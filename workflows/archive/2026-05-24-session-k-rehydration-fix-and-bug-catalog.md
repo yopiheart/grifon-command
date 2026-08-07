@@ -15,9 +15,9 @@
 
 ## What the rehydration fix does ([commit 8852013](#))
 
-**Root cause:** `sceneResults: Record<number, GeneratedVideoResult>` in [components/GenerateVideo/index.tsx:121](../components/GenerateVideo/index.tsx#L121) was transient React state. The wizard's `WizardSessionV1` schema in [services/wizardSessionStore.ts:3-17](../services/wizardSessionStore.ts#L3) persists 13 fields but does NOT include per-scene render URLs. On Resume, `App.tsx:441-461` restored everything EXCEPT renders. Next GenerateVideo mount: `sceneResults = {}` → `sceneBatch.renderedUrl` all undefined → SEND TO SIGNAL MODULATOR gate stays off → user is locked out of TTS / AI Editor without re-rendering.
+**Root cause:** `sceneResults: Record<number, GeneratedVideoResult>` in [components/GenerateVideo/index.tsx:121](../../components/GenerateVideo/index.tsx#L121) was transient React state. The wizard's `WizardSessionV1` schema in [services/wizardSessionStore.ts:3-17](../../services/wizardSessionStore.ts#L3) persists 13 fields but does NOT include per-scene render URLs. On Resume, `App.tsx:441-461` restored everything EXCEPT renders. Next GenerateVideo mount: `sceneResults = {}` → `sceneBatch.renderedUrl` all undefined → SEND TO SIGNAL MODULATOR gate stays off → user is locked out of TTS / AI Editor without re-rendering.
 
-**Fix:** New useEffect after the existing `refreshLibrary()` ([index.tsx:286](../components/GenerateVideo/index.tsx#L286)). When `library` loads and `sceneResults` is empty but `seedPrompts` exists, match each scene to its library entry by `VideoLibraryItem.sceneIdx` (deterministic — already tagged by the render pipeline). Falls back to `prompt`-text match for legacy entries that pre-date sceneIdx tagging. Threshold gate (≥70% must match) prevents partial-rehydration confusion. Toast `// SCENES_REHYDRATED — N/M RECOVERED` confirms success.
+**Fix:** New useEffect after the existing `refreshLibrary()` ([index.tsx:286](../../components/GenerateVideo/index.tsx#L286)). When `library` loads and `sceneResults` is empty but `seedPrompts` exists, match each scene to its library entry by `VideoLibraryItem.sceneIdx` (deterministic — already tagged by the render pipeline). Falls back to `prompt`-text match for legacy entries that pre-date sceneIdx tagging. Threshold gate (≥70% must match) prevents partial-rehydration confusion. Toast `// SCENES_REHYDRATED — N/M RECOVERED` confirms success.
 
 **Verified live today:** Battlecreek smoke walk, 7/7 RECOVERED on resume, zero new `/api/gemini/video` POSTs (Network panel confirmed), SEND TO SIGNAL MODULATOR button reappeared and was clickable. **Total Veo/Kling spend during the verification: $0.**
 
@@ -38,7 +38,7 @@
 
 The headline blocker.
 
-**Root cause:** ElevenLabs TTS in Signal Modulator returns audio as a Blob; `URL.createObjectURL(blob)` produces a `blob:http://localhost:5174/<uuid>` URL that lives only in browser memory. `renderEditDecisionList` in [services/geminiService.ts:1340-1351](../services/geminiService.ts#L1340) passes those blob URLs directly to Gemini's `fileData.fileUri`. Gemini's File API rejects them:
+**Root cause:** ElevenLabs TTS in Signal Modulator returns audio as a Blob; `URL.createObjectURL(blob)` produces a `blob:http://localhost:5174/<uuid>` URL that lives only in browser memory. `renderEditDecisionList` in [services/geminiService.ts:1340-1351](../../services/geminiService.ts#L1340) passes those blob URLs directly to Gemini's `fileData.fileUri`. Gemini's File API rejects them:
 
 > *"Unsupported file URI type: blob:http://localhost:5174/33707bde-…. File URI must be a File API (e.g. https://generativelanguage.googleapis.com/files/<id>), Youtube, HTTPS, or a valid gURI (gs://)."*
 
@@ -56,13 +56,13 @@ Status: 400 INVALID_ARGUMENT, request never reaches the model.
 
 **Observation today:** Click any scene tile in the GenerateVideo Pipeline panel → editor canvas loads the prompt, but the "Veo 3.1 Lite · 9:16 · 720p · 4s" header chip and the model picker dropdown stay on the global `config.model` default (Veo Lite). Even for KLING-routed hooks/b-roll where the per-scene KLING badge on the tile is correct.
 
-**Distinct from Bug 1.** Bug 1's `ecb688f` fix patched `handleRerender` (the Re-render button on rendered MP4 previews). The scene-tile-click handler is a different code path that loads `previewItem` but doesn't auto-route the model. Likely in [components/GenerateVideo/index.tsx](../components/GenerateVideo/index.tsx) around where scene-tile clicks set `previewItem`. Same `autoRouteModelForType` helper from `RenderAllRunner.ts:39-49` is reusable.
+**Distinct from Bug 1.** Bug 1's `ecb688f` fix patched `handleRerender` (the Re-render button on rendered MP4 previews). The scene-tile-click handler is a different code path that loads `previewItem` but doesn't auto-route the model. Likely in [components/GenerateVideo/index.tsx](../../components/GenerateVideo/index.tsx) around where scene-tile clicks set `previewItem`. Same `autoRouteModelForType` helper from `RenderAllRunner.ts:39-49` is reusable.
 
 **Fix scope:** small, isolated, non-TUNED. Likely <10 lines. Defer to a dedicated session.
 
 ### Bug 8 — Flash picks "crane lift" as a talking-scene camera move (off-palette)
 
-**Observation today:** Scene 6 talking prompt contained *"captured with an 85mm lens and a gentle crane lift that moves with the gesture"*. The Option B (Talking) palette at [services/geminiService.ts:2100](../services/geminiService.ts#L2100) lists only three allowed moves: `dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), or aggressive handheld (urgency)`. "Crane lift" is not on the list.
+**Observation today:** Scene 6 talking prompt contained *"captured with an 85mm lens and a gentle crane lift that moves with the gesture"*. The Option B (Talking) palette at [services/geminiService.ts:2100](../../services/geminiService.ts#L2100) lists only three allowed moves: `dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), or aggressive handheld (urgency)`. "Crane lift" is not on the list.
 
 **Severity:** low. Crane lift is not deterministically a defocus instruction (unlike rack focus was), so Veo probably renders it as an actual gentle upward camera motion — which is fine cinematically. But the palette is meant to be a closed set. Flash is improvising.
 
@@ -70,7 +70,7 @@ Status: 400 INVALID_ARGUMENT, request never reaches the model.
 
 ### Bug 5 (from Session J, still pending) — `[object Object]` Director AI prefill
 
-Not surfaced today (different angle path). Still pending in [App.tsx](../App.tsx) prefill logic.
+Not surfaced today (different angle path). Still pending in [App.tsx](../../App.tsx) prefill logic.
 
 ---
 
@@ -90,11 +90,11 @@ It did NOT touch: the storyboard prompt in `api/_lib/prompts.ts` (`buildStoryboa
 
 ### Q: "Why didn't the script-angle picker show up?"
 
-**A: Designed behavior, not a regression.** The picker is gated on `localStorage.getItem('marketMindReport')` having valid shape with non-empty headlines/hooks/ads arrays — see [components/Step3AdScript.tsx:49-94](../components/Step3AdScript.tsx#L49). I clicked "Skip for now" on the Step 1 MarketMind prompt today. With no MarketMind report in localStorage, the picker is **deterministically suppressed**. To get it back: run Market Research first (the "Skip for now" was the trigger).
+**A: Designed behavior, not a regression.** The picker is gated on `localStorage.getItem('marketMindReport')` having valid shape with non-empty headlines/hooks/ads arrays — see [components/Step3AdScript.tsx:49-94](../../components/Step3AdScript.tsx#L49). I clicked "Skip for now" on the Step 1 MarketMind prompt today. With no MarketMind report in localStorage, the picker is **deterministically suppressed**. To get it back: run Market Research first (the "Skip for now" was the trigger).
 
 ### Q: "Scene 7 video still has blur — is this Bug 3 regressing?"
 
-**A: No.** Step 7 video-prompts text was verified clean (`browser_evaluate` regex returned `rackFocusCount: 0` across all 7 scenes). Scene 7's actual prompt is *"…35mm lens and a slow, pronounced dolly-in to emphasize the call to action…"* — no defocus language. Any residual blur in the rendered MP4 is **Veo 3.1 Lite's intrinsic behavior** on dolly-in shots (mild background defocus is normal at the focal lengths and apertures Veo defaults to). Not a Grifon code regression. Per [agent_lessons.md 2026-05-24](../agent_lessons.md) I will NOT install ffmpeg to confirm by frame extraction; that was the rabbit-hole lesson. Investigating further would need Phase 0 Vertex AI access to compare against Veo Full.
+**A: No.** Step 7 video-prompts text was verified clean (`browser_evaluate` regex returned `rackFocusCount: 0` across all 7 scenes). Scene 7's actual prompt is *"…35mm lens and a slow, pronounced dolly-in to emphasize the call to action…"* — no defocus language. Any residual blur in the rendered MP4 is **Veo 3.1 Lite's intrinsic behavior** on dolly-in shots (mild background defocus is normal at the focal lengths and apertures Veo defaults to). Not a Grifon code regression. Per [agent_lessons.md 2026-05-24](../../agent_lessons.md) I will NOT install ffmpeg to confirm by frame extraction; that was the rabbit-hole lesson. Investigating further would need Phase 0 Vertex AI access to compare against Veo Full.
 
 ---
 
@@ -115,7 +115,7 @@ Small isolated fix; <10 lines; non-TUNED. See section above.
 Either bless crane lift into the palette or tighten the directive's closed-set language. TUNED diff requires line-by-line approval per services/CLAUDE.md hard rules.
 
 ### 4. Bug 5 — `[object Object]` Director AI prefill (carried from Session J)
-Still pending. Small isolated patch in [App.tsx](../App.tsx) prefill logic. Non-TUNED.
+Still pending. Small isolated patch in [App.tsx](../../App.tsx) prefill logic. Non-TUNED.
 
 ### 5. Persist sceneResults to wizardSessionStore.v2 (deferred robustness)
 Today's rehydration fix is library-driven (works as long as Supabase library has the entries with sceneIdx). Extending the IndexedDB schema is the "belt and suspenders" version. Schema migration with backward-compat. Defer until library-rehydration is proven in production.
@@ -150,11 +150,11 @@ Locked at Tier A — Lean MVP per Session I handoff. Still blocked until EDL val
 ## First files to read in the next session
 
 1. **This handoff doc.**
-2. [`agent_lessons.md`](../agent_lessons.md) — including today's hero-image lesson.
+2. [`agent_lessons.md`](../../agent_lessons.md) — including today's hero-image lesson.
 3. `git show 8852013` — see today's rehydration fix.
-4. [services/geminiService.ts:1340-1351](../services/geminiService.ts#L1340) — Bug 7 fix target (Option A).
-5. [services/CLAUDE.md](../services/CLAUDE.md) "Fair game" clause — confirms transport-mechanics edit is non-TUNED.
-6. [`CLAUDE.md`](../CLAUDE.md) — project rules + Plan→Goal pipeline.
+4. [services/geminiService.ts:1340-1351](../../services/geminiService.ts#L1340) — Bug 7 fix target (Option A).
+5. [services/CLAUDE.md](../../services/CLAUDE.md) "Fair game" clause — confirms transport-mechanics edit is non-TUNED.
+6. [`CLAUDE.md`](../../CLAUDE.md) — project rules + Plan→Goal pipeline.
 
 ---
 

@@ -61,14 +61,14 @@ Add multi-mode auth surface to `App.tsx`: sign-in (existing) + sign-up (NEW) + f
 **Why this is the next session's primary:** the existing email/password flow has no sign-up path — new users hit "Invalid credentials" with no remedy. OAuth bypasses this (Supabase auto-creates accounts) but the email/password gap is a real product hole.
 
 **Critical files to be modified:**
-- [App.tsx](../App.tsx) — state additions (~line 103), handler additions (~line 411), JSX rewrite (line 647-716)
-- [services/supabaseClient.ts](../services/supabaseClient.ts) — append `signUpWithPassword` + `requestPasswordReset` helpers
-- [components/ui/Input.tsx](../components/ui/Input.tsx) — REUSE as-is (auto `//` label prefix at line 15)
+- [App.tsx](../../App.tsx) — state additions (~line 103), handler additions (~line 411), JSX rewrite (line 647-716)
+- [services/supabaseClient.ts](../../services/supabaseClient.ts) — append `signUpWithPassword` + `requestPasswordReset` helpers
+- [components/ui/Input.tsx](../../components/ui/Input.tsx) — REUSE as-is (auto `//` label prefix at line 15)
 
 **Existing utilities to reuse:**
-- [GoldButton](../components/ui/GoldButton.tsx) — all primary CTAs
-- [GlassPanel](../components/ui/GlassPanel.tsx) — auth container
-- [Input](../components/ui/Input.tsx) — replaces inline `<input>` elements
+- [GoldButton](../../components/ui/GoldButton.tsx) — all primary CTAs
+- [GlassPanel](../../components/ui/GlassPanel.tsx) — auth container
+- [Input](../../components/ui/Input.tsx) — replaces inline `<input>` elements
 
 **Out of scope (do NOT bundle):**
 - Magic-link as primary auth (only as password recovery)
@@ -130,7 +130,7 @@ deep-link handler is out of scope. OR stop after 25 turns.
 | Hybrid inference router | Per the plan, after desktop-Chrome telemetry confirms ≥40% qualifying users | TBD |
 
 **Carry-forwards from prior sessions (still pending — NOT touched in Session O):**
-- **Bug 7** ⏸ Code-correct, in-vivo deferred to clean-output session (post-TUNED). See [handoff_2026-05-26-session-m-bug-catalog-halt.md](handoff_2026-05-26-session-m-bug-catalog-halt.md).
+- **Bug 7** ⏸ Code-correct, in-vivo deferred to clean-output session (post-TUNED). See [handoff_2026-05-26-session-m-bug-catalog-halt.md](2026-05-26-session-m-bug-catalog-halt.md).
 - **Bug 8/9/14/15** ⏸ TUNED — addressed in session-n's `e392e66 tuned(session-n): Bug 8/9/14/15 + Gemini 3.5 Layer 1-2 architecture` per `git log`. Verify they're fully closed before Session P starts touching auth surface.
 - **Fix 2** ⏸ Session H — strip audio/SFX directives from `generateVideoPrompts` + daylight→like typo.
 - **Bug 5 schema** ⏸ Session L — tighten `api/_lib/prompts.ts:100` demographics-as-string enforcement.
@@ -155,13 +155,13 @@ Six memory files were saved during Session O at `~/.claude/projects/c--Users-Adm
 ## References
 
 - Plan file (ephemeral): `~/.claude/plans/i-have-a-knowledge-hazy-snowflake.md`
-- [services/CLAUDE.md](../services/CLAUDE.md) — TUNED-file rules + crown-jewel prompt migration log
-- [agent_lessons.md](../agent_lessons.md) — behavioral rules accumulator
-- [CLAUDE.md](../CLAUDE.md) — project root, including Plan→Goal pipeline contract
-- [DESIGN.md](../DESIGN.md) — brand system (gold + glass + JetBrains Mono labels)
-- [UBIQUITOUS_LANGUAGE.md](../UBIQUITOUS_LANGUAGE.md) — domain vocabulary
+- [services/CLAUDE.md](../../services/CLAUDE.md) — TUNED-file rules + crown-jewel prompt migration log
+- [agent_lessons.md](../../agent_lessons.md) — behavioral rules accumulator
+- [CLAUDE.md](../../CLAUDE.md) — project root, including Plan→Goal pipeline contract
+- [DESIGN.md](../../DESIGN.md) — brand system (gold + glass + JetBrains Mono labels)
+- [UBIQUITOUS_LANGUAGE.md](../../UBIQUITOUS_LANGUAGE.md) — domain vocabulary
 - Session-n handoff (prior): per `git log` — commit `656f5fa docs(session-n): handoff + Gem workflow lesson`
-- Session-m handoff (prior): [handoff_2026-05-26-session-m-bug-catalog-halt.md](handoff_2026-05-26-session-m-bug-catalog-halt.md)
+- Session-m handoff (prior): [handoff_2026-05-26-session-m-bug-catalog-halt.md](2026-05-26-session-m-bug-catalog-halt.md)
 
 ---
 
@@ -169,7 +169,7 @@ Six memory files were saved during Session O at `~/.claude/projects/c--Users-Adm
 
 ```
 Continuing from session-o (2026-05-26). Read this handoff first:
-workflows/handoff_2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md
+workflows/archive/2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md
 
 Then read CLAUDE.md, agent_lessons.md, UBIQUITOUS_LANGUAGE.md, and the
 plan file at ~/.claude/plans/i-have-a-knowledge-hazy-snowflake.md (or

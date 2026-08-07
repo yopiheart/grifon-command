@@ -36,10 +36,10 @@ PROXY_ERROR_502: gemini_error — {"error":{"code":404,"message":
 
 **Files touched (TUNED — all 4 occurrences):**
 
-- [services/geminiService.ts:275](services/geminiService.ts#L275) — `textModel`
-- [services/geminiService.ts:276](services/geminiService.ts#L276) — `fastTextModel`
-- [api/_lib/prompts.ts:62](api/_lib/prompts.ts#L62) — `MODEL_TEXT`
-- [api/_lib/prompts.ts:63](api/_lib/prompts.ts#L63) — `MODEL_FAST`
+- [services/geminiService.ts:275](../../services/geminiService.ts#L275) — `textModel`
+- [services/geminiService.ts:276](../../services/geminiService.ts#L276) — `fastTextModel`
+- [api/_lib/prompts.ts:62](../../api/_lib/prompts.ts#L62) — `MODEL_TEXT`
+- [api/_lib/prompts.ts:63](../../api/_lib/prompts.ts#L63) — `MODEL_FAST`
 
 `researchTextModel = 'gemini-3.5-flash'` at `:277` left untouched (was already on 3.5, working).
 
@@ -77,7 +77,7 @@ PROXY_ERROR_502: gemini_error — {"error":{"code":404,"message":
 
 ### Bug 14 (truncation prevention) → became Bug 18 (dead-air silent-pause)
 
-Session N added a "safety tail" instruction at [services/geminiService.ts:2112](services/geminiService.ts#L2112):
+Session N added a "safety tail" instruction at [services/geminiService.ts:2112](../../services/geminiService.ts#L2112):
 
 > **AUDIO TAIL PADDING (REQUIRED on all talking scenes):** When emitting the dialogue inside the output prose, append a safety tail to the user-script line: ", [silent pause], looking back toward the lens with a natural, comfortable smile." This protects against final-syllable truncation by giving the video model a silent action to clip if the duration shortens by 0.3-0.5s — better to truncate a silent smile than a spoken Taglish word like "suffocate" or "mukha".
 
@@ -192,7 +192,7 @@ After landing the TUNED bundle, **re-run the same Curology smoke with same hero 
 
 ## What survived in the repo (durable)
 
-- This handoff at `workflows/handoff_2026-05-26-session-q-bug16-shipped-session-n-regressions-captured.md`
+- This handoff at `workflows/archive/2026-05-26-session-q-bug16-shipped-session-n-regressions-captured.md`
 - The Bug 16 model-ID swap in `services/geminiService.ts` + `api/_lib/prompts.ts` (TUNED files, single commit)
 - New 2026-05-26 entry in `agent_lessons.md` titled "Verify wiring with grep before declaring a feature shipped" — full incident analysis on how `normalizeTaglish` was wired only to the planning prompt at `:2032`, not the audio path
 
@@ -218,13 +218,13 @@ After Session R TUNED bundle lands, re-render these 7 scenes with the same Curol
 
 ## References
 
-- [services/CLAUDE.md](../services/CLAUDE.md) — TUNED-file rules (still apply for Session R)
-- [api/CLAUDE.md](../api/CLAUDE.md) — api/_lib is TUNED
-- [agent_lessons.md](../agent_lessons.md) — behavioral rules accumulator (new 2026-05-26 entry on grep-wiring-before-shipping)
-- [CLAUDE.md](../CLAUDE.md) — project root, Plan→Goal pipeline rules
-- [services/phoneticNormalizer.ts](../services/phoneticNormalizer.ts) — Layer 1 implementation, will be redesigned in Session R per Bug 17
-- [services/geminiService.ts:2078-2122](../services/geminiService.ts#L2078) — `generateVideoPrompts` system instruction (Bug 18 + Bug 19 fixes will land here)
-- Prior handoffs: [Session N](handoff_2026-05-26-session-n-tuned-edits-shipped.md), [Session O](handoff_2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md), [Session P](handoff_2026-05-26-session-p-login-redesign-shipped.md)
+- [services/CLAUDE.md](../../services/CLAUDE.md) — TUNED-file rules (still apply for Session R)
+- [api/CLAUDE.md](../../api/CLAUDE.md) — api/_lib is TUNED
+- [agent_lessons.md](../../agent_lessons.md) — behavioral rules accumulator (new 2026-05-26 entry on grep-wiring-before-shipping)
+- [CLAUDE.md](../../CLAUDE.md) — project root, Plan→Goal pipeline rules
+- [services/phoneticNormalizer.ts](../../services/phoneticNormalizer.ts) — Layer 1 implementation, will be redesigned in Session R per Bug 17
+- [services/geminiService.ts:2078-2122](../../services/geminiService.ts#L2078) — `generateVideoPrompts` system instruction (Bug 18 + Bug 19 fixes will land here)
+- Prior handoffs: [Session N](2026-05-26-session-n-tuned-edits-shipped.md), [Session O](2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md), [Session P](2026-05-26-session-p-login-redesign-shipped.md)
 
 ---
 
@@ -232,7 +232,7 @@ After Session R TUNED bundle lands, re-render these 7 scenes with the same Curol
 
 ```
 Continuing from session-q (2026-05-26). Read this handoff first:
-workflows/handoff_2026-05-26-session-q-bug16-shipped-session-n-regressions-captured.md
+workflows/archive/2026-05-26-session-q-bug16-shipped-session-n-regressions-captured.md
 
 Then read CLAUDE.md, services/CLAUDE.md, agent_lessons.md, and
 ~/.claude/projects/.../memory/MEMORY.md for the memory index.

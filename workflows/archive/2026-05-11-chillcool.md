@@ -103,7 +103,7 @@ Paste this into the next conversation:
 Continuing from 2026-05-11 ChillCool Face Mist session.
 
 Branch: combined-preview HEAD 426c9bd (pushed).
-Read FIRST: workflows/handoff_2026-05-11-chillcool.md (full session context).
+Read FIRST: workflows/archive/2026-05-11-chillcool.md (full session context).
 Plan file (long, scan as needed): ~/.claude/plans/continuing-from-2026-05-10-karit-fluttering-pond.md (dies on reboot — handoff doc is the durable record).
 
 Top-line summary:

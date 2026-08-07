@@ -80,7 +80,7 @@ It's isolated in `find_winning_ads.py`; if it breaks, the `--from-json` path
 
 ## Paste-ready kickoff for the VS Code session
 
-> Resuming Ad Recon (see `workflows/handoff_2026-06-26-ad-recon-v1-shipped.md`).
+> Resuming Ad Recon (see `workflows/archive/2026-06-26-ad-recon-v1-shipped.md`).
 > v1 is built + committed on this branch. Let's do the first LIVE end-to-end run
 > on IM8 Health (page 345914995276546): run `tools/find_winning_ads.py`, I'll
 > AdLibNote-download the top winner, then hand it to `viral-autopsy` and see if it

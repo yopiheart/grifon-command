@@ -150,10 +150,10 @@ Carried from Session K and earlier; both unchanged by Session L.
   tighten closed-set language. services/geminiService.ts:2100 area.
 - **Fix 2 (Session H)** — strip audio/SFX directives from
   `generateVideoPrompts` + daylight→like typo. Pending 3+ days. Spec in
-  [workflows/handoff_2026-05-22-session-h-render-all-verified-and-fixes.md](handoff_2026-05-22-session-h-render-all-verified-and-fixes.md).
+  [workflows/archive/2026-05-22-session-h-render-all-verified-and-fixes.md](2026-05-22-session-h-render-all-verified-and-fixes.md).
 
 Both require line-by-line TUNED diff sign-off per [agent_lessons.md
-2026-05-09](../agent_lessons.md). Cannot ship without Neil's review.
+2026-05-09](../../agent_lessons.md). Cannot ship without Neil's review.
 
 ### 4. Out-of-scope underlying schema violation for Bug 5
 
@@ -195,9 +195,9 @@ smoke clears, Phase 2 unblocks.
 ## Operational notes for Session M
 
 - **Cafe PC defreezer.** Same recurring wipe. Run
-  [scripts/restore-git-identity.ps1](../scripts/restore-git-identity.ps1)
+  [scripts/restore-git-identity.ps1](../../scripts/restore-git-identity.ps1)
   first if commits fail with "Author identity unknown" (happened today).
-  Other restore scripts under [scripts/](../scripts/) — check before
+  Other restore scripts under [scripts/](../../scripts/) — check before
   manually re-configuring anything.
 - **Vite dev server port.** Today it bound to `:5173`. Session K's blob URLs
   were `:5174`. Vite picks the next available port at startup. If you have
@@ -208,7 +208,7 @@ smoke clears, Phase 2 unblocks.
   start. If you want to drive smoke from Playwright, expect to re-inject
   any cached state (or use the snapshot script from carry-forward item 2).
 - **Don't write into `.tmp/`** while `npm run dev` is running ([lesson
-  2026-05-24](../agent_lessons.md) — Vite EBUSY crash). Use `$env:TEMP`
+  2026-05-24](../../agent_lessons.md) — Vite EBUSY crash). Use `$env:TEMP`
   for scratch.
 
 ---
@@ -234,11 +234,11 @@ Session M, 15-min item).
 ## First files to read in Session M
 
 1. **This handoff doc.**
-2. [`agent_lessons.md`](../agent_lessons.md) — especially today's *reboot
+2. [`agent_lessons.md`](../../agent_lessons.md) — especially today's *reboot
    resilience* lesson (will be added in a follow-up commit if Session M
    confirms the failure mode recurs).
 3. `git show 27400fb` — see today's bundle.
-4. [`CLAUDE.md`](../CLAUDE.md) — project rules + Plan→Goal pipeline.
+4. [`CLAUDE.md`](../../CLAUDE.md) — project rules + Plan→Goal pipeline.
 5. Resume the Battlecreek wizard session if the card is still in
    localStorage; otherwise minimal 1-scene wizard run for cheap EDL
    validation.

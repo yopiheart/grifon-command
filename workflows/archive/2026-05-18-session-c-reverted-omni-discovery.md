@@ -63,7 +63,7 @@ they describe.
 - **Endpoint**: `POST /v1/videos/omni-video` (NOT `/v1/videos/image2video`)
 - **Auth**: same HS256 JWT, same `Authorization: Bearer <jwt>` header,
   same TTL semantics — the proxy auth helper at
-  [api/_lib/klingAuth.ts](../api/_lib/klingAuth.ts) works as-is
+  [api/_lib/klingAuth.ts](../../api/_lib/klingAuth.ts) works as-is
 - **Model name enum**: `kling-video-o1` (Omni O1, what we tested as "winner
   for hook drama") OR `kling-v3-omni` (V3 Omni variant; different from
   `kling-v3` image2video)
@@ -110,14 +110,14 @@ on Veo.
 that branching inside one proxy would be ugly. New files:
 
 - `api/kling/omni-video.ts` — POST handler, similar shape to
-  [api/kling/video.ts](../api/kling/video.ts) but builds the Omni body
+  [api/kling/video.ts](../../api/kling/video.ts) but builds the Omni body
   (image_list array, optional sound/4k/3s)
 - `api/kling/omni-video/poll.ts` — mirrors
-  [api/kling/video/poll.ts](../api/kling/video/poll.ts), different upstream
+  [api/kling/video/poll.ts](../../api/kling/video/poll.ts), different upstream
   GET path (`/v1/videos/omni-video/{task_id}`), same Supabase Storage
   upload + signed URL pattern
 
-**Service layer** ([services/geminiService.ts](../services/geminiService.ts)):
+**Service layer** ([services/geminiService.ts](../../services/geminiService.ts)):
 
 - New `proxyGenerateKlingOmniVideo` helper next to
   `proxyGenerateKlingVideo` — POSTs to `/api/kling/omni-video` with the
@@ -140,12 +140,12 @@ that branching inside one proxy would be ugly. New files:
 **Runner + UI** (unchanged from Session C plan, just re-applied):
 
 - `autoRouteModelForType` at
-  [components/GenerateVideo/RenderAllRunner.ts:36](../components/GenerateVideo/RenderAllRunner.ts#L36)
+  [components/GenerateVideo/RenderAllRunner.ts:36](../../components/GenerateVideo/RenderAllRunner.ts#L36)
   gains optional `sceneIdx` param; special-case `sceneIdx === 0 && type
   === 'b-roll'` → `Kling_O1`
 - `index.tsx` callers pass scene index
 - `Kling_O1` to `ACTIVE_MODELS` at
-  [components/GenerateVideo/index.tsx:78](../components/GenerateVideo/index.tsx#L78)
+  [components/GenerateVideo/index.tsx:78](../../components/GenerateVideo/index.tsx#L78)
 - `types.ts` `VideoModelType` union gains `'Kling_O1'`
 
 **TUNED prompt cleanups** (re-apply Session C's P1-P4 in the same commit
@@ -244,16 +244,16 @@ have shifted from edits to neighboring blocks.
 ## What's already working and DON'T touch
 
 - **JWT refresh** (Session B+) — one-shot 401 retry in
-  [api/kling/video.ts](../api/kling/video.ts) +
-  [api/kling/video/poll.ts](../api/kling/video/poll.ts). Working as
+  [api/kling/video.ts](../../api/kling/video.ts) +
+  [api/kling/video/poll.ts](../../api/kling/video/poll.ts). Working as
   designed.
 - **F2 morph-fallback** at
-  [services/geminiService.ts:444-456](../services/geminiService.ts#L444-L456)
+  [services/geminiService.ts:444-456](../../services/geminiService.ts#L444-L456)
   — kept for Veo morph cases (rare since b-roll now goes Kling, but
   still kicks in if user manually picks Veo for a morph). Don't delete
   in Session D.
 - **Crown-jewel prompt registry** at
-  [api/_lib/prompts.ts](../api/_lib/prompts.ts) — TUNED, never touch
+  [api/_lib/prompts.ts](../../api/_lib/prompts.ts) — TUNED, never touch
   without Neil approval (CLAUDE.md hard rule).
 - **MarketMind output schema** — load-bearing for multiple downstream
   consumers (CLAUDE.md services/CLAUDE.md hard rule).

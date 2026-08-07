@@ -23,7 +23,7 @@ them live is a separate initiative ("Path B").
   Launch → Running → First Cut by run status, plus the `?osaPreview=` dev hook.
 
 Related spec/handoff: `workflows/autopilot_oneclick_spec.md`,
-`workflows/handoff_2026-06-09-one-shot-ad-v1.md`.
+`workflows/archive/2026-06-09-one-shot-ad-v1.md`.
 
 ## What IS live / previewable (elsewhere)
 The **screens** are recovered and wired into a zero-API preview

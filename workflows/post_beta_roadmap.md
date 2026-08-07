@@ -335,7 +335,7 @@ Vercel runtime; if unavailable, the trim mechanism needs rethinking (a player
 offset is the fallback but only a partial fix).
 
 **Source:** Session G, 2026-05-22 —
-`workflows/handoff_2026-05-22-session-g-dead-first-second.md`. Both no-code levers
+`workflows/archive/2026-05-22-session-g-dead-first-second.md`. Both no-code levers
 (prompt FRAME-0 language, shorter duration) empirically FAILed; trim is the
 remaining structural fix. Neil endorsed scoping it during the Session G grill
 (locked decision #3: "document the limit + scope a trim follow-up").
@@ -1292,6 +1292,83 @@ second client's ask against it, promote the overlap.
 **Source:** Jia Wu (Cognition) FDE knowledge-transfer brief, evaluated 2026-08-04, Neil
 endorsed same session ("Okay bro G" — stamp the record + park the rule, then back to the
 live campaign).
+
+---
+
+### 27. Production Incident Agent (the "AI SRE" / on-call assistant pattern)
+
+> **Brief evaluation record (2026-08-07):** *How Ramp Engineers Work with AI Agents at Every
+> Step* evaluated against the codebase — verdict: **~70% already absorbed.** Horizontal
+> loops/routines = [`loops.md`](loops.md) Tiers 0–6; the test-time-compute dial = the
+> per-role model allocation in CLAUDE.md; adversarial sub-agent verification =
+> [`pr_review_loop.md`](pr_review_loop.md) (builder ≠ reviewer) + `gemini-eval` /
+> `brand-check` / `straw-man-audit`; least-privilege agent access = the
+> `ad-spend-gate` / `veo-render-gate` hooks + read-only Meta allowlist + the TUNED-file
+> guardrail; declarative prompting ("state the outcome, not the steps") = the `/goal`
+> condition template; build-for-future-models = Bake-and-Leap, already parked as item #1's
+> second verdict type.
+>
+> **Rejected as conflicts:** (a) *eliminate token budgets / ignore cost when ROI is
+> positive* — Grifon runs on a capped Max 5x plan with the Gemini video budget currently
+> exhausted, and with zero paying users "positive ROI" is unmeasurable, so the premise
+> fails on its own terms. **This is the third brief to carry this claim (Kun Chen
+> 2026-06-17, OpenAI Dev Day 2026-07-16, Ramp 2026-08-07); the context-hygiene doctrine
+> stands and does not need a fourth review.** (b) *deprecate prompt scaffolding as models
+> outgrow it* — sound for agent-harness scaffolding, **actively dangerous here**, because
+> Grifon's prompts are product IP, not harness (that is what
+> [`check-bundle-leak.mjs`](../tools/check-bundle-leak.mjs) exists to protect). The two
+> senses of "scaffolding" must not be conflated. (c) *autonomous PR fixes from the on-call
+> agent* — collides with the standing flag-don't-apply rule; the brief lists write-access
+> governance under its own admitted gaps. Take the detection, never the application.
+> (d) Modal-style remote dev environments, Project Glass, decentralized multi-team tool
+> adoption — no org, and the cheap 80% (GitHub Actions + cloud Routines) already ships.
+>
+> **Net-new output (all landed 2026-08-07, none of it code):** the trace-based-evaluation
+> stopping rule as rule 9 in [`gauntlet_loop_decision.md`](gauntlet_loop_decision.md); the
+> `workflows/` handoff-doc archive sweep (36 files → [`archive/`](archive/README.md), with
+> the archiving rule written down so the pile does not rebuild); and this item. **Do not
+> re-evaluate this brief.**
+
+**What:** An agent that triggers on a production incident — a failed Vercel deployment, a
+runtime error spike, a Supabase advisor crossing baseline, a support complaint — pulls the
+relevant telemetry, does root-cause analysis, and opens a GitHub Issue with a diagnosis and
+a *proposed* diff. Detection and diagnosis are autonomous; application stays gated.
+
+**Why it matters:** It is the one genuinely missing loop tier. Everything in
+[`loops.md`](loops.md) today fires on a *schedule* or on an *edit*; nothing fires on
+*production reality*. Today the first signal that a beta user's render broke is the user
+saying so — the exact fragility item #1 was parked to fix on the generation side.
+
+**Why parked:** No production traffic. An incident agent with no incidents is the *"a
+Routine without a named READER is quota burn"* rule in [`loops.md`](loops.md) Tier 6,
+violated on purpose. The substrate is genuinely ready and that is the tempting part —
+[`api/events.ts`](../api/events.ts) + `supabase/events.sql` + `producer_runs.sql` +
+`feedback.sql` are live, Vercel `get_runtime_errors` and Supabase `get_logs` are connected,
+and Health Watch v2 already runs daily with both connectors attached. Ready is not the same
+as needed.
+
+**When to resume:** First paying cohort on `app.grifon.ai` — i.e. when
+[`launch_readiness.md`](launch_readiness.md) closes. Earlier only if a beta user hits a
+production failure Neil learned about from the user rather than from a monitor.
+
+**Where to start:**
+1. **Do this part now, not later:** the Health Watch v2 push notification has been
+   *unconfirmed* since 2026-07-19 ([`loops.md`](loops.md) Tier 6). A monitor whose reader
+   was never verified is the same quota burn in a quieter form. Confirm delivery, or fire
+   the documented fallback (Gmail connector, email on CRITICAL). Also still pending: delete
+   the v1 trigger from a remote session.
+2. Widen v2's read set from advisors-only to `get_runtime_errors` + Supabase `get_logs` +
+   the `events` / `producer_runs` failure rows. Same read-only posture.
+3. Add the diagnosis step: on CRITICAL, open a GitHub Issue (label `incident`) with the
+   trace, the suspected cause, and a proposed fix — **never a commit, never a merge**, and
+   flag-don't-apply on anything touching the TUNED files.
+4. Only then consider a trigger richer than cron.
+
+**Scope estimate:** Step 1 is minutes. Steps 2–3 are ~half a day on the existing Routine —
+no new infra, since the connectors and tables already exist.
+
+**Source:** Ramp agent-engineering brief, evaluated 2026-08-07. Neil approved stamping the
+record + parking the item ("Alright go!") in the same session.
 
 ---
 

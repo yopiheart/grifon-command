@@ -199,7 +199,7 @@ Everything else stays parked per `post_beta_roadmap.md`'s own resume triggers �
   shipped); [`advanced_mode_cleanup.md`](advanced_mode_cleanup.md) (targets the now-admin-only 8-step
   wizard — mark superseded, fold salvage into
   [`concierge_director_plan.md`](concierge_director_plan.md));
-  [`handoff_2026-06-08-pr9-merged-launch-pendings.md`](handoff_2026-06-08-pr9-merged-launch-pendings.md)
+  [`archive/2026-06-08-pr9-merged-launch-pendings.md`](archive/2026-06-08-pr9-merged-launch-pendings.md)
   (#1 burn-in looks shipped mid-June, #2 headless-autopilot likely superseded by the producer flow —
   verify + close).
 - **Branches to delete after believability lands:** `wip/seedance-merge-backup` (strict subset),
@@ -292,7 +292,7 @@ First item of the render backlog closed. The AI Editor (FINAL_RENDER) and Scene 
 
 The `claude/landing-page-redesign-g7zaca` bundle (entrance → daily habit, one kinetic visual language) was **verified on PC by Neil and merged to `main` via `--no-ff` (`1a9097d`); origin updated `08be4b2..1a9097d`.** Vercel auto-deploys `main` to prod. Source of truth = `git log`; this is the summary.
 
-**The redesign (pre-merge, on the branch):** landing rebuilt with kinetic ad-montage hero, Instrument Serif gold accents, marquees, SignatureScribble system, cream proof band, scattered proof gallery, pinned START FREE pill w/ hide-zones, squiggle scroll-spy nav; pricing kinetic pass; auth gateway outcome-first + **GitHub OAuth live in Supabase** (Apple wired but OFF, needs $99/yr account — `config/authProviders.ts` is the per-provider kill switch); route veil page transitions; checkout/billing-success/dashboard restyle. DESIGN.md amended (serif-accent token, proof-band `#F2F1EA` light-band exception, heading LAW). `.AI` suffix dropped everywhere. Full pre-merge detail: [`handoff_2026-06-11-funnel-redesign.md`](handoff_2026-06-11-funnel-redesign.md).
+**The redesign (pre-merge, on the branch):** landing rebuilt with kinetic ad-montage hero, Instrument Serif gold accents, marquees, SignatureScribble system, cream proof band, scattered proof gallery, pinned START FREE pill w/ hide-zones, squiggle scroll-spy nav; pricing kinetic pass; auth gateway outcome-first + **GitHub OAuth live in Supabase** (Apple wired but OFF, needs $99/yr account — `config/authProviders.ts` is the per-provider kill switch); route veil page transitions; checkout/billing-success/dashboard restyle. DESIGN.md amended (serif-accent token, proof-band `#F2F1EA` light-band exception, heading LAW). `.AI` suffix dropped everywhere. Full pre-merge detail: [`archive/2026-06-11-funnel-redesign.md`](archive/2026-06-11-funnel-redesign.md).
 
 **This session's verification + conversion pass (CMO-locked, on top of the bundle):**
 
@@ -346,11 +346,11 @@ Five sessions routing the wizard's Scene-1 **Hook** to Kling Omni O1 for morph-d
 
 | Session | Outcome | Handoff |
 |---|---|---|
-| C | Routed hook → Kling O1 on a *guessed* model name; reverted after a doc-check found Omni needs its own proxy + body shape. | [session-c](handoff_2026-05-18-session-c-reverted-omni-discovery.md) |
-| D | Omni proxy + `Kling_O1` routing built (`api/kling/omni-video.ts`); `end_frame` morph hotfixed (`2d943b6`) after a frame-check caught camera-motion-only. | [session-d](handoff_2026-05-19-session-d-shipped-track-b-pending.md) |
-| E | `generateVideoPrompts` Option A split into A-Hook + A-Regular; existing `scene.transitionEffect` signal plumbed through instead of a new classifier (TUNED, `4a82d99`/`31d65f4`). | [session-e](handoff_2026-05-19-session-e-shipped-session-f-pending.md) |
-| F | Effect sweep — 5 hook transition effects graded on Omni; non-morph-family effects down-converted in A-Hook (TUNED, `84d542d`). | [session-f](handoff_2026-05-22-session-f-omni-effect-sweep.md) |
-| G | Dead-first-second investigation — Omni holds `first_frame` static ~1–2s. Proven a **structural Omni limit**: both no-code levers (front-loaded prompt, shorter duration) FAILed empirically. No code shipped. | [session-g](handoff_2026-05-22-session-g-dead-first-second.md) |
+| C | Routed hook → Kling O1 on a *guessed* model name; reverted after a doc-check found Omni needs its own proxy + body shape. | [session-c](archive/2026-05-18-session-c-reverted-omni-discovery.md) |
+| D | Omni proxy + `Kling_O1` routing built (`api/kling/omni-video.ts`); `end_frame` morph hotfixed (`2d943b6`) after a frame-check caught camera-motion-only. | [session-d](archive/2026-05-19-session-d-shipped-track-b-pending.md) |
+| E | `generateVideoPrompts` Option A split into A-Hook + A-Regular; existing `scene.transitionEffect` signal plumbed through instead of a new classifier (TUNED, `4a82d99`/`31d65f4`). | [session-e](archive/2026-05-19-session-e-shipped-session-f-pending.md) |
+| F | Effect sweep — 5 hook transition effects graded on Omni; non-morph-family effects down-converted in A-Hook (TUNED, `84d542d`). | [session-f](archive/2026-05-22-session-f-omni-effect-sweep.md) |
+| G | Dead-first-second investigation — Omni holds `first_frame` static ~1–2s. Proven a **structural Omni limit**: both no-code levers (front-loaded prompt, shorter duration) FAILed empirically. No code shipped. | [session-g](archive/2026-05-22-session-g-dead-first-second.md) |
 
 **Open from the arc:** the dead-first-second fix (post-render head-trim) is parked as [`post_beta_roadmap.md` #9](post_beta_roadmap.md). Session F leftovers still open: VIRAL VFX MENU prune, cross-product validation (effect sweep is coffee-substrate only, n=1), the 10 `tests/unit/geminiService.schemas.test.ts` failures.
 

@@ -33,9 +33,9 @@ This was a continuation of the morning's MrBeast session (see `handoff_2026-05-1
 
 These were confirmed via Explore-agent audits and should NOT be re-investigated:
 
-1. **`VideoPrompt.type` is `'talking' | 'b-roll' | 'cinematic'`** ([types.ts:73-77](../types.ts#L73-L77)) — scene type metadata exists today, no new tagging needed for voice consolidation routing.
+1. **`VideoPrompt.type` is `'talking' | 'b-roll' | 'cinematic'`** ([types.ts:73-77](../../types.ts#L73-L77)) — scene type metadata exists today, no new tagging needed for voice consolidation routing.
 
-2. **MarketMind prefill fills 6 businessInfo fields + offer** ([App.tsx:295-324](../App.tsx#L295-L324)):
+2. **MarketMind prefill fills 6 businessInfo fields + offer** ([App.tsx:295-324](../../App.tsx#L295-L324)):
    - `product` ← `r.subject`
    - `audience` ← `winningAvatar + demographics`
    - `painPoint` ← `r.bleedingNeck`
@@ -44,17 +44,17 @@ These were confirmed via Explore-agent audits and should NOT be re-investigated:
    - `features` ← `r.bigIdea`
    - `clientDetails.offer` ← `r.bigIdea`
 
-3. **OfferOptimizer prefill fills 5 businessInfo fields + offer** via `r.directorPayload` ([App.tsx:326-354](../App.tsx#L326-L354)):
+3. **OfferOptimizer prefill fills 5 businessInfo fields + offer** via `r.directorPayload` ([App.tsx:326-354](../../App.tsx#L326-L354)):
    - `product`, `audience`, `benefit`, `painPoint`, `separator`, `clientDetails.offer`
    - Does NOT fill `features`
 
 4. **Both prefill effects check `wizardPristine`** — if MarketMind fires first, OfferOptimizer's pristine check fails and it silently skips. **Net: when both localStorage entries exist, MarketMind wins.**
 
-5. **Scene image generation uses `productImageUrls[0]` only** ([services/geminiService.ts:1373](../services/geminiService.ts#L1373)) — even after Addendum 3's multi-photo description fix, photo[0] remains the visual anchor for Veo. Addendum 3 made TEXT multi-aware but not multimodal-bytes-aware. Deferred to Phase 5.2.
+5. **Scene image generation uses `productImageUrls[0]` only** ([services/geminiService.ts:1373](../../services/geminiService.ts#L1373)) — even after Addendum 3's multi-photo description fix, photo[0] remains the visual anchor for Veo. Addendum 3 made TEXT multi-aware but not multimodal-bytes-aware. Deferred to Phase 5.2.
 
-6. **MarketResearch is the only flow that uses all uploaded images** ([api/_lib/prompts.ts:224-235](../api/_lib/prompts.ts#L224-L235)) — `buildMarketMindParts` loops over `input.uploadedImages`.
+6. **MarketResearch is the only flow that uses all uploaded images** ([api/_lib/prompts.ts:224-235](../../api/_lib/prompts.ts#L224-L235)) — `buildMarketMindParts` loops over `input.uploadedImages`.
 
-7. **Director AI script generation has a LOGIC LOCK** ([api/_lib/prompts.ts:274](../api/_lib/prompts.ts#L274)) — "Do NOT recite the full SKU/product name verbatim" — protects against verbose product descriptions polluting ad dialogue.
+7. **Director AI script generation has a LOGIC LOCK** ([api/_lib/prompts.ts:274](../../api/_lib/prompts.ts#L274)) — "Do NOT recite the full SKU/product name verbatim" — protects against verbose product descriptions polluting ad dialogue.
 
 ## Pending / Next-Session Priorities
 
@@ -132,7 +132,7 @@ git commit -m "chore(scripts): commit vercel project link for cafe-PC restore"
 git push origin main
 ```
 
-After this one-time setup, [scripts/restore-vercel.ps1](../scripts/restore-vercel.ps1) handles every future cafe-PC reboot.
+After this one-time setup, [scripts/restore-vercel.ps1](../../scripts/restore-vercel.ps1) handles every future cafe-PC reboot.
 
 ### Then deploy + verify on mobile
 
@@ -172,7 +172,7 @@ Paste this into the next conversation's first message:
 Continuing from 2026-05-12 evening session (cozy-flask continuation).
 
 Branch: main HEAD b491cbf (pushed, working tree clean).
-Read FIRST: workflows/handoff_2026-05-12-cozy-flask.md (full session record).
+Read FIRST: workflows/archive/2026-05-12-cozy-flask.md (full session record).
 
 Top-line:
 - Beta-merge SHIPPED this morning (73 commits from combined-preview → main).

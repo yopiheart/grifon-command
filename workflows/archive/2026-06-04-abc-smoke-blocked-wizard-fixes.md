@@ -28,16 +28,16 @@
    - **Veo 429 hourly quota** → app auto-pauses, "auto-resumes in ~58m". Scenes 2,4,7,8 still queued.
 4. **Architectural gotcha (important):** the path to the AI Editor FINAL_RENDER panel is
    GenerateVideo (all 9 videos) → **Voice module / SignalModulator** → **"SEND TO AI EDITOR ↗"**, which
-   is gated on **`allDone`** ([`components/SignalModulator/ScenePipelineTile.tsx:73,338`](../components/SignalModulator/ScenePipelineTile.tsx#L73)).
+   is gated on **`allDone`** ([`components/SignalModulator/ScenePipelineTile.tsx:73,338`](../../components/SignalModulator/ScenePipelineTile.tsx#L73)).
    No partial-batch shortcut — you need **9/9** before the panel unlocks. The dashboard "Edit" tab stays
-   disabled until `onSendToAiEditor` fires (`editorBatch` is null until then — [`App.tsx:1168`](../App.tsx#L1168)).
+   disabled until `onSendToAiEditor` fires (`editorBatch` is null until then — [`App.tsx:1168`](../../App.tsx#L1168)).
 
 ## Two APPROVED wizard fixes (Neil approved both "as written" 2026-06-04) — apply NEXT session
 These touch **TUNED** scene/prompt-gen logic — already greenlit, but re-confirm the diff before editing.
 **They change generated output, so verify by re-driving the wizard (Scene 6 must render b-roll; hook 5s).**
 
 ### Fix A — mouth-obstruction → b-roll (kills the Scene-6 drinking/talking morph)
-- **Where:** [`services/geminiService.ts`](../services/geminiService.ts) ~line 2111, inside `generateVideoPrompts`
+- **Where:** [`services/geminiService.ts`](../../services/geminiService.ts) ~line 2111, inside `generateVideoPrompts`
   **TYPE ASSIGNMENT RULES** (client-side classifier; NOT a crown-jewel server flow — leak check stays 0).
 - **Add a first-priority bullet** right after `- SCENE 2+: Decide by lens engagement + script delivery context.`:
   ```
@@ -51,7 +51,7 @@ These touch **TUNED** scene/prompt-gen logic — already greenlit, but re-confir
   "mid-sip"/"drinking", never lip-motion language, so the rule must match *those* words.
 
 ### Fix B — cap the hook to 5s (so the morph completes; #10 trim can't chop it)
-- **Where:** [`components/GenerateVideo/index.tsx`](../components/GenerateVideo/index.tsx) — the
+- **Where:** [`components/GenerateVideo/index.tsx`](../../components/GenerateVideo/index.tsx) — the
   Render-All job builder sets each `RenderJob.duration` from `suggestDurationForScript(...)`
   (per-scene; suggestion logic at ~L209-214). The hook always routes to **Kling_O1** (`[5,10]` valid).
 - **Change:** force `sceneIdx === 0` → **5s** (deterministic cap, NOT the tuned `words/2.5+0.8` heuristic):

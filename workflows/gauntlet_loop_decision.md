@@ -110,6 +110,22 @@ not reality, and it is least like reality precisely when the call is close.
    Do not trust *"now as good as the reference"* — that verdict is a coin flip
    by construction. A human eyeball closes the loop, or a market does.
 
+9. **When the score stops moving, read the trace — do not run another round.**
+   Two consecutive rounds that act on the critic's stated gap and do not move
+   the number is a STOP (see the round 1→3 table below: 82 · 82 · 82/83). At that
+   point the useful artifact is no longer the score, it is the *trace* — the
+   record of what was changed, what the critic said before and after, and where
+   the two diverge. Grade the instrument, not the output. Concretely: diff the
+   critic's stated cause across rounds; if the cause changes every round while
+   the score does not, the field has stopped being causal and a fourth round
+   buys nothing. **This generalizes past the Gauntlet** — it applies to any
+   scored loop here, including `gemini-eval`, `brand-check`, and the
+   [executor ledger](../tools/executor_ledger.mjs), whose aggregate table will
+   happily report a rate over a 2-commit lane. An aggregate that cannot show you
+   the point of divergence is not measuring; it is reassuring.
+   *Source: Ramp agent-engineering brief, evaluated 2026-08-07 — see the
+   evaluation record in [`post_beta_roadmap.md`](post_beta_roadmap.md) #27.*
+
 ## First real run — Kuya Marvin static cards vs the swipe file (2026-08-06)
 
 Subject: `clients/oceanides/kuya-marvin/organic/cards/post3-senyales-card.png`

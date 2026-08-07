@@ -1,9 +1,9 @@
 # Handoff — 2026-05-22 — Session F (Omni Hook-Effect Sweep — Scope β Validation)
 
 > **Status:** SHIPPED — superseded by Session G
-> ([handoff_2026-05-22-session-g-dead-first-second.md](handoff_2026-05-22-session-g-dead-first-second.md)).
+> ([handoff_2026-05-22-session-g-dead-first-second.md](2026-05-22-session-g-dead-first-second.md)).
 > Predecessor:
-> [handoff_2026-05-19-session-e-shipped-session-f-pending.md](handoff_2026-05-19-session-e-shipped-session-f-pending.md).
+> [handoff_2026-05-19-session-e-shipped-session-f-pending.md](2026-05-19-session-e-shipped-session-f-pending.md).
 > Mirrors the approved plan at
 > `C:\Users\Administrator\.claude\plans\read-in-order-workflows-handoff-2026-05-unified-emerson.md`
 > (defreezer-disposable — this workflow file is the durable copy).
@@ -14,9 +14,9 @@
 
 Session E (commits `31d65f4` + `4a82d99`) shipped the hook video-prompt audit and
 Gate-2-validated it on **exactly one** effect — Character Morph. The storyboard
-generator's VIRAL VFX MENU ([api/_lib/prompts.ts:773-780](../api/_lib/prompts.ts)) can pick
+generator's VIRAL VFX MENU ([api/_lib/prompts.ts:773-780](../../api/_lib/prompts.ts)) can pick
 5 other effects per Scene 1; `generateVideoPrompts` Option A-Hook
-([services/geminiService.ts:1673-1680](../services/geminiService.ts)) has prose for them but
+([services/geminiService.ts:1673-1680](../../services/geminiService.ts)) has prose for them but
 **zero live-render proof**. Session F renders each of the 5 untested effects on Kling Omni
 against one fixed substrate and grades them on **per-effect rubrics** — then surgically fixes
 or documents whatever fails.
@@ -40,8 +40,8 @@ them; produce an effect↔product-fit map; leave substrate + findings durable in
 
 ## Test substrate
 
-Committed `825205d` under [assets/session-f/](assets/session-f/) — see
-[substrate.md](assets/session-f/substrate.md). One fixed pair: `substrate-start-beans.jpg`
+Committed `825205d` under [assets/session-f/](../assets/session-f/) — see
+[substrate.md](../assets/session-f/substrate.md). One fixed pair: `substrate-start-beans.jpg`
 (Omni `first_frame`) → `substrate-end-latte.jpg` (`end_frame`). The only variable across all
 renders is the `transitionEffect`.
 
@@ -121,7 +121,7 @@ Effect → Explosion Reveal → Chaos Burst.**
 | Invisible Effect | fashion, food prep, UGC/lifestyle, services-in-context | — | capability risk on 2-frame API |
 
 **Crown-jewel finding (flagged, not fixed):** the VIRAL VFX MENU
-([api/_lib/prompts.ts:773-780](../api/_lib/prompts.ts)) says "Select the BEST VFX style" with
+([api/_lib/prompts.ts:773-780](../../api/_lib/prompts.ts)) says "Select the BEST VFX style" with
 **zero product-category guardrail**. A future crown-jewel session should gate high-energy
 effects (Explosion, Chaos) to impulse/youth/entertainment categories only. Session F documents
 this; it does not edit the menu.
@@ -140,7 +140,7 @@ this; it does not edit the menu.
 | **Teleport / Snap Cut** | ❌ FAIL | Omni interpolated a gradual morph — no instant cut. Two-frame interpolation cannot "snap." |
 | **Invisible Effect** | ❌ FAIL (Gate 1) | No clause, no two-frame interpretation — Flash degraded it to morph prose. Not rendered. |
 
-Gate-2 frame strips committed under [assets/session-f/](assets/session-f/) (`gate2-*.jpeg`).
+Gate-2 frame strips committed under [assets/session-f/](../assets/session-f/) (`gate2-*.jpeg`).
 
 ### Two cross-cutting findings
 
@@ -165,7 +165,7 @@ prompt-coherence fix + intentional degradation — not a dramatic visual change 
 regardless). Option A-Regular untouched.
 
 **Crown-jewel finding (flagged, NOT fixed):** the VIRAL VFX MENU at
-[api/_lib/prompts.ts:773-780](../api/_lib/prompts.ts) offers Snap Cut, Invisible Effect, and
+[api/_lib/prompts.ts:773-780](../../api/_lib/prompts.ts) offers Snap Cut, Invisible Effect, and
 Chaos Burst as hook options Kling Omni cannot deliver, with no product-category guardrail. A
 future crown-jewel session should prune those three from the Omni-hook menu (or gate them) and
 add the high-energy→impulse-category gate from the effect↔product-fit map above.
@@ -192,7 +192,7 @@ use `grill-me` (an investigation that may yield a TUNED Option A-Hook edit — m
    ("transformation begins on frame 1", a speed-ramp directive) or an Omni parameter can pull
    the transition earlier. Cheap to probe via the Session F Gate 1/2 harness pattern
    (`.tmp/sf-gate1-textdiff.mjs` rebuilds quickly; substrate is committed under
-   [assets/session-f/](assets/session-f/)). Outcome is either a TUNED Option A-Hook tweak
+   [assets/session-f/](../assets/session-f/)). Outcome is either a TUNED Option A-Hook tweak
    (per-edit Neil approval) or a documented Omni pacing limit. Grill checkpoint: "if we ship
    this, does the hook actually move in its first second?"
 2. **Crown-jewel VIRAL VFX MENU prune (deferred).** Drop/gate Snap Cut + Invisible Effect +

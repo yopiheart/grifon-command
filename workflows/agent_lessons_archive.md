@@ -53,7 +53,7 @@ Entries reflect what was true when written — several are superseded by later e
 
 **What went wrong:** Neil pointed me at https://kling.ai/document-api/apiReference/model/OmniVideo. Three discoveries — every one of which alone would have broken the wiring: (1) the actual Omni model name is `kling-video-o1` or `kling-v3-omni`, not `kling-v1-6` — that string doesn't exist anywhere in Kling's enums. (2) Omni lives at `POST /v1/videos/omni-video`, NOT the `/v1/videos/image2video` endpoint our existing proxy hardcodes — routing Omni model names through that proxy 4xx's every call. (3) Omni's body shape is fundamentally different: `image_list: [{image_url, type: 'first_frame'|'end_frame'}]` array of tagged objects, not the flat `image` + `image_tail` strings image2video uses. Recovery cost was a `git revert` (clean, no data lost) but the routing change has to be re-done from scratch as a new proxy with the proper body shape.
 
-**Lesson:** When adding a new model/variant to an existing API surface, "fetch the canonical docs" is a load-bearing prerequisite step, not a nice-to-have. Treat the assumption "Variant X is just like Variant Y with a different name" as false until proven true by the docs. For bot-protected docs sites (Kling's docs returned HTTP 446 to WebFetch), use Playwright in a real browser to bypass — that takes 60 seconds and is much cheaper than building the wrong proxy. Concrete rule for this repo: any new entry in `VIDEO_MODEL_ROUTING` that targets a `provider: 'kling'` model name we haven't directly tested via smoke must include a doc-fetch verification step BEFORE writing the dispatcher branch. Same rule generalizes — any new Veo model variant, ElevenLabs voice mode, Gemini SDK surface, PayMongo product type: read the actual docs page before assuming surface-level similarity. Captured in [workflows/handoff_2026-05-18-session-c-reverted-omni-discovery.md](workflows/handoff_2026-05-18-session-c-reverted-omni-discovery.md) for the Session D follow-up.
+**Lesson:** When adding a new model/variant to an existing API surface, "fetch the canonical docs" is a load-bearing prerequisite step, not a nice-to-have. Treat the assumption "Variant X is just like Variant Y with a different name" as false until proven true by the docs. For bot-protected docs sites (Kling's docs returned HTTP 446 to WebFetch), use Playwright in a real browser to bypass — that takes 60 seconds and is much cheaper than building the wrong proxy. Concrete rule for this repo: any new entry in `VIDEO_MODEL_ROUTING` that targets a `provider: 'kling'` model name we haven't directly tested via smoke must include a doc-fetch verification step BEFORE writing the dispatcher branch. Same rule generalizes — any new Veo model variant, ElevenLabs voice mode, Gemini SDK surface, PayMongo product type: read the actual docs page before assuming surface-level similarity. Captured in [workflows/archive/2026-05-18-session-c-reverted-omni-discovery.md](workflows/archive/2026-05-18-session-c-reverted-omni-discovery.md) for the Session D follow-up.
 
 ### 2026-05-18 — HTTP 429 can mean TWO different things from one upstream; inspect the envelope, not just the status code
 
@@ -345,7 +345,7 @@ expression to a useEffect that hydrates transient React state, ask:
 filter falsely match an entry from a different wizard at the same index?"*
 If yes, add an identity guard (prompt text, batchId, wizardSessionId, or
 fingerprint of the seed itself). Captured in
-[workflows/handoff_2026-05-26-session-m-bug-catalog-halt.md](workflows/handoff_2026-05-26-session-m-bug-catalog-halt.md)
+[workflows/archive/2026-05-26-session-m-bug-catalog-halt.md](workflows/archive/2026-05-26-session-m-bug-catalog-halt.md)
 as the headline Session M finding.
 
 **Pattern generalization for future work:** Same caution will apply to (a)
@@ -419,7 +419,7 @@ text and flag any discrepancy from the prompt-named brand without auto-
 correcting. Pass 2 caught "Currology" with a double-r on the same Curology
 clip Pass 1 missed — a real text-hallucination finding.
 
-Captured in [workflows/handoff_2026-05-26-session-n-tuned-edits-shipped.md](workflows/handoff_2026-05-26-session-n-tuned-edits-shipped.md)
+Captured in [workflows/archive/2026-05-26-session-n-tuned-edits-shipped.md](workflows/archive/2026-05-26-session-n-tuned-edits-shipped.md)
 under "NEW: Grifon Director AI Video Auditor Gem".
 
 ### 2026-05-26 — Hand-transcribed inline SVGs and icon-text rhythm must be eyeballed, not build-verified

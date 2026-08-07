@@ -14,6 +14,9 @@ Markdown SOPs that tell the agent *what* to do and *how*. Each workflow:
 - [app_audit.md](app_audit.md) — produce a prioritized punch list of what's broken/stubbed/risky
 - [fix_broken_feature.md](fix_broken_feature.md) — SOP for fixing one item from the punch list
 - [infra_setup.md](infra_setup.md) — stand up Supabase, PayMongo, Google OAuth, domain, hosting
+- [archive/](archive/README.md) — finished dated session handoffs. **History, not resume
+  paths.** Read [`NOW.md`](../NOW.md) for where work stopped; the archive README carries the
+  rule for when a handoff moves here.
 
 ## How workflows relate
 

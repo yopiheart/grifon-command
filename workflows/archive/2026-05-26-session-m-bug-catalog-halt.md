@@ -24,10 +24,10 @@
 
 Single commit, bundled because Bug 12 is the only code-change and everything else is supporting documentation / infra.
 
-- **[components/GenerateVideo/index.tsx:295-327](../components/GenerateVideo/index.tsx#L295-L327)** — Bug 12 patch. Rehydration filter now requires `l.sceneIdx === i && l.prompt === seed.prompt` (was sceneIdx alone). 1-line behavioural change at line 302; comment block at 290-296 updated to reflect the why. Non-TUNED, mechanical state-matcher fix.
-- **[scripts/snapshot-wizard-session.ps1](../scripts/snapshot-wizard-session.ps1)** — NEW. Two-phase clipboard-assisted localStorage capture for reboot resilience.
-- **[scripts/restore-wizard-session.ps1](../scripts/restore-wizard-session.ps1)** — NEW. Reads a snapshot, emits a re-injection JS snippet to clipboard.
-- **[agent_lessons.md](../agent_lessons.md)** — 3 new entries dated 2026-05-26:
+- **[components/GenerateVideo/index.tsx:295-327](../../components/GenerateVideo/index.tsx#L295-L327)** — Bug 12 patch. Rehydration filter now requires `l.sceneIdx === i && l.prompt === seed.prompt` (was sceneIdx alone). 1-line behavioural change at line 302; comment block at 290-296 updated to reflect the why. Non-TUNED, mechanical state-matcher fix.
+- **[scripts/snapshot-wizard-session.ps1](../../scripts/snapshot-wizard-session.ps1)** — NEW. Two-phase clipboard-assisted localStorage capture for reboot resilience.
+- **[scripts/restore-wizard-session.ps1](../../scripts/restore-wizard-session.ps1)** — NEW. Reads a snapshot, emits a re-injection JS snippet to clipboard.
+- **[agent_lessons.md](../../agent_lessons.md)** — 3 new entries dated 2026-05-26:
   1. Corrected Director AI pre-flight order (hero-with-label FIRST → derive brand → MarketMind)
   2. NEW Rule: watch every rendered video before Signal Modulator
   3. Bug 12 lesson + cross-session-binding pattern generalization
@@ -56,8 +56,8 @@ Numbered consecutively with prior sessions. Status legend:
 | 15 | ⏸ TUNED | api/_lib/prompts.ts storyboard generator | Storyboard narrative defaults to "applying product to her hand" for face-care products (moisturizer/serum/cleanser/sunscreen/mask). Scene 6 rendered the Curology moisturizer being pumped onto the HAND, not the face. For Filipino skincare market this materially hurts ad credibility — viewer needs to see the product applied to face for "this is what it does to MY face" mapping. Proposed rule: face-care products MUST show face application; hand-only reserved for hand creams / sanitizers / oils explicitly tested on hands. |
 
 **Carry-forwards from prior sessions still pending:**
-- **Bug 7** ⏸ Code-correct, in-vivo deferred. Fix at [services/geminiService.ts:1347-1356](../services/geminiService.ts#L1347-L1356) converts audio blob URLs to base64 `inlineData`. The change is deterministic — Gemini File API definitively accepts inlineData (not URI-checked). Defer in-vivo confirmation to Session O when clean videos are available; validating transport on slop is verification theatre.
-- **Fix 2** ⏸ Session H — strip audio/SFX directives from `generateVideoPrompts` + daylight→like typo. Spec in [workflows/handoff_2026-05-22-session-h-render-all-verified-and-fixes.md](handoff_2026-05-22-session-h-render-all-verified-and-fixes.md).
+- **Bug 7** ⏸ Code-correct, in-vivo deferred. Fix at [services/geminiService.ts:1347-1356](../../services/geminiService.ts#L1347-L1356) converts audio blob URLs to base64 `inlineData`. The change is deterministic — Gemini File API definitively accepts inlineData (not URI-checked). Defer in-vivo confirmation to Session O when clean videos are available; validating transport on slop is verification theatre.
+- **Fix 2** ⏸ Session H — strip audio/SFX directives from `generateVideoPrompts` + daylight→like typo. Spec in [workflows/archive/2026-05-22-session-h-render-all-verified-and-fixes.md](2026-05-22-session-h-render-all-verified-and-fixes.md).
 - **Bug 5 schema** ⏸ Session L — tighten `api/_lib/prompts.ts:100` demographics-as-string enforcement (defensive safeStr catches the symptom; underlying schema laxity remains).
 
 ---
@@ -90,7 +90,7 @@ Full signed URLs (with tokens, for direct browser inspection) live in the Sessio
 
 ---
 
-## Reference: [Gemini 3.5 flash video audit.md](../Gemini%203.5%20flash%20video%20audit.md)
+## Reference: [Gemini 3.5 flash video audit.md](../../Gemini%203.5%20flash%20video%20audit.md)
 
 Already in the repo root. Part 1 is a per-scene glitch enumeration that maps 1:1 with the Bug 8/9/11/13/14/15 catalog above. **Part 2 is the load-bearing reading for Session N** — it proposes a 4-layer SaaS-backend architecture to fix the systemic failures permanently:
 
@@ -112,9 +112,9 @@ Open a focused TUNED-review session with Neil + agent. Sequence:
 
 1. **Prereqs** (~5 min): re-read this handoff + Gemini 3.5 audit Part 2. Open the 7 video URLs in browser tabs so Neil can re-watch any scene as needed during discussion.
 
-2. **Bug 9 grep** (~5 min): grep [api/_lib/prompts.ts](../api/_lib/prompts.ts) for any reference to "talking", "b-roll", "alternation", "consecutive". If rule absent, propose explicit addition. If present, identify why Gemini violated it — likely a prompt strength issue.
+2. **Bug 9 grep** (~5 min): grep [api/_lib/prompts.ts](../../api/_lib/prompts.ts) for any reference to "talking", "b-roll", "alternation", "consecutive". If rule absent, propose explicit addition. If present, identify why Gemini violated it — likely a prompt strength issue.
 
-3. **Bug 14 review** (~15 min): walk `suggestDurationForScript` in [services/geminiService.ts](../services/geminiService.ts). The function takes a scriptLine and returns a duration. Current behavior: 4 scenes overshoot, 1 undershoots. Hypothesis: words-per-second multiplier too generous + missing trailing-buffer. Neil signs off on the new multiplier + buffer values line by line.
+3. **Bug 14 review** (~15 min): walk `suggestDurationForScript` in [services/geminiService.ts](../../services/geminiService.ts). The function takes a scriptLine and returns a duration. Current behavior: 4 scenes overshoot, 1 undershoots. Hypothesis: words-per-second multiplier too generous + missing trailing-buffer. Neil signs off on the new multiplier + buffer values line by line.
 
 4. **Bug 15 review** (~10 min): add face-application rule to the storyboard generator prompt. Specific TUNED text addition; Neil signs off on exact wording.
 
@@ -148,7 +148,7 @@ Total Session O cost: ~$2.20 if all 7 scenes pass on first render. Time: ~30-45 
 
 ## Operational notes for Session N
 
-- **Cafe PC defreezer** persists. Use the new [scripts/snapshot-wizard-session.ps1](../scripts/snapshot-wizard-session.ps1) BEFORE shutting down each session if there's wizard state worth preserving. Tested round-trip in Session M (snapshot writes to `.tmp/grifon-wizard-snapshot-*.json`, restore emits a clipboard-paste snippet).
+- **Cafe PC defreezer** persists. Use the new [scripts/snapshot-wizard-session.ps1](../../scripts/snapshot-wizard-session.ps1) BEFORE shutting down each session if there's wizard state worth preserving. Tested round-trip in Session M (snapshot writes to `.tmp/grifon-wizard-snapshot-*.json`, restore emits a clipboard-paste snippet).
 - **`.tmp/` is gitignored** (confirmed). Snapshot files won't pollute commits.
 - **Don't write to `.tmp/`** while `npm run dev` is running — the script's writability probe handles this and falls back to `$env:TEMP` automatically.
 - **Playwright MCP restricts file uploads** to the repo root or `.playwright-mcp/`. If a future session needs a hero image, copy it into `.playwright-mcp/` first (also gitignored). Session M's working hero is at `.playwright-mcp/grifon-hero-curology-moisturizer.jpg` if reusable.
@@ -174,9 +174,9 @@ Total Session O cost: ~$2.20 if all 7 scenes pass on first render. Time: ~30-45 
 ## First files to read in Session N
 
 1. **This handoff.**
-2. **[Gemini 3.5 flash video audit.md](../Gemini%203.5%20flash%20video%20audit.md)** — particularly Part 2.
-3. **[agent_lessons.md](../agent_lessons.md)** — the 3 new 2026-05-26 entries.
-4. **[services/CLAUDE.md](../services/CLAUDE.md)** — the TUNED guardrails (line-by-line review process).
+2. **[Gemini 3.5 flash video audit.md](../../Gemini%203.5%20flash%20video%20audit.md)** — particularly Part 2.
+3. **[agent_lessons.md](../../agent_lessons.md)** — the 3 new 2026-05-26 entries.
+4. **[services/CLAUDE.md](../../services/CLAUDE.md)** — the TUNED guardrails (line-by-line review process).
 5. `git show <session-m-commit>` — see what landed today.
 
 Open Bug 9 grep first (it's the cheapest disposition — either the rule exists or it doesn't), then proceed through Bug 14 → 15 → 8 → Gemini 3.5 4-layer architecture.

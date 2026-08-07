@@ -86,9 +86,9 @@ constants; MediaPipe face-detect (talking-only, graceful) on jsdelivr CDN; same 
 **AI-auto is the default + a LIGHT override (fast-follow), NOT a sound studio.** How it works
 today (ships as-is, merge does not wait on the override): SFX are AI-picked in the EDL
 (`sfxCues[].sfxId` from the 10-name `SfxBankId` bank + `anchorSec`), shown read-only in the editor
-([EditVideo.tsx:482](../components/EditVideo.tsx)); the music bed is code-derived from the AI's
+([EditVideo.tsx:482](../../components/EditVideo.tsx)); the music bed is code-derived from the AI's
 `edl.meta.scriptStyleDetected` → `mrbeast|temu|testimonial` (default mrbeast,
-[EditVideo.tsx:215](../components/EditVideo.tsx)). **Fast-follow slice (post/peri-merge, small,
+[EditVideo.tsx:215](../../components/EditVideo.tsx)). **Fast-follow slice (post/peri-merge, small,
 touches `EditVideo.tsx` → needs a plan+goal):** a music-bed dropdown (**Auto** ✦ / MrBeast / Temu /
 Testimonial / None, Auto preselected) + a **master SFX on/off** toggle + optional **per-cue mute**
 on the cues already listed. Deliberately NOT: hand-placing SFX or a library browser (different
@@ -111,4 +111,4 @@ can highlight the true power-word instead of the whole title, if desired. v1 box
 ## Other launch pendings (unchanged from the PR#9 handoff)
 TASK 2 One-Click Autopilot; hook scene-1 Kling transition creative pass; Pro video_ads cap parity +
 useSubscription status muddle + deploy-enabled gate (need Neil's product calls). See
-`workflows/handoff_2026-06-08-pr9-merged-launch-pendings.md`.
+`workflows/archive/2026-06-08-pr9-merged-launch-pendings.md`.

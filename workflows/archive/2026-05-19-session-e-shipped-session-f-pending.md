@@ -1,7 +1,7 @@
 # Handoff — 2026-05-19 evening — Session E shipped, Session F pending
 
 > **For the next session.** Paste this whole file in as your briefing. Then
-> read in order: this file → `workflows/handoff_2026-05-19-session-e-hook-audit.md` (the Session E plan + full log) → `agent_lessons.md` → `CLAUDE.md` →
+> read in order: this file → `workflows/archive/2026-05-19-session-e-hook-audit.md` (the Session E plan + full log) → `agent_lessons.md` → `CLAUDE.md` →
 > `UBIQUITOUS_LANGUAGE.md`. Then enter plan mode for Session F
 > as described in the "P0 next" section below.
 
@@ -28,7 +28,7 @@
 | `2d72a56` | docs(workflows): log Session E Commits 2a + 2b shipped; Gate 2 queued | ✅ pushed |
 | `3a33887` | docs(session-e): close-out — Gate 2 PASS, audit shipped, lesson recorded | ✅ pushed |
 
-`31d65f4` adds an optional `TransitionEffect: <value>` line to the storyboardText fed to Flash, only when `scene.transitionEffect` is set (Scene 1 only per the storyboard generator's schema at [api/_lib/prompts.ts:822](../api/_lib/prompts.ts)). `4a82d99` splits the Option A b-roll rules into Option A-Hook (Scene 1, drops morphing/melting/deformation from negative tail, opens with anchor transformation, uses TransitionEffect verbatim) and Option A-Regular (Scene 2+, behaviorally identical to pre-audit Option A).
+`31d65f4` adds an optional `TransitionEffect: <value>` line to the storyboardText fed to Flash, only when `scene.transitionEffect` is set (Scene 1 only per the storyboard generator's schema at [api/_lib/prompts.ts:822](../../api/_lib/prompts.ts)). `4a82d99` splits the Option A b-roll rules into Option A-Hook (Scene 1, drops morphing/melting/deformation from negative tail, opens with anchor transformation, uses TransitionEffect verbatim) and Option A-Regular (Scene 2+, behaviorally identical to pre-audit Option A).
 
 `3a33887` added a new `agent_lessons.md` entry: *"Audit upstream before designing new downstream logic"* — the load-bearing finding from Session E was that the storyboard generator already classifies transitions via the 6-effect VIRAL VFX MENU, but `generateVideoPrompts` was dropping that signal. The audit just plumbed the existing signal through; the redesign was unnecessary.
 
@@ -85,18 +85,18 @@ The current Option A-Hook block tells Flash to "translate the TransitionEffect l
 
 | File | Notes |
 |---|---|
-| [services/geminiService.ts:1671-1699](../services/geminiService.ts) | Option A-Hook + A-Regular blocks. **TUNED — every prompt edit needs per-edit Neil approval.** Citation Rule 2 (every clause cites its source). |
-| [api/_lib/prompts.ts:773-823](../api/_lib/prompts.ts) | Storyboard generator's VIRAL VFX MENU + Scene 1 schema. **Crown-jewel, hard rule: do NOT edit.** Read-only reference for which effects Flash picks. |
-| [services/geminiService.ts:539-562](../services/geminiService.ts) | Omni dispatcher. Already correct, don't touch. |
+| [services/geminiService.ts:1671-1699](../../services/geminiService.ts) | Option A-Hook + A-Regular blocks. **TUNED — every prompt edit needs per-edit Neil approval.** Citation Rule 2 (every clause cites its source). |
+| [api/_lib/prompts.ts:773-823](../../api/_lib/prompts.ts) | Storyboard generator's VIRAL VFX MENU + Scene 1 schema. **Crown-jewel, hard rule: do NOT edit.** Read-only reference for which effects Flash picks. |
+| [services/geminiService.ts:539-562](../../services/geminiService.ts) | Omni dispatcher. Already correct, don't touch. |
 | `.tmp/gate1-textdiff.mjs` (if not wiped by defreezer) | The Gate 1 harness pattern. Rebuilds quickly if wiped — see Session E plan/log for the structure. |
-| [workflows/handoff_2026-05-19-session-e-hook-audit.md](handoff_2026-05-19-session-e-hook-audit.md) | The Session E plan + full execution log. Read for context on what's been validated and why. |
-| [agent_lessons.md](../agent_lessons.md) entries 2026-05-19 (×3) | Session D + Session E lessons — deferred-essential-piece antipattern, V3-formula-portability, plumb-upstream-before-redesigning. |
+| [workflows/archive/2026-05-19-session-e-hook-audit.md](2026-05-19-session-e-hook-audit.md) | The Session E plan + full execution log. Read for context on what's been validated and why. |
+| [agent_lessons.md](../../agent_lessons.md) entries 2026-05-19 (×3) | Session D + Session E lessons — deferred-essential-piece antipattern, V3-formula-portability, plumb-upstream-before-redesigning. |
 
 ## DO NOT (Session F)
 
-- **Don't touch `api/_lib/prompts.ts`** beyond read-only inspection (crown-jewel rule, [CLAUDE.md](../CLAUDE.md)).
+- **Don't touch `api/_lib/prompts.ts`** beyond read-only inspection (crown-jewel rule, [CLAUDE.md](../../CLAUDE.md)).
 - **Don't change Option A-Regular** — its behavior is preserved Scene 2+ b-roll, Neil's two-year-tuned formula. The audit explicitly protected it.
-- **Don't bundle TUNED prompt edits with code refactors** ([agent_lessons.md](../agent_lessons.md) 2026-05-09).
+- **Don't bundle TUNED prompt edits with code refactors** ([agent_lessons.md](../../agent_lessons.md) 2026-05-09).
 - **Don't ship explicit per-effect clauses** without Gate 1 text-diff confirming they improve prose AND Gate 2 live render confirming they improve frames. The Session E gate pattern is the established procedure.
 - **Don't speculatively expand to non-coffee product types** until per-effect generalization is established. One axis of variance at a time.
 - **Don't burn Kling balance speculatively** — Session F budget is $1.25 (5 effects × $0.25). Total Sessions A-F aggregate would be ~$3.75 of $10.
@@ -105,14 +105,14 @@ The current Option A-Hook block tells Flash to "translate the TransitionEffect l
 
 ## What's already working — DON'T touch
 
-- **Omni dispatcher** at [services/geminiService.ts:539-562](../services/geminiService.ts) (Session D + hotfix `2d943b6`).
-- **`autoRouteModelForType`** at [components/GenerateVideo/RenderAllRunner.ts:39-49](../components/GenerateVideo/RenderAllRunner.ts) — scene 0 b-roll → Kling_O1.
-- **Storyboard generator's HOOK LOGIC + VIRAL VFX MENU** at [api/_lib/prompts.ts:769-780](../api/_lib/prompts.ts) — crown-jewel, picks the right effect per Scene 1.
-- **Option A-Regular** at [services/geminiService.ts:1681-1699](../services/geminiService.ts) — Scene 2+ b-roll, Neil's tuned formula intact.
-- **Option A-Hook with the camera-motion fix** at [services/geminiService.ts:1671-1679](../services/geminiService.ts) — Scene 1 hook, anchor-bridging discipline + mandatory camera motion + hook-scoped negative tail + TransitionEffect translation.
+- **Omni dispatcher** at [services/geminiService.ts:539-562](../../services/geminiService.ts) (Session D + hotfix `2d943b6`).
+- **`autoRouteModelForType`** at [components/GenerateVideo/RenderAllRunner.ts:39-49](../../components/GenerateVideo/RenderAllRunner.ts) — scene 0 b-roll → Kling_O1.
+- **Storyboard generator's HOOK LOGIC + VIRAL VFX MENU** at [api/_lib/prompts.ts:769-780](../../api/_lib/prompts.ts) — crown-jewel, picks the right effect per Scene 1.
+- **Option A-Regular** at [services/geminiService.ts:1681-1699](../../services/geminiService.ts) — Scene 2+ b-roll, Neil's tuned formula intact.
+- **Option A-Hook with the camera-motion fix** at [services/geminiService.ts:1671-1679](../../services/geminiService.ts) — Scene 1 hook, anchor-bridging discipline + mandatory camera motion + hook-scoped negative tail + TransitionEffect translation.
 - **JWT refresh** in Kling proxies (Session B).
-- **F2 morph-fallback** at [services/geminiService.ts:444-456](../services/geminiService.ts) — Veo morph fallback for talking-scene edge cases.
-- **Crown-jewel prompt registry** at [api/_lib/prompts.ts](../api/_lib/prompts.ts) — TUNED, server-side only.
+- **F2 morph-fallback** at [services/geminiService.ts:444-456](../../services/geminiService.ts) — Veo morph fallback for talking-scene edge cases.
+- **Crown-jewel prompt registry** at [api/_lib/prompts.ts](../../api/_lib/prompts.ts) — TUNED, server-side only.
 
 ## Alternative P0 priorities (if Neil wants something else)
 
@@ -122,7 +122,7 @@ If Neil prefers a different next step over Scope β validation, alternatives in 
 - **Alt 2 — RENDER ALL mixed-scene flow validation.** Render a full ad (1 hook Omni + 3 b-roll V3 + 1 talking Veo) via the RENDER ALL queue. Confirms multi-engine handoff still works with the new behavior. ~$1.00. Carried forward from Session D, never validated.
 - **Alt 3 — Fix the 10 pre-existing test failures.** `tests/unit/geminiService.schemas.test.ts` expects prompts in fetch body (pre-crown-jewel pattern). Rewrite to test against the server-side prompts via a different mechanism. Cleans the build-gate signal. ~1-3 hours, no Kling spend.
 - **Alt 4 — Migrate `generateVideoPrompts` to crown-jewel registry.** Move Option A-Hook + A-Regular + B + C blocks to `api/_lib/prompts.ts`, replace client-side function with thin proxy wrapper. Big architectural workstream — likely needs its own grill-me + plan-mode session. Defer until customer-visible reason.
-- **Alt 5 — Continue post-beta roadmap.** Open [workflows/post_beta_roadmap.md](post_beta_roadmap.md) for endorsed-but-deferred ideas (nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier). Strategic moves, not tactical.
+- **Alt 5 — Continue post-beta roadmap.** Open [workflows/post_beta_roadmap.md](../post_beta_roadmap.md) for endorsed-but-deferred ideas (nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier). Strategic moves, not tactical.
 
 ## Cafe-PC reboot reminders
 
@@ -139,6 +139,6 @@ If Neil prefers a different next step over Scope β validation, alternatives in 
 1. `cd c:\Users\Administrator\Desktop\grifon-command`
 2. `git log -5 --oneline` — confirm HEAD is `3a33887` or further.
 3. Open a fresh Claude session, paste this whole handoff doc as the opening message.
-4. Tell Claude: *"Read in order: this file → `workflows/handoff_2026-05-19-session-e-hook-audit.md` → `agent_lessons.md` → `CLAUDE.md` → `UBIQUITOUS_LANGUAGE.md`. Then enter plan mode for Session F. The P0 is empirical Scope β validation (render the 5 untested TransitionEffect values on Omni). Use `grill-me` for the per-effect test design — multi-decision plan needs interview-style alignment."*
+4. Tell Claude: *"Read in order: this file → `workflows/archive/2026-05-19-session-e-hook-audit.md` → `agent_lessons.md` → `CLAUDE.md` → `UBIQUITOUS_LANGUAGE.md`. Then enter plan mode for Session F. The P0 is empirical Scope β validation (render the 5 untested TransitionEffect values on Omni). Use `grill-me` for the per-effect test design — multi-decision plan needs interview-style alignment."*
 5. Confirm Kling balance (~$8.00 expected).
 6. Approve the plan, approve the goal, then execute.

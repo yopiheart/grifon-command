@@ -94,7 +94,7 @@ pre-launch render-quality fixes. #3 (editor trim) is verification, not a build.
 Continuing GRIFON COMMAND launch-prep. Last session = 2026-05-29 (Ninja Blast smoke + 2 fixes).
 
 READ FIRST, in this order:
-1. workflows/handoff_2026-05-29-ninja-smoke-hookfix-uigrid.md  ← full context + backlog
+1. workflows/archive/2026-05-29-ninja-smoke-hookfix-uigrid.md  ← full context + backlog
 2. CLAUDE.md (Plan→Goal pipeline, TUNED rules, cafe-PC defreezer)
 3. agent_lessons.md (Director AI pre-flight: hero-FIRST 2026-05-24 + 2026-05-26)
 4. services/CLAUDE.md + api/CLAUDE.md (TUNED-file rules)

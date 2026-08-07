@@ -24,16 +24,16 @@
 
 ### Files touched in e392e66
 
-- **[services/phoneticNormalizer.ts](../services/phoneticNormalizer.ts)** — NEW. 5 Taglish→phonetic mappings; `normalizeTaglish(text)` export.
-- **[services/geminiService.ts](../services/geminiService.ts)** — 4 edits:
-  - Bug 14 buffer revert + comment block at [:467-475](../services/geminiService.ts#L467-L475) (`0.3 → 0.8`, replaces 2026-05-11 MrBeast tightening that broke on Taglish skincare).
-  - Layer 1 import at [:6](../services/geminiService.ts#L6) (`import { normalizeTaglish } from './phoneticNormalizer';`).
-  - Layer 1 integration at [:2031](../services/geminiService.ts#L2031) (storyboardText builder wraps scriptLine in `normalizeTaglish()`).
-  - Bug 8 strip at [:2090](../services/geminiService.ts#L2090) (A-HOOK palette: 3→2 entries) and [:2096](../services/geminiService.ts#L2096) (A-REGULAR palette: 4→3 entries).
-  - Layer 2 AUDIO TAIL PADDING bullet at [:2112](../services/geminiService.ts#L2112) (between First & Last Frame Logic and OUTPUT FORMAT in Option B Talking).
-- **[api/_lib/prompts.ts](../api/_lib/prompts.ts)** — 2 edits:
-  - Bug 9 PACING RULE relocated from line 752-755 → after [:715](../api/_lib/prompts.ts#L715) (top of rule block, above STILL_FRAME_RULE). UPPERCASE "YOU MUST NOT HAVE 3 CONSECUTIVE" + WRONG/RIGHT violation example added.
-  - Bug 15 FACE_APPLICATION_RULE inserted at [:792-798](../api/_lib/prompts.ts#L792-L798) (between BAG_ORIENTATION_RULE and REFERENCE_IMAGE_CLASSIFICATION_RULE). Draft A+ wording: MUST language + EXCEPTION clause for texture-preview cutaway B-roll + EXEMPT product categories.
+- **[services/phoneticNormalizer.ts](../../services/phoneticNormalizer.ts)** — NEW. 5 Taglish→phonetic mappings; `normalizeTaglish(text)` export.
+- **[services/geminiService.ts](../../services/geminiService.ts)** — 4 edits:
+  - Bug 14 buffer revert + comment block at [:467-475](../../services/geminiService.ts#L467-L475) (`0.3 → 0.8`, replaces 2026-05-11 MrBeast tightening that broke on Taglish skincare).
+  - Layer 1 import at [:6](../../services/geminiService.ts#L6) (`import { normalizeTaglish } from './phoneticNormalizer';`).
+  - Layer 1 integration at [:2031](../../services/geminiService.ts#L2031) (storyboardText builder wraps scriptLine in `normalizeTaglish()`).
+  - Bug 8 strip at [:2090](../../services/geminiService.ts#L2090) (A-HOOK palette: 3→2 entries) and [:2096](../../services/geminiService.ts#L2096) (A-REGULAR palette: 4→3 entries).
+  - Layer 2 AUDIO TAIL PADDING bullet at [:2112](../../services/geminiService.ts#L2112) (between First & Last Frame Logic and OUTPUT FORMAT in Option B Talking).
+- **[api/_lib/prompts.ts](../../api/_lib/prompts.ts)** — 2 edits:
+  - Bug 9 PACING RULE relocated from line 752-755 → after [:715](../../api/_lib/prompts.ts#L715) (top of rule block, above STILL_FRAME_RULE). UPPERCASE "YOU MUST NOT HAVE 3 CONSECUTIVE" + WRONG/RIGHT violation example added.
+  - Bug 15 FACE_APPLICATION_RULE inserted at [:792-798](../../api/_lib/prompts.ts#L792-L798) (between BAG_ORIENTATION_RULE and REFERENCE_IMAGE_CLASSIFICATION_RULE). Draft A+ wording: MUST language + EXCEPTION clause for texture-preview cutaway B-roll + EXEMPT product categories.
 
 ---
 
@@ -45,11 +45,11 @@ Continuing the Session M catalog (bugs 5/6/8/9/11/12/13/14/15).
 |---|---|---|
 | 5  | ✅ shipped + in vivo | Session L safeStr fix, Session M verified |
 | 6  | ✅ shipped + in vivo | Session L per-scene model picker, Session M verified |
-| 7  | ⏸ code-correct, in-vivo Session O | Audio blob → base64 inlineData fix at [services/geminiService.ts:1347-1356](../services/geminiService.ts#L1347-L1356); needs single Network 200 confirmation on the EDL synthesis call |
+| 7  | ⏸ code-correct, in-vivo Session O | Audio blob → base64 inlineData fix at [services/geminiService.ts:1347-1356](../../services/geminiService.ts#L1347-L1356); needs single Network 200 confirmation on the EDL synthesis call |
 | 8  | ✅ shipped Session N | "crane lift" stripped from Option A-HOOK + A-REGULAR palettes; eliminates Option B vocabulary-bleed at the source |
 | 9  | ✅ shipped Session N | PACING RULE relocated + UPPERCASE MUST NOT + WRONG/RIGHT example |
 | 11 | ⏸ UX, post-TUNED unblocked | "// SCENE PIPELINE · 7/7 RENDERED" label honesty fix |
-| 12 | ✅ shipped Session M | Cross-session library binding patch ([components/GenerateVideo/index.tsx:302](../components/GenerateVideo/index.tsx#L302)) |
+| 12 | ✅ shipped Session M | Cross-session library binding patch ([components/GenerateVideo/index.tsx:302](../../components/GenerateVideo/index.tsx#L302)) |
 | 13 | ⏸ UX, post-TUNED unblocked | Pipeline tile click should swap editor video player, not just model picker |
 | 14 | ✅ shipped Session N | Buffer reverted 0.3 → 0.8; trades ~1-2s overshoot per scene for ZERO truncations on Session M data |
 | 15 | ✅ shipped Session N | FACE_APPLICATION_RULE (Draft A+) added; closes the hand-vs-face Curology Scene 6 finding |
@@ -64,7 +64,7 @@ Continuing the Session M catalog (bugs 5/6/8/9/11/12/13/14/15).
 
 | Layer | Status | Notes |
 |---|---|---|
-| 1: Phonetic Translation Middleware | ✅ shipped Session N | [services/phoneticNormalizer.ts](../services/phoneticNormalizer.ts); 5 mappings (I-click → Ee-click, Bago → Bah-goh, lang → lahng, mukha → moo-khah, mabilisang → mah-beh-lee-sahng); integrated at storyboardText builder only — EDL/AI-Editor path keeps raw Taglish |
+| 1: Phonetic Translation Middleware | ✅ shipped Session N | [services/phoneticNormalizer.ts](../../services/phoneticNormalizer.ts); 5 mappings (I-click → Ee-click, Bago → Bah-goh, lang → lahng, mukha → moo-khah, mabilisang → mah-beh-lee-sahng); integrated at storyboardText builder only — EDL/AI-Editor path keeps raw Taglish |
 | 2: Audio Timeline Padding | ✅ shipped Session N | AUDIO TAIL PADDING bullet inside Option B Talking; unconditional on all talking scenes; tail string verbatim from Gemini 3.5 audit |
 | 3: Structural Segment Isolation | ⏸ deferred to Session O A/B test | Current code FORBIDS bracketed segments — paperwork session couldn't render-validate. Session O bonus task if budget allows: render Scene 5 b-roll paragraph (control) vs bracketed (test), compare via Gem. |
 | 4: Image-to-Video Anchor Workflow | ⏸ deferred to Phase 2 PRD | 1-2 day architectural shift, requires Gemini Image (sceneImageModel) budget per scene. Resume after Phase 1b closes. Likely biggest unlock for visual quality (text hallucinations, floating products, grip failures, brand-label drift). |
@@ -139,7 +139,7 @@ Render-spend session (~$2.20-$2.30 if all 7 scenes pass first render; more if an
 
 6. **IF all 7 PASS or MINOR** → Send to Signal Modulator (TTS, ~$0.07) → AI Editor (EDL synthesis, ~$0.02). Download `edit-decision-list-*.json`.
 
-7. **Bug 7 in-vivo verification** (~2 min, free). Network panel: the single `/api/gemini/text` POST during EDL synthesis returned **200** (was 400 in Session K). Confirms audio-blob → base64 inlineData fix at [services/geminiService.ts:1347-1356](../services/geminiService.ts#L1347-L1356).
+7. **Bug 7 in-vivo verification** (~2 min, free). Network panel: the single `/api/gemini/text` POST during EDL synthesis returned **200** (was 400 in Session K). Confirms audio-blob → base64 inlineData fix at [services/geminiService.ts:1347-1356](../../services/geminiService.ts#L1347-L1356).
 
 8. **5 brief assertions** on the downloaded JSON (~3 min, free):
    - 3.1 `meta.scriptStyleDetected === "mrbeast"`
@@ -163,7 +163,7 @@ Render-spend session (~$2.20-$2.30 if all 7 scenes pass first render; more if an
 ✅ One TUNED commit shipped (`e392e66`) — 6 distinct fixes, all line-by-line approved via AskUserQuestion.
 ✅ Build gate green (`tsc && vite build`, exit 0). 1.6 MB index bundle (no size regression).
 ✅ Bundle-leak check: 0 hits for crown-jewel prompts in `dist/assets/index-*.js` (including the newly-added FACE_APPLICATION_RULE and the relocated PACING RULE).
-✅ Locked surfaces untouched: `MarketResearchReport` in [types.ts](../types.ts); model-ID block at [services/geminiService.ts:274-278](../services/geminiService.ts#L274-L278); video-model constants at [:412-416](../services/geminiService.ts#L412-L416).
+✅ Locked surfaces untouched: `MarketResearchReport` in [types.ts](../../types.ts); model-ID block at [services/geminiService.ts:274-278](../../services/geminiService.ts#L274-L278); video-model constants at [:412-416](../../services/geminiService.ts#L412-L416).
 ✅ Plan→Goal pipeline gate honored. Neil approved the `/goal` before any edit fired.
 ✅ Surgical-edit discipline: 3 files touched, +50/-14 total. No collateral changes.
 ✅ **Grifon Director AI Video Auditor Gem operational + tested.** Two Instructions iterations on the same calibration clip. Documented in this handoff + agent_lessons.
@@ -178,16 +178,16 @@ Render-spend session (~$2.20-$2.30 if all 7 scenes pass first render; more if an
 ## First files to read in Session O
 
 1. **This handoff.**
-2. **[services/CLAUDE.md](../services/CLAUDE.md)** — TUNED guardrails (still apply on any per-scene TUNED edits if the Gem surfaces new bugs mid-session).
-3. **[CLAUDE.md](../CLAUDE.md)** — project rules + Plan→Goal pipeline + the (now Gem-augmented) watch-each-video gate.
-4. **[agent_lessons.md](../agent_lessons.md)** — 2026-05-26 entry on the Gem workflow (observation layer vs integration layer).
+2. **[services/CLAUDE.md](../../services/CLAUDE.md)** — TUNED guardrails (still apply on any per-scene TUNED edits if the Gem surfaces new bugs mid-session).
+3. **[CLAUDE.md](../../CLAUDE.md)** — project rules + Plan→Goal pipeline + the (now Gem-augmented) watch-each-video gate.
+4. **[agent_lessons.md](../../agent_lessons.md)** — 2026-05-26 entry on the Gem workflow (observation layer vs integration layer).
 5. `git show e392e66` — see exactly what landed in Session N.
 
 ---
 
 ## Operational notes for Session O
 
-- **Cafe PC defreezer** persists. Use [scripts/snapshot-wizard-session.ps1](../scripts/snapshot-wizard-session.ps1) before any reboot risk. Restore via [scripts/restore-wizard-session.ps1](../scripts/restore-wizard-session.ps1).
+- **Cafe PC defreezer** persists. Use [scripts/snapshot-wizard-session.ps1](../../scripts/snapshot-wizard-session.ps1) before any reboot risk. Restore via [scripts/restore-wizard-session.ps1](../../scripts/restore-wizard-session.ps1).
 - **Playwright MCP** restricts file uploads to repo root or `.playwright-mcp/`. Session M's working hero at `.playwright-mcp/grifon-hero-curology-moisturizer.jpg` is reusable for Curology re-tests.
 - **`.tmp/` is gitignored** — fine for scratch but don't write to it while `npm run dev` is running (Vite EBUSY).
 - **Grifon Director AI Video Auditor Gem**: external Gemini Gem (not in repo). Calibrated 2026-05-26 with `Gemini 3.5 flash video audit.md` as Knowledge. Run 2-3 ensemble passes on CRITICAL clips. **Treat Gem's Section 4 file paths as STALE** — Claude (not Gem) translates findings to code.

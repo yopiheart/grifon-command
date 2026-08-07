@@ -1,70 +1,54 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-06** (session 9)
+**Stamped: 2026-08-07** (session 10)
 
 ## ▶ NEXT ACTION — MATUTO NG TOTOONG TAGLISH, GALING SA SOURCES
 
-Utos ni Neil sa dulo ng session 9: *"its time for you to learn taglish na
-ginagamit ngayon 2026 na uso at popular na madaling intindihin. Siguro kailangan
-mong mag research at maghanap ng sources para matuto ka mag taglish. Ung tone
-nalang ung iaadjust mo depende sa brand voice / target market fit."*
+Utos ni Neil, session 9: *"its time for you to learn taglish na ginagamit ngayon
+2026 na uso at popular na madaling intindihin… mag research at maghanap ng
+sources. Ung tone nalang ung iaadjust mo depende sa brand voice / target market."*
 
-Hindi pa sya nasisimulan. **Blacklist ang meron tayo ngayon**
+Hindi pa nasisimulan. Blacklist lang ang meron
 ([`lint-voice.mjs`](funnels/oceanides-paolo/scripts/lint-voice.mjs)), at bawat
-entry doon ay idinagdag pagkatapos mahuli ni Neil. Bago ang slop kada beses, kaya
-laging huli ng isang insidente ang blacklist. Ang kailangan ay **positibong
-modelo** galing sa totoong Taglish ng 2026, hindi mas mahabang listahan ng bawal.
-Tapos tono na lang ang iaayos kada brand.
+entry doon ay dinagdag pagkatapos mahuli ni Neil, kaya laging huli ng isang
+insidente. Kailangan ng **positibong modelo** galing sa totoong Taglish ng 2026,
+hindi mas mahabang listahan ng bawal. Tono na lang ang iaayos kada brand.
 
-## 🔴 ANG MALI NA TATLONG BESES NANG NAULIT NGAYONG SESSION
+## ✅ Tapos ngayong 2026-08-07 (session 10) — docs lang, walang app code
+Ramp agent-engineering brief, sinukat sa codebase. ~70% nandyan na.
 
-**Maling bar, hindi maling gawa.** Tatlong beses, iisang hugis:
+1. **Record sa [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #27** —
+   bagong parked item: **AI SRE** (agent na nagbabasa ng production incident,
+   nag-diagnose, nagbubukas ng issue). Handa na ang lahat ng kailangan nya, wala
+   lang users. Trigger: unang bayad na cohort. ⛔ Wag i-re-evaluate ang brief na to.
+2. **Rule 9 sa [`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)** —
+   dalawang round na sinunod ang sabi ng critic at hindi gumalaw ang score = STOP.
+   Basahin ang trace, wag mag-round tatlo. Yan mismo ang 82 · 82 · 82/83 ng session 9.
+3. **36 handoff docs → [`workflows/archive/`](workflows/archive/README.md)**, may
+   nakasulat nang panuntunan para di na muling magtambak. 262 link na-check, 4
+   lang ang sira at binurang code naman ang tinuturo.
 
-1. Sinukat ang organic cards sa **attention** gayong **conversion** ang bara.
-2. Sinabing "hindi problema ang creative natin" mula sa **5 ad na sample** na
-   walang kahit isang brand na nagbebenta sa tiwala. Totoong bar: **82**, hindi 68.
-3. 🆕 Kumuha ng inspiration sa `assets/ad-swipe/` at ipinatong sa **organic
-   cards**. Sabi ni Neil: *"kaya ang nangyayari para kang nagbebenta sa pag
-   popost ng organic."*
+⚠️ Pangatlong beses nang dumating ang *"wag mong bilangin ang token"* (Kun Chen,
+OpenAI Dev Day, Ramp). Nasa #27 na kung bakit di sya bagay dito. Tapos na.
+🔴 **Health Watch push: di pa kumpirmado mula 2026-07-19** — araw-araw tumatakbo,
+walang nakumpirmang nagbabasa. Step 1 ng #27, minuto lang.
 
-**Ang bagong panuntunan: may dalang axis ang corpus mismo.** Puro **bayad na ad**
-ang 78 na nasa `assets/ad-swipe/`. Kahit anong bar na kunin doon ay bar ng ad.
-⛔ **Wag lagyan ng CTA ang organic cards** — hindi yun ang trabaho nila.
-Nagbebenta si Fibo Lim / Brunson / Hormozi **sa loob ng** value content, hindi sa
-pamamagitan ng pagdikit ng button. **Kailangan ng hiwalay na organic corpus**
-bago pa masukat ang organic. Wala pa tayo nun.
+## 🔴 Ang mali na tatlong beses naulit noong session 9
 
-## ✅ Tapos ngayong 2026-08-06 (session 9)
-
-**Gauntlet build run** ([`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)):
-Paolo trust card **63/68 → 82**, `strong`, tabla sa Stripe. Isang bagay lang ang
-gumawa nun — **receipts strip** (totoong DENR na numero) + tapat na disclaimer.
-Dalawang magkaibang hook: 82 at 82. **Walang naiambag ang hook.**
-
-🆕 **Bagong failure mode:** hypothesis lang ang `biggest_gap`, hindi sanhi.
-Inayos nang eksakto ang pinangalanan nito, tatlong round, **hindi gumalaw ang
-score** (82 → 82 → 82/83). Bagong reklamo lang sa parehong numero. Inayos ng
-rubric scorer ang position bias, **hindi ang confabulation.**
-
-**Voice fix, 74 hit sa 5 file:** `15 araw`→`15 days` (38) · `48 oras`→`48 hours`
-(20) · `3 buwan`→`3 months` (10) · `30 araw`→`30 days` (5) ·
-`dokumentasyon`→`papel` · `sa yo`/`sa iyo`→`sayo` (23). **Klase ang idinagdag sa
-linter, hindi salita.** Tatlo pa ang nahuli nito na hindi ko naabot ng kamay.
-⚠️ **Bukas pa: `isang taon`** (6 hit). Sagot ni Neil ang hinihintay.
-
-**Na-merge sa `main`** ang 47-commit na branch. Walang app code, green ang root
-build at ang funnel build.
+**Maling bar, hindi maling gawa.** Buong kwento nasa
+[`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md).
+**May dalang axis ang corpus mismo:** puro **bayad na ad** ang 78 sa
+`assets/ad-swipe/`, kaya bar ng ad ang kahit anong kunin doon.
+⛔ **Wag lagyan ng CTA ang organic cards.** Kailangan muna ng hiwalay na organic
+corpus. Wala pa tayo nun.
 
 ## 🅿 PAOLO — itayo, wag buksan
 
-Buhay pa rin ang gate: **pangako pa lang, walang load na dumaan, walang
-certificate na hawak.** Sarado lang sya kapag may isang load na diretsong
-binayaran ni Neil sa facility **at** may hawak nang certificate.
+Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate
+na hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build,
+**hindi naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
 
-Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build, **hindi
-naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
-
-1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang humaharang sa lahat.
+1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang bara sa lahat.
    [`facility-call-script.md`](clients/oceanides/facility-call-script.md).
 1b. 🔴 **Sa parehong message:** sino ang mga na-issuehan na ni Boss Jay ng DENR
    certificate? Yun ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
@@ -75,8 +59,8 @@ naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
 5. Bagong creative at targeting. ⏳ Aling siyudad ang una, isa lang.
 
 **Nagawa na, wag ulitin:** avatar ni Paolo, value stack, grill, pixel-leak, copy,
-page, at ang trust card (`paolo-trust-a-urgency.png`, `paolo-trust-b-admit.png`,
-**hindi pa nai-publish** — numero ng critic ang 82, hindi resulta sa merkado).
+page, trust card (`paolo-trust-a/b`, **hindi pa nai-publish** — numero ng critic
+ang 82, hindi resulta sa merkado).
 
 ## 🔴 Huwag kalimutan
 
@@ -84,11 +68,10 @@ page, at ang trust card (`paolo-trust-a-urgency.png`, `paolo-trust-b-admit.png`,
 2. **Bawal ang CASH refund** sa tripwire. Credit, at isang taon ang bisa.
 3. **Patay na ang ₱900 break-even.** Kay Paolo: **₱4,900 kada 1-load na trabaho**.
 4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
-5. ⚠️ **Enterprise ang malalaking pangalan sa client list.** Galing sa procurement
-   at referral, **hindi sa Facebook ad.** Pinakamalaking hula pa rin ng plano.
+5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — galing sa procurement
+   at referral, **hindi sa FB ad.** Pinakamalaking hula pa rin ng plano.
 
 ## 🅿 PARKED
-
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
 watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM Configure Web
 Events hindi pa na-verify**.
@@ -96,7 +79,6 @@ Events hindi pa na-verify**.
 · `artifact-noir` Steps 1-4 · 0 pa rin ang codex-sol lane, di pa masusukat ang gate.
 
 ## ⛔ Gated · 🔧 Arm before starting
-
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
 ⚠️ `npx playwright install chromium` — kinakain sya ng defreezer kada session.

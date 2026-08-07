@@ -149,7 +149,7 @@ If Neil asks for any of these tomorrow, the right answer is: "That's a post-laun
 
 ## Critical files for the next agent to read (in this order)
 
-1. **This handoff** — `workflows/handoff_2026-05-27-session-r-launch-runway.md`
+1. **This handoff** — `workflows/archive/2026-05-27-session-r-launch-runway.md`
 2. **`CLAUDE.md`** — project overview, working environment, Plan→Goal pipeline
 3. **`agent_lessons.md`** — behavioral rules accumulated across sessions. The 2026-05-24 + 2026-05-26 Director AI pre-flight rules are MANDATORY before any wizard smoke.
 4. **`services/CLAUDE.md`** + **`api/CLAUDE.md`** — TUNED file rules. If you're touching `geminiService.ts` or `api/_lib/prompts.ts`, you need per-line approval via AskUserQuestion before edits, then a `/goal` per the Plan→Goal pipeline.
@@ -185,7 +185,7 @@ If recovered after defreezer:
 Continuing from Session R (commit 4b192c6 on origin/main, 2026-05-27).
 Read first, in this order:
 
-1. workflows/handoff_2026-05-27-session-r-launch-runway.md
+1. workflows/archive/2026-05-27-session-r-launch-runway.md
 2. agent_lessons.md (Director AI pre-flight rules at 2026-05-24 + 2026-05-26)
 3. services/CLAUDE.md + api/CLAUDE.md (TUNED rules)
 4. CLAUDE.md (Plan→Goal pipeline)

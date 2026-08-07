@@ -252,4 +252,4 @@ that `waitUntil` only fires on Vercel, so a *deployed* run is the truest test of
 ## Related docs
 - `workflows/post_beta_roadmap.md` #10 — original final-render-executor entry.
 - `workflows/phase5_voice_consolidation.md` — the voice setup (talking→STS, b-roll/hook→TTS) this folds in.
-- `workflows/handoff_2026-05-29-gates-merged-hook-codefix.md` — backlog #3 origin of the dead-air observation.
+- `workflows/archive/2026-05-29-gates-merged-hook-codefix.md` — backlog #3 origin of the dead-air observation.

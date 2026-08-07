@@ -7,7 +7,7 @@ end-to-end smoke test. Start next session with **`/clear` then `/grill-me`** poi
 
 Created 2026-07-01. Owner: Neil. Related: [concierge_director_plan.md](concierge_director_plan.md),
 [oneshot_flow_fixes.md](oneshot_flow_fixes.md),
-[handoff_2026-06-09-one-shot-ad-v1.md](handoff_2026-06-09-one-shot-ad-v1.md) (Fable 5's original).
+[archive/2026-06-09-one-shot-ad-v1.md](archive/2026-06-09-one-shot-ad-v1.md) (Fable 5's original).
 
 ---
 

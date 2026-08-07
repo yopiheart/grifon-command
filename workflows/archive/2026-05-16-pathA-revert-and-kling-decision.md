@@ -28,7 +28,7 @@ Two technical wins kept; the strategic prompt change (Path A) was Neil-rejected 
 
 ## The architectural decision: Kling 3.0 for hooks + b-rolls, Veo 3.1 Lite for talking avatars
 
-**Neil's call (2026-05-16 session 2 close):** stop trying to make Veo do everything. Route by scene type. This was the *original* intent — see [api/_lib/prompts.ts](../api/_lib/prompts.ts) `generateVideoPrompts` OPTION C already targets `MODEL: Kling O1 (Standard / Frames Mode)`. Veo was the wizard's default only because the Veo API was already wired and Kling wasn't. That convenience is over.
+**Neil's call (2026-05-16 session 2 close):** stop trying to make Veo do everything. Route by scene type. This was the *original* intent — see [api/_lib/prompts.ts](../../api/_lib/prompts.ts) `generateVideoPrompts` OPTION C already targets `MODEL: Kling O1 (Standard / Frames Mode)`. Veo was the wizard's default only because the Veo API was already wired and Kling wasn't. That convenience is over.
 
 **Target architecture:**
 
@@ -82,16 +82,16 @@ The lip-sync mismatch on Veo close-ups is *deferred*, not solved. Once Kling han
 ## Critical files & integration anchors for Kling work
 
 **To touch in Kling Session A:**
-- [api/_lib/](../api/_lib/) — auth + rate-limit + Kling-specific helpers (`klingAuth.ts`?)
-- [api/kling/](../api/kling/) — new directory for `video.ts` (+ `video/poll.ts` if Kling has async polling)
-- [services/geminiService.ts](../services/geminiService.ts) — `VIDEO_MODEL_ROUTING` (~line 280), `VIDEO_MODEL_SPECS` (~line 220), `generateVideo` (line 402+), proxy helper (line 133 `proxyGenerateVideo`)
-- [vite.config.ts](../vite.config.ts) — env-loader (line 81-97), `vercelApiDevPlugin` resolver
-- [.env](../.env) — `KLING_API_KEY` (server-only, no `VITE_` prefix)
+- [api/_lib/](../../api/_lib/) — auth + rate-limit + Kling-specific helpers (`klingAuth.ts`?)
+- [api/kling/](../../api/kling/) — new directory for `video.ts` (+ `video/poll.ts` if Kling has async polling)
+- [services/geminiService.ts](../../services/geminiService.ts) — `VIDEO_MODEL_ROUTING` (~line 280), `VIDEO_MODEL_SPECS` (~line 220), `generateVideo` (line 402+), proxy helper (line 133 `proxyGenerateVideo`)
+- [vite.config.ts](../../vite.config.ts) — env-loader (line 81-97), `vercelApiDevPlugin` resolver
+- [.env](../../.env) — `KLING_API_KEY` (server-only, no `VITE_` prefix)
 
 **To touch in Kling Session B:**
-- [services/geminiService.ts](../services/geminiService.ts) — `generateVideo` dispatcher
-- [components/GenerateVideo/RenderAllRunner.ts](../components/GenerateVideo/RenderAllRunner.ts) — auto-routing logic based on `seedPrompts[i].type`
-- [components/GenerateVideo/SceneQueue.tsx](../components/GenerateVideo/SceneQueue.tsx) — model badge UI per scene
+- [services/geminiService.ts](../../services/geminiService.ts) — `generateVideo` dispatcher
+- [components/GenerateVideo/RenderAllRunner.ts](../../components/GenerateVideo/RenderAllRunner.ts) — auto-routing logic based on `seedPrompts[i].type`
+- [components/GenerateVideo/SceneQueue.tsx](../../components/GenerateVideo/SceneQueue.tsx) — model badge UI per scene
 
 **TUNED guardrails (do NOT touch in Kling work):**
 - Prompt strings, system instructions, response schemas in `services/geminiService.ts` and `api/_lib/prompts.ts`. Provider routing is transport; OPTION A/B/C prompt content is locked.

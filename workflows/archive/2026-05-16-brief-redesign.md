@@ -11,20 +11,20 @@ Branch: `main` HEAD now contains 2 fresh commits + 1 inherited docs commit. Both
 
 Both changes are UI-only — no edits to `services/geminiService.ts`, schemas, model IDs, or autofill flow. Build passes clean (tsc + Vite production). Live-verified with the Glossier sample.
 
-Full Glossier wizard walkthrough (Steps 1–7) verified in this session — all 6 BusinessInfo fields prefill from MarketMind autofill ([App.tsx:320-328](App.tsx#L320-L328)), Step 4 avatar renders at 768×1376 (correct 9:16), Step 5 generates 8/8 scene images (Scene 1 start+end frame, Scenes 2–7 static shots), Step 6 thumbnail + Step 7 video prompts auto-generate, Step 8 → GenerateVideo enters pipeline mode cleanly.
+Full Glossier wizard walkthrough (Steps 1–7) verified in this session — all 6 BusinessInfo fields prefill from MarketMind autofill ([App.tsx:320-328](../../App.tsx#L320-L328)), Step 4 avatar renders at 768×1376 (correct 9:16), Step 5 generates 8/8 scene images (Scene 1 start+end frame, Scenes 2–7 static shots), Step 6 thumbnail + Step 7 video prompts auto-generate, Step 8 → GenerateVideo enters pipeline mode cleanly.
 
 ## What blocked the audio gen test — and what to do about it
 
 Tried to walk through to Phase 5 v2 audio gen (Glossier ad). Render All hit two upstream problems that gate the Phase 5 v2 button (`renderedCount === seedPrompts.length`):
 
 1. **Scene 01 morph rejected with `400 INVALID_ARGUMENT`** — Veo 3.1 Lite preview model doesn't accept `startFrame + endFrame` pair mode for the Q4 morph. Only Scene 01 has both frames (b-roll morph); Scenes 02–07 are STATIC_SHOT and rendered fine.
-2. **Scenes 06+07 hit Veo 429 RATE LIMIT after Scene 05** — [RenderAllRunner.ts:37](components/GenerateVideo/RenderAllRunner.ts#L37) sets `RATE_LIMIT_WINDOW_SEC = 3600`. Queue correctly paused for 60 min and is `await`-ing the timer. If the page stays open, they auto-resume.
+2. **Scenes 06+07 hit Veo 429 RATE LIMIT after Scene 05** — [RenderAllRunner.ts:37](../../components/GenerateVideo/RenderAllRunner.ts#L37) sets `RATE_LIMIT_WINDOW_SEC = 3600`. Queue correctly paused for 60 min and is `await`-ing the timer. If the page stays open, they auto-resume.
 
 Net: stuck at 4/7 rendered. Phase 5 v2 button never appears. Audio gen test parked.
 
 ## Video-quality observations (Neil reviewed 4 successful renders)
 
-Two NEW issues surfaced — both are **pre-existing P1s already on [launch_readiness.md](launch_readiness.md)**, surfaced live for the first time:
+Two NEW issues surfaced — both are **pre-existing P1s already on [launch_readiness.md](../launch_readiness.md)**, surfaced live for the first time:
 
 ### 1. Lip-sync mismatch on talking-avatar scenes
 
@@ -32,7 +32,7 @@ Already tracked in launch_readiness as: *"Speaking-scene `FACING_CAMERA_REQUIRED
 
 Root cause: **architectural, not camera-angle.** Veo invents mouth movements based on prompt text; ElevenLabs generates audio separately; merge = invented motion ≠ actual waveform = mismatch. Camera distance is a **visibility multiplier**, not the cause. Tight close-up = obvious mismatch; wide shot = barely noticeable.
 
-**Fix path (Path A, recommended):** Surgical TUNED edit to [services/geminiService.ts](services/geminiService.ts) `generateStoryboard` visual anchor — force mouth-closed framing on talking scenes ("avatar reacts non-verbally — expressive eyes, gestures, mouth CLOSED. No active speech motion."). Preserves the Phase 5 v2 architecture; eliminates the mismatch entirely; avatar becomes the "reactor" while ElevenLabs voiceover carries the dialogue. ~30 min including verify.
+**Fix path (Path A, recommended):** Surgical TUNED edit to [services/geminiService.ts](../../services/geminiService.ts) `generateStoryboard` visual anchor — force mouth-closed framing on talking scenes ("avatar reacts non-verbally — expressive eyes, gestures, mouth CLOSED. No active speech motion."). Preserves the Phase 5 v2 architecture; eliminates the mismatch entirely; avatar becomes the "reactor" while ElevenLabs voiceover carries the dialogue. ~30 min including verify.
 
 Alternatives considered + dropped:
 - **B. Post-process lip-sync** (Sieve, HeyGen, D-ID, Wav2Lip) — adds vendor + $0.10-0.50/scene + latency. Defer.
@@ -41,7 +41,7 @@ Alternatives considered + dropped:
 ### 2. Camera motion from prompt not visible in Veo Lite output
 
 Commit [`0db5424`](#) (mandatory motion) **already anticipated this exact failure mode** in its own message:
-> *If even strengthened prompts still produce static Veo Lite output, that's a model-capability limit — the real fix is Phase 5+ Vertex AI migration per [post_beta_roadmap.md](post_beta_roadmap.md) item #5.*
+> *If even strengthened prompts still produce static Veo Lite output, that's a model-capability limit — the real fix is Phase 5+ Vertex AI migration per [post_beta_roadmap.md](../post_beta_roadmap.md) item #5.*
 
 Veo 3.1 Lite is the cheapest tier and is documented to interpret motion prompts loosely. The prompt is already as strong as it can reasonably get without becoming unmaintainable.
 

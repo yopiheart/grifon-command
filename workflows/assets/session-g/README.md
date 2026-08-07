@@ -1,7 +1,7 @@
 # Session G — Evidence
 
 `omni-dead-first-second-evidence.jpg` — the frame grid behind Session G's verdict.
-See [handoff_2026-05-22-session-g-dead-first-second.md](../../handoff_2026-05-22-session-g-dead-first-second.md).
+See [archive/2026-05-22-session-g-dead-first-second.md](../../archive/2026-05-22-session-g-dead-first-second.md).
 
 Four blocks, all on the committed Session F beans→latte substrate
 ([../session-f/](../session-f/)), Kling Omni `kling-video-o1`, std / 9:16:

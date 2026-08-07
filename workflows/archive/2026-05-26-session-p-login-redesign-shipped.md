@@ -95,7 +95,7 @@ Open questions from session-o's handoff all resolved:
 
 ### Carry-forwards (still pending — NOT touched in session P)
 
-- **Bug 7** ⏸ Code-correct, in-vivo deferred to clean-output session (post-TUNED). See [handoff_2026-05-26-session-m-bug-catalog-halt.md](handoff_2026-05-26-session-m-bug-catalog-halt.md).
+- **Bug 7** ⏸ Code-correct, in-vivo deferred to clean-output session (post-TUNED). See [handoff_2026-05-26-session-m-bug-catalog-halt.md](2026-05-26-session-m-bug-catalog-halt.md).
 - **Bug 8/9/14/15** ⏸ TUNED — addressed in session-n's `e392e66`. Verify they're fully closed before session Q starts touching anything that depends on them.
 - **Fix 2** ⏸ Session H — strip audio/SFX directives from `generateVideoPrompts` + daylight→like typo.
 - **Bug 5 schema** ⏸ Session L — tighten `api/_lib/prompts.ts:100` demographics-as-string enforcement.
@@ -114,20 +114,20 @@ Memory files saved during Session P at `~/.claude/projects/c--Users-Administrato
 | `MEMORY.md` | Newly created (first session P memory file). Index of all stored memories. | This session |
 
 The durable layer (survives defreezer):
-- [agent_lessons.md](../agent_lessons.md) 2026-05-26 entry: full incident analysis + 3 rules
-- [.claude/skills/brand-check/SKILL.md](../.claude/skills/brand-check/SKILL.md) new "Alignment & icon-text rhythm" checklist section + expanded "Icons" section to flag hand-transcribed SVGs
+- [agent_lessons.md](../../agent_lessons.md) 2026-05-26 entry: full incident analysis + 3 rules
+- [.claude/skills/brand-check/SKILL.md](../../.claude/skills/brand-check/SKILL.md) new "Alignment & icon-text rhythm" checklist section + expanded "Icons" section to flag hand-transcribed SVGs
 
 ---
 
 ## References
 
 - Plan file (ephemeral): `~/.claude/plans/continuing-from-session-o-2026-05-26-dynamic-wall.md`
-- Session-o handoff (prior): [handoff_2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md](handoff_2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md)
-- [services/CLAUDE.md](../services/CLAUDE.md) — TUNED-file rules
-- [agent_lessons.md](../agent_lessons.md) — behavioral rules accumulator (NEW 2026-05-26 entry on alignment audit)
-- [CLAUDE.md](../CLAUDE.md) — project root, Plan→Goal pipeline
-- [DESIGN.md](../DESIGN.md) — brand system
-- [UBIQUITOUS_LANGUAGE.md](../UBIQUITOUS_LANGUAGE.md) — domain vocabulary
+- Session-o handoff (prior): [handoff_2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md](2026-05-26-session-o-agentic-era-shipped-login-redesign-pending.md)
+- [services/CLAUDE.md](../../services/CLAUDE.md) — TUNED-file rules
+- [agent_lessons.md](../../agent_lessons.md) — behavioral rules accumulator (NEW 2026-05-26 entry on alignment audit)
+- [CLAUDE.md](../../CLAUDE.md) — project root, Plan→Goal pipeline
+- [DESIGN.md](../../DESIGN.md) — brand system
+- [UBIQUITOUS_LANGUAGE.md](../../UBIQUITOUS_LANGUAGE.md) — domain vocabulary
 - Phase 1-4 screenshots captured in `.tmp/auth-phase{N}-*.png` (gitignored, will not survive defreezer; described in the handoff text above)
 
 ---
@@ -136,7 +136,7 @@ The durable layer (survives defreezer):
 
 ```
 Continuing from session-p (2026-05-26). Read this handoff first:
-workflows/handoff_2026-05-26-session-p-login-redesign-shipped.md
+workflows/archive/2026-05-26-session-p-login-redesign-shipped.md
 
 Then read CLAUDE.md, agent_lessons.md, UBIQUITOUS_LANGUAGE.md.
 
