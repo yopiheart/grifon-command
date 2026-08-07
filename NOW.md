@@ -25,13 +25,13 @@ CRITICAL, **kasama kung ilang araw nang bukas** — yun ang di kayang laktawan.
 Napatunayan sa totoong run ang green at **auto-close** path; ang aral na nagastos
 ng isang pulang run ay nasa [`loops.md`](workflows/loops.md) Tier 0b.
 
-### ⏳ ISA LANG ANG HINDI KO MAPAPATUNAYAN MAG-ISA
-Pinaandar ko ang manual run ng Health Watch v2, **4:22 PM** (`last_fired_at`
-08:22:34Z). **Desktop Routines UI, buksan ang 4:22 PM MANUAL** — di ang 3:04 PM
-(luma yun, bago pa ang edit ko). May CI section ba, o *"CI status unavailable"*?
-Kung unavailable, walang `gh` ang cloud env; ang palit ay ipasa ang CI state sa
-committed file. **Di sya mag-a-assume ng green** kahit alin doon, kaya safe muna.
-📱 **Walang Routines sa phone app** — ang push mismo ang buong deliverable doon.
+### ✅ KUMPIRMADO NA ANG CI READ (4:22 PM manual run)
+`CI / main: Green … No open ci-red issue` — gumana. Pero **walang `gh` sa cloud
+env**; sinabi muna nyang *"CI status unavailable"* (tama ang fail-safe, di sya
+nag-assume ng green), tapos sya na mismo nakahanap ng **GitHub MCP tools**. Swerte
+yun, hindi disenyo — kaya nakasulat na sa prompt na wala ang `gh` at MCP tools ang
+gamitin. 📱 **Walang Routines sa phone app** — ang push mismo ang buong deliverable
+doon, kaya bawal ang *"check the run for details"*. Detalye: [`loops.md`](workflows/loops.md) Tier 6.
 
 **Galing sa Rauch / Vercel "Eve" brief — SARADO na, wag nang i-re-evaluate.** ~90%
 nandito na (CLAUDE.md = `instructions.md`, 28 skills, `tools/`, WAT); ang channel

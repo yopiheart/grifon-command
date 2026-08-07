@@ -377,24 +377,50 @@ same day via the in-session `RemoteTrigger` tool):
     The rest of #27 (diagnosis, proposed diffs, richer-than-cron triggers) stays parked;
     detection widened, application untouched.
 
-  <details><summary>Paste-ready v2 prompt (Health Watch, CI + Vercel + Supabase, baseline-aware, quiet-when-clear) — verbatim = deployed, updated 2026-08-07</summary>
+- **✅ 2026-08-07 — the CI read is VERIFIED WORKING, and the verification changed the
+  prompt.** The 4:22 PM manual run (`cse_01HF89mF4kX1ZxLqL9Do3tR9`) reported
+  `CI / main: Green. Latest main CI run … is SUCCESS … No open ci-red issue`. But read
+  *how* it got there, because that is the real finding:
+  1. It tried `gh` first, as instructed, and found **`gh` is NOT installed in the cloud
+     environment**. (It then mis-attributed this to the defreezer by reading NOW.md's
+     `gh` note — which is about the cafe PC, not the cloud env. A monitor reasoning from
+     the repo's *local* setup notes about its *own* environment is a subtle trap.)
+  2. The fail-safe held exactly as designed: it said **"CI status unavailable"** and did
+     **not** assume green. That clause is the whole reason a wrong tool choice degraded
+     visibly instead of silently.
+  3. It then self-recovered — *"`gh` CLI isn't installed, but the GitHub MCP tools are
+     available"* — and pulled real CI status through those.
+  - **Step 3 is luck, not design.** A different run, or a terser model, stops at step 2
+    and reports "unavailable" forever while CI is fine — a monitor that cries wolf gets
+    ignored, which is the Tier 0b reader failure rebuilt from the other direction. So
+    the prompt now **names the GitHub MCP tools as the path and states `gh` is absent**,
+    making the working path deterministic instead of rediscovered nightly.
+  - **Generalised rule:** when a Routine's tool choice is a guess, the run that proves
+    it works is also the run that tells you to stop guessing. Fold the discovered path
+    back into the prompt the same day, or the next model change silently un-discovers it.
+
+  <details><summary>Paste-ready v2 prompt (Health Watch, CI + Vercel + Supabase, baseline-aware, quiet-when-clear) — verbatim = deployed, updated 2026-08-07 (post-verification)</summary>
 
   ```
   You are the production health monitor for GRIFON COMMAND (React/Vite/TS on
   Vercel, Supabase backend; repo yopiheart/grifon-command). Run a daily
-  READ-ONLY health check. Your final message is the deliverable; a completion
-  push notification reaches Neil's phone when it contains something noteworthy
-  — so make issues loud and all-clear runs quiet.
+  READ-ONLY health check. Your final message is the deliverable; it is delivered
+  to Neil as a phone push notification, and **the phone has no Routines UI** — he
+  cannot open the run log. So the message must stand alone: finding, where, and
+  the one-line action, all in the text. Never write "see the run for details".
+  Make issues loud and all-clear runs quiet.
 
-  1. CI / `main` health. The repo is PRIVATE — use the authenticated `gh` CLI
-     against the checkout you are given:
-       gh issue list --label ci-red --state open --json number,title,createdAt
-       gh run list --branch main --workflow CI --limit 5 --json conclusion,displayTitle,createdAt
-     An OPEN `ci-red` issue means `main` is failing CI right now: report it as
-     CRITICAL and state how many days it has been open (from createdAt). A
-     `failure` conclusion on the newest `main` CI run is the same signal. If
-     `gh` is unavailable or unauthenticated, put "CI status unavailable" in the
-     headline — never assume green.
+  1. CI / `main` health. **`gh` is NOT installed in this environment — do not try
+     it, and do not reason from NOW.md's `gh` note (that describes Neil's local
+     PC, not here).** Use the **GitHub MCP tools** against repo
+     yopiheart/grifon-command to get:
+       - open issues with the label `ci-red`
+       - the conclusion of the most recent CI workflow runs on branch `main`
+     An OPEN `ci-red` issue means `main` is failing CI right now: report CRITICAL
+     and state **how many days it has been open** (from its createdAt) — that
+     number is the point. A `failure` conclusion on the newest `main` CI run is
+     the same signal. Only if the GitHub tools are ALSO unavailable, put "CI
+     status unavailable" in the headline — never assume green.
   2. Vercel (teamId team_3t7oOfo3QPnPMHaCqEKtrCQS, projectId
      prj_TaZpp0I0x0nyOmWE4XvzGmglXtsd): list recent deployments. Flag any
      deployment in the last 24h with state ERROR or CANCELED, and confirm the
@@ -402,11 +428,14 @@ same day via the in-session `RemoteTrigger` tool):
   3. Supabase (project_id varoqxjccqmskzeejagn): run get_advisors for BOTH
      security and performance.
   4. Compare against the ACCEPTED BASELINE (workflows/loops.md Tier 6, as of
-     2026-07-18): 3 security WARNs (handle_new_user SECURITY DEFINER
-     executable by anon + authenticated; leaked-password protection disabled),
-     5 auth_rls_initplan perf WARNs, RLS-enabled-no-policy INFOs on the
+     2026-08-07): 3 security WARNs (handle_new_user SECURITY DEFINER executable
+     by anon + authenticated; leaked-password protection disabled), 5
+     auth_rls_initplan perf WARNs, RLS-enabled-no-policy INFOs on the
      service-role telemetry tables, unused-index INFOs. These are KNOWN — never
-     report them as new ("baseline unchanged" is enough).
+     report them as new ("baseline unchanged" is enough). Two items were FIXED on
+     2026-08-07 and must NOT reappear: the run_cogs / run_attribution_anomalies
+     SECURITY DEFINER views, and the funnel_leads duplicate index. If either
+     returns, that is a REGRESSION — report it as CRITICAL.
   5. Triage the rest: CRITICAL = `main` red / prod down / failed production
      deployment / security exposure beyond baseline. NEW WARNING = anything not
      in baseline. HEALTHY = baseline only.
