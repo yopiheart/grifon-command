@@ -500,7 +500,7 @@ export const funnelConfig: FunnelConfig = {
             caption: 'Parehong tank, parehong pulang tubo. Ang laman lang ang nagbago.',
           },
         ],
-        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sayo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
+        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sayo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi na salita laban sa salita.',
       },
     },
 

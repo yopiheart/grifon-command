@@ -372,7 +372,7 @@ export const funnelConfig: FunnelConfig = {
         body: [
           'Ikaw. ==Ikaw ang generator ng waste, kaya ikaw ang mananagot, kahit iba ang kumuha nun sayo.== Ganon nakasulat sa RA 9275, ang Clean Water Act.',
           'Kaya ang tanong sa inspection ay hindi kung may nagsipsip ba. Ang tanong ay saan napunta, at ano ang maipapakita mong papel.',
-          'Kapag walang manifest, walang certificate, at hindi mo alam kung saan itinapon, ang natitirang sagot mo ay ang pangalan ng taong tumawag ka. Hindi yun papel.',
+          'Kapag walang manifest, walang certificate, at hindi mo alam kung saan itinapon, ang natitira mo na lang na sagot ay ang pangalan ng taong tinawagan mo. Hindi yun papel.',
           'Ang multa sa ilalim ng RA 9275 ay umaabot ng ₱200,000 kada araw ng violation. Nakasulat yan sa batas mismo, Section 28. Hindi ito banta. Sya ang dahilan kung bakit may hinihinging papel sayo.',
           'Ang totoong risk ay hindi ang multa. Sya ay ang hindi mo malaman na wala ka palang papel hanggang sa may humingi na.',
         ],
@@ -506,7 +506,7 @@ export const funnelConfig: FunnelConfig = {
       props: {
         heading: 'Paano nagiging papel ang laman ng tangke mo',
         paragraphs: [
-          'Kinukuha ng truck ang laman ng tangke mo at diretsong dinadala sa treatment facility na tinatanggap ng DENR. Doon sya tinitimbang at ginagamot. Hindi sya itinatapon sa ilog, sa bakanteng lote, o sa kanal sa kabilang bayan.',  // voice-ok: sadyang ritmo ng tatlo (ilog / lote / kanal) — sisirain sya ng particle
+          'Kinukuha ng truck ang laman ng tangke mo at diretsong dinadala sa treatment facility na tinatanggap ng DENR. Doon sya tinitimbang at ginagamot. Hindi sya itinatapon sa ilog, sa bakanteng lote, o sa kanal sa kabilang bayan.',  // voice-ok: sadyang ritmo ng tatlo (ilog, lote, kanal), sisirain sya ng particle
           'Kapag naproseso na, doon lumalabas ang certificate. ==15 days ang normal na hintay, at yun ang totoo.== Hindi namin sya kayang bilisan, at hindi rin namin sya bibilisan para lang may maisagot sayo.',
           'Kaya kung Setyembre ang renewal mo, ngayong Agosto dapat magsimula. Hindi kasi ang truck ang mabagal. Ang papel ang may sariling orasan.',
         ],
@@ -624,7 +624,7 @@ export const funnelConfig: FunnelConfig = {
         items: [
           {
             q: 'Anong papel ba talaga ang matatanggap ko?',
-            a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 hours. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 days.',  // voice-ok: FAQ na sagot tungkol sa papel — listahan sya, hindi kwento
+            a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 hours. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 days.',  // voice-ok: FAQ na sagot tungkol sa papel, listahan sya at hindi kwento
           },
           // 🆕 ANG PRESYO NG CORE, INILIPAT DITO MULA SA HERO TICKET
           // (2026-08-06). Parehong F05 na pattern ng DENR cert sa page ni
@@ -688,9 +688,9 @@ export const funnelConfig: FunnelConfig = {
       props: {
         heading: 'Kanino nakapangalan ang papel',
         body: [
-          '⟦PENDING · B⟧ Ang manifest at ang Certificate of Treatment ay nakapangalan sa negosyo mo, hindi sa amin. Ikaw ang generator, kaya ang papel ay dapat nagsasabi ng pangalan mo.',
+          '⟦PENDING · B⟧ Sa negosyo mo naman nakapangalan ang manifest at ang Certificate of Treatment, hindi sa amin. Ikaw ang generator, kaya ang papel ay dapat nagsasabi ng pangalan mo.',
           '⟦PENDING · B⟧ Ibig sabihin nun, kapag may humingi sayo ng patunay, hindi mo kailangang tumawag muna sa amin. Nasa yo na sya.',
-          'Ang hinahanap sa inspection ay hindi kung sino ang kumuha. Ang hinahanap ay kung saan napunta ang waste mo, at ano ang katunayan nun.',
+          'Ang hinahanap sa inspection ay hindi kung sino ang kumuha. Ang hinahanap kasi ay kung saan napunta ang waste mo, at ano ang katunayan nun.',
         ],
       },
     },
