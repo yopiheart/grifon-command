@@ -140,16 +140,27 @@
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
   }
-  /* The refracted band — the beam, brighter and displaced, INSIDE the pane.
-     This is the single element that proves the slab is transparent. */
-  .slab::after {
-    content: ''; position: absolute; z-index: 1; pointer-events: none;
-    top: -8%; left: 34%; width: 122px; height: 116%;
-    transform: rotate(15deg);
-    background: linear-gradient(to bottom,
-      rgba(255,238,170,0.15) 0%, rgba(255,208,40,0.06) 52%, transparent 92%);
-    filter: blur(11px);
-  }
+  /* ── NO REFRACTED BAND (removed 2026-08-08) ──────────────────────────
+     There was a hand-drawn bright strip inside the pane here, meant to
+     read as the beam bending as it passed through the glass. Neil caught
+     it at 1:1 on the phone variant and he was right: it was a bug wearing
+     a physics excuse.
+
+     Two things were wrong with it. The backdrop-filter ALREADY carries the
+     shaft into the pane, so the drawn strip was a SECOND band — one beam
+     went in and two came out. And its angle sat about 8 degrees off the
+     shaft's, so the two diverged further the lower they ran, which is what
+     made the mismatch obvious right at the top edge.
+
+     The physics it was imitating does not work that way either. Light
+     leaving a pane with two parallel faces exits PARALLEL to how it
+     entered, displaced sideways by a hair — and for a pane this thin that
+     displacement is sub-pixel. So the correct render is ONE continuous
+     beam, softened and slightly lifted where it crosses the glass, which
+     is precisely what backdrop-filter already does unaided.
+
+     Rule this leaves behind: never hand-draw an optical effect on top of a
+     filter that is already producing it. Decide which one owns the effect. */
 
   /* ── DUST ────────────────────────────────────────────────────────────
      Grain masked to the beam only, at roughly 3x the ambient grain's
