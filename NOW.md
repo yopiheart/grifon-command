@@ -19,7 +19,8 @@ link: `grifon.ai/i/FOUNDER-01`, kusang bumubukas, hindi tinatangay ang `utm_*`.
 
 **Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na
 ang KONYO/PARTICLE/MAHABA) at **PR #102** `feat/script-audit-domain-lint`
-(`utils/scriptAudit.ts` advisory + `npm run check:domain`, 7 hit).
+(`utils/scriptAudit.ts` advisory + `npm run check:domain`, 7 hit). Plus
+`feat/wallpaper-v6-presence-gauntlet` — wallpaper lang, walang app code, pwedeng i-merge kahit kailan.
 
 **Dalawang desisyon mo, buhay pa:**
 1. Papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun ng `geminiService`,
