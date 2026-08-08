@@ -1,5 +1,22 @@
 # Paolo Landing Page · Buong Copy
 
+> # 🛑 PATAY. WAG ITAYO. — 2026-08-08
+>
+> **Walang ESC ang Oceanides**, kaya may tatlong maling claim ang buong page na to.
+> Wag mong gamitin ang kahit anong bahagi nito nang hindi mo binabasa ang
+> [`compliance-findings-2026-08-08.md`](compliance-findings-2026-08-08.md).
+>
+> - ❌ `LLDA permit` sa trustChips at sa authority line — **wala.** At hindi rin sya
+>   papel ng hauler kahit kailan, papel sya ng establishment at ng facility.
+> - ❌ `DENR-registered hauler` — kay **Globaltec** ang DENR ID, hindi sa Oceanides.
+> - ❌ `Ang LLDA ang wedge` (§Ang wedge) — patay ang buong anggulo.
+> - ⚠️ `15 days ang certificate` — **10 days** per Clause 7 ng MOA.
+> - ✅ `⟦PENDING · B⟧` ay **SAGOT NA**: nakapangalan sa generator (ang kliyente) ang
+>   Certificate of Treatment, per Clause 7. Ito lang ang bahaging buhay.
+>
+> Isinara ni Neil ang Oceanides noong 2026-08-08. Bumalik lang dito kung may
+> hawak nang **sariling ESC** ang Oceanides na may sakop na NCR.
+
 **Ginawa: 2026-08-06** · `grifon-cmo` (copy at strategy) + `grifon-creative-director` (structure at print devices)
 **Para sa:** `funnels/oceanides-paolo/` (bagong standalone funnel, hindi ito ang `oceanides-price-page`)
 **Brief:** [`paolo-funnel-brief.md`](paolo-funnel-brief.md) · **Bakit:** [`../../workflows/ad_performance_ledger.md`](../../workflows/ad_performance_ledger.md) §OCEANIDES-PRICE-01
