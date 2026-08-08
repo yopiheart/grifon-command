@@ -1,13 +1,16 @@
 # set-wallpaper.ps1 — sets a Grifon Noir wallpaper as the Windows desktop background.
 # Idempotent re-arm script (defreezer wipes the wallpaper setting on reboot).
 # Usage (from repo root):
-#   powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v4a-plate
+#   powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v6-prism-mk2
 #   powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Image C:\path\to\any.png
-# Variants: v4a-plate (default) | v4b-aperture | v1 | v2 | v3
+# Variants: v6-prism-mk2 (default, won the 2026-08-08 PRESENCE gauntlet at 72)
+#           v5a-slate-quiet | v5a-slate | v5b-prism-quiet | v5c-monolith-quiet | v5d-lens-quiet
+#           v4a-plate | v4b-aperture | v1 | v2 | v3   (superseded; all scored 42-48)
+# Browse them with scores + reasoning: assets\wallpapers\gallery.html
 # -Variant is interpolated straight into the filename, so any rendered
 # wallpaper-noir-<variant>-3840x2160.png works without touching this script.
 param(
-    [string]$Variant = 'v4a-plate',
+    [string]$Variant = 'v6-prism-mk2',
     [string]$Image = ''
 )
 

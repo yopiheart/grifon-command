@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpaper v5a — Slate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     v5a — SLATE.  The faithful port of the ARTIFACT noir language
+     (assets/grifon-social/noir/slide-1-hook.html, v4 sweep 2026-07-25)
+     onto a 16:9 desktop field.
+
+     v4a claimed these three fixes but only half-landed them at 1920px.
+     What actually changed here, each one visible in a diff of the PNGs:
+
+     1. THE GROUND IS ACTUALLY LIT.  v4a's softbox topped out at #191920
+        over a 1920px field, so by mid-frame it was already #0A0A0C — a
+        flat black plate. The grain then had nothing to vary and read as
+        nothing. Ceiling raised to #20202A and the ellipse widened past
+        the frame so the falloff is a gradient, not an edge.
+
+     2. THE DISPLAY GRADIENT STOPS AT #C6C6CD, NOT #6E6E77.  This is the
+        measured floor from workflows/artifact_noir_style.md: the dark
+        stop of a clipped gradient must land at 10.8:1 or line 2 visibly
+        fades out.  v4a's second line ("SCROLL,") died at ~#8A8A92 and
+        that is the single biggest reason it reads cheap.  Clipped
+        gradient type is DESKTOP-ONLY and legal here — the ban in that
+        spec is scoped to artifacts rendered in the Android WebView.
+
+     3. THE GLASS HAS A RIM, SO IT HAS AN EDGE.  v4a's panel was a
+        translucent rectangle with one hairline border; the ::before rim
+        lens (mask-composite xor) puts BRIGHT silver on the light side
+        and gold where the pool hits it, which is what makes a pane read
+        as a physical object instead of a lowered opacity.
+
+     Composition is icon-safe by construction: everything of weight lives
+     right of x=900, the left third is deliberately empty ground, and the
+     bottom 72px is clear of the Windows taskbar.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #060607; }
+
+  #canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background:
+      /* gold ambient — the pool the whole frame sits inside */
+      radial-gradient(ellipse 1420px 980px at 64% 27%,
+        rgba(255,204,0,0.070) 0%, rgba(255,204,0,0.019) 34%, transparent 66%),
+      /* the softbox itself, running off the frame so falloff never hits a wall */
+      radial-gradient(ellipse 2100px 1420px at 64% 27%,
+        #20202A 0%, #15151B 30%, #0C0C10 64%, #060607 100%);
+  }
+
+  /* Corner vignette. Pulls the four corners down so the softbox reads as a
+     single source rather than an evenly bright plate. */
+  .vignette {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: radial-gradient(ellipse 1600px 1100px at 64% 30%,
+      transparent 0%, transparent 52%, rgba(0,0,0,0.42) 100%);
+  }
+
+  /* The gold pool the serif line sits INSIDE. A real light source, so the
+     text-shadow on the serif can stay tight instead of doing the glowing by
+     itself — a wide dim shadow just traces the glyphs in khaki. */
+  .pool {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 1374px; top: 540px; width: 820px; height: 520px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center,
+      rgba(255,204,0,0.085) 0%, rgba(255,190,0,0.024) 42%, transparent 70%);
+  }
+
+  /* ── The spine ───────────────────────────────────────────────────────
+     One hairline running out of the empty left field into the panel edge.
+     Without it the left third reads as unused space; with it, it reads as
+     deliberate negative space that the composition is hanging from. ── */
+  .thread {
+    position: absolute; z-index: 4; left: 236px; top: 436px;
+    width: 828px; height: 1px;
+    background: linear-gradient(to right,
+      transparent 0%, rgba(255,204,0,0.05) 22%, rgba(255,204,0,0.30) 100%);
+  }
+  .thread::after {
+    content: ''; position: absolute; right: -1px; top: -2px;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #FFCC00; box-shadow: 0 0 10px rgba(255,204,0,0.65);
+  }
+
+  /* ── THE GLASS ───────────────────────────────────────────────────────
+     Layered sheen + inner top-edge highlight + rim lens + deep shadow.
+     Built so it still reads as glass if backdrop-filter is dropped; the
+     blur is enhancement, never the whole effect. ── */
+  .panel {
+    position: absolute; z-index: 5;
+    left: 1064px; top: 372px; width: 624px; height: 336px;
+    border-radius: 28px;
+    isolation: isolate;
+    padding: 52px 58px;
+    display: flex; flex-direction: column; justify-content: center;
+    background:
+      linear-gradient(157deg,
+        rgba(255,255,255,0.115) 0%,
+        rgba(255,255,255,0.028) 44%,
+        rgba(255,255,255,0.070) 100%),
+      rgba(12,12,15,0.40);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.20),
+      inset 0 -1px 0 rgba(255,255,255,0.055),
+      0 44px 96px -30px rgba(0,0,0,0.82),
+      0 8px 28px -12px rgba(0,0,0,0.55);
+  }
+  /* Rim lens — bright silver where the light lands, gold where the pool
+     touches it, near-nothing on the shadow side. */
+  .panel::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.5px; pointer-events: none;
+    background: linear-gradient(148deg,
+      rgba(255,255,255,0.50) 0%,
+      rgba(255,204,0,0.30) 30%,
+      rgba(255,255,255,0.04) 58%,
+      rgba(255,255,255,0.24) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  /* Specular sweep across the upper-left corner of the pane. */
+  .panel::after {
+    content: ''; position: absolute; left: 0; top: 0; right: 0; height: 46%;
+    border-radius: 30px 30px 0 0; pointer-events: none;
+    background: linear-gradient(160deg,
+      rgba(255,255,255,0.055) 0%, transparent 62%);
+  }
+
+  /* ── QUIET TYPE ──────────────────────────────────────────────────────
+     The round-0 critic gave all six variants — including both 2026-07-25
+     baselines — the SAME single biggest gap: "an advertisement shouting at
+     its owner". Six images, three runs each, one complaint. That is not a
+     critique of any one design, it is a confound: slogan size was
+     swamping the whole PRESENCE axis, so the light and material work was
+     never actually being measured.
+
+     So the headline becomes a MARK. High contrast and floating on glass —
+     both of those were right and both are kept — but sized as a label
+     rather than a poster, and stripped of the motivational register. What
+     is left is the only line a wallpaper is entitled to say: whose
+     machine this is. ── */
+  .mark {
+    position: relative;
+    font-weight: 900; font-size: 46px; line-height: 1;
+    letter-spacing: 0.20em; text-transform: uppercase;
+    color: #F8F8FA;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.7);
+  }
+  .under {
+    position: relative;
+    margin-top: 26px; display: flex; align-items: center; gap: 20px;
+  }
+  .under .rule { width: 64px; height: 1px; background: rgba(255,204,0,0.50); }
+  .under .cap {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: 0.34em; text-transform: uppercase; color: #FFCC00; opacity: 0.88;
+  }
+  .stamp {
+    position: relative; margin-top: 34px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: #9A9AA3;
+  }
+
+  /* ── GRAIN ───────────────────────────────────────────────────────────
+     soft-light, not screen — screen only ever lightens, so it milks the
+     blacks into haze instead of graining them. Masked to the light: grain
+     lives in the light, never in the shadow. Sits ABOVE the glass so the
+     pane is grained too, which is what stops it looking like a decal. ── */
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.17; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1700px 1200px at 64% 28%, #000 0%, rgba(0,0,0,0.55) 46%, transparent 80%);
+    mask-image: radial-gradient(ellipse 1700px 1200px at 64% 28%, #000 0%, rgba(0,0,0,0.55) 46%, transparent 80%);
+  }
+
+  .sig {
+    position: absolute; z-index: 6; left: 108px; bottom: 96px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: 0.44em; text-transform: uppercase; color: #83838C;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="vignette"></div>
+  <div class="pool"></div>
+  <div class="thread"></div>
+
+  <div class="panel">
+    <div class="mark">Grifon</div>
+    <div class="under">
+      <span class="rule"></span>
+      <span class="cap">command</span>
+    </div>
+    <div class="stamp">build &middot; verify &middot; commit &middot; push</div>
+  </div>
+
+  <div class="sig">2026</div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>

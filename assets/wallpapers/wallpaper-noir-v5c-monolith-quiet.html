@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpaper v5c — Monolith</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     v5c — MONOLITH.  God-mode candidate 2.
+
+     THE ARGUMENT.  Every other variant in this folder adds. This one
+     subtracts until only three things remain: a wall of black, one seam
+     of light, and a slab standing in front of it. Restraint is the
+     hardest thing to fake and the only quality that survives 500 views,
+     because there is nothing to get tired of.
+
+     The single idea: THE SEAM IS THE SLAB'S EDGE.  The light is not
+     decoration placed near the object — it is the object's lit edge, the
+     way a door ajar in a dark room is a line of light rather than a
+     drawing of one. Remove the slab and the seam becomes meaningless.
+
+     TYPE PRESSED AGAINST THE LIGHT.  The headline is right-aligned and
+     stops one gutter short of the seam, so the light acts as a margin the
+     text is leaning on. This is why it can be quiet and still dominate:
+     the tension is positional, not typographic, so it does not have to
+     shout to hold the frame.
+
+     Icon-safe by construction: the top-left quadrant is pure black ground
+     with nothing in it, and the type block starts below y=380.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #030304; }
+
+  #canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    /* Almost nothing. The only lift in the whole ground is the spill from
+       behind the slab, which the seam justifies. */
+    background:
+      radial-gradient(ellipse 1250px 1500px at 63% 50%,
+        rgba(255,204,0,0.052) 0%, rgba(255,204,0,0.013) 34%, transparent 66%),
+      radial-gradient(ellipse 1800px 1600px at 63% 48%,
+        #14141A 0%, #0C0C10 34%, #07070A 68%, #030304 100%);
+  }
+
+  /* ── THE SEAM ────────────────────────────────────────────────────────
+     Three stacked layers, because a single bright line always reads as a
+     border. A hard 2px core, a tight bloom, and a wide atmospheric haze
+     — that stack is what a real light source does to a camera. ── */
+  .haze {
+    position: absolute; z-index: 2; pointer-events: none;
+    left: 1216px; top: -80px; transform: translateX(-50%);
+    width: 620px; height: 1240px;
+    background: linear-gradient(to right,
+      transparent 0%, rgba(255,204,0,0.075) 50%, transparent 100%);
+    filter: blur(72px);
+  }
+  .bloom {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 1216px; top: 96px; transform: translateX(-50%);
+    width: 118px; height: 892px;
+    background: linear-gradient(to right,
+      transparent 0%, rgba(255,220,90,0.34) 50%, transparent 100%);
+    filter: blur(22px);
+    /* Falls off at both ends so the seam has a beginning and an end,
+       instead of running off the frame like a stripe. */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+  }
+  .seam {
+    position: absolute; z-index: 5; pointer-events: none;
+    left: 1216px; top: 118px; transform: translateX(-50%);
+    width: 2.5px; height: 848px;
+    background: linear-gradient(to bottom,
+      transparent 0%, rgba(255,246,214,0.92) 22%, rgba(255,214,60,0.95) 54%,
+      rgba(255,204,0,0.55) 84%, transparent 100%);
+  }
+
+  /* ── THE SLAB ────────────────────────────────────────────────────────
+     Barely there on purpose. What you read is its lit left edge, a faint
+     top-edge highlight, and the fact that the haze behind it is DIMMER
+     where it stands — which is the only real evidence of an object. ── */
+  .slab {
+    position: absolute; z-index: 4;
+    left: 1218px; top: 118px; width: 424px; height: 848px;
+    border-radius: 4px 26px 26px 4px;
+    background:
+      linear-gradient(100deg,
+        rgba(255,236,170,0.085) 0%,
+        rgba(255,255,255,0.020) 16%,
+        rgba(255,255,255,0.008) 56%,
+        rgba(255,255,255,0.028) 100%),
+      rgba(6,6,9,0.34);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.13),
+      inset 1px 0 0 rgba(255,228,140,0.30),
+      0 70px 130px -50px rgba(0,0,0,0.95);
+  }
+  .slab::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.2px; pointer-events: none;
+    background: linear-gradient(158deg,
+      rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.02) 46%, rgba(255,255,255,0.16) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  /* The floor. One horizontal smear of reflected light under the slab,
+     which is what gives the frame a ground plane and stops the slab from
+     floating in a void. */
+  .floor {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 1290px; top: 1004px; transform: translate(-50%, -50%);
+    width: 900px; height: 150px;
+    background: radial-gradient(ellipse at center,
+      rgba(255,206,20,0.075) 0%, transparent 68%);
+    filter: blur(30px);
+  }
+
+  /* ── TYPE ────────────────────────────────────────────────────────────
+     Right-aligned, stopping 132px short of the seam. Solid near-white:
+     at this scale on near-black, a clipped gradient would only add a
+     weakness. Quiet sizes — the composition is already carrying it. ── */
+  /* ── QUIET TYPE ──────────────────────────────────────────────────────
+     See the note in wallpaper-noir-v5a-slate-quiet.html for why the
+     headline shrank. The one thing that must NOT change is the alignment:
+     this variant's whole idea is type leaning on the wall of light, so the
+     chip stays right-aligned and stops one gutter short of the seam. ── */
+  .badge {
+    position: absolute; z-index: 6;
+    right: 838px; top: 50%; transform: translateY(-50%);
+    border-radius: 22px; padding: 30px 38px;
+    display: flex; flex-direction: column; align-items: flex-end;
+    isolation: isolate;
+    background:
+      linear-gradient(157deg,
+        rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.024) 46%, rgba(255,255,255,0.062) 100%),
+      rgba(8,8,11,0.44);
+    backdrop-filter: blur(26px) saturate(175%);
+    -webkit-backdrop-filter: blur(26px) saturate(175%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      0 36px 74px -26px rgba(0,0,0,0.92);
+  }
+  .badge::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.4px; pointer-events: none;
+    /* Rim runs bright on the RIGHT here, because that is the side facing
+       the seam. Lighting an edge away from the source is the fastest way
+       to make glass look pasted on. */
+    background: linear-gradient(300deg,
+      rgba(255,236,150,0.46) 0%, rgba(255,214,70,0.26) 26%,
+      rgba(255,255,255,0.03) 62%, rgba(255,255,255,0.18) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .mark {
+    position: relative;
+    font-weight: 900; font-size: 42px; line-height: 1;
+    letter-spacing: 0.20em; text-transform: uppercase; color: #F6F6F8;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.8);
+  }
+  .under { position: relative; margin-top: 22px; display: flex; align-items: center; gap: 18px; }
+  .under .rule { width: 58px; height: 1px; background: rgba(255,204,0,0.46); }
+  .under .cap {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.34em; text-transform: uppercase; color: #FFCC00; opacity: 0.86;
+  }
+
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.19; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1500px 1400px at 63% 50%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+    mask-image: radial-gradient(ellipse 1500px 1400px at 63% 50%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+  }
+
+  .sig {
+    position: absolute; z-index: 6; left: 108px; bottom: 96px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.46em; text-transform: uppercase; color: #6F6F79;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="haze"></div>
+  <div class="bloom"></div>
+  <div class="floor"></div>
+  <div class="slab"></div>
+  <div class="seam"></div>
+
+  <div class="badge">
+    <div class="mark">Grifon</div>
+    <div class="under">
+      <span class="rule"></span>
+      <span class="cap">command</span>
+    </div>
+  </div>
+
+  <div class="sig">2026</div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>

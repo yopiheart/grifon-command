@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpaper v5d — Lens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     v5d — LENS.  God-mode candidate 3.
+
+     THE ARGUMENT.  The thing that separates premium key art from a dark
+     gradient is not the colour, it is DEPTH OF FIELD. A frame that has an
+     out-of-focus plane and a razor-sharp plane reads as photographed by a
+     fast lens; a frame where everything is equally sharp reads as drawn in
+     a browser. Every other variant here is uniformly in focus.
+
+     So: a field of defocused gold light points sits behind, and exactly
+     two things are sharp — the glass and the type. The eye is forced to
+     the sharp plane without a single arrow, box or size increase. That is
+     the cheapest attention in design and almost nobody spends it.
+
+     BOKEH IS BUILT, NOT BLURRED.  Discs are drawn with a bright RIM and a
+     dimmer centre, then softened only slightly. Taking a solid circle and
+     applying a heavy blur gives a fuzzy dot, which is what fake bokeh
+     always looks like; real defocus preserves the disc's edge because it
+     is an image of the aperture. Sizes and opacities are varied and a few
+     discs are cut by the frame, because an evenly spaced field reads as
+     a pattern.
+
+     The copy and the optics say the same thing, which is the only reason
+     the effect is allowed to be this loud.
+
+     Icon-safe: the whole field is right of x=880 and falls to black
+     toward the top-left corner.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #050506; }
+
+  #canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background:
+      radial-gradient(ellipse 1400px 1000px at 70% 34%,
+        rgba(255,204,0,0.058) 0%, rgba(255,204,0,0.015) 36%, transparent 68%),
+      radial-gradient(ellipse 2000px 1400px at 70% 32%,
+        #1A1A21 0%, #111116 32%, #0A0A0D 66%, #050506 100%);
+  }
+
+  /* ── THE DEFOCUSED PLANE ─────────────────────────────────────────────
+     Each disc: dim centre, bright rim, faint soften. The `blur` values are
+     deliberately small (2-9px) — the disc EDGE is the whole point. ── */
+  .bokeh { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .b {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%,
+      rgba(255,214,70,0.085) 0%,
+      rgba(255,214,70,0.105) 62%,
+      rgba(255,236,150,0.26) 90%,
+      rgba(255,236,150,0.10) 97%,
+      transparent 100%);
+  }
+  /* A few cooler discs. A monochrome bokeh field looks tinted; one or two
+     neutral highlights make the gold read as gold. */
+  .b.cool {
+    background: radial-gradient(circle at 50% 50%,
+      rgba(228,232,245,0.055) 0%,
+      rgba(228,232,245,0.075) 62%,
+      rgba(244,247,255,0.20) 90%,
+      rgba(244,247,255,0.07) 97%,
+      transparent 100%);
+  }
+  /* Far plane — bigger, dimmer, softer. Near plane — smaller, brighter. */
+  .b.far  { filter: blur(9px); opacity: 0.85; }
+  .b.mid  { filter: blur(5px); }
+  .b.near { filter: blur(2.5px); }
+
+  /* ── THE SHARP PLANE ─────────────────────────────────────────────────
+     Real liquid glass: layered sheen, inner top-edge highlight, rim lens,
+     deep shadow. It sits ON the bokeh, which is the entire composition —
+     glass with nothing behind it has nothing to refract, and that is why
+     v1-v3 could not use it. ── */
+  .panel {
+    position: absolute; z-index: 5;
+    left: 1092px; top: 588px; width: 620px; height: 306px;
+    border-radius: 28px;
+    isolation: isolate;
+    padding: 46px 54px;
+    display: flex; flex-direction: column; justify-content: center;
+    background:
+      linear-gradient(157deg,
+        rgba(255,255,255,0.125) 0%,
+        rgba(255,255,255,0.030) 44%,
+        rgba(255,255,255,0.075) 100%),
+      rgba(11,11,14,0.42);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      inset 0 -1px 0 rgba(255,255,255,0.06),
+      0 48px 100px -32px rgba(0,0,0,0.86),
+      0 10px 30px -14px rgba(0,0,0,0.6);
+  }
+  .panel::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.5px; pointer-events: none;
+    background: linear-gradient(148deg,
+      rgba(255,255,255,0.52) 0%,
+      rgba(255,214,70,0.34) 30%,
+      rgba(255,255,255,0.04) 58%,
+      rgba(255,255,255,0.26) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .panel::after {
+    content: ''; position: absolute; left: 0; top: 0; right: 0; height: 48%;
+    border-radius: 30px 30px 0 0; pointer-events: none;
+    background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, transparent 64%);
+  }
+
+  /* ── QUIET TYPE ──────────────────────────────────────────────────────
+     See the note in wallpaper-noir-v5a-slate-quiet.html. This variant
+     loses the least by shrinking: its subject was never the sentence, it
+     was the two planes of focus. A smaller sharp mark actually sharpens
+     the effect, because the eye has less sharp area to land on. ── */
+  .mark {
+    position: relative;
+    font-weight: 900; font-size: 44px; line-height: 1;
+    letter-spacing: 0.20em; text-transform: uppercase; color: #F8F8FA;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.75);
+  }
+  .under { position: relative; margin-top: 24px; display: flex; align-items: center; gap: 18px; }
+  .under .rule { width: 60px; height: 1px; background: rgba(255,204,0,0.50); }
+  .under .cap {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.34em; text-transform: uppercase; color: #FFCC00; opacity: 0.88;
+  }
+  .stamp {
+    position: relative; margin-top: 30px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: #9A9AA3;
+  }
+
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.17; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1700px 1300px at 68% 34%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 82%);
+    mask-image: radial-gradient(ellipse 1700px 1300px at 68% 34%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 82%);
+  }
+
+  .sig {
+    position: absolute; z-index: 6; left: 108px; bottom: 96px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: 0.44em; text-transform: uppercase; color: #83838C;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+
+  <div class="bokeh">
+    <!-- far plane -->
+    <div class="b far"  style="left:1508px; top:  72px; width:352px; height:352px;"></div>
+    <div class="b far"  style="left: 986px; top: 138px; width:286px; height:286px;"></div>
+    <div class="b far cool" style="left:1792px; top: 330px; width:318px; height:318px;"></div>
+    <div class="b far"  style="left:1206px; top: 372px; width:250px; height:250px;"></div>
+    <!-- mid plane -->
+    <div class="b mid"  style="left:1364px; top: 194px; width:196px; height:196px;"></div>
+    <div class="b mid"  style="left: 878px; top: 402px; width:164px; height:164px;"></div>
+    <div class="b mid cool" style="left:1650px; top: 148px; width:138px; height:138px;"></div>
+    <div class="b mid"  style="left:1122px; top:  36px; width:150px; height:150px;"></div>
+    <div class="b mid"  style="left:1846px; top:  86px; width:206px; height:206px;"></div>
+    <!-- near plane -->
+    <div class="b near" style="left:1290px; top: 288px; width: 96px; height: 96px;"></div>
+    <div class="b near" style="left:1584px; top: 428px; width:114px; height:114px;"></div>
+    <div class="b near cool" style="left:1046px; top: 288px; width: 72px; height: 72px;"></div>
+    <div class="b near" style="left:1730px; top: 246px; width: 84px; height: 84px;"></div>
+    <div class="b near" style="left: 946px; top:  62px; width: 66px; height: 66px;"></div>
+    <div class="b near" style="left:1452px; top:  22px; width: 78px; height: 78px;"></div>
+  </div>
+
+  <div class="panel">
+    <div class="mark">Grifon</div>
+    <div class="under">
+      <span class="rule"></span>
+      <span class="cap">command</span>
+    </div>
+    <div class="stamp">one thing, in focus</div>
+  </div>
+
+  <div class="sig">2026</div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>
