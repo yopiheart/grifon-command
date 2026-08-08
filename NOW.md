@@ -1,79 +1,80 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-08** (session 13)
+**Stamped: 2026-08-08** (session 14)
 
-## ▶ NEXT ACTION — NASA MAIN NA ANG LOCK, PATAY. IKAW NA ANG SUSI.
+## ▶ SARADO NA ANG PINTUAN NG `grifon.ai`. BUHAY ANG LOCK.
 
-**Merged na** ang `claude/grifon-lock-design-9pptxl` (08-08, ff, anim na CI gate pasado
-locally bago i-push). **Walang nagbago sa `grifon.ai`** — dark ang lock hangga't walang env.
+Live 08-08, patunay sa `events`: `launch_gate_redeem`=`FOUNDER-01`, `launch_gate_reject`=`ASDASD`.
+Tatlong code: **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**. Ipadala bilang link,
+`grifon.ai/i/FOUNDER-01` — kusang bumubukas, binubura ang code sa address bar. **Isa kada tao**
+para may tala kung sino ang pumasok: `select ts, event, meta->>'code' from events where
+module='launch_gate' order by ts desc;` (waitlist: `funnel_leads`, `funnel_id='grifon-launch-waitlist'`).
 
-**Para buksan:** Vercel → Environment Variables → `VITE_LAUNCH_LOCK=true` **at**
-`LAUNCH_INVITE_CODES=FOUNDER-01,...` (Production scope) → **REDEPLOY**. Pag-save lang =
-walang epekto, build-time kasi ang flag. Pang-patay: alisin ang una, redeploy ulit.
+Pang-bawi ng isang code: alisin sa `LAUNCH_INVITE_CODES`, **redeploy**. Pang-patay ng buong lock:
+alisin ang `VITE_LAUNCH_LOCK`, **redeploy**. Walang epekto ang pag-save kung walang redeploy.
+Sa **pintuan lang** (`login`/`app`/`checkout`), bukas pa rin ang buong marketing site.
+May pass ka na, 6 na buwan (`grifon_launch_pass_v1`) — **incognito** kung titingnan ulit ang lock.
 
-Sa **pintuan lang** (`login` / `app` / `checkout`) — bukas pa rin ang buong marketing site,
-gumagana lahat ng CTA, sa lock lang dadaong. Dalawang daanan: **access code** (server-side
-ang match, 0 hit sa `dist/`) at **waitlist** (`funnel_leads`, totoong pwesto sa pila). Invite
-link: `grifon.ai/i/FOUNDER-01`, kusang bumubukas, hindi tinatangay ang `utm_*`.
-⚠️ **Hindi diretso sa lock ang hero CTA** — may "Anong business mo?" modal muna.
+## ▶ NEXT ACTION — DALAWANG MAY DEADLINE
 
-**Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na
-ang KONYO/PARTICLE/MAHABA) at **PR #102** `feat/script-audit-domain-lint`
-(`utils/scriptAudit.ts` advisory + `npm run check:domain`, 7 hit).
+1. 🔴 **Node 20 pa ang Vercel runtime.** Fail ang builds simula **Oct 1, 2026**. Node 24 na ang
+   `engines` at lahat ng CI, Vercel lang ang naiwan (range ang `">=24"`, hindi namamap, kaya
+   nanalo ang default). Dialog → Upgrade → redeploy. Bantayan ang `api/render/final.ts` +
+   `api/voice/consolidate.ts`, sila lang ang may `ffmpeg-static`.
+2. 🔴 **FREE ang Supabase, tapos na ang grace period.** *"…will not be able to serve requests
+   when you use up your quota."* Pag naubos, patay ang auth at buong app, hindi lang ang lock.
 
-**Dalawang desisyon mo, buhay pa:**
-1. Papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun ng `geminiService`,
-   kaya hindi ko ginalaw. 6 sa 7 hit ng domain lint ay dito.
-2. ⚠️ Nasa `_template` ang ERROR tier, kaya **ganun na rin ang lahat ng susunod na funnel.**
+**Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na ang
+KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`utils/scriptAudit.ts` +
+`npm run check:domain`, 7 hit) · `feat/wallpaper-v6-presence-gauntlet` (wallpaper lang, safe).
+**Dalawang desisyon mo:** (1) papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun
+ng `geminiService`, hindi ko ginalaw, 6 sa 7 hit ng domain lint ay dito. (2) ⚠️ Nasa `_template`
+ang ERROR tier, kaya **ganun na rin ang lahat ng susunod na funnel.**
 
-⚠️ **Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel** — kailangan ng totoong script
-generation para marating ang review mode. Text budget lang yun, hindi video.
+⚠️ **Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel** — kailangan ng totoong script gen
+para marating ang review mode. Text budget lang yun, hindi video.
 
 ## 🅿 PAOLO — itayo, wag buksan   ← dito ang totoong pera
 
-Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate na hawak.**
-Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build, **hindi naka-deploy, patay
-ang pixel**, may dalawang `⟦PENDING⟧`.
+Pangako pa lang: **walang load na dumaan, walang certificate na hawak.** Nakatayo ang page
+(`funnels/oceanides-paolo/`), green ang build, **hindi naka-deploy, patay ang pixel**, 2 `⟦PENDING⟧`.
 
 1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang bara sa lahat
    ([`facility-call-script.md`](clients/oceanides/facility-call-script.md)). **Sa parehong
-   message:** sino ang na-issuehan na ni Boss Jay ng DENR certificate? Yun ang tanging
-   totoong listahan ng bumibiling Paolo, at libre sya.
-2. Punan ang dalawang `⟦PENDING⟧`, tapos deploy → env var (kamay ni Neil) → **redeploy**,
-   kundi walang epekto ang env.
+   message:** sino ang na-issuehan na ni Boss Jay ng DENR certificate? Yun ang tanging totoong
+   listahan ng bumibiling Paolo, at libre sya.
+2. Punan ang `⟦PENDING⟧`, deploy → env var (kamay ni Neil) → **redeploy**, kundi walang epekto.
 3. Dalawang alok, naka-preselect ang mas mahal. Presyo muna sa facility.
-4. Checkout. ⏳ PayMongo keys ng Oceanides. ⛔ Hindi ang key ng Grifon.
+4. Checkout: ⏳ PayMongo keys ng Oceanides. ⛔ Hindi ang key ng Grifon.
 5. Bagong creative at targeting. ⏳ Aling siyudad ang una, isa lang.
 
 **Nagawa na, wag ulitin:** avatar, value stack, grill, pixel-leak, copy, page, trust card
-(`paolo-trust-a/b`, di pa nai-publish, 82 ang numero ng critic).
+(`paolo-trust-a/b`, di pa nai-publish, 82 ang critic).
 
 ## 🔴 IBANG REGISTER ANG CHAT KAY NEIL
 
-Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang technical
-terms** — hook, retention, frame, syllable, build, lint. Mas mataas ang English, magaan ang
-Tagalog (pandikit lang: yung, kaso, pero, kasi). **Walang formulang naglo-lock** sa ads —
-rotation, depende sa market (ledger **A6**).
+Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang technical terms**
+— hook, retention, frame, syllable, build, lint. Mas mataas ang English, magaan ang Tagalog
+(pandikit lang: yung, kaso, pero, kasi). **Walang formulang naglo-lock** sa ads (ledger **A6**).
 
 ## 🔴 Huwag kalimutan
 
 1. **Route density ang lever, hindi presyo.** Isang siyudad muna.
-2. **Bawal ang CASH refund** sa tripwire. Credit, at isang taon ang bisa.
+2. **Bawal ang CASH refund** sa tripwire. Credit, isang taon ang bisa.
 3. **Patay na ang ₱900 break-even.** Kay Paolo: **₱4,900 kada 1-load na trabaho**.
 4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
-5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at referral,
-   **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
+5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at referral, **hindi FB ad.**
 6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa `assets/ad-swipe/`.
-   🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
+7. 🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
 8. 🔧 **Wag `git add -A` habang may smoke agent** — nasama ang throwaway script nya (08-08).
 
 ## 🅿 PARKED
 
-**Oceanides:** Week 02 pack · GB-001 · hook2 ng KM-004 · Kling b-roll · watermark ni
-Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verified**. ⏸ Pause ang daily.
+**Oceanides:** Week 02 pack · GB-001 · hook2 ng KM-004 · Kling b-roll · watermark ni Gabriel ·
+SEC Reg. No. · FB About · reviews · **AEM di pa verified**. ⏸ Pause ang daily.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED ·
-`artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · bump `@v5` ang `checkout`/`setup-node`.
-**Sarado ang Rauch brief** (roadmap #27, wag i-re-evaluate).
+`artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · bump `@v5` ang `checkout`/`setup-node` ·
+**sarado ang Rauch brief** (roadmap #27, wag i-re-evaluate).
 
 ## ⛔ Gated · 🔧 Arm before starting
 
