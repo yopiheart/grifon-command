@@ -35,6 +35,7 @@ Environment variables (required in `.env`):
 Client-side (`VITE_`-prefixed, bundled into the browser):
 - `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` — auth + database
 - `VITE_PAYMONGO_PUBLIC_KEY` — billing (Philippines)
+- `VITE_LAUNCH_LOCK` — the pre-launch curtain ([components/LaunchLock.tsx](components/LaunchLock.tsx)). `'true'` shows the invite-only lock **in place of the auth gateway** — it gates `login` / `app` / `checkout` only, so the marketing site (landing, pricing, legal) stays fully browsable and every CTA still works, it just lands on the lock instead of sign-up. An already-authenticated user is never locked out. **Build-time** — Vite inlines it, so flipping it on Vercel does nothing until you **redeploy**. Same trap as `VITE_IMAGE_GATE_ENABLED`.
 
 Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
 - `GEMINI_API_KEY` — required by [api/gemini/text.ts](api/gemini/text.ts) and [api/gemini/image.ts](api/gemini/image.ts). Without it the proxy throws `GEMINI_NOT_CONFIGURED`.
@@ -43,6 +44,7 @@ Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
 - `SFX_V2_ENABLED` — `'true'` enables seeded per-ad SFX variant rotation in the final render ([api/_lib/renderFfmpeg.ts](api/_lib/renderFfmpeg.ts)); anything else = legacy static bank. CLASSIC never rotates regardless of the flag.
 - `IMAGE_GATE_ENABLED` **+ `VITE_IMAGE_GATE_ENABLED`** — the P4 scene-image gate. **BOTH must be exactly `'true'`**; either absent = fully dark (pre-P4 behavior). The server flag is read at runtime ([api/gemini/image.ts](api/gemini/image.ts) → 503 when off); the client flag is **build-time**, baked into the bundle by `gateDepsFor` ([services/producerDeps.ts](services/producerDeps.ts)) — **changing it on Vercel does nothing until you redeploy.** ⚠ Asymmetric partial state: client-on + server-off wires the *deterministic* `checkSceneImage`, which HARD-FLAGS scenes and drives the only automated reroll, while the AI gate silently 503s. Set both or neither. Flag-ON preconditions are discharged (metering redesign 2026-07-23; live smoke 2026-07-24 — re-run `RUN_IMAGE_GATE_SMOKE=1` after any `sceneImageModel` change).
 - `SUPABASE_SERVICE_ROLE_KEY` — used by [api/_lib/supabaseAdmin.ts](api/_lib/supabaseAdmin.ts) for token verification and rate-limit RPCs.
+- `LAUNCH_INVITE_CODES` — the codes that open the curtain, read by [api/gate.ts](api/gate.ts). Comma/space/newline separated; matching is case-insensitive and ignores anything outside `A-Z 0-9 -`. **No `VITE_` prefix on purpose** — codes are matched server-side so they never ship in the browser bundle, and revoking one is an env edit + redeploy. Empty while `VITE_LAUNCH_LOCK` is on = `POST /api/gate` returns 503 `gate_not_configured` and nobody can get in. Invite links are `https://grifon.ai/i/FOUNDER-01` (or `?invite=FOUNDER-01`): the code redeems itself on arrival and is scrubbed from the address bar, leaving `utm_*` intact.
 
 ## Working Environment
 

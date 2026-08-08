@@ -40,6 +40,7 @@ import GenerateVideo from './components/GenerateVideo';
 import SignalModulator from './components/SignalModulator';
 import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
+import LaunchLock from './components/LaunchLock';
 import GrifonPricingPage from './components/GrifonPricingPage';
 import CheckoutPage from './components/CheckoutPage';
 import TopUpCheckoutPage from './components/TopUpCheckoutPage';
@@ -77,6 +78,7 @@ import { useSubscription } from './hooks/useSubscription';
 import { useQuota } from './hooks/useQuota';
 import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
+import { LAUNCH_LOCK_ENABLED, hasValidPass } from './services/launchGate';
 import { MAT_PLATE } from './components/ui/materialTokens';
 
 const TOTAL_STEPS = 8;
@@ -99,6 +101,15 @@ if (typeof window !== 'undefined') {
 
 type Route ='landing' | 'login' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
 
+// Routes the pre-launch curtain stands in front of (services/launchGate.ts).
+//
+// Deliberately NARROW: the marketing site stays fully browsable while we are
+// pre-launch — landing, pricing, and the legal pages are how a stranger decides
+// they WANT an invite, so locking them would be locking the shop window. The
+// curtain drops at the moment of ACCOUNT CREATION instead: the auth gateway and
+// anything behind it. Everything else is open.
+const LOCK_GATED_ROUTES: ReadonlySet<Route> = new Set<Route>(['login', 'app', 'checkout']);
+
 const detectInitialRoute = (): Route => {
   if (typeof window === 'undefined') return 'landing';
   const path = window.location.pathname;
@@ -112,6 +123,10 @@ const detectInitialRoute = (): Route => {
   if (path.startsWith('/refund')) return 'refund';
   if (path.startsWith('/support')) return 'support';
   if (path.startsWith('/login')) return 'login';
+  // Invite links (/i/FOUNDER-01) walk the visitor straight to the door they
+  // hold the key for — the curtain intercepts 'login' and redeems the code on
+  // arrival. See services/launchGate.ts takeInviteFromUrl.
+  if (path.startsWith('/i/')) return 'login';
   if (path.startsWith('/app')) return 'app';
   return 'landing';
 };
@@ -227,6 +242,10 @@ const App: React.FC = () => {
   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
+  // Pre-launch curtain. Read once at mount (localStorage), flipped by LaunchLock
+  // after a code is redeemed. Inert unless VITE_LAUNCH_LOCK === 'true' at BUILD
+  // time — see services/launchGate.ts.
+  const [hasLaunchPass, setHasLaunchPass] = useState(() => LAUNCH_LOCK_ENABLED && hasValidPass());
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [activeModule, setActiveModule] = useState<string | null>(null);
   // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
@@ -1132,6 +1151,45 @@ const App: React.FC = () => {
       runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'));
     }
   };
+
+  // ---------------------------------------------------------------------
+  // PRE-LAUNCH CURTAIN — stands at the sign-in/sign-up door, not the front gate.
+  //
+  // A visitor can read the whole marketing site; what they cannot do yet is make
+  // an account. So this intercepts LOCK_GATED_ROUTES only, which means the CTAs
+  // ("create my first ad", the pricing buttons) all still work — they just land
+  // on the lock instead of the auth gateway.
+  //
+  // An authenticated user is never locked out: they were already let in, and the
+  // curtain is about who may JOIN, not who may use it. Same for a visitor
+  // mid-OAuth-bounce (the provider returns to '/', which would otherwise flash
+  // the lock for a frame before the session lands).
+  // ---------------------------------------------------------------------
+  const launchLocked = LAUNCH_LOCK_ENABLED && !hasLaunchPass && !isAuthenticated;
+  if (launchLocked && LOCK_GATED_ROUTES.has(currentRoute)) {
+    const midOAuthReturn =
+      typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('grifon_oauth_pending');
+    // Hold the canvas rather than flash the lock at a user who turns out to
+    // have a session. The check is a local read — this is a frame, not a wait.
+    if (isCheckingSession || midOAuthReturn) {
+      return <div className="min-h-screen bg-zinc-950" />;
+    }
+    return (
+      <ErrorBoundary name="route:launch_lock" resetLabel="RETRY">
+        <LaunchLock
+          // Redeeming a code puts the visitor exactly where they were headed:
+          // the auth gateway, to make the account the curtain was withholding.
+          onUnlock={() => {
+            setHasLaunchPass(true);
+            goToLegal('login');
+          }}
+          onBackToSite={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))}
+          onNavigateLegal={veilToLegal}
+        />
+        <RouteVeil veil={veil} />
+      </ErrorBoundary>
+    );
+  }
 
   if (currentRoute === 'billing_success') {
     return (
