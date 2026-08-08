@@ -90,19 +90,33 @@
   }
 
   /* ── THE MARK, BEHIND THE GLASS ──────────────────────────────────────
-     The first cut pre-blurred this AND let the pane blur it again. Two
-     stages of softening turned the mark into a smudge — recognisable as
-     "something pale" and not as the griffin, which loses the whole point.
-     The pane alone does the blurring now, and the mark is carried
-     brighter to survive it. The rule this taught: when an object is meant
-     to be read THROUGH a material, the material is the only thing allowed
-     to degrade it. ── */
+     Two corrections, in order, both from Neil looking at the render.
+
+     FIRST: the original cut pre-blurred this AND let the pane blur it
+     again. Two stages of softening turned the mark into a smudge. Rule:
+     when an object is meant to be read THROUGH a material, the material is
+     the only thing allowed to degrade it.
+
+     SECOND (and the real one): even with one stage it was still too far
+     gone — "pati ung logo tinago na". The concept was sound and the DOSE
+     was wrong, which is a different failure and needs a different fix.
+
+     Why this mark suffers from blur more than almost anything would: it is
+     LINE ART, not a solid shape. At 300px wide its strokes are roughly
+     14px, and a 9px blur very nearly closes them — the counters fill in
+     and the griffin stops being a griffin. So the fix is mostly SIZE, not
+     opacity: at 380px the strokes run ~18px and survive the glass with
+     their shape intact. Opacity and a small blur reduction finish it.
+
+     The general rule worth keeping: when line art has to survive a blur,
+     widen the stroke before you brighten it. Brightening a closed counter
+     just gives you a brighter blob. ── */
   .griffin-back {
     position: absolute; z-index: 4; pointer-events: none;
-    left: 556px; top: 1250px; transform: translate(-50%, -50%);
-    width: 300px; height: auto;
-    opacity: 0.52;
-    filter: drop-shadow(0 0 26px rgba(255,214,90,0.18));
+    left: 552px; top: 1256px; transform: translate(-50%, -50%);
+    width: 380px; height: auto;
+    opacity: 0.80;
+    filter: drop-shadow(0 0 30px rgba(255,214,90,0.20));
   }
 
   /* ── THE PANE ────────────────────────────────────────────────────────
@@ -122,8 +136,11 @@
         rgba(255,255,255,0.080) 0%, rgba(255,255,255,0.014) 40%,
         rgba(255,222,110,0.028) 72%, rgba(255,255,255,0.046) 100%),
       rgba(10,10,13,0.14);
-    backdrop-filter: blur(9px) saturate(160%) brightness(1.10);
-    -webkit-backdrop-filter: blur(9px) saturate(160%) brightness(1.10);
+    /* 13 -> 9 -> 7. The pane still visibly softens what is behind it, which
+       is all the glass needs to do; past about 8px it stops reading as
+       glass and starts reading as frosting, and frosting hides things. */
+    backdrop-filter: blur(7px) saturate(160%) brightness(1.10);
+    -webkit-backdrop-filter: blur(7px) saturate(160%) brightness(1.10);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.16),
       0 66px 120px -46px rgba(0,0,0,0.92);
