@@ -1,28 +1,33 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-08** (session 12)
+**Stamped: 2026-08-08** (session 13)
 
-## ▶ NEXT ACTION — I-REVIEW AT I-MERGE ANG DALAWANG PR
+## ▶ NEXT ACTION — TATLONG BRANCH ANG NAKAPILA SA REVIEW MO
 
-✅ Tapos na ang 34 babala. Nabasa, nahusgahan, naayos: **34 → 0.**
-✅ ERROR tier na ang KONYO, PARTICLE at MAHABA — sa `_template` at sa dalawang funnel.
+**Bago: `claude/grifon-lock-design-9pptxl`** — ang invite-only lock bago mag-launch.
+Nakatayo sa **pintuan lang** (`login` / `app` / `checkout`), kaya bukas pa rin ang buong
+marketing site. Gumagana pa rin lahat ng CTA, sa lock lang dadaong.
 
-- **PR #103** `fix/voice-lint-particle-surface`. Apat na hakbang: surface-level ang legal
-  exemption (−7) · mabigat na **UGAT** ang target ng MAHABA, hindi mahabang affix (−10) ·
-  IMPERATIVE + terms micro-copy (−7) · `// voice-ok: <dahilan>` escape hatch (−6) · saka
-  ang apat na totoong patay na linya. Beripikado na **totoong bumabagsak** ang bagong tier.
-- **PR #102** `feat/script-audit-domain-lint`. Dalawang deterministic checker: na-check na
-  rin ang output ng AI (`utils/scriptAudit.ts` — advisory, hindi humaharang), at na-check
-  na ang glossary (`npm run check:domain`, 7 hit, WARNING tier).
+- Dalawang daanan: **access code** (server-side ang match sa `LAUNCH_INVITE_CODES`, kaya
+  hindi umaabot sa bundle — verified 0 hit sa `dist/`) at **waitlist** (`funnel_leads`,
+  totoong position sa pila). Invite link: `grifon.ai/i/FOUNDER-01`, kusang bumubukas,
+  binubura ang code sa URL pero **hindi ang `utm_*`**.
+- **Patay pa rin:** **build-time** ang `VITE_LAUNCH_LOCK`. Kailangan nyan **at** ng
+  `LAUNCH_INVITE_CODES` sa Vercel, tapos **REDEPLOY**. Walang epekto ang pag-save lang.
+- Smoke: 8/8 sa phone viewport, kasya sa isang screen. ⚠️ **Hindi diretso sa lock ang hero
+  CTA** — may "Anong business mo?" modal muna (`enterAppWithSegmentation`, luma na).
 
-**Dalawang desisyon mo:**
+**Luma pa rin, di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0,
+ERROR tier na ang KONYO/PARTICLE/MAHABA) at **PR #102** `feat/script-audit-domain-lint`
+(`utils/scriptAudit.ts` advisory + `npm run check:domain`, 7 hit).
+
+**Dalawang desisyon mo, buhay pa:**
 1. Papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun ng `geminiService`,
    kaya hindi ko ginalaw. 6 sa 7 hit ng domain lint ay dito.
 2. ⚠️ Nasa `_template` ang ERROR tier, kaya **ganun na rin ang lahat ng susunod na funnel.**
-   Pagbalik sa babala: isang linya, ibalik ang `&& warns.length === 0`.
 
 ⚠️ **Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel** — kailangan ng totoong script
-generation para marating ang review mode. Text budget lang yun, hindi video, kaya kaya pa.
+generation para marating ang review mode. Text budget lang yun, hindi video.
 
 ## 🅿 PAOLO — itayo, wag buksan   ← dito ang totoong pera
 
@@ -47,8 +52,8 @@ ang pixel**, may dalawang `⟦PENDING⟧`.
 
 Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang technical
 terms** — hook, retention, frame, syllable, build, lint. Mas mataas ang English, magaan ang
-Tagalog (pandikit lang: yung, kaso, pero, kasi). Register ng Gemini / Director AI at GPT ang
-target. **Walang formulang naglo-lock** sa ads — rotation, depende sa market (ledger **A6**).
+Tagalog (pandikit lang: yung, kaso, pero, kasi). **Walang formulang naglo-lock** sa ads —
+rotation, depende sa market (ledger **A6**).
 
 ## 🔴 Huwag kalimutan
 
@@ -58,10 +63,9 @@ target. **Walang formulang naglo-lock** sa ads — rotation, depende sa market (
 4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
 5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at referral,
    **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
-6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa `assets/ad-swipe/`,
-   kaya may dalang axis ang corpus. Kailangan ng organic corpus.
-7. 🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.** Nakaligtaan ko ang isang
-   ERROR sa paolo dahil dito (08-08). Sarili kong `voice-ok` comment pala ang may em dash.
+6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa `assets/ad-swipe/`.
+7. 🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
+8. 🔧 **Wag `git add -A` habang may smoke agent** — nasama ang throwaway script nya (08-08).
 
 ## 🅿 PARKED
 
