@@ -291,7 +291,7 @@ const LaunchLock: React.FC<LaunchLockProps> = ({ onUnlock, onBackToSite, onNavig
                     aria-hidden="true"
                     className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#FFCC00] shadow-[0_0_6px_rgba(255,204,0,0.8)] animate-pulse"
                   />
-                  <MetaLabel>// PRIVATE — FOUNDING COHORT</MetaLabel>
+                  <MetaLabel>// PRIVATE · FOUNDING COHORT</MetaLabel>
                 </div>
 
                 {/* --- HEADLINE ---------------------------------------- */}
@@ -299,7 +299,11 @@ const LaunchLock: React.FC<LaunchLockProps> = ({ onUnlock, onBackToSite, onNavig
                   <span className="bg-gradient-to-b from-zinc-100 to-zinc-500 bg-clip-text text-transparent">
                     ACCOUNTS ARE{' '}
                   </span>
-                  <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">
+                  {/* nowrap: the hyphen is a legal break point, and letting it
+                      break renders the accent word as "invite-" / "only" across
+                      two lines — the one place in the headline that must read
+                      as a single idea. */}
+                  <span className="whitespace-nowrap font-serif italic normal-case tracking-normal text-[#FFCC00]">
                     invite-only
                   </span>
                   <span className="bg-gradient-to-b from-zinc-100 to-zinc-500 bg-clip-text text-transparent">
@@ -467,7 +471,7 @@ const LaunchLock: React.FC<LaunchLockProps> = ({ onUnlock, onBackToSite, onNavig
           </button>
           <p className="flex items-center gap-1.5">
             <KeyRound aria-hidden="true" className="h-3 w-3 text-on-surface-sublabel" />
-            <MetaLabel>// GRIFON COMMAND — PRIVATE BETA</MetaLabel>
+            <MetaLabel>// GRIFON COMMAND · PRIVATE BETA</MetaLabel>
           </p>
           <p className="flex items-center gap-3">
             <button

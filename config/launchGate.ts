@@ -29,7 +29,7 @@ export const WAITLIST_FUNNEL_ID = 'grifon-launch-waitlist';
  * new rows record; existing rows keep the text they were actually shown.
  */
 export const WAITLIST_CONSENT_TEXT =
-  'Email me when a seat opens. Grifon launch updates only — no spam, unsubscribe anytime.';
+  'Email me when a seat opens. Grifon launch updates only, no spam, unsubscribe anytime.';
 
 /**
  * Canonical form of an invite code: uppercase, A-Z/0-9/dash only.
