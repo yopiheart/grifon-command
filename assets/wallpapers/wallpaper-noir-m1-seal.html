@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Mobile m1 — Seal</title>
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     m1 — SEAL.  Phone, 1080x2340 (19.5:9).
+
+     THIS ONE BEATS THE OLD WALLPAPER ON ITS OWN TERMS. Same archetype —
+     one round hero object, centred, glowing, floating — but with two
+     things the old render did not have.
+
+     1. THE RIGHT MARK. The old one carries a generic front-facing eagle:
+        two eyes, a symmetrical beak, a feathered ruff. Grifon's actual
+        mark is a PROFILE griffin drawn in one continuous white line,
+        framed by a gold hairline ring (public/logo.png +
+        components/ui/GrifonMark.tsx). Nothing in the old image is ours.
+
+     2. NO ORNAMENT. The old render fills its disc with radiating spokes,
+        concentric rings and two companion discs, none of which follow a
+        light source or mean anything — they are there to look expensive.
+        That is why it tires: the centre is full but empty. Here the disc
+        is a plain machined face, and every bright thing on it is either
+        the ring catching the light or the mark. One companion disc
+        survives, far back and heavily defocused, because depth is a
+        reason; three is decoration.
+
+     PHONE SAFE ZONES (why the composition sits where it does):
+       y 0-660     lock-screen clock and date. Must stay dark and empty.
+       y 660-2100  the hero band. Home-screen icons cover most of this, so
+                   the wallpaper's job here is light, not detail.
+       y 2100-2340 home indicator / dock.
+     The seal is centred at y=1310 (56%), which reads under the clock on
+     the lock screen and still peeks between icon rows on the home screen.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #050506; }
+
+  #canvas {
+    position: relative;
+    width: 1080px;
+    height: 2340px;
+    overflow: hidden;
+    /* Source sits centre-right and slightly above the seal, so the top of
+       the frame falls away dark for the clock and the bottom keeps a
+       little floor light for the object to stand on. */
+    background:
+      radial-gradient(ellipse 760px 760px at 62% 52%,
+        rgba(255,204,0,0.075) 0%, rgba(255,204,0,0.018) 36%, transparent 68%),
+      radial-gradient(ellipse 1180px 1500px at 62% 54%,
+        #1B1B22 0%, #121217 32%, #0A0A0D 66%, #050506 100%);
+  }
+
+  /* ── COMPANION DISC ──────────────────────────────────────────────────
+     Far plane. Small, dim, heavily defocused, cut by the frame edge. It
+     exists only to put something BEHIND the seal so the seal has a front
+     to be in. ── */
+  .far-disc {
+    position: absolute; z-index: 2; pointer-events: none;
+    left: -96px; top: 780px; width: 340px; height: 340px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 62% 34%, rgba(255,222,120,0.10) 0%, transparent 62%),
+      #0E0E13;
+    box-shadow: inset 0 0 0 2px rgba(255,204,0,0.14);
+    filter: blur(14px);
+    opacity: 0.75;
+  }
+
+  /* ── THE FLOOR ───────────────────────────────────────────────────────
+     A pool of reflected light plus a contact shadow. An object with no
+     occlusion under it always reads as floating in a void; the pair is
+     what puts it in a room. ── */
+  .pool {
+    position: absolute; z-index: 2; pointer-events: none;
+    left: 540px; top: 1836px; transform: translate(-50%, -50%);
+    width: 900px; height: 210px;
+    background: radial-gradient(ellipse at center,
+      rgba(255,206,30,0.10) 0%, rgba(255,200,0,0.028) 40%, transparent 70%);
+    filter: blur(24px);
+  }
+  .contact {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 540px; top: 1706px; transform: translate(-50%, -50%);
+    width: 470px; height: 78px;
+    background: radial-gradient(ellipse at center,
+      rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.44) 44%, transparent 74%);
+    filter: blur(14px);
+  }
+
+  /* ── THE SEAL ────────────────────────────────────────────────────────
+     A machined charcoal disc, lit from the upper right. The bevel is done
+     with two inset shadows rather than a drawn edge: a bright one on the
+     lit side and a dark one opposite, which is what a chamfer actually
+     does to light. ── */
+  .seal {
+    position: absolute; z-index: 5;
+    left: 540px; top: 1310px; transform: translate(-50%, -50%);
+    width: 620px; height: 620px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(circle at 68% 26%,
+        rgba(255,255,255,0.085) 0%, rgba(255,255,255,0.012) 34%, transparent 62%),
+      radial-gradient(circle at 62% 32%, #1D1D25 0%, #121218 46%, #09090C 100%);
+    box-shadow:
+      inset -2px -3px 0 rgba(0,0,0,0.55),
+      inset 3px 4px 0 rgba(255,244,214,0.10),
+      inset 0 0 70px rgba(0,0,0,0.55),
+      0 46px 90px -30px rgba(0,0,0,0.92);
+  }
+  /* Rim lens on the disc edge: bright where the light lands, gold where it
+     grazes, near-nothing on the shadow side. */
+  .seal::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    padding: 2px; pointer-events: none;
+    background: linear-gradient(214deg,
+      rgba(255,255,255,0.46) 0%, rgba(255,214,70,0.34) 28%,
+      rgba(255,255,255,0.03) 60%, rgba(255,236,160,0.20) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  /* ── THE BRAND RING ──────────────────────────────────────────────────
+     GrifonMark's rule is a 1px gold hairline with NO glow and a small even
+     gap, so the ring frames the griffin instead of reading as a button.
+     That rule is written for UI chrome. Here the ring is a physical gold
+     wire in a lit scene, so it is allowed the bloom a real one would
+     have — but TIGHT, per the noir spec: a wide dim halo traces the wire
+     in khaki, a tight bright one reads as gold. The gap is kept. ── */
+  .ring {
+    position: absolute; z-index: 6; pointer-events: none;
+    left: 540px; top: 1310px; transform: translate(-50%, -50%);
+    width: 716px; height: 716px; border-radius: 50%;
+    border: 1.5px solid rgba(255,204,0,0.82);
+    box-shadow:
+      0 0 16px rgba(255,204,0,0.22),
+      inset 0 0 16px rgba(255,204,0,0.10);
+  }
+
+  /* ── THE MARK ────────────────────────────────────────────────────────
+     Solid white, exactly as the brand draws it. The only additions are
+     edge lighting: a warm sliver on the side facing the source and the
+     shadow thrown the other way. No gradient fill — a clipped gradient on
+     a line-art mark thins the strokes and the mark stops reading. ── */
+  .griffin {
+    position: relative;
+    width: 268px; height: auto; display: block;
+    margin-left: -6px;
+    filter:
+      drop-shadow(2px 0 2px rgba(255,214,90,0.30))
+      drop-shadow(-4px 6px 18px rgba(0,0,0,0.92));
+  }
+
+  /* Grain, soft-light, masked to the light — grain lives in the light,
+     never in the shadow. Above everything so the seal is grained too,
+     which is what stops it looking like a decal. */
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.17; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 900px 1200px at 62% 54%, #000 0%, rgba(0,0,0,0.55) 46%, transparent 80%);
+    mask-image: radial-gradient(ellipse 900px 1200px at 62% 54%, #000 0%, rgba(0,0,0,0.55) 46%, transparent 80%);
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="far-disc"></div>
+  <div class="pool"></div>
+  <div class="contact"></div>
+
+  <div class="seal">
+    <img class="griffin" src="../../public/logo.png" alt="">
+  </div>
+  <div class="ring"></div>
+
+  <div class="grain"></div>
+</div>
+</body>
+</html>

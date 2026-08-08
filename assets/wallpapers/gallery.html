@@ -16,6 +16,10 @@
   table.scores th { color: #d4d4d8; border-bottom: 1px solid #26262b; }
   table.scores td.win { color: #FFCC00; font-weight: 700; }
   .grid { display: grid; grid-template-columns: 1fr; gap: 28px; max-width: 1100px; }
+  .grid.phone { grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; }
+  .grid.phone .meta { display: block; }
+  .grid.phone .meta span { display: block; text-align: left; margin-top: 6px; }
+  .grid.phone .meta a { margin: 0 12px 0 0; }
   .card { background: #101014; border: 1px solid #26262b; border-radius: 14px; overflow: hidden; }
   .card.best { border-color: #FFCC00; }
   .card img { width: 100%; display: block; }
@@ -160,6 +164,61 @@
         <span>ninuno ng v6; dito pa naka-kahon ang wordmark
           <a href="wallpaper-noir-v5b-prism-quiet-3840x2160.png">4K</a>
           <a href="wallpaper-noir-v5b-prism-quiet-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Telepono &mdash; 1080x2340 at 2160x4680</h2>
+  <div class="note">
+    <b style="color:#d4d4d8">Ang pinapalitan.</b> Ang lumang mobile wallpaper ay isang gintong
+    medalyon na may ibang ibon: harap na tingin, dalawang mata, simetrikong tuka. <b>Hindi yun ang
+    mark natin.</b> Ang atin ay tagilid na griffin na iginuhit sa isang tuloy-tuloy na puting linya,
+    nakakulong sa manipis na gintong bilog (<code>public/logo.png</code> +
+    <code>components/ui/GrifonMark.tsx</code>). At ang mga sinag, singsing at lumulutang na disc doon
+    ay hindi sumusunod sa kahit anong ilaw. Palamuti lang para mukhang mahal, kaya puno ang gitna pero
+    walang laman.
+    <br><br>
+    <b style="color:#d4d4d8">Ang totoong pagpipilian, at hindi ito depekto.</b> Sa telepono, hindi mo
+    pwedeng pagsabayin ang dalawa: kinakain ng orasan ang itaas na 28%, at tinatakpan ng icon grid ang
+    gitna. Kaya <b>m1</b> ay para sa lock screen, kita ang seal sa ilalim ng orasan, pero natatabunan
+    sya ng icon sa home screen. Ganun din ang luma mo, ganun din ang pwesto nito. Ang <b>m2</b> at
+    <b>m3</b> ay may bigat sa gilid, kaya kaya nilang dalawa. Nakuha ito ng critic sa m1 at tama sya.
+    <br><br>
+    Score sa bagong <code>presence_phone</code> axis (data lang, hindi hatol &mdash; tinalo ni Neil ang
+    rubric noong desktop at tama sya): m2 62, m3 55, m1 48.
+  </div>
+  <div class="grid phone">
+    <div class="card">
+      <img src="wallpaper-noir-m2-prism-1080x2340.png" alt="m2 prism">
+      <div class="meta">
+        <b>m2 &mdash; Prism <span style="color:#9aa0a6">&nbsp;62</span></b>
+        <span>kapatid ng desktop mo. Ang mark ay nasa LIKOD ng salamin, kaya kita mo syang lumalabo
+          &mdash; yun lang ang patunay na totoong transparent ang pane.
+          <a href="wallpaper-noir-m2-prism-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m2-prism-1080x2340.png">1x</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-m3-ascent-1080x2340.png" alt="m3 ascent">
+      <div class="meta">
+        <b>m3 &mdash; Ascent <span style="color:#9aa0a6">&nbsp;55</span></b>
+        <span>gawa para sa patayong screen, hindi hiniram sa desktop. Ang tahi ay gilid ng slab, at
+          ang mark ay <b>hindi pininturahan</b>, pinuno ng ilaw.
+          <a href="wallpaper-noir-m3-ascent-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m3-ascent-1080x2340.png">1x</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-m1-seal-1080x2340.png" alt="m1 seal">
+      <div class="meta">
+        <b>m1 &mdash; Seal <span style="color:#9aa0a6">&nbsp;48</span></b>
+        <span>parehong archetype ng luma mo pero tamang mark at zero palamuti. Pinakamalakas sa lock
+          screen, natatabunan sa home screen.
+          <a href="wallpaper-noir-m1-seal-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m1-seal-1080x2340.png">1x</a>
         </span>
       </div>
     </div>
