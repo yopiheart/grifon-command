@@ -2,23 +2,23 @@
 
 **Stamped: 2026-08-08** (session 13)
 
-## ▶ NEXT ACTION — TATLONG BRANCH ANG NAKAPILA SA REVIEW MO
+## ▶ NEXT ACTION — NASA MAIN NA ANG LOCK, PATAY. IKAW NA ANG SUSI.
 
-**Bago: `claude/grifon-lock-design-9pptxl`** — ang invite-only lock bago mag-launch.
-Nakatayo sa **pintuan lang** (`login` / `app` / `checkout`), kaya bukas pa rin ang buong
-marketing site. Gumagana pa rin lahat ng CTA, sa lock lang dadaong.
+**Merged na** ang `claude/grifon-lock-design-9pptxl` (08-08, ff, anim na CI gate pasado
+locally bago i-push). **Walang nagbago sa `grifon.ai`** — dark ang lock hangga't walang env.
 
-- Dalawang daanan: **access code** (server-side ang match sa `LAUNCH_INVITE_CODES`, kaya
-  hindi umaabot sa bundle — verified 0 hit sa `dist/`) at **waitlist** (`funnel_leads`,
-  totoong position sa pila). Invite link: `grifon.ai/i/FOUNDER-01`, kusang bumubukas,
-  binubura ang code sa URL pero **hindi ang `utm_*`**.
-- **Patay pa rin:** **build-time** ang `VITE_LAUNCH_LOCK`. Kailangan nyan **at** ng
-  `LAUNCH_INVITE_CODES` sa Vercel, tapos **REDEPLOY**. Walang epekto ang pag-save lang.
-- Smoke: 8/8 sa phone viewport, kasya sa isang screen. ⚠️ **Hindi diretso sa lock ang hero
-  CTA** — may "Anong business mo?" modal muna (`enterAppWithSegmentation`, luma na).
+**Para buksan:** Vercel → Environment Variables → `VITE_LAUNCH_LOCK=true` **at**
+`LAUNCH_INVITE_CODES=FOUNDER-01,...` (Production scope) → **REDEPLOY**. Pag-save lang =
+walang epekto, build-time kasi ang flag. Pang-patay: alisin ang una, redeploy ulit.
 
-**Luma pa rin, di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0,
-ERROR tier na ang KONYO/PARTICLE/MAHABA) at **PR #102** `feat/script-audit-domain-lint`
+Sa **pintuan lang** (`login` / `app` / `checkout`) — bukas pa rin ang buong marketing site,
+gumagana lahat ng CTA, sa lock lang dadaong. Dalawang daanan: **access code** (server-side
+ang match, 0 hit sa `dist/`) at **waitlist** (`funnel_leads`, totoong pwesto sa pila). Invite
+link: `grifon.ai/i/FOUNDER-01`, kusang bumubukas, hindi tinatangay ang `utm_*`.
+⚠️ **Hindi diretso sa lock ang hero CTA** — may "Anong business mo?" modal muna.
+
+**Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na
+ang KONYO/PARTICLE/MAHABA) at **PR #102** `feat/script-audit-domain-lint`
 (`utils/scriptAudit.ts` advisory + `npm run check:domain`, 7 hit).
 
 **Dalawang desisyon mo, buhay pa:**
@@ -64,7 +64,7 @@ rotation, depende sa market (ledger **A6**).
 5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at referral,
    **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
 6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa `assets/ad-swipe/`.
-7. 🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
+   🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
 8. 🔧 **Wag `git add -A` habang may smoke agent** — nasama ang throwaway script nya (08-08).
 
 ## 🅿 PARKED
