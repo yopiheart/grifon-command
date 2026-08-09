@@ -640,7 +640,23 @@ export function planScene(
   // Captions may not draw before this moment (overlay owns the band until then).
   let overlayClearSec = 0;
 
-  if (oText && !dup) {
+  // A `subtitle` overlay IS the spoken line — that is what the style means to the
+  // model, so it writes the whole line in (unlike `callout`/`hook`, which it keeps
+  // short). The caption layer below then chunks the SAME line off voiceWords, so the
+  // scene plays the line twice: once as a static block that lands BEFORE she says it
+  // (spoiling it), then again as karaoke. `dup` above exists to catch exactly this
+  // and misses on any spelling difference — here "8 hours" vs "Eight hours" (Neil,
+  // 2026-08-09).
+  //
+  // So don't compare strings: when the scene carries word timings, the karaoke
+  // caption is strictly better (tracks the mouth, no spoiler) and the static copy is
+  // dropped. No timings → no karaoke to replace it → it stays and carries the line.
+  // `callout`/`punchline` are untouched: they are short, face-aware, and say
+  // something the line does not.
+  const subtitleCoveredByKaraoke =
+    overlay?.style === 'subtitle' && !!cap && !!scene.voiceWords?.length;
+
+  if (oText && !dup && !subtitleCoveredByKaraoke) {
     const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * preset.caption.overlaySizeFrac), adv);
     const color = overlay!.style === 'callout' || overlay!.style === 'punchline'
       ? preset.caption.highlightColor

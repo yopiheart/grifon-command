@@ -152,3 +152,38 @@ describe('planScene — overlay onset (#94.1)', () => {
     expect(empty.endSec).toBe(absent.endSec);
   });
 });
+
+// A `subtitle` overlay carries the whole spoken line (that is what the style means
+// to the model), and the caption layer chunks the SAME line off voiceWords. Shipping
+// both plays the line twice and the static copy lands BEFORE she says it. Found by
+// Neil on real footage 2026-08-09: overlay "Ako si Sarah. 8 hours sa desk araw-araw."
+// over a line reading "Eight hours" — the existing string-equality `dup` guard could
+// never catch it, because one spelled the numeral and the other did not.
+describe('planScene — subtitle overlay vs karaoke caption', () => {
+  const LINE = 'Ako si Sarah. Eight hours sa desk araw-araw.';
+  const WORDS: VoiceWord[] = [
+    vw('Ako', 0.15, 0.4), vw('si', 0.45, 0.6), vw('Sarah', 0.65, 1.1),
+    vw('Eight', 1.2, 1.6), vw('hours', 1.65, 2.0), vw('sa', 2.05, 2.2),
+    vw('desk', 2.25, 2.6), vw('araw-araw', 2.65, 3.2),
+  ];
+  const scene = (over: string, style: 'subtitle' | 'callout', words?: VoiceWord[]): FinalRenderScene => ({
+    sceneIdx: 1, videoUrl: 'v', sceneType: 'talking', scriptLine: LINE,
+    overlayText: [{ text: over, startSec: 0, endSec: 5, style, position: 'bottom' }],
+    ...(words ? { voiceWords: words } : {}),
+  });
+  const hasText = (s: FinalRenderScene, text: string) =>
+    planScene(s, 6, [1080, 1920], HYPE, 0).some((l) => l.kind === 'text' && l.text.includes(text));
+
+  it('drops the static subtitle when the karaoke caption will carry the line', () => {
+    // The numeral spelling differs, so string equality cannot save us here.
+    expect(hasText(scene('Ako si Sarah. 8 hours sa desk araw-araw.', 'subtitle', WORDS), '8 hours')).toBe(false);
+  });
+
+  it('keeps the subtitle when there is no karaoke to replace it', () => {
+    expect(hasText(scene('Ako si Sarah. 8 hours sa desk araw-araw.', 'subtitle'), '8 hours')).toBe(true);
+  });
+
+  it('never touches a callout — it is short and says something the line does not', () => {
+    expect(hasText(scene('8 HOURS SA DESK', 'callout', WORDS), '8 HOURS SA DESK')).toBe(true);
+  });
+});
