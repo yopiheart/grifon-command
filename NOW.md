@@ -21,10 +21,10 @@ Auth + database na lang ang nandun. Tingnan ang usage page minsan; wag nang itur
 **Tapos 08-09:** lead-in trim (`_lib/voiceLeadIn.ts`, **TTS lang**, sinisira nya ang lip sync sa
 STS) · hook hold 1.0 → **0.5** · ₱0 restitch (`build-restitch-spec`→`resign`→`fill-alignment`).
 
-🔴 **SUNOD: sabay putulin ang boses AT ang video sa STS scenes** (`2.29s` sa `2.95s` na natitirang
-patay). Sa talking scene ang mp3 ay audio mismo ng video, kaya ang lead-in nya ay ang tao bago
-magsalita: boses lang ang putulin at mauuna sya sa labi (napatunayan 08-09). Kailangan ng `-ss` sa
-video input + iusog ang `sfxCues`; tapos na ang mp3 at ang `voiceWords`.
+✅ **Tapos na ang lead-in**, pati ang STS (sabay ang boses at video, buhay ang labi). Patay na oras:
+`3.44s → 1.73s` sa 32s na ad. 🔴 **SUNOD: ang `1.01s` na nasa GITNA ng scene.** Ibang trabaho yun,
+split-at-concat sa loob ng scene, at may tanong muna: **jump cut yun sa mukha.** Desisyon ni Neil.
+🟡 Hindi format-aware ang `HOOK_REVEAL_HOLD_SEC` (0.5); may lugar na sya sa `RenderPreset`.
 
 **Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na ang
 KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`utils/scriptAudit.ts` +
