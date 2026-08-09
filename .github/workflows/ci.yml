@@ -46,6 +46,14 @@ jobs:
       - name: Funnel voice-lint sync
         run: npm run check:voice-sync
 
+      # Guard on the guards. The PreToolUse gates (env-warden, tuned-file-gate)
+      # are invisible when they work and equally invisible when a regex quietly
+      # stops matching. On its first run this harness caught two dead gates: a
+      # verb list where `env` matched the `.env` filename itself, and a tuned
+      # gate that passed a real prompt edit clean. Pure bash + grep, no deps.
+      - name: Permission-gate harness
+        run: bash tools/hook_gate_test.sh
+
       - name: Test (vitest)
         run: npm run test
 

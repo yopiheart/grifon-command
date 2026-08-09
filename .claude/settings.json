@@ -60,6 +60,28 @@
             "statusMessage": "lock-sync-gate: chine-check ang package-lock.json bago ang commit"
           }
         ]
+      },
+      {
+        "comment_envWarden": "The warden principle, applied to the AGENT instead of the browser. api/* already keeps GEMINI_API_KEY / ELEVEN_LABS_API_KEY out of the client bundle (and check:bundle-leak fails CI if a prompt escapes), but .env itself — including SUPABASE_SERVICE_ROLE_KEY, which bypasses RLS — was readable by any Read call, every subagent, and the codex-executor lane that hands work to a third-party model. A secret that enters the transcript cannot be un-read. DENY not ask: .env.example carries every key NAME, which is all any code needs, and the processes that need the VALUES (vite dev middleware, vercel, node) read the file themselves. Metadata (ls, Test-Path) stays legal; content reads, copies and interpreter-eval reads do not. Known limit: it gates tool calls, not what a spawned CLI does on its own.",
+        "matcher": "Read|Edit|Write|NotebookEdit|Grep|Glob|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash .claude/hooks/env-warden.sh"
+          }
+        ]
+      },
+      {
+        "comment_tunedFileGate": "CLAUDE.md's oldest rule — 'prompts, system instructions, response schemas and model IDs are tuned, do not edit their content without explicit approval' — was enforced only by prose and the surgical-edit skill, while six hooks guarded money, builds, lockfiles and language. agent_lessons.md 2026-05-09 is what that costs. ASK not deny, because the rule says 'not without approval', not 'never': both files are mixed (prompts.ts holds zod schemas and parsers beside the prompt bank) and CLAUDE.md explicitly allows transport/type/refactor edits, so a deny would block legitimate work and could not be overridden even when Neil agrees. The prompt IS the approval step. Also makes CLAUDE.md's '/goal may not target tuned content' enforceable — an unattended goal stalls here instead of quietly rewriting a prompt.",
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash .claude/hooks/tuned-file-gate.sh"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [
