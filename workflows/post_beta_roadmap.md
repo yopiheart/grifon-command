@@ -342,7 +342,58 @@ remaining structural fix. Neil endorsed scoping it during the Session G grill
 
 ---
 
-### 10. AI Editor — Final-Render Executor + Trailing-Silence Trim (the unbuilt Remotion Lambda)
+### 10. ✅ SHIPPED — AI Editor Final-Render Executor + Trailing-Silence Trim (built on FFmpeg, NOT Remotion)
+
+> **STATUS CORRECTED 2026-08-10.** This item read "the unbuilt Remotion Lambda" and
+> described a stub. **It is built.** Not on Remotion — on the FFmpeg pipeline that shipped
+> in the meantime. Every load-bearing claim in the old "Why parked" was verified false:
+>
+> | Old claim | Reality (verified 2026-08-10) |
+> |---|---|
+> | "the Remotion Lambda … is **not wired**" | `api/render/final.ts` + `api/_lib/renderFfmpeg.ts` (1,144 lines, `ffmpeg-static` + `spawnSync`) ship the render server-side |
+> | "`EditVideo.tsx:266-269` is a **stub brain**" | `components/EditVideo.tsx:495` calls `renderFinalVideo()` from `services/finalRenderService.ts`, with error handling |
+> | "the only output today is a **downloadable EDL JSON**" | EDL download still exists, but final-render is a real action beside it |
+> | "`keepSegments` is a **script-text heuristic**, not audio speech-end detection" | `resolveSpeechEndSec()` (`renderFfmpeg.ts:542`) runs `silencedetect` on the voice MP3. The EDL heuristic survives only as the **fallback for audio-less scenes** |
+> | "So nothing assembles a final video, so **nothing trims silence**" | Both exist. `SILENCE_MIN_SEC = 0.4`, `PAD_SEC = 0.18` so the last word is never clipped, and the **last scene trims razor-tight (0.06s)** after a 2026-06-10 review caught a Kling ghost/dissolve tail |
+>
+> The stale `services/geminiService.ts:1269-1273` line reference now points at unrelated
+> prompt text — the file moved out from under the citation. **Lesson: a roadmap item that
+> cites line numbers rots silently.** Verify before resuming any parked item here.
+>
+> Related follow-on work continued through 2026-08-09 (lead-in/head trim in
+> `api/_lib/voiceLeadIn.ts`, STS video cut, hook hold 1.0 → 0.5s), so the tail trim this
+> item asked for is now one part of a broader, tuned trim system. **Treat
+> `renderFfmpeg.ts` as TUNED.** Do not rebuild any of this.
+
+**⛔ Remotion verdict: CLOSED, twice, and the case got weaker since.**
+
+1. **2026-06-08** — FFmpeg burn-in was chosen over Remotion for the caption/overlay
+   engine, marked *do not reopen*.
+2. **2026-07-22** ([`hyperframes_decision.md`](hyperframes_decision.md)) — *"if the parked
+   Remotion Lambda final-render executor ever revives, **Hyperframes supersedes Remotion
+   as the candidate** (plain HTML > framework-specific React for LLM authoring)."*
+3. **Since then** the FFmpeg executor actually shipped (above), so the vacancy Remotion
+   was proposed to fill no longer exists.
+
+Remotion is still headless Chrome underneath, so it hits the **same 300s Vercel wall**
+that ruled out browser rendering in the product. And it would be a *fourth* renderer beside
+FFmpeg / Hyperframes / Omni (plus the `grifon-promo-canvas` lane) — which is `ai-editor`
+premortem #3, "the registry rots." Note also that the canvas lane already implements
+Remotion's actual core idea: `drawFrame(ctx, t)` is `useCurrentFrame()`. Adopting Remotion
+would buy React syntax and AWS Lambda, not the concept.
+
+**↻ The ONE condition that reopens it.** Remotion Lambda's real moat is **server-side,
+horizontally-scaled, data-driven template rendering** — one motion template + an array of
+data → N variants rendered in parallel in the cloud. Nothing we own can do that:
+Hyperframes is a local CLI, the canvas lane is single-process, FFmpeg is per-job.
+**If a product feature ever needs that** (e.g. "render 20 variants of one template from a
+data set"), Remotion is the right tool and **beats Hyperframes for that specific job** —
+a local CLI does not scale. Today we have no such need: the 12-recipe sample batch is full
+AI-pipeline renders where the cost is Veo/Kling model calls, not compositing, so Remotion
+would save nothing. Do not reopen on general enthusiasm; reopen only on that requirement.
+
+<details>
+<summary>Original item text (kept for provenance — describes the pre-FFmpeg world)</summary>
 
 **What:** Build the Phase-2 executor that renders the AI Editor's EDL (cut-list JSON)
 into a single trimmed final MP4, including **audio-based trailing-silence trim** — cut
@@ -390,6 +441,8 @@ runtime availability is the key unknown (shared with item #9).
 4–6 is dead air + blur, my editor will cut it, correct?") + the 2026-05-29 PM handoff #3
 verification that the trimmer/executor is unbuilt. Neil endorsed scoping (not building) it
 during the gate session.
+
+</details>
 
 ---
 
