@@ -5,8 +5,22 @@ Bawat recipe sa launcher ay may sariling row. Ang layunin ay mapunan ang `SAMPLE
 manifest sa [`components/OneShotAd/recipes.ts`](../components/OneShotAd/recipes.ts) para
 may makita ang user sa halip na "Sample soon".
 
-**Bakit may checklist:** 12 recipe, mga ₱550 kada buong render (batay sa 2026-07-31 smoke),
-kaya mga **₱6,600** kung sabay-sabay. Sunod-sunod, hindi sabay, at may quality bar muna.
+**Bakit may checklist:** 12 recipe, at may quality bar bago ang bayad na render. Sunod-sunod,
+hindi sabay.
+
+> **KOREKSYON SA GASTOS (2026-08-10).** Ang lumang linya dito ay `₱550 kada render × 12 =
+> ₱6,600`. Mali ang batayan. Ang ₱550 ay galing sa **9-scene** na admin smoke noong
+> 2026-07-31. Walang customer na aabot ng 9 — ang `SCENE_CAP` ([`utils/planGate.ts`](../utils/planGate.ts))
+> ay **4 para sa Starter at Pro**, 6 sa Business. Kung ang sample ay katulad ng totoong
+> output ng produkto, **₱273 kada isa, mga ₱3,280 ang buong 12** — kalahati ng takot.
+> Patakbuhin ang `npm run cost:estimate` para sa kasalukuyang numero; binabasa nito ang
+> totoong `routeModel()` at `pickSceneDuration()`, kaya kusang gumagalaw kapag nagbago ang
+> routing. Dalawang bagay ang nakasabit dito na desisyon ni Neil:
+>
+> 1. **Ilang scene ang sample?** Kung 4, kamukha nya ang bibilhin ng customer at mas mura.
+>    Kung 9, mas maganda ang demo pero hindi na yun ang totoong produkto.
+> 2. **Hindi pa verified ang presyo ng Kling.** Naka-calibrate lang sa iisang render na
+>    binayaran natin. Isa pang render sa **ibang** scene count ang magpapatino nito.
 
 > **Kasalukuyang estado (2026-08-09): `export const SAMPLES = {}` — WALA PA NI ISA.**
 > Kaya ang bawat card sa gallery ay "Sample soon", at ang hero video sa landing ay wala rin.
