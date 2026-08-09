@@ -137,7 +137,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // change. Alignment decides where — amplitude cannot tell a breath from a
       // word, which is why the earlier silencedetect attempt failed. No alignment
       // (issue #96) → cut is 0 → byte-identical to today.
-      const leadInCut = planLeadInCut(words);
+      //
+      // TTS ONLY, AND THIS IS LOAD-BEARING. On an STS scene the MP3 is the scene
+      // MP4's own audio with the voice swapped, so its lead-in IS the character
+      // standing there before she speaks — the timing that keeps her lips in sync
+      // (see sceneVoiceRoute.ts: "preserves"). Cutting it runs the voice ahead of
+      // the mouth, which is exactly what happened on the 2026-08-09 A/B: the voice
+      // moved 1.27s earlier and the picture did not. Removing dead air from a
+      // talking scene means cutting the VIDEO too, which is renderer work, not this.
+      const leadInCut = route.unit === 'tts' ? planLeadInCut(words) : 0;
       if (leadInCut > 0) {
         try {
           mp3 = await trimLeadIn(mp3, leadInCut);
