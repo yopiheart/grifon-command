@@ -158,15 +158,18 @@ describe('chooseTrim', () => {
     expect(plan.padAudio).toBe(false);
   });
 
-  it('hook: holds the reveal ~1s past the VO end and pads the short audio', () => {
+  // The hold went 1.0 → 0.5 on 2026-08-09 (Neil, A/B'd on real footage): the hook's
+  // trailing silence sat at seconds 3.8-5.0, which is where the viewer decides to
+  // keep watching. 0.5s still lands the reveal; 1.0s read as dead air.
+  it('hook: holds the reveal 0.5s past the VO end and pads the short audio', () => {
     const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, PROBE, 2.8);
-    expect(plan.trimSec).toBeCloseTo(3.8, 3); // 2.8 VO end + 1.0 reveal hold
+    expect(plan.trimSec).toBeCloseTo(3.3, 3); // 2.8 VO end + 0.5 reveal hold
     expect(plan.padAudio).toBe(true);
   });
 
   it('hook: the reveal-hold cannot overrun the clip', () => {
-    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, 4.0, 3.6);
-    expect(plan.trimSec).toBeCloseTo(4.0, 3); // 3.6 + 1.0 capped to the 4.0 clip
+    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, 3.9, 3.6);
+    expect(plan.trimSec).toBeCloseTo(3.9, 3); // 3.6 + 0.5 capped to the 3.9 clip
     expect(plan.padAudio).toBe(true);
   });
 

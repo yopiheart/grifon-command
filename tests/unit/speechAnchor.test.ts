@@ -86,7 +86,7 @@ describe('resolveSpeechEndSec — trim anchor (#91)', () => {
     expect(resolveSpeechEndSec({}, true, measure({ silence: null }))).toBeNull();
   });
 
-  it('hook: the anchored speech-end still buys the 1s reveal hold through chooseTrim', () => {
+  it('hook: the anchored speech-end still buys the 0.5s reveal hold through chooseTrim', () => {
     const scene: Pick<FinalRenderScene, 'voiceWords' | 'keepFullClip' | 'audioUrl'> = {
       keepFullClip: true, audioUrl: 'voice.mp3',
       voiceWords: [vw('Tignan', 0.2, 0.7), vw('mo', 0.8, 1.62)],
@@ -94,7 +94,7 @@ describe('resolveSpeechEndSec — trim anchor (#91)', () => {
     const detectedSec = resolveSpeechEndSec(scene, false, measure({ audio: 6 }));
     expect(detectedSec).toBeCloseTo(1.8, 3); // 1.62 + 0.18
     const plan = chooseTrim(scene, 6, detectedSec);
-    expect(plan.trimSec).toBeCloseTo(2.8, 3); // + HOOK_REVEAL_HOLD_SEC
+    expect(plan.trimSec).toBeCloseTo(2.3, 3); // 1.8 + 0.5 HOOK_REVEAL_HOLD_SEC
     expect(plan.padAudio).toBe(true);
   });
 });

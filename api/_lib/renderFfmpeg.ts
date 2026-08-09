@@ -51,7 +51,7 @@ const PAD_SEC = 0.18;           // keep a soft final word from being clipped
 const LAST_SCENE_PAD_SEC = 0.06;
 const SILENCE_NOISE_DB = '-35dB';
 const SILENCE_MIN_SEC = '0.4';  // min trailing-silence run to treat as dead air
-const HOOK_REVEAL_HOLD_SEC = 1.0; // hook: hold the product reveal this long past the VO end (vs a long silent morph tail)
+const HOOK_REVEAL_HOLD_SEC = 0.5; // hook: hold the product reveal this long past the VO end (vs a long silent morph tail)
 
 const DIMS: Record<string, [number, number]> = {
   '9:16': [1080, 1920],
