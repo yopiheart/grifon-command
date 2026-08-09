@@ -25,6 +25,10 @@
   var BRAND = {
     name: 'GRIFON',
     font: 'Inter, "Helvetica Neue", Helvetica, Arial, sans-serif',
+    // DESIGN.md `label-caps` + index.html's stated LAW: labels, buttons and
+    // technical data are JetBrains Mono, wide-tracked. v1 set every string in
+    // Inter, which quietly broke the one type rule the app states as a law.
+    mono: 'JBMono, "JetBrains Mono", ui-monospace, monospace',
     ink: '#ffffff',
     gold: '#FFCC00',        // Grifon Gold — the only accent
     goldDeep: '#B88A00',
@@ -121,6 +125,33 @@
   }
 
   function setFont(ctx, weight, size) { ctx.font = weight + ' ' + size + 'px ' + BRAND.font; }
+  function setMono(ctx, weight, size) { ctx.font = weight + ' ' + size + 'px ' + BRAND.mono; }
+
+  /*  label-caps — DESIGN.md's mono meta-label role: JetBrains Mono, 0.15em
+      tracking, uppercase. Used for the `//` chips, the watermark, the small
+      caps leads and the CTA button (index.html: labels/buttons/tech-data are
+      mono, and that file calls it a LAW). Canvas has no portable letterSpacing,
+      so tracking is drawn per character. */
+  function monoCaps(ctx, txt, cx, y, size, color, alpha, weight, track) {
+    setMono(ctx, weight || '600', size);
+    var sp = track === undefined ? size * 0.15 : track;
+    var w = trackW(ctx, txt, sp);
+    ctx.save();
+    ctx.globalAlpha = alpha === undefined ? 1 : alpha;
+    ctx.fillStyle = color;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    trackFill(ctx, txt, cx - w / 2, y, sp);
+    ctx.restore();
+    return w;
+  }
+
+  /*  Assets the engine draws but does not own. drawFrame must stay pure and
+      synchronous (the renderer seeks it out of order), so images are decoded
+      once by the host — render.js on disk, the shell from a data URI — and
+      handed in here. Every consumer checks for null and falls back, so a
+      missing asset degrades instead of throwing. */
+  var ASSETS = { logo: null };
+  function setAssets(a) { for (var k in a) if (a[k]) ASSETS[k] = a[k]; }
   function trackW(ctx, txt, sp) {
     var w = 0; for (var i = 0; i < txt.length; i++) w += ctx.measureText(txt[i]).width + sp;
     return txt.length ? w - sp : 0;
@@ -234,12 +265,13 @@
   }
 
   function watermark(ctx) {
-    setFont(ctx, '700', 17);
+    setMono(ctx, '600', 15);
+    var wmW = trackW(ctx, 'GRIFON.AI', 2.2);
     ctx.save();
     ctx.globalAlpha = 0.30;
     ctx.fillStyle = '#ffffff';
-    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
-    ctx.fillText('GRIFON.AI', W - 30, 34);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    trackFill(ctx, 'GRIFON.AI', W - 30 - wmW, 34, 2.2);
     ctx.restore();
   }
 
@@ -297,7 +329,7 @@
     backdrop(ctx, t, false);
 
     var lead = inv(t, 0.02, 0.38);
-    centerText(ctx, 'PARA SA ISANG AD', H * 0.235, 34, '700', BRAND.steel, easeOut(lead) * 0.95);
+    monoCaps(ctx, 'PARA SA ISANG AD', W / 2, H * 0.235, 22, BRAND.steelLit, easeOut(lead) * 0.95);
 
     var cards = [
       { txt: '3 DAYS', sub: '// ANG HINTAY', at: 0.18, peso: false },
@@ -332,10 +364,7 @@
         ctx.fillText(c.txt, cx, cy + 6);
       }
 
-      setFont(ctx, '700', 21);
-      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-      ctx.fillStyle = BRAND.steel;
-      ctx.fillText(c.sub, cx, cy + 46);
+      monoCaps(ctx, c.sub, cx, cy + 46, 15, BRAND.steelLit, 1);
       ctx.restore();
     }
 
@@ -376,7 +405,7 @@
 
     var y = H * 0.44;
     // MEET — small, ember, above.
-    centerText(ctx, 'MEET', y - 104, snapped ? 30 : 26, '700',
+    monoCaps(ctx, 'ETO ANG', W / 2, y - 104, snapped ? 22 : 19,
       snapped ? BRAND.gold : BRAND.goldDeep, snapped ? 0.9 : 0.55 * easeOut(pre));
 
     // The wordmark. 2-frame snap: size and colour both jump.
@@ -456,9 +485,9 @@
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       ctx.fillStyle = BRAND.ink;
       ctx.fillText(steps[i], lx, yy);
-      setFont(ctx, '700', 19);
-      ctx.fillStyle = hexa(BRAND.gold, 0.72);
-      ctx.fillText('// 0' + (i + 1), lx + 2, yy + 40);
+      setMono(ctx, '600', 14);
+      ctx.fillStyle = hexa(BRAND.gold, 0.78);
+      trackFill(ctx, '// 0' + (i + 1), lx + 2, yy + 40, 2.1);
       ctx.restore();
     }
 
@@ -470,12 +499,20 @@
   }
 
   /* =========================== SCENE 5 — OFFER ===========================
-     STAT-SLAM. One number, big and centred, gold on darkness.             */
+     STAT-SLAM, but the slam is a WORD, not a price.
+
+     v1 slammed ₱997 here. That breaks the CMO hard constraint — never put OUR
+     price in a video script — and it breaks it at the worst moment: a cold
+     viewer eight seconds in starts comparison shopping before he has seen the
+     thing work. The competitor prices (₱30K/MO, ₱5,000) stay, because those
+     are the VILLAIN's numbers and they are the whole positioning. Ours goes.
+     LIBRE is the stronger slam anyway — Reciprocity, and it asks for a much
+     smaller first commitment.                                               */
   function sceneOffer(ctx, t, p) {
     backdrop(ctx, t, true);
 
     var lead = inv(t, 0.02, 0.34);
-    centerText(ctx, 'LAHAT NG TO, KADA BUWAN', H * 0.265, 27, '700', BRAND.steel, easeOut(lead) * 0.9);
+    monoCaps(ctx, 'ANG UNANG AD MO', W / 2, H * 0.265, 22, BRAND.steelLit, easeOut(lead) * 0.9);
 
     var slam = inv(t, 0.42, 0.60);
     var sw4 = swell(inv(t, 0.42, 2.9));
@@ -483,20 +520,17 @@
 
     if (slam > 0) {
       var s = lerp(1.28, 1.0, easeOut4(slam));
-      setFont(ctx, '900', 114);
-      var w = pesoAdvance(ctx, 114) + ctx.measureText('997').width;
+      setFont(ctx, '900', 132);
+      var w = ctx.measureText('LIBRE.').width;
       ctx.save();
       ctx.translate(W / 2, yb); ctx.scale(s, s); ctx.translate(-W / 2, -yb);
       scrim(ctx, yb - 20, 130, 0.5);
       shapeBloom(ctx, function (k) {
-        var bw = w * k * 0.42, bh = 74 * k * 0.40;
-        rr(ctx, W / 2 - bw, yb - 42 - bh * 0.30, bw * 2, bh * 1.3 + 42, 22);
-      }, BRAND.gold, 0.46 * sw4);
-      drawPrice(ctx, '997', W / 2, yb, 114, BRAND.gold, 1);
+        var bw = w * k * 0.42, bh = 86 * k * 0.40;
+        rr(ctx, W / 2 - bw, yb - 48 - bh * 0.30, bw * 2, bh * 1.3 + 48, 22);
+      }, BRAND.gold, 0.50 * sw4);
+      centerText(ctx, 'LIBRE.', yb, 132, '900', BRAND.gold, 1);
       ctx.restore();
-
-      setFont(ctx, '900', 30);
-      centerText(ctx, '/ BUWAN', yb + 44, 30, '900', hexa(BRAND.gold, 0.62), Math.min(1, slam * 1.6));
     }
 
     // The free-first-ad line, held to the end of the beat.
@@ -509,7 +543,7 @@
       ctx.fillStyle = 'rgba(255,204,0,0.10)';
       ctx.fill();
       ctx.lineWidth = 1.4; ctx.strokeStyle = hexa(BRAND.gold, 0.45); ctx.stroke();
-      centerText(ctx, 'UNANG AD — LIBRE', by + 53, 34, '900', BRAND.gold, 1);
+      centerText(ctx, 'Walang bayad para subukan.', by + 52, 26, '700', BRAND.steelLit, 1);
       ctx.restore();
     }
 
@@ -529,24 +563,38 @@
     // The hero glow, carried over from the offer beat's gold.
     glow(ctx, W / 2, cy, lerp(150, 300, rise) * sw5, BRAND.gold, 0.20 * sw5);
 
-    // Emblem stand-in: a gold ring with the wordmark inside. Drawn, not
-    // imported — the PNG emblem is 2.8 MB and would bloat every frame.
+    /*  The real griffin mark (public/logo.png), in the lockup the brand already
+        uses on logo-badge.png: white mark inside a gold ring. v1 drew a fake
+        letter "G" here and justified it with "the PNG is 2.8 MB" — which was
+        wrong twice over. It is decoded ONCE at startup, not per frame, and the
+        2.8 MB file is griffin-emblem.png (the 3D bust); the actual mark is
+        logo.png. If the asset is missing the ring still draws, so a bad path
+        degrades to something shippable instead of throwing mid-render.        */
+    var R = 92;
     ctx.save();
     ctx.globalAlpha = rise;
-    ctx.beginPath();
-    ctx.arc(W / 2, cy, 86, 0, Math.PI * 2);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = hexa(BRAND.gold, 0.85);
+
+    ctx.beginPath();                                     // gold ring
+    ctx.arc(W / 2, cy, R, 0, Math.PI * 2);
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = hexa(BRAND.gold, 0.80);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(W / 2, cy, 86, -Math.PI * 0.85, -Math.PI * 0.35);
+    ctx.beginPath();                                     // hot arc, upper-left
+    ctx.arc(W / 2, cy, R, -Math.PI * 0.88, -Math.PI * 0.38);
     ctx.lineWidth = 4;
     ctx.strokeStyle = hexa(BRAND.goldHot, 0.95);
     ctx.stroke();
-    setFont(ctx, '900', 54);
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = BRAND.gold;
-    ctx.fillText('G', W / 2, cy + 3);
+
+    if (ASSETS.logo) {
+      var lh = R * 1.12;                                 // fit by height
+      var lw = lh * (ASSETS.logo.width / ASSETS.logo.height);
+      ctx.drawImage(ASSETS.logo, W / 2 - lw / 2, cy - lh / 2, lw, lh);
+    } else {
+      setFont(ctx, '900', 54);
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = BRAND.gold;
+      ctx.fillText('G', W / 2, cy + 3);
+    }
     ctx.restore();
 
     var wm = inv(t, 0.34, 0.76);
@@ -578,15 +626,17 @@
       var g = ctx.createLinearGradient(W / 2 - bw3 / 2, by2, W / 2 + bw3 / 2, by2 + bh3);
       g.addColorStop(0, BRAND.goldHot); g.addColorStop(0.45, BRAND.gold); g.addColorStop(1, '#F0B800');
       ctx.fillStyle = g; ctx.fill();
-      setFont(ctx, '900', 27);
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      setMono(ctx, '800', 23);
+      var ctaSp = 2.4, ctaTxt = 'GUMAWA NG UNANG AD';
+      var ctaW = trackW(ctx, ctaTxt, ctaSp);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       ctx.fillStyle = '#0b0b0d';
-      ctx.fillText('GUMAWA NG UNANG AD — LIBRE', W / 2, by2 + bh3 / 2 + 1);
+      trackFill(ctx, ctaTxt, W / 2 - ctaW / 2, by2 + bh3 / 2 + 1, ctaSp);
       ctx.restore();
     }
 
     var foot = inv(t, 1.25, 1.72);
-    centerText(ctx, 'PARA SA NEGOSYANTENG PINOY', H * 0.905, 20, '700', BRAND.steel, easeOut(foot) * 0.85);
+    monoCaps(ctx, 'PARA SA NEGOSYANTENG PINOY', W / 2, H * 0.905, 15, BRAND.steelLit, easeOut(foot) * 0.85);
 
     watermark(ctx);
   }
@@ -606,5 +656,5 @@
     }
   }
 
-  return { W: W, H: H, FPS: FPS, DUR: DUR, drawFrame: drawFrame, TIMELINE: TIMELINE, BRAND: BRAND };
+  return { W: W, H: H, FPS: FPS, DUR: DUR, drawFrame: drawFrame, setAssets: setAssets, TIMELINE: TIMELINE, BRAND: BRAND };
 });
