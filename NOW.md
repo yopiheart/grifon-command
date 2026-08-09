@@ -21,19 +21,18 @@ Auth + database na lang ang nandun. Tingnan ang usage page minsan; wag nang itur
 **Tapos 08-09:** lead-in trim (`_lib/voiceLeadIn.ts`, **TTS lang**, sinisira nya ang lip sync sa
 STS) · hook hold 1.0 → **0.5** · ₱0 restitch (`build-restitch-spec`→`resign`→`fill-alignment`).
 
-✅ **Tapos na ang lead-in**, pati ang STS (sabay ang boses at video, buhay ang labi). Patay na oras:
-`3.44s → 1.73s` sa 32s na ad. 🔴 **SUNOD: ang `1.01s` na nasa GITNA ng scene.** Ibang trabaho yun,
-split-at-concat sa loob ng scene, at may tanong muna: **jump cut yun sa mukha.** Desisyon ni Neil.
-🟡 Hindi format-aware ang `HOOK_REVEAL_HOLD_SEC` (0.5); may lugar na sya sa `RenderPreset`.
+✅ **08-09, apat na ayos, LAHAT ng format:** lead-in trim (TTS) · STS video cut (buhay ang labi) ·
+hook hold 1.0→0.5 · dobleng linya. Patay na oras `3.44s → 1.73s`.
+🔴 **SUNOD: [`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — 11 quality gate
++ 12 recipe, wala pang laman ang `SAMPLES`. Gate 5-11 muna bago ang batch (₱550 kada render, 12
+sila). Unang tatlo: `real_talk`, `before_after`, `unboxing_asmr`. Dun din galing ang landing hero.
 
 **Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na ang
 KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`utils/scriptAudit.ts` +
 `npm run check:domain`, 7 hit). Merged na ang wallpaper branch (08-09).
 **Dalawang desisyon mo:** (1) papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun
 ng `geminiService`, 6 sa 7 hit ng domain lint. (2) ⚠️ Nasa `_template` ang ERROR tier, **ganun na
-rin ang lahat ng susunod na funnel.**
-
-⚠️ **Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel.** Kailangan ng totoong script gen.
+rin ang susunod na funnel.** ⚠️ Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel.
 
 ## 🅿 PAOLO — itayo, wag buksan   ← dito ang totoong pera
 
