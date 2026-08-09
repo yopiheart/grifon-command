@@ -1,19 +1,17 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-08** (session 14)
+**Stamped: 2026-08-09** (session 15)
 
 ## ▶ SARADO NA ANG PINTUAN NG `grifon.ai`. BUHAY ANG LOCK.
 
-Live 08-08, patunay sa `events`: `launch_gate_redeem`=`FOUNDER-01`, `launch_gate_reject`=`ASDASD`.
-Tatlong code: **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**. Ipadala bilang link,
-`grifon.ai/i/FOUNDER-01` — kusang bumubukas, binubura ang code sa address bar. **Isa kada tao**
-para may tala kung sino ang pumasok: `select ts, event, meta->>'code' from events where
-module='launch_gate' order by ts desc;` (waitlist: `funnel_leads`, `funnel_id='grifon-launch-waitlist'`).
-
-Pang-bawi ng isang code: alisin sa `LAUNCH_INVITE_CODES`, **redeploy**. Pang-patay ng buong lock:
-alisin ang `VITE_LAUNCH_LOCK`, **redeploy**. Walang epekto ang pag-save kung walang redeploy.
-Sa **pintuan lang** (`login`/`app`/`checkout`), bukas pa rin ang buong marketing site.
-May pass ka na, 6 na buwan (`grifon_launch_pass_v1`) — **incognito** kung titingnan ulit ang lock.
+Live 08-08. Tatlong code: **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, ipadala bilang link
+(`grifon.ai/i/FOUNDER-01`), kusang bumubukas at binubura ang code sa address bar. **Isa kada tao**
+para may tala: `select ts, event, meta->>'code' from events where module='launch_gate' order by
+ts desc;` (waitlist: `funnel_leads`, `funnel_id='grifon-launch-waitlist'`). Pang-bawi ng isang
+code: alisin sa `LAUNCH_INVITE_CODES`. Pang-patay ng lock: alisin ang `VITE_LAUNCH_LOCK`.
+**Walang epekto ang pag-save kung walang redeploy.** Sa **pintuan lang** (`login`/`app`/`checkout`),
+bukas pa rin ang buong marketing site. May 6-buwang pass ka na (`grifon_launch_pass_v1`),
+**incognito** kung titingnan ulit ang lock.
 
 ## ▶ NEXT ACTION — DALAWANG MAY DEADLINE
 
@@ -67,6 +65,9 @@ Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang
 6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa `assets/ad-swipe/`.
 7. 🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
 8. 🔧 **Wag `git add -A` habang may smoke agent** — nasama ang throwaway script nya (08-08).
+9. 🔒 **Hook na ang bantay sa `.env` at sa tuned files** (08-09). DENY ang pagbasa ng `.env`
+   (kaya kamay mo na ang pag-edit nun), ASK kada edit sa `geminiService.ts`/`prompts.ts`, kaya
+   hihinto dun ang `/goal`. Verifier: `bash tools/hook_gate_test.sh`, naka-wire na sa CI.
 
 ## 🅿 PARKED
 
@@ -80,11 +81,9 @@ SEC Reg. No. · FB About · reviews · **AEM di pa verified**. ⏸ Pause ang dai
 
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
-⚠️ Di napupunta sa PATH ang `gh` — buong path:
-`C:\Users\Administrator\AppData\Local\Programs\GitHubCLI\bin\gh.exe` (patunay 08-08, gana).
+⚠️ Wala sa PATH ang `gh`: `C:\Users\Administrator\AppData\Local\Programs\GitHubCLI\bin\gh.exe`.
 ⚠️ `npx playwright install chromium` — kinakain ng defreezer kada session.
 ⚠️ Sariling `node_modules` ang bawat funnel · **wag i-pipe ang build output**.
 
 ### How to maintain this file
-**Overwrite, never append.** Rewriting it is the last action of any session that changed the
-work. Verifier fails past 90 lines.
+**Overwrite, never append.** Huling hakbang ito ng session na nagbago ng estado. Max 90 linya.
