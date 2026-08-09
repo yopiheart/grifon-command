@@ -26,6 +26,7 @@ import {
   FLIP_C1, FLIP_C3, MIN_SFX_GAP,
   type DrawLayer, type TextLayer, type WordTiming, type SfxCandidate,
 } from './drawPlan.js';
+import { planLeadInCut, shiftWords } from './voiceLeadIn.js';
 export * from './drawPlan.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
@@ -477,6 +478,26 @@ function checkFfmpegCapabilities(): void {
   }
 }
 
+/**
+ * Slide a scene's own-timeline anchors back by the lead-in cut, so they still
+ * describe the media AFTER `-ss leadInSec` has been applied to both inputs.
+ *
+ * Two things live on that timeline: `voiceWords` (captions, and the trim-to-
+ * speech-end anchor) and `sfxCues[].anchorSec` (diegetic sounds). Miss either and
+ * the sound or the text fires early by exactly the cut.
+ *
+ * Returns the SAME object when there is no cut — the no-cut path must stay
+ * byte-identical, since that is every TTS scene and every scene without alignment.
+ */
+export function shiftSceneForLeadIn(scene: FinalRenderScene, leadInSec: number): FinalRenderScene {
+  if (leadInSec <= 0) return scene;
+  return {
+    ...scene,
+    voiceWords: scene.voiceWords ? shiftWords(scene.voiceWords, leadInSec) : scene.voiceWords,
+    sfxCues: scene.sfxCues?.map((c) => ({ ...c, anchorSec: Math.max(0, c.anchorSec - leadInSec) })),
+  };
+}
+
 /** Probe a media file's duration (seconds) by reading ffmpeg's Duration line. */
 export function probeDurationSec(path: string): number | null {
   // `ffmpeg -i <file>` with no output exits non-zero but prints Duration to stderr.
@@ -630,7 +651,8 @@ function buildScene(
   cameraFilter: string | null = null, // zoom/pan/punch, applied before drawtext
   preset: RenderPreset = CLASSIC,
   hookFontName: string | null = null, // BARE hook-title font (falls back to fontName)
-  sweepName: string | null = null // BARE sweep.png in `dir` (premium hook glint)
+  sweepName: string | null = null, // BARE sweep.png in `dir` (premium hook glint)
+  leadInSec: number = 0 // seconds of pre-speech dead air to skip on BOTH inputs
 ): void {
   const [w, h] = dims;
 
@@ -700,8 +722,13 @@ function buildScene(
   const vGraph = stmts.join(';');
 
   // --- Inputs: [0]=video, [1]=audio (voice or silence), [2..]=sfx, [last]=sweep. ---
-  const inputs: string[] = ['-y', '-i', videoPath];
-  if (audioPath) inputs.push('-i', audioPath);
+  // `-ss` before `-i` is INPUT seeking, and it is applied to the video and the voice
+  // identically so the two stay locked to each other (an STS scene's lip-sync is the
+  // whole reason this cut is done here and not on the audio alone). SFX inputs are
+  // never seeked — their offsets were already rebased by shiftSceneForLeadIn.
+  const ss = leadInSec > 0 ? ['-ss', leadInSec.toFixed(3)] : [];
+  const inputs: string[] = ['-y', ...ss, '-i', videoPath];
+  if (audioPath) inputs.push(...ss, '-i', audioPath);
   else inputs.push('-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000');
   for (const s of sfx) inputs.push('-i', s.path);
   if (sweepInputIdx !== null) inputs.push('-loop', '1', '-t', premiumDur.toFixed(3), '-i', join(dir, sweepName as string));
@@ -907,7 +934,19 @@ export async function renderFinalVideo(
     let elapsed = 0; // cumulative timeline position = current scene's start
 
     for (let i = 0; i < ordered.length; i++) {
-      const scene = ordered[i];
+      // Lead-in cut. On an STS (talking) scene the VO MP3 *is* the clip's own audio
+      // with the voice swapped, so a long silence before the first word sits in BOTH
+      // streams at the same timestamp — cutting only the audio (which is what
+      // api/voice/consolidate.ts does, and why it is TTS-only there) runs the voice
+      // ahead of the mouth. Here the video is in hand, so both get cut together and
+      // the lip-sync survives.
+      //
+      // Self-selecting, no route flag needed: a TTS scene arrives already trimmed by
+      // consolidate.ts, so its onset is ~0.15s, below planLeadInCut's threshold → 0 →
+      // shiftSceneForLeadIn returns the scene untouched and this path is a no-op.
+      const rawScene = ordered[i];
+      const leadInSec = planLeadInCut(rawScene.voiceWords);
+      const scene = shiftSceneForLeadIn(rawScene, leadInSec);
       const tScene = Date.now();
       const videoPath = join(dir, `scene_${i}.mp4`);
       await downloadToFile(scene.videoUrl, videoPath);
@@ -939,6 +978,7 @@ export async function renderFinalVideo(
         sceneIdx: scene.sceneIdx, probeSec, detectedSec, trimSec,
         keepFullClip: !!scene.keepFullClip, isLastScene,
         anchor: speechWindow(scene) ? 'speech' : 'silence',
+        leadInSec,
       });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
@@ -1035,7 +1075,7 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset, hookFontName, sweepName
+        camFilter, preset, hookFontName, sweepName, leadInSec
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
