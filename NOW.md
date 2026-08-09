@@ -4,61 +4,49 @@
 
 ## ▶ SARADO NA ANG PINTUAN NG `grifon.ai`. BUHAY ANG LOCK.
 
-Live 08-08. Tatlong code: **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, ipadala bilang link
-(`grifon.ai/i/FOUNDER-01`), kusang bumubukas at binubura ang code sa address bar. **Isa kada tao**
-para may tala: `select ts, event, meta->>'code' from events where module='launch_gate' order by
-ts desc;` (waitlist: `funnel_leads`, `funnel_id='grifon-launch-waitlist'`). Pang-bawi ng code:
-alisin sa `LAUNCH_INVITE_CODES`. Pang-patay: alisin ang `VITE_LAUNCH_LOCK`. **Walang epekto ang
-pag-save kung walang redeploy.** Sa **pintuan lang** (`login`/`app`/`checkout`). May 6-buwang pass
-ka na (`grifon_launch_pass_v1`), **incognito** kung titingnan ulit.
+Live 08-08. Codes: **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`** — ipadala bilang link
+(`grifon.ai/i/FOUNDER-01`), kusang bumubukas at binubura sa address bar. **Isa kada tao**:
+`select ts,event,meta->>'code' from events where module='launch_gate' order by ts desc;`
+(waitlist: `funnel_leads`). Bawi: alisin sa `LAUNCH_INVITE_CODES`. Patay: alisin ang
+`VITE_LAUNCH_LOCK`. **Walang epekto kung walang redeploy.** Pintuan lang. **Incognito** kung
+titingnan ulit — may 6-buwang pass ka na.
 
 ## ▶ NEXT ACTION — ANG SAMPLE BATCH
 
 🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — 11 quality gate + 12
 recipe, wala pang laman ang `SAMPLES`. **Gate 5-11 muna bago ang batch**, kasi bawat butas dun ay
 bibilhin mo ng 12 beses. Unang tatlo: `real_talk`, `before_after`, `unboxing_asmr`. Dun din galing
-ang landing hero.
+ang landing hero. (✅ 08-09: lead-in trim TTS · STS video cut · hook hold 1.0→0.5 · dobleng linya.
+Patay na oras `3.44s → 1.73s`.)
 
-💰 **Itinama ang gastos 08-10. HINDI ₱6,600.** Ang lumang ₱550 ay galing sa **9-scene** admin smoke,
-pero **4 lang ang `SCENE_CAP`** ng Starter at Pro (6 sa Business). Ang totoo: **~₱273 kada ad,
-~₱3,280 ang buong 12.** Patakbuhin ang **`npm run cost:estimate`** para sa kasalukuyang numero —
-binabasa nito ang buhay na `routeModel`/`pickSceneDuration`/`SCENE_CAP`, kaya kusang gumagalaw.
-Dalawang bagay na nakasabit: (1) **ilang scene ang sample?** 4 = kamukha ng bibilhin ng customer at
-mas mura. (2) **Hindi verified ang presyo ng Kling**, naka-calibrate lang sa iisang bayad na render;
-isa pang render sa **ibang** scene count ang magpapatino.
-⚠️ Nag-drift ang `pricing_unit_economics.md` §2 (Veo Fast @1080p ang assume nya, 720p + Kling na
-ang totoo). May drift warning na sya. At **pina-round up ng `pickSceneDuration()` ang cinematic sa
-10s** (humihingi ng 6, `[5,10]` lang ang alok ng Kling) — doble ang bayad sa footage na puputulin.
-Tanong sa yo, hindi ko ginalaw, katabi ng tuned routing.
+💰 **Itinama 08-10. HINDI ₱6,600.** Ang lumang ₱550 ay galing sa **9-scene** admin smoke, pero **4
+lang ang `SCENE_CAP`** ng Starter/Pro (6 sa Business). Totoo: **~₱273 kada ad, ~₱3,280 ang 12.**
+**`npm run cost:estimate`** ang numero — binabasa nito ang buhay na `routeModel`/`SCENE_CAP`, kaya
+kusang gumagalaw. Nakasabit: (1) **ilang scene ang sample?** 4 = kamukha ng bibilhin ng customer.
+(2) **Hindi verified ang presyo ng Kling**, calibrated lang sa iisang bayad na render.
+⚠️ Nag-drift ang `pricing_unit_economics.md` §2 (Veo Fast @1080p ang assume, 720p + Kling ang
+totoo) — may warning na. At **pina-round up ng `pickSceneDuration()` ang cinematic sa 10s**
+(humihingi ng 6, `[5,10]` ang alok ng Kling) — doble ang bayad sa puputuling footage. Tanong sa
+yo, katabi ng tuned routing.
 
-🔴 **BAGONG BARA — magkasalungat ang "FIRST AD FREE".** Sinasabi ng landing page
-(`components/landing/sections/Hero.tsx:75`) na `CREATE MY FIRST AD — FREE`, pero `free.video_ads = 0`
-sa `utils/planGate.ts:19` — **walang video na nirerender ang Free tier.** Totoo na to ngayon pa lang,
-nasa live site. **Ayusin kung alin ang totoo bago tumakbo ang kahit anong bayad na ad.**
+🔴 **BAGONG BARA — magkasalungat ang "FIRST AD FREE".** Sabi ng landing
+(`components/landing/sections/Hero.tsx:75`) `CREATE MY FIRST AD — FREE`, pero `free.video_ads = 0`
+sa `utils/planGate.ts:19` — **walang video ang Free tier.** Totoo na to ngayon, nasa live site.
+**Ayusin kung alin ang totoo bago ang kahit anong bayad na ad.**
 
-✅ **08-09, apat na ayos, LAHAT ng format:** lead-in trim (TTS) · STS video cut (buhay ang labi) ·
-hook hold 1.0→0.5 · dobleng linya. Patay na oras `3.44s → 1.73s`.
+**Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier ang
+KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`npm run check:domain`, 7 hit).
+**Dalawang desisyon mo:** (1) papalitan ba ang `generateInfluencerAvatar`? Export yun ng
+`geminiService`, 6 sa 7 hit ng domain lint. (2) ⚠️ Nasa `_template` ang ERROR tier, **ganun na rin
+ang susunod na funnel.** ⚠️ Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel.
 
-**Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na ang
-KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`utils/scriptAudit.ts` +
-`npm run check:domain`, 7 hit).
-**Dalawang desisyon mo:** (1) papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun
-ng `geminiService`, 6 sa 7 hit ng domain lint. (2) ⚠️ Nasa `_template` ang ERROR tier, **ganun na
-rin ang susunod na funnel.** ⚠️ Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel.
+## 🎬 CANVAS PROMO LANE — tapos, merged 08-10
 
-## 🎬 CANVAS PROMO LANE — tapos, naka-merge 08-10
-
-`workflows/assets/grifon-promo-canvas/` — 20s Grifon promo, **₱0**, canvas engine (`motion-promo`
-skill, nasa `workflows/assets/motion-promo-skill/`). **Hindi nagbabago ang verdict: Hyperframes pa
-rin ang production lane** (`hyperframes_decision.md`) — walang video-in-video ang canvas, at yun ang
-pinakamalakas na beat. Ang canvas ang **fallback kapag hindi ma-restore ang Hyperframes**, at sya
-lang ang may buhay na scrubbable page na kasya sa artifact. Tatlong aral, nasa README: **walang `₱`
-ang Inter Black** (tofu box, may `drawPeso()` na) · **isang font weight lang = tahimik na mali ang
-lahat** · **JetBrains Mono pala ang `label-caps`** ng DESIGN.md, LAW yun sa `index.html`.
-Copy: **isang register** (Taglish, ad ito para sa malamig na Bryan; ibang asset ang landing hero at
-English yun) · **English ang `DESCRIBE/BUILD/LAUNCH`, desisyon ni Neil** — label yun, hindi
-pangungusap · **bawal ang presyo natin sa video**, kaya wala ang `₱997`, nanatili ang `₱30K`/`₱5,000`
-kasi presyo yun ng kalaban.
+`workflows/assets/grifon-promo-canvas/` — 20s promo, **₱0**. **Hyperframes pa rin ang production
+lane** (walang video-in-video ang canvas); ito ang **fallback kapag hindi ma-restore ang
+Hyperframes** at sya lang ang may scrubbable page para sa artifact. Aral + copy decisions: nasa
+README. Tatlo ang mahalaga: **walang `₱` ang Inter Black** · **isang font weight = tahimik na
+mali ang lahat** · **bawal ang presyo natin sa video**.
 
 ## 🅿 PAOLO — itayo, wag buksan   ← dito ang totoong pera
 
@@ -101,9 +89,9 @@ Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang
 
 **Oceanides:** Week 02 pack · GB-001 · hook2 ng KM-004 · Kling b-roll · watermark ni Gabriel ·
 SEC Reg. No. · FB About · reviews · **AEM di pa verified**. ⏸ Pause ang daily.
-**Grifon:** #94.2/#94.3 · #92+#89/#90 ride Slice B · #93 ⛔ TUNED · **#104+#59 hook starvation
-(kulang ang isang regen)** · `artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · `@v5` bump ·
-**sarado ang Rauch brief** (roadmap #27) · `/viral-autopsy` sa 3 Savic + sa labas natin.
+**Grifon:** #94.2/#94.3 · #92+#89/#90 ride Slice B · #93 ⛔ TUNED · **#104+#59 hook starvation** ·
+`artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · `@v5` bump · **sarado ang Rauch brief** ·
+`/viral-autopsy` sa 3 Savic. **Remotion: sarado, 2× (roadmap §10 + hyperframes_decision).**
 
 ## ⛔ Gated · 🔧 Arm before starting
 
