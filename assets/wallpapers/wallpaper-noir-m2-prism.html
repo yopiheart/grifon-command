@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Mobile m2 — Prism</title>
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     m2 — PRISM.  Phone, 1080x2340.
+
+     The portrait port of v7, the desktop Neil picked. Same three-event
+     light chain: a shaft enters top-right, a glass pane stands in its
+     path, and a caustic pools on the floor where the light lands after
+     passing through. Set the two together and the phone and the desktop
+     read as one machine.
+
+     THE ONE IDEA THAT IS NEW HERE. The mark sits BEHIND the pane, not on
+     it — so you read it THROUGH the glass, blurred and dimmed by the
+     material in front of it. That is the only element in any of these
+     three variants that proves the glass is transparent rather than a
+     lighter rectangle: something is visibly different because it is
+     behind it. It also happens to be the truer picture of the thing, the
+     mark seen through the machine rather than stamped on it.
+
+     Portrait suits this design better than landscape did: a shaft of
+     light wants a tall frame to fall through, and the caustic finally has
+     somewhere to land.
+
+     Phone safe zones — clock y 0-660, hero band 660-2100, dock 2100+.
+     The pane is centred at y=1280 and the caustic sits at y=1900, below
+     the last icon row, where it reads as floor rather than as an object.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #050506; }
+
+  #canvas {
+    position: relative;
+    width: 1080px;
+    height: 2340px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 820px 620px at 58% 88%,
+        rgba(255,204,0,0.050) 0%, rgba(255,204,0,0.012) 42%, transparent 74%),
+      radial-gradient(ellipse 1250px 1700px at 74% 24%,
+        #1A1A22 0%, #111116 32%, #0A0A0D 66%, #050506 100%);
+  }
+
+  /* ── THE SHAFT ───────────────────────────────────────────────────────
+     Halo + core. One pass alone reads as a smear; the pair reads as a
+     beam. Steeper than the desktop version because the frame is tall —
+     a shallow angle would exit the side before reaching the floor. ── */
+  .shaft {
+    position: absolute; z-index: 2; pointer-events: none;
+    top: -300px; left: 660px; width: 400px; height: 2900px;
+    transform-origin: top center; transform: rotate(13deg);
+    background: linear-gradient(to bottom,
+      rgba(255,214,60,0.110) 0%, rgba(255,204,0,0.058) 34%,
+      rgba(255,196,0,0.020) 66%, transparent 92%);
+    filter: blur(42px);
+  }
+  .shaft-core {
+    position: absolute; z-index: 2; pointer-events: none;
+    top: -300px; left: 774px; width: 104px; height: 2820px;
+    transform-origin: top center; transform: rotate(13deg);
+    background: linear-gradient(to bottom,
+      rgba(255,232,150,0.19) 0%, rgba(255,210,40,0.080) 40%,
+      rgba(255,200,0,0.018) 72%, transparent 94%);
+    filter: blur(14px);
+  }
+
+  /* ── THE CAUSTIC ─────────────────────────────────────────────────────
+     Offset from the beam's own axis, because glass BENDS light. Lining
+     them up perfectly is the tell that there is no glass, only two
+     gradients stacked. ── */
+  .caustic {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 600px; top: 1900px; transform: translate(-50%, -50%) rotate(-5deg);
+    width: 900px; height: 260px;
+    background: radial-gradient(ellipse at center,
+      rgba(255,214,70,0.145) 0%, rgba(255,200,0,0.046) 34%, transparent 68%);
+    filter: blur(24px);
+  }
+  .caustic-hot {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 628px; top: 1894px; transform: translate(-50%, -50%) rotate(-5deg);
+    width: 300px; height: 82px;
+    background: radial-gradient(ellipse at center,
+      rgba(255,240,190,0.16) 0%, rgba(255,214,60,0.05) 46%, transparent 72%);
+    filter: blur(16px);
+  }
+
+  /* ── THE MARK, BEHIND THE GLASS ──────────────────────────────────────
+     Two corrections, in order, both from Neil looking at the render.
+
+     FIRST: the original cut pre-blurred this AND let the pane blur it
+     again. Two stages of softening turned the mark into a smudge. Rule:
+     when an object is meant to be read THROUGH a material, the material is
+     the only thing allowed to degrade it.
+
+     SECOND (and the real one): even with one stage it was still too far
+     gone — "pati ung logo tinago na". The concept was sound and the DOSE
+     was wrong, which is a different failure and needs a different fix.
+
+     Why this mark suffers from blur more than almost anything would: it is
+     LINE ART, not a solid shape. At 300px wide its strokes are roughly
+     14px, and a 9px blur very nearly closes them — the counters fill in
+     and the griffin stops being a griffin. So the fix is mostly SIZE, not
+     opacity: at 380px the strokes run ~18px and survive the glass with
+     their shape intact. Opacity and a small blur reduction finish it.
+
+     The general rule worth keeping: when line art has to survive a blur,
+     widen the stroke before you brighten it. Brightening a closed counter
+     just gives you a brighter blob. ── */
+  .griffin-back {
+    position: absolute; z-index: 4; pointer-events: none;
+    left: 552px; top: 1256px; transform: translate(-50%, -50%);
+    width: 380px; height: auto;
+    opacity: 0.80;
+    filter: drop-shadow(0 0 30px rgba(255,214,90,0.20));
+  }
+
+  /* ── THE PANE ────────────────────────────────────────────────────────
+     Mostly invisible on purpose. What you actually see is two lit edges,
+     the beam brightening inside it, and the mark going soft behind it. ── */
+  .slab {
+    position: absolute; z-index: 5;
+    left: 540px; top: 1280px; transform: translate(-50%, -50%) rotate(-4.5deg) skewY(1.6deg);
+    width: 620px; height: 880px; border-radius: 26px;
+    isolation: isolate;
+    /* Kept: it guarantees nothing a future child element paints can
+       escape the rounded rect. The old refracted band did exactly that and
+       printed a floating rectangle above the pane. */
+    overflow: hidden;
+    background:
+      linear-gradient(152deg,
+        rgba(255,255,255,0.080) 0%, rgba(255,255,255,0.014) 40%,
+        rgba(255,222,110,0.028) 72%, rgba(255,255,255,0.046) 100%),
+      rgba(10,10,13,0.14);
+    /* 13 -> 9 -> 7. The pane still visibly softens what is behind it, which
+       is all the glass needs to do; past about 8px it stops reading as
+       glass and starts reading as frosting, and frosting hides things. */
+    backdrop-filter: blur(7px) saturate(160%) brightness(1.10);
+    -webkit-backdrop-filter: blur(7px) saturate(160%) brightness(1.10);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.16),
+      0 66px 120px -46px rgba(0,0,0,0.92);
+  }
+  .slab::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.6px; pointer-events: none;
+    background: linear-gradient(150deg,
+      rgba(255,255,255,0.60) 0%, rgba(255,214,70,0.44) 26%,
+      rgba(255,255,255,0.03) 60%, rgba(255,236,150,0.32) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  /* ── NO REFRACTED BAND (removed 2026-08-08) ──────────────────────────
+     There was a hand-drawn bright strip inside the pane here, meant to
+     read as the beam bending as it passed through the glass. Neil caught
+     it at 1:1 on the phone variant and he was right: it was a bug wearing
+     a physics excuse.
+
+     Two things were wrong with it. The backdrop-filter ALREADY carries the
+     shaft into the pane, so the drawn strip was a SECOND band — one beam
+     went in and two came out. And its angle sat about 8 degrees off the
+     shaft's, so the two diverged further the lower they ran, which is what
+     made the mismatch obvious right at the top edge.
+
+     The physics it was imitating does not work that way either. Light
+     leaving a pane with two parallel faces exits PARALLEL to how it
+     entered, displaced sideways by a hair — and for a pane this thin that
+     displacement is sub-pixel. So the correct render is ONE continuous
+     beam, softened and slightly lifted where it crosses the glass, which
+     is precisely what backdrop-filter already does unaided.
+
+     Rule this leaves behind: never hand-draw an optical effect on top of a
+     filter that is already producing it. Decide which one owns the effect. */
+  /* The pane's back face, offset along the light's axis, so the glass has
+     a measurable thickness instead of being a plane at zero depth. */
+  .slab-back {
+    position: absolute; z-index: 4; pointer-events: none;
+    left: 550px; top: 1288px; transform: translate(-50%, -50%) rotate(-4.5deg) skewY(1.6deg);
+    width: 620px; height: 880px; border-radius: 26px;
+    background: linear-gradient(150deg,
+      rgba(255,228,140,0.10) 0%, rgba(255,255,255,0.02) 40%, rgba(255,236,160,0.06) 100%);
+    filter: blur(1px);
+  }
+  /* Occlusion where the pane meets the floor. */
+  .contact {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 552px; top: 1726px; transform: translate(-50%, -50%) rotate(-4.5deg);
+    width: 640px; height: 88px;
+    background: radial-gradient(ellipse at center,
+      rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.42) 44%, transparent 74%);
+    filter: blur(16px);
+  }
+
+  /* ── DUST ────────────────────────────────────────────────────────────
+     Grain masked to the beam only, blended screen, so it reads as motes
+     catching light rather than as texture on the surface. This is what
+     makes the beam a volume instead of a gradient. ── */
+  .dust {
+    position: absolute; inset: 0; z-index: 6; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.40' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3C/svg%3E");
+    background-size: 190px 190px;
+    opacity: 0.26; mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(103deg, transparent 54%, rgba(0,0,0,0.85) 64%, rgba(0,0,0,0.9) 74%, transparent 86%);
+    mask-image: linear-gradient(103deg, transparent 54%, rgba(0,0,0,0.85) 64%, rgba(0,0,0,0.9) 74%, transparent 86%);
+  }
+
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.17; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1000px 1500px at 62% 46%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 82%);
+    mask-image: radial-gradient(ellipse 1000px 1500px at 62% 46%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 82%);
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="shaft"></div>
+  <div class="shaft-core"></div>
+  <div class="caustic"></div>
+  <div class="caustic-hot"></div>
+
+  <div class="contact"></div>
+  <img class="griffin-back" src="../../public/logo.png" alt="">
+  <div class="slab-back"></div>
+  <div class="slab"></div>
+  <div class="dust"></div>
+
+  <div class="grain"></div>
+</div>
+</body>
+</html>

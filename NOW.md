@@ -26,7 +26,7 @@ May pass ka na, 6 na buwan (`grifon_launch_pass_v1`) — **incognito** kung titi
 
 **Di pa merged:** **PR #103** `fix/voice-lint-particle-surface` (34 babala → 0, ERROR tier na ang
 KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`utils/scriptAudit.ts` +
-`npm run check:domain`, 7 hit) · `feat/wallpaper-v6-presence-gauntlet` (wallpaper lang, safe).
+`npm run check:domain`, 7 hit). Merged na ang wallpaper branch (08-09).
 **Dalawang desisyon mo:** (1) papalitan ba ang pangalan ng `generateInfluencerAvatar`? Export yun
 ng `geminiService`, hindi ko ginalaw, 6 sa 7 hit ng domain lint ay dito. (2) ⚠️ Nasa `_template`
 ang ERROR tier, kaya **ganun na rin ang lahat ng susunod na funnel.**

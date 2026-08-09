@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpaper v5b — Prism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     v5b — PRISM.  God-mode candidate 1.
+
+     THE ARGUMENT.  v1–v5a all light the frame with a softbox: a diffuse
+     glow behind the subject. Diffuse light is flattering and completely
+     forgettable — it is the reason every dark SaaS wallpaper on earth
+     looks the same. This one uses a DIRECTIONAL source instead: a single
+     hard shaft entering top-right, a glass slab standing in its path, and
+     a caustic pool where the light lands on the floor after passing
+     through. Three events in a causal chain, so the eye can follow the
+     light and the frame reads as a photographed space, not a fill.
+
+     What makes it hold up at 500 views is that nothing is decoration —
+     remove the slab and the caustic has no reason to exist. Decoration
+     tires; consequence does not.
+
+     DUST is the detail that sells it: a second grain layer, higher
+     contrast and masked to the beam only, so the texture is visible
+     inside the light and absent outside it. That is how volumetric light
+     actually behaves and it is why the beam does not read as a gradient.
+
+     Icon-safe: the entire chain lives right of x=880. Top-left is bare
+     ground by design, and the bottom 84px clears the taskbar.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #050506; }
+
+  #canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    /* Ground is a ROOM, not a plate: a floor plane that lifts toward the
+       light and falls to true black in the top-left corner. */
+    background:
+      radial-gradient(ellipse 1500px 720px at 72% 104%,
+        rgba(255,204,0,0.055) 0%, rgba(255,204,0,0.012) 40%, transparent 72%),
+      radial-gradient(ellipse 2000px 1500px at 78% 8%,
+        #1B1B23 0%, #121217 32%, #0A0A0D 66%, #050506 100%);
+  }
+
+  /* ── THE SHAFT ───────────────────────────────────────────────────────
+     A parallelogram of light, rotated, blurred, entering the top-right and
+     running down-left. Two passes: a wide soft halo and a narrow bright
+     core. One pass alone reads as a smear; core + halo reads as a beam. ── */
+  .shaft, .shaft-core {
+    position: absolute; z-index: 2; pointer-events: none;
+    transform-origin: top center;
+  }
+  .shaft {
+    top: -320px; left: 1180px; width: 520px; height: 1760px;
+    transform: rotate(21deg);
+    background: linear-gradient(to bottom,
+      rgba(255,214,60,0.115) 0%,
+      rgba(255,204,0,0.062) 34%,
+      rgba(255,196,0,0.022) 66%,
+      transparent 92%);
+    filter: blur(46px);
+  }
+  .shaft-core {
+    top: -320px; left: 1332px; width: 132px; height: 1700px;
+    transform: rotate(21deg);
+    background: linear-gradient(to bottom,
+      rgba(255,232,150,0.20) 0%,
+      rgba(255,210,40,0.085) 40%,
+      rgba(255,200,0,0.020) 72%,
+      transparent 94%);
+    filter: blur(16px);
+  }
+
+  /* ── THE CAUSTIC ─────────────────────────────────────────────────────
+     Where the beam lands after the slab. Slightly offset from the beam's
+     own axis, because glass BENDS light — aligning them perfectly is the
+     tell that there is no glass, only two gradients. ── */
+  .caustic {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 1210px; top: 848px; width: 900px; height: 300px;
+    transform: translate(-50%, -50%) rotate(-7deg);
+    background: radial-gradient(ellipse at center,
+      rgba(255,214,70,0.150) 0%, rgba(255,200,0,0.048) 34%, transparent 68%);
+    filter: blur(26px);
+  }
+  /* The hot centre of the pool — small, bright, and the only near-white in
+     the frame besides the type. */
+  .caustic-hot {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 1246px; top: 842px; width: 300px; height: 92px;
+    transform: translate(-50%, -50%) rotate(-7deg);
+    background: radial-gradient(ellipse at center,
+      rgba(255,240,190,0.16) 0%, rgba(255,214,60,0.05) 46%, transparent 72%);
+    filter: blur(18px);
+  }
+
+  /* ── THE SLAB ────────────────────────────────────────────────────────
+     A tall pane standing in the beam, tilted off-axis so it reads as an
+     object with a back and a front rather than a sticker. It is mostly
+     invisible: what you actually see is its two lit EDGES and the way the
+     beam brightens inside it. That restraint is the difference between
+     glass and a grey rectangle at 12% opacity. ── */
+  .slab {
+    position: absolute; z-index: 4;
+    left: 1104px; top: 168px; width: 560px; height: 760px;
+    border-radius: 22px;
+    transform: rotate(-6.5deg) skewY(2.2deg);
+    isolation: isolate;
+    /* Kept: it guarantees nothing a future child element paints can
+       escape the rounded rect. The old refracted band did exactly that and
+       printed a floating rectangle above the pane. */
+    overflow: hidden;
+    background:
+      linear-gradient(152deg,
+        rgba(255,255,255,0.085) 0%,
+        rgba(255,255,255,0.016) 40%,
+        rgba(255,222,110,0.030) 72%,
+        rgba(255,255,255,0.050) 100%),
+      rgba(10,10,13,0.16);
+    backdrop-filter: blur(14px) saturate(160%) brightness(1.10);
+    -webkit-backdrop-filter: blur(14px) saturate(160%) brightness(1.10);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.16),
+      0 60px 120px -46px rgba(0,0,0,0.9);
+  }
+  .slab::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.6px; pointer-events: none;
+    background: linear-gradient(150deg,
+      rgba(255,255,255,0.62) 0%,
+      rgba(255,214,70,0.46) 26%,
+      rgba(255,255,255,0.03) 60%,
+      rgba(255,236,150,0.34) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  /* ── NO REFRACTED BAND (removed 2026-08-08) ──────────────────────────
+     There was a hand-drawn bright strip inside the pane here, meant to
+     read as the beam bending as it passed through the glass. Neil caught
+     it at 1:1 on the phone variant and he was right: it was a bug wearing
+     a physics excuse.
+
+     Two things were wrong with it. The backdrop-filter ALREADY carries the
+     shaft into the pane, so the drawn strip was a SECOND band — one beam
+     went in and two came out. And its angle sat about 8 degrees off the
+     shaft's, so the two diverged further the lower they ran, which is what
+     made the mismatch obvious right at the top edge.
+
+     The physics it was imitating does not work that way either. Light
+     leaving a pane with two parallel faces exits PARALLEL to how it
+     entered, displaced sideways by a hair — and for a pane this thin that
+     displacement is sub-pixel. So the correct render is ONE continuous
+     beam, softened and slightly lifted where it crosses the glass, which
+     is precisely what backdrop-filter already does unaided.
+
+     Rule this leaves behind: never hand-draw an optical effect on top of a
+     filter that is already producing it. Decide which one owns the effect. */
+
+  /* ── DUST ────────────────────────────────────────────────────────────
+     Grain masked to the beam only, at roughly 3x the ambient grain's
+     strength and blended screen so it reads as motes catching light rather
+     than as texture on the surface. ── */
+  .dust {
+    position: absolute; inset: 0; z-index: 6; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.40' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3C/svg%3E");
+    background-size: 210px 210px;
+    opacity: 0.30; mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(111deg, transparent 58%, rgba(0,0,0,0.85) 68%, rgba(0,0,0,0.9) 76%, transparent 86%);
+    mask-image: linear-gradient(111deg, transparent 58%, rgba(0,0,0,0.85) 68%, rgba(0,0,0,0.9) 76%, transparent 86%);
+  }
+
+  /* ── TYPE ────────────────────────────────────────────────────────────
+     Sits IN FRONT of the slab and to its left, so the slab's lit rim runs
+     behind the last words. Solid near-white, not a clipped gradient: at
+     this size against a lit ground the gradient's dark stop is the first
+     thing to fail, and there is nothing here that needs the extra drama. ── */
+  /* ── QUIET TYPE ──────────────────────────────────────────────────────
+     See the note in wallpaper-noir-v5a-slate-quiet.html: the round-0
+     critic charged every variant with the same gap ("shouting at its
+     owner"), which meant slogan size was swamping the axis and the light
+     work was never being scored. Here the type shrinks to a glass chip so
+     the beam, the slab and the caustic are what the frame is about — which
+     is what this variant was always for. ── */
+  .badge {
+    position: absolute; z-index: 7;
+    left: 236px; bottom: 232px;
+    border-radius: 22px; padding: 30px 38px;
+    isolation: isolate;
+    background:
+      linear-gradient(157deg,
+        rgba(255,255,255,0.125) 0%, rgba(255,255,255,0.030) 46%, rgba(255,255,255,0.078) 100%),
+      rgba(11,11,14,0.42);
+    backdrop-filter: blur(28px) saturate(185%);
+    -webkit-backdrop-filter: blur(28px) saturate(185%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      inset 0 -1px 0 rgba(255,255,255,0.06),
+      0 34px 70px -24px rgba(0,0,0,0.86);
+  }
+  .badge::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.5px; pointer-events: none;
+    background: linear-gradient(148deg,
+      rgba(255,255,255,0.52) 0%, rgba(255,214,70,0.34) 30%,
+      rgba(255,255,255,0.04) 58%, rgba(255,255,255,0.26) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .mark {
+    position: relative;
+    font-weight: 900; font-size: 42px; line-height: 1;
+    letter-spacing: 0.20em; text-transform: uppercase; color: #F8F8FA;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7);
+  }
+  .under { position: relative; margin-top: 22px; display: flex; align-items: center; gap: 18px; }
+  .under .rule { width: 58px; height: 1px; background: rgba(255,204,0,0.50); }
+  .under .cap {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.34em; text-transform: uppercase; color: #FFCC00; opacity: 0.88;
+  }
+
+  /* Ambient grain, everywhere, soft-light and masked to the light. */
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.17; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1800px 1300px at 68% 34%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 82%);
+    mask-image: radial-gradient(ellipse 1800px 1300px at 68% 34%, #000 0%, rgba(0,0,0,0.55) 48%, transparent 82%);
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="shaft"></div>
+  <div class="shaft-core"></div>
+  <div class="caustic"></div>
+  <div class="caustic-hot"></div>
+
+  <div class="slab"></div>
+  <div class="dust"></div>
+
+  <div class="badge">
+    <div class="mark">Grifon</div>
+    <div class="under">
+      <span class="rule"></span>
+      <span class="cap">command</span>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+</div>
+</body>
+</html>
