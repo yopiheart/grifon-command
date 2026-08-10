@@ -38,9 +38,9 @@ Claude reviews every PR to `main`. One sticky comment, report-only, TUNED flagge
 **Verified on #106** — its first act was catching five real defects in the diff of the agent that
 wrote it. Entry + the two permanent constraints: **Tier 0c** in [`loops.md`](workflows/loops.md).
 ⚠️ **Plan drift, your call.** Token is **Pro**, so `claude-fable-5` died fast and quiet; pinned to
-`claude-opus-5` now. Grep-verified, the wrong assumption survives ONLY in
-[`.claude/settings.json`](.claude/settings.json) and CLAUDE.md's **Max 5x** budget section —
-policy, so untouched. Review runs eat your working limit; cut their *number*, not the model.
+`claude-opus-5` now (**you confirmed Pro, 08-10**). The Max assumption is wider than one grep
+showed: `settings.json` + CLAUDE.md **plus `session_reminders.md`, `post_beta_roadmap.md`,
+`codex-executor/SKILL.md`**. Policy, untouched. Each review costs ~$1.51 of your own limit.
 
 ⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
 the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️

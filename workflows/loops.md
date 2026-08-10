@@ -134,6 +134,12 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   is now satisfied — Tier 0c is live and verified, so **worktree parallelism is
   UNLOCKED** as of 2026-08-10. NOW.md's PARKED list says the same; if these two
   ever disagree again, this entry is the one NOW.md points at, so fix both.
+  - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
+    `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
+    to `main` is unreviewed, and a PR touching `.github/workflows/` is skipped by
+    design (above). Parallel agents multiply exactly the paths that skip the
+    reviewer, so **if agent count goes up, put branch protection on `main`
+    first** — otherwise the unlock is louder than the guard behind it.
 - Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
   The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
   `claude setup-token`) is set, which bills the **Pro subscription, not the API**
@@ -163,17 +169,28 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   replaces (that SOP stays the in-session path for non-PR diffs).
 - Model: **`claude-opus-5`**. CLAUDE.md's per-role allocation puts review in the
   main-loop role and pins that role to Fable 5 — but **Fable is a Max-plan
-  inclusion and the account is on Pro**, so the first live run initialised on
-  `claude-fable-5` and died 524ms later with `is_error:true` after one turn
-  (#106, 2026-08-10). Worth knowing the shape: an out-of-plan model does not
+  inclusion and Neil confirmed the account is Pro** (in session, 2026-08-10;
+  the run evidence alone would only have proven the plan of that *token*, which
+  is a distinction worth keeping since the remedy differs). The first live run
+  initialised on `claude-fable-5` and died 524ms later with `is_error:true`
+  after one turn (#106). Worth knowing the shape: an out-of-plan model does not
   return a clear "no such model", it fails fast and quiet. **Do not downgrade to
   save quota** — a reviewer Neil does not trust costs more than it saves. If Pro
   limits bind, cut the NUMBER of reviews (path filters, skip draft PRs) before
   the quality of one.
-  - ⚠ **Same drift lives in [`.claude/settings.json`](../.claude/settings.json)**,
-    which still pins `"model": "claude-fable-5"`, and in CLAUDE.md's budget
-    section, which is written for Max 5x. Not fixed here — that is a policy
-    decision, not a workflow fix, and it needs Neil.
+  - 💰 **Measured cost, 2026-08-10:** a full pass over a 2-file docs diff ran
+    216s and **20 turns — exactly the `--max-turns 20` cap** — at $1.51
+    equivalent. Hitting the cap means a review can be truncated; raise it or
+    narrow the prompt before assuming a short report means a clean diff.
+  - ⚠ **The Max assumption is NOT confined to two files.** It also lives in
+    [`session_reminders.md`](session_reminders.md) (a re-arm doc the SessionStart
+    hook surfaces, telling the next session to keep the Fable pin *indefinitely*),
+    [`post_beta_roadmap.md`](post_beta_roadmap.md), and
+    [`codex-executor/SKILL.md`](../.claude/skills/codex-executor/SKILL.md),
+    beside [`.claude/settings.json`](../.claude/settings.json) and CLAUDE.md's
+    budget section. Not fixed here — policy, and it needs Neil. **The first
+    write of this entry said "only" the two, from a grep over five files. The
+    reviewer found the rest. Do not write "only" off a scoped grep.**
 - Scoped against overlap: the prompt names CI's deterministic checks (build,
   tsc, vitest, `design:lint`, `check:bundle-leak`, `check:voice-sync`, the
   gate harness, boot smoke) and forbids re-reporting them.
