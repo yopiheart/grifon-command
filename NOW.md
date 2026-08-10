@@ -35,12 +35,12 @@ in `renderFfmpeg`, non-tuned. Gate 11 needs a regen and sits near TUNED.
 
 ## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER · ✅ LIVE
 Claude reviews every PR to `main`. One sticky comment, report-only, TUNED flagged not judged.
-**Verified on #106** — its first act was catching five real defects in the diff of the agent that
-wrote it. Entry + every constraint on it: **Tier 0c** in [`loops.md`](workflows/loops.md).
-⚠️ **Plan drift, your call.** Token is **Pro**, so `claude-fable-5` died fast and quiet; pinned to
-`claude-opus-5` now (**you confirmed Pro, 08-10**). The Max assumption is wider than one grep
-showed: `settings.json` + CLAUDE.md **plus `session_reminders.md`, `post_beta_roadmap.md`,
-`codex-executor/SKILL.md`**. Policy, untouched. Each review costs ~$1.51 of your own limit.
+**Verified on #106** — five passes, each catching real defects in the agent's own diff. Every
+constraint: **Tier 0c** in [`loops.md`](workflows/loops.md).
+⚠️ **Plan drift, your call.** Pinned to `claude-opus-5`; `claude-fable-5` died fast and quiet
+(**you confirmed Pro, 08-10**). The Max assumption is wider than one grep showed: `settings.json`
++ CLAUDE.md **plus `session_reminders.md`, `post_beta_roadmap.md`, `codex-executor/SKILL.md`**.
+Policy, untouched. Reviews bill your limit; **$1.51 is a FLOOR**, no code PR reviewed yet.
 
 ⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
 the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️

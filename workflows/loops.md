@@ -137,8 +137,8 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
     to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
-    skipped by GitHub's token guard (the ⛔ bullet at the end of this entry — a PR
-    touching only `ci.yml` still gets reviewed). Parallel agents multiply exactly
+    skipped by GitHub's token guard (the ⛔ bullet at the end of this entry, which
+    also records what is still untested about it). Parallel agents multiply exactly
     the paths that skip the reviewer, so **if agent count goes up, put branch
     protection on `main` first** — otherwise the unlock is louder than the guard
     behind it. NOW.md's PARKED line carries this caveat too; keep them together.
@@ -180,10 +180,15 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   save quota** — a reviewer Neil does not trust costs more than it saves. If Pro
   limits bind, cut the NUMBER of reviews (path filters, skip draft PRs) before
   the quality of one.
-  - 💰 **Measured cost, 2026-08-10:** a full pass over a 2-file docs diff ran
-    216s and **20 turns — exactly the `--max-turns 20` cap** — at $1.51
-    equivalent. Hitting the cap means a review can be truncated; raise it or
-    narrow the prompt before assuming a short report means a clean diff.
+  - 💰 **Measured cost, 2026-08-10 — and the cap is now 60, not 20.** A pass over
+    a 2-file docs diff ran 216s and **20 turns, exactly the then-`--max-turns 20`
+    cap**, at $1.51 equivalent. The cap binding on the easiest possible input is
+    why **#110 raised it to 60** and added a prompt rule to write a partial report
+    rather than run out silently — a short report is indistinguishable from a
+    clean diff. **$1.51 is therefore a FLOOR, not the standing price:** it is the
+    cheapest run that will ever happen, and a real `api/` + `components/` review
+    can cost materially more. No code PR has been reviewed yet, so the true
+    per-review cost is still unmeasured.
   - ⚠ **The Max assumption is NOT confined to two files.** It also lives in
     [`session_reminders.md`](session_reminders.md) (a re-arm doc the SessionStart
     hook surfaces, telling the next session to keep the Fable pin *indefinitely*),
@@ -202,8 +207,13 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   to exfiltrate the token. Found on the first live run (2026-08-10): the job went
   **green having reviewed nothing**, because the action skipped cleanly and the
   post step swallowed the missing report. Two consequences, both permanent:
-  1. **A PR touching `.github/workflows/` always needs a human reviewer.** There
-     is no version of this that self-reviews.
+  1. **A PR editing `claude-review.yml` always needs a human reviewer.** There is
+     no version of this that self-reviews. ⚠ **Whether a PR touching only
+     `ci.yml` still gets reviewed is UNTESTED.** The error names *the* workflow
+     file, singular, which reads as the one being executed — so it probably is
+     reviewed — but nothing here has proven that, and an earlier version of this
+     entry stated the broad claim as fact. Treat any `.github/workflows/` PR as
+     needing human eyes until one is observed getting reviewed.
   2. **The reviewer only starts working once the workflow is merged to `main`.**
      Its first real review is the NEXT PR, never its own.
   Fixed by making the absence loud: the post step now writes a "NOT reviewed"
