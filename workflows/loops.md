@@ -149,11 +149,19 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   **flagged and explicitly not judged** — same doctrine as
   [pr_review_loop.md](pr_review_loop.md), which this automates rather than
   replaces (that SOP stays the in-session path for non-PR diffs).
-- Model: `claude-fable-5`, following CLAUDE.md's per-role allocation (review is
-  a main-loop role). Fallback if the weekly Fable allowance is spent:
-  `--model claude-opus-5`. **Do not downgrade to save quota** — a reviewer Neil
-  does not trust costs more than it saves, since the whole point is to stop him
-  reading every diff by hand.
+- Model: **`claude-opus-5`**. CLAUDE.md's per-role allocation puts review in the
+  main-loop role and pins that role to Fable 5 — but **Fable is a Max-plan
+  inclusion and the account is on Pro**, so the first live run initialised on
+  `claude-fable-5` and died 524ms later with `is_error:true` after one turn
+  (#106, 2026-08-10). Worth knowing the shape: an out-of-plan model does not
+  return a clear "no such model", it fails fast and quiet. **Do not downgrade to
+  save quota** — a reviewer Neil does not trust costs more than it saves. If Pro
+  limits bind, cut the NUMBER of reviews (path filters, skip draft PRs) before
+  the quality of one.
+  - ⚠ **Same drift lives in [`.claude/settings.json`](../.claude/settings.json)**,
+    which still pins `"model": "claude-fable-5"`, and in CLAUDE.md's budget
+    section, which is written for Max 5x. Not fixed here — that is a policy
+    decision, not a workflow fix, and it needs Neil.
 - Scoped against overlap: the prompt names CI's deterministic checks (build,
   tsc, vitest, `design:lint`, `check:bundle-leak`, `check:voice-sync`, the
   gate harness, boot smoke) and forbids re-reporting them.
