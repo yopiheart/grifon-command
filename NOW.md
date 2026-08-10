@@ -74,8 +74,8 @@ in `assets/ad-swipe/` are paid ads.
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
 Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
-3 Savic · **worktree parallelism unlocked, but branch-protect `main` FIRST** — Tier 0c only sees
-PRs ([`loops.md`](workflows/loops.md)). **Remotion + Hyperframes closed.**
+3 Savic · **worktree parallelism unlocked only once you READ each review before merging** — Tier
+0c never blocks ([`loops.md`](workflows/loops.md)). **Remotion + Hyperframes closed.**
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:

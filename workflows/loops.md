@@ -132,10 +132,22 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   bottleneck is *reviewing output*, so **going parallel before this exists
   multiplies the step-1 bottleneck instead of relieving it.** ✅ That condition
   is now satisfied — Tier 0c is live and verified, so **worktree parallelism is
-  UNLOCKED ONCE `main` IS BRANCH-PROTECTED** (2026-08-10). The condition is in the
-  headline on purpose: a reader skimming for the verdict must not be able to take
-  the permission without the guard, and the sub-bullet below is where that used to
-  live. NOW.md's PARKED line says the same; if these two ever disagree, this entry
+  UNLOCKED ONCE `main` REQUIRES A PR *AND* AN APPROVING REVIEW** (2026-08-10).
+  The condition is in the headline on purpose: a reader skimming for the verdict
+  must not be able to take the permission without the guard.
+  - ⚠ **Branch protection alone is NOT the condition, and an earlier draft of this
+    line said it was.** Protection forces every change through a PR, which is the
+    premise the sub-bullet below needs — but **Tier 0c is report-only and never
+    blocks a merge**, and plain protection does not require an approving review.
+    So the weaker condition can be fully met while every review goes unread: four
+    agents open four PRs, Tier 0c posts four sticky comments, all four merge
+    green, nothing is blocked and nothing is read. That multiplies the review
+    burden by four — the exact outcome the step-gate bullet above says the
+    ordering exists to prevent. **A human reading the comment before merge is the
+    thing being protected; the PR is only the container.** If merges stay
+    unblocked by choice, then the rule is that Neil reads each sticky comment
+    before merging, and that is what has to be true before agent count goes up.
+  NOW.md's PARKED line says the same; if these two ever disagree, this entry
   is the one NOW.md points at, so fix both.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
