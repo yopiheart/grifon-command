@@ -96,7 +96,9 @@ ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump �
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` · `npx playwright
-install chromium`. ⚠️ `gh` is not on PATH: `…\Programs\GitHubCLI\bin\gh.exe`. Each funnel has its
+install chromium`. ⚠️ **Neither `gh` nor `claude` is on PATH** — `…\Programs\GitHubCLI\bin\gh.exe`
+and `~\.vscode\extensions\anthropic.claude-code-<VER>\resources\native-binary\claude.exe` (the
+version is IN the path, so it breaks on every extension update — re-list the dir). Each funnel has its
 own `node_modules` · **never pipe build output** · **Bash is network-sandboxed, use PowerShell** ·
 ⚠️ `scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls**, answer already recorded.
 
