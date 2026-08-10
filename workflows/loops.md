@@ -130,8 +130,10 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   time. Grifon had the first two over-built (Tier 0/0b, `defaultMode: "auto"`)
   and this one missing. Order matters and is not cosmetic: step 2's own
   bottleneck is *reviewing output*, so **going parallel before this exists
-  multiplies the step-1 bottleneck instead of relieving it.** Worktree
-  parallelism stays locked behind Tier 0c working.
+  multiplies the step-1 bottleneck instead of relieving it.** ✅ That condition
+  is now satisfied — Tier 0c is live and verified, so **worktree parallelism is
+  UNLOCKED** as of 2026-08-10. NOW.md's PARKED list says the same; if these two
+  ever disagree again, this entry is the one NOW.md points at, so fix both.
 - Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
   The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
   `claude setup-token`) is set, which bills the **Pro subscription, not the API**
