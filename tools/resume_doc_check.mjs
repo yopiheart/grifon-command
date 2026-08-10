@@ -20,7 +20,11 @@
 //   2. NOW.md is not BEHIND the work — stamp vs. last commit date, plus anchor-commit drift.
 //   3. NOW.md has not regrown append-rot (CURRENT/PREVIOUS blocks). It is overwritten, never
 //      appended — that growth pattern is precisely what killed the last resume doc.
-//   4. NOW.md is the SOLE claimant — no other doc asserts primacy as "the resume doc".
+//   4. NOW.md is written in ENGLISH. Repo artifacts that outlive the conversation are
+//      English (Neil, 2026-08-10); chat and customer copy stay Taglish. This drifted for
+//      months while the rule sat in prose: the agent chats in Neil's Taglish, then writes
+//      files in whatever register it is already sitting in. Nothing ever interrupted it.
+//   5. NOW.md is the SOLE claimant — no other doc asserts primacy as "the resume doc".
 //
 // Usage:
 //   node tools/resume_doc_check.mjs            # advisory, always exits 0
@@ -134,7 +138,45 @@ if (rotHits.length) {
   pass('NOW.md has no CURRENT/PREVIOUS append-rot (still overwrite-only).');
 }
 
-// ── 4. Sole claimant ─────────────────────────────────────────────────────────
+// ── 4. NOW.md is English ─────────────────────────────────────────────────────
+// Measured as a RATE, not a hit count: one Tagalog word in a quoted line is not drift,
+// a third of the document is. Calibrated 2026-08-10 on the two real versions of this
+// exact file — the English rewrite scores 0.00%, the Taglish original 31.46%, and the
+// noisiest English doc in the repo (agent_lessons.md, which quotes Neil verbatim) 1.28%.
+// The 5% line sits ~4x above the worst honest English doc and ~6x below real drift, so
+// it cannot cry wolf. Markers are function words with no English homograph; `at`, `to`,
+// `may`, `po` and `ba` are deliberately absent because they collide.
+const TL_MARKERS = new Set([
+  'ang','ng','mga','sa','na','ni','kay','ay','ito','yung','yun','yan','nya','nyo','sya',
+  'kasi','pero','kung','hindi','wala','walang','wag','dun','dito','ako','natin','namin',
+  'nila','sila','lang','naman','kaya','dapat','tapos','meron','nasa','para','din','rin',
+  'muna','pala','nga','bakit','paano','saan','ilan','ganun','ganito','bago','habang',
+  'kada','isang','yang','nito','nyan','pwede','gawa','sabi',
+]);
+const TL_MAX_PCT = 5;
+
+const prose = nowRaw
+  .replace(/```[\s\S]*?```/g, ' ')   // fenced code
+  .replace(/`[^`\n]*`/g, ' ')        // inline code, paths, identifiers
+  .replace(/\]\([^)]*\)/g, '] ')     // link targets (keep the link TEXT — it is prose)
+  .replace(/https?:\/\/\S+/g, ' ')
+  .replace(/[A-Za-z]:\\\S+/g, ' ')   // windows paths
+  .toLowerCase();
+const words = prose.match(/[a-z]+/g) || [];
+const tlHits = words.filter((w) => TL_MARKERS.has(w));
+const tlPct = words.length ? (tlHits.length / words.length) * 100 : 0;
+
+if (words.length < 100) {
+  warn(`NOW.md has only ${words.length} prose words — too short to judge its language. Check it by eye.`);
+} else if (tlPct > TL_MAX_PCT) {
+  const top = [...tlHits.reduce((m, w) => m.set(w, (m.get(w) || 0) + 1), new Map())]
+    .sort((a, b) => b[1] - a[1]).slice(0, 6).map(([w, n]) => `${w}×${n}`).join(', ');
+  fail(`NOW.md has drifted into Taglish (${tlPct.toFixed(1)}% marker words, max ${TL_MAX_PCT}% — e.g. ${top}). Repo artifacts that outlive the conversation are ENGLISH: this file, commit subject lines, workflow docs, and every executor brief. Chat with Neil and customer-facing copy stay Taglish — do NOT "fix" those.`);
+} else {
+  pass(`NOW.md is in English (${tlPct.toFixed(1)}% Taglish markers, budget ${TL_MAX_PCT}%).`);
+}
+
+// ── 5. Sole claimant ─────────────────────────────────────────────────────────
 // Primacy claims only. A SCOPED claim — "the resume doc FOR the build session" — is
 // legitimate and must not fire: a verifier that cries wolf gets ignored, which is how the
 // last convention died. So STRONG wording (an explicit uniqueness word) always counts,
