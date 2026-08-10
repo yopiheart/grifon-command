@@ -132,8 +132,11 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   bottleneck is *reviewing output*, so **going parallel before this exists
   multiplies the step-1 bottleneck instead of relieving it.** ✅ That condition
   is now satisfied — Tier 0c is live and verified, so **worktree parallelism is
-  UNLOCKED** as of 2026-08-10. NOW.md's PARKED list says the same; if these two
-  ever disagree again, this entry is the one NOW.md points at, so fix both.
+  UNLOCKED ONCE `main` IS BRANCH-PROTECTED** (2026-08-10). The condition is in the
+  headline on purpose: a reader skimming for the verdict must not be able to take
+  the permission without the guard, and the sub-bullet below is where that used to
+  live. NOW.md's PARKED line says the same; if these two ever disagree, this entry
+  is the one NOW.md points at, so fix both.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
     to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
@@ -147,7 +150,7 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   `claude setup-token`) is set, which bills the **Pro subscription, not the API**
   — an `ANTHROPIC_API_KEY` secret would bill pay-as-you-go instead. To re-arm on
   a new account, those two steps are the whole setup.
-- **First real review, #106 (2026-08-10): it caught five defects in the diff of
+- **First real review, #106 (2026-08-10): round one alone caught five findings in the diff of
   the agent that built it** — four stale facts in `NOW.md` (including a
   Max-vs-Pro contradiction against its own workflow comment) and a `MAX_LINES`
   breach against `tools/resume_doc_check.mjs`, a verifier the author had not
