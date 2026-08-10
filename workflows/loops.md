@@ -157,6 +157,20 @@ findings as **one sticky PR comment**, edited in place on each re-push.
 - Scoped against overlap: the prompt names CI's deterministic checks (build,
   tsc, vitest, `design:lint`, `check:bundle-leak`, `check:voice-sync`, the
   gate harness, boot smoke) and forbids re-reporting them.
+- ⛔ **It cannot review changes to itself, and this is not configurable.** The
+  action refuses to run when the workflow file on the PR branch differs from the
+  copy on the default branch — GitHub's guard against a PR rewriting the workflow
+  to exfiltrate the token. Found on the first live run (2026-08-10): the job went
+  **green having reviewed nothing**, because the action skipped cleanly and the
+  post step swallowed the missing report. Two consequences, both permanent:
+  1. **A PR touching `.github/workflows/` always needs a human reviewer.** There
+     is no version of this that self-reviews.
+  2. **The reviewer only starts working once the workflow is merged to `main`.**
+     Its first real review is the NEXT PR, never its own.
+  Fixed by making the absence loud: the post step now writes a "NOT reviewed"
+  sticky comment instead of returning quietly. A green check that means *nothing
+  ran* is the same unread-channel failure as Tier 0b's 20 emails, rebuilt from the
+  inside — silence must never be indistinguishable from a clean bill.
 - Kill switch: delete the workflow file, or delete the
   `CLAUDE_CODE_OAUTH_TOKEN` secret (which returns it to a clean no-op).
 - ⚠ Before editing: run the Tier 0b empty-expression guard. Same file class,

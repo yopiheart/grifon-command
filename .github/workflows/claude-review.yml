@@ -209,14 +209,33 @@ jobs:
             const MARKER = '<!-- grifon-claude-review -->';
             const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
 
-            if (!fs.existsSync('review.md')) {
-              core.warning('No review.md was produced — the reviewer did not finish. Not posting.');
-              return;
-            }
-            const findings = fs.readFileSync('review.md', 'utf8').trim();
-            if (!findings) {
-              core.warning('review.md was empty — not posting.');
-              return;
+            // A missing report must NEVER read as "reviewed, clean". The action
+            // skips itself — and the job still goes green — whenever a PR edits a
+            // file under .github/workflows/, because GitHub refuses to run it when
+            // the workflow on the branch differs from the copy on the default
+            // branch. That is its guard against a PR rewriting the workflow to
+            // exfiltrate the token, and it cannot be configured away. On the first
+            // live run (2026-08-10) that produced a green check on a PR nobody had
+            // reviewed, which is the unread-channel failure rebuilt from the inside.
+            // So: post the ABSENCE rather than swallow it. The comment is the
+            // channel; anything that does not reach it did not happen.
+            let findings = fs.existsSync('review.md')
+              ? fs.readFileSync('review.md', 'utf8').trim()
+              : '';
+            const reviewed = findings.length > 0;
+
+            if (!reviewed) {
+              findings = [
+                '⚠️ **No report was produced — this PR was NOT reviewed.**',
+                '',
+                'Most likely cause: this PR changes a file under `.github/workflows/`, so the',
+                'action refused to run. GitHub only runs it when the workflow on the branch is',
+                'identical to the copy on `main` — its protection against a PR rewriting the',
+                'workflow to steal the token. It cannot be configured away, so **a PR that',
+                'touches this workflow always needs a human reviewer.**',
+                '',
+                'Any other cause is a malfunction. Open the run below.',
+              ].join('\n');
             }
 
             const body = [
@@ -243,10 +262,13 @@ jobs:
               await github.rest.issues.updateComment({
                 owner, repo, comment_id: existing.id, body,
               });
-              core.notice(`Updated review comment on #${issue_number}`);
             } else {
               await github.rest.issues.createComment({
                 owner, repo, issue_number, body,
               });
-              core.notice(`Posted review comment on #${issue_number}`);
             }
+            core.notice(
+              reviewed
+                ? `Review posted on #${issue_number}`
+                : `NOT REVIEWED — posted the absence on #${issue_number}`
+            );
