@@ -1,13 +1,12 @@
 # NOW — the resume doc
-
 **Stamped: 2026-08-10** (session 17)
 
 ## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
 
 Live 08-08. Codes **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, sent as `grifon.ai/i/FOUNDER-01` —
-redeems on arrival, scrubs itself from the bar. Audit: `select ts,event,meta->>'code' from events
-where module='launch_gate' order by ts desc;` (waitlist: `funnel_leads`). Revoke via
-`LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`; **neither works without a redeploy.**
+redeems on arrival, scrubs itself from the bar. Audit `events where module='launch_gate'`
+(waitlist: `funnel_leads`). Revoke via `LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`;
+**neither works without a redeploy.**
 
 ## ▶ NEXT ACTION — THE SAMPLE BATCH
 
@@ -28,24 +27,29 @@ batch. ⚠️ Kling pricing is still calibrated off one paid render.
 never drops a word, and `scripts/check-alignment-numerals.mjs` proved it **VERBATIM** (`"₱149"` =
 one token), so the fix you approved would have broken a working mapping. **Read before editing.**
 
-## 🔴 WAITING ON YOU — these three unblock the rest
+## 🔴 WAITING ON YOU — one question, and it blocks gate 5
 
-1. **Gate 6 values.** Dial is in (`hook.revealHoldSec`), every preset still 0.5 = zero visual
-   change. Proposed **0.35** impact/hype, **0.7** clean, **0.5 frozen** classic — or ride it on
-   the first pilot render and judge by eye.
-2. **Gate 5 jump cut.** Cutting silence mid-scene makes the video jump. Accept the jump cut
-   (fast, UGC-native) or require a cutaway? Nothing moves on gate 5 until this lands.
-3. **The reassurance line.** CTA is fixed (`START MY FIRST AD — FREE`, Hero + ReceiptsRail), but
-   `components/landing/microcopy.ts` still says *"Free plan · No card required · Upgrade anytime"*
-   — a free plan EXISTS, never what it gives. Proposed: **`Free plan · No card · See it before
-   you pay`** (turns the limit into the offer, and it is true). One file, three surfaces.
+**The jump cut.** Cutting the ~1s of silence mid-scene makes the video jump. Accept it (fast,
+UGC-native, what every Reel does) or require a cutaway to hide it? **Nothing moves on gate 5
+until this lands.** Everything else you owed is applied: gate 6 is at 0.35 impact/hype, 0.7
+clean, 0.5 frozen classic; the CTA reads `START MY FIRST AD — FREE`; the line under it now says
+`Free plan · No card · See it before you pay`. Overrule any of them freely, all are one-liners.
 
-**Also open:** **PR #103** + **PR #102**, both unmerged. Rename `generateInfluencerAvatar`?
-⚠️ The ERROR tier lives in `_template`, so the next funnel inherits it. Step 3's `SCRIPT_AUDIT`
-panel still has no live eyeball. 📚 **CMO canon training PARKED** →
-[`cmo_canon_training.md`](workflows/cmo_canon_training.md): Cialdini + Schwartz are already in
-the skill, the real holes are **positioning**, **sales as a discipline**, and **no ledger of its
-own**. **Resume by typing `/grill-me` yourself.**
+**Both PRs merged 08-10.** #103 shipped the voice ERROR tier plus a **suppression counter** (the
+`voice-ok` bypass now prints its count on the PASSING line — paolo 5, price-page 1, zero stale),
+because a hole nobody counts becomes a door. #102 shipped `check:domain`, now **0 hits**:
+`generateInfluencerAvatar` → `generateInfluencer`, and 4 of the 7 were false positives of one
+shape (a module passing into an API named for the wizard, where that word is right), so they
+carry a recorded reason instead of a rename.
+
+⚠️ **`grifon-starter` is live with 30 em dashes.** It has no voice gate, correctly — it is the
+English funnel — but the em-dash rule is universal, not Taglish, so the carve-out threw out a
+universal rule with the Taglish ones. Not fixed. ⚠️ `check:domain` scans comments, so documenting
+a rename re-trips the rule the rename satisfied. ⚠️ Step 3's `SCRIPT_AUDIT` has no live eyeball.
+
+📚 **CMO canon training PARKED** → [`cmo_canon_training.md`](workflows/cmo_canon_training.md):
+Cialdini + Schwartz are already in the skill; the holes are **positioning**, **sales as a
+discipline**, **no ledger of its own**. **Resume by typing `/grill-me` yourself.**
 
 ## 🅿 PAOLO — build it, do not open it   ← this is where the real money is
 
@@ -63,27 +67,23 @@ Promise only so far: **no load has run, no certificate in hand.** The page stand
 ## 🔴 Do not forget
 
 **Route density is the lever, not price** — one city first. **No CASH refunds** on the tripwire,
-credit only, valid one year. **The ₱900 break-even is dead**; for Paolo it is **₱4,900 per
-1-load job**. **Geo is a coordinate radius**, lat `14.54` lng `121.02`. ⚠️ **The big names on the
-client list are Enterprise** — procurement and referral, **not FB ads**. ⛔ **No CTAs on organic
-cards** — all 78 in `assets/ad-swipe/` are paid ads.
+credit only, one year. **The ₱900 break-even is dead**; Paolo is **₱4,900 per 1-load job**. **Geo
+is a coordinate radius**, lat `14.54` lng `121.02`. ⚠️ **The big client-list names are
+Enterprise** — procurement and referral, **not FB ads**. ⛔ **No CTAs on organic cards**, all 78
+in `assets/ad-swipe/` are paid ads.
 
 ## 🅿 PARKED
-
-**Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark ·
-SEC Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused.
-**Grifon:** #89/#90 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane still at 0 ·
-`@v5` bump · `/viral-autopsy` on 3 Savic. **Remotion + Hyperframes closed.** Canvas promo done.
+**Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
+Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
+ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
+3 Savic. **Remotion + Hyperframes closed.** Canvas promo done.
 
 ## ⛔ Gated · 🔧 Arm before starting
 
-🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling.
-`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
-⚠️ `gh` is not on PATH: `C:\Users\Administrator\AppData\Local\Programs\GitHubCLI\bin\gh.exe`
-⚠️ `npx playwright install chromium` every session · each funnel has its own `node_modules` ·
-**never pipe build output** · **the Bash tool is network-sandboxed, use PowerShell.**
-⚠️ `scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls** — answer already
-recorded in `format_sample_readiness.md`. Do not re-run casually.
+🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
+`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` · `npx playwright
+install chromium`. ⚠️ `gh` is not on PATH: `…\Programs\GitHubCLI\bin\gh.exe`. Each funnel has its
+own `node_modules` · **never pipe build output** · **Bash is network-sandboxed, use PowerShell** ·
+⚠️ `scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls**, answer already recorded.
 
-### Maintain: **overwrite, never append.** Last step of any session that changed state. Max 90.
-### Language: repo artifacts are ENGLISH (this file, commit subjects, workflow docs). Ads stay Taglish.
+### Maintain: **overwrite, never append**, last step of any session that changed state, max 90. Repo artifacts are ENGLISH (this file, commit subjects, workflow docs); ads stay Taglish.
