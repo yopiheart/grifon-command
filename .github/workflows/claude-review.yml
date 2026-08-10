@@ -103,9 +103,23 @@ jobs:
           # reading every diff by hand. If Pro limits turn out to be the binding
           # constraint, cut the NUMBER of reviews (path filters, draft-PR skips)
           # before cutting the quality of one.
+          # 60, raised from 20. The one measurement in hand said the old cap bound
+          # on the EASIEST possible input: reviewing a 2-file docs diff consumed
+          # exactly 20/20 turns (216s, $1.51 equivalent, PR #106 2026-08-10). A
+          # multi-file api/ + components/ PR would therefore exhaust the budget
+          # partway through reading the diff and write a partial review.md — and a
+          # SHORT REPORT IS INDISTINGUISHABLE FROM A CLEAN DIFF to the reader. That
+          # is this workflow's recurring failure (silence that looks like a pass)
+          # in its last remaining hiding place, so the cap moves before the first
+          # code PR meets it, not after.
+          #
+          # Cost is the real trade: turns are billed to the Pro subscription, the
+          # same pool as Neil's working sessions. If that binds, cut the NUMBER of
+          # reviews (path filters, skip draft PRs) or trim the prompt's context
+          # reads — do NOT lower this back under a measured requirement.
           claude_args: |
             --model claude-opus-5
-            --max-turns 20
+            --max-turns 60
             --allowedTools "Read,Grep,Glob,Write,Bash(git diff:*),Bash(git log:*),Bash(git show:*)"
           prompt: |
             You are the fresh-context PR critic for GRIFON COMMAND. You did not
@@ -215,6 +229,12 @@ jobs:
               specifically so Neil can stop reading every diff by hand.
             - Never claim a check you did not run. If the diff was too large to
               read fully, say which parts you skipped.
+            - **If you are running short on turns, STOP READING AND WRITE THE
+              FILE.** An unwritten report is read as a clean diff, which is worse
+              than a partial one. A report that says "I reviewed 3 of 9 files,
+              here is what I found, the rest is unread" is honest and useful; an
+              empty `review.md` is a silent pass. Budget accordingly and always
+              leave yourself the turn it takes to write.
 
       - name: Post the review to the PR
         # always(), so a FAILED review still speaks. Third live run (2026-08-10)
