@@ -72,7 +72,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
               Stacks on mobile so the ghost never crowds the fold. */}
           <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start">
             <GoldButton glossy onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
-              CREATE MY FIRST AD — FREE
+              START MY FIRST AD — FREE
             </GoldButton>
             <a
               href="#reviews"
