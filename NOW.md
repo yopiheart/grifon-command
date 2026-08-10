@@ -40,13 +40,9 @@ KONYO/PARTICLE/MAHABA) · **PR #102** `feat/script-audit-domain-lint` (`npm run 
 `geminiService`, 6 sa 7 hit ng domain lint. (2) ⚠️ Nasa `_template` ang ERROR tier, **ganun na rin
 ang susunod na funnel.** ⚠️ Wala pang live eyeball ang Step 3 `SCRIPT_AUDIT` panel.
 
-## 🎬 CANVAS PROMO LANE — tapos, merged 08-10
-
-`workflows/assets/grifon-promo-canvas/` — 20s promo, **₱0**. **Hyperframes pa rin ang production
-lane** (walang video-in-video ang canvas); ito ang **fallback kapag hindi ma-restore ang
-Hyperframes** at sya lang ang may scrubbable page para sa artifact. Aral + copy decisions: nasa
-README. Tatlo ang mahalaga: **walang `₱` ang Inter Black** · **isang font weight = tahimik na
-mali ang lahat** · **bawal ang presyo natin sa video**.
+🎬 **Canvas promo: tapos + merged 08-10** (`workflows/assets/grifon-promo-canvas/`, 20s, ₱0).
+**Hyperframes pa rin ang production lane**; fallback lang to kapag di ma-restore yun. Aral at copy
+decisions: nasa README nya.
 
 ## 🅿 PAOLO — itayo, wag buksan   ← dito ang totoong pera
 
@@ -65,12 +61,6 @@ Pangako pa lang: **walang load na dumaan, walang certificate na hawak.** Nakatay
 **Nagawa na, wag ulitin:** avatar, value stack, grill, pixel-leak, copy, page, trust card
 (`paolo-trust-a/b`, di pa nai-publish, 82 ang critic).
 
-## 🔴 IBANG REGISTER ANG CHAT KAY NEIL
-
-Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang technical terms**
-— hook, retention, frame, syllable, build, lint. Mas mataas ang English, magaan ang Tagalog
-(pandikit lang: yung, kaso, pero, kasi). **Walang formulang naglo-lock** sa ads (ledger **A6**).
-
 ## 🔴 Huwag kalimutan
 
 1. **Route density ang lever, hindi presyo.** Isang siyudad muna.
@@ -79,11 +69,6 @@ Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang
 4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
 5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at referral, **hindi FB ad.**
 6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa `assets/ad-swipe/`.
-7. 🔧 **Tingnan ang EXIT CODE, wag lang i-grep ang output.**
-8. 🔧 **Wag `git add -A` habang may smoke agent** — nasama ang throwaway script nya (08-08).
-9. 🔒 **Bantay na ang hook sa `.env` (DENY) at sa tuned files (ASK).** `tools/hook_gate_test.sh`
-10. ⛔ **Wag maghulog ng file sa `public/`** — kinokopya yun ng Vite papuntang `dist/`, bukas sa
-    `grifon.ai`. Nangyari 08-10 sa `motion-promo.skill`, inilipat sa `workflows/assets/`.
 
 ## 🅿 PARKED
 
