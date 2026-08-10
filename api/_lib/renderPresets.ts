@@ -166,7 +166,8 @@ export const IMPACT: RenderPreset = {
   hook: {
     layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
     textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
-    wordCadenceSec: 0.32, burnTransition: true, revealHoldSec: 0.5,
+    // 0.35: direct-response grammar is fast, and a hook that waits reads as hesitation.
+    wordCadenceSec: 0.32, burnTransition: true, revealHoldSec: 0.35,
   },
   transition: { kind: 'flash', halfDurSec: 0.07, everyN: 2, maxPerAd: 3 },
   // Camera motion is the video-generation prompt's job — generated clips carry
@@ -203,7 +204,8 @@ export const HYPE: RenderPreset = {
   hook: {
     layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
     textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
-    wordCadenceSec: 0.3, burnTransition: true, revealHoldSec: 0.5,
+    // 0.35: matches impact — MrBeast/Temu energy cuts on the beat, it does not linger.
+    wordCadenceSec: 0.3, burnTransition: true, revealHoldSec: 0.35,
   },
   transition: { kind: 'whip', halfDurSec: 0.05, everyN: 2, maxPerAd: 4 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).
@@ -239,7 +241,9 @@ export const CLEAN: RenderPreset = {
   hook: {
     layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/ArchivoBlack-Regular.ttf', advRatio: 0.66,
     textColor: 'white', highlightColor: '0xFFCC00', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
-    wordCadenceSec: 0.34, burnTransition: false, revealHoldSec: 0.5,
+    // 0.7: restraint IS the style here. The extra beat reads as a breath on a
+    // testimonial, where on impact/hype the same beat would read as dead air.
+    wordCadenceSec: 0.34, burnTransition: false, revealHoldSec: 0.7,
   },
   transition: { kind: 'dip', halfDurSec: 0.12, everyN: 3, maxPerAd: 2 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).

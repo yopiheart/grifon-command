@@ -234,6 +234,17 @@ describe('chooseTrim', () => {
         expect(p.hook.revealHoldSec, id).toBeGreaterThanOrEqual(0);
       }
     });
+
+    // The whole point of the dial (Neil, 2026-08-10): a testimonial hook must not
+    // cut on the same beat as a MrBeast one. Asserted as an ORDERING, not as three
+    // magic numbers, so retuning the values does not break the test that protects
+    // the intent behind them.
+    it('a testimonial hook breathes longer than a hype hook', () => {
+      expect(CLEAN.hook.revealHoldSec).toBeGreaterThan(HYPE.hook.revealHoldSec);
+      expect(CLEAN.hook.revealHoldSec).toBeGreaterThan(IMPACT.hook.revealHoldSec);
+      // classic is the frozen kill-switch override and sits between them.
+      expect(CLASSIC.hook.revealHoldSec).toBe(0.5);
+    });
   });
 });
 
