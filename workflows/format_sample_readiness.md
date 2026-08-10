@@ -44,13 +44,45 @@ depekto ng 12 beses.
 | 6 | Pacing kada format (pareho ang MrBeast at Testimonial) | ⬜ | ilipat ang `HOOK_REVEAL_HOLD_SEC` sa `RenderPreset` |
 | 7 | Hook morph, goo ang gitna | ⬜ | [#92](https://github.com/yopiheart/grifon-command/issues/92) · sundan ang `/viral-autopsy` kay Savic |
 | 8 | Talking avatar, natutunaw ang mukha | ⬜ | [#93](https://github.com/yopiheart/grifon-command/issues/93) ⛔ TUNED |
-| 9 | Nalalaglag ang numero sa karaoke | ⬜ | [#94](https://github.com/yopiheart/grifon-command/issues/94).2 |
-| 10 | Dobleng text sa scene 2 | ⬜ | [#94](https://github.com/yopiheart/grifon-command/issues/94).3 |
+| 9 | Nalalaglag ang numero sa karaoke | ⚠️ 08-10 | **Mali ang naka-file na root cause.** Hindi caption bug. Basahin sa ibaba. |
+| 10 | Dobleng text sa scene 2 | ✅ 08-09 | **Kapareho lang ng #4.** Sarado na ng `subtitleCoveredByKaraoke`, `drawPlan.ts:656` |
 | 11 | Walang laman ang hook (starvation) | ⬜ | [#104](https://github.com/yopiheart/grifon-command/issues/104) + [#59](https://github.com/yopiheart/grifon-command/issues/59), kulang ang isang regen |
 
 **Panuntunan:** 1 hanggang 4 ay sapat na para magsimula ng **isang** pilot render. Ang 5
 hanggang 11 ay kailangan bago ang **buong batch**, kasi bawat isa sa kanila ay lalabas sa
 lahat ng 12 sample.
+
+### Koreksyon sa gate 9 at 10 (2026-08-10, code trace)
+
+**Gate 10 ay kapareho lang ng gate 4.** Iisang butas, dalawang row. Pinatay na sya ng
+`subtitleCoveredByKaraoke` ([`api/_lib/drawPlan.ts:656`](../api/_lib/drawPlan.ts#L656)) at may
+test sa [`tests/unit/speechAnchor.test.ts:162`](../tests/unit/speechAnchor.test.ts#L162).
+Isara na ang #94.3.
+
+**Gate 9 ay hindi caption bug.** Sabi ng issue, hindi raw ma-match ng aligner ang numeral kaya
+nalalaglag sa karaoke timeline. Hindi yan ang mekanismo:
+
+1. Ang karaoke ay kumukuha ng **teksto** sa `scene.scriptLine`. Ang aligner ay pang-**timing**
+   lang. Kahit masira ang timing ng isang salita, nasa screen pa rin ang salita.
+2. Walang code path na nagbubura ng salita. Sa `karaoke` may base layer na bukas sa buong chunk;
+   sa `word-pop` ang enable ay `between(t, wd.start, l.endSec)`, kaya tumatagal hanggang dulo.
+3. Ang tunay na dahilan ay nasa fixture ng sarili nating test: ang `scriptLine` ay
+   `"Ako si Sarah. Eight hours sa desk araw-araw."` habang ang overlay ay `"8 hours"`.
+   **Nagbaybay ang model.** Wala talagang "8" sa karaoke kasi wala syang "8" sa script.
+
+Kaya **script-side compliance** ang klase nito, hindi renderer. Sinasabi ng tuned prompt na digit
+ang gamitin (`Prices and numbers — "₱650", "P22 vs P180", "30 days"`,
+[`api/_lib/prompts.ts:359`](../api/_lib/prompts.ts#L359)) pero hindi laging sumusunod ang model.
+⛔ TUNED ang lunas, kaya Neil-gated at kailangan ng ≥3 sample bago mag-propose.
+
+**May natirang bukas na tanong na hindi pa nasasagot ng docs:** kapag digit ang naisulat
+(`"₱149"`), ano ang ibinabalik ng ElevenLabs forced-alignment — isang token na `"₱149"`, o limang
+token na `"one","hundred","forty","nine","pesos"`? Kung pangalawa, **nadi-drift ang timing ng
+lahat ng chunk pagkatapos ng presyo**, dahil proporsyonal ang mapping sa
+[`voiceChunkWindows`](../api/_lib/drawPlan.ts#L334) at bilang ng salita ang batayan. Hindi to
+masasagot ng pagbabasa ng code at hindi rin sya nasa docs ng ElevenLabs. **Isang TTS + isang
+alignment call ang kailangan.** Hangga't hindi nasasagot, wag munang ayusin ang
+`voiceChunkWindows` — walang patunay na sira sya.
 
 Ang ₱0 na harness ang panukat sa 1-6: `build-restitch-spec` → `resign-restitch-urls` →
 `fill-restitch-alignment` → `RUN_RESTITCH=1 npx vitest run tests/integration/restitch-real.test.ts`.
