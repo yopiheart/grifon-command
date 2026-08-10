@@ -108,7 +108,7 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 - Kill switch: delete `.github/workflows/ci.yml` (or disable the workflow in the
   repo's Actions settings).
 
-## Tier 0c — Cloud-side REVIEWER · 🔶 built, dark pending one secret
+## Tier 0c — Cloud-side REVIEWER · ✅ LIVE (verified on #106, 2026-08-10)
 
 **Claude Review** ([.github/workflows/claude-review.yml](../.github/workflows/claude-review.yml)).
 Tier 0b answers *does it build*; this answers *should it merge*. Runs
@@ -130,12 +130,47 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   time. Grifon had the first two over-built (Tier 0/0b, `defaultMode: "auto"`)
   and this one missing. Order matters and is not cosmetic: step 2's own
   bottleneck is *reviewing output*, so **going parallel before this exists
-  multiplies the step-1 bottleneck instead of relieving it.** Worktree
-  parallelism stays locked behind Tier 0c working.
-- Arm: nothing in-repo — wired to `pull_request` on `main`. **Neil's one manual
-  step:** run `claude setup-token` and add the result as the repo Actions
-  secret `CLAUDE_CODE_OAUTH_TOKEN`. That path bills the **Max subscription, not
-  the API** (an `ANTHROPIC_API_KEY` secret would bill pay-as-you-go instead).
+  multiplies the step-1 bottleneck instead of relieving it.** ✅ That condition
+  is now satisfied — Tier 0c is live and verified, so **worktree parallelism is
+  UNLOCKED ONCE `main` REQUIRES A PR *AND* AN APPROVING REVIEW** (2026-08-10).
+  The condition is in the headline on purpose: a reader skimming for the verdict
+  must not be able to take the permission without the guard.
+  - ⚠ **Branch protection alone is NOT the condition, and an earlier draft of this
+    line said it was.** Protection forces every change through a PR, which is the
+    premise the sub-bullet below needs — but **Tier 0c is report-only and never
+    blocks a merge**, and plain protection does not require an approving review.
+    So the weaker condition can be fully met while every review goes unread: four
+    agents open four PRs, Tier 0c posts four sticky comments, all four merge
+    green, nothing is blocked and nothing is read. That multiplies the review
+    burden by four — the exact outcome the step-gate bullet above says the
+    ordering exists to prevent. **A human reading the comment before merge is the
+    thing being protected; the PR is only the container.** If merges stay
+    unblocked by choice, then the rule is that Neil reads each sticky comment
+    before merging, and that is what has to be true before agent count goes up.
+  NOW.md's PARKED line says the same; if these two ever disagree, this entry
+  is the one NOW.md points at, so fix both.
+  - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
+    `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
+    to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
+    skipped by GitHub's token guard (the ⛔ bullet at the end of this entry, which
+    also records what is still untested about it). Parallel agents multiply exactly
+    the paths that skip the reviewer, so **if agent count goes up, put branch
+    protection on `main` first** — otherwise the unlock is louder than the guard
+    behind it. NOW.md's PARKED line carries this caveat too; keep them together.
+- Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
+  The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
+  `claude setup-token`) is set, which bills the **Pro subscription, not the API**
+  — an `ANTHROPIC_API_KEY` secret would bill pay-as-you-go instead. To re-arm on
+  a new account, those two steps are the whole setup.
+- **First real review, #106 (2026-08-10): round one alone caught five findings in the diff of
+  the agent that built it** — four stale facts in `NOW.md` (including a
+  Max-vs-Pro contradiction against its own workflow comment) and a `MAX_LINES`
+  breach against `tools/resume_doc_check.mjs`, a verifier the author had not
+  found. It correctly reported no TUNED change and correctly exempted the
+  em-dash and Taglish rules on a repo-internal doc. One sub-claim was stale
+  (it said loops.md recorded neither new fact; #107 had already added the
+  opus-5 pin). **That ratio is the point: builder ≠ reviewer earns its keep on
+  the builder's own work, and the reviewer is a strong signal, not an oracle.**
 - **Fails SOFT, deliberately.** With no token the job emits a `::notice` and
   no-ops. It never paints a PR red, because a red check nobody can fix rebuilds
   the unread-channel failure this file keeps relearning.
@@ -151,17 +186,33 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   replaces (that SOP stays the in-session path for non-PR diffs).
 - Model: **`claude-opus-5`**. CLAUDE.md's per-role allocation puts review in the
   main-loop role and pins that role to Fable 5 — but **Fable is a Max-plan
-  inclusion and the account is on Pro**, so the first live run initialised on
-  `claude-fable-5` and died 524ms later with `is_error:true` after one turn
-  (#106, 2026-08-10). Worth knowing the shape: an out-of-plan model does not
+  inclusion and Neil confirmed the account is Pro** (in session, 2026-08-10;
+  the run evidence alone would only have proven the plan of that *token*, which
+  is a distinction worth keeping since the remedy differs). The first live run
+  initialised on `claude-fable-5` and died 524ms later with `is_error:true`
+  after one turn (#106). Worth knowing the shape: an out-of-plan model does not
   return a clear "no such model", it fails fast and quiet. **Do not downgrade to
   save quota** — a reviewer Neil does not trust costs more than it saves. If Pro
   limits bind, cut the NUMBER of reviews (path filters, skip draft PRs) before
   the quality of one.
-  - ⚠ **Same drift lives in [`.claude/settings.json`](../.claude/settings.json)**,
-    which still pins `"model": "claude-fable-5"`, and in CLAUDE.md's budget
-    section, which is written for Max 5x. Not fixed here — that is a policy
-    decision, not a workflow fix, and it needs Neil.
+  - 💰 **Measured cost, 2026-08-10 — and the cap is now 60, not 20.** A pass over
+    a 2-file docs diff ran 216s and **20 turns, exactly the then-`--max-turns 20`
+    cap**, at $1.51 equivalent. The cap binding on the easiest possible input is
+    why **#110 raised it to 60** and added a prompt rule to write a partial report
+    rather than run out silently — a short report is indistinguishable from a
+    clean diff. **$1.51 is therefore a FLOOR, not the standing price:** it is the
+    cheapest run that will ever happen, and a real `api/` + `components/` review
+    can cost materially more. No code PR has been reviewed yet, so the true
+    per-review cost is still unmeasured.
+  - ⚠ **The Max assumption is NOT confined to two files.** It also lives in
+    [`session_reminders.md`](session_reminders.md) (a re-arm doc the SessionStart
+    hook surfaces, telling the next session to keep the Fable pin *indefinitely*),
+    [`post_beta_roadmap.md`](post_beta_roadmap.md), and
+    [`codex-executor/SKILL.md`](../.claude/skills/codex-executor/SKILL.md),
+    beside [`.claude/settings.json`](../.claude/settings.json) and CLAUDE.md's
+    budget section. Not fixed here — policy, and it needs Neil. **The first
+    write of this entry said "only" the two, from a grep over five files. The
+    reviewer found the rest. Do not write "only" off a scoped grep.**
 - Scoped against overlap: the prompt names CI's deterministic checks (build,
   tsc, vitest, `design:lint`, `check:bundle-leak`, `check:voice-sync`, the
   gate harness, boot smoke) and forbids re-reporting them.
@@ -171,8 +222,13 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   to exfiltrate the token. Found on the first live run (2026-08-10): the job went
   **green having reviewed nothing**, because the action skipped cleanly and the
   post step swallowed the missing report. Two consequences, both permanent:
-  1. **A PR touching `.github/workflows/` always needs a human reviewer.** There
-     is no version of this that self-reviews.
+  1. **A PR editing `claude-review.yml` always needs a human reviewer.** There is
+     no version of this that self-reviews. ⚠ **Whether a PR touching only
+     `ci.yml` still gets reviewed is UNTESTED.** The error names *the* workflow
+     file, singular, which reads as the one being executed — so it probably is
+     reviewed — but nothing here has proven that, and an earlier version of this
+     entry stated the broad claim as fact. Treat any `.github/workflows/` PR as
+     needing human eyes until one is observed getting reviewed.
   2. **The reviewer only starts working once the workflow is merged to `main`.**
      Its first real review is the NEXT PR, never its own.
   Fixed by making the absence loud: the post step now writes a "NOT reviewed"
