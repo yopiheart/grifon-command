@@ -1,5 +1,5 @@
 # NOW — the resume doc
-**Stamped: 2026-08-10** (session 17)
+**Stamped: 2026-08-10** (session 18)
 
 ## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
 
@@ -25,24 +25,38 @@ DARK** (below) · ⚠️ **9 is NOT a caption bug**, now TUNED script compliance
 **Three filed root causes in a row were wrong on inspection** (#91, #94.2, **mine** — a paid probe
 caught the last one before it broke a working mapping). **Read the path before editing it.**
 
-## 🔴 YOUR MOVE — one eyeball unlocks gate 5
-**`MID_GAP_TRIM_ENABLED` is built and OFF.** Gaps ≥0.6s compress to a 0.15s floor, max 2 per
-scene. Jump cuts accepted on talking scenes per your call; b-roll/cinematic get audio-only
-compression, so no jump and no cost. A real-ffmpeg test proves the hole is gone, not just the
-scene shortened. **No test can close whether lip-sync reads right on a real talking head** — that
-is the flag flip, and it wants your eyes on one render.
+## 🔴 YOUR MOVE — two things, both small, both blocking
+
+**1. One eyeball unlocks gate 5.** `MID_GAP_TRIM_ENABLED` is built and OFF. Gaps ≥0.6s compress
+to a 0.15s floor, max 2 per scene. Jump cuts accepted on talking scenes per your call;
+b-roll/cinematic get audio-only compression, so no jump and no cost. A real-ffmpeg test proves the
+hole is gone, not just the scene shortened. **No test can close whether lip-sync reads right on a
+real talking head** — that is the flag flip, and it wants your eyes on one render.
+
+**2. Two clicks arm the cloud reviewer** (PR in flight, below). Install the
+[Claude GitHub App](https://github.com/apps/claude) on the repo, then `claude setup-token` → add
+as repo Actions secret **`CLAUDE_CODE_OAUTH_TOKEN`** (bills the **Max plan**, not the API; an
+`ANTHROPIC_API_KEY` would go pay-as-you-go). Until that secret exists the job no-ops by design.
 
 Next code I can take without you: **gate 7** ([#92](https://github.com/yopiheart/grifon-command/issues/92)) —
-speed-ramp the morph middle in `renderFfmpeg`, non-tuned, how the pros hide a morph. Gate 11
-needs a regen and sits near TUNED.
+speed-ramp the morph middle in `renderFfmpeg`, non-tuned. Gate 11 needs a regen and sits near TUNED.
 
-**Both PRs merged 08-10.** #103 shipped the voice ERROR tier plus a **suppression counter** (the
-`voice-ok` bypass now prints its count on the PASSING line — paolo 5, price-page 1, zero stale),
-because a hole nobody counts becomes a door. #102 shipped `check:domain`, now **0 hits**:
-`generateInfluencerAvatar` → `generateInfluencer`; 4 of the 7 were false positives of one shape
-(a module passing into an API named for the wizard, where that word is right) so they carry a
-recorded reason instead of a rename. Landing CTA is `START MY FIRST AD — FREE` over
-`Free plan · No card · See it before you pay`.
+## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER
+Branch **`feat/claude-review-tier0c`** → PR. Adds
+[`.github/workflows/claude-review.yml`](.github/workflows/claude-review.yml): Claude reviews every
+PR to `main` and posts ranked findings as **one sticky PR comment** (never the run log — that is
+the reader failure this repo has paid for twice). Report-only, never blocks a merge, TUNED changes
+flagged and explicitly not judged. Registered as **Tier 0c** in
+[`loops.md`](workflows/loops.md).
+
+**Why now:** the review rules already existed but only inside PreToolUse hooks that fire when a
+session is alive on this PC. `grifon-starter` shipped live with 30 em dashes through that hole.
+**And it is the gate on parallelism** — per Boris Cherny's *Steps of AI Adoption*, Grifon sits at
+**step 1 (~1 agent)** with step-2 guardrails over-built; step 2's own bottleneck is *reviewing
+output*, so worktree parallelism before this exists would multiply the jam, not clear it.
+Unverified until it runs once: whether the action accepts `claude-fable-5` (fallback line is in
+the file). **Earlier 08-10:** #103 (voice ERROR tier + suppression counter) and #102
+(`check:domain`, now 0 hits) both merged.
 
 ⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
 the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️
@@ -77,7 +91,7 @@ in `assets/ad-swipe/` are paid ads.
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
 Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
-3 Savic. **Remotion + Hyperframes closed.** Canvas promo done.
+3 Savic · **worktree parallelism — locked behind Tier 0c**. **Remotion + Hyperframes closed.**
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:

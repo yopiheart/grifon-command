@@ -1,0 +1,252 @@
+name: Claude Review
+
+# ── Tier 0c — the cloud-side REVIEWER (workflows/loops.md) ────────────────────
+# CI (Tier 0b) answers "does it build and pass". This answers "should it merge".
+#
+# Why it exists: Grifon's review logic already existed, but only inside
+# PreToolUse hooks that fire when a Claude session happens to be alive on the
+# cafe PC — tuned-file-gate, taglish-guard, check:domain, the em-dash rule.
+# Anything authored from a worktree, a web session, a phone, or a post-defreezer
+# machine reached main unreviewed. `grifon-starter` shipped LIVE with 30 em
+# dashes through exactly that hole (NOW.md, 2026-08-10): a universal rule thrown
+# out with an English-funnel carve-out, with nothing outside the session
+# watching. This job is those guards lifted somewhere they run without Neil.
+#
+# It is also the gating item of Boris Cherny's step 1 -> 2 transition ("Steps of
+# AI Adoption", 2026-07-16): a self-verification loop + auto mode + automated
+# code review are what make running more than one agent at a time safe. Grifon
+# had the first two over-built and this one missing, so parallelism stayed
+# locked — going parallel first would have multiplied the review burden that is
+# already the named step-1 bottleneck.
+#
+# REPORT-ONLY, ALWAYS. It never pushes a commit, never edits a file, and never
+# blocks a merge. Same doctrine as workflows/pr_review_loop.md: builder is not
+# reviewer, and anything touching a TUNED file is FLAGGED, never applied.
+#
+# ⚠ Editing this file: the Actions runner scans the ENTIRE file for empty
+# expression interpolations, including inside comments, and an empty one is a
+# parse error that kills every job in the file. Run the guard in loops.md
+# Tier 0b before pushing any change here.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+# A re-push supersedes the review in flight. Reviewing a diff that no longer
+# exists is how a reviewer earns the right to be ignored.
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  id-token: write
+  actions: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # Fail SOFT, not red. The token below is Neil's to add; until it exists this
+    # job must no-op rather than paint every PR red, because a check that is red
+    # for a reason nobody can fix is the noise problem this repo keeps relearning.
+    # `secrets` is unavailable in a job-level `if`, so it is lifted into env here
+    # and tested per-step.
+    env:
+      HAS_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+    steps:
+      - name: Announce missing credential
+        if: env.HAS_TOKEN != 'true'
+        run: |
+          echo "::notice title=Claude Review skipped::CLAUDE_CODE_OAUTH_TOKEN is not set. Generate one with 'claude setup-token' and add it as a repo Actions secret. Billed to the Max subscription, not the API."
+
+      - uses: actions/checkout@v6
+        if: env.HAS_TOKEN == 'true'
+        with:
+          # Full history: the reviewer diffs head against the PR base itself
+          # rather than trusting the merge ref.
+          fetch-depth: 0
+
+      - name: Claude review
+        if: env.HAS_TOKEN == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Model follows CLAUDE.md's per-role allocation: review is a main-loop
+          # role, and the main loop is pinned to Fable 5. If the weekly Fable
+          # allowance is exhausted, CLAUDE.md's own fallback applies — swap the
+          # line below to `--model claude-opus-5`. Do NOT drop to a smaller model
+          # to save quota: a reviewer Neil does not trust costs more than it saves,
+          # because the entire point is to stop him reading every diff by hand.
+          claude_args: |
+            --model claude-fable-5
+            --max-turns 20
+            --allowedTools "Read,Grep,Glob,Write,Bash(git diff:*),Bash(git log:*),Bash(git show:*)"
+          prompt: |
+            You are the fresh-context PR critic for GRIFON COMMAND. You did not
+            write this diff and you are not its author's advocate. Report only:
+            you must NOT edit any file except the single report file named below,
+            and you must NOT propose commits or push anything.
+
+            The diff under review is between these two commits:
+              base: ${{ github.event.pull_request.base.sha }}
+              head: ${{ github.event.pull_request.head.sha }}
+            Read it with: git diff <base>..<head>
+            Use `git diff --stat <base>..<head>` first to size it, then read the
+            files that matter with Read rather than dumping the whole diff.
+
+            Read CLAUDE.md, DESIGN.md, and UBIQUITOUS_LANGUAGE.md before judging.
+            They are the standard; this prompt only names the traps that have
+            actually cost this repo something.
+
+            ## Do NOT report what the deterministic gates already catch
+
+            CI (.github/workflows/ci.yml) independently runs: tsc + vite build,
+            vitest, design:lint, check:bundle-leak, check:voice-sync, the
+            permission-gate harness, and a Playwright boot smoke. Type errors,
+            build breaks, failing tests and leaked prompts are ALREADY covered.
+            Repeating them is noise. Your job is what those cannot see.
+
+            ## Hard rules, in priority order
+
+            1. TUNED CONTENT — FLAG, NEVER APPLY, NEVER ENDORSE.
+               In services/geminiService.ts and api/_lib/prompts.ts, the prompts,
+               system instructions, response schemas and model IDs are tuned.
+               Transport, types, error wrapping and structural refactors are fair
+               game and need no flag. If the diff changes tuned CONTENT, say so
+               at the very top of your report, quote the before/after, and state
+               plainly that it needs Neil's explicit approval. Do not offer an
+               opinion on whether the new prompt is better — you are not the
+               judge of that, and agent_lessons.md 2026-05-09 is what guessing
+               costs. Flag it and stop.
+
+            2. EM DASHES IN CUSTOMER-FACING COPY — universal, no carve-out.
+               The rule applies to English copy exactly as much as to Taglish.
+               `grifon-starter` shipped live with 30 of them because a
+               voice-lint carve-out for an English funnel was read as a carve-out
+               from the em-dash rule too. Check every string a customer can read:
+               components/, funnels/*/src/, funnels/*/public/, and root HTML.
+               Repo-internal artifacts (workflow docs, CLAUDE.md, NOW.md, commit
+               messages, code comments) are EXEMPT — do not report those.
+
+            3. TAGLISH VOICE, customer-facing copy only.
+               No apostrophes in contractions: nyo, yun, yan, to, wag, di. The
+               enemy is manual-Tagalog, not Tagalog — words correct in a
+               dictionary that no person says out loud (detalye, rehistrado,
+               awtomatiko, kumpirmahin, pahintulot, naka-imbak, opisyal). A pure
+               Tagalog sentence is not automatically wrong. Do not chase a
+               language ratio. Spec is .claude/skills/_shared/taglish-voice.md.
+
+            4. DOMAIN LANGUAGE — UBIQUITOUS_LANGUAGE.md is binding.
+               Watch the disambiguations: wizard Avatar vs Influencer Forge
+               Influencer; wizard Script vs Influencer Script; wizard Storyboard
+               vs Cinematic Relay. A module passing into an API named for the
+               wizard may legitimately use the wizard's word — check intent
+               before calling it drift.
+
+            5. DESIGN SYSTEM — DESIGN.md.
+               Canvas is bg-zinc-950 and never bg-black. Accent is #FFCC00. Use
+               the components/ui/ primitives (GlassPanel, GoldButton) rather than
+               recreating them inline. Icons are lucide-react only.
+
+            6. SCOPE CREEP — the surgical-edit rule.
+               Compare what the PR title and body claim against what the diff
+               actually touches. Unrequested edits to files outside the stated
+               scope are a finding on their own, even when each edit looks fine.
+
+            7. SECURITY AND SECRETS.
+               A server secret must never gain a VITE_ prefix or otherwise reach
+               the client bundle. Server-side flags are read at runtime in api/*;
+               VITE_-prefixed flags are baked in at build time and a Vercel flip
+               does nothing without a redeploy — a diff that confuses the two is
+               a real defect. Check auth, rate-limit and quota paths for
+               fail-open behavior. Anything reachable with the anon key is
+               reachable by the browser.
+
+            8. CORRECTNESS the gates cannot see.
+               Async video jobs are fire-then-poll; wizard state lives in
+               App.tsx and is passed as props. Look for broken polling, dropped
+               error paths, state that cannot resume, and flags whose two halves
+               (server runtime + client build-time) can land in a partial state.
+
+            ## How to report
+
+            Write your findings to a file named `review.md` in the repository
+            root. That file is the entire deliverable — a later step posts it
+            verbatim as a PR comment, and Neil reads it there. Nothing you print
+            to the log is read by anyone.
+
+            Format:
+            - Open with one line: the verdict, and the count of findings by
+              severity. If a TUNED file's content changed, that goes first,
+              before the verdict line.
+            - Then findings, MOST SEVERE FIRST. Each one: a bold one-line claim,
+              the `path/to/file.ts:LINE` reference, why it is wrong in one or two
+              sentences, and a concrete failure scenario. No essays.
+            - Mark each finding with a severity: BLOCKER, SHOULD FIX, or NIT.
+            - If you find nothing, say exactly that in one short line and stop.
+              Do not manufacture findings to look useful. A reviewer that always
+              finds something is a reviewer that gets ignored, and this one exists
+              specifically so Neil can stop reading every diff by hand.
+            - Never claim a check you did not run. If the diff was too large to
+              read fully, say which parts you skipped.
+
+      - name: Post the review to the PR
+        if: env.HAS_TOKEN == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const MARKER = '<!-- grifon-claude-review -->';
+            const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+
+            if (!fs.existsSync('review.md')) {
+              core.warning('No review.md was produced — the reviewer did not finish. Not posting.');
+              return;
+            }
+            const findings = fs.readFileSync('review.md', 'utf8').trim();
+            if (!findings) {
+              core.warning('review.md was empty — not posting.');
+              return;
+            }
+
+            const body = [
+              MARKER,
+              '### Claude review',
+              '',
+              findings,
+              '',
+              '---',
+              '_Report-only. Nothing here was applied, and this check never blocks a merge —',
+              `build/tests stay with CI. TUNED-file changes are flagged for Neil, never endorsed._`,
+              `_[run](${runUrl})_`,
+            ].join('\n');
+
+            // ONE sticky comment, edited in place. Twenty comments on a PR is the
+            // same unread-channel failure as twenty CI emails (loops.md Tier 0b) —
+            // the review is only useful if the newest one is the one he opens.
+            const { data: comments } = await github.rest.issues.listComments({
+              owner, repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find(c => c.body && c.body.includes(MARKER));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: existing.id, body,
+              });
+              core.notice(`Updated review comment on #${issue_number}`);
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body,
+              });
+              core.notice(`Posted review comment on #${issue_number}`);
+            }
