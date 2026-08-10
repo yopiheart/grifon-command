@@ -108,6 +108,74 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 - Kill switch: delete `.github/workflows/ci.yml` (or disable the workflow in the
   repo's Actions settings).
 
+## Tier 0c — Cloud-side REVIEWER · 🔶 built, dark pending one secret
+
+**Claude Review** ([.github/workflows/claude-review.yml](../.github/workflows/claude-review.yml)).
+Tier 0b answers *does it build*; this answers *should it merge*. Runs
+`anthropics/claude-code-action@v1` on every PR to `main` and posts ranked
+findings as **one sticky PR comment**, edited in place on each re-push.
+
+- **Why it exists.** The review logic already existed — it lived in PreToolUse
+  hooks (`tuned-file-gate`, `taglish-guard`, `check:domain`, the em-dash rule)
+  that only fire when a Claude session happens to be alive on the cafe PC.
+  Anything authored from a worktree, a web session, a phone, or a
+  post-defreezer machine reached `main` unreviewed. **`grifon-starter` shipped
+  LIVE with 30 em dashes through exactly that hole** (NOW.md 2026-08-10): a
+  universal rule thrown out with an English-funnel voice-lint carve-out, with
+  nothing outside the session watching. Tier 0c is those guards lifted
+  somewhere they run without Neil.
+- **The step gate.** In Boris Cherny's *Steps of AI Adoption* (2026-07-16) the
+  step 1 → 2 transition needs four things: a self-verification loop you trust,
+  auto mode, **automated code review**, and running more than one agent at a
+  time. Grifon had the first two over-built (Tier 0/0b, `defaultMode: "auto"`)
+  and this one missing. Order matters and is not cosmetic: step 2's own
+  bottleneck is *reviewing output*, so **going parallel before this exists
+  multiplies the step-1 bottleneck instead of relieving it.** Worktree
+  parallelism stays locked behind Tier 0c working.
+- Arm: nothing in-repo — wired to `pull_request` on `main`. **Neil's one manual
+  step:** run `claude setup-token` and add the result as the repo Actions
+  secret `CLAUDE_CODE_OAUTH_TOKEN`. That path bills the **Max subscription, not
+  the API** (an `ANTHROPIC_API_KEY` secret would bill pay-as-you-go instead).
+- **Fails SOFT, deliberately.** With no token the job emits a `::notice` and
+  no-ops. It never paints a PR red, because a red check nobody can fix rebuilds
+  the unread-channel failure this file keeps relearning.
+- Reader: the sticky PR comment — **not** the workflow run log. The action's
+  automation mode writes to the run log by default, which is precisely the Tier
+  0b/Tier 6 reader failure; the `github-script` post step exists to defeat that.
+  One comment, edited in place, for the same reason `main-status` keeps one
+  issue instead of twenty emails.
+- **Report-only, always.** Never pushes a commit, never edits a file (except its
+  own `review.md` scratch), never blocks a merge. TUNED-file content changes are
+  **flagged and explicitly not judged** — same doctrine as
+  [pr_review_loop.md](pr_review_loop.md), which this automates rather than
+  replaces (that SOP stays the in-session path for non-PR diffs).
+- Model: `claude-fable-5`, following CLAUDE.md's per-role allocation (review is
+  a main-loop role). Fallback if the weekly Fable allowance is spent:
+  `--model claude-opus-5`. **Do not downgrade to save quota** — a reviewer Neil
+  does not trust costs more than it saves, since the whole point is to stop him
+  reading every diff by hand.
+- Scoped against overlap: the prompt names CI's deterministic checks (build,
+  tsc, vitest, `design:lint`, `check:bundle-leak`, `check:voice-sync`, the
+  gate harness, boot smoke) and forbids re-reporting them.
+- ⛔ **It cannot review changes to itself, and this is not configurable.** The
+  action refuses to run when the workflow file on the PR branch differs from the
+  copy on the default branch — GitHub's guard against a PR rewriting the workflow
+  to exfiltrate the token. Found on the first live run (2026-08-10): the job went
+  **green having reviewed nothing**, because the action skipped cleanly and the
+  post step swallowed the missing report. Two consequences, both permanent:
+  1. **A PR touching `.github/workflows/` always needs a human reviewer.** There
+     is no version of this that self-reviews.
+  2. **The reviewer only starts working once the workflow is merged to `main`.**
+     Its first real review is the NEXT PR, never its own.
+  Fixed by making the absence loud: the post step now writes a "NOT reviewed"
+  sticky comment instead of returning quietly. A green check that means *nothing
+  ran* is the same unread-channel failure as Tier 0b's 20 emails, rebuilt from the
+  inside — silence must never be indistinguishable from a clean bill.
+- Kill switch: delete the workflow file, or delete the
+  `CLAUDE_CODE_OAUTH_TOKEN` secret (which returns it to a clean no-op).
+- ⚠ Before editing: run the Tier 0b empty-expression guard. Same file class,
+  same trap.
+
 ## Tier 1 — Per-task (outer loop) · ✅ live, armed per task
 
 **`/goal` with the condition template** (CLAUDE.md → "Goal-driven execution"):
