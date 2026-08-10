@@ -240,6 +240,29 @@ const KONYO = [
 const PARTICLES = new Set(['na','pa','lang','naman','nga','pala','ba','daw','raw','po','ho',
   'muna','sana','kaya','din','rin','yata','tuloy','kasi','talaga','man','pala','eh']);
 
+/**
+ * 🔧 CALIBRATION 2026-08-08 (B-1) — HINDI TUMATANGGAP NG PARTICLE ANG UTOS.
+ * Gramatika to, hindi panlasa: ang naman/lang/kasi ay panlambot ng PAHAYAG. Ang
+ * utos ay diretso — "Linisin mo na lang naman ang daanan" ay hindi mas mabuti,
+ * mas malambot lang at mas mahina. Kaya ang checklist at ang how-to step ay
+ * tama na kahit walang particle, at pagkakamali ng gate ang paghuli sa kanila.
+ *
+ * Beripikado sa 17 na totoong hit: na-exempt lahat ng apat na utos (Kunan mo,
+ * Linisin, ihambing mo, ipadala mo) at NANATILING flagged ang lahat ng apat na
+ * prose na pangungusap na talagang patay ang tunog. Zero false exempt.
+ */
+const IMPERATIVE =
+  /\b(?:[a-zñ]+(?:in|an)|i-?[a-zñ]+|mag-?[a-zñ]+)\s+(?:mo|nyo|ninyo)\b|^\s*(?:[A-ZÑ][a-zñ]+(?:in|an))\s+(?:ang|ng|sa|mo|nyo)\b/;
+
+/**
+ * 🔧 CALIBRATION 2026-08-08 (B-2) — TERMS MICRO-COPY, KAPATID NG LEGAL SURFACE.
+ * Ang `disclaimer`, `reassurance`, `consent` at `brandLine` ay parehong klase ng
+ * `privacy.html`: transactional at pormal sila nang may dahilan. Ang presyong
+ * disclaimer ("Ang ₱999 ay para sa septic check...") ay hindi vlog line at hindi
+ * sya dapat maging vlog line. Field name ang senyas, hindi hula sa prose.
+ */
+const TERMS_KEY = /^(disclaimer|reassurance|consent|brandLine|legal|terms|finePrint)$/i;
+
 const TAGALOG_MARKERS = new Set(['ang','ng','sa','mga','yung','yun','yan','ito','ako','ka',
   'ikaw','sya','siya','kami','tayo','kayo','sila','hindi','di','wala','meron','may','at',
   'kung','para','pag','kapag','tapos','habang','kahit','basta','gusto','kailangan','pwede',
@@ -251,9 +274,26 @@ const TAGALOG_MARKERS = new Set(['ang','ng','sa','mga','yung','yun','yan','ito',
  * na pantig ang magkatabing patinig (na-pag-ka-ka-sun-du-an = 7).
  * Exempt ang pinaka-/nakaka-/pagka-/magka- — produktibo sila at sinasabi ng tao
  * (pinakamaganda, nakakatawa), kaya hindi sila slop.
+ *
+ * 🔧 CALIBRATION 2026-08-08 — 10 sa 27 na babala ay dito, at LAHAT sila mali.
+ * Nahuli: maipapakita, mapapatunayan, ipinapadala, ipapaliwanag, makakapagbigay,
+ * makapagsimula. Karaniwang salita silang lahat — `kita`, `patunay`, `padala`,
+ * `paliwanag`, `bigay`, `simula` ang ugat. Lumagpas lang sila sa 6 pantig dahil sa
+ * ASPECT REDUPLICATION (pa-pa, ka-ka) — gramatika yun, hindi mabigat na bokabularyo.
+ * Ang senyas: "May maipapakita ka kapag may humingi." ay magandang kopya.
+ *
+ * Ang totoong target ay ang mabigat na UGAT (napagkakasunduan, naisasakatuparan),
+ * hindi ang mahabang affix sa magaan na ugat. Ang mismong hint na ini-print nito
+ * ("i-check sa affix machine") ay nagsasabing gamitin ang affix machine sa mga
+ * salitang SILA MISMO ang affix machine — kaya alam nating mali ang rule, hindi ang copy.
+ *
+ * Parehong prinsipyo ng pinaka-/nakaka- sa itaas, kaya isang listahan lang sila.
+ * Beripikado: exempt na ang anim sa itaas, at nahuhuli pa rin ang napagkakasunduan,
+ * nakapagpapahiwatig, naisasakatuparan, pinagtitibay, naipagkakaloob.
  */
 const LONG_WORD_MIN_SYLLABLES = 6;
-const NATURAL_LONG_PREFIX = /^(pinaka|nakaka|nagka|magka|pagka|nakiki|makiki)/i;
+const NATURAL_LONG_PREFIX =
+  /^(pinaka|nakaka|nagka|magka|pagka|nakiki|makiki|maipapa|ipinapa|ipapa|mapapa|makaka|makapag)/i;
 // Kailangang mukhang Tagalog: may affix sa unahan o sa hulihan. Kung wala, malamang
 // English compound sya (surfaceElevated, objectionReversal) at hindi natin problema.
 const TAGALOG_AFFIX = /^(na|ma|pa|ka|ni|mag|nag|pag|pinag|ipina|maka|sina|ipa|ma[gk])|([aeiou](han|hin|an|in|ng))$/i;
@@ -331,14 +371,48 @@ const rootHtml = (await readdir(ROOT, { withFileTypes: true }))
   .filter((e) => e.isFile() && e.name.endsWith('.html'))
   .map((e) => join(ROOT, e.name));
 
+// 🔴 2026-08-08 — SAKOP NG EXEMPTION, HINDI SAKOP NG WALKER.
+// May legal exemption na sa loob ng PARTICLE loop sa ibaba, pero PANGUNGUSAP ang
+// tinitingnan nya: kailangang nasa mismong linya ang RA / DENR / Privacy bago sya
+// mag-exempt. Kaya tumatagas — ang `privacy.html:103` ("may karapatan kang malaman
+// kung ano ang kinuha namin") ay purong legal, pero walang keyword, kaya nahuhuli.
+// Ganun din ang numbered na how-to step sa `pack/` ("2. Sa Meta Business Suite,
+// gumawa ng schedule").
+//
+// Ang particle test ay tanong na "parang sinasabi ba to ng tao nang malakas?" — at
+// may dalawang surface na sadyang HINDI sinasalita: ang legal page at ang
+// instructional pack. Ang pagdagdag ng naman/lang/kasi doon ay SIRA, hindi ayos.
+//
+// ⚠️ ANG PARTICLE LANG ANG NAKA-OFF DITO — hindi ito pagpapaliit ng sakop ng walker,
+// at yun ang mahalagang pagkakaiba. Buhay pa rin ang RULES, ang KONYO at ang MAHABA
+// sa mga page na to. Sila ang nakakahuli ng deep-Tagalog na privacy.html gaya noong
+// 08-02, kaya hindi sila hinahawakan. Ang bumabasa nito bukas: wag mong idagdag ang
+// MAHABA sa listahan — sya ang huling nakabantay sa manual-Tagalog sa legal page.
+const FORMAL_SURFACE = /(^|[\\/])(privacy|terms)\.html$|(^|[\\/])pack[\\/]/i;
+
 const files = [...(await walk(SRC)), ...(await walk(PUBLIC)), ...rootHtml];
 const hits = [];
 const warns = [];
+// Bawat `// voice-ok:` na nakita, kasama kung ilang warning ang tunay nyang
+// pinatahimik. Ipinapakita kahit sa pasadong run — tingnan ang paliwanag sa tabi
+// ng `annotated` sa ibaba.
+const suppressions = [];
 
 for (const file of files) {
   const raw = await readFile(file, 'utf8');
   const code = strip(raw);
+  // Ang `voice-ok:` ay nasa COMMENT, at binubura ng strip() ang comment — kaya
+  // ang HILAW na linya ang binabasa para dito, hindi ang na-strip.
+  const rawLines = raw.split(/\r?\n/);
+  // Isang beses kada file, hindi kada linya — pareho ang sagot sa buong file.
+  const isFormalSurface = FORMAL_SURFACE.test(relative(ROOT, file));
+  // Sinusundan ang huling `key:` na nakita para malaman kung anong field ang
+  // kinalalagyan ng string. Sapat ang line-based dito: isang key kada linya ang
+  // config, at ang string ay nasa mismong linya o sa kasunod.
+  let currentKey = '';
   code.split('\n').forEach((line, i) => {
+    const keyOnLine = line.match(/^\s*([A-Za-z_$][\w$]*)\s*:/);
+    if (keyOnLine) currentKey = keyOnLine[1];
     // Relative sa ROOT, hindi sa SRC: mula nang ma-scan ang public/ at ang root
     // HTML, ang SRC-relative na path ay lumalabas na `src/..\public\privacy.html`.
     const where = { file: relative(ROOT, file), line: i + 1 };
@@ -347,6 +421,28 @@ for (const file of files) {
       const m = line.match(re);
       if (m) hits.push({ ...where, word: m[0], why, better });
     }
+
+    // 🔧 2026-08-08 — ESCAPE HATCH PARA SA PANLASA, HINDI PARA SA HARD RULE.
+    // May pasyang hindi kayang makita ng regex: ang sadyang ritmo ng tatlo ("sa
+    // ilog, sa bakanteng lote, o sa kanal"), ang noun-phrase na list item, ang
+    // naka-quote na script na ipapadala sa Messenger. Dati, dalawa lang ang
+    // pagpipilian doon — sirain ang magandang kopya, o pabayaang maingay ang gate
+    // hanggang di na sya binabasa. Pangatlo to: itala ang pasya sa tabi mismo ng
+    // linya, kasama ang dahilan, para nababasa sya ng susunod na tao.
+    //
+    // ⚠️ WARNING LANG ang napapatahimik nito. Tumatakbo na ang RULES sa itaas
+    // bago pa marating ang linyang to, kaya HINDI kayang patahimikin ang hard
+    // rule ni Neil. Sinadya yun: panlasa ang warning, batas ang RULES.
+    //
+    // Gamit:  'kopya dito',  // voice-ok: bakit tama ang linyang to
+    //
+    // 🔴 2026-08-10 — HINDI NA SYA TAHIMIK NA LUSOT. Ang bypass na walang nakakakita
+    // ay hindi bypass, bulok na gate. Dati `return` agad dito; ngayon tumatakbo pa
+    // rin ang tatlong class check at binabawi lang ang naipong warning, para may
+    // MABILANG. Ipinapakita ang bilang kahit sa pasadong run, kaya ang funnel na may
+    // dalawampung suppression ay nakikita agad na palamuti na ang gate nya.
+    const annotated = /voice-ok:/.test(rawLines[i] ?? '');
+    const warnMark = warns.length;
 
     // (A) Konyo
     for (const [re, why, better] of KONYO) {
@@ -376,7 +472,12 @@ for (const file of files) {
     // ang maiikling punchy na copy dahil tatlong pangungusap ang nasa iisang
     // linya ng HTML, kaya lumagpas sa 12 salita ang PINAGSAMA. Mali yun — walang
     // kailangang particle ang maikling linya, at yun mismo ang magandang copy.
-    for (const s of prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
+    // Surface-level muna ang exemption (tingnan ang FORMAL_SURFACE sa itaas), tapos
+    // ang lumang sentence-level na keyword check sa loob — para mahuli pa rin ang
+    // legal na pangungusap na naka-embed sa isang sales page.
+    const skipParticle = isFormalSurface || TERMS_KEY.test(currentKey);
+    for (const s of skipParticle ? [] : prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
+      if (IMPERATIVE.test(s)) continue;
       // Exempt ang legal at compliance na pangungusap. Pormal talaga sila nang
       // may dahilan (RA number, Data Privacy Act, DENR, BIR), at hindi pa
       // kailanman nireklamo ni Neil na "walang particle" ang ganitong linya.
@@ -412,25 +513,67 @@ for (const file of files) {
         better: 'i-check sa affix machine (i- / mag- / na- + English root)', klase: 'MAHABA',
       });
     }
+
+    // Dito binabawi ang warning ng isang naka-annotate na linya. Kapareho ng epekto
+    // ng lumang `return`, may bilang lang ngayon. Ang `produced === 0` ay STALE:
+    // may `voice-ok:` na nakaupo sa linyang matagal nang hindi na sumisira, kaya
+    // dapat na syang tanggalin — kundi, unti-unting nauubos ang gate ng mga
+    // annotation na walang binabantayan.
+    if (annotated) {
+      const produced = warns.length - warnMark;
+      warns.length = warnMark;
+      suppressions.push({ ...where, produced });
+    }
   });
 }
 
-// WARNINGS muna: babala lang sila, kaya lumalabas kahit pasado ang build.
+// 🔴 ERROR TIER NA ANG TATLONG KLASE (2026-08-08). Babala lang sila noon, at may
+// dahilan yun: 34 ang hit at wala pang paraan para itala ang sadyang exception,
+// kaya ang ERROR tier noon ay dalawang pagpipilian lang — sirain ang magandang
+// kopya, o pabayaang maingay ang gate hanggang di na sya binabasa ng tao.
+//
+// Nagbago ang dalawa. Nakalibre ang KONYO, at na-calibrate ang PARTICLE (utos +
+// terms micro-copy + legal surface) at ang MAHABA (mabigat na ugat, hindi mahabang
+// affix) — 34 -> 0 nang hindi humihina, patunay ang limang manual na salita na
+// nahuhuli pa rin. At may `// voice-ok: <dahilan>` na para sa panlasang hindi
+// kayang makita ng regex.
+//
+// Yun ang bumubuhay sa ERROR tier: may kinalalagyan na ang sadyang exception,
+// kasama ang dahilan nya. Kung babalik sa babala, ISANG LINYA lang: ibalik ang
+// `&& warns.length === 0` sa pagpasa sa ibaba.
 if (warns.length) {
-  console.warn(`\n⚠ ${warns.length} BABALA (klase, hindi salita — hindi to nagpapabagsak)\n`);
+  console.error(`\n✗ ${warns.length} SALA SA KLASE (nagpapabagsak na to)\n`);
   for (const w of warns) {
-    console.warn(`  [${w.klase}] ${w.file}:${w.line}`);
-    console.warn(`    "${w.word}"`);
-    console.warn(`    ${w.why}`);
-    console.warn(`    ${w.better}\n`);
+    console.error(`  [${w.klase}] ${w.file}:${w.line}`);
+    console.error(`    "${w.word}"`);
+    console.error(`    ${w.why}`);
+    console.error(`    ${w.better}\n`);
   }
-  console.warn('Modelo: workflows/taglish_2026_model.md\n');
+  console.error('Modelo: workflows/taglish_2026_model.md');
+  console.error('Kung TAMA ang linya, itala ang dahilan: // voice-ok: <bakit sya tama>\n');
 }
 
-if (hits.length === 0) {
-  console.log(`voice ok — ${files.length} file, ${warns.length} babala, walang nahuli`);
+// 🔴 2026-08-10 — NAKIKITA ANG BYPASS KAHIT PASADO.
+// Ang `voice-ok:` ang tanging butas sa ERROR tier, at ang butas na walang
+// nagbibilang ay unti-unting nagiging pinto. Nakadikit sya sa PASSING line mismo,
+// hindi sa ilalim ng error, kasi doon lang sya makikita ng tao araw-araw. Ang
+// funnel na may tatlo ay malusog. Ang may dalawampu ay hindi na gate, palamuti na.
+const stale = suppressions.filter((s) => s.produced === 0);
+const suppressionNote = suppressions.length
+  ? `, ${suppressions.length} suppression${stale.length ? ` (${stale.length} STALE)` : ''}`
+  : '';
+
+if (hits.length === 0 && warns.length === 0) {
+  console.log(`voice ok — ${files.length} file, walang nahuli${suppressionNote}`);
+  // Hindi to nagpapabagsak. Basura sya, hindi sira — pero basurang nagtatago ng
+  // gate, kaya pinapangalanan sya para may makapaglinis.
+  for (const s of stale) {
+    console.log(`  stale voice-ok — ${s.file}:${s.line} (wala na syang pinipigilan, tanggalin na)`);
+  }
   process.exit(0);
 }
+
+if (hits.length === 0) process.exit(1);
 
 console.error(`\n✗ VOICE LINT — ${hits.length} nahuli\n`);
 for (const h of hits) {
