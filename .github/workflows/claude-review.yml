@@ -81,7 +81,12 @@ jobs:
           fetch-depth: 0
 
       - name: Claude review
+        id: claude
         if: env.HAS_TOKEN == 'true'
+        # continue-on-error so the post step below still runs and can SAY the run
+        # failed. The check still goes red — the last step re-fails the job — but a
+        # red check with a stale comment sitting above it was worse than either.
+        continue-on-error: true
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -212,8 +217,15 @@ jobs:
               read fully, say which parts you skipped.
 
       - name: Post the review to the PR
-        if: env.HAS_TOKEN == 'true'
+        # always(), so a FAILED review still speaks. Third live run (2026-08-10)
+        # died mid-review; this step was skipped, and the sticky comment from the
+        # previous pass stayed up unchanged — findings that had already been fixed,
+        # reading as current, with only a red check to contradict them. A stale
+        # comment is worse than no comment: it is confidently wrong.
+        if: always() && env.HAS_TOKEN == 'true'
         uses: actions/github-script@v7
+        env:
+          REVIEW_OUTCOME: ${{ steps.claude.outcome }}
         with:
           script: |
             const fs = require('fs');
@@ -236,8 +248,24 @@ jobs:
               ? fs.readFileSync('review.md', 'utf8').trim()
               : '';
             const reviewed = findings.length > 0;
+            const failed = process.env.REVIEW_OUTCOME === 'failure';
 
-            if (!reviewed) {
+            if (!reviewed && failed) {
+              // The run started and broke. Distinct from the skip case below, and
+              // it MUST overwrite the sticky comment rather than leave the previous
+              // pass standing — that is the whole point of this branch.
+              findings = [
+                '🔴 **The review RUN FAILED — this diff was NOT reviewed.**',
+                '',
+                'Whatever this comment said before is now gone on purpose: it described an',
+                'older diff and would have read as current.',
+                '',
+                'Open the run below for the cause. Known ones: a model your plan does not',
+                'include (fails in ~1 turn, near-zero cost), or a subscription limit reached',
+                '(fails after real work). Check `is_error`, `num_turns` and `total_cost_usd`',
+                'in the result object to tell them apart.',
+              ].join('\n');
+            } else if (!reviewed) {
               findings = [
                 '⚠️ **No report was produced — this PR was NOT reviewed.**',
                 '',
@@ -285,3 +313,13 @@ jobs:
                 ? `Review posted on #${issue_number}`
                 : `NOT REVIEWED — posted the absence on #${issue_number}`
             );
+
+      # Restores the red check that `continue-on-error` above suppressed. The
+      # comment has now been written, so the ordering is: say what happened, THEN
+      # fail. Without this the job would go green on a broken review, which is the
+      # exact silent-pass this workflow already had to fix once.
+      - name: Re-fail if the review broke
+        if: always() && steps.claude.outcome == 'failure'
+        run: |
+          echo "::error title=Claude Review failed::The review did not complete. The PR comment says so; this step just restores the red check."
+          exit 1
