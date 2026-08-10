@@ -108,7 +108,7 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 - Kill switch: delete `.github/workflows/ci.yml` (or disable the workflow in the
   repo's Actions settings).
 
-## Tier 0c — Cloud-side REVIEWER · 🔶 built, dark pending one secret
+## Tier 0c — Cloud-side REVIEWER · ✅ LIVE (verified on #106, 2026-08-10)
 
 **Claude Review** ([.github/workflows/claude-review.yml](../.github/workflows/claude-review.yml)).
 Tier 0b answers *does it build*; this answers *should it merge*. Runs
@@ -132,10 +132,20 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   bottleneck is *reviewing output*, so **going parallel before this exists
   multiplies the step-1 bottleneck instead of relieving it.** Worktree
   parallelism stays locked behind Tier 0c working.
-- Arm: nothing in-repo — wired to `pull_request` on `main`. **Neil's one manual
-  step:** run `claude setup-token` and add the result as the repo Actions
-  secret `CLAUDE_CODE_OAUTH_TOKEN`. That path bills the **Max subscription, not
-  the API** (an `ANTHROPIC_API_KEY` secret would bill pay-as-you-go instead).
+- Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
+  The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
+  `claude setup-token`) is set, which bills the **Pro subscription, not the API**
+  — an `ANTHROPIC_API_KEY` secret would bill pay-as-you-go instead. To re-arm on
+  a new account, those two steps are the whole setup.
+- **First real review, #106 (2026-08-10): it caught five defects in the diff of
+  the agent that built it** — four stale facts in `NOW.md` (including a
+  Max-vs-Pro contradiction against its own workflow comment) and a `MAX_LINES`
+  breach against `tools/resume_doc_check.mjs`, a verifier the author had not
+  found. It correctly reported no TUNED change and correctly exempted the
+  em-dash and Taglish rules on a repo-internal doc. One sub-claim was stale
+  (it said loops.md recorded neither new fact; #107 had already added the
+  opus-5 pin). **That ratio is the point: builder ≠ reviewer earns its keep on
+  the builder's own work, and the reviewer is a strong signal, not an oracle.**
 - **Fails SOFT, deliberately.** With no token the job emits a `::notice` and
   no-ops. It never paints a PR red, because a red check nobody can fix rebuilds
   the unread-channel failure this file keeps relearning.

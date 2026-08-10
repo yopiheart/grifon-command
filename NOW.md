@@ -2,7 +2,6 @@
 **Stamped: 2026-08-10** (session 18)
 
 ## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
-
 Live 08-08. Codes **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, sent as `grifon.ai/i/FOUNDER-01` —
 redeems on arrival, scrubs itself from the bar. Audit `events where module='launch_gate'`
 (waitlist: `funnel_leads`). Revoke via `LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`;
@@ -25,41 +24,23 @@ DARK** (below) · ⚠️ **9 is NOT a caption bug**, now TUNED script compliance
 **Three filed root causes in a row were wrong on inspection** (#91, #94.2, **mine** — a paid probe
 caught the last one before it broke a working mapping). **Read the path before editing it.**
 
-## 🔴 YOUR MOVE — two things, both small, both blocking
+## 🔴 YOUR MOVE — one eyeball unlocks gate 5
+**`MID_GAP_TRIM_ENABLED` is built and OFF.** Gaps ≥0.6s compress to a 0.15s floor, max 2 per
+scene. Jump cuts accepted on talking scenes per your call; b-roll/cinematic get audio-only
+compression, so no jump and no cost. A real-ffmpeg test proves the hole is gone, not just the
+scene shortened. **No test can close whether lip-sync reads right on a real talking head** — that
+is the flag flip, and it wants your eyes on one render. Next code I can take without you: **gate
+7** ([#92](https://github.com/yopiheart/grifon-command/issues/92)) — speed-ramp the morph middle
+in `renderFfmpeg`, non-tuned. Gate 11 needs a regen and sits near TUNED.
 
-**1. One eyeball unlocks gate 5.** `MID_GAP_TRIM_ENABLED` is built and OFF. Gaps ≥0.6s compress
-to a 0.15s floor, max 2 per scene. Jump cuts accepted on talking scenes per your call;
-b-roll/cinematic get audio-only compression, so no jump and no cost. A real-ffmpeg test proves the
-hole is gone, not just the scene shortened. **No test can close whether lip-sync reads right on a
-real talking head** — that is the flag flip, and it wants your eyes on one render.
-
-**2. Two clicks arm the cloud reviewer** (PR in flight, below). Install the
-[Claude GitHub App](https://github.com/apps/claude) on the repo, then `claude setup-token` → add
-as repo Actions secret **`CLAUDE_CODE_OAUTH_TOKEN`** (bills the **Max plan**, not the API; an
-`ANTHROPIC_API_KEY` would go pay-as-you-go). Until that secret exists the job no-ops by design.
-
-Next code I can take without you: **gate 7** ([#92](https://github.com/yopiheart/grifon-command/issues/92)) —
-speed-ramp the morph middle in `renderFfmpeg`, non-tuned. Gate 11 needs a regen and sits near TUNED.
-
-## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER · ✅ ARMED (#105 merged)
-[`.github/workflows/claude-review.yml`](.github/workflows/claude-review.yml): Claude reviews every
-PR to `main` and posts findings as **one sticky PR comment** (never the run log — the reader
-failure this repo has paid for twice). Report-only, never blocks a merge, TUNED changes flagged
-and explicitly not judged. `CLAUDE_CODE_OAUTH_TOKEN` is live (**Max plan**, not API). Full entry:
-**Tier 0c** in [`loops.md`](workflows/loops.md).
-
-**Why:** the rules already existed but only inside PreToolUse hooks that fire when a session is
-alive on this PC — `grifon-starter` shipped live with 30 em dashes through that hole. **It is also
-the gate on parallelism:** per Boris Cherny's *Steps of AI Adoption*, Grifon sits at **step 1 (~1
-agent)** with step-2 guardrails over-built, and step 2's own bottleneck is *reviewing output*, so
-going parallel first multiplies the jam instead of clearing it.
-
-⛔ **It can never review a PR that touches `.github/workflows/`** — GitHub refuses to run it when
-the workflow differs from `main`, its guard against a PR rewriting the workflow to steal the
-token. Those PRs always need your eyes. First run also caught a defect of mine: a skipped review
-went **green having read nothing**; it now posts a loud NOT-reviewed comment instead. ⬜ Still
-unproven: whether the action accepts `claude-fable-5` — **this PR is that test** (fallback
-`claude-opus-5` line is in the file). **Earlier 08-10:** #103 + #102 merged.
+## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER · ✅ LIVE
+Claude reviews every PR to `main`. One sticky comment, report-only, TUNED flagged not judged.
+**Verified on #106** — its first act was catching five real defects in the diff of the agent that
+wrote it. Entry + the two permanent constraints: **Tier 0c** in [`loops.md`](workflows/loops.md).
+⚠️ **Plan drift, your call.** Token is **Pro**, so `claude-fable-5` died fast and quiet; pinned to
+`claude-opus-5` now. Same wrong assumption still in [`.claude/settings.json`](.claude/settings.json)
+and CLAUDE.md's **Max 5x** budget section — policy, not plumbing, so untouched. Review runs eat
+your working limit; if it binds, cut the *number* of reviews, not the model.
 
 ⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
 the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️
@@ -83,7 +64,6 @@ Promise only so far: **no load has run, no certificate in hand.** The page stand
 4. **Done, do not redo:** avatar, value stack, grill, pixel-leak, copy, page, trust card.
 
 ## 🔴 Do not forget
-
 **Route density is the lever, not price** — one city first. **No CASH refunds** on the tripwire,
 credit only, one year. **The ₱900 break-even is dead**; Paolo is **₱4,900 per 1-load job**. **Geo
 is a coordinate radius**, lat `14.54` lng `121.02`. ⚠️ **The big client-list names are
@@ -94,15 +74,16 @@ in `assets/ad-swipe/` are paid ads.
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
 Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
-3 Savic · **worktree parallelism — locked behind Tier 0c**. **Remotion + Hyperframes closed.**
+3 Savic · **worktree parallelism — Tier 0c is live, so this is now unlocked**. **Remotion +
+Hyperframes closed.**
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` · `npx playwright
 install chromium`. ⚠️ **Neither `gh` nor `claude` is on PATH** — `…\Programs\GitHubCLI\bin\gh.exe`
-and `~\.vscode\extensions\anthropic.claude-code-<VER>\resources\native-binary\claude.exe` (the
-version is IN the path, so it breaks on every extension update — re-list the dir). Each funnel has its
-own `node_modules` · **never pipe build output** · **Bash is network-sandboxed, use PowerShell** ·
-⚠️ `scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls**, answer already recorded.
+and `~\.vscode\extensions\anthropic.claude-code-<VER>\resources\native-binary\claude.exe` (version
+is IN the path, so it breaks on every extension update — re-list the dir). Each funnel has its own
+`node_modules` · **never pipe build output** · **Bash is network-sandboxed, use PowerShell** · ⚠️
+`scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls**, answer already recorded.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90. Repo artifacts are ENGLISH (this file, commit subjects, workflow docs); ads stay Taglish.
