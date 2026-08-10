@@ -393,6 +393,10 @@ const FORMAL_SURFACE = /(^|[\\/])(privacy|terms)\.html$|(^|[\\/])pack[\\/]/i;
 const files = [...(await walk(SRC)), ...(await walk(PUBLIC)), ...rootHtml];
 const hits = [];
 const warns = [];
+// Bawat `// voice-ok:` na nakita, kasama kung ilang warning ang tunay nyang
+// pinatahimik. Ipinapakita kahit sa pasadong run — tingnan ang paliwanag sa tabi
+// ng `annotated` sa ibaba.
+const suppressions = [];
 
 for (const file of files) {
   const raw = await readFile(file, 'utf8');
@@ -431,7 +435,14 @@ for (const file of files) {
     // rule ni Neil. Sinadya yun: panlasa ang warning, batas ang RULES.
     //
     // Gamit:  'kopya dito',  // voice-ok: bakit tama ang linyang to
-    if (/voice-ok:/.test(rawLines[i] ?? '')) return;
+    //
+    // 🔴 2026-08-10 — HINDI NA SYA TAHIMIK NA LUSOT. Ang bypass na walang nakakakita
+    // ay hindi bypass, bulok na gate. Dati `return` agad dito; ngayon tumatakbo pa
+    // rin ang tatlong class check at binabawi lang ang naipong warning, para may
+    // MABILANG. Ipinapakita ang bilang kahit sa pasadong run, kaya ang funnel na may
+    // dalawampung suppression ay nakikita agad na palamuti na ang gate nya.
+    const annotated = /voice-ok:/.test(rawLines[i] ?? '');
+    const warnMark = warns.length;
 
     // (A) Konyo
     for (const [re, why, better] of KONYO) {
@@ -502,6 +513,17 @@ for (const file of files) {
         better: 'i-check sa affix machine (i- / mag- / na- + English root)', klase: 'MAHABA',
       });
     }
+
+    // Dito binabawi ang warning ng isang naka-annotate na linya. Kapareho ng epekto
+    // ng lumang `return`, may bilang lang ngayon. Ang `produced === 0` ay STALE:
+    // may `voice-ok:` na nakaupo sa linyang matagal nang hindi na sumisira, kaya
+    // dapat na syang tanggalin — kundi, unti-unting nauubos ang gate ng mga
+    // annotation na walang binabantayan.
+    if (annotated) {
+      const produced = warns.length - warnMark;
+      warns.length = warnMark;
+      suppressions.push({ ...where, produced });
+    }
   });
 }
 
@@ -531,8 +553,23 @@ if (warns.length) {
   console.error('Kung TAMA ang linya, itala ang dahilan: // voice-ok: <bakit sya tama>\n');
 }
 
+// 🔴 2026-08-10 — NAKIKITA ANG BYPASS KAHIT PASADO.
+// Ang `voice-ok:` ang tanging butas sa ERROR tier, at ang butas na walang
+// nagbibilang ay unti-unting nagiging pinto. Nakadikit sya sa PASSING line mismo,
+// hindi sa ilalim ng error, kasi doon lang sya makikita ng tao araw-araw. Ang
+// funnel na may tatlo ay malusog. Ang may dalawampu ay hindi na gate, palamuti na.
+const stale = suppressions.filter((s) => s.produced === 0);
+const suppressionNote = suppressions.length
+  ? `, ${suppressions.length} suppression${stale.length ? ` (${stale.length} STALE)` : ''}`
+  : '';
+
 if (hits.length === 0 && warns.length === 0) {
-  console.log(`voice ok — ${files.length} file, walang nahuli`);
+  console.log(`voice ok — ${files.length} file, walang nahuli${suppressionNote}`);
+  // Hindi to nagpapabagsak. Basura sya, hindi sira — pero basurang nagtatago ng
+  // gate, kaya pinapangalanan sya para may makapaglinis.
+  for (const s of stale) {
+    console.log(`  stale voice-ok — ${s.file}:${s.line} (wala na syang pinipigilan, tanggalin na)`);
+  }
   process.exit(0);
 }
 
