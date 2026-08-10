@@ -136,10 +136,12 @@ findings as **one sticky PR comment**, edited in place on each re-push.
   ever disagree again, this entry is the one NOW.md points at, so fix both.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
-    to `main` is unreviewed, and a PR touching `.github/workflows/` is skipped by
-    design (above). Parallel agents multiply exactly the paths that skip the
-    reviewer, so **if agent count goes up, put branch protection on `main`
-    first** — otherwise the unlock is louder than the guard behind it.
+    to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
+    skipped by GitHub's token guard (the ⛔ bullet at the end of this entry — a PR
+    touching only `ci.yml` still gets reviewed). Parallel agents multiply exactly
+    the paths that skip the reviewer, so **if agent count goes up, put branch
+    protection on `main` first** — otherwise the unlock is louder than the guard
+    behind it. NOW.md's PARKED line carries this caveat too; keep them together.
 - Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
   The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
   `claude setup-token`) is set, which bills the **Pro subscription, not the API**
