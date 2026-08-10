@@ -65,7 +65,13 @@ jobs:
       - name: Announce missing credential
         if: env.HAS_TOKEN != 'true'
         run: |
-          echo "::notice title=Claude Review skipped::CLAUDE_CODE_OAUTH_TOKEN is not set. Generate one with 'claude setup-token' and add it as a repo Actions secret. Billed to the Max subscription, not the API."
+          # Says "Claude subscription", not "Max". This notice is the ONLY thing a
+          # post-defreezer session sees when the token is missing, so a wrong plan
+          # name here is worse than in any doc: it would send the reader to fix a
+          # quota they do not have, which is the exact mistake that killed the
+          # first live run. The account is Pro today, and naming the tier at all
+          # would just rot again on the next plan change.
+          echo "::notice title=Claude Review skipped::CLAUDE_CODE_OAUTH_TOKEN is not set. Generate one with 'claude setup-token' and add it as a repo Actions secret. Billed to the Claude subscription, not the API. NB: model must be one your plan includes -- see workflows/loops.md Tier 0c."
 
       - uses: actions/checkout@v6
         if: env.HAS_TOKEN == 'true'
