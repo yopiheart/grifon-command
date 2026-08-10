@@ -75,14 +75,33 @@ ang gamitin (`Prices and numbers — "₱650", "P22 vs P180", "30 days"`,
 [`api/_lib/prompts.ts:359`](../api/_lib/prompts.ts#L359)) pero hindi laging sumusunod ang model.
 ⛔ TUNED ang lunas, kaya Neil-gated at kailangan ng ≥3 sample bago mag-propose.
 
-**May natirang bukas na tanong na hindi pa nasasagot ng docs:** kapag digit ang naisulat
-(`"₱149"`), ano ang ibinabalik ng ElevenLabs forced-alignment — isang token na `"₱149"`, o limang
-token na `"one","hundred","forty","nine","pesos"`? Kung pangalawa, **nadi-drift ang timing ng
-lahat ng chunk pagkatapos ng presyo**, dahil proporsyonal ang mapping sa
-[`voiceChunkWindows`](../api/_lib/drawPlan.ts#L334) at bilang ng salita ang batayan. Hindi to
-masasagot ng pagbabasa ng code at hindi rin sya nasa docs ng ElevenLabs. **Isang TTS + isang
-alignment call ang kailangan.** Hangga't hindi nasasagot, wag munang ayusin ang
-`voiceChunkWindows` — walang patunay na sira sya.
+### ✅ SAGOT NA: verbatim ang tokenization ng aligner (2026-08-10, bayad na probe)
+
+Naitanong: kapag digit ang naisulat (`"₱149"`), isang token ba ang ibinabalik ng ElevenLabs
+forced-alignment, o ang binigkas na `"one","hundred","forty","nine","pesos"`? Mahalaga sya kasi
+proporsyonal ang mapping sa [`voiceChunkWindows`](../api/_lib/drawPlan.ts#L334) at bilang ng
+salita ang batayan, kaya kung lumolobo ang bilang, **nadi-drift ang lahat ng chunk pagkatapos ng
+presyo.**
+
+Hindi to sinasagot ng docs ng ElevenLabs at hindi rin kayang sagutin ng pagbabasa ng code.
+Pinatakbo ang [`scripts/check-alignment-numerals.mjs`](../scripts/check-alignment-numerals.mjs)
+(isang TTS + isang alignment, `eleven_v3`):
+
+```
+SCRIPT_LINE=Only ₱149 today. 8 hours lang, 30 days na warranty.
+ALIGNER_TOKENS=["Only","₱149","today.","8","hours","lang,","30","days","na","warranty."]
+COUNT_DELTA=0
+```
+
+**VERBATIM.** Ibinabalik ng aligner ang mismong token ng teksto na ipinadala natin. Buo ang
+`"₱149"`. **Walang drift. Wala ring dapat ayusin sa `voiceChunkWindows`** — at ang "fix" na
+muntik nang gawin (bilangin ang binigkas na token) ay **sisira** sana sa mapping, dahil pinipilit
+nyang limahin ang tunay na isang token.
+
+Nakatala rin nito ang mas malaking bagay: **matibay ang pundasyon na pinatungan noong 08-09.**
+Apat na bagay ang nakasabit ngayon sa alignment (lead-in cut, end trim, caption windows, SFX
+anchors), at pantay ang tokenization nya sa script. Wag nang tanungin ulit. Kapag kailangang
+i-verify, nasa `scripts/` ang probe, pero **may bayad sya** — huwag patakbuhin nang basta.
 
 Ang ₱0 na harness ang panukat sa 1-6: `build-restitch-spec` → `resign-restitch-urls` →
 `fill-restitch-alignment` → `RUN_RESTITCH=1 npx vitest run tests/integration/restitch-real.test.ts`.
