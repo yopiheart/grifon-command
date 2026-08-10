@@ -8,6 +8,7 @@ import { getUserPlan } from '../_lib/userPlan.js';
 import { TTS_DAILY, STS_DAILY, DAILY_WINDOW_SECONDS, ttsDailyKey, stsDailyKey } from '../_lib/quota.js';
 import { synthesizeTts, convertSts, forcedAlignment, ElevenLabsError } from '../_lib/elevenlabs.js';
 import { extractAudioFromMp4 } from '../_lib/audioExtract.js';
+import { planLeadInCut, trimLeadIn, shiftWords, type AlignedWord } from '../_lib/voiceLeadIn.js';
 import { routeScene, assertUniqueSceneIdx } from '../_lib/sceneVoiceRoute.js';
 import type { ConsolidationScene, ConsolidationResult } from '../../types.js';
 
@@ -113,6 +114,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         mp3 = await synthesizeTts(voiceId, route.text, stabilityMode);
       }
 
+      // Best-effort word alignment: REAL caption timings for the renderer
+      // (the even-spread estimate lagged the speaker — 2026-06-13 review).
+      // Works for both paths (STS has no synthesis-time timestamps at all).
+      // Failure is non-fatal: captions fall back to estimates.
+      //
+      // Runs BEFORE upload because the lead-in cut below depends on it, and the
+      // uploaded MP3 must be the trimmed one.
+      let words: ConsolidationResult['words'];
+      if (scene.scriptLine.trim()) {
+        try {
+          const aligned = await forcedAlignment(mp3, scene.scriptLine);
+          if (aligned.length) words = aligned;
+        } catch (err: any) {
+          console.warn(`[api/voice/consolidate] alignment failed for scene ${scene.sceneIdx}:`, err?.message ?? err);
+        }
+      }
+
+      // Dead air before the first word is the loudest tell that nobody edited this.
+      // Cut it here, at the MP3's birth, so every downstream anchor (captions, SFX,
+      // trim-to-speech-end) keeps measuring the audio it is handed and needs no
+      // change. Alignment decides where — amplitude cannot tell a breath from a
+      // word, which is why the earlier silencedetect attempt failed. No alignment
+      // (issue #96) → cut is 0 → byte-identical to today.
+      //
+      // TTS ONLY, AND THIS IS LOAD-BEARING. On an STS scene the MP3 is the scene
+      // MP4's own audio with the voice swapped, so its lead-in IS the character
+      // standing there before she speaks — the timing that keeps her lips in sync
+      // (see sceneVoiceRoute.ts: "preserves"). Cutting it runs the voice ahead of
+      // the mouth, which is exactly what happened on the 2026-08-09 A/B: the voice
+      // moved 1.27s earlier and the picture did not. Removing dead air from a
+      // talking scene means cutting the VIDEO too, which is renderer work, not this.
+      const leadInCut = route.unit === 'tts' ? planLeadInCut(words) : 0;
+      if (leadInCut > 0) {
+        try {
+          mp3 = await trimLeadIn(mp3, leadInCut);
+          words = shiftWords(words as AlignedWord[], leadInCut);
+        } catch (err: any) {
+          console.warn(`[api/voice/consolidate] lead-in trim failed for scene ${scene.sceneIdx}:`, err?.message ?? err);
+        }
+      }
+
       const path = `${user.id}/audio/${randomUUID()}.mp3`;
       const upload = await putMedia(path, mp3, 'audio/mpeg', { cacheControl: '3600', upsert: false });
       if (upload.error) {
@@ -124,20 +166,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (sign.error || !sign.url) {
         results.push({ sceneIdx: scene.sceneIdx, audioUrl: null, error: `sign_failed:${sign.error ?? 'unknown'}` });
         continue;
-      }
-
-      // Best-effort word alignment: REAL caption timings for the renderer
-      // (the even-spread estimate lagged the speaker — 2026-06-13 review).
-      // Works for both paths (STS has no synthesis-time timestamps at all).
-      // Failure is non-fatal: captions fall back to estimates.
-      let words: ConsolidationResult['words'];
-      if (scene.scriptLine.trim()) {
-        try {
-          const aligned = await forcedAlignment(mp3, scene.scriptLine);
-          if (aligned.length) words = aligned;
-        } catch (err: any) {
-          console.warn(`[api/voice/consolidate] alignment failed for scene ${scene.sceneIdx}:`, err?.message ?? err);
-        }
       }
 
       results.push({ sceneIdx: scene.sceneIdx, audioUrl: sign.url, ...(words ? { words } : {}) });

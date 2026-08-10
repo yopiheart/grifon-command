@@ -20,6 +20,30 @@ This pairs with the implementation plan `~/.claude/plans/free-tier-let-greedy-ma
 
 ## 2. Cost per finished ad (verified unit prices, 2026-06-19)
 
+> ⚠️ **DRIFT WARNING (2026-08-10) — the table below prices a pipeline we no longer run.**
+> It assumes **Veo Fast @1080p for every scene**. The producer today defaults to **720p**
+> (`run.input.resolution ?? '720p'`) and `routeModel()` in
+> [`services/producerOrchestrator.ts`](../services/producerOrchestrator.ts) sends
+> **talking → Veo 3.1 Lite**, **b-roll and cinematic → Kling 3.0**. So the ₱380 / ₱528 /
+> ₱673 rows are no longer the cost of anything.
+>
+> **For a current number, run `npm run cost:estimate`** — it imports the live `routeModel`,
+> `pickSceneDuration` and `SCENE_CAP` instead of restating this doc, so it cannot drift the
+> same way. Today it reports **~₱273 per 4-scene Pro/Starter ad** and **~₱384 at Business's
+> 6 scenes**, which is *better* than this table, not worse. The margin logic in §4 still
+> holds and holds with more room.
+>
+> Two caveats the tool prints and this doc should carry:
+> - **Kling's per-second price was never verified.** The tool back-solves it from the single
+>   2026-07-31 paid render (implied ~$0.167/s vs the $0.05/s that had been assumed). That is
+>   a one-point fit, so it is exact at 9 scenes and an extrapolation everywhere else. One
+>   more paid render at a different scene count pins it; reading Kling's price page is better.
+> - **`pickSceneDuration()` rounds cinematic scenes UP to 10s.** It asks for 6s, Kling only
+>   offers `[5, 10]`, and the fallback takes the first value ≥ target. A cinematic scene
+>   therefore bills roughly double a b-roll one for footage that gets trimmed. Whether that
+>   is deliberate headroom or a costly accident is an open question for Neil, not something
+>   to silently "fix" — it sits next to tuned routing.
+
 - **Veo 3.1 Fast 1080p = $0.12/sec** (Gemini API). Quality ~$0.40/s, Lite ~$0.08/s.
 - **Nano Banana 2 image ~$0.10** (4K/premium ~$0.15). Text (flash-lite) + voice (ElevenLabs) + final render = rounding error.
 - FX ≈ ₱58/$. **Video gen ≈ 80% of every ad's COGS.**

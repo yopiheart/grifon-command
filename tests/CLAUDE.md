@@ -15,6 +15,8 @@ Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). vitest i
   [`unit/rateLimit.test.ts`](unit/rateLimit.test.ts), `quota.*`, `credits`, `modelCosts`,
   `omniBilling`); the `omni*` One-Shot cluster (~11 files); voice/timing (`voiceSelect`,
   `sceneVoiceRoute`, `spokenDuration`); telemetry (`metaPixel`, `omniTelemetry`);
+  the pre-launch curtain ([`unit/launchGate.test.ts`](unit/launchGate.test.ts) — invite-code
+  matching shared with `api/gate.ts`, redeemed-pass TTL/forgery, and invite-link scrubbing);
   producer checkpoint concurrency
   ([`unit/producerCheckpointConcurrency.test.ts`](unit/producerCheckpointConcurrency.test.ts) —
   the P3 parallel stage pairs against the REAL `producerDeps.persist` + a fake

@@ -1,5 +1,18 @@
 # Paolo Funnel — Build Brief
 
+> # 🛑 ISINARA — 2026-08-08
+>
+> Hindi ang gate ang bumagsak. **Walang ESC ang Oceanides**, at kailangan nun ng
+> open-tank vacuum tanker na wala sila. Kapital ang harang, hindi papel.
+> Buong ebidensya: [`compliance-findings-2026-08-08.md`](compliance-findings-2026-08-08.md).
+>
+> Patay ang §2 wedge (`Ang LLDA ang wedge`). Mali ang `15 days` sa §Sunod na hakbang,
+> **10 days** sya per Clause 7 ng MOA. Kada **kilo** ang singil ng Globaltec per
+> Clause 3, hindi kada load, kaya suspetsoso ang buong ₱6,000/load na mekanismo sa §Gate.
+>
+> Wag ituloy hangga't wala ang tatlo: sariling **ESC** na sakop ang NCR, **truck**,
+> at bagong **MOA** sa pangalan ng OPC (DTI pa ang pumirma sa kasalukuyan).
+
 **Ginawa: 2026-08-05** (session 7, matapos ang buong grill)
 **Estado: ITAYO NA, WAG PA BUKSAN** — napagkasunduan ang gate (2026-08-06) pero
 sarado lang sya sa unang bayad na load na may certificate. Kulang pa ang copy

@@ -75,6 +75,27 @@ const AXES = {
     label: 'SELL — paggalaw ng tao papunta sa isang alok',
     question: `Does this image do sales work, or does it only hand out free value? Judge whether it names a specific offer, gives a reason to act, makes clear what the business actually sells, and gives the viewer a next step. Pure education — tips, "4 signs that...", explainer content — scores LOW no matter how genuinely useful or well made it is, because it asks for nothing. A specific offer with a clear next step scores HIGH. Beauty, polish and trustworthiness are NOT selling.`,
   },
+  // Idinagdag 2026-08-08 (Neil, wallpaper v5): walang isa sa tatlo sa itaas ang
+  // sumusukat sa isang bagay na TINITITIGAN ARAW-ARAW. Ang ad ay minsan lang
+  // nakikita at kailangang sumigaw; ang wallpaper ay 500 beses at hindi
+  // dapat sumigaw. Kaya nga bumagsak ang v1-v3: maganda sa unang tingin,
+  // walang lalim, at pagkatapos ng isang linggo ay parang flat na fill lang.
+  // Ang sukat dito ay lalim ng ilaw at pagpipigil, hindi interruption power.
+  presence: {
+    label: 'PRESENCE — a surface you look at every day without tiring of it',
+    question: `This image is a desktop wallpaper that one person will see hundreds of times, with app icons and windows sitting on top of it. How well does it hold up under that? Judge four things and nothing else. (1) DEPTH: does it read as a lit physical space with layers, materials and a believable light source, or as a flat coloured fill with decoration pasted on? (2) CRAFT: are the edges, glows, gradients and type genuinely well made, or are there tells — muddy or khaki-looking glows, gradient text that fades out and gets hard to read, plastic-looking fake glass, blur used to hide a weak composition? (3) RESTRAINT: could it sit behind a window of code for a week without becoming visual noise or feeling like an advertisement shouting at its owner? Busy, loud, or slogan-heavy scores LOW here. (4) COMPOSITION: is there real negative space, deliberate weight and a clean field where desktop icons would live, or is the frame filled edge to edge? Loud attention-grabbing is NOT presence and costs points. A merely dark, tidy, empty image is NOT presence either — with no light, material or depth it is just generic.`,
+  },
+  // Idinagdag 2026-08-08 (Neil, mobile wallpaper). HINDI pwedeng gamitin ang
+  // `presence` sa telepono kahit magkamukha sila: nagbabanggit yun ng desktop
+  // icon at window, at ibang-iba ang tinatakpan ng isang phone. Mas malala pa:
+  // sa telepono, ang itaas ay kinakain ng orasan at ang gitna ay ng icon grid,
+  // kaya ang komposisyon na tama sa 16:9 ay pwedeng putol na putol sa 19.5:9.
+  // Ang maling axis ay hindi bumabagsak nang maingay, patag lang ang sagot nya
+  // (nasukat 2026-08-06). Kaya hiwalay ito, hindi pinilit sa luma.
+  presence_phone: {
+    label: 'PRESENCE (PHONE) — a lock screen you unlock 80 times a day',
+    question: `This image is a PHONE wallpaper in portrait (roughly 19.5:9). Its owner unlocks the phone dozens of times a day, so it is seen in short glances, not studied. Judge five things and nothing else. (1) THE CLOCK ZONE: the top ~28% of the frame is covered by a large lock-screen clock and date. Is that band dark, quiet and free of detail, or is something important buried under it? (2) THE ICON BAND: on the home screen a grid of app icons covers most of the middle. Does the image still work as a field of light and texture when detail there is hidden, and would white icon labels stay readable over it? (3) DEPTH: does it read as a lit physical space with layers, materials and a believable light source, or as a flat coloured fill with a graphic pasted on the middle? (4) CRAFT: are the edges, glows, gradients and any logo genuinely well made, or are there tells — ornament that follows no light source, muddy or khaki glows, plastic-looking fake glass, symmetrical filler detail that exists only to look expensive? (5) RESTRAINT: could this sit behind a lock screen for months without becoming noise? Busy, ornate or shouty scores LOW. A merely black empty image scores LOW too — with no light, material or depth it is just generic, not restrained.`,
+  },
 };
 
 function loadEnvKey(name) {

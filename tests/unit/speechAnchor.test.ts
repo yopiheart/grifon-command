@@ -86,7 +86,7 @@ describe('resolveSpeechEndSec — trim anchor (#91)', () => {
     expect(resolveSpeechEndSec({}, true, measure({ silence: null }))).toBeNull();
   });
 
-  it('hook: the anchored speech-end still buys the 1s reveal hold through chooseTrim', () => {
+  it('hook: the anchored speech-end still buys the 0.5s reveal hold through chooseTrim', () => {
     const scene: Pick<FinalRenderScene, 'voiceWords' | 'keepFullClip' | 'audioUrl'> = {
       keepFullClip: true, audioUrl: 'voice.mp3',
       voiceWords: [vw('Tignan', 0.2, 0.7), vw('mo', 0.8, 1.62)],
@@ -94,7 +94,7 @@ describe('resolveSpeechEndSec — trim anchor (#91)', () => {
     const detectedSec = resolveSpeechEndSec(scene, false, measure({ audio: 6 }));
     expect(detectedSec).toBeCloseTo(1.8, 3); // 1.62 + 0.18
     const plan = chooseTrim(scene, 6, detectedSec);
-    expect(plan.trimSec).toBeCloseTo(2.8, 3); // + HOOK_REVEAL_HOLD_SEC
+    expect(plan.trimSec).toBeCloseTo(2.3, 3); // 1.8 + 0.5 HOOK_REVEAL_HOLD_SEC
     expect(plan.padAudio).toBe(true);
   });
 });
@@ -150,5 +150,40 @@ describe('planScene — overlay onset (#94.1)', () => {
     const absent = overlayOf(planScene(base, 6, [1080, 1920], CLASSIC, 0))!;
     expect(empty.startSec).toBe(absent.startSec);
     expect(empty.endSec).toBe(absent.endSec);
+  });
+});
+
+// A `subtitle` overlay carries the whole spoken line (that is what the style means
+// to the model), and the caption layer chunks the SAME line off voiceWords. Shipping
+// both plays the line twice and the static copy lands BEFORE she says it. Found by
+// Neil on real footage 2026-08-09: overlay "Ako si Sarah. 8 hours sa desk araw-araw."
+// over a line reading "Eight hours" — the existing string-equality `dup` guard could
+// never catch it, because one spelled the numeral and the other did not.
+describe('planScene — subtitle overlay vs karaoke caption', () => {
+  const LINE = 'Ako si Sarah. Eight hours sa desk araw-araw.';
+  const WORDS: VoiceWord[] = [
+    vw('Ako', 0.15, 0.4), vw('si', 0.45, 0.6), vw('Sarah', 0.65, 1.1),
+    vw('Eight', 1.2, 1.6), vw('hours', 1.65, 2.0), vw('sa', 2.05, 2.2),
+    vw('desk', 2.25, 2.6), vw('araw-araw', 2.65, 3.2),
+  ];
+  const scene = (over: string, style: 'subtitle' | 'callout', words?: VoiceWord[]): FinalRenderScene => ({
+    sceneIdx: 1, videoUrl: 'v', sceneType: 'talking', scriptLine: LINE,
+    overlayText: [{ text: over, startSec: 0, endSec: 5, style, position: 'bottom' }],
+    ...(words ? { voiceWords: words } : {}),
+  });
+  const hasText = (s: FinalRenderScene, text: string) =>
+    planScene(s, 6, [1080, 1920], HYPE, 0).some((l) => l.kind === 'text' && l.text.includes(text));
+
+  it('drops the static subtitle when the karaoke caption will carry the line', () => {
+    // The numeral spelling differs, so string equality cannot save us here.
+    expect(hasText(scene('Ako si Sarah. 8 hours sa desk araw-araw.', 'subtitle', WORDS), '8 hours')).toBe(false);
+  });
+
+  it('keeps the subtitle when there is no karaoke to replace it', () => {
+    expect(hasText(scene('Ako si Sarah. 8 hours sa desk araw-araw.', 'subtitle'), '8 hours')).toBe(true);
+  });
+
+  it('never touches a callout — it is short and says something the line does not', () => {
+    expect(hasText(scene('8 HOURS SA DESK', 'callout', WORDS), '8 HOURS SA DESK')).toBe(true);
   });
 });

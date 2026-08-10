@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Mobile m1 — Seal (home cut)</title>
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     m1 — SEAL.  Phone, 1080x2340 (19.5:9).
+
+     THIS ONE BEATS THE OLD WALLPAPER ON ITS OWN TERMS. Same archetype —
+     one round hero object, centred, glowing, floating — but with two
+     things the old render did not have.
+
+     1. THE RIGHT MARK. The old one carries a generic front-facing eagle:
+        two eyes, a symmetrical beak, a feathered ruff. Grifon's actual
+        mark is a PROFILE griffin drawn in one continuous white line,
+        framed by a gold hairline ring (public/logo.png +
+        components/ui/GrifonMark.tsx). Nothing in the old image is ours.
+
+     2. NO ORNAMENT. The old render fills its disc with radiating spokes,
+        concentric rings and two companion discs, none of which follow a
+        light source or mean anything — they are there to look expensive.
+        That is why it tires: the centre is full but empty. Here the disc
+        is a plain machined face, and every bright thing on it is either
+        the ring catching the light or the mark. One companion disc
+        survives, far back and heavily defocused, because depth is a
+        reason; three is decoration.
+
+     ── HOME-SCREEN CUT ─────────────────────────────────────────────────
+     This is the companion to wallpaper-noir-m1-seal.html, and the ONLY
+     difference is that the seal, its ring and its contact shadow are
+     gone. Same ground, same light, same grain, same companion disc.
+
+     WHY IT EXISTS. m1's seal is centred at y=1310, which is exactly where
+     a home screen puts its app icon grid — so on the home screen the
+     subject is buried and the frame reads as a dark blur with icons on
+     it. The rubric flagged that as m1's single biggest gap and it was
+     right. Neil picked m1 anyway, which is his call to make; this just
+     removes the cost of it.
+
+     WHY NOT MOVE THE SEAL DOWN INSTEAD. Below the last icon row there is
+     only the dock, so it would be cramped against the bottom edge and the
+     composition would read bottom-heavy on the lock screen too. The real
+     answer is the one Apple uses: a home screen wants a FIELD, not a
+     subject. Icons are the subject there. So the light stays and the hero
+     leaves, and the pair works as a set — seal on lock, field on home.
+     Both iOS and Android let you set the two separately.
+
+     PHONE SAFE ZONES:
+       y 0-660     lock-screen clock and date. Dark and empty either way.
+       y 660-2100  the icon grid. Light and texture only, no detail.
+       y 2100-2340 home indicator / dock.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #050506; }
+
+  #canvas {
+    position: relative;
+    width: 1080px;
+    height: 2340px;
+    overflow: hidden;
+    /* Identical to the lock cut, deliberately: the two are a set, and a
+       set falls apart the moment the light moves. Source sits centre-right
+       so the top falls away dark and the middle stays lifted, which is
+       where the icons will sit. */
+    background:
+      radial-gradient(ellipse 760px 760px at 62% 52%,
+        rgba(255,204,0,0.090) 0%, rgba(255,204,0,0.024) 36%, transparent 68%),
+      radial-gradient(ellipse 1180px 1500px at 62% 54%,
+        #1B1B22 0%, #121217 32%, #0A0A0D 66%, #050506 100%);
+  }
+
+  /* ── NO COMPANION DISC ───────────────────────────────────────────────
+     The lock cut has a small defocused disc at the left edge, there to
+     give the seal something to stand in front of. It was kept here at
+     first with the reasoning that one soft irregularity makes a field read
+     as a photographed surface. That was a rationalisation: with nothing in
+     front of it, it is an unexplained pale smear at the frame edge, which
+     is exactly the kind of ornament-without-a-cause this whole set exists
+     to avoid. Removed. A home screen field is allowed to be only light. */
+
+  /* ── THE FLOOR ───────────────────────────────────────────────────────
+     In the lock cut this was a pool of reflected light under the seal,
+     paired with a contact shadow. The shadow left with the object it
+     belonged to — light with nothing casting it is a lie the eye catches.
+     What remains is widened and softened into plain ambient lift near the
+     dock, which is the one part of a home screen that stays uncovered. ── */
+  .pool {
+    position: absolute; z-index: 2; pointer-events: none;
+    left: 560px; top: 1880px; transform: translate(-50%, -50%);
+    width: 1240px; height: 420px;
+    background: radial-gradient(ellipse at center,
+      rgba(255,206,30,0.070) 0%, rgba(255,200,0,0.020) 44%, transparent 74%);
+    filter: blur(40px);
+  }
+
+  /* Grain, soft-light, masked to the light — grain lives in the light,
+     never in the shadow. It is the only texture left in this cut, and it
+     is what keeps the frame from reading as a flat gradient fill. */
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.17; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 900px 1200px at 62% 54%, #000 0%, rgba(0,0,0,0.55) 46%, transparent 80%);
+    mask-image: radial-gradient(ellipse 900px 1200px at 62% 54%, #000 0%, rgba(0,0,0,0.55) 46%, transparent 80%);
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="pool"></div>
+
+  <div class="grain"></div>
+</div>
+</body>
+</html>

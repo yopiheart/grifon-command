@@ -168,9 +168,51 @@ deliberately leaves out of scope ("discovery stays human").
 | **Offer Tier** | One rung of an **Offer Stack** (`OfferTier`): mechanism name, pitch, value stack with anchor pricing, scarcity window, guarantee, and Hormozi-equation rationale. | Offer level, package |
 | **Director Payload** | The projection of an **Offer Stack** into **Director AI** wizard fields (`directorPayload` on `OfferOptimizerResult`): a one-line `offer` plus the **Business Info** fields (product, audience, benefit, pain point, USP). Powers the Send-to-Director auto-prefill. | Wizard prefill, handoff bundle |
 
+## Blueprints (cross-cutting pattern)
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **Blueprint** | A named, data-only recipe that can be instantiated many times while carrying none of an instance's content. The **category** for a pattern Grifon has now built four times independently. | Template (overloaded — `funnels/_template` is a directory), schema |
+| **Instance** | One materialized output of a **Blueprint** + its own data: a rendered ad, a burned-in render, an Omni edit, a deployed funnel. | Run (that's a job), copy |
+
+⚠️ **Blueprint is the category name, not a rename.** `Recipe`, `RenderPreset`, `OmniPreset`, and
+`funnel.config.ts` are each correct *within their module* and stay exactly as they are. Say
+"Blueprint" only when talking about the pattern in the abstract — or when building the fifth one.
+
+| Family | Blueprint | Instance | Registry |
+| --- | --- | --- | --- |
+| One-Shot recipes | `Recipe` (12) | a rendered ad | [`components/OneShotAd/recipes.ts`](components/OneShotAd/recipes.ts) |
+| Render presets | `RenderPreset` (8) | a burned-in render | [`api/_lib/renderPresets.ts`](api/_lib/renderPresets.ts) |
+| Omni edit presets | `OmniPreset` (4) | an Omni edit pass | [`api/_lib/omniPresets.ts`](api/_lib/omniPresets.ts) |
+| Funnels | `FunnelConfig` | a deployed funnel | [`funnels/_template/`](funnels/_template/) |
+
+**The five properties a Blueprint family needs.** Each family independently discovered a different
+subset; **as of 2026-08-10 no family has all five**, so read this as the checklist for the next one:
+
+1. **An identity member** — one blueprint that reproduces pre-blueprint behavior byte-for-byte, so
+   the abstraction can ship without betting the product on it. Only `renderPresets` has this
+   (`classic` + `none`); `classic` is dropped from `ROTATION` and never rotates SFX, which is
+   exactly what makes it a kill switch.
+2. **An eligibility filter** — not every blueprint is legal in every context. The one property
+   *all four* rediscovered: `visibleRecipes(vertical)`, `ROTATION[scriptStyle]` (the sincerity
+   guard — a Testimonial never gets the hype treatment), `OMNI_STYLE_ROUTING`.
+3. **Deterministic selection seeded on stable identity** — only `renderPresets`, and it carries the
+   scar: seeding on the full URL re-rolled the preset on every re-render of the *same* ad, so
+   `rotationSeed()` seeds on order-independent scene identity instead. Any family that ever
+   auto-picks inherits this bug otherwise.
+4. **Graceful absence of an instance** — blueprints exist before anything is built from them. Only
+   `recipes.ts` types this honestly: `SAMPLES` is `Partial<Record<RecipeId, RecipeSample>>`, so a
+   recipe with no rendered sample renders "Sample soon" instead of breaking.
+5. **The id treated as a public contract** — runtime-validated and versioned. Only `omniPresets`
+   (`isApprovedOmniPresetId`, ids like `premium-reel-v2`), and correctly so: it is the only family
+   whose id crosses a trust boundary. A `RecipeId` never leaves the client — `LaunchScreen`
+   decomposes it into the existing axes — which is why a TS union alone is safe there. **If a
+   blueprint id starts crossing the wire, it needs both halves of this property that same day.**
+
 ## Relationships
 
 - One **AllData** wraps one wizard run: one **Avatar**, one **Storyboard**, one set of **Video Prompts**.
+- A **Blueprint** has zero or many **Instances**; an **Instance** always names exactly one **Blueprint**. Zero is a valid, expected state — see property 4 above.
 - A **Storyboard** has many **Scenes**; each **Scene** may carry one **Chain Role**.
 - An **Influencer Forge** session has one **Influencer**, one **Monetization Game**, and many **Odyssey Days**.
 - An **Odyssey Day** produces one **Influencer Script** and (optionally) one **Storyboard** of **Scenes**.
@@ -193,6 +235,7 @@ deliberately leaves out of scope ("discovery stays human").
 
 ## Flagged ambiguities
 
+- **"Preset"** is overloaded across three **Blueprint** families. `RenderPreset` is an *editor personality* (caption typography, cuts, SFX) auto-rotated server-side; `OmniPreset` is a *generative prompt template* with slots; and `recipes.ts` describes its own `Recipe` as "nothing more than a named preset over those axes" — a *user-facing* pick. Never say a bare "preset" when two of the three are in scope: say **Render Preset**, **Omni Preset**, or **Recipe**. Use **Blueprint** for the category.
 - **"Avatar"** is overloaded. The wizard's `Avatar` interface is one on-camera person for one ad. The **Influencer Forge**'s `InfluencerConfig` describes a persistent persona for a multi-day **Odyssey**. Recommendation: never use "Avatar" inside Influencer Forge code, prompts, or UI copy — say **Influencer**. Inside the wizard, "Avatar" is fine.
 - **"Script"** is overloaded. The wizard's `Script` (two **Hooks** + shared **Body**) and the **Influencer Forge**'s `InfluencerScriptResponse` (one `hook` + `body[]`) are different shapes. When the surrounding context is mixed, qualify: **wizard Script** vs **Influencer Script**.
 - **"Pain point" / "problem" / "bleeding neck"** describe the same underlying concept across `BusinessInfo.painPoint`, `UplinkData.marketPainPoint`, and `InfluencerStrategicInput.bleedingNeck`. They have different connotations: **Pain Point** = generic problem (wizard, Uplink); **Bleeding Neck** = the *most urgent* pain (Influencer Forge framework). Don't conflate.

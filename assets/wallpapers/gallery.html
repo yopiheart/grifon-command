@@ -7,14 +7,25 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #09090B; color: #e8eaed; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; }
   h1 { color: #FFCC00; font-size: 22px; margin-bottom: 6px; }
-  .note { color: #9aa0a6; font-size: 13px; margin-bottom: 28px; }
+  h2 { color: #d4d4d8; font-size: 14px; letter-spacing: .16em; text-transform: uppercase;
+       margin: 42px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #26262b; max-width: 1100px; }
+  .note { color: #9aa0a6; font-size: 13px; margin-bottom: 28px; max-width: 1100px; line-height: 1.65; }
   .note code { color: #d4d4d8; background: #18181b; padding: 2px 6px; border-radius: 4px; }
+  table.scores { border-collapse: collapse; font-size: 13px; margin: 0 0 28px; }
+  table.scores th, table.scores td { text-align: left; padding: 6px 18px 6px 0; color: #9aa0a6; }
+  table.scores th { color: #d4d4d8; border-bottom: 1px solid #26262b; }
+  table.scores td.win { color: #FFCC00; font-weight: 700; }
   .grid { display: grid; grid-template-columns: 1fr; gap: 28px; max-width: 1100px; }
+  .grid.phone { grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; }
+  .grid.phone .meta { display: block; }
+  .grid.phone .meta span { display: block; text-align: left; margin-top: 6px; }
+  .grid.phone .meta a { margin: 0 12px 0 0; }
   .card { background: #101014; border: 1px solid #26262b; border-radius: 14px; overflow: hidden; }
+  .card.best { border-color: #FFCC00; }
   .card img { width: 100%; display: block; }
-  .meta { padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .meta { padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
   .meta b { color: #fff; font-size: 14px; }
-  .meta span { color: #9aa0a6; font-size: 12px; }
+  .meta span { color: #9aa0a6; font-size: 12px; text-align: right; }
   .meta a { color: #FFCC00; font-size: 12px; text-decoration: none; margin-left: 14px; }
   .meta a:hover { text-decoration: underline; }
 </style>
@@ -22,21 +33,225 @@
 <body>
   <h1>Grifon Noir Wallpapers</h1>
   <div class="note">
-    Pick one, then run: <code>powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v4a-plate</code>
-    (or v1/v2/v3/v4b-aperture) from the repo root. Re-run after every defreezer reboot — it's on the session re-arm checklist.
+    Pumili, tapos patakbuhin:
+    <code>powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v7-prism-luck</code>
+    mula sa repo root. Ulitin pagkatapos ng bawat defreezer reboot — nasa session re-arm checklist yan.
   </div>
-  <div class="note" style="margin-top:-18px">
-    v4 adds liquid glass and fixes three things v1&ndash;v3 got wrong: the ground was too flat for grain to
-    register, the grain blended <code>screen</code> (which only lightens, so it milked the blacks instead of
-    graining them), and the gold bloom was a wide dim <code>text-shadow</code> that traced the glyphs in
-    khaki instead of lighting them.
+
+  <div class="note">
+    <b style="color:#d4d4d8">Paano nasukat ang set na ito (2026-08-08).</b>
+    Pinatakbo sa <code>gauntlet-loop</code> sa isang bagong axis, <b>PRESENCE</b> — hindi attention,
+    hindi trust: <i>mukha pa rin bang mahal sa ika-500 tingin, may icon at window sa ibabaw, at hindi
+    nagiging ingay.</i> Bawat larawan ay isa-isang ginradohan (walang pairwise, kaya walang position
+    bias), tatlong takbo, at ang <code>v4a</code> ang anchor. Nasukat ang drift ng instrumento sa
+    <b>&plusmn;3 puntos</b>, kaya sa ibaba ng apat ay ingay lang.
   </div>
+
+  <table class="scores">
+    <tr><th>Variant</th><th>Maingay na cut</th><th>Tahimik na cut</th></tr>
+    <tr><td>v4a plate (luma, 2026-07-25)</td><td>45 / 48</td><td>&mdash;</td></tr>
+    <tr><td>v4b aperture (luma)</td><td>42</td><td>&mdash;</td></tr>
+    <tr><td>v5a slate</td><td>63</td><td>68 / 65</td></tr>
+    <tr><td>v5b prism</td><td>55</td><td>58</td></tr>
+    <tr><td>v5c monolith</td><td>52</td><td>55</td></tr>
+    <tr><td>v5d lens</td><td>45</td><td>58</td></tr>
+    <tr><td class="win">v6 prism mk2</td><td>&mdash;</td><td class="win">72</td></tr>
+  </table>
+
+  <div class="note">
+    Dalawang bagay ang natutunan, at nakasulat sila sa loob ng HTML ng bawat variant.
+    <b style="color:#d4d4d8">Una:</b> sa round 0, iisa ang reklamo ng critic sa lahat ng anim, kasama
+    ang dalawang luma &mdash; <i>&ldquo;an advertisement shouting at its owner&rdquo;</i>. Hindi yun
+    puna sa isang disenyo, confound yun: ang laki ng slogan ang sumasakop sa buong axis kaya hindi pa
+    nasusukat ang ilaw. Kaya naging <b>marka</b> ang teksto imbes na poster.
+    <b style="color:#d4d4d8">Ikalawa:</b> sa round 1, apat na bagong gap, iisa ang sinasabi &mdash;
+    <i>UI kit components, landing page mockup, promotional splash screen</i>. Ang salamin ay parang
+    <b>widget</b>, hindi bagay na nakatayo sa espasyo. Ang sagot ng v6: tinanggal ang kahon sa
+    wordmark, binigyan ng <b>kapal</b> ang pane, at nilagyan ng <b>contact shadow</b> sa sahig.
+    Doon tumigil ang loop: ang susunod na hiling ng critic ay tanggalin ang brand text at ang salamin
+    mismo &mdash; yun ang dalawang bagay na hiningi ni Neil, kaya paglabas na yun sa axis.
+  </div>
+
+  <div class="note">
+    <b style="color:#d4d4d8">Pinili ni Neil, at dito natapos ang loop (2026-08-08).</b>
+    Ika-1 nya ang maingay na <code>v5b</code>, ika-2 ang <code>v6</code>. Ika-4 (55) at ika-1 (72)
+    yun sa rubric. <b>Sya ang huling mata</b>, kaya pinagsama: ang linya ng v5b sa ilaw at kapal ng
+    v6, at naayos ang bug ng v5b (tumatakas ang refracted band sa labas ng pane at nagpipinta ng
+    lumulutang na parihaba sa itaas). Sinadyang <b>hindi ginradohan</b> ang v7: pinaparusahan ng
+    PRESENCE axis ang malaking headline, kaya ang score nya ay hindi nya sagot, at nasagot na ni Neil.
+    <b style="color:#d4d4d8">Ang natutunan:</b> hindi ang dami ng salita ang gumagawa ng ingay, kundi
+    ang <b>paglalagay ng teksto sa tabi ng pinakamaliwanag na bagay</b>. Sa v7 nasa madilim na kalahati
+    ang teksto at nasa kabila ang ilaw, kaya kalmado sa mata kahit 104px ang letra. At isa pa: utos sa
+    sarili ang mga tinanggal na headline (<i>one real thing shipped today</i>) at hindi mo na sinusunod
+    yun pagkalipas ng isang linggo. Ang <i>none of this was luck</i> ay hindi utos, kundi pahayag ng
+    nangyari na. Hindi nauubos ang totoo.
+  </div>
+
+  <h2>Kampeon</h2>
+  <div class="grid">
+    <div class="card best">
+      <img src="wallpaper-noir-v7-prism-luck-1920x1080.png" alt="v7 prism luck">
+      <div class="meta">
+        <b>v7 &mdash; Prism, &ldquo;none of this was luck.&rdquo; <span style="color:#FFCC00">&nbsp;PINILI NI NEIL</span></b>
+        <span>ilaw at kapal ng v6, linya ng v5b, ayos na ang bug
+          <a href="wallpaper-noir-v7-prism-luck-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v7-prism-luck-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-v6-prism-mk2-1920x1080.png" alt="v6 prism mk2">
+      <div class="meta">
+        <b>v6 &mdash; Prism mk2 <span style="color:#FFCC00">&nbsp;72 &middot; PINAKAMATAAS SA RUBRIC</span></b>
+        <span>sinag, pane na may kapal, caustic sa sahig, markang walang kahon
+          <a href="wallpaper-noir-v6-prism-mk2-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v6-prism-mk2-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Ang artifact look, ayos na</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="wallpaper-noir-v5a-slate-quiet-1920x1080.png" alt="v5a slate quiet">
+      <div class="meta">
+        <b>v5a &mdash; Slate, tahimik <span style="color:#9aa0a6">&nbsp;68</span></b>
+        <span>tuwirang port ng artifact NOIR; pinakamalinis, pinaka-ligtas
+          <a href="wallpaper-noir-v5a-slate-quiet-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v5a-slate-quiet-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-v5a-slate-1920x1080.png" alt="v5a slate loud">
+      <div class="meta">
+        <b>v5a &mdash; Slate, may headline <span style="color:#9aa0a6">&nbsp;63</span></b>
+        <span>kung gusto mo talaga ng malaking teksto sa salamin
+          <a href="wallpaper-noir-v5a-slate-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v5a-slate-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Ang ibang kandidato</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="wallpaper-noir-v5c-monolith-quiet-1920x1080.png" alt="v5c monolith quiet">
+      <div class="meta">
+        <b>v5c &mdash; Monolith <span style="color:#9aa0a6">&nbsp;55</span></b>
+        <span>isang tahi ng ilaw; pinakamalaking pagpipigil sa set
+          <a href="wallpaper-noir-v5c-monolith-quiet-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v5c-monolith-quiet-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-v5d-lens-quiet-1920x1080.png" alt="v5d lens quiet">
+      <div class="meta">
+        <b>v5d &mdash; Lens <span style="color:#9aa0a6">&nbsp;58</span></b>
+        <span>bokeh sa likod, matalim lang ang salamin at teksto
+          <a href="wallpaper-noir-v5d-lens-quiet-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v5d-lens-quiet-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-v5b-prism-quiet-1920x1080.png" alt="v5b prism quiet">
+      <div class="meta">
+        <b>v5b &mdash; Prism, may badge <span style="color:#9aa0a6">&nbsp;58</span></b>
+        <span>ninuno ng v6; dito pa naka-kahon ang wordmark
+          <a href="wallpaper-noir-v5b-prism-quiet-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v5b-prism-quiet-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Telepono &mdash; 1080x2340 at 2160x4680</h2>
+  <div class="note">
+    <b style="color:#d4d4d8">Ang pinapalitan.</b> Ang lumang mobile wallpaper ay isang gintong
+    medalyon na may ibang ibon: harap na tingin, dalawang mata, simetrikong tuka. <b>Hindi yun ang
+    mark natin.</b> Ang atin ay tagilid na griffin na iginuhit sa isang tuloy-tuloy na puting linya,
+    nakakulong sa manipis na gintong bilog (<code>public/logo.png</code> +
+    <code>components/ui/GrifonMark.tsx</code>). At ang mga sinag, singsing at lumulutang na disc doon
+    ay hindi sumusunod sa kahit anong ilaw. Palamuti lang para mukhang mahal, kaya puno ang gitna pero
+    walang laman.
+    <br><br>
+    <b style="color:#d4d4d8">Pinili ni Neil ang m1</b> (2026-08-08): <i>&ldquo;simple lang pero mukhang
+    premium ang quality, parang Apple.&rdquo;</i> Ika-3 at pinakamababa yun sa rubric, 48.
+    <br><br>
+    <b style="color:#d4d4d8">Ang isang totoong puna, at kung paano nalutas.</b> Nasa gitna ang seal, at
+    doon din nakaupo ang icon grid, kaya natatabunan sya sa home screen. Nahuli yun ng rubric at tama
+    sya. Ang sagot ay hindi ilipat ang seal pababa &mdash; masikip doon, dock na ang katabi, at magiging
+    mabigat sa ibaba pati ang lock screen. Ang sagot ay <b>pares</b>: seal sa lock, <b>field</b> sa
+    home. Parehong ilaw, parehong grain, tinanggal lang ang bagay. Ganito rin ang ginagawa ng Apple,
+    kasi ang icon mismo ang subject sa home screen. Pwedeng maghiwalay ng lock at home sa iOS at Android.
+    <br><br>
+    Score sa <code>presence_phone</code> axis (data lang, hindi hatol): m2 62, m3 55, m1 48.
+    <b style="color:#d4d4d8">Dalawang beses nang natalo ang rubric ni Neil</b> &mdash; ika-4 ang v5b sa
+    desktop, ika-3 ang m1 dito. Ang natutunan tungkol sa instrumento: <b>magaling syang maghanap ng
+    sira, hindi sya marunong pumili ng panalo.</b> Sya ang nakakita ng slogan confound at ng dead-center
+    na problema, dalawang bagay na hindi namin nakita. Pero walang alam ang isang numero tungkol sa
+    kung ano ang gustong titigan ng may-ari araw-araw.
+  </div>
+  <div class="grid phone">
+    <div class="card best">
+      <img src="wallpaper-noir-m1-seal-1080x2340.png" alt="m1 seal">
+      <div class="meta">
+        <b>m1 &mdash; Seal <span style="color:#FFCC00">&nbsp;PINILI NI NEIL</span></b>
+        <span><b>Ilagay sa LOCK screen.</b> Parehong archetype ng luma mo pero tamang mark at zero
+          palamuti. Kita ang seal sa ilalim ng orasan.
+          <a href="wallpaper-noir-m1-seal-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m1-seal-1080x2340.png">1x</a>
+        </span>
+      </div>
+    </div>
+    <div class="card best">
+      <img src="wallpaper-noir-m1-seal-home-1080x2340.png" alt="m1 seal home cut">
+      <div class="meta">
+        <b>m1 &mdash; Seal, home cut <span style="color:#FFCC00">&nbsp;KAPARES</span></b>
+        <span><b>Ilagay sa HOME screen.</b> Parehong ilaw at grain, wala lang ang seal, kaya walang
+          natatabunan at lumulutang ang icon.
+          <a href="wallpaper-noir-m1-seal-home-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m1-seal-home-1080x2340.png">1x</a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="grid phone" style="margin-top:24px">
+    <div class="card">
+      <img src="wallpaper-noir-m2-prism-1080x2340.png" alt="m2 prism">
+      <div class="meta">
+        <b>m2 &mdash; Prism <span style="color:#9aa0a6">&nbsp;62</span></b>
+        <span>kapatid ng desktop mo. Ang mark ay nasa LIKOD ng salamin, kaya kita mo syang lumalabo
+          &mdash; yun lang ang patunay na totoong transparent ang pane.
+          <a href="wallpaper-noir-m2-prism-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m2-prism-1080x2340.png">1x</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-m3-ascent-1080x2340.png" alt="m3 ascent">
+      <div class="meta">
+        <b>m3 &mdash; Ascent <span style="color:#9aa0a6">&nbsp;55</span></b>
+        <span>gawa para sa patayong screen, hindi hiniram sa desktop. Ang tahi ay gilid ng slab, at
+          ang mark ay <b>hindi pininturahan</b>, pinuno ng ilaw.
+          <a href="wallpaper-noir-m3-ascent-2160x4680.png">2x</a>
+          <a href="wallpaper-noir-m3-ascent-1080x2340.png">1x</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Ang luma (2026-07-25)</h2>
   <div class="grid">
     <div class="card">
       <img src="wallpaper-noir-v4a-plate-1920x1080.png" alt="v4a">
       <div class="meta">
-        <b>v4a — Command Plate <span style="color:#FFCC00">&nbsp;RECOMMENDED</span></b>
-        <span>liquid glass, ghost wordmark, icons stay left
+        <b>v4a &mdash; Command Plate <span style="color:#9aa0a6">&nbsp;45&ndash;48</span></b>
+        <span>patag ang lupa, hindi kita ang grain, kumukupas ang ikalawang linya
           <a href="wallpaper-noir-v4a-plate-3840x2160.png">4K</a>
           <a href="wallpaper-noir-v4a-plate-1920x1080.png">1080p</a>
         </span>
@@ -45,40 +260,10 @@
     <div class="card">
       <img src="wallpaper-noir-v4b-aperture-1920x1080.png" alt="v4b">
       <div class="meta">
-        <b>v4b — Aperture</b>
-        <span>glass lens, cinema vocabulary
+        <b>v4b &mdash; Aperture <span style="color:#9aa0a6">&nbsp;42</span></b>
+        <span>pinakamababa sa buong set
           <a href="wallpaper-noir-v4b-aperture-3840x2160.png">4K</a>
           <a href="wallpaper-noir-v4b-aperture-1920x1080.png">1080p</a>
-        </span>
-      </div>
-    </div>
-    <div class="card">
-      <img src="wallpaper-noir-v1-1920x1080.png" alt="v1">
-      <div class="meta">
-        <b>v1 — "Ship one real thing."</b>
-        <span>daily ritual, centered
-          <a href="wallpaper-noir-v1-3840x2160.png">4K</a>
-          <a href="wallpaper-noir-v1-1920x1080.png">1080p</a>
-        </span>
-      </div>
-    </div>
-    <div class="card">
-      <img src="wallpaper-noir-v2-1920x1080.png" alt="v2">
-      <div class="meta">
-        <b>v2 — "While they scroll, you ship."</b>
-        <span>right-weighted, icons stay left
-          <a href="wallpaper-noir-v2-3840x2160.png">4K</a>
-          <a href="wallpaper-noir-v2-1920x1080.png">1080p</a>
-        </span>
-      </div>
-    </div>
-    <div class="card">
-      <img src="wallpaper-noir-v3-1920x1080.png" alt="v3">
-      <div class="meta">
-        <b>v3 — "GRIFON — command the machine."</b>
-        <span>wordmark, most minimal
-          <a href="wallpaper-noir-v3-3840x2160.png">4K</a>
-          <a href="wallpaper-noir-v3-1920x1080.png">1080p</a>
         </span>
       </div>
     </div>

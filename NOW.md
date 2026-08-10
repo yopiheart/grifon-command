@@ -1,89 +1,89 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-07** (session 11)
+**Stamped: 2026-08-10** (session 17)
 
-## ▶ NEXT ACTION — BASAHIN NI NEIL ANG 34 BABALA, TAPOS SAKA I-PROMOTE
+## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
 
-✅ Tapos ang research → [`taglish_2026_model.md`](workflows/taglish_2026_model.md) ·
-✅ Tapos ang lint (3 class rule, WARNING tier) · ✅ Tapos ang drift gate.
+Live 08-08. Codes **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, sent as `grifon.ai/i/FOUNDER-01` —
+redeems on arrival, scrubs itself from the bar. Audit: `select ts,event,meta->>'code' from events
+where module='launch_gate' order by ts desc;` (waitlist: `funnel_leads`). Revoke via
+`LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`; **neither works without a redeploy.**
 
-Tenga mo na ang natira. Babala lang ang 3 class rule at walang nagiging ERROR hangga't
-di mo nababasa ang hits. Tingnan sa alinmang funnel dir: `node scripts/lint-voice.mjs`.
+## ▶ NEXT ACTION — THE SAMPLE BATCH
 
-- **KONYO: 0 hit** sa dalawa. Malinis ang na-review mong copy, at di nag-iingay.
-- **PARTICLE: 24** · **MAHABA: 10.** Husgahan mo kung alin ang tama, ako na ang
-  mag-a-adjust o magpo-promote sa ERROR. (`24 hours` = sagot na ni Neil, tama nga.)
+🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty.
+**Scene count DECIDED 08-10: 4**, matching `SCENE_CAP` on Starter/Pro, so a sample is what the
+customer actually buys. **~₱273 per ad, ~₱3,280 for all 12**; `npm run cost:estimate` is live.
+First three: `real_talk`, `before_after`, `unboxing_asmr`; the landing hero comes from the same
+batch. ⚠️ Kling pricing is still calibrated off one paid render.
 
-## 🔴 IBANG REGISTER ANG CHAT KAY NEIL (08-07, tingnan ang STEP 0b)
-Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang
-technical terms** — hook, retention, frame, syllable, build, lint. Mas mataas ang
-English, malapit sa 50/50, magaan ang Tagalog (pandikit lang: yung, kaso, pero,
-kasi). Register ng **Gemini / Director AI at GPT** ang target, yun ang nakasanayan
-nya. Sablay ko: ginawa kong `pantig`/`patinig`/`balangkas` ang syllable/vowel/frame.
-**Walang formulang naglo-lock** sa ads — rotation, depende sa market (ledger **A6**).
+**Gates after the 08-10 code trace — SIX left, not seven; full detail in the workflow doc.**
+✅ 1-4 (08-09) · ✅ **10 was a duplicate of 4** · 🔶 **6 dial shipped, values pending you** ·
+⬜ 5 (your jump-cut call) · ⬜ 7 [#92](https://github.com/yopiheart/grifon-command/issues/92) ·
+⛔ 8 [#93](https://github.com/yopiheart/grifon-command/issues/93) TUNED ·
+⚠️ **9 is NOT a caption bug** — now TUNED script compliance ·
+⬜ 11 [#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59).
 
-## 🔴 14 na ERROR sa LIVE na price-page, ayos na
-53 rule lang ang kopya nya, 64 kay Paolo: **wala ang buong `KLASE, HINDI SALITA` block**
-kasama ang `15 days` rule. Nahuli: `24 oras`, `30 araw`, `sa iyo` ×7, `2 oras` ×5. Ayos
-na sa source; **di gagalaw ang live site** hangga't di ka nagde-deploy (CLI, di
-git-connected). Bagong gate sa CI: `npm run check:voice-sync`.
+**Three filed root causes in a row were wrong on inspection** (#91, #94.2, **mine**). The aligner
+never drops a word, and `scripts/check-alignment-numerals.mjs` proved it **VERBATIM** (`"₱149"` =
+one token), so the fix you approved would have broken a working mapping. **Read before editing.**
 
-## 🧠 Pinakamalaking natuklasan sa research
-**May pangalan ang kalaban: Konyo.** English ang frame, Tagalog ang isinasabog, hugis
-ng lahat ng "Bad" sa voice spec. May **test** imbes na listahan: *alisin ang English,
-may Tagalog bang frame na natira?* Wala = Konyo. **Hindi lang panlasa** (Neil): English
-ang dominante doon, kaya pwedeng mag-American accent ang avatar sa ACCENT LOCK.
+## 🔴 WAITING ON YOU — these three unblock the rest
 
-## 🔔 TAPOS DIN SESSION 11 — di na mapapalampas ang pulang CI
-Reader ang sira ng 3-araw na pula, hindi detection. Bagong `main-status` job sa
-[`ci.yml`](.github/workflows/ci.yml): isang bukas na `ci-red` issue lang habang pula
-ang main, kusang nagsasara pag green. Binabasa ng **Health Watch v2** tuwing 08:00 PHT,
-CRITICAL, kasama kung ilang araw nang bukas. Napatunayan sa live run. **Walang `gh` sa
-cloud env**, GitHub MCP tools pala ang daan. 📱 **Walang Routines sa phone**, kaya ang
-push mismo ang buong deliverable. [`loops.md`](workflows/loops.md) Tier 0b + 6.
+1. **Gate 6 values.** Dial is in (`hook.revealHoldSec`), every preset still 0.5 = zero visual
+   change. Proposed **0.35** impact/hype, **0.7** clean, **0.5 frozen** classic — or ride it on
+   the first pilot render and judge by eye.
+2. **Gate 5 jump cut.** Cutting silence mid-scene makes the video jump. Accept the jump cut
+   (fast, UGC-native) or require a cutaway? Nothing moves on gate 5 until this lands.
+3. **The reassurance line.** CTA is fixed (`START MY FIRST AD — FREE`, Hero + ReceiptsRail), but
+   `components/landing/microcopy.ts` still says *"Free plan · No card required · Upgrade anytime"*
+   — a free plan EXISTS, never what it gives. Proposed: **`Free plan · No card · See it before
+   you pay`** (turns the limit into the offer, and it is true). One file, three surfaces.
 
-## 🅿 PAOLO — itayo, wag buksan
-Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate na
-hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build, **hindi
-naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
+**Also open:** **PR #103** + **PR #102**, both unmerged. Rename `generateInfluencerAvatar`?
+⚠️ The ERROR tier lives in `_template`, so the next funnel inherits it. Step 3's `SCRIPT_AUDIT`
+panel still has no live eyeball. 📚 **CMO canon training PARKED** →
+[`cmo_canon_training.md`](workflows/cmo_canon_training.md): Cialdini + Schwartz are already in
+the skill, the real holes are **positioning**, **sales as a discipline**, and **no ledger of its
+own**. **Resume by typing `/grill-me` yourself.**
 
-1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang bara sa lahat
-   ([`facility-call-script.md`](clients/oceanides/facility-call-script.md)). **Sa
-   parehong message:** sino ang na-issuehan na ni Boss Jay ng DENR certificate? Yun
-   ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
-2. Punan ang dalawang `⟦PENDING⟧`, tapos deploy → env var (kamay ni Neil) →
-   **redeploy**, kundi walang epekto ang env.
-3. Dalawang alok, naka-preselect ang mas mahal. Presyo muna sa facility.
-4. Checkout. ⏳ PayMongo keys ng Oceanides. ⛔ Hindi ang key ng Grifon.
-5. Bagong creative at targeting. ⏳ Aling siyudad ang una, isa lang.
+## 🅿 PAOLO — build it, do not open it   ← this is where the real money is
 
-**Nagawa na, wag ulitin:** avatar, value stack, grill, pixel-leak, copy, page,
-trust card (`paolo-trust-a/b`, di pa nai-publish, 82 ang numero ng critic).
+Promise only so far: **no load has run, no certificate in hand.** The page stands
+(`funnels/oceanides-paolo/`), build green, **not deployed, pixel off**, 2 `⟦PENDING⟧` left.
 
-## 🔴 Huwag kalimutan
-1. **Route density ang lever, hindi presyo.** Isang siyudad muna.
-2. **Bawal ang CASH refund** sa tripwire. Credit, at isang taon ang bisa.
-3. **Patay na ang ₱900 break-even.** Kay Paolo: **₱4,900 kada 1-load na trabaho**.
-4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
-5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at
-   referral, **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
-6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa
-   `assets/ad-swipe/`, kaya may dalang axis ang corpus. Kailangan ng organic corpus.
+1. 🔴 **CALL THE SUPERVISOR** — blocks everything else
+   ([`facility-call-script.md`](clients/oceanides/facility-call-script.md)). **Same message:** who
+   has Boss Jay already issued a DENR certificate to? Only real list of paying buyers, costs ₱0.
+2. Fill the `⟦PENDING⟧`, deploy → env var (your hands) → **redeploy**, or it has no effect.
+3. Two offers, pricier preselected, facility pricing first. ⏳ Checkout needs Oceanides' own
+   PayMongo keys (⛔ never Grifon's). ⏳ New creative + targeting; pick the first city.
+4. **Done, do not redo:** avatar, value stack, grill, pixel-leak, copy, page, trust card.
+
+## 🔴 Do not forget
+
+**Route density is the lever, not price** — one city first. **No CASH refunds** on the tripwire,
+credit only, valid one year. **The ₱900 break-even is dead**; for Paolo it is **₱4,900 per
+1-load job**. **Geo is a coordinate radius**, lat `14.54` lng `121.02`. ⚠️ **The big names on the
+client list are Enterprise** — procurement and referral, **not FB ads**. ⛔ **No CTAs on organic
+cards** — all 78 in `assets/ad-swipe/` are paid ads.
 
 ## 🅿 PARKED
-**Oceanides:** Week 02 pack · GB-001 · hook2 ng KM-004 · Kling b-roll · watermark ni
-Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verified**. ⏸ Pause ang daily.
-**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED ·
-`artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · bump `@v5` ang
-`checkout`/`setup-node`. **Sarado ang Rauch brief** (roadmap #27, wag i-re-evaluate).
+
+**Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark ·
+SEC Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused.
+**Grifon:** #89/#90 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane still at 0 ·
+`@v5` bump · `/viral-autopsy` on 3 Savic. **Remotion + Hyperframes closed.** Canvas promo done.
 
 ## ⛔ Gated · 🔧 Arm before starting
-🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.
-`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
-⚠️ Di napupunta sa PATH ang `gh` — buong path: `…\Programs\GitHubCLI\bin\gh.exe`.
-⚠️ `npx playwright install chromium` — kinakain ng defreezer kada session.
-⚠️ Sariling `node_modules` ang bawat funnel · **wag i-pipe ang build output**.
 
-### How to maintain this file
-**Overwrite, never append.** Rewriting it is the last action of any session that
-changed the work. Verifier fails past 90 lines.
+🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling.
+`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
+⚠️ `gh` is not on PATH: `C:\Users\Administrator\AppData\Local\Programs\GitHubCLI\bin\gh.exe`
+⚠️ `npx playwright install chromium` every session · each funnel has its own `node_modules` ·
+**never pipe build output** · **the Bash tool is network-sandboxed, use PowerShell.**
+⚠️ `scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls** — answer already
+recorded in `format_sample_readiness.md`. Do not re-run casually.
+
+### Maintain: **overwrite, never append.** Last step of any session that changed state. Max 90.
+### Language: repo artifacts are ENGLISH (this file, commit subjects, workflow docs). Ads stay Taglish.

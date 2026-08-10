@@ -81,6 +81,30 @@ Blind A/B ([`tools/gauntlet_blind_ab.mjs`](../../../tools/gauntlet_blind_ab.mjs)
 is valid **only at wide gaps**, and always order-flipped. Run `--null` first and
 publish the bias number as the error bar.
 
+**Match the axis to the FORMAT, not just the goal.** `presence` names desktop
+icons and windows; `presence_phone` names the lock-screen clock band and the icon
+grid. Reusing the first on a portrait phone image asks a question the image is not
+answering. Same trap as the corpus warning above, one level down.
+
+### What the rubric is FOR (measured over two rounds, 2026-08-08)
+
+**It finds defects. It does not pick winners.** In one wallpaper run it caught
+three real faults nobody else had: every variant was slogan-heavy in the same way
+(a confound swamping the axis), the glass was reading as a UI widget rather than
+an object in a space, and the phone hero sat exactly under the icon grid. All
+three were true and all three were fixed.
+
+Over the same run **Neil over-ruled its ranking twice** — he picked the 4th-place
+image on desktop and the last-place image on phone, and both were the right call.
+A calibrated score says how much is wrong with an artifact. It says nothing about
+what a person wants to look at every day.
+
+So: **route `biggest_gap` into the next build, and route `score` into the bin
+once the owner has looked.** Never present a ranking to Neil as a
+recommendation — present the gaps, and let the ranking be a footnote. And never
+"fix" a variant *toward* a higher score after he has chosen; his choice closes the
+loop (STEP 4), and the instrument does not get a vote after that.
+
 ## STEP 3 — Build, bounded
 
 - Image generation goes through **`codex-image`** (ChatGPT plan, zero Gemini and

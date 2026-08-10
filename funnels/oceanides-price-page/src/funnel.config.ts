@@ -500,7 +500,7 @@ export const funnelConfig: FunnelConfig = {
             caption: 'Parehong tank, parehong pulang tubo. Ang laman lang ang nagbago.',
           },
         ],
-        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sayo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
+        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sayo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi na salita laban sa salita.',
       },
     },
 
@@ -641,7 +641,7 @@ export const funnelConfig: FunnelConfig = {
           },
           {
             q: 'Tenant lang ako. Pwede pa rin ba?',
-            a: 'Pwede, pero ang may-ari ang kailangang mag-desisyon kasi sa kanya ang tangke. I-copy mo to at ipadala sa kanya: "Boss, puno na po yung septic tank dito. May nakita akong Oceanides, ₱5,000 lahat-lahat, may resibo at 30-day warranty, at nakasulat ang presyo bago sila magsimula. Pwede po ba nating ipa-schedule?" Kapag sumagot sya, sya na ang mag-book dito.',
+            a: 'Pwede, pero ang may-ari ang kailangang mag-desisyon kasi sa kanya ang tangke. I-copy mo to at ipadala sa kanya: "Boss, puno na po yung septic tank dito. May nakita akong Oceanides, ₱5,000 lahat-lahat, may resibo at 30-day warranty, at nakasulat ang presyo bago sila magsimula. Pwede po ba nating ipa-schedule?" Kapag sumagot sya, sya na ang mag-book dito.',  // voice-ok: naka-quote na script na ipapadala sa Messenger, may po na
           },
           // ⬆️ WALA NA DITO ANG "Bakit ₱5,000 eh may ₱2,500?" (2026-08-03).
           // Sarili nyang section na sya ngayon, sa itaas ng page, kasunod ng
