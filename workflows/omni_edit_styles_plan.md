@@ -12,12 +12,36 @@
 
 ## ⏸ RESUME STATE (2026-07-07 — read this first when resuming)
 
-**Where we are:** Slices 1 + 2 + 3 + 4 are BUILT and NEIL-eyeballed. Slice 4
-code `5f02fc1`; step-0 registry flips `0664801`; live smoke + dolly-zoom pull
-2026-07-07. 533 unit tests green. **Remaining before PR to main:** (1) set
-`OMNI_STYLES_BETA_ALLOWLIST` in Vercel BEFORE merge (deleting the var later =
-public launch); (2) beta launch-gate review with Neil (fallback rate >30% =
-hold public). Nothing merged to main.
+**Where we are (2026-07-07 late — SHIPPED TO PROD):** All 4 slices are MERGED to
+`main` (PR #47) and LIVE on prod (www.grifon.ai). 533 unit tests green. Vercel
+env set: `OMNI_STYLES_ENABLED=true` + `OMNI_STYLES_BETA_ALLOWLIST=<Neil email +
+smoke uid>` (both Production, redeployed). Prod liveness verified: site 200, new
+`/api/gemini/omni-video/status` returns 401 (route live). Feature is beta-gated
+and running.
+
+**REMAINING (next session — none blocking, all Neil's hands):**
+1. **Live eyeball (not yet done):** log into www.grifon.ai as an allowlisted
+   Business user → One-Shot → generate a small ad with a TALKING scene → confirm
+   the `// STYLE` picker shows + a styled render comes back. Rides free: also
+   eyeball the new `gemini-3.1-flash-lite-image` scene-image quality/speed (its
+   pending live confirmation — launch_readiness.md). NOTE: only talking scenes
+   style now (dolly-zoom pulled); b-roll shows "used the standard edit" = correct.
+   If the picker never appears → allowlist/plan/status-probe mismatch, trace it.
+   After the render, re-query `events` for the real row (query below) to confirm
+   the prod path is fully wired.
+2. **Beta launch-gate review:** once real beta ads accumulate, check fallback
+   rate (query the `events` table). >30% = HOLD public release. Go public =
+   delete `OMNI_STYLES_BETA_ALLOWLIST` in Vercel + redeploy.
+3. **(Adjacent, not omni)** Meta pixel/CAPI Vercel vars (`VITE_META_PIXEL_ID`,
+   `META_CAPI_ACCESS_TOKEN`) before announcing beta — funnel data can't backfill
+   (launch_readiness.md item 4).
+
+**Launch-gate telemetry query** (Supabase, project `varoqxjccqmskzeejagn`):
+`SELECT meta->>'presetId', meta->>'sceneType', meta->>'outcome',
+meta->>'fallbackReason', count(*) FROM events WHERE module='omni_style' AND
+event='omni_scene_outcome' GROUP BY 1,2,3,4;` — as of 2026-07-07 the only rows
+are the 4 SMOKE events (08:26–08:30 UTC); ignore those, they include pre-pull
+dolly-zoom + the allowlist-negative test. First REAL prod render is the proof.
 
 **Slice-4 LIVE SMOKE PASSED (2026-07-07, ~$0.80, 2 paid renders):**
 - **Positive path:** dev-seeded 2-scene EditVideo run (VOX EXPLAINER),
