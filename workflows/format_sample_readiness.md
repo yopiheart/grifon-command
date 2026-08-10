@@ -40,7 +40,7 @@ depekto ng 12 beses.
 | 2 | Lead-in dead air sa STS scene (sabay ang video, buhay ang labi) | ✅ 08-09 | `renderFfmpeg.ts` |
 | 3 | Hook reveal hold 1.0 → 0.5 | ✅ 08-09 | `renderFfmpeg.ts` |
 | 4 | Dobleng linya (static subtitle + karaoke) | ✅ 08-09 | `drawPlan.ts` |
-| 5 | Dead air sa **gitna** ng scene (`~1.0s`) | ⬜ | kailangan ng split-at-concat; **may tanong sa jump cut, kay Neil** |
+| 5 | Dead air sa **gitna** ng scene (`~1.0s`) | 🔶 08-10 | **Gawa na, naka-patay pa.** `api/_lib/voiceMidGap.ts` + `MID_GAP_TRIM_ENABLED`. Basahin sa ibaba. |
 | 6 | Pacing kada format (pareho ang MrBeast at Testimonial) | 🔶 08-10 | **Nakalagay na ang dial** (`hook.revealHoldSec` sa `RenderPreset`). **Hindi pa napipihit** — kay Neil ang numero, basahin sa ibaba. |
 | 7 | Hook morph, goo ang gitna | ⬜ | [#92](https://github.com/yopiheart/grifon-command/issues/92) · sundan ang `/viral-autopsy` kay Savic |
 | 8 | Talking avatar, natutunaw ang mukha | ⬜ | [#93](https://github.com/yopiheart/grifon-command/issues/93) ⛔ TUNED |
@@ -51,6 +51,29 @@ depekto ng 12 beses.
 **Panuntunan:** 1 hanggang 4 ay sapat na para magsimula ng **isang** pilot render. Ang 5
 hanggang 11 ay kailangan bago ang **buong batch**, kasi bawat isa sa kanila ay lalabas sa
 lahat ng 12 sample.
+
+### 🔶 Gate 5: naka-code na ang mid-scene trim, naka-patay pa (2026-08-10)
+
+Yung `~1.0s` na katahimikan sa **gitna** ng VO ay hindi nakikita ng `chooseTrim` (buntot lang
+ang inaalis nun). Bagong module na kapatid ng `voiceLeadIn.ts`:
+[`api/_lib/voiceMidGap.ts`](../api/_lib/voiceMidGap.ts). Ang patakaran:
+
+- `0.6s` pataas lang ang pinuputol. Mas mataas sya sa `0.25s` ng lead-in kasi mas kita ang
+  putol sa gitna ng pangungusap kaysa sa umpisa.
+- **May natitirang `0.15s` palagi.** Kino-compress, hindi binubura, para di tunog clipped.
+- **Dalawa lang kada scene.** Kapag bawat hinga pinutol, nagiging kabado ang dating.
+- Sa `talking` scene sabay pinuputol ang video at ang audio, kaya **may jump cut**. Tanggap yun
+  (grammar yan ng UGC at Reels, mukhang self-edit), mas masama ang dead air. Sa `b-roll` at
+  `cinematic` audio lang, tuloy lang ang clip, walang jump kasi walang bibig sa screen.
+
+**Naka-patay pa sya.** `MID_GAP_TRIM_ENABLED='true'` ang bubukas nito; habang wala yun, pareho
+pa rin ang labas ng render. Ang susunod ay isang pilot render na bukas ang flag, tapos mata at
+tenga mo ang magdedesisyon kung tama ang `0.6s` at ang `0.15s`.
+
+₱0 ang panukat: [`tests/unit/voiceMidGap.test.ts`](../tests/unit/voiceMidGap.test.ts) para sa
+planner, rebase at filtergraph; at `RUN_MIDGAP=1 npx vitest run tests/integration/midgap-render.test.ts`
+para sa totoong ffmpeg (gawa nya ang sariling media, at pinapatunayan nyang wala na talaga ang
+butas sa audio, hindi lang naikli ang scene).
 
 ### Koreksyon sa gate 9 at 10 (2026-08-10, code trace)
 

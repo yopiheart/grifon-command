@@ -27,6 +27,10 @@ import {
   type DrawLayer, type TextLayer, type WordTiming, type SfxCandidate,
 } from './drawPlan.js';
 import { planLeadInCut, shiftWords } from './voiceLeadIn.js';
+import {
+  planSceneMidGap, rebaseSceneAfterCuts, buildMidGapFilters, totalCutSec,
+  type MidGapPlan,
+} from './voiceMidGap.js';
 export * from './drawPlan.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
@@ -657,9 +661,16 @@ function buildScene(
   preset: RenderPreset = CLASSIC,
   hookFontName: string | null = null, // BARE hook-title font (falls back to fontName)
   sweepName: string | null = null, // BARE sweep.png in `dir` (premium hook glint)
-  leadInSec: number = 0 // seconds of pre-speech dead air to skip on BOTH inputs
+  leadInSec: number = 0, // seconds of pre-speech dead air to skip on BOTH inputs
+  midGap: MidGapPlan | null = null // mid-scene dead air to splice out (ships dark)
 ): void {
   const [w, h] = dims;
+
+  // Mid-scene dead-air splice, spliced into THIS graph rather than run as its own
+  // ffmpeg pass — the clip is already being re-encoded here, so a pre-pass would
+  // buy a second generation loss for nothing. Null (no plan, no cuts, or no voice
+  // to cut) leaves every string below exactly as it was before the feature.
+  const mg = midGap && audioPath ? buildMidGapFilters(midGap) : null;
 
   // --- Video chain: normalize, then apply the scene's draw plan (boxes + text).
   // drawtext/drawbox font/text files are referenced as BARE filenames and ffmpeg
@@ -671,10 +682,10 @@ function buildScene(
     layers.some((l) => l.kind === 'text' && l.gradient && l.words?.length);
   const sweepInputIdx = needsSweep ? 2 + sfx.length : null;
   const premiumDur = trimSec ?? 12;
-  const stmts: string[] = [];
+  const stmts: string[] = mg ? [...mg.stmts] : [];
   let split = 0;
 
-  let vChain = `[0:v]fps=${FPS},${sceneNormalizeFilter(w, h)}`;
+  let vChain = `${mg?.videoOut ?? '[0:v]'}fps=${FPS},${sceneNormalizeFilter(w, h)}`;
   if (cameraFilter) vChain += `,${cameraFilter}`;
   let k = 0;
   for (const layer of layers) {
@@ -739,7 +750,8 @@ function buildScene(
   if (sweepInputIdx !== null) inputs.push('-loop', '1', '-t', premiumDur.toFixed(3), '-i', join(dir, sweepName as string));
 
   // --- Audio chain: base (voice padded/passthrough or silence) + SFX amix. ---
-  const base = padAudioToVideo && audioPath ? `[1:a]apad[abase]` : `[1:a]anull[abase]`;
+  const aSrc = mg?.audioOut ?? '[1:a]';
+  const base = padAudioToVideo && audioPath ? `${aSrc}apad[abase]` : `${aSrc}anull[abase]`;
   let aChain = base;
   let aOut = '[abase]';
   if (sfx.length) {
@@ -951,7 +963,14 @@ export async function renderFinalVideo(
       // shiftSceneForLeadIn returns the scene untouched and this path is a no-op.
       const rawScene = ordered[i];
       const leadInSec = planLeadInCut(rawScene.voiceWords);
-      const scene = shiftSceneForLeadIn(rawScene, leadInSec);
+      const leadInScene = shiftSceneForLeadIn(rawScene, leadInSec);
+      // Mid-scene dead air, planned on the ALREADY lead-in-shifted words so both
+      // cuts speak the same timeline, then every anchor rebased by the cumulative
+      // cut in front of it. Dark unless MID_GAP_TRIM_ENABLED='true' — with the flag
+      // off planSceneMidGap returns the empty plan and `scene` IS `leadInScene`.
+      const midGap = planSceneMidGap(leadInScene);
+      const scene = rebaseSceneAfterCuts(leadInScene, midGap.cuts);
+      const midGapSec = totalCutSec(midGap.cuts);
       const tScene = Date.now();
       const videoPath = join(dir, `scene_${i}.mp4`);
       await downloadToFile(scene.videoUrl, videoPath);
@@ -965,6 +984,14 @@ export async function renderFinalVideo(
       onStep?.(`download ${i + 1}/${ordered.length}`);
 
       const probeSec = probeDurationSec(videoPath);
+      // Length of the clip the graph will actually emit. Identical to probeSec on
+      // every path except a video-spliced mid-gap scene, where the file on disk is
+      // longer than what survives the concat — and every duration decision below
+      // (trim cap, camera move, diegetic headroom, timeline advance) is about the
+      // survivor, not the file.
+      const clipSec = probeSec === null || !midGap.cutVideo
+        ? probeSec
+        : Math.max(0, probeSec - midGapSec);
       // Measure the actual VO speech-end for every voiced scene — this is now the
       // PRIMARY trim signal (chooseTrim), ground-truth across any script/product.
       // Measured alignment beats silencedetect whenever the scene carries it (#91).
@@ -974,16 +1001,22 @@ export async function renderFinalVideo(
         const ap = audioPath;
         detectedSec = resolveSpeechEndSec(scene, isLastScene, {
           silenceSec: () => detectTrimSec(ap),
-          audioDurationSec: () => probeDurationSec(ap),
+          // The probe reads the file on disk, which still carries the mid-gap
+          // silence the graph is about to splice out — net it off or the cap
+          // stops describing the audio the scene will actually contain.
+          audioDurationSec: () => {
+            const d = probeDurationSec(ap);
+            return d === null ? null : Math.max(0, d - midGapSec);
+          },
         });
       }
 
-      const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec, preset);
+      const { trimSec, padAudio } = chooseTrim(scene, clipSec, detectedSec, preset);
       console.log('[renderFfmpeg:trim]', {
-        sceneIdx: scene.sceneIdx, probeSec, detectedSec, trimSec,
+        sceneIdx: scene.sceneIdx, probeSec, clipSec, detectedSec, trimSec,
         keepFullClip: !!scene.keepFullClip, isLastScene,
         anchor: speechWindow(scene) ? 'speech' : 'silence',
-        leadInSec,
+        leadInSec, midGapCuts: midGap.cuts.length, midGapSec, midGapVideo: midGap.cutVideo,
       });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
@@ -1046,7 +1079,7 @@ export async function renderFinalVideo(
           // the NEXT scene's transition whoosh (which diegetic must defer to).
           // trimSec is null on keepFullClip — fall back to the probed duration;
           // if both are unknown the clampAnchor path is the only bound we have.
-          const sceneEndSec = trimSec ?? probeSec;
+          const sceneEndSec = trimSec ?? clipSec;
           if (sceneEndSec !== null && cue.anchorSec > sceneEndSec - DIEGETIC_MIN_GAP) continue;
           const cueGlobal = elapsed + cue.anchorSec;
           if (!admitDiegeticCue(cueGlobal, cue.sfxId, [...placedSec, ...diegeticSec], diegeticPlaced, diegeticUse)) continue;
@@ -1071,7 +1104,7 @@ export async function renderFinalVideo(
         .map((l) => l.startSec);
       const camFilter = preset.stitchedOnly ? '' : buildCameraFilter(
         effectiveCameraEffect(scene.cameraEffect, i, preset.camera),
-        trimSec ?? probeSec, dims, preset.camera, punchTimes
+        trimSec ?? clipSec, dims, preset.camera, punchTimes
       );
 
       const outPath = join(dir, `muxed_${i}.mp4`);
@@ -1080,7 +1113,7 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset, hookFontName, sweepName, leadInSec
+        camFilter, preset, hookFontName, sweepName, leadInSec, midGap
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
@@ -1088,7 +1121,7 @@ export async function renderFinalVideo(
       );
       onStep?.(`scene ${i + 1}/${ordered.length}`);
       muxed.push(outPath);
-      elapsed += trimSec ?? probeSec ?? 0; // advance the timeline by this scene's length
+      elapsed += trimSec ?? clipSec ?? 0; // advance the timeline by this scene's length
     }
 
     const finalPath = join(dir, 'final.mp4');
