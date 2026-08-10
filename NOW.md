@@ -9,50 +9,51 @@ redeems on arrival, scrubs itself from the bar. Audit `events where module='laun
 **neither works without a redeploy.**
 
 ## ▶ NEXT ACTION — THE SAMPLE BATCH
-
 🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty.
 **Scene count DECIDED 08-10: 4**, matching `SCENE_CAP` on Starter/Pro, so a sample is what the
 customer actually buys. **~₱273 per ad, ~₱3,280 for all 12**; `npm run cost:estimate` is live.
 First three: `real_talk`, `before_after`, `unboxing_asmr`; the landing hero comes from the same
 batch. ⚠️ Kling pricing is still calibrated off one paid render.
 
-**Gates after the 08-10 code trace — SIX left, not seven; full detail in the workflow doc.**
-✅ 1-4 (08-09) · ✅ **10 was a duplicate of 4** · 🔶 **6 dial shipped, values pending you** ·
-⬜ 5 (your jump-cut call) · ⬜ 7 [#92](https://github.com/yopiheart/grifon-command/issues/92) ·
-⛔ 8 [#93](https://github.com/yopiheart/grifon-command/issues/93) TUNED ·
-⚠️ **9 is NOT a caption bug** — now TUNED script compliance ·
-⬜ 11 [#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59).
+**Gates after 08-10 — TWO left. Detail in the workflow doc.** ✅ 1-4 (08-09) · ✅ **6** at 0.35
+impact/hype, 0.7 clean, 0.5 frozen classic · ✅ **10 was a duplicate of 4** · 🔶 **5 shipped
+DARK** (below) · ⚠️ **9 is NOT a caption bug**, now TUNED script compliance · ⛔ 8
+[#93](https://github.com/yopiheart/grifon-command/issues/93) TUNED · ⬜ 7
+[#92](https://github.com/yopiheart/grifon-command/issues/92) · ⬜ 11
+[#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59).
 
-**Three filed root causes in a row were wrong on inspection** (#91, #94.2, **mine**). The aligner
-never drops a word, and `scripts/check-alignment-numerals.mjs` proved it **VERBATIM** (`"₱149"` =
-one token), so the fix you approved would have broken a working mapping. **Read before editing.**
+**Three filed root causes in a row were wrong on inspection** (#91, #94.2, **mine** — a paid probe
+caught the last one before it broke a working mapping). **Read the path before editing it.**
 
-## 🔴 WAITING ON YOU — one question, and it blocks gate 5
+## 🔴 YOUR MOVE — one eyeball unlocks gate 5
+**`MID_GAP_TRIM_ENABLED` is built and OFF.** Gaps ≥0.6s compress to a 0.15s floor, max 2 per
+scene. Jump cuts accepted on talking scenes per your call; b-roll/cinematic get audio-only
+compression, so no jump and no cost. A real-ffmpeg test proves the hole is gone, not just the
+scene shortened. **No test can close whether lip-sync reads right on a real talking head** — that
+is the flag flip, and it wants your eyes on one render.
 
-**The jump cut.** Cutting the ~1s of silence mid-scene makes the video jump. Accept it (fast,
-UGC-native, what every Reel does) or require a cutaway to hide it? **Nothing moves on gate 5
-until this lands.** Everything else you owed is applied: gate 6 is at 0.35 impact/hype, 0.7
-clean, 0.5 frozen classic; the CTA reads `START MY FIRST AD — FREE`; the line under it now says
-`Free plan · No card · See it before you pay`. Overrule any of them freely, all are one-liners.
+Next code I can take without you: **gate 7** ([#92](https://github.com/yopiheart/grifon-command/issues/92)) —
+speed-ramp the morph middle in `renderFfmpeg`, non-tuned, how the pros hide a morph. Gate 11
+needs a regen and sits near TUNED.
 
 **Both PRs merged 08-10.** #103 shipped the voice ERROR tier plus a **suppression counter** (the
 `voice-ok` bypass now prints its count on the PASSING line — paolo 5, price-page 1, zero stale),
 because a hole nobody counts becomes a door. #102 shipped `check:domain`, now **0 hits**:
-`generateInfluencerAvatar` → `generateInfluencer`, and 4 of the 7 were false positives of one
-shape (a module passing into an API named for the wizard, where that word is right), so they
-carry a recorded reason instead of a rename.
+`generateInfluencerAvatar` → `generateInfluencer`; 4 of the 7 were false positives of one shape
+(a module passing into an API named for the wizard, where that word is right) so they carry a
+recorded reason instead of a rename. Landing CTA is `START MY FIRST AD — FREE` over
+`Free plan · No card · See it before you pay`.
 
-⚠️ **`grifon-starter` is live with 30 em dashes.** It has no voice gate, correctly — it is the
-English funnel — but the em-dash rule is universal, not Taglish, so the carve-out threw out a
-universal rule with the Taglish ones. Not fixed. ⚠️ `check:domain` scans comments, so documenting
-a rename re-trips the rule the rename satisfied. ⚠️ Step 3's `SCRIPT_AUDIT` has no live eyeball.
+⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
+the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️
+`check:domain` scans comments, so documenting a rename re-trips the rule it satisfied. ⚠️ Step 3's
+`SCRIPT_AUDIT` has no live eyeball.
 
 📚 **CMO canon training PARKED** → [`cmo_canon_training.md`](workflows/cmo_canon_training.md):
 Cialdini + Schwartz are already in the skill; the holes are **positioning**, **sales as a
 discipline**, **no ledger of its own**. **Resume by typing `/grill-me` yourself.**
 
 ## 🅿 PAOLO — build it, do not open it   ← this is where the real money is
-
 Promise only so far: **no load has run, no certificate in hand.** The page stands
 (`funnels/oceanides-paolo/`), build green, **not deployed, pixel off**, 2 `⟦PENDING⟧` left.
 
@@ -79,7 +80,6 @@ ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump �
 3 Savic. **Remotion + Hyperframes closed.** Canvas promo done.
 
 ## ⛔ Gated · 🔧 Arm before starting
-
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` · `npx playwright
 install chromium`. ⚠️ `gh` is not on PATH: `…\Programs\GitHubCLI\bin\gh.exe`. Each funnel has its
