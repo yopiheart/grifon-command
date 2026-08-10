@@ -206,8 +206,13 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
         <button onClick={() => setShowVideoPrompts(false)} className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#FFCC00] border border-[#FFCC00]/20 px-4 py-2 rounded-full hover:bg-[#FFCC00]/10 transition-colors uppercase mb-8">
           <ChevronLeft className="w-4 h-4" /> BACK TO STUDIO
         </button>
-        <Step6VideoPrompts 
-          storyboard={result} 
+        {/* Same shape as the reference-image notes in InfluencerForge: the prop
+            below is Step6VideoPrompts' OWN name, and that component belongs to the
+            wizard, where the word is the correct term. What we hand it is a
+            Cinematic Relay. Renaming would mean renaming the wizard's prop to
+            satisfy a linter reading the caller. */}
+        <Step6VideoPrompts
+          storyboard={result} // domain-lint-ok: wizard component's own prop name
           videoPrompts={videoPrompts} 
           setVideoPrompts={setVideoPrompts} 
           onNext={() => onBack()} 

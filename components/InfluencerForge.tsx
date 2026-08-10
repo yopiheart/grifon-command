@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+﻿import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { InfluencerConfig, InfluencerStrategicInput, Scene, InfluencerScriptResponse, OdysseyState } from '../types';
-import { generateInfluencerAvatar, generateInfluencerScript, generateInfluencerStoryboard, generateVideoPrompts, generateSceneImage, generateThumbnail } from '../services/geminiService';
+import { generateInfluencer, generateInfluencerScript, generateInfluencerStoryboard, generateVideoPrompts, generateSceneImage, generateThumbnail } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
@@ -19,10 +19,10 @@ type TacticalFolder = 'BIOMETRIC_DNA' | 'SCENE_CONTEXT' | 'VISUAL_STYLING' | 'OP
 const CAMERAS = ['IPHONE_15_PRO', 'SONY_A7IV', 'RED_KOMODO'] as const;
 const LENSES = ['35MM_VLOG', '50MM_PRIME', '85MM_CINEMATIC'] as const;
 const ENVIRONMENTS = [
-  { id: 'OUTDOOR', label: '🌳 OUTDOOR' },
-  { id: 'OFFICE', label: '🏢 OFFICE' },
-  { id: 'INDOOR', label: '🏠 INDOOR' },
-  { id: 'MATCH_UPLOAD', label: '🧬 MATCH' }
+  { id: 'OUTDOOR', label: 'ðŸŒ³ OUTDOOR' },
+  { id: 'OFFICE', label: 'ðŸ¢ OFFICE' },
+  { id: 'INDOOR', label: 'ðŸ  INDOOR' },
+  { id: 'MATCH_UPLOAD', label: 'ðŸ§¬ MATCH' }
 ] as const;
 
 const ETHNICITIES = ['Filipino/Asian', 'Caucasian', 'Latino', 'African', 'European'] as const;
@@ -30,36 +30,36 @@ const GENDERS = ['MALE', 'FEMALE', 'ANY'] as const;
 const WARDROBES = ['PROFESSIONAL', 'CASUAL', 'STREETWEAR', 'ELEGANT', 'MINIMALIST'] as const;
 
 const LIGHTING_PRESETS = [
-  { id: 'AUTHORITY', label: '🏆 AUTHORITY', icon: '👑' },
-  { id: 'NEON_VLOG', label: '⚡ NEON', icon: '🌈' },
-  { id: 'NATURAL_STUDIO', label: '🌿 NATURAL', icon: '☀️' },
-  { id: 'DARK_MINIMALIST', label: '🌑 DARK', icon: '💎' }
+  { id: 'AUTHORITY', label: 'ðŸ† AUTHORITY', icon: 'ðŸ‘‘' },
+  { id: 'NEON_VLOG', label: 'âš¡ NEON', icon: 'ðŸŒˆ' },
+  { id: 'NATURAL_STUDIO', label: 'ðŸŒ¿ NATURAL', icon: 'â˜€ï¸' },
+  { id: 'DARK_MINIMALIST', label: 'ðŸŒ‘ DARK', icon: 'ðŸ’Ž' }
 ] as const;
 
 const GAMES = [
   { 
     id: 'MEDIA_GAME', 
-    label: '🎭 ATTENTION_STORY', 
+    label: 'ðŸŽ­ ATTENTION_STORY', 
     desc: 'Viral Reach // Climax-Start Hook', 
-    icon: '🎬' 
+    icon: 'ðŸŽ¬' 
   },
   { 
     id: 'COMMODITY_VIBE', 
-    label: '✨ DESIRE_DEMO', 
+    label: 'âœ¨ DESIRE_DEMO', 
     desc: 'Product Aesthetic // Result-First Flow', 
-    icon: '🛋️' 
+    icon: 'ðŸ›‹ï¸' 
   },
   { 
     id: 'PRODUCT_EDUCATION', 
-    label: '💡 REVENUE_TUTORIAL', 
+    label: 'ðŸ’¡ REVENUE_TUTORIAL', 
     desc: 'The Gap Strategy // 3-Step Bridge', 
-    icon: '🧪' 
+    icon: 'ðŸ§ª' 
   },
   { 
     id: 'B2B_AUTHORITY', 
-    label: '🏛️ TRUST_DOMINANCE', 
+    label: 'ðŸ›ï¸ TRUST_DOMINANCE', 
     desc: 'Consulting // Negative-Hook Pattern', 
-    icon: '💼' 
+    icon: 'ðŸ’¼' 
   }
 ] as const;
 
@@ -203,7 +203,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
       return;
     }
 
-    // New flow: report is structured JSON — map fields directly, no Gemini re-parse.
+    // New flow: report is structured JSON â€” map fields directly, no Gemini re-parse.
     try {
       const parsed = JSON.parse(savedReport);
       if (parsed && typeof parsed === 'object' && parsed.subject) {
@@ -211,7 +211,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
           ...prev,
           subject: parsed.subject || prev.subject,
           offer: parsed.bigIdea || prev.offer,
-          dreamCustomer: `${parsed.winningAvatar || ''} — ${parsed.demographics || ''}. ${parsed.dayInTheLife || ''}`.trim(),
+          dreamCustomer: `${parsed.winningAvatar || ''} â€” ${parsed.demographics || ''}. ${parsed.dayInTheLife || ''}`.trim(),
           bleedingNeck: parsed.bleedingNeck || prev.bleedingNeck,
           deepFear: parsed.deepFear || prev.deepFear,
           magicGenie: parsed.magicGenie || prev.magicGenie,
@@ -241,8 +241,8 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
   const onForge = async () => {
     setIsLoading(true); setError(null);
     try {
-      const persona = await generateInfluencerAvatar(config);
-      setResult(persona);
+      const influencer = await generateInfluencer(config);
+      setResult(influencer);
       setSuccessMsg("PERSONA_SYNTHESIS_COMPLETE");
     } catch (err) { setError("NEURAL_FORGE_FAILED"); } finally { setIsLoading(false); }
   };
@@ -281,20 +281,27 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
       const brandColors = [config.brandColor];
       
       if (index === 0) {
+        // The three reference-image keys below are NOT this module's vocabulary
+        // leaking. `generateSceneImage` is shared with the wizard, and the key is
+        // ITS parameter name, where that word is the correct domain term. We cannot
+        // rename it here (it belongs to the callee), and renaming it in
+        // geminiService would strip the right word out of the wizard to satisfy a
+        // linter reading the caller. What we pass is an Influencer; the slot is
+        // just named for the other module's concept.
         // Dual-Frame Hook Generation
         const [startUrl, endUrl] = await Promise.all([
           generateSceneImage(
             `BELIEF CHALLENGE: ${scene.sceneDescription}`,
             config.aspectRatio as any,
             config.quality as any,
-            { avatarUrl: result.url },
+            { avatarUrl: result.url }, // domain-lint-ok: shared wizard param name, see note above
             ethnicity, brandColors, 'MrBeast', undefined, undefined, index, scene.referenceImage
           ),
           generateSceneImage(
             `SHOCKING RESULT PAYOFF: ${scene.sceneDescription}`,
             config.aspectRatio as any,
             config.quality as any,
-            { avatarUrl: result.url },
+            { avatarUrl: result.url }, // domain-lint-ok: shared wizard param name, see note above
             ethnicity, brandColors, 'MrBeast', undefined, undefined, index + 10, scene.referenceImage
           )
         ]);
@@ -307,7 +314,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
           scene.sceneDescription,
           config.aspectRatio as any,
           config.quality as any,
-          { avatarUrl: result.url },
+          { avatarUrl: result.url }, // domain-lint-ok: shared wizard param name, see note above
           ethnicity, brandColors, 'MrBeast', undefined, undefined, index, scene.referenceImage
         );
         const updatedScenes = [...storyboardResult.scenes];
@@ -996,7 +1003,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
 
         <aside className={`w-full lg:w-96 flex flex-col shrink-0 h-full ${MAT_PLATE} border border-white/10 rounded-2xl p-6 gap-6 overflow-y-auto custom-scrollbar`}>
           <div className="flex-1 flex flex-col pr-2 relative">
-            <TacticalFolderHeader id="BIOMETRIC_DNA" label="🧬 BIOMETRIC_DNA" isOpen={openFolder === 'BIOMETRIC_DNA'} />
+            <TacticalFolderHeader id="BIOMETRIC_DNA" label="ðŸ§¬ BIOMETRIC_DNA" isOpen={openFolder === 'BIOMETRIC_DNA'} />
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openFolder === 'BIOMETRIC_DNA' ? 'max-h-[1000px] p-8 pb-6 space-y-8' : 'max-h-0 opacity-0'}`}>
                 <div className="space-y-4">
                    <label className="text-[8px] text-gray-500 uppercase font-black tracking-widest block">SOURCE_ORIGIN</label>
@@ -1051,7 +1058,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 </div>
             </div>
 
-            <TacticalFolderHeader id="SCENE_CONTEXT" label="🏢 SCENE_CONTEXT" isOpen={openFolder === 'SCENE_CONTEXT'} />
+            <TacticalFolderHeader id="SCENE_CONTEXT" label="ðŸ¢ SCENE_CONTEXT" isOpen={openFolder === 'SCENE_CONTEXT'} />
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openFolder === 'SCENE_CONTEXT' ? 'max-h-[1000px] p-8 pb-6 space-y-8' : 'max-h-0 opacity-0'}`}>
                 <div className="space-y-4">
                     <label className="text-[8px] text-gray-500 uppercase font-black tracking-widest block">ENVIRONMENT_DNA</label>
@@ -1075,7 +1082,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 </div>
             </div>
 
-            <TacticalFolderHeader id="VISUAL_STYLING" label="🎨 VISUAL_STYLING" isOpen={openFolder === 'VISUAL_STYLING'} />
+            <TacticalFolderHeader id="VISUAL_STYLING" label="ðŸŽ¨ VISUAL_STYLING" isOpen={openFolder === 'VISUAL_STYLING'} />
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openFolder === 'VISUAL_STYLING' ? 'max-h-[1000px] p-8 pb-6 space-y-8' : 'max-h-0 opacity-0'}`}>
                 <div className="space-y-4">
                     <label className="text-[8px] text-gray-500 uppercase font-black tracking-widest block">WARDROBE_SYNC</label>
@@ -1119,7 +1126,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 </div>
             </div>
 
-            <TacticalFolderHeader id="OPTIC_TARGET" label="🎥 OPTIC_TARGET" isOpen={openFolder === 'OPTIC_TARGET'} />
+            <TacticalFolderHeader id="OPTIC_TARGET" label="ðŸŽ¥ OPTIC_TARGET" isOpen={openFolder === 'OPTIC_TARGET'} />
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openFolder === 'OPTIC_TARGET' ? 'max-h-[1000px] p-8 pb-6 space-y-8' : 'max-h-0 opacity-0'}`}>
                 <div className="space-y-4">
                    <label className="text-[8px] text-gray-500 uppercase font-black tracking-widest block">GEAR_LOCK</label>

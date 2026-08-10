@@ -1915,7 +1915,15 @@ export const generateAvatarImage = async (
   throw new Error("Avatar image generation failed");
 };
 
-export const generateInfluencerAvatar = async (config: InfluencerConfig): Promise<{ url: string; description: string }> => {
+// Renamed 2026-08-10 from `generateInfluencerAvatar`. // domain-lint-ok: names the
+// old identifier on purpose, so a future session can grep the rename.
+// UBIQUITOUS_LANGUAGE.md:239 is explicit — never use the wizard's person-word inside
+// Influencer Forge code — and the old name fused two modules' concepts in one
+// identifier. NOT `...Persona`, which is what `check:domain` suggests: the glossary
+// lists that word as an avoid-term for Influencer too, so the swap would trade one
+// violation for another. Prompt content below is untouched; this is a rename, not a
+// tuning change.
+export const generateInfluencer = async (config: InfluencerConfig): Promise<{ url: string; description: string }> => {
   await delay(1000);
   const parts: any[] = [];
   
