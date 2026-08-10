@@ -7,8 +7,9 @@ redeems on arrival, scrubs itself from the bar. Audit `events where module='laun
 (waitlist: `funnel_leads`). Revoke via `LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`;
 **neither works without a redeploy.**
 
-## ▶ NEXT ACTION — THE SAMPLE BATCH
+## ▶ NEXT ACTION — THE SAMPLE BATCH ← the only focus, Neil 08-10
 🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty.
+The preview videos for the **One-Shot composer + the landing page** come out of this batch.
 **Scene count DECIDED 08-10: 4**, matching `SCENE_CAP` on Starter/Pro, so a sample is what the
 customer actually buys. **~₱273 per ad, ~₱3,280 for all 12**; `npm run cost:estimate` is live.
 First three: `real_talk`, `before_after`, `unboxing_asmr`; the landing hero comes from the same
@@ -51,24 +52,21 @@ the em-dash rule is universal and the carve-out threw it out with the Taglish on
 Cialdini + Schwartz are already in the skill; the holes are **positioning**, **sales as a
 discipline**, **no ledger of its own**. **Resume by typing `/grill-me` yourself.**
 
-## 🅿 PAOLO — build it, do not open it   ← this is where the real money is
-Promise only so far: **no load has run, no certificate in hand.** The page stands
-(`funnels/oceanides-paolo/`), build green, **not deployed, pixel off**, 2 `⟦PENDING⟧` left.
+## ⏸ PAOLO / OCEANIDES — HELD by Neil 08-09. Do NOT restart it.
+**Grifon launch blockers come first.** No call, no deploy, no spend until Neil lifts this. Page
+stands (`funnels/oceanides-paolo/`), build green, not deployed, pixel off; nothing rots waiting.
+⚠️ **Neil said "paperwork" but [`paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)
+says CAPITAL** — closed 08-08 because Oceanides has **no ESC and no open-tank tanker**; it needs
+an NCR-covering ESC, a truck, and a new MOA under the OPC. It also calls the **₱6,000/load
+mechanism suspect** (Globaltec bills per KILO, Clause 3), which puts the ₱4,900 price below in
+doubt. **Reconcile the two before spending anything on resume.** Evidence:
+[`compliance-findings-2026-08-08.md`](clients/oceanides/compliance-findings-2026-08-08.md).
 
-1. 🔴 **CALL THE SUPERVISOR** — blocks everything else
-   ([`facility-call-script.md`](clients/oceanides/facility-call-script.md)). **Same message:** who
-   has Boss Jay already issued a DENR certificate to? Only real list of paying buyers, costs ₱0.
-2. Fill the `⟦PENDING⟧`, deploy → env var (your hands) → **redeploy**, or it has no effect.
-3. Two offers, pricier preselected, facility pricing first. ⏳ Checkout needs Oceanides' own
-   PayMongo keys (⛔ never Grifon's). ⏳ New creative + targeting; pick the first city.
-4. **Done, do not redo:** avatar, value stack, grill, pixel-leak, copy, page, trust card.
-
-## 🔴 Do not forget
-**Route density is the lever, not price** — one city first. **No CASH refunds** on the tripwire,
-credit only, one year. **The ₱900 break-even is dead**; Paolo is **₱4,900 per 1-load job**. **Geo
-is a coordinate radius**, lat `14.54` lng `121.02`. ⚠️ **The big client-list names are
-Enterprise** — procurement and referral, **not FB ads**. ⛔ **No CTAs on organic cards**, all 78
-in `assets/ad-swipe/` are paid ads.
+**Standing facts:** route density is the lever, not price, one city first · **no CASH refunds**,
+credit only, one year · geo is a coordinate radius, lat `14.54` lng `121.02` · the big client-list
+names are **Enterprise**, procurement and referral, not FB ads · ⛔ no CTAs on organic cards, all
+78 in `assets/ad-swipe/` are paid ads. Done, do not redo: avatar, value stack, grill, pixel-leak,
+copy, page, trust card.
 
 ## 🅿 PARKED
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
