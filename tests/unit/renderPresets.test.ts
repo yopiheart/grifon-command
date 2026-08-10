@@ -35,6 +35,10 @@ describe('preset definitions', () => {
       layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
       textColor: 'white', highlightColor: '0xFFCC00', wipeBox: true, wipeColor: '0xD90429',
       sizeFrac: 0.06, wordCadenceSec: 0, burnTransition: false,
+      // Moved here from a renderFfmpeg module constant on 2026-08-10. The VALUE is
+      // the one that has always shipped, so CLASSIC's look is still locked; what
+      // changed is that each preset can now set its own beat.
+      revealHoldSec: 0.5,
     });
     expect(CLASSIC.transition.kind).toBe('none');
     expect(CLASSIC.camera.intensity).toBe(0);

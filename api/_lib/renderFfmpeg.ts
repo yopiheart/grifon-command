@@ -52,7 +52,9 @@ const PAD_SEC = 0.18;           // keep a soft final word from being clipped
 const LAST_SCENE_PAD_SEC = 0.06;
 const SILENCE_NOISE_DB = '-35dB';
 const SILENCE_MIN_SEC = '0.4';  // min trailing-silence run to treat as dead air
-const HOOK_REVEAL_HOLD_SEC = 0.5; // hook: hold the product reveal this long past the VO end (vs a long silent morph tail)
+// The hook's reveal hold moved onto the preset (`hook.revealHoldSec`, 2026-08-10):
+// as one module constant it gave a Testimonial hook the same beat as a MrBeast one.
+// Values are unchanged (every preset ships 0.5) — this is the dial, not a turn of it.
 
 const DIMS: Record<string, [number, number]> = {
   '9:16': [1080, 1920],
@@ -583,13 +585,16 @@ export interface TrimPlan {
 export function chooseTrim(
   scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'fallbackDurationSec'>,
   probeSec: number | null,
-  detectedSec: number | null
+  detectedSec: number | null,
+  // Defaults to CLASSIC so the trim math is unchanged for every existing caller
+  // (same default as renderFinalVideo's own `preset` parameter).
+  preset: RenderPreset = CLASSIC
 ): TrimPlan {
   const cap = (t: number) => (typeof probeSec === 'number' ? Math.min(t, probeSec) : t);
 
   if (scene.audioUrl && typeof detectedSec === 'number' && detectedSec > 0) {
     if (scene.keepFullClip) {
-      return { trimSec: cap(detectedSec + HOOK_REVEAL_HOLD_SEC), padAudio: true };
+      return { trimSec: cap(detectedSec + preset.hook.revealHoldSec), padAudio: true };
     }
     return { trimSec: cap(detectedSec), padAudio: false };
   }
@@ -973,7 +978,7 @@ export async function renderFinalVideo(
         });
       }
 
-      const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
+      const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec, preset);
       console.log('[renderFfmpeg:trim]', {
         sceneIdx: scene.sceneIdx, probeSec, detectedSec, trimSec,
         keepFullClip: !!scene.keepFullClip, isLastScene,

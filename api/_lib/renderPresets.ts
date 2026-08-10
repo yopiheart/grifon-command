@@ -61,6 +61,13 @@ export interface HookStyle {
   wordCadenceSec: number;
   /** Light-leak / film-burn transition at the hook→scene-2 cut. */
   burnTransition: boolean;
+  /** How long a `keepFullClip` hook holds past the VO end, so the product reveal
+   * lands before the cut (`chooseTrim`, renderFfmpeg.ts). Was a single module
+   * constant at 0.5s, which gave a Testimonial hook the same beat as a MrBeast
+   * one — pacing is a per-preset property, so it lives here now. Every preset
+   * still ships 0.5 verbatim: this move is plumbing, and differentiating the
+   * values is a look decision that belongs to Neil, not to a refactor. */
+  revealHoldSec: number;
 }
 
 export interface TransitionStyle {
@@ -123,7 +130,7 @@ export const CLASSIC: RenderPreset = {
   hook: {
     layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
     textColor: 'white', highlightColor: '0xFFCC00', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
-    wordCadenceSec: 0, burnTransition: false,
+    wordCadenceSec: 0, burnTransition: false, revealHoldSec: 0.5,
   },
   transition: { kind: 'none', halfDurSec: 0, everyN: 1, maxPerAd: 0 },
   camera: {
@@ -159,7 +166,7 @@ export const IMPACT: RenderPreset = {
   hook: {
     layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
     textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
-    wordCadenceSec: 0.32, burnTransition: true,
+    wordCadenceSec: 0.32, burnTransition: true, revealHoldSec: 0.5,
   },
   transition: { kind: 'flash', halfDurSec: 0.07, everyN: 2, maxPerAd: 3 },
   // Camera motion is the video-generation prompt's job — generated clips carry
@@ -196,7 +203,7 @@ export const HYPE: RenderPreset = {
   hook: {
     layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
     textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
-    wordCadenceSec: 0.3, burnTransition: true,
+    wordCadenceSec: 0.3, burnTransition: true, revealHoldSec: 0.5,
   },
   transition: { kind: 'whip', halfDurSec: 0.05, everyN: 2, maxPerAd: 4 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).
@@ -232,7 +239,7 @@ export const CLEAN: RenderPreset = {
   hook: {
     layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/ArchivoBlack-Regular.ttf', advRatio: 0.66,
     textColor: 'white', highlightColor: '0xFFCC00', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
-    wordCadenceSec: 0.34, burnTransition: false,
+    wordCadenceSec: 0.34, burnTransition: false, revealHoldSec: 0.5,
   },
   transition: { kind: 'dip', halfDurSec: 0.12, everyN: 3, maxPerAd: 2 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).

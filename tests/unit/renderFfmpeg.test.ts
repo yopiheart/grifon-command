@@ -7,6 +7,8 @@ import {
   sceneNormalizeFilter, musicMixPlan,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
+import { CLASSIC, CLEAN, HYPE, IMPACT, PRESETS } from '../../api/_lib/renderPresets.js';
+import type { RenderPreset } from '../../api/_lib/renderPresets.js';
 import type { FinalRenderScene } from '../../types.js';
 
 // Encodes the Phase 2 trim intent (workflows/render_pipeline_voice_10.md):
@@ -194,6 +196,44 @@ describe('chooseTrim', () => {
 
   it('keeps the full clip when nothing else applies', () => {
     expect(chooseTrim({}, PROBE, null).trimSec).toBeCloseTo(PROBE, 3);
+  });
+
+  // The hold moved from a module constant onto the preset (2026-08-10) because one
+  // global value gave a Testimonial hook the same beat as a MrBeast one. These pin
+  // the dial itself: the plumbing must read the preset, and today every preset still
+  // ships 0.5 so the move is provably behaviour-neutral.
+  describe('reveal hold is a per-preset dial', () => {
+    const HOOK = { keepFullClip: true, audioUrl: 'x' } as const;
+
+    it('reads the hold off the preset instead of a fixed constant', () => {
+      // Independent source of truth: a hand-built preset, not one of ours.
+      const slow: RenderPreset = { ...CLEAN, hook: { ...CLEAN.hook, revealHoldSec: 1.25 } };
+      expect(chooseTrim(HOOK, PROBE, 2.8, slow).trimSec).toBeCloseTo(4.05, 3); // 2.8 + 1.25
+    });
+
+    it('a zero hold cuts exactly on the VO end', () => {
+      const snap: RenderPreset = { ...HYPE, hook: { ...HYPE.hook, revealHoldSec: 0 } };
+      expect(chooseTrim(HOOK, PROBE, 2.8, snap).trimSec).toBeCloseTo(2.8, 3);
+    });
+
+    it('still clamps to the clip no matter how long the preset asks to hold', () => {
+      const greedy: RenderPreset = { ...IMPACT, hook: { ...IMPACT.hook, revealHoldSec: 99 } };
+      expect(chooseTrim(HOOK, 3.9, 3.6, greedy).trimSec).toBeCloseTo(3.9, 3);
+    });
+
+    it('omitting the preset behaves exactly as CLASSIC (unchanged default)', () => {
+      expect(chooseTrim(HOOK, PROBE, 2.8).trimSec)
+        .toBeCloseTo(chooseTrim(HOOK, PROBE, 2.8, CLASSIC).trimSec, 3);
+    });
+
+    // Guards the migration itself: if a future preset forgets the field, the trim
+    // silently becomes NaN rather than failing loudly.
+    it('every shipped preset carries a usable hold', () => {
+      for (const [id, p] of Object.entries(PRESETS)) {
+        expect(Number.isFinite(p.hook.revealHoldSec), id).toBe(true);
+        expect(p.hook.revealHoldSec, id).toBeGreaterThanOrEqual(0);
+      }
+    });
   });
 });
 

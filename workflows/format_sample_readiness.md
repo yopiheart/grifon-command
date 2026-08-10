@@ -41,7 +41,7 @@ depekto ng 12 beses.
 | 3 | Hook reveal hold 1.0 → 0.5 | ✅ 08-09 | `renderFfmpeg.ts` |
 | 4 | Dobleng linya (static subtitle + karaoke) | ✅ 08-09 | `drawPlan.ts` |
 | 5 | Dead air sa **gitna** ng scene (`~1.0s`) | ⬜ | kailangan ng split-at-concat; **may tanong sa jump cut, kay Neil** |
-| 6 | Pacing kada format (pareho ang MrBeast at Testimonial) | ⬜ | ilipat ang `HOOK_REVEAL_HOLD_SEC` sa `RenderPreset` |
+| 6 | Pacing kada format (pareho ang MrBeast at Testimonial) | 🔶 08-10 | **Nakalagay na ang dial** (`hook.revealHoldSec` sa `RenderPreset`). **Hindi pa napipihit** — kay Neil ang numero, basahin sa ibaba. |
 | 7 | Hook morph, goo ang gitna | ⬜ | [#92](https://github.com/yopiheart/grifon-command/issues/92) · sundan ang `/viral-autopsy` kay Savic |
 | 8 | Talking avatar, natutunaw ang mukha | ⬜ | [#93](https://github.com/yopiheart/grifon-command/issues/93) ⛔ TUNED |
 | 9 | Nalalaglag ang numero sa karaoke | ⚠️ 08-10 | **Mali ang naka-file na root cause.** Hindi caption bug. Basahin sa ibaba. |
@@ -74,6 +74,28 @@ Kaya **script-side compliance** ang klase nito, hindi renderer. Sinasabi ng tune
 ang gamitin (`Prices and numbers — "₱650", "P22 vs P180", "30 days"`,
 [`api/_lib/prompts.ts:359`](../api/_lib/prompts.ts#L359)) pero hindi laging sumusunod ang model.
 ⛔ TUNED ang lunas, kaya Neil-gated at kailangan ng ≥3 sample bago mag-propose.
+
+### 🔶 Gate 6: nakalagay na ang dial, hindi pa napipihit (2026-08-10)
+
+`HOOK_REVEAL_HOLD_SEC` ay isang module constant dati sa `renderFfmpeg.ts`, kaya **pareho ang
+hinihintay ng MrBeast hook at ng Testimonial hook** bago pumutol. Nasa `RenderPreset` na sya
+ngayon bilang `hook.revealHoldSec` ([`renderPresets.ts`](../api/_lib/renderPresets.ts)), at
+binabasa na sya ng `chooseTrim`.
+
+**Sinadyang 0.5 pa rin lahat.** Zero pagbabago sa itsura, at napapatunayan yun ng test: pareho
+ang labas ng `chooseTrim` na walang preset at ng `chooseTrim` na CLASSIC. Hindi isinakay ang
+panlasa sa isang refactor.
+
+**Kailangan ng numero mo.** Mungkahi, at may dahilan bawat isa:
+
+| Preset | Format | Ngayon | Mungkahi | Bakit |
+|---|---|---|---|---|
+| `impact` · `hype` | MrBeast, Temu, UGC Pro | 0.5 | **0.35** | Mabilis ang grammar nila. Ang hintay ay lumalabas na pag-aatubili. |
+| `clean` | Testimonial | 0.5 | **0.7** | Restraint mismo ang estilo. May hininga bago pumutol, hindi dead air. |
+| `classic` | kill-switch override | 0.5 | **0.5, wag galawin** | Naka-lock sya sa live render at may regression test. |
+
+Hindi pwedeng sagutin ng code ang mga numerong yan. Kung gusto mo, isakay natin sa unang pilot
+render: isang `real_talk` sa 0.35 at isa sa 0.7, tapos tenga at mata ang magdesisyon.
 
 ### ✅ SAGOT NA: verbatim ang tokenization ng aligner (2026-08-10, bayad na probe)
 
