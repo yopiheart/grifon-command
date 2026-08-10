@@ -41,22 +41,25 @@ as repo Actions secret **`CLAUDE_CODE_OAUTH_TOKEN`** (bills the **Max plan**, no
 Next code I can take without you: **gate 7** ([#92](https://github.com/yopiheart/grifon-command/issues/92)) —
 speed-ramp the morph middle in `renderFfmpeg`, non-tuned. Gate 11 needs a regen and sits near TUNED.
 
-## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER
-Branch **`feat/claude-review-tier0c`** → PR. Adds
+## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER · ✅ ARMED (#105 merged)
 [`.github/workflows/claude-review.yml`](.github/workflows/claude-review.yml): Claude reviews every
-PR to `main` and posts ranked findings as **one sticky PR comment** (never the run log — that is
-the reader failure this repo has paid for twice). Report-only, never blocks a merge, TUNED changes
-flagged and explicitly not judged. Registered as **Tier 0c** in
-[`loops.md`](workflows/loops.md).
+PR to `main` and posts findings as **one sticky PR comment** (never the run log — the reader
+failure this repo has paid for twice). Report-only, never blocks a merge, TUNED changes flagged
+and explicitly not judged. `CLAUDE_CODE_OAUTH_TOKEN` is live (**Max plan**, not API). Full entry:
+**Tier 0c** in [`loops.md`](workflows/loops.md).
 
-**Why now:** the review rules already existed but only inside PreToolUse hooks that fire when a
-session is alive on this PC. `grifon-starter` shipped live with 30 em dashes through that hole.
-**And it is the gate on parallelism** — per Boris Cherny's *Steps of AI Adoption*, Grifon sits at
-**step 1 (~1 agent)** with step-2 guardrails over-built; step 2's own bottleneck is *reviewing
-output*, so worktree parallelism before this exists would multiply the jam, not clear it.
-Unverified until it runs once: whether the action accepts `claude-fable-5` (fallback line is in
-the file). **Earlier 08-10:** #103 (voice ERROR tier + suppression counter) and #102
-(`check:domain`, now 0 hits) both merged.
+**Why:** the rules already existed but only inside PreToolUse hooks that fire when a session is
+alive on this PC — `grifon-starter` shipped live with 30 em dashes through that hole. **It is also
+the gate on parallelism:** per Boris Cherny's *Steps of AI Adoption*, Grifon sits at **step 1 (~1
+agent)** with step-2 guardrails over-built, and step 2's own bottleneck is *reviewing output*, so
+going parallel first multiplies the jam instead of clearing it.
+
+⛔ **It can never review a PR that touches `.github/workflows/`** — GitHub refuses to run it when
+the workflow differs from `main`, its guard against a PR rewriting the workflow to steal the
+token. Those PRs always need your eyes. First run also caught a defect of mine: a skipped review
+went **green having read nothing**; it now posts a loud NOT-reviewed comment instead. ⬜ Still
+unproven: whether the action accepts `claude-fable-5` — **this PR is that test** (fallback
+`claude-opus-5` line is in the file). **Earlier 08-10:** #103 + #102 merged.
 
 ⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
 the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️
