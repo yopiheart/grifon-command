@@ -213,7 +213,7 @@ nasa `public/samples/formats/`.
 
 | Recipe | Format | Label | R | E | S |
 |---|---|---|:-:|:-:|:-:|
-| `real_talk` | ugc | Real Talk Review | ⬜ | ⬜ | ⬜ |
+| `real_talk` | ugc | Real Talk Review | 🔶¹ | ⬜ | ⬜ |
 | `hype_drop` | ugc | Hype Drop | ⬜ | ⬜ | ⬜ |
 | `rapid_fire` | product_ugc | Rapid Fire | ⬜ | ⬜ | ⬜ |
 | `pure_hype` | product_ugc | Pure Hype | ⬜ | ⬜ | ⬜ |
@@ -228,6 +228,38 @@ nasa `public/samples/formats/`.
 
 `auto` ay hindi sample-able: pumipili sya ng ibang recipe, kaya ang sample nya ay kung ano
 ang napili.
+
+**¹ `real_talk` may na-render na, pero HINDI sya counted.** `apr_69e5adc6` (07-31): 9 scenes,
+0:35, umabot sa First Cut. **Yun mismo ang pinanggalingan ng 7-issue punch list** (#89 hanggang
+#95) na pinagmulan ng mga gate dito, kaya ipapakita nya sa customer ang eksaktong sira na
+inaayos natin. **9 scenes din sya, samantalang 4 na ang napagkasunduan noong 08-10**, kaya mali
+na ang haba. Ang silbi nya ay **panghambing lang** (ang "bago" laban sa pilot na "pagkatapos"),
+at kahit dun, hindi sya perpektong katapat dahil sa magkaibang bilang ng scene. **Huwag itong
+ilagay sa `SAMPLES`.** Tanong ito ni Neil noong 08-13; nakasulat na para hindi na maulit.
+
+### Ang paglalagay kada format (napagkasunduan kay Neil, 08-13)
+
+**Isa-isa, hindi hintayin ang lahat ng 12.** Sinusuportahan na to ng code, walang babaguhin:
+`SAMPLES` ay `Partial<Record<RecipeId, RecipeSample>>` na walang laman
+([`recipes.ts:108`](../components/OneShotAd/recipes.ts#L108)), at ang recipe na wala pa dun ay
+**"Sample soon"** placeholder ang lalabas. Kaya kayang may tatlong buhay na card habang siyam
+ang naghihintay.
+
+Kada format, ganito ang takbo, at **hindi tumatawid sa 3 nang walang 2:**
+
+1. **R** — i-render.
+2. **E** — panoorin ni Neil. 🔴 **Sya lang ang makakapagsabi ng pasado.** Walang sample na
+   pumapasok sa gallery na hindi nya nakita.
+3. **S** — ilagay ang file sa `public/samples/formats/` at isang susi sa `SAMPLES`. Live na agad
+   ang card na yun, tuloy lang sa placeholder ang iba.
+
+⚠️ **Hindi sya auto-play, at dapat alam ni Neil to.**
+`autoplay = hoverCapable && !reduceMotion` ([`LaunchScreen.tsx:1495`](../components/OneShotAd/LaunchScreen.tsx#L1495)).
+Sa desktop, hover bago gumalaw. **Sa cellphone, poster muna at may Play chip na kailangang
+pindutin** dahil walang hover dun. Karamihan ng customer ay naka-cellphone, kaya kung tunay na
+auto-play ang gusto, hiwalay na usapan yun (mute + `playsInline` + data at 12 video sa isang
+page). ⚠️ **Kailanman hindi pa natakbo ang path na to** dahil walang laman ang `SAMPLES`, kaya
+ang unang sample ang magiging unang totoong test ng card mismo.
 
 **Ang unang tatlo, sa ganitong pagkakasunod** (isa kada beses, tingnan bago ang susunod):
 

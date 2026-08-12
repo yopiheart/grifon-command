@@ -8,16 +8,13 @@ redeems on arrival, scrubs itself from the bar. Audit `events where module='laun
 works without a redeploy.**
 
 ## ▶ NEXT ACTION — THE SAMPLE BATCH ← the only focus, Neil 08-10
-🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty.
-That one manifest blocks the **One-Shot gallery** (today a wall of `Film` icons, which
-`launch_readiness.md` calls worse than the modal it replaced), the **landing hero**, and
-`RecipeCard`'s hover-play, never once executed. **4 scenes**, matching `SCENE_CAP`. **~₱273/ad,
-~₱3,280 for 12**; `npm run cost:estimate` is live. First three: `real_talk`, `before_after`,
-`unboxing_asmr`. ⚠️ Kling pricing is calibrated off one paid render.
+🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty, which blocks the **One-Shot gallery** (a wall of `Film` icons today), the **landing hero**, and `RecipeCard`'s hover-play, never once executed. **4 scenes** per `SCENE_CAP`, **~₱273/ad, ~₱3,280 for 12**, `npm run cost:estimate` is live. First three: `real_talk`, `before_after`, `unboxing_asmr`. ⚠️ Kling pricing is calibrated off one paid render.
 
 **FIRE ONE PILOT FIRST — it clears three gates at once.** One `real_talk` with
 `MID_GAP_TRIM_ENABLED=true` validates gate 5 (trim), gate 6 (the 0.35/0.7 dial, code-correct but
 never watched), and is sample 1 of the ≥3 gates 8 and 9 need before a TUNED fix may be proposed.
+
+**Ship them ONE AT A TIME, Neil-gated (agreed 08-13).** `SAMPLES` is `Partial`, so an absent recipe just shows "Sample soon" — no need to wait for all 12. Per format: render → **Neil watches** → only then into `public/samples/formats/` + one `SAMPLES` key. ⚠️ `real_talk` `apr_69e5adc6` (07-31) is rendered but **NOT a sample**: it is the run that produced the #89-#95 punch list, and it is 9 scenes not 4. Comparison only.
 
 **Gates: ✅ 1-4, 6, 10 · 🔶 5 dark, needs your eyes · ⛔ 7, 8, 9 · ⬜ 11**
 [#93](https://github.com/yopiheart/grifon-command/issues/93) (8, TUNED) ·
