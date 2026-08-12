@@ -1614,9 +1614,10 @@ record + parking the item ("Alright go!") in the same session.
 > `CLAUDE.md:137-144` was built on a **Max 5x** plan with Fable 5 pinned as the main loop,
 > while `NOW.md:43` records the account as **Pro** and Fable as Max-only. Both loaded every
 > session, so the model read a routing policy it could not execute. Corrected in place.
-> **Still open for Neil:** `.claude/settings.json:3` pins `"model": "claude-fable-5"` — a
-> Max-only model on a Pro plan. Left untouched on purpose; changing the main-loop model is
-> Neil's call, not the agent's (`agent_lessons.md:16`).
+> `.claude/settings.json:3` pinned `"model": "claude-fable-5"` — a Max-only model on a Pro
+> plan. Raised rather than changed, since the main-loop model is Neil's call, not the
+> agent's (`agent_lessons.md:16`); **he instructed the repoint the same day and it now reads
+> `claude-opus-5`**, with `tools/hook_gate_test.sh` re-run at 25/25 per the standing rule.
 
 **What:** Register the instruction-stack prune in [`loops.md`](loops.md) as a real loop —
 arm command, verifier, kill switch, cadence — instead of the ad-hoc habit it is today.

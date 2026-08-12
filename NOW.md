@@ -41,9 +41,9 @@ that did not survive inspection.**
 ## 🤖 Tier 0c, the cloud-side REVIEWER · ✅ LIVE
 Every PR to `main` gets one sticky comment, report-only, TUNED flagged not judged. Constraints:
 **Tier 0c** in [`loops.md`](workflows/loops.md). ⚠️ Pinned `claude-opus-5` (Fable is Max-only, the
-account is **Pro**). CLAUDE.md corrected 08-12; 🔴 **`.claude/settings.json` still pins
-`claude-fable-5`, a dead pin — YOUR call to repoint or drop.** Rest are dated records. **$1.51
-is a FLOOR** — no code PR reviewed yet.
+account is **Pro**). ✅ Closed 08-12: CLAUDE.md corrected and `.claude/settings.json` repointed
+to `claude-opus-5` (was the dead `claude-fable-5` pin); hook gate re-run 25/25. Rest are dated
+records. **$1.51 is a FLOOR** — no code PR reviewed yet.
 
 ## 📊 NEW 08-13 — Meta ads brief filed; it exposed a hole in OUR tracking
 Eval in [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #17 (~80% already in
