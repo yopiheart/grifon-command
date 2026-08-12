@@ -1,86 +1,88 @@
 # NOW — the resume doc
-**Stamped: 2026-08-10** (session 18)
+**Stamped: 2026-08-13** (session 19)
 
 ## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
 Live 08-08. Codes **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, sent as `grifon.ai/i/FOUNDER-01` —
 redeems on arrival, scrubs itself from the bar. Audit `events where module='launch_gate'`
-(waitlist: `funnel_leads`). Revoke via `LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`;
-**neither works without a redeploy.**
+(waitlist: `funnel_leads`). Revoke via `LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`; **neither
+works without a redeploy.**
 
 ## ▶ NEXT ACTION — THE SAMPLE BATCH ← the only focus, Neil 08-10
 🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty.
-The preview videos for the **One-Shot composer + the landing page** come out of this batch.
-**Scene count DECIDED 08-10: 4**, matching `SCENE_CAP` on Starter/Pro, so a sample is what the
-customer actually buys. **~₱273 per ad, ~₱3,280 for all 12**; `npm run cost:estimate` is live.
-First three: `real_talk`, `before_after`, `unboxing_asmr`; the landing hero comes from the same
-batch. ⚠️ Kling pricing is still calibrated off one paid render.
+That one manifest blocks the **One-Shot gallery** (today a wall of `Film` icons, which
+`launch_readiness.md` calls worse than the modal it replaced), the **landing hero**, and
+`RecipeCard`'s hover-play, never once executed. **4 scenes**, matching `SCENE_CAP`. **~₱273/ad,
+~₱3,280 for 12**; `npm run cost:estimate` is live. First three: `real_talk`, `before_after`,
+`unboxing_asmr`. ⚠️ Kling pricing is calibrated off one paid render.
 
-**Gates after 08-10 — TWO left. Detail in the workflow doc.** ✅ 1-4 (08-09) · ✅ **6** at 0.35
-impact/hype, 0.7 clean, 0.5 frozen classic · ✅ **10 was a duplicate of 4** · 🔶 **5 shipped
-DARK** (below) · ⚠️ **9 is NOT a caption bug**, now TUNED script compliance · ⛔ 8
-[#93](https://github.com/yopiheart/grifon-command/issues/93) TUNED · ⬜ 7
-[#92](https://github.com/yopiheart/grifon-command/issues/92) · ⬜ 11
-[#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59).
+**FIRE ONE PILOT FIRST — it clears three gates at once.** One `real_talk` with
+`MID_GAP_TRIM_ENABLED=true` validates gate 5 (trim), gate 6 (the 0.35/0.7 dial, code-correct but
+never watched), and is sample 1 of the ≥3 gates 8 and 9 need before a TUNED fix may be proposed.
 
-**Three filed root causes in a row were wrong on inspection** (#91, #94.2, **mine** — a paid probe
-caught the last one before it broke a working mapping). **Read the path before editing it.**
+**Gates: ✅ 1-4, 6, 10 · 🔶 5 dark, needs your eyes · ⛔ 7, 8, 9 · ⬜ 11**
+[#93](https://github.com/yopiheart/grifon-command/issues/93) (8, TUNED) ·
+[#92](https://github.com/yopiheart/grifon-command/issues/92) (7) ·
+[#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59) (11).
 
 ## 🔴 YOUR MOVE — one eyeball unlocks gate 5
-**`MID_GAP_TRIM_ENABLED` is built and OFF.** Gaps ≥0.6s compress to a 0.15s floor, max 2 per
-scene. Jump cuts accepted on talking scenes per your call; b-roll/cinematic get audio-only
-compression, so no jump and no cost. A real-ffmpeg test proves the hole is gone, not just the
-scene shortened. **No test can close whether lip-sync reads right on a real talking head** — that
-is the flag flip, and it wants your eyes on one render. Next code I can take without you: **gate
-7** ([#92](https://github.com/yopiheart/grifon-command/issues/92)) — speed-ramp the morph middle
-in `renderFfmpeg`, non-tuned. Gate 11 needs a regen and sits near TUNED.
+**`MID_GAP_TRIM_ENABLED` is built and OFF.** Gaps ≥0.6s compress to a 0.15s floor, max 2/scene.
+Jump cuts accepted on talking scenes per your call; b-roll/cinematic get audio-only compression. A
+real-ffmpeg test proves the hole is gone, not just the scene shortened. **No test can close whether
+lip-sync reads right on a real talking head.** That is the flag flip.
 
-## 🤖 NEW 08-10 — Tier 0c, the cloud-side REVIEWER · ✅ LIVE
-Claude reviews every PR to `main`. One sticky comment, report-only, TUNED flagged not judged.
-**Verified on #106** — six review rounds, each catching real defects in the agent's own diff. Every
-constraint: **Tier 0c** in [`loops.md`](workflows/loops.md).
-⚠️ **Plan drift, your call.** Pinned to `claude-opus-5`; `claude-fable-5` died fast and quiet
-(**you confirmed Pro, 08-10**). The Max assumption is wider than one grep showed: `settings.json`
-+ CLAUDE.md **plus `session_reminders.md`, `post_beta_roadmap.md`, `codex-executor/SKILL.md`**.
-Policy, untouched. Reviews bill your limit; **$1.51 is a FLOOR**, no code PR reviewed yet.
+## ⛔ CORRECTION 08-13 — gate 7 is NOT the free agent task I said it was
+Last session promised gate 7 as agent-doable. **Wrong, and I stopped before writing it.** Four
+reasons in the workflow doc's gate 7 section; the two that decide it: the speed-ramp is the
+documented **fallback** behind a TUNED prompt fix and is flagged
+*"VO-sync makes this experimental"*, the exact desync class gates 1-5 just closed; and 🔴 **the
+blob was declared DEAD on the wizard path in June**, while #92 was filed off the **producer**,
+which had its hook-morph routing removed (`65e69de`). **Live hypothesis: a producer wiring
+regression, not residual mush**, so a mask would hide a dropped fix. Cheapest next read is one
+storyboard payload during the batch run you already pay for. **Fourth filed root cause in a row
+that did not survive inspection.**
 
-⚠️ **`grifon-starter` is live with 30 em dashes** — no voice gate, correctly (English funnel), but
-the em-dash rule is universal and the carve-out threw it out with the Taglish ones. ⚠️
-`check:domain` scans comments, so documenting a rename re-trips the rule it satisfied. ⚠️ Step 3's
-`SCRIPT_AUDIT` has no live eyeball.
+## 🤖 Tier 0c, the cloud-side REVIEWER · ✅ LIVE
+Every PR to `main` gets one sticky comment, report-only, TUNED flagged not judged. Constraints:
+**Tier 0c** in [`loops.md`](workflows/loops.md). ⚠️ Pinned `claude-opus-5` (Fable is Max-only, the
+account is **Pro**); the Max assumption still lives in 5 files, policy, untouched. **$1.51 is a
+FLOOR** — no code PR reviewed yet.
 
-📚 **CMO canon training PARKED** → [`cmo_canon_training.md`](workflows/cmo_canon_training.md):
-Cialdini + Schwartz are already in the skill; the holes are **positioning**, **sales as a
-discipline**, **no ledger of its own**. **Resume by typing `/grill-me` yourself.**
+## 📊 NEW 08-13 — Meta ads brief filed; it exposed a hole in OUR tracking
+Eval in [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #17 (~80% already in
+`grifon-ad-strategist`; **Hyros declined**). Ledger **A7**+**A8** at *0 campaigns of ours*, so
+neither can graduate. 🔴 [`api/_lib/metaCapi.ts`](api/_lib/metaCapi.ts) sends hashed email +
+`external_id` + IP + UA but **no `fbc`**, the click ID tying a Purchase to a specific ad click;
+funnels fire `Lead` browser-only. **Attribution cannot be backfilled** and no paid traffic has run,
+so this is the cheapest it will ever be. Recorded, not fixed.
+🟢 **Same argument, minutes of clicking:** launch-stack #4 telemetry go-live needs only two Vercel vars (`VITE_META_PIXEL_ID`, `META_CAPI_ACCESS_TOKEN`) + apply `supabase/marketing_consent.sql`.
 
 ## ⏸ PAOLO / OCEANIDES — HELD by Neil 08-09. Do NOT restart it.
 **Grifon launch blockers come first.** No call, no deploy, no spend until Neil lifts this. Page
 stands (`funnels/oceanides-paolo/`), build green, not deployed, pixel off; nothing rots waiting.
 ⚠️ **Neil said "paperwork" but [`paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)
-says CAPITAL** — closed 08-08 because Oceanides has **no ESC and no open-tank tanker**; it needs
-an NCR-covering ESC, a truck, and a new MOA under the OPC. It also calls the **₱6,000/load
-mechanism suspect** (Globaltec bills per KILO, Clause 3), which puts the ₱4,900 price below in
-doubt. **Reconcile the two before spending anything on resume.** Evidence:
-[`compliance-findings-2026-08-08.md`](clients/oceanides/compliance-findings-2026-08-08.md).
+says CAPITAL** (no ESC, no open-tank tanker) and calls the **₱6,000/load mechanism suspect**
+(Globaltec bills per KILO), putting the ₱4,900 price in doubt. **Reconcile both before spending.**
+Evidence: [`compliance-findings-2026-08-08.md`](clients/oceanides/compliance-findings-2026-08-08.md).
 
 **Standing facts:** route density is the lever, not price, one city first · **no CASH refunds**,
-credit only, one year · geo is a coordinate radius, lat `14.54` lng `121.02` · the big client-list
-names are **Enterprise**, procurement and referral, not FB ads · ⛔ no CTAs on organic cards, all
-78 in `assets/ad-swipe/` are paid ads. Done, do not redo: avatar, value stack, grill, pixel-leak,
-copy, page, trust card.
+credit only, one year · geo radius lat `14.54` lng `121.02` · big client-list names are
+**Enterprise**, not FB ads · ⛔ no CTAs on organic cards. Done: avatar, value stack, grill,
+pixel-leak, copy, page, trust card.
 
 ## 🅿 PARKED
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
 Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
-3 Savic · **worktree parallelism unlocked only once you READ each review before merging** — Tier
-0c never blocks ([`loops.md`](workflows/loops.md)). **Remotion + Hyperframes closed.**
+3 Savic · ledger Pattern Index is **mixed register** (A1-A6 Taglish, A7-A8 English), normalize when
+convenient · **worktree parallelism unlocked only once you READ each review before merging**, Tier
+0c never blocks. **Remotion + Hyperframes closed.**
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` · `npx playwright
 install chromium`. ⚠️ **Neither `gh` nor `claude` is on PATH** — `…\Programs\GitHubCLI\bin\gh.exe`
-and `~\.vscode\extensions\anthropic.claude-code-<VER>\resources\native-binary\claude.exe` (version
-is IN the path, so it breaks on every extension update — re-list the dir). Each funnel has its own
+and `~\.vscode\extensions\anthropic.claude-code-<VER>\...\claude.exe` (**version is IN the path**,
+so it breaks on every extension update, re-list the dir). Each funnel has its own
 `node_modules` · **never pipe build output** · **Bash is network-sandboxed, use PowerShell** · ⚠️
 `scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls**, answer already recorded.
 

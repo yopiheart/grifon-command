@@ -41,8 +41,8 @@ depekto ng 12 beses.
 | 3 | Hook reveal hold 1.0 → 0.5 | ✅ 08-09 | `renderFfmpeg.ts` |
 | 4 | Dobleng linya (static subtitle + karaoke) | ✅ 08-09 | `drawPlan.ts` |
 | 5 | Dead air sa **gitna** ng scene (`~1.0s`) | 🔶 08-10 | **Gawa na, naka-patay pa.** `api/_lib/voiceMidGap.ts` + `MID_GAP_TRIM_ENABLED`. Basahin sa ibaba. |
-| 6 | Pacing kada format (pareho ang MrBeast at Testimonial) | 🔶 08-10 | **Nakalagay na ang dial** (`hook.revealHoldSec` sa `RenderPreset`). **Hindi pa napipihit** — kay Neil ang numero, basahin sa ibaba. |
-| 7 | Hook morph, goo ang gitna | ⬜ | [#92](https://github.com/yopiheart/grifon-command/issues/92) · sundan ang `/viral-autopsy` kay Savic |
+| 6 | Pacing kada format (pareho ang MrBeast at Testimonial) | ✅ 08-10 | **Napihit na.** Neil gave the numbers and they are live in [`renderPresets.ts`](../api/_lib/renderPresets.ts): `impact`/`hype` 0.35, `clean` 0.7, `classic` 0.5 frozen. Section below is kept as the rationale record. |
+| 7 | Hook morph, goo ang gitna | ⛔ 08-13 | [#92](https://github.com/yopiheart/grifon-command/issues/92) · **NOT agent-doable as filed. Do not write the speed-ramp yet** — read the gate 7 section below before touching `renderFfmpeg`. |
 | 8 | Talking avatar, natutunaw ang mukha | ⬜ | [#93](https://github.com/yopiheart/grifon-command/issues/93) ⛔ TUNED |
 | 9 | Nalalaglag ang numero sa karaoke | ⚠️ 08-10 | **Mali ang naka-file na root cause.** Hindi caption bug. Basahin sa ibaba. |
 | 10 | Dobleng text sa scene 2 | ✅ 08-09 | **Kapareho lang ng #4.** Sarado na ng `subtitleCoveredByKaraoke`, `drawPlan.ts:656` |
@@ -98,7 +98,51 @@ ang gamitin (`Prices and numbers — "₱650", "P22 vs P180", "30 days"`,
 [`api/_lib/prompts.ts:359`](../api/_lib/prompts.ts#L359)) pero hindi laging sumusunod ang model.
 ⛔ TUNED ang lunas, kaya Neil-gated at kailangan ng ≥3 sample bago mag-propose.
 
-### 🔶 Gate 6: nakalagay na ang dial, hindi pa napipihit (2026-08-10)
+### ⛔ Gate 7: the filed fix is the SECOND choice, and it may be the wrong layer (2026-08-13)
+
+**Status: investigated, no code written, deliberately.** NOW.md listed gate 7 as "next code I can
+take without you." A read of the path before editing it says otherwise, which is the third time
+that instinct has paid. Four findings, each independently enough to stop:
+
+1. **Neil already ruled on how #92 gets verified, and it is not a dedicated render.**
+   [`sample_batch_test_spec.md`](sample_batch_test_spec.md) line 10: #92 *"rides along"* with the
+   sample batch **instead of paying for a dedicated render** (his call 2026-08-01: *"ayoko muna
+   mag generate… isahang render na lang."*). So even a perfect patch cannot be confirmed until
+   the batch runs. Writing it first inverts his own sequencing.
+2. **The speed-ramp is explicitly the fallback, not the fix.**
+   [`edit_style_research.md`](edit_style_research.md) §6 is the design of record: the **prompt fix
+   ships first** (named concrete anchor + decisive transformation verbs, ⛔ TUNED and Neil-gated),
+   and the renderer speed-ramp is labelled **"renderer insurance"** to run *after* Slice 3. The
+   same paragraph flags it: **"VO-sync makes this experimental."** Speed-ramping a mid-clip window
+   with `setpts` moves the video timeline against a fixed VO, which is the exact desync class
+   gates 1 to 5 just spent a week closing. We would be re-opening a solved problem to mask an
+   unsolved one.
+3. **The renderer cannot find the blob.** Per the Edit DNA the mush sits mid-clip, ~1.8-3.4s of a
+   4.2s scene. Nothing in [`renderFfmpeg.ts`](../api/_lib/renderFfmpeg.ts) detects it: `chooseTrim`
+   knows only the VO end and `preset.hook.revealHoldSec`, and every other hook-aware branch keys
+   off `isHook` / `keepFullClip`, never off clip content. A speed-ramp therefore needs either a
+   hardcoded window (wrong for every clip of a different length) or a detector that does not
+   exist. The filed one-liner hides a missing component.
+4. 🔴 **The root cause may not be the renderer at all.** The hook blob was declared **DEAD**
+   2026-06-10 on the wizard path, frame-stepped and verified ~1/10 against an 8/10 baseline
+   (Phase D `109d367` + the anchor-color fix, `launch_readiness.md`). #92 was then filed
+   2026-08-01 off the **producer** smoke, and the producer is a different path:
+   `handoff_oneshot_concierge_unified_flow.md` records that *"the producer rebuild had dropped the
+   start→end hook-morph the 8-step wizard still had,"* and `july_close_out_plan.md` notes O1
+   hook-morph routing was **removed** from the producer (`65e69de`). `endFrame` plumbing survives
+   in [`utils/sceneRender.ts`](../utils/sceneRender.ts) + `types.ts` but appears in **no** `api/`
+   render path. **So the live hypothesis is a wiring regression in the producer, not residual
+   mush needing a mask.** If that is right, a speed-ramp would paper over a dropped fix and make
+   the real defect harder to see.
+
+**What to do instead, in order.** (a) Confirm on the batch's hook scene whether the producer emits
+a start→end morph at all; that is a $0 read of one storyboard payload during a run that is already
+paid for. (b) If the morph is missing, this is a producer wiring fix and #92 should be re-filed as
+such. (c) Only if the morph is present AND still mushy does the prompt fix fire, Neil-gated,
+TUNED. (d) The speed-ramp stays last and stays optional. **Do not skip to (d) because it is the
+only step an agent can do alone.**
+
+### ✅ Gate 6: RESOLVED — the dial is turned (rationale record, 2026-08-10)
 
 `HOOK_REVEAL_HOLD_SEC` ay isang module constant dati sa `renderFfmpeg.ts`, kaya **pareho ang
 hinihintay ng MrBeast hook at ng Testimonial hook** bago pumutol. Nasa `RenderPreset` na sya
@@ -109,16 +153,25 @@ binabasa na sya ng `chooseTrim`.
 ang labas ng `chooseTrim` na walang preset at ng `chooseTrim` na CLASSIC. Hindi isinakay ang
 panlasa sa isang refactor.
 
-**Kailangan ng numero mo.** Mungkahi, at may dahilan bawat isa:
+**✅ Sinagot na ni Neil (08-10). Naka-code na ang lahat ng numero:**
 
-| Preset | Format | Ngayon | Mungkahi | Bakit |
+| Preset | Format | Dati | **Live ngayon** | Bakit |
 |---|---|---|---|---|
 | `impact` · `hype` | MrBeast, Temu, UGC Pro | 0.5 | **0.35** | Mabilis ang grammar nila. Ang hintay ay lumalabas na pag-aatubili. |
 | `clean` | Testimonial | 0.5 | **0.7** | Restraint mismo ang estilo. May hininga bago pumutol, hindi dead air. |
-| `classic` | kill-switch override | 0.5 | **0.5, wag galawin** | Naka-lock sya sa live render at may regression test. |
+| `classic` | kill-switch override | 0.5 | **0.5, hindi ginalaw** | Naka-lock sya sa live render at may regression test. |
 
-Hindi pwedeng sagutin ng code ang mga numerong yan. Kung gusto mo, isakay natin sa unang pilot
-render: isang `real_talk` sa 0.35 at isa sa 0.7, tapos tenga at mata ang magdesisyon.
+Verified in [`renderPresets.ts`](../api/_lib/renderPresets.ts) (`revealHoldSec` per preset) and
+guarded by [`renderFfmpeg.test.ts`](../tests/unit/renderFfmpeg.test.ts), which asserts
+`CLEAN > HYPE`, `CLEAN > IMPACT`, and `CLASSIC === 0.5`.
+
+⚠️ **Still owed: the eyeball.** The numbers are code-correct and taste-unconfirmed. Nobody has
+watched 0.35 and 0.7 on real footage. That validation rides the first pilot render, alongside
+gate 5 — one render, two gates.
+
+> **Doc-drift note (found 2026-08-13):** this section asked Neil for numbers he had already given,
+> and the gate table still read 🔶, for three days after the code shipped. NOW.md was right and
+> this file was stale. When a gate closes, close it in BOTH places in the same commit.
 
 ### ✅ SAGOT NA: verbatim ang tokenization ng aligner (2026-08-10, bayad na probe)
 
