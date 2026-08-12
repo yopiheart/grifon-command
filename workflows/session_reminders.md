@@ -114,13 +114,21 @@ Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
 Delete this section once `OMNI_STYLES_ENABLED` + `OMNI_STYLES_BETA_ALLOWLIST`
 are set in Vercel (the feature merged to main 2026-07-07, PR #47).
 
-## RESOLVED 2026-07-20: Fable sunset cancelled — Fable 5 permanent on Max plans
+## ⚰️ SUPERSEDED 2026-08-12 — this whole section assumed a Max plan; the account is Pro
+
+**Do not act on anything below.** It is kept for history. Fable 5 is Max / Team-Premium
+only, and this account is **Pro**, so `claude-fable-5` was a pin that resolved to nothing.
+Neil repointed `.claude/settings.json` to **`claude-opus-5`** on 2026-08-12; `/fable-mode`
+carries Fable's working discipline instead. Policy of record is CLAUDE.md's
+"Usage budget" block. Nothing here re-arms — there is no sunset cycle left to track.
+
+### RESOLVED 2026-07-20 (historical): Fable sunset cancelled — Fable 5 permanent on Max plans
 
 Anthropic announcement (@claudeai, 2026-07-18): "Beginning July 20, Claude Fable 5
 will be included in all Max and Team Premium plans, at 50% of limits." The staged
 rollout / sunset cycle is over. The sunset flip block in `session-start.sh` and the
 never-armed flip-PR Routine plan were removed 2026-07-20; the pin stays
-`claude-fable-5` indefinitely.
+`claude-fable-5` indefinitely. ← **false since the move to Pro; see the tombstone above.**
 
 Details from the support article
 (https://support.claude.com/en/articles/15424964-claude-fable-5-on-your-plan):
