@@ -809,6 +809,77 @@ reused `api/webhook.ts` + one telemetry event end-to-end). Run `straw-man-audit`
 **Source:** Neil, 2026-06-24 — *"DATA DRIVEN LEARNING/Feedback LOOP… gusto ko approver or reviewer
 lang ako."* Evaluation persisted at his request (chose to persist the doc over building immediately).
 
+> **Brief evaluation record (2026-08-12):** *Meta Ads: Scaling from Scrappy to Sophisticated
+> ($100 vs $100,000 Facebook Ads Strategy)*, brought by Neil as a structured knowledge-transfer
+> doc. ⚠ **This is a paid-ads brief, NOT an agent-architecture brief.** Do not add it to the
+> tally in item #27, which counts a different family and whose "marginal return has flattened"
+> note does not apply here. Filed under #17 because everything that survived evaluation is an
+> attribution/measurement question, which is this item's territory.
+>
+> **Verdict: ~80% already absorbed** by [`grifon-ad-strategist/SKILL.md`](../.claude/skills/grifon-ad-strategist/SKILL.md),
+> which already carries Advantage+ as the 2026 cold default, 10-20% always-on testing, CBO vs
+> ABO by budget tier, break-even ROAS = 1 ÷ margin, ~50 optimization events / 7 days to exit
+> learning, and MER as north star. Four things survived, ranked:
+>
+> 1. 🔴 **The `fbc` gap, and it is the highest-value finding in this entry.** The brief's one
+>    verified claim is that native Meta tracking is off 20-50%; Hyros exists to sell that fix.
+>    We already built most of the fix and omitted the field that matters most.
+>    [`api/_lib/metaCapi.ts`](../api/_lib/metaCapi.ts) sends hashed email, hashed `external_id`,
+>    `client_ip_address` and `client_user_agent` with `event_id` dedup and `value`/`currency`,
+>    but **no `fbc` and no `fbp`.** `fbc` is the click ID derived from `fbclid`, the strongest
+>    match key Meta accepts and the only one tying a Purchase to a *specific ad click* rather
+>    than a probabilistic guess about a person. Second instance of the same hole: the funnels
+>    fire `Lead` browser-only via `fbq` ([`pixel.ts`](../funnels/oceanides-price-page/src/lib/pixel.ts))
+>    with no server-side counterpart and no `event_id`, even though every lead already lands in
+>    Supabase `funnel_leads`. **Attribution cannot be backfilled** — a Purchase that arrives
+>    without `fbc` is unattributable forever, so the cheapest moment to close this is before
+>    the first paid traffic, which the launch lock means has not happened yet.
+> 2. **Value Rules** (bid +N% for segments with higher repeat-purchase or phone-conversion
+>    rates, set above ad-set level) are genuinely new and genuinely not for us yet: they need
+>    enough conversions to know which segment deserves the bump. At ₱500/day with one logged
+>    order we would be bidding off noise. Parked, not discarded.
+> 3. **Account-level audience definitions** (declare customer vs engaged vs cold lists so Meta
+>    can see warm reach) cost nothing and need no spend. Consent-gated via
+>    [`marketing_consent.sql`](../supabase/marketing_consent.sql) + the Phase 3 roster-export
+>    path. Do it when Oceanides resumes.
+> 4. **Positioning:** *"The $100 advertiser's job is to get out of the algorithm's way."* Grifon's
+>    whole market is that advertiser, and by the brief's own logic targeting, bidding, structure
+>    and attribution are all unavailable at that budget, leaving **creative as the only lever.**
+>    An outside source independently derived our wedge. Swipe material for `grifon-cmo`, sitting
+>    beside the Cherny Autopilot frame under item #2.
+>
+> **Three conflicts. Two resolved against the brief.**
+> - ⛔ **Do not import its low-budget creative rule.** It says 1 creative format, 1 test/month;
+>   our skill says 4-6 genuinely distinct creatives even under ₱1k/day, because Andromeda prices
+>   near-identical videos as cosmetic dupes. The ledger has an open action on exactly this
+>   (hook1/hook2 shared seg2-seg6 byte-for-byte). The brief reads pre-Andromeda here.
+> - ⚠ **The brief wins the scaling argument, but the rule does not change yet.** It says jump
+>   200%+ at $3/day; the skill says never jump 3× overnight. At ₱500/day a sales objective gets
+>   ~10 events/week against the ~50 needed, so there is no learning phase to reset and the
+>   skill's absolute is scale-blind. Logged as ledger **A7 at 0 corroborating campaigns of our
+>   own**; the ≥3 gate holds and the skill text is untouched.
+> - ✅ **Our ledger already beats the brief on one point.** Pattern **A3** (₱12.85/message, 3×
+>   better than target, 1% close) proves a tracked event can be cheap and worthless. The brief's
+>   low-budget framework optimizes CPA/ROAS while assuming the tracked event *is* the money
+>   event, which is false for messaging and call businesses. We paid to learn that.
+>
+> **Hyros: NO.** Both pages fetched 2026-08-12. Headline *"Our Tracking Data Grows Your Ad ROI.
+> Or You Don't Pay"* / *"Your Ads Grow 15% Or You Don't Pay"*; pricing and minimum spend are
+> published on neither page, gated behind a business-model selector and a booked call, so the
+> commercial terms remain unverified and are not guessed at here. Four reasons: (a) the
+> transcript discloses its own bias (40% lifetime affiliate commissions, 30% discount via the
+> creator's link), so the 10-15% lift figure is a marketing claim from an interested party, and
+> the brief's own Gaps section says so; (b) we would be buying the part we can build for free,
+> since stripped of the AI language Hyros is first-party server-side tracking with click IDs,
+> identity stitching, call tracking, and API conversion push, and we already have the push;
+> (c) it does not fit the business, because Oceanides converts in Messenger and on the phone and
+> KM-003 deliberately runs with no pixel attached (messaging conversions are counted at the
+> Page); (d) total logged spend is ₱1,284.92. **Revisit only if Grifon itself ever spends real
+> money on paid acquisition against a web checkout.** Never for Oceanides.
+>
+> **Not done here:** items 1 and 2 above are code and were not written. NOW.md's only focus is
+> the sample batch, and Paolo/Oceanides is HELD.
+
 ---
 
 ### 18. Gemini Omni Flash — b-roll camera-choreography PoC (Layer 2 of the per-scene engagement plan)
