@@ -41,8 +41,9 @@ that did not survive inspection.**
 ## 🤖 Tier 0c, the cloud-side REVIEWER · ✅ LIVE
 Every PR to `main` gets one sticky comment, report-only, TUNED flagged not judged. Constraints:
 **Tier 0c** in [`loops.md`](workflows/loops.md). ⚠️ Pinned `claude-opus-5` (Fable is Max-only, the
-account is **Pro**); the Max assumption still lives in 5 files, policy, untouched. **$1.51 is a
-FLOOR** — no code PR reviewed yet.
+account is **Pro**). ✅ Closed 08-12: CLAUDE.md corrected and `.claude/settings.json` repointed
+to `claude-opus-5` (was the dead `claude-fable-5` pin); hook gate re-run 25/25. Rest are dated
+records. **$1.51 is a FLOOR** — no code PR reviewed yet.
 
 ## 📊 NEW 08-13 — Meta ads brief filed; it exposed a hole in OUR tracking
 Eval in [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #17 (~80% already in
@@ -70,7 +71,8 @@ pixel-leak, copy, page, trust card.
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
 Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
 ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
-3 Savic · ledger Pattern Index is **mixed register** (A1-A6 Taglish, A7-A8 English), normalize when
+3 Savic · instruction-stack prune = roadmap **#28** (audit + ranked delete-list ready, ~5,700
+tokens, zero gates) · ledger Pattern Index is **mixed register** (A1-A6 Taglish, A7-A8 English), normalize when
 convenient · **worktree parallelism unlocked only once you READ each review before merging**, Tier
 0c never blocks. **Remotion + Hyperframes closed.**
 

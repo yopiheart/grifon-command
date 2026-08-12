@@ -1539,6 +1539,125 @@ record + parking the item ("Alright go!") in the same session.
 
 ---
 
+### 28. Instruction-Stack Prune Loop — a registered cadence, prose-only
+
+> **Brief evaluation record (2026-08-12):** *3 Secret Ways Claude Code's Creator Actually
+> Uses It* (Boris Cherny interview, YC channel; evaluated from Nate's structured summary).
+> Core thesis: over-specified prompts and skills "hobble" a strong model; switch from
+> micromanagement to goal + guardrails + exit criteria + self-verification. Verdict:
+> **~85% already absorbed**, two applies, one hard reject.
+>
+> **What makes this eval unusual — it was measured, not argued.** The same session ran a
+> line-by-line audit of everything that loads before the first instruction
+> ([`instruction_stack_audit.md`](instruction_stack_audit.md)): 13,494 words / ~18k tokens
+> across `CLAUDE.md`, `agent_lessons.md`, 28 skill descriptions, and `NOW.md`, each line
+> tagged FACT / GATE / PROC / CONV. **Procedure — the only category "unhobbling" targets —
+> is ~7% of the stack**, and half of that is discipline earned by documented repeats. The
+> 80%-deletion headline describes scaffolding written for weaker models; this repo's stack
+> is 93% environment facts, Neil-set gates, and pointers. Same word "prompt", different
+> artifact. The audit's real finding was **~1,500 words of cross-file duplication** and
+> ~5,700 tokens of situational detail that should load on demand — none of it a constraint
+> on how the model thinks.
+>
+> **Already absorbed (do not re-import):** "task + guardrails + exit criteria, let it cook"
+> is the `/goal` condition template verbatim (`CLAUDE.md:152`); "embed verification systems"
+> is 8 wired hooks + Tier 0/0b/0c + `verify-changes` / `gemini-eval` / `brand-check` /
+> `render_audit.mjs` / `ad_preflight.mjs` / `resume_doc_check.mjs` / `librarian_sweep.mjs`;
+> "devil's advocate sub-agents" is [`pr_review_loop.md`](pr_review_loop.md) (builder ≠
+> reviewer) + `straw-man-audit` + the Sol advisory trial; "strip mechanics, keep brand
+> assets" is the FACT/GATE-vs-PROC split; "prompting tactics expire" is
+> `agent_lessons.md:44`. The brief's own Gaps section concedes it is vague on verification
+> mechanics — this repo is the concrete implementation it lacks. **On cadence Grifon is
+> already faster than the brief's 6-month advice:** two prunes in ~4 months (the 2026-07-28
+> lessons split, the 2026-08-05 NOIR extraction).
+>
+> **Applied / to apply:** (a) **this item** — the prune exists as a habit but not as a
+> registered loop with an arm command, a verifier, and a kill switch, which is the shape
+> every other entry in [`loops.md`](loops.md) has. (b) **The dev-vs-knowledge-worker split
+> as a lens** — the sharpest idea in the brief, because Grifon is both halves at once: the
+> marketing lane (`grifon-cmo`, `grifon-creative-director`, `grifon-ad-strategist`, the
+> swipe files, brand tokens) is knowledge-work context the brief itself says to KEEP, while
+> orchestration prose is where "let the harness handle it" actually applies. That is a
+> better cut line than "delete 80%". (c) **Low-confidence, cheap to test:** emotional
+> framing ("QA'd 10x, ready to launch tomorrow") in `code-executor` briefs — measurable
+> against the executor ledger's 25% follow-up-fix baseline. **Never in the TUNED prompts.**
+>
+> **Rejected as conflicts:** (a) 🔴 ***"Every six months delete your `.claude`, delete your
+> skills, delete your hooks"* — hard no as written.** The eight hooks here are
+> `ad-spend-gate` · `veo-render-gate` · `tuned-file-gate` · `env-warden` ·
+> `lock-sync-gate` · `build-gate` · `taglish-guard` · `session-start`. Four stand between an
+> agent and Neil's money or secrets, and `agent_lessons.md:88` records the veo gate already
+> having a hole that let a real paid call through *with the gate installed*. The brief is
+> internally inconsistent here — it says delete hooks AND embed verification, and in this
+> repo those are the same objects. Resolve toward keeping them: **prune prose, never gates.**
+> (b) *"Let the model cook"* as autonomy — the **fifth** arrival of the eliminate-the-human-
+> gate claim (Kun Chen, OpenAI Dev Day, Ramp, Rauch, now this). Standing answer, unchanged:
+> in Grifon the prompts **are** the guardrails; removing the prompt removes the gate. Do not
+> re-review. (c) *"Messier outputs can be higher quality"* — reject for anything
+> user-facing; DESIGN.md, `brand-check`, the NOIR spec and Neil's own *"sakit sa mata"*
+> verdict all say formatting IS the product. Fine for internal analysis only. (d) *"More
+> skills degrade systems"* — true in general, mis-aimed here: skill **bodies** load on
+> demand, so the 28-skill count is not the tax people assume; only ~1,924 words of
+> descriptions are always-on, half of them for skills that cannot auto-fire.
+>
+> ⚠️ **Two caveats worth carrying forward.** (1) **Source quality:** this is a summary of an
+> interview, i.e. tertiary, and the 80% figure could not be verified anywhere. Per
+> `agent_lessons.md:22` a document is not evidence and copies of one source do not
+> corroborate each other — it must not outvote the measurement above. (2) **The recursion:**
+> the last Boris Cherny brief evaluated here (2026-05-09) was applied as a lens and produced
+> 7 unauthorized copy edits to landing + pricing; that incident is *why* the
+> analyze-and-flag-don't-rewrite rule in `agent_lessons.md:9` exists. Applying this brief
+> uncritically would use a Cherny brief to delete the rule created by the last Cherny brief.
+> Flagged, not resolved — Neil sees the loop.
+>
+> **Correctness bug found while auditing (fixed 2026-08-12, outside this item):**
+> `CLAUDE.md:137-144` was built on a **Max 5x** plan with Fable 5 pinned as the main loop,
+> while `NOW.md:43` records the account as **Pro** and Fable as Max-only. Both loaded every
+> session, so the model read a routing policy it could not execute. Corrected in place.
+> `.claude/settings.json:3` pinned `"model": "claude-fable-5"` — a Max-only model on a Pro
+> plan. Raised rather than changed, since the main-loop model is Neil's call, not the
+> agent's (`agent_lessons.md:16`); **he instructed the repoint the same day and it now reads
+> `claude-opus-5`**, with `tools/hook_gate_test.sh` re-run at 25/25 per the standing rule.
+
+**What:** Register the instruction-stack prune in [`loops.md`](loops.md) as a real loop —
+arm command, verifier, kill switch, cadence — instead of the ad-hoc habit it is today.
+Scope is **prose only: duplication, situational detail, and narrative justification.** Gates,
+hooks, and environment facts are out of scope permanently.
+
+**Why it matters:** ~18k tokens load before Neil types anything, and `CLAUDE.md:144` records
+that 80% of historical usage burned above 150k context where reasoning also degrades. Every
+always-on token moves a session toward that wall sooner. The prune has fired twice, both
+times reactively, after something hurt. A registered loop makes it periodic and *measured* —
+delete, run a real task, compare — rather than a blind sweep on a calendar.
+
+**Why parked:** The sample batch is the only focus (Neil, 08-10) and `SAMPLES` is still
+empty. The tokens are not hurting today; the empty gallery is. This is workflow-layer polish
+on a system that already works.
+
+**When to resume:** After the sample batch ships, or the next time a session visibly degrades
+from context pressure — whichever comes first. The delete-list is already written and ranked
+in [`instruction_stack_audit.md`](instruction_stack_audit.md), so the resume cost is low.
+
+**Where to start:**
+1. Execute audit items 1-7 and 9-11 (mechanical: duplication, the skill catalog that
+   duplicates auto-loaded frontmatter, the workflows index, the artifact registry). ~5,700
+   tokens, zero gates touched.
+2. Items 8 and 12 (ffmpeg/Veo facts to the render skill; thinning generic engineering
+   advice) need Neil's eye — they are judgment calls, not sweeps.
+3. Add the loop to `loops.md` with the standard four fields. Verifier candidate: a word-count
+   ceiling on the always-loaded set, checked by the SessionStart hook the way
+   `resume_doc_check.mjs` already checks `NOW.md`.
+4. Re-run the tagging pass to measure the delta. A prune with no before/after is a vibe.
+
+**Scope estimate:** ~2h for step 1, most of it verification that nothing referenced the
+deleted duplicates. Steps 3-4 ~1h.
+
+**Source:** Boris Cherny "unhobbling" brief (Nate's summary), evaluated 2026-08-12 against a
+same-session measurement of the actual stack. Neil approved filing the record and fixing the
+Max→Pro block; the prune itself stays parked behind the sample batch.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
