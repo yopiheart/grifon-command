@@ -1,5 +1,5 @@
 # NOW — the resume doc
-**Stamped: 2026-08-13** (session 19)
+**Stamped: 2026-08-13** (session 20)
 
 ## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
 Live 08-08. Codes **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, sent as `grifon.ai/i/FOUNDER-01` —
@@ -21,31 +21,28 @@ never watched), and is sample 1 of the ≥3 gates 8 and 9 need before a TUNED fi
 [#92](https://github.com/yopiheart/grifon-command/issues/92) (7) ·
 [#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59) (11).
 
-## 🔴 YOUR MOVE — one eyeball unlocks gate 5
-**`MID_GAP_TRIM_ENABLED` is built and OFF.** Gaps ≥0.6s compress to a 0.15s floor, max 2/scene.
-Jump cuts accepted on talking scenes per your call; b-roll/cinematic get audio-only compression. A
-real-ffmpeg test proves the hole is gone, not just the scene shortened. **No test can close whether
-lip-sync reads right on a real talking head.** That is the flag flip.
+## 🔴 YOUR MOVE — two, both small
+1. **One eyeball unlocks gate 5.** `MID_GAP_TRIM_ENABLED` is built and OFF. Gaps ≥0.6s compress to
+   a 0.15s floor, max 2/scene; jump cuts accepted on talking scenes per your call, b-roll and
+   cinematic get audio-only. A real-ffmpeg test proves the hole is gone, not just the scene
+   shortened. **No test can close whether lip-sync reads right on a real talking head.** Flag flip.
+2. **Delete the merged branch on GitHub** — `claude/boris-brief-system-prompt-n5sgzb`. The web
+   sandbox's git proxy refuses ref deletion (3 retries, hard fail). Every commit is in `main`; a
+   dead branch just re-arms the branch-check trap. ⚠️ `--prune` also revealed **~80 remote
+   branches** the SessionStart hook never shows (it lists only branches AHEAD of main).
 
 ## ⛔ CORRECTION 08-13 — gate 7 is NOT the free agent task I said it was
-Last session promised gate 7 as agent-doable. **Wrong, and I stopped before writing it.** Four
-reasons in the workflow doc's gate 7 section; the two that decide it: the speed-ramp is the
-documented **fallback** behind a TUNED prompt fix and is flagged
-*"VO-sync makes this experimental"*, the exact desync class gates 1-5 just closed; and 🔴 **the
-blob was declared DEAD on the wizard path in June**, while #92 was filed off the **producer**,
-which had its hook-morph routing removed (`65e69de`). **Live hypothesis: a producer wiring
-regression, not residual mush**, so a mask would hide a dropped fix. Cheapest next read is one
-storyboard payload during the batch run you already pay for. **Fourth filed root cause in a row
-that did not survive inspection.**
+Four reasons in the workflow doc's gate 7 section; the two that decide it: the speed-ramp is the documented **fallback** behind a TUNED prompt fix and is flagged *"VO-sync makes this experimental"*, the exact desync class gates 1-5 just closed; and 🔴 **the blob was declared DEAD on the wizard path in June**, while #92 was filed off the **producer**, whose hook-morph routing was removed (`65e69de`). **Live hypothesis: a producer wiring regression, not residual mush** — a mask would hide a dropped fix. Cheapest read is one storyboard payload during the batch run you already pay for. **Fourth filed root cause in a row that did not survive inspection.**
+
+## 🧠 NEW 08-12 — instruction stack audited; two live errors fixed
+Cherny "unhobbling" brief evaluated → **roadmap #28**, verdict **~85% already absorbed**. Measured, not argued: every always-loaded line tagged in [`instruction_stack_audit.md`](workflows/instruction_stack_audit.md) — 13,494 words / ~18k tokens, of which **procedure is only ~7%**. Your skills are NOT hobbling the model; the waste is ~1,500 words of duplication. **Ranked delete-list ready: ~5,700 tokens, zero gates touched — PARKED behind the batch.** Rejected: "delete your hooks" (4 of 8 guard money or secrets).
+🔴 **Two live errors fixed on the way:** CLAUDE.md claimed **Max 5x** on a **Pro** account, and `settings.json` pinned Max-only `claude-fable-5` → now **`claude-opus-5`** (hook gate re-run 25/25). `session_reminders.md` carried a live line telling a future session to undo that repin — tombstoned.
 
 ## 🤖 Tier 0c, the cloud-side REVIEWER · ✅ LIVE
 Every PR to `main` gets one sticky comment, report-only, TUNED flagged not judged. Constraints:
-**Tier 0c** in [`loops.md`](workflows/loops.md). ⚠️ Pinned `claude-opus-5` (Fable is Max-only, the
-account is **Pro**). ✅ Closed 08-12: CLAUDE.md corrected and `.claude/settings.json` repointed
-to `claude-opus-5` (was the dead `claude-fable-5` pin); hook gate re-run 25/25. Rest are dated
-records. **$1.51 is a FLOOR** — no code PR reviewed yet.
+**Tier 0c** in [`loops.md`](workflows/loops.md). **$1.51 is a FLOOR** — no code PR reviewed yet.
 
-## 📊 NEW 08-13 — Meta ads brief filed; it exposed a hole in OUR tracking
+## 📊 08-13 — Meta ads brief filed; it exposed a hole in OUR tracking
 Eval in [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #17 (~80% already in
 `grifon-ad-strategist`; **Hyros declined**). Ledger **A7**+**A8** at *0 campaigns of ours*, so
 neither can graduate. 🔴 [`api/_lib/metaCapi.ts`](api/_lib/metaCapi.ts) sends hashed email +
@@ -70,11 +67,10 @@ pixel-leak, copy, page, trust card.
 ## 🅿 PARKED
 **Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
 Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
-ride Slice B · `artifact-noir` Steps 1-4 · codex-sol lane at 0 · `@v5` bump · `/viral-autopsy` on
-3 Savic · instruction-stack prune = roadmap **#28** (audit + ranked delete-list ready, ~5,700
-tokens, zero gates) · ledger Pattern Index is **mixed register** (A1-A6 Taglish, A7-A8 English), normalize when
-convenient · **worktree parallelism unlocked only once you READ each review before merging**, Tier
-0c never blocks. **Remotion + Hyperframes closed.**
+ride Slice B · instruction-stack prune = roadmap **#28** · `artifact-noir` Steps 1-4 · codex-sol
+lane at 0 · `@v5` bump · `/viral-autopsy` on 3 Savic · ledger Pattern Index is **mixed register**
+(A1-A6 Taglish, A7-A8 English), normalize when convenient · **worktree parallelism unlocked only
+once you READ each review before merging**, Tier 0c never blocks. **Remotion + Hyperframes closed.**
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
