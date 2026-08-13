@@ -26,10 +26,13 @@ never watched), and is sample 1 of the ≥3 gates 8 and 9 need before a TUNED fi
    a 0.15s floor, max 2/scene; jump cuts accepted on talking scenes per your call, b-roll and
    cinematic get audio-only. A real-ffmpeg test proves the hole is gone, not just the scene
    shortened. **No test can close whether lip-sync reads right on a real talking head.** Flag flip.
-2. **Delete the merged branch on GitHub** — `claude/boris-brief-system-prompt-n5sgzb`. The web
-   sandbox's git proxy refuses ref deletion (3 retries, hard fail). Every commit is in `main`; a
-   dead branch just re-arms the branch-check trap. ⚠️ `--prune` also revealed **~80 remote
-   branches** the SessionStart hook never shows (it lists only branches AHEAD of main).
+2. ⚠️ **73 stale branches now appear in the SessionStart list — do not panic at them.** A full
+   `fetch --prune` on 08-12 pulled every remote ref into the clone; the hook lists branches AHEAD
+   of `main`, and squash-merges make that count lie (`agent_lessons.md:23`). `chore/instruction-
+   stack-prune` reads **+1233** while its work is already on `main` — verified by content.
+   **Judge by content, never by the count.** Optional tidiness: delete
+   `claude/boris-brief-system-prompt-n5sgzb` on GitHub (merged, so it does NOT show in that list;
+   this sandbox's git proxy refuses ref deletion).
 
 ## ⛔ CORRECTION 08-13 — gate 7 is NOT the free agent task I said it was
 Four reasons in the workflow doc's gate 7 section; the two that decide it: the speed-ramp is the documented **fallback** behind a TUNED prompt fix and is flagged *"VO-sync makes this experimental"*, the exact desync class gates 1-5 just closed; and 🔴 **the blob was declared DEAD on the wizard path in June**, while #92 was filed off the **producer**, whose hook-morph routing was removed (`65e69de`). **Live hypothesis: a producer wiring regression, not residual mush** — a mask would hide a dropped fix. Cheapest read is one storyboard payload during the batch run you already pay for. **Fourth filed root cause in a row that did not survive inspection.**
