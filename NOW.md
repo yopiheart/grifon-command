@@ -1,87 +1,96 @@
 # NOW — the resume doc
-**Stamped: 2026-08-13** (session 20)
+**Stamped: 2026-08-13** (session 21)
 
-## ▶ THE `grifon.ai` DOOR IS SHUT. THE LOCK IS LIVE.
-Live 08-08. Codes **`FOUNDER-01`, `FOUNDER-02`, `BETA-01`**, sent as `grifon.ai/i/FOUNDER-01` —
-redeems on arrival, scrubs itself from the bar. Audit `events where module='launch_gate'`
-(waitlist: `funnel_leads`). Revoke via `LAUNCH_INVITE_CODES`, kill via `VITE_LAUNCH_LOCK`; **neither
-works without a redeploy.**
+## 🔴 A PAID RUN IS PAUSED AND ITS POINTER DIES WITH THE REBOOT
 
-## ▶ NEXT ACTION — THE SAMPLE BATCH ← the only focus, Neil 08-10
-🔴 **[`format_sample_readiness.md`](workflows/format_sample_readiness.md)** — `SAMPLES` still empty, which blocks the **One-Shot gallery** (a wall of `Film` icons today), the **landing hero**, and `RecipeCard`'s hover-play, never once executed. **4 scenes** per `SCENE_CAP`, **~₱273/ad, ~₱3,280 for 12**, `npm run cost:estimate` is live. First three: `real_talk`, `before_after`, `unboxing_asmr`. ⚠️ Kling pricing is calibrated off one paid render.
+```
+apr_2f930418-0766-43ad-9bd2-f23abea8382e
+```
 
-**FIRE ONE PILOT FIRST — it clears three gates at once.** One `real_talk` with
-`MID_GAP_TRIM_ENABLED=true` validates gate 5 (trim), gate 6 (the 0.35/0.7 dial, code-correct but
-never watched), and is sample 1 of the ≥3 gates 8 and 9 need before a TUNED fix may be proposed.
+Ten scenes **filmed and persisted** (`producer_scenes`: 10/10 video + image). Only the EDL
+step failed, on a Gemini `RESOURCE_EXHAUSTED` 429. **No spend is lost and RETRY does not
+re-film.** But `ProducerFlow` resumes from `localStorage['osa_producer_active_run']`
+([ProducerFlow.tsx:173](components/OneShotAd/ProducerFlow.tsx#L173)) and the defreezer eats
+the Chrome profile, so on a fresh machine: log in, DevTools console,
+`localStorage.setItem('osa_producer_active_run','apr_2f930418-0766-43ad-9bd2-f23abea8382e')`,
+reload `grifon.ai/app?osaEngine=producer`, click **RETRY**. ⚠️ **Never START OVER** — it is
+the only thing that clears the key.
 
-**Ship them ONE AT A TIME, Neil-gated (agreed 08-13).** `SAMPLES` is `Partial`, so an absent recipe just shows "Sample soon" — no need to wait for all 12. Per format: render → **Neil watches** → only then into `public/samples/formats/` + one `SAMPLES` key. ⚠️ `real_talk` `apr_69e5adc6` (07-31) is rendered but **NOT a sample**: it is the run that produced the #89-#95 punch list, and it is 9 scenes not 4. Comparison only.
+**Everything else about the run is in [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md). Read it before touching anything below.**
 
-**Gates: ✅ 1-4, 6, 10 · 🔶 5 dark, needs your eyes · ⛔ 7, 8, 9 · ⬜ 11**
-[#93](https://github.com/yopiheart/grifon-command/issues/93) (8, TUNED) ·
-[#92](https://github.com/yopiheart/grifon-command/issues/92) (7) ·
-[#104](https://github.com/yopiheart/grifon-command/issues/104)+[#59](https://github.com/yopiheart/grifon-command/issues/59) (11).
+## ▶ NEXT ACTION — finish the pilot, then grade it
+Gate 5 (mid-scene trim, flag ON in Vercel Preview **and** Production) and gate 6 (hook hold
+0.35 / 0.7) are the **only** reasons this run exists. Neither depends on scene count or
+colour. 🔴 **Only Neil can pass them.** While the run is live, also grab the storyboard
+payload for [#92](https://github.com/yopiheart/grifon-command/issues/92) — $0, and gone once
+the run is.
 
-## 🔴 YOUR MOVE — two, both small
-1. **One eyeball unlocks gate 5.** `MID_GAP_TRIM_ENABLED` is built and OFF. Gaps ≥0.6s compress to
-   a 0.15s floor, max 2/scene; jump cuts accepted on talking scenes per your call, b-roll and
-   cinematic get audio-only. A real-ffmpeg test proves the hole is gone, not just the scene
-   shortened. **No test can close whether lip-sync reads right on a real talking head.** Flag flip.
-2. ⚠️ **73 stale branches now appear in the SessionStart list — do not panic at them.** A full
-   `fetch --prune` on 08-12 pulled every remote ref into the clone; the hook lists branches AHEAD
-   of `main`, and squash-merges make that count lie (`agent_lessons.md:23`). `chore/instruction-
-   stack-prune` reads **+1233** while its work is already on `main` — verified by content.
-   **Judge by content, never by the count.** Optional tidiness: delete
-   `claude/boris-brief-system-prompt-n5sgzb` on GitHub (merged, so it does NOT show in that list;
-   this sandbox's git proxy refuses ref deletion).
+## 🟢 KLING PRICE IS VERIFIED — `$0.084/sec` std, two sources
+Collapses a **3.3x** uncertainty on 80% of COGS. The repo was wrong three ways: the tool
+listed `$0.05 UNVERIFIED`, the one-render back-solve said `$0.167` (that is Kling's *Pro
+with video input* rate — it was never measuring std), and the telemetry actually logs
+`$0.10` because **`modelCosts.ts` has no row for `veo-3.1-lite` or `kling-v3` at all.**
 
-## ⛔ CORRECTION 08-13 — gate 7 is NOT the free agent task I said it was
-Four reasons in the workflow doc's gate 7 section; the two that decide it: the speed-ramp is the documented **fallback** behind a TUNED prompt fix and is flagged *"VO-sync makes this experimental"*, the exact desync class gates 1-5 just closed; and 🔴 **the blob was declared DEAD on the wizard path in June**, while #92 was filed off the **producer**, whose hook-morph routing was removed (`65e69de`). **Live hypothesis: a producer wiring regression, not residual mush** — a mask would hide a dropped fix. Cheapest read is one storyboard payload during the batch run you already pay for. **Fourth filed root cause in a row that did not survive inspection.**
+**This 10-scene run really cost ~$4.96 ≈ ₱288**, from live console durations (Veo 6s
+talking, Kling 5s b-roll, 10 images). ⛔ The "₱680" said mid-session was a bad extrapolation
+— roughly double. A 10-scene ad costs about what 4 was budgeted at. **Do NOT cut the Pro
+tier from 8 ads:** the ladder holds on breakage (~53% margin at 3.5 ads/mo), and real usage
+is `pricing_unit_economics.md` §6 item 3, which needs beta data, not another guess.
 
-## 🧠 NEW 08-12 — instruction stack audited; two live errors fixed
-Cherny "unhobbling" brief evaluated → **roadmap #28**, verdict **~85% already absorbed**. Measured, not argued: every always-loaded line tagged in [`instruction_stack_audit.md`](workflows/instruction_stack_audit.md) — 13,494 words / ~18k tokens, of which **procedure is only ~7%**. Your skills are NOT hobbling the model; the waste is ~1,500 words of duplication. **Ranked delete-list ready: ~5,700 tokens, zero gates touched — PARKED behind the batch.** Rejected: "delete your hooks" (4 of 8 guard money or secrets).
-🔴 **Two live errors fixed on the way:** CLAUDE.md claimed **Max 5x** on a **Pro** account, and `settings.json` pinned Max-only `claude-fable-5` → now **`claude-opus-5`** (hook gate re-run 25/25). `session_reminders.md` carried a live line telling a future session to undo that repin — tombstoned.
+## 🔴 SEVEN FINDINGS, NONE FILED YET (details + evidence in the pilot doc)
+1. **`SCENE_CAP` is not wired to the producer** — only ScriptStudio / GenerateVideo /
+   scriptGuardrails import it; the orchestrator follows `scenes.length`. **This is why this
+   run was 10 and why `apr_69e5adc6` was 9** — recorded as a mystery on 07-31. Margin hole:
+   one credit per finished ad regardless of length.
+2. `modelCosts.ts` has no price row for either model we run → telemetry is a placeholder.
+3. `producer_runs.cost_usd` is `0` on **every** row. Fix 2+3 and the next run self-measures.
+4. **Colour drift at 3/3 → the gated TUNED proposal is unlocked.** No shared grade anchor
+   across scenes. ⚠️ We already ship 7 LUTs + `tools/grade.mjs` — a render-stage LUT fixes
+   it without touching a tuned prompt.
+5. No shot-variety rule on the `ugc`/Testimonial skeleton (scenes 5≈6). **1/3.**
+6. `TEXT_LIMIT = 30/60s` is mis-sized for the producer burst — one normal run trips our own
+   limiter and burns ~2 min in backoff. Twin of the filed Kling 5/hr finding.
+7. Eye dead zone confirmed live (scenes 2, 9; scene 9's eyes hallucinated). Neil's rule:
+   **talking avatars close, b-roll may be far.**
 
-## 🤖 Tier 0c, the cloud-side REVIEWER · ✅ LIVE
-Every PR to `main` gets one sticky comment, report-only, TUNED flagged not judged. Constraints:
-**Tier 0c** in [`loops.md`](workflows/loops.md). **$1.51 is a FLOOR** — no code PR reviewed yet.
+## ⛔ CORRECTION — the 429 is Google's, not ours
+Mid-session the agent said the 429s were our per-user limiter and therefore would not worsen
+with scale. Wrong: `RESOURCE_EXHAUSTED` is the **project-level Gemini quota, shared by every
+user**. Neil's original worry was right. **Launch-gate item: read the actual quota headroom
+in Google Cloud and file an increase request before public launch.** Nobody has looked.
 
-## 📊 08-13 — Meta ads brief filed; it exposed a hole in OUR tracking
-Eval in [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #17 (~80% already in
-`grifon-ad-strategist`; **Hyros declined**). Ledger **A7**+**A8** at *0 campaigns of ours*, so
-neither can graduate. 🔴 [`api/_lib/metaCapi.ts`](api/_lib/metaCapi.ts) sends hashed email +
-`external_id` + IP + UA but **no `fbc`**, the click ID tying a Purchase to a specific ad click;
-funnels fire `Lead` browser-only. **Attribution cannot be backfilled** and no paid traffic has run,
-so this is the cheapest it will ever be. Recorded, not fixed.
-🟢 **Same argument, minutes of clicking:** launch-stack #4 telemetry go-live needs only two Vercel vars (`VITE_META_PIXEL_ID`, `META_CAPI_ACCESS_TOKEN`) + apply `supabase/marketing_consent.sql`.
+## 🧠 THE STRATEGIC ONE — every avatar has the same face
+The auto-cast "mean face" is what every nano-banana user gets, so believability buys us
+nothing competitively. Cheap lever: the brief carries only age/gender/ethnicity/market, and
+`assets/house-model/README.md` already proved the fix is **"bone, not features."** ⚠️ A/B it
+**alone** on Gemini — the full raw-ugc scaffold failed 4/4 there on 07-16. Real moat: extend
+the locked house model into a **casting bank of 15–20 approved, structurally distinct faces**
+and cast from it. An asset cannot be copied from a prompt.
 
-## ⏸ PAOLO / OCEANIDES — HELD by Neil 08-09. Do NOT restart it.
-**Grifon launch blockers come first.** No call, no deploy, no spend until Neil lifts this. Page
-stands (`funnels/oceanides-paolo/`), build green, not deployed, pixel off; nothing rots waiting.
-⚠️ **Neil said "paperwork" but [`paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)
-says CAPITAL** (no ESC, no open-tank tanker) and calls the **₱6,000/load mechanism suspect**
-(Globaltec bills per KILO), putting the ₱4,900 price in doubt. **Reconcile both before spending.**
-Evidence: [`compliance-findings-2026-08-08.md`](clients/oceanides/compliance-findings-2026-08-08.md).
+## 📝 PRODUCT TRUTH LEARNED — the offer box
+Real users paste **only their literal package offer**; Market Research does the rest. Neil
+deleted the benefits paragraph as unrealistic. `sample_batch_test_spec.md` §1 still carries
+the long brief — **update it before the other 11 formats run.**
 
-**Standing facts:** route density is the lever, not price, one city first · **no CASH refunds**,
-credit only, one year · geo radius lat `14.54` lng `121.02` · big client-list names are
-**Enterprise**, not FB ads · ⛔ no CTAs on organic cards. Done: avatar, value stack, grill,
-pixel-leak, copy, page, trust card.
+## ✅ SHIPPED THIS SESSION
+**Omni Edit Styles PARKED** (`OMNI_STYLES_ENABLED=false`, Vercel + local). Fails closed; the
+allowlist is cohort control and is **inverted** (empty = open to everyone), so it is never
+the off switch. Resume trigger + the stale "arm the allowlist" tombstone are in
+[`omni_edit_styles_plan.md`](workflows/omni_edit_styles_plan.md). `codex-image` bridge fixed
+(`--full-auto` removed upstream → `--approve-for-me`); every generate call had been dying
+silently. `.env.example` now documents the OMNI keys + `MID_GAP_TRIM_ENABLED`, including
+that **a Vercel env edit needs a REDEPLOY** — "runtime-read" never meant otherwise, and
+CLAUDE.md said it did.
 
 ## 🅿 PARKED
-**Oceanides:** Week 02 pack · GB-001 · KM-004 hook2 · Kling b-roll · Gabriel's watermark · SEC
-Reg. No. · FB About · reviews · **AEM unverified**. ⏸ Daily posting paused. **Grifon:** #89/#90
-ride Slice B · instruction-stack prune = roadmap **#28** · `artifact-noir` Steps 1-4 · codex-sol
-lane at 0 · `@v5` bump · `/viral-autopsy` on 3 Savic · ledger Pattern Index is **mixed register**
-(A1-A6 Taglish, A7-A8 English), normalize when convenient · **worktree parallelism unlocked only
-once you READ each review before merging**, Tier 0c never blocks. **Remotion + Hyperframes closed.**
+Hero re-roll (b2/b3 light + first-batch closeness; the second prompt over-described the room
+so the camera pulled back). ⚠️ `.tmp/hiraya-v3/` **dies with the reboot** — regenerate, do
+not hunt. **Oceanides still HELD by Neil 08-09.** Instruction-stack prune = roadmap #28.
 
 ## ⛔ Gated · 🔧 Arm before starting
-🔴 **GEMINI API VIDEO BUDGET IS EXHAUSTED.** Manual via Flow. Gated: Kling. Re-arm:
-`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` · `npx playwright
-install chromium`. ⚠️ **Neither `gh` nor `claude` is on PATH** — `…\Programs\GitHubCLI\bin\gh.exe`
-and `~\.vscode\extensions\anthropic.claude-code-<VER>\...\claude.exe` (**version is IN the path**,
-so it breaks on every extension update, re-list the dir). Each funnel has its own
-`node_modules` · **never pipe build output** · **Bash is network-sandboxed, use PowerShell** · ⚠️
-`scripts/check-alignment-numerals.mjs` **costs real ElevenLabs calls**, answer already recorded.
+Re-arm: `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` ·
+`npx playwright install chromium`. ⚠️ Neither `gh` nor `claude` is on PATH. Each funnel has
+its own `node_modules` · **never pipe build output** · **Bash is network-sandboxed, use
+PowerShell** · ⚠️ the ENV WARDEN blocks every read of `.env` — ask Neil, never route around.
 
-### Maintain: **overwrite, never append**, last step of any session that changed state, max 90. Repo artifacts are ENGLISH (this file, commit subjects, workflow docs); ads stay Taglish.
+### Maintain: **overwrite, never append**, last step of any session that changed state, max 90. Repo artifacts are ENGLISH; ads stay Taglish.
