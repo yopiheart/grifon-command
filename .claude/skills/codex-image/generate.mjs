@@ -17,9 +17,9 @@
 //   --edit <path>     optional input image → edit mode (passed to codex via -i);
 //                     repeatable — pass it twice for e.g. identity + scene anchors
 //
-// Safety: this always runs Codex in its workspace-write sandbox (--full-auto)
-// and refuses output paths outside the repo. It never disables Codex's sandbox
-// or approval gates.
+// Safety: this always runs Codex in its workspace-write sandbox
+// (--approve-for-me) and refuses output paths outside the repo. It never
+// disables Codex's sandbox or approval gates.
 
 import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, statSync, copyFileSync, mkdirSync } from 'node:fs';
@@ -118,18 +118,25 @@ const instruction =
     ? `Edit/compose using the ${args.edit.length > 1 ? `${args.edit.length} provided input images` : 'provided input image'} per: ${args.prompt}`
     : `Image: ${args.prompt}`);
 
-// --full-auto runs Codex in its workspace-write sandbox (writes confined to the
-// repo, network restricted) without interactive prompts — appropriate for a
-// single headless image-gen that saves one file in-repo. We never bypass the
-// sandbox. Exact flags can vary by Codex version — check `codex exec --help`.
+// --approve-for-me runs Codex in its workspace-write sandbox (writes confined to
+// the repo, network restricted) and auto-reviews approval requests instead of
+// prompting — appropriate for a single headless image-gen that saves one file
+// in-repo. We never bypass the sandbox: --dangerously-bypass-approvals-and-sandbox
+// is the flag that would, and it is deliberately NOT used here.
+//
+// ⚠ 2026-08-13: this was `--full-auto`, which the installed Codex CLI has since
+// REMOVED (`error: unexpected argument '--full-auto' found`, exit 2). That broke
+// every generate call silently until one was actually run. Exact flags vary by
+// Codex version — when this dies with exit 2 on an "unexpected argument", the fix
+// is `codex exec --help`, not a rewrite. Keep the replacement sandbox-preserving.
 // IMPORTANT: the PROMPT positional must come BEFORE -i. `codex exec`'s
 // `-i/--image <FILE>...` is VARIADIC, so if -i precedes the prompt it swallows
 // the instruction as another image → Codex finds no prompt and reads stdin
 // ("No prompt provided via stdin"). Prompt first, then the image flag.
-const codexArgs = [...codex.pre, 'exec', '--full-auto', instruction];
+const codexArgs = [...codex.pre, 'exec', '--approve-for-me', instruction];
 if (args.edit) codexArgs.push('-i', ...args.edit.map((e) => path.resolve(e)));
 
-console.error(`[codex-image] ${path.basename(codex.file)} exec --full-auto "<instruction>"${args.edit ? ` -i ${args.edit.map((e) => path.resolve(e)).join(' ')}` : ''}`);
+console.error(`[codex-image] ${path.basename(codex.file)} exec --approve-for-me "<instruction>"${args.edit ? ` -i ${args.edit.map((e) => path.resolve(e)).join(' ')}` : ''}`);
 const startMs = Date.now();
 const run = spawnSync(codex.file, codexArgs, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 const log = (run.stdout || '') + (run.stderr || '');
