@@ -10,14 +10,56 @@
 > needed for typical scene clips; revisit only if 16:9/1080p sources push
 > upload times past ~40s. Full smoke record: omni_edit_presets.md Proposal 001.
 
-## ⏸ RESUME STATE (2026-07-07 — read this first when resuming)
+## ⛔ PARKED BY NEIL, 2026-08-13 — do NOT re-arm this. Read before anything below.
+
+**Decision:** Omni Edit Styles is **off in production** via `OMNI_STYLES_ENABLED`.
+Neil's call: *"kaartehan lang to sa edit which is i dont have yet a proof na gumagana
+to or makakatulong to for the ads."* The code stays on `main` — this is a park, not a
+revert. Nothing is deleted and one env var brings it back.
+
+**Why the repo agreed with him** (all pre-existing evidence, nothing new was measured):
+
+1. **His own launch gate already said hold.** The gate below is *fallback rate >30% =
+   hold public*. The only paid live smoke we have (2026-07-07) ran **1 of 2 scenes into
+   fallback = 50%**. One data point, but it is the only one and it is on the wrong side.
+2. **One of three moves was already rejected by eyeball** — `dolly-zoom-v1` pulled
+   2026-07-07 as cheap/uncommitted on real footage; b-roll reverted to clean FFmpeg.
+   Two talking-scene moves remained.
+3. **Nothing on the pricing cards depends on it.** The Pro-tier "editing styles" are the
+   FFmpeg render presets (`classic`/`impact`/`hype`/`clean`, `api/_lib/renderPresets.ts`).
+   Omni only composes on top of them. Parking it makes **no** sold claim false.
+4. **It cannot be attributed yet.** It adds ~$0.30–0.40/scene on top of a base whose
+   dominant input (Kling per-second) is still a one-point fit — see the DRIFT WARNING in
+   `pricing_unit_economics.md` §2. A variable stacked on an unpinned base measures nothing.
+
+**How it is switched off, and why it is this var:** `OMNI_STYLES_ENABLED` **fails CLOSED** —
+anything but exactly `'true'` returns 503 at [`api/gemini/omni-video.ts:128`](../api/gemini/omni-video.ts#L128),
+*before* auth, meters, and the Gemini call, so a parked feature costs zero.
+🔴 **Do NOT use `OMNI_STYLES_BETA_ALLOWLIST` to turn it off.** It is cohort control and it is
+**inverted**: unset/empty returns `true` ([`api/_lib/omniBeta.ts:19`](../api/_lib/omniBeta.ts#L19)),
+i.e. open to everyone. It can only narrow an already-enabled feature.
+
+**Resume trigger — the ONE condition that reopens this.** Do not reopen on a hunch, a new
+preset idea, or because the branch looks finished. Reopen only when **≥3 format samples have
+shipped WITHOUT Omni** and Neil can name a specific defect in them that a generative-pixel
+move would fix. At that point the question is answerable; before it, it is not.
+
+> **⏭ SUPERSEDED — kept as the 2026-07-07 state record.** The block below told a future
+> session to *set `OMNI_STYLES_BETA_ALLOWLIST` in Vercel before merge*. Following that today
+> would **arm** the feature Neil just parked, and it is stale twice over: the branch **did**
+> merge (PR #47, `b6481d6`), and the allowlist was never the off switch. Same failure mode as
+> the `session_reminders.md` line that survived the Opus repin and had to be tombstoned
+> 2026-08-12. Read it as history, not as instructions.
+
+## ⏸ RESUME STATE (2026-07-07 — historical, superseded by the block above)
 
 **Where we are:** Slices 1 + 2 + 3 + 4 are BUILT and NEIL-eyeballed. Slice 4
 code `5f02fc1`; step-0 registry flips `0664801`; live smoke + dolly-zoom pull
 2026-07-07. 533 unit tests green. **Remaining before PR to main:** (1) set
 `OMNI_STYLES_BETA_ALLOWLIST` in Vercel BEFORE merge (deleting the var later =
 public launch); (2) beta launch-gate review with Neil (fallback rate >30% =
-hold public). Nothing merged to main.
+hold public). Nothing merged to main. *(Both items are now moot — see the PARKED
+block above. The merge happened; the allowlist is not the off switch.)*
 
 **Slice-4 LIVE SMOKE PASSED (2026-07-07, ~$0.80, 2 paid renders):**
 - **Positive path:** dev-seeded 2-scene EditVideo run (VOX EXPLAINER),
