@@ -43,6 +43,18 @@ const proxyGenerateImage = async (params: any): Promise<GenerateContentResponse>
   return proxyCall('/api/gemini/image', params);
 };
 
+// Mints a Gemini Files API URI for ONE media URL and returns it. Gemini's
+// fileData contract only accepts URIs it minted itself (see
+// EDL_MAX_ATTACHED_VIDEOS), and the client can neither hold the server key nor
+// import @google/genai — so the download+upload runs in
+// api/gemini/files/upload.ts and this is the thin transport wrapper. Callers
+// fan out one call per clip; each upload then gets its own function budget.
+const proxyUploadFile = async (url: string): Promise<string> => {
+  const { uri } = await proxyCall<{ uri: string; name?: string }>('/api/gemini/files/upload', { url });
+  if (!uri) throw new Error('FILES_UPLOAD_NO_URI: proxy returned no files/* uri');
+  return uri;
+};
+
 // Shared in-flight refresh promise: when many proxy calls hit a 401 at once,
 // dedupe to a single refreshSession round-trip instead of N concurrent ones.
 let inFlightRefresh: Promise<string | null> | null = null;
@@ -1104,34 +1116,55 @@ export const SFX_BANK: readonly SfxBankId[] = [
 /**
  * Per-request ceiling on attached scene videos in the EDL call.
  *
- * TEMPORARILY 0 — Gemini no longer accepts our scene videos at all.
+ * WHY THE CAP EXISTS (root cause, 2026-08-14): we used to pass the R2 object
+ * URL straight through as `fileData.fileUri`, but Gemini's contract only
+ * accepts URIs minted by its own Files API. It tolerated arbitrary HTTPS URLs
+ * until 2026-07-31 and stopped some time before 2026-08-13. Isolated live
+ * against production: the SAME model, endpoint and second returns 200 with
+ * zero video parts and 429 RESOURCE_EXHAUSTED with exactly ONE — so it was
+ * never request size, never scene count, never project quota (every quota row
+ * read 0% on a paid tier 3 account). The cap shipped at 0 for one day, which
+ * kept the pipeline alive but blind: every scene rode in as videoAttached:no.
  *
- * We pass the R2 object URL straight through as `fileData.fileUri` (see the
- * videoParts loop below), and Gemini's documented contract only accepts URIs
- * minted by its own Files API. It tolerated arbitrary HTTPS URLs until
- * 2026-07-31 and stopped some time before 2026-08-13. Isolated live on
- * 2026-08-14 against production: the SAME model, endpoint and second returns
- * 200 with zero video parts and 429 RESOURCE_EXHAUSTED with exactly ONE — so
- * this is not request size, not scene count, and not project quota (every
- * quota row read 0% on a paid tier 3 account).
+ * SHIPPED DESIGN: each eligible scene video is uploaded to the Files API
+ * through api/gemini/files/upload.ts (one clip per request, fanned out in
+ * parallel from the videoParts block below) and the returned `files/*` URI is
+ * what goes on the wire. Files API retention is 48h, so the upload happens
+ * fresh at EDL time — URIs are never persisted, or a run parked past 48h would
+ * resume with a dead one.
  *
- * 0 keeps the pipeline alive: every scene is described to the model as
- * videoAttached:no — a branch the tuned prompt already has, with its own
- * timing rule (scriptLine.length / 18, clamped 3-8s) — so the EDL still
- * returns one entry per scene and the render keeps all its sources. The cost
- * is a blind edit: cuts and transitions are inferred from the script instead
- * of watched.
+ * WHY 10 (Neil, 2026-08-14). This shipped at 8 for a few hours on a reason that
+ * was WRONG: the comment claimed 8 was a payload-size knob. It is not. A
+ * `fileData.fileUri` is a POINTER — Gemini fetches the object itself — so the
+ * request body does not grow with the video count at all. (The base64
+ * `inlineData` audio overlays are what grow; those are uncapped and separate.)
+ * The real ceiling is how much VIDEO the model will process per call, and we
+ * have never measured it. With no measurement behind it, 8 bought nothing and
+ * cost something concrete: a 10-scene ad is our normal shape, and 8 left scenes
+ * 8 and 9 permanently and silently blind on every single one. If the mechanism
+ * is broken it is broken at ONE video, so a lower cap was never protection.
  *
- * RESTORE PATH: upload each scene video to the Gemini Files API and pass the
- * returned files/* URI here, then raise this cap. That is the supported
- * contract and it also survives R2 presign expiry.
+ * 10 covers a normal run end to end. Raise it further only against a real run,
+ * not a guess — and note the 429 was NEVER about count (capping to 8 still
+ * 429'd while 9 had worked twice, which is what falsified that theory).
+ *
+ * Scenes past the cap — and any scene whose upload fails — still ride in the
+ * prompt as videoAttached:no, the branch the tuned prompt already has, with its
+ * own timing rule (scriptLine.length / 18, clamped 3-8s). So the EDL always
+ * returns one entry per scene and the render keeps all its sources.
+ *
+ * NOT fixed by this: R2 presign expiry. We still fetch from R2 at upload time,
+ * so an expired presign now fails at our own 502 instead of inside Gemini.
  */
-const EDL_MAX_ATTACHED_VIDEOS = 0;
+const EDL_MAX_ATTACHED_VIDEOS = 10;
 
 /**
- * Picks which sceneBatch entries get their video attached to the EDL request.
- * Returns sceneBatch INDEXES (not sceneIdx values), so the prompt's per-scene
- * `videoAttached` line and the fileData parts can't drift apart.
+ * Picks which sceneBatch entries are ELIGIBLE to have their video attached to
+ * the EDL request. Returns sceneBatch INDEXES (not sceneIdx values), so both
+ * the prompt's per-scene `videoAttached` line and the fileData parts can be
+ * derived from one index space. Eligibility is not attachment: a selected
+ * scene whose Files API upload fails is dropped from BOTH by the fan-out in
+ * generateEditDecisionList, which owns the no-drift invariant.
  *
  * Deterministic by design — same input ⇒ same set — because the degrade retry
  * re-issues with the SAME media parts. At or under the cap every rendered scene
@@ -1177,18 +1210,30 @@ export const selectEdlVideoAttachIndexes = (
  *
  * Input attachment contract (parts array order is load-bearing):
  *   [0] text prompt
- *   [1..N]   per-scene video fileData parts (mimeType video/mp4), in
+ *   [1..N]   per-scene video fileData parts (mimeType video/mp4, fileUri = a
+ *            Gemini Files API `files/*` URI minted at call time), in
  *            input.sceneBatch order — the prompt's "Scene 1 of N" numbering
  *            matches this order. Capped at EDL_MAX_ATTACHED_VIDEOS; scenes
- *            past the cap are still listed in the prompt as videoAttached:no.
+ *            past the cap — and scenes whose upload failed — are still listed
+ *            in the prompt, as videoAttached:no.
  *   [N+1..]  per-scene audio overlay fileData parts (mimeType audio/mpeg),
  *            in input.audioOverlays order
  */
 export const generateEditDecisionList = async (input: EditDecisionInput): Promise<EditDecisionList> => {
-  // Which scenes get their video attached (sceneBatch INDEXES, not sceneIdx).
+  // Which scenes are ELIGIBLE for attachment (sceneBatch INDEXES, not sceneIdx).
   // Computed ONCE from `input` — never from `eff` — so the degrade retry below
   // attaches exactly the same media as attempt 1.
-  const attachedIdx = selectEdlVideoAttachIndexes(input.sceneBatch);
+  const eligibleIdx = selectEdlVideoAttachIndexes(input.sceneBatch);
+
+  // Which scenes ACTUALLY got a files/* URI. Filled by the upload fan-out in the
+  // media-parts block below, which runs BEFORE any prompt is built (buildPromptText
+  // reads this set lazily, and callEdl is only reached after the fan-out settles).
+  //
+  // 🔴 INVARIANT: this is the ONE source of truth for both the per-scene
+  // `videoAttached` line and the fileData parts. Eligibility alone must never
+  // reach the prompt — an upload that rejected has to read `videoAttached: no` and
+  // contribute no part, or the model is told to watch a video that isn't there.
+  const attachedIdx = new Set<number>();
 
   // The prompt build is parameterized so the degrade lane (below) can re-issue the
   // SAME tuned skeleton with the script-text values swapped for neutral stubs. `eff`
@@ -1527,10 +1572,35 @@ the nearest valid value. Never emit anything else.
   // Media parts are identical across attempts — build them ONCE. The degrade retry
   // (below) reuses the same video fileData + audio inlineData arrays; re-fetching
   // the blob: audio URLs would be pure waste (they live in browser memory only).
+  //
+  // Every attached scene needs a Gemini-MINTED files/* URI — the R2 object URL is
+  // not a URI Gemini accepts (see EDL_MAX_ATTACHED_VIDEOS). Fan the uploads out in
+  // parallel, one clip per request, so each gets its own 60s function budget;
+  // serial uploads inside this 60s-pinned EDL call are impossible, not just tight.
+  //
+  // allSettled, never all: a clip that fails to upload degrades THAT scene to
+  // today's exact behavior (videoAttached:no) and never fails the edit. Partial
+  // eyes beat no eyes, so there is no all-or-nothing gate here.
+  //
+  // Ascending sceneBatch order is load-bearing (the parts-order contract above):
+  // selectEdlVideoAttachIndexes seeds first+last before filling, so its Set
+  // iterates out of order — sort before fanning out.
+  const eligible = [...eligibleIdx].sort((a, b) => a - b);
+  const uploads = await Promise.allSettled(
+    eligible.map((i) => proxyUploadFile(input.sceneBatch[i].renderedUrl as string)),
+  );
   const videoParts: any[] = [];
-  input.sceneBatch.forEach((scene, i) => {
-    if (scene.renderedUrl && attachedIdx.has(i)) {
-      videoParts.push({ fileData: { fileUri: scene.renderedUrl, mimeType: 'video/mp4' } });
+  uploads.forEach((result, n) => {
+    const i = eligible[n];
+    if (result.status === 'fulfilled') {
+      // Both sides of the invariant, written together — the only place either moves.
+      attachedIdx.add(i);
+      videoParts.push({ fileData: { fileUri: result.value, mimeType: 'video/mp4' } });
+    } else {
+      console.warn(
+        `[edl] scene index ${i} video upload failed — that scene goes in as videoAttached:no:`,
+        result.reason?.message ?? result.reason,
+      );
     }
   });
   // ElevenLabs TTS returns blob: URLs (browser memory only); Gemini's File API
@@ -1558,11 +1628,13 @@ the nearest valid value. Never emit anything else.
     } as any,
   }));
 
-  // Evidence for the next live run: how many scenes had a video vs how many we
-  // actually attached (see EDL_MAX_ATTACHED_VIDEOS — the 10-video 429).
+  // Evidence for the next live run: how many scenes had a video, how many the cap
+  // selected, and how many survived the upload fan-out. selected > attached means
+  // uploads failed (see the per-scene warn above), not that the cap bit.
   console.info(
     '[edl] video attachments —',
     'eligible:', input.sceneBatch.filter((s) => s.renderedUrl).length,
+    'selected:', eligible.length,
     'attached:', videoParts.length,
     'cap:', EDL_MAX_ATTACHED_VIDEOS,
   );

@@ -5,6 +5,7 @@
     "api/gemini/image.ts": { "maxDuration": 60 },
     "api/gemini/video.ts": { "maxDuration": 30 },
     "api/gemini/video/poll.ts": { "maxDuration": 60 },
+    "api/gemini/files/upload.ts": { "maxDuration": 60 },
     "api/voice/consolidate.ts": { "maxDuration": 60, "includeFiles": "node_modules/ffmpeg-static/ffmpeg" },
     "api/render/final.ts": { "maxDuration": 300, "includeFiles": "{node_modules/ffmpeg-static/ffmpeg,api/_lib/assets/**}" },
     "api/render/final/poll.ts": { "maxDuration": 60 },

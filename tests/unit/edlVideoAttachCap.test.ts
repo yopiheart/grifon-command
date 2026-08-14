@@ -2,15 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Cap on how many scene videos one EDL request may attach.
 //
-// Root cause (isolated live against production, 2026-08-14): we hand Gemini the
+// Root cause (isolated live against production, 2026-08-14): we handed Gemini the
 // R2 object URL as `fileData.fileUri`, but its contract only accepts URIs minted
 // by its own Files API. It tolerated arbitrary HTTPS URLs until 2026-07-31 and
 // stopped some time before 2026-08-13. Same model, same endpoint, same second:
 // ZERO video parts returns 200, exactly ONE returns 429 RESOURCE_EXHAUSTED. So
 // it is not request size, not scene count, and not project quota (every quota
-// row read 0% on a paid tier-3 account). The cap therefore ships at 0 — every
-// scene rides in the prompt as videoAttached:no, a branch the tuned prompt
-// already has — until the Files API upload path lands.
+// row read 0% on a paid tier-3 account). The cap shipped at 0 for a day — every
+// scene rode in as videoAttached:no — and now ships at 8 on top of the Files API
+// upload path (api/gemini/files/upload.ts), which mints the supported URI.
 //
 // Catches:
 //   1. Selection-rule regressions — the cap as a hard upper bound (including 0
@@ -19,13 +19,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 //      determinism. These pass the cap EXPLICITLY so the rule stays under test
 //      whatever the shipped default is.
 //   2. Request-shape regressions at the proxy seam, against the SHIPPED default:
-//      no fileData parts reach the wire and every videoAttached line says no.
-//      Raising the cap without restoring a supported URI scheme fails here —
-//      which is the point.
+//      the fileData parts are present and EVERY fileUri is a `files/*` URI.
+//      Reverting to the raw R2 object URL fails here — which is the point.
 //   3. Degrade-lane drift — the stubbed retry must attach the SAME videos.
 //
 // Does NOT catch: whether Gemini accepts a given URI scheme. That is a live-run
-// question; the console.info in generateEditDecisionList is the evidence trail.
+// question; the console.info in generateEditDecisionList is the evidence trail,
+// and tests/regression/edl-video-part.regression.test.ts is the live canary.
 
 vi.mock('../../services/supabaseClient', () => ({
   getSupabase: () => ({
@@ -108,8 +108,14 @@ describe('selectEdlVideoAttachIndexes', () => {
 // Seam test: the outbound /api/gemini/* request body, at the SHIPPED cap.
 // ---------------------------------------------------------------------------
 
-const tenSceneInput = {
-  sceneBatch: Array.from({ length: 10 }, (_, i) => ({
+// DELIBERATELY 12, two ABOVE the shipped cap of 10. The seam tests below exercise
+// the DEFAULT cap (they never pass one), so the fixture has to exceed it or the cap
+// would never bite and these tests would silently stop testing a cap at all. When
+// EDL_MAX_ATTACHED_VIDEOS moves, this number moves with it — keep it cap + 2.
+const SEAM_SCENE_COUNT = 12;
+
+const overCapInput = {
+  sceneBatch: Array.from({ length: SEAM_SCENE_COUNT }, (_, i) => ({
     sceneIdx: i,
     scriptLine: `Line ${i}`,
     renderedUrl: `https://example.com/s${i}.mp4`,
@@ -120,7 +126,7 @@ const tenSceneInput = {
   targetPlatform: 'tiktok' as const,
 };
 
-const cannedTenSceneEdl = {
+const cannedOverCapEdl = {
   meta: {
     totalDurationSec: 40,
     aspectRatio: '9:16',
@@ -129,7 +135,7 @@ const cannedTenSceneEdl = {
     formulaApplied: ['mrbeast'],
     scriptStyleDetected: 'mrbeast',
   },
-  scenes: tenSceneInput.sceneBatch.map((s) => ({
+  scenes: overCapInput.sceneBatch.map((s) => ({
     sceneIdx: s.sceneIdx,
     sourceVideoUrl: s.renderedUrl,
     sourceAudioUrl: '',
@@ -148,10 +154,26 @@ const okGemini = (payload: unknown) => ({
   json: async () => ({ text: JSON.stringify(payload) }),
 });
 
+// Files API mint, mocked at the /api/gemini/files/upload proxy seam. The minted
+// URI carries the source filename so part ORDER stays checkable.
+const okUpload = (sourceUrl: string) => ({
+  ok: true,
+  status: 200,
+  json: async () => {
+    const stem = sourceUrl.split('/').pop()!.replace('.mp4', '');
+    return { uri: `files/${stem}`, name: `files/${stem}` };
+  },
+});
+
 const geminiBodies = (): any[] =>
   fetchMock.mock.calls
-    .filter((c: any) => typeof c[0] === 'string' && !c[0].startsWith('blob:'))
+    .filter((c: any) => typeof c[0] === 'string' && c[0].includes('/api/gemini/text'))
     .map((c: any) => JSON.parse(c[1].body));
+
+const uploadedUrls = (): string[] =>
+  fetchMock.mock.calls
+    .filter((c: any) => typeof c[0] === 'string' && c[0].includes('/api/gemini/files/upload'))
+    .map((c: any) => JSON.parse(c[1].body).url);
 
 // Reads the videoAttached value the prompt declared for each 1-based scene.
 const videoAttachedFlags = (promptText: string): string[] =>
@@ -164,46 +186,74 @@ const videoAttachedFlags = (promptText: string): string[] =>
       return m[1];
     });
 
+// Routes the global fetch mock: Files API mints answer the upload proxy, the
+// canned EDL answers everything else.
+const routeAllOk = () => {
+  fetchMock.mockImplementation(async (url: any, init: any) =>
+    typeof url === 'string' && url.includes('/api/gemini/files/upload')
+      ? okUpload(JSON.parse(init.body).url)
+      : okGemini(cannedOverCapEdl),
+  );
+};
+
 describe('generateEditDecisionList — attachment cap on the wire', () => {
   beforeEach(() => {
     fetchMock.mockReset();
   });
 
-  it('puts no video on the wire at the shipped cap', async () => {
-    fetchMock.mockImplementation(async () => okGemini(cannedTenSceneEdl));
+  it('puts ONLY Files-API-minted URIs on the wire, capped at the shipped default', async () => {
+    routeAllOk();
 
-    await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
     const parts = geminiBodies()[0].contents.parts;
-    expect(parts.filter((p: any) => p.fileData)).toEqual([]);
+    const fileParts = parts.filter((p: any) => p.fileData);
+    // 12 rendered scenes, cap 10 → hook (0) + close (11) + the earliest eight (1..8).
+    expect(fileParts.length).toBe(10);
+    // The whole point of the restore: never the raw R2 object URL again.
+    fileParts.forEach((p: any) => {
+      expect(p.fileData.fileUri).toMatch(/^files\//);
+      expect(p.fileData.mimeType).toBe('video/mp4');
+    });
+    // Parts stay in ascending sceneBatch order (the load-bearing contract), even
+    // though the selector seeds first+last before filling.
+    expect(fileParts.map((p: any) => p.fileData.fileUri)).toEqual(
+      ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's11'].map((s) => `files/${s}`),
+    );
+    // Only the selected scenes were uploaded — the cap is a spend gate too.
+    expect(uploadedUrls().length).toBe(10);
   });
 
   it('the prompt describes exactly what was attached', async () => {
-    fetchMock.mockImplementation(async () => okGemini(cannedTenSceneEdl));
+    routeAllOk();
 
-    await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
-    // Every scene still appears in the prompt — only the attachment is gone.
+    // Every scene still appears in the prompt; scenes 9 and 10 lost the cap draw.
+    const yes = 'yes (see fileData part)';
     expect(videoAttachedFlags(geminiBodies()[0].contents.parts[0].text))
-      .toEqual(Array(10).fill('no'));
+      .toEqual([yes, yes, yes, yes, yes, yes, yes, yes, yes, 'no', 'no', yes]);
   });
 
   it('keeps every scene in the batch so the render keeps all its sources', async () => {
-    fetchMock.mockImplementation(async () => okGemini(cannedTenSceneEdl));
+    routeAllOk();
 
-    const edl = await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    const edl = await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
     // The passthrough at the end of generateEditDecisionList only rewrites
     // sourceVideoUrl when scenes-out matches scenes-in; detaching media must not
     // shrink sceneBatch, or the final render loses its inputs.
-    expect(edl.scenes.length).toBe(10);
+    expect(edl.scenes.length).toBe(SEAM_SCENE_COUNT);
     expect(edl.scenes.map((s: any) => s.sourceVideoUrl))
-      .toEqual(tenSceneInput.sceneBatch.map((s) => s.renderedUrl));
+      .toEqual(overCapInput.sceneBatch.map((s) => s.renderedUrl));
   });
 
   it('the degrade retry attaches the identical video set', async () => {
     let attempt = 0;
-    fetchMock.mockImplementation(async () => {
+    fetchMock.mockImplementation(async (url: any, init: any) => {
+      if (typeof url === 'string' && url.includes('/api/gemini/files/upload')) {
+        return okUpload(JSON.parse(init.body).url);
+      }
       attempt += 1;
       if (attempt === 1) {
         return {
@@ -212,13 +262,15 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
           json: async () => ({ text: '', promptFeedback: { blockReason: 'PROHIBITED_CONTENT' } }),
         };
       }
-      return okGemini(cannedTenSceneEdl);
+      return okGemini(cannedOverCapEdl);
     });
 
-    await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
     const bodies = geminiBodies();
     expect(bodies.length).toBe(2);
+    // Media parts are built once — the stubbed retry must not re-mint URIs.
+    expect(uploadedUrls().length).toBe(10);
     const videosOf = (b: any) =>
       b.contents.parts.filter((p: any) => p.fileData).map((p: any) => p.fileData.fileUri);
     expect(videosOf(bodies[1])).toEqual(videosOf(bodies[0]));

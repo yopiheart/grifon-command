@@ -8,17 +8,33 @@ discharged. Run `apr_2f930418` shipped 10 scenes for ~$4.96 ≈ ₱288. Nothing 
 nothing is perishable any more — full write-up, corrected root cause, cost table and the
 9-item finding list are in [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
 
-## ▶ NEXT ACTION — give the EDL its eyes back (Gemini Files API)
-**The editor is currently BLIND for every user.** Gemini stopped accepting our R2 object
-URL as `fileData.fileUri`; it only takes URIs minted by its own **Files API**. One video
-part on the request = 429 `RESOURCE_EXHAUSTED`, zero parts = 200 (isolated live 08-14, same
-model/endpoint/second). Shipped mitigation on main (`2a1860b`): `EDL_MAX_ATTACHED_VIDEOS = 0`
-— every scene rides in the prompt as `videoAttached: no`, a branch the tuned prompt already
-had. **Fix: upload each scene video to the Files API, pass the `files/*` URI, raise the cap.**
-Restore note is in the constant's doc comment in [geminiService.ts](services/geminiService.ts).
-It also survives R2 presign expiry, which the current design does not.
+## ▶ NEXT ACTION — merge `feat/edl-files-api`, then watch one live run
+**The EDL fix is BUILT and reviewed but NOT MERGED — production is still blind until it
+deploys.** Branch `feat/edl-files-api` (`458dc7f`, pushed). New `api/gemini/files/upload.ts`
+mints a Files API URI per clip; `geminiService.ts` fans the uploads out with `allSettled`;
+`EDL_MAX_ATTACHED_VIDEOS` 0 → 8. Design + the 48h-retention reasoning:
+[`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
 
-⚠️ It broke ~2 weeks before anyone noticed, because no run was attempted in between.
+Verified locally: `npm run build` exit 0 · `npm run test` 100 files / 1195 tests ·
+`check:bundle-leak` 0 markers · no prompt, schema or model-ID change.
+
+**✅ BOTH LIVE PROBES PASSED** (`tests/regression/edl-video-part.regression.test.ts`):
+- `RUN_REGRESSION=1` 17:37 — ONE `files/*` part → **200, not 429**, usable EDL, 23s.
+  Exact inverse of the 08-14 isolation.
+- `RUN_EDL_FULL_CAP=1` 17:42 — **TEN** parts → **200**, 30.9s. Harsher than production
+  (10 × 15.5s ≈ 155s of video vs ~60s for a real 10-scene ad), so a real run has headroom.
+
+**Nothing testable is left unmeasured. Merge is de-risked** — what remains needs the merge
+itself: a real end-to-end run on deployed code, watched by Neil.
+
+**Then step 5 of the plan: wire `tests/regression/edl-video-part.regression.test.ts` into
+the Tier 3 nightly loop.** The assertion exists; nothing runs it on a schedule, so this
+class of blackout is still only *detectable*, not *detected*. That gap is the actual lesson
+of the 2-week outage — the fix without the schedule leaves it half-learned.
+
+⚠️ Three non-blocking follow-ups are recorded at the bottom of the plan doc — read them
+before touching this area. The sharpest: `research-tier.ab.test.ts` (`RUN_AB=1`) now
+degrades silently and would print a confident wrong A/B result.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 The scene-image gate is live and **it is not enough**:
