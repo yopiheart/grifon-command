@@ -1102,6 +1102,44 @@ export const SFX_BANK: readonly SfxBankId[] = [
 ] as const;
 
 /**
+ * Per-request ceiling on attached scene videos in the EDL call.
+ *
+ * Gemini rejects an EDL request carrying 10 attached scene videos with a 429
+ * RESOURCE_EXHAUSTED even when every project quota reads 0% (paid tier 3,
+ * verified 2026-08-14). 9 attached videos is the highest count proven to
+ * succeed in production (runs 2026-07-23 and 2026-07-31); 8 keeps one slot of
+ * margin. Scenes beyond the cap stay in sceneBatch and in the prompt — they are
+ * simply described as videoAttached:no, a branch the tuned prompt already has.
+ */
+const EDL_MAX_ATTACHED_VIDEOS = 8;
+
+/**
+ * Picks which sceneBatch entries get their video attached to the EDL request.
+ * Returns sceneBatch INDEXES (not sceneIdx values), so the prompt's per-scene
+ * `videoAttached` line and the fileData parts can't drift apart.
+ *
+ * Deterministic by design — same input ⇒ same set — because the degrade retry
+ * re-issues with the SAME media parts. At or under the cap every rendered scene
+ * is attached (unchanged behavior); over it, the FIRST and LAST rendered scenes
+ * always survive (hook + close) and the remaining slots go to the earliest
+ * rendered scenes in order. Transport concern, not creative.
+ */
+export const selectEdlVideoAttachIndexes = (
+  sceneBatch: readonly { renderedUrl?: string }[],
+  cap: number = EDL_MAX_ATTACHED_VIDEOS,
+): Set<number> => {
+  const eligible: number[] = [];
+  sceneBatch.forEach((s, i) => { if (s.renderedUrl) eligible.push(i); });
+  if (eligible.length <= cap) return new Set(eligible);
+  const picked = new Set<number>([eligible[0], eligible[eligible.length - 1]]);
+  for (const i of eligible) {
+    if (picked.size >= cap) break;
+    picked.add(i);
+  }
+  return picked;
+};
+
+/**
  * Remotion AI Editor brain — Phase 1 half (b).
  *
  * Multimodal call into `researchTextModel` that produces a machine-actionable
@@ -1120,11 +1158,17 @@ export const SFX_BANK: readonly SfxBankId[] = [
  *   [0] text prompt
  *   [1..N]   per-scene video fileData parts (mimeType video/mp4), in
  *            input.sceneBatch order — the prompt's "Scene 1 of N" numbering
- *            matches this order
+ *            matches this order. Capped at EDL_MAX_ATTACHED_VIDEOS; scenes
+ *            past the cap are still listed in the prompt as videoAttached:no.
  *   [N+1..]  per-scene audio overlay fileData parts (mimeType audio/mpeg),
  *            in input.audioOverlays order
  */
 export const generateEditDecisionList = async (input: EditDecisionInput): Promise<EditDecisionList> => {
+  // Which scenes get their video attached (sceneBatch INDEXES, not sceneIdx).
+  // Computed ONCE from `input` — never from `eff` — so the degrade retry below
+  // attaches exactly the same media as attempt 1.
+  const attachedIdx = selectEdlVideoAttachIndexes(input.sceneBatch);
+
   // The prompt build is parameterized so the degrade lane (below) can re-issue the
   // SAME tuned skeleton with the script-text values swapped for neutral stubs. `eff`
   // is the effective input for THIS attempt: attempt 1 passes `input` verbatim; the
@@ -1142,7 +1186,7 @@ export const generateEditDecisionList = async (input: EditDecisionInput): Promis
   sceneIdx: ${s.sceneIdx}
   type: ${s.type}                   // talking | b-roll | cinematic
   scriptLine: "${s.scriptLine}"
-  videoAttached: ${s.renderedUrl ? 'yes (see fileData part)' : 'no'}
+  videoAttached: ${attachedIdx.has(i) ? 'yes (see fileData part)' : 'no'}
   audioOverlayAttached: ${hasAudio ? 'yes (separate fileData part)' : 'no'}${transitionHint}`;
   }).join('');
 
@@ -1463,11 +1507,11 @@ the nearest valid value. Never emit anything else.
   // (below) reuses the same video fileData + audio inlineData arrays; re-fetching
   // the blob: audio URLs would be pure waste (they live in browser memory only).
   const videoParts: any[] = [];
-  for (const scene of input.sceneBatch) {
-    if (scene.renderedUrl) {
+  input.sceneBatch.forEach((scene, i) => {
+    if (scene.renderedUrl && attachedIdx.has(i)) {
       videoParts.push({ fileData: { fileUri: scene.renderedUrl, mimeType: 'video/mp4' } });
     }
-  }
+  });
   // ElevenLabs TTS returns blob: URLs (browser memory only); Gemini's File API
   // rejects those. Fetch the blob, base64-encode, push as inlineData. Transport
   // concern, not creative — fair game per services/CLAUDE.md.
@@ -1492,6 +1536,15 @@ the nearest valid value. Never emit anything else.
       thinkingConfig: { thinkingLevel: 'medium' },
     } as any,
   }));
+
+  // Evidence for the next live run: how many scenes had a video vs how many we
+  // actually attached (see EDL_MAX_ATTACHED_VIDEOS — the 10-video 429).
+  console.info(
+    '[edl] video attachments —',
+    'eligible:', input.sceneBatch.filter((s) => s.renderedUrl).length,
+    'attached:', videoParts.length,
+    'cap:', EDL_MAX_ATTACHED_VIDEOS,
+  );
 
   let response: GenerateContentResponse = await callEdl(input);
 
