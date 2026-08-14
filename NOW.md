@@ -61,11 +61,11 @@ the pilot doc. **The dashboard cannot answer this class of question; a two-line 
 reproducer can.** One is in there.
 
 ## 🌿 THE BRANCH PILE IS NOW READABLE (2026-08-15)
-`node tools/branch_triage.mjs` — 7s, read-only, one verdict per branch. Today: **1 DELETE ·
-3 SUPERSEDED · 2 TUNED · 8 CONFLICT-CODE · 12 CONFLICT-DOC · 1 MERGE-DOCS · 2 STALE.** The
-"29 unmerged branches" scare is half doc churn — `CLAUDE.md`/`post_beta_roadmap.md`/
-`agent_lessons.md` collide, not code. Delete commands print paste-ready; **Neil's call, the
-tool never deletes.** SOP + what it deliberately can't decide: [`branch_triage.md`](workflows/branch_triage.md).
+`node tools/branch_triage.mjs` — 7s, read-only, one verdict per branch. **28 left** (was 29;
+the 1 DELETE was fired): **3 SUPERSEDED · 2 TUNED · 8 CONFLICT-CODE · 12 CONFLICT-DOC ·
+1 MERGE-DOCS · 2 STALE.** The scare is half doc churn — `CLAUDE.md`/`post_beta_roadmap.md`/
+`agent_lessons.md` collide, not code. Next cheap win: the 3 SUPERSEDED (eyeball, then delete).
+SOP + what it deliberately can't decide: [`branch_triage.md`](workflows/branch_triage.md).
 
 ## 🧠 THE STRATEGIC ONE — every avatar has the same face
 The auto-cast "mean face" is what every nano-banana user gets, so believability buys us

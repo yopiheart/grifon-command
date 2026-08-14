@@ -44,9 +44,15 @@ the skim with a truth table: one row per branch, one verdict per row.
    patch is equivalent; it cannot say whether the leftover unique lines are an
    older form or lost work. That is why the verdict is not `DELETE`.
 
-## Snapshot — 2026-08-15 (29 branches)
+## Snapshot — 2026-08-15
 
+First run, 29 branches:
 `1 DELETE / 3 SUPERSEDED / 2 TUNED / 8 CONFLICT-CODE / 12 CONFLICT-DOC / 1 MERGE-DOCS / 2 STALE`
+
+After acting on it, **28 branches**: the one `DELETE`
+(`claude/spotify-agent-strategy-kturz0`, `5c2c439`) was verified twice — `git cherry`
+returned zero novel commits and its only file, `workflows/nightly_regression.md`, was
+byte-identical to `main` — then deleted. No `DELETE` rows remain.
 
 **The finding that makes the pile tractable:** the top conflict sources are
 `CLAUDE.md` (11), `workflows/post_beta_roadmap.md` (7) and `agent_lessons.md` (6)
