@@ -8,24 +8,26 @@ discharged. Run `apr_2f930418` shipped 10 scenes for ~$4.96 ≈ ₱288. Nothing 
 nothing is perishable any more — full write-up, corrected root cause, cost table and the
 9-item finding list are in [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
 
-## ▶ NEXT ACTION — give the EDL its eyes back (Gemini Files API)
-**The editor is currently BLIND for every user.** Gemini stopped accepting our R2 object
-URL as `fileData.fileUri`; it only takes URIs minted by its own **Files API**. One video
-part = 429 `RESOURCE_EXHAUSTED`, zero parts = 200 (isolated live 08-14, same model/endpoint/
-second). Shipped mitigation on main (`2a1860b`): `EDL_MAX_ATTACHED_VIDEOS = 0` — every scene
-rides in the prompt as `videoAttached: no`, a branch the tuned prompt already had.
+## ▶ NEXT ACTION — merge `feat/edl-files-api`, then watch one live run
+**The EDL fix is BUILT and reviewed but NOT MERGED — production is still blind until it
+deploys.** Branch `feat/edl-files-api` (`458dc7f`, pushed). New `api/gemini/files/upload.ts`
+mints a Files API URI per clip; `geminiService.ts` fans the uploads out with `allSettled`;
+`EDL_MAX_ATTACHED_VIDEOS` 0 → 8. Design + the 48h-retention reasoning:
+[`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
 
-**➜ Design doc: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md). Read it before
-touching this — the constant's doc comment describes the fix as a swap and it is NOT one.**
-The upload loop already exists ([omni-video.ts:259-300](api/gemini/omni-video.ts#L259-L300)),
-but it CANNOT run where the EDL runs: `api/gemini/text.ts` is pinned to 60s and one clip is
-budgeted 5 min × up to 10 clips. The upload has to move to its own server surface.
-**Step 1 is a doc lookup, not code:** how long a `files/*` URI stays valid decides
-upload-at-EDL-time vs upload-at-render-time + a `producer_scenes` column.
+Verified locally by the main loop (not taken from the executor's report): `npm run build`
+exit 0 · `npm run test` 100 files / 1195 tests · `check:bundle-leak` 0 markers · no prompt,
+schema or model-ID change. **NOT yet verified live** — nobody has watched a real run edit
+with its eyes back. Do that before calling it done.
 
-⚠️ It broke ~2 weeks before anyone noticed, because no run was attempted in between. The
-missing live "one video part returns 200" assertion is what let it hide — add it in the same
-commit as the fix, then wire it into the Tier 3 nightly loop.
+**Then step 5 of the plan: wire `tests/regression/edl-video-part.regression.test.ts` into
+the Tier 3 nightly loop.** The assertion exists; nothing runs it on a schedule, so this
+class of blackout is still only *detectable*, not *detected*. That gap is the actual lesson
+of the 2-week outage — the fix without the schedule leaves it half-learned.
+
+⚠️ Three non-blocking follow-ups are recorded at the bottom of the plan doc — read them
+before touching this area. The sharpest: `research-tier.ab.test.ts` (`RUN_AB=1`) now
+degrades silently and would print a confident wrong A/B result.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 The scene-image gate is live and **it is not enough**:
