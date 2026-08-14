@@ -35,10 +35,34 @@ const MODEL_PRICES: Record<string, TextPrice | ImagePrice | VideoPrice> = {
   'gemini-3.1-flash-lite': { kind: 'text', inputPerMTok: 0.25, outputPerMTok: 1.5 },
   'gemini-3.5-flash': { kind: 'text', inputPerMTok: 1.5, outputPerMTok: 9.0 },
   'gemini-3.6-flash': { kind: 'text', inputPerMTok: 1.5, outputPerMTok: 7.5 },
+  // ⏳ INTRODUCTORY RATE — expires 2026-12-31, then DOUBLES to 1.5 / 7.5 (parity
+  // with 3.6-flash). Sourced 2026-08-15 from deepmind.google/models/gemini/flash.
+  // `gemini37IntroRateExpired()` below is the tripwire: modelCosts.test.ts fails
+  // once the intro window closes, so the reversion can't be silently missed by a
+  // session that never saw this comment.
+  'gemini-3.7-flash': { kind: 'text', inputPerMTok: 0.75, outputPerMTok: 3.75 },
   'gemini-3.5-flash-lite': { kind: 'text', inputPerMTok: 0.3, outputPerMTok: 2.5 },
   'gemini-3.1-flash-image-preview': { kind: 'image', perImage: 0.04 },
   'gemini-omni-flash-preview': { kind: 'video', perSecondUsd: 0.1 },
 };
+
+// Last day of Google's gemini-3.7-flash introductory pricing. On 2027-01-01 the
+// rate reverts to 1.5 / 7.5 and the MODEL_PRICES row above becomes a 2x
+// UNDER-estimate. Exported so the unit test can assert against it rather than
+// re-hardcoding the date.
+export const GEMINI_37_INTRO_RATE_LAST_DAY = '2026-12-31';
+
+/**
+ * True once the 3.7-flash introductory window has closed. Pure (takes `now`) so
+ * the test can drive it, and so nothing here depends on ambient clock state.
+ *
+ * This exists because the defreezer eats session memory: a comment explaining
+ * that a price doubles in four months is only read by whoever opens this file.
+ * A failing test is read by everyone. See CLAUDE.md — prefer a verifier to prose.
+ */
+export function gemini37IntroRateExpired(now: Date = new Date()): boolean {
+  return now > new Date(`${GEMINI_37_INTRO_RATE_LAST_DAY}T23:59:59.999Z`);
+}
 
 const DEFAULT_TEXT_PRICE: TextPrice = { kind: 'text', inputPerMTok: 0.25, outputPerMTok: 1.5 };
 const DEFAULT_PER_IMAGE = 0.04;

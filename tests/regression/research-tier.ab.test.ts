@@ -3,18 +3,24 @@
 // Grifon routes six non-crown-jewel flows through researchTextModel
 // (gemini-3.6-flash after the Slice-2 flip; the premise-check flow stays pinned
 // to gemini-3.5-flash via premiseCheckModel). This harness replays all six against
-// BOTH a 3.5-flash arm (A) and a 3.6-flash arm (B) using identical, fixed inputs,
-// then writes a side-by-side report a human / LLM grader can review. It does NOT
-// decide a winner — asserts are structural only (each arm either errored or
-// produced parseable output of the right shape). The interceptor treats both
-// research-tier model IDs as swappable, so arm forcing keeps working post-flip.
+// an INCUMBENT arm (A) and a CANDIDATE arm (B) using identical, fixed inputs, then
+// writes a side-by-side report a human / LLM grader can review. It does NOT decide
+// a winner — asserts are structural only (each arm either errored or produced
+// parseable output of the right shape). The interceptor treats every research-tier
+// model ID as swappable, so arm forcing keeps working post-flip.
+//
+// Arms default to A=gemini-3.6-flash (production today) and B=gemini-3.7-flash
+// (the 2026-08 candidate), and are overridable via AB_ARM_A / AB_ARM_B — no code
+// edit needed to evaluate the next model. See workflows/gemini37_adoption.md.
 //
 // Skipped by default — opt in with `RUN_AB=1`. This keeps `npm test` from
-// burning Gemini quota (12 live calls per run).
+// burning Gemini quota (12 live calls per run, ~$0.25).
 //
 // Run:
 //   RUN_AB=1 npx vitest run tests/regression/research-tier.ab.test.ts --reporter=verbose
 //   (PowerShell: $env:RUN_AB='1'; npx vitest run tests/regression/research-tier.ab.test.ts --reporter=verbose)
+//   Override arms:  $env:AB_ARM_B='gemini-4.0-flash'
+//   Premise only:   ... --reporter=verbose -t generatePremiseCheck
 //
 // Modeled on tests/regression/script-gen.regression.test.ts — same manual .env
 // parser, same supabaseClient mock, same Gemini-direct fetch stub (all six
@@ -79,6 +85,62 @@ const apiKey = process.env.GEMINI_API_KEY;
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 const originalFetch = globalThis.fetch.bind(globalThis);
 
+// --- 3a. Arm configuration ------------------------------------------------
+//
+// Arms are ENV-CONFIGURABLE so a new candidate model needs zero edits here. This
+// harness has now been pointed at three different candidates (3.6 in 2026-07,
+// 3.7 in 2026-08); each migration previously meant touching four hardcoded
+// literals, which is exactly the kind of edit that goes stale silently.
+//
+//   AB_ARM_A — the incumbent (default: whatever production runs today)
+//   AB_ARM_B — the candidate
+//
+// Defaults track production: arm A is researchTextModel's CURRENT value, arm B
+// is the model under evaluation. Keep ARM_A in sync with
+// services/geminiService.ts researchTextModel after any approved flip.
+const ARM_A = process.env.AB_ARM_A || 'gemini-3.6-flash';
+const ARM_B = process.env.AB_ARM_B || 'gemini-3.7-flash';
+
+// Every model ID that a research-tier flow might legitimately send. The
+// interceptor only swaps when the client sent one of these, so arm forcing keeps
+// working across flips (production sends 3.6 today, 3.5 for the pinned premise
+// check). ADD A NEW ID HERE when researchTextModel/premiseCheckModel changes.
+const RESEARCH_TIER_MODELS = new Set([
+  'gemini-3.5-flash',
+  'gemini-3.6-flash',
+  'gemini-3.7-flash',
+]);
+
+// Which thinking dialect each model speaks. Google moved from a numeric
+// `thinkingBudget` to a categorical `thinkingLevel` on the 3.6+ generation; the
+// approved equivalent for Grifon's budget of 4000 is 'medium' (see
+// workflows/gemini36_adoption.md Slice 2, validated live).
+//
+// ⚠️ 3.7 additionally REJECTS thinkingLevel:'minimal' with an API validation
+// error — LOW is its floor. Grifon uses 'medium' everywhere, so this is inert
+// today, but the mapping must never emit 'minimal' for a 3.7+ target.
+const THINKING_LEVEL_MODELS = new Set(['gemini-3.6-flash', 'gemini-3.7-flash']);
+const EQUIVALENT_THINKING_BUDGET = 4000;
+const EQUIVALENT_THINKING_LEVEL = 'medium';
+
+/**
+ * Rewrite a thinkingConfig into the dialect `targetModel` accepts, leaving every
+ * other config key untouched. Returns the config unchanged when there is no
+ * thinkingConfig (only the EDL flow sets one).
+ */
+function mapThinkingConfig(targetModel: string, config: any): any {
+  const thinking = config?.thinkingConfig;
+  if (!thinking) return config;
+  const wantsLevel = THINKING_LEVEL_MODELS.has(targetModel);
+  if (wantsLevel && thinking.thinkingBudget != null) {
+    return { ...config, thinkingConfig: { thinkingLevel: EQUIVALENT_THINKING_LEVEL } };
+  }
+  if (!wantsLevel && thinking.thinkingLevel != null) {
+    return { ...config, thinkingConfig: { thinkingBudget: EQUIVALENT_THINKING_BUDGET } };
+  }
+  return config;
+}
+
 // Set by the test loop before each flow-arm. When set AND the client sent the
 // research-tier model, the interceptor swaps to this model.
 let currentTargetModel: string | null = null;
@@ -93,16 +155,65 @@ interface CallMetrics {
     totalTokenCount?: number;
   };
   estUsd: number;
+  // GROUND TRUTH: how many fileData (video) parts were actually in the request
+  // body we sent upstream — counted from the wire, never inferred from whether
+  // beforeAll's upload looked like it worked. 0 on the EDL arm means that arm ran
+  // BLIND and its output is not comparable to a sighted one.
+  videoPartsSent: number;
 }
 // Overwritten on every intercepted /api/gemini/text call; the test loop reads it
 // after the flow function returns. On a retry, the LAST (successful) call wins.
 let lastCall: CallMetrics | null = null;
+
+/** Count fileData parts in an outgoing request body. Shape-tolerant: flows send
+ *  either `{ parts: [...] }` or a bare array, and most send no media at all. */
+function countVideoParts(contents: any): number {
+  const parts = Array.isArray(contents) ? contents : contents?.parts;
+  if (!Array.isArray(parts)) return 0;
+  return parts.filter((p: any) => p?.fileData?.fileUri).length;
+}
 
 const fetchMock = vi.fn(async (url: any, init: any = {}) => {
   const urlStr =
     typeof url === 'string'
       ? url
       : (url?.url as string | undefined) ?? (url?.toString?.() as string | undefined) ?? '';
+
+  // --- Files-API upload seam -------------------------------------------
+  //
+  // Since a841f69 the EDL re-uploads every renderedUrl through
+  // /api/gemini/files/upload to mint a Gemini files/* URI. This harness has no
+  // server for that route, so without this stub EVERY scene's upload rejects,
+  // allSettled degrades them all, and the EDL arm silently runs PROMPT-ONLY —
+  // while the report still printed videoPartsIncluded: true. A wrong A/B result
+  // that looks right (recorded as follow-up #1 in workflows/edl_files_api_plan.md).
+  //
+  // The echo below is honest, not a fake: beforeAll already did the REAL upload
+  // against the live Files API and set each renderedUrl to the minted files/* URI.
+  // This only bypasses a proxy hop that doesn't exist in-process — the URI the
+  // model receives is genuinely the uploaded one. Deliberately NOT fixed by
+  // teaching proxyUploadFile to pass through files/ URLs: that would mask real
+  // upload failures in production to make a test pass.
+  if (urlStr.includes('/api/gemini/files/upload')) {
+    const { url: srcUrl } = JSON.parse(init.body as string);
+    // What production returns is `uploaded.uri` from the SDK
+    // (api/gemini/files/upload.ts:126), which is the FULL
+    // https://generativelanguage.googleapis.com/v1beta/files/<id> URL — not a
+    // bare `files/<id>`. beforeAll stores that same value as renderedUrl, so
+    // accept both spellings and reject anything that is not a Files API URI.
+    const isFilesUri =
+      typeof srcUrl === 'string' &&
+      (srcUrl.startsWith('files/') || /\/v1beta\/files\/[^/]+$/.test(srcUrl));
+    if (!isFilesUri) {
+      // Anything else means beforeAll's upload didn't happen — fail loudly rather
+      // than degrade into a prompt-only run wearing a "video attached" label.
+      throw new Error(
+        `research-tier.ab: expected a pre-minted Files API URI as renderedUrl, got "${srcUrl}". ` +
+          'The EDL arm would have run blind. Check the beforeAll Files API upload.'
+      );
+    }
+    return new Response(JSON.stringify({ uri: srcUrl }));
+  }
 
   if (urlStr.includes('/api/gemini/text')) {
     if (!ai) {
@@ -117,25 +228,11 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
     // both are swappable so arm forcing keeps re-testing every flow on either arm.
     let effModel: string = body.model;
     let config: any = body.config;
-    if (
-      (body.model === 'gemini-3.5-flash' || body.model === 'gemini-3.6-flash') &&
-      currentTargetModel
-    ) {
+    if (RESEARCH_TIER_MODELS.has(body.model) && currentTargetModel) {
       effModel = currentTargetModel;
-      // Google deprecated thinking_budget on the newer models; the approved
-      // mapping is thinkingLevel:'medium'. Map symmetrically so either arm gets a
-      // config the effective target accepts. Only the EDL flow sets thinking.
-      if (
-        currentTargetModel === 'gemini-3.6-flash' &&
-        config?.thinkingConfig?.thinkingBudget != null
-      ) {
-        config = { ...config, thinkingConfig: { thinkingLevel: 'medium' } };
-      } else if (
-        currentTargetModel === 'gemini-3.5-flash' &&
-        config?.thinkingConfig?.thinkingLevel != null
-      ) {
-        config = { ...config, thinkingConfig: { thinkingBudget: 4000 } };
-      }
+      // Map the thinking dialect to whatever the effective target accepts, so
+      // either arm gets a config it won't reject. Only the EDL flow sets one.
+      config = mapThinkingConfig(currentTargetModel, config);
     }
 
     const t0 = performance.now();
@@ -157,6 +254,7 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
         totalTokenCount: usage.totalTokenCount,
       },
       estUsd: estimateTextCostUsd(effModel, usage),
+      videoPartsSent: countVideoParts(body.contents),
     };
 
     return new Response(
@@ -270,6 +368,8 @@ interface ResultRecord {
   latencyMs: number | null;
   usage: CallMetrics['usage'];
   estUsd: number | null;
+  /** Ground truth from the wire — see CallMetrics.videoPartsSent. */
+  videoPartsSent: number | null;
   parsedOk: boolean;
   outputSummary: string;
   output: unknown;
@@ -283,31 +383,43 @@ async function runArm(
   fn: () => Promise<unknown>,
   validate: (out: any) => boolean
 ): Promise<ResultRecord> {
-  currentTargetModel = arm === 'A' ? 'gemini-3.5-flash' : 'gemini-3.6-flash';
+  currentTargetModel = arm === 'A' ? ARM_A : ARM_B;
   lastCall = null;
   let record: ResultRecord;
   try {
     const output = await fn();
+    // Snapshot through an explicit ASSERTION (not an annotation — a `const` just
+    // inherits the narrowed initializer type, so `const x: T | null = lastCall`
+    // does NOT work here; verified). `lastCall = null` above narrows the
+    // module-level binding to `null` for the rest of this function — TS control
+    // flow can't see the fetch mock reassigning it — so reading `lastCall?.x`
+    // directly resolves to `never`. Harmless at runtime (esbuild strips types),
+    // but it made this file impossible to typecheck. `tests/` is excluded from
+    // tsconfig, which is why nobody noticed.
+    const call = lastCall as CallMetrics | null;
     const summarySrc = typeof output === 'string' ? output : JSON.stringify(output);
     record = {
       flow,
       arm,
-      model: lastCall?.model ?? currentTargetModel,
-      latencyMs: lastCall?.latencyMs ?? null,
-      usage: lastCall?.usage ?? {},
-      estUsd: lastCall?.estUsd ?? null,
+      model: call?.model ?? currentTargetModel,
+      latencyMs: call?.latencyMs ?? null,
+      usage: call?.usage ?? {},
+      estUsd: call?.estUsd ?? null,
+      videoPartsSent: call?.videoPartsSent ?? null,
       parsedOk: !!validate(output),
       outputSummary: (summarySrc ?? '').slice(0, 400),
       output,
     };
   } catch (e: any) {
+    const call = lastCall as CallMetrics | null;
     record = {
       flow,
       arm,
-      model: lastCall?.model ?? currentTargetModel,
-      latencyMs: lastCall?.latencyMs ?? null,
-      usage: lastCall?.usage ?? {},
-      estUsd: lastCall?.estUsd ?? null,
+      model: call?.model ?? currentTargetModel,
+      latencyMs: call?.latencyMs ?? null,
+      usage: call?.usage ?? {},
+      estUsd: call?.estUsd ?? null,
+      videoPartsSent: call?.videoPartsSent ?? null,
       parsedOk: false,
       outputSummary: '',
       output: null,
@@ -352,22 +464,35 @@ function writeReports() {
   lines.push('');
   lines.push(`Ran at: ${new Date().toISOString()}`);
   lines.push('');
-  lines.push(`- Arm A: \`gemini-3.5-flash\` (current)`);
-  lines.push(`- Arm B: \`gemini-3.6-flash\` (candidate)`);
-  lines.push(`- EDL video parts included: **${videoPartsIncluded}**`);
+  lines.push(`- Arm A: \`${ARM_A}\` (incumbent)`);
+  lines.push(`- Arm B: \`${ARM_B}\` (candidate)`);
+  // Ground truth, counted off the wire — NOT the beforeAll upload flag. Before
+  // this was measured, a fully-degraded prompt-only EDL run still reported
+  // "videoPartsIncluded: true" (edl_files_api_plan.md follow-up #1).
+  const maxVideoParts = results.reduce((m, r) => Math.max(m, r.videoPartsSent ?? 0), 0);
+  lines.push(`- Files API upload in beforeAll succeeded: **${videoPartsIncluded}**`);
+  lines.push(`- Video parts ACTUALLY sent upstream (max across calls): **${maxVideoParts}**`);
+  if (videoPartsIncluded && maxVideoParts === 0) {
+    lines.push('');
+    lines.push(
+      '> ⛔ **THIS RESULT IS NOT TRUSTWORTHY.** The upload succeeded but zero video parts ' +
+        'reached the model, so the EDL arm ran BLIND. Do not grade the EDL rows.'
+    );
+  }
   lines.push('');
 
   for (const flow of flowOrder) {
     const rows = results.filter((r) => r.flow === flow);
     lines.push(`## ${flow}`);
     lines.push('');
-    lines.push('| Arm | Model | Latency (ms) | Prompt tok | Output tok | Thoughts tok | Total tok | Est USD | parsedOk | Error |');
-    lines.push('|---|---|---|---|---|---|---|---|---|---|');
+    lines.push('| Arm | Model | Latency (ms) | Prompt tok | Output tok | Thoughts tok | Total tok | Est USD | Video parts | parsedOk | Error |');
+    lines.push('|---|---|---|---|---|---|---|---|---|---|---|');
     for (const r of rows) {
       lines.push(
         `| ${r.arm} | ${r.model} | ${fmt(r.latencyMs)} | ${fmt(r.usage.promptTokenCount)} | ` +
           `${fmt(r.usage.candidatesTokenCount)} | ${fmt(r.usage.thoughtsTokenCount)} | ` +
           `${fmt(r.usage.totalTokenCount)} | ${r.estUsd != null ? fmt(r.estUsd, 6) : '—'} | ` +
+          `${r.videoPartsSent ?? '—'} | ` +
           `${r.parsedOk} | ${r.error ? r.error.replace(/\|/g, '\\|').slice(0, 120) : ''} |`
       );
     }
@@ -433,7 +558,9 @@ afterAll(() => {
 
 // --- 9. The six flows — arm A then arm B, sequential ---------------------
 
-describe.skipIf(!SHOULD_RUN)('Research-tier A/B (gemini-3.5-flash vs gemini-3.6-flash)', () => {
+// Title is built from the live arm constants — a hardcoded one printed
+// "3.5-flash vs 3.6-flash" through a run that actually exercised 3.6 vs 3.7.
+describe.skipIf(!SHOULD_RUN)(`Research-tier A/B (${ARM_A} vs ${ARM_B})`, () => {
   it(
     'generateEditDecisionList',
     async () => {

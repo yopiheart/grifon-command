@@ -20,10 +20,15 @@ import { GoogleGenAI } from '@google/genai';
 // styled clip. Only a clean, parsed verdict can fail a clip.
 // ============================================================================
 
-/** Vision-capable Gemini flash model reused for the gate (researchTextModel /
- *  MODEL_RESEARCH in this codebase). Overridable for eval tuning; never invents
- *  a new id. */
-export const OMNI_GATE_MODEL = process.env.OMNI_GATE_MODEL || 'gemini-3.5-flash';
+/** Vision-capable Gemini flash model reused for the gate. Overridable for eval
+ *  tuning; never invents a new id.
+ *
+ *  2026-08-15: 3.5-flash → 3.7-flash (Neil-approved). Output rate $9.00 → $3.75
+ *  per Mtok — the most expensive text rate we paid, on fail-open flag-only eval
+ *  infra. Measured −59% cost / −24% latency across the research tier
+ *  (workflows/gemini37_adoption.md Slice 1). ⏪ Instant rollback WITHOUT a deploy:
+ *  set the OMNI_GATE_MODEL env var back to 'gemini-3.5-flash' on Vercel. */
+export const OMNI_GATE_MODEL = process.env.OMNI_GATE_MODEL || 'gemini-3.7-flash';
 
 // ----------------------------------------------------------------------------
 // OMNI_GATE_PROMPT — EVAL infra. Main-loop review requested on this wording.

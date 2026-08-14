@@ -24,8 +24,14 @@ import { GoogleGenAI, Type } from '@google/genai';
 // ============================================================================
 
 /** Vision-capable Gemini flash model reused for the still gate (same convention
- *  as OMNI_GATE_MODEL). Overridable for eval tuning; never invents a new id. */
-export const IMAGE_GATE_MODEL = process.env.IMAGE_GATE_MODEL || 'gemini-3.5-flash';
+ *  as OMNI_GATE_MODEL). Overridable for eval tuning; never invents a new id.
+ *
+ *  2026-08-15: 3.5-flash → 3.7-flash (Neil-approved), in lockstep with
+ *  OMNI_GATE_MODEL. Output rate $9.00 → $3.75 per Mtok. ⚠️ Unlike the omni gate
+ *  this one is NOT behaviorally inert — it drives the only automated reroll, so
+ *  watch flag/reroll rates after this ships. ⏪ Instant rollback WITHOUT a deploy:
+ *  set the IMAGE_GATE_MODEL env var back to 'gemini-3.5-flash' on Vercel. */
+export const IMAGE_GATE_MODEL = process.env.IMAGE_GATE_MODEL || 'gemini-3.7-flash';
 
 // ----------------------------------------------------------------------------
 // IMAGE_GATE_PROMPT — EVAL infra. Main-loop review requested on this wording.

@@ -414,14 +414,21 @@ const FlowBody = z.object({
 });
 
 // Pin the legacy forwarder to Grifon's approved text models. Without this an
-// authenticated client could request arbitrary/expensive models. 3.6-flash and
-// 3.5-flash-lite are pre-approved for upcoming model-adoption slices. A model
-// outside this set fails safeParse and takes the existing invalid_body 400 path.
+// authenticated client could request arbitrary/expensive models. 3.6-flash,
+// 3.5-flash-lite and 3.7-flash are pre-approved for model-adoption slices. A
+// model outside this set fails safeParse and takes the invalid_body 400 path.
+//
+// 3.7-flash added 2026-08-15. Inert today (nothing sends it), but without it a
+// future researchTextModel flip would 400 every research-tier call — and the A/B
+// harness could NOT catch that, since it intercepts at the fetch layer and never
+// reaches this parse. Cost exposure does not widen: at $0.75/$3.75 it is cheaper
+// than 3.5-flash and 3.6-flash, both already allowed.
 export const LegacyBody = z.object({
   model: z.enum([
     'gemini-3.1-flash-lite',
     'gemini-3.5-flash',
     'gemini-3.6-flash',
+    'gemini-3.7-flash',
     'gemini-3.5-flash-lite',
   ]),
   contents: z.unknown(),

@@ -164,7 +164,14 @@ the cap, the attach path, or the EDL model id.
 
 ## Known follow-ups (recorded 2026-08-14, none blocking)
 
-**1. `tests/regression/research-tier.ab.test.ts` now degrades silently.** That opt-in
+**1. ✅ FIXED 2026-08-15** (branch `feat/gemini37-cogs-prep`, before anyone ran it — see
+[`gemini37_adoption.md`](gemini37_adoption.md) Slice 0). The harness now stubs the
+`/api/gemini/files/upload` seam, throws loudly on a non-`files/` URL, and reports
+`videoPartsSent` counted off the wire with a ⛔ banner when the upload flag and the wire
+disagree. Fixed the prescribed way — stubbing the seam, NOT by adding a `files/`-prefix
+passthrough to `proxyUploadFile`. Original finding below, kept for the record:
+
+~~**1. `tests/regression/research-tier.ab.test.ts` now degrades silently.**~~ That opt-in
 harness (`RUN_AB=1`) pre-mints `files/*` URIs in `beforeAll` and passes them as
 `renderedUrl`. They now get re-uploaded through `/api/gemini/files/upload`, which the
 harness does not stub — so `allSettled` degrades every scene and the EDL arm runs
