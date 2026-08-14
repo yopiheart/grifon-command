@@ -286,6 +286,71 @@ changes nothing.
 
 ---
 
+## Slice 4 — the AD SCRIPT flow 🔴 FLASH-LITE DROPS THE OFFER, 4/4 (2026-08-15)
+
+Opened because Neil asked the right question: *"kung titipirin natin ang storyboard and script,
+baka maka-apekto rin to sa conversion."* He was right, and the evidence is countable, not
+aesthetic.
+
+Harness: [`tests/regression/adscript.ab.test.ts`](../tests/regression/adscript.ab.test.ts)
+(`RUN_AB=1`). Replays the REAL tuned flow — `buildAdScriptPrompt` imported from
+`api/_lib/prompts.ts`, zero prompt duplication — mirroring `FLOW_REGISTRY.adscript` including
+its hook-starvation retry, with the model as the only variable. 2 fixtures × 2 arms ×
+2 samples = 8 live calls, **$0.056**.
+
+| Arm | Model | Calls | Cost/call | Avg latency | Empty hooks |
+|---|---|---|---|---|---|
+| A | `gemini-3.1-flash-lite` **(production today)** | 4 | $0.0024 | 4.3s | 0/4 |
+| B | `gemini-3.7-flash` | 4 | $0.0116 | 8.2s | 0/4 |
+
+### 🔴 The finding: the incumbent silently drops the offer
+
+**`gemini-3.1-flash-lite` omitted the offer from the script in 4 of 4 runs. `gemini-3.7-flash`
+included it in 4 of 4.** The offer is supplied in the input and is the thing that earns the
+click; leaving it out is a direct-response failure, not a style difference. This is a count, not
+a judgement — grep the offer terms in `.tmp/adscript-ab/results.json` to reproduce.
+
+Secondary, softer observations (one reader, so weigh accordingly):
+
+- **Hook specificity.** A: *"Kape na galing pa sa Bukidnon, susubukan?"* B: *"Bakit ito laging
+  laman ng balikbayan box?"* B reaches for a real cultural anchor; A stays product-first.
+- **Fixture fidelity.** The cleaning fixture's pain is a visitor arriving Tuesday. B used it
+  (*"Parating na ang bisita pero wala ka nang natitirang oras"*); A drifted to invented laundry
+  (*"tambak ang labahan"*), which is not a cleaning-service claim at all.
+- **Beat count.** A: 6–7 body lines. B: 7–9.
+
+### The economics
+
+A script is ONE call per ad. Upgrading costs **+$0.009 per ad ≈ ₱0.53** — against a measured
+**$4.96** ad. That is **+0.19% of COGS** to stop dropping the offer, on the artifact every
+downstream stage is built from ([`cogs_analysis.md`](cogs_analysis.md): text is <1% of spend,
+video ~90%).
+
+### ⏸ NOT applied — Neil's call
+
+`MODEL_TEXT` is a LOCKED line and it feeds **all five crown-jewel flows**, not just adscript, so
+flipping it moves storyboard/offer/influencer-script at the same time. Two options:
+
+- **Narrow:** give `adscript` its own model constant in `FLOW_REGISTRY`, leave the rest on
+  flash-lite. Smallest blast radius, and adscript is where the evidence is.
+- **Broad:** flip `MODEL_TEXT`. Needs its own A/B per flow first — do NOT infer storyboard from
+  this run.
+
+⚠️ Real risk, and it is not cost: **the tuned prompts were tuned against flash-lite's behavior.**
+A stronger model can change output length and tone. B already runs longer (7–9 beats vs 6),
+which may or may not fit the formula's timing. Grade with `gemini-eval` before shipping.
+
+⚠️ Also note 3.7 spends far more thinking tokens here (≈2,400 vs ≈800), which is why it is 4.8x
+the cost rather than 3x. That gap will NOT shrink when the introductory rate expires.
+
+Reproduce:
+
+```powershell
+$env:RUN_AB='1'; npx vitest run tests/regression/adscript.ab.test.ts --reporter=verbose
+```
+
+---
+
 ## ⛔ Explicitly NOT recommended
 
 **Do not put 3.7 on `textModel` / `fastTextModel`.** Both are `gemini-3.1-flash-lite` at
