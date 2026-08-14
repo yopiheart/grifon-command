@@ -6,6 +6,8 @@ import {
   logModelUsage,
   logImageUsage,
   logVideoUsage,
+  gemini37IntroRateExpired,
+  GEMINI_37_INTRO_RATE_LAST_DAY,
 } from '../../api/_lib/modelCosts.js';
 
 const OMNI_MODEL = 'gemini-omni-flash-preview';
@@ -60,6 +62,21 @@ describe('modelCosts — billing-grade text rates (verified 2026-07-22)', () => 
     expect(estimateTextCostUsd('gemini-3.6-flash', ONE_M)).toBeCloseTo(9.0, 10);
   });
 
+  it('gemini-3.7-flash: 0.75 in + 3.75 out (INTRODUCTORY rate)', () => {
+    expect(estimateTextCostUsd('gemini-3.7-flash', ONE_M)).toBeCloseTo(4.5, 10);
+  });
+
+  it('gemini-3.7-flash intro rate is exactly half of gemini-3.6-flash', () => {
+    // The whole cost case for adopting 3.7 is this ratio. If Google changes
+    // either row, this fails and the adoption maths gets re-derived rather than
+    // assumed. Post-2026-12-31 the rates reach parity and this SHOULD be updated
+    // together with the price row (the tripwire below is what forces that).
+    expect(estimateTextCostUsd('gemini-3.7-flash', ONE_M)).toBeCloseTo(
+      estimateTextCostUsd('gemini-3.6-flash', ONE_M) / 2,
+      10
+    );
+  });
+
   it('gemini-3.5-flash-lite: 0.30 in + 2.50 out', () => {
     expect(estimateTextCostUsd('gemini-3.5-flash-lite', ONE_M)).toBeCloseTo(2.8, 10);
   });
@@ -69,6 +86,34 @@ describe('modelCosts — billing-grade text rates (verified 2026-07-22)', () => 
     expect(estimateTextCostUsd('gemini-3.0-ultra', ONE_M)).toBe(
       estimateTextCostUsd('gemini-3.1-flash-lite', ONE_M)
     );
+  });
+});
+
+describe('modelCosts — gemini-3.7-flash introductory-rate tripwire', () => {
+  // DELIBERATE TIME BOMB. Not an accident, not flake — read this before "fixing" it.
+  //
+  // gemini-3.7-flash is priced at 0.75 / 3.75 only through 2026-12-31; on
+  // 2027-01-01 it reverts to 1.5 / 7.5. Nothing else in the repo would notice,
+  // and every COGS figure on that model would silently read 2x low. This test is
+  // the thing that notices.
+  //
+  // WHEN THIS FAILS, the fix is NOT to delete it — it is:
+  //   1. verify Google's current 3.7-flash rate on the live pricing page,
+  //   2. update the MODEL_PRICES row in api/_lib/modelCosts.ts to match,
+  //   3. update the two rate assertions above (the "half of 3.6" one will break too),
+  //   4. then retire this block.
+  it('is still inside the introductory window (see comment when this fails)', () => {
+    expect(
+      gemini37IntroRateExpired(),
+      `gemini-3.7-flash introductory pricing ended ${GEMINI_37_INTRO_RATE_LAST_DAY}. ` +
+        'The MODEL_PRICES row in api/_lib/modelCosts.ts is now a ~2x UNDER-estimate. ' +
+        'Re-verify the live rate and update the row + the rate assertions in this file.'
+    ).toBe(false);
+  });
+
+  it('flips on the day after the last intro day', () => {
+    expect(gemini37IntroRateExpired(new Date('2026-12-31T12:00:00Z'))).toBe(false);
+    expect(gemini37IntroRateExpired(new Date('2027-01-01T00:00:01Z'))).toBe(true);
   });
 });
 
