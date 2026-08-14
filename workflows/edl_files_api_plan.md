@@ -115,8 +115,36 @@ issue-filing path.
 ## Run order
 
 1. ~~Look up the Files API retention window.~~ **Done — 48h, option A.**
-2. Brief `code-executor` (server surface + transport, not prompts — but it lands next to a
-   TUNED file, so it does not go to the Sol lane).
-3. Fix + live one-part assertion in the same commit.
-4. Raise `EDL_MAX_ATTACHED_VIDEOS`, retarget the two unit tests.
-5. Add the assertion to the nightly loop.
+2. ~~Brief `code-executor`.~~ **Done** — [edl_files_api_brief.md](edl_files_api_brief.md).
+3. ~~Fix + live one-part assertion.~~ **Done, SHIPPED 2026-08-14.**
+4. ~~Raise the cap, retarget the two unit tests.~~ **Done — cap is 8.**
+5. **← NEXT: add the live assertion to the Tier 3 nightly loop.** The regression test
+   exists (`tests/regression/edl-video-part.regression.test.ts`, `RUN_REGRESSION=1`) but
+   nothing runs it on a schedule yet, so the blackout class of failure is still only
+   *detectable*, not *detected*. Wire it into
+   [.github/workflows/nightly-regression.yml](../.github/workflows/nightly-regression.yml).
+
+---
+
+## Known follow-ups (recorded 2026-08-14, none blocking)
+
+**1. `tests/regression/research-tier.ab.test.ts` now degrades silently.** That opt-in
+harness (`RUN_AB=1`) pre-mints `files/*` URIs in `beforeAll` and passes them as
+`renderedUrl`. They now get re-uploaded through `/api/gemini/files/upload`, which the
+harness does not stub — so `allSettled` degrades every scene and the EDL arm runs
+prompt-only **while the report still prints `videoPartsIncluded: true`.** A wrong A/B
+result that looks right, which is the exact failure class this whole change exists to kill.
+Fix by stubbing the upload seam in that harness. **Deliberately NOT fixed by adding a
+`files/`-prefix passthrough to `proxyUploadFile`** — that would mask real upload failures in
+production to make a test pass. Nobody is running `RUN_AB=1` today; fix it before anyone does.
+
+**2. The download in `api/gemini/files/upload.ts` has no size cap.** It buffers the whole
+response into memory (`Buffer.from(await dl.arrayBuffer())`) before writing to `/tmp`. Any
+authenticated user can POST a URL to an arbitrarily large public file and OOM the function.
+`assertSafeMediaUrl` blocks internal hosts but says nothing about size. Low severity —
+self-inflicted, costs the caller their own rate-limit budget — and `omni-video.ts` has had
+the same shape all along, so this is pre-existing, not a regression. A `content-length`
+check plus a streamed write is a few lines whenever someone is in there.
+
+**3. `omni-video.ts` is still unpinned in `vercel.json`** (see §4 above). The new handler is
+pinned; its neighbour is not.

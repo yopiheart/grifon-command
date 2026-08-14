@@ -10,7 +10,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 //      platform / formulaApplied / scriptStyleDetected value outside its
 //      declared union.
 //   3. Request-shape regressions — sceneBatch.renderedUrl MUST land as
-//      fileData parts and audioOverlays as base64 inlineData parts (blob:
+//      fileData parts carrying a Gemini-minted `files/*` URI (never the raw
+//      R2 object URL) and audioOverlays as base64 inlineData parts (blob:
 //      URLs can't go to Gemini's File API) on the outbound /api/gemini/text
 //      body in the documented order (text prompt → per-scene video → audio
 //      overlays).
@@ -51,10 +52,27 @@ const blobResponse = (url: string) => ({
   }),
 });
 
+// Scene videos are uploaded to the Gemini Files API through
+// /api/gemini/files/upload before the EDL call (Gemini only accepts URIs it
+// minted itself). Mocked at that proxy seam; the minted URI carries the source
+// filename so part order stays checkable.
+const uploadResponse = (body: string) => {
+  const stem = JSON.parse(body).url.split('/').pop().replace('.mp4', '');
+  return { ok: true, status: 200, json: async () => ({ uri: `files/${stem}`, name: `files/${stem}` }) };
+};
+
+// blob: audio fetches and Files API mints are infrastructure, not model attempts.
+// Routed identically in every test so each mock below only has to describe what
+// the MODEL returns.
+const mediaResponse = (url: any, init: any): any | null => {
+  if (typeof url !== 'string') return null;
+  if (url.startsWith('blob:')) return blobResponse(url);
+  if (url.includes('/api/gemini/files/upload')) return uploadResponse(init.body);
+  return null;
+};
+
 const mockFetchRouting = (edl: unknown) => {
-  fetchMock.mockImplementation(async (url: any) =>
-    typeof url === 'string' && url.startsWith('blob:') ? blobResponse(url) : okGemini(edl)
-  );
+  fetchMock.mockImplementation(async (url: any, init: any) => mediaResponse(url, init) ?? okGemini(edl));
 };
 
 const captureLastFetchBody = (): any => {
@@ -319,17 +337,18 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
     expect(typeof parts[0].text).toBe('string');
     expect(parts[0].text.length).toBeGreaterThan(100);
 
-    // No video parts: EDL_MAX_ATTACHED_VIDEOS ships at 0 because Gemini stopped
-    // accepting our R2 object URLs as fileData.fileUri and answers a request
-    // carrying even ONE of them with 429 RESOURCE_EXHAUSTED (isolated live
-    // 2026-08-14 — see tests/unit/edlVideoAttachCap.test.ts). The order contract
-    // itself is unchanged: text first, then videos, then audios.
-    expect(parts.filter((p: any) => p.fileData)).toEqual([]);
+    // Parts 1..2: per-scene videos, in sceneBatch order, each carrying the URI
+    // minted by /api/gemini/files/upload — NOT the R2 object URL. Gemini answers
+    // a request carrying even ONE raw R2 URL with 429 RESOURCE_EXHAUSTED
+    // (isolated live 2026-08-14 — see tests/unit/edlVideoAttachCap.test.ts).
+    expect(parts[1].fileData).toEqual({ fileUri: 'files/a', mimeType: 'video/mp4' });
+    expect(parts[2].fileData).toEqual({ fileUri: 'files/b', mimeType: 'video/mp4' });
+    expect(parts.filter((p: any) => p.fileData).length).toBe(2);
 
-    // Parts 1..2: audio overlays inlined as base64, in audioOverlays array
+    // Parts 3..4: audio overlays inlined as base64, in audioOverlays array
     // order (NOT sceneIdx order). The bytes are the blob URL itself (see mock).
-    expect(parts[1].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-1') });
-    expect(parts[2].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-0') });
+    expect(parts[3].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-1') });
+    expect(parts[4].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-0') });
   });
 });
 
@@ -554,12 +573,12 @@ describe('EDL degrade lane — script-stub retry on prompt block', () => {
   const runMarker = () =>
     generateEditDecisionList({ ...markerInput, finalScript: markerScript });
 
-  // Only the /api/gemini/* proxy calls carry a request body (blob: fetches don't).
-  // Filter on that to count model attempts independent of the media-fetch traffic.
+  // Model attempts are the /api/gemini/text calls only — blob: audio fetches and
+  // the /api/gemini/files/upload mints are media traffic, not attempts.
   const geminiProxyCalls = () =>
     fetchMock.mock.calls.filter((c: any) => {
       const url = c[0];
-      return typeof url === 'string' && !url.startsWith('blob:');
+      return typeof url === 'string' && url.includes('/api/gemini/text');
     });
 
   const bodyOf = (call: any): any => JSON.parse(call[1].body);
@@ -570,8 +589,9 @@ describe('EDL degrade lane — script-stub retry on prompt block', () => {
     // 1st gemini call blocked-empty; 2nd returns a valid EDL. blob: fetches always
     // resolve to a Blob shape. Track only which gemini attempt we're on.
     let geminiAttempt = 0;
-    fetchMock.mockImplementation(async (url: any) => {
-      if (typeof url === 'string' && url.startsWith('blob:')) return blobResponse(url);
+    fetchMock.mockImplementation(async (url: any, init: any) => {
+      const media = mediaResponse(url, init);
+      if (media) return media;
       geminiAttempt += 1;
       if (geminiAttempt === 1) {
         return { ok: true, status: 200, json: async () => emptyBlockedEnvelope };
@@ -605,10 +625,8 @@ describe('EDL degrade lane — script-stub retry on prompt block', () => {
   });
 
   it('double block: both attempts empty+blocked → throws EDL_EMPTY_RESPONSE with the degraded-retry marker, no third call', async () => {
-    fetchMock.mockImplementation(async (url: any) =>
-      typeof url === 'string' && url.startsWith('blob:')
-        ? blobResponse(url)
-        : { ok: true, status: 200, json: async () => emptyBlockedEnvelope }
+    fetchMock.mockImplementation(async (url: any, init: any) =>
+      mediaResponse(url, init) ?? { ok: true, status: 200, json: async () => emptyBlockedEnvelope }
     );
 
     await expect(runMarker()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
@@ -617,19 +635,16 @@ describe('EDL degrade lane — script-stub retry on prompt block', () => {
   });
 
   it('double block: the thrown message carries the "(degraded retry also blocked)" suffix', async () => {
-    fetchMock.mockImplementation(async (url: any) =>
-      typeof url === 'string' && url.startsWith('blob:')
-        ? blobResponse(url)
-        : { ok: true, status: 200, json: async () => emptyBlockedEnvelope }
+    fetchMock.mockImplementation(async (url: any, init: any) =>
+      mediaResponse(url, init) ?? { ok: true, status: 200, json: async () => emptyBlockedEnvelope }
     );
     await expect(runMarker()).rejects.toThrow(/\(degraded retry also blocked\)/);
   });
 
   it('empty WITHOUT a blockReason (MAX_TOKENS) does NOT fire the degrade lane — one call, no wasted spend', async () => {
-    fetchMock.mockImplementation(async (url: any) =>
-      typeof url === 'string' && url.startsWith('blob:')
-        ? blobResponse(url)
-        : { ok: true, status: 200, json: async () => ({ text: '', candidates: [{ finishReason: 'MAX_TOKENS' }] }) }
+    fetchMock.mockImplementation(async (url: any, init: any) =>
+      mediaResponse(url, init) ??
+      { ok: true, status: 200, json: async () => ({ text: '', candidates: [{ finishReason: 'MAX_TOKENS' }] }) }
     );
 
     await expect(runMarker()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
