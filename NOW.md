@@ -8,24 +8,24 @@ discharged. Run `apr_2f930418` shipped 10 scenes for ~$4.96 ≈ ₱288. Nothing 
 nothing is perishable any more — full write-up, corrected root cause, cost table and the
 9-item finding list are in [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
 
-## ▶ NEXT ACTION — merge `feat/edl-files-api`, then watch one live run
-**The EDL fix is BUILT and reviewed but NOT MERGED — production is still blind until it
-deploys.** Branch `feat/edl-files-api` (`458dc7f`, pushed). New `api/gemini/files/upload.ts`
-mints a Files API URI per clip; `geminiService.ts` fans the uploads out with `allSettled`;
-`EDL_MAX_ATTACHED_VIDEOS` 0 → 8. Design + the 48h-retention reasoning:
-[`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
+## ▶ NEXT ACTION — one real run on the deployed code, watched by Neil
+**SHIPPED 2026-08-14 17:47 — the EDL has its eyes back in production.** Merged as ONE commit
+`a841f69` (`--no-ff` on purpose). `api/gemini/files/upload.ts` mints a Files API URI per
+clip, `geminiService.ts` fans the uploads out with `allSettled`, `EDL_MAX_ATTACHED_VIDEOS`
+0 → 10. Design + the 48h-retention reasoning: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
 
-Verified locally: `npm run build` exit 0 · `npm run test` 100 files / 1195 tests ·
-`check:bundle-leak` 0 markers · no prompt, schema or model-ID change.
+**⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` puts the editor back to the safe
+blind state. That is the whole reason it went in as a merge commit.
 
-**✅ BOTH LIVE PROBES PASSED** (`tests/regression/edl-video-part.regression.test.ts`):
-- `RUN_REGRESSION=1` 17:37 — ONE `files/*` part → **200, not 429**, usable EDL, 23s.
-  Exact inverse of the 08-14 isolation.
-- `RUN_EDL_FULL_CAP=1` 17:42 — **TEN** parts → **200**, 30.9s. Harsher than production
-  (10 × 15.5s ≈ 155s of video vs ~60s for a real 10-scene ad), so a real run has headroom.
+Measured live BEFORE merging (`tests/regression/edl-video-part.regression.test.ts`):
+ONE `files/*` part → **200, not 429**, 23s · **TEN** parts → **200**, 30.9s, with ~155s of
+video against ~60s for a real 10-scene ad, so a real run has headroom. Plus build exit 0,
+1195 tests, `check:bundle-leak` 0, no prompt/schema/model-ID change.
 
-**Nothing testable is left unmeasured. Merge is de-risked** — what remains needs the merge
-itself: a real end-to-end run on deployed code, watched by Neil.
+⚠️ **STILL UNPROVEN, AND DO NOT CLAIM IT:** that an edit made WITH eyes is better than the
+blind one. The blind pilot scored well and Neil passed both its gates. All that is proven is
+that the model accepts the video and does not 429. **Only a watched live run answers the
+quality question** — that is the next action, and nothing else can substitute for it.
 
 **Then step 5 of the plan: wire `tests/regression/edl-video-part.regression.test.ts` into
 the Tier 3 nightly loop.** The assertion exists; nothing runs it on a schedule, so this
