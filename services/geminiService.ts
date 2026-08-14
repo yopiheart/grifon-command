@@ -1104,14 +1104,29 @@ export const SFX_BANK: readonly SfxBankId[] = [
 /**
  * Per-request ceiling on attached scene videos in the EDL call.
  *
- * Gemini rejects an EDL request carrying 10 attached scene videos with a 429
- * RESOURCE_EXHAUSTED even when every project quota reads 0% (paid tier 3,
- * verified 2026-08-14). 9 attached videos is the highest count proven to
- * succeed in production (runs 2026-07-23 and 2026-07-31); 8 keeps one slot of
- * margin. Scenes beyond the cap stay in sceneBatch and in the prompt — they are
- * simply described as videoAttached:no, a branch the tuned prompt already has.
+ * TEMPORARILY 0 — Gemini no longer accepts our scene videos at all.
+ *
+ * We pass the R2 object URL straight through as `fileData.fileUri` (see the
+ * videoParts loop below), and Gemini's documented contract only accepts URIs
+ * minted by its own Files API. It tolerated arbitrary HTTPS URLs until
+ * 2026-07-31 and stopped some time before 2026-08-13. Isolated live on
+ * 2026-08-14 against production: the SAME model, endpoint and second returns
+ * 200 with zero video parts and 429 RESOURCE_EXHAUSTED with exactly ONE — so
+ * this is not request size, not scene count, and not project quota (every
+ * quota row read 0% on a paid tier 3 account).
+ *
+ * 0 keeps the pipeline alive: every scene is described to the model as
+ * videoAttached:no — a branch the tuned prompt already has, with its own
+ * timing rule (scriptLine.length / 18, clamped 3-8s) — so the EDL still
+ * returns one entry per scene and the render keeps all its sources. The cost
+ * is a blind edit: cuts and transitions are inferred from the script instead
+ * of watched.
+ *
+ * RESTORE PATH: upload each scene video to the Gemini Files API and pass the
+ * returned files/* URI here, then raise this cap. That is the supported
+ * contract and it also survives R2 presign expiry.
  */
-const EDL_MAX_ATTACHED_VIDEOS = 8;
+const EDL_MAX_ATTACHED_VIDEOS = 0;
 
 /**
  * Picks which sceneBatch entries get their video attached to the EDL request.
@@ -1123,15 +1138,21 @@ const EDL_MAX_ATTACHED_VIDEOS = 8;
  * is attached (unchanged behavior); over it, the FIRST and LAST rendered scenes
  * always survive (hook + close) and the remaining slots go to the earliest
  * rendered scenes in order. Transport concern, not creative.
+ *
+ * The cap is an upper bound the result NEVER exceeds, including at 0 and 1.
+ * The hook/close pair is seeded only when there is room for it, otherwise a
+ * cap of 0 would still return two videos and a cap of 1 would return two.
  */
 export const selectEdlVideoAttachIndexes = (
   sceneBatch: readonly { renderedUrl?: string }[],
   cap: number = EDL_MAX_ATTACHED_VIDEOS,
 ): Set<number> => {
+  if (cap <= 0) return new Set();
   const eligible: number[] = [];
   sceneBatch.forEach((s, i) => { if (s.renderedUrl) eligible.push(i); });
   if (eligible.length <= cap) return new Set(eligible);
-  const picked = new Set<number>([eligible[0], eligible[eligible.length - 1]]);
+  const picked = new Set<number>([eligible[0]]);
+  if (cap > 1) picked.add(eligible[eligible.length - 1]);
   for (const i of eligible) {
     if (picked.size >= cap) break;
     picked.add(i);

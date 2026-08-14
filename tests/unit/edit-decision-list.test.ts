@@ -319,14 +319,17 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
     expect(typeof parts[0].text).toBe('string');
     expect(parts[0].text.length).toBeGreaterThan(100);
 
-    // Parts 1..2: per-scene video URLs, in sceneBatch order
-    expect(parts[1].fileData).toEqual({ fileUri: 'https://example.com/a.mp4', mimeType: 'video/mp4' });
-    expect(parts[2].fileData).toEqual({ fileUri: 'https://example.com/b.mp4', mimeType: 'video/mp4' });
+    // No video parts: EDL_MAX_ATTACHED_VIDEOS ships at 0 because Gemini stopped
+    // accepting our R2 object URLs as fileData.fileUri and answers a request
+    // carrying even ONE of them with 429 RESOURCE_EXHAUSTED (isolated live
+    // 2026-08-14 — see tests/unit/edlVideoAttachCap.test.ts). The order contract
+    // itself is unchanged: text first, then videos, then audios.
+    expect(parts.filter((p: any) => p.fileData)).toEqual([]);
 
-    // Parts 3..4: audio overlays inlined as base64, in audioOverlays array
+    // Parts 1..2: audio overlays inlined as base64, in audioOverlays array
     // order (NOT sceneIdx order). The bytes are the blob URL itself (see mock).
-    expect(parts[3].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-1') });
-    expect(parts[4].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-0') });
+    expect(parts[1].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-1') });
+    expect(parts[2].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-0') });
   });
 });
 

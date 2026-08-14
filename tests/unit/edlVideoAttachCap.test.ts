@@ -2,23 +2,30 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Cap on how many scene videos one EDL request may attach.
 //
-// Production evidence (producer_runs): every EDL run with <=9 attached videos
-// succeeded; the single run with 10 failed with a reproducible 429
-// RESOURCE_EXHAUSTED while every project quota read 0% on a paid tier-3
-// account. The fix caps attachments at 8 and lets the surplus scenes ride in
-// the prompt as videoAttached:no.
+// Root cause (isolated live against production, 2026-08-14): we hand Gemini the
+// R2 object URL as `fileData.fileUri`, but its contract only accepts URIs minted
+// by its own Files API. It tolerated arbitrary HTTPS URLs until 2026-07-31 and
+// stopped some time before 2026-08-13. Same model, same endpoint, same second:
+// ZERO video parts returns 200, exactly ONE returns 429 RESOURCE_EXHAUSTED. So
+// it is not request size, not scene count, and not project quota (every quota
+// row read 0% on a paid tier-3 account). The cap therefore ships at 0 — every
+// scene rides in the prompt as videoAttached:no, a branch the tuned prompt
+// already has — until the Files API upload path lands.
 //
 // Catches:
-//   1. Selection-rule regressions — the cap, the always-keep-first-and-last
-//      rule, sceneBatch-INDEX (not sceneIdx, not eligible-position) semantics,
-//      and determinism.
-//   2. Request-shape regressions at the proxy seam — an over-cap run must put
-//      exactly 8 fileData parts on the wire, and the prompt's per-scene
-//      videoAttached lines must agree with what was actually attached.
+//   1. Selection-rule regressions — the cap as a hard upper bound (including 0
+//      and 1), the always-keep-first-and-last rule when there is room for it,
+//      sceneBatch-INDEX (not sceneIdx, not eligible-position) semantics, and
+//      determinism. These pass the cap EXPLICITLY so the rule stays under test
+//      whatever the shipped default is.
+//   2. Request-shape regressions at the proxy seam, against the SHIPPED default:
+//      no fileData parts reach the wire and every videoAttached line says no.
+//      Raising the cap without restoring a supported URI scheme fails here —
+//      which is the point.
 //   3. Degrade-lane drift — the stubbed retry must attach the SAME videos.
 //
-// Does NOT catch: whether 8 is the right number. That's a live-run question;
-// the console.info in generateEditDecisionList is the evidence trail.
+// Does NOT catch: whether Gemini accepts a given URI scheme. That is a live-run
+// question; the console.info in generateEditDecisionList is the evidence trail.
 
 vi.mock('../../services/supabaseClient', () => ({
   getSupabase: () => ({
@@ -42,9 +49,8 @@ const rendered = (n: number) =>
 
 describe('selectEdlVideoAttachIndexes', () => {
   it('attaches every rendered scene when the batch is at or under the cap', () => {
-    expect([...selectEdlVideoAttachIndexes(rendered(4))]).toEqual([0, 1, 2, 3]);
-    expect(selectEdlVideoAttachIndexes(rendered(8)).size).toBe(8);
-    expect([...selectEdlVideoAttachIndexes(rendered(8))].sort((a, b) => a - b))
+    expect([...selectEdlVideoAttachIndexes(rendered(4), 8)]).toEqual([0, 1, 2, 3]);
+    expect([...selectEdlVideoAttachIndexes(rendered(8), 8)].sort((a, b) => a - b))
       .toEqual([0, 1, 2, 3, 4, 5, 6, 7]);
   });
 
@@ -55,17 +61,15 @@ describe('selectEdlVideoAttachIndexes', () => {
       { renderedUrl: '' },
       { renderedUrl: 'https://example.com/d.mp4' },
     ];
-    expect([...selectEdlVideoAttachIndexes(batch)].sort((a, b) => a - b)).toEqual([0, 3]);
+    expect([...selectEdlVideoAttachIndexes(batch, 8)].sort((a, b) => a - b)).toEqual([0, 3]);
   });
 
   it('over the cap: keeps the first and last scene, fills the rest from the front', () => {
     // 10 rendered scenes, cap 8 → hook (0) + close (9) + the earliest six (1..6).
     // Scenes 7 and 8 are the ones dropped.
-    const picked = selectEdlVideoAttachIndexes(rendered(10));
+    const picked = selectEdlVideoAttachIndexes(rendered(10), 8);
     expect(picked.size).toBe(8);
     expect([...picked].sort((a, b) => a - b)).toEqual([0, 1, 2, 3, 4, 5, 6, 9]);
-    expect(picked.has(7)).toBe(false);
-    expect(picked.has(8)).toBe(false);
   });
 
   it('returns sceneBatch indexes, not positions within the eligible subset', () => {
@@ -74,13 +78,13 @@ describe('selectEdlVideoAttachIndexes', () => {
     const batch: { renderedUrl?: string }[] = rendered(12);
     batch[0] = {};
     batch[3] = {};
-    const picked = selectEdlVideoAttachIndexes(batch);
+    const picked = selectEdlVideoAttachIndexes(batch, 8);
     expect([...picked].sort((a, b) => a - b)).toEqual([1, 2, 4, 5, 6, 7, 8, 11]);
   });
 
   it('is deterministic — the degrade retry must attach the same media', () => {
-    const a = [...selectEdlVideoAttachIndexes(rendered(11))].sort((x, y) => x - y);
-    const b = [...selectEdlVideoAttachIndexes(rendered(11))].sort((x, y) => x - y);
+    const a = [...selectEdlVideoAttachIndexes(rendered(11), 8)].sort((x, y) => x - y);
+    const b = [...selectEdlVideoAttachIndexes(rendered(11), 8)].sort((x, y) => x - y);
     expect(a).toEqual(b);
   });
 
@@ -88,10 +92,20 @@ describe('selectEdlVideoAttachIndexes', () => {
     const picked = selectEdlVideoAttachIndexes(rendered(6), 3);
     expect([...picked].sort((a, b) => a - b)).toEqual([0, 1, 5]);
   });
+
+  // The cap is an upper bound, never a target. A naive "seed first+last, then
+  // fill" returns TWO indexes at cap 0 and cap 1 — which at 0 would put video
+  // back on the wire and re-trigger the 429 this cap exists to avoid.
+  it('never exceeds the cap at its boundaries', () => {
+    expect(selectEdlVideoAttachIndexes(rendered(10), 0).size).toBe(0);
+    expect([...selectEdlVideoAttachIndexes(rendered(10), 1)]).toEqual([0]);
+    expect(selectEdlVideoAttachIndexes(rendered(10), 2).size).toBe(2);
+    expect(selectEdlVideoAttachIndexes([], 0).size).toBe(0);
+  });
 });
 
 // ---------------------------------------------------------------------------
-// Seam test: the outbound /api/gemini/* request body.
+// Seam test: the outbound /api/gemini/* request body, at the SHIPPED cap.
 // ---------------------------------------------------------------------------
 
 const tenSceneInput = {
@@ -155,18 +169,13 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
     fetchMock.mockReset();
   });
 
-  it('a 10-scene batch attaches 8 videos, keeping scene 1 and scene 10', async () => {
+  it('puts no video on the wire at the shipped cap', async () => {
     fetchMock.mockImplementation(async () => okGemini(cannedTenSceneEdl));
 
     await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
 
     const parts = geminiBodies()[0].contents.parts;
-    const videos = parts.filter((p: any) => p.fileData);
-    expect(videos.length).toBe(8);
-    expect(videos[0].fileData.fileUri).toBe('https://example.com/s0.mp4');
-    expect(videos[7].fileData.fileUri).toBe('https://example.com/s9.mp4');
-    expect(videos.map((p: any) => p.fileData.fileUri)).not.toContain('https://example.com/s7.mp4');
-    expect(videos.map((p: any) => p.fileData.fileUri)).not.toContain('https://example.com/s8.mp4');
+    expect(parts.filter((p: any) => p.fileData)).toEqual([]);
   });
 
   it('the prompt describes exactly what was attached', async () => {
@@ -174,47 +183,22 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
 
     await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
 
-    const flags = videoAttachedFlags(geminiBodies()[0].contents.parts[0].text);
-    expect(flags).toEqual([
-      'yes (see fileData part)', // Scene 1  — hook, always kept
-      'yes (see fileData part)', // Scene 2
-      'yes (see fileData part)', // Scene 3
-      'yes (see fileData part)', // Scene 4
-      'yes (see fileData part)', // Scene 5
-      'yes (see fileData part)', // Scene 6
-      'yes (see fileData part)', // Scene 7
-      'no',                      // Scene 8  — over the cap
-      'no',                      // Scene 9  — over the cap
-      'yes (see fileData part)', // Scene 10 — close, always kept
-    ]);
+    // Every scene still appears in the prompt — only the attachment is gone.
+    expect(videoAttachedFlags(geminiBodies()[0].contents.parts[0].text))
+      .toEqual(Array(10).fill('no'));
   });
 
-  it('an under-cap batch still attaches every scene and says so', async () => {
-    const input = {
-      sceneBatch: Array.from({ length: 4 }, (_, i) => ({
-        sceneIdx: i,
-        scriptLine: `Line ${i}`,
-        renderedUrl: `https://example.com/u${i}.mp4`,
-        type: 'b-roll' as const,
-      })),
-      audioOverlays: [],
-      aspectRatio: '9:16' as const,
-      targetPlatform: 'tiktok' as const,
-    };
-    fetchMock.mockImplementation(async () =>
-      okGemini({
-        ...cannedTenSceneEdl,
-        scenes: cannedTenSceneEdl.scenes.slice(0, 4),
-      }),
-    );
+  it('keeps every scene in the batch so the render keeps all its sources', async () => {
+    fetchMock.mockImplementation(async () => okGemini(cannedTenSceneEdl));
 
-    await generateEditDecisionList({ ...input, finalScript: 'Four scenes.' });
+    const edl = await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
 
-    const parts = geminiBodies()[0].contents.parts;
-    expect(parts.filter((p: any) => p.fileData).length).toBe(4);
-    expect(videoAttachedFlags(parts[0].text)).toEqual(
-      Array(4).fill('yes (see fileData part)'),
-    );
+    // The passthrough at the end of generateEditDecisionList only rewrites
+    // sourceVideoUrl when scenes-out matches scenes-in; detaching media must not
+    // shrink sceneBatch, or the final render loses its inputs.
+    expect(edl.scenes.length).toBe(10);
+    expect(edl.scenes.map((s: any) => s.sourceVideoUrl))
+      .toEqual(tenSceneInput.sceneBatch.map((s) => s.renderedUrl));
   });
 
   it('the degrade retry attaches the identical video set', async () => {
@@ -238,7 +222,6 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
     const videosOf = (b: any) =>
       b.contents.parts.filter((p: any) => p.fileData).map((p: any) => p.fileData.fileUri);
     expect(videosOf(bodies[1])).toEqual(videosOf(bodies[0]));
-    expect(videosOf(bodies[1]).length).toBe(8);
     // The stub swaps the script text only — the attachment map must not move.
     expect(videoAttachedFlags(bodies[1].contents.parts[0].text)).toEqual(
       videoAttachedFlags(bodies[0].contents.parts[0].text),
