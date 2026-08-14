@@ -108,8 +108,14 @@ describe('selectEdlVideoAttachIndexes', () => {
 // Seam test: the outbound /api/gemini/* request body, at the SHIPPED cap.
 // ---------------------------------------------------------------------------
 
-const tenSceneInput = {
-  sceneBatch: Array.from({ length: 10 }, (_, i) => ({
+// DELIBERATELY 12, two ABOVE the shipped cap of 10. The seam tests below exercise
+// the DEFAULT cap (they never pass one), so the fixture has to exceed it or the cap
+// would never bite and these tests would silently stop testing a cap at all. When
+// EDL_MAX_ATTACHED_VIDEOS moves, this number moves with it — keep it cap + 2.
+const SEAM_SCENE_COUNT = 12;
+
+const overCapInput = {
+  sceneBatch: Array.from({ length: SEAM_SCENE_COUNT }, (_, i) => ({
     sceneIdx: i,
     scriptLine: `Line ${i}`,
     renderedUrl: `https://example.com/s${i}.mp4`,
@@ -120,7 +126,7 @@ const tenSceneInput = {
   targetPlatform: 'tiktok' as const,
 };
 
-const cannedTenSceneEdl = {
+const cannedOverCapEdl = {
   meta: {
     totalDurationSec: 40,
     aspectRatio: '9:16',
@@ -129,7 +135,7 @@ const cannedTenSceneEdl = {
     formulaApplied: ['mrbeast'],
     scriptStyleDetected: 'mrbeast',
   },
-  scenes: tenSceneInput.sceneBatch.map((s) => ({
+  scenes: overCapInput.sceneBatch.map((s) => ({
     sceneIdx: s.sceneIdx,
     sourceVideoUrl: s.renderedUrl,
     sourceAudioUrl: '',
@@ -186,7 +192,7 @@ const routeAllOk = () => {
   fetchMock.mockImplementation(async (url: any, init: any) =>
     typeof url === 'string' && url.includes('/api/gemini/files/upload')
       ? okUpload(JSON.parse(init.body).url)
-      : okGemini(cannedTenSceneEdl),
+      : okGemini(cannedOverCapEdl),
   );
 };
 
@@ -198,12 +204,12 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
   it('puts ONLY Files-API-minted URIs on the wire, capped at the shipped default', async () => {
     routeAllOk();
 
-    await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
     const parts = geminiBodies()[0].contents.parts;
     const fileParts = parts.filter((p: any) => p.fileData);
-    // 10 rendered scenes, cap 8 → hook (0) + close (9) + the earliest six (1..6).
-    expect(fileParts.length).toBe(8);
+    // 12 rendered scenes, cap 10 → hook (0) + close (11) + the earliest eight (1..8).
+    expect(fileParts.length).toBe(10);
     // The whole point of the restore: never the raw R2 object URL again.
     fileParts.forEach((p: any) => {
       expect(p.fileData.fileUri).toMatch(/^files\//);
@@ -212,34 +218,34 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
     // Parts stay in ascending sceneBatch order (the load-bearing contract), even
     // though the selector seeds first+last before filling.
     expect(fileParts.map((p: any) => p.fileData.fileUri)).toEqual(
-      ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's9'].map((s) => `files/${s}`),
+      ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's11'].map((s) => `files/${s}`),
     );
     // Only the selected scenes were uploaded — the cap is a spend gate too.
-    expect(uploadedUrls().length).toBe(8);
+    expect(uploadedUrls().length).toBe(10);
   });
 
   it('the prompt describes exactly what was attached', async () => {
     routeAllOk();
 
-    await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
-    // Every scene still appears in the prompt; scenes 7 and 8 lost the cap draw.
+    // Every scene still appears in the prompt; scenes 9 and 10 lost the cap draw.
     const yes = 'yes (see fileData part)';
     expect(videoAttachedFlags(geminiBodies()[0].contents.parts[0].text))
-      .toEqual([yes, yes, yes, yes, yes, yes, yes, 'no', 'no', yes]);
+      .toEqual([yes, yes, yes, yes, yes, yes, yes, yes, yes, 'no', 'no', yes]);
   });
 
   it('keeps every scene in the batch so the render keeps all its sources', async () => {
     routeAllOk();
 
-    const edl = await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    const edl = await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
     // The passthrough at the end of generateEditDecisionList only rewrites
     // sourceVideoUrl when scenes-out matches scenes-in; detaching media must not
     // shrink sceneBatch, or the final render loses its inputs.
-    expect(edl.scenes.length).toBe(10);
+    expect(edl.scenes.length).toBe(SEAM_SCENE_COUNT);
     expect(edl.scenes.map((s: any) => s.sourceVideoUrl))
-      .toEqual(tenSceneInput.sceneBatch.map((s) => s.renderedUrl));
+      .toEqual(overCapInput.sceneBatch.map((s) => s.renderedUrl));
   });
 
   it('the degrade retry attaches the identical video set', async () => {
@@ -256,15 +262,15 @@ describe('generateEditDecisionList — attachment cap on the wire', () => {
           json: async () => ({ text: '', promptFeedback: { blockReason: 'PROHIBITED_CONTENT' } }),
         };
       }
-      return okGemini(cannedTenSceneEdl);
+      return okGemini(cannedOverCapEdl);
     });
 
-    await generateEditDecisionList({ ...tenSceneInput, finalScript: 'Ten scenes.' });
+    await generateEditDecisionList({ ...overCapInput, finalScript: 'Ten scenes.' });
 
     const bodies = geminiBodies();
     expect(bodies.length).toBe(2);
     // Media parts are built once — the stubbed retry must not re-mint URIs.
-    expect(uploadedUrls().length).toBe(8);
+    expect(uploadedUrls().length).toBe(10);
     const videosOf = (b: any) =>
       b.contents.parts.filter((p: any) => p.fileData).map((p: any) => p.fileData.fileUri);
     expect(videosOf(bodies[1])).toEqual(videosOf(bodies[0]));

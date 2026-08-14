@@ -1133,16 +1133,30 @@ export const SFX_BANK: readonly SfxBankId[] = [
  * fresh at EDL time — URIs are never persisted, or a run parked past 48h would
  * resume with a dead one.
  *
- * 8 is a PAYLOAD-SIZE knob, not a fix for the 429 (the 429 was never about
- * count). Scenes past the cap — and any scene whose upload fails — still ride
- * in the prompt as videoAttached:no, the branch the tuned prompt already has,
- * with its own timing rule (scriptLine.length / 18, clamped 3-8s). So the EDL
- * always returns one entry per scene and the render keeps all its sources.
+ * WHY 10 (Neil, 2026-08-14). This shipped at 8 for a few hours on a reason that
+ * was WRONG: the comment claimed 8 was a payload-size knob. It is not. A
+ * `fileData.fileUri` is a POINTER — Gemini fetches the object itself — so the
+ * request body does not grow with the video count at all. (The base64
+ * `inlineData` audio overlays are what grow; those are uncapped and separate.)
+ * The real ceiling is how much VIDEO the model will process per call, and we
+ * have never measured it. With no measurement behind it, 8 bought nothing and
+ * cost something concrete: a 10-scene ad is our normal shape, and 8 left scenes
+ * 8 and 9 permanently and silently blind on every single one. If the mechanism
+ * is broken it is broken at ONE video, so a lower cap was never protection.
+ *
+ * 10 covers a normal run end to end. Raise it further only against a real run,
+ * not a guess — and note the 429 was NEVER about count (capping to 8 still
+ * 429'd while 9 had worked twice, which is what falsified that theory).
+ *
+ * Scenes past the cap — and any scene whose upload fails — still ride in the
+ * prompt as videoAttached:no, the branch the tuned prompt already has, with its
+ * own timing rule (scriptLine.length / 18, clamped 3-8s). So the EDL always
+ * returns one entry per scene and the render keeps all its sources.
  *
  * NOT fixed by this: R2 presign expiry. We still fetch from R2 at upload time,
  * so an expired presign now fails at our own 502 instead of inside Gemini.
  */
-const EDL_MAX_ATTACHED_VIDEOS = 8;
+const EDL_MAX_ATTACHED_VIDEOS = 10;
 
 /**
  * Picks which sceneBatch entries are ELIGIBLE to have their video attached to
