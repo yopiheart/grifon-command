@@ -53,17 +53,35 @@ it to the Files API too and store the URI on `producer_scenes`. The EDL just rea
 
 **C — do it inside the EDL request.** Ruled out by §2. Recorded so it isn't re-proposed.
 
-**The deciding question — and it is a fact, not a preference: how long does a Files API URI
-stay valid?** Gemini's documented retention is short (on the order of days, not months) and
-I have NOT verified the current number this session — do not build on my memory of it.
+### ✅ ANSWERED 2026-08-14 — **48 hours. Take option A.**
 
-- If the URI outlives a typical run-to-render gap → **B wins.** Uploads once, survives
-  resume, and kills the R2-presign-expiry failure mode the constant's doc comment already
-  flags as a second reason to do this.
-- If it expires faster than a parked run can sit in `review` → **A wins**, because B would
-  hand the EDL a dead URI on exactly the resumed runs that matter most.
+Google's Files API docs, checked live this session: *"Files are stored for 48 hours."*
+Free, 2 GB per file, 20 GB per project.
 
-Check the retention number first. It costs one doc lookup and it decides the schema.
+**48h does not survive a parked run.** The pilot itself **stalled 21 hours** at the EDL
+stage, and a run can sit in `review` on a `gate_park` indefinitely — a Monday render
+resumed Wednesday is entirely ordinary. Option B would persist a URI onto `producer_scenes`
+that is dead on exactly the resumed runs where losing the edit hurts most, and it would
+fail *silently into the same blind branch we are trying to leave*. Not worth a migration to
+buy a bug with a 48-hour fuse.
+
+**So: A.** Upload at EDL time, one clip per `api/gemini/files/upload.ts` call, client fans
+out in parallel, fresh URIs every run. No schema change, no expiry class of bug, and the
+20 GB project ceiling self-cleans on the same 48h clock.
+
+Two properties worth keeping in the brief:
+
+- **It degrades into today's behavior, not into a failure.** If a clip misses its 60s
+  budget, that scene simply goes to the EDL as `videoAttached: no` — the branch the tuned
+  prompt already has and is running on right now. Partial eyes beat no eyes; nothing needs
+  an all-or-nothing gate.
+- **It does NOT fix R2 presign expiry** the way the constant's doc comment claims a Files
+  API move would. Under A we still fetch from R2 at EDL time, so a presign that expired
+  before the EDL runs still fails — it just fails at our own `502`
+  (`omni_source_download_failed` shape) instead of inside Gemini. Worth knowing before
+  someone closes that concern as solved.
+
+Sources: [ai.google.dev/gemini-api/docs/files](https://ai.google.dev/gemini-api/docs/files)
 
 ## 4. Latent finding, adjacent — omni-video's deadline is unbacked
 
@@ -96,7 +114,7 @@ issue-filing path.
 
 ## Run order
 
-1. Look up the Files API retention window. → picks A or B.
+1. ~~Look up the Files API retention window.~~ **Done — 48h, option A.**
 2. Brief `code-executor` (server surface + transport, not prompts — but it lands next to a
    TUNED file, so it does not go to the Sol lane).
 3. Fix + live one-part assertion in the same commit.
