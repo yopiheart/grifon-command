@@ -7,14 +7,12 @@ Gates 5 (mid-scene dead-air trim) and 6 (hook hold 0.35/0.7) are **Neil-passed**
 ₱288. Nothing perishable. Write-up: [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
 
 ## ▶ NEXT ACTION — one real run on the deployed code, watched by Neil
-**SHIPPED 2026-08-14 17:47 — the EDL has its eyes back in production.** Merged as ONE commit
-`a841f69` (`--no-ff` on purpose). `api/gemini/files/upload.ts` mints a Files API URI per
-clip, `geminiService.ts` fans the uploads out with `allSettled`, `EDL_MAX_ATTACHED_VIDEOS`
-0 → 10. Design + the 48h-retention reasoning: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
-
-**⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` → safe blind state. That is the whole
-reason it went in as a merge commit. Measured live pre-merge: ONE `files/*` part → **200, not
-429** · **TEN** → **200** on ~155s of video vs ~60s for a real 10-scene ad, so there is headroom.
+**SHIPPED 2026-08-14 17:47 — the EDL has its eyes back in production** (`a841f69`, `--no-ff`).
+Files API URI minted per clip, uploads fanned out with `allSettled`, `EDL_MAX_ATTACHED_VIDEOS`
+0 → 10. Design + 48h-retention reasoning: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
+**⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` → safe blind state; that is the whole
+reason it went in as a merge. Measured pre-merge: ONE `files/*` part → **200, not 429** · **TEN**
+→ **200** on ~155s of video vs ~60s for a real 10-scene ad, so there is headroom.
 
 ⚠️ **STILL UNPROVEN, AND DO NOT CLAIM IT:** that an edit made WITH eyes is better than the
 blind one. The blind pilot scored well and Neil passed both its gates. All that is proven is
@@ -26,23 +24,25 @@ PHT; a red night opens an issue naming the containment step. **First fire = firs
 
 ⚠️ 2 non-blocking follow-ups left in the plan doc; **#1 (`research-tier.ab`) FIXED 2026-08-15.**
 
-## 🧪 GEMINI 3.7 FLASH — gates SHIPPED, and a real bug found
-Branch `feat/gemini37-cogs-prep` (pushed, $0.46 / 26 live calls). A/B 3.6 vs 3.7: **−59% cost,
-−24% latency per pass, on-contract 6/6** — beats the −50% rate cut alone because 3.7 thinks less
-(EDL 1072→483 thoughts), which survives the 2027-01-01 expiry. ⚠️ **Quality NOT established**
-(1 sample/flow): same ad scripts cheaper, not better ones.
-✅ **Both QA gates → 3.7** (`13bd5bc`), $9.00→$3.75. **Effective next deploy**; env var is still
-the instant rollback. ⚠️ Watch reroll rates (image gate drives the only auto-reroll).
-⛔ NOT `researchTextModel` before the watched EDL run — same variable.
-🔴 **PREMISE PIN IS BUYING NOTHING.** 6 paired samples: pinned `gemini-3.5-flash` flaked **1/6**,
-same as 3.7 — but the 3.6 eval recorded it **0/6**, the entire reason to pin. Both failures
-byte-identical and **both models emitted 450–520 output tokens**: the model answers, the pipeline
-discards it → `googleSearch`+JSON-in-prompt **parser bug**, not the model. Pin costs **4.2x**
-for the same flake. ▶ Parser-hardening grill-me FIRST; flip is a free follow-on. **~1 in 6 users
-lose this feature today.**
+## 🚀 DEPLOYED TO PROD 2026-08-15 — `18d6310` (merge, `--no-ff`)
+**⏪ ONE-COMMAND ROLLBACK: `git revert -m 1 18d6310`.** Vercel prod deploy
+`dpl_DGZKBNQ…` fired off this sha. Ships two things:
+**1. Both QA gates → `gemini-3.7-flash`**, $9.00→$3.75/Mtok. ⚠️ Watch reroll rates — the image
+gate drives the only auto-reroll. Env vars `OMNI_GATE_MODEL`/`IMAGE_GATE_MODEL` still override
+for an instant no-deploy rollback of just the gates.
+**2. 🔴 A REAL PROD BUG — grounded JSON was being thrown away.** `cleanJson` picked object-vs-array
+by whichever delimiter came FIRST, so a grounded reply opening `Based on search results [1],
+…{json}` took the array branch and sliced garbage. Reproduced in isolation (4 shapes fail on old,
+pass on new). Real cause of the premise empty shell (**1/6 on BOTH 3.5 and 3.7 — never a model
+defect**), and it could **hard-throw `marketmind`**, the wizard's entry point, which parses with
+no try/catch. Fix is strictly widening (whatever parsed before is byte-identical) + 14 tests.
+⛔ **`researchTextModel` NOT flipped** — the watched EDL run above is its only gate. ⛔ **Premise
+pin untouched** on purpose: re-measure AFTER the parser fix runs in prod, then 3.5→3.7 is a free
+4.2x. A/B evidence ($0.46, 26 calls, −59% cost / −24% latency, quality NOT established):
+[`gemini37_adoption.md`](workflows/gemini37_adoption.md).
 🔴 **Bears on the EDL question:** with 4 clips attached **neither** arm made a *visual* observation
-(`weaknessesFlagged` script-only on both). 1 run, not proof, but it points the wrong way and
-**raises** your watched run's value. Details: [`gemini37_adoption.md`](workflows/gemini37_adoption.md).
+(`weaknessesFlagged` script-only on both). 1 run, not proof — but it points the wrong way and
+**raises** your watched run's value.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 Scene-image gate is live and **not enough**: (1) it **passed** scene 9's unreadable "HIRAYA GLOW"
