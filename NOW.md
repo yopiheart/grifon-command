@@ -15,10 +15,14 @@ mints a Files API URI per clip; `geminiService.ts` fans the uploads out with `al
 `EDL_MAX_ATTACHED_VIDEOS` 0 → 8. Design + the 48h-retention reasoning:
 [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
 
-Verified locally by the main loop (not taken from the executor's report): `npm run build`
-exit 0 · `npm run test` 100 files / 1195 tests · `check:bundle-leak` 0 markers · no prompt,
-schema or model-ID change. **NOT yet verified live** — nobody has watched a real run edit
-with its eyes back. Do that before calling it done.
+Verified locally: `npm run build` exit 0 · `npm run test` 100 files / 1195 tests ·
+`check:bundle-leak` 0 markers · no prompt, schema or model-ID change.
+
+**✅ LIVE CANARY PASSED 17:37** — `RUN_REGRESSION=1` on
+`tests/regression/edl-video-part.regression.test.ts`: ONE `files/*` video part on the wire
+returns **200, not 429**, usable EDL back in 23s. Exact inverse of the 08-14 isolation.
+⚠️ **It tested ONE part, not ten.** The cap ships at 10 because count was never the culprit
+— true, but unmeasured at 10. A ten-part live call is the last unknown before merge.
 
 **Then step 5 of the plan: wire `tests/regression/edl-video-part.regression.test.ts` into
 the Tier 3 nightly loop.** The assertion exists; nothing runs it on a schedule, so this

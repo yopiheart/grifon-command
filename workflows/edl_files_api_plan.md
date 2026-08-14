@@ -126,6 +126,22 @@ issue-filing path.
 
 ---
 
+## ✅ LIVE CANARY PASSED — 2026-08-14 17:37
+
+`RUN_REGRESSION=1 npx vitest run tests/regression/edl-video-part.regression.test.ts`
+
+```
+[edl] video attachments — eligible: 1  selected: 1  attached: 1  cap: 10
+✓ returns 200 (not 429) with exactly ONE Files-API video part attached   23020ms
+```
+
+One `files/*` part on the wire, **200 not 429**, usable EDL returned, 23s. The exact
+inverse of the 08-14 isolation. The root-cause diagnosis was right and the fix works.
+
+**What it does NOT prove: that TEN parts work.** This tested one. The cap ships at 10 on
+the reasoning that count was never the culprit — true, but unmeasured at 10. The remaining
+unknown before merge is a ten-part call, not a one-part call.
+
 ## Known follow-ups (recorded 2026-08-14, none blocking)
 
 **1. `tests/regression/research-tier.ab.test.ts` now degrades silently.** That opt-in
