@@ -12,33 +12,33 @@ Gates 5 (mid-scene dead-air trim) and 6 (hook hold 0.35/0.7) are **Neil-passed**
 clip, `geminiService.ts` fans the uploads out with `allSettled`, `EDL_MAX_ATTACHED_VIDEOS`
 0 → 10. Design + the 48h-retention reasoning: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
 
-**⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` puts the editor back to the safe
-blind state. That is the whole reason it went in as a merge commit.
-
-Measured live pre-merge: ONE `files/*` part → **200, not 429** · **TEN** → **200** on ~155s of
-video vs ~60s for a real 10-scene ad, so there is headroom.
+**⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` → safe blind state. That is the whole
+reason it went in as a merge commit. Measured live pre-merge: ONE `files/*` part → **200, not
+429** · **TEN** → **200** on ~155s of video vs ~60s for a real 10-scene ad, so there is headroom.
 
 ⚠️ **STILL UNPROVEN, AND DO NOT CLAIM IT:** that an edit made WITH eyes is better than the
 blind one. The blind pilot scored well and Neil passed both its gates. All that is proven is
 that the model accepts the video and does not 429. **Only a watched live run answers the
 quality question** — that is the next action, and nothing else can substitute for it.
 
-**✅ THE CANARY IS ON A SCHEDULE (`0e326ef`).** Tier 3 nightly runs the EDL video-attach check
-at 02:00 PHT; a red night opens an issue naming the containment step. **The first night it
-fires is the first real proof** — glance at the Actions tab.
+**✅ CANARY ON A SCHEDULE (`0e326ef`).** Tier 3 nightly runs the EDL video-attach check at 02:00
+PHT; a red night opens an issue naming the containment step. **First fire = first real proof.**
 
-⚠️ 2 non-blocking follow-ups remain in the plan doc. **#1 — the silently-degrading
-`research-tier.ab` harness — is FIXED (2026-08-15), before anyone ran it.**
+⚠️ 2 non-blocking follow-ups remain in the plan doc; **#1 (silently-degrading `research-tier.ab`
+harness) is FIXED 2026-08-15.**
 
-## 🧪 GEMINI 3.7 FLASH — prep shipped, NOTHING FLIPPED, decision is yours
-GA 2026-08-13. **Intro $0.75/$3.75 thru 2026-12-31, then $1.50/$7.50 = exactly 3.6's price** —
-better model at HALF price for ~4.5 months, parity after. ⚠️ 3 of its 4 headline benchmarks are
-*coding/computer-use*: **expect the same ad scripts cheaper, not better ones.** On
-`feat/gemini37-cogs-prep`: price row + **a test that fails 2027-01-01** when the rate doubles ·
-A/B harness env-parameterized, **truthful about video attachment**, typechecking.
-▶ **~$0.25, one command:** `$env:RUN_AB='1'; npx vitest run tests/regression/research-tier.ab.test.ts`
-⛔ **Do NOT flip `researchTextModel` before the watched EDL run above** (same variable). Gates +
-premise pin are independent, go anytime. Plan: [`gemini37_adoption.md`](workflows/gemini37_adoption.md).
+## 🧪 GEMINI 3.7 FLASH — A/B RAN, cost case PROVEN, NOTHING FLIPPED
+Branch `feat/gemini37-cogs-prep` (2 commits, pushed). Live A/B 3.6 vs 3.7, 14 calls, $0.18:
+**−59% cost, −24% latency per pass, on-contract 6/6 both arms.** Beats the −50% rate cut alone
+because 3.7 also thinks less (EDL 1072→483 thoughts), which survives the 2027-01-01 expiry.
+⚠️ **Quality NOT established** (1 sample/flow): same ad scripts cheaper, not better ones.
+▶ **Clear to go, no code/redeploy:** flip `OMNI_GATE_MODEL` + `IMAGE_GATE_MODEL` → 3.7,
+**$9.00→$3.75 output**, fail-open infra. Watch reroll rates. ⛔ NOT `researchTextModel` before
+the watched EDL run (same variable); premise pin needs **≥6 samples**, not 1.
+🔴 **Bears on the EDL question:** with 4 real clips attached **neither** arm made a *visual*
+observation — `weaknessesFlagged` was script-only on both. 1 run, not proof, but it points the
+wrong way and **raises** your watched run's value. Attach costs 2.2x input tokens/call.
+Results: [`gemini37_adoption.md`](workflows/gemini37_adoption.md).
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 The scene-image gate is live and **it is not enough**: (1) it **passed** scene 9's hero shot
