@@ -169,3 +169,59 @@ describe.skipIf(!SHOULD_RUN)('EDL live — one attached video part', () => {
     300_000,
   );
 });
+
+// --- 6. The FULL-CAP probe (separate gate, deliberately not nightly) -------
+//
+// The one-part canary above proves the Files API contract. It does NOT prove a
+// full run: EDL_MAX_ATTACHED_VIDEOS ships at 10 on the reasoning that count was
+// never the culprit (true — capping to 8 still 429'd while 9 had worked), but
+// TEN parts has never actually been measured, because the attach path was broken
+// the whole time it mattered. This measures it.
+//
+// Gated on RUN_EDL_FULL_CAP, NOT RUN_REGRESSION, so the Tier 3 nightly loop keeps
+// paying for the cheap canary only.
+//
+//   $env:RUN_EDL_FULL_CAP='1'; npx vitest run tests/regression/edl-video-part.regression.test.ts
+//
+// DELIBERATELY HARSHER THAN PRODUCTION: the fixture is 15.5s, so ten of them is
+// ~155s of video in one call, against roughly 60s for a real 10-scene ad (4-8s
+// per scene). A pass here therefore clears a real run with room to spare. A FAIL
+// is ambiguous by the same logic — it would mean "155s is too much", not
+// necessarily "ten parts is too much" — so on red, re-probe with trimmed clips
+// before lowering the cap.
+
+const RUN_FULL_CAP = !!process.env.RUN_EDL_FULL_CAP;
+const FULL_CAP_SCENES = 10;
+
+describe.skipIf(!RUN_FULL_CAP)('EDL live — a full-cap batch', () => {
+  it(
+    `returns 200 (not 429) with ${FULL_CAP_SCENES} Files-API video parts attached`,
+    async () => {
+      expect(apiKey, 'GEMINI_API_KEY missing from .env').toBeTruthy();
+
+      const edl = await generateEditDecisionList({
+        sceneBatch: Array.from({ length: FULL_CAP_SCENES }, (_, i) => ({
+          sceneIdx: i,
+          scriptLine: `Beat number ${i + 1} of the ad.`,
+          renderedUrl: `https://example.com/scene${i}.mp4`, // each uploaded via the stub
+          type: 'talking' as const,
+        })),
+        audioOverlays: [],
+        aspectRatio: '9:16' as const,
+        targetPlatform: 'tiktok' as const,
+        finalScript: 'Ten beats, one ad.',
+      } as any);
+
+      // The whole question: does a full-cap batch survive the wire?
+      expect(videoPartsOnWire.length).toBe(FULL_CAP_SCENES);
+      videoPartsOnWire.forEach((p: any) => {
+        expect(p.fileData.fileUri).toMatch(/^(files\/|https:\/\/generativelanguage\.)/);
+      });
+      expect(edlHttpStatus).toBe(200);
+
+      // Every scene still comes back, or the render loses sources.
+      expect(edl.scenes.length).toBe(FULL_CAP_SCENES);
+    },
+    600_000,
+  );
+});

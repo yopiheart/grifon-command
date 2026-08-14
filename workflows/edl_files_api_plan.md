@@ -138,9 +138,25 @@ issue-filing path.
 One `files/*` part on the wire, **200 not 429**, usable EDL returned, 23s. The exact
 inverse of the 08-14 isolation. The root-cause diagnosis was right and the fix works.
 
-**What it does NOT prove: that TEN parts work.** This tested one. The cap ships at 10 on
-the reasoning that count was never the culprit — true, but unmeasured at 10. The remaining
-unknown before merge is a ten-part call, not a one-part call.
+## ✅ FULL-CAP PROBE PASSED — 2026-08-14 17:42
+
+`RUN_EDL_FULL_CAP=1 npx vitest run tests/regression/edl-video-part.regression.test.ts`
+
+```
+[edl] video attachments — eligible: 10  selected: 10  attached: 10  cap: 10
+✓ returns 200 (not 429) with 10 Files-API video parts attached   30897ms
+```
+
+**Ten parts, 200, 30.9s.** And deliberately harsher than production: the fixture is 15.5s,
+so this put ~155s of video in one call against roughly 60s for a real 10-scene ad. A real
+run clears with room to spare.
+
+The cap of 10 is now measured, not assumed. **Nothing testable is left unmeasured before
+merge** — what remains needs the merge itself (a real end-to-end run on deployed code).
+
+Gate is `RUN_EDL_FULL_CAP`, deliberately NOT `RUN_REGRESSION`, so the Tier 3 nightly loop
+keeps paying only for the cheap one-part canary. Re-run this one by hand after any change to
+the cap, the attach path, or the EDL model id.
 
 ## Known follow-ups (recorded 2026-08-14, none blocking)
 

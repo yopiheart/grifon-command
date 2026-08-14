@@ -18,11 +18,14 @@ mints a Files API URI per clip; `geminiService.ts` fans the uploads out with `al
 Verified locally: `npm run build` exit 0 · `npm run test` 100 files / 1195 tests ·
 `check:bundle-leak` 0 markers · no prompt, schema or model-ID change.
 
-**✅ LIVE CANARY PASSED 17:37** — `RUN_REGRESSION=1` on
-`tests/regression/edl-video-part.regression.test.ts`: ONE `files/*` video part on the wire
-returns **200, not 429**, usable EDL back in 23s. Exact inverse of the 08-14 isolation.
-⚠️ **It tested ONE part, not ten.** The cap ships at 10 because count was never the culprit
-— true, but unmeasured at 10. A ten-part live call is the last unknown before merge.
+**✅ BOTH LIVE PROBES PASSED** (`tests/regression/edl-video-part.regression.test.ts`):
+- `RUN_REGRESSION=1` 17:37 — ONE `files/*` part → **200, not 429**, usable EDL, 23s.
+  Exact inverse of the 08-14 isolation.
+- `RUN_EDL_FULL_CAP=1` 17:42 — **TEN** parts → **200**, 30.9s. Harsher than production
+  (10 × 15.5s ≈ 155s of video vs ~60s for a real 10-scene ad), so a real run has headroom.
+
+**Nothing testable is left unmeasured. Merge is de-risked** — what remains needs the merge
+itself: a real end-to-end run on deployed code, watched by Neil.
 
 **Then step 5 of the plan: wire `tests/regression/edl-video-part.regression.test.ts` into
 the Tier 3 nightly loop.** The assertion exists; nothing runs it on a schedule, so this
