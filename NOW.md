@@ -1,5 +1,5 @@
 # NOW — the resume doc
-**Stamped: 2026-08-14** (session 22)
+**Stamped: 2026-08-15** (session 23)
 
 ## ✅ THE PILOT IS DONE — both gates PASSED, ad downloaded
 Gates 5 (mid-scene dead-air trim) and 6 (hook hold 0.35/0.7) are **Neil-passed**, so
