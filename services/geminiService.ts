@@ -988,19 +988,49 @@ const retryWithBackoff = async <T>(
   }
 };
 
+// Extract the JSON payload from a model reply that may be fenced or wrapped in prose.
+//
+// ⚠️ MIRRORED in api/_lib/prompts.ts — change both together.
+//
+// The historical version chose object-vs-array purely by which delimiter appeared
+// FIRST. That breaks on googleSearch-GROUNDED replies, which routinely open with a
+// citation marker: `Based on search results [1], here is the analysis:\n{...}`. The
+// leading `[` selected the array branch, which then sliced from that `[` to the last
+// `]` and produced garbage. Reproduced 2026-08-15; it is the root cause of the
+// premise-check "empty shell" (1-in-6 on BOTH 3.5-flash and 3.7-flash — never a model
+// defect) and it can hard-throw `marketmind`, which parses with no try/catch
+// (api/gemini/text.ts:204). See workflows/gemini37_adoption.md Slice 2.
+//
+// STRICTLY WIDENING, by construction: the historically-preferred branch is still tried
+// FIRST and returned unchanged whenever it parses, so every input that works today
+// returns the byte-identical string. The other branch is consulted only when the
+// preferred one does NOT parse — i.e. only in cases that are broken today.
 const cleanJson = (text: string) => {
   if (!text) return "{}";
-  let cleaned = text.replace(/```json\s*|```/g, '').trim();
+  const cleaned = text.replace(/```json\s*|```/g, '').trim();
+
+  const sliceBetween = (open: string, close: string): string | null => {
+    const start = cleaned.indexOf(open);
+    if (start === -1) return null;
+    const end = cleaned.lastIndexOf(close);
+    if (end === -1 || end < start) return null;
+    return cleaned.substring(start, end + 1);
+  };
+  const parses = (s: string | null): s is string => {
+    if (s === null) return false;
+    try { JSON.parse(s); return true; } catch { return false; }
+  };
+
   const firstBrace = cleaned.indexOf('{');
   const firstBracket = cleaned.indexOf('[');
-  if (firstBracket !== -1 && (firstBrace === -1 || firstBracket < firstBrace)) {
-     const lastBracket = cleaned.lastIndexOf(']');
-     if (lastBracket !== -1) cleaned = cleaned.substring(firstBracket, lastBracket + 1);
-  } else if (firstBrace !== -1) {
-      const lastBrace = cleaned.lastIndexOf('}');
-      if (lastBrace !== -1) cleaned = cleaned.substring(firstBrace, lastBrace + 1);
-  }
-  return cleaned;
+  // The original branch choice, preserved exactly.
+  const arrayFirst = firstBracket !== -1 && (firstBrace === -1 || firstBracket < firstBrace);
+  const preferred = arrayFirst ? sliceBetween('[', ']') : sliceBetween('{', '}');
+  const fallback = arrayFirst ? sliceBetween('{', '}') : sliceBetween('[', ']');
+
+  if (parses(preferred)) return preferred;
+  if (parses(fallback)) return fallback;
+  return preferred ?? cleaned;
 };
 
 export const generateVideoEditPlan = async (input: VideoEditInput): Promise<string> => {
