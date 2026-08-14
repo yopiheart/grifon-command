@@ -196,11 +196,19 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
   // upload failures in production to make a test pass.
   if (urlStr.includes('/api/gemini/files/upload')) {
     const { url: srcUrl } = JSON.parse(init.body as string);
-    if (typeof srcUrl !== 'string' || !srcUrl.startsWith('files/')) {
+    // What production returns is `uploaded.uri` from the SDK
+    // (api/gemini/files/upload.ts:126), which is the FULL
+    // https://generativelanguage.googleapis.com/v1beta/files/<id> URL — not a
+    // bare `files/<id>`. beforeAll stores that same value as renderedUrl, so
+    // accept both spellings and reject anything that is not a Files API URI.
+    const isFilesUri =
+      typeof srcUrl === 'string' &&
+      (srcUrl.startsWith('files/') || /\/v1beta\/files\/[^/]+$/.test(srcUrl));
+    if (!isFilesUri) {
       // Anything else means beforeAll's upload didn't happen — fail loudly rather
       // than degrade into a prompt-only run wearing a "video attached" label.
       throw new Error(
-        `research-tier.ab: expected a pre-minted files/* URI as renderedUrl, got "${srcUrl}". ` +
+        `research-tier.ab: expected a pre-minted Files API URI as renderedUrl, got "${srcUrl}". ` +
           'The EDL arm would have run blind. Check the beforeAll Files API upload.'
       );
     }
@@ -550,7 +558,9 @@ afterAll(() => {
 
 // --- 9. The six flows — arm A then arm B, sequential ---------------------
 
-describe.skipIf(!SHOULD_RUN)('Research-tier A/B (gemini-3.5-flash vs gemini-3.6-flash)', () => {
+// Title is built from the live arm constants — a hardcoded one printed
+// "3.5-flash vs 3.6-flash" through a run that actually exercised 3.6 vs 3.7.
+describe.skipIf(!SHOULD_RUN)(`Research-tier A/B (${ARM_A} vs ${ARM_B})`, () => {
   it(
     'generateEditDecisionList',
     async () => {

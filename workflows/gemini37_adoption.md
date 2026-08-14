@@ -4,8 +4,13 @@
 Same slice discipline as [`gemini36_adoption.md`](gemini36_adoption.md) — that doc is the
 precedent and the template; read it first.
 
-**Status as of 2026-08-15:** Slice 0 ✅ SHIPPED. Slices 1–3 ⏸ PENDING NEIL. **No production
-model ID has been changed.** Everything below the Slice-0 line is a proposal.
+**Status as of 2026-08-15:** Slice 0 ✅ SHIPPED · Slice 1 ✅ RAN (**3.7 is −59% cheaper and
+−24% faster per research pass, on-contract 6/6**) · Slices 2–3 ⏸ PENDING NEIL.
+**No production model ID has been changed.**
+
+**The recommendation, in one line:** the cost case is proven and the structural case is clean,
+so flip the two QA gates (Slice 3, env-var only) whenever you like — but hold
+`researchTextModel` until the watched EDL run, and hold the premise pin until it has ≥6 samples.
 
 ---
 
@@ -87,17 +92,76 @@ Verification: `npm run build` clean · `npx tsc --noEmit` clean · **1199 tests 
 
 ---
 
-## Slice 1 — the A/B eval ⏸ PENDING (Neil: ~$0.25 of Gemini quota)
+## Slice 1 — the A/B eval ✅ RAN 2026-08-15
 
-The harness is wired and waiting. Nothing else is needed to run it:
+**Arms: A = `gemini-3.6-flash` (production) · B = `gemini-3.7-flash`.** Bukidnon Brew fixtures,
+EDL with **4 real video parts attached on both arms** (verified off the wire, not inferred).
+Total spend **$0.1828** across 14 live calls. `parsedOk: true` on 6/6 flows, both arms — zero
+structural failures, zero empty shells.
+
+| Flow | Latency A→B | Cost A→B | Δ cost |
+|---|---|---|---|
+| Edit Decision List | 12.8s → **8.5s** | $0.0297 → $0.0136 | **−54%** |
+| Premise Check | 16.9s → 19.4s ⚠️ | $0.0198 → $0.0072 | **−64%** |
+| Optimize Image Prompt | 8.2s → **5.2s** | $0.0106 → $0.0035 | **−67%** |
+| Product Signature | 5.2s → **3.8s** | $0.0080 → $0.0034 | **−58%** |
+| Cinematic Themes | 8.3s → **5.6s** | $0.0091 → $0.0048 | **−48%** |
+| Cinematic Narrative | 10.7s → **4.4s** | $0.0172 → $0.0064 | **−63%** |
+| **Full research pass** | **62.2s → 47.0s (−24%)** | **$0.0944 → $0.0389** | **−59%** |
+
+**Read the cost column carefully — it is NOT just the halved list price.** A −59% pass on a
+−50% rate means 3.7 also emits **fewer thinking tokens** for the same work (EDL: 1072 → 483
+thoughts). Both effects compound; the second one survives 2027-01-01 when the intro rate ends.
+
+**Verdicts:**
+- **Cost: unambiguous win.** Every flow cheaper, no exceptions.
+- **Latency: win on 5/6.** Premise Check is the lone regression (+2.5s), and it is the flow
+  that runs `googleSearch` grounding — plausibly more tool round-trips, not slower inference.
+  All flows remain far under the 55s client abort.
+- **Structure: clean.** `globalSfxPicks` correctly at top level on both arms (the old 3.5-flash
+  misplacement into `meta` did not reappear). `hookStrategy` + `formulaApplied` present on both.
+  3.7 additionally cited `cialdini` in `formulaApplied`.
+- **Quality: NOT ESTABLISHED, and do not claim it.** One sample per flow. The harness asserts
+  structure only, by design. Nothing here says 3.7 writes better ads — only that it produces
+  on-contract output faster and much cheaper.
+
+### ⚠️ The finding that matters more than the cost table
+
+**With 4 real clips attached, NEITHER arm produced a single visual observation.** Every scene
+`notes` field cites the *script*; `weaknessesFlagged` — the one field whose prompt example is
+explicitly visual (*"Scene 3 video looks underexposed"*) — returned only script-level
+criticism on both arms ("no real scarcity anchor in script").
+
+Caveats, stated plainly: one run per arm, and the fixture clips may genuinely have nothing
+visual worth flagging (though one is named `scene2fail-raw.mp4`). This is **not** proof that
+attaching video is worthless.
+
+But it is the first direct evidence bearing on [`NOW.md`](../NOW.md)'s open question — *is an
+edit made WITH eyes better than the blind one?* — and it points the wrong way. **It raises the
+value of the watched live run rather than substituting for it.** If a human-watched run also
+shows no visual grounding, the EDL video attach is paying upload latency and prompt tokens
+(9027 vs ~4089 input tokens — **2.2x the input cost per EDL call**) for nothing.
+
+### Reproducing / extending
+
+⚠️ **A guard bug was found and fixed DURING this run, by the guard itself.** The upload stub
+first validated `startsWith('files/')`, but production returns the SDK's full
+`https://…/v1beta/files/<id>` URL ([upload.ts:126](../api/gemini/files/upload.ts#L126)). The
+stub threw, all 4 scenes degraded — and because the wire-counted `videoPartsSent` said `0`
+while the upload flag said `true`, the report **banner-flagged its own result as untrustworthy
+instead of printing a clean-looking lie**. Fixed to accept both spellings; the EDL was re-run
+and reported `attached: 4`. The pre-2026-08-15 harness would have printed that first run as a
+valid EDL comparison. The `describe()` title was also hardcoded to the old arm names and is
+now built from `ARM_A`/`ARM_B`.
 
 ```powershell
 $env:RUN_AB='1'; npx vitest run tests/regression/research-tier.ab.test.ts --reporter=verbose
 ```
 
-Defaults now compare **3.6 (incumbent) vs 3.7 (candidate)** across all six research flows with
+Defaults compare **3.6 (incumbent) vs 3.7 (candidate)** across all six research flows with
 identical fixed inputs, real tuned prompts, and Files-API video parts on the EDL. Outputs land
-in `.tmp/research-ab/` (`results.json`, `report.md`). 12 live calls, ~$0.25.
+in `.tmp/research-ab/` (`results.json`, `report.md`). 12 live calls, **measured $0.18**.
+Single flow: append `-t <flowName>` (EDL alone ≈ $0.04).
 
 Fixtures confirmed present 2026-08-15: `tests/fixtures/sample-batch/*.mp4` (2),
 `assets/ad-swipe/E19-gruns.jpg`, `E20-gruns.jpg`.
@@ -112,7 +176,11 @@ fresh-critic read of B vs A per flow. Structural asserts only; the harness never
 
 ---
 
-## Slice 2 — the premise pin ⏸ PENDING (depends on Slice 1)
+## Slice 2 — the premise pin ⏸ PENDING (1 clean sample, need ≥6)
+
+**Slice 1 datapoint:** 3.7's premise check returned **rich, non-empty output** (1465 chars,
+`parsedOk: true`) — no flake. But the 3.6 failure rate was **1 in 6**, so a single clean run is
+statistically worthless. Do not retire the pin on this. Sample ≥6 first (~$0.16).
 
 [`premiseCheckModel`](../services/geminiService.ts#L332) is still pinned to `gemini-3.5-flash`
 because 3.6 flaked **1/6 runs empty** on `googleSearch` grounding + JSON-instructed-in-prompt
