@@ -11,14 +11,21 @@ nothing is perishable any more — full write-up, corrected root cause, cost tab
 ## ▶ NEXT ACTION — give the EDL its eyes back (Gemini Files API)
 **The editor is currently BLIND for every user.** Gemini stopped accepting our R2 object
 URL as `fileData.fileUri`; it only takes URIs minted by its own **Files API**. One video
-part on the request = 429 `RESOURCE_EXHAUSTED`, zero parts = 200 (isolated live 08-14, same
-model/endpoint/second). Shipped mitigation on main (`2a1860b`): `EDL_MAX_ATTACHED_VIDEOS = 0`
-— every scene rides in the prompt as `videoAttached: no`, a branch the tuned prompt already
-had. **Fix: upload each scene video to the Files API, pass the `files/*` URI, raise the cap.**
-Restore note is in the constant's doc comment in [geminiService.ts](services/geminiService.ts).
-It also survives R2 presign expiry, which the current design does not.
+part = 429 `RESOURCE_EXHAUSTED`, zero parts = 200 (isolated live 08-14, same model/endpoint/
+second). Shipped mitigation on main (`2a1860b`): `EDL_MAX_ATTACHED_VIDEOS = 0` — every scene
+rides in the prompt as `videoAttached: no`, a branch the tuned prompt already had.
 
-⚠️ It broke ~2 weeks before anyone noticed, because no run was attempted in between.
+**➜ Design doc: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md). Read it before
+touching this — the constant's doc comment describes the fix as a swap and it is NOT one.**
+The upload loop already exists ([omni-video.ts:259-300](api/gemini/omni-video.ts#L259-L300)),
+but it CANNOT run where the EDL runs: `api/gemini/text.ts` is pinned to 60s and one clip is
+budgeted 5 min × up to 10 clips. The upload has to move to its own server surface.
+**Step 1 is a doc lookup, not code:** how long a `files/*` URI stays valid decides
+upload-at-EDL-time vs upload-at-render-time + a `producer_scenes` column.
+
+⚠️ It broke ~2 weeks before anyone noticed, because no run was attempted in between. The
+missing live "one video part returns 200" assertion is what let it hide — add it in the same
+commit as the fix, then wire it into the Tier 3 nightly loop.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 The scene-image gate is live and **it is not enough**:
