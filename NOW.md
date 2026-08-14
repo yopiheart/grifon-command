@@ -2,11 +2,9 @@
 **Stamped: 2026-08-14** (session 22)
 
 ## ✅ THE PILOT IS DONE — both gates PASSED, ad downloaded
-Gate 5 (mid-scene dead-air trim) and gate 6 (hook hold 0.35/0.7) are **Neil-passed**.
-`MID_GAP_TRIM_ENABLED` comes out of the dark; gate 5 of `format_sample_readiness.md` is
-discharged. Run `apr_2f930418` shipped 10 scenes for ~$4.96 ≈ ₱288. Nothing is paused and
-nothing is perishable any more — full write-up, corrected root cause, cost table and the
-9-item finding list are in [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
+Gates 5 (mid-scene dead-air trim) and 6 (hook hold 0.35/0.7) are **Neil-passed**, so
+`MID_GAP_TRIM_ENABLED` is out of the dark. Run `apr_2f930418` shipped 10 scenes for ~$4.96 ≈
+₱288. Nothing is perishable. Full write-up: [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
 
 ## ▶ NEXT ACTION — one real run on the deployed code, watched by Neil
 **SHIPPED 2026-08-14 17:47 — the EDL has its eyes back in production.** Merged as ONE commit
@@ -17,24 +15,20 @@ clip, `geminiService.ts` fans the uploads out with `allSettled`, `EDL_MAX_ATTACH
 **⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` puts the editor back to the safe
 blind state. That is the whole reason it went in as a merge commit.
 
-Measured live BEFORE merging (`tests/regression/edl-video-part.regression.test.ts`):
-ONE `files/*` part → **200, not 429**, 23s · **TEN** parts → **200**, 30.9s, with ~155s of
-video against ~60s for a real 10-scene ad, so a real run has headroom. Plus build exit 0,
-1195 tests, `check:bundle-leak` 0, no prompt/schema/model-ID change.
+Measured live before merging: ONE `files/*` part → **200, not 429** · **TEN** → **200**, on
+~155s of video vs ~60s for a real 10-scene ad, so there is headroom. Build 0, 1195 tests.
 
 ⚠️ **STILL UNPROVEN, AND DO NOT CLAIM IT:** that an edit made WITH eyes is better than the
 blind one. The blind pilot scored well and Neil passed both its gates. All that is proven is
 that the model accepts the video and does not 429. **Only a watched live run answers the
 quality question** — that is the next action, and nothing else can substitute for it.
 
-**✅ THE CANARY IS ON A SCHEDULE (`0e326ef`).** Tier 3 nightly now runs the EDL video-attach
-check beside the adscript suite, 02:00 PHT, and a red night opens an issue that names the
-containment step. This class of blackout is finally *detected*, not merely detectable —
-**the first night it fires is the first real proof**, so glance at the Actions tab tomorrow.
+**✅ THE CANARY IS ON A SCHEDULE (`0e326ef`).** Tier 3 nightly runs the EDL video-attach check
+at 02:00 PHT; a red night opens an issue naming the containment step. **The first night it
+fires is the first real proof** — glance at the Actions tab.
 
-⚠️ Three non-blocking follow-ups are recorded at the bottom of the plan doc — read them
-before touching this area. The sharpest: `research-tier.ab.test.ts` (`RUN_AB=1`) now
-degrades silently and would print a confident wrong A/B result.
+⚠️ Three non-blocking follow-ups sit at the bottom of the plan doc. Sharpest:
+`research-tier.ab.test.ts` (`RUN_AB=1`) degrades silently and would print a wrong A/B result.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 The scene-image gate is live and **it is not enough**:
@@ -49,13 +43,10 @@ which also proves the hook's `Object Materialization` morph is **high-variance**
 one-off. Users without Neil's eye will publish the slop.
 
 ## 📋 9 FINDINGS, NONE FILED — `gh` is not on PATH
-Full text + evidence in the pilot doc. Ranked: 1 blind EDL · 2 gate passed an illegible
-label · 3 nothing watches video + gate coverage holes · 4 `SCENE_CAP` not wired to the
-producer (why runs come back 9 or 10) · 5 `modelCosts.ts` has no row for `veo-3.1-lite` or
-`kling-v3` · 6 `producer_runs.cost_usd` is 0 on every row · 7 colour drift at **3/3 → the
-gated TUNED proposal is unlocked** (a render-stage LUT fixes it without touching a prompt) ·
-8 no shot-variety rule on the ugc/testimonial skeleton (1/3) · 9 preset styles are bare text
-labels. File these when `gh` is back: `.\scripts\restore-gh.ps1`.
+Ranked list + evidence in the pilot doc. Sharpest: **#7 colour drift hit 3/3, so the gated
+TUNED proposal is UNLOCKED** (render-stage LUT, no prompt touched) · #4 `SCENE_CAP` isn't
+wired to the producer (why runs return 9 or 10) · #6 `producer_runs.cost_usd` is 0 on every
+row. File when `gh` is back: `.\scripts\restore-gh.ps1`.
 
 ## 🅿 PARKED THIS SESSION (Neil's call — do not start these mid-session)
 **Preset styles + their preview UI.** Right shape at zero marginal cost: caption/text styles
@@ -64,25 +55,28 @@ once, shipped as a static asset. ⛔ Never render a preview from the user's own 
 full render per click × 7 presets. **Thumbnail** looks on-format (MrBeast shape); grade it
 with `gemini-eval` in its own session, not by eyeball mid-pilot.
 
-## ⚠️ TWO WRONG DIAGNOSES WERE PUBLISHED BEFORE THE RIGHT ONE
-Recorded so nobody re-walks them. (a) "our `TEXT_LIMIT` limiter" — dead, `Retry-After: 30` is
-the Google branch, ours sets 60. (b) "Google project quota" — dead, every quota row 0% on a
-paid tier 3 account. (c) "10 attached videos is over a ceiling" — dead, capping to 8 still
-429'd, and 8 < 9 which had worked twice. **The dashboard cannot answer this class of
-question; a two-line console reproducer can.** One is in the pilot doc.
+## ⚠️ THREE WRONG DIAGNOSES, ALL DEAD — do not re-walk
+`TEXT_LIMIT` · Google project quota · "10 videos is over a ceiling". Evidence for each is in
+the pilot doc. **The dashboard cannot answer this class of question; a two-line console
+reproducer can.** One is in there.
+
+## 🌿 THE BRANCH PILE IS NOW READABLE (2026-08-15)
+`node tools/branch_triage.mjs` — 7s, read-only, one verdict per branch. Today: **1 DELETE ·
+3 SUPERSEDED · 2 TUNED · 8 CONFLICT-CODE · 12 CONFLICT-DOC · 1 MERGE-DOCS · 2 STALE.** The
+"29 unmerged branches" scare is half doc churn — `CLAUDE.md`/`post_beta_roadmap.md`/
+`agent_lessons.md` collide, not code. Delete commands print paste-ready; **Neil's call, the
+tool never deletes.** SOP + what it deliberately can't decide: [`branch_triage.md`](workflows/branch_triage.md).
 
 ## 🧠 THE STRATEGIC ONE — every avatar has the same face
 The auto-cast "mean face" is what every nano-banana user gets, so believability buys us
-nothing competitively. Cheap lever: `assets/house-model/README.md` already proved the fix is
-**"bone, not features."** ⚠️ A/B it **alone** on Gemini — the full raw-ugc scaffold failed
-4/4 there on 07-16. Real moat: extend the locked house model into a **casting bank of 15–20
-approved, structurally distinct faces** and cast from it. An asset cannot be copied from a
-prompt.
+nothing competitively. Cheap lever proved in `assets/house-model/README.md`: **"bone, not
+features"** — but A/B it **alone** on Gemini (the full raw-ugc scaffold failed 4/4, 07-16).
+Real moat: a **casting bank of 15–20 approved, structurally distinct faces**. An asset
+cannot be copied from a prompt.
 
 ## 📝 PRODUCT TRUTH — the offer box
 Real users paste **only their literal package offer**; Market Research does the rest.
-`sample_batch_test_spec.md` §1 still carries the long brief — **update it before the other
-11 formats run.**
+`sample_batch_test_spec.md` §1 still carries the long brief — **fix before the other 11 run.**
 
 ## ⛔ Gated · 🔧 Arm before starting
 Re-arm: `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1` ·
