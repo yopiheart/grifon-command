@@ -7,9 +7,22 @@ name: Nightly Regression
 # a GitHub Issue + uploads the run output. It NEVER edits prompts and NEVER
 # auto-merges — it only surfaces. Full SOP: workflows/nightly_regression.md.
 #
-# v1 scope: the existing adscript regression suite
+# v1 scope: the adscript regression suite
 # (tests/regression/script-gen.regression.test.ts), deterministic-invariant
 # assertions only — no LLM evaluator, no ANTHROPIC_API_KEY in CI yet.
+#
+# v2 (2026-08-14): + the EDL video-attach canary
+# (tests/regression/edl-video-part.regression.test.ts). THIS IS THE POINT OF THE
+# WHOLE LOOP. The EDL went blind for every user for ~2 weeks and nothing noticed,
+# because no run was attempted in between and every unit test mocks the proxy.
+# The fix without a schedule leaves that lesson half-learned: the failure was
+# *detectable*, nothing was *detecting*. One cheap live call a night closes it.
+#
+# NOTE the canary runs on RUN_REGRESSION only. The full-cap probe in the same
+# file is gated separately on RUN_EDL_FULL_CAP and is deliberately NOT set here —
+# ten videos a night is real spend for a question already answered by hand
+# (2026-08-14: ten parts → 200). Re-run that one manually after any change to
+# EDL_MAX_ATTACHED_VIDEOS, the attach path, or the EDL model id.
 on:
   schedule:
     # 18:00 UTC = ~02:00 PHT — runs overnight, Manila time.
@@ -57,7 +70,7 @@ jobs:
       # the nightly cron would open a false-alarm "FAILED" issue every night
       # before the secret is added. A skipped run is annotated, never silent
       # (the paper's "no silent caps"). Once the secret exists it runs for real.
-      - name: Run Gemini ad-script regression
+      - name: Run live Gemini regressions (ad-script + EDL video-attach canary)
         env:
           RUN_REGRESSION: '1'
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -67,7 +80,9 @@ jobs:
             echo "### ⏭️ Nightly regression skipped — GEMINI_API_KEY not set" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          npx vitest run tests/regression/script-gen.regression.test.ts \
+          npx vitest run \
+            tests/regression/script-gen.regression.test.ts \
+            tests/regression/edl-video-part.regression.test.ts \
             --reporter=verbose \
             --reporter=json --outputFile=.tmp/regression/results.json
 
@@ -109,8 +124,12 @@ jobs:
             const list = failed.length
               ? failed.map(n => `- ${n}`).join('\n')
               : '_Could not parse failed test names — see the run log / artifact._';
+            // The EDL canary and the ad-script suite fail for completely different
+            // reasons and send the triager to different files, so say which one broke
+            // instead of printing "ad-script" over both.
+            const edlFailed = failed.some(n => /EDL live/i.test(n));
             const body = [
-              `Nightly ad-script regression failed.`,
+              `Nightly live-Gemini regression failed.`,
               ``,
               `**Run:** ${runUrl}`,
               `**Artifact:** \`nightly-regression-results\` (attached to the run, 30-day retention)`,
@@ -119,11 +138,24 @@ jobs:
               list,
               ``,
               `---`,
-              `This is a deterministic-invariant regression on the live Gemini ad-script`,
-              `flow (hook/body starvation + schema shape). The loop only *reads* output —`,
-              `it never edits a tuned prompt. Triage per workflows/nightly_regression.md;`,
-              `any fix touching \`services/geminiService.ts\` / \`api/_lib/prompts.ts\` is`,
-              `TUNED — escalate, do not auto-apply.`,
+              ...(edlFailed ? [
+                `🔴 **THE EDL CANARY IS RED — the editor is going blind again.**`,
+                ``,
+                `That check exists because this exact failure hid for ~2 weeks: Gemini stopped`,
+                `accepting our video URIs, so every producer run edited from script text alone`,
+                `while looking healthy. If it is a 429 \`RESOURCE_EXHAUSTED\`, the attach path is`,
+                `broken, NOT your quota — that misreading cost two wrong diagnoses on 2026-08-13.`,
+                `Read workflows/edl_files_api_plan.md before touching anything.`,
+                ``,
+                `**Containment, if runs are stalling:** set \`EDL_MAX_ATTACHED_VIDEOS = 0\` in`,
+                `\`services/geminiService.ts\`. Runs complete blind instead of failing.`,
+                ``,
+              ] : []),
+              `The ad-script half is a deterministic-invariant regression (hook/body starvation`,
+              `+ schema shape). The loop only *reads* output — it never edits a tuned prompt.`,
+              `Triage per workflows/nightly_regression.md; any fix touching`,
+              `\`services/geminiService.ts\` / \`api/_lib/prompts.ts\` is TUNED — escalate, do`,
+              `not auto-apply.`,
             ].join('\n');
             await github.rest.issues.create({
               owner: context.repo.owner,

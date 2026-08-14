@@ -274,7 +274,7 @@ The defreezer can wipe session state; it can't wipe the repo.
 - Adding a new session loop? Document its arm command as a `/loop …` line in
   `session_reminders.md` — the hook picks it up automatically.
 
-## Tier 3 — Nightly regression loop · ✅ live, automatic (v1: adscript, deterministic invariants)
+## Tier 3 — Nightly regression loop · ✅ live, automatic (v2: adscript + EDL video-attach canary)
 
 Armed 2026-06-30 (Loop Engineering / Move 1). A cloud-scheduled GitHub Action
 runs the live Gemini ad-script regression nightly and surfaces any regression as
@@ -286,9 +286,22 @@ SOP: [nightly_regression.md](nightly_regression.md); spec:
 - Arm: nothing — wired in [.github/workflows/nightly-regression.yml](../.github/workflows/nightly-regression.yml)
   (`cron '0 18 * * *'` ≈ 02:00 PHT + `workflow_dispatch`). Schedule fires from
   `main` only; test on a branch via dispatch.
-- Verifier: the suite's deterministic-invariant assertions
-  (`RUN_REGRESSION=1 npx vitest run tests/regression/script-gen.regression.test.ts`)
-  — hook/body starvation + schema shape. Stable across Gemini's stochastic output.
+- Verifier, two halves, both deterministic (no LLM judge — stable across Gemini's
+  stochastic output):
+  - **adscript** (`tests/regression/script-gen.regression.test.ts`) — hook/body
+    starvation + schema shape.
+  - **EDL video-attach canary** (`tests/regression/edl-video-part.regression.test.ts`,
+    added 2026-08-14) — ONE `files/*` video part must come back **200, not 429**.
+    This is the loop's reason to exist: the EDL went blind for every user for ~2
+    weeks and nothing noticed, because no run was attempted and every unit test
+    mocks the proxy. A red canary means the editor is going blind again; the issue
+    body carries the containment step (`EDL_MAX_ATTACHED_VIDEOS = 0`).
+  - ⛔ NOT nightly: the full-cap 10-video probe in the same file, gated separately on
+    `RUN_EDL_FULL_CAP`. Ten videos a night is real spend for a question already
+    answered by hand (2026-08-14: ten parts → 200). Re-run it manually after any
+    change to the cap, the attach path, or the EDL model id.
+  - Both run in ONE `vitest` invocation → one `results.json` → one issue. Verified
+    live end to end on 2026-08-14: 13 passed, 1 skipped, 62s.
 - Persistence: GitHub Issue per failing night (label `regression`) + a
   `nightly-regression-results` artifact every run (30-day retention).
 - Human-review door: read-only — opens an issue for Neil, never edits a tuned
