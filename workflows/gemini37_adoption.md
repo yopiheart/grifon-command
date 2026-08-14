@@ -4,13 +4,15 @@
 Same slice discipline as [`gemini36_adoption.md`](gemini36_adoption.md) — that doc is the
 precedent and the template; read it first.
 
-**Status as of 2026-08-15:** Slice 0 ✅ SHIPPED · Slice 1 ✅ RAN (**3.7 is −59% cheaper and
-−24% faster per research pass, on-contract 6/6**) · Slices 2–3 ⏸ PENDING NEIL.
-**No production model ID has been changed.**
+**Status as of 2026-08-15:** Slice 0 ✅ SHIPPED · Slice 1 ✅ RAN (**−59% cost, −24% latency,
+on-contract 6/6**) · Slice 3 ✅ SHIPPED (both QA gates on 3.7) · Slice 2 🔴 **the premise pin's
+justification does not reproduce — and the real defect is a parser bug, not the model.**
 
-**The recommendation, in one line:** the cost case is proven and the structural case is clean,
-so flip the two QA gates (Slice 3, env-var only) whenever you like — but hold
-`researchTextModel` until the watched EDL run, and hold the premise pin until it has ≥6 samples.
+Total measured spend for the whole evaluation: **$0.46** (26 live calls).
+
+**The recommendation, in one line:** the gates are done; hold `researchTextModel` until the
+watched EDL run; and treat the premise flake as a **parser-hardening job**, not a model choice —
+3.5-flash flakes too, so the pin is paying 4.2x for nothing.
 
 ---
 
@@ -176,11 +178,56 @@ fresh-critic read of B vs A per flow. Structural asserts only; the harness never
 
 ---
 
-## Slice 2 — the premise pin ⏸ PENDING (1 clean sample, need ≥6)
+## Slice 2 — the premise pin 🔴 THE PIN'S PREMISE DOES NOT REPRODUCE (6 samples, 2026-08-15)
 
-**Slice 1 datapoint:** 3.7's premise check returned **rich, non-empty output** (1465 chars,
-`parsedOk: true`) — no flake. But the 3.6 failure rate was **1 in 6**, so a single clean run is
-statistically worthless. Do not retire the pin on this. Sample ≥6 first (~$0.16).
+Ran 6 paired samples, A = `gemini-3.5-flash` (the pinned incumbent) vs B = `gemini-3.7-flash`.
+12 live calls, **$0.28** (over my ~$0.16 estimate — because 3.5-flash is the expensive half).
+
+| Arm | Model | Empty shells | Avg cost/call | Avg latency |
+|---|---|---|---|---|
+| A | `gemini-3.5-flash` **(the pin)** | **1 / 6** | $0.03782 | 28.7s |
+| B | `gemini-3.7-flash` | **1 / 6** | **$0.00911** | **14.2s** |
+
+**The pin exists because the 3.6 eval measured 3.5-flash at 0/6 and 3.6-flash at 1/6. That
+0/6 does not hold up — 3.5-flash flaked here too, at the same rate as the candidate.**
+
+Both failures are **byte-identical**:
+
+```json
+{"impliedPremise":"","alternatives":[],"questions":[]}
+```
+
+And both models **did** generate content — 516 output tokens on the 3.5 failure, 459 on the
+3.7 one (plus 4338 and 1938 thinking tokens). The model answered; the pipeline threw the
+answer away. That is conclusive on root cause: **this is a flow-level parser failure, not a
+model defect.** It is the known `googleSearch`-grounding + JSON-in-prompt interaction — no
+`responseMimeType` is possible on a grounded call, so `cleanJson` occasionally extracts
+nothing and the code falls back to an empty shell.
+
+### What follows
+
+- **The pin is not buying reliability.** It is paying **4.2x the cost and 2x the latency** for
+  the same 1-in-6 failure rate. On this evidence its justification is gone.
+- ⚠️ **Statistical honesty:** n=6 per arm with 1 event each cannot distinguish the true rates —
+  these could both be 1/6, or 1/10 and 1/4. What IS established is the negative: **3.5-flash is
+  not flake-free**, and that was the entire basis for pinning to it.
+- **The real fix is parser hardening, not model selection** — exactly what
+  [`gemini36_adoption.md`](gemini36_adoption.md) Slice 2 deferred ("premise migrates later
+  behind a parser-hardening grill-me"). A model flip alone cannot fix a parse that discards a
+  valid answer; whichever model is chosen, ~1 in 6 users silently lose the feature today.
+- **Recommended (Neil's call — `premiseCheckModel` is a LOCKED line):** run the
+  parser-hardening grill-me first, since it fixes the actual defect for every model. The model
+  flip is then a free follow-on that saves 4.2x. Do **not** flip on cost alone while the parse
+  bug is live — it would look like a regression the first time a 3.7 run comes back empty.
+
+Reproduce (12 calls, ~$0.28):
+
+```powershell
+$env:RUN_AB='1'; $env:AB_ARM_A='gemini-3.5-flash'; $env:AB_ARM_B='gemini-3.7-flash'
+npx vitest run tests/regression/research-tier.ab.test.ts -t generatePremiseCheck
+```
+
+### Original rationale
 
 [`premiseCheckModel`](../services/geminiService.ts#L332) is still pinned to `gemini-3.5-flash`
 because 3.6 flaked **1/6 runs empty** on `googleSearch` grounding + JSON-instructed-in-prompt
@@ -200,7 +247,27 @@ codebase goes to $3.75.
 
 ---
 
-## Slice 3 — the QA gates ⏸ PENDING (env-var flip, Neil's call)
+## Slice 3 — the QA gates ✅ SHIPPED 2026-08-15 (Neil-approved)
+
+Both defaults flipped to `gemini-3.7-flash` in commit `13bd5bc`. **$9.00 → $3.75 output** —
+the most expensive text rate Grifon paid, spent on fail-open flag-only eval infra.
+
+**Flipped the CODE DEFAULT, not the Vercel env var**, for two reasons: the Vercel MCP surface
+available here has no env-var setter (checked, not assumed), and a default in git is reviewable
+and revertible where a dashboard edit is invisible to history. **The env var still overrides**,
+so it stays the instant no-deploy rollback lever — documented at both call sites.
+
+⚠️ **Takes effect on next deploy, not on merge.**
+⚠️ **Watch flag/reroll rates.** The image gate drives the only automated reroll; the omni gate
+is the inert one.
+
+Also pre-approved `gemini-3.7-flash` in the [`text.ts`](../api/gemini/text.ts) `LegacyBody`
+allowlist. Inert today, but without it a future `researchTextModel` flip would 400 every
+research-tier call — and **the A/B harness could not have caught that**, since it intercepts at
+the fetch layer and never reaches that zod parse. Cost exposure does not widen: 3.7 is cheaper
+than 3.5-flash and 3.6-flash, both already allowed.
+
+### Original rationale
 
 [`OMNI_GATE_MODEL`](../api/_lib/omniGate.ts#L26) and
 [`IMAGE_GATE_MODEL`](../api/_lib/imageGate.ts#L28) both default to `gemini-3.5-flash` and are
