@@ -118,11 +118,15 @@ issue-filing path.
 2. ~~Brief `code-executor`.~~ **Done** — [edl_files_api_brief.md](edl_files_api_brief.md).
 3. ~~Fix + live one-part assertion.~~ **Done, SHIPPED 2026-08-14.**
 4. ~~Raise the cap, retarget the two unit tests.~~ **Done — cap is 8.**
-5. **← NEXT: add the live assertion to the Tier 3 nightly loop.** The regression test
-   exists (`tests/regression/edl-video-part.regression.test.ts`, `RUN_REGRESSION=1`) but
-   nothing runs it on a schedule yet, so the blackout class of failure is still only
-   *detectable*, not *detected*. Wire it into
-   [.github/workflows/nightly-regression.yml](../.github/workflows/nightly-regression.yml).
+5. ~~Add the live assertion to the Tier 3 nightly loop.~~ **Done 2026-08-14 (`0e326ef`).**
+   The canary runs beside the adscript suite in
+   [.github/workflows/nightly-regression.yml](../.github/workflows/nightly-regression.yml)
+   at 02:00 PHT; the failure issue branches on which half broke and carries the
+   containment step. The full-cap probe stays off nightly (`RUN_EDL_FULL_CAP`).
+   Registry entry: [loops.md](loops.md) Tier 3, now v2.
+
+**Nothing in this plan is open.** What remains is not a task but an observation: one real
+producer run, watched by Neil, to answer whether an edit made WITH eyes is actually better.
 
 ---
 

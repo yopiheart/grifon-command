@@ -27,10 +27,10 @@ blind one. The blind pilot scored well and Neil passed both its gates. All that 
 that the model accepts the video and does not 429. **Only a watched live run answers the
 quality question** — that is the next action, and nothing else can substitute for it.
 
-**Then step 5 of the plan: wire `tests/regression/edl-video-part.regression.test.ts` into
-the Tier 3 nightly loop.** The assertion exists; nothing runs it on a schedule, so this
-class of blackout is still only *detectable*, not *detected*. That gap is the actual lesson
-of the 2-week outage — the fix without the schedule leaves it half-learned.
+**✅ THE CANARY IS ON A SCHEDULE (`0e326ef`).** Tier 3 nightly now runs the EDL video-attach
+check beside the adscript suite, 02:00 PHT, and a red night opens an issue that names the
+containment step. This class of blackout is finally *detected*, not merely detectable —
+**the first night it fires is the first real proof**, so glance at the Actions tab tomorrow.
 
 ⚠️ Three non-blocking follow-ups are recorded at the bottom of the plan doc — read them
 before touching this area. The sharpest: `research-tier.ab.test.ts` (`RUN_AB=1`) now
