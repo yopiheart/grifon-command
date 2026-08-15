@@ -19,6 +19,9 @@ video and does not 429. **Only a watched live run answers the quality question.*
 **✅ CANARY ON A SCHEDULE (`0e326ef`).** Tier 3 nightly runs the EDL video-attach check at 02:00
 PHT; a red night opens an issue naming the containment step. **First fire = first real proof.**
 ⚠️ 2 non-blocking follow-ups left in the plan doc; **#1 (`research-tier.ab`) FIXED 2026-08-15.**
+▶ **RUN SHEET IS READY, run not started** — hero + brand + offer picked (same fixture as the blind
+pilot, so the eyes are the only variable), and the two killers verified in code: the unmeter flag
+CANNOT be used on prod, and **>5 `talking` scenes kills the run** (Veo is 5/hr). See the plan doc.
 
 ## 🚀 DEPLOYED TO PROD 2026-08-15 — `18d6310` (merge, `--no-ff`)
 **⏪ ONE-COMMAND ROLLBACK: `git revert -m 1 18d6310`.** Deploy `dpl_DGZKBNQ…` READY. Two things:

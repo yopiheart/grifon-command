@@ -191,3 +191,54 @@ check plus a streamed write is a few lines whenever someone is in there.
 
 **3. `omni-video.ts` is still unpinned in `vercel.json`** (see §4 above). The new handler is
 pinned; its neighbour is not.
+
+---
+
+## The watched run — run sheet (prepared 2026-08-15, NOT yet run)
+
+Neil is on Claude Code web with no local clone, so this run happens in a browser against
+production. Everything below was verified in code this session, not remembered.
+
+**⛔ The skill's pre-flight is impossible here.** `.claude/skills/director-smoke/` says to set
+`GRIFON_DEV_UNMETERED_VIDEO` first. That flag **cannot** be used on prod:
+[`api/_lib/supabaseAdmin.ts:10-17`](../api/_lib/supabaseAdmin.ts#L10) throws on module load when
+`VERCEL` is set and the flag is true, and every `api/` proxy imports it — so setting it takes the
+whole API down rather than unmetering it. The run is metered, exactly like a real user's.
+
+**🔴 The one thing that can kill the run: `talking` scenes.**
+
+| Engine | Limit / hour | Scene types | Source |
+|---|---|---|---|
+| Veo | **5** | `talking` | [`api/gemini/video.ts:29`](../api/gemini/video.ts#L29) |
+| Kling | 12 | `b-roll`, `cinematic` | [`api/kling/video.ts:26`](../api/kling/video.ts#L26) |
+
+Routing is [`producerOrchestrator.ts:498-500`](../services/producerOrchestrator.ts#L498). **Count
+the `talking` scenes on the storyboard before RENDER ALL — 5 or fewer.** At 6 the run dies mid-way
+with a 429 and a one-hour lockout (the 2026-06-10 failure).
+
+**Monthly quota is fine:** one finished ad costs ONE `video_ads` credit, not one per scene
+([`quota.ts:174`](../api/_lib/quota.ts#L174) `consumeFinishedAd` — later scenes of the same
+`finishedAdId` are free).
+
+**Inputs — deliberately the SAME fixture the blind pilot used** (`apr_2f930418`), so any
+difference is attributable to the eyes rather than to a different product:
+
+- Hero: `tests/fixtures/sample-batch/hero.png` — amber dropper bottle, held in-hand, label legible.
+- Brand (read off the label, not invented): **Hiraya Glow**, Vitamin C Brightening Serum 30ml.
+- Offer: **₱499 launch promo** (reg. ₱799), free shipping nationwide, ends Sunday
+  ([`sample_batch_test_spec.md:33`](sample_batch_test_spec.md)).
+
+Those three go into **Market Research only**. Step 1/2 of the wizard must AUTO-PREFILL from
+"Send to Director AI" — an empty field or `[object Object]` there is a bug and a STOP, never
+something to type around.
+
+**What to judge, in order:**
+
+1. **Does the EDL make a VISUAL observation, or is it still script-only?** This is the whole
+   question. Slice 1 of [`gemini37_adoption.md`](gemini37_adoption.md) found that with 4 real
+   clips attached, NEITHER arm said anything about the picture — `weaknessesFlagged` came back
+   script-level on both. If that repeats under Neil's eye, the answer is that the attach earns
+   nothing and should be reverted, saving 2.2x input tokens per EDL call.
+2. **Does the ₱499 offer survive into the script?** Free observation while he is in there, and it
+   bears directly on Slice 4 (flash-lite dropped the offer 4/4 in the harness). The spec already
+   records one run where ₱499 never surfaced in any of 4 script lines.
