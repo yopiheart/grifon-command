@@ -1636,7 +1636,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       **VISUAL PURITY RULE:**
       "The \`sceneDescription\` and \`imagePrompt\` MUST describe the physical scene only.
-      - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
+      - **FORBIDDEN:** Do not include instructions like 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
       - Text belongs in the Audio/Script, NEVER in the image generation prompt."
 
       ${isUGCPro ? `**PACING RULE (UGC Pro override):**

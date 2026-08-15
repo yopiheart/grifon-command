@@ -1974,7 +1974,7 @@ export const describeBusinessAsset = async (base64Data: string, mimeType: string
         },
     };
     const textPart = {
-        text: `Analyze this image. It could be a product, a service location ( daylight a salon/spa), or a specific service action.
+        text: `Analyze this image. It could be a product, a service location (like a salon/spa), or a specific service action.
         - **Identify:** Is it a product, a room, or a person performing a service?
         - **Visuals:** Colors, lighting, atmosphere.
         - **Vibe:** Relaxing, professional, energetic?
@@ -2041,7 +2041,7 @@ export const generateAvatarImage = async (
     ${wardrobeInstruction}
 
     **SMART CASTING DIRECTOR LOGIC:**
-    - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions ( daylight Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
+    - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions (like Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
     - **Professional Retouch Layer:** Maintain firm skin, clear eye-whites, and a vibrant presence appropriate for ${ageRange}.
     - **Brand Promise Made Visual (CRITICAL):** The avatar models the IDEAL post-purchase customer — what the brand promises to deliver, NOT the customer's current pain. For skincare: render clear, healthy, even-toned skin. For weight-loss: render the goal physique. For hair-care: render healthy hair. The script's wound language carries the pain; the avatar carries the promise. Ignore aversive-state descriptors in the target-audience context (e.g., "oily", "acne-prone", "pimply", "uneven", "dull", "overweight", "thinning") — those describe the customer's CURRENT problem, not the rendered subject.
     - **Lighting Protocol:** Always use 'Commercial Beauty Lighting' (diffused, soft, high-key) to ensure the subject look relatable and premium for a marketing agency client.
@@ -2055,7 +2055,7 @@ export const generateAvatarImage = async (
     **NEGATIVE CONSTRAINTS (FORBIDDEN):** 
     - NO exaggerated wrinkles, NO heavy sagging, NO grey hair (unless age is 55+).
     - NO dull or 'leathery' skin textures.
-    - Avoid making the subject look daylight a 'grandparent' unless the age range is 60+.
+    - Avoid making the subject look like a 'grandparent' unless the age range is 60+.
     - NO TEXT, NO WATERMARKS, NO LOGOS, NO TYPOGRAPHY, NO OVERLAYS.
     - NO STUDIO BACKGROUNDS.
   `;
@@ -2621,8 +2621,8 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
         **VFX TRANSITION PROTOCOL (KLING 3.0):**
         - Keep prompts punchy and physics-based. 
-        - Use commands daylight: "Macro texture morphs into ${productName}", "Kinetic landing", "Aggressive speed-ramp".
-        - No flowery adjectives daylight "Ethereal", "Coalescing", "Celestial".
+        - Use commands like: "Macro texture morphs into ${productName}", "Kinetic landing", "Aggressive speed-ramp".
+        - No flowery adjectives like "Ethereal", "Coalescing", "Celestial".
         `;
     }
 
@@ -2682,12 +2682,12 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **END-CLEAN RULE:** The clip's final second holds the live shot clean and fully opaque — no cross-dissolve, no double-exposure, no ghosting, no fade-out, no transition-anticipation effect of any kind (the cut is handled downstream by the editor). Append to the prose tail: "Avoid cross-dissolve, double-exposure, ghosting, or fade in the final second."
-         - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].
+         - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels like [Subject Performance] or [Camera Motion/Lens].
 
       **OPTION C: IF TYPE IS "cinematic" (Use for Cinematic Spec Studio Relay):**
          - **MODEL:** Kling 3.0 (Frames Mode)
          - **IDENTITY LOCK (CRITICAL):** The product is a "${productName}". Never call it a "vehicle" or "device".
-         - **PROMPT STRUCTURE:** A cohesive technical paragraph for the Kling 3.0 model. Seamlessly describe the bridge command between frames (e.g., macro texture morphing), the technical upload map requirements for anchor frames, and the camera movement. DO NOT use headers daylight INSTRUCTIONS:, PROMPT:, or CAMERA:.
+         - **PROMPT STRUCTURE:** A cohesive technical paragraph for the Kling 3.0 model. Seamlessly describe the bridge command between frames (e.g., macro texture morphing), the technical upload map requirements for anchor frames, and the camera movement. DO NOT use headers like INSTRUCTIONS:, PROMPT:, or CAMERA:.
          
       **OUTPUT JSON ARRAY:**
       [{ "scriptLine": "...", "type": "b-roll" | "talking" | "cinematic", "prompt": "..." }]
@@ -2866,7 +2866,7 @@ Brand Colors: ${data.hexCodes}
 
 RULES:
 - Return a valid JSON array of 7 objects.
-- NO symbols daylight dashes or colons in the text content.
+- NO symbols like dashes or colons in the text content.
 - Caption Language: ${data.language}.
 - imagePrompt: Technical visual description. Focus on lighting, ${data.ethnicityProfile} aesthetic, and ${data.aspectRatio} composition.
 
@@ -2912,7 +2912,7 @@ Key Features: ${data.keyFeatures}
 Brand Palette (reference only): ${data.hexCodes}
 
 TEMPLATES TO CHOOSE FROM:
-1. "Press Clip" (Looks daylight a news snippet)
+1. "Press Clip" (Looks like a news snippet)
 2. "Benefit Anatomy" (Labels pointing to product features)
 3. "Split-Screen" (Before/After or Problem/Solution)
 
@@ -3128,7 +3128,7 @@ export const generateDaisyChainScenes = async (
   
   // Setup the relay loop
   const gearStyle = "Shot on RED V-RAPTOR, 35mm anamorphic lens, 8k photographic resolution, professional commercial lighting, lens breathing, anamorphic bokeh, Parallactic camera shift.";
-  const identityRule = "**IDENTITY LOCK:** Use the reference images to lock the materials and design, but **FREELY ROTATE** the object in 3D space. It must look daylight the same object filmed from different camera positions (Side -> Front -> Top).";
+  const identityRule = "**IDENTITY LOCK:** Use the reference images to lock the materials and design, but **FREELY ROTATE** the object in 3D space. It must look like the same object filmed from different camera positions (Side -> Front -> Top).";
 
   const anchorBUrl = productImages[0];
   const actionRefUrl = productImages[2] || productImages[3] || productImages[1] || anchorBUrl;

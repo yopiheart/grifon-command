@@ -41,14 +41,14 @@ what earns the click. Fix costs **+$0.009/ad (₱0.53)** on a **$4.96** ad = **+
 ⚠️ NOT flipped: `MODEL_TEXT` is LOCKED and moves all 5 flows at once. Narrow (adscript-only
 constant) vs broad (own A/B per flow), plus the real risk that prompts were tuned against
 flash-lite (3.7 runs 7–9 beats vs 6): [`gemini37_adoption.md`](workflows/gemini37_adoption.md)
-Slice 4. Grade with `gemini-eval` before shipping.
+Slice 4. Grade with `gemini-eval` before shipping. ⏸ Harness branch `feat/adscript-ab-harness`
+(`a7ff5f3`) awaits your eye — `RUN_AB=1`, skipped by default, zero production touched.
 
-## ⏸ 2 BRANCHES WAITING ON NEIL'S EYE (zero production touched)
-- **`fix/tuned-prompt-daylight-typo`** (`77766c4`) — 11 TUNED instructions read `daylight` where
-  they mean `like`, since the **initial commit (2026-05-02)**. Mostly *negative constraints*, so
-  the rules meant to block headers/symbols/on-screen text are the ones that were blunted.
-- **`feat/adscript-ab-harness`** (`a7ff5f3`) — the harness above, `RUN_AB=1`, skipped by default.
-  Both branches: build clean, 1214 tests, bundle-leak OK.
+## ✅ DAYLIGHT TYPO — PR #114, merging on green (Neil-approved)
+13 TUNED instructions read `daylight` where they mean `like`, since the **initial commit**: 10 in
+`geminiService.ts`, 1 in `prompts.ts`, +2 in `tools/eval_realism_formula.mjs` (PR critic caught
+those; my sweep was `*.ts` only, so the eval would have graded the PRE-fix avatar prompt). Mostly
+*negative constraints* — on-screen text, bracketed headers, symbols. ⚠️ Output effect UNMEASURED.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 Gate is live and **not enough**: passed scene 9's unreadable "HIRAYA GLOW" label · scene 8's
@@ -68,7 +68,7 @@ a two-line console reproducer can. **Offer box:** users paste **only their liter
 Market Research does the rest; `sample_batch_test_spec.md` §1 still carries the long brief.
 
 ## 🌿 THE BRANCH PILE (2026-08-15)
-`node tools/branch_triage.mjs` — 7s, read-only, one verdict per branch. **28** (+2 mine above):
+`node tools/branch_triage.mjs` — 7s, read-only, one verdict per branch. **28** (+1 mine above):
 3 SUPERSEDED · 2 TUNED · 8 CONFLICT-CODE · 12 CONFLICT-DOC · 1 MERGE-DOCS · 2 STALE. Half is doc
 churn. SOP: [`branch_triage.md`](workflows/branch_triage.md).
 
