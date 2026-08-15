@@ -44,11 +44,12 @@ flash-lite (3.7 runs 7–9 beats vs 6): [`gemini37_adoption.md`](workflows/gemin
 Slice 4. Grade with `gemini-eval` before shipping. ⏸ Harness branch `feat/adscript-ab-harness`
 (`a7ff5f3`) awaits your eye — `RUN_AB=1`, skipped by default, zero production touched.
 
-## ✅ DAYLIGHT TYPO — PR #114, merging on green (Neil-approved)
-13 TUNED instructions read `daylight` where they mean `like`, since the **initial commit**: 10 in
-`geminiService.ts`, 1 in `prompts.ts`, +2 in `tools/eval_realism_formula.mjs` (PR critic caught
-those; my sweep was `*.ts` only, so the eval would have graded the PRE-fix avatar prompt). Mostly
-*negative constraints* — on-screen text, bracketed headers, symbols. ⚠️ Output effect UNMEASURED.
+## ✅ DAYLIGHT TYPO ON MAIN — `3ec2920` (PR #114). ⏪ ROLLBACK: `git revert -m 1 3ec2920`
+13 instructions read `daylight` where they mean `like`, since the **initial commit**: 10 in
+`geminiService.ts`, 1 in `prompts.ts`, +2 in `tools/eval_realism_formula.mjs`. Mostly *negative
+constraints* — on-screen text, bracketed headers, symbols. ⚠️ Output effect UNMEASURED.
+🔴 **OPEN:** eval harnesses hand-copy TUNED blocks, guarded only by a prose "re-sync" comment —
+that prose failed IN this PR and CI could not see it. Copy `tools/check-voice-lint-sync.mjs`.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 Gate is live and **not enough**: passed scene 9's unreadable "HIRAYA GLOW" label · scene 8's
