@@ -41,21 +41,14 @@ what earns the click. Fix costs **+$0.009/ad (₱0.53)** on a **$4.96** ad = **+
 ⚠️ NOT flipped: `MODEL_TEXT` is LOCKED and moves all 5 flows at once. Narrow (adscript-only
 constant) vs broad (own A/B per flow), plus the real risk that prompts were tuned against
 flash-lite (3.7 runs 7–9 beats vs 6): [`gemini37_adoption.md`](workflows/gemini37_adoption.md)
-Slice 4. Grade with `gemini-eval` before shipping.
+Slice 4. Grade with `gemini-eval` before shipping. ⏸ Harness branch `feat/adscript-ab-harness`
+(`a7ff5f3`) awaits your eye — `RUN_AB=1`, skipped by default, zero production touched.
 
-## ✅ DAYLIGHT TYPO MERGED 2026-08-15 — `e11a20f` on `claude/gemini-3-7-pending-sso06k`
-Neil-approved, `--no-ff`. **⏪ ROLLBACK: `git revert -m 1 e11a20f`.** 11 TUNED instructions read
-`daylight` where they mean `like`, since the **initial commit (2026-05-02)**: 10 in
-`geminiService.ts`, 1 in `prompts.ts`. Mostly *negative constraints*, so the rules meant to block
-on-screen text, bracketed headers (`[Subject Performance]`) and symbols are the ones that were
-blunted. Verified: build clean · **1214 tests** · `grep daylight` leaves only the 5 legitimate
-uses (a lighting concept, 3 funnel comments, 1 test fixture). ⚠️ **Not on `main` yet** — merge it
-there, and the effect on output is UNMEASURED (no A/B; the argument is that the instruction now
-parses at all).
-
-## ⏸ 1 BRANCH STILL WAITING ON NEIL'S EYE (zero production touched)
-- **`feat/adscript-ab-harness`** (`a7ff5f3`) — the harness above, `RUN_AB=1`, skipped by default.
-  Build clean, 1214 tests, bundle-leak OK.
+## ✅ DAYLIGHT TYPO — PR #114, merging on green (Neil-approved)
+13 TUNED instructions read `daylight` where they mean `like`, since the **initial commit**: 10 in
+`geminiService.ts`, 1 in `prompts.ts`, +2 in `tools/eval_realism_formula.mjs` (PR critic caught
+those; my sweep was `*.ts` only, so the eval would have graded the PRE-fix avatar prompt). Mostly
+*negative constraints* — on-screen text, bracketed headers, symbols. ⚠️ Output effect UNMEASURED.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 Gate is live and **not enough**: passed scene 9's unreadable "HIRAYA GLOW" label · scene 8's

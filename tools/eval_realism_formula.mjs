@@ -101,7 +101,7 @@ const buildCurrentAvatarPrompt = () => {
     ${''}
 
     **SMART CASTING DIRECTOR LOGIC:**
-    - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions ( daylight Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
+    - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions (like Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
     - **Professional Retouch Layer:** Maintain firm skin, clear eye-whites, and a vibrant presence appropriate for ${ageRange}.
     - **Brand Promise Made Visual (CRITICAL):** The avatar models the IDEAL post-purchase customer — what the brand promises to deliver, NOT the customer's current pain. For skincare: render clear, healthy, even-toned skin. For weight-loss: render the goal physique. For hair-care: render healthy hair. The script's wound language carries the pain; the avatar carries the promise. Ignore aversive-state descriptors in the target-audience context (e.g., "oily", "acne-prone", "pimply", "uneven", "dull", "overweight", "thinning") — those describe the customer's CURRENT problem, not the rendered subject.
     - **Lighting Protocol:** Always use 'Commercial Beauty Lighting' (diffused, soft, high-key) to ensure the subject look relatable and premium for a marketing agency client.
@@ -115,7 +115,7 @@ const buildCurrentAvatarPrompt = () => {
     **NEGATIVE CONSTRAINTS (FORBIDDEN):**
     - NO exaggerated wrinkles, NO heavy sagging, NO grey hair (unless age is 55+).
     - NO dull or 'leathery' skin textures.
-    - Avoid making the subject look daylight a 'grandparent' unless the age range is 60+.
+    - Avoid making the subject look like a 'grandparent' unless the age range is 60+.
     - NO TEXT, NO WATERMARKS, NO LOGOS, NO TYPOGRAPHY, NO OVERLAYS.
     - NO STUDIO BACKGROUNDS.
   `;
