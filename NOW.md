@@ -19,9 +19,8 @@ video and does not 429. **Only a watched live run answers the quality question.*
 **✅ CANARY ON A SCHEDULE (`0e326ef`).** Tier 3 nightly runs the EDL video-attach check at 02:00
 PHT; a red night opens an issue naming the containment step. **First fire = first real proof.**
 ⚠️ 2 non-blocking follow-ups left in the plan doc; **#1 (`research-tier.ab`) FIXED 2026-08-15.**
-▶ **RUN SHEET IS READY, run not started** — hero + brand + offer picked (same fixture as the blind
-pilot, so the eyes are the only variable), and the two killers verified in code: the unmeter flag
-CANNOT be used on prod, and **>5 `talking` scenes kills the run** (Veo is 5/hr). See the plan doc.
+▶ **RUN SHEET READY, run NOT started** (plan doc): same fixture as the blind pilot so the eyes are
+the only variable · unmeter flag CANNOT run on prod · **>5 `talking` scenes kills the run** (Veo 5/hr).
 
 ## 🚀 DEPLOYED TO PROD 2026-08-15 — `18d6310` (merge, `--no-ff`)
 **⏪ ONE-COMMAND ROLLBACK: `git revert -m 1 18d6310`.** Deploy `dpl_DGZKBNQ…` READY. Two things:
@@ -48,11 +47,9 @@ Slice 4. Grade with `gemini-eval` before shipping. ⏸ Harness branch `feat/adsc
 (`a7ff5f3`) awaits your eye — `RUN_AB=1`, skipped by default, zero production touched.
 
 ## ✅ DAYLIGHT TYPO ON MAIN — `3ec2920` (PR #114). ⏪ ROLLBACK: `git revert -m 1 3ec2920`
-13 instructions read `daylight` where they mean `like`, since the **initial commit**: 10 in
-`geminiService.ts`, 1 in `prompts.ts`, +2 in `tools/eval_realism_formula.mjs`. Mostly *negative
-constraints* — on-screen text, bracketed headers, symbols. ⚠️ Output effect UNMEASURED.
-🔴 **OPEN:** eval harnesses hand-copy TUNED blocks, guarded only by a prose "re-sync" comment —
-that prose failed IN this PR and CI could not see it. Copy `tools/check-voice-lint-sync.mjs`.
+13 instructions read `daylight` for `like` since the **initial commit**. ⚠️ Effect UNMEASURED.
+🔴 **OPEN:** eval harnesses hand-copy TUNED blocks guarded only by a prose comment — that failed
+IN this PR, invisible to CI. Fix pattern: `tools/check-voice-lint-sync.mjs`.
 
 ## 🔴 THE ANTI-SLOP NET HAS THREE NAMED HOLES
 Gate is live and **not enough**: passed scene 9's unreadable "HIRAYA GLOW" label · scene 8's
