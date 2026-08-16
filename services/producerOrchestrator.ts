@@ -280,7 +280,7 @@ export interface ProducerDeps {
     productDescription?: string,
     productName?: string,
     variationIndex?: number,
-    referenceImageMode?: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue'
+    referenceImageMode?: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state'
   ) => Promise<string>;
   generateVideoPrompts: (storyboard: Scene[], businessInfo: BusinessInfo) => Promise<VideoPrompt[]>;
   /** P4 deterministic still check (decode/dims/min-res) — the ONLY automated reroll driver
@@ -1529,19 +1529,48 @@ async function runStage(
           // utils/sceneRender.ts so the two surfaces don't drift.
           const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
           const imgAspect = (run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio) as '9:16' | '16:9' | '1:1';
+
+          // REAL-PHOTO ROUTING (2026-08-16). Until this landed the producer passed ONLY the
+          // avatar + hero, so every `venueSlot` the storyboard emitted was silently discarded and
+          // the uploaded before/after photos never reached a single frame — while the upload
+          // modal told the user they "anchor the before->after so the AI doesn't invent them".
+          // Same class of gap as the dropped endFrame plumbing (format_sample_readiness gate 7):
+          // the wizard (utils/sceneRender.ts) had the router, the producer rebuild did not.
+          const slotPhoto = scene.venueSlot
+            ? run.input.servicePhotos?.find((p) => p.slot === scene.venueSlot)
+            : undefined;
+          const isAvatarScene = mode === 'avatar' || mode === 'both';
+          // A person-STATE slot is the same human in a different condition; a place/product slot
+          // is a different subject entirely. They need opposite render modes, so split on it.
+          const isPersonStateSlot = scene.venueSlot === 'before'
+            || scene.venueSlot === 'after'
+            || scene.venueSlot === 'onbody';
+          const avatarUrl = run.input.avatar.url;
+          // Performer + their real state: lock the FACE to the avatar and the SKIN/BODY STATE to
+          // the upload. This is what makes a before/after an actual proof instead of a claim.
+          const usePersonState = !!slotPhoto && !isHookMorph && isPersonStateSlot && isAvatarScene && !!avatarUrl;
+          // A real place or product state on a scene with no performer: anchor the thing itself.
+          const useVenue = !!slotPhoto && !isHookMorph && !isPersonStateSlot && !isAvatarScene;
+          const refMode = usePersonState ? 'avatar_state' : useVenue ? 'venue' : mode;
+          const refs = usePersonState
+            ? { avatarUrl, productUrl: slotPhoto!.url }
+            : useVenue
+              ? { productUrl: slotPhoto!.url }
+              : { avatarUrl, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 };
+
           const genMainImage = (variationIndex: number) =>
             deps.generateSceneImage(
               prompt,
               imgAspect,
               '1K',
-              { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
+              refs,
               run.input.avatar.ethnicity,
               [],
               run.input.scriptType,
               run.input.productDescription,
               run.input.productName,
               variationIndex,
-              mode
+              refMode
             );
           try {
             if (needsMain) {
