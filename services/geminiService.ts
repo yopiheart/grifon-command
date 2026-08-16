@@ -329,7 +329,14 @@ const proxyPollVideoOperation = async (
 const textModel = 'gemini-3.1-flash-lite';
 const fastTextModel = 'gemini-3.1-flash-lite';
 const researchTextModel = 'gemini-3.6-flash';
-const premiseCheckModel = 'gemini-3.5-flash'; // premise check stays pinned: googleSearch-grounding + JSON-in-prompt flaked 1/6 on 3.6 (see workflows/gemini36_adoption.md)
+// premise check: pin RETIRED 2026-08-16 (Neil's explicit call). The 3.5 pin existed because a
+// 3.6 eval measured 3.5 at 0/6 empty shells; the 6-sample rerun in gemini37_adoption.md Slice 2
+// did NOT reproduce that — 3.5 flaked 1/6 and 3.7 flaked 1/6, byte-identical empty shells, with
+// both models emitting real output tokens. The defect is cleanJson discarding a valid grounded
+// answer, not the model, so the pin was paying 4.2x cost and 2x latency for the same failure
+// rate. ⚠️ THE PARSE BUG IS STILL LIVE — ~1 in 6 users silently lose this feature regardless of
+// model. Parser hardening is its own job. ⏪ Rollback: 'gemini-3.5-flash'.
+const premiseCheckModel = 'gemini-3.7-flash';
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
 const sceneImageModel = 'gemini-3.1-flash-lite-image';
 const thumbnailModel = 'gemini-3.1-flash-image-preview';
