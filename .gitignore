@@ -93,19 +93,26 @@ clients/oceanides/kuya-gabriel/ads/*/edit/
 funnels/oceanides-price-page/public/*.mp4
 funnels/oceanides-price-page/public/ad/
 
-# ── Media na binubuo mula sa source na naka-commit na (2026-08-16) ──────────
-# Umabot na sa 1.5 GB ang repo at umaabot ng ~13 oras ang clone sa cafe wifi.
-# Ang mga rule sa baba ay para sa BAGONG file lang — hindi nito binubura ang
-# naka-track na. Tingnan ang workflows/cafe_session.md.
+# ── Media rendered from a source that is already committed (2026-08-16) ─────
+# The repo reached 1.5 GB and a clone takes ~13 hours on cafe wifi.
 #
-# Kung may isang render na talagang gusto mong itago: git add -f <file>
+# SCOPE, precisely: these rules only stop BRAND-NEW filenames. .gitignore has no
+# effect on files already tracked, and every path matched below is tracked at
+# HEAD right now (19 wallpaper variants = 113 MB, 2 upscaled clips = 81 MB).
+# Re-rendering an existing filename is a MODIFICATION to a tracked file, which
+# .gitignore also does not suppress. Actually removing that 194 MB needs
+# `git rm --cached`, which is a separate decision. See workflows/cafe_session.md.
+#
+# To keep one specific render anyway: git add -f <file>
 
-# Malalaking wallpaper variant. Ang source ay ang .html na katabi mismo nila,
-# at ang renderer ay tools/render-wallpaper.mjs. Sinasadyang pinapanatili ang
-# maliliit na variant (1080x2340 / 1920x1080) para tumakbo pa rin ang
-# scripts/set-wallpaper.ps1 sa sariwang clone.
+# Large wallpaper variants. The source of truth is the .html sitting beside them
+# and the renderer is tools/render-wallpaper.mjs, so the PNG is reproducible.
+# The small variants (1080x2340 / 1920x1080) stay tracked because they are the
+# ones scripts/set-wallpaper.ps1 uses. NOTE: the lite clone in cafe_session.md
+# excludes all of /assets, so on a fresh cafe machine set-wallpaper.ps1 needs
+# `git sparse-checkout add assets/wallpapers` first regardless.
 assets/wallpapers/*-2160x4680.png
 assets/wallpapers/*-3840x2160.png
 
-# Upscaled na motion test. Galing sila sa -lite na kapareha nila, na naka-commit.
+# Upscaled motion tests, derived from the committed -lite originals beside them.
 clients/oceanides/kuya-marvin/motion-test/*-UPSCALED-*.mp4

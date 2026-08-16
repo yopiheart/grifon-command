@@ -1,59 +1,65 @@
-# Spawn parallel-Claude worktrees after the cafe defreezer wipes Desktop.
+# Spawn the parallel-Claude worktrees after the cafe defreezer wipes Desktop.
 #
-# Idempotent — nilalaktawan ang worktree na existing na, kinokopya ang
-# environment file sa mga worktree na wala pa nito, at nag-i-install lang kung
-# walang node_modules.
+# Idempotent — skips worktrees that already exist, copies the environment file
+# only into worktrees that lack it, and runs npm install only where node_modules
+# is absent.
 #
-# NAKA-PARAMETER NA (2026-08-16). Dati ay hardcoded sa feat/wizard-persist at
-# feat/camera-buckets. Parehong merged at binura na sa origin nung 2026-08-16,
-# kaya palagi syang nag-e-error sa `git worktree add` bago pa makarating sa
-# npm install. Ang branch names ay argument na ngayon at chine-check muna sa
-# origin bago subukan.
+# PARAMETERIZED 2026-08-16. This used to be hardcoded to feat/wizard-persist and
+# feat/camera-buckets. Both were merged and deleted from origin, and with
+# $ErrorActionPreference = "Stop" the script died inside `git worktree add`
+# before ever reaching npm install — so it failed on every run. Branch names are
+# arguments now and are validated against origin first.
 #
-# Gamit (mula sa loob ng grifon-command folder):
+# Usage (from the grifon-command folder):
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-#   .\scripts\spawn-worktrees.ps1 feat/una feat/pangalawa
+#   .\scripts\spawn-worktrees.ps1 feat/one feat/two
 #
 # Prereqs:
-#   1. Naka-clone na ang grifon-command at natapos na ang `npm install` dito.
-#   2. Nakapaste na ang environment file sa ugat ng main repo. Kinokopya ito ng
-#      script sa bawat worktree — kung wala, di makakatakbo ang Vite dev server.
-#   3. Existing sa origin ang bawat branch na ipapasa mo.
+#   1. grifon-command cloned and `npm install` already run in it.
+#   2. The environment file pasted into the repo root. The script copies it into
+#      each worktree — without it, the worktrees cannot run the Vite dev server.
+#   3. Every branch you pass exists on origin.
 #
-# Mura sya sa lite clone: minamana ng worktree ang sparse-checkout pattern, kaya
-# 42 MB lang ang bawat isa imbes na 1.5 GB (sinukat 2026-08-16).
+# Cheap on a lite clone: a worktree inherits the sparse-checkout pattern, so each
+# one is 42 MB rather than 1.5 GB (measured 2026-08-16).
 #
-# Pagkatapos (~2-3 min para sa parallel npm install):
-#   code ..\grifon-<pangalan>
-#   Sa terminal ng bawat window: npm run dev (kukuha ang Vite ng 5174 / 5175),
-#   tapos `claude` para magsimula ng bagong session.
+# After this finishes (~2-3 min for the parallel npm install):
+#   code ..\grifon-<name>
+#   In each window's terminal: npm run dev (Vite picks 5174 / 5175), then `claude`.
 #
-# Buong runbook: workflows/cafe_session.md
+# Full runbook: workflows/cafe_session.md
 
 [CmdletBinding()]
 param(
-    # Isa o higit pang branch na existing sa origin. Isang worktree kada branch.
+    # One or more branches that exist on origin. One worktree per branch.
     [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
     [string[]]$Branches
 )
 
 $ErrorActionPreference = "Stop"
 
+# PowerShell 7.3+ turns a non-zero exit from a native command into a terminating
+# error when $ErrorActionPreference is 'Stop'. The branch pre-flight below relies
+# on `git show-ref --verify --quiet` exiting 1 for a missing ref and reading
+# $LASTEXITCODE afterwards, so that behaviour has to stay off or the pre-flight
+# never runs. Harmless on Windows PowerShell 5.1, where the variable is unused.
+$PSNativeCommandUseErrorActionPreference = $false
+
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $desktop  = Split-Path -Parent $repoRoot
 
-# --- Pre-flight: kailangan ng branch -----------------------------------------
+# --- Pre-flight: at least one branch is required -----------------------------
 if (-not $Branches -or $Branches.Count -eq 0) {
-    Write-Host "ERROR: walang branch na ibinigay." -ForegroundColor Red
+    Write-Host "ERROR: no branch given." -ForegroundColor Red
     Write-Host ""
-    Write-Host "Gamit:" -ForegroundColor Yellow
-    Write-Host "  .\scripts\spawn-worktrees.ps1 feat/una feat/pangalawa" -ForegroundColor Yellow
+    Write-Host "Usage:" -ForegroundColor Yellow
+    Write-Host "  .\scripts\spawn-worktrees.ps1 feat/one feat/two" -ForegroundColor Yellow
     Write-Host ""
-    # Sinasadyang recency ang pinagbabatayan, hindi "ahead of main". Squash-merge
-    # ang karamihan ng branch dito, kaya nagbibilang pa rin ng libo-libong commit
-    # ang `rev-list origin/main..<branch>` kahit merged na ang laman — walang
-    # kwentang signal yun (nasukat 2026-08-16: 1,233 sa isang merged na branch).
-    Write-Host "Pinakabagong branch sa origin:" -ForegroundColor Cyan
+    # Sorted by recency on purpose, NOT by "ahead of main". Most branches here
+    # were squash-merged, so `rev-list origin/main..<branch>` still counts
+    # thousands of commits on branches whose content landed long ago — measured
+    # 2026-08-16: 1,233 on one fully merged branch. That signal is worthless.
+    Write-Host "Most recent branches on origin:" -ForegroundColor Cyan
     git -C $repoRoot fetch origin --quiet
     $recent = git -C $repoRoot for-each-ref --sort=-committerdate --count=15 `
         --format='%(refname:short)|%(committerdate:short)' refs/remotes/origin |
@@ -63,14 +69,14 @@ if (-not $Branches -or $Branches.Count -eq 0) {
         $name  = $parts[0] -replace '^origin/', ''
         Write-Host ("  {0,-12} {1}" -f $parts[1], $name)
     }
-    Write-Host "  (lahat: $((git -C $repoRoot branch -r | Where-Object { $_ -notmatch 'HEAD' }).Count) na branch)" -ForegroundColor DarkGray
+    $total = (git -C $repoRoot branch -r | Where-Object { $_ -notmatch 'HEAD' }).Count
+    Write-Host "  ($total branches total)" -ForegroundColor DarkGray
     exit 1
 }
 
-# --- Pre-flight: buhay pa ba ang bawat branch sa origin? --------------------
-# Nauuna to sa environment-file check para sa mas mabilis na feedback: kung
-# patay na ang branch, walang saysay na sabihin muna sa iyo ang tungkol sa
-# environment file.
+# --- Pre-flight: does each branch still exist on origin? ---------------------
+# Ordered before the environment-file check on purpose: if the branch is dead,
+# there is no point telling you about the environment file first.
 Write-Host "Fetching origin..." -ForegroundColor Cyan
 git -C $repoRoot fetch origin --quiet
 
@@ -82,28 +88,28 @@ foreach ($b in $Branches) {
         $missing += $b
         continue
     }
-    # grifon-command -> grifon-<huling bahagi ng branch>
+    # grifon-command -> grifon-<last segment of the branch name>
     $leaf = ($b -split '/')[-1]
     $worktrees += @{ Path = Join-Path $desktop "grifon-$leaf"; Branch = $b }
 }
 
 if ($missing.Count -gt 0) {
-    Write-Host "" -ForegroundColor Red
-    Write-Host "ERROR: wala sa origin ang branch na to:" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "ERROR: these branches are not on origin:" -ForegroundColor Red
     $missing | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
-    Write-Host "Baka merged at binura na. Patakbuhin nang walang argument para makita ang listahan." -ForegroundColor Yellow
+    Write-Host "Probably merged and deleted. Run with no arguments to see the list." -ForegroundColor Yellow
     exit 1
 }
 
-# --- Pre-flight: kailangan ng environment file sa main repo ------------------
+# --- Pre-flight: the main repo needs its environment file --------------------
 $mainEnv = Join-Path $repoRoot '.env'
 if (-not (Test-Path $mainEnv)) {
     Write-Host "ERROR: $mainEnv not found." -ForegroundColor Red
-    Write-Host "I-paste muna ang environment file mo mula Bitwarden sa main repo, tapos ulitin." -ForegroundColor Yellow
+    Write-Host "Paste the environment file from Bitwarden into the main repo first, then re-run." -ForegroundColor Yellow
     exit 1
 }
 
-# --- Step 1: gumawa ng worktree (laktawan ang existing) ---------------------
+# --- Step 1: spawn worktrees (skip any that already exist) ------------------
 foreach ($wt in $worktrees) {
     if (Test-Path $wt.Path) {
         Write-Host "[skip] Worktree exists: $($wt.Path)" -ForegroundColor DarkGray
@@ -113,26 +119,26 @@ foreach ($wt in $worktrees) {
     }
 }
 
-# --- Step 2: kopyahin ang environment file kung wala ------------------------
+# --- Step 2: copy the environment file into each worktree if missing --------
 foreach ($wt in $worktrees) {
     $wtEnv = Join-Path $wt.Path '.env'
     if (Test-Path $wtEnv) {
-        Write-Host "[skip] environment file nandyan na: $($wt.Path)" -ForegroundColor DarkGray
+        Write-Host "[skip] environment file already present: $($wt.Path)" -ForegroundColor DarkGray
     } else {
         Write-Host "[copy] environment file -> $($wt.Path)" -ForegroundColor Cyan
         Copy-Item $mainEnv $wtEnv
     }
 }
 
-# --- Step 3: parallel npm install kung walang node_modules ------------------
+# --- Step 3: npm install in parallel where node_modules is absent -----------
 $jobs = @()
 foreach ($wt in $worktrees) {
     $nm = Join-Path $wt.Path 'node_modules'
     if (Test-Path $nm) {
-        Write-Host "[skip] node_modules nandyan na: $($wt.Path)" -ForegroundColor DarkGray
+        Write-Host "[skip] node_modules already present: $($wt.Path)" -ForegroundColor DarkGray
         continue
     }
-    Write-Host "[npm]  nag-i-install sa $($wt.Path)" -ForegroundColor Cyan
+    Write-Host "[npm]  starting install in $($wt.Path)" -ForegroundColor Cyan
     $jobs += Start-Job -Name "npm-install-$([System.IO.Path]::GetFileName($wt.Path))" -ScriptBlock {
         param($path)
         Set-Location $path
@@ -142,7 +148,7 @@ foreach ($wt in $worktrees) {
 
 if ($jobs.Count -gt 0) {
     Write-Host ""
-    Write-Host "Hinihintay ang $($jobs.Count) na parallel npm install..." -ForegroundColor Cyan
+    Write-Host "Waiting for $($jobs.Count) parallel npm install(s) to finish..." -ForegroundColor Cyan
     $jobs | Wait-Job | Out-Null
     foreach ($job in $jobs) {
         $tail = (Receive-Job -Job $job) | Select-Object -Last 5
@@ -155,11 +161,11 @@ if ($jobs.Count -gt 0) {
 
 # --- Done -------------------------------------------------------------------
 Write-Host ""
-Write-Host "OK: handa na ang worktrees." -ForegroundColor Green
+Write-Host "OK: worktrees ready." -ForegroundColor Green
 Write-Host ""
-Write-Host "Susunod:" -ForegroundColor Cyan
+Write-Host "Next steps:" -ForegroundColor Cyan
 foreach ($wt in $worktrees) {
     Write-Host "  code $($wt.Path)"
 }
-Write-Host "  Sa terminal ng bawat window: npm run dev, tapos claude"
+Write-Host "  In each window's terminal: npm run dev, then claude"
 Write-Host ""
