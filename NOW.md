@@ -50,6 +50,14 @@ a new `avatar_state` mode, so uploaded before/after photos anchor real frames; `
 run stays single-variable. ⚠️ 3.7 doubles to $1.50/$7.50 on **2027-01-01**.
 ⚠️ **Do not credit 3.7 for the quality jump yet** — the identity fix shipped in the same deploy.
 
+## 📌 SESSION 27 STARTS HERE — [`next_session_2026-08-17.md`](workflows/next_session_2026-08-17.md)
+Carry today's lessons to the other 11 formats (**4 of 7 fixes are already format-agnostic;
+the `referenceImage="none"` audit is the one that is NOT done** and it is the same defect
+that cost two runs), plus two NEW bugs Neil found in the editing presets: **SFX + music look
+identical across presets** (check `SFX_V2_ENABLED` on Vercel first — unset = static bank by
+design) and **the hook overlay text ignores the preset** (the hook has its own text branch,
+`drawPlan.ts` ~511).
+
 ## ⚠ OPEN — owed, not blocking
 - **The AI gate is FLAG-ONLY, it does not reroll.** `imageGate.ts`'s own header claims it
   "drives the only automated reroll"; the producer and CLAUDE.md say the deterministic
