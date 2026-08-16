@@ -2,16 +2,16 @@
 #
 # WHY THIS EXISTS: Smoke-testing the Director AI wizard end-to-end renders 6+
 # video scenes. Two server-side gates block that on a real account:
-#   1. Monthly `video_ads` quota (HTTP 402) — pro tier caps at 15/mo.
-#   2. Hourly video rate-limit (HTTP 429) — 5 renders/hour, "50M TO RESUME".
+#   1. Monthly `video_ads` quota (HTTP 402) - pro tier caps at 15/mo.
+#   2. Hourly video rate-limit (HTTP 429) - 5 renders/hour, "50M TO RESUME".
 # Both are bypassed ONLY when GRIFON_DEV_UNMETERED_VIDEO='true' is in .env
 # (see api/_lib/quota.ts + api/kling/video.ts + api/kling/omni-video.ts +
-# api/gemini/video.ts). The flag is LOCAL-ONLY — it is never set on Vercel,
+# api/gemini/video.ts). The flag is LOCAL-ONLY - it is never set on Vercel,
 # so production stays fully metered. Neil hit both gates mid-smoke twice on
 # 2026-06-10; this script makes the dev-unmetered state one command to restore.
 #
 # The cafe-PC defreezer wipes .env (gitignored) on reboot, so this is NOT a
-# one-time setup — run it at the START of any local smoke-test session, AFTER
+# one-time setup - run it at the START of any local smoke-test session, AFTER
 # .env has its API keys restored.
 #
 # Usage (from the grifon-command folder):
@@ -32,7 +32,7 @@ if (-not (Test-Path $envPath)) {
 }
 
 # GRIFON_DEV_UNMETERED (all monthly meters: images/reports/workflows/captions/
-# video_ads) is the one that matters for a full Director smoke — a storyboard
+# video_ads) is the one that matters for a full Director smoke - a storyboard
 # renders 6+ scene IMAGES + a Market Research report, which the older video-only
 # flag never covered (Neil burned images 150/150 mid-smoke 2026-06-21). We set
 # BOTH: the broad flag, plus the legacy video-only flag for back-compat.

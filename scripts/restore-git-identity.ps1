@@ -7,7 +7,7 @@
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # if needed
 #   .\scripts\restore-git-identity.ps1
 #
-# Idempotent — safe to run on every cafe-PC reboot, or any time `git commit`
+# Idempotent - safe to run on every cafe-PC reboot, or any time `git commit`
 # starts complaining about an unknown author. Pairs with restore-notebooklm.ps1.
 
 $ErrorActionPreference = "Stop"

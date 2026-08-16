@@ -1,13 +1,13 @@
 # Spawn the parallel-Claude worktrees after the cafe defreezer wipes Desktop.
 #
-# Idempotent — skips worktrees that already exist, copies the environment file
+# Idempotent - skips worktrees that already exist, copies the environment file
 # only into worktrees that lack it, and runs npm install only where node_modules
 # is absent.
 #
 # PARAMETERIZED 2026-08-16. This used to be hardcoded to feat/wizard-persist and
 # feat/camera-buckets. Both were merged and deleted from origin, and with
 # $ErrorActionPreference = "Stop" the script died inside `git worktree add`
-# before ever reaching npm install — so it failed on every run. Branch names are
+# before ever reaching npm install - so it failed on every run. Branch names are
 # arguments now and are validated against origin first.
 #
 # Usage (from the grifon-command folder):
@@ -17,7 +17,7 @@
 # Prereqs:
 #   1. grifon-command cloned and `npm install` already run in it.
 #   2. The environment file pasted into the repo root. The script copies it into
-#      each worktree — without it, the worktrees cannot run the Vite dev server.
+#      each worktree - without it, the worktrees cannot run the Vite dev server.
 #   3. Every branch you pass exists on origin.
 #
 # Cheap on a lite clone: a worktree inherits the sparse-checkout pattern, so each
@@ -44,7 +44,7 @@ $ErrorActionPreference = "Stop"
 #
 # Do NOT disable $PSNativeCommandUseErrorActionPreference script-wide for that.
 # It would also swallow a failed `git worktree add`, and Step 2 would then try to
-# copy the environment file into a directory that was never created — burying
+# copy the environment file into a directory that was never created - burying
 # git's real, actionable error under a confusing Copy-Item path error. Set it
 # inside this helper only, where PowerShell scopes it to the function body.
 function Test-OriginBranch {
@@ -66,7 +66,7 @@ if (-not $Branches -or $Branches.Count -eq 0) {
     Write-Host ""
     # Sorted by recency on purpose, NOT by "ahead of main". Most branches here
     # were squash-merged, so `rev-list origin/main..<branch>` still counts
-    # thousands of commits on branches whose content landed long ago — measured
+    # thousands of commits on branches whose content landed long ago - measured
     # 2026-08-16: 1,233 on one fully merged branch. That signal is worthless.
     Write-Host "Most recent branches on origin:" -ForegroundColor Cyan
     git -C $repoRoot fetch origin --quiet

@@ -1,4 +1,4 @@
-# get-smoke-otp.ps1 — mint a fresh sign-in OTP for the smoke-test account.
+# get-smoke-otp.ps1 - mint a fresh sign-in OTP for the smoke-test account.
 #
 # The app's email auth is OTP-only (passwordless), so browser smokes can't use a
 # password and the test inbox isn't reachable from the cafe PC. This mints a valid
@@ -7,7 +7,7 @@
 # 6-digit code into the app's // VERIFICATION CODE field (or hand it to the
 # smoke-tester agent). Codes are single-use and short-lived; re-run for a fresh one.
 #
-# NOTE: the code minted here REPLACES any code the app just emailed — after running
+# NOTE: the code minted here REPLACES any code the app just emailed - after running
 # this, use THIS code, not the emailed one.
 #
 # Usage:  .\scripts\get-smoke-otp.ps1            # default smoke account
@@ -66,6 +66,6 @@ if ($resp.email_otp) {
   Write-Host '  (single-use; type it into the app sign-in code field now)'
   Write-Host ''
 } else {
-  Write-Error 'No email_otp in response — check the account exists (see workflows/smoke_test_setup.md).'
+  Write-Error 'No email_otp in response - check the account exists (see workflows/smoke_test_setup.md).'
   exit 1
 }

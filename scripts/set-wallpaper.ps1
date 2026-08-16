@@ -1,4 +1,4 @@
-# set-wallpaper.ps1 — sets a Grifon Noir wallpaper as the Windows desktop background.
+# set-wallpaper.ps1 - sets a Grifon Noir wallpaper as the Windows desktop background.
 # Idempotent re-arm script (defreezer wipes the wallpaper setting on reboot).
 # Usage (from repo root):
 #   powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v7-prism-luck

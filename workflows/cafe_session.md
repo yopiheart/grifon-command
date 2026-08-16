@@ -131,6 +131,11 @@ Every one of these is a mistake the repo has already paid for:
   for a value, never route around the hook.
 - **Each funnel under `funnels/` has its own `node_modules`** — a root
   `npm install` does not cover them.
+- **Every `scripts/*.ps1` must stay pure ASCII.** The shop PC runs Windows
+  PowerShell 5.1, which reads a BOM-less `.ps1` as Windows-1252. One em dash
+  inside a quoted string decodes to a stray double quote and takes the whole
+  file down with parse errors, as `cafe-start.ps1` did on 2026-08-16. Enforced
+  by `npm run check:ps1-ascii`, which runs automatically before `npm run build`.
 
 ---
 

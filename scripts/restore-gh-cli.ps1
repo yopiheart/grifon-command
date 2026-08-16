@@ -2,7 +2,7 @@
 # overnight. `gh` lets Claude Code open/manage PRs directly instead of handing
 # you a manual create-URL. No package manager is installed on the cafe PCs, so
 # this downloads the portable Windows zip into the repo-relative .tools\gh\
-# folder (gitignored — the binary is NOT committed; we re-download each session).
+# folder (gitignored - the binary is NOT committed; we re-download each session).
 #
 # Usage (from the grifon-command folder, in PowerShell):
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # if not already set this session
@@ -11,7 +11,7 @@
 # After this finishes:
 #   1. `gh` is at .tools\gh\bin\gh.exe and added to $env:PATH for THIS session.
 #      To use it in a new terminal without re-running, add that bin dir to PATH,
-#      or just re-run this script (it's idempotent — skips the download if present).
+#      or just re-run this script (it's idempotent - skips the download if present).
 #   2. Authenticate once per session:  gh auth login   (or set $env:GH_TOKEN /
 #      GITHUB_TOKEN to a PAT to skip the interactive flow).
 
@@ -45,7 +45,7 @@ if (Test-Path $ghExe) {
         Write-Host "PATH updated for this session." -ForegroundColor Cyan
         exit 0
     }
-    # Wrong version present — clear it out and re-download.
+    # Wrong version present - clear it out and re-download.
     Remove-Item -Recurse -Force $ghHome
 }
 

@@ -2,14 +2,14 @@
 #
 # Runs from two places and works out which on its own:
 #
-#   1. USB SSD (Route B) — copy this file to the root of the drive, beside
+#   1. USB SSD (Route B) - copy this file to the root of the drive, beside
 #      tools\ and grifon-command\:
 #          E:\cafe-start.ps1
 #          E:\tools\PortableGit\  E:\tools\node\  E:\tools\VSCode\
 #          E:\grifon-command\
 #      Then every session:  E:\cafe-start.ps1
 #
-#   2. Inside the repo (Route A) — when it sits in scripts\, the parent folder
+#   2. Inside the repo (Route A) - when it sits in scripts\, the parent folder
 #      is the repo. No portable tools, uses whatever is installed on the system:
 #          .\scripts\cafe-start.ps1
 #
@@ -109,7 +109,7 @@ foreach ($cmd in @('git', 'node', 'npm')) {
         $v = (& $cmd --version 2>&1 | Select-Object -First 1)
         Ok "$cmd  $v"
     } else {
-        Say "  [MISSING] $cmd — not on PATH" 'Red'
+        Say "  [MISSING] $cmd - not on PATH" 'Red'
         Say '            See workflows/cafe_session.md phase A1.' 'Yellow'
         exit 1
     }
@@ -119,14 +119,14 @@ Say ''
 # --- Git identity -----------------------------------------------------------
 # The defreezer wipes ~/.gitconfig. Without an identity, git refuses the commit
 # at the END of the day, after a full day of work. restore-git-identity.ps1 did
-# NOT take on 2026-08-14, so running it is not enough — verify it afterwards.
+# NOT take on 2026-08-14, so running it is not enough - verify it afterwards.
 Say 'Git identity' 'White'
 $gitName  = (Read-GitValue -C $repoPath config user.name).Value
 $gitEmail = (Read-GitValue -C $repoPath config user.email).Value
 if ($gitName -and $gitEmail) {
     Ok "$gitName <$gitEmail>"
 } else {
-    Warn 'no git identity — commits would fail at the end of the day'
+    Warn 'no git identity - commits would fail at the end of the day'
     $restore = Join-Path $repoPath 'scripts\restore-git-identity.ps1'
     if (Test-Path $restore) {
         Info 'running restore-git-identity.ps1'
@@ -141,7 +141,7 @@ if ($gitName -and $gitEmail) {
             Say '' 'Red'
             Say '  [FAIL] restore-git-identity.ps1 ran but the identity is STILL unset.' 'Red'
             Say '         This is the 2026-08-14 failure repeating. Set it by hand NOW,' 'Red'
-            Say '         before doing any work — otherwise the whole day is lost at reboot:' 'Red'
+            Say '         before doing any work - otherwise the whole day is lost at reboot:' 'Red'
             Say '' 'Red'
             Say '           git config --global user.name  "Neil Maglaya"' 'Yellow'
             Say '           git config --global user.email "neilmaglaya.business22@gmail.com"' 'Yellow'
@@ -163,10 +163,10 @@ if (Test-Path $envPath) {
     if ($bytes -gt 0) {
         Ok "environment file present ($bytes bytes)"
     } else {
-        Warn 'environment file exists but is EMPTY — paste it from Bitwarden'
+        Warn 'environment file exists but is EMPTY - paste it from Bitwarden'
     }
 } else {
-    Warn 'NO environment file — the dev server and the api\ handlers will not run'
+    Warn 'NO environment file - the dev server and the api\ handlers will not run'
     Say '  Bitwarden -> GRIFON env Secure Note -> Copy -> notepad .env -> paste -> save' 'Yellow'
 }
 Say ''
@@ -186,7 +186,7 @@ if (-not $NoFetch) {
     $branch = (Read-GitValue -C $repoPath branch --show-current).Value
 
     if (-not $branch) {
-        Warn 'detached HEAD — cannot compare against origin'
+        Warn 'detached HEAD - cannot compare against origin'
     } else {
         Ok "branch: $branch"
 
@@ -196,7 +196,7 @@ if (-not $NoFetch) {
         $drift  = Read-GitValue -C $repoPath rev-list --count "HEAD..origin/$branch"
         $behind = $drift.Value
         if ($drift.Code -ne 0 -or -not $behind) {
-            Warn "cannot measure drift — origin/$branch may not exist yet"
+            Warn "cannot measure drift - origin/$branch may not exist yet"
         } elseif ([int]$behind -gt 0) {
             Warn "$behind commit(s) ahead of you on origin. Run: git pull"
         } else {
@@ -208,7 +208,7 @@ if (-not $NoFetch) {
     if ($sparse -eq 'true') {
         Ok 'lite clone (sparse-checkout on)'
     } else {
-        Warn 'full clone — 1.5 GB. See workflows/cafe_session.md phase A2.'
+        Warn 'full clone - 1.5 GB. See workflows/cafe_session.md phase A2.'
     }
     Say ''
 }
@@ -224,7 +224,7 @@ if (Test-Path (Join-Path $repoPath 'node_modules')) {
     if ($LASTEXITCODE -ne 0) {
         Say '' 'Red'
         Say '  [FAIL] npm install exited non-zero. node_modules is incomplete.' 'Red'
-        Say '         Do NOT start work — this surfaces later as module-not-found' 'Red'
+        Say '         Do NOT start work - this surfaces later as module-not-found' 'Red'
         Say '         from npm run dev, 20 minutes from now. Usually the wifi died.' 'Yellow'
         Say '         Re-run this script; npm install resumes from the cache.' 'Yellow'
         exit 1
@@ -238,10 +238,16 @@ $now = Join-Path $repoPath 'NOW.md'
 if (Test-Path $now) {
     # Print the NEXT ACTION section specifically. The first 12 lines used to be
     # printed instead, which stopped short of the one line this preview exists
-    # to surface — the heading currently sits well below line 12.
-    Say 'NOW.md — the next action' 'White'
+    # to surface - the heading currently sits well below line 12.
+    Say 'NOW.md - the next action' 'White'
     $lines   = Get-Content $now
-    $start   = ($lines | Select-String -SimpleMatch '## ▶ NEXT ACTION' | Select-Object -First 1).LineNumber
+    # Matched loosely on purpose. The real heading carries a U+25B6 glyph, and a
+    # literal one in this file is exactly the bug that broke this script on
+    # 2026-08-16: Windows PowerShell 5.1 reads a BOM-less .ps1 as Windows-1252,
+    # so any multi-byte character mojibakes, and an em dash's third byte (0x94)
+    # decodes to a double quote that terminates the surrounding string. Keep this
+    # file pure ASCII; `npm run check:ps1-ascii` enforces it.
+    $start   = ($lines | Select-String -Pattern '^##\s.*NEXT ACTION' | Select-Object -First 1).LineNumber
     if ($start) {
         $body = @()
         for ($i = $start - 1; $i -lt $lines.Count; $i++) {
@@ -250,7 +256,7 @@ if (Test-Path $now) {
         }
         $body | ForEach-Object { Say "  $_" }
     } else {
-        Warn 'no "## ▶ NEXT ACTION" heading in NOW.md — the SessionStart hook greps for it'
+        Warn 'no "NEXT ACTION" heading in NOW.md - the SessionStart hook greps for it'
         $lines | Select-Object -First 12 | ForEach-Object { Say "  $_" }
     }
     Say ''
@@ -262,7 +268,7 @@ if (-not $NoCode) {
         Info 'opening VS Code'
         Start-Process -FilePath 'code' -ArgumentList $repoPath -NoNewWindow
     } else {
-        Warn "'code' not on PATH — open VS Code by hand at $repoPath"
+        Warn "'code' not on PATH - open VS Code by hand at $repoPath"
     }
 }
 
