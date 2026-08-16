@@ -1,80 +1,83 @@
 # NOW — the resume doc
-**Stamped: 2026-08-16** (session 25)
+**Stamped: 2026-08-16** (session 26)
 
-## ✅ SOLVED — the cafe clone (merged `60c1c91`, PR #116)
-3 days lost across 3 shops. **Not SQL, not Supabase, not the Boris setup** — the repo is
-**1.5 GB** (134 MB in June 2026). At the ~30 KiB/s measured 2026-08-16 that is ~13 hours,
-and `git clone` has no resume, so every dropped connection restarts from zero.
+## ▶ NEXT ACTION — re-run `before_after` on prod, watched
 
-The app is 6 MB. The 1.5 GB is media: `clients/oceanides` **1,131 MB**, `assets/wallpapers`
-**145 MB**. July alone added **993 MB**. Everything text — every doc, skill, hook, config —
-is 4.7 MB across 322 files.
-
-**ON `main` SINCE 2026-08-16.** ⏪ ROLLBACK: `git revert -m 1 60c1c91`.
-Runbook: [`workflows/cafe_session.md`](workflows/cafe_session.md) · starter:
-`scripts/cafe-start.ps1`. Lite clone = `--filter=blob:none --no-checkout` +
-sparse-checkout excluding media:
+Everything below shipped today. Nothing has been run against it yet.
 
 ```
-68 MB · 1,689 commits · every remote branch · 30 skills / 8 hooks / 2 agents / 4 Actions
-npm run build PASSED · npm test 1,214 passed, 0 failed
+https://grifon.ai/app?osaEngine=producer
 ```
+Recipe `before_after` · Hiraya Glow · Presenter **SET** = `after.png` (not Auto) ·
+slots `hero`/`before`/`after` from `tests/fixtures/sample-batch/`. Full input table +
+pre-flight: [`sample_run_before_after_2026-08-16.md`](workflows/sample_run_before_after_2026-08-16.md).
 
-⚠️ `--filter=blob:none` **alone is a trap** — the checkout backfills every blob and you get
-**3.2 GB**, worse than a normal clone. `--no-checkout` + sparse is what does the work.
+🔴 **THE GATE — "is it the SAME woman in ALL FOUR scenes?"** Not just scene 1. Two runs
+today each rendered a stranger, run 1 in S1 and run 2 in S3, because **two** beats permitted
+`referenceImage="none"`. A one-scene gate was given on run 1 and it let run 2 through.
 
-Also shipped: Route B (portable rig on a USB SSD, ~1 min/session), a parameterized
-`spawn-worktrees.ps1` (it was hardcoded to two deleted branches and errored every run), and
-`.gitignore` rules that stop **new** oversized renders. ⚠️ Those rules do NOT touch the
-194 MB already tracked, and re-rendering an existing filename is a modification `.gitignore`
-cannot suppress — `git rm --cached` is the separate, unmade decision.
+**Also watch, both first-time-live:**
+1. Do the before/after frames actually resemble the uploaded photos? `avatar_state` has
+   never run outside tests.
+2. Is `"agad"` (or any instant-result claim) back in the script? That would be
+   **corroboration #7** of a BANNED speed claim whose grill-me route triggered at #3 and
+   has never been run. Our honest claim is 2 weeks.
 
-✅ **NEIL RAN IT ON A REAL SHOP PC 2026-08-16 and got back to work.** Not just verified here.
+## 🚀 MERGED + DEPLOYED 2026-08-16 — `77426d1` (merge, `--no-ff`)
+**⏪ ONE-COMMAND ROLLBACK: `git revert -m 1 77426d1`.** Build passed, tsc clean, **1,219
+tests passed**, bundle-leak 0 markers, verified on the merged tree before the push.
 
-⚠️ **`review` job on PR #116 failed on the last commit — NOT a diff defect.**
-`permission_denials_count: 4`, neither cause its own failure message lists. Two small fixes
-belong on a separate branch (never on a PR that edits the workflow — GitHub then refuses to
-run it at all): add `Bash(git branch:*)` + `Bash(git ls-remote:*)` to the reviewer allowlist,
-and add `permission_denials_count` to the known-causes list. Full diagnosis in PR #116.
+1. **Identity lock (TUNED, Neil-approved).** `referenceImage="none"` is now FORBIDDEN on the
+   S1 and S3 beats of TRANSFORMATION for PERSON subjects; it survives only for surfaces,
+   fabric, objects and spaces. Plus an IDENTITY RULE line: one ad, one face. This was filed
+   as a gated proposal on **2026-07-11** (`sample_batch_test_spec.md` finding #7) and sat
+   unactioned for five weeks. Guarded by a regression test.
+2. **`venueSlot` finally reaches the scene image.** It had **zero** references in `services/`,
+   so every uploaded before/after photo was discarded and the model invented the skin state —
+   while the upload modal promised the opposite. Porting the wizard's router would NOT have
+   fixed it: `sceneRender.ts` gates on `isRealEstate` or `!isAvatarScene`, and a person
+   transformation is neither. New **`avatar_state`** render mode (TUNED, approved): face from
+   the avatar, skin state from the upload, plus a FRAMING PARITY rule that makes the
+   skeleton's "framed IDENTICALLY to S1" real instead of prose. Wired on **both** surfaces.
+3. **3.7-flash on the customer-facing text lane.** ⚠️ **Corrected model map** — script,
+   storyboard and Market Research do NOT use the `geminiService.ts` constants; they run
+   server-side off `MODEL_TEXT` in `api/_lib/prompts.ts`, a second table. `MODEL_TEXT`
+   flash-lite → `gemini-3.7-flash`; the `storyboard` flow moved off `MODEL_FAST` onto it;
+   `MODEL_FAST` stays flash-lite (three enum classifiers); `premiseCheckModel` 3.5 → 3.7.
+   **`researchTextModel` deliberately untouched** — it feeds the EDL, so the pending watched
+   run stays a clean single-variable experiment. `sceneImageModel` untouched per Neil.
+   ⚠️ 3x input rate, unmeasured in absolute terms — read it off `run_cogs` on the next run.
+   ⚠️ **2027-01-01** the intro window closes and 3.7 doubles to $1.50/$7.50.
+4. **Fixtures rebuilt.** Neil rejected the old `after.png` as slop. New pair generated on the
+   raw-ugc scaffold + the `marvin-avatar` master-daylight rule (codex-image, ₱0 Gemini spend).
+   Mirror selfie was tried and rejected: the phone covers half the face, and `after.png` is
+   also the presenter. Findings in
+   [`ugc-photoreal-prompt-pack.md`](workflows/believability-samples/ugc-photoreal-prompt-pack.md),
+   the most reusable being that **`--edit` preserves identity where reference-generation
+   drifts** — state-change pairs should always be edited off the approved frame.
 
-## ▶ NEXT ACTION — one real run on the deployed code, watched by Neil
-**SHIPPED 2026-08-14 17:47 — the EDL has its eyes back in production** (`a841f69`, `--no-ff`).
-Files API URI minted per clip, uploads fanned out with `allSettled`, `EDL_MAX_ATTACHED_VIDEOS`
-0 → 10. Design + 48h-retention reasoning: [`edl_files_api_plan.md`](workflows/edl_files_api_plan.md).
-**⏪ ONE-COMMAND ROLLBACK:** `git revert -m 1 a841f69` → safe blind state; that is the whole reason
-it went in as a merge. Measured pre-merge: ONE `files/*` part → **200, not 429** · **TEN** →
-**200** on ~155s of video vs ~60s for a real 10-scene ad, so there is headroom.
-⚠️ **STILL UNPROVEN, AND DO NOT CLAIM IT:** that an edit made WITH eyes beats the blind one. The
-blind pilot scored well and passed both gates. All that is proven is that the model accepts the
-video and does not 429. **Only a watched live run answers the quality question.**
-**✅ CANARY ON A SCHEDULE (`0e326ef`).** Tier 3 nightly runs the EDL video-attach check at 02:00
-PHT; a red night opens an issue naming the containment step. **First fire = first real proof.**
-⚠️ 2 non-blocking follow-ups left in the plan doc; **#1 (`research-tier.ab`) FIXED 2026-08-15.**
-▶ **RUN SHEET READY, run NOT started** (plan doc): same fixture as the blind pilot so the eyes are
-the only variable · unmeter flag CANNOT run on prod · **>5 `talking` scenes kills the run** (Veo 5/hr).
+## ⚠ OPEN — owed, not blocking the run
+- **Premise-check parse bug is LIVE.** `cleanJson` discards a valid grounded answer ~1 in 6,
+  on every model. The 3.7 flip was neutral on this, not a fix. Parser hardening is its own job.
+- **Expression audit (TUNED).** Neil's rule: a big emotion in a storyboard still deforms the
+  face, then relaxes when the performer speaks, so the face changes shape mid-clip and the next
+  scene stops matching. Shipped only inside `avatar_state` rule 1b; every other skeleton can
+  still ask for anger/laughter. Needs a pass over all `imagePrompt` rules.
+- **No price in any video beat** is now a product decision (wider than the CTA guard). It
+  RETIRES the "offer never surfaced" defect logged across four runs. ⚠️ Before acting on the
+  `feat/adscript-ab-harness` result *"flash-lite drops the offer 4/4"*, check whether it counts
+  a missing PRICE as a miss — if so the harness is wrong, not the model.
+- **`MODEL_RESEARCH`** (`gemini-3.5-flash`) is now referenced by no flow. Dead constant.
+- **S4 camera mandate collapsed** to a medium shot instead of its mandated close-up. n=1, watch it.
 
 ## ⚠ OPEN DECISION — the repo still grows ~400 MB/month
-The lite clone buys time, it is not a cure. Two things left, both Neil's call:
-1. **`clients/*/ads/*/clips/`** — the heaviest (25 MB each) but **paid Veo generations**.
-   Deliberately NOT gitignored: ignoring them without another home guarantees the defreezer
-   eats them. Needs a destination first (Drive / R2 / Git LFS).
-2. **`git filter-repo`** to strip the 1.5 GB from history. Irreversible, needs a force push,
-   breaks every existing clone and branch. **Never without Neil saying so.**
-
-## ✅ THE PILOT IS DONE — both gates PASSED, ad downloaded
-Gates 5 (dead-air trim) + 6 (hook hold) **Neil-passed**, so `MID_GAP_TRIM_ENABLED` is out of the
-dark. `apr_2f930418` = 10 scenes for **~$4.96 ≈ ₱288** (the COGS baseline everything above cites).
-Write-up: [`pilot_run_2026-08-13.md`](workflows/pilot_run_2026-08-13.md).
-
-## 🚀 DEPLOYED TO PROD 2026-08-15 — `18d6310` (merge, `--no-ff`)
-**⏪ ONE-COMMAND ROLLBACK: `git revert -m 1 18d6310`.** Deploy `dpl_DGZKBNQ…` READY. Two things:
-**1. Both QA gates → `gemini-3.7-flash`**, $9.00→$3.75/Mtok. ⚠️ Watch reroll rates — the image
-gate drives the only auto-reroll. Env vars `OMNI_GATE_MODEL`/`IMAGE_GATE_MODEL` still override
-for an instant no-deploy rollback of just the gates.
-**2. 🔴 PROD BUG FIXED — grounded JSON was being discarded.** `cleanJson` picked object-vs-array
-by which brace came first, so grounded Market Research output was thrown away.
+The lite clone bought time, it is not a cure. Both are Neil's call:
+1. **`clients/*/ads/*/clips/`** — heaviest (25 MB each) but **paid Veo generations**. Not
+   gitignored on purpose: ignoring them without another home guarantees the defreezer eats
+   them. Needs a destination first (Drive / R2 / Git LFS).
+2. **`git filter-repo`** to strip the 1.5 GB from history. Irreversible, force push, breaks
+   every clone and branch. **Never without Neil saying so.**
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
-Repo artifacts are ENGLISH; ads stay Taglish. Both rules also live in `CLAUDE.md` now (2026-08-16)
-after a rewrite deleted this footer and left them with no home. Cafe-PC operating warnings moved
-to [`cafe_session.md`](workflows/cafe_session.md) §A6.
+Repo artifacts are ENGLISH; ads stay Taglish. Both rules also live in `CLAUDE.md`.
+Cafe-PC operating warnings: [`cafe_session.md`](workflows/cafe_session.md) §A6.
