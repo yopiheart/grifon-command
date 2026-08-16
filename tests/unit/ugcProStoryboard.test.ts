@@ -94,6 +94,26 @@ describe('buildStoryboardPrompt — UGCPro branch', () => {
     expect(flat).not.toContain('the change is the only variable. referenceImage="none" (or "avatar")');
   });
 
+  // The storyboard layer is the HIGHER-LEVERAGE half of the expression fix: it writes the
+  // imagePrompt text that both the image model and the video-prompt brain then read. Before
+  // 2026-08-16 its APPEARANCE_LOCK_RULE actively REQUIRED expression and offered three extreme
+  // examples ("brow furrowed", "eyes wide in surprise", "lips parted in confusion") — so the big
+  // reactions were not model randomness, they were instructed. See the matching video-layer guard
+  // in geminiService.schemas.test.ts.
+  it('caps expression in avatar-scene frame prompts instead of demanding it', () => {
+    const flat = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'transformation' })))
+      .replace(/\s+/g, ' ');
+    expect(flat).toContain('EXPRESSION CEILING');
+    expect(flat).toContain('TEETH RULE');
+    // The ceiling must outrank the variety instruction, or "make each scene different" gets
+    // satisfied by escalating emotion — which is exactly how the live run produced its reactions.
+    expect(flat).toContain('OVERRIDES CINEMATIC VARIETY');
+    // The three extreme examples are gone from the REQUIRED list and from the CORRECT sample.
+    expect(flat).not.toContain('"eyes wide in surprise"');
+    expect(flat).not.toContain('"lips parted in confusion"');
+    expect(flat).not.toContain('eyes wide in surprise, looking at a smartphone');
+  });
+
   it("ugcProFormat 'unboxing' selects the Unboxing beats", () => {
     const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'unboxing' })));
     expect(out).toContain('CONTINUOUS PERFORMANCE (Unboxing)');

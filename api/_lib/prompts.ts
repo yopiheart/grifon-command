@@ -1717,7 +1717,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       REQUIRED in avatar-scene prompts (describe ONLY these):
       - Action ("looking down", "gesturing", "sipping", "tapping the phone screen")
-      - Expression ("brow furrowed", "eyes wide in surprise", "lips parted in confusion")
+      - Expression, RESTRAINED — see the EXPRESSION CEILING below ("a small closed-lip smile", "a slight frown", "a calm, level look")
       - Gaze direction ("looking at the camera", "looking down at the mug")
       - Hand position + held props ("holding an empty mug", "hands on the counter")
       - Body pose ("standing", "sitting at the dining table", "leaning against the counter")
@@ -1725,7 +1725,30 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - Lighting/mood for that spot ("warm afternoon light", "soft window light")
 
       WRONG: "A friendly Southeast Asian woman with dark brown hair, wearing a casual linen shirt, sitting at a modern Filipino home dining table, acting surprised while looking at a smartphone, warm sunlight hitting her face."
-      CORRECT: "Sitting at the dining table, eyes wide in surprise, looking at a smartphone, warm afternoon sunlight from the window."
+      CORRECT: "Sitting at the dining table, a slight lift of the brows, looking at a smartphone, warm afternoon sunlight from the window."
+
+      **EXPRESSION CEILING (identity survives the CUT, not just the frame):**
+      A storyboard still is the FIRST FRAME of a generated video clip, never a finished picture.
+      A big expression costs identity twice: it deforms the face away from the locked reference
+      IN the still, and then the video model relaxes it back toward neutral the moment the
+      performer speaks — so the face visibly changes shape mid-clip and no longer matches the
+      next scene. One ad, one face, and the cut is where a viewer detects an AI.
+
+      Therefore, in EVERY avatar-scene prompt:
+      - **Keep the register narrow and mouth-level.** A small closed-lip smile, a slight frown, a
+        small brow lift, a calm level look. Emotion is carried by the SCRIPT LINE and by motion in
+        the video stage — the still only has to stay recognisably the same person.
+      - **BANNED in a still:** wide or open-mouth grins, laughter, teeth bared in delight, eyes
+        wide in shock or surprise, squinting, scrunching, exaggerated dismay or confusion, and any
+        hand covering, pressing, or scrunching the face.
+      - **TEETH RULE:** if the locked reference photo does not show teeth, the prompt must not ask
+        for a teeth-showing smile. A warm closed-lip smile reads just as happy and survives the cut.
+      - **Intensity words are the tell.** "very", "extremely", "dramatically", "shocked",
+        "ecstatic", "beaming", "overjoyed", "furious" do not belong in a frame prompt. Downgrade
+        each to its smallest honest form.
+
+      This rule OVERRIDES CINEMATIC VARIETY below: vary the POSE, the ACTION, the SPOT and the
+      FRAMING freely — never vary the emotional intensity to create variety.
 
       **CONTEXT:**
       - **Type:** ${businessInfo.scriptType} Style

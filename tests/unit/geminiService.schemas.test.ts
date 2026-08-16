@@ -61,6 +61,7 @@ const {
   generateInfluencerStoryboard,
   generateCinematicNarrative,
   generateAdCreatives,
+  generateVideoPrompts,
 } = await import('../../services/geminiService');
 
 const { buildAdScriptPrompt, buildStoryboardPrompt, MODEL_TEXT } = await import(
@@ -356,6 +357,54 @@ describe('generateStoryboard schema', () => {
 // ----------------------------------------------------------------------------
 // generateInfluencerStoryboard -> Promise<{ scenes: Scene[]; directorNote: string }>
 // ----------------------------------------------------------------------------
+
+describe('generateVideoPrompts — expression continuity (identity survives the CUT)', () => {
+  // WHY (Neil, 2026-08-16, from his own Kuya Marvin ad tests and confirmed on a Hiraya Glow
+  // storyboard): a scene still is the FIRST FRAME of a clip, and the next scene cuts off this
+  // one's LAST frame. Give the still or the clip a big reaction and the face deforms away from
+  // the locked reference, then relaxes as the performer speaks — so it changes shape mid-clip and
+  // stops matching the next scene. Drift shows up AT THE CUT, which is where viewers detect an AI.
+  //
+  // This layer had NO ceiling at all before: OPTION B asked for "facial tension, eye movement and
+  // mouth shapes" with nothing bounding intensity, and the storyboard layer upstream was actively
+  // REQUIRING "eyes wide in surprise". Both were fixed the same day; this guards the video half.
+  const storyboard = [
+    { scriptLine: 'Ang fresh na tignan.', sceneDescription: 'Looking at camera', referenceImage: 'avatar' },
+  ] as any;
+  const businessInfo = { product: 'Hiraya Glow', scriptType: 'Testimonial' } as any;
+
+  const dumpPrompt = async () => {
+    fetchMock.mockResolvedValueOnce(okGemini([{ scriptLine: 'x', type: 'talking', prompt: 'p' }]));
+    await generateVideoPrompts(storyboard, businessInfo);
+    return JSON.stringify(captureLastFetchBody());
+  };
+
+  it('bounds expression for EVERY scene type, not just talking heads', async () => {
+    const dump = await dumpPrompt();
+    // Placed above the per-type branches on purpose: the scene that broke on the live run
+    // (hands raised near the face) classifies as b-roll, so an OPTION-B-only rule would miss it.
+    expect(dump).toContain('EXPRESSION CONTINUITY');
+    expect(dump).toContain('applies to EVERY type');
+    expect(dump).toContain('The still is the CEILING');
+    expect(dump).toContain('NO ESCALATION ACROSS THE CLIP');
+  });
+
+  it('names the teeth rule explicitly rather than saying "do not overdo it"', async () => {
+    const dump = await dumpPrompt();
+    // A vague ceiling gets ignored; a checkable one does not. If the reference shows no teeth,
+    // a teeth-showing smile in the clip guarantees a mismatch at the next cut.
+    expect(dump).toContain('TEETH RULE');
+    expect(dump).toContain('does not show teeth');
+  });
+
+  it('runs on the 3.7-flash lane, asserted on the wire not on a private const', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini([]));
+    await generateVideoPrompts(storyboard, businessInfo);
+    // `fastTextModel` has exactly ONE caller — this brain — so the flip had zero blast radius.
+    // It is the last reasoning step before paid video, where a bad prompt costs a render.
+    expect(captureLastFetchBody().model).toBe('gemini-3.7-flash');
+  });
+});
 
 describe('generateInfluencerStoryboard schema', () => {
   const config = { monetizationGame: 'Affiliate', format: 'Reel' } as any;

@@ -327,7 +327,11 @@ const proxyPollVideoOperation = async (
 };
 
 const textModel = 'gemini-3.1-flash-lite';
-const fastTextModel = 'gemini-3.1-flash-lite';
+// fastTextModel: flash-lite -> 3.7-flash 2026-08-16 (Neil). Despite the name this has exactly
+// ONE call site — `generateVideoPrompts`, the brain that turns each storyboard scene into the
+// Veo/Kling prompt. Zero blast radius, and it is the last reasoning step before paid video, where
+// a bad prompt costs a render rather than a retry. ⏪ Rollback: 'gemini-3.1-flash-lite'.
+const fastTextModel = 'gemini-3.7-flash';
 const researchTextModel = 'gemini-3.6-flash';
 // premise check: pin RETIRED 2026-08-16 (Neil's explicit call). The 3.5 pin existed because a
 // 3.6 eval measured 3.5 at 0/6 empty shells; the 6-sample rerun in gemini37_adoption.md Slice 2
@@ -2681,6 +2685,25 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       ${additionalInstructions}
 
+      **EXPRESSION CONTINUITY (applies to EVERY type below — talking, b-roll and cinematic alike):**
+      Each scene's still is the FIRST FRAME this clip animates from, and the next scene cuts
+      straight off this one's LAST frame. Identity is judged at those cuts, so the performance you
+      write must stay inside the register the still already shows.
+      - **The still is the CEILING, not a starting point.** Read the scene's description and match
+        its emotional level. NEVER escalate it — do not turn a small smile into a grin, a slight
+        frown into anger, or a calm look into shock, however well it would suit the line.
+      - **TEETH RULE:** if the scene's still does not show teeth, do NOT write a teeth-showing
+        smile, a laugh, or an open-mouth reaction. A warm closed-lip smile carries the same
+        feeling and survives the cut.
+      - **NO ESCALATION ACROSS THE CLIP.** The performance ends in the same emotional register it
+        opened in. A clip that starts calm and ends beaming hands the editor a last frame that no
+        longer matches the next scene's first frame.
+      - **Keep it light.** Happy, annoyed, doubtful and surprised are all allowed — at LOW
+        intensity. Banned at any intensity: laughter, shock, ecstatic delight, fury, exaggerated
+        confusion, and any hand covering or scrunching the face.
+      - Emotion belongs in the VOICE and in motion, not in a deformed face. The script line is
+        already carrying it.
+
       **GENERATION RULES BY TYPE:**
 
       **OPTION A-HOOK: IF TYPE IS "b-roll" AND THIS IS SCENE 1 (THE HOOK):**
@@ -2706,7 +2729,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **FRAME 0 RULE (CRITICAL):** The avatar is ALREADY mid-syllable when the clip opens — mouth in motion, first word of the dialogue actively forming, eyes already engaged with the lens. NO establishing pose, NO pre-speech beat, NO "settling in," NO "initially resting." The first frame IS the action. The clip ends on the next breath, not on a resolve-state pause.
          - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
-         - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0.
+         - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0. Keep them MICRO, per EXPRESSION CONTINUITY above: the mouth is shaping words, not performing an emotion. Speech movement only — never a widening grin, never a laugh, never a reaction face layered on top of the dialogue.
          - **Cinematic Grammar (minimal, smooth motion):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE GENTLE camera move per scene: a slow dolly-in or a subtle push-in toward the subject. Do NOT use parallactic/background-reveal shifts, handheld movement, camera shake, jitter, lens breathing, or rack/pull focus — they read as blur or a changing background and break the clean talking-head look. Keep the background stable. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so the slow move happens DURING dialogue. Keep it subtle and smooth on all durations; avoid fully frozen frames, but err toward calm over dynamic.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
