@@ -92,3 +92,27 @@ clients/oceanides/kuya-gabriel/ads/*/edit/
 # Hindi kailanman naka-commit: nasa clients/oceanides/ na ang totoong kopya.
 funnels/oceanides-price-page/public/*.mp4
 funnels/oceanides-price-page/public/ad/
+
+# ── Media rendered from a source that is already committed (2026-08-16) ─────
+# The repo reached 1.5 GB and a clone takes ~13 hours on cafe wifi.
+#
+# SCOPE, precisely: these rules only stop BRAND-NEW filenames. .gitignore has no
+# effect on files already tracked, and every path matched below is tracked at
+# HEAD right now (19 wallpaper variants = 113 MB, 2 upscaled clips = 81 MB).
+# Re-rendering an existing filename is a MODIFICATION to a tracked file, which
+# .gitignore also does not suppress. Actually removing that 194 MB needs
+# `git rm --cached`, which is a separate decision. See workflows/cafe_session.md.
+#
+# To keep one specific render anyway: git add -f <file>
+
+# Large wallpaper variants. The source of truth is the .html sitting beside them
+# and the renderer is tools/render-wallpaper.mjs, so the PNG is reproducible.
+# The small variants (1080x2340 / 1920x1080) stay tracked because they are the
+# ones scripts/set-wallpaper.ps1 uses. NOTE: the lite clone in cafe_session.md
+# excludes all of /assets, so on a fresh cafe machine set-wallpaper.ps1 needs
+# `git sparse-checkout add assets/wallpapers` first regardless.
+assets/wallpapers/*-2160x4680.png
+assets/wallpapers/*-3840x2160.png
+
+# Upscaled motion tests, derived from the committed -lite originals beside them.
+clients/oceanides/kuya-marvin/motion-test/*-UPSCALED-*.mp4
