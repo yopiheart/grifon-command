@@ -1,14 +1,14 @@
 # Restore Vercel CLI + project link after the cafe defreezer wipes
 # C:\Users\Administrator\ overnight. Mirrors the pattern of
-# restore-notebooklm.ps1 — idempotent, safe to re-run.
+# restore-notebooklm.ps1 - idempotent, safe to re-run.
 #
 # Usage (from the grifon-command folder):
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # if not already
 #   .\scripts\restore-vercel.ps1
 #
-# ── TWO AUTH MODES ────────────────────────────────────────────────────────────
+# -- TWO AUTH MODES ------------------------------------------------------------
 #
-# A) TOKEN (non-interactive — lets an AGENT run Vercel ops for you)
+# A) TOKEN (non-interactive - lets an AGENT run Vercel ops for you)
 #    Set a token before running this script and every `vercel` call below works
 #    with no browser. Get one at https://vercel.com/account/tokens (scope it to
 #    the grifon-command project; give it the shortest expiry you can live with).
@@ -28,15 +28,15 @@
 #    scripts/vercel-project.json are public identifiers and ARE safe to commit;
 #    the token is not.
 #
-# B) INTERACTIVE (`vercel login`) — browser auth, once per session. Fine when
+# B) INTERACTIVE (`vercel login`) - browser auth, once per session. Fine when
 #    you are driving by hand, but an agent cannot complete it.
 #
-# ── First-time setup (one-shot, then forget) ──────────────────────────────────
+# -- First-time setup (one-shot, then forget) ----------------------------------
 #   1. Run `npm i -g vercel` and `vercel login`
 #   2. From the repo root, run `vercel link` and pick the grifon-command project
 #   3. Copy the generated .vercel/project.json into scripts/vercel-project.json
 #      (`Copy-Item .vercel\project.json scripts\vercel-project.json`)
-#   4. Commit scripts/vercel-project.json — projectId/orgId are public identifiers,
+#   4. Commit scripts/vercel-project.json - projectId/orgId are public identifiers,
 #      NOT secrets. The auth token lives elsewhere (~\AppData\Roaming\com.vercel.cli\)
 #      and must NEVER be committed.
 #
@@ -46,7 +46,7 @@
 
 param(
     # Explicit token wins over $env:VERCEL_TOKEN / $env:VERCEL_TOKEN_FILE.
-    # Prefer the env var — a parameter can land in your shell history.
+    # Prefer the env var - a parameter can land in your shell history.
     [string]$Token
 )
 
@@ -155,7 +155,7 @@ if ($resolvedToken) {
     $who = vercel whoami --token $resolvedToken
     if ($LASTEXITCODE -eq 0) {
         Write-Host "OK: authenticated via $tokenSource as '$($who | Select-Object -Last 1)'." -ForegroundColor Green
-        Write-Host "     `$env:VERCEL_TOKEN is set for this session — no 'vercel login' needed." -ForegroundColor Green
+        Write-Host "     `$env:VERCEL_TOKEN is set for this session - no 'vercel login' needed." -ForegroundColor Green
         Write-Host ""
         Write-Host "Non-interactive commands now available (agent-runnable):" -ForegroundColor Cyan
         Write-Host "  vercel env ls preview                       # list env vars"
@@ -179,7 +179,7 @@ if ($resolvedToken) {
     exit 1
 }
 
-# 5) No token — interactive login is the only remaining path
+# 5) No token - interactive login is the only remaining path
 Write-Host ""
 Write-Host "No token found (checked -Token, `$env:VERCEL_TOKEN, `$env:VERCEL_TOKEN_FILE)." -ForegroundColor Yellow
 Write-Host "Next step:" -ForegroundColor Cyan

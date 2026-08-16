@@ -1,7 +1,7 @@
 # Restore the Playwright MCP server registration after the cafe defreezer
 # wipes ~/.claude.json. This MCP gives the agent a real browser (headless
 # or headed) so it can navigate localhost:5173, screenshot UI states,
-# click through the wizard, etc. — the "drag/drop screenshots replacement"
+# click through the wizard, etc. - the "drag/drop screenshots replacement"
 # workflow Boris Cherny demos in his Claude Code talks.
 #
 # Usage (from the grifon-command folder):
@@ -10,7 +10,7 @@
 #
 # After this finishes, restart VS Code so Claude Code reloads MCP servers.
 #
-# Idempotent — safe to run on every cafe-PC reboot. Merge-aware: preserves
+# Idempotent - safe to run on every cafe-PC reboot. Merge-aware: preserves
 # any other MCP entries already in ~/.claude.json (e.g., notebooklm).
 
 $ErrorActionPreference = "Stop"

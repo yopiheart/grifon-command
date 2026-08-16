@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run check:ps1-ascii",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest run",
@@ -22,7 +23,8 @@
     "creative:batch": "node tools/batch-creative-codex.mjs",
     "design:lint": "design.md lint DESIGN.md",
     "design:tailwind": "design.md export --format tailwind DESIGN.md > design.tokens.json",
-    "design:spec": "design.md spec"
+    "design:spec": "design.md spec",
+    "check:ps1-ascii": "node tools/check-ps1-ascii.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.46.0",
