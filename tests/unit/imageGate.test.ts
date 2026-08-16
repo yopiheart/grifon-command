@@ -17,6 +17,7 @@ const OK: ImageGateObservations = {
   personMatchesReference: true,
   productLabelText: null,
   labelLegible: null,
+  lightingLooksProduced: null,
   compositionNotes: 'centered medium shot',
 };
 
@@ -29,6 +30,7 @@ describe('parseImageGateResponse', () => {
       personMatchesReference: true,
       productLabelText: 'GRIFON',
       labelLegible: true,
+      lightingLooksProduced: null, // absent from the response -> unverifiable, never flags
       compositionNotes: 'tight',
     });
   });
@@ -41,6 +43,7 @@ describe('parseImageGateResponse', () => {
       personMatchesReference: null, // non-boolean → null (unverifiable)
       productLabelText: null, // empty string → null
       labelLegible: null, // non-boolean → null
+      lightingLooksProduced: null, // absent → null
       compositionNotes: '', // non-string → ''
     });
   });
@@ -67,6 +70,7 @@ describe('parseImageGateResponse — real malformed framing from production stil
     personMatchesReference: null,
     productLabelText: 'HIRAYA GLOW',
     labelLegible: true,
+    lightingLooksProduced: null,
     compositionNotes: 'Centered close-up of a dropper bottle on a counter',
   };
 
@@ -201,6 +205,48 @@ describe('judgeImageGate — composition is LOG-ONLY (never flags)', () => {
     expect(r.pass).toBe(true);
     expect(r.flags).toEqual([]);
     expect(r.compositionNotes).toBe('badly off-center, subject cropped at the edge');
+  });
+});
+
+describe('judgeImageGate — produced/cinematic light on an identity scene', () => {
+  // WHY (2026-08-16). Colour-grade drift is the longest-running unfixed defect on this
+  // pipeline and it MOVES: run 1 put a warm cinematic cast on the hook, run 2 put it on
+  // scene 4. Tuned prompt guardrails keep missing it because they cannot predict where it
+  // will land. A watcher does not have to predict — it just looks at what came back.
+  it('flags a warm/rim-lit still when a locked face is expected', () => {
+    const r = judgeImageGate({ ...OK, lightingLooksProduced: true }, { referenceMode: 'avatar' });
+    expect(r.pass).toBe(false);
+    expect(r.flags).toContain('cinematic_grade');
+  });
+
+  it('does NOT flag a deliberately cinematic product or venue shot', () => {
+    // The scoping decision in one test: a produced relight is only a defect when it is
+    // relighting a LOCKED FACE. A graded product hero is a legitimate look, not a defect.
+    for (const referenceMode of ['product', 'none', 'venue']) {
+      const r = judgeImageGate({ ...OK, lightingLooksProduced: true }, { referenceMode });
+      expect(r.flags).not.toContain('cinematic_grade');
+    }
+  });
+
+  it('never flags on null — unverifiable stays the conservative path', () => {
+    const r = judgeImageGate({ ...OK, lightingLooksProduced: null }, { referenceMode: 'avatar' });
+    expect(r.pass).toBe(true);
+    expect(r.flags).toEqual([]);
+  });
+
+  it("treats 'avatar_state' as an identity mode", () => {
+    // Regression guard for a bug shipped earlier the SAME day: avatar_state was added as a
+    // render mode but never added to IDENTITY_MODES, so the two beats of a person
+    // transformation (the before hook and the after reveal) got NO identity check at all —
+    // the exact two beats that rendered a stranger on two consecutive live runs.
+    const drift = judgeImageGate(
+      { ...OK, personMatchesReference: false },
+      { referenceMode: 'avatar_state' }
+    );
+    expect(drift.flags).toContain('identity_drift');
+
+    const graded = judgeImageGate({ ...OK, lightingLooksProduced: true }, { referenceMode: 'avatar_state' });
+    expect(graded.flags).toContain('cinematic_grade');
   });
 });
 

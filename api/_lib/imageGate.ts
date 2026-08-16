@@ -45,6 +45,7 @@ Return STRICT JSON and nothing else, in exactly this shape:
   "personMatchesReference": boolean | null,
   "productLabelText": string | null,
   "labelLegible": boolean | null,
+  "lightingLooksProduced": boolean | null,
   "compositionNotes": string
 }
 
@@ -53,6 +54,7 @@ Field rules:
 - "personMatchesReference": if a REFERENCE person image was provided, answer true when the person in the scene still is clearly the same individual as the reference (same face, build, look), false when they are clearly a different person or an AI-warped re-render. If NO reference image was provided, answer null.
 - "productLabelText": if a product with readable label/brand typography is visible, transcribe that text VERBATIM exactly as shown. If no product text is visible, answer null.
 - "labelLegible": if a product label is present, answer true when its text is crisp and readable, false when it is warped, smeared, garbled, or gibberish. If no product label is present, answer null.
+- "lightingLooksProduced": answer true when the light in this still reads as PRODUCED rather than ordinary — any of: a warm, amber or orange colour cast over the whole frame; a visible rim or edge light separating the subject from the background; a strong directional key throwing hard shadows; or an obviously graded, filmic, cinematic look. Answer false when the light reads as ordinary natural or ambient room light with no cast and no rim. Answer null only if you genuinely cannot tell. Judge the LIGHT, not the subject's attractiveness, and not how good the photo is.
 - "compositionNotes": one short phrase describing framing/composition (e.g. "centered medium shot, product held at chest"). Keep it under 15 words.
 
 Output the JSON object only. No markdown fences, no commentary.`;
@@ -79,6 +81,7 @@ export const IMAGE_GATE_SCHEMA = {
     personMatchesReference: { type: Type.BOOLEAN, nullable: true },
     productLabelText: { type: Type.STRING, nullable: true },
     labelLegible: { type: Type.BOOLEAN, nullable: true },
+    lightingLooksProduced: { type: Type.BOOLEAN, nullable: true },
     compositionNotes: { type: Type.STRING },
   },
   required: [
@@ -86,12 +89,17 @@ export const IMAGE_GATE_SCHEMA = {
     'personMatchesReference',
     'productLabelText',
     'labelLegible',
+    'lightingLooksProduced',
     'compositionNotes',
   ],
 };
 
-/** Reference modes that imply the locked avatar/person must appear in the scene. */
-const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue']);
+/** Reference modes that imply the locked avatar/person must appear in the scene.
+ *  'avatar_state' added 2026-08-16 WITH the mode itself — it was missed on the first pass,
+ *  which left the two beats of a person transformation (the before hook and the after reveal)
+ *  with NO identity check at all. Those are the exact beats that rendered a stranger on two
+ *  consecutive live runs, so they are the last place the check should have been absent. */
+const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue', 'avatar_state']);
 
 export interface ImageGateObservations {
   personPresent: boolean;
@@ -100,6 +108,9 @@ export interface ImageGateObservations {
   /** Verbatim product label text read off the still, or null when none visible. */
   productLabelText: string | null;
   labelLegible: boolean | null;
+  /** true = produced/cinematic light (warm cast, rim light, hard key, graded look).
+   *  null = unverifiable, which never flags. Added 2026-08-16. */
+  lightingLooksProduced: boolean | null;
   compositionNotes: string;
 }
 
@@ -209,6 +220,10 @@ export function parseImageGateResponse(raw: string): ImageGateObservations | nul
         typeof obj.personMatchesReference === 'boolean' ? obj.personMatchesReference : null,
       productLabelText: label,
       labelLegible: typeof obj.labelLegible === 'boolean' ? obj.labelLegible : null,
+      // Anything that is not an explicit boolean becomes null = unverifiable, which never
+      // flags. An older gate response that predates this field therefore stays passing.
+      lightingLooksProduced:
+        typeof obj.lightingLooksProduced === 'boolean' ? obj.lightingLooksProduced : null,
       compositionNotes: typeof obj.compositionNotes === 'string' ? obj.compositionNotes : '',
     };
   } catch {
@@ -281,6 +296,23 @@ export function judgeImageGate(
       }
     }
     if (garbled) flags.push('garbled_label');
+  }
+
+  // ── Produced/cinematic light on an identity scene (rank 3, NEW 2026-08-16) ──
+  // Colour-grade drift is the longest-running unfixed defect on this pipeline (4+
+  // corroborations) and it MOVES between scenes, so tuned-prompt guardrails keep missing it:
+  // it was in the hook, then in scene 4 of the next run. A watcher catches what a rule cannot
+  // predict the location of.
+  //
+  // SCOPED TO IDENTITY SCENES ON PURPOSE, and this is the whole judgement call: a produced
+  // relight is only a defect when it is relighting a LOCKED FACE, because that is what pulls
+  // the render away from the reference and reads as AI. A deliberately cinematic product or
+  // venue shot is a legitimate look and must not be flagged. Scoping this way also avoids
+  // plumbing a new "expected register" field through five files for a soft signal.
+  //
+  // null (unverifiable) never flags — the same conservative path as every field above.
+  if (IDENTITY_MODES.has(expectations.referenceMode) && observations.lightingLooksProduced === true) {
+    flags.push('cinematic_grade');
   }
 
   return {
