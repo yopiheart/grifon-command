@@ -385,6 +385,37 @@ rebuilt with this pack + the **master-daylight** rule from `.claude/skills/marvi
    "dull skin" prompts were written mild → strong; Neil graded them **inverted**. Do not reason
    about how bad the skin will *look* from how bad the prompt *asks*. Spread and let him pick.
 
+## 🔴 The expression rule, extended to VIDEO (Neil, 2026-08-16)
+
+The eyes-open rule above ("expressiveness lives in the MOUTH only") was derived from a
+**single still** losing its likeness. Neil extended it, and his version is the stronger one:
+
+> *"pag iniba mo ang emotion ng muka, nag babago ang muka nila at pag nagsalita na yan at
+> bumalik sa normal na emotion sa video, dun madedetect ung inconsistency ng character kasi
+> hindi na ito mag mamatch sa susunod na scenes."*
+
+**The mechanism.** A storyboard still is not a final frame — it is the FIRST frame of a
+generated clip. Give that still a big expression (anger, laughter, confusion, a squint, a hand
+scrunching the cheek) and two things happen in sequence: the face deforms away from the
+reference *in the still*, and then the video model relaxes it back toward neutral as soon as
+the performer speaks. The viewer therefore sees the face **change shape mid-clip**, and the
+next scene's calm face no longer matches. A rule that was about one image is really about
+**continuity across an edit**, which is where a viewer actually detects an AI.
+
+Observed on the 2026-08-16 `before_after` run: S1's prompt asked for a frustrated
+problem-state, and the generated frame came back with the hand scrunching one cheek and the
+face contorted — Neil's read was *"okay na sana kaso nakakusot ung muka."* Same failure family
+as the mirror-selfie phone occlusion (finding 1 above): whatever hides or deforms the face
+starves the identity lock.
+
+**Partially shipped already.** The `avatar_state` render mode added the same day carries this
+as rule 1b — expression clamped to a narrow mouth-level range, hands off the face, no squint,
+with the reason stated ("BREAK identity across the cut"). That covers the person-state beats
+of a transformation only. ⛔ **The general case is still open**: the storyboard's `imagePrompt`
+rules can still ask any scene for a big emotion. That is a TUNED change in
+`api/_lib/prompts.ts` and needs its own pass — the honest scope is "audit every skeleton for
+emotion words," not a one-line patch.
+
 ## Scaffold self-check (all 10 prompts)
 
 Every prompt above contains: ✔ smartphone-capture device opening ✔ candid/UGC

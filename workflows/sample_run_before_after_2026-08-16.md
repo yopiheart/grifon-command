@@ -150,6 +150,68 @@ two different faces in one ad.
   `gate_verdict` came back `null`, and it inspects **stills only**, so video slop is invisible to it.
 - **REGENERATE has no undo** (finding 4c #2b) — a bad re-roll silently destroys a good frame.
 
+---
+
+## RUNS 1 + 2 — both STOPPED at the storyboard gate, zero film spend (2026-08-16)
+
+Neil drove both. Neither reached FILM, so nothing here cost a video credit.
+
+**The defect, same both times, different scene.** Run 1 rendered a stranger in **S1**; run 2
+rendered a stranger in **S3**. Root cause read off the code, not guessed: the TRANSFORMATION
+skeleton offered `referenceImage="none"` on exactly those two beats, and with no avatar
+reference the scene has no identity anchor. It is a coin flip per roll on whichever beat the
+model takes the hatch — and in `"none"` mode the camera mandate does not fire either, which is
+why the stranger also arrived in a different room and a warmer grade.
+
+⚠️ **My run-1 gate was too narrow and let run 2 through.** I told Neil to check one thing, "is
+Scene 1 the same woman." S1 passed and S3 broke. **Two beats permit the hatch, so the gate was
+always "is EVERY scene the same woman."** Recorded because the wrong gate cost a whole roll.
+
+**FIXED the same day** (commits `cdb4f7e`, `3197748`): `"none"` forbidden on both beats for
+person transformations + an IDENTITY RULE line, guarded by a regression test; and `venueSlot`
+now actually reaches the scene-image call via a new `avatar_state` mode.
+
+### Answers to Neil's questions, from code
+
+| Question | Answer |
+|---|---|
+| What was S4 based on — character, before, or after? | **after.png, guaranteed.** The producer passes exactly one face: `run.input.avatar.url`, the presenter upload. `before.png` was never passed anywhere, so it could not have been the basis. |
+| Did the camera rotation fire? | **Yes, on the avatar beats only.** `variationIndex = i`, three angles, `i % 3`. It is skipped entirely in `"none"` mode, which is why the broken scenes also lost their framing. S4 still collapsed to a medium shot instead of its mandated close-up — a documented model behavior, n=1, watch it. |
+| Why 4 picture frames instead of 3? | **Ignore.** The reference locks the FACE, never the room; the environment is re-imagined per scene. Same single cause as the colour-grade drift (now 4 corroborations). |
+| Is before/after upload required? | **No** — no `required` flag on the slots. And until `3197748` it made no difference whether you uploaded them, because they were discarded. |
+| Is this 3.7-flash? | **No, nothing you saw was.** Script/storyboard/Market Research were all `gemini-3.1-flash-lite`; premise check `3.5`; only the image QA gate was on 3.7. Flipped in `cdb4f7e`. |
+
+### 🔴 PRODUCT DECISION — no price anywhere in a video (Neil, 2026-08-16)
+
+> *"bawal talaga ang presyo or price sa video. Kasi un ung mag drive ng curiosity for them to
+> visit website / or to click the link sa ads."*
+
+Wider than the existing tuned CTA price-leak guard, which only bans price in the final beat.
+The rule is now **no peso amount in any beat**. Non-price value-adds (free shipping, a bonus, a
+guarantee) stay legal and are the intended weave.
+
+**This retires a finding.** "The ₱499 offer never surfaced" was logged as a defect across four
+runs and treated as corroboration for the flash-lite A/B result *"drops the offer 4/4"*. Under
+this decision the absence is **correct behavior**, and run 2's script — which surfaced free
+shipping and no price — complied. ⚠️ Before acting on that A/B result, check which of the two
+it actually measures; if it counts a missing PRICE as a miss, the harness is wrong, not the
+model.
+
+### Script verdict (run 2) — one hard violation
+
+🔴 **S3: "Look at that, ang fresh na tignan."** Run 1's was worse: *"kitang-kita **agad** ang
+fresh glow ko."* **"agad" is BANNED** by the tuned SPEED RULE — the honest claim is 2 weeks —
+and it is a Meta appearance-claim risk, not just an internal rule. That is **corroboration #6**
+(prior five in `sample_batch_test_spec.md`). The grill-me route was already triggered at #3 and
+has never been run.
+
+✅ **CTA is clean, both runs.** *"Tara, click mo na para sa free shipping ngayon."* Opens on
+Tara not the English verb, borrowed verb mid-sentence, Tagalog final word, no price. All four
+guards pass — the best CTA these runs have produced.
+
+⚠️ **Hook is compliant but mid.** *"Grabe, bakit ang dumi ng skin ko?"* is a statement where the
+tuned rule asks for a visual complaint that POINTS at something ("Tingnan mo tong mantsa").
+
 ## ⏳ Perishable
 
 Every media URL is presigned `X-Amz-Expires=90000` (**25 h**). **Download the finished ad the same
