@@ -329,7 +329,14 @@ const proxyPollVideoOperation = async (
 const textModel = 'gemini-3.1-flash-lite';
 const fastTextModel = 'gemini-3.1-flash-lite';
 const researchTextModel = 'gemini-3.6-flash';
-const premiseCheckModel = 'gemini-3.5-flash'; // premise check stays pinned: googleSearch-grounding + JSON-in-prompt flaked 1/6 on 3.6 (see workflows/gemini36_adoption.md)
+// premise check: pin RETIRED 2026-08-16 (Neil's explicit call). The 3.5 pin existed because a
+// 3.6 eval measured 3.5 at 0/6 empty shells; the 6-sample rerun in gemini37_adoption.md Slice 2
+// did NOT reproduce that — 3.5 flaked 1/6 and 3.7 flaked 1/6, byte-identical empty shells, with
+// both models emitting real output tokens. The defect is cleanJson discarding a valid grounded
+// answer, not the model, so the pin was paying 4.2x cost and 2x latency for the same failure
+// rate. ⚠️ THE PARSE BUG IS STILL LIVE — ~1 in 6 users silently lose this feature regardless of
+// model. Parser hardening is its own job. ⏪ Rollback: 'gemini-3.5-flash'.
+const premiseCheckModel = 'gemini-3.7-flash';
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
 const sceneImageModel = 'gemini-3.1-flash-lite-image';
 const thumbnailModel = 'gemini-3.1-flash-image-preview';
@@ -2304,7 +2311,7 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state' = 'none'
 ): Promise<string> => {
     
     await delay(2500);
@@ -2425,6 +2432,23 @@ export const generateSceneImage = async (
         6. **AVATAR_RELIGHT (anti-composite):** Light the agent WITH the room — match the direction, color temperature, and intensity of Reference Image 2's environmental light on her face and wardrobe, with contact shadows where she meets the floor/furniture. She must look PHOTOGRAPHED in the room, not pasted on top of it. Preserve her IDENTITY from rule 1 — relight, never restyle.
         7. **CINEMATIC_GRADE:** Apply one consistent, clean cinematic grade across scenes (even exposure, gentle filmic contrast, natural color) so the walkthrough cuts together. You MAY enhance muddy phone-shot capture quality, but NEVER upgrade the real tier (TIER_TRUTH holds).
         `;
+    } else if (referenceImageMode === 'avatar_state' && references.avatarUrl && references.productUrl) {
+        // UGC Pro person-transformation: Ref 2 is the SAME PERSON in the real before/after state
+        // the user uploaded. Added 2026-08-16 (Neil-approved) because there was no mode for it —
+        // 'avatar_venue' says Ref 2 is a ROOM and bans product props, 'both' says Ref 2 is a
+        // PRODUCT. With neither fitting, the producer ignored the before/after uploads entirely
+        // and the model invented the skin state, while the upload modal promised the opposite
+        // ("these anchor the before->after so the AI doesn't invent them").
+        consistencyRules = `
+        **PERSON_STATE (Reference Image 1 = the performer; Reference Image 2 = the SAME PERSON in the real state this beat depicts):**
+        1. **IDENTITY (Reference Image 1, LOCKED across scenes — non-negotiable):** preserve face, bone structure, skin tone, hair styling (color AND style), wardrobe (color, cut, fabric — the SAME outfit every scene), body type. Scene action MAY change pose and expression; identity and wardrobe NEVER change.
+        1b. **FACE_TO_CAMERA (required whenever the performer speaks the line):** both eyes AND mouth clearly visible for lip-sync. Eyes-closed, hands covering the face, or a full side-profile with the face turned away = BANNED. Keep expression within a NARROW range of Reference Image 1 — a small mouth-level smile or a small mouth-level frown. Wide grins, laughter, squinting, and exaggerated dismay all deform the face away from the reference and BREAK identity across the cut.
+        2. **STATE (Reference Image 2 — this is the whole point of this mode):** Reference Image 2 is the SAME PERSON, photographed in the exact state this beat depicts. Reproduce THAT state on the performer: skin tone and evenness, texture, visible marks or blemishes, dullness or clarity, and any sheen. Reference Image 2 is NOT a second person, NOT a product, NOT a place — do not render it as a separate subject and do not place the performer "inside" it.
+        3. **FRAMING PARITY (what makes the change legible):** render a chest-up medium close-up at eye level, face toward camera. The before beat and the after beat of the same ad MUST share this framing, distance and lighting, so the STATE is the only thing that changes between them. Do NOT choose a distinctive angle for this beat.
+        4. **NO_GLAMORIZE:** never clean up the before-state and never exaggerate the after-state. The two uploaded photos are the floor and the ceiling — matching them is the job; improving on them is a lie.
+        5. **ETHNICITY:** the performer is strictly ${ethnicity} (authentically Filipino, not glamorized).
+        6. **APPEARANCE GUARDRAIL (Meta policy):** the after-state reads as glow, freshness, and ease — never a clinical, dermatological, or corrective depiction.
+        `;
     } else {
         consistencyRules = `
         **STRICT_NEGATIVE (VISUAL AIDS):**
@@ -2440,6 +2464,11 @@ export const generateSceneImage = async (
     // mandatory face demand contradicts the NO-HUMAN rules and pulls the person from the hero
     // reference photo into frame (2026-06-10 validation render: hook end-frame person leak —
     // the 627ccb2 rule-5 text fix alone couldn't beat a MUST-render-a-face instruction).
+    // 'avatar_state' is deliberately ABSENT from this list even though a human IS in frame.
+    // The rotation picks a different framing per scene index, which would hand the before beat
+    // and the after beat two different shots — directly contradicting the PERSON_STATE rule 3
+    // parity requirement (and the skeleton's own "framed IDENTICALLY to S1"). That mode pins its
+    // own framing and its own face rule instead. Rotation still applies to every other beat.
     const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue';
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
     const cameraMandatory = humanSubjectInFrame ? `

@@ -786,6 +786,91 @@ describe('camera framing rotation across scenes', () => {
   });
 });
 
+describe('real-photo routing — venueSlot reaches the scene-image call', () => {
+  // THE BUG THIS EXISTS FOR (2026-08-16, two live before_after producer runs). The storyboard
+  // emitted `venueSlot` exactly as its prompt asks, and the orchestrator passed ONLY
+  // `{ avatarUrl, productUrl: heroImageBase64 }` — a hardcoded pair with no slot lookup anywhere
+  // in services/. So every uploaded before/after photo was silently discarded and the model
+  // invented the skin state, while the upload modal promised "these anchor the before->after so
+  // the AI doesn't invent them". Nothing failed; the ad just quietly wasn't the user's.
+  //
+  // Asserted on the ARGUMENTS of generateSceneImage — the seam — not on any rendered pixel, the
+  // same discipline as the camera-rotation test above.
+  const PHOTOS = [
+    { url: 'svc://hero', slot: 'hero' as const, description: 'the bottle' },
+    { url: 'svc://before', slot: 'before' as const, description: 'dull skin' },
+    { url: 'svc://after', slot: 'after' as const, description: 'clear skin' },
+  ];
+  /** S0 = performer + their BEFORE state · S1 = plain avatar, no slot · S2 = product state, no performer. */
+  const TAGGED: Scene[] = [
+    { scriptLine: 'L0', sceneDescription: 'd0', imagePrompt: 'IMG0', referenceImage: 'avatar', venueSlot: 'before' },
+    { scriptLine: 'L1', sceneDescription: 'd1', imagePrompt: 'IMG1', referenceImage: 'avatar' },
+    { scriptLine: 'L2', sceneDescription: 'd2', imagePrompt: 'IMG2', referenceImage: 'none', venueSlot: 'hero' },
+  ] as Scene[];
+  const taggedStoryboard = () =>
+    vi.fn(async () => ({ scenes: TAGGED.map((s) => ({ ...s })), strategicAudit: '' })) as any;
+  /** The (references, referenceImageMode) pair per main-image prompt. Keyed by prompt because the
+   *  pooled fan-out completes out of order. */
+  const routingByPrompt = (spy: { mock: { calls: unknown[][] } }) => {
+    const m = new Map<string, { refs: any; mode: string }>();
+    for (const c of spy.mock.calls as any[]) {
+      if (!m.has(String(c[0]))) m.set(String(c[0]), { refs: c[3], mode: String(c[10]) });
+    }
+    return m;
+  };
+
+  it('anchors a person-STATE slot to BOTH the avatar and the uploaded state photo', async () => {
+    const { deps, spies } = makeFakeDeps({ generateStoryboard: taggedStoryboard() });
+    const run = createProductionRun(makeInput({ servicePhotos: PHOTOS }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const s0 = routingByPrompt(spies.generateSceneImage).get('IMG0')!;
+    // The face comes from the performer, the SKIN STATE from the upload. Both, or it is not proof.
+    expect(s0.mode).toBe('avatar_state');
+    expect(s0.refs.avatarUrl).toBe('avatar.png');
+    expect(s0.refs.productUrl).toBe('svc://before');
+    // The hero must NOT be what rides along on this scene — that was the old hardcoded behaviour.
+    expect(s0.refs.productUrl).not.toBe(makeInput().heroImageBase64);
+  });
+
+  it('leaves an untagged avatar scene exactly as it was (no regression)', async () => {
+    const { deps, spies } = makeFakeDeps({ generateStoryboard: taggedStoryboard() });
+    const run = createProductionRun(makeInput({ servicePhotos: PHOTOS }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const s1 = routingByPrompt(spies.generateSceneImage).get('IMG1')!;
+    expect(s1.mode).toBe('avatar');
+    expect(s1.refs).toEqual({ avatarUrl: 'avatar.png', productUrl: makeInput().heroImageBase64 });
+  });
+
+  it('anchors a non-person slot on a performer-free scene in venue mode', async () => {
+    const { deps, spies } = makeFakeDeps({ generateStoryboard: taggedStoryboard() });
+    const run = createProductionRun(makeInput({ servicePhotos: PHOTOS }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const s2 = routingByPrompt(spies.generateSceneImage).get('IMG2')!;
+    expect(s2.mode).toBe('venue');
+    expect(s2.refs.productUrl).toBe('svc://hero');
+    // No performer in this frame, so no avatar reference may leak into it.
+    expect(s2.refs.avatarUrl).toBeUndefined();
+  });
+
+  it('falls through unchanged when the tagged slot was never uploaded', async () => {
+    const { deps, spies } = makeFakeDeps({ generateStoryboard: taggedStoryboard() });
+    // 'before' is tagged by the storyboard but absent from the uploads.
+    const run = createProductionRun(makeInput({ servicePhotos: [PHOTOS[0]] }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const s0 = routingByPrompt(spies.generateSceneImage).get('IMG0')!;
+    expect(s0.mode).toBe('avatar');
+    expect(s0.refs.productUrl).toBe(makeInput().heroImageBase64);
+  });
+});
+
 describe('end-frame (hook morph) generation', () => {
   it('scene_images renders BOTH keyframes for a morph scene: product-free start, hero-anchored reveal end', async () => {
     const { deps, spies } = makeMorphDeps();

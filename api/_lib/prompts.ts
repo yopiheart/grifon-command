@@ -87,7 +87,20 @@ export const cleanJson = (text: string): string => {
 };
 
 // Model IDs — kept in sync with services/geminiService.ts. Server-side use.
-export const MODEL_TEXT = 'gemini-3.1-flash-lite';
+// MODEL_TEXT flipped flash-lite -> 3.7-flash 2026-08-16 on Neil's explicit call, after a
+// before_after producer run came back with a script he graded weak. It carries the flows the
+// customer actually sees: marketmind (Market Research), adscript, storyboard, offer-optimizer,
+// influencer-script. 3x the input rate ($0.25 -> $0.75 /Mtok) against a per-ad COGS that is
+// ~80% video, so the absolute delta is small — measure it on the next run via run_cogs rather
+// than estimating. ⚠️ gemini37_adoption.md:291 advises AGAINST this on cost grounds; Neil
+// overrode it for output quality, which is the trade that doc could not price.
+// ⚠️ 2027-01-01 the intro window closes and 3.7 doubles to $1.50/$7.50 — see
+// modelCosts.ts INTRO_PRICING_LAST_DAY. Revisit before then.
+// ⏪ Rollback: set both back to 'gemini-3.1-flash-lite'.
+export const MODEL_TEXT = 'gemini-3.7-flash';
+// MODEL_FAST deliberately stays on flash-lite: its only remaining callers are three cheap
+// sub-type classifiers (temu, ugcpro, ugcpro-service) that pick one enum value. The storyboard
+// flow was moved off it to MODEL_TEXT in the same commit.
 export const MODEL_FAST = 'gemini-3.1-flash-lite';
 export const MODEL_RESEARCH = 'gemini-3.5-flash';
 
@@ -1567,12 +1580,21 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
         3. **BEATS (4 scenes):**
            S1 HOOK — the PROBLEM, close-up. The before-state IS the hook. NO product anywhere in
-              this frame. referenceImage="none" (or "avatar" if the problem is on the person).
+              this frame. PERSON TRANSFORMATION (skin, hair, face, body): referenceImage="avatar",
+              MANDATORY — the same performer must carry the before-state, and "none" is FORBIDDEN
+              here. Only a NON-person transformation (a surface, fabric, object, garment, or space)
+              may use referenceImage="none".
            S2 APPLICATION — the product enters mid-action, WORKING, never posed on a surface.
               referenceImage="both".
            S3 INSTANT REVEAL — the hard-cut after-state, framed IDENTICALLY to S1 (same angle,
-              same distance, same lighting) so the change is the only variable. referenceImage="none"
-              (or "avatar").
+              same distance, same lighting) so the change is the only variable. PERSON
+              TRANSFORMATION: referenceImage="avatar", MANDATORY — the after-state is only proof
+              if it is the SAME FACE as S1, so "none" is FORBIDDEN here. Only a NON-person
+              transformation may use referenceImage="none".
+           IDENTITY RULE (overrides any per-scene preference above): in a PERSON transformation
+              every one of the 4 scenes carries the avatar — S1 "avatar", S2 "both", S3 "avatar",
+              S4 "avatar". One ad, one face. A scene that drops the avatar renders a DIFFERENT
+              PERSON and destroys the before/after proof the format exists to deliver.
            S4 VERDICT — the creator, verdict + soft CTA. referenceImage="avatar".
 
         **APPEARANCE-CLAIM GUARDRAIL (Meta policy — applies to imagePrompt, not just script):**

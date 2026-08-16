@@ -307,17 +307,21 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
     return parseInfluencerScriptResponse(response.text || '{}');
   },
 
+  // MODEL_FAST -> MODEL_TEXT 2026-08-16 (Neil): the storyboard is the step that picks each
+  // scene's referenceImage, and a wrong pick silently swaps the performer's face. That is a
+  // reasoning job, not a classifier job, so it belongs on the smart lane with adscript. Only
+  // the three sub-type classifiers stay on MODEL_FAST.
   storyboard: async (input: StoryboardFlowInput, ai, runId?: string, userId?: string | null) => {
     const prompt = buildStoryboardPrompt(input);
     const response = await ai.models.generateContent({
-      model: MODEL_FAST,
+      model: MODEL_TEXT,
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
         safetySettings: SAFETY_SETTINGS,
       },
     } as any);
-    logModelUsage('flow:storyboard', MODEL_FAST, (response as any).usageMetadata, runId, userId);
+    logModelUsage('flow:storyboard', MODEL_TEXT, (response as any).usageMetadata, runId, userId);
     return parseStoryboardResponse(response.text || '{}');
   },
 };

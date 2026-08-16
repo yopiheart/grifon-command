@@ -132,8 +132,12 @@ describe('generateAdScript schema', () => {
     expect(dump).not.toContain('NO PRICE');
     expect(dump).not.toContain('LOGIC LOCK');
 
-    // The adscript flow executes server-side on the flash-lite text model.
-    expect(MODEL_TEXT).toMatch(/flash-lite/);
+    // The adscript flow executes server-side on MODEL_TEXT. Pinned exactly, not by
+    // pattern: this guard exists so the customer-facing text lane can never change
+    // models by accident. Flipped flash-lite -> 3.7-flash 2026-08-16 on Neil's explicit
+    // call for output quality (see api/_lib/prompts.ts:90 for the cost trade and the
+    // 2027-01-01 intro-window expiry). Changing this line is a deliberate act.
+    expect(MODEL_TEXT).toBe('gemini-3.7-flash');
   }, 10_000);
 
   it('preserves tuned-prompt invariants: NO PRICE rule and Sabri Suby Slide pacing', () => {

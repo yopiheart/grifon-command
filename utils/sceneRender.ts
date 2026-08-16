@@ -84,15 +84,27 @@ export const renderSceneImages = async (
   // RealEstate avatar-in-property: a talking scene tagged with a room the user uploaded composites
   // the AGENT (avatar identity) INTO that REAL room (place identity), instead of a generic lookalike.
   const useAvatarVenue = isRealEstate && !!venuePhoto && !isHookMorph && isAvatarScene && !!avatar;
+  // UGC Pro person transformation (2026-08-16): a person-STATE slot is the SAME human in a
+  // different condition, not a place. Before this branch existed, an avatar-tagged scene tagged
+  // `before`/`after` matched NEITHER case above — useAvatarVenue is RealEstate-only and useVenue
+  // requires a person-free scene — so the uploaded state photo was dropped and the model invented
+  // the skin. Kept in sync with services/producerOrchestrator.ts, which has the same branch.
+  const isPersonStateSlot = scene.venueSlot === 'before'
+    || scene.venueSlot === 'after'
+    || scene.venueSlot === 'onbody';
+  const usePersonState = !isRealEstate && !!venuePhoto && !isHookMorph && isPersonStateSlot
+    && isAvatarScene && !!avatar;
   // Plain venue (b-roll, no person): anchor the place to its real photo.
   const useVenue = !!venuePhoto && !isHookMorph && !isAvatarScene;
-  const mainRefs = useAvatarVenue
+  const mainRefs = usePersonState
     ? { avatarUrl: avatar!.url, productUrl: venuePhoto!.url }
-    : useVenue
-      ? { productUrl: venuePhoto!.url }
-      : startFrameRefs;
-  const mainMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | undefined =
-    useAvatarVenue ? 'avatar_venue' : useVenue ? 'venue' : scene.referenceImage;
+    : useAvatarVenue
+      ? { avatarUrl: avatar!.url, productUrl: venuePhoto!.url }
+      : useVenue
+        ? { productUrl: venuePhoto!.url }
+        : startFrameRefs;
+  const mainMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state' | undefined =
+    usePersonState ? 'avatar_state' : useAvatarVenue ? 'avatar_venue' : useVenue ? 'venue' : scene.referenceImage;
 
   // When the hook's END frame reveals the product, anchor it to the hero photo even
   // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —

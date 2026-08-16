@@ -73,6 +73,27 @@ describe('buildStoryboardPrompt — UGCPro branch', () => {
     expect(out).not.toContain('Virtual Try-On');
   });
 
+  // Regression guard, 2026-08-16. Two consecutive before_after producer runs each rendered a
+  // DIFFERENT WOMAN in one scene (run 1 = S1, run 2 = S3) because the skeleton offered
+  // referenceImage="none" on exactly those two beats and the model took it. With no avatar
+  // reference the scene has no identity anchor, so the before/after proof — the entire point of
+  // the format — collapses. The fix forbids "none" on S1 and S3 for PERSON transformations.
+  // If this test fails, someone reopened that door; read the run write-up before "fixing" it.
+  it("'transformation' FORBIDS referenceImage=none on the person beats (identity lock)", () => {
+    const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'transformation' })));
+    // The rules wrap across template lines, so match on whitespace-normalised text.
+    const flat = out.replace(/\s+/g, ' ');
+    expect(flat).toContain('PERSON TRANSFORMATION');
+    expect(flat).toContain('IDENTITY RULE');
+    // Both person beats name the avatar as mandatory.
+    expect(flat).toContain('referenceImage="avatar", MANDATORY');
+    // The escape hatch survives ONLY for non-person subjects (surfaces, fabric, objects, spaces).
+    expect(flat).toContain('Only a NON-person transformation may use referenceImage="none"');
+    // ...and the old opt-out wording that let the model drop the face is gone.
+    expect(flat).not.toContain('referenceImage="none" (or "avatar" if the problem is on the person)');
+    expect(flat).not.toContain('the change is the only variable. referenceImage="none" (or "avatar")');
+  });
+
   it("ugcProFormat 'unboxing' selects the Unboxing beats", () => {
     const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'unboxing' })));
     expect(out).toContain('CONTINUOUS PERFORMANCE (Unboxing)');

@@ -353,6 +353,69 @@ Agent calibration note: the agent pre-read scored the scaffold 4/4 wins
 overruled it. Neil's eyeball is the only valid believability grader; agent
 pre-reads are triage, never verdicts.
 
+## Production use #1 — Hiraya Glow before/after fixtures (2026-08-16, Neil-graded)
+
+First time the scaffold shipped into a real asset. Neil rejected the old
+`tests/fixtures/sample-batch/after.png` as *"slop/AI"*; both person-state photos were
+rebuilt with this pack + the **master-daylight** rule from `.claude/skills/marvin-avatar/`
+(positive light target FIRST, bans underneath). Run sheet:
+[`../sample_run_before_after_2026-08-16.md`](../sample_run_before_after_2026-08-16.md).
+
+1. **⛔ `#7 mirror selfie` is unusable for a PRESENTER plate.** The phone covering part of the
+   face is the format's signature, and it starves the avatar identity lock. Neil caught it:
+   *"natatakpan ung muka ng cellphone, baka di makuha ung consistency."* Mirror selfie stays
+   valid for image-ad heroes; for any plate that anchors identity, use `#1`-style **front-cam
+   selfie** (no phone in frame at all) or a **friend-candid**.
+2. **Friend-candid beat arm's-length selfie for the anchor.** Straight-on geometry, no
+   wide-angle pull on the nose and cheeks, nothing entering the frame edge to be mistaken for
+   part of her body. The arm's-length roll with the best *skin* lost to it — a weak lock costs
+   every scene, a subtler glow costs one beat.
+3. **The "mean face" is still the failure mode to watch.** Neil on the losing roll: *"mukang
+   ai. Natural face ng ai."* Same convergence recorded 2026-07-11 (4b #3). Generate a spread
+   and let his eye reject; the agent pre-read cannot see it.
+4. 🔴 **`--edit` PRESERVES identity where reference-generation DRIFTS.** The `before` was made
+   by editing the approved `after` frame — same woman, room, shirt, hair, framing and light
+   held perfectly, with only skin and mouth changed. Contrast the 2026-07-16 Zam bonus test
+   above, which drifted from a *reference*. Different mechanism: editing pixels vs generating a
+   new scene. **For any state-change pair (before/after, tryon), `--edit` off the approved
+   frame is the route.** Keep the change mouth-only per the eyes-open rule and it holds.
+5. **Identical prompts return byte-identical images on this lane.** Two rolls of one prompt came
+   back with the same md5. Vary the prompt to get real variants.
+6. ⚠️ **A written severity dial does not survive contact with taste.** Three graduated
+   "dull skin" prompts were written mild → strong; Neil graded them **inverted**. Do not reason
+   about how bad the skin will *look* from how bad the prompt *asks*. Spread and let him pick.
+
+## 🔴 The expression rule, extended to VIDEO (Neil, 2026-08-16)
+
+The eyes-open rule above ("expressiveness lives in the MOUTH only") was derived from a
+**single still** losing its likeness. Neil extended it, and his version is the stronger one:
+
+> *"pag iniba mo ang emotion ng muka, nag babago ang muka nila at pag nagsalita na yan at
+> bumalik sa normal na emotion sa video, dun madedetect ung inconsistency ng character kasi
+> hindi na ito mag mamatch sa susunod na scenes."*
+
+**The mechanism.** A storyboard still is not a final frame — it is the FIRST frame of a
+generated clip. Give that still a big expression (anger, laughter, confusion, a squint, a hand
+scrunching the cheek) and two things happen in sequence: the face deforms away from the
+reference *in the still*, and then the video model relaxes it back toward neutral as soon as
+the performer speaks. The viewer therefore sees the face **change shape mid-clip**, and the
+next scene's calm face no longer matches. A rule that was about one image is really about
+**continuity across an edit**, which is where a viewer actually detects an AI.
+
+Observed on the 2026-08-16 `before_after` run: S1's prompt asked for a frustrated
+problem-state, and the generated frame came back with the hand scrunching one cheek and the
+face contorted — Neil's read was *"okay na sana kaso nakakusot ung muka."* Same failure family
+as the mirror-selfie phone occlusion (finding 1 above): whatever hides or deforms the face
+starves the identity lock.
+
+**Partially shipped already.** The `avatar_state` render mode added the same day carries this
+as rule 1b — expression clamped to a narrow mouth-level range, hands off the face, no squint,
+with the reason stated ("BREAK identity across the cut"). That covers the person-state beats
+of a transformation only. ⛔ **The general case is still open**: the storyboard's `imagePrompt`
+rules can still ask any scene for a big emotion. That is a TUNED change in
+`api/_lib/prompts.ts` and needs its own pass — the honest scope is "audit every skeleton for
+emotion words," not a one-line patch.
+
 ## Scaffold self-check (all 10 prompts)
 
 Every prompt above contains: ✔ smartphone-capture device opening ✔ candid/UGC
