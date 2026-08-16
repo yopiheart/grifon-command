@@ -114,6 +114,24 @@ describe('buildStoryboardPrompt — UGCPro branch', () => {
     expect(flat).not.toContain('eyes wide in surprise, looking at a smartphone');
   });
 
+  // Neil's call, 2026-08-16, after watching the first finished ad: the hook was a neutral
+  // portrait of someone saying she looks tired. Compliant with beat-0 (problem state, no
+  // product) and still weak, because the first 3 seconds are decided by the EYE. The tuned
+  // script rule already asked for a "visual complaint" and the storyboard had nothing making
+  // the FRAME show one. This also supplies the reason for a camera push-in, which was the
+  // other thing missing from scene 1.
+  it('makes the hook SHOW the flaw rather than only mention it', () => {
+    const flat = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'transformation' })))
+      .replace(/\s+/g, ' ');
+    expect(flat).toContain('SHOW THE FLAW, DO NOT MERELY MENTION IT');
+    expect(flat).toContain('EXTREME CLOSE-UP');
+    expect(flat).toContain('INDICATING it');
+    expect(flat).toContain('the camera moving IN on it');
+    // The pointing hand must not become the next identity problem — a hand across the face
+    // starves the lock exactly like the mirror-selfie phone did.
+    expect(flat).toContain('must NOT cover the face');
+  });
+
   it("ugcProFormat 'unboxing' selects the Unboxing beats", () => {
     const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'unboxing' })));
     expect(out).toContain('CONTINUOUS PERFORMANCE (Unboxing)');

@@ -62,6 +62,7 @@ const {
   generateCinematicNarrative,
   generateAdCreatives,
   generateVideoPrompts,
+  generateThumbnail,
 } = await import('../../services/geminiService');
 
 const { buildAdScriptPrompt, buildStoryboardPrompt, MODEL_TEXT } = await import(
@@ -397,12 +398,92 @@ describe('generateVideoPrompts — expression continuity (identity survives the 
     expect(dump).toContain('does not show teeth');
   });
 
+  it('gives the camera a MEASURABLE positive target, not only a list of bans', async () => {
+    const dump = await dumpPrompt();
+    // Two live scenes rendered fully static. The camera language was 6 bans and 4 damping
+    // words against one weak positive ("a subtle push-in"), and the model answered a
+    // ban-stack the way it always does — by delivering less. Same failure the marvin-avatar
+    // skill records for lighting: bans with no target make the model under-deliver.
+    expect(dump).toContain('STATE THE TARGET FIRST');
+    expect(dump).toContain('ALREADY UNDERWAY AT FRAME 0');
+    // Measurable, so "subtle" cannot collapse to "none".
+    expect(dump).toContain('noticeably larger');
+    expect(dump).toContain('FAILED shot');
+    // The bans must be framed as trimming the STYLE of a move, never as removing it.
+    expect(dump).toContain('never reduce it to nothing');
+  });
+
+  it('only asks for a hook MORPH when the scene actually has two frames', async () => {
+    const dump = await dumpPrompt();
+    // The hook branch is written for an anchor-bridged morph between a start and an end
+    // frame, and says so ("Kling Omni ... between Start Frame and End Frame"). On a
+    // single-image scene it was still firing, so the model warped the subject to invent the
+    // transformation it had been told to deliver — the white wash across the hair.
+    expect(dump).toContain('AND THE SCENE HAS **BOTH** A START FRAME AND AN END FRAME');
+    expect(dump).toContain('this option DOES NOT APPLY');
+    // ...and the fallback is stated on the branch that must catch it.
+    expect(dump).toContain('OR** SCENE 1 HAS NO END FRAME');
+  });
+
   it('runs on the 3.7-flash lane, asserted on the wire not on a private const', async () => {
     fetchMock.mockResolvedValueOnce(okGemini([]));
     await generateVideoPrompts(storyboard, businessInfo);
     // `fastTextModel` has exactly ONE caller — this brain — so the flip had zero blast radius.
     // It is the last reasoning step before paid video, where a bad prompt costs a render.
     expect(captureLastFetchBody().model).toBe('gemini-3.7-flash');
+  });
+});
+
+describe('generateThumbnail — the cover frame must survive the click', () => {
+  // WHY (Neil, 2026-08-16): the generated thumbnail came back studio-lit, saturated, and
+  // showing a DIFFERENT-looking woman from the presenter in the video. Neither was a
+  // hallucination — the prompt mandated "Commercial Photography", "sharp studio lighting with
+  // strong rim lights", and "an EXTREME, high-energy facial expression (Shock/Surprise/Joy)".
+  // The expression ceiling shipped earlier that day covered the storyboard and video layers;
+  // this was the THIRD place and it was demanding the opposite. It also contradicted our own
+  // decoded MrBeast law (15 real thumbnails): warm open smile, never shock.
+  const dumpThumbPrompt = async () => {
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        candidates: [{ content: { parts: [{ inlineData: { mimeType: 'image/png', data: 'AAAA' } }] } }],
+      }),
+    });
+    await generateThumbnail(
+      ['Bakit pagod ang balat ko?'],
+      'Filipina mid-20s',
+      { product: 'Hiraya Glow', productImageUrls: [] } as any,
+      '9:16',
+      'data:image/png;base64,AAAA',
+      '1K'
+    );
+    return JSON.stringify(captureLastFetchBody());
+  };
+
+  it('caps the expression instead of demanding shock', async () => {
+    const dump = await dumpThumbPrompt();
+    expect(dump).toContain('EXPRESSION CEILING');
+    expect(dump).toContain('CLOSED-LIP smile');
+    // The exact words that produced the wrong face must be gone.
+    expect(dump).not.toContain('extreme, high-energy facial expression');
+    expect(dump).not.toContain('Shock/Surprise/Joy');
+  });
+
+  it('asks for the ad’s own register, not commercial key art', async () => {
+    const dump = await dumpThumbPrompt();
+    // A studio-lit cover on a phone-shot ad is the fastest way to make the whole thing read
+    // as AI, and it is the exact list our believability scaffold bans.
+    expect(dump).toContain('NEVER a commercial campaign key art');
+    expect(dump).toContain('NO studio lighting');
+    expect(dump).not.toContain('strong rim lights');
+    expect(dump).not.toContain('High-End Commercial Photography');
+  });
+
+  it('states WHY identity matters here, so the rule survives a future trim', async () => {
+    const dump = await dumpThumbPrompt();
+    expect(dump).toContain('SAME PERSON');
+    expect(dump).toContain('broken promise');
   });
 });
 
