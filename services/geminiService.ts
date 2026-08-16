@@ -902,14 +902,21 @@ const REALISM_INSTRUCTION_CINEMATIC = `
 - **MOMENTUM:** Maintain a consistent Global Motion Vector (e.g., all motion flows Left-to-Right).
 `;
 
-const MRBEAST_THUMBNAIL_STYLE = `
-**Aesthetic:** Hyper-Realistic High-End Commercial Photography.
-- **Visual Rule:** Zero 3D-rendering, zero animation, zero cartoonish smoothing. 
-- **Skin Texture:** Maintain 100% photographic skin detail, including pores, fine lines, and natural sheen. 
-- **Lighting:** Sharp studio lighting with strong rim lights (backlighting) to make the subject pop. 
-- **Camera:** shot on Sony A1, 35mm f1.4 lens, hyper-sharp focus on the subject.
-- **Composition:** High-resolution composite. The subject in the foreground must look like a real human being standing in the scene.
-- **Colors:** Vibrant and saturated, but grounded in real-world colors.
+// Renamed from MRBEAST_THUMBNAIL_STYLE 2026-08-16 (Neil-approved). The old constant mandated
+// "Commercial Photography", "sharp studio lighting with strong rim lights" and saturated colour
+// — the exact opposite of the raw-ugc register the ad itself renders in, and the exact list our
+// own believability scaffold bans ("no studio lighting, no rim light"). A studio-lit cover on a
+// phone-shot ad is the fastest way to make the whole thing read as AI. The name was also wrong
+// on its own terms: our decoded MrBeast thumbnail law (15 real thumbnails) says warm open smile,
+// never shock — the "shock face" spec described the 2019-2021 era, not what wins now.
+const UGC_THUMBNAIL_STYLE = `
+**Aesthetic:** a real photo taken on the same phone that shot the ad — the cover frame of a UGC video, NEVER a commercial campaign key art.
+- **Visual Rule:** Zero 3D-rendering, zero animation, zero cartoonish smoothing, no composited look.
+- **Skin Texture:** Maintain 100% photographic skin detail — pores, fine lines, natural sheen, small real blemishes left in place. Not retouched, no beauty filter, no smoothing.
+- **Lighting:** ordinary available light from a named physical source (window daylight, a room light). Bright, well exposed, neutral white balance. NO studio lighting, NO rim or edge light, NO hard directional key throwing hard shadows, NO warm or orange cast, NO filmic or cinematic colour grade.
+- **Camera:** a modern phone camera — mild wide-angle, sharp on the subject, natural falloff behind.
+- **Composition:** the subject is genuinely standing in a real, lived-in room and was photographed in it. Slightly imperfect framing is correct and wanted.
+- **Colors:** true to life. Real colour, not boosted saturation.
 `;
 
 const NO_TEXT_CONSTRAINT = `
@@ -2570,19 +2577,19 @@ export const generateThumbnail = async (
     const brandColorPrompt = brandColors.length > 0 ? `**Brand Colors (Apply to background or elements):** ${brandColors.join(', ')}` : "";
 
     const prompt = `
-    **Task:** Create a Viral YouTube/TikTok Thumbnail (MrBeast Photography Style).
-    **AESTHETIC:** ${MRBEAST_THUMBNAIL_STYLE}
+    **Task:** Create the COVER FRAME for a UGC video ad — the still a viewer sees in the feed before it plays.
+    **AESTHETIC:** ${UGC_THUMBNAIL_STYLE}
     **SCRIPT CONTEXT:** ${script.join(' ')}
     **AVATAR CONTEXT:** ${avatarDescription}
 
     **SUBJECT & ACTION:**
-    - **Identity:** Use Reference 1 (the avatar face) as a RAW PHOTOGRAPH. Maintain her exact facial features and skin texture.
-    - **Performance:** Character is showing an extreme, high-energy facial expression (Shock/Surprise/Joy). 
-    - **Interaction:** Character is holding or interacting with the product: "${pDesc}" (Reference 2).
-    
+    - **Identity:** Use Reference 1 (the avatar face) as a RAW PHOTOGRAPH. Maintain her exact facial features, bone structure, skin tone and skin texture. This must be unmistakably the SAME PERSON a viewer then sees in the video — a cover showing a different face is a broken promise before the ad has even played.
+    - **Performance — EXPRESSION CEILING (this is the identity rule, not a style note):** a warm, natural, CLOSED-LIP smile, or a calm confident look. Keep the expression within a narrow range of Reference 1. **BANNED:** shock, surprise, wide or open-mouth grins, laughter, teeth bared in delight, eyes wide, exaggerated anything, and hands covering or pressing the face. A big expression deforms the face away from the reference, which is precisely how the cover stops looking like the person in the video.
+    - **Interaction:** Character is holding the product naturally, the way someone holds a thing they actually own: "${pDesc}" (Reference 2). Not presented to camera like a shopping-channel display.
+
     **SCENE DESIGN:**
-    - **Background:** High-contrast, clean environment.
-    - **Context:** A clear visual metaphor showing the result of using "${businessInfo.product}".
+    - **Background:** the same kind of real, lived-in room the ad itself is shot in, softly out of focus. Not a studio, not a seamless backdrop, not a high-contrast set.
+    - **Context:** an honest moment from the ad's own story. Do NOT invent a visual metaphor for the result.
     - **Visual Purity:** NO TEXT, NO LOGOS, NO WATERMARKS.
     
     ${ratioInstruction}
@@ -2706,7 +2713,13 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       **GENERATION RULES BY TYPE:**
 
-      **OPTION A-HOOK: IF TYPE IS "b-roll" AND THIS IS SCENE 1 (THE HOOK):**
+      **OPTION A-HOOK: IF TYPE IS "b-roll" AND THIS IS SCENE 1 (THE HOOK) AND THE SCENE HAS **BOTH** A START FRAME AND AN END FRAME:**
+         🔴 **GATE — read this before using this option.** Every rule below describes an
+         anchor-bridged MORPH between two frames. If scene 1 has only ONE image (no end frame),
+         this option DOES NOT APPLY: fall through to OPTION A-REGULAR and write an ordinary
+         b-roll shot. Asking for a morph on a single-frame scene makes the model warp the
+         subject to invent the transformation it was told to deliver, which shows up as
+         melting hair, smeared edges and a bright wash across the frame.
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
          - **OPEN WITH THE ANCHOR TRANSFORMATION (MANDATORY):** Name the shared anchor explicitly — its color AND silhouette (e.g., "the brown dome of coffee grounds"). Open the prose with that anchor's transformation in physics-first language; the transformation is the verb and it is DECISIVE: the start texture holds its form, then rapidly compresses/crystallizes into the fully-formed product. Use fast decisive verbs ("compresses into", "crystallizes into", "snaps into"). NEVER a slow continuous blend, and NEVER describe any intermediate amorphous state (no blob, mass, shapeless or half-formed stage). Example: "The brown dome of wet coffee grounds compresses and crystallizes into the amber glass bottle of [product]." NOT "Slow dolly-out reveals [start]."
          - **USE THE STORYBOARD'S TRANSITION EFFECT:** When TransitionEffect is provided, the prompt MUST describe a transformation consistent with it. Kling Omni interpolates a gradual anchor-bridged transformation between Start Frame and End Frame — that is the only motion it delivers — so translate every effect into that form. For Character Morph: in-flight texture/material transformation across the anchor element. For Object Materialization: anchor element resolves from amorphous into the target subject. For Explosion Reveal: kinetic dispersion of the start subject flying outward, revealing the end subject clean. For Teleport / Snap Cut and Invisible Effect: render a fast, clean anchor morph — Omni cannot produce an instant cut or a hidden masked cut, so do NOT write "instant", "snap", "hard cut", "teleport", "seamless", or "hidden cut" language. For Chaos Burst: render an Explosion-Reveal-style kinetic dispersion — do NOT write "chaotic" or "mayhem" language Omni cannot resolve into a clean end frame. Translate the TransitionEffect label into anchor-bridge prose; do not invent a different transition.
@@ -2715,11 +2728,13 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **CAMERA MOTION (required, subtle, serves the morph):** A camera move runs through the FULL clip duration — pick one: "slow dolly-out following the transformation", "gentle push-in toward the anchor". STATIC SHOTS ARE FORBIDDEN.
          - **OUTPUT FORMAT:** Single cohesive cinematic paragraph. Open with anchor transformation, weave in the camera motion, end with the negative phrase. NO bracketed labels.
 
-      **OPTION A-REGULAR: IF TYPE IS "b-roll" AND THIS IS NOT SCENE 1 (Scene 2+ visuals):**
+      **OPTION A-REGULAR: IF TYPE IS "b-roll" AND (THIS IS NOT SCENE 1, **OR** SCENE 1 HAS NO END FRAME):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
-         - **CAMERA PHYSICS (minimal, smooth — open the prose with this):**
-           - "slow dolly-out with a gentle upward tilt" | "slow macro push-in" | "smooth, slow lateral tracking pan"
-         - **MOTION CONTINUITY:** The chosen GENTLE camera move runs smoothly through the clip. No handheld shake, jitter, counter-roll, parallactic/background-reveal shifts, or rack/pull focus. Keep the background stable. Err toward calm, smooth motion over dynamic.
+         - **CAMERA PHYSICS — STATE THE TARGET FIRST, open the prose with it:**
+           - Pick ONE: "slow dolly-out with a gentle upward tilt" | "slow macro push-in" | "smooth, slow lateral tracking pan"
+           - **THE MOVE IS ALREADY UNDERWAY AT FRAME 0** — no static opening beat, no settle, no hold before it starts.
+           - **IT MUST BE VISIBLE, and that is measurable:** by the last frame the subject is noticeably larger or smaller in frame, or the framing has noticeably shifted, compared to the first frame. If a viewer could mistake the clip for a still photograph, the move was too small — a static shot is a FAILED shot.
+         - **MOTION CONTINUITY:** the chosen move runs continuously from first frame to last — smooth, even speed, never stopping partway. The bans below trim the STYLE of that move; they never reduce it to nothing: no handheld shake, jitter, counter-roll, parallactic/background-reveal shifts, or rack/pull focus, and keep the background stable.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles, cross-dissolve, double-exposure, ghosting, fade-out. The final second holds the shot clean and fully opaque to the last frame."
          - **OUTPUT FORMAT:** A single cohesive cinematic paragraph. NO bracketed labels, NO [Model:] tag, NO VISUAL:/CAMERA:/AUDIO:/NEGATIVE: headers — those are stale routing markers from a manual copy-paste workflow. Open with the visual action, weave in the camera physics, end with the audio direction and the negative phrase as natural prose.
@@ -2730,7 +2745,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
          - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0. Keep them MICRO, per EXPRESSION CONTINUITY above: the mouth is shaping words, not performing an emotion. Speech movement only — never a widening grin, never a laugh, never a reaction face layered on top of the dialogue.
-         - **Cinematic Grammar (minimal, smooth motion):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE GENTLE camera move per scene: a slow dolly-in or a subtle push-in toward the subject. Do NOT use parallactic/background-reveal shifts, handheld movement, camera shake, jitter, lens breathing, or rack/pull focus — they read as blur or a changing background and break the clean talking-head look. Keep the background stable. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so the slow move happens DURING dialogue. Keep it subtle and smooth on all durations; avoid fully frozen frames, but err toward calm over dynamic.
+         - **Cinematic Grammar — STATE THE TARGET FIRST:** Open the prose with the camera physics directive. Use a specific lens (35mm, 85mm) and pick ONE camera move per scene: a slow dolly-in or a push-in toward the subject. **THE MOVE IS ALREADY UNDERWAY AT FRAME 0, together with the first syllable** — no static opening beat, no settle, no hold. **IT MUST BE VISIBLE, and that is measurable:** by the last frame the subject is noticeably larger in frame than in the first. If a viewer could mistake the clip for a still photograph with a talking mouth, the move was too small — a static talking head is a FAILED shot. The bans that follow trim the STYLE of the move and never reduce it to nothing: no parallactic/background-reveal shifts, handheld movement, camera shake, jitter, lens breathing, or rack/pull focus, and keep the background stable.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **END-CLEAN RULE:** The clip's final second holds the live shot clean and fully opaque — no cross-dissolve, no double-exposure, no ghosting, no fade-out, no transition-anticipation effect of any kind (the cut is handled downstream by the editor). Append to the prose tail: "Avoid cross-dissolve, double-exposure, ghosting, or fade in the final second."

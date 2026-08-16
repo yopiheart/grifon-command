@@ -1584,6 +1584,16 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
               MANDATORY — the same performer must carry the before-state, and "none" is FORBIDDEN
               here. Only a NON-person transformation (a surface, fabric, object, garment, or space)
               may use referenceImage="none".
+              **SHOW THE FLAW, DO NOT MERELY MENTION IT (scroll-stop rule).** The first 3 seconds
+              are decided by the EYE, not the ear. Build the imagePrompt as: (a) an EXTREME
+              CLOSE-UP on the problem area itself — the cheek, the spots, the roots, the stain —
+              filling the frame, not a neutral portrait of someone who happens to be unhappy;
+              (b) the performer INDICATING it, one finger or fingertips touching or drawing
+              attention to the exact spot; (c) the camera moving IN on it. A hook where nothing
+              is pointed at gives the viewer nothing to look at, and they scroll.
+              ⚠️ The indicating hand must NOT cover the face — it touches beside or below the
+              flaw, never across the eyes, nose or mouth. EXPRESSION CEILING still applies here
+              in full: a slight frown, never a scrunch, never dismay.
            S2 APPLICATION — the product enters mid-action, WORKING, never posed on a surface.
               referenceImage="both".
            S3 INSTANT REVEAL — the hard-cut after-state, framed IDENTICALLY to S1 (same angle,
