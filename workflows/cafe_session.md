@@ -200,6 +200,21 @@ Without them `npm run dev` renders that surface with broken images, and a
 `smoke-tester` run will report a checkout artifact as a real UI regression. Prod
 is unaffected — Vercel builds from the full repo.
 
+⚠️ **Before rebuilding any artifact twin, add what its builder reads.** CLAUDE.md
+makes the committed twin under `artifacts/` a standing deliverable, and three
+builders read straight out of excluded paths:
+
+| Builder | Reads |
+|---|---|
+| `tools/artifacts/build-one-hook-twelve-worlds.mjs` | `assets/ad-swipe/` |
+| `tools/artifacts/build-km-week01-runsheet.mjs` | `clients/oceanides/kuya-marvin/organic/` |
+| `tools/artifacts/build-gabriel-review.mjs` | `clients/oceanides/kuya-gabriel/identity-lock/` |
+
+On a lite clone the best case is an ENOENT and a session burned diagnosing a
+checkout artifact as a code bug. The worse case is a twin that builds with
+missing images: `finalize()` in `tools/artifacts/_gates.mjs` gates ASCII purity,
+not asset presence, so nothing catches it. Add the folder first.
+
 `tests/fixtures` is safe to leave out: its only consumers are the opt-in
 regression tests, which are skipped by default. That is why the 1,214-passing
 figure holds on a lite clone.

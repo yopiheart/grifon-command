@@ -38,12 +38,21 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-# PowerShell 7.3+ turns a non-zero exit from a native command into a terminating
-# error when $ErrorActionPreference is 'Stop'. The branch pre-flight below relies
-# on `git show-ref --verify --quiet` exiting 1 for a missing ref and reading
-# $LASTEXITCODE afterwards, so that behaviour has to stay off or the pre-flight
-# never runs. Harmless on Windows PowerShell 5.1, where the variable is unused.
-$PSNativeCommandUseErrorActionPreference = $false
+# The branch pre-flight NEEDS `git show-ref --verify --quiet` to exit 1 for a
+# missing ref without throwing, so it can collect every bad branch and report
+# them together.
+#
+# Do NOT disable $PSNativeCommandUseErrorActionPreference script-wide for that.
+# It would also swallow a failed `git worktree add`, and Step 2 would then try to
+# copy the environment file into a directory that was never created — burying
+# git's real, actionable error under a confusing Copy-Item path error. Set it
+# inside this helper only, where PowerShell scopes it to the function body.
+function Test-OriginBranch {
+    param([string]$RepoRoot, [string]$Branch)
+    $PSNativeCommandUseErrorActionPreference = $false
+    git -C $RepoRoot show-ref --verify --quiet "refs/remotes/origin/$Branch"
+    return ($LASTEXITCODE -eq 0)
+}
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $desktop  = Split-Path -Parent $repoRoot
@@ -82,15 +91,31 @@ git -C $repoRoot fetch origin --quiet
 
 $worktrees = @()
 $missing   = @()
+$seenLeaf = @{}
+$collide  = @()
 foreach ($b in $Branches) {
-    git -C $repoRoot show-ref --verify --quiet "refs/remotes/origin/$b"
-    if ($LASTEXITCODE -ne 0) {
+    if (-not (Test-OriginBranch -RepoRoot $repoRoot -Branch $b)) {
         $missing += $b
         continue
     }
-    # grifon-command -> grifon-<last segment of the branch name>
+    # grifon-command -> grifon-<last segment of the branch name>. Two branches can
+    # share a leaf (feat/foo and fix/foo), which would silently collapse into one
+    # worktree while the summary still printed two paths. Refuse instead.
     $leaf = ($b -split '/')[-1]
+    if ($seenLeaf.ContainsKey($leaf)) {
+        $collide += "$($seenLeaf[$leaf]) and $b both map to grifon-$leaf"
+        continue
+    }
+    $seenLeaf[$leaf] = $b
     $worktrees += @{ Path = Join-Path $desktop "grifon-$leaf"; Branch = $b }
+}
+
+if ($collide.Count -gt 0) {
+    Write-Host ""
+    Write-Host "ERROR: two branches would land in the same worktree folder:" -ForegroundColor Red
+    $collide | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
+    Write-Host "Run them one at a time, or rename one branch." -ForegroundColor Yellow
+    exit 1
 }
 
 if ($missing.Count -gt 0) {
@@ -116,6 +141,13 @@ foreach ($wt in $worktrees) {
     } else {
         Write-Host "[add]  $($wt.Path)  ->  $($wt.Branch)" -ForegroundColor Cyan
         git -C $repoRoot worktree add $wt.Path $wt.Branch
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host ""
+            Write-Host "ERROR: git worktree add failed for $($wt.Branch)." -ForegroundColor Red
+            Write-Host "Git's message above is the real one. A common cause is the branch" -ForegroundColor Yellow
+            Write-Host "already being checked out in the main repo or another worktree." -ForegroundColor Yellow
+            exit 1
+        }
     }
 }
 

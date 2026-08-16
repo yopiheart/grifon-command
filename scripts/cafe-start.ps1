@@ -28,12 +28,23 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# PowerShell 7.3+ turns a non-zero exit from a native command into a terminating
-# error when $ErrorActionPreference is 'Stop'. This script deliberately reads
-# $LASTEXITCODE and empty output from `git config` (exit 1 when a key is unset),
-# so that behaviour has to stay off or the identity check below never runs.
-# Harmless on Windows PowerShell 5.1, where the variable does not exist.
-$PSNativeCommandUseErrorActionPreference = $false
+# Some git reads are ALLOWED to fail: `git config <key>` exits 1 when the key is
+# unset, and `rev-list HEAD..origin/<branch>` exits non-zero when the upstream
+# ref does not exist. Both are normal states this script has to detect.
+#
+# Do NOT disable $PSNativeCommandUseErrorActionPreference script-wide to allow
+# that. It would also swallow a failed `npm install` or `git fetch`, and the
+# script would print a green "Ready." over a broken checkout. Set it inside this
+# helper only, where PowerShell scopes it to the function body.
+#
+# Windows PowerShell 5.1 never throws on native exits at all, so the explicit
+# $LASTEXITCODE checks further down are what make the loud paths loud there.
+function Read-GitValue {
+    param([Parameter(ValueFromRemainingArguments = $true)][string[]]$GitArgs)
+    $PSNativeCommandUseErrorActionPreference = $false
+    $out = & git @GitArgs 2>$null
+    return [pscustomobject]@{ Value = ($out | Select-Object -First 1); Code = $LASTEXITCODE }
+}
 
 function Say([string]$msg, [string]$color = 'Gray') { Write-Host $msg -ForegroundColor $color }
 function Ok  ([string]$msg) { Say "  [ok]   $msg" 'Green' }
@@ -110,8 +121,8 @@ Say ''
 # at the END of the day, after a full day of work. restore-git-identity.ps1 did
 # NOT take on 2026-08-14, so running it is not enough — verify it afterwards.
 Say 'Git identity' 'White'
-$gitName  = (git -C $repoPath config user.name  2>$null)
-$gitEmail = (git -C $repoPath config user.email 2>$null)
+$gitName  = (Read-GitValue -C $repoPath config user.name).Value
+$gitEmail = (Read-GitValue -C $repoPath config user.email).Value
 if ($gitName -and $gitEmail) {
     Ok "$gitName <$gitEmail>"
 } else {
@@ -122,8 +133,8 @@ if ($gitName -and $gitEmail) {
         & $restore
 
         # Verify it actually took. It silently no-opped once before.
-        $gitName  = (git -C $repoPath config user.name  2>$null)
-        $gitEmail = (git -C $repoPath config user.email 2>$null)
+        $gitName  = (Read-GitValue -C $repoPath config user.name).Value
+        $gitEmail = (Read-GitValue -C $repoPath config user.email).Value
         if ($gitName -and $gitEmail) {
             Ok "restored: $gitName <$gitEmail>"
         } else {
@@ -165,7 +176,14 @@ if (-not $NoFetch) {
     Say 'Git' 'White'
     Info 'fetching origin'
     git -C $repoPath fetch origin --quiet
-    $branch = (git -C $repoPath branch --show-current)
+    if ($LASTEXITCODE -ne 0) {
+        Say '' 'Red'
+        Say '  [FAIL] git fetch failed. Everything below would compare against stale' 'Red'
+        Say '         refs and could report a green "up to date" that is not true.' 'Red'
+        Say '         Check the wifi, then re-run. -NoFetch skips this step.' 'Yellow'
+        exit 1
+    }
+    $branch = (Read-GitValue -C $repoPath branch --show-current).Value
 
     if (-not $branch) {
         Warn 'detached HEAD — cannot compare against origin'
@@ -175,8 +193,9 @@ if (-not $NoFetch) {
         # Distinguish "0 behind" from "the check could not run at all". A local-only
         # branch has no origin/<branch>, and the revspec below just errors; falling
         # through to a green "up to date" would be a lie.
-        $behind = (git -C $repoPath rev-list --count "HEAD..origin/$branch" 2>$null)
-        if ($LASTEXITCODE -ne 0 -or -not $behind) {
+        $drift  = Read-GitValue -C $repoPath rev-list --count "HEAD..origin/$branch"
+        $behind = $drift.Value
+        if ($drift.Code -ne 0 -or -not $behind) {
             Warn "cannot measure drift — origin/$branch may not exist yet"
         } elseif ([int]$behind -gt 0) {
             Warn "$behind commit(s) ahead of you on origin. Run: git pull"
@@ -185,7 +204,7 @@ if (-not $NoFetch) {
         }
     }
 
-    $sparse = (git -C $repoPath config core.sparseCheckout)
+    $sparse = (Read-GitValue -C $repoPath config core.sparseCheckout).Value
     if ($sparse -eq 'true') {
         Ok 'lite clone (sparse-checkout on)'
     } else {
@@ -202,6 +221,14 @@ if (Test-Path (Join-Path $repoPath 'node_modules')) {
     Info 'no node_modules, installing (~3 min)'
     Push-Location $repoPath
     try { npm install } finally { Pop-Location }
+    if ($LASTEXITCODE -ne 0) {
+        Say '' 'Red'
+        Say '  [FAIL] npm install exited non-zero. node_modules is incomplete.' 'Red'
+        Say '         Do NOT start work — this surfaces later as module-not-found' 'Red'
+        Say '         from npm run dev, 20 minutes from now. Usually the wifi died.' 'Yellow'
+        Say '         Re-run this script; npm install resumes from the cache.' 'Yellow'
+        exit 1
+    }
     Ok 'npm install finished'
 }
 Say ''
@@ -209,8 +236,23 @@ Say ''
 # --- NOW.md -----------------------------------------------------------------
 $now = Join-Path $repoPath 'NOW.md'
 if (Test-Path $now) {
-    Say 'NOW.md — where the work stopped' 'White'
-    Get-Content $now -TotalCount 12 | ForEach-Object { Say "  $_" }
+    # Print the NEXT ACTION section specifically. The first 12 lines used to be
+    # printed instead, which stopped short of the one line this preview exists
+    # to surface — the heading currently sits well below line 12.
+    Say 'NOW.md — the next action' 'White'
+    $lines   = Get-Content $now
+    $start   = ($lines | Select-String -SimpleMatch '## ▶ NEXT ACTION' | Select-Object -First 1).LineNumber
+    if ($start) {
+        $body = @()
+        for ($i = $start - 1; $i -lt $lines.Count; $i++) {
+            if ($i -gt ($start - 1) -and $lines[$i] -match '^## ') { break }
+            $body += $lines[$i]
+        }
+        $body | ForEach-Object { Say "  $_" }
+    } else {
+        Warn 'no "## ▶ NEXT ACTION" heading in NOW.md — the SessionStart hook greps for it'
+        $lines | Select-Object -First 12 | ForEach-Object { Say "  $_" }
+    }
     Say ''
 }
 
