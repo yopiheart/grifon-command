@@ -1,90 +1,73 @@
 # NOW — the resume doc
 **Stamped: 2026-08-16** (session 26)
 
-## ▶ NEXT ACTION — re-run `before_after` on prod, watched
+## ▶ NEXT ACTION — one more `before_after` run, watched
 
-Everything below shipped today. Nothing has been run against it yet.
+Three merges shipped today. The last two are UNPROVEN — nothing has run against them.
 
 ```
 https://grifon.ai/app?osaEngine=producer
 ```
-Recipe `before_after` · Hiraya Glow · Presenter **SET** = `after.png` (not Auto) ·
-slots `hero`/`before`/`after` from `tests/fixtures/sample-batch/`. Full input table +
-pre-flight: [`sample_run_before_after_2026-08-16.md`](workflows/sample_run_before_after_2026-08-16.md).
+Recipe `before_after` · Hiraya Glow · Presenter **SET** = `after.png` (not Auto) · slots
+`hero`/`before`/`after` from `tests/fixtures/sample-batch/`. Inputs + pre-flight:
+[`sample_run_before_after_2026-08-16.md`](workflows/sample_run_before_after_2026-08-16.md).
 
-🔴 **THE GATE — "is it the SAME woman in ALL FOUR scenes?"** Not just scene 1. Two runs
-today each rendered a stranger, run 1 in S1 and run 2 in S3, because **two** beats permitted
-`referenceImage="none"`. A one-scene gate was given on run 1 and it let run 2 through.
+**Storyboard gate — check ALL of these, not one:**
+1. **Same woman in EVERY scene.** Two beats used to permit `referenceImage="none"`; a
+   one-scene gate let a break through on run 2. Fixed, but this is the gate that matters.
+2. **Scene count = 4.** Run 3 came back with **5** — the TRANSFORMATION skeleton did not
+   hold, and the extra beat was also the one that drifted. Unexplained. Flag it.
+3. **Does the hook SHOW the flaw** (close-up on it, she points, camera moves in), or is it
+   another neutral portrait?
+4. **Any warm/cinematic scene?** The gate now flags this as a `cinematic_grade` chip.
+   ⚠️ It does NOT auto-fix — hit REGENERATE yourself before FILM IT.
 
-**Also watch, both first-time-live:**
-1. Do the before/after frames actually resemble the uploaded photos? `avatar_state` has
-   never run outside tests.
-2. Is `"agad"` (or any instant-result claim) back in the script? That would be
-   **corroboration #7** of a BANNED speed claim whose grill-me route triggered at #3 and
-   has never been run. Our honest claim is 2 weeks.
+**After filming, watch for:** camera motion visibly moving in EVERY scene from frame 0 · no
+white wash on the hook · the thumbnail looking like the presenter, in her room, not studio-lit.
 
-## 🚀 MERGED + DEPLOYED 2026-08-16 — `77426d1` (merge, `--no-ff`)
-**⏪ ONE-COMMAND ROLLBACK: `git revert -m 1 77426d1`.** Build passed, tsc clean, **1,219
-tests passed**, bundle-leak 0 markers, verified on the merged tree before the push.
+## 🚀 THREE MERGES TODAY (newest first) — each `git revert -m 1 <sha>`
+**`c932dc0`** — Gate now observes `lightingLooksProduced` and flags `cinematic_grade` on
+identity scenes; `avatar_state` added to `IDENTITY_MODES` (a hole I shipped hours earlier, on
+the exact two beats that had already broken twice). Plus four render fixes, **none of which
+were model randomness — all were things we instructed**: camera language was 6 bans vs 1 weak
+positive so the model delivered nothing (fixed with a MEASURABLE target, underway at frame 0 —
+same lesson `marvin-avatar` already records for lighting); the hook-morph branch fired on scene
+index alone and made the model warp the subject to invent a transformation on a single-frame
+scene (now gated on actually having two frames); the thumbnail demanded "EXTREME... 
+Shock/Surprise/Joy" + studio rim light, the THIRD place the expression rule was missing;
+and the hook now SHOWS the flaw instead of mentioning it.
 
-1. **Identity lock (TUNED, Neil-approved).** `referenceImage="none"` is now FORBIDDEN on the
-   S1 and S3 beats of TRANSFORMATION for PERSON subjects; it survives only for surfaces,
-   fabric, objects and spaces. Plus an IDENTITY RULE line: one ad, one face. This was filed
-   as a gated proposal on **2026-07-11** (`sample_batch_test_spec.md` finding #7) and sat
-   unactioned for five weeks. Guarded by a regression test.
-2. **`venueSlot` finally reaches the scene image.** It had **zero** references in `services/`,
-   so every uploaded before/after photo was discarded and the model invented the skin state —
-   while the upload modal promised the opposite. Porting the wizard's router would NOT have
-   fixed it: `sceneRender.ts` gates on `isRealEstate` or `!isAvatarScene`, and a person
-   transformation is neither. New **`avatar_state`** render mode (TUNED, approved): face from
-   the avatar, skin state from the upload, plus a FRAMING PARITY rule that makes the
-   skeleton's "framed IDENTICALLY to S1" real instead of prose. Wired on **both** surfaces.
-3. **3.7-flash on the customer-facing text lane.** ⚠️ **Corrected model map** — script,
-   storyboard and Market Research do NOT use the `geminiService.ts` constants; they run
-   server-side off `MODEL_TEXT` in `api/_lib/prompts.ts`, a second table. `MODEL_TEXT`
-   flash-lite → `gemini-3.7-flash`; the `storyboard` flow moved off `MODEL_FAST` onto it;
-   `MODEL_FAST` stays flash-lite (three enum classifiers); `premiseCheckModel` 3.5 → 3.7.
-   **`researchTextModel` deliberately untouched** — it feeds the EDL, so the pending watched
-   run stays a clean single-variable experiment. `sceneImageModel` untouched per Neil.
-   ⚠️ 3x input rate, unmeasured in absolute terms — read it off `run_cogs` on the next run.
-   ⚠️ **2027-01-01** the intro window closes and 3.7 doubles to $1.50/$7.50.
-4. **Fixtures rebuilt.** Neil rejected the old `after.png` as slop. New pair generated on the
-   raw-ugc scaffold + the `marvin-avatar` master-daylight rule (codex-image, ₱0 Gemini spend).
-   Mirror selfie was tried and rejected: the phone covers half the face, and `after.png` is
-   also the presenter. Findings in
-   [`ugc-photoreal-prompt-pack.md`](workflows/believability-samples/ugc-photoreal-prompt-pack.md),
-   the most reusable being that **`--edit` preserves identity where reference-generation
-   drifts** — state-change pairs should always be edited off the approved frame.
+**`e4d2864`** — Expression ceiling at the storyboard AND video layers. `APPEARANCE_LOCK_RULE`
+had listed Expression as REQUIRED with three extreme examples. Includes a TEETH RULE and an
+explicit override of CINEMATIC VARIETY, which was the loophole. `fastTextModel` → 3.7.
 
-## 🚀 SECOND MERGE, same session — `e4d2864` (`git revert -m 1 e4d2864`)
-The first storyboard to PASS the identity gate exposed the next defect: S3 and S4 both showed
-teeth while the reference photo does not. **Our instruction, not model randomness** —
-`APPEARANCE_LOCK_RULE` listed Expression as REQUIRED and its three canonical examples were
-"brow furrowed" / "eyes wide in surprise" / "lips parted in confusion". Capped at BOTH layers
-(storyboard writes the text everything downstream reads; the video-prompt brain had no ceiling
-at all), with a TEETH RULE and an explicit override of CINEMATIC VARIETY — that was the
-loophole, "make each scene different" was being satisfied by escalating emotion. The video rule
-sits ABOVE the type branches on purpose: the scene that broke classifies as **b-roll**, so an
-OPTION-B-only rule would have missed it. `fastTextModel` → 3.7 (one call site, the video brain).
+**`77426d1`** — `referenceImage="none"` FORBIDDEN on the person beats of TRANSFORMATION
+(filed 2026-07-11, unactioned for five weeks); `venueSlot` finally reaches the scene image via
+a new `avatar_state` mode, so uploaded before/after photos anchor real frames; `MODEL_TEXT` →
+`gemini-3.7-flash`; fixtures rebuilt on the raw-ugc scaffold + master daylight.
 
-## ⚠ OPEN — owed, not blocking the run
+⚠️ **`researchTextModel` deliberately still 3.6** — it feeds the EDL, so the pending watched
+run stays single-variable. ⚠️ 3.7 doubles to $1.50/$7.50 on **2027-01-01**.
+⚠️ **Do not credit 3.7 for the quality jump yet** — the identity fix shipped in the same deploy.
+
+## ⚠ OPEN — owed, not blocking
+- **The AI gate is FLAG-ONLY, it does not reroll.** `imageGate.ts`'s own header claims it
+  "drives the only automated reroll"; the producer and CLAUDE.md say the deterministic
+  `checkSceneImage` does. **The code is the truth — fix that comment.**
 - **Premise-check parse bug is LIVE.** `cleanJson` discards a valid grounded answer ~1 in 6,
-  on every model. The 3.7 flip was neutral on this, not a fix. Parser hardening is its own job.
-- **No price in any video beat** is now a product decision (wider than the CTA guard). It
-  RETIRES the "offer never surfaced" defect logged across four runs. ⚠️ Before acting on the
-  `feat/adscript-ab-harness` result *"flash-lite drops the offer 4/4"*, check whether it counts
-  a missing PRICE as a miss — if so the harness is wrong, not the model.
-- **`MODEL_RESEARCH`** (`gemini-3.5-flash`) is now referenced by no flow. Dead constant.
-- **S4 camera mandate collapsed** to a medium shot instead of its mandated close-up. n=1, watch it.
+  on every model. The 3.7 flip was neutral on this, not a fix.
+- **No price in any video beat** is a product decision now. It RETIRES the "offer never
+  surfaced" defect. ⚠️ Re-read the `feat/adscript-ab-harness` "drops the offer 4/4" result
+  before acting on it — if it counts a missing PRICE as a miss, the harness is wrong.
+- **`MODEL_RESEARCH`** (`gemini-3.5-flash`) is referenced by no flow. Dead constant.
+- **Cross-model ceiling is real and NOT worth chasing.** Fixtures are gpt-image-2, scenes
+  render on Gemini; 100% will never happen. Neil's call: don't force it.
 
 ## ⚠ OPEN DECISION — the repo still grows ~400 MB/month
-The lite clone bought time, it is not a cure. Both are Neil's call:
 1. **`clients/*/ads/*/clips/`** — heaviest (25 MB each) but **paid Veo generations**. Not
-   gitignored on purpose: ignoring them without another home guarantees the defreezer eats
-   them. Needs a destination first (Drive / R2 / Git LFS).
-2. **`git filter-repo`** to strip the 1.5 GB from history. Irreversible, force push, breaks
-   every clone and branch. **Never without Neil saying so.**
+   gitignored on purpose: ignoring them without another home means the defreezer eats them.
+2. **`git filter-repo`** to strip 1.5 GB from history. Irreversible, force push, breaks every
+   clone. **Never without Neil saying so.**
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
-Repo artifacts are ENGLISH; ads stay Taglish. Both rules also live in `CLAUDE.md`.
-Cafe-PC operating warnings: [`cafe_session.md`](workflows/cafe_session.md) §A6.
+Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
