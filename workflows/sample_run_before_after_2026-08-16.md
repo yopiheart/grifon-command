@@ -55,6 +55,47 @@ Director AI, and the brand/offer fields are NEVER typed by hand** (`.claude/skil
 | **Presenter** | 🔴 **SET — upload `after.png`. NOT Auto.** |
 | Slots | `hero` → `hero.png` · `before` → `before.png` · `after` → `after.png` |
 
+### `before.png` + `after.png` REGENERATED 2026-08-16 — Neil rejected the originals on sight
+
+*"Mukhang slop/AI yang nasa after png."* The two person-state photos were rebuilt before this
+run; `hero.png` was NOT touched (product-only, label legible, never the complaint).
+
+**Formula:** the raw-ugc 8-block scaffold from
+[`ugc-photoreal-prompt-pack.md`](believability-samples/ugc-photoreal-prompt-pack.md) + the
+**master-daylight** lighting rule from [`marvin-avatar`](../.claude/skills/marvin-avatar/SKILL.md)
+(positive light target stated FIRST, bans underneath — a bans-only stack makes the model
+underexpose). Generated on the codex-image lane (gpt-image-2), ₱0 Gemini/Claude spend.
+
+**⛔ Neil asked for the `#3 skincare flash` prompt and it was NOT used, deliberately** — #3 is a
+NIGHT FLASH photo and cannot coexist with master daylight. Resolved against the pack's own
+finding that **"flash not required — the realism carrier is texture + context"**, so #3's
+skin-texture and authored-imperfection lines were carried over and its lighting was not.
+
+**⛔ Mirror selfie (`#7`) was tried FIRST and rejected — the phone covers half the face** (Neil:
+*"baka di makuha ung consistency"*). Correct: `after.png` is also the **presenter**, i.e. the
+avatar identity anchor for all 4 scenes. The fix was a **front-cam selfie / friend-candid**
+framing — full face, no phone in frame.
+
+| File | Roll | Why it won |
+|---|---|---|
+| `after.png` | friend-candid, head-and-shoulders, living room | Straight-on, **no wide-angle distortion**, nothing entering the frame edge, full jawline + both ears. Best geometry for the identity lock. |
+| `before.png` | `--edit` off `after.png`, strongest of 3 severities | Same woman, room, shirt, hair, framing and light; **only skin + mouth changed.** |
+
+**Two findings from the session, both worth carrying:**
+
+1. **`--edit` preserves identity where reference-generation drifts.** The 2026-07-16 Zam
+   single-anchor test drifted badly; this pair held perfectly. Different mechanism — editing the
+   pixels, not generating a new scene from a reference. **For state-change pairs (before/after,
+   tryon), `--edit` off the approved frame is the route.**
+2. **Identical prompts return byte-identical images on this lane** (two rolls, same md5). To get
+   real variants, vary the prompt.
+
+⚠️ **Prompt severity ≠ perceived severity.** Three graduated "dullness" prompts were written; Neil
+graded the labels **inverted** — the roll prompted as *strongest* read as moderate to him and
+vice versa. Do not trust a written severity dial on skin state; generate a spread and let his eye
+pick. The winner is the one prompted as strongest, chosen as *"haggard sya pero hindi sobra,
+hindi rin kulang."*
+
 **Offer box — the literal offer only.** Do not paste the benefits paragraph.
 [`sample_batch_test_spec.md`](sample_batch_test_spec.md) §1 still carries the old long brief;
 [`pilot_run_2026-08-13.md`](pilot_run_2026-08-13.md) "PRODUCT TRUTH" supersedes it — real users

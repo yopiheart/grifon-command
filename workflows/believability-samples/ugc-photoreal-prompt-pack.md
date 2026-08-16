@@ -353,6 +353,38 @@ Agent calibration note: the agent pre-read scored the scaffold 4/4 wins
 overruled it. Neil's eyeball is the only valid believability grader; agent
 pre-reads are triage, never verdicts.
 
+## Production use #1 — Hiraya Glow before/after fixtures (2026-08-16, Neil-graded)
+
+First time the scaffold shipped into a real asset. Neil rejected the old
+`tests/fixtures/sample-batch/after.png` as *"slop/AI"*; both person-state photos were
+rebuilt with this pack + the **master-daylight** rule from `.claude/skills/marvin-avatar/`
+(positive light target FIRST, bans underneath). Run sheet:
+[`../sample_run_before_after_2026-08-16.md`](../sample_run_before_after_2026-08-16.md).
+
+1. **⛔ `#7 mirror selfie` is unusable for a PRESENTER plate.** The phone covering part of the
+   face is the format's signature, and it starves the avatar identity lock. Neil caught it:
+   *"natatakpan ung muka ng cellphone, baka di makuha ung consistency."* Mirror selfie stays
+   valid for image-ad heroes; for any plate that anchors identity, use `#1`-style **front-cam
+   selfie** (no phone in frame at all) or a **friend-candid**.
+2. **Friend-candid beat arm's-length selfie for the anchor.** Straight-on geometry, no
+   wide-angle pull on the nose and cheeks, nothing entering the frame edge to be mistaken for
+   part of her body. The arm's-length roll with the best *skin* lost to it — a weak lock costs
+   every scene, a subtler glow costs one beat.
+3. **The "mean face" is still the failure mode to watch.** Neil on the losing roll: *"mukang
+   ai. Natural face ng ai."* Same convergence recorded 2026-07-11 (4b #3). Generate a spread
+   and let his eye reject; the agent pre-read cannot see it.
+4. 🔴 **`--edit` PRESERVES identity where reference-generation DRIFTS.** The `before` was made
+   by editing the approved `after` frame — same woman, room, shirt, hair, framing and light
+   held perfectly, with only skin and mouth changed. Contrast the 2026-07-16 Zam bonus test
+   above, which drifted from a *reference*. Different mechanism: editing pixels vs generating a
+   new scene. **For any state-change pair (before/after, tryon), `--edit` off the approved
+   frame is the route.** Keep the change mouth-only per the eyes-open rule and it holds.
+5. **Identical prompts return byte-identical images on this lane.** Two rolls of one prompt came
+   back with the same md5. Vary the prompt to get real variants.
+6. ⚠️ **A written severity dial does not survive contact with taste.** Three graduated
+   "dull skin" prompts were written mild → strong; Neil graded them **inverted**. Do not reason
+   about how bad the skin will *look* from how bad the prompt *asks*. Spread and let him pick.
+
 ## Scaffold self-check (all 10 prompts)
 
 Every prompt above contains: ✔ smartphone-capture device opening ✔ candid/UGC
