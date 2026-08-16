@@ -26,8 +26,14 @@ lite clone ~8 min, Daan B = portable rig on a USB SSD ~1 min), `scripts/cafe-sta
 a parameterized `spawn-worktrees.ps1` (it was hardcoded to two deleted branches and errored
 every session), and `.gitignore` rules for 193 MB of provably-derived renders.
 
-▶ **NEXT: Neil runs the lite clone at the shop and confirms VS Code opens.** Nothing else
-starts until he is unblocked.
+✅ **NEIL RAN IT 2026-08-16 AND IS BACK IN VS CODE.** Verified on a real shop PC, not just here.
+
+## ▶ NEXT ACTION — get this branch onto `main`
+`claude/receiving-objects-hang-toggiy` is where the runbook, `cafe-start.ps1`, the fixed
+`spawn-worktrees.ps1` and the `.gitignore` rules live. **Until it merges, every fresh clone
+still lands on a `main` that has none of it** and the next session re-derives all of this
+from zero. Docs + scripts only, no app code — `npm run build` and 1,214 tests already green
+on the branch.
 
 ## ⚠ OPEN DECISION — the repo still grows ~400 MB/month
 The lite clone buys time, it is not a cure. Two things left, both Neil's call:
