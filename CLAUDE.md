@@ -51,6 +51,8 @@ Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
 
 Sessions run on rented cafe PCs with a defreezer that wipes `C:\Users\Administrator\` (including `~/.claude/` and `~/.claude.json`) on reboot. **Only the GitHub repo persists across sessions.** Practical implications:
 
+> ⚠️ **A full `git clone` no longer finishes on cafe wifi — use the lite clone in [workflows/cafe_session.md](workflows/cafe_session.md).** The repo is **1.5 GB** (134 MB in June 2026); at the ~30 KiB/s measured on 2026-08-16 a full clone is ~13 hours, and `git clone` has no resume, so a dropped connection restarts from zero. This cost Neil 3 blocked days across 3 different shops. The lite clone (`--filter=blob:none --no-checkout` + `sparse-checkout` excluding media) is **68 MB** and keeps all 1,689 commits, every remote branch, and the whole `.claude/` + `.github/` setup — verified 2026-08-16 with `npm run build` passing and 1,214 tests green. Media is still on GitHub, pulled one folder at a time with `git sparse-checkout add`. `scripts/cafe-start.ps1` automates the whole session start.
+
 - "Save this for later" almost always means commit + push, not write to `~/.claude/` or any local path. Commit early and often — uncommitted work dies with the reboot.
 - **Built work often lives on an unmerged remote branch, not `main` — check before concluding "not built."** The defreezer wipes *local* branches, so only `main` + `origin/*` survive: a feature can be fully built, tested, and integrated-with-main on a pushed `feat/*` branch while `main`'s working tree shows no code and its planning doc still reads "not started." **Before declaring any feature unbuilt / not-started / missing, run `git branch -a`, `git log --all --grep=<feature>`, and `git diff --name-only origin/main...origin/<branch>` — never trust `main` + a workflow doc alone** (a stale planning doc does NOT outvote a branch). The SessionStart hook lists every remote branch ahead of `main` ("UNMERGED WORK IN FLIGHT") for exactly this reason. This mistake recurred 3× on Expert Mode / Director's Cut — see [agent_lessons.md](agent_lessons.md) 2026-06-27.
 - Project-level [.claude/settings.json](.claude/settings.json) and [.claude/skills/](.claude/skills/) survive in the repo; user-global `~/.claude/` config does not.
@@ -243,6 +245,7 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 
 ## Workflows Index
 
+- `workflows/cafe_session.md` — **the cafe-PC session runbook: read it before cloning on a fresh shop machine.** Daan A (lite clone on C:, ~8 min) and Daan B (portable rig on a USB SSD, ~1 min), the restore-script checklist, how to pull media back one folder at a time, and the open decision on stopping the repo's ~400 MB/month growth. Driven by `scripts/cafe-start.ps1`.
 - `workflows/app_audit.md` — prioritized punch list of what's broken/stubbed/risky
 - `workflows/fix_broken_feature.md` — SOP for fixing one item from the audit
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist

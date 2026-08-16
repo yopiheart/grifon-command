@@ -92,3 +92,20 @@ clients/oceanides/kuya-gabriel/ads/*/edit/
 # Hindi kailanman naka-commit: nasa clients/oceanides/ na ang totoong kopya.
 funnels/oceanides-price-page/public/*.mp4
 funnels/oceanides-price-page/public/ad/
+
+# ── Media na binubuo mula sa source na naka-commit na (2026-08-16) ──────────
+# Umabot na sa 1.5 GB ang repo at umaabot ng ~13 oras ang clone sa cafe wifi.
+# Ang mga rule sa baba ay para sa BAGONG file lang — hindi nito binubura ang
+# naka-track na. Tingnan ang workflows/cafe_session.md.
+#
+# Kung may isang render na talagang gusto mong itago: git add -f <file>
+
+# Malalaking wallpaper variant. Ang source ay ang .html na katabi mismo nila,
+# at ang renderer ay tools/render-wallpaper.mjs. Sinasadyang pinapanatili ang
+# maliliit na variant (1080x2340 / 1920x1080) para tumakbo pa rin ang
+# scripts/set-wallpaper.ps1 sa sariwang clone.
+assets/wallpapers/*-2160x4680.png
+assets/wallpapers/*-3840x2160.png
+
+# Upscaled na motion test. Galing sila sa -lite na kapareha nila, na naka-commit.
+clients/oceanides/kuya-marvin/motion-test/*-UPSCALED-*.mp4
