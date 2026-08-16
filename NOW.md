@@ -56,13 +56,20 @@ tests passed**, bundle-leak 0 markers, verified on the merged tree before the pu
    the most reusable being that **`--edit` preserves identity where reference-generation
    drifts** — state-change pairs should always be edited off the approved frame.
 
+## 🚀 SECOND MERGE, same session — `e4d2864` (`git revert -m 1 e4d2864`)
+The first storyboard to PASS the identity gate exposed the next defect: S3 and S4 both showed
+teeth while the reference photo does not. **Our instruction, not model randomness** —
+`APPEARANCE_LOCK_RULE` listed Expression as REQUIRED and its three canonical examples were
+"brow furrowed" / "eyes wide in surprise" / "lips parted in confusion". Capped at BOTH layers
+(storyboard writes the text everything downstream reads; the video-prompt brain had no ceiling
+at all), with a TEETH RULE and an explicit override of CINEMATIC VARIETY — that was the
+loophole, "make each scene different" was being satisfied by escalating emotion. The video rule
+sits ABOVE the type branches on purpose: the scene that broke classifies as **b-roll**, so an
+OPTION-B-only rule would have missed it. `fastTextModel` → 3.7 (one call site, the video brain).
+
 ## ⚠ OPEN — owed, not blocking the run
 - **Premise-check parse bug is LIVE.** `cleanJson` discards a valid grounded answer ~1 in 6,
   on every model. The 3.7 flip was neutral on this, not a fix. Parser hardening is its own job.
-- **Expression audit (TUNED).** Neil's rule: a big emotion in a storyboard still deforms the
-  face, then relaxes when the performer speaks, so the face changes shape mid-clip and the next
-  scene stops matching. Shipped only inside `avatar_state` rule 1b; every other skeleton can
-  still ask for anger/laughter. Needs a pass over all `imagePrompt` rules.
 - **No price in any video beat** is now a product decision (wider than the CTA guard). It
   RETIRES the "offer never surfaced" defect logged across four runs. ⚠️ Before acting on the
   `feat/adscript-ab-harness` result *"flash-lite drops the offer 4/4"*, check whether it counts
