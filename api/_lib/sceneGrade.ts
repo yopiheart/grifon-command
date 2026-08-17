@@ -20,16 +20,23 @@
 // post-generation, invisible to every model, so it carries zero slop risk. Same
 // reasoning as tools/grade.mjs, which is where the filter grammar comes from.
 //
-// WHY A FIXED NEUTRAL TARGET AND NOT AN ANCHOR SCENE
-// Pulling every scene toward one FIXED point is what makes them converge, and it
-// needs no cross-scene state: scenes are measured and corrected one at a time, in
-// the order the render already walks them, with no second pass over the timeline
-// and no coupling between beats. Anchoring on scene 0 instead would propagate
-// scene 0's own cast to the whole ad whenever scene 0 is the outlier.
+// ⛔ GREY-WORLD (a fixed 128,128 target) WAS TRIED FIRST AND IS WRONG. MEASURED,
+// not reasoned: the UNTOUCHED fixture frame measures uavg=122.0 vavg=134.8, i.e.
+// 8.5 units off "neutral" while looking completely correct. A frame filled with a
+// face and a warm-tiled bathroom is not supposed to average to grey. Against a
+// fixed target the planner therefore hit its cap correcting a scene that had
+// nothing wrong with it, and closed only 15% of a cast that was really there.
 //
-// The pull is PARTIAL and CAPPED on purpose. A full correction to grey would flatten
-// every deliberate mood in the ad; the job here is to close the gap between beats,
-// not to sterilise them.
+// So the target is the AD'S OWN MIDDLE, per channel — see `chromaTarget`. What is
+// meaningful here is never a scene's absolute cast, only its distance from its
+// siblings, and these scenes share a subject, a wardrobe and a location. A median
+// is used rather than a mean so one badly-drifted beat cannot drag the target it
+// is about to be measured against, and rather than anchoring on scene 0 so that a
+// drifted FIRST scene cannot impose its cast on the whole ad.
+//
+// The pull is PARTIAL and CAPPED on purpose. A full correction would flatten every
+// deliberate mood in the ad; the job is to close the gap between beats, not to
+// sterilise them.
 //
 // SHIPS DARK behind SCENE_GRADE_ENABLED. Off (incl. unset) → planSceneGrade is
 // never consulted and the filtergraph is byte-identical to today's.
@@ -48,22 +55,24 @@ export interface ChromaMeasure {
   frames: number;
 }
 
-/** Chroma-neutral point in signalstats' 0-255 UV scale. */
-const NEUTRAL = 128;
-
-/** Fraction of the distance to neutral that gets corrected. 1.0 would sterilise
+/** Fraction of the distance to the target that gets corrected. 1.0 would sterilise
  * the scene; this closes most of the gap between beats while leaving the mood. */
-const PULL = 0.65;
+const PULL = 0.8;
 
-/** signalstats UV units → colorbalance's -1..1 scale. Calibrated by round trip in
- * tests/unit/sceneGrade.test.ts: a synthetic cast is applied to a real frame, then
- * measured, corrected, and re-measured, and the residual must land inside DEADBAND. */
-const UV_TO_BALANCE = 0.055;
+/** signalstats UV units → colorbalance's -1..1 scale. MEASURED, not assumed: a
+ * `colorbalance=rm=0.18` cast applied to a real frame moved VAVG by 1.68 units
+ * (136.49 from 134.81), so one UV unit costs ~0.107 of balance. The first guess
+ * here was 0.055, which under-corrected by half — see the calibration in
+ * tests/unit/sceneGrade.test.ts, which re-derives this from a round trip rather
+ * than trusting the constant. */
+const UV_TO_BALANCE = 0.107;
 
-/** Below this much cast (in UV units) the scene is already neutral enough and gets
- * NO filter at all — so an ad whose beats already agree renders byte-identically
- * to today, flag on or off. This is what keeps the CLASSIC regression lock honest. */
-const DEADBAND = 2.5;
+/** Below this much drift FROM THE AD'S OWN TARGET the scene already agrees with its
+ * siblings and gets NO filter at all — so an ad whose beats match renders
+ * byte-identically to today, flag on or off. This is what keeps the CLASSIC
+ * regression lock honest. In UV units, where the observed scene-4-class drift was
+ * ~1.7 and a same-look sibling pair sat under 0.5. */
+const DEADBAND = 0.8;
 
 /** Hard ceiling on any single channel shift. A wild measurement (a scene that is
  * legitimately one colour — a sunset, a red wall) can never blow out the picture;
@@ -103,17 +112,42 @@ export function parseSignalstats(output: string): ChromaMeasure | null {
 }
 
 /**
- * Turn a measurement into the ffmpeg filter that pulls the scene toward neutral,
- * or null when it is already close enough to leave alone.
+ * The look the whole ad is corrected toward: the per-channel MEDIAN of its scenes.
+ * Needs every scene measured before any scene is graded, so the render has to walk
+ * the timeline twice — measure all, then build all.
+ *
+ * Returns null for fewer than 3 scenes. With 2 there is no majority to appeal to,
+ * only two opinions, and picking either one is a coin flip that can pull the good
+ * beat toward the bad one. Pure.
+ */
+export function chromaTarget(ms: readonly ChromaMeasure[]): ChromaMeasure | null {
+  const valid = ms.filter((m): m is ChromaMeasure => !!m && m.frames > 0);
+  if (valid.length < 3) return null;
+  const median = (pick: (m: ChromaMeasure) => number) => {
+    const xs = valid.map(pick).sort((a, b) => a - b);
+    const mid = xs.length >> 1;
+    return xs.length % 2 ? xs[mid] : (xs[mid - 1] + xs[mid]) / 2;
+  };
+  return {
+    yavg: median((m) => m.yavg),
+    uavg: median((m) => m.uavg),
+    vavg: median((m) => m.vavg),
+    frames: valid.length,
+  };
+}
+
+/**
+ * Turn a measurement into the ffmpeg filter that pulls the scene toward the ad's
+ * target, or null when it already agrees with its siblings.
  *
  * Pure — no I/O, no clock, no randomness. The same measurement always yields the
  * same string, so a re-render of the same ad is reproducible.
  */
-export function planSceneGrade(m: ChromaMeasure | null): string | null {
-  if (!m) return null;
+export function planSceneGrade(m: ChromaMeasure | null, target: ChromaMeasure | null): string | null {
+  if (!m || !target) return null;
 
-  const du = m.uavg - NEUTRAL; // >0 = too blue
-  const dv = m.vavg - NEUTRAL; // >0 = too red
+  const du = m.uavg - target.uavg; // >0 = bluer than its siblings
+  const dv = m.vavg - target.vavg; // >0 = redder than its siblings
 
   const cast = Math.max(Math.abs(du), Math.abs(dv));
   if (cast < DEADBAND) return null;
@@ -126,9 +160,9 @@ export function planSceneGrade(m: ChromaMeasure | null): string | null {
 
   const parts = [`colorbalance=rm=${q(rm)}:bm=${q(bm)}`];
 
-  // Luma sits on a mid-grey target rather than a measured average: a scene that is
-  // legitimately dark should stay dark, so only a large deviation moves at all.
-  const dy = m.yavg - 128;
+  // Luma is corrected against the same sibling target, for the same reason as
+  // chroma: an ad that is legitimately dark throughout should stay dark.
+  const dy = m.yavg - target.yavg;
   const brightness = clamp((-dy / 255) * LUMA_PULL, -MAX_BRIGHTNESS, MAX_BRIGHTNESS);
   if (Math.abs(brightness) >= 0.005) parts.push(`eq=brightness=${q(brightness)}`);
 
