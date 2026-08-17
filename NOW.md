@@ -1,81 +1,77 @@
 # NOW — the resume doc
-**Stamped: 2026-08-16** (session 26)
+**Stamped: 2026-08-17** (session 27)
 
-## ▶ NEXT ACTION — one more `before_after` run, watched
+## ▶ NEXT ACTION — listen. Two flags have been waiting six months on your ear.
 
-Three merges shipped today. The last two are UNPROVEN — nothing has run against them.
+⚠️ **`.tmp/` does not survive the reboot. The music beds cost API calls to remake.**
+Copy `.tmp/music-gate/` somewhere safe, or listen before you shut down.
 
-```
-https://grifon.ai/app?osaEngine=producer
-```
-Recipe `before_after` · Hiraya Glow · Presenter **SET** = `after.png` (not Auto) · slots
-`hero`/`before`/`after` from `tests/fixtures/sample-batch/`. Inputs + pre-flight:
+**1. Music (~5 min).** `.tmp/music-gate/` — four styles, each with a `--GENERATED`
+and a `--STATIC` beside it. Bar: **invisible > impressive.** The bed must vanish
+under a voiceover and must **not** open on singing (the known 2026-06-16 leak).
+Note `ugcpro--STATIC-ALIASED-TO-testimonial.mp3` — that filename IS the defect you
+reported. Generated ≥ static → set `GRIFON_MUSIC_GEN_ENABLED=true`.
+Regenerate: `npx vite-node tools/smoke_music_bed.mjs`
+
+**2. SFX (~5 min).** `.tmp/ear-gate/` — start with **`_CONTESTED.mp3`** (the 6
+machine-flagged variants) and **`_CHACHING.mp3`** (v1-v6; keep the family that
+reads "cha-ching" first listen, prune the rest). Order is in `ORDER.txt`.
+Free to regenerate, no API: `node tools/ear_gate_audition.mjs`
+Approve → flip `SFX_V2_ENABLED=true` in prod, mark P13 `applied` in the swipe file.
+Cue **timing** cannot be judged here — that needs a real ad, target (c) of the gate.
+
+**3. Still owed from session 26: the watched `before_after` run.** Nothing has run
+against `c932dc0`/`e4d2864` yet, and now nothing has run against today's work either.
+`https://grifon.ai/app?osaEngine=producer` · inputs in
 [`sample_run_before_after_2026-08-16.md`](workflows/sample_run_before_after_2026-08-16.md).
+Gate: same woman in EVERY scene · scene count = 4 · does the hook SHOW the flaw ·
+any `cinematic_grade` chip (it flags, it does NOT auto-fix — hit REGENERATE).
 
-**Storyboard gate — check ALL of these, not one:**
-1. **Same woman in EVERY scene.** Two beats used to permit `referenceImage="none"`; a
-   one-scene gate let a break through on run 2. Fixed, but this is the gate that matters.
-2. **Scene count = 4.** Run 3 came back with **5** — the TRANSFORMATION skeleton did not
-   hold, and the extra beat was also the one that drifted. Unexplained. Flag it.
-3. **Does the hook SHOW the flaw** (close-up on it, she points, camera moves in), or is it
-   another neutral portrait?
-4. **Any warm/cinematic scene?** The gate now flags this as a `cinematic_grade` chip.
-   ⚠️ It does NOT auto-fix — hit REGENERATE yourself before FILM IT.
+## 🚀 BRANCH `fix/preset-hook-identity` — 2 commits, pushed, NOT merged
+**`8b19747`** — every preset now has its own hook. Your report ("lahat ata pare-parehas")
+had **three** stacked causes, not one:
+1. `punch`/`bars`/`spotlight` were `{...IMPACT, caption}` — they overrode ONLY captions,
+   so they inherited IMPACT's `hook` AND `sfx` verbatim. That is why captions changed
+   and nothing else did.
+2. `planScene` used `pickHookPalette(variantSeed)` — the **ad** picked the colour, so it
+   was random per render and identical in distribution across every title-stack preset.
+   `HookStyle.gradient` owns it now.
+3. `buildWordFilters` hardcoded ONE entrance, so `hook.reveal` was dead for all six
+   title-stack presets. Preset-keyed now: slam / bounce / flip.
 
-**After filming, watch for:** camera motion visibly moving in EVERY scene from frame 0 · no
-white wash on the hook · the thumbnail looking like the presenter, in her room, not studio-lit.
+Result: 7 presets, 7 distinct hooks — 5 fonts, 6 accents, 3 entrances.
+**CLASSIC is untouched, proven not asserted:** its golden snapshot is byte-identical
+against HEAD while the other six moved. Two new tests fail if any two presets ever
+share a hook signature or SFX palette again — and one of them caught a real collision
+while being written (punch had been handed CLASSIC's exact palette).
 
-## 🚀 THREE MERGES TODAY (newest first) — each `git revert -m 1 <sha>`
-**`c932dc0`** — Gate now observes `lightingLooksProduced` and flags `cinematic_grade` on
-identity scenes; `avatar_state` added to `IDENTITY_MODES` (a hole I shipped hours earlier, on
-the exact two beats that had already broken twice). Plus four render fixes, **none of which
-were model randomness — all were things we instructed**: camera language was 6 bans vs 1 weak
-positive so the model delivered nothing (fixed with a MEASURABLE target, underway at frame 0 —
-same lesson `marvin-avatar` already records for lighting); the hook-morph branch fired on scene
-index alone and made the model warp the subject to invent a transformation on a single-frame
-scene (now gated on actually having two frames); the thumbnail demanded "EXTREME... 
-Shock/Surprise/Joy" + studio rim light, the THIRD place the expression rule was missing;
-and the hook now SHOWS the flaw instead of mentioning it.
+**`7e72c8c`** — closed the two hands-only `referenceImage="none"` hatches (SERVICE
+Tutorial S2-S4, SERVICE Before&After S2). TUNED, you approved it. S1/S3 keep `"none"`
+on purpose — no operator in frame at all. Plus the two ear-gate tools above.
+⚠️ **The audit found FEWER holes than the session-26 brief claimed.** `tryon`,
+`unboxing`, `demo`, `tutorial`, `realestate` never offered `"none"`. That brief was
+wrong on this and on the hook root cause; do not trust its remaining pointers unread.
 
-**`e4d2864`** — Expression ceiling at the storyboard AND video layers. `APPEARANCE_LOCK_RULE`
-had listed Expression as REQUIRED with three extreme examples. Includes a TEETH RULE and an
-explicit override of CINEMATIC VARIETY, which was the loophole. `fastTextModel` → 3.7.
-
-**`77426d1`** — `referenceImage="none"` FORBIDDEN on the person beats of TRANSFORMATION
-(filed 2026-07-11, unactioned for five weeks); `venueSlot` finally reaches the scene image via
-a new `avatar_state` mode, so uploaded before/after photos anchor real frames; `MODEL_TEXT` →
-`gemini-3.7-flash`; fixtures rebuilt on the raw-ugc scaffold + master daylight.
-
-⚠️ **`researchTextModel` deliberately still 3.6** — it feeds the EDL, so the pending watched
-run stays single-variable. ⚠️ 3.7 doubles to $1.50/$7.50 on **2027-01-01**.
-⚠️ **Do not credit 3.7 for the quality jump yet** — the identity fix shipped in the same deploy.
-
-## 📌 SESSION 27 STARTS HERE — [`next_session_2026-08-17.md`](workflows/next_session_2026-08-17.md)
-Carry today's lessons to the other 11 formats (**4 of 7 fixes are already format-agnostic;
-the `referenceImage="none"` audit is the one that is NOT done** and it is the same defect
-that cost two runs), plus two NEW bugs Neil found in the editing presets: **SFX + music look
-identical across presets** (check `SFX_V2_ENABLED` on Vercel first — unset = static bank by
-design) and **the hook overlay text ignores the preset** (the hook has its own text branch,
-`drawPlan.ts` ~511).
+## ⚠ NOT VERIFIED — say it plainly
+**No real ffmpeg render exists for any of today's work.** Burn-in integration tests are
+gated behind `RUN_BURNIN`. Evidence stops at the emitted filtergraph (7 of 7 distinct,
+3 motion signatures). **Your eyeball on a real render is the remaining gate**, and the
+SFX cue-class picks for punch/bars/spotlight are a design proposal, not an ear result.
 
 ## ⚠ OPEN — owed, not blocking
-- **The AI gate is FLAG-ONLY, it does not reroll.** `imageGate.ts`'s own header claims it
-  "drives the only automated reroll"; the producer and CLAUDE.md say the deterministic
-  `checkSceneImage` does. **The code is the truth — fix that comment.**
-- **Premise-check parse bug is LIVE.** `cleanJson` discards a valid grounded answer ~1 in 6,
-  on every model. The 3.7 flip was neutral on this, not a fix.
-- **No price in any video beat** is a product decision now. It RETIRES the "offer never
-  surfaced" defect. ⚠️ Re-read the `feat/adscript-ab-harness` "drops the offer 4/4" result
-  before acting on it — if it counts a missing PRICE as a miss, the harness is wrong.
+- **`hookFallbackText` ([`drawPlan.ts`](api/_lib/drawPlan.ts) ~520) breaks the #1 rule of
+  the hook skill you dropped**: it derives the on-screen title from the first 7 words of
+  the SPOKEN line. The skill's ban, verbatim: *"a text hook that just repeats the spoken
+  hook word-for-word (that's a caption's job)."* TUNED-adjacent, needs a decision.
+- **The `text-hook-machine` skill is worth its rulebook, not its machinery.** BUILD and
+  REFRESH need Sandcastles MCP, which we do not have. The fundamentals + WRITE mode are
+  the asset, and they belong in the EDL prompt + a 4th swipe file, not a live skill. Its
+  no-punctuation rule is WRONG for us — a Tagalog question hook is a workhorse. Committed
+  at `public/text-hook-machine.skill`.
+- **The AI gate is FLAG-ONLY, it does not reroll.** `imageGate.ts`'s header still lies.
+- **Premise-check parse bug is LIVE.** `cleanJson` drops a valid grounded answer ~1 in 6.
 - **`MODEL_RESEARCH`** (`gemini-3.5-flash`) is referenced by no flow. Dead constant.
-- **Cross-model ceiling is real and NOT worth chasing.** Fixtures are gpt-image-2, scenes
-  render on Gemini; 100% will never happen. Neil's call: don't force it.
-
-## ⚠ OPEN DECISION — the repo still grows ~400 MB/month
-1. **`clients/*/ads/*/clips/`** — heaviest (25 MB each) but **paid Veo generations**. Not
-   gitignored on purpose: ignoring them without another home means the defreezer eats them.
-2. **`git filter-repo`** to strip 1.5 GB from history. Irreversible, force push, breaks every
-   clone. **Never without Neil saying so.**
+- **Repo grows ~400 MB/month.** `git filter-repo` is irreversible — never without you.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
