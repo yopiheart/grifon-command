@@ -121,15 +121,22 @@ describe('sceneNormalizeFilter (quality upscale prefix)', () => {
   });
 });
 
+// Gains carry a +5% bump (Neil, 2026-08-17). What this block actually locks is
+// the ROLE CONTRACT — a bed stays quiet and ducks, a lead plays loud and never
+// ducks, and an unset role is a bed. The literals move whenever Neil re-tunes by
+// ear; the relationship between them must not.
 describe('musicMixPlan (role → gain + ducking)', () => {
   it('bed (default) plays quiet and ducks under the VO', () => {
-    expect(musicMixPlan('bed')).toEqual({ volume: 0.18, duck: true });
+    expect(musicMixPlan('bed')).toEqual({ volume: 0.189, duck: true });
   });
   it('lead (no-VO) plays loud and never ducks', () => {
-    expect(musicMixPlan('lead')).toEqual({ volume: 0.85, duck: false });
+    expect(musicMixPlan('lead')).toEqual({ volume: 0.8925, duck: false });
   });
   it('undefined role falls back to the bed plan', () => {
-    expect(musicMixPlan(undefined)).toEqual({ volume: 0.18, duck: true });
+    expect(musicMixPlan(undefined)).toEqual({ volume: 0.189, duck: true });
+  });
+  it('a lead is always louder than a bed, whatever the tuned numbers are', () => {
+    expect(musicMixPlan('lead').volume).toBeGreaterThan(musicMixPlan('bed').volume);
   });
 });
 

@@ -89,8 +89,11 @@ const SFX_VOLUME = CLASSIC.sfx.volume; // SFX sit under the VO, not over it
 // so music is seasoning. 0.34 fought the VO on a full-ad listen; drop to 0.18 with
 // a moderate fast duck so the bed only breathes in the gaps. Final loudness is
 // pinned by the -14 LUFS master (LOUDNORM) so every ad ships at a consistent level.
-const MUSIC_VOLUME = 0.18;       // bed gain before sidechain ducking
-const MUSIC_VOLUME_LEAD = 0.85;  // no VO to duck under — music IS the audio; LOUDNORM still pins the master
+// +5% on both (Neil, 2026-08-17: "para medyo marinig din"). 0.18→0.189 is ~0.4 dB,
+// which is at/below the level an ear reliably notices — if the next render still
+// sits too low, these two numbers are the whole knob.
+const MUSIC_VOLUME = 0.189;      // bed gain before sidechain ducking
+const MUSIC_VOLUME_LEAD = 0.8925; // no VO to duck under — music IS the audio; LOUDNORM still pins the master
 const MUSIC_FADE_SEC = 0.4;      // afade in/out on the bed
 const MUSIC_DUCK = 'threshold=0.04:ratio=5:attack=5:release=280'; // duck hard+fast under VO
 const LOUDNORM = 'loudnorm=I=-14:TP=-1.5:LRA=11'; // social/Reels target, VO-anchored
@@ -149,20 +152,33 @@ const fontPath = () => findAsset(join('fonts', 'Inter-Black.ttf'));
  * pool (snap), or the variant file is missing on disk. Exported for the seam
  * tests — this function's return value IS the only byte that can differ
  * between flag states upstream of ffmpeg. */
+/** Classes retired by ear, remapped to a survivor at the LAST moment before a
+ * file is chosen. This is the only wall that holds: a cue reaches here from two
+ * independent directions — a preset's `overlayMap` AND an AI-authored EDL, whose
+ * `emphasisSfx` is validated against the full SfxBankId union in api/render/final.ts.
+ * Editing presets alone leaves the model free to keep emitting the sound.
+ *
+ * `glitch` → `swish`: retired 2026-08-17 (Neil, "sakit sa tenga"). Remapped
+ * rather than dropped so the cue keeps its beat — a callout that suddenly lands
+ * silent reads as a bug, not as a fix. The type, the prompt vocabulary and the
+ * files on disk are all untouched, so this reverses by deleting one line. */
+const RETIRED_SFX: Partial<Record<SfxBankId, SfxBankId>> = { glitch: 'swish' };
+
 export function resolveSfxFile(
   sfxId: SfxBankId,
   presetId: PresetId,
   variantSeed: number
 ): string | null {
+  const id = RETIRED_SFX[sfxId] ?? sfxId;
   if (sfxVariantsEnabled(presetId)) {
-    const variant = pickSfxVariant(sfxId, variantSeed);
+    const variant = pickSfxVariant(id, variantSeed);
     if (variant) {
       const p = sfxPath(variant);
       if (p) return p;
       console.warn(`[renderFfmpeg] sfx variant missing, static fallback: ${variant}`);
     }
   }
-  return sfxPath(sfxId);
+  return sfxPath(id);
 }
 
 /** Escape a filesystem path for use inside an ffmpeg filtergraph option value

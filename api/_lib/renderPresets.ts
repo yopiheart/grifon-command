@@ -176,7 +176,7 @@ export const CLASSIC: RenderPreset = {
   sfx: {
     overlayMap: { hook: 'boom', callout: 'pop', punchline: 'ding', subtitle: null },
     maxWhoosh: 3,
-    volume: 0.6,
+    volume: 0.63,
   },
 };
 
@@ -221,7 +221,7 @@ export const IMPACT: RenderPreset = {
   sfx: {
     overlayMap: { hook: 'boom', callout: 'snap', punchline: 'ding', subtitle: null },
     maxWhoosh: 3,
-    volume: 0.6,
+    volume: 0.63,
   },
 };
 
@@ -262,7 +262,7 @@ export const HYPE: RenderPreset = {
   sfx: {
     overlayMap: { hook: 'boom', callout: 'pop', punchline: 'ding', subtitle: null },
     maxWhoosh: 4,
-    volume: 0.6,
+    volume: 0.63,
   },
 };
 
@@ -305,7 +305,7 @@ export const CLEAN: RenderPreset = {
   sfx: {
     overlayMap: { hook: 'sparkle', callout: null, punchline: 'ding', subtitle: null },
     maxWhoosh: 1,
-    volume: 0.5,
+    volume: 0.525,
   },
 };
 
@@ -349,15 +349,18 @@ export const PUNCH: RenderPreset = {
     gradient: null,
   },
   sfx: {
-    // `glitch` (not `pop`) on the callout: `boom`+`pop`+3 whooshes at 0.6 is
+    // `swish` (not `pop`) on the callout: `boom`+`pop`+3 whooshes at 0.63 is
     // CLASSIC's palette exactly, and shipping punch as a renamed classic is the
-    // very defect this preset was split out to fix. Every class here has a legacy
-    // static <class>.mp3 — the 5 diegetic classes (chaching/notification/paper/
-    // shutter/typing) are variant-only and MUST NOT appear in an overlayMap, or
-    // the cue fails to resolve whenever SFX_V2_ENABLED is off.
-    overlayMap: { hook: 'boom', callout: 'glitch', punchline: 'ding', subtitle: null },
+    // very defect this preset was split out to fix. Was `glitch` until 2026-08-17,
+    // when Neil retired the whole class by ear ("sakit sa tenga") — see
+    // RETIRED_SFX in renderFfmpeg.ts. `boom`+`swish`+`ding` still reads as its
+    // own palette (BARS is riser/swish, IMPACT is boom/snap). Every class here
+    // has a legacy static <class>.mp3 — the 5 diegetic classes (chaching/
+    // notification/paper/shutter/typing) are variant-only and MUST NOT appear in
+    // an overlayMap, or the cue fails to resolve whenever SFX_V2_ENABLED is off.
+    overlayMap: { hook: 'boom', callout: 'swish', punchline: 'ding', subtitle: null },
     maxWhoosh: 3,
-    volume: 0.6,
+    volume: 0.63,
   },
 };
 
@@ -389,7 +392,7 @@ export const BARS: RenderPreset = {
   sfx: {
     overlayMap: { hook: 'riser', callout: 'swish', punchline: 'ding', subtitle: null },
     maxWhoosh: 2,
-    volume: 0.55,
+    volume: 0.5775,
   },
 };
 
@@ -414,7 +417,7 @@ export const SPOTLIGHT: RenderPreset = {
   sfx: {
     overlayMap: { hook: 'drop', callout: 'sparkle', punchline: 'ding', subtitle: null },
     maxWhoosh: 2,
-    volume: 0.55,
+    volume: 0.5775,
   },
 };
 
@@ -436,7 +439,9 @@ export const SFX_VARIANT_POOLS: Partial<Record<SfxBankId, readonly number[]>> = 
   sparkle: [1, 2, 3, 4, 5, 6],
   ding:    [1, 2, 3, 4],
   drop:    [1, 2, 3, 4],
-  glitch:  [1, 2, 3, 4],
+  // glitch: RETIRED 2026-08-17 (Neil, by ear). Pool removed so the v2 rotation
+  // cannot resurrect it; the files stay on disk. RETIRED_SFX in renderFfmpeg.ts
+  // is the real wall — this line alone would still let the legacy static play.
   riser:   [1, 2, 3, 4],
   swish:   [1, 2, 3, 4],
   whoosh:  [1, 2, 3, 5],

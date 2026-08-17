@@ -49,7 +49,11 @@ describe('preset definitions', () => {
     expect(CLASSIC.camera.intensity).toBe(0);
     expect(CLASSIC.sfx.overlayMap).toEqual({ hook: 'boom', callout: 'pop', punchline: 'ding', subtitle: null });
     expect(CLASSIC.sfx.maxWhoosh).toBe(3);
-    expect(CLASSIC.sfx.volume).toBe(0.6);
+    // 0.6 → 0.63 on 2026-08-17: Neil asked for +5% across every preset's SFX so
+    // the cues sit slightly above the VO floor. This is a DELIBERATE break of the
+    // regression lock, not drift — the lock covers CLASSIC's LOOK (font, colors,
+    // layout, transition, camera), and a mix level is not part of that look.
+    expect(CLASSIC.sfx.volume).toBe(0.63);
   });
 
   it('every preset uses either a box or an outline, never both', () => {
