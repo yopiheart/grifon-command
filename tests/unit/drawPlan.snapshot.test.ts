@@ -22,9 +22,16 @@ import type { FinalRenderScene, VoiceWord } from '../../types.js';
 // every snapshot below byte-identical. Any diff = the tuned look changed =
 // STOP and escalate (TUNED-file guardrail). This is the goal's transcript proof.
 //
-// Determinism note: planScene's hook gradient comes from pickHookPalette(seed);
-// every call below pins an explicit variantSeed so output is reproducible. No
-// Date.now()/Math.random() anywhere in the engine.
+// Determinism note: the draw plan carries NO seed-dependent field as of
+// 2026-08-17 — the hook gradient used to come from pickHookPalette(seed) and now
+// belongs to the preset, so the seed argument below is inert and pinned only to
+// keep the call shape. No Date.now()/Math.random() anywhere in the engine.
+//
+// 2026-08-17 rebaseline: the six title-stack presets (impact/hype/clean/punch/
+// bars/spotlight) were given distinct hook typography, accent colours and
+// entrances, so their blocks below MOVED ON PURPOSE. CLASSIC's block did not
+// change, and that is the regression lock — if a future diff touches CLASSIC,
+// that IS the escalation the header above demands.
 // ---------------------------------------------------------------------------
 
 const PORTRAIT: [number, number] = [1080, 1920];

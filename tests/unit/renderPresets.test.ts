@@ -39,6 +39,11 @@ describe('preset definitions', () => {
       // the one that has always shipped, so CLASSIC's look is still locked; what
       // changed is that each preset can now set its own beat.
       revealHoldSec: 0.5,
+      // Added 2026-08-17 when the hook palette moved off the render seed onto the
+      // preset. CLASSIC renders the `wipe` layout, which has no gradient path at
+      // all, so `null` is what it has ALWAYS drawn — new field, unchanged look.
+      // The drawPlan golden snapshot for CLASSIC is the independent proof.
+      gradient: null,
     });
     expect(CLASSIC.transition.kind).toBe('none');
     expect(CLASSIC.camera.intensity).toBe(0);
@@ -63,6 +68,42 @@ describe('preset definitions', () => {
   it('every hook font file is bundled', () => {
     for (const p of Object.values(PRESETS)) {
       expect(existsSync(join(ASSETS, p.hook.fontFile)), `${p.id}: ${p.hook.fontFile}`).toBe(true);
+    }
+  });
+
+  // THE REGRESSION THIS FILE EXISTS TO CATCH (Neil, 2026-08-17): "lahat ng preset
+  // overlay text design/font/animation ay pare-parehas". punch/bars/spotlight were
+  // declared as `{ ...IMPACT, caption: {...} }`, overriding ONLY the captions, so
+  // all four drew a byte-identical hook title. Nothing failed — there was no test
+  // asserting the looks were different, only that each was internally valid.
+  // A preset is an "editor personality"; two personalities that render the same
+  // hook are one personality with two names.
+  it('every burn-in preset has a hook look that is unique among presets', () => {
+    const burned = Object.values(PRESETS).filter((p) => !p.stitchedOnly);
+    const seen = new Map<string, string>();
+    for (const p of burned) {
+      const signature = JSON.stringify([
+        p.hook.layout, p.hook.reveal, p.hook.fontFile, p.hook.textColor,
+        p.hook.highlightColor, p.hook.sizeFrac, p.hook.gradient,
+      ]);
+      const clash = seen.get(signature);
+      expect(clash, `${p.id} draws an identical hook to ${clash}`).toBeUndefined();
+      seen.set(signature, p.id);
+    }
+    expect(seen.size).toBe(burned.length);
+  });
+
+  // Same defect class, sound instead of typography: the three IMPACT-derived
+  // presets inherited its SFX palette verbatim, so the same cue classes fired in
+  // all four no matter which preset the user picked.
+  it('every burn-in preset has an SFX palette that is unique among presets', () => {
+    const burned = Object.values(PRESETS).filter((p) => !p.stitchedOnly);
+    const seen = new Map<string, string>();
+    for (const p of burned) {
+      const signature = JSON.stringify([p.sfx.overlayMap, p.sfx.maxWhoosh, p.sfx.volume]);
+      const clash = seen.get(signature);
+      expect(clash, `${p.id} sounds identical to ${clash}`).toBeUndefined();
+      seen.set(signature, p.id);
     }
   });
 });

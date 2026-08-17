@@ -1479,7 +1479,10 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
            S1 HOOK — the operator to camera at the jobsite. referenceImage="avatar".
            S2–S4 STEPS 1-2-3 — one step per scene, the REAL work mid-performance, tools in
               honest use. venueSlot="staff" or "interior" where the uploads fit.
-              referenceImage="avatar" (or "none" if the step is hands-only).
+              referenceImage="avatar" on EVERY step — "none" is FORBIDDEN here. A
+              hands-only step is STILL the same operator: the forearm, the sleeve and the
+              skin tone are all in frame, so dropping the anchor renders a DIFFERENT
+              person's hands in the middle of a one-operator ad.
            S5 RESULT + CTA — the finished work shown, operator closes with the book invite.
               venueSlot="after" if uploaded. referenceImage="avatar".
 
@@ -1495,8 +1498,12 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
               damaged surface). The before-state IS the hook. NO operator, NO gear in
               this frame. venueSlot="before" if uploaded. referenceImage="none".
            S2 THE WORK — the operator's hands + tool mid-action on the problem. Honest
-              working posture, NOT a posed crew shot. referenceImage="avatar" (or "none"
-              if the beat is hands-only).
+              working posture, NOT a posed crew shot. referenceImage="avatar", MANDATORY —
+              "none" is FORBIDDEN here. A hands-only beat is STILL the same operator: the
+              forearm, the sleeve and the skin tone are all in frame, so dropping the
+              anchor renders a DIFFERENT person's hands in the middle of a one-operator
+              ad. (S1 and S3 above keep "none" on purpose — those two beats have NO
+              operator in frame at all, by their own instruction.)
            S3 INSTANT REVEAL — the hard-cut after-state, framed IDENTICALLY to S1 (same
               angle, same distance, same lighting) so the change is the only variable.
               venueSlot="after" if uploaded. referenceImage="none".
