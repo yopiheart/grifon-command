@@ -59,40 +59,36 @@ re-enabling is one line. **Overrule this if he disagrees.**
 `consolidate.ts:108-111` — talking scenes send **audio only** to STS; `scriptLine`
 is never sent. So the "Hirayaglao / ipahed" text in Neil's ElevenLabs history is a
 **transcript of what Veo said**, not our input. STS changes timbre, never phonemes,
-so it can NEVER fix this.
-**Why it happens:** the script is Tagalog, so Veo applies Tagalog phonology to the
-English brand. Tagalog has no `/oʊ/` diphthong → "glow" splits to "gla-o"; Tagalog
-merges e/i → "ipahid" → "ipahed". Consistent, not random.
-**Confirmed technique** (Replicate's guide + 2 more): phonetic spelling in the VEO
-prompt. Counterintuitive fix: spell it for a TAGALOG reader ("Hiraya Glo").
-⛔ **Not applying it.** Neil: it is intermittent, and a blanket map could make it
-systematic. `agent_lessons.md:60` bans exactly that (the deleted
-`phoneticNormalizer` made things WORSE). n=1. Repo bar is 3 corroborations.
+so it can NEVER fix this. **Why:** the script is Tagalog, so Veo applies Tagalog
+phonology to the English brand — no `/oʊ/` diphthong → "glow" splits to "gla-o";
+e/i merge → "ipahid" → "ipahed". Consistent, not random.
+**Technique** (Replicate + 2 sources): phonetic spelling in the VEO prompt. The
+counterintuitive fix is to spell it for a TAGALOG reader ("Hiraya Glo").
+⛔ **Not applying it.** It is intermittent, and a blanket map could make it
+systematic — `agent_lessons.md:60` bans exactly that (the deleted
+`phoneticNormalizer` made things WORSE). n=1; repo bar is 3.
 **Free instrument:** every talking scene's STS history entry IS a pronunciation
-log. Read it each run. **Zero-risk change available now:** stop having Veo say the
-brand at all — let on-screen text and the label carry it.
+log. **Zero-risk change available now:** stop having Veo say the brand at all.
 
-## ⏭ NEXT SESSION — Neil's open question, answered but unfinished
-"Hanggang ganyan lang ba?" No. ~80% of his references are reachable in FFmpeg.
-**The real ceiling:** no true blur (the glow is stacked borders), no rounded box
-corners, no gradient BEHIND text, no letter-spacing control, no text-behind-subject
-(needs body segmentation; we only have face detection), no arc/rotated type.
-Those three are the ONLY case for Hyperframes **Move 3** (transparent assets baked
-to file, consumed by FFmpeg like `sweep.png` — never a runtime; Vercel lambda +
-untrusted-HTML walls stand).
-**Neil to pick:** (a) identify the ACTUAL Kallaway fonts — I never did, I picked
-free lookalikes, and the real ones may be paid licences; or (b) build the layouts
-already reachable (per-line size hierarchy, 3-line stacks, box on ONE word).
+## ⏭ NEXT SESSION — answered but unfinished
+"Hanggang ganyan lang ba?" No. ~80% of the references are reachable in FFmpeg.
+**Real ceiling:** no true blur (the glow is stacked borders), no rounded box
+corners, no gradient BEHIND text, no letter-spacing, no text-behind-subject (needs
+body segmentation; we only have face detection), no arc type. Those are the ONLY
+case for Hyperframes **Move 3** (transparent assets baked to file like `sweep.png`
+— never a runtime; the lambda + untrusted-HTML walls stand).
+**Neil picks:** (a) identify the ACTUAL Kallaway fonts — I never did, I picked free
+lookalikes and the real ones may be paid; or (b) build the reachable layouts
+(per-line size hierarchy, 3-line stacks, box on ONE word).
 
 ## ⚠ OPEN — owed, not blocking
 - **`hookFallbackText`** (`drawPlan.ts` ~520) builds the title from the SPOKEN line,
-  which the `text-hook-machine` skill bans outright. Skill committed at
-  `public/text-hook-machine.skill`; its rulebook is worth having, its Sandcastles
-  machinery is not, and its no-punctuation rule is WRONG for Taglish.
-- **Music E2E still owed** — flip the flag, then a Pro/Business render.
-- **AI gate is FLAG-ONLY**, `imageGate.ts`'s header still lies. **Premise-check
-  `cleanJson` drops ~1 in 6.** **`MODEL_RESEARCH` is dead.** Repo +400 MB/month.
-- `npm run design:lint` fails: the `design.md` CLI is defreezer-wiped. Not a regression.
+  which the `text-hook-machine` skill bans. Skill at `public/text-hook-machine.skill`
+  — rulebook worth having, Sandcastles machinery not, no-punctuation rule WRONG here.
+- **Music E2E owed** — flip the flag, then a Pro/Business render.
+- **AI gate is FLAG-ONLY**, `imageGate.ts`'s header lies. **Premise-check `cleanJson`
+  drops ~1 in 6.** **`MODEL_RESEARCH` dead.** Repo +400 MB/month.
+- `npm run design:lint` fails: `design.md` CLI is defreezer-wiped. Not a regression.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
