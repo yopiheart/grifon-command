@@ -16,6 +16,19 @@ export type ScriptStyle = 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
 export type ChunkAnim = 'none' | 'pop' | 'word-pop' | 'karaoke' | 'bars' | 'karaoke-invert';
 export type HookRevealStyle = 'bounce' | 'slam' | 'flip';
 export type HookLayoutStyle = 'wipe' | 'title-stack';
+
+/** WHERE the accent colour lands in a hook title.
+ *
+ * `power-word` was the ONLY behaviour until 2026-08-17, and it is the single
+ * reason every preset's hook looked the same no matter what font or colour it
+ * carried: `hookTitleLayout` highlights `isPowerWord(w)` and falls back to
+ * word 0 when nothing matches, so "PUYAT PA RIN?" painted "PUYAT" in every
+ * preset and only the hue changed. Not one of the reference hooks in the swipe
+ * screenshots does that — they accent a whole LINE or a whole PHRASE.
+ *
+ * `accent-line`  — line 1 plain, ALL of line 2 in the accent colour.
+ * `boxed-line`   — line 2 sits inside a solid accent box, text knocked out white. */
+export type HookAccentMode = 'power-word' | 'accent-line' | 'boxed-line';
 export type TransitionKind = 'none' | 'flash' | 'dip' | 'whip' | 'burn';
 
 /** Premium hook fill: vertical metallic gradient pair [top, bottom] per word
@@ -101,6 +114,23 @@ export interface HookStyle {
    * 2026-08-17 — see HookPalette. Only consulted on `layout: 'title-stack'`;
    * the classic wipe layout has no gradient path at all. */
   gradient: HookPalette | null;
+  /** Where the accent colour lands — see HookAccentMode. */
+  accentMode: HookAccentMode;
+  /** Force the title into TWO lines even when it would fit on one. Every
+   * reference hook in the swipe screenshots is a two-line stack, and an
+   * accent-line/boxed-line mode has nothing to paint without a line 2. */
+  twoLine: boolean;
+  /** Upper-case the title. NOT a house rule — Neil, 2026-08-17: "merong all
+   * caps, merong hindi, depende sa font at gaano kalaki basta mag-fifit sa
+   * screen at pasok sa safe zone." So it is a per-preset look decision, and
+   * fitText + safeZone still own whether it actually fits. */
+  caps: boolean;
+  /** Outer glow on accent words (stacked widening borders — drawtext has no
+   * blur, so this fakes one). The neon look in the swipe references. */
+  glow: boolean;
+  /** Optional second face for ONE accent word (the italic-serif word inside
+   * Kallaway's red box). Absent → the accent word uses the hook font. */
+  accentFontFile?: string;
 }
 
 export interface TransitionStyle {
@@ -167,6 +197,9 @@ export const CLASSIC: RenderPreset = {
     // `wipe` has no gradient path, so null is what CLASSIC has ALWAYS rendered —
     // the field is new, the look is untouched (regression lock still holds).
     gradient: null,
+    // All four below are the pre-2026-08-17 behaviour written down explicitly.
+    // CLASSIC is the kill switch: it must render byte-identically forever.
+    accentMode: 'power-word', twoLine: false, caps: false, glow: false,
   },
   transition: { kind: 'none', halfDurSec: 0, everyN: 1, maxPerAd: 0 },
   camera: {
@@ -200,16 +233,20 @@ export const IMPACT: RenderPreset = {
     yFracBroll: 0.7,
   },
   hook: {
-    // Anton condensed caps — the same face the captions use, so the hook and the
-    // captions read as one editor. Condensed fits more words per line at a given
-    // size, which is what an offer hook needs.
-    layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Anton-Regular.ttf', advRatio: 0.5,
-    textColor: 'white', highlightColor: '0xFFCC00', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
+    // LAYOUT: BOXED — the Kallaway grammar from Neil's swipe screenshots. Line 1
+    // plain white, line 2 knocked out of a solid crimson slab, with ONE word set
+    // in an italic serif. Poppins Black is the geometric heavy face those
+    // creators actually use; the old Montserrat/Anton pick was just reshuffling
+    // fonts the repo already had, which is what made every preset look the same.
+    layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Poppins-Black.ttf', advRatio: 0.62,
+    textColor: 'white', highlightColor: 'white', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.056,
     // 0.35: direct-response grammar is fast, and a hook that waits reads as hesitation.
     wordCadenceSec: 0.32, burnTransition: true, revealHoldSec: 0.35,
-    // Gold/silver metallic: the premium offer look Neil approved 2026-06-10. It
-    // survives HERE (and on hype) rather than on all six title-stack presets.
-    gradient: HOOK_PALETTES[0],
+    // FLAT: the box carries the colour. A metallic gradient inside a solid slab
+    // fights it — this is why the palette is a per-preset decision now.
+    gradient: null,
+    accentMode: 'boxed-line', twoLine: true, caps: true, glow: false,
+    accentFontFile: 'fonts/InstrumentSerif-Italic.ttf',
   },
   transition: { kind: 'flash', halfDurSec: 0.07, everyN: 2, maxPerAd: 3 },
   // Camera motion is the video-generation prompt's job — generated clips carry
@@ -244,14 +281,16 @@ export const HYPE: RenderPreset = {
     yFracBroll: 0.68,
   },
   hook: {
-    // Bangers — the same display face as its captions. Loud by construction, so
-    // this is the one hook that is allowed to shout.
-    layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Bangers-Regular.ttf', advRatio: 0.48,
-    textColor: 'white', highlightColor: '0xFFE100', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
+    // LAYOUT: NEON — line 1 plain white, ALL of line 2 in hot yellow with an
+    // outer glow (the "YOU FINALLY DID IT!" reference). drawtext has no blur, so
+    // the glow is stacked widening borders; see buildWordFilters.
+    layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Poppins-Black.ttf', advRatio: 0.62,
+    textColor: 'white', highlightColor: '0xFFE100', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.058,
     // 0.35: matches impact — MrBeast/Temu energy cuts on the beat, it does not linger.
     wordCadenceSec: 0.3, burnTransition: true, revealHoldSec: 0.35,
-    // Sunset gold: hotter than impact's gold/silver, which is the point.
-    gradient: HOOK_PALETTES[2],
+    // FLAT: the glow IS the treatment. Gradient + glow reads as mud.
+    gradient: null,
+    accentMode: 'accent-line', twoLine: true, caps: true, glow: true,
   },
   transition: { kind: 'whip', halfDurSec: 0.05, everyN: 2, maxPerAd: 4 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).
@@ -285,9 +324,11 @@ export const CLEAN: RenderPreset = {
     yFracBroll: 0.72,
   },
   hook: {
-    // Soft sky accent, not gold: gold is impact's, and a testimonial/service hook
-    // wants a calm, trustworthy accent rather than a sales one.
-    layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/ArchivoBlack-Regular.ttf', advRatio: 0.66,
+    // LAYOUT: EDITORIAL — the ONE preset that is not all-caps ("Fitness Will Make
+    // You Rich" in the swipe set). Sentence case + an italic serif accent line
+    // reads as a magazine standfirst, which is the register a testimonial wants.
+    // Neil, 2026-08-17: caps is a per-preset look call, not a house rule.
+    layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/Poppins-Black.ttf', advRatio: 0.62,
     textColor: 'white', highlightColor: '0x7FD4FF', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
     // 0.7: restraint IS the style here. The extra beat reads as a breath on a
     // testimonial, where on impact/hype the same beat would read as dead air.
@@ -295,6 +336,8 @@ export const CLEAN: RenderPreset = {
     // FLAT on purpose. A metallic sweep on a testimonial hook reads as an ad, and
     // sincerity is the entire product of this preset.
     gradient: null,
+    accentMode: 'accent-line', twoLine: true, caps: false, glow: false,
+    accentFontFile: 'fonts/InstrumentSerif-Italic.ttf',
   },
   transition: { kind: 'dip', halfDurSec: 0.12, everyN: 3, maxPerAd: 2 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).
@@ -340,13 +383,24 @@ export const PUNCH: RenderPreset = {
   },
   hook: {
     ...IMPACT.hook,
-    fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
+    // LAYOUT: STACK — the tightest of the four. Bebas Neue condensed caps, line 1
+    // white, all of line 2 in neon green, minimal leading ("STOP USING / CALL TO
+    // ACTIONS"). No box, no glow: the density is the style.
+    // sizeFrac is HIGHER than the geometric presets on purpose: Bebas is
+    // condensed, so at a shared fontsize it reads visibly smaller on the frame.
+    // Optical size, not nominal size, is what the eye grades.
+    fontFile: 'fonts/BebasNeue-Regular.ttf', advRatio: 0.42,
     reveal: 'slam',
-    textColor: 'white', highlightColor: '0x39FF6A', sizeFrac: 0.056,
+    textColor: 'white', highlightColor: '0x39FF6A', sizeFrac: 0.082,
     wordCadenceSec: 0.28,
+    // Explicitly OFF. `...IMPACT.hook` carries impact's italic-serif accent, and
+    // inheriting it silently is the exact defect class this whole change fixes:
+    // a preset that never asked for a trait quietly wearing another preset's.
+    accentFontFile: undefined,
     // Flat, not metallic: the creator look is a solid white line + one solid
     // accent line (the dominant grammar across the swipe-file screenshots).
     gradient: null,
+    accentMode: 'accent-line', twoLine: true, caps: true, glow: false,
   },
   sfx: {
     // `glitch` (not `pop`) on the callout: `boom`+`pop`+3 whooshes at 0.6 is
@@ -376,15 +430,18 @@ export const BARS: RenderPreset = {
   },
   hook: {
     ...IMPACT.hook,
-    fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
+    // LAYOUT: BOXED (amber variant) — same slab grammar as impact but condensed
+    // and warm, so the hook rhymes with this preset's black/white caption bars
+    // instead of fighting them. The bar treatment is a CAPTION animation
+    // (`chunkAnim: 'bars'`) and never reaches the hook, so the hook needs its own
+    // block of colour or it renders as flat white.
+    fontFile: 'fonts/BebasNeue-Regular.ttf', advRatio: 0.42,
     reveal: 'slam',
-    // Amber accent. The black/white bar treatment is a CAPTION animation
-    // (`chunkAnim: 'bars'`) and never reaches the title-stack hook, so a
-    // white-on-white title would have left this preset's hook with no power-word
-    // hierarchy at all — flat white for the whole line.
-    textColor: 'white', highlightColor: '0xFF9F1C', sizeFrac: 0.054,
+    // Condensed face → higher sizeFrac, same optical-size reasoning as punch.
+    textColor: 'white', highlightColor: 'white', wipeColor: '0xFF9F1C', sizeFrac: 0.08,
     wordCadenceSec: 0.26, burnTransition: false,
     gradient: null,
+    accentMode: 'boxed-line', twoLine: true, caps: true, glow: false,
   },
   sfx: {
     overlayMap: { hook: 'riser', callout: 'swish', punchline: 'ding', subtitle: null },
@@ -405,11 +462,18 @@ export const SPOTLIGHT: RenderPreset = {
   },
   hook: {
     ...IMPACT.hook,
+    // LAYOUT: NEON (red variant) — Anton condensed rather than hype's geometric
+    // Poppins, and a red glow rather than yellow. Same family, different voice:
+    // hype shouts an outcome, spotlight warns about a mistake.
     fontFile: 'fonts/Anton-Regular.ttf', advRatio: 0.5,
     reveal: 'flip',
-    textColor: 'white', highlightColor: '0xFF3B30', sizeFrac: 0.06,
+    textColor: 'white', highlightColor: '0xFF3B30', sizeFrac: 0.07,
     wordCadenceSec: 0.3, burnTransition: false,
     gradient: null,
+    accentMode: 'accent-line', twoLine: true, caps: true, glow: true,
+    // Explicitly OFF — see the note on punch. A neon line does not want a serif
+    // word inside it; the glow is already the accent.
+    accentFontFile: undefined,
   },
   sfx: {
     overlayMap: { hook: 'drop', callout: 'sparkle', punchline: 'ding', subtitle: null },

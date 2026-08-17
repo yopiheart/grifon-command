@@ -44,6 +44,11 @@ describe('preset definitions', () => {
       // all, so `null` is what it has ALWAYS drawn — new field, unchanged look.
       // The drawPlan golden snapshot for CLASSIC is the independent proof.
       gradient: null,
+      // Added 2026-08-17 with the hook layout system. All four are the
+      // pre-existing behaviour spelled out: the accent was ALWAYS power-word,
+      // titles were never force-wrapped, never force-cased, never glowed. New
+      // fields, unchanged look — the CLASSIC golden snapshot still matches HEAD.
+      accentMode: 'power-word', twoLine: false, caps: false, glow: false,
     });
     expect(CLASSIC.transition.kind).toBe('none');
     expect(CLASSIC.camera.intensity).toBe(0);
@@ -85,6 +90,11 @@ describe('preset definitions', () => {
       const signature = JSON.stringify([
         p.hook.layout, p.hook.reveal, p.hook.fontFile, p.hook.textColor,
         p.hook.highlightColor, p.hook.sizeFrac, p.hook.gradient,
+        // Added 2026-08-17 with the layout system. Without these the signature
+        // could not tell a boxed line from a glowing one, which is most of what
+        // now distinguishes the presets from each other.
+        p.hook.accentMode, p.hook.twoLine, p.hook.caps, p.hook.glow,
+        p.hook.accentFontFile ?? null,
       ]);
       const clash = seen.get(signature);
       expect(clash, `${p.id} draws an identical hook to ${clash}`).toBeUndefined();

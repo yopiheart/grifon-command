@@ -11,7 +11,7 @@ import type { FinalRenderScene, FinalRenderEndCard, SfxBankId, CameraEffect, Voi
 import {
   CLASSIC,
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
-  type HookPalette,
+  type HookPalette, type HookAccentMode,
 } from './renderPresets.js';
 import { textWidthPx } from './fontMetrics.js';
 
@@ -219,6 +219,16 @@ export interface WordTiming {
   yPx?: number;
   /** Render in the preset's highlight color (gold power word) instead of base. */
   highlight?: boolean;
+  /** Which stacked line this word belongs to (title-stack hooks). Needed so the
+   * accent can be applied per LINE rather than per power-word, and so a boxed
+   * line can be measured for its slab. */
+  lineIdx?: number;
+  /** Render this word in the preset's `accentFontFile` (the italic-serif word
+   * inside a boxed line) instead of the hook font. */
+  accentFont?: boolean;
+  /** Knock the word out of a solid slab: skip the outline/shadow decoration so
+   * the glyphs read cleanly against the box behind them. */
+  onBox?: boolean;
 }
 
 // Power words pop GOLD in the title stack (reference grammar: numbers +
@@ -250,7 +260,10 @@ export function hookTitleLayout(
   yTop: number,
   startSec: number,
   cadenceSec: number,
-  fontFile?: string
+  fontFile?: string,
+  // WHERE the accent lands. Defaults to the pre-2026-08-17 power-word rule so
+  // CLASSIC and every existing caller are untouched.
+  accentMode: HookAccentMode = 'power-word'
 ): WordTiming[] {
   const lineH = Math.round(fontsize * 1.18);
   // Explicit inter-word gap + REAL per-glyph advance. estWidth is length×advRatio —
@@ -279,13 +292,31 @@ export function hookTitleLayout(
       out.push({
         word: wd, start, end: start, // end is overwritten by the caller (persist)
         xPx: Math.round(x), yPx: yTop + li * lineH,
-        highlight: isPowerWord(wd),
+        // Per-LINE accent for the two line modes; the legacy per-word rule only
+        // for 'power-word'. This one branch is what made every preset's hook
+        // look identical: the old rule painted word 0 of a single line in every
+        // preset, so font and colour were the only things that could differ.
+        highlight: accentMode === 'power-word' ? isPowerWord(wd) : li > 0,
+        lineIdx: li,
+        onBox: accentMode === 'boxed-line' && li > 0,
       });
       x += wordWs[wi] + gap;
       idx++;
     }
   }
-  if (out.length && !out.some((w) => w.highlight)) out[0].highlight = true;
+  if (accentMode === 'power-word') {
+    if (out.length && !out.some((w) => w.highlight)) out[0].highlight = true;
+  } else if (!out.some((w) => w.highlight)) {
+    // Line modes with a single line (fitText declined to wrap, or a one-word
+    // title): fall back to accenting the LAST word rather than the first. The
+    // payoff word is what the references colour, and word 0 is precisely the
+    // old look we are moving off.
+    if (out.length) {
+      const last = out[out.length - 1];
+      last.highlight = true;
+      last.onBox = accentMode === 'boxed-line';
+    }
+  }
   return out;
 }
 
@@ -585,20 +616,61 @@ export function planScene(
     // Title source: the EDL hook overlay when present, else the first sentence of
     // the spoken line (7-word cap). Only when BOTH are empty does the hook plan
     // no title layer.
-    const text = overlay?.text
+    const raw = overlay?.text
       ? stripUnrenderable(overlay.text)
       : stripUnrenderable(hookFallbackText(scene.scriptLine));
-    if (!text) return layers;
+    if (!raw) return layers;
+    // Caps is a per-preset LOOK decision, not a house rule (Neil, 2026-08-17:
+    // "merong all caps, merong hindi, depende sa font"). fitText + safeZone below
+    // still decide whether the result actually fits, so a preset can ask for caps
+    // and still be shrunk to fit the 9:16 safe zone.
+    const text = preset.hook.caps ? raw.toUpperCase() : raw;
     const hookAdv = preset.hook.advRatio;
-    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), hookAdv);
+    let { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), hookAdv);
+    // A one-line title has no line 2, so an accent-line/boxed-line preset would
+    // have nothing to paint and would silently fall back to the old look. Every
+    // reference hook in the swipe set is a two-line stack, so force the split.
+    if (preset.hook.twoLine && lines.length < 2) lines = wrapTwoLines(text);
     const yTop = Math.round(h * HOOK_TOP_FRAC);
 
     if (preset.hook.layout === 'title-stack') {
-      // Reference-grade hook: word-by-word elastic pop, gold/white two-tone,
-      // no box (websites5 grammar; Neil 2026-06-10 redesign).
+      // Reference-grade hook: word-by-word elastic pop, accent applied per the
+      // preset's accentMode (line, boxed line, or the legacy power-word rule).
       const words = hookTitleLayout(
-        lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec, preset.hook.fontFile
+        lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec,
+        preset.hook.fontFile, preset.hook.accentMode
       );
+      // The italic-serif accent word (Kallaway's boxed line). ONE word only —
+      // the LAST of the accent line, which is where the payoff sits.
+      if (preset.hook.accentFontFile) {
+        const accented = words.filter((wd) => wd.highlight);
+        if (accented.length) accented[accented.length - 1].accentFont = true;
+      }
+      // Solid slab behind the accent line, drawn BEFORE the text so the words
+      // knock out of it. Reuses the existing BoxLayer primitive (CLASSIC's wipe
+      // box) rather than inventing a second box path.
+      if (preset.hook.accentMode === 'boxed-line') {
+        const boxed = words.filter((wd) => wd.onBox);
+        if (boxed.length) {
+          const pad = Math.round(fontsize * 0.16);
+          const left = Math.min(...boxed.map((b) => b.xPx));
+          const right = Math.max(
+            ...boxed.map((b) => b.xPx + (textWidthPx(preset.hook.fontFile, b.word, fontsize)
+              ?? estWidth(b.word, fontsize, hookAdv)))
+          );
+          const boxTop = Math.min(...boxed.map((b) => b.yPx ?? yTop));
+          layers.push({
+            kind: 'box',
+            x: Math.max(sz.xMargin - pad, Math.round(left - pad)),
+            y: Math.round(boxTop + fontsize * 0.16),
+            w: Math.round(right - left) + 2 * pad,
+            h: Math.round(fontsize * 1.02),
+            color: preset.hook.wipeColor,
+            startSec: boxed[0].start,
+            wipeDur: HOOK_WIPE_DUR,
+          });
+        }
+      }
       words.forEach((wd) => { wd.end = end; }); // every word persists to scene end
       layers.push({
         kind: 'text', text: lines.join('\n'), fontsize, color: preset.hook.textColor, boxAlpha: 0,

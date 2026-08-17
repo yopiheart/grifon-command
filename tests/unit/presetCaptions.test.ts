@@ -51,11 +51,10 @@ describe('planScene — classic identity', () => {
 });
 
 describe('planScene — preset styling', () => {
-  it('hype/impact hook is a title stack: no box, hook font, sequential elastic words', () => {
+  it('hype/impact hook is a title stack: hook font, sequential elastic words', () => {
     for (const preset of [HYPE, IMPACT]) {
       const layers = planScene(hook, 4, DIMS, preset);
-      expect(layers.some((l) => l.kind === 'box')).toBe(false);
-      const title = layers[0] as TextLayer;
+      const title = layers.find((l) => l.kind === 'text') as TextLayer;
       expect(title.anim).toBe('word-pop');
       expect(title.font).toBe('hook');
       expect(title.words!.length).toBe(3); // TIGNAN MO TO
@@ -63,11 +62,45 @@ describe('planScene — preset styling', () => {
       // sequential cadence + persistence to scene end
       expect(title.words![1].start).toBeGreaterThan(title.words![0].start);
       expect(title.words![2].end).toBeCloseTo(4, 3);
-      // two-tone: TIGNAN is a power word → gold highlight
-      expect(title.words![0].highlight).toBe(true);
-      expect(title.words![1].highlight).toBeFalsy();
       expect(title.emphasisSfx).toBe('boom');
     }
+  });
+
+  // REWRITTEN 2026-08-17. The old version asserted "no box" and "TIGNAN is a
+  // power word → word 0 highlights" for both presets. Both were the defect, not
+  // the contract: that single rule ran in EVERY preset, so the hook was word-0
+  // accented on one line everywhere and only the hue could differ. Neil's swipe
+  // references accent a whole LINE (or a boxed line) and never a stray word.
+  it('accent lands on the whole SECOND LINE, not on a scattered power word', () => {
+    for (const preset of [HYPE, IMPACT, CLEAN]) {
+      const layers = planScene(hook, 4, DIMS, preset);
+      const title = layers.find((l) => l.kind === 'text') as TextLayer;
+      const byLine = new Map<number, boolean[]>();
+      for (const wd of title.words!) {
+        const li = wd.lineIdx ?? 0;
+        if (!byLine.has(li)) byLine.set(li, []);
+        byLine.get(li)!.push(!!wd.highlight);
+      }
+      expect(byLine.size, `${preset.id} must be a two-line stack`).toBe(2);
+      // Line 0 entirely plain, line 1 entirely accented — no mixed line.
+      expect(byLine.get(0)!.every((h) => !h), `${preset.id} line 0`).toBe(true);
+      expect(byLine.get(1)!.every((h) => h), `${preset.id} line 1`).toBe(true);
+    }
+  });
+
+  it('a boxed-line preset plans a slab BEHIND the accent line, text knocked out', () => {
+    const layers = planScene(hook, 4, DIMS, IMPACT);
+    const box = layers.find((l) => l.kind === 'box');
+    expect(box, 'impact is boxed-line and must plan a box').toBeDefined();
+    // The box must be planned BEFORE the text, or it paints over the words.
+    expect(layers.indexOf(box!)).toBeLessThan(
+      layers.findIndex((l) => l.kind === 'text')
+    );
+    const title = layers.find((l) => l.kind === 'text') as TextLayer;
+    // Every accent-line word is flagged onBox so it drops its black contour.
+    expect(title.words!.filter((w) => w.highlight).every((w) => w.onBox)).toBe(true);
+    // ...and a non-boxed preset plans no box at all.
+    expect(planScene(hook, 4, DIMS, HYPE).some((l) => l.kind === 'box')).toBe(false);
   });
 
   it('clean: title stack with no box, white base', () => {

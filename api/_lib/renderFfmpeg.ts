@@ -194,10 +194,13 @@ export function buildWordFilters(
   wordTextNames: string[],
   preset: RenderPreset,
   baseTextName: string | null = null,
-  mode: 'normal' | 'bed' | 'mask' = 'normal'
+  mode: 'normal' | 'bed' | 'mask' = 'normal',
   // 'bed'  = all-black glyphs WITH outline+shadow (the contrast bed a gradient
   //          fill sits on); 'mask' = pure white glyphs, no decoration (the
   //          clipping mask that cuts the gradient into letter shapes).
+  // Second face for words flagged `accentFont` (the italic-serif word inside a
+  // boxed hook line). Null → every word uses `fontName`.
+  accentFontName: string | null = null
 ): string {
   const words = l.words ?? [];
   if (!words.length) return buildTextFilter({ ...l, anim: 'pop' }, fontName, baseTextName ?? wordTextNames[0], preset);
@@ -330,12 +333,35 @@ export function buildWordFilters(
       yExpr = `${yBase}`;
     }
 
+    // A word sitting INSIDE a solid slab drops its outline+shadow: the box is
+    // already the contrast, and a black contour on top reads as a smudge.
+    const wordDeco = wd.onBox && mode === 'normal' ? '' : deco;
+    const wordFont = wd.accentFont && accentFontName ? accentFontName : fontName;
+    const alpha = `alpha='min(1,max(0,(t-${wd.start})/0.05))'`;
+    const enable = `enable='between(t,${wd.start},${l.endSec})'`;
+
+    // NEON GLOW. drawtext has no blur, so an outer glow is faked by stacking
+    // widening borders of the accent colour UNDER the glyph at falling opacity.
+    // Accent words only, `normal` mode only — in bed/mask modes the halo would
+    // leak into the gradient clip and fringe every letter.
+    if (preset.hook.glow && wd.highlight && mode === 'normal' && l.font === 'hook') {
+      for (const [mult, a] of [[3.2, 0.18], [2.1, 0.3], [1.2, 0.45]] as const) {
+        parts.push(
+          `drawtext=fontfile=${wordFont}:textfile=${wordTextNames[j]}:` +
+          `fontsize=${fontsizeOpt}:fontcolor=${color}:` +
+          `borderw=${Math.round(l.fontsize * 0.06 * mult)}:bordercolor=${color}@${a}:` +
+          `x=${wd.xPx}:y=${yExpr}:` +
+          `alpha='min(${a},max(0,(t-${wd.start})/0.05))':${enable}`
+        );
+      }
+    }
+
     parts.push(
-      `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
+      `drawtext=fontfile=${wordFont}:textfile=${wordTextNames[j]}:` +
       `fontsize=${fontsizeOpt}:` +
-      `fontcolor=${color}${deco ? `:${deco}` : ''}:` +
+      `fontcolor=${color}${wordDeco ? `:${wordDeco}` : ''}:` +
       `x=${wd.xPx}:y=${yExpr}:` +
-      `alpha='min(1,max(0,(t-${wd.start})/0.05))':enable='between(t,${wd.start},${l.endSec})'`
+      `${alpha}:${enable}`
     );
   }
   return parts.join(',');
@@ -698,7 +724,8 @@ function buildScene(
   hookFontName: string | null = null, // BARE hook-title font (falls back to fontName)
   sweepName: string | null = null, // BARE sweep.png in `dir` (premium hook glint)
   leadInSec: number = 0, // seconds of pre-speech dead air to skip on BOTH inputs
-  midGap: MidGapPlan | null = null // mid-scene dead air to splice out (ships dark)
+  midGap: MidGapPlan | null = null, // mid-scene dead air to splice out (ships dark)
+  accentFontName: string | null = null // BARE italic-serif face for accentFont words
 ): void {
   const [w, h] = dims;
 
@@ -759,7 +786,10 @@ function buildScene(
           // `null` pass-through so later appends stay comma-legal after a label.
           vChain = `${outLabel}null`;
         } else {
-          vChain += `,${buildWordFilters(layer, layerFont, wordNames, preset, baseName)}`;
+          vChain += `,${buildWordFilters(
+            layer, layerFont, wordNames, preset, baseName, 'normal',
+            layer.font === 'hook' ? accentFontName : null
+          )}`;
         }
       } else {
         const textName = `ov_${sceneIdx}_${k++}.txt`;
@@ -958,6 +988,16 @@ export async function renderFinalVideo(
     hookFontName = 'hook.ttf';
     copyFileSync(hookFontSrc, join(dir, hookFontName));
   }
+  // Second hook face for the ONE italic-serif accent word inside a boxed line
+  // (Kallaway grammar). Optional per preset; absent → that word uses hook.ttf.
+  let accentFontName: string | null = null;
+  if (preset.hook.accentFontFile) {
+    const accentSrc = findAsset(preset.hook.accentFontFile);
+    if (accentSrc) {
+      accentFontName = 'hookaccent.ttf';
+      copyFileSync(accentSrc, join(dir, accentFontName));
+    }
+  }
   // Light-sweep band for the premium hook fill (skip silently if missing).
   let sweepName: string | null = null;
   const sweepSrc = findAsset(join('fx', 'sweep.png'));
@@ -1149,7 +1189,7 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset, hookFontName, sweepName, leadInSec, midGap
+        camFilter, preset, hookFontName, sweepName, leadInSec, midGap, accentFontName
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
