@@ -51,8 +51,27 @@ Open render-side items to confirm:
 > suite green (225 passed); pushed. **Music-under-VO is now part of the main one-pass smoke** —
 > ships dark behind `GRIFON_MUSIC_GEN_ENABLED` (default off → 503 → static-bed fallback).
 
+> ## ✅ LISTEN GATE RUN 2026-08-17 — PASS
+>
+> Four beds generated (all four styles, not two) via the new
+> `tools/smoke_music_bed.mjs`, each parked beside its static counterpart in
+> `.tmp/music-gate/`. Neil's verdict: **"okay naman lahat."** Generated ≥ static,
+> so the gate below is discharged.
+>
+> **Remaining action: set `GRIFON_MUSIC_GEN_ENABLED='true'`.** Then drive a
+> **Pro/Business** render through the AI Editor for the full E2E — that step is
+> still owed; the ear test and the E2E are two different gates.
+>
+> Note for whoever reads the runbook below: **Python IS installed on this cafe PC**
+> (checked 2026-08-17), so the "Python isn't installed" note above is stale. The
+> Node tool is still the one to reach for — it imports `api/_lib/musicPrompts.ts`
+> instead of hand-copying the prompts, so it cannot drift, and it covers `ugcpro`,
+> the style whose missing static bed (`ugcpro` → `testimonial.mp3` alias) is why
+> several presets sounded alike.
+
 Branch: `claude/gemini-audio-stack-transfer-eglwp5` (fetch when starting).
-- `ELEVEN_LABS_API_KEY=sk_... python3 tools/smoke_music_bed.py` → two MP3s in `.tmp/`
+- `npx vite-node tools/smoke_music_bed.mjs` → four MP3s + statics in `.tmp/music-gate/`
+  (superseded `tools/smoke_music_bed.py`, which does two styles from copied prompts)
 - Listen bar: **invisible > impressive** — bed must disappear under a VO, **no singing /
   vocal intro**. Compare vs static beds in `api/_lib/assets/music/`.
 - Stray vocal on a take → discard + rerun (don't judge on one bad roll).

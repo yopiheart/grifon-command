@@ -256,8 +256,28 @@ list so `pickSceneSfx` can never be gap-suppressed by a diegetic cue across a
 scene boundary (P13 precedence holds both directions) + scene-end headroom
 guard + punctuation-proof negation window. 579 unit tests green.
 
-**Neither slice is live yet — `SFX_V2_ENABLED` is unset in prod.** One
-combined ear-gate now covers both slices:
+> ## ✅ EAR-GATE RUN 2026-08-17 — targets (a) and (b) PASS
+>
+> Neil auditioned the bank via `tools/ear_gate_audition.mjs` (16 files in
+> `.tmp/ear-gate/`, built straight from the 66-file variant bank — no render, no
+> API). Verdict: **"okay naman lahat."**
+>
+> - **(a) Rotation variants — PASS**, including every machine-contested one the
+>   list below names: ding-v3/v4, riser-v2, swish-v2, glitch-v4, whoosh-v5.
+> - **(b) chaching family — PASS WHOLE. No prune.** All 6 variants stay; the
+>   "mechanical vs bell chime" split did not need resolving by ear.
+> - **(c) Cue TIMING — NOT JUDGED.** An audition plays sounds in isolation, so it
+>   physically cannot answer whether a hit lands on its beat. This is the ONE
+>   remaining piece of the gate and it needs a real ad. If hits read consistently
+>   late or early, tune `CALIBRATION_OFFSET_SEC` (one constant).
+>
+> **Remaining action: set `SFX_V2_ENABLED='true'` in the PROD Vercel env** (it is
+> already set on preview). Runtime-read, so no rebuild is needed. P13 marked
+> `applied` in [viral_swipe_file.md](viral_swipe_file.md) with the same timing
+> caveat recorded there.
+
+**Neither slice was live as of the writing below — `SFX_V2_ENABLED` was unset in
+prod.** One combined ear-gate covers both slices:
 
 1. **Ear-gate (Neil):** `SFX_V2_ENABLED='true'` in a Vercel PREVIEW env;
    render 2-3 real ads on impact/hype whose scripts LITERALLY contain
