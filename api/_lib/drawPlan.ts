@@ -9,7 +9,7 @@
 
 import type { FinalRenderScene, FinalRenderEndCard, SfxBankId, CameraEffect, VoiceWord } from '../../types.js';
 import {
-  CLASSIC, pickHookPalette,
+  CLASSIC,
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
   type HookPalette,
 } from './renderPresets.js';
@@ -63,10 +63,15 @@ const HOOK_TOP_FRAC = 0.15;
 // the style; the env override lets the synthetic harness A/B all three with no edit.
 const HOOK_DELAY = 0.4;
 const HOOK_BOX_DELAY = 0.55, HOOK_WIPE_DUR = 0.4;
-// flip = uniform scale-grow "pop" — Neil's pick (2026-06-08), now carried by the
+// flip = uniform scale-grow "pop" — Neil's pick (2026-06-08), carried by the
 // CLASSIC preset ('bounce' = easeOutBack overshoot | 'slam' = easeOutQuart hard
-// slide | 'flip'). The wide annotation keeps the alternate branches type-valid.
-const HOOK_REVEAL: HookRevealStyle = CLASSIC.hook.reveal;
+// slide | 'flip').
+//
+// This was a module constant pinned to `CLASSIC.hook.reveal` until 2026-08-17,
+// so every preset's own `reveal` was dead on this path and any future non-
+// title-stack preset would have silently inherited CLASSIC's entrance. It reads
+// from the caller's preset now. CLASSIC still resolves to 'flip', so its look is
+// unchanged.
 const HOOK_FADE_SEC = 0.15;            // alpha snap-in, decoupled from motion (so it's NOT a slow fade)
 // bounce: spring up PAST the target then settle (easeOutBack; c1=3 → ~25% overshoot)
 const HOOK_BOUNCE_DUR = 0.45, HOOK_BOUNCE_RISE = 60, BOUNCE_C1 = 3.0, BOUNCE_C3 = 4.0;
@@ -561,7 +566,11 @@ export function planScene(
   trimSec: number | null,
   dims: [number, number],
   preset: RenderPreset = CLASSIC,
-  variantSeed: number = 0
+  // Kept for signature stability (renderFinalVideo passes it positionally). It
+  // drove the hook gradient until 2026-08-17; the palette is preset-owned now, so
+  // nothing in the draw plan is seed-dependent. SFX variant rotation still uses
+  // the seed, but that happens in renderFfmpeg, not here.
+  _variantSeed: number = 0
 ): DrawLayer[] {
   const [w, h] = dims;
   const sz = safeZone(dims);
@@ -596,9 +605,13 @@ export function planScene(
         xExpr: `${Math.round((w - Math.max(...lines.map((l) => estWidth(l, fontsize, hookAdv)))) / 2)}`,
         yBase: yTop, startSec: 0.05, endSec: end, anim: 'word-pop', words, font: 'hook',
         emphasisSfx: overlaySfx.hook ?? undefined,
-        // Premium metallic fill + light sweep, palette rotated per render so
-        // consecutive ads don't match (Neil 2026-06-10 polish round).
-        gradient: pickHookPalette(variantSeed),
+        // Premium metallic fill + light sweep. PRESET-OWNED since 2026-08-17: the
+        // palette used to be pickHookPalette(variantSeed), i.e. chosen by the ad,
+        // which made the hook's colour random per render AND identical in
+        // distribution across every title-stack preset. `null` here = flat fill
+        // (textColor base + hook.highlightColor power words), which is the look
+        // punch/bars/spotlight/clean now ship.
+        gradient: preset.hook.gradient ?? undefined,
       });
       return layers;
     }
@@ -1035,10 +1048,11 @@ export function buildTextFilter(
     // fade read as a plain fade (Neil, 2026-06-08). pow() bases are kept ≥0 via
     // (1-p) so ffmpeg's eval never hits pow(negative,...).
     alpha = `min(1,max(0,(t-${s})/${HOOK_FADE_SEC}))`;
-    if (HOOK_REVEAL === 'slam') {
+    const hookReveal: HookRevealStyle = preset.hook.reveal;
+    if (hookReveal === 'slam') {
       const p = `min(1,max(0,(t-${s})/${HOOK_SLAM_DUR}))`;
       yExpr = `${l.yBase}+${HOOK_SLAM_RISE}*pow(1-${p},4)`;
-    } else if (HOOK_REVEAL === 'flip') {
+    } else if (hookReveal === 'flip') {
       const p = `min(1,max(0,(t-${s})/${HOOK_FLIP_DUR}))`;
       const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
       fontsizeOpt = `fontsize='max(10,${l.fontsize}*(${HOOK_FLIP_MINSCALE}+${HOOK_FLIP_SPAN}*${ease}))'`;

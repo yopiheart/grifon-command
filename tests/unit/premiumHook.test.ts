@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { planScene, buildPremiumHookStmts, buildWordFilters } from '../../api/_lib/renderFfmpeg.js';
 import type { TextLayer } from '../../api/_lib/renderFfmpeg.js';
-import { HYPE, CLASSIC, HOOK_PALETTES, pickHookPalette } from '../../api/_lib/renderPresets.js';
+import {
+  HYPE, CLASSIC, IMPACT, CLEAN, PUNCH, BARS, SPOTLIGHT, HOOK_PALETTES, pickHookPalette,
+} from '../../api/_lib/renderPresets.js';
 import type { FinalRenderScene } from '../../types.js';
 
 const DIMS: [number, number] = [1080, 1920];
@@ -11,15 +13,37 @@ const hook: FinalRenderScene = {
   overlayText: [{ text: 'TIGNAN MO TO', startSec: 0, endSec: 5, style: 'hook', position: 'center' }],
 };
 
-describe('hook palette rotation', () => {
-  it('non-classic hook carries the seed-picked palette; classic carries none', () => {
+// The hook palette belongs to the PRESET, not to the render seed (2026-08-17).
+// Before that, planScene called pickHookPalette(variantSeed), so the hook's
+// colour was chosen by the ad: it changed between two renders of the same preset
+// and was drawn from the same 4-palette pool for every title-stack preset. That
+// is what "parehas lahat ng overlay text" actually was, and these tests encode
+// the rule rather than the mechanism, so they survive a future re-implementation.
+describe('hook palette ownership', () => {
+  it('the same preset yields the same palette regardless of render seed', () => {
     const a = planScene(hook, 4, DIMS, HYPE, 0)[0] as TextLayer;
-    const b = planScene(hook, 4, DIMS, HYPE, 1)[0] as TextLayer;
-    expect(a.gradient).toEqual(HOOK_PALETTES[0]);
-    expect(b.gradient).toEqual(HOOK_PALETTES[1]);
-    expect(a.gradient).not.toEqual(b.gradient);
-    const classic = planScene(hook, 4, DIMS, CLASSIC, 0);
-    expect(classic.every((l) => l.kind !== 'text' || !(l as TextLayer).gradient)).toBe(true);
+    const b = planScene(hook, 4, DIMS, HYPE, 999)[0] as TextLayer;
+    expect(a.gradient).toEqual(HYPE.hook.gradient);
+    expect(a.gradient).toEqual(b.gradient);
+  });
+
+  it('the two metallic presets do not share a palette', () => {
+    expect(IMPACT.hook.gradient).not.toBeNull();
+    expect(HYPE.hook.gradient).not.toBeNull();
+    expect(IMPACT.hook.gradient).not.toEqual(HYPE.hook.gradient);
+  });
+
+  it('a flat-hook preset plans NO gradient layer at any seed', () => {
+    for (const p of [CLASSIC, CLEAN, PUNCH, BARS, SPOTLIGHT]) {
+      expect(p.hook.gradient, p.id).toBeNull();
+      for (const seed of [0, 1, 7, 999]) {
+        const layers = planScene(hook, 4, DIMS, p, seed);
+        expect(
+          layers.every((l) => l.kind !== 'text' || !(l as TextLayer).gradient),
+          `${p.id} @ seed ${seed}`
+        ).toBe(true);
+      }
+    }
   });
 
   it('pickHookPalette wraps deterministically', () => {
@@ -40,9 +64,10 @@ describe('buildPremiumHookStmts (gradient clip + light sweep)', () => {
     expect(g).toContain('format=gray[m_hi]');
     expect(g).toContain('format=gray[m_bs]');
     expect(g).toContain('fontcolor=white');
-    // gradient fills with the palette endpoints
-    expect(g).toContain(`c0=${HOOK_PALETTES[0].hi[0]}:c1=${HOOK_PALETTES[0].hi[1]}`);
-    expect(g).toContain(`c0=${HOOK_PALETTES[0].base[0]}:c1=${HOOK_PALETTES[0].base[1]}`);
+    // gradient fills with HYPE'S OWN palette endpoints (preset-owned, not seeded)
+    const pal = HYPE.hook.gradient!;
+    expect(g).toContain(`c0=${pal.hi[0]}:c1=${pal.hi[1]}`);
+    expect(g).toContain(`c0=${pal.base[0]}:c1=${pal.base[1]}`);
     // clip + composite chain from inLabel to outLabel
     expect(g).toContain('[f_hi][m_hi]alphamerge[c_hi]');
     expect(g).toContain('[vb0][c_hi]overlay=0:0');

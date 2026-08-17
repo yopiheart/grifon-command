@@ -281,24 +281,60 @@ export function buildWordFilters(
     return parts.join(',');
   }
 
-  // word-pop (default): each word lands with an elastic overshoot pop (scale
-  // 20%→~108%→100%, easeOutBack — the reference "scale bounce") and persists.
+  // word-pop: each word lands with its own entrance and persists.
+  //
+  // ENTRANCE IS PRESET-KEYED since 2026-08-17. Every title-stack preset used to
+  // share this one hardcoded scale-pop, so the hook animated identically in
+  // impact/hype/clean/punch/bars/spotlight no matter what `hook.reveal` said —
+  // the second half of Neil's "parehas lahat" report (the first half was the
+  // palette). Captions are NOT affected: they carry no `font: 'hook'`, so they
+  // keep today's pop verbatim.
+  //
+  // Durations are WORD-level, so they are tighter than drawPlan's block-level
+  // constants: words land ~0.26-0.32s apart and an entrance that outlives its
+  // own cadence reads as mush.
+  const hookReveal = l.font === 'hook' ? preset.hook.reveal : 'bounce';
   // Hook title power words use the HOOK highlight (caption highlight can be
   // inverted, e.g. hype's gold-fill/white-highlight captions).
   const hlColor = l.font === 'hook' ? preset.hook.highlightColor : preset.caption.highlightColor;
   for (let j = 0; j < words.length; j++) {
     const wd = words[j];
-    const p = `min(1,max(0,(t-${wd.start})/0.22))`;
-    const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+    const yBase = wd.yPx ?? l.yBase;
     const color =
       mode === 'bed' ? 'black' :
       mode === 'mask' ? 'white' :
       wd.highlight ? hlColor : l.color;
+
+    // Geometry per reveal. `mask` and `bed` run through this same branch with the
+    // same layer+preset, so the gradient clip can never drift off its glyphs.
+    let fontsizeOpt: string;
+    let yExpr: string;
+    if (hookReveal === 'slam') {
+      // easeOutQuart hard slide up from below, no scale — the direct-response beat.
+      const p = `min(1,max(0,(t-${wd.start})/0.20))`;
+      fontsizeOpt = `${l.fontsize}`;
+      yExpr = `'${yBase}+70*pow(1-${p},4)'`;
+    } else if (hookReveal === 'flip') {
+      // Uniform scale-grow 45%→100% (slight overshoot) + a small rise — the
+      // "unfold". Calmer than bounce, which is why clean and spotlight use it.
+      const p = `min(1,max(0,(t-${wd.start})/0.24))`;
+      const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+      fontsizeOpt = `'max(8,${l.fontsize}*(0.45+0.55*${ease}))'`;
+      yExpr = `'${yBase}+18*(1-${p})'`;
+    } else {
+      // bounce (default, and today's shipped behaviour verbatim): elastic
+      // overshoot pop, scale 20%→~108%→100% (easeOutBack).
+      const p = `min(1,max(0,(t-${wd.start})/0.22))`;
+      const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+      fontsizeOpt = `'max(8,${l.fontsize}*(0.2+0.8*${ease}))'`;
+      yExpr = `${yBase}`;
+    }
+
     parts.push(
       `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
-      `fontsize='max(8,${l.fontsize}*(0.2+0.8*${ease}))':` +
+      `fontsize=${fontsizeOpt}:` +
       `fontcolor=${color}${deco ? `:${deco}` : ''}:` +
-      `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:` +
+      `x=${wd.xPx}:y=${yExpr}:` +
       `alpha='min(1,max(0,(t-${wd.start})/0.05))':enable='between(t,${wd.start},${l.endSec})'`
     );
   }

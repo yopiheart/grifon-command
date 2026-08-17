@@ -18,6 +18,34 @@ export type HookRevealStyle = 'bounce' | 'slam' | 'flip';
 export type HookLayoutStyle = 'wipe' | 'title-stack';
 export type TransitionKind = 'none' | 'flash' | 'dip' | 'whip' | 'burn';
 
+/** Premium hook fill: vertical metallic gradient pair [top, bottom] per word
+ * class (Neil 2026-06-10: "5 BEST" gold→dark-gold, "FREE" white→steel).
+ *
+ * OWNERSHIP MOVED 2026-08-17. This used to be picked by `pickHookPalette(seed)`
+ * inside planScene, i.e. by the AD, so the hook's colour was random per render
+ * and IDENTICAL in distribution across every title-stack preset — the reason
+ * Neil saw "parehas lahat ng overlay text kahit anong preset". A palette is a
+ * LOOK, and a look belongs to the preset, so `HookStyle.gradient` now owns it
+ * and `null` means a flat high-contrast fill (the reference grammar in most of
+ * the swipe file: solid white line + one solid accent line). */
+export interface HookPalette {
+  /** Power words (gold class in the reference). */
+  hi: [string, string];
+  /** Connector words (white→steel class). */
+  base: [string, string];
+}
+
+export const HOOK_PALETTES: HookPalette[] = [
+  { hi: ['0xFFE860', '0xC07F00'], base: ['0xFFFFFF', '0x9EA3AA'] }, // gold + silver ("5 BEST FREE")
+  { hi: ['0x9BD8FF', '0x1E5F9E'], base: ['0xFFFFFF', '0xB9C2CC'] }, // sky/water blue + silver (billboard)
+  { hi: ['0xFFD400', '0xFF7A00'], base: ['0xFFFFFF', '0xC9CDD3'] }, // sunset gold
+  { hi: ['0x8CFFC0', '0x0E8F5E'], base: ['0xFFFFFF', '0xAEB6BF'] }, // emerald
+];
+
+export function pickHookPalette(variantSeed: number): HookPalette {
+  return HOOK_PALETTES[Math.abs(variantSeed) % HOOK_PALETTES.length];
+}
+
 export interface CaptionStyle {
   /** Font file relative to api/_lib/assets/ (copied bare-named into the temp dir). */
   fontFile: string;
@@ -68,6 +96,11 @@ export interface HookStyle {
    * still ships 0.5 verbatim: this move is plumbing, and differentiating the
    * values is a look decision that belongs to Neil, not to a refactor. */
   revealHoldSec: number;
+  /** Metallic gradient fill clipped into the title glyphs, or `null` for a FLAT
+   * fill (textColor base + highlightColor power words). Preset-owned since
+   * 2026-08-17 — see HookPalette. Only consulted on `layout: 'title-stack'`;
+   * the classic wipe layout has no gradient path at all. */
+  gradient: HookPalette | null;
 }
 
 export interface TransitionStyle {
@@ -131,6 +164,9 @@ export const CLASSIC: RenderPreset = {
     layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
     textColor: 'white', highlightColor: '0xFFCC00', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
     wordCadenceSec: 0, burnTransition: false, revealHoldSec: 0.5,
+    // `wipe` has no gradient path, so null is what CLASSIC has ALWAYS rendered —
+    // the field is new, the look is untouched (regression lock still holds).
+    gradient: null,
   },
   transition: { kind: 'none', halfDurSec: 0, everyN: 1, maxPerAd: 0 },
   camera: {
@@ -164,10 +200,16 @@ export const IMPACT: RenderPreset = {
     yFracBroll: 0.7,
   },
   hook: {
-    layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
-    textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
+    // Anton condensed caps — the same face the captions use, so the hook and the
+    // captions read as one editor. Condensed fits more words per line at a given
+    // size, which is what an offer hook needs.
+    layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Anton-Regular.ttf', advRatio: 0.5,
+    textColor: 'white', highlightColor: '0xFFCC00', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
     // 0.35: direct-response grammar is fast, and a hook that waits reads as hesitation.
     wordCadenceSec: 0.32, burnTransition: true, revealHoldSec: 0.35,
+    // Gold/silver metallic: the premium offer look Neil approved 2026-06-10. It
+    // survives HERE (and on hype) rather than on all six title-stack presets.
+    gradient: HOOK_PALETTES[0],
   },
   transition: { kind: 'flash', halfDurSec: 0.07, everyN: 2, maxPerAd: 3 },
   // Camera motion is the video-generation prompt's job — generated clips carry
@@ -202,10 +244,14 @@ export const HYPE: RenderPreset = {
     yFracBroll: 0.68,
   },
   hook: {
-    layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
-    textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
+    // Bangers — the same display face as its captions. Loud by construction, so
+    // this is the one hook that is allowed to shout.
+    layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Bangers-Regular.ttf', advRatio: 0.48,
+    textColor: 'white', highlightColor: '0xFFE100', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
     // 0.35: matches impact — MrBeast/Temu energy cuts on the beat, it does not linger.
     wordCadenceSec: 0.3, burnTransition: true, revealHoldSec: 0.35,
+    // Sunset gold: hotter than impact's gold/silver, which is the point.
+    gradient: HOOK_PALETTES[2],
   },
   transition: { kind: 'whip', halfDurSec: 0.05, everyN: 2, maxPerAd: 4 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).
@@ -239,11 +285,16 @@ export const CLEAN: RenderPreset = {
     yFracBroll: 0.72,
   },
   hook: {
+    // Soft sky accent, not gold: gold is impact's, and a testimonial/service hook
+    // wants a calm, trustworthy accent rather than a sales one.
     layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/ArchivoBlack-Regular.ttf', advRatio: 0.66,
-    textColor: 'white', highlightColor: '0xFFCC00', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
+    textColor: 'white', highlightColor: '0x7FD4FF', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
     // 0.7: restraint IS the style here. The extra beat reads as a breath on a
     // testimonial, where on impact/hype the same beat would read as dead air.
     wordCadenceSec: 0.34, burnTransition: false, revealHoldSec: 0.7,
+    // FLAT on purpose. A metallic sweep on a testimonial hook reads as an ad, and
+    // sincerity is the entire product of this preset.
+    gradient: null,
   },
   transition: { kind: 'dip', halfDurSec: 0.12, everyN: 3, maxPerAd: 2 },
   // Camera motion lives in generation, not the renderer (pulse guard — see impact).
@@ -265,7 +316,20 @@ export const NONE: RenderPreset = {
   stitchedOnly: true,
 };
 
-/** White heavy-caps word pops with a hard black contour and drop shadow. */
+// ─────────────────────────────────────────────────────────────────────────────
+// The three IMPACT-derived presets. Until 2026-08-17 each of these overrode ONLY
+// `caption`, so they inherited IMPACT's `hook` and `sfx` verbatim — which is
+// exactly what Neil reported: the auto-captions changed between punch/bars/
+// spotlight while the hook title and the sound stayed identical in all three.
+// Each now carries its own hook typography, accent colour and entrance, and its
+// own SFX cue classes.
+// ⚠️ The SFX class picks below are a DESIGN proposal, not an ear-tested result.
+// They are deliberately distinct and inside the shipped bank; Neil's ear is the
+// gate on whether they stay.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** White heavy-caps word pops with a hard black contour and drop shadow.
+ * Creator/UGC register: neon-green accent, flat fill, hard slam entrance. */
 export const PUNCH: RenderPreset = {
   ...IMPACT,
   id: 'punch',
@@ -274,9 +338,31 @@ export const PUNCH: RenderPreset = {
     highlightColor: 'white',
     chunkAnim: 'word-pop',
   },
+  hook: {
+    ...IMPACT.hook,
+    fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
+    reveal: 'slam',
+    textColor: 'white', highlightColor: '0x39FF6A', sizeFrac: 0.056,
+    wordCadenceSec: 0.28,
+    // Flat, not metallic: the creator look is a solid white line + one solid
+    // accent line (the dominant grammar across the swipe-file screenshots).
+    gradient: null,
+  },
+  sfx: {
+    // `glitch` (not `pop`) on the callout: `boom`+`pop`+3 whooshes at 0.6 is
+    // CLASSIC's palette exactly, and shipping punch as a renamed classic is the
+    // very defect this preset was split out to fix. Every class here has a legacy
+    // static <class>.mp3 — the 5 diegetic classes (chaching/notification/paper/
+    // shutter/typing) are variant-only and MUST NOT appear in an overlayMap, or
+    // the cue fails to resolve whenever SFX_V2_ENABLED is off.
+    overlayMap: { hook: 'boom', callout: 'glitch', punchline: 'ding', subtitle: null },
+    maxWhoosh: 3,
+    volume: 0.6,
+  },
 };
 
-/** Alternating black/white per-line bars with a staggered slide-slam. */
+/** Alternating black/white per-line bars with a staggered slide-slam.
+ * Listicle/education register: no accent hue (the bars carry the contrast). */
 export const BARS: RenderPreset = {
   ...IMPACT,
   id: 'bars',
@@ -288,9 +374,27 @@ export const BARS: RenderPreset = {
     shadow: null,
     chunkAnim: 'bars',
   },
+  hook: {
+    ...IMPACT.hook,
+    fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
+    reveal: 'slam',
+    // Amber accent. The black/white bar treatment is a CAPTION animation
+    // (`chunkAnim: 'bars'`) and never reaches the title-stack hook, so a
+    // white-on-white title would have left this preset's hook with no power-word
+    // hierarchy at all — flat white for the whole line.
+    textColor: 'white', highlightColor: '0xFF9F1C', sizeFrac: 0.054,
+    wordCadenceSec: 0.26, burnTransition: false,
+    gradient: null,
+  },
+  sfx: {
+    overlayMap: { hook: 'riser', callout: 'swish', punchline: 'ding', subtitle: null },
+    maxWhoosh: 2,
+    volume: 0.55,
+  },
 };
 
-/** White outlined caps with a VO-timed black-on-white active-word invert. */
+/** White outlined caps with a VO-timed black-on-white active-word invert.
+ * Tutorial/how-to register: red accent, condensed face, slower flip entrance. */
 export const SPOTLIGHT: RenderPreset = {
   ...IMPACT,
   id: 'spotlight',
@@ -299,28 +403,20 @@ export const SPOTLIGHT: RenderPreset = {
     highlightColor: 'white',
     chunkAnim: 'karaoke-invert',
   },
+  hook: {
+    ...IMPACT.hook,
+    fontFile: 'fonts/Anton-Regular.ttf', advRatio: 0.5,
+    reveal: 'flip',
+    textColor: 'white', highlightColor: '0xFF3B30', sizeFrac: 0.06,
+    wordCadenceSec: 0.3, burnTransition: false,
+    gradient: null,
+  },
+  sfx: {
+    overlayMap: { hook: 'drop', callout: 'sparkle', punchline: 'ding', subtitle: null },
+    maxWhoosh: 2,
+    volume: 0.55,
+  },
 };
-
-/** Premium hook fill: vertical metallic gradient pair [top, bottom] per word
- * class (Neil 2026-06-10: "5 BEST" gold→dark-gold, "FREE" white→steel). One
- * palette per render, rotated by seed so consecutive ads don't match. */
-export interface HookPalette {
-  /** Power words (gold class in the reference). */
-  hi: [string, string];
-  /** Connector words (white→steel class). */
-  base: [string, string];
-}
-
-export const HOOK_PALETTES: HookPalette[] = [
-  { hi: ['0xFFE860', '0xC07F00'], base: ['0xFFFFFF', '0x9EA3AA'] }, // gold + silver ("5 BEST FREE")
-  { hi: ['0x9BD8FF', '0x1E5F9E'], base: ['0xFFFFFF', '0xB9C2CC'] }, // sky/water blue + silver (billboard)
-  { hi: ['0xFFD400', '0xFF7A00'], base: ['0xFFFFFF', '0xC9CDD3'] }, // sunset gold
-  { hi: ['0x8CFFC0', '0x0E8F5E'], base: ['0xFFFFFF', '0xAEB6BF'] }, // emerald
-];
-
-export function pickHookPalette(variantSeed: number): HookPalette {
-  return HOOK_PALETTES[Math.abs(variantSeed) % HOOK_PALETTES.length];
-}
 
 /** Seeded SFX variant pools (Slice 1, workflows/sfx_upgrade_plan.md). Keys are
  * the 10 shipped SfxBankId classes; values are LAB variant numbers surviving
