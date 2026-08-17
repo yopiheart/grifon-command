@@ -8,10 +8,9 @@
 SFX_V2_ENABLED = true              # PRODUCTION only (preview already true)
 GRIFON_MUSIC_GEN_ENABLED = true    # PRODUCTION
 ```
-Runtime-read, **no rebuild**, no `VITE_` twin (checked — only `IMAGE_GATE_ENABLED`
-has a build-time twin). Neil auditioned both banks and passed them: SFX rotation
-incl. every machine-contested variant, chaching family whole (**no prune**), and
-the generated music beds beat the statics. Recorded in `sfx_upgrade_plan.md`,
+Runtime-read, **no rebuild**, no `VITE_` twin (only `IMAGE_GATE_ENABLED` has one).
+Neil passed both banks: SFX rotation incl. every contested variant, chaching whole
+(**no prune**), generated beds beat the statics. Recorded in `sfx_upgrade_plan.md`,
 `this_week_plan.md`, P13 in `viral_swipe_file.md`.
 
 ### 2. Then one `before_after` run — `https://grifon.ai/app?osaEngine=producer`
@@ -24,36 +23,33 @@ on every fresh cafe PC.**
 
 **Two traps.** ⛔ Don't pick RAW (`stitchedOnly` bypasses every editorial layer).
 ⛔ `ROTATION.ugcpro = ['hype']` — AUTO always gives hype, so pick a preset by hand
-on the **FirstCutScreen** (which only appears AFTER filming; runs 1+2 died at the
+on the **FirstCutScreen**, which only appears AFTER filming (runs 1+2 died at the
 storyboard gate and never reached it). Music gen needs Pro/Business or it 403s.
-
-**Storyboard gate:** same woman in EVERY scene · 4 scenes · does the hook SHOW the
-flaw · `cinematic_grade` chip flags but does NOT auto-fix.
+**Gate:** same woman in EVERY scene · 4 scenes · hook SHOWS the flaw ·
+`cinematic_grade` chip flags but does NOT auto-fix.
 
 ## 🚀 ON MAIN (merged, deployed)
 **Per-preset hook identity.** "Lahat pare-parehas" had THREE stacked causes:
 punch/bars/spotlight were `{...IMPACT, caption}` so they inherited IMPACT's hook
-AND sfx; the hook palette came from `pickHookPalette(variantSeed)` so the AD chose
-the colour; and `buildWordFilters` hardcoded ONE entrance so `hook.reveal` was dead.
-Plus the two hands-only `referenceImage="none"` hatches closed (SERVICE skeletons).
-⚠️ The session-26 brief was WRONG twice — on the hook root cause and on "every
-skeleton still offers none". Don't trust its remaining pointers unread.
+AND sfx; the palette came from `pickHookPalette(variantSeed)` so the AD chose the
+colour; `buildWordFilters` hardcoded ONE entrance so `hook.reveal` was dead. Plus
+the two hands-only `referenceImage="none"` hatches closed (SERVICE skeletons).
+⚠️ The session-26 brief was WRONG twice — hook root cause, and "every skeleton
+still offers none". Don't trust its remaining pointers unread.
 
 ## 🌿 BRANCH `feat/hook-layout-system` (`1245d14`, pushed, NOT merged)
-Four real hook LAYOUTS. Root cause of the sameness was ONE line: `hookTitleLayout`
-accented `isPowerWord(w)` and fell back to `out[0]`, so every preset painted word 0
-of one line. Now accent-by-LINE. Three NEW fonts added (the old round only
-reshuffled Neil's existing five, which was the complaint): **Poppins Black**,
-**Bebas Neue**, **Instrument Serif Italic**.
-BOXED (impact, bars) · NEON (hype, spotlight) · STACK (punch) · EDITORIAL (clean).
-`caps` is per-preset, not a house rule. **CLASSIC byte-identical to HEAD.**
-Build pass, 1256 tests, 0 failed. Preview via `npx vite-node tools/hook_preview.mjs`
+Four real hook LAYOUTS. The sameness was ONE line: `hookTitleLayout` accented
+`isPowerWord(w)` and fell back to `out[0]`, so every preset painted word 0 of one
+line. Now accent-by-LINE. Three NEW fonts (the prior round only reshuffled Neil's
+existing five — that was the complaint): **Poppins Black**, **Bebas Neue**,
+**Instrument Serif Italic**. BOXED (impact, bars) · NEON (hype, spotlight) · STACK
+(punch) · EDITORIAL (clean). `caps` is per-preset. **CLASSIC byte-identical to
+HEAD.** Build pass, 1256 tests. Preview: `npx vite-node tools/hook_preview.mjs`
 (real planScene → PNGs, zero video credit).
 
-🔴 **ONE DECISION AWAITING NEIL:** the metallic gradient he approved 2026-06-10 is
-now OFF on every preset — none of his swipe references carries one. Machinery is
-NOT deleted (a synthetic `METALLIC` preset drives it in `premiumHook.test.ts`);
-re-enabling is one line. **Overrule this if he disagrees.**
+🔴 **DECISION AWAITING NEIL:** the metallic gradient he approved 2026-06-10 is now
+OFF everywhere — no swipe reference carries one. Machinery NOT deleted (synthetic
+`METALLIC` preset drives it in `premiumHook.test.ts`). **Overrule if he disagrees.**
 
 ## 🎤 VEO PRONUNCIATION — decision: OBSERVE, do NOT apply a phonetic map yet
 `consolidate.ts:108-111` — talking scenes send **audio only** to STS; `scriptLine`
