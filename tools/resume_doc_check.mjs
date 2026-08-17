@@ -70,7 +70,10 @@ if (!existsSync(NOW_PATH)) {
 }
 
 const nowRaw = readFileSync(NOW_PATH, 'utf8');
-const nowLines = nowRaw.split('\n');
+// Trailing newline first: a 90-line file ends with '\n', so a bare split() yields
+// 91 elements and the cap silently becomes 89. Cost session 27 a commit that
+// measured 90 and still failed the gate.
+const nowLines = nowRaw.replace(/\n$/, '').split('\n');
 
 if (nowLines.length > MAX_LINES) {
   fail(`NOW.md is ${nowLines.length} lines (max ${MAX_LINES}). It is a one-screen pointer, not a ledger — move detail into the workflow docs it links to.`);
