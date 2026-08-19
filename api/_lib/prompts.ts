@@ -1623,6 +1623,14 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   } else {
     strategyInstructions = `
         **STRATEGY: NARRATIVE RETENTION RHYTHOR**
+        0. **ONE PERFORMER, ONE PLACE.** Every scene that SHOWS the performer happens in the
+           SAME room, with the same furniture and surfaces in frame. Name that room in the
+           first performer scene and repeat it VERBATIM in every later performer scene. Do not
+           walk them through the house: a real person filming a 30-second review does not
+           change rooms four times, and each new room drags in its own surfaces (a wooden
+           vanity, a stone counter) that make one beat stop matching the others even when the
+           light is identical. Product-only B-roll with NO person in frame is exempt, and so is
+           Scene 1's metaphor still.
         1. **SCENE 1 (THE HOOK):** Visual Metaphor/Pattern Interrupt (Start/End Frames).
         2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** (Bridge the hook).
         3. **MIDDLE SCENES:** Alternate between **Product B-Roll** and **Avatar Talking**.
@@ -1741,9 +1749,13 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - Spot within residence ("at the kitchen counter", "by the front door")
       - Light: ORDINARY ambient room light, and the SAME light in every scene of this ad.
         Say it plainly ("ordinary indoor daylight", "plain room light") or say nothing.
-        BANNED, because they make one beat stop matching the others: warm, golden, amber,
-        afternoon, sunset, cinematic, filmic, moody, rim light, backlight, hard shadows,
-        "sunlight hitting", "light from the window".
+        BANNED **AS A DESCRIPTION OF THE LIGHT**, because they make one beat stop matching the
+        others: warm, golden, amber, afternoon, sunset, cinematic, filmic, moody, studio,
+        rim light, backlight, hard shadows, "sunlight hitting", "light from the window".
+        The SAME words stay legal when they describe something that is not the light — a warm
+        smile, an amber bottle, a golden label. NEVER restyle the product's real colour to obey
+        this rule: the uploaded product photo is ground truth, and the hook's anchor colour is
+        derived FROM it.
 
       WRONG: "A friendly Southeast Asian woman with dark brown hair, wearing a casual linen shirt, sitting at a modern Filipino home dining table, acting surprised while looking at a smartphone, warm sunlight hitting her face."
       WRONG: "Sitting at the dining table, looking at a smartphone, warm afternoon sunlight from the window."
