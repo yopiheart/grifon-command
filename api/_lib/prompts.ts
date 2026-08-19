@@ -1739,10 +1739,15 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - Hand position + held props ("holding an empty mug", "hands on the counter")
       - Body pose ("standing", "sitting at the dining table", "leaning against the counter")
       - Spot within residence ("at the kitchen counter", "by the front door")
-      - Lighting/mood for that spot ("warm afternoon light", "soft window light")
+      - Light: ORDINARY ambient room light, and the SAME light in every scene of this ad.
+        Say it plainly ("ordinary indoor daylight", "plain room light") or say nothing.
+        BANNED, because they make one beat stop matching the others: warm, golden, amber,
+        afternoon, sunset, cinematic, filmic, moody, rim light, backlight, hard shadows,
+        "sunlight hitting", "light from the window".
 
       WRONG: "A friendly Southeast Asian woman with dark brown hair, wearing a casual linen shirt, sitting at a modern Filipino home dining table, acting surprised while looking at a smartphone, warm sunlight hitting her face."
-      CORRECT: "Sitting at the dining table, a slight lift of the brows, looking at a smartphone, warm afternoon sunlight from the window."
+      WRONG: "Sitting at the dining table, looking at a smartphone, warm afternoon sunlight from the window."
+      CORRECT: "Sitting at the dining table, a slight lift of the brows, looking at a smartphone, ordinary indoor daylight."
 
       **EXPRESSION CEILING (identity survives the CUT, not just the frame):**
       A storyboard still is the FIRST FRAME of a generated video clip, never a finished picture.
