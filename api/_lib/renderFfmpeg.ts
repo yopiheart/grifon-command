@@ -31,6 +31,13 @@ import {
   planSceneMidGap, rebaseSceneAfterCuts, buildMidGapFilters, totalCutSec,
   type MidGapPlan,
 } from './voiceMidGap.js';
+// Per-scene colour-cast correction. The target is the ad's own per-channel MEDIAN,
+// so EVERY scene must be measured before ANY scene is built — that requirement is
+// what splits the scene walk below into two passes. Dark unless SCENE_GRADE_ENABLED.
+import {
+  isSceneGradeEnabled, measureSceneChroma, chromaTarget, planSceneGrade,
+  type ChromaMeasure,
+} from './sceneGrade.js';
 export * from './drawPlan.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
@@ -714,7 +721,8 @@ function buildScene(
   hookFontName: string | null = null, // BARE hook-title font (falls back to fontName)
   sweepName: string | null = null, // BARE sweep.png in `dir` (premium hook glint)
   leadInSec: number = 0, // seconds of pre-speech dead air to skip on BOTH inputs
-  midGap: MidGapPlan | null = null // mid-scene dead air to splice out (ships dark)
+  midGap: MidGapPlan | null = null, // mid-scene dead air to splice out (ships dark)
+  sceneGradeFilter: string | null = null // colour-cast pull toward the ad's median (ships dark)
 ): void {
   const [w, h] = dims;
 
@@ -738,6 +746,11 @@ function buildScene(
   let split = 0;
 
   let vChain = `${mg?.videoOut ?? '[0:v]'}fps=${FPS},${sceneNormalizeFilter(w, h)}`;
+  // Grade on the raw normalized picture — BEFORE the camera move and, critically,
+  // before any drawtext, so a burned-in caption's #FFCC00 is the exact colour the
+  // preset asked for and never gets pulled with the footage. Null (flag off, or a
+  // scene that already agrees with its siblings) leaves this string untouched.
+  if (sceneGradeFilter) vChain += `,${sceneGradeFilter}`;
   if (cameraFilter) vChain += `,${cameraFilter}`;
   let k = 0;
   for (const layer of layers) {
@@ -1002,6 +1015,48 @@ export async function renderFinalVideo(
     const diegeticSec: number[] = [];
     let elapsed = 0; // cumulative timeline position = current scene's start
 
+    // --- PASS 1: fetch every scene's media, and measure its colour cast. ---
+    // The grade target is the MEDIAN across the whole ad (chromaTarget), so no
+    // scene can be built until all of them have been measured. That is the only
+    // reason the download was lifted out of the build loop; PASS 2 below is the
+    // original loop, unchanged apart from reading the paths from these arrays.
+    const gradeOn = isSceneGradeEnabled(); // read ONCE per render, at call time
+    const videoPaths: string[] = [];
+    const audioPaths: (string | null)[] = [];
+    const dlMsBy: number[] = [];
+    const measures: (ChromaMeasure | null)[] = [];
+    for (let i = 0; i < ordered.length; i++) {
+      const tScene = Date.now();
+      const videoPath = join(dir, `scene_${i}.mp4`);
+      await downloadToFile(ordered[i].videoUrl, videoPath);
+
+      let audioPath: string | null = null;
+      if (ordered[i].audioUrl) {
+        audioPath = join(dir, `voice_${i}.mp3`);
+        await downloadToFile(ordered[i].audioUrl!, audioPath);
+      }
+      videoPaths.push(videoPath);
+      audioPaths.push(audioPath);
+      dlMsBy.push(Date.now() - tScene);
+      // Sampled at 1 frame / 2s and never throwing — a grading failure costs the
+      // correction, never the render. Skipped entirely with the flag off, so an
+      // unflagged render pays no extra ffmpeg subprocess.
+      measures[i] = gradeOn ? measureSceneChroma(videoPath) : null;
+      // Heartbeat stays once per scene: WATCHDOG_STALE_MS is 120s (renderJob.ts),
+      // and a download + measure must not share a gap with the next scene's.
+      onStep?.(`download ${i + 1}/${ordered.length}`);
+    }
+
+    // Fewer than 3 measured scenes → null target → no scene is graded. With 2
+    // there is no majority to appeal to, only two opinions (see sceneGrade.ts).
+    const gradeTarget = gradeOn
+      ? chromaTarget(measures.filter((m): m is ChromaMeasure => m !== null))
+      : null;
+    if (gradeOn) console.log('[renderFfmpeg:grade] target', { gradeTarget, measured: measures.filter(Boolean).length, scenes: ordered.length });
+
+    // --- PASS 2: build every scene. Sequential and in `ordered` order, because
+    // the SFX/timeline state below (elapsed, placedSec, whoosh/diegetic caps) is
+    // threaded across scenes and only means anything walked front to back. ---
     for (let i = 0; i < ordered.length; i++) {
       // Lead-in cut. On an STS (talking) scene the VO MP3 *is* the clip's own audio
       // with the voice swapped, so a long silence before the first word sits in BOTH
@@ -1023,17 +1078,11 @@ export async function renderFinalVideo(
       const midGap = planSceneMidGap(leadInScene);
       const scene = rebaseSceneAfterCuts(leadInScene, midGap.cuts);
       const midGapSec = totalCutSec(midGap.cuts);
-      const tScene = Date.now();
-      const videoPath = join(dir, `scene_${i}.mp4`);
-      await downloadToFile(scene.videoUrl, videoPath);
-
-      let audioPath: string | null = null;
-      if (scene.audioUrl) {
-        audioPath = join(dir, `voice_${i}.mp3`);
-        await downloadToFile(scene.audioUrl, audioPath);
-      }
-      const dlMs = Date.now() - tScene;
-      onStep?.(`download ${i + 1}/${ordered.length}`);
+      // Fetched (and measured) in PASS 1 — the paths and the download timing are
+      // read back here so the per-scene log line below still reports real numbers.
+      const videoPath = videoPaths[i];
+      const audioPath = audioPaths[i];
+      const dlMs = dlMsBy[i];
 
       const probeSec = probeDurationSec(videoPath);
       // Length of the clip the graph will actually emit. Identical to probeSec on
@@ -1159,13 +1208,22 @@ export async function renderFinalVideo(
         trimSec ?? clipSec, dims, preset.camera, punchTimes
       );
 
+      // Colour-cast pull toward the ad's own median. Applies on EVERY preset,
+      // CLASSIC included: a scene inside the deadband plans null, so an ad whose
+      // beats already agree renders byte-identically — which is what keeps the
+      // CLASSIC regression lock honest rather than an exclusion here.
+      const gradeFilter = gradeOn ? planSceneGrade(measures[i], gradeTarget) : null;
+      if (gradeFilter) {
+        console.log('[renderFfmpeg:grade]', { sceneIdx: scene.sceneIdx, measure: measures[i], filter: gradeFilter });
+      }
+
       const outPath = join(dir, `muxed_${i}.mp4`);
       const tBuild = Date.now();
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset, hookFontName, sweepName, leadInSec, midGap
+        camFilter, preset, hookFontName, sweepName, leadInSec, midGap, gradeFilter
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
