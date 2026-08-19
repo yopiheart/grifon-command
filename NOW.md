@@ -1,90 +1,82 @@
 # NOW — the resume doc
 **Stamped: 2026-08-19** (session 29)
 
-## ▶ NEXT ACTION — one render with `SCENE_GRADE_ENABLED` ON, then Neil's eye
+## ▶ NEXT ACTION — one Real Talk storyboard run, then the film run
 
-The grade module is now **WIRED** (`22ca43b`). It ships dark. Everything owed at
-the code layer is closed: two-pass loop, 21 unit tests, and a free ffmpeg harness
-(`RUN_SCENEGRADE=1`) that proves agreeing beats render byte-identically and a warm
-outlier gets pulled back. A mutation check confirms the harness measures the wiring.
+**Do this first, it is free-ish and takes one sitting.** Confirm Vercel PRODUCTION is on
+`35cd3ed`, then run ONE storyboard-only `real_talk` at
+`grifon.ai/app?osaEngine=producer` — same Hiraya Glow brief, AUTO presenter, TALENT
+Filipino, and `tests/fixtures/sample-batch/hero.png` as the only upload. **Stop at the
+storyboard gate.** Images bill against the 150/month image meter, not a video credit.
 
-What is left is taste, and only Neil can supply it: **render the parked
-`before_after` / Hiraya Glow storyboard twice, flag OFF then ON, and look at
-scene 4.** Set `SCENE_GRADE_ENABLED='true'` on Vercel — runtime-read, no rebuild.
+One question only: **are all the scenes that SHOW the performer in the SAME room?**
+The product macro shot is exempt by design. Scene 1 opening amber is CORRECT, not a bug
+(the hook's anchor colour is derived from the product, and the bottle is amber).
 
-⚠️ **Do NOT start the 12-run sample batch before that render.** Three things are
-still open and each one would force a re-pay of all 12:
-1. This grade decision (ON changes the colour of every sample).
-2. `fc1baa5` audio (glitch SFX retired, +5% gains) — **confirm Vercel PRODUCTION
-   has it**, and Neil has still not heard it.
-3. `forced_alignment` on the ElevenLabs key ([#96]) — if it is off, every scene
-   falls back to caption estimates SILENTLY, degrading the very samples.
+**Then the film run**, which needs a credit decision first (see below). It settles three
+open things in one payment: the half-face crop on close-ups, the camera framing across
+scenes, and whether scene 1's morph goes to goo (issue #92, predicted — see the log).
 
-## 🔍 FOUND WHILE TESTING — the cap governs, not the pull
+📕 **Read [`workflows/lighting_fix_2026-08-19.md`](workflows/lighting_fix_2026-08-19.md)
+before touching any format.** It carries the per-format expectations table, the run IDs
+and how to reopen a run, the open bugs, and the method lessons. This file is the pointer;
+that file is the knowledge.
 
-At the observed ~1.7-unit drift the correction is set by `MAX_SHIFT`, **not** by
-`PULL`. The clamp starts at 1.64 units, so scene 4 closes **77%**, and a
-hypothetical 3.0-unit drift would close only **44%**. The module header reads as
-if `PULL` governs. No code changed — raising the ceiling is a taste call, and only
-after Neil has seen what 77% already looks like.
+## ✅ WHAT LANDED — lighting is fixed, and it is confirmed in the output
 
-## 🎨 WHY SCENE 4 CAME BACK WARM — root cause, read off the code
+Two commits, two different causes, both verified against real storyboard runs:
 
-[`prompts.ts:1742`](api/_lib/prompts.ts#L1742) puts *"Lighting/mood for that spot"*
-in the **REQUIRED** list of every avatar-scene prompt, and its own worked example
-ends *"warm afternoon sunlight from the window."* Each beat is **instructed** to
-author its own light; the identity lock holds the face and nothing else. So
-**regenerate cannot fix it** — 3 rolls on 2026-08-17 all came back warm. A re-roll
-is a fresh dice throw, not a repair. 🔴 Neil chose the deterministic route (A); the
-prompt edit (B) is the real root fix but is TUNED and needs his explicit go.
-⚠️ A grade cannot fix a different ROOM. S4's bathroom differs from S3's.
+- **`b1632b0`** — `Lighting/mood for that spot` was in the **REQUIRED** list of every
+  avatar-scene prompt, and the worked example ended *"warm afternoon sunlight."* Every
+  beat was INSTRUCTED to invent its own light. Untouched since 2026-05-09. Now: ordinary
+  ambient room light, the same in every scene. The model's own stored prompts now end
+  with the exact phrase `ordinary indoor daylight`.
+- **`35cd3ed`** — the plain-UGC strategy block was the ONLY one in the file with no place
+  rule, so a Real Talk performer walked hallway → sala → bedroom → kitchen. The "warm"
+  scene 3 was a **wooden vanity table**, not warm light; its own prompt read
+  `ordinary indoor daylight` and obeyed. Also scoped the light ban to the LIGHT (a warm
+  smile and an amber bottle are legal again) and banned `studio`.
 
-## 🧪 THE MEASUREMENT THAT KILLED THE FIRST DESIGN
+Neil, on the first clean storyboard: *"BROOO THIS IS ABSOLUTE CINEMA."*
 
-Grey-world (fixed 128 target) was written, then **measured and thrown away**. An
-untouched fixture frame reads `uavg=122.0 vavg=134.8` — 8.5 units off "neutral"
-while looking correct, because a frame full of face and warm tile is not supposed
-to average to grey. Do not re-propose grey-world.
+## 🔴 SCENE GRADE — REJECTED, flag off, code stays dark
 
-## ❓ OPEN QUESTION FOR NEIL — niche coverage in the samples gallery
+`22ca43b` wired `SCENE_GRADE_ENABLED` with tests and a free ffmpeg harness. Neil watched
+a real render and said no: *"ang dilim at mukang patay na ad."* The env var is deleted on
+Vercel. **The luma term is what killed it** — it pulls every scene to the median, so no
+scene may be brighter than the middle and all four converge downward. Do not re-propose
+without dropping luma entirely. Do not re-propose grey-world either (measured and thrown
+away in session 28).
 
-The batch spec locks ONE brand (Hiraya Glow serum) across all 10 product recipes,
-deliberately: the cards differ by **format**, not niche, so a second variable would
-make the gallery unreadable. But runs 11–12 (Linis Pro service, Casa Verde condo)
-are **eval-only, no card** and no recipe slot exists for them — so a plumbing or
-real-estate SMB opens the gallery and sees 12 skincare ads. Proposal: keep the 10
-format cards on Hiraya Glow, add a small "ibang negosyo, parehong makina" strip
-carrying runs 11–12. **Zero extra render spend** (they are already in the 12); it is
-a gallery UI change plus a decision. Awaiting Neil.
+## ⏭ OPEN — ranked, with the trap in each
 
-## 💰 BATCH COST — computed live, not quoted
-`npm run cost:estimate`: **₱273 per 4-scene ad → ₱3,280 for all 12.** 6 scenes =
-₱4,608. The old ₱6,600 figure assumed 9 scenes, which no customer can get
-(`SCENE_CAP` is 4 for Starter/Pro). Fixtures are committed but sparse-excluded here:
-`git sparse-checkout add tests/fixtures/sample-batch-v2`.
-Hard limit on parallelism: **6 renders / 10 min** ([`api/render/final.ts:106`]).
-Neil drives + uploads (OTP wall, paid spend); the agent grades and cuts the cards.
+1. **Auto-cast slop** (Neil's standing request, never implemented). Three drivers in
+   `generateAvatarImage`: `ALWAYS Commercial Beauty Lighting`, a retouch layer, and a
+   negative list banning every real-face marker. ⚠️ **Neil LIKES the lighting and dislikes
+   the sameness of the FACE.** Attack the retouch layer and the texture bans only.
+2. **Floating product.** The image gate makes six observations and none covers hand
+   contact. Copy the `BAG_ORIENTATION_RULE` pattern + add a 7th gate observation.
+3. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic while scenes
+   fan out in parallel. One 4-scene run produced 3 submissions, one 402, and jumped the
+   counter to 8/8. An owner never notices; the first 8-scene customer will.
+4. **Neil is at 8/8 video ads on PRO.** Any film run needs a credit decision first.
+5. **Supabase FREE tier is past its grace period.** It holds auth, runs, quota, billing.
 
-## ⏸ THE RUN — stopped at the storyboard gate, zero film spend
-`before_after` / Hiraya Glow. Gates 1–3 PASSED (4 scenes · beat 0 is the BEFORE
-with no product · same woman throughout). Stopped on the S4 grade only. Inputs and
-the full gate list: [`sample_run_before_after_2026-08-16.md`](workflows/sample_run_before_after_2026-08-16.md).
-⚠️ REGENERATE has no undo — 3 rolls burned, the coolest roll is the one to keep.
-
-## 🌿 BRANCH `feat/hook-layout-system` (`1245d14`, pushed, NOT merged)
-Four real hook LAYOUTS. **Font decision made 2026-08-17: ship the 8 on the branch,
-add nothing.** The sameness was a code bug (accent-by-word, now by-LINE), not a font
-shortage. Queued for AFTER launch only if the real render still reads samey:
-**hype → Titan One**, **bars → Passion One Black**. 🔴 Still awaiting Neil: the
-metallic gradient he approved 2026-06-10 is OFF everywhere. Machinery kept.
-
-## ⚠ OPEN — owed, not blocking
-- **Music is ElevenLabs now**, keyed `${userId}/music/${seed}-${style}.mp3`. Pro/
-  Business only, else the static bed.
-- **`hookFallbackText`** builds the title from the SPOKEN line, which the
-  `text-hook-machine` skill bans. **AI gate is FLAG-ONLY.** **Premise-check
-  `cleanJson` drops ~1 in 6.** **`MODEL_RESEARCH` dead.** Repo +400 MB/month.
-- `npm run design:lint` fails: the `design.md` CLI is defreezer-wiped. Not a regression.
+## ⚠ CARRIED
+- **`onbody.png` / `inuse.png` are still the 2026-07-11 files** and measurably warmer
+  (VAVG 141.3 vs the rebuilt pair's 134.9) and 15 units darker. Used by Try-On, Watch It
+  Work, Steps 1-2-3. If warmth returns there, suspect the ASSET first.
+- `tests/fixtures/sample-batch` is the ONLY fixture set; `-v2` was older than it and is
+  deleted (`af0be7a`). Sparse-excluded here: `git sparse-checkout add tests/fixtures/sample-batch`.
+- `MID_GAP_TRIM_ENABLED` is ON in production (confirmed by Neil this session).
+- **Branch `feat/hook-layout-system` (`1245d14`, pushed, NOT merged)** — four real hook
+  layouts, font decision made: ship the 8 on the branch, add nothing. Queued for after
+  launch. Metallic gradient Neil approved 2026-06-10 is still OFF everywhere.
+- Batch cost, computed live: **₱273 per 4-scene ad, ₱3,280 for all 12.** Hard parallel
+  limit: 6 renders / 10 min (`api/render/final.ts`).
+- Open question for Neil, unanswered: 10 of the 12 gallery cards would be one skincare
+  serum. Proposal is a small second strip carrying the service + real-estate runs, which
+  costs zero extra render spend.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
