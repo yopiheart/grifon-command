@@ -245,6 +245,7 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 
 ## Workflows Index
 
+- `workflows/locked_wins.md` — **the register of what Neil has APPROVED, and whether it is pinned or was luck. Open it BEFORE telling Neil that something he remembers does not exist, and before re-testing any format.** Every entry carries the run_id, the verbatim prompt, a committed copy of the frame, and a 🔒 CODE / 🎲 LUCK / 🔴 REJECTED verdict. **🎲 means approved but never pinned** — a generative pipeline returns a distribution, so a good frame proves only that it *can* recur, and "this used to work" is usually a 🎲 row losing a coin flip, not a regression. Written 2026-08-20 after the agent spent three failed searches denying a hook Neil had genuinely approved on 2026-08-13; it existed in a Postgres row and in no repo doc. Approved stills live ONLY in `producer_scenes` on a FREE-tier Supabase — pull them the day of approval with `scripts/pull-run-frames.mjs`.
 - `workflows/cafe_session.md` — **the cafe-PC session runbook: read it before cloning on a fresh shop machine.** Daan A (lite clone on C:, ~8 min) and Daan B (portable rig on a USB SSD, ~1 min), the restore-script checklist, how to pull media back one folder at a time, and the open decision on stopping the repo's ~400 MB/month growth. Driven by `scripts/cafe-start.ps1`.
 - `workflows/app_audit.md` — prioritized punch list of what's broken/stubbed/risky
 - `workflows/fix_broken_feature.md` — SOP for fixing one item from the audit
