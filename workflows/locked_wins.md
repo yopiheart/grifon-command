@@ -33,7 +33,7 @@ never working, it was winning a coin flip.
 
 ## The register
 
-### W-001 · Hook end frame: the performer holding the product 🎲 LUCK
+### W-001 · Hook end frame: the performer holding the product 🔒 CODE (was 🎲)
 
 | | |
 |---|---|
@@ -61,7 +61,7 @@ resolves the disagreement differently each run.** That is the whole variance.
 Any move to make the performer deterministic in the hook end frame RAISES morph-goo risk and
 must ship with the silhouette half of the HOOK ANCHOR RULE, not without it.
 
-**Lock written 2026-08-20, PENDING one verification run.** Neil chose to keep the morph and make
+**LOCKED 2026-08-20, verified on the first run under the new rule.** Neil chose to keep the morph and make
 the performer required, which resolves the disagreement in the prompt's favour rather than the
 code's — so `renderEndFrame` needed **no change at all**: `'both'` is now the correct mode because
 the end frame genuinely wants both. The tuned block was rewritten (see W-005). Flip this row to
@@ -71,11 +71,12 @@ This also corrects **P5** in [`loop_arch_handoff.md`](loop_arch_handoff.md) L366
 (*"the generator is ignoring its own explicit negative constraint"*) was **incomplete**: the
 generator was obeying a reference mode the code handed it.
 
-### W-005 · Hook frames anchored on the performer's body 🎲 → pending verification
+### W-005 · Hook frames anchored on the performer's body 🔒 CODE
 
 | | |
 |---|---|
 | **Decided** | 2026-08-20 by Neil, across four messages, after the CMO recommended the opposite |
+| **VERIFIED** | 2026-08-20, first storyboard run on the new rule. Start frame = extreme close-up of flaking, blemished cheek skin, matching the hook line *"Tigil sa peeling, lalo lang nangingitim dark spots mo."* End frame = the same performer holding the bottle. **Both gate questions passed on the first run.** No fruit, no fabric, no wall |
 | **Written by** | `api/_lib/prompts.ts` storyboard hook block; pinned by `tests/unit/hookStartFrameSubject.test.ts` (10 cases) |
 | **Scope** | `real_talk`, `hype_drop`, `rapid_fire`, `pure_hype` ONLY. Services, UGC Pro and Real Estate keep their existing branches verbatim |
 
