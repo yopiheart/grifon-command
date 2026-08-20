@@ -61,10 +61,45 @@ resolves the disagreement differently each run.** That is the whole variance.
 Any move to make the performer deterministic in the hook end frame RAISES morph-goo risk and
 must ship with the silhouette half of the HOOK ANCHOR RULE, not without it.
 
-**To lock:** code and prompt must be made to agree. Two directions, opposite outcomes, both
-need Neil. Open, unresolved. Tracked as **P5** in [`loop_arch_handoff.md`](loop_arch_handoff.md) L366
-(whose diagnosis — *"the generator is ignoring its own explicit negative constraint"* — is
-**incomplete**: the generator was obeying a reference mode the code handed it).
+**Lock written 2026-08-20, PENDING one verification run.** Neil chose to keep the morph and make
+the performer required, which resolves the disagreement in the prompt's favour rather than the
+code's — so `renderEndFrame` needed **no change at all**: `'both'` is now the correct mode because
+the end frame genuinely wants both. The tuned block was rewritten (see W-005). Flip this row to
+🔒 CODE only after a storyboard run shows the performer in the hook end frame.
+
+This also corrects **P5** in [`loop_arch_handoff.md`](loop_arch_handoff.md) L366 — its diagnosis
+(*"the generator is ignoring its own explicit negative constraint"*) was **incomplete**: the
+generator was obeying a reference mode the code handed it.
+
+### W-005 · Hook frames anchored on the performer's body 🎲 → pending verification
+
+| | |
+|---|---|
+| **Decided** | 2026-08-20 by Neil, across four messages, after the CMO recommended the opposite |
+| **Written by** | `api/_lib/prompts.ts` storyboard hook block; pinned by `tests/unit/hookStartFrameSubject.test.ts` (10 cases) |
+| **Scope** | `real_talk`, `hype_drop`, `rapid_fire`, `pure_hype` ONLY. Services, UGC Pro and Real Estate keep their existing branches verbatim |
+
+Three rules replaced the old product-colour anchor:
+
+1. **Frames are built from the script line.** Start = the problem that line names, end = the
+   resolution it points to. A muted viewer must be able to read the hook line off the two stills.
+2. **The anchor is the performer's own body**, shared by construction. Start is a cropped detail of
+   that performer; end is the same performer pulled back holding the product at the same position.
+   A colour-matched stand-in (the 2026-08-19 orange fruit) is banned by name.
+3. **The product no longer carries the anchor**, so any product colour works — the portability the
+   old rule never had, since it required packaging that sits near skin tones.
+
+⚠️ **The CMO's recommendation was the opposite and Neil overrode it, knowingly.** `P3` in
+[`viral_swipe_file.md`](viral_swipe_file.md) — *"Nobody morphs, ever"* — carries **12
+corroborations**, and `before_after` (hard cut) is the clean baseline while the morph formats carry
+every open hook defect. Neil's call stands; record it here so the trade is visible if the morph
+underperforms later, and so nobody re-argues it from scratch.
+
+⚠️ **Deliberately NOT changed: the motion layer.** The Savic anchor-bridge clause lives at
+[`services/geminiService.ts:2725`](../services/geminiService.ts#L2725) and still describes
+`Object Materialization` as *"anchor element resolves from amorphous into the target subject"* — an
+object-swap framing, while the new stills describe a pull-back on one continuous subject. One layer
+per test, or the next run cannot say which change did what. Re-read this after the verification run.
 
 ### W-002 · Ordinary ambient room light, same in every scene 🔒 CODE
 
