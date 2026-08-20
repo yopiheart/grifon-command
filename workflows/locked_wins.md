@@ -64,8 +64,8 @@ must ship with the silhouette half of the HOOK ANCHOR RULE, not without it.
 **LOCKED 2026-08-20, verified on the first run under the new rule.** Neil chose to keep the morph and make
 the performer required, which resolves the disagreement in the prompt's favour rather than the
 code's — so `renderEndFrame` needed **no change at all**: `'both'` is now the correct mode because
-the end frame genuinely wants both. The tuned block was rewritten (see W-005). Flip this row to
-🔒 CODE only after a storyboard run shows the performer in the hook end frame.
+the end frame genuinely wants both. The tuned block was rewritten (see W-005), and W-005 carries the
+verification run that flipped both rows to 🔒.
 
 This also corrects **P5** in [`loop_arch_handoff.md`](loop_arch_handoff.md) L366 — its diagnosis
 (*"the generator is ignoring its own explicit negative constraint"*) was **incomplete**: the
