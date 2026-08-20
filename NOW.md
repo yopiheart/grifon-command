@@ -1,23 +1,25 @@
 # NOW — the resume doc
 **Stamped: 2026-08-20** (session 30)
 
-## ▶ NEXT ACTION — one Real Talk storyboard run, and it answers two questions
+## ▶ NEXT ACTION — the film run, and it needs a credit decision FIRST
 
-Confirm Vercel PRODUCTION is on **`877b0a7`**, then run ONE storyboard-only `real_talk` at
-`grifon.ai/app?osaEngine=producer` — Hiraya Glow brief, AUTO presenter, TALENT Filipino,
-`tests/fixtures/sample-batch/hero.png` as the only upload. **Stop at the storyboard gate.**
-Images bill the 150/month image meter, not a video credit.
+**The storyboard gate is DISCHARGED.** Run `apr_377a69a0-2c11-4ce4-b6b9-66bf0567dd85`
+(2026-08-20), the first under the new hook rule, came back clean on every open question:
+the hook anchored on the performer own body (start = a flaking, blemished cheek carrying the
+hook line; end = the same performer holding the bottle), the room lock held, and the lighting
+rule held **8 of 8 scenes** — every stored prompt ends `ordinary indoor daylight`.
 
-Look at scene 1 only, and answer two things:
+**Neil is at 8/8 video ads on PRO, so nothing films until that credit decision is made.**
+One film run then settles three things at once: the half-face crop on close-ups, the camera
+framing across scenes, and whether the new pull-back hook still goes to goo (issue #92 — far
+less likely now, since the morph no longer interpolates between two unrelated subjects).
 
-1. **Is the START frame a cropped detail of the performer's own body?** Her skin, her hands,
-   what she is touching. NOT a fruit, a fabric, or a wall — those are now banned by name.
-2. **Is the END frame that same performer, pulled back, holding the bottle at the same
-   position?**
+Logged, NOT blocking: card 3 reads brighter and cooler, but its prompt is identical to every
+other scene — it is the only WIDE shot, so it carries the most window, plus a mirror.
+Composition, not rule; the full note is under W-002 in `locked_wins.md`.
 
-**Yes to both → flip W-005 to 🔒 in [`workflows/locked_wins.md`](workflows/locked_wins.md)
-and we never revisit this.** No → the tuned block is the first place to look, and the motion
-layer (below) is the second.
+Still owed, both cheap: pull run `apr_377a69a0` scene 0 into `baselines/locked-wins/`
+(`scripts/pull-run-frames.mjs`, Neil runs it), and the Savic autopsy below.
 
 ## ✅ WHAT LANDED — the recall system, and the hook Neil asked for
 
@@ -27,11 +29,10 @@ layer (below) is the second.
   2026-08-13; three searches denied it before it turned up in a Postgres row and in no repo
   doc. Cause: decisions lived in `workflows/`, the frames they were about lived only in
   `producer_scenes`, and nothing linked them. Now every approved look carries its run_id, its
-  verbatim prompt, a committed copy of the frame, and a **🔒 CODE / 🎲 LUCK / 🔴 REJECTED**
-  verdict. **🎲 is the load-bearing column** — a generative pipeline returns a distribution, so
-  most "this used to work" reports are an unpinned win losing a coin flip, not a regression.
-  `scripts/pull-run-frames.mjs` is how a still becomes a committed file (Neil runs it — the
-  ENV WARDEN blocks the agent).
+  verbatim prompt, a committed frame, and a **🔒 CODE / 🎲 LUCK / 🔴 REJECTED** verdict.
+  **🎲 is the load-bearing column** — most "this used to work" reports are an unpinned win
+  losing a coin flip, not a regression. `scripts/pull-run-frames.mjs` commits a still (Neil
+  runs it — the ENV WARDEN blocks the agent).
 - **`ba512bc` — the hook morph anchors on the performer's body.** Was: anchor colour came
   FROM THE PRODUCT, so any similarly-coloured stand-in could carry it — that is why 08-19
   opened on an orange fruit, working exactly as written. Now: start = a cropped detail of the
@@ -71,8 +72,7 @@ the prompt said "NO people in the hook end frame." Neil resolved it in the promp
    and needs BOTH `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED`. 2nd corroboration.
 5. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic. An owner never
    notices; the first 8-scene customer will.
-6. **Neil is at 8/8 video ads on PRO.** Any film run needs a credit decision first.
-7. **Supabase FREE tier is past its grace period.** It holds auth, runs, quota, billing — and it
+6. **Supabase FREE tier is past its grace period.** It holds auth, runs, quota, billing — and it
    was the ONLY copy of every approved frame until this session.
 
 ## ⚠ CARRIED

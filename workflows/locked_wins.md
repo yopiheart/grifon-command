@@ -109,9 +109,17 @@ per test, or the next run cannot say which change did what. Re-read this after t
 | **Approved** | 2026-08-20, Neil: *"Wala na rin ung cinematic warm lighting ang galing"* |
 | **Locked by** | `b1632b0` (per-beat lighting instruction removed) + `35cd3ed` (light ban scoped to the light) |
 | **Proof in output** | Stored scene prompts end with the literal phrase `ordinary indoor daylight` |
+| **RE-VERIFIED** | 2026-08-20, run `apr_377a69a0-2c11-4ce4-b6b9-66bf0567dd85` — **8 of 8** scene prompts end with that exact phrase. Card 1 is `NULL` by design (morph hook carries start/end frames, no `imagePrompt`) |
 
 The longest-running defect on this pipeline, 4+ corroborations since May. Full autopsy:
 [`lighting_fix_2026-08-19.md`](lighting_fix_2026-08-19.md).
+
+⚠️ **A scene that LOOKS differently lit is not automatically this bug returning.** On the
+2026-08-20 run Neil flagged card 3 as brighter and cooler than its siblings. Its prompt was
+identical to every other scene. The real drivers were compositional: it was the only WIDE
+shot (per the deliberate camera rotation in `4f662a3`), so it carried the most window, and it
+held a mirror. Read the stored prompt BEFORE calling it a lighting regression, and do not
+"fix" it by narrowing the shot variety that rotation exists to create.
 
 ### W-003 · One performer, one place 🔒 CODE
 
