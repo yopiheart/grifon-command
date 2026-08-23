@@ -1173,6 +1173,21 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
   brief's platform-walling thesis, demonstrated live); (3) firecrawl (which can reach Reddit)
   needed an interactive approval with Neil away. Verdict so far: **fit is real, value unproven —
   no data seen yet.**
+- **Re-confirmed 2026-08-23 (3rd independent hit, remote session).** Neil asked for this
+  skill by name to pull a single X post + its video. Same wall, reached from a different
+  direction and without knowing this entry existed: `yt-dlp` 2026.08.19 installed clean,
+  then the gateway refused CONNECT to `api.x.com:443` with a logged **"policy denial"**;
+  `x.com`, `api.x.com`, and `video.twimg.com` all returned curl `000`. **The blocker is the
+  sandbox egress policy, not the skill.** X sits in the skill's auth-required tier (browser
+  cookies or API key, unlike the zero-config Reddit/HN/Polymarket/GitHub tier) — but auth is
+  moot when the host cannot reach X at all. Blocker (1) from 2026-07-16 also still stands.
+- **Scope correction (same session) — do NOT reach for this skill for single-post retrieval.**
+  Last30Days is a *topic pulse*: 30-day, engagement-ranked briefs on a subject. It is not a
+  fetch-this-tweet-and-its-MP4 tool, so even fully working on the cafe PC it would not have
+  gotten that clip. Right tools for that job are `yt-dlp` (video) and the firecrawl connector
+  (post text) on an unblocked network. Worth knowing: **firecrawl DID return the post body,
+  timestamps, engagement counts, and top replies from this blocked session** — it fetches
+  server-side, so it routes around the egress denial for text. It cannot return video bytes.
 - **When to resume:** Next cafe-PC session (or any session with Neil present to approve
   firecrawl as the interim keyless-value probe).
 - **Where to start (paste-ready cafe-PC kickoff):** install via
