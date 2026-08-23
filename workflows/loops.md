@@ -137,12 +137,30 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
        against the pool that ran out. Now capped at 15 on both jobs.
   - **`claude-review` was NOT a cause** — it already had `cancel-in-progress: true`
     since it was written. Checked before blaming it.
-  - **Open, and the reason this is filed here:** an exhausted-minutes outage is
-    invisible to the Tier 0b alarm by construction. `main-status` cannot run, so
-    no `ci-red` issue opens, so the Tier 6 Health Watch's issue check sees
-    nothing. Its *other* check (the newest `main` run's conclusion) should still
-    catch it — **confirm Neil actually received a CRITICAL push between Aug 20
-    and 23; if he did not, the monitor has the same blind spot as the alarm.**
+  - **The alarm was blind; the monitor was NOT. Verified 2026-08-23 by reading the
+    routine's own run logs** (`RemoteTrigger list_runs` + `get_run_log` on
+    `trig_01EwWDbLuXyegg39L61XwVbS` — no `gh` needed, and far cheaper than the
+    claude.ai UI). An exhausted-minutes outage is invisible to the Tier 0b alarm
+    **by construction**: `main-status` cannot start, so no `ci-red` issue ever
+    opens. The Health Watch's *second* check — the newest `main` run's conclusion
+    — carried the whole load and worked:
+    - **Aug 21, 08:14 PHT** (~15h after main went red) it pushed CRITICAL, named
+      the commit, **and independently reached the same 3-second infra diagnosis**
+      a session reached by hand two days later. It also flagged that no `ci-red`
+      issue existed. It fired again Aug 23, 08:10 PHT.
+    - It could not read the job logs (HTTP 404 on all three), which is itself
+      consistent: GitHub serves no logs for a job it never started.
+    - **Keep that redundant check.** On its own, the `ci-red` issue would have
+      reported this outage as healthy for as long as it lasted.
+  - **⚠ The real gap is the READER, for the THIRD time.** Tier 0b wrote off the
+    GitHub email firehose as noise Neil scrolls past, and named the push
+    notification the channel whose delivery is CONFIRMED. This outage inverted
+    it: the pushes landed on Aug 21 and Aug 23 and did not get acted on, while
+    **the GitHub emails are what Neil brought to a session on Aug 23** — the
+    dismissed channel did the job the designated one was built for. Delivery was
+    never the problem in any of the three rounds; being read is. Before adding a
+    fourth channel, re-read this: two of the three failures so far were caused by
+    adding one.
 
 - Kill switch: delete `.github/workflows/ci.yml` (or disable the workflow in the
   repo's Actions settings).
