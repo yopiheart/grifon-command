@@ -9,6 +9,34 @@ on:
     branches: [main]
   push:
     branches: [main]
+    # A docs-only push cannot change a build, a test, or a bundle, but it ran the
+    # whole pipeline anyway (tsc + vite + 1264 tests + a fresh Playwright browser
+    # download) on every NOW.md rewrite. Rewriting NOW.md is the last action of
+    # EVERY session. That is a large part of what burned the 2,000 included
+    # Actions minutes on 2026-08-19, and the resulting zero budget then blocked
+    # every job in this repo for four days.
+    #
+    # Verified before adding (2026-08-23): no test and no CI gate opens any of
+    # these paths at runtime. Every mention of them under tests/ is in a comment.
+    # The one .md a gate DOES read is DESIGN.md (design:lint), so it is
+    # deliberately absent from this list.
+    #
+    # On `push` only, on purpose: paths-ignore on `pull_request` leaves a
+    # REQUIRED status check stuck on "Expected" forever, which blocks the merge
+    # button. Widen this to PRs only after confirming CI is not a required check.
+    paths-ignore:
+      - 'NOW.md'
+      - 'agent_lessons.md'
+      - 'workflows/**'
+      - 'baselines/**'
+
+# A burst of pushes used to spawn a complete parallel run each, and only the last
+# one was ever read. Supersede PR runs. NEVER cancel a push-to-main run, because
+# main-status is what opens and closes the ci-red alarm issue, and a cancelled
+# alarm reads as a false all-clear (Tier 0b).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -17,6 +45,9 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    # Uncapped, a hung step billed the 6-hour default against the same
+    # 2,000-minute pool that ran out. This job finishes in about three.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -66,6 +97,7 @@ jobs:
   # render without crashing — zero Gemini/ElevenLabs calls, no quota burn.
   e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -77,8 +109,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # The browser download AND its apt deps ran on every e2e job, uncached.
+      # Keyed on the lockfile so a Playwright version bump busts it by itself.
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
       - name: Install Playwright (chromium)
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
+
+      # A cache hit restores the browser but NOT the system libraries, which live
+      # outside ~/.cache. This is the cheap half of the step above.
+      - name: Install Playwright system deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
 
       - name: Boot/render smoke
         run: npm run test:e2e

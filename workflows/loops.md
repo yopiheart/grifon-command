@@ -105,6 +105,45 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 - No secrets: regression (`RUN_REGRESSION`) and integration (`RUN_BURNIN`)
   suites stay off by default so CI never burns Gemini quota; the `e2e` smoke
   uses dummy env and never reaches a real API.
+- **⚠ 2026-08-19 — the second repo-wide outage, and it was not a bug at all.**
+  Every job in every workflow began failing in **3 seconds** with one annotation.
+  Nothing was broken: `main` built clean, 1264 tests passed, all five gates
+  passed, and all four workflow files parsed. The account had simply **used 100%
+  of its 2,000 included Actions minutes** (GitHub emailed on Aug 19, 21:08; the
+  cycle resets on the 1st). With a $0 Actions budget GitHub **refuses to start
+  the job**, which is why even `main-status` died — it runs no code, only a
+  github-script call, and it never got the chance.
+  - **The tell that separates this from a code failure: 3 seconds.** `npm ci`
+    needs 20–60s to even fail. A job that dies before its first step did not run.
+    Check billing before reading a single log.
+  - **It was a RATE problem, not an accident.** 2,000 minutes went in 19 days,
+    about 105/day. Waiting for the reset would have re-capped around the 19th of
+    the next month. Four causes, all measured on 2026-08-23:
+    1. **No `paths-ignore` anywhere.** Docs-only pushes ran tsc + vite + 1264
+       tests + an uncached Playwright browser download. **102 of the 254
+       first-parent commits on main since Aug 1 (40%) were docs-only** — including
+       all four Aug 20 failures. Now skipped on `push`. The list is deliberately
+       narrow (`NOW.md`, `agent_lessons.md`, `workflows/**`, `baselines/**`);
+       `DESIGN.md` is excluded because `design:lint` reads it. Verified first:
+       no test opens any ignored path at runtime, only comments mention them.
+    2. **No workflow-level `concurrency`.** A burst of pushes spawned a full
+       parallel run each and only the last was ever read. Now supersedes PR runs
+       only — a push-to-main run must never be cancelled, because `main-status`
+       is the alarm and a cancelled alarm reads as a false all-clear.
+    3. **Playwright uncached.** Browser + apt deps downloaded on every e2e job.
+       Now cached on `~/.cache/ms-playwright`, keyed on the lockfile, with
+       `install-deps` on a cache hit (the libs live outside the cached path).
+    4. **No `timeout-minutes`.** A hung step could bill the 6-hour default
+       against the pool that ran out. Now capped at 15 on both jobs.
+  - **`claude-review` was NOT a cause** — it already had `cancel-in-progress: true`
+    since it was written. Checked before blaming it.
+  - **Open, and the reason this is filed here:** an exhausted-minutes outage is
+    invisible to the Tier 0b alarm by construction. `main-status` cannot run, so
+    no `ci-red` issue opens, so the Tier 6 Health Watch's issue check sees
+    nothing. Its *other* check (the newest `main` run's conclusion) should still
+    catch it — **confirm Neil actually received a CRITICAL push between Aug 20
+    and 23; if he did not, the monitor has the same blind spot as the alarm.**
+
 - Kill switch: delete `.github/workflows/ci.yml` (or disable the workflow in the
   repo's Actions settings).
 
