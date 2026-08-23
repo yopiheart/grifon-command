@@ -1,89 +1,89 @@
 # NOW — the resume doc
-**Stamped: 2026-08-23** (session 31)
+**Stamped: 2026-08-23** (session 32)
 
-## ▶ NEXT ACTION — the film run, and it needs a credit decision FIRST
+## ▶ NEXT ACTION — one diff closes four of tonight's five bugs
 
-**The storyboard gate is DISCHARGED.** Run `apr_377a69a0-2c11-4ce4-b6b9-66bf0567dd85`
-(2026-08-20), the first under the new hook rule, came back clean on every open question:
-the hook anchored on the performer's own body (start = a flaking, blemished cheek carrying
-the hook line; end = the same performer holding the bottle), the room lock held, and the
-lighting rule held **8 of 8 scenes** — every stored prompt ends `ordinary indoor daylight`.
+**The generation layers have no "never invent" rule. The script layer does.** That is not
+four bugs, it is one gap with four symptoms, and it is the whole fix pass for tomorrow.
 
-**Neil is at 8/8 video ads on PRO, so nothing films until that credit decision is made.**
-One film run then settles three things at once: the half-face crop on close-ups, the camera
-framing across scenes, and whether the new pull-back hook still goes to goo (issue #92 — far
-less likely now, since the morph no longer interpolates between two unrelated subjects).
+| Layer | Guard today |
+|---|---|
+| Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` — *"Do NOT invent or add any bonus that is not in the offer"* |
+| Image: packaging + props | ❌ none — scene 8 rendered a HIRAYA GLOW box Neil never uploaded |
+| Image: hair + wardrobe | ❌ none — plain-UGC block locks the ROOM only; `tryon` locks wardrobe too |
+| Video: spoken dialogue | ❌ none — Veo improvised *"Ito nang kanina ka."* into scene 7 |
 
-Logged, NOT blocking: card 3 reads brighter and cooler on an identical prompt — it is the
-only WIDE shot, so it carries the most window, plus a mirror. Composition, not rule; the
-full note is under W-002 in `locked_wins.md`.
+Fifth bug, unrelated and the cheapest of all: **[`poll.ts:135`](api/gemini/video/poll.ts#L135)
+does a single `fetch` with no retry.** Two `veo download failed: 503` = two flagged scenes on a
+clip that was already generated AND billed. `withRetry` already exists in the repo.
 
-Still owed, both cheap: pull run `apr_377a69a0` scene 0 into `baselines/locked-wins/`
-(`scripts/pull-run-frames.mjs`, Neil runs it), and the Savic autopsy below.
+⛔ All four prompt edits are TUNED. Neil's explicit go, one diff, and **one layer per test**.
 
-## ✅ WHAT LANDED — CI was dead for 4 days and it was never a bug
+## ✅ WHAT LANDED — the first filmed ad under the new hook rule
 
-**`965a95b`** on main, CI run **#752 GREEN** (verify 3m2s, e2e 2m0s, main-status 3s, 1264
-tests). Every job in every workflow had failed in **3 seconds** since 08-20. Nothing was
-broken: main built clean, all five gates passed, all four workflow files parsed. The account
-had used **100% of its 2,000 included Actions minutes** on 08-19, and a $0 Actions budget
-makes GitHub **refuse to start the job** — which is why even `main-status` died. Neil set a
-**$5 Actions budget** (Stop usage ON); billed in arrears at the 09-01 reset, actual usage
-only, ~$0.07 so far.
+**Run `apr_fa7cedc3-d730-441c-b6c5-e2066b4b4868`** — real_talk, AUTO presenter, `hero.png`
+uploaded, 8 scenes storyboarded, **6 filmed**. Logged COGS **US$6.50** (~₱377), and that
+UNDERCOUNTS: Kling bills in points, which `estUsd` does not track. Final MP4 is on R2 behind a
+**signed URL that expires ~2026-08-24 13:00** — re-sign or download before then. Confirmed
+holding on real output: the room lock, `ordinary indoor daylight`, and the W-005 hook anchor
+(start = cropped performer detail, end = same performer with the bottle).
 
-It was a **rate** problem: 2,000 minutes in 19 days (~105/day), so the 09-01 reset alone
-would have re-capped around 09-19. Four fixes in `ci.yml` — `paths-ignore` on push for
-`NOW.md` / `agent_lessons.md` / `workflows/**` / `baselines/**` (**102 of 254 first-parent
-commits on main since 08-01 were docs-only**); workflow-level `concurrency` that supersedes
-PR runs but NEVER a push-to-main run; a Playwright browser cache; `timeout-minutes: 15`.
-`DESIGN.md` is deliberately NOT ignored — `design:lint` reads it.
+## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
-## ⚠ FOUR THINGS THE NEXT SESSION MUST NOT REDISCOVER
-
-- **The 3-second tell.** A job that dies in 3s never ran a step (`npm ci` needs 20–60s to
-  even fail). Check billing before reading a single log. Job logs 404 — GitHub serves none
-  for a job it never started.
-- **The alarm is blind to this class by construction; the monitor was not.** `main-status`
-  cannot open a `ci-red` issue if it cannot start. The Health Watch's *other* check (newest
-  `main` run conclusion) caught it and pushed CRITICAL on 08-21 08:14 PHT. **Keep that
-  redundant check.** What failed was the READER, third time — write-up in loops.md Tier 0b.
-  Do not add a fourth channel; two of the three failures were caused by adding one.
-- **The motion layer was deliberately left alone.** [`geminiService.ts:2725`](services/geminiService.ts#L2725)
-  still says `Object Materialization` *"resolves from amorphous into the target subject"* —
-  object-swap language, while the new stills describe a pull-back on one continuous subject.
-  One layer per test. Re-read after the verification run.
-- **The CMO recommended the opposite and Neil overrode it, knowingly.** `P3` in
-  `viral_swipe_file.md` — *"Nobody morphs, ever"* — carries **12 corroborations**. Neil's
-  call stands; if the morph underperforms, the trade is already written up in W-005.
+- **`GRIFON_DEV_UNMETERED` works.** It bypasses the meter without touching the counter, so the
+  8/8 PRO wall is irrelevant locally and **no plan credits were spent tonight.** Arm it with
+  `scripts/enable-dev-unmetered-video.ps1`, which sets BOTH flags including the broad one.
+- **Two different 402s exist on `api/kling/video.ts`** — `quota_exceeded` (line 90, our meter)
+  and `kling_balance_exhausted` (line 171, Kling's own balance). The browser shows both as a
+  bare 402. **Read the body before diagnosing.** An expired Kling pack killed a whole run and
+  was misread as the quota race for an hour. Kling is paid now: 100 points, valid to 09-22.
+- **Only Kling takes an end frame** (`image_tail`, kling/video.ts:14). Veo has no equivalent.
+  So the morph hook REQUIRES Kling — routing everything to Veo cannot test it.
+- **Talking scenes go through STS, not TTS** (`api/voice/consolidate.ts:18`). STS re-voices
+  Veo's OWN audio and never reads the script, so anything Veo improvises survives into the
+  final mix and the trimmer correctly keeps it — it is real speech.
+- **Start the dev server with `--port 5173 --strictPort`.** Without it Vite silently moves to
+  5174 while the dying old process still answers on 5173 — a port probe is not a process check,
+  and localStorage is per-origin, so a run key does not follow the port.
 
 ## ⏭ OPEN — ranked, with the trap in each
 
-1. **Savic autopsy, 3rd corroboration.** `yt-dlp` and `ffmpeg` are NOT on this PC, and
-   `analyze_video.mjs` takes a local file or a direct file URL — not a TikTok page link. Neil
-   saves the file, then `/viral-autopsy`. Two are already decoded, so this hits the ≥3 gate.
-2. **Auto-cast slop.** Neil LIKES the lighting and dislikes the sameness of the FACE. Attack
-   the retouch layer and the texture bans in `generateAvatarImage` only.
-3. **Floating product.** No gate observation covers hand contact. Copy the
-   `BAG_ORIENTATION_RULE` pattern + a 7th observation.
-4. **Garbled label at distance.** Variance (clean on the same product 08-13). `labelLegible`
-   is **FLAG-ONLY, never rerolls**, and needs BOTH `IMAGE_GATE_ENABLED` +
-   `VITE_IMAGE_GATE_ENABLED`. 2nd corroboration.
-5. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic. An owner never
-   notices; the first 8-scene customer will.
-6. **Supabase FREE tier is past its grace period.** It holds auth, runs, quota, billing.
-7. **Node 20 deprecation, cosmetic.** `checkout@v4`, `setup-node@v4`, `cache@v4`,
-   `upload-artifact@v4`, `github-script@v7` are force-run on 24. Bump to `@v5` in one pass.
+1. **The four-symptom diff above** + the `poll.ts` retry. Tomorrow's whole job.
+2. **Identity reference dies on reload — LAUNCH BLOCKER.** `slimCheckpointInput` drops `data:`
+   strings over 700KB; a 2K auto-cast avatar exceeds it and **"has never reached the database
+   intact"** (`producerOrchestrator.ts:722`), so the durable `avatar_url` column never fills.
+   After ONE refresh every scene fix is refused with *"Start over to re-shoot this scene"* —
+   and Start over is a new run, a new credit. **Auto-cast is the RECOMMENDED default** (Neil's
+   own A/B, `concierge_poc_findings.md:232`), so the recommended lane is the broken lane.
+3. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
+   still showed a 4-second one-scene video titled **YOUR FIRST CUT** with *"7 scenes ready."*
+   No error, no warning. Inverted twin of [#90](https://github.com/yopiheart/grifon-command/issues/90).
+4. **The hook opens on the wrong body part.** Two regenerations, two arm/shoulder close-ups on
+   a script whose problem is on the FACE (beat 3 says concealer). CMO verdict: scroll-past, not
+   scroll-stop — `S8` self-identification fails on an arm — plus a Meta risk, since a macro
+   skin-lesion still is a visual medical claim our script guardrail bans in words only. Cause:
+   the rule says *"whichever part the script's problem lives on"* and the hook line never says
+   face. **Not a regenerate fix.**
+5. **Landing page has zero video and one false claim.** `ProofGallery` headline reads *"THESE
+   ADS WERE MADE WITH GRIFON. Real businesses RAN THEM."* over CSS mockups; `ExitIntentModal`
+   points at `/exit/proof-ad.mp4`, which does not exist. `SAMPLES = {}`, all 13 recipes show
+   "Sample soon". Fix the copy now; the videos come from the sample batch.
+6. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic. Did NOT fire
+   tonight (unmetered), but it is still there for the first real 8-scene customer.
+7. **Supabase FREE tier is past its grace period.** Holds auth, runs, quota, billing.
+8. **PRO is loss-making at full use.** 8 × ₱273 = ₱2,184 COGS vs ~₱2,140 net. The margin bets
+   on breakage (~2 ads/mo). Cap the founder invites at 5–10 so the bet is cheap if wrong.
 
 ## ⚠ CARRIED
-- **Scene grade stays REJECTED**, flag deleted on Vercel, code dark. The **luma term** is what
-  killed it. Do not re-propose without dropping luma; grey-world was separately thrown away.
-- Lighting (`b1632b0`+`35cd3ed`) and the room lock are **🔒 confirmed by Neil** on a real run.
-- `onbody.png` / `inuse.png` are still the 2026-07-11 files, warmer and darker than the rebuilt
-  pair. If warmth returns in Try-On / Demo / Tutorial, suspect the ASSET first.
-- Sparse-excluded, fetch on demand: `tests/fixtures/sample-batch` (the ONLY fixture set) and
-  `baselines/locked-wins`.
-- `MID_GAP_TRIM_ENABLED` is ON in production. Batch cost **₱273 per 4-scene ad**; hard limit
-  6 renders / 10 min.
+- **Scene grade stays REJECTED** — the **luma term** killed it. Do not re-propose with luma.
+- `real_talk` is an 8-beat TUNED skeleton → 9 scenes, always; **no scene-count dial exists**.
+  Only `before_after` / `unboxing` / `try_on` are 4-beat, and `cost:estimate` assumes 4 for all
+  12. `before_after` is UGC Pro = **hard cut, no start/end frames** — it cannot test the morph.
+- A scene that LOOKS differently lit is usually composition (the wide shot, the wooden vanity) —
+  read the stored prompt before calling it a lighting regression, W-002.
+- `MID_GAP_TRIM_ENABLED` ON in prod. Both image-gate flags ON, but **`VITE_` is build-time —
+  Vercel needs a REDEPLOY**. Batch cost ₱273 per 4-scene ad.
+- Sparse-excluded, fetch on demand: `baselines/locked-wins`. Sample-batch PNGs are on disk.
 - Branch `feat/hook-layout-system` (`1245d14`) still unmerged, queued for after launch.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
