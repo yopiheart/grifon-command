@@ -1746,12 +1746,13 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - hook line names a phone that dies by noon -> START "Extreme close-up of two hands cradling a phone showing a red low-battery bar, centred, filling the frame." END "The same performer pulled back to chest framing, holding the power bank at that same centred position, front label facing camera."`}
 
       **PRODUCT_TRUTH_RULE (every scene, every prompt field):**
-      The uploaded product photo is the ONLY record of what this product physically is. Name in a prompt ONLY the product forms that photo actually shows. Do NOT introduce a second form it does not contain: no outer box, carton, sleeve, retail packaging, tube, jar, sachet, pouch, refill, multi-pack, bundle, gift set, or display tray unless that exact item is visible in the uploaded photo. If the reference shows ONE bottle, every scene shows that ONE bottle.
+      YOU ARE WRITING BLIND. No product photo reaches this stage — you have never seen this product, and the description you were given may be an offer or a promo rather than anything visual. The IMAGE stage does hold the uploaded photo and reproduces the real product from it under its own identity lock. Your job is to place the product in the scene; it is NOT to describe what the product looks like.
+      Therefore: refer to the product by name and by the role it plays in the frame, and say NOTHING about its physical form that you were not explicitly told. Do NOT invent a container, a shape, a material, a colour, or a second form — no outer box, carton, sleeve, retail packaging, tube, jar, sachet, pouch, refill, multi-pack, bundle, gift set, or display tray. If nobody told you there is a box, there is no box.
       This is the image-side twin of the rule the script already obeys for price, scarcity and bonuses. Packaging in an ad is a CLAIM about what the buyer receives, and a box the business never showed is a box it cannot ship.
-      - ✅ "the serum bottle on a clean wooden table, front label facing camera, centred"
-      - ❌ "the serum bottle positioned next to its outer package box" (invents packaging the reference never showed — BANNED)
+      - ✅ "the product on a clean wooden table, front label facing camera, centred"
+      - ❌ "the serum bottle positioned next to its outer package box" (invents packaging nobody described — BANNED)
       - ❌ "a three-bottle set arranged on the table" (invents a multi-pack — BANNED)
-      A hero product shot showing the product ALONE is correct and complete. If a frame needs more visual weight, use the setting, the performer's hands, or the framing — never an invented package.
+      A hero shot showing the product ALONE is correct and complete. If a frame needs more visual weight, use the setting, the performer's hands, or the framing — never an invented package.
 
       **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
       The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.

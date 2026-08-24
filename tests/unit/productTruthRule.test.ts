@@ -95,6 +95,25 @@ describe('PRODUCT_TRUTH_RULE reaches the storyboard prompt', () => {
     expect(prompt).toContain('next to its outer package box');
   });
 
+  it('tells the model it is writing BLIND, because it is', () => {
+    // api/gemini/text.ts sends the storyboard flow `contents: prompt` — a plain string, no
+    // inlineData. The storyboard model never receives the hero image. A rule phrased as
+    // "match the uploaded photo" would ask a blind writer to check something it cannot see,
+    // so the rule has to remove the model's need to describe form at all.
+    const prompt = buildFor(baseInfo({ scriptType: 'Testimonial' }));
+    expect(prompt).toMatch(/WRITING BLIND/);
+    expect(prompt).toMatch(/No product photo reaches this stage/);
+  });
+
+  it('warns that the given description may be an offer, not a visual description', () => {
+    // oneShotIntake maps productImageDescription <- input.productDescription. In run
+    // apr_fa7cedc3 that field held "₱499 launch promo (reg. ₱799), free shipping nationwide,
+    // ends Sunday" — identical to input.offer. The field name promises a visual; the data
+    // is whatever the user typed.
+    const prompt = buildFor(baseInfo({ scriptType: 'Testimonial' }));
+    expect(prompt).toMatch(/may be an offer or a promo rather than anything visual/);
+  });
+
   it('states that a product-alone hero shot is complete, so the model has a legal way out', () => {
     // Without this the model satisfies "make it a hero shot" by adding something, which is
     // exactly the pressure that produced the box.
