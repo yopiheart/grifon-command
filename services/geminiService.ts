@@ -2343,6 +2343,52 @@ export const generateSceneImage = async (
         if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
     }
 
+    // --- REFERENCE-MODE RESOLUTION (routing, not prompt content) ---
+    // A mode is a PROMISE about which reference photos arrived, and every branch below re-checks
+    // that promise. When it does not hold the chain falls all the way through to STRICT_NEGATIVE,
+    // which bans faces, skin, hands and fingers outright — and `humanSubjectInFrame` still counts
+    // 'both' as human, so the camera mandate keeps demanding a face. A scene then gets told to
+    // frame a person and to render no anatomy at once, and the model splits the difference into a
+    // floating head, bare skin, or disembodied hands.
+    //
+    // That is not hypothetical: the hook morph withholds productUrl ON PURPOSE (the start frame
+    // must not contain the product) while the storyboard still labels the scene 'both', so EVERY
+    // morph hook on a 'both' scene rendered under the no-humans ruleset. Run apr_fa7cedc3 scene 1
+    // opened on bare skin instead of the performer for exactly this reason.
+    //
+    // Resolve the mode against the references that actually arrived, so a missing photo DOWNGRADES
+    // the lock to the strongest one still supported instead of removing it. Nothing here changes a
+    // single word of any prompt.
+    const hasAvatarRef = !!references.avatarUrl;
+    const hasProductRef = !!references.productUrl;
+    const resolveMode = (m: typeof referenceImageMode): typeof referenceImageMode => {
+        switch (m) {
+            case 'avatar':
+                return hasAvatarRef ? 'avatar' : 'none';
+            case 'product':
+            case 'venue':
+                return hasProductRef ? m : 'none';
+            // These three want a human AND a second photo. Losing the second photo must not cost
+            // us the identity lock — fall back to the avatar-only lock, never to no-humans.
+            case 'both':
+            case 'avatar_venue':
+            case 'avatar_state':
+                if (hasAvatarRef && hasProductRef) return m;
+                if (hasAvatarRef) return 'avatar';
+                return hasProductRef ? 'product' : 'none';
+            default:
+                return m;
+        }
+    };
+    const resolvedMode = resolveMode(referenceImageMode);
+    if (resolvedMode !== referenceImageMode) {
+        console.warn(
+            `[generateSceneImage] reference mode '${referenceImageMode}' -> '${resolvedMode}'`,
+            `(avatar: ${hasAvatarRef}, product: ${hasProductRef})`
+        );
+    }
+    referenceImageMode = resolvedMode;
+
     // --- FORGE_STUDIO_v6.0_GATES ---
     let consistencyRules = "";
     // `&& references.avatarUrl` added 2026-07-25 (Neil-approved). This was the ONE branch of the
