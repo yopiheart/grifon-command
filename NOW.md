@@ -1,89 +1,78 @@
 # NOW — the resume doc
-**Stamped: 2026-08-23** (session 32)
+**Stamped: 2026-08-24** (session 33)
 
-## ▶ NEXT ACTION — one diff closes four of tonight's five bugs
+## ▶ NEXT ACTION — six fixes are written and NONE has met a real render
 
-**The generation layers have no "never invent" rule. The script layer does.** That is not
-four bugs, it is one gap with four symptoms, and it is the whole fix pass for tomorrow.
+Branch **`fix/poll-download-retry`** (6 commits, pushed, unmerged). Build clean, **1297 tests
+passing**. Every claim below was verified at a seam — a stubbed fetch, a captured prompt, a
+Postgres row. **Not one has been through a film run.** Neil is holding spend, so the gate is his.
 
-| Layer | Guard today |
-|---|---|
-| Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` — *"Do NOT invent or add any bonus that is not in the offer"* |
-| Image: packaging + props | ❌ none — scene 8 rendered a HIRAYA GLOW box Neil never uploaded |
-| Image: hair + wardrobe | ❌ none — plain-UGC block locks the ROOM only; `tryon` locks wardrobe too |
-| Video: spoken dialogue | ❌ none — Veo improvised *"Ito nang kanina ka."* into scene 7 |
+One thing still needs him at a keyboard first: **scene 4's frame.** The env-warden hook blocks
+any command containing `.env`, so the pull is his to run, not the agent's:
 
-Fifth bug, unrelated and the cheapest of all: **[`poll.ts:135`](api/gemini/video/poll.ts#L135)
-does a single `fetch` with no retry.** Two `veo download failed: 503` = two flagged scenes on a
-clip that was already generated AND billed. `withRetry` already exists in the repo.
+```
+node --env-file=.env scripts/pull-run-frames.mjs apr_fa7cedc3-d730-441c-b6c5-e2066b4b4868 .tmp/run-fa7cedc3
+```
 
-⛔ All four prompt edits are TUNED. Neil's explicit go, one diff, and **one layer per test**.
+Scene 4 is the file named `-s03-`. Open it beside scene 5 (`-s04-`, which came out fine).
 
-## ✅ WHAT LANDED — the first filmed ad under the new hook rule
+## ✅ WHAT LANDED — one blind writer, not four unrelated bugs
 
-**Run `apr_fa7cedc3-d730-441c-b6c5-e2066b4b4868`** — real_talk, AUTO presenter, `hero.png`
-uploaded, 8 scenes storyboarded, **6 filmed**. Logged COGS **US$6.50** (~₱377), and that
-UNDERCOUNTS: Kling bills in points, which `estUsd` does not track. Final MP4 is on R2 behind a
-**signed URL that expires ~2026-08-24 13:00** — re-sign or download before then. Confirmed
-holding on real output: the room lock, `ordinary indoor daylight`, and the W-005 hook anchor
-(start = cropped performer detail, end = same performer with the bottle).
+Session 32 called it "the generation layers have no never-invent rule." Half right. The rule was
+missing, but the deeper cause is that **the storyboard writes product visuals blind.**
+
+| # | Commit | What was actually wrong |
+|---|---|---|
+| 1 | `ba88f43` | Veo AND Kling fetched a finished, billed clip **once**. Two 503s killed two paid scenes. Now 3 tries, 400/1200ms; 403 and 404 still settle first try. |
+| 2 | `eebb680` | Scene 8's stored `imagePrompt` literally said *"next to its outer package box"*. **The storyboard wrote the box**; the image model obeyed. |
+| 3 | `e06e93f` | Commit 2 was misaimed — `text.ts:317` sends `contents: prompt`, a plain string. **The storyboard never receives the hero image.** The rule now removes the need to guess instead of forbidding it. |
+| 4 | `d22c85d` | `productImageDescription` was the OFFER. `LaunchScreen:455-458` sends one field as both. The hero is now described at upload by `describeBusinessAsset` — the same call the guided slots already made. |
+| 5 | `aea27bd` | OPTION B never said the quoted line was ALL the speech, and two of its own rules ("ends on the next breath", "Last frame = next syllable") demand the mouth still be moving. On a short line the only way to obey is to invent words. |
+| 6 | `bf1f60f` | **The hook is not allowed to show a face.** A morph hook withholds `productUrl` by design while passing mode `both`, which needs both photos → falls to `STRICT_NEGATIVE` ("NO faces, NO skin, NO hands") while the camera mandate still demands a face. Every morph hook on a `both` scene, not just this run. |
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
-- **`GRIFON_DEV_UNMETERED` works.** It bypasses the meter without touching the counter, so the
-  8/8 PRO wall is irrelevant locally and **no plan credits were spent tonight.** Arm it with
-  `scripts/enable-dev-unmetered-video.ps1`, which sets BOTH flags including the broad one.
-- **Two different 402s exist on `api/kling/video.ts`** — `quota_exceeded` (line 90, our meter)
-  and `kling_balance_exhausted` (line 171, Kling's own balance). The browser shows both as a
-  bare 402. **Read the body before diagnosing.** An expired Kling pack killed a whole run and
-  was misread as the quota race for an hour. Kling is paid now: 100 points, valid to 09-22.
-- **Only Kling takes an end frame** (`image_tail`, kling/video.ts:14). Veo has no equivalent.
-  So the morph hook REQUIRES Kling — routing everything to Veo cannot test it.
-- **Talking scenes go through STS, not TTS** (`api/voice/consolidate.ts:18`). STS re-voices
-  Veo's OWN audio and never reads the script, so anything Veo improvises survives into the
-  final mix and the trimmer correctly keeps it — it is real speech.
-- **Start the dev server with `--port 5173 --strictPort`.** Without it Vite silently moves to
-  5174 while the dying old process still answers on 5173 — a port probe is not a process check,
-  and localStorage is per-origin, so a run key does not follow the port.
+- **Scene numbering: Neil's scene N = `scene_idx` N-1.** Scene 1 is the hook, the only row with
+  an `end_frame_url`. `pull-run-frames.mjs` names files by **idx**, so scene 4 is `-s03-`. This
+  cost a full round of wrong conclusions.
+- **`slimCheckpointArtifacts` empties `businessInfo.productImageUrls` before saving** — by
+  design, a transport guard against the 2mb cap. The durable copy is `input.heroImageBase64`.
+  An empty array in Postgres is NORMAL. Do not read it as a lost upload.
+- **Correction to session 32:** `avatar_url` is **NOT** always dropped. In this run the column
+  holds **833,726 bytes**. The >700KB slim rule applies to `input`, not that column. Re-diagnose
+  launch blocker #2 before repeating its mechanism.
+- **STS re-voices the clip's OWN audio** (`consolidate.ts:107` — `extractAudioFromMp4` →
+  `convertSts`). `scriptLine` is used only for caption alignment. Anything the video model
+  improvises is real speech downstream and the trimmer is right to keep it.
+- **The append-verbatim pattern works.** END-CLEAN's sentence appeared word for word in the
+  stored scene-7 prompt. That is why the DIALOGUE LOCK ends with an append instruction — the
+  video model never sees the instruction block, only the prose the writer emits.
 
-## ⏭ OPEN — ranked, with the trap in each
+## ⏭ OPEN — ranked
 
-1. **The four-symptom diff above** + the `poll.ts` retry. Tomorrow's whole job.
-2. **Identity reference dies on reload — LAUNCH BLOCKER.** `slimCheckpointInput` drops `data:`
-   strings over 700KB; a 2K auto-cast avatar exceeds it and **"has never reached the database
-   intact"** (`producerOrchestrator.ts:722`), so the durable `avatar_url` column never fills.
-   After ONE refresh every scene fix is refused with *"Start over to re-shoot this scene"* —
-   and Start over is a new run, a new credit. **Auto-cast is the RECOMMENDED default** (Neil's
-   own A/B, `concierge_poc_findings.md:232`), so the recommended lane is the broken lane.
-3. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
-   still showed a 4-second one-scene video titled **YOUR FIRST CUT** with *"7 scenes ready."*
-   No error, no warning. Inverted twin of [#90](https://github.com/yopiheart/grifon-command/issues/90).
-4. **The hook opens on the wrong body part.** Two regenerations, two arm/shoulder close-ups on
-   a script whose problem is on the FACE (beat 3 says concealer). CMO verdict: scroll-past, not
-   scroll-stop — `S8` self-identification fails on an arm — plus a Meta risk, since a macro
-   skin-lesion still is a visual medical claim our script guardrail bans in words only. Cause:
-   the rule says *"whichever part the script's problem lives on"* and the hook line never says
-   face. **Not a regenerate fix.**
-5. **Landing page has zero video and one false claim.** `ProofGallery` headline reads *"THESE
-   ADS WERE MADE WITH GRIFON. Real businesses RAN THEM."* over CSS mockups; `ExitIntentModal`
-   points at `/exit/proof-ad.mp4`, which does not exist. `SAMPLES = {}`, all 13 recipes show
-   "Sample soon". Fix the copy now; the videos come from the sample batch.
-6. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic. Did NOT fire
-   tonight (unmetered), but it is still there for the first real 8-scene customer.
-7. **Supabase FREE tier is past its grace period.** Holds auth, runs, quota, billing.
-8. **PRO is loss-making at full use.** 8 × ₱273 = ₱2,184 COGS vs ~₱2,140 net. The margin bets
-   on breakage (~2 ads/mo). Cap the founder invites at 5–10 so the bet is cheap if wrong.
+1. **A film run on this branch.** It tests fixes 1–6 at once. Nothing is proven until it does.
+2. **Scene 4 is still unexplained.** It was the other `both` scene but it HAD both photos, so
+   fix 6 does not cover it. Clean prompt, both refs, `ANATOMICAL_LOCK` present, wrong output.
+   Needs the frame.
+3. **`NO_UNSOLICITED_PRODUCT` exists only in the `avatar` branch** of `generateSceneImage`. The
+   `product` and `both` branches never got the sibling rule.
+4. **Nothing feeds a real visual description into any text stage** except fix 4's new path.
+5. **Identity reference dies on reload — LAUNCH BLOCKER**, but see the correction above.
+6. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
+   still showed a 4s clip titled YOUR FIRST CUT. Inverted twin of issue #90.
+7. **Landing page has zero video and one false claim.** `ProofGallery` says real businesses ran
+   these ads over CSS mockups; `/exit/proof-ad.mp4` does not exist.
+8. **Quota race in `consumeFinishedAd`** (peek → consume → mark, not atomic). **Supabase FREE
+   tier past grace.** **PRO is loss-making at full use** — cap founder invites at 5–10.
 
 ## ⚠ CARRIED
-- **Scene grade stays REJECTED** — the **luma term** killed it. Do not re-propose with luma.
-- `real_talk` is an 8-beat TUNED skeleton → 9 scenes, always; **no scene-count dial exists**.
-  Only `before_after` / `unboxing` / `try_on` are 4-beat, and `cost:estimate` assumes 4 for all
-  12. `before_after` is UGC Pro = **hard cut, no start/end frames** — it cannot test the morph.
-- A scene that LOOKS differently lit is usually composition (the wide shot, the wooden vanity) —
-  read the stored prompt before calling it a lighting regression, W-002.
-- `MID_GAP_TRIM_ENABLED` ON in prod. Both image-gate flags ON, but **`VITE_` is build-time —
-  Vercel needs a REDEPLOY**. Batch cost ₱273 per 4-scene ad.
-- Sparse-excluded, fetch on demand: `baselines/locked-wins`. Sample-batch PNGs are on disk.
+- Scene grade stays REJECTED — the **luma term** killed it. Do not re-propose with luma.
+- `real_talk` is an 8-beat TUNED skeleton → 9 scenes; **no scene-count dial exists.**
+- Only Kling takes an end frame (`image_tail`). The morph hook cannot be tested on Veo.
+- Two different 402s on `api/kling/video.ts` — our meter vs Kling's balance. **Read the body.**
+  Kling paid: 100 points to 09-22. `GRIFON_DEV_UNMETERED` works; arm it before any local run.
+- Start dev with `--port 5173 --strictPort`. A port probe is not a process check.
+- `MID_GAP_TRIM_ENABLED` ON in prod. Both image-gate flags ON, but **`VITE_` is build-time.**
 - Branch `feat/hook-layout-system` (`1245d14`) still unmerged, queued for after launch.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
