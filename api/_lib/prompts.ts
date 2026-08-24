@@ -1745,6 +1745,14 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - hook line names an aching back after a shift -> START "Extreme close-up of a hand pressed flat against a lower back, knuckles tight, centred, filling the frame." END "The same performer pulled back to chest framing, holding the patch box at that same centred position, front label facing camera."
       - hook line names a phone that dies by noon -> START "Extreme close-up of two hands cradling a phone showing a red low-battery bar, centred, filling the frame." END "The same performer pulled back to chest framing, holding the power bank at that same centred position, front label facing camera."`}
 
+      **PRODUCT_TRUTH_RULE (every scene, every prompt field):**
+      The uploaded product photo is the ONLY record of what this product physically is. Name in a prompt ONLY the product forms that photo actually shows. Do NOT introduce a second form it does not contain: no outer box, carton, sleeve, retail packaging, tube, jar, sachet, pouch, refill, multi-pack, bundle, gift set, or display tray unless that exact item is visible in the uploaded photo. If the reference shows ONE bottle, every scene shows that ONE bottle.
+      This is the image-side twin of the rule the script already obeys for price, scarcity and bonuses. Packaging in an ad is a CLAIM about what the buyer receives, and a box the business never showed is a box it cannot ship.
+      - ✅ "the serum bottle on a clean wooden table, front label facing camera, centred"
+      - ❌ "the serum bottle positioned next to its outer package box" (invents packaging the reference never showed — BANNED)
+      - ❌ "a three-bottle set arranged on the table" (invents a multi-pack — BANNED)
+      A hero product shot showing the product ALONE is correct and complete. If a frame needs more visual weight, use the setting, the performer's hands, or the framing — never an invented package.
+
       **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
       The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.
 
