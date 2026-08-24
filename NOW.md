@@ -8,9 +8,9 @@ Branch **`fix/poll-download-retry`** (7 fixes + docs, pushed, unmerged). Build c
 captured prompt, a mutation test, a Postgres row. **Not one has been through a film run.**
 Neil is holding spend, so the gate is his.
 
-**Stop hunting at the seam. There is nothing left to learn there.** The next evidence has to
-come from a render. Arm `GRIFON_DEV_UNMETERED` first, and start dev with
-`--port 5173 --strictPort`.
+**Stop hunting at the seam. There is nothing left to learn there.** The next evidence has to come
+from a render, and the whole sheet for it is **[`workflows/film_run_sheet.md`](workflows/film_run_sheet.md)** —
+reuse `apr_fa7cedc3`'s EXACT inputs, and arm **`GRIFON_DEV_UNMETERED_VIDEO`** (the suffix matters).
 
 ## ✅ WHAT LANDED
 
