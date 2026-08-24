@@ -180,6 +180,10 @@ export const LaunchScreen: React.FC<{
 
   // --- Brief --------------------------------------------------------------
   const [hero, setHero] = useState<string>(restored?.hero ?? '');          // Product vertical: single product-in-hand photo
+  // What the hero photo actually LOOKS like, written by describeBusinessAsset at upload. The
+  // guided slot uploads have always captured this; the Product path never did, so downstream
+  // fell back to the offer text as the product's "description" (see mapReportToWizard).
+  const [heroDescription, setHeroDescription] = useState<string>(restored?.heroDescription ?? '');
   const [offer, setOffer] = useState(restored?.offer ?? '');
   const [brandName, setBrandName] = useState(restored?.brandName ?? '');
   const [price, setPrice] = useState(restored?.price ?? '');
@@ -458,6 +462,8 @@ export const LaunchScreen: React.FC<{
       productDescription: offer.trim(),
       // Guided verticals anchor research on the hero-slot photo; Product on the single hero.
       heroImageBase64: isGuided ? (servicePhotos[0]?.url ?? '') : hero,
+      // Product path only — the guided verticals build their description from the slot photos.
+      heroDescription: isGuided ? undefined : (heroDescription.trim() || undefined),
       // UPLOAD → the run honors the user's photo. AUTO → empty url so AI Director
       // casts the spokesperson from the research persona, shaped by castHints.
       avatar: presenterMode === 'upload'
@@ -502,7 +508,7 @@ export const LaunchScreen: React.FC<{
     if (!dirty) return;
     const t = setTimeout(() => {
       saveOneShotDraft({
-        hero, offer, brandName, price, forceFresh,
+        hero, heroDescription, offer, brandName, price, forceFresh,
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
         vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
         presenterMode, gender, ageRange, ethnicity, avatarUrl,
@@ -511,7 +517,7 @@ export const LaunchScreen: React.FC<{
     }, 700);
     return () => clearTimeout(t);
   }, [
-    dirty, hero, offer, brandName, price, forceFresh,
+    dirty, hero, heroDescription, offer, brandName, price, forceFresh,
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
     vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
     presenterMode, gender, ageRange, ethnicity, avatarUrl,
@@ -522,7 +528,7 @@ export const LaunchScreen: React.FC<{
   // by a two-tap confirm (destructive: nukes typed details + uploads).
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resetAll = () => {
-    setHero(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
+    setHero(''); setHeroDescription(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
     // Reset drops the draft too, so the segmentation answer is the default again.
@@ -988,8 +994,18 @@ export const LaunchScreen: React.FC<{
           <UploadDropzone
             thumb={hero}
             hint="A plain phone shot is fine — just hold the product so the brand name and whole product are clear."
-            onFile={async (f) => { try { const c = await compressImageForUpload(f); setHero(c.dataUrl); checkQuality('hero', c.dataUrl); } catch { setAssetErr('Could not read that image — try another.'); } }}
-            onClear={() => { setHero(''); clearQuality('hero'); }}
+            onFile={async (f) => {
+              try {
+                const c = await compressImageForUpload(f);
+                setHero(c.dataUrl);
+                setHeroDescription('');
+                checkQuality('hero', c.dataUrl);
+                // Best-effort, exactly like uploadSlot: a 401/quota must never block the
+                // upload. Without it the product's "description" downstream is the offer text.
+                try { setHeroDescription(await describeBusinessAsset(c.base64, c.mimeType)); } catch { /* best-effort */ }
+              } catch { setAssetErr('Could not read that image — try another.'); }
+            }}
+            onClear={() => { setHero(''); setHeroDescription(''); clearQuality('hero'); }}
             onView={hero ? () => setViewImage(hero) : undefined}
           />
           <QualityNudge warnings={hero ? quality.hero : undefined} />

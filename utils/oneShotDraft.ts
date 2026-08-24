@@ -26,6 +26,9 @@ type ServicePhoto = NonNullable<BusinessInfo['servicePhotos']>[number];
 
 export interface OneShotDraft {
   hero: string;
+  /** AI-written visual description of `hero`, captured at upload. Optional so a draft saved
+   * before this field existed (or while the describe call was still in flight) still loads. */
+  heroDescription?: string;
   offer: string;
   brandName: string;
   price: string;
