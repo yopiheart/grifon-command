@@ -2423,17 +2423,18 @@ export const generateSceneImage = async (
         5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image 1 shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
         6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
         7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
+        8. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 1, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
         `;
     } else if (referenceImageMode === 'both' && references.avatarUrl && references.productUrl) {
         consistencyRules = `
         **DUAL_REFERENCE_LOCK (avatar + product):**
 
         **FROM AVATAR (Reference Image 1 — character/identity):**
-        1. **LOCKED (preserve from Reference Image 1):** face, skin tone, bone structure, hair styling (color AND style — never change between scenes), wardrobe (color, cut, fabric), body type.
+        1. **LOCKED (preserve from Reference Image 1, NEVER change across scenes — non-negotiable):** face, skin tone, bone structure, **hair styling** (color AND style — if Reference Image 1 shows hair tied up in a bun or ponytail, render it tied up in EVERY scene; do NOT let it down. If Reference Image 1 shows hair down/loose, do NOT tie it up in any scene. Hair styling drift between scenes is BANNED), wardrobe (color, cut, fabric — same blouse/top across scenes), body type. Scene-driven action MAY change pose/expression, but MUST NOT change hair styling, wardrobe, or body type.
         2. **VARIES (driven by Scene Prompt):** facial expression, gaze direction, body pose, hand position.
         2b. **FACE_TO_CAMERA (REQUIRED when the avatar speaks the script line):** both eyes + mouth visible. Side body OK; face-away BANNED for talking scenes.
         3. **CAMERA:** angle, distance, framing per CAMERA_MANDATORY block.
-        4. **ENVIRONMENT:** same residence/setting as Reference Image 1 (avatar's home).
+        4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (the avatar's home). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
         5. **ETHNICITY:** Strictly **${ethnicity}**.
 
         **FROM PRODUCT (Reference Image 2 — product/label):**
@@ -2441,6 +2442,7 @@ export const generateSceneImage = async (
         7. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 2 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
         8. **VISUAL_GROUND_TRUTH_PRIORITY — PRODUCT (overrides text metadata):** Reference Image 2 (product photo) is VISUAL GROUND TRUTH for the product. Do NOT infer product visual properties (color, shape, label design, finish) from the product NAME or DESCRIPTION text. If the photo and the name disagree, the photo wins. Text controls only the wordmark/variant text on the label, not the visual appearance of the jar/container.
         9. **ANATOMICAL_LOCK:** Render ONLY the number of hands the action needs — one hand holding the product = exactly ONE hand; a two-handed action = exactly TWO. Five fingers each. NEVER add an extra, third, phantom, or duplicate hand to "complete a pair", and never a disembodied hand entering frame. Anatomy matches the action, not a fixed count.
+        10. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 2, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
 
         **LIGHTING (DUAL_LUMEN_SYNC):**
         - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
