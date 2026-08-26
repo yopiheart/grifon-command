@@ -30,6 +30,12 @@ the page prints the **anchor string, no line number** (verified both tails). Tie
 ✅ 2026-08-27: **9 tests** ([tests/unit/checkAnchors.test.ts](tests/unit/checkAnchors.test.ts)) drive the REAL script
 against a REAL temp git repo — mocking git would re-encode the belief behind all three false-greens. Mutation-checked.
 
+## ✅ CLOSED 2026-08-27 — identity-reference blocker was ALREADY FIXED (was OPEN #2)
+`producerOrchestrator.ts:722` (*"never reached the database intact"*) was quoted as a live verdict; it notes
+what was UNMEASURED when `a1d8b7e` landed 07-26. Live DB: of 27 runs **7 carry `avatar_url`**, the four
+biggest **809k-846k chars, `input.avatar.url` empty** — slimmer stripped, column caught, rehydrated at
+[ProducerFlow.tsx:55](components/OneShotAd/ProducerFlow.tsx#L55). ⚠ NOT smoke-tested end-to-end.
+
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
 - **`GRIFON_DEV_UNMETERED` works** — bypasses the meter without touching the counter, so the 8/8
@@ -49,28 +55,22 @@ against a REAL temp git repo — mocking git would re-encode the belief behind a
 ## ⏭ OPEN — ranked, with the trap in each
 
 1. **The four-symptom diff above** + the `poll.ts` retry. The whole next job.
-2. **Identity reference dies on reload — LAUNCH BLOCKER.** `slimCheckpointInput` drops `data:`
-   strings over 700KB; a 2K auto-cast avatar exceeds it and **"has never reached the database
-   intact"** (`producerOrchestrator.ts:722`), so the durable `avatar_url` column never fills. After
-   ONE refresh every scene fix is refused with *"Start over to re-shoot this scene"* — a new run, a
-   new credit. **Auto-cast is the RECOMMENDED default** (`concierge_poc_findings.md:232`), so the
-   recommended lane is the broken lane.
-3. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
+2. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
    still showed a 4-second one-scene video titled **YOUR FIRST CUT** with *"7 scenes ready."*
    No error, no warning. Inverted twin of [#90](https://github.com/yopiheart/grifon-command/issues/90).
-4. **The hook opens on the wrong body part.** Two regenerations, two arm/shoulder close-ups on
+3. **The hook opens on the wrong body part.** Two regenerations, two arm/shoulder close-ups on
    a script whose problem is on the FACE (beat 3 says concealer). Scroll-past, not scroll-stop —
    `S8` fails on an arm — plus a Meta risk: a macro skin-lesion still is a visual medical claim
    our guardrail bans in words only. Cause: the rule says *"whichever part the script's problem
    lives on"* and the hook line never says face. **Not a regenerate fix.**
-5. **Landing page has zero video and one false claim.** `ProofGallery` says *"THESE ADS WERE MADE
+4. **Landing page has zero video and one false claim.** `ProofGallery` says *"THESE ADS WERE MADE
    WITH GRIFON. Real businesses RAN THEM."* over CSS mockups; `ExitIntentModal` points at
    `/exit/proof-ad.mp4`, which does not exist. `SAMPLES = {}`, all 13 recipes show "Sample soon".
    Fix the copy now; the videos come from the sample batch.
-6. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic. Still unfired,
+5. **Quota race in `consumeFinishedAd`.** peek → consume → mark is not atomic. Still unfired,
    still there for the first real 8-scene customer.
-7. **Supabase FREE tier is past its grace period.** Holds auth, runs, quota, billing.
-8. **PRO is loss-making at full use.** 8 × ₱273 = ₱2,184 COGS vs ~₱2,140 net. The margin bets
+6. **Supabase FREE tier is past its grace period.** Holds auth, runs, quota, billing.
+7. **PRO is loss-making at full use.** 8 × ₱273 = ₱2,184 COGS vs ~₱2,140 net. The margin bets
    on breakage (~2 ads/mo). Cap the founder invites at 5–10 so the bet is cheap if wrong.
 
 ## ⚠ CARRIED
