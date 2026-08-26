@@ -1713,32 +1713,6 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
 
-      **PRODUCT_TRUTH_RULE (every frame prompt, every scene):**
-      The uploaded product photo is the ONLY product that exists. A frame prompt may name what is
-      visibly IN that photo, and nothing else.
-
-      BANNED unless the uploaded photo actually shows it: an outer box, carton, pouch, sachet,
-      refill, tube, jar, second bottle, gift set, tray, sleeve, branded bag, or any other packaging
-      or branded prop. Also banned: a quantity the photo does not show ("three bottles", "a row of
-      jars", "the full set").
-
-      The image model obeys this field literally, so naming a package here MAKES one. A rendered
-      package the business never produced is a fake product on a real brand's ad: it cannot be
-      shipped, a customer cannot recognise it, and it is worse than an ugly frame because it looks
-      finished. Naming ONLY the real product is always safe; the still is allowed to be simple.
-
-      - WRONG: "the serum bottle positioned next to its outer package box" (the upload is a bottle
-        alone, so the box is invented)
-      - RIGHT: "the serum bottle standing upright on a clean wooden table, front label facing camera"
-      - RIGHT: "the serum bottle beside a plain unbranded ceramic dish" (an unbranded prop is fine —
-        an invented BRANDED one is not)
-
-      If a scene needs more visual weight than the single product carries, add UNBRANDED staging:
-      cloth, a plain surface, water, plain glassware, ordinary household objects. Never a second
-      branded object. And if the chosen format seems to call for packaging the photo does not show
-      (an unboxing with no box in the upload), keep the reveal on the product itself — a format is
-      not a licence to invent inventory.
-
       ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : isUGCPro ? `**HOOK FRAMES (Scene 1, UGC Pro) = A HARD CUT, NOT A MORPH:** This format has NO transition
       into scene 2 — the cut IS the effect. Scene 1 emits a SINGLE \`imagePrompt\` exactly like scenes
       2+. Do NOT emit \`startFramePrompt\`, \`endFramePrompt\`, or \`transitionEffect\` for Scene 1 or for

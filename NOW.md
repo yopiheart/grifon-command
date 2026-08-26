@@ -1,21 +1,23 @@
 # NOW — the resume doc
 **Stamped: 2026-08-26** (session 33)
 
-## ▶ NEXT ACTION — ONE test render, then the samples
+## ▶ NEXT ACTION — one diff closes four of five bugs (UNCHANGED, still the job)
 
-All four prompt gaps are CLOSED (2026-08-27), and **none is verified by a render.** Both TUNED
-edits change generated text, so the next spend is one run that exercises both: look at the stills
-for packaging nobody uploaded, and listen for any word that is not in the script.
+**The generation layers have no "never invent" rule. The script layer does.** That is not
+four bugs, it is one gap with four symptoms, and it is the whole fix pass.
 
 | Layer | Guard today |
 |---|---|
-| Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` |
-| Image: packaging + props | ✅ `PRODUCT_TRUTH_RULE`. Diagnosis was WRONG: the STORYBOARD wrote *"next to its outer package box"*; the image model obeyed. Upload was one bottle, looked at. 11 tests |
-| Image: hair + wardrobe | ✅ already guarded — IDENTITY_LOCK rule 1 + `APPEARANCE_LOCK_RULE`. Never was a gap |
-| Video: spoken dialogue | ✅ `DIALOGUE LOCK`. This one was REAL: OPTION B said where to START, never where to STOP. STS re-voices Veos own audio, so an ad-lib ships. 5 tests |
+| Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` — *"Do NOT invent or add any bonus that is not in the offer"* |
+| Image: packaging + props | ❌ none — scene 8 rendered a HIRAYA GLOW box Neil never uploaded |
+| Image: hair + wardrobe | ❌ none — plain-UGC block locks the ROOM only; `tryon` locks wardrobe too |
+| Video: spoken dialogue | ❌ none — Veo improvised *"Ito nang kanina ka."* into scene 7 |
 
-⛔ **Two of those four ❌ claims were false.** Both were caught by reading the stored run, not the
-doc. Read `producer_runs.artifacts` before trusting any symptom note. ✅ `poll.ts` retry DONE, CI green.
+Fifth bug, unrelated and the cheapest of all: **[`poll.ts:135`](api/gemini/video/poll.ts#L135)
+does a single `fetch` with no retry.** Two `veo download failed: 503` = two flagged scenes on a
+clip that was already generated AND billed. `withRetry` already exists in the repo.
+
+⛔ All four prompt edits are TUNED. Neil's explicit go, one diff, and **one layer per test**.
 
 ## ✅ LANDED — `/eli5` + the anchor CI gate (PR #118, merged `170229a`)
 
@@ -52,8 +54,7 @@ biggest **809k-846k chars, `input.avatar.url` empty** — slimmer stripped, colu
 
 ## ⏭ OPEN — ranked, with the trap in each
 
-1. **ONE test render** to eyeball both TUNED changes, then **fix the sample previews** — `SAMPLES = {}`
-   and all 13 recipes still say "Sample soon". The render feeds the samples; do them in that order.
+1. **The four-symptom diff above** + the `poll.ts` retry. The whole next job.
 2. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
    still showed a 4-second one-scene video titled **YOUR FIRST CUT** with *"7 scenes ready."*
    No error, no warning. Inverted twin of [#90](https://github.com/yopiheart/grifon-command/issues/90).
