@@ -678,6 +678,19 @@ Reproduced 2026-08-26: move a call site, run (exit 1, correct), `git add` the tw
 **exit 0**. A dev doing `git add -A` then re-running as a pre-commit sanity pass would get a
 green light on a citation that silently changed — the exact outcome this tier exists to prevent,
 arriving through the run a human is most likely to make. Found by the PR #118 reviewer.
+
+⛔ **And `HEAD` alone is still not enough — the twin must be TRACKED.** `git diff HEAD` cannot see
+a path absent from `HEAD`, so an **untracked** twin diffs clean and prints `unchanged` forever.
+Same false green, one step further out; the live trap is adding an `ANCHORED` entry and forgetting
+`git add artifacts/foo.html`, which would leave an anchored artifact with no committed twin at all
+while CI stays green. `git ls-files --error-unmatch` runs first now. Also found by the #118
+reviewer, on the very commit that fixed the staged case.
+
+**Every failure path prints git's own stderr rather than guessing.** Measured 2026-08-26: a real
+difference exits 1, but so does running outside a repo (`error: Could not access 'HEAD'`), while a
+bad revision exits 128 — so the exit code CANNOT separate "a call site moved" from "git could not
+run", and branching on `status === 1` would still misreport the commonest failure. A checker whose
+whole purpose is not shipping a confident wrong answer must not print one about itself.
 **Kill switch:** delete the `artifacts` job, and drop it from `main-status`'s `needs`.
 
 An explainer that cites `foo.ts:412` is wrong the moment a line is inserted above it, and a

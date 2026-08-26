@@ -38,7 +38,10 @@ const ROOT = resolve(HERE, '..', '..');
 /**
  * Every anchor-based artifact. To add one:
  *
- *   ⛔ It must need NO npm dependencies and NO git history.
+ *   1. COMMIT THE TWIN in the same change. An untracked twin used to diff clean and
+ *      print "unchanged" forever; there is now a tracked-check below that fails loudly
+ *      instead, but the twin still has to exist in HEAD for any of this to mean anything.
+ *   2. ⛔ It must need NO npm dependencies and NO git history.
  *
  * That is not style, it is what keeps this job able to gate every PR: the CI job
  * runs no `npm ci` and uses a default shallow checkout. A builder needing `sharp`
@@ -67,13 +70,55 @@ for (const { builder, twin } of ANCHORED) {
     continue;
   }
 
+  // TRACKED first. `git diff HEAD` cannot see a path that is absent from HEAD, so an
+  // UNTRACKED twin diffs clean and prints "unchanged" - the same false green as the
+  // staged-twin bug one step further out. Live trap for the next ANCHORED entry: commit
+  // the builder, forget `git add artifacts/foo.html`, and CI reports an anchored artifact
+  // with no committed twin at all, quietly breaking the twin rule in CLAUDE.md.
+  // Confirmed 2026-08-26: untracked file present -> `git diff HEAD --exit-code` exits 0,
+  // `git ls-files --error-unmatch` exits 1. Found by the PR #118 reviewer.
+  try {
+    execFileSync('git', ['ls-files', '--error-unmatch', '--', twin], { cwd: ROOT, stdio: 'pipe' });
+  } catch (err) {
+    // Same rule as the diff below: let git say why. `ls-files` fails BOTH for an
+    // untracked path and for "not a git repository", and telling someone to run
+    // `git add` when the real problem is a missing .git is just a different confident
+    // wrong answer. Measured 2026-08-26 - that is exactly what the first draft did.
+    const stderr = String(err?.stderr ?? '').trim();
+    if (/did not match any file/i.test(stderr) || !stderr) {
+      console.error(`\n  ${twin} is NOT TRACKED by git.`);
+      console.error('  An anchored artifact must have its twin committed, or this check is blind');
+      console.error(`  to it forever. Run: git add ${twin}`);
+    } else {
+      console.error(`\n  git said: ${stderr}`);
+      console.error(`  Could not determine whether ${twin} is tracked. This is a git failure,`);
+      console.error('  not a verdict about the artifact.');
+    }
+    failed = true;
+    continue;
+  }
+
   // HEAD, not the index. See the header - `git diff` alone goes green on a staged twin.
   try {
     execFileSync('git', ['diff', 'HEAD', '--exit-code', '--', twin], { cwd: ROOT, stdio: 'pipe' });
     console.log(`  ${twin} unchanged`);
-  } catch {
-    console.error(`\n  ${twin} CHANGED on rebuild - a cited call site moved.`);
-    console.error('  Reread the page against the new code, then commit the rebuilt twin.');
+  } catch (err) {
+    // Surface git's OWN stderr rather than branching on the exit code. Measured
+    // 2026-08-26: a real difference exits 1, but so does running outside a repo
+    // ("error: Could not access 'HEAD'"), while a bad revision exits 128. So the exit
+    // code alone CANNOT separate "a call site moved" from "git could not run", and a
+    // status===1 test would still misreport the commonest failure. The stderr always
+    // says which. Reporting a confident wrong diagnosis is the exact failure this whole
+    // file exists to prevent, so never print the verdict below without it.
+    const stderr = String(err?.stderr ?? '').trim();
+    if (stderr) {
+      console.error(`\n  git said: ${stderr}`);
+      console.error(`  Could not compare ${twin} against HEAD. Fix that before reading anything`);
+      console.error('  into it - this is a git failure, not necessarily a moved call site.');
+    } else {
+      console.error(`\n  ${twin} CHANGED on rebuild - a cited call site moved.`);
+      console.error('  Reread the page against the new code, then commit the rebuilt twin.');
+    }
     failed = true;
   }
 }
