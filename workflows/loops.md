@@ -668,8 +668,16 @@ same day via the in-session `RemoteTrigger` tool):
 **Arm:** automatic — the `artifacts` job in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml),
 on every PR and every push to main.
 **Local equivalent:** `npm run check:artifact-anchors`
-**Verifier:** rebuilds `artifacts/eli5-image-gate.html` from its anchors, then
-`git diff --exit-code` on the twin.
+**Verifier:** [`tools/artifacts/check-anchors.mjs`](../tools/artifacts/check-anchors.mjs) rebuilds
+every anchored twin, then `git diff HEAD --exit-code` on each.
+
+⛔ **`HEAD` is load-bearing — never drop it back to a bare `git diff`.** Bare `git diff` compares
+the INDEX to the working tree, and the builder writes the twin *before* the diff runs. So once
+the twin is staged the rebuild reproduces the staged bytes and the check exits 0 whatever moved.
+Reproduced 2026-08-26: move a call site, run (exit 1, correct), `git add` the twin, run again ->
+**exit 0**. A dev doing `git add -A` then re-running as a pre-commit sanity pass would get a
+green light on a citation that silently changed — the exact outcome this tier exists to prevent,
+arriving through the run a human is most likely to make. Found by the PR #118 reviewer.
 **Kill switch:** delete the `artifacts` job, and drop it from `main-status`'s `needs`.
 
 An explainer that cites `foo.ts:412` is wrong the moment a line is inserted above it, and a
@@ -705,6 +713,10 @@ but reaches nobody, so a merged refactor leaves the published page citing a line
 
 ### Adding another anchored artifact
 
-Extend the `check:artifact-anchors` script in `package.json`. Keep the no-deps rule: builders
-that need `sharp` or funnel fonts (e.g. `build-gb-001-brief.mjs`) must NOT join this job, or an
-unrelated PR starts failing on a missing dependency.
+Add it to the `ANCHORED` list in [`tools/artifacts/check-anchors.mjs`](../tools/artifacts/check-anchors.mjs) —
+one place, with the joining rule written beside it. The script name `check:artifact-anchors`
+reads as repo-wide but covers exactly that list; that gap is why the list lives in a commented
+file instead of an uncommentable `package.json` one-liner (PR #118 review, nit 3).
+
+Keep the no-deps rule: builders needing `sharp` or funnel fonts (e.g. `build-gb-001-brief.mjs`)
+must NOT join, or an unrelated PR starts failing on a missing dependency.

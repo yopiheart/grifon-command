@@ -25,7 +25,7 @@
     "design:tailwind": "design.md export --format tailwind DESIGN.md > design.tokens.json",
     "design:spec": "design.md spec",
     "check:ps1-ascii": "node tools/check-ps1-ascii.mjs",
-    "check:artifact-anchors": "node tools/artifacts/build-eli5-image-gate.mjs && git diff --exit-code artifacts/eli5-image-gate.html"
+    "check:artifact-anchors": "node tools/artifacts/check-anchors.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.46.0",
