@@ -14,8 +14,7 @@ http://localhost:5173/app?osaEngine=producer
 session that set it once worked and the next did not. UNVERIFIED but it fits. `?osaEngine=steps`
 forces legacy back.
 
-Right path = **Running → storyboard gate → FIRST CUT.** If you see "YOUR AD PLAN" with a
-GENERATE VIDEO NOW button, the flag did not take.
+Right path = **Running → storyboard gate → FIRST CUT.** Seeing "YOUR AD PLAN"? The flag did not take.
 
 ## ✅ WHAT LANDED (main, CI green)
 
