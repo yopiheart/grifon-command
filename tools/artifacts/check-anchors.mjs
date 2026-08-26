@@ -103,23 +103,47 @@ for (const { builder, twin } of ANCHORED) {
     execFileSync('git', ['diff', 'HEAD', '--exit-code', '--', twin], { cwd: ROOT, stdio: 'pipe' });
     console.log(`  ${twin} unchanged`);
   } catch (err) {
-    // Surface git's OWN stderr rather than branching on the exit code. Measured
-    // 2026-08-26: a real difference exits 1, but so does running outside a repo
-    // ("error: Could not access 'HEAD'"), while a bad revision exits 128. So the exit
-    // code alone CANNOT separate "a call site moved" from "git could not run", and a
-    // status===1 test would still misreport the commonest failure. The stderr always
-    // says which. Reporting a confident wrong diagnosis is the exact failure this whole
-    // file exists to prevent, so never print the verdict below without it.
+    // Three different things land here, and printing the wrong one is the failure this
+    // whole file exists to prevent. Decide by POSITIVE signal, never by absence.
+    //
+    // The exit code cannot decide it. Measured 2026-08-26: a real difference exits 1,
+    // but so does running outside a repo ("error: Could not access 'HEAD'"), while a bad
+    // revision exits 128.
+    //
+    // Neither can "is stderr empty". An earlier draft used that, and it was asymmetric:
+    // any git advice line (core.safecrlf=warn on a cafe PC, a hint:) on a GENUINE drift
+    // would have flipped the verdict to "git failure, go debug git" and sent the operator
+    // away from the page that actually moved. err.stdout carries the diff under
+    // stdio:'pipe', so ask for the thing you mean.
     const stderr = String(err?.stderr ?? '').trim();
-    if (stderr) {
-      console.error(`\n  git said: ${stderr}`);
-      console.error(`  Could not compare ${twin} against HEAD. Fix that before reading anything`);
-      console.error('  into it - this is a git failure, not necessarily a moved call site.');
-    } else {
+    const diff = String(err?.stdout ?? '').trim();
+
+    // NEW artifact, staged but not yet in HEAD. `git diff HEAD` reports the whole file as
+    // an addition, which an earlier draft announced as "a cited call site moved" -- on
+    // exactly the workflow the registry comment above prescribes (add the entry, stage the
+    // twin, run this as a pre-commit sanity pass). Nothing moved; the artifact is new.
+    // Not a failure: the twin is staged and about to be committed, and CI cannot reach this
+    // branch anyway (its checkout IS a commit, so an uncommitted twin fails the tracked
+    // check above instead).
+    let inHead = true;
+    try {
+      execFileSync('git', ['cat-file', '-e', `HEAD:${twin}`], { cwd: ROOT, stdio: 'pipe' });
+    } catch { inHead = false; }
+
+    if (!inHead) {
+      console.log(`  ${twin} is NEW (staged, not yet in HEAD) - nothing to compare against.`);
+      console.log('  Commit it; CI compares against HEAD from then on.');
+    } else if (diff) {
       console.error(`\n  ${twin} CHANGED on rebuild - a cited call site moved.`);
-      console.error('  Reread the page against the new code, then commit the rebuilt twin.');
+      console.error('  Reread the page against the new code, then commit the rebuilt twin');
+      console.error('  AND redeploy the published artifact (see the CI failure hint).');
+      failed = true;
+    } else {
+      console.error(`\n  git said: ${stderr || '(no output)'}`);
+      console.error(`  Could not compare ${twin} against HEAD. Fix that before reading anything`);
+      console.error('  into it - this is a git failure, not a verdict about the artifact.');
+      failed = true;
     }
-    failed = true;
   }
 }
 

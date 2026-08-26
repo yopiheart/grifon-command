@@ -702,9 +702,20 @@ Before this job nothing rebuilt it — verified 2026-08-26: no artifact builder 
 from `package.json` or from any file in `.github/workflows/`. The guarantee was real *per
 rebuild* and absent *per commit*, while `CLAUDE.md` told the reader a build would catch it.
 
-Proven, not assumed: inserting one blank line above the `if (deps.checkSceneImage)` anchor
-moved the citations 1592 -> 1593 and 1613 -> 1614 and the check exited 1; reverting returned
-exit 0.
+Proven, not assumed: inserting one blank line above the `if (deps.checkSceneImage)` anchor moved
+**all three** `producerOrchestrator.ts` citations — 1592 -> 1593, 1613 -> 1614 **and 1635 -> 1636**
+— and the check exited 1; reverting returned exit 0. (This paragraph first reported only two of
+the three, because the test that produced it piped the builder's output through `head -2`. In a
+section whose whole claim is that the result was measured, a truncated command quietly costs the
+doc its authority. Caught by the PR #118 reviewer.)
+
+⛔ **The check guards the COMMITTED TWIN, never the published page.** The artifact on claude.ai is
+a separate copy nothing in CI can reach, and it is the one Neil reads on his phone. Fix a red
+build by committing the rebuilt twin and stopping, and the build goes green while the published
+page still cites the moved line — with the green build as the reason nobody looks again. So a red
+anchor check has TWO obligations: commit the twin, **and** redeploy in place via the Artifact
+tool's `url` param (never mint a new URL). The CI failure hint says so too, at the moment someone
+is actually looking.
 
 **It is in `main-status`'s `needs`** alongside `verify` and `e2e`. Leaving it out would have
 recreated that job's own founding failure in miniature: the signal exists (the job goes red)

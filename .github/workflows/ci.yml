@@ -185,6 +185,14 @@ jobs:
           echo "    npm run check:artifact-anchors"
           echo "If an anchor is GONE, reread the code before re-anchoring --"
           echo "the page may now describe behaviour that no longer exists."
+          echo ""
+          echo "THEN REDEPLOY THE PUBLISHED PAGE. This job guards the committed twin"
+          echo "only. The artifact on claude.ai is a SEPARATE copy that nothing here"
+          echo "can touch, and it is the one Neil actually opens. Commit the twin and"
+          echo "stop, and the build goes green while the published page still cites the"
+          echo "old line -- with the green build as the reason nobody looks again."
+          echo "Redeploy in place via the Artifact tool's url param (CLAUDE.md has the"
+          echo "URL in the artifact registry). Do NOT mint a new URL."
 
   # ── main-status ────────────────────────────────────────────────────────────
   # The 2026-08-04→08-07 outage was not a detection failure — CI went red
