@@ -1,0 +1,384 @@
+<!-- Title stays UNSTAMPED across redeploys: it names the artifact in the tab + gallery.
+     Built by tools/artifacts/build-eli5-image-gate.mjs. Every line number on this page
+     is resolved from the committed source at build time, never typed by hand. -->
+<title>The Two-Flag Image Gate</title>
+
+<style>
+:root{
+  --ground-0:#070708;
+  --ground-1:#131316;
+  --ground-2:#09090B;
+  --gold:#FFCC00;
+  --gold-soft:rgba(255,204,0,.06);
+  /* Contrast-audited NOIR floors (.claude/skills/artifact-noir, 2026-07-29):
+     ratios are measured against the charcoal ground, not estimated. */
+  --silver-a:#FAFAFA;   /* 15.9:1 -- emphasis */
+  --body:#A1A1AA;       /* 7.3:1 -- AAA body */
+  --meta:#9A9AA3;       /* 6.7:1 -- small mono captions (never #71717A: 3.89:1 fails AA) */
+  --flag:#FF8563;       /* 7.9:1 -- warning hue at small sizes */
+  --dead:#52525B;       /* an UNARMED switch. Never carries text, only fills a rail. */
+  --line:rgba(255,255,255,.10);
+  --display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:min(68ch,100%);
+}
+
+/* NOIR commits to one dark world by design. Both theme signals pin the same palette. */
+:root[data-theme="light"],:root[data-theme="dark"]{color-scheme:dark;}
+
+*{box-sizing:border-box;}
+html,body{background:var(--ground-0);}
+body{
+  margin:0;
+  font-family:var(--display);
+  color:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* Fixed ground + grain as their own fixed DIVs -- the Android WebView detaches
+   background-attachment:fixed and mispaints naked fixed <svg> filters. */
+.ground,.grain{position:fixed;inset:0;pointer-events:none;}
+.ground{
+  z-index:0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--gold-soft) 0%, transparent 55%),
+    radial-gradient(140% 100% at 50% 8%, var(--ground-1) 0%, var(--ground-2) 45%, var(--ground-0) 100%);
+}
+.grain{
+  z-index:1;
+  opacity:.15;
+  mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:240px 240px;
+}
+
+.page{position:relative;z-index:2;padding:0 20px 88px;}
+.col{width:var(--wrap);margin:0 auto;}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 18px;
+}
+.eyebrow.flagged{color:var(--flag);}
+
+h1,h2,h3{
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.02em;
+  line-height:.94;
+  text-wrap:balance;
+  margin:0;
+  /* SOLID display type. `background-clip:text` + `color:transparent` is BANNED in
+     artifacts: the Android WebView mispaints it and headings came out inverted and
+     darker than either gradient stop on a real phone (2026-07-29). 17.3:1 solid. */
+  color:#F5F5F7;
+  text-shadow:0 0 14px rgba(255,204,0,.20);
+}
+h1{font-size:clamp(2.3rem,8.6vw,4rem);}
+h2{font-size:clamp(1.45rem,5vw,2.1rem);}
+h3{font-size:clamp(.98rem,3vw,1.14rem);letter-spacing:0;text-shadow:none;color:var(--silver-a);}
+
+.serif{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  color:var(--gold);
+  /* Hug the bloom in. A wide haze around already-high-contrast gold softens the
+     letter edges and reads as WEAKER, not brighter (artifact-noir rule 5). */
+  text-shadow:0 0 11px rgba(255,204,0,.34);
+}
+
+header{padding:64px 0 8px;}
+.lede{font-size:1.05rem;margin:22px 0 0;max-width:46ch;}
+.lede strong{color:var(--silver-a);font-weight:600;}
+
+section{padding-top:60px;}
+
+/* ---- Liquid glass, built to survive without backdrop-filter (noir rule 3).
+        The sheen gradient + inner top highlight + edge light do the work; the
+        blur is progressive enhancement only. ---- */
+.glass{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055) 0%, rgba(255,255,255,.018) 38%, rgba(255,255,255,0) 100%),
+    rgba(18,18,21,.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 18px 40px rgba(0,0,0,.44);
+  -webkit-backdrop-filter:blur(9px);
+  backdrop-filter:blur(9px);
+}
+
+/* ---- The 2x2. This page IS a truth table, so the matrix is the hero.
+        One column on a phone, two from 620px up. ---- */
+.matrix{display:grid;grid-template-columns:1fr;gap:14px;margin-top:26px;}
+@media(min-width:620px){.matrix{grid-template-columns:1fr 1fr;gap:16px;}}
+
+.state{display:flex;flex-direction:column;gap:14px;}
+.state .verdict{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--meta);
+}
+.state.safe{border-color:rgba(255,255,255,.10);}
+.state.live{border-color:rgba(255,204,0,.34);}
+.state.live .verdict{color:var(--gold);}
+.state.trap{border-color:rgba(255,133,99,.52);}
+.state.trap .verdict{color:var(--flag);}
+.state.trap{box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 18px 44px rgba(0,0,0,.5),0 0 0 1px rgba(255,133,99,.14);}
+
+.state p{margin:0;font-size:.92rem;line-height:1.55;}
+.state p .hit{color:var(--flag);font-weight:600;}
+.state p .ok{color:var(--silver-a);font-weight:600;}
+
+/* ---- Switch rails. The subject is literally two flags, so the state reads as
+        hardware before it reads as text. ---- */
+.rails{display:flex;flex-direction:column;gap:9px;}
+.rail{display:flex;align-items:center;gap:10px;}
+.rail .name{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.04em;
+  color:var(--meta);
+  flex:1 1 auto;
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.sw{
+  flex:0 0 auto;
+  width:38px;height:19px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.42);
+  position:relative;
+}
+.sw::after{
+  content:"";
+  position:absolute;
+  top:2px;width:13px;height:13px;
+  border-radius:999px;
+  background:var(--dead);
+}
+.sw.off::after{left:3px;}
+.sw.on::after{right:3px;background:var(--gold);box-shadow:0 0 10px rgba(255,204,0,.55);}
+.sw.on{border-color:rgba(255,204,0,.42);background:rgba(255,204,0,.10);}
+
+/* ---- The mechanism: two halves of one gate, opposite severity. ---- */
+.halves{display:grid;grid-template-columns:1fr;gap:14px;margin-top:26px;}
+@media(min-width:620px){.halves{grid-template-columns:1fr 1fr;}}
+
+.half{display:flex;flex-direction:column;gap:12px;}
+.half .tag{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+}
+.half.hard .tag{color:var(--flag);}
+.half.soft .tag{color:var(--meta);}
+.half.hard{border-color:rgba(255,133,99,.38);}
+
+.facts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+/* Block, NOT flex. A flex <li> makes every inline run its own flex item, so a
+   sentence with a mid-phrase <b> shatters into side-by-side columns. Caught by the
+   390px gate 2026-08-26 -- it read as three stacked fragments on a phone. The marker
+   is absolutely positioned instead, which leaves the text as ordinary flowing prose. */
+.facts li{
+  position:relative;
+  padding-left:15px;
+  font-size:.88rem;line-height:1.5;
+}
+.facts li::before{
+  content:"";
+  position:absolute;
+  left:0;top:.62em;
+  width:5px;height:5px;
+  border-radius:1px;
+  background:var(--dead);
+}
+.half.hard .facts li::before{background:var(--flag);}
+.half.soft .facts li::before{background:var(--gold);opacity:.55;}
+.facts b{color:var(--silver-a);font-weight:600;}
+
+/* The wire: both halves hang off the SAME client flag. Said once, in the middle. */
+.wire{
+  margin-top:20px;
+  border-left:2px solid rgba(255,204,0,.34);
+  padding:2px 0 2px 16px;
+  font-size:.93rem;
+}
+.wire b{color:var(--gold);font-weight:600;}
+
+.rule{margin-top:26px;}
+.rule .line{
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  font-size:clamp(1.15rem,4.4vw,1.6rem);
+  line-height:1.06;
+  color:#F5F5F7;
+  margin:0 0 12px;
+}
+.rule p{margin:0;font-size:.94rem;}
+
+code{
+  font-family:var(--mono);
+  font-size:.86em;
+  color:var(--silver-a);
+  background:rgba(255,255,255,.055);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:1px 5px;
+  overflow-wrap:anywhere;
+}
+
+.sources{
+  margin-top:60px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:11px;
+  line-height:2;
+  color:var(--meta);
+}
+.sources .k{color:var(--silver-a);}
+.sig{
+  margin-top:34px;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.42em;
+  color:#3F3F46;
+}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+
+<div class="ground"></div>
+<div class="grain"></div>
+
+<div class="page">
+<div class="col">
+
+  <header>
+    <p class="eyebrow">// ELI5 &middot; SCENE IMAGE GATE</p>
+    <h1>Two flags.<br>Four outcomes.<br><span class="serif">One trap.</span></h1>
+    <p class="lede">The P4 image gate has an on switch on the server and an on switch in the browser bundle. <strong>Three of the four combinations are fine.</strong> The fourth arms the only half that can stop a run.</p>
+  </header>
+
+  <section>
+    <p class="eyebrow">// EVERY COMBINATION</p>
+    <h2>What each setting actually does</h2>
+
+    <div class="matrix">
+
+      <div class="glass state safe">
+        <div class="rails">
+          <div class="rail"><span class="name">VITE_IMAGE_GATE_ENABLED</span><span class="sw off"></span></div>
+          <div class="rail"><span class="name">IMAGE_GATE_ENABLED</span><span class="sw off"></span></div>
+        </div>
+        <span class="verdict">Both off &middot; safe</span>
+        <p>Nothing runs. Scene images behave exactly as they did before P4 shipped. <span class="ok">This is the default.</span></p>
+      </div>
+
+      <div class="glass state safe">
+        <div class="rails">
+          <div class="rail"><span class="name">VITE_IMAGE_GATE_ENABLED</span><span class="sw off"></span></div>
+          <div class="rail"><span class="name">IMAGE_GATE_ENABLED</span><span class="sw on"></span></div>
+        </div>
+        <span class="verdict">Server only &middot; safe</span>
+        <p>The server is ready and nobody ever calls it. The browser never wires the checks up, so the server flag is simply unread. <span class="ok">Harmless.</span></p>
+      </div>
+
+      <div class="glass state trap">
+        <div class="rails">
+          <div class="rail"><span class="name">VITE_IMAGE_GATE_ENABLED</span><span class="sw on"></span></div>
+          <div class="rail"><span class="name">IMAGE_GATE_ENABLED</span><span class="sw off"></span></div>
+        </div>
+        <span class="verdict">Client only &middot; the trap</span>
+        <p>The browser wires up <strong>both</strong> checks. The strict one runs locally and <span class="hit">hard-flags scenes and spends rerolls</span>. The forgiving one hits the server, gets a 503, and is <span class="hit">silently swallowed</span>. You get the punishing half with none of the judgement.</p>
+      </div>
+
+      <div class="glass state live">
+        <div class="rails">
+          <div class="rail"><span class="name">VITE_IMAGE_GATE_ENABLED</span><span class="sw on"></span></div>
+          <div class="rail"><span class="name">IMAGE_GATE_ENABLED</span><span class="sw on"></span></div>
+        </div>
+        <span class="verdict">Both on &middot; the real gate</span>
+        <p>Both halves run. This is the only setting the gate was designed and smoke-tested for. <span class="ok">Set both or neither.</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow flagged">// WHY IT BITES</p>
+    <h2>One gate, two halves,<br>opposite severity</h2>
+    <p class="lede">People assume a half-on feature flag gives you a gentler version of the feature. Here it gives you the harsher one.</p>
+
+    <div class="halves">
+
+      <div class="glass half hard">
+        <span class="tag">Half A &middot; deterministic</span>
+        <h3>checkSceneImage</h3>
+        <ul class="facts">
+          <li>Runs <b>in the browser</b>. Never touches the server, so the server flag cannot switch it off.</li>
+          <li>Fails a scene, then rerolls it <b>once</b>. That reroll is a real image generation, billed.</li>
+          <li>Still failing, it sets <b>status = flagged</b> and returns. That scene is now blocked from approval.</li>
+        </ul>
+      </div>
+
+      <div class="glass half soft">
+        <span class="tag">Half B &middot; the AI gate</span>
+        <h3>imageGateCheck</h3>
+        <ul class="facts">
+          <li>Calls the server, which is where <b>IMAGE_GATE_ENABLED</b> is finally read.</li>
+          <li>Flag only. It records a verdict and <b>never changes status</b>, so it cannot block anything.</li>
+          <li>Fails open by design. A 503, a timeout, a parse error: all swallowed, run continues.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="wire">Both halves are handed out together by one function, <code>gateDepsFor</code>, from <b>one flag: the client one</b>. Only Half B ever asks the server for permission. That is the whole bug in one sentence.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">// THE RULE</p>
+    <div class="rule">
+      <p class="line">Set both, or set neither.</p>
+      <p>And remember which one is which: <code>IMAGE_GATE_ENABLED</code> is read at runtime, so flipping it takes effect immediately. <code>VITE_IMAGE_GATE_ENABLED</code> is <strong>baked into the bundle at build time</strong>. Changing it on Vercel does nothing at all until you redeploy, which is exactly how a deploy drifts into the trap state without anyone touching the server.</p>
+    </div>
+  </section>
+
+  <div class="sources">
+    <span class="k">Resolved from source at build time</span><br>
+    api/gemini/image.ts:105 &middot; the 503<br>
+    services/producerDeps.ts:138 &middot; gateDepsFor<br>
+    services/producerOrchestrator.ts:1592 &middot; Half A<br>
+    services/producerOrchestrator.ts:1613 &middot; the hard flag<br>
+    services/producerOrchestrator.ts:1635 &middot; Half B<br>
+    <span class="k">every line above is resolved from source by anchor, and re-checked by CI</span>
+  </div>
+
+  <p class="sig">GRIFON</p>
+
+</div>
+</div>

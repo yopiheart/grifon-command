@@ -172,6 +172,27 @@ Tier 0b answers *does it build*; this answers *should it merge*. Runs
 `anthropics/claude-code-action@v1` on every PR to `main` and posts ranked
 findings as **one sticky PR comment**, edited in place on each re-push.
 
+### ⛔ Never push while a review is in flight (2026-08-26)
+
+`claude-review.yml:38-40` sets `cancel-in-progress: true`, so a second push **cancels the review
+of the first** and the sticky comment becomes:
+
+> ⚠️ No report was produced — this PR was NOT reviewed. Most likely cause: this PR changes a file
+> under `.github/workflows/` … Any other cause is a malfunction.
+
+**That text is a MISDIAGNOSIS and it is the commonest thing you will see.** The real cause is
+almost always a superseding push. Falsified on PR #118: `9d327e2` and `b7609ec` both carried a
+`ci.yml` change on the branch and both got **complete** reviews — the only thing that ever
+suppressed one was pushing again mid-run. It cried wolf three times in one session, and the agent
+believed it once and reported it to Neil as fact.
+
+So: push, then **wait** for the review before pushing again. And when you see that comment, check
+the job log for `REVIEW_OUTCOME` (`cancelled` = superseded) before believing the stated cause.
+
+The message itself is worth fixing — it names one cause and calls everything else a malfunction,
+never mentioning the cancellation its own concurrency block guarantees. Not done: editing it means
+touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
+
 - **Why it exists.** The review logic already existed — it lived in PreToolUse
   hooks (`tuned-file-gate`, `taglish-guard`, `check:domain`, the em-dash rule)
   that only fire when a Claude session happens to be alive on the cafe PC.
@@ -660,3 +681,155 @@ same day via the in-session `RemoteTrigger` tool):
   (per-row `auth.uid()` re-eval; trivial `(select auth.uid())` rewrite).
   No criticals. RLS-no-policy INFOs on the telemetry tables are expected —
   they're written via service role; no-policy = deny-all for clients.
+
+---
+
+## Tier 0d — Artifact anchor check · ✅ LIVE, automatic (wired 2026-08-26, Neil's call)
+
+**Arm:** automatic — the `artifacts` job in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml),
+on every PR and every push to main.
+**Local equivalent:** `npm run check:artifact-anchors`
+**Verifier:** [`tools/artifacts/check-anchors.mjs`](../tools/artifacts/check-anchors.mjs) rebuilds
+every anchored twin, then `git diff HEAD --exit-code` on each.
+
+⛔ **`HEAD` is load-bearing — never drop it back to a bare `git diff`.** Bare `git diff` compares
+the INDEX to the working tree, and the builder writes the twin *before* the diff runs. So once
+the twin is staged the rebuild reproduces the staged bytes and the check exits 0 whatever moved.
+Reproduced 2026-08-26: move a call site, run (exit 1, correct), `git add` the twin, run again ->
+**exit 0**. A dev doing `git add -A` then re-running as a pre-commit sanity pass would get a
+green light on a citation that silently changed — the exact outcome this tier exists to prevent,
+arriving through the run a human is most likely to make. Found by the PR #118 reviewer.
+
+⛔ **And `HEAD` alone is still not enough — the twin must be TRACKED.** `git diff HEAD` cannot see
+a path absent from `HEAD`, so an **untracked** twin diffs clean and prints `unchanged` forever.
+Same false green, one step further out; the live trap is adding an `ANCHORED` entry and forgetting
+`git add artifacts/foo.html`, which would leave an anchored artifact with no committed twin at all
+while CI stays green. `git ls-files --error-unmatch` runs first now. Also found by the #118
+reviewer, on the very commit that fixed the staged case.
+
+**Every failure path prints git's own stderr rather than guessing.** Measured 2026-08-26: a real
+difference exits 1, but so does running outside a repo (`error: Could not access 'HEAD'`), while a
+bad revision exits 128 — so the exit code CANNOT separate "a call site moved" from "git could not
+run", and branching on `status === 1` would still misreport the commonest failure. A checker whose
+whole purpose is not shipping a confident wrong answer must not print one about itself.
+**Kill switch:** delete the `artifacts` job, and drop it from `main-status`'s `needs`.
+
+An explainer that cites `foo.ts:412` is wrong the moment a line is inserted above it, and a
+confidently-wrong page is worse than no page. `tools/artifacts/build-eli5-image-gate.mjs`
+resolves all five of its citations from unique anchor strings and throws when an anchor is
+missing or ambiguous.
+
+Before this job nothing rebuilt it — verified 2026-08-26: no artifact builder was referenced
+from `package.json` or from any file in `.github/workflows/`. The guarantee was real *per
+rebuild* and absent *per commit*, while `CLAUDE.md` told the reader a build would catch it.
+
+Proven, not assumed: inserting one blank line above the `if (deps.checkSceneImage)` anchor moved
+**all three** `producerOrchestrator.ts` citations — 1592 -> 1593, 1613 -> 1614 **and 1635 -> 1636**
+— and the check exited 1; reverting returned exit 0. (This paragraph first reported only two of
+the three, because the test that produced it piped the builder's output through `head -2`. In a
+section whose whole claim is that the result was measured, a truncated command quietly costs the
+doc its authority. Caught by the PR #118 reviewer.)
+
+⛔ **The check guards the COMMITTED TWIN, never the published page.** The artifact on claude.ai is
+a separate copy nothing in CI can reach, and it is the one Neil reads on his phone. Fix a red
+build by committing the rebuilt twin and stopping, and the build goes green while the published
+page still cites the moved line — with the green build as the reason nobody looks again. So a red
+anchor check has TWO obligations: commit the twin, **and** redeploy in place via the Artifact
+tool's `url` param (never mint a new URL). The CI failure hint says so too, at the moment someone
+is actually looking.
+
+**It is in `main-status`'s `needs`** alongside `verify` and `e2e`. Leaving it out would have
+recreated that job's own founding failure in miniature: the signal exists (the job goes red)
+but reaches nobody, so a merged refactor leaves the published page citing a line that moved.
+
+### Two design constraints — reread before changing this
+
+1. **No `npm ci`, no git history.** The builder imports only `node:` builtins plus
+   `./_gates.mjs`, so the job is checkout + node + run, in seconds. That cheapness is why it
+   can gate every PR. Verified 2026-08-26 by running the builder in a bare directory with no
+   `.git` at all: exit 0, byte-identical twin.
+2. **⛔ Never make the page depend on git history.** A draft stamped it with
+   `git log -1 --format=%cs` over the cited sources. That needs `fetch-depth: 0` (a ~1.5 GB
+   repo), and worse, ANY later commit to `producerOrchestrator.ts` would flip the stamp and
+   turn this job red on every unrelated PR — paging `main-status` over a date string, which is
+   precisely the noise that job exists to remove. The stamp was dropped instead: CI enforcing
+   freshness is what a "last changed" date was for, so once this job existed the stamp was
+   redundant. The page now depends on the cited files' CONTENT alone.
+
+### ⛔ OPEN DEBT — this checker has no tests, and that is the wrong way round
+
+**Next session's first job if it touches `check-anchors.mjs`.** Four rounds of PR #118 review
+found **three separate false-green modes** in it, each introduced while fixing the previous one:
+
+| Mode | Found in | Symptom |
+|---|---|---|
+| bare `git diff` vs a **staged** twin | `9d327e2` | exit 0 on a moved call site |
+| an **untracked** twin | `b7609ec` | `git diff HEAD` sees no path, prints "unchanged" |
+| skip-worktree regex matched only lowercase | `9bcfe84` | guard silently no-opped on the sparse case it was written for |
+
+Every one was caught by a **reviewer reading the diff**, never by a gate. And the whole record of
+it now lives in commit messages and ~90 lines of prose *here*. That inverts CLAUDE.md's own
+standing rule — prefer a verifier over a paragraph — in the one file whose entire job is refusing
+to print a confident wrong answer.
+
+Design, so the next session does not have to re-derive it: the script's `ANCHORED` list and
+`ROOT` are module-level, so it cannot be exercised from a temp fixture as-is. **Extract the
+git-state classification into an exported pure function** (index flag + `cat-file -e HEAD:` +
+diff-stdout in, one of **six** verdicts out) and unit-test THAT with vitest — no subprocess, no
+mutation of real sources. Pin all six: clean / new-staged / moved-call-site / no-repo / untracked /
+**unborn HEAD**, plus the `S` and lowercase index flags.
+
+⚠ The sixth is the one still deciding by absence, and it lands on the PASS side. `git cat-file -e
+HEAD:<twin>` failing is read as "not in HEAD yet, so NEW" — but it also fails when HEAD itself does
+not resolve. On an unborn HEAD (`git init`, `checkout --orphan`) with the twin staged,
+`ls-files` passes, `git diff HEAD` dies on `ambiguous argument 'HEAD'` with empty stdout,
+`cat-file -e` fails, and the check prints `is NEW` and **exits 0** — a green run that determined
+nothing. Low reachability (CI always checks out a commit) which is why it was not patched blind,
+but it is the last instance of the habit this file spent four rounds removing. Found by the
+PR #118 reviewer on `2a05efc`.
+
+Deliberately NOT done on 2026-08-26: the session had already flagged its own context as degraded
+and had made three unverified assertions that day. Writing this test badly is exactly how a fourth
+false green gets in.
+
+### ⛔ OPEN DEBT 2 — this gate has a real false-red rate, and it is not small
+
+**Neil's call, not a bug to fix silently.** The anchors resolve to line NUMBERS, so the twin
+tracks line **positions**, not behaviour. Inserting a blank line above a citation reddens the
+`artifacts` job with nothing having changed — proven by Tier 0d's own evidence paragraph above,
+which is the same PR claiming "no false red" in `ci.yml`. That claim is now corrected.
+
+The exposure, measured by the PR #118 reviewer (I could **not** reproduce the commit count — this
+sandbox is a shallow clone whose history starts 2026-08-14, so take the rate as theirs, not mine):
+
+- the three orchestrator anchors sit at `:1592 / :1613 / :1635` of a **1915-line** file — ~83% down,
+  so nearly any edit to it lands above them
+- `services/producerOrchestrator.ts` took ~**33 commits in 3 months** (~11/month)
+
+**Why that compounds rather than annoys:** each red demands rebuild + commit the twin **and** a
+manual claude.ai redeploy that CI cannot verify. At ~11 firings a month the discipline degrades to
+"commit the twin, skip the redeploy" — which is precisely the failure `CLAUDE.md` and the CI hint
+were written to prevent. A gate that fires mostly on non-events trains people to half-obey it.
+
+Second case: on a `pull_request`, `actions/checkout@v4` builds the **merge commit**. If `main`
+moved lines in a cited file after the branch was cut, the rebuild sees `main`'s positions and the
+twin has the branch's — red for something the author never touched, fixable only by rebasing.
+
+**Two cheap fixes, both keeping the never-confidently-wrong property:**
+1. **Cite the anchor STRING on the page, not the line number.** Build-time uniqueness stays the
+   guarantee; a moved line stops being an event at all. Strictly better, slightly less precise
+   for a reader jumping to code.
+2. Drop the three orchestrator citations to one.
+
+Not done here: it changes what the page shows, which is a design decision, and the gate is still
+net-useful meanwhile.
+
+### Adding another anchored artifact
+
+Add it to the `ANCHORED` list in [`tools/artifacts/check-anchors.mjs`](../tools/artifacts/check-anchors.mjs) —
+one place, with the joining rule written beside it. The script name `check:artifact-anchors`
+reads as repo-wide but covers exactly that list; that gap is why the list lives in a commented
+file instead of an uncommentable `package.json` one-liner (PR #118 review, nit 3).
+
+Keep the no-deps rule: builders needing `sharp` or funnel fonts (e.g. `build-gb-001-brief.mjs`)
+must NOT join, or an unrelated PR starts failing on a missing dependency.
