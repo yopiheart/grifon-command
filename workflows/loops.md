@@ -660,3 +660,47 @@ same day via the in-session `RemoteTrigger` tool):
   (per-row `auth.uid()` re-eval; trivial `(select auth.uid())` rewrite).
   No criticals. RLS-no-policy INFOs on the telemetry tables are expected —
   they're written via service role; no-policy = deny-all for clients.
+
+---
+
+## Tier 0d — Artifact anchor check · ⚠ ON DEMAND ONLY, not a loop yet (2026-08-26)
+
+**Arm:** `npm run check:artifact-anchors`
+**Verifier:** rebuilds `artifacts/eli5-image-gate.html` from its anchors, then
+`git diff --exit-code` on the twin.
+**Kill switch:** n/a — nothing runs it automatically. That is the open question.
+
+An explainer that cites `foo.ts:412` is wrong the moment a line is inserted above it, and a
+confidently-wrong page is worse than no page. `tools/artifacts/build-eli5-image-gate.mjs`
+resolves all five of its citations from unique anchor strings and throws when an anchor is
+missing or ambiguous, so the rebuild cannot silently re-emit a stale number.
+
+**But nothing rebuilds it.** Verified 2026-08-26: no artifact builder is referenced from
+`package.json` (before this entry) or from any file in `.github/workflows/`. So the guarantee
+is real *per rebuild* and absent *per commit* — a refactor lands green, and the published page
+keeps citing the old line forever.
+
+Proven, not assumed (2026-08-26): inserting one blank line above the `if (deps.checkSceneImage)`
+anchor moved the citations 1592 -> 1593 and 1613 -> 1614 and the check exited 1; reverting it
+returned exit 0. The twin is also byte-reproducible now — the stamp is the newest commit date
+across the cited sources, not the wall clock, so `git diff` on it means "a call site moved",
+never "someone reran the builder today".
+
+### ⛔ OPEN — Neil's call, do not wire this without him
+
+Adding a CI step (`npm run check:artifact-anchors` in `ci.yml`'s `verify` job) would make the
+guarantee automatic. Three things to weigh first, which is why the session did not just do it:
+
+1. **It edits `.github/workflows/ci.yml`.** Per `claude-review.yml`'s own refusal path, a PR
+   touching `.github/workflows/` never gets Claude-reviewed — GitHub only runs that action when
+   the branch copy matches `main`. So the PR that adds this check is itself unreviewable by the
+   reviewer, and needs a human.
+2. **It makes every artifact builder a CI dependency.** Only the eli5 builder is anchor-based
+   and dependency-free today. `build-gb-001-brief.mjs` needs `sharp` plus fonts from a funnel's
+   `node_modules`; a naive `build-*.mjs` glob would fail CI on an unrelated PR.
+3. **It turns a docs drift into a red build.** Correct, arguably — but it means a
+   `producerOrchestrator.ts` refactor is blocked until someone reruns an artifact builder. That
+   is a real tax on the fix pass in `NOW.md`, and worth agreeing to on purpose.
+
+Until then `CLAUDE.md`'s registry line must keep saying the check is on demand. Do not describe
+it as automatic while this entry still reads ON DEMAND ONLY.

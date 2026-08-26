@@ -22,11 +22,12 @@ clip that was already generated AND billed. `withRetry` already exists in the re
 ## ⏳ IN FLIGHT — PR #118, watched
 
 **[PR #118](https://github.com/yopiheart/grifon-command/pull/118)** adds **`/eli5`** + its first
-page. Docs/tooling only — no `api/` `services/` `components/` code, so it cannot affect the fix
-pass above. Subscribed to CI (`verify`/`e2e`/`review` running at hand-off, no conflict). Page
+page. Docs/tooling only — no `api/` `services/` `components/` code, cannot affect the fix pass
+above. `verify`+`e2e` green; review bot left 2 SHOULD-FIX, both addressed. Page
 <https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06> · twin
-`artifacts/eli5-image-gate.html`: **line numbers resolve from source anchors, so a refactor FAILS
-the build instead of shipping a stale citation.** Reuse that pattern.
+`artifacts/eli5-image-gate.html` — line numbers resolve from source anchors, **on demand only
+(`npm run check:artifact-anchors`); wiring it into CI is an OPEN call for you, `loops.md` 0d.**
+**Also open for you: the throwaway-twin carve-out `.claude/skills/eli5/` proposes — unruled.**
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
@@ -83,8 +84,7 @@ the build instead of shipping a stale citation.** Reuse that pattern.
   read the stored prompt before calling it a lighting regression, W-002.
 - `MID_GAP_TRIM_ENABLED` ON in prod. Both image-gate flags ON, but **`VITE_` is build-time —
   Vercel needs a REDEPLOY** (the artifact above explains the four states and the one trap).
-- Sparse-excluded, fetch on demand: `baselines/locked-wins`. Sample-batch PNGs are on disk.
-- Branch `feat/hook-layout-system` (`1245d14`) still unmerged, queued for after launch.
+- Sparse-excluded: `baselines/locked-wins`. Branch `feat/hook-layout-system` (`1245d14`) unmerged.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.

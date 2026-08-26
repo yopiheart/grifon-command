@@ -30,6 +30,7 @@
  */
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { finalize } from './_gates.mjs';
@@ -109,9 +110,21 @@ for (const anchor of ANCHORS) {
   console.log(`  ${anchor.file}:${line}`.padEnd(46) + anchor.what);
 }
 
-// Date only, no clock time: the twin is committed, and a timestamp that changes every
-// run would churn the diff on every rebuild for no reader benefit.
-tokens.__BUILT_AT__ = new Date().toISOString().slice(0, 10);
+// Stamp the SOURCES, not the clock. The first version used `new Date()`, which meant a
+// rebuild on any later date rewrote the twin even when all five anchors resolved
+// identically. That defeats the only check worth having here: `git diff --exit-code
+// artifacts/` after a rebuild is meant to answer "did a cited call site move?", and a
+// wall-clock stamp makes it answer "did someone rerun this today?" instead.
+//
+// Newest commit date across the cited files, so the stamp is a fact about the code the
+// page describes and is byte-identical for anyone rebuilding at the same commit.
+const stamped = execFileSync('git',
+  ['log', '-1', '--format=%cs', '--', ...ANCHORS.map((a) => a.file)],
+  { cwd: ROOT, encoding: 'utf8' }).trim();
+if (!/^\d{4}-\d{2}-\d{2}$/.test(stamped)) {
+  throw new Error(`BUILD_FAILED [eli5-image-gate]: git gave no commit date for the cited sources (got ${JSON.stringify(stamped)}).`);
+}
+tokens.__BUILT_AT__ = stamped;
 
 let html = await readFile(TPL, 'utf8');
 for (const [token, value] of Object.entries(tokens)) {

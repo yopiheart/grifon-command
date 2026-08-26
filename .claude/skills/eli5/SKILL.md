@@ -78,17 +78,31 @@ rereading.
 `finalize()` from `_gates.mjs`, and the 390x844 `smoke-tester` screenshot before Neil sees a
 URL. No mobile screenshot = not done.
 
-**One carve-out, decided 2026-08-26.** The standing rule is that every artifact ships with a
-committed twin built by a script under `tools/artifacts/`. eli5 pages come in two kinds:
+### ⛔ One PROPOSED carve-out - Neil has NOT ruled on it
+
+**Until he does, the standing rule wins: build the twin.**
+
+`CLAUDE.md`'s rule is absolute and is attributed to Neil (2026-07-29): *every* artifact ships
+with a committed twin at `artifacts/<slug>.html`, built by a script under `tools/artifacts/`.
+Nothing below overrides that. The session that wrote this skill (2026-08-26) proposed a
+carve-out and **did not have authority to grant it** - an earlier draft of this file said
+"decided", which read as Neil's ruling and was not. Flagged in review on PR #118.
+
+The proposal, for Neil to accept or reject:
 
 | Kind | Twin + builder | Registry line |
 |---|---|---|
-| **Throwaway** - explaining something once, mid-session, to unblock a decision | not required | no |
-| **Kept** - a mental model the repo will need again after a defreeze | **required** | yes, in CLAUDE.md |
+| **Throwaway** - explaining something once, mid-session, to unblock a decision | *proposed:* not required | no |
+| **Kept** - a mental model the repo will need again after a defreeze | required (rule as written) | yes, in CLAUDE.md |
 
-A throwaway is still `finalize()`-clean, still mobile-safe, still NOIR. It just does not earn
-a builder until it earns a reader. Promote it the moment Neil says "keep this one" - that is
-the trigger, not your own judgement about how good the page is.
+The argument for it: eli5's value is speed, and a builder per throwaway kills that. The argument
+against is already in `CLAUDE.md` one bullet above the twin rule - a carve-out that lives only in
+a skill file is invisible, because `CLAUDE.md` is always in context and this file loads only on
+`/eli5`. That exact asymmetry cost a full artifact rebuild on 2026-07-28.
+
+So: a throwaway is still `finalize()`-clean, still mobile-safe, still NOIR, **and still gets a
+twin** until Neil says otherwise. If he grants the carve-out, it moves into `CLAUDE.md` beside
+the rule it modifies, with his name on it - not here.
 
 ## Not this skill
 
