@@ -21,13 +21,14 @@ clip that was already generated AND billed. `withRetry` already exists in the re
 
 ## ⏳ IN FLIGHT — PR #118, watched
 
-**[PR #118](https://github.com/yopiheart/grifon-command/pull/118)** adds **`/eli5`** + its first
-page. Docs/tooling only — no `api/` `services/` `components/` code, cannot affect the fix pass
-above. `verify`+`e2e` green; review bot left 2 SHOULD-FIX, both addressed. Page
+**[PR #118](https://github.com/yopiheart/grifon-command/pull/118)** adds **`/eli5`** + its page.
+9 commits, docs/tooling ONLY (no `api/` `services/` `components/`), cannot touch the fix pass
+above. **CI green on `9bcfe84`.** 4 review rounds, ~11 findings, all real, all fixed.
 <https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06> · twin
-`artifacts/eli5-image-gate.html` — line numbers resolve from source anchors, now **enforced by the
-new `artifacts` CI job** (you wired it; `loops.md` Tier 0d, in `main-status` needs).
-Both open calls now ruled: CI wiring **yes**, throwaway-twin carve-out **granted** (in CLAUDE.md).
+`artifacts/eli5-image-gate.html`; its line numbers are anchor-resolved and enforced by the new
+`artifacts` CI job (`loops.md` Tier 0d). Both calls ruled — CI wiring **yes**, carve-out
+**granted**, both in CLAUDE.md. ⛔ **Never push while `review` runs** — `loops.md` Tier 0c.
+**Left: your merge call + a human read of `ci.yml` in `6bac182` — no bot reviewed that commit.**
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
@@ -80,8 +81,7 @@ Both open calls now ruled: CI wiring **yes**, throwaway-twin carve-out **granted
 - `real_talk` is an 8-beat TUNED skeleton → 9 scenes, always; **no scene-count dial exists**.
   Only `before_after` / `unboxing` / `try_on` are 4-beat, and `cost:estimate` assumes 4 for all
   12. `before_after` is UGC Pro = **hard cut, no start/end frames** — it cannot test the morph.
-- A scene that LOOKS differently lit is usually composition (the wide shot, the wooden vanity) —
-  read the stored prompt before calling it a lighting regression, W-002.
+- A scene that LOOKS differently lit is usually composition (wide shot, wooden vanity) — read the stored prompt before calling it a lighting regression, W-002.
 - `MID_GAP_TRIM_ENABLED` ON in prod. Both image-gate flags ON, but **`VITE_` is build-time —
   Vercel needs a REDEPLOY** (the artifact above explains the four states and the one trap).
 - Sparse-excluded: `baselines/locked-wins`. Branch `feat/hook-layout-system` (`1245d14`) unmerged.

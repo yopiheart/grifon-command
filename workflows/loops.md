@@ -172,6 +172,27 @@ Tier 0b answers *does it build*; this answers *should it merge*. Runs
 `anthropics/claude-code-action@v1` on every PR to `main` and posts ranked
 findings as **one sticky PR comment**, edited in place on each re-push.
 
+### ⛔ Never push while a review is in flight (2026-08-26)
+
+`claude-review.yml:38-40` sets `cancel-in-progress: true`, so a second push **cancels the review
+of the first** and the sticky comment becomes:
+
+> ⚠️ No report was produced — this PR was NOT reviewed. Most likely cause: this PR changes a file
+> under `.github/workflows/` … Any other cause is a malfunction.
+
+**That text is a MISDIAGNOSIS and it is the commonest thing you will see.** The real cause is
+almost always a superseding push. Falsified on PR #118: `9d327e2` and `b7609ec` both carried a
+`ci.yml` change on the branch and both got **complete** reviews — the only thing that ever
+suppressed one was pushing again mid-run. It cried wolf three times in one session, and the agent
+believed it once and reported it to Neil as fact.
+
+So: push, then **wait** for the review before pushing again. And when you see that comment, check
+the job log for `REVIEW_OUTCOME` (`cancelled` = superseded) before believing the stated cause.
+
+The message itself is worth fixing — it names one cause and calls everything else a malfunction,
+never mentioning the cancellation its own concurrency block guarantees. Not done: editing it means
+touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
+
 - **Why it exists.** The review logic already existed — it lived in PreToolUse
   hooks (`tuned-file-gate`, `taglish-guard`, `check:domain`, the em-dash rule)
   that only fire when a Claude session happens to be alive on the cafe PC.
