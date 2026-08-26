@@ -164,9 +164,24 @@ for (const [token, value] of Object.entries(tokens)) {
 // Shared gates: truncation guard, unsubstituted-token guard, the banned clipped-text
 // property, and the pure-ASCII rule that keeps the bare-file twin from mojibaking when
 // it is opened straight off disk with no <meta charset>. See _gates.mjs.
+// The last three entries are the truncation guard's real teeth, added after the PR #118
+// review. The list used to end at `gateDepsFor`, which renders in the .wire paragraph at
+// ~94% of the page -- so it looked like thorough coverage. It was not: the uncovered 6%
+// is precisely the .sources block, i.e. every citation the page's credibility rests on.
+// A truncation after .wire shipped a twin with NO citations and finalize() returned
+// clean, because `required` passed and `leftover` found nothing (the tokens had already
+// been substituted). "94% covered" was the wrong question; "is the part that matters
+// covered" was the right one.
+//
+// So: `class="sources"` proves the block opened, `class="q"` proves the anchor strings
+// themselves rendered (the block opening with no citations inside would otherwise pass),
+// and `class="sig"` proves the document reached its final element.
 html = finalize(html, {
   label: 'eli5-image-gate',
-  required: ['<title>', 'class="ground"', 'class="matrix"', 'gateDepsFor'],
+  required: [
+    '<title>', 'class="ground"', 'class="matrix"', 'gateDepsFor',
+    'class="sources"', 'class="q"', 'class="sig"',
+  ],
   leftover: [/__[A-Z0-9_]+__/g],
 });
 
