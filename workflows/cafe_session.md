@@ -56,6 +56,14 @@ git checkout
 First time: a browser opens to sign in to GitHub as `yopiheart` → Authorize →
 close the browser.
 
+⚠️ **Already have a lite clone from before 2026-08-26?** It was made from the older sparse line,
+which excluded `/artifacts` entirely, so `npm run check:artifact-anchors` will refuse to run there.
+One command, 16 KB, no re-clone:
+
+```powershell
+git sparse-checkout add 'artifacts/eli5-image-gate.html'
+```
+
 ⚠️ **`--filter=blob:none` on its own is a trap.** Without `--no-checkout`, the
 checkout backfills every blob and you end up with **3.2 GB**, worse than a plain
 clone. Both halves are load-bearing. Measured 2026-08-16.

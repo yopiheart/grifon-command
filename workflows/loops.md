@@ -775,9 +775,18 @@ to print a confident wrong answer.
 Design, so the next session does not have to re-derive it: the script's `ANCHORED` list and
 `ROOT` are module-level, so it cannot be exercised from a temp fixture as-is. **Extract the
 git-state classification into an exported pure function** (index flag + `cat-file -e HEAD:` +
-diff-stdout in, one of five verdicts out) and unit-test THAT with vitest — no subprocess, no
-mutation of real sources. Pin all five: clean / new-staged / moved-call-site / no-repo / untracked,
-plus the `S` and lowercase index flags.
+diff-stdout in, one of **six** verdicts out) and unit-test THAT with vitest — no subprocess, no
+mutation of real sources. Pin all six: clean / new-staged / moved-call-site / no-repo / untracked /
+**unborn HEAD**, plus the `S` and lowercase index flags.
+
+⚠ The sixth is the one still deciding by absence, and it lands on the PASS side. `git cat-file -e
+HEAD:<twin>` failing is read as "not in HEAD yet, so NEW" — but it also fails when HEAD itself does
+not resolve. On an unborn HEAD (`git init`, `checkout --orphan`) with the twin staged,
+`ls-files` passes, `git diff HEAD` dies on `ambiguous argument 'HEAD'` with empty stdout,
+`cat-file -e` fails, and the check prints `is NEW` and **exits 0** — a green run that determined
+nothing. Low reachability (CI always checks out a commit) which is why it was not patched blind,
+but it is the last instance of the habit this file spent four rounds removing. Found by the
+PR #118 reviewer on `2a05efc`.
 
 Deliberately NOT done on 2026-08-26: the session had already flagged its own context as degraded
 and had made three unverified assertions that day. Writing this test badly is exactly how a fourth

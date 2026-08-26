@@ -135,8 +135,10 @@ for (const { builder, twin } of ANCHORED) {
     if (/^[Sa-z]/.test(flags.trim())) {
       console.error(`\n  ${twin} is SPARSE-EXCLUDED from this checkout (git flag "${flags.trim()[0]}").`);
       console.error('  This check cannot tell you anything here - it would either false-green or');
-      console.error('  cry wolf. Add the path and rerun:');
-      console.error('      git sparse-checkout add artifacts');
+      console.error('  cry wolf. Add just THIS FILE and rerun:');
+      console.error(`      git sparse-checkout add '${twin}'`);
+      console.error('  NOT `add artifacts` -- that directory is 3.5 MB, 96% of it base64 pages no');
+      console.error('  check reads, ~2 min on cafe wifi. See workflows/cafe_session.md.');
       failed = true;
       continue;
     }
