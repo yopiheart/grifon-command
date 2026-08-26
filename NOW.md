@@ -1,23 +1,21 @@
 # NOW — the resume doc
 **Stamped: 2026-08-26** (session 33)
 
-## ▶ NEXT ACTION — verify the LAST claim before you write its diff
+## ▶ NEXT ACTION — ONE test render, then the samples
 
-**Two of the three ❌ rows below were WRONG.** Both were found by reading the stored run instead of
-this doc. So before touching the Veo layer, pull scene 7s stored VIDEO prompt from `apr_fa7cedc3`
-and see whether the dialogue was improvised or ASKED FOR. Guessing cost a whole planned fix pass.
+All four prompt gaps are CLOSED (2026-08-27), and **none is verified by a render.** Both TUNED
+edits change generated text, so the next spend is one run that exercises both: look at the stills
+for packaging nobody uploaded, and listen for any word that is not in the script.
 
 | Layer | Guard today |
 |---|---|
 | Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` |
-| Image: packaging + props | ✅ FIXED 2026-08-27, `PRODUCT_TRUTH_RULE`. Diagnosis was wrong: the STORYBOARD wrote *"next to its outer package box"*; the image model obeyed. Upload = one bottle, looked at. 11 tests |
-| Image: hair + wardrobe | ✅ already guarded — wardrobe by IDENTITY_LOCK rule 1 ([geminiService.ts:2492](services/geminiService.ts#L2492), variation deliberately REMOVED), hair by `APPEARANCE_LOCK_RULE` |
-| Video: spoken dialogue | ❓ UNVERIFIED — Veo improvised *"Ito nang kanina ka."* into scene 7. No guard FOUND, but I did not search exhaustively |
+| Image: packaging + props | ✅ `PRODUCT_TRUTH_RULE`. Diagnosis was WRONG: the STORYBOARD wrote *"next to its outer package box"*; the image model obeyed. Upload was one bottle, looked at. 11 tests |
+| Image: hair + wardrobe | ✅ already guarded — IDENTITY_LOCK rule 1 + `APPEARANCE_LOCK_RULE`. Never was a gap |
+| Video: spoken dialogue | ✅ `DIALOGUE LOCK`. This one was REAL: OPTION B said where to START, never where to STOP. STS re-voices Veos own audio, so an ad-lib ships. 5 tests |
 
-✅ Fifth bug DONE (2026-08-27): `poll.ts` retried nothing, so two `503`s flagged two scenes on an
-already-billed clip. Now 3 attempts, 5xx/429 only; a 404 still fails fast. 10 tests. CI green.
-
-⛔ Still TUNED. Neils explicit go, one diff, and **one layer per test**.
+⛔ **Two of those four ❌ claims were false.** Both were caught by reading the stored run, not the
+doc. Read `producer_runs.artifacts` before trusting any symptom note. ✅ `poll.ts` retry DONE, CI green.
 
 ## ✅ LANDED — `/eli5` + the anchor CI gate (PR #118, merged `170229a`)
 
@@ -54,7 +52,8 @@ biggest **809k-846k chars, `input.avatar.url` empty** — slimmer stripped, colu
 
 ## ⏭ OPEN — ranked, with the trap in each
 
-1. **The four-symptom diff above.** The whole next job. Blocked on Neil (all four are TUNED).
+1. **ONE test render** to eyeball both TUNED changes, then **fix the sample previews** — `SAMPLES = {}`
+   and all 13 recipes still say "Sample soon". The render feeds the samples; do them in that order.
 2. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
    still showed a 4-second one-scene video titled **YOUR FIRST CUT** with *"7 scenes ready."*
    No error, no warning. Inverted twin of [#90](https://github.com/yopiheart/grifon-command/issues/90).
