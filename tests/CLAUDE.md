@@ -22,6 +22,14 @@ Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). vitest i
   the P3 parallel stage pairs against the REAL `producerDeps.persist` + a fake
   `saveRunCheckpoint` that reproduces `api/producer/run.ts`'s optimistic-revision
   semantics exactly; mocks only the transport, asserts at the checkpoint seam).
+  The artifact anchor gate
+  ([`unit/checkAnchors.test.ts`](unit/checkAnchors.test.ts) — runs the REAL
+  `tools/artifacts/check-anchors.mjs` against a REAL throwaway git repo in a temp dir,
+  with the three cited sources reduced to stand-ins holding just their anchor strings.
+  Mocking git was not an option: all three false-greens this script has had were wrong
+  beliefs ABOUT git, and a fake would have encoded the same belief and passed. The
+  headline cases assert a control — the naive git command reports success on the very
+  state the script must reject).
 - **`integration/`** — 3 real-ffmpeg render harnesses (`burnin-render`, `demo-rerender`,
   `restitch-real`), gated behind `RUN_BURNIN`.
 - **`regression/`** — [`regression/script-gen.regression.test.ts`](regression/script-gen.regression.test.ts),

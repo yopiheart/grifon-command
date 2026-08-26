@@ -27,8 +27,8 @@ clip that was already generated AND billed. `withRetry` already exists in the re
 *positions*, and `artifacts` is in `main-status`'s `needs` — so a comment reflow in
 `producerOrchestrator.ts` would open `ci-red` and **push a false CRITICAL to your phone**. Fixed:
 the page prints the **anchor string, no line number** (verified both tails). Tier 0d debt 2 CLOSED.
-⛔ Still open there: **no tests for `check-anchors.mjs`** — three false-greens in it were caught
-by human review, not by a gate.
+✅ 2026-08-27: **9 tests** ([tests/unit/checkAnchors.test.ts](tests/unit/checkAnchors.test.ts)) drive the REAL script
+against a REAL temp git repo — mocking git would re-encode the belief behind all three false-greens. Mutation-checked.
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
