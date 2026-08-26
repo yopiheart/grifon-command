@@ -49,7 +49,7 @@ Once VS Code opens: Extensions (the four squares in the sidebar) → search
 cd $HOME\Desktop
 git clone --filter=blob:none --no-checkout https://github.com/yopiheart/grifon-command.git
 cd grifon-command
-git sparse-checkout set --no-cone '/*' '!/clients' '!/assets' '!/baselines' '!/samples' '!/workflows/believability-samples' '!/workflows/concierge_poc' '!/workflows/assets' '!/tests/fixtures' '!/public/examples'
+git sparse-checkout set --no-cone '/*' '!/clients' '!/assets' '!/baselines' '!/artifacts' '/artifacts/eli5-image-gate.html' '!/samples' '!/workflows/believability-samples' '!/workflows/concierge_poc' '!/workflows/assets' '!/tests/fixtures' '!/public/examples'
 git checkout
 ```
 
@@ -215,14 +215,27 @@ builders read straight out of excluded paths:
 | `tools/artifacts/build-km-week01-runsheet.mjs` | `clients/oceanides/kuya-marvin/organic/` |
 | `tools/artifacts/build-gabriel-review.mjs` | `clients/oceanides/kuya-gabriel/identity-lock/` |
 
-⚠️ **`/artifacts` itself is no longer excluded (2026-08-26), and must stay that way.** It is
-text, so it costs nothing, and `npm run check:artifact-anchors` — the `artifacts` CI job's local
-equivalent (`loops.md` Tier 0d) — is *unreliable* when the twin is sparse-excluded. The builder
-`mkdir`+`writeFile`s into the excluded directory regardless, the twin still reads as tracked, and
-`git diff HEAD` then either ignores the entry (**false green**, the exact failure that check
-exists to kill) or cries wolf. `check-anchors.mjs` now detects the skip-worktree flag and refuses
-to answer rather than guess, but the real fix is not re-excluding the path. Note this is the
-inverse of the table above: those builders *read* an excluded folder, this one *writes into one*.
+⚠️ **`/artifacts` stays excluded, but the ONE anchored twin is re-included** (2026-08-26). The
+sparse line carries `'!/artifacts' '/artifacts/eli5-image-gate.html'` — gitignore semantics, so the
+later pattern wins and exactly that 16 KB file comes down.
+
+Why not just drop the exclusion: an earlier version of this block did, on the grounds that
+"it is text, so it costs nothing." **Measured, that was wrong.** `artifacts/` is 3.5 MB and 96% of
+it is two base64-heavy pages — `km-value-week-01.html` 2.3 MB, `gabriel-review.html` 628 KB — none
+of which any check reads. At the ~30 KiB/s this file records for cafe wifi that is ~2 extra minutes
+on a clone whose whole purpose is avoiding a 13-hour one, and it grows with every kept artifact. A
+sentence that says "costs nothing" never gets re-measured, so it must not be written.
+
+The reason the path matters at all: `npm run check:artifact-anchors` — the `artifacts` CI job's
+local equivalent (`loops.md` Tier 0d) — is *unreliable* when the twin is sparse-excluded. The
+builder `mkdir`+`writeFile`s into the excluded directory regardless, the twin still reads as
+tracked, and `git diff HEAD` then either ignores the entry (**false green**, the exact failure the
+check exists to kill) or cries wolf. `check-anchors.mjs` now detects the skip-worktree flag and
+refuses to answer rather than guess — that refusal is what actually closes the hole; re-including
+the file is the convenience on top of it.
+
+Note this is the inverse of the table above: those builders *read* an excluded folder, this one
+*writes into one*. **A second anchored artifact needs its twin added to the sparse line too.**
 
 On a lite clone the best case is an ENOENT and a session burned diagnosing a
 checkout artifact as a code bug. The worse case is a twin that builds with

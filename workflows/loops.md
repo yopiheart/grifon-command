@@ -756,6 +756,33 @@ but reaches nobody, so a merged refactor leaves the published page citing a line
    freshness is what a "last changed" date was for, so once this job existed the stamp was
    redundant. The page now depends on the cited files' CONTENT alone.
 
+### ⛔ OPEN DEBT — this checker has no tests, and that is the wrong way round
+
+**Next session's first job if it touches `check-anchors.mjs`.** Four rounds of PR #118 review
+found **three separate false-green modes** in it, each introduced while fixing the previous one:
+
+| Mode | Found in | Symptom |
+|---|---|---|
+| bare `git diff` vs a **staged** twin | `9d327e2` | exit 0 on a moved call site |
+| an **untracked** twin | `b7609ec` | `git diff HEAD` sees no path, prints "unchanged" |
+| skip-worktree regex matched only lowercase | `9bcfe84` | guard silently no-opped on the sparse case it was written for |
+
+Every one was caught by a **reviewer reading the diff**, never by a gate. And the whole record of
+it now lives in commit messages and ~90 lines of prose *here*. That inverts CLAUDE.md's own
+standing rule — prefer a verifier over a paragraph — in the one file whose entire job is refusing
+to print a confident wrong answer.
+
+Design, so the next session does not have to re-derive it: the script's `ANCHORED` list and
+`ROOT` are module-level, so it cannot be exercised from a temp fixture as-is. **Extract the
+git-state classification into an exported pure function** (index flag + `cat-file -e HEAD:` +
+diff-stdout in, one of five verdicts out) and unit-test THAT with vitest — no subprocess, no
+mutation of real sources. Pin all five: clean / new-staged / moved-call-site / no-repo / untracked,
+plus the `S` and lowercase index flags.
+
+Deliberately NOT done on 2026-08-26: the session had already flagged its own context as degraded
+and had made three unverified assertions that day. Writing this test badly is exactly how a fourth
+false green gets in.
+
 ### Adding another anchored artifact
 
 Add it to the `ANCHORED` list in [`tools/artifacts/check-anchors.mjs`](../tools/artifacts/check-anchors.mjs) —

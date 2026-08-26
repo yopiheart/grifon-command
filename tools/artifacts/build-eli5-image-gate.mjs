@@ -7,7 +7,7 @@
  * An explainer that cites line numbers is wrong the moment someone inserts a line
  * above one of them, and a wrong explainer is worse than none: it teaches a reader
  * to distrust the whole page. So no line number on this page is typed. Each one is
- * resolved here by finding a unique ANCHOR string in the committed source.
+ * resolved here by finding a unique ANCHOR string in the WORKING TREE (HEAD only in CI, where the checkout is a commit).
  *
  * That turns rot into a build failure. If a refactor deletes an anchor, or an anchor
  * stops being unique, this script throws and the page does not regenerate. Per
