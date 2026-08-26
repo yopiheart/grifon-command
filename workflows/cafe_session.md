@@ -216,8 +216,20 @@ builders read straight out of excluded paths:
 | `tools/artifacts/build-gabriel-review.mjs` | `clients/oceanides/kuya-gabriel/identity-lock/` |
 
 ⚠️ **`/artifacts` stays excluded, but the ONE anchored twin is re-included** (2026-08-26). The
-sparse line carries `'!/artifacts' '/artifacts/eli5-image-gate.html'` — gitignore semantics, so the
-later pattern wins and exactly that 16 KB file comes down.
+sparse line carries `'!/artifacts' '/artifacts/eli5-image-gate.html'` — the later pattern wins and
+exactly that 16 KB file comes down.
+
+**That was asserted before it was measured, and `gitignore(5)` says the opposite for its own
+engine** (*"It is not possible to re-include a file if a parent directory of that file is
+excluded"*). Flagged by the PR #118 reviewer, who could not run the check. Verified on git 2.43.0
+— sparse-checkout does NOT inherit that restriction; the twin comes down and the heavy pages do
+not. Re-run it before trusting any change to this line:
+
+```powershell
+printf '/*\n!/clients\n!/assets\n!/baselines\n!/artifacts\n/artifacts/eli5-image-gate.html\n' > rules.txt
+echo "artifacts/eli5-image-gate.html" | git sparse-checkout check-rules --no-cone --rules-file rules.txt   # prints the path = included
+echo "artifacts/km-value-week-01.html" | git sparse-checkout check-rules --no-cone --rules-file rules.txt  # prints nothing = excluded
+```
 
 Why not just drop the exclusion: an earlier version of this block did, on the grounds that
 "it is text, so it costs nothing." **Measured, that was wrong.** `artifacts/` is 3.5 MB and 96% of

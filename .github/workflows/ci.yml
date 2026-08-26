@@ -180,11 +180,13 @@ jobs:
       - name: Explain a failure
         if: failure()
         run: |
-          echo "::error::A cited call site moved, or an anchor is gone/ambiguous."
-          echo "Fix locally, then commit the rebuilt twin:"
-          echo "    npm run check:artifact-anchors"
-          echo "If an anchor is GONE, reread the code before re-anchoring --"
-          echo "the page may now describe behaviour that no longer exists."
+          echo "::error::Artifact anchor check failed -- read the job log for WHICH of"
+          echo "its verdicts printed. It distinguishes them on purpose, and this"
+          echo "one-line annotation cannot: a builder/gate failure is not a moved"
+          echo "call site, and telling you it is would cost you a wrong investigation."
+          echo "Reproduce locally:  npm run check:artifact-anchors"
+          echo "If it names a moved or missing ANCHOR, reread the code before"
+          echo "re-anchoring -- the page may describe behaviour that no longer exists."
           echo ""
           echo "THEN REDEPLOY THE PUBLISHED PAGE. This job guards the committed twin"
           echo "only. The artifact on claude.ai is a SEPARATE copy that nothing here"

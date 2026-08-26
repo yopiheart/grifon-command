@@ -62,10 +62,18 @@ for (const { builder, twin } of ANCHORED) {
   try {
     execFileSync(process.execPath, [resolve(HERE, builder)], { cwd: ROOT, stdio: 'inherit' });
   } catch {
-    // The builder already printed which anchor is missing or ambiguous.
-    console.error(`\n  FAILED to rebuild ${twin} - an anchor is gone or no longer unique.`);
-    console.error('  REREAD the code before re-anchoring: the page may now describe');
-    console.error('  behaviour that no longer exists.');
+    // Do NOT attribute this to the anchors. The builder throws for at least four
+    // non-anchor reasons too: a finalize() gate throw (non-ASCII inside <style>, a
+    // missing `required` substring, a surviving __TOKEN__, a banned CSS property), a
+    // missing/renamed builder, a syntax error, or ENOENT on a cited source file.
+    // Saying "an anchor is gone" would send someone to reread producerOrchestrator.ts
+    // for a call site that never moved -- the same confident-answer-narrower-than-the-
+    // evidence bug the diff handler below was rewritten to remove. It survived here
+    // until the PR #118 reviewer spotted the inconsistency between the two branches.
+    // stdio:'inherit' above already printed the builder's real error; point at it.
+    console.error(`\n  The builder for ${twin} FAILED - its own error is printed above.`);
+    console.error('  If it names a missing or ambiguous ANCHOR, reread the code before');
+    console.error('  re-anchoring: the page may describe behaviour that no longer exists.');
     failed = true;
     continue;
   }
