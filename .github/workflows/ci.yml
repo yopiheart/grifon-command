@@ -166,8 +166,18 @@ jobs:
       # commit to producerOrchestrator.ts would flip that stamp and turn this
       # job red on every unrelated PR, paging main-status over a date string.
       # The stamp was dropped instead (see build-eli5-image-gate.mjs), so this
-      # now depends on the cited files' CONTENT alone: no history, no blobs, no
-      # false red. Do not reintroduce a history dependency without rereading that.
+      # now depends on the cited files' CONTENT alone: no history, no blobs.
+      # Do not reintroduce a history dependency without rereading that.
+      #
+      # ⚠ It does NOT mean "no false red", as an earlier version of this comment
+      # claimed. The anchors resolve to line NUMBERS, so the twin tracks line
+      # POSITIONS: inserting a blank line anywhere above a citation reddens this
+      # job without any behaviour changing. loops.md Tier 0d proves exactly that
+      # two paragraphs into its own evidence. The three orchestrator anchors sit
+      # ~83% down a 1915-line file that changes often, so most edits to it land
+      # above them. Known cost, accepted when Neil wired this in; the cheaper
+      # design (cite the anchor STRING, keep build-time uniqueness as the
+      # guarantee) is written up as a follow-up in Tier 0d.
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4

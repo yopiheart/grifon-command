@@ -792,6 +792,38 @@ Deliberately NOT done on 2026-08-26: the session had already flagged its own con
 and had made three unverified assertions that day. Writing this test badly is exactly how a fourth
 false green gets in.
 
+### ⛔ OPEN DEBT 2 — this gate has a real false-red rate, and it is not small
+
+**Neil's call, not a bug to fix silently.** The anchors resolve to line NUMBERS, so the twin
+tracks line **positions**, not behaviour. Inserting a blank line above a citation reddens the
+`artifacts` job with nothing having changed — proven by Tier 0d's own evidence paragraph above,
+which is the same PR claiming "no false red" in `ci.yml`. That claim is now corrected.
+
+The exposure, measured by the PR #118 reviewer (I could **not** reproduce the commit count — this
+sandbox is a shallow clone whose history starts 2026-08-14, so take the rate as theirs, not mine):
+
+- the three orchestrator anchors sit at `:1592 / :1613 / :1635` of a **1915-line** file — ~83% down,
+  so nearly any edit to it lands above them
+- `services/producerOrchestrator.ts` took ~**33 commits in 3 months** (~11/month)
+
+**Why that compounds rather than annoys:** each red demands rebuild + commit the twin **and** a
+manual claude.ai redeploy that CI cannot verify. At ~11 firings a month the discipline degrades to
+"commit the twin, skip the redeploy" — which is precisely the failure `CLAUDE.md` and the CI hint
+were written to prevent. A gate that fires mostly on non-events trains people to half-obey it.
+
+Second case: on a `pull_request`, `actions/checkout@v4` builds the **merge commit**. If `main`
+moved lines in a cited file after the branch was cut, the rebuild sees `main`'s positions and the
+twin has the branch's — red for something the author never touched, fixable only by rebasing.
+
+**Two cheap fixes, both keeping the never-confidently-wrong property:**
+1. **Cite the anchor STRING on the page, not the line number.** Build-time uniqueness stays the
+   guarantee; a moved line stops being an event at all. Strictly better, slightly less precise
+   for a reader jumping to code.
+2. Drop the three orchestrator citations to one.
+
+Not done here: it changes what the page shows, which is a design decision, and the gate is still
+net-useful meanwhile.
+
 ### Adding another anchored artifact
 
 Add it to the `ANCHORED` list in [`tools/artifacts/check-anchors.mjs`](../tools/artifacts/check-anchors.mjs) —
