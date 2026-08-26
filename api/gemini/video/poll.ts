@@ -23,6 +23,58 @@ const POLL_LIMIT = 60;
 const POLL_WINDOW_SECONDS = 60;
 const SIGNED_URL_TTL_SECONDS = 86400; // 24h
 
+/**
+ * Download the finished Veo artifact, retrying only what a retry can fix.
+ *
+ * By the time we reach here the clip is ALREADY GENERATED AND BILLED — this fetch merely
+ * collects it. A single attempt turned two transient 503s into two permanently flagged scenes
+ * on a run the customer had already paid for: the 502 below reaches
+ * services/geminiService.ts:321, which throws VEO_DOWNLOAD_FAILED straight out of
+ * pollUntilDone's loop, and nothing catches it. The scene dies holding a finished video.
+ *
+ * Retriable is a POSITIVE test, never `!ok`. A 5xx or a 429 is the download host having a
+ * moment. A 4xx means the URI expired or the key is wrong, and re-asking cannot change that —
+ * it only spends the 60s this function is given (vercel.json pins maxDuration 60 here).
+ *
+ * Deliberately NOT the orchestrator's withRetry: that lives in services/producerOrchestrator.ts,
+ * client-side, and pulling a 90KB module into a serverless handler to reuse fifteen lines is the
+ * wrong trade. Its 2–4s backoff is also tuned for a pipeline stage, not for a request on a clock.
+ *
+ * `fetchImpl` and `sleep` are injectable so the retry policy can be tested without a network or
+ * a real timer — see tests/unit/veoDownloadRetry.test.ts.
+ */
+export const VEO_DOWNLOAD_ATTEMPTS = 3;
+
+export type VeoDownloadResult = { ok: true; buffer: Buffer } | { ok: false; status: number };
+
+export async function downloadVeoVideo(
+  url: string,
+  fetchImpl: typeof fetch = fetch,
+  sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms)),
+): Promise<VeoDownloadResult> {
+  let status = 0; // 0 = never got an HTTP reply at all (network throw)
+  for (let attempt = 1; attempt <= VEO_DOWNLOAD_ATTEMPTS; attempt++) {
+    try {
+      const fetchRes = await fetchImpl(url);
+      if (fetchRes.ok) return { ok: true, buffer: Buffer.from(await fetchRes.arrayBuffer()) };
+      status = fetchRes.status;
+      console.error(
+        `[api/gemini/video/poll] veo download failed (attempt ${attempt}/${VEO_DOWNLOAD_ATTEMPTS}):`,
+        status,
+      );
+      if (status !== 429 && status < 500) break; // permanent — stop spending the budget
+    } catch (err: any) {
+      status = 0;
+      console.error(
+        `[api/gemini/video/poll] veo download exception (attempt ${attempt}/${VEO_DOWNLOAD_ATTEMPTS}):`,
+        err?.message,
+      );
+    }
+    if (attempt < VEO_DOWNLOAD_ATTEMPTS) await sleep(attempt * 800 + Math.random() * 400);
+  }
+  return { ok: false, status };
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -131,18 +183,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const key = process.env.GEMINI_API_KEY;
     const sep = video.uri.includes('?') ? '&' : '?';
     const downloadUrl = key ? `${video.uri}${sep}key=${encodeURIComponent(key)}` : video.uri;
-    try {
-      const fetchRes = await fetch(downloadUrl);
-      if (!fetchRes.ok) {
-        console.error('[api/gemini/video/poll] veo download failed:', fetchRes.status);
-        return res.status(502).json({ error: 'veo_download_failed', status: fetchRes.status });
-      }
-      const arr = await fetchRes.arrayBuffer();
-      buffer = Buffer.from(arr);
-    } catch (err: any) {
-      console.error('[api/gemini/video/poll] veo download exception:', err?.message);
-      return res.status(502).json({ error: 'veo_download_failed', status: 0 });
-    }
+    // Unchanged 502 shape on final failure, so geminiService's VEO_DOWNLOAD_FAILED mapping
+    // (services/geminiService.ts:321) keeps working with no client change.
+    const dl = await downloadVeoVideo(downloadUrl);
+    if (!dl.ok) return res.status(502).json({ error: 'veo_download_failed', status: dl.status });
+    buffer = dl.buffer;
   } else {
     return res.status(200).json({ done: true, error: { code: 'VEO_EMPTY_VIDEO' } });
   }

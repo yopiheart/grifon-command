@@ -13,9 +13,8 @@ four bugs, it is one gap with four symptoms, and it is the whole fix pass.
 | Image: hair + wardrobe | ❌ none — plain-UGC block locks the ROOM only; `tryon` locks wardrobe too |
 | Video: spoken dialogue | ❌ none — Veo improvised *"Ito nang kanina ka."* into scene 7 |
 
-Fifth bug, unrelated and the cheapest of all: **[`poll.ts:135`](api/gemini/video/poll.ts#L135)
-does a single `fetch` with no retry.** Two `veo download failed: 503` = two flagged scenes on a
-clip that was already generated AND billed. `withRetry` already exists in the repo.
+✅ The fifth bug is DONE (2026-08-27): `poll.ts` retried nothing, so two transient `503`s flagged two
+scenes on an already-billed clip. Now 3 attempts, 5xx/429 only — a 404 still fails fast. 10 tests.
 
 ⛔ All four prompt edits are TUNED. Neil's explicit go, one diff, and **one layer per test**.
 
@@ -54,7 +53,7 @@ biggest **809k-846k chars, `input.avatar.url` empty** — slimmer stripped, colu
 
 ## ⏭ OPEN — ranked, with the trap in each
 
-1. **The four-symptom diff above** + the `poll.ts` retry. The whole next job.
+1. **The four-symptom diff above.** The whole next job. Blocked on Neil (all four are TUNED).
 2. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** 7 of 8 scenes died and the app
    still showed a 4-second one-scene video titled **YOUR FIRST CUT** with *"7 scenes ready."*
    No error, no warning. Inverted twin of [#90](https://github.com/yopiheart/grifon-command/issues/90).
