@@ -1,22 +1,23 @@
 # NOW — the resume doc
 **Stamped: 2026-08-26** (session 33)
 
-## ▶ NEXT ACTION — one diff closes four of five bugs (UNCHANGED, still the job)
+## ▶ NEXT ACTION — verify the LAST claim before you write its diff
 
-**The generation layers have no "never invent" rule. The script layer does.** That is not
-four bugs, it is one gap with four symptoms, and it is the whole fix pass.
+**Two of the three ❌ rows below were WRONG.** Both were found by reading the stored run instead of
+this doc. So before touching the Veo layer, pull scene 7s stored VIDEO prompt from `apr_fa7cedc3`
+and see whether the dialogue was improvised or ASKED FOR. Guessing cost a whole planned fix pass.
 
 | Layer | Guard today |
 |---|---|
-| Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` — *"Do NOT invent or add any bonus that is not in the offer"* |
-| Image: packaging + props | ❌ none — scene 8 rendered a HIRAYA GLOW box Neil never uploaded |
-| Image: hair + wardrobe | ❌ none — plain-UGC block locks the ROOM only; `tryon` locks wardrobe too |
-| Video: spoken dialogue | ❌ none — Veo improvised *"Ito nang kanina ka."* into scene 7 |
+| Script: price / scarcity / bonus | ✅ hard, `prompts.ts:512,940,941` |
+| Image: packaging + props | ✅ FIXED 2026-08-27, `PRODUCT_TRUTH_RULE`. Diagnosis was wrong: the STORYBOARD wrote *"next to its outer package box"*; the image model obeyed. Upload = one bottle, looked at. 11 tests |
+| Image: hair + wardrobe | ✅ already guarded — wardrobe by IDENTITY_LOCK rule 1 ([geminiService.ts:2492](services/geminiService.ts#L2492), variation deliberately REMOVED), hair by `APPEARANCE_LOCK_RULE` |
+| Video: spoken dialogue | ❓ UNVERIFIED — Veo improvised *"Ito nang kanina ka."* into scene 7. No guard FOUND, but I did not search exhaustively |
 
-✅ The fifth bug is DONE (2026-08-27): `poll.ts` retried nothing, so two transient `503`s flagged two
-scenes on an already-billed clip. Now 3 attempts, 5xx/429 only — a 404 still fails fast. 10 tests.
+✅ Fifth bug DONE (2026-08-27): `poll.ts` retried nothing, so two `503`s flagged two scenes on an
+already-billed clip. Now 3 attempts, 5xx/429 only; a 404 still fails fast. 10 tests. CI green.
 
-⛔ All four prompt edits are TUNED. Neil's explicit go, one diff, and **one layer per test**.
+⛔ Still TUNED. Neils explicit go, one diff, and **one layer per test**.
 
 ## ✅ LANDED — `/eli5` + the anchor CI gate (PR #118, merged `170229a`)
 
