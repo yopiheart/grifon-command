@@ -792,37 +792,46 @@ Deliberately NOT done on 2026-08-26: the session had already flagged its own con
 and had made three unverified assertions that day. Writing this test badly is exactly how a fourth
 false green gets in.
 
-### ⛔ OPEN DEBT 2 — this gate has a real false-red rate, and it is not small
+### ✅ CLOSED 2026-08-26 — the false-red rate, and where the red actually landed
 
-**Neil's call, not a bug to fix silently.** The anchors resolve to line NUMBERS, so the twin
-tracks line **positions**, not behaviour. Inserting a blank line above a citation reddens the
-`artifacts` job with nothing having changed — proven by Tier 0d's own evidence paragraph above,
-which is the same PR claiming "no false red" in `ci.yml`. That claim is now corrected.
+**The debt as filed was understated.** It said the anchors resolve to line NUMBERS, so the twin
+tracks line **positions** and a blank line above a citation reddens `artifacts` with nothing
+having changed. True, and proven by this tier's own evidence paragraph above. What it missed is
+where that red goes: `artifacts` is in `main-status`'s `needs`, so on a push to `main` a false red
+**opens the `ci-red` alarm issue** — the durable red/green bit the Health Watch v2 Routine (Tier 6)
+reads each morning and pushes to Neil's phone as a CRITICAL with a day count. A comment reflow in
+`producerOrchestrator.ts` would have paged him about a line that moved. Filed as a PR-check
+annoyance; it was a false-alarm path to the one channel whose delivery is confirmed. Found by the
+PR #118 reviewer, who followed the red instead of stopping at the job.
 
-The exposure, measured by the PR #118 reviewer (I could **not** reproduce the commit count — this
-sandbox is a shallow clone whose history starts 2026-08-14, so take the rate as theirs, not mine):
+Exposure as measured by that reviewer (the commit count could **not** be reproduced here — this
+sandbox is a shallow clone whose history starts 2026-08-14, so that rate is theirs, not mine):
+the three orchestrator anchors sit at `:1592 / :1613 / :1635` of a **1915-line** file (~83% down,
+so nearly any edit lands above them), and the file took ~**33 commits in 3 months**.
 
-- the three orchestrator anchors sit at `:1592 / :1613 / :1635` of a **1915-line** file — ~83% down,
-  so nearly any edit to it lands above them
-- `services/producerOrchestrator.ts` took ~**33 commits in 3 months** (~11/month)
+**Fixed by option 1 — the page prints the anchor STRING and no line number at all.** The number is
+still resolved, because resolving it *is* the uniqueness check (`find` must match exactly once or
+`lineOf` throws); it is logged for the operator and discarded. Build-time uniqueness remains the
+guarantee, and the string is greppable, which is what a reader actually needs.
 
-**Why that compounds rather than annoys:** each red demands rebuild + commit the twin **and** a
-manual claude.ai redeploy that CI cannot verify. At ~11 firings a month the discipline degrades to
-"commit the twin, skip the redeploy" — which is precisely the failure `CLAUDE.md` and the CI hint
-were written to prevent. A gate that fires mostly on non-events trains people to half-obey it.
+Verified at the layer of the claim, both tails:
 
-Second case: on a `pull_request`, `actions/checkout@v4` builds the **merge commit**. If `main`
-moved lines in a cited file after the branch was cut, the rebuild sees `main`'s positions and the
-twin has the branch's — red for something the author never touched, fixable only by rebasing.
+- **No false red.** Inserted a blank line above `producerOrchestrator.ts:1592`. All three anchors
+  shifted (1592/1613/1635 → 1593/1614/1636) and the twin's sha256 was **byte-identical**
+  (`b7fc0e7b…`). Before the fix this exact edit rewrote the twin.
+- **Real red preserved.** Renaming `if (deps.checkSceneImage) {` still throws `ANCHOR LOST` and the
+  page does not regenerate.
 
-**Two cheap fixes, both keeping the never-confidently-wrong property:**
-1. **Cite the anchor STRING on the page, not the line number.** Build-time uniqueness stays the
-   guarantee; a moved line stops being an event at all. Strictly better, slightly less precise
-   for a reader jumping to code.
-2. Drop the three orchestrator citations to one.
+This also closes the second case the debt listed without a fix: on a `pull_request`,
+`actions/checkout@v4` builds the **merge commit**, so if `main` moved lines in a cited file after
+the branch was cut, the rebuild saw `main`'s positions and the twin had the branch's — red for
+something the author never touched. With positions out of the twin entirely, that cannot happen.
 
-Not done here: it changes what the page shows, which is a design decision, and the gate is still
-net-useful meanwhile.
+Option 2 (drop the three orchestrator citations to one) was not needed and was not taken.
+
+⚠ The gate now reddens on exactly two things: a genuine anchor loss, and a deliberate edit to the
+template, builder or `_gates.mjs`. The second is expected — commit the rebuilt twin **and** redeploy
+the published page. That redeploy is still the step CI cannot verify.
 
 ### Adding another anchored artifact
 

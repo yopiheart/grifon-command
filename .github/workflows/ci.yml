@@ -169,15 +169,24 @@ jobs:
       # now depends on the cited files' CONTENT alone: no history, no blobs.
       # Do not reintroduce a history dependency without rereading that.
       #
-      # ⚠ It does NOT mean "no false red", as an earlier version of this comment
-      # claimed. The anchors resolve to line NUMBERS, so the twin tracks line
-      # POSITIONS: inserting a blank line anywhere above a citation reddens this
-      # job without any behaviour changing. loops.md Tier 0d proves exactly that
-      # two paragraphs into its own evidence. The three orchestrator anchors sit
-      # ~83% down a 1915-line file that changes often, so most edits to it land
-      # above them. Known cost, accepted when Neil wired this in; the cheaper
-      # design (cite the anchor STRING, keep build-time uniqueness as the
-      # guarantee) is written up as a follow-up in Tier 0d.
+      # The same reasoning then had to be applied one level down. Until
+      # 2026-08-26 the page printed the resolved line NUMBERS, so the twin
+      # tracked line POSITIONS and a blank line inserted above any citation
+      # reddened this job with nothing having changed. That mattered more than
+      # a noisy PR check: `artifacts` is in main-status's `needs` below, so on a
+      # push to main it opens the `ci-red` alarm issue -- the one the Health
+      # Watch Routine reads each morning and pushes to Neil's phone. A comment
+      # reflow would have paged him. The PR #118 reviewer traced where the red
+      # lands; the session that wired this in had it recorded only as a PR-check
+      # annoyance.
+      #
+      # Fixed at the source: the page now prints the ANCHOR STRING and no line
+      # number at all. The number is still resolved, because resolving it IS the
+      # uniqueness check, and then discarded. Verified 2026-08-26 by inserting a
+      # line above producerOrchestrator.ts:1592 -- all three anchors shifted
+      # (1592/1613/1635 -> 1593/1614/1636) and the twin's sha256 was unchanged;
+      # renaming an anchor still throws ANCHOR LOST. So this job now reddens
+      # only on a real anchor loss or a deliberate template/builder edit.
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4

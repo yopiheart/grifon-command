@@ -19,16 +19,16 @@ clip that was already generated AND billed. `withRetry` already exists in the re
 
 ⛔ All four prompt edits are TUNED. Neil's explicit go, one diff, and **one layer per test**.
 
-## ⏳ IN FLIGHT — PR #118, watched
+## ✅ LANDED — `/eli5` + the anchor CI gate (PR #118, merged `170229a`)
 
-**[PR #118](https://github.com/yopiheart/grifon-command/pull/118)** adds **`/eli5`** + its page.
-9 commits, docs/tooling ONLY (no `api/` `services/` `components/`), cannot touch the fix pass
-above. **CI green on `9bcfe84`.** 4 review rounds, ~11 findings, all real, all fixed.
-<https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06> · twin
-`artifacts/eli5-image-gate.html`; its line numbers are anchor-resolved and enforced by the new
-`artifacts` CI job (`loops.md` Tier 0d). Both calls ruled — CI wiring **yes**, carve-out
-**granted**, both in CLAUDE.md. ⛔ **Never push while `review` runs** — `loops.md` Tier 0c.
-**Left: your merge call + a human read of `ci.yml` in `6bac182` — no bot reviewed that commit.**
+`/eli5`, its page (<https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06>, twin
+`artifacts/eli5-image-gate.html`), the `artifacts` CI job. Docs/tooling only. 5 review rounds.
+**Follow-up pushed on this branch, unmerged:** citing line numbers made the twin track line
+*positions*, and `artifacts` is in `main-status`'s `needs` — so a comment reflow in
+`producerOrchestrator.ts` would open `ci-red` and **push a false CRITICAL to your phone**. Fixed:
+the page prints the **anchor string, no line number** (verified both tails). Tier 0d debt 2 CLOSED.
+⛔ Still open there: **no tests for `check-anchors.mjs`** — three false-greens in it were caught
+by human review, not by a gate.
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 

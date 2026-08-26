@@ -240,7 +240,7 @@ echo "artifacts/km-value-week-01.html" | git sparse-checkout check-rules --no-co
 ```
 
 Why not just drop the exclusion: an earlier version of this block did, on the grounds that
-"it is text, so it costs nothing." **Measured, that was wrong.** `artifacts/` is 3.5 MB and 96% of
+"it is text, so it costs nothing." **Measured, that was wrong.** `artifacts/` is 3.5 MB and 84% of
 it is two base64-heavy pages — `km-value-week-01.html` 2.3 MB, `gabriel-review.html` 628 KB — none
 of which any check reads. At the ~30 KiB/s this file records for cafe wifi that is ~2 extra minutes
 on a clone whose whole purpose is avoiding a 13-hour one, and it grows with every kept artifact. A

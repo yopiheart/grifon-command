@@ -47,31 +47,31 @@ const OUT = join(ROOT, 'artifacts', 'eli5-image-gate.html');
  */
 const ANCHORS = [
   {
-    token: '__LINE_SERVER_503__',
+    token: '__ANCHOR_SERVER_503__',
     file: 'api/gemini/image.ts',
     find: "'image_gate_disabled'",
     what: 'the server 503 when the unprefixed flag is off',
   },
   {
-    token: '__LINE_GATE_DEPS__',
+    token: '__ANCHOR_GATE_DEPS__',
     file: 'services/producerDeps.ts',
     find: 'export function gateDepsFor',
     what: 'the one function that hands out BOTH halves from the client flag',
   },
   {
-    token: '__LINE_DETERMINISTIC__',
+    token: '__ANCHOR_DETERMINISTIC__',
     file: 'services/producerOrchestrator.ts',
     find: 'if (deps.checkSceneImage) {',
     what: 'Half A, the deterministic check',
   },
   {
-    token: '__LINE_HARD_FLAG__',
+    token: '__ANCHOR_HARD_FLAG__',
     file: 'services/producerOrchestrator.ts',
     find: 'await deps.run.flagScene(run.runId, i,',
     what: 'Half A hard-flagging a scene out of approval',
   },
   {
-    token: '__LINE_AI_GATE__',
+    token: '__ANCHOR_AI_GATE__',
     file: 'services/producerOrchestrator.ts',
     find: 'if (deps.imageGateCheck) {',
     what: 'Half B, the AI gate',
@@ -101,11 +101,36 @@ function lineOf(source, find, { file, what }) {
   return hits[0];
 }
 
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// The page prints the ANCHOR STRING, not the line number lineOf() just proved unique.
+//
+// The number is still resolved, because resolving it IS the check: `find` must match
+// exactly once or lineOf throws. It is printed to the operator below, and thrown away.
+//
+// WHY IT NEVER REACHES THE PAGE. Emitting it made the twin track line POSITIONS, so a
+// blank line inserted anywhere above a citation rewrote the twin and reddened
+// `check:artifact-anchors` with no behaviour change. That is the same bug as the date
+// stamp two comments up, one level down: the stamp coupled the page to the sources'
+// HISTORY, the line number coupled it to their LAYOUT. Neither is what the page claims.
+//
+// It was not merely noisy. `artifacts` is in main-status's `needs` (ci.yml), so on a
+// push to main a false red opens the `ci-red` alarm issue -- which the Health Watch
+// Routine reads each morning and pushes to Neil's phone as a CRITICAL with a day count.
+// A comment reflow in producerOrchestrator.ts (~11 commits/month, all three anchors sit
+// ~83% down it) would have paged him about a line that moved. Found by the PR #118
+// reviewer, who traced where the red actually lands; I had recorded it as a PR-check
+// annoyance and missed the alarm path.
+//
+// The anchor string loses nothing: it is greppable, it is what a reader needs to find
+// the call site, and its uniqueness is guaranteed at build time rather than asserted.
+// Now the twin changes only when an anchor's CONTENT changes -- which is the one event
+// that should ever force a reread of this page.
 const tokens = {};
 for (const anchor of ANCHORS) {
   const source = await readFile(join(ROOT, anchor.file), 'utf8');
   const line = lineOf(source, anchor.find, anchor);
-  tokens[anchor.token] = String(line);
+  tokens[anchor.token] = esc(anchor.find);
   console.log(`  ${anchor.file}:${line}`.padEnd(46) + anchor.what);
 }
 

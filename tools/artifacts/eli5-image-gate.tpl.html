@@ -1,6 +1,6 @@
 <!-- Title stays UNSTAMPED across redeploys: it names the artifact in the tab + gallery.
-     Built by tools/artifacts/build-eli5-image-gate.mjs. Every line number on this page
-     is resolved from the committed source at build time, never typed by hand. -->
+     Built by tools/artifacts/build-eli5-image-gate.mjs. This page cites no line numbers
+     at all -- only anchor strings, each proved unique in its file at build time. -->
 <title>The Two-Flag Image Gate</title>
 
 <style>
@@ -260,6 +260,16 @@ code{
   color:var(--meta);
 }
 .sources .k{color:var(--silver-a);}
+/* The anchor strings. Indented and gold so the file/label line and the greppable
+   string read as one pair, and `overflow-wrap:anywhere` because these are code with
+   no spaces to break on -- at 390px an unbroken anchor would push the page sideways,
+   and the body must never scroll horizontally. */
+.sources .q{
+  color:var(--gold);
+  display:inline-block;
+  padding-left:15px;
+  overflow-wrap:anywhere;
+}
 .sig{
   margin-top:34px;
   font-family:var(--mono);
@@ -369,13 +379,19 @@ code{
   </section>
 
   <div class="sources">
-    <span class="k">Resolved from source at build time</span><br>
-    api/gemini/image.ts:__LINE_SERVER_503__ &middot; the 503<br>
-    services/producerDeps.ts:__LINE_GATE_DEPS__ &middot; gateDepsFor<br>
-    services/producerOrchestrator.ts:__LINE_DETERMINISTIC__ &middot; Half A<br>
-    services/producerOrchestrator.ts:__LINE_HARD_FLAG__ &middot; the hard flag<br>
-    services/producerOrchestrator.ts:__LINE_AI_GATE__ &middot; Half B<br>
-    <span class="k">every line above is resolved from source by anchor, and re-checked by CI</span>
+    <span class="k">Grep these strings &mdash; each was proved unique in its file at build time</span><br>
+    api/gemini/image.ts &middot; the 503<br>
+    <span class="q">__ANCHOR_SERVER_503__</span><br>
+    services/producerDeps.ts &middot; gateDepsFor<br>
+    <span class="q">__ANCHOR_GATE_DEPS__</span><br>
+    services/producerOrchestrator.ts &middot; Half A<br>
+    <span class="q">__ANCHOR_DETERMINISTIC__</span><br>
+    services/producerOrchestrator.ts &middot; the hard flag<br>
+    <span class="q">__ANCHOR_HARD_FLAG__</span><br>
+    services/producerOrchestrator.ts &middot; Half B<br>
+    <span class="q">__ANCHOR_AI_GATE__</span><br>
+    <span class="k">no line numbers on purpose: they rot on any reflow. If a string above stops
+    matching exactly once, the build fails and this page does not regenerate &mdash; CI re-checks it.</span>
   </div>
 
   <p class="sig">GRIFON</p>
