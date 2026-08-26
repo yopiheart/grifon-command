@@ -23,7 +23,7 @@ clip that was already generated AND billed. `withRetry` already exists in the re
 
 `/eli5`, its page (<https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06>, twin
 `artifacts/eli5-image-gate.html`), the `artifacts` CI job. Docs/tooling only. 5 review rounds.
-**Follow-up pushed on this branch, unmerged:** citing line numbers made the twin track line
+**Follow-up merged `bcb4a1a` (2026-08-27):** citing line numbers made the twin track line
 *positions*, and `artifacts` is in `main-status`'s `needs` — so a comment reflow in
 `producerOrchestrator.ts` would open `ci-red` and **push a false CRITICAL to your phone**. Fixed:
 the page prints the **anchor string, no line number** (verified both tails). Tier 0d debt 2 CLOSED.
