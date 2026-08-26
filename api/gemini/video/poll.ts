@@ -5,6 +5,7 @@ import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
 import { putMedia, getMediaUrl } from '../../_lib/mediaStore.js';
 import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
+import { fetchMediaWithRetry } from '../../_lib/fetchRetry.js';
 
 const Body = z.object({
   operation: z.unknown(),
@@ -131,18 +132,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const key = process.env.GEMINI_API_KEY;
     const sep = video.uri.includes('?') ? '&' : '?';
     const downloadUrl = key ? `${video.uri}${sep}key=${encodeURIComponent(key)}` : video.uri;
-    try {
-      const fetchRes = await fetch(downloadUrl);
-      if (!fetchRes.ok) {
-        console.error('[api/gemini/video/poll] veo download failed:', fetchRes.status);
-        return res.status(502).json({ error: 'veo_download_failed', status: fetchRes.status });
-      }
-      const arr = await fetchRes.arrayBuffer();
-      buffer = Buffer.from(arr);
-    } catch (err: any) {
-      console.error('[api/gemini/video/poll] veo download exception:', err?.message);
-      return res.status(502).json({ error: 'veo_download_failed', status: 0 });
+    // The clip is already generated and billed at this point, so a transient 503 from
+    // Google's file server must not cost us the scene. See api/_lib/fetchRetry.ts.
+    const download = await fetchMediaWithRetry(downloadUrl);
+    if (!download.ok || !download.buffer) {
+      console.error(
+        '[api/gemini/video/poll] veo download failed:',
+        download.status,
+        `after ${download.attempts} attempt(s)`
+      );
+      return res.status(502).json({ error: 'veo_download_failed', status: download.status });
     }
+    buffer = download.buffer;
   } else {
     return res.status(200).json({ done: true, error: { code: 'VEO_EMPTY_VIDEO' } });
   }

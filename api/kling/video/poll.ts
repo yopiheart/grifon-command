@@ -6,6 +6,7 @@ import { rateLimitCheck } from '../../_lib/rateLimit.js';
 import { putMedia, getMediaUrl } from '../../_lib/mediaStore.js';
 import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../../_lib/klingAuth.js';
 import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
+import { fetchMediaWithRetry } from '../../_lib/fetchRetry.js';
 
 const Body = z.object({
   operation: z.object({
@@ -164,19 +165,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ done: true, error: { code: 'KLING_NO_OUTPUT' } });
   }
 
-  let buffer: Buffer;
-  try {
-    const fetchRes = await fetch(video.url);
-    if (!fetchRes.ok) {
-      console.error('[api/kling/video/poll] kling download failed:', fetchRes.status);
-      return res.status(502).json({ error: 'kling_download_failed', status: fetchRes.status });
-    }
-    const arr = await fetchRes.arrayBuffer();
-    buffer = Buffer.from(arr);
-  } catch (err: any) {
-    console.error('[api/kling/video/poll] kling download exception:', err?.message);
-    return res.status(502).json({ error: 'kling_download_failed', status: 0 });
+  // Kling bills in points and the clip is already rendered here, so a transient failure on
+  // the CDN must not cost us the scene. See api/_lib/fetchRetry.ts.
+  const download = await fetchMediaWithRetry(video.url);
+  if (!download.ok || !download.buffer) {
+    console.error(
+      '[api/kling/video/poll] kling download failed:',
+      download.status,
+      `after ${download.attempts} attempt(s)`
+    );
+    return res.status(502).json({ error: 'kling_download_failed', status: download.status });
   }
+  const buffer: Buffer = download.buffer;
 
   const mimeType = 'video/mp4';
   const path = `${user.id}/${randomUUID()}.mp4`;

@@ -146,6 +146,9 @@ export interface ProductionInput {
   productDescription: string;
   /** Hero product image (base64 / data URL) — product-in-hand for size anchoring. */
   heroImageBase64: string;
+  /** AI-written visual description of the hero photo, captured at upload. Optional and
+   * best-effort; `mapReportToWizard` falls back to `productDescription` without it. */
+  heroDescription?: string;
   /** Avatar locked at intake (uploaded or generated+accepted) so the run is pure. */
   avatar: Avatar;
   /** Pinoy/pinay voice id chosen at intake. */

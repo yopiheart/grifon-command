@@ -2343,6 +2343,52 @@ export const generateSceneImage = async (
         if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
     }
 
+    // --- REFERENCE-MODE RESOLUTION (routing, not prompt content) ---
+    // A mode is a PROMISE about which reference photos arrived, and every branch below re-checks
+    // that promise. When it does not hold the chain falls all the way through to STRICT_NEGATIVE,
+    // which bans faces, skin, hands and fingers outright — and `humanSubjectInFrame` still counts
+    // 'both' as human, so the camera mandate keeps demanding a face. A scene then gets told to
+    // frame a person and to render no anatomy at once, and the model splits the difference into a
+    // floating head, bare skin, or disembodied hands.
+    //
+    // That is not hypothetical: the hook morph withholds productUrl ON PURPOSE (the start frame
+    // must not contain the product) while the storyboard still labels the scene 'both', so EVERY
+    // morph hook on a 'both' scene rendered under the no-humans ruleset. Run apr_fa7cedc3 scene 1
+    // opened on bare skin instead of the performer for exactly this reason.
+    //
+    // Resolve the mode against the references that actually arrived, so a missing photo DOWNGRADES
+    // the lock to the strongest one still supported instead of removing it. Nothing here changes a
+    // single word of any prompt.
+    const hasAvatarRef = !!references.avatarUrl;
+    const hasProductRef = !!references.productUrl;
+    const resolveMode = (m: typeof referenceImageMode): typeof referenceImageMode => {
+        switch (m) {
+            case 'avatar':
+                return hasAvatarRef ? 'avatar' : 'none';
+            case 'product':
+            case 'venue':
+                return hasProductRef ? m : 'none';
+            // These three want a human AND a second photo. Losing the second photo must not cost
+            // us the identity lock — fall back to the avatar-only lock, never to no-humans.
+            case 'both':
+            case 'avatar_venue':
+            case 'avatar_state':
+                if (hasAvatarRef && hasProductRef) return m;
+                if (hasAvatarRef) return 'avatar';
+                return hasProductRef ? 'product' : 'none';
+            default:
+                return m;
+        }
+    };
+    const resolvedMode = resolveMode(referenceImageMode);
+    if (resolvedMode !== referenceImageMode) {
+        console.warn(
+            `[generateSceneImage] reference mode '${referenceImageMode}' -> '${resolvedMode}'`,
+            `(avatar: ${hasAvatarRef}, product: ${hasProductRef})`
+        );
+    }
+    referenceImageMode = resolvedMode;
+
     // --- FORGE_STUDIO_v6.0_GATES ---
     let consistencyRules = "";
     // `&& references.avatarUrl` added 2026-07-25 (Neil-approved). This was the ONE branch of the
@@ -2377,17 +2423,18 @@ export const generateSceneImage = async (
         5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image 1 shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
         6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
         7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
+        8. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 1, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
         `;
     } else if (referenceImageMode === 'both' && references.avatarUrl && references.productUrl) {
         consistencyRules = `
         **DUAL_REFERENCE_LOCK (avatar + product):**
 
         **FROM AVATAR (Reference Image 1 — character/identity):**
-        1. **LOCKED (preserve from Reference Image 1):** face, skin tone, bone structure, hair styling (color AND style — never change between scenes), wardrobe (color, cut, fabric), body type.
+        1. **LOCKED (preserve from Reference Image 1, NEVER change across scenes — non-negotiable):** face, skin tone, bone structure, **hair styling** (color AND style — if Reference Image 1 shows hair tied up in a bun or ponytail, render it tied up in EVERY scene; do NOT let it down. If Reference Image 1 shows hair down/loose, do NOT tie it up in any scene. Hair styling drift between scenes is BANNED), wardrobe (color, cut, fabric — same blouse/top across scenes), body type. Scene-driven action MAY change pose/expression, but MUST NOT change hair styling, wardrobe, or body type.
         2. **VARIES (driven by Scene Prompt):** facial expression, gaze direction, body pose, hand position.
         2b. **FACE_TO_CAMERA (REQUIRED when the avatar speaks the script line):** both eyes + mouth visible. Side body OK; face-away BANNED for talking scenes.
         3. **CAMERA:** angle, distance, framing per CAMERA_MANDATORY block.
-        4. **ENVIRONMENT:** same residence/setting as Reference Image 1 (avatar's home).
+        4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (the avatar's home). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
         5. **ETHNICITY:** Strictly **${ethnicity}**.
 
         **FROM PRODUCT (Reference Image 2 — product/label):**
@@ -2395,6 +2442,7 @@ export const generateSceneImage = async (
         7. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 2 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
         8. **VISUAL_GROUND_TRUTH_PRIORITY — PRODUCT (overrides text metadata):** Reference Image 2 (product photo) is VISUAL GROUND TRUTH for the product. Do NOT infer product visual properties (color, shape, label design, finish) from the product NAME or DESCRIPTION text. If the photo and the name disagree, the photo wins. Text controls only the wordmark/variant text on the label, not the visual appearance of the jar/container.
         9. **ANATOMICAL_LOCK:** Render ONLY the number of hands the action needs — one hand holding the product = exactly ONE hand; a two-handed action = exactly TWO. Five fingers each. NEVER add an extra, third, phantom, or duplicate hand to "complete a pair", and never a disembodied hand entering frame. Anatomy matches the action, not a fixed count.
+        10. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 2, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
 
         **LIGHTING (DUAL_LUMEN_SYNC):**
         - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
@@ -2746,6 +2794,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
          - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0. Keep them MICRO, per EXPRESSION CONTINUITY above: the mouth is shaping words, not performing an emotion. Speech movement only — never a widening grin, never a laugh, never a reaction face layered on top of the dialogue.
          - **Cinematic Grammar — STATE THE TARGET FIRST:** Open the prose with the camera physics directive. Use a specific lens (35mm, 85mm) and pick ONE camera move per scene: a slow dolly-in or a push-in toward the subject. **THE MOVE IS ALREADY UNDERWAY AT FRAME 0, together with the first syllable** — no static opening beat, no settle, no hold. **IT MUST BE VISIBLE, and that is measurable:** by the last frame the subject is noticeably larger in frame than in the first. If a viewer could mistake the clip for a still photograph with a talking mouth, the move was too small — a static talking head is a FAILED shot. The bans that follow trim the STYLE of the move and never reduce it to nothing: no parallactic/background-reveal shifts, handheld movement, camera shake, jitter, lens breathing, or rack/pull focus, and keep the background stable.
+         - **DIALOGUE LOCK (an invented word here is PERMANENT — read this before writing the prose):** The quoted script line is the COMPLETE and ONLY speech in the clip. The performer says those words and no others: no greeting before, no sign-off after, no filler, no ad-lib, no repetition, and no second sentence written to "fill" the remaining seconds. If the line finishes before the clip does, the performer simply stops speaking and the shot holds — a silent tail is CORRECT. **This OVERRIDES the FRAME 0 RULE and First & Last Frame Logic above wherever they could be read as licence to keep talking: "the next syllable" and "the next breath" mean the next syllable or breath OF THE QUOTED LINE, never of an added word.** Why this is stricter than it looks: a talking scene's audio is re-voiced downstream by speech-to-speech, which reprocesses the model's OWN audio and never reads the script — so anything the model chooses to say is treated as real speech, survives into the final mix, and cannot be trimmed out. Append to the prose tail, verbatim: "The performer speaks only the quoted line and nothing else — no added words, no greeting, no sign-off."
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **END-CLEAN RULE:** The clip's final second holds the live shot clean and fully opaque — no cross-dissolve, no double-exposure, no ghosting, no fade-out, no transition-anticipation effect of any kind (the cut is handled downstream by the editor). Append to the prose tail: "Avoid cross-dissolve, double-exposure, ghosting, or fade in the final second."

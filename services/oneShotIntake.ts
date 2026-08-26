@@ -26,6 +26,11 @@ export interface ProductionInput {
   productDescription: string;
   /** Hero product image (base64 / data URL) — product-in-hand for size anchoring. */
   heroImageBase64: string;
+  /** AI-written visual description of the hero photo, captured at upload by
+   * `describeBusinessAsset` (the same call the guided slot uploads already make).
+   * Optional and best-effort: when it is absent the mapping falls back to
+   * `productDescription`, which is what every run did before this field existed. */
+  heroDescription?: string;
   /** Presenter locked at intake. When `avatar.url` is set (the user uploaded one)
    * the run honors it; when empty the user chose AUTO and AI Director casts the
    * spokesperson from the research persona post-research (see `castHints`). */
@@ -116,9 +121,18 @@ export function mapReportToWizard(
   const productImageUrls = hasGuided
     ? guided.map((p) => p.url).slice(0, 5)
     : input.heroImageBase64 ? [input.heroImageBase64] : [];
+  // `productImageDescription` is consumed as a description of what the product LOOKS LIKE —
+  // buildStoryboardPrompt reads it as the writer's only clue about physical form, and the
+  // storyboard flow is text-only (api/gemini/text.ts sends `contents: prompt`, no image), so
+  // whatever lands here is all the writer will ever know. The guided verticals already fill it
+  // from describeBusinessAsset. The Product path used to fall straight through to
+  // `productDescription`, which LaunchScreen sets to the OFFER — so a skincare run was told its
+  // product "looks like" a ₱499 launch promo, and the storyboard invented a retail box to fill
+  // the gap (run apr_fa7cedc3, scene 8). Prefer the hero's real description; fall back only
+  // when the best-effort describe produced nothing.
   const productImageDescription = hasGuided
     ? buildServicePhotoDescription(guided) ?? input.productDescription
-    : input.productDescription;
+    : input.heroDescription?.trim() || input.productDescription;
 
   return {
     clientDetails: { brandName: input.brandName, offer: input.offer },
