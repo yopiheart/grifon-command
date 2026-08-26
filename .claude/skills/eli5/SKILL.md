@@ -78,31 +78,30 @@ rereading.
 `finalize()` from `_gates.mjs`, and the 390x844 `smoke-tester` screenshot before Neil sees a
 URL. No mobile screenshot = not done.
 
-### ⛔ One PROPOSED carve-out - Neil has NOT ruled on it
+### Throwaway vs kept
 
-**Until he does, the standing rule wins: build the twin.**
+**Granted by Neil, 2026-08-26. `CLAUDE.md` is canonical** - the rule lives beside the twin rule
+it modifies, because a carve-out in a `disable-model-invocation` skill is invisible to a reader
+of `CLAUDE.md`, and that asymmetry cost the 2026-07-28 rebuild. What follows is the working
+summary; if the two ever disagree, `CLAUDE.md` wins.
 
-`CLAUDE.md`'s rule is absolute and is attributed to Neil (2026-07-29): *every* artifact ships
-with a committed twin at `artifacts/<slug>.html`, built by a script under `tools/artifacts/`.
-Nothing below overrides that. The session that wrote this skill (2026-08-26) proposed a
-carve-out and **did not have authority to grant it** - an earlier draft of this file said
-"decided", which read as Neil's ruling and was not. Flagged in review on PR #118.
-
-The proposal, for Neil to accept or reject:
-
-| Kind | Twin + builder | Registry line |
+| Kind | Builder + twin | Registry line |
 |---|---|---|
-| **Throwaway** - explaining something once, mid-session, to unblock a decision | *proposed:* not required | no |
-| **Kept** - a mental model the repo will need again after a defreeze | required (rule as written) | yes, in CLAUDE.md |
+| **Throwaway** - explaining one thing once, mid-session, to unblock a decision in front of you | not required | no |
+| **Kept** - a mental model the repo will need again after a defreeze | required | yes, in CLAUDE.md |
 
-The argument for it: eli5's value is speed, and a builder per throwaway kills that. The argument
-against is already in `CLAUDE.md` one bullet above the twin rule - a carve-out that lives only in
-a skill file is invisible, because `CLAUDE.md` is always in context and this file loads only on
-`/eli5`. That exact asymmetry cost a full artifact rebuild on 2026-07-28.
+⚠ **Exempt from the twin ONLY.** A throwaway still goes through `finalize()`, still obeys the
+NOIR mobile-safe rules, and still passes the 390x844 gate before anyone sees a URL. Speed is the
+point of the carve-out; a page that mispaints on a phone is not faster, it is just wrong sooner.
 
-So: a throwaway is still `finalize()`-clean, still mobile-safe, still NOIR, **and still gets a
-twin** until Neil says otherwise. If he grants the carve-out, it moves into `CLAUDE.md` beside
-the rule it modifies, with his name on it - not here.
+**Promotion is Neil's word, not your judgement.** The trigger is him saying "keep this one" -
+not your own read of how good the page is. When he does, build the builder and add the registry
+line *while the sources are still in context*, because after a `/clear` or a defreeze the
+reasoning that produced the page is gone and only the page is left.
+
+(History, so nobody re-litigates it: the session that wrote this skill originally dated this
+"decided 2026-08-26" while Neil had ruled on nothing. That fabricated attribution was caught in
+review on PR #118, downgraded to a PROPOSAL, and then actually granted.)
 
 ## Not this skill
 

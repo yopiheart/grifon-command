@@ -27,7 +27,7 @@ above. `verify`+`e2e` green; review bot left 2 SHOULD-FIX, both addressed. Page
 <https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06> · twin
 `artifacts/eli5-image-gate.html` — line numbers resolve from source anchors, now **enforced by the
 new `artifacts` CI job** (you wired it; `loops.md` Tier 0d, in `main-status` needs).
-**Still open for you: the throwaway-twin carve-out `.claude/skills/eli5/` proposes — unruled.**
+Both open calls now ruled: CI wiring **yes**, throwaway-twin carve-out **granted** (in CLAUDE.md).
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 
