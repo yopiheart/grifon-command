@@ -84,6 +84,17 @@ for (const { builder, twin } of ANCHORED) {
     // untracked path and for "not a git repository", and telling someone to run
     // `git add` when the real problem is a missing .git is just a different confident
     // wrong answer. Measured 2026-08-26 - that is exactly what the first draft did.
+    // ENOENT first: a spawn failure (no `git` on PATH) has no stderr at all, and the
+    // `|| !stderr` fallback below would have called that "NOT TRACKED - run git add",
+    // for a problem git cannot fix because git is not there. Deciding by absence is the
+    // exact habit the diff handler further down was rewritten to drop; this branch was
+    // still doing it. Caught by the PR #118 reviewer.
+    if (err?.code === 'ENOENT') {
+      console.error('\n  git is not on PATH - this check needs it.');
+      console.error(`  Nothing has been determined about ${twin}.`);
+      failed = true;
+      continue;
+    }
     const stderr = String(err?.stderr ?? '').trim();
     if (/did not match any file/i.test(stderr) || !stderr) {
       console.error(`\n  ${twin} is NOT TRACKED by git.`);
@@ -97,6 +108,31 @@ for (const { builder, twin } of ANCHORED) {
     failed = true;
     continue;
   }
+
+  // SPARSE-EXCLUDED twin = this check cannot work, and must say so instead of guessing.
+  // workflows/cafe_session.md's lite clone excludes /artifacts, and that lite clone IS the
+  // standard cafe-PC setup - i.e. the machine Neil actually runs this on. There the twin
+  // is tracked (so the check above passes) but carries skip-worktree, while the builder
+  // mkdir+writeFile's it into the excluded directory anyway. `git diff HEAD` then either
+  // ignores the entry (prints "unchanged" - a false green, the very thing this file exists
+  // to kill) or reports it as changed when nothing moved. Neither answer is true, so refuse
+  // to answer. Found by the PR #118 reviewer.
+  try {
+    const flags = execFileSync('git', ['ls-files', '-v', '--', twin], { cwd: ROOT, encoding: 'utf8' });
+    // `git ls-files -v` tags: UPPERCASE `S` = skip-worktree (what sparse-checkout sets),
+    // lowercase = assume-unchanged. Both mean git is ignoring worktree changes at this
+    // path, so both must refuse. A first draft matched only lowercase and therefore did
+    // NOT fire on the sparse case it was written for - it printed "unchanged", the false
+    // green, and only the test caught it.
+    if (/^[Sa-z]/.test(flags.trim())) {
+      console.error(`\n  ${twin} is SPARSE-EXCLUDED from this checkout (git flag "${flags.trim()[0]}").`);
+      console.error('  This check cannot tell you anything here - it would either false-green or');
+      console.error('  cry wolf. Add the path and rerun:');
+      console.error('      git sparse-checkout add artifacts');
+      failed = true;
+      continue;
+    }
+  } catch { /* non-fatal: the tracked-check above already covers the real failures */ }
 
   // HEAD, not the index. See the header - `git diff` alone goes green on a staged twin.
   try {
@@ -134,9 +170,15 @@ for (const { builder, twin } of ANCHORED) {
       console.log(`  ${twin} is NEW (staged, not yet in HEAD) - nothing to compare against.`);
       console.log('  Commit it; CI compares against HEAD from then on.');
     } else if (diff) {
-      console.error(`\n  ${twin} CHANGED on rebuild - a cited call site moved.`);
-      console.error('  Reread the page against the new code, then commit the rebuilt twin');
-      console.error('  AND redeploy the published artifact (see the CI failure hint).');
+      // Deliberately NOT "a cited call site moved". The rebuild diffs against HEAD, so
+      // ANY input change reddens it - the template, this script, or _gates.mjs - and
+      // hardcoding the anchor story sends a typo-fixer off to audit producerOrchestrator.ts.
+      // Same shape as the bugs above: a confident answer narrower than the evidence.
+      console.error(`\n  ${twin} DIFFERS from HEAD after rebuild.`);
+      console.error('  Either a cited call site moved, or the template/builder changed.');
+      console.error('  Check which - if a citation moved, reread the page against the new code.');
+      console.error('  Then commit the rebuilt twin AND redeploy the published artifact');
+      console.error('  (see the CI failure hint).');
       failed = true;
     } else {
       console.error(`\n  git said: ${stderr || '(no output)'}`);
