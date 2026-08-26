@@ -663,44 +663,48 @@ same day via the in-session `RemoteTrigger` tool):
 
 ---
 
-## Tier 0d — Artifact anchor check · ⚠ ON DEMAND ONLY, not a loop yet (2026-08-26)
+## Tier 0d — Artifact anchor check · ✅ LIVE, automatic (wired 2026-08-26, Neil's call)
 
-**Arm:** `npm run check:artifact-anchors`
+**Arm:** automatic — the `artifacts` job in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml),
+on every PR and every push to main.
+**Local equivalent:** `npm run check:artifact-anchors`
 **Verifier:** rebuilds `artifacts/eli5-image-gate.html` from its anchors, then
 `git diff --exit-code` on the twin.
-**Kill switch:** n/a — nothing runs it automatically. That is the open question.
+**Kill switch:** delete the `artifacts` job, and drop it from `main-status`'s `needs`.
 
 An explainer that cites `foo.ts:412` is wrong the moment a line is inserted above it, and a
 confidently-wrong page is worse than no page. `tools/artifacts/build-eli5-image-gate.mjs`
 resolves all five of its citations from unique anchor strings and throws when an anchor is
-missing or ambiguous, so the rebuild cannot silently re-emit a stale number.
+missing or ambiguous.
 
-**But nothing rebuilds it.** Verified 2026-08-26: no artifact builder is referenced from
-`package.json` (before this entry) or from any file in `.github/workflows/`. So the guarantee
-is real *per rebuild* and absent *per commit* — a refactor lands green, and the published page
-keeps citing the old line forever.
+Before this job nothing rebuilt it — verified 2026-08-26: no artifact builder was referenced
+from `package.json` or from any file in `.github/workflows/`. The guarantee was real *per
+rebuild* and absent *per commit*, while `CLAUDE.md` told the reader a build would catch it.
 
-Proven, not assumed (2026-08-26): inserting one blank line above the `if (deps.checkSceneImage)`
-anchor moved the citations 1592 -> 1593 and 1613 -> 1614 and the check exited 1; reverting it
-returned exit 0. The twin is also byte-reproducible now — the stamp is the newest commit date
-across the cited sources, not the wall clock, so `git diff` on it means "a call site moved",
-never "someone reran the builder today".
+Proven, not assumed: inserting one blank line above the `if (deps.checkSceneImage)` anchor
+moved the citations 1592 -> 1593 and 1613 -> 1614 and the check exited 1; reverting returned
+exit 0.
 
-### ⛔ OPEN — Neil's call, do not wire this without him
+**It is in `main-status`'s `needs`** alongside `verify` and `e2e`. Leaving it out would have
+recreated that job's own founding failure in miniature: the signal exists (the job goes red)
+but reaches nobody, so a merged refactor leaves the published page citing a line that moved.
 
-Adding a CI step (`npm run check:artifact-anchors` in `ci.yml`'s `verify` job) would make the
-guarantee automatic. Three things to weigh first, which is why the session did not just do it:
+### Two design constraints — reread before changing this
 
-1. **It edits `.github/workflows/ci.yml`.** Per `claude-review.yml`'s own refusal path, a PR
-   touching `.github/workflows/` never gets Claude-reviewed — GitHub only runs that action when
-   the branch copy matches `main`. So the PR that adds this check is itself unreviewable by the
-   reviewer, and needs a human.
-2. **It makes every artifact builder a CI dependency.** Only the eli5 builder is anchor-based
-   and dependency-free today. `build-gb-001-brief.mjs` needs `sharp` plus fonts from a funnel's
-   `node_modules`; a naive `build-*.mjs` glob would fail CI on an unrelated PR.
-3. **It turns a docs drift into a red build.** Correct, arguably — but it means a
-   `producerOrchestrator.ts` refactor is blocked until someone reruns an artifact builder. That
-   is a real tax on the fix pass in `NOW.md`, and worth agreeing to on purpose.
+1. **No `npm ci`, no git history.** The builder imports only `node:` builtins plus
+   `./_gates.mjs`, so the job is checkout + node + run, in seconds. That cheapness is why it
+   can gate every PR. Verified 2026-08-26 by running the builder in a bare directory with no
+   `.git` at all: exit 0, byte-identical twin.
+2. **⛔ Never make the page depend on git history.** A draft stamped it with
+   `git log -1 --format=%cs` over the cited sources. That needs `fetch-depth: 0` (a ~1.5 GB
+   repo), and worse, ANY later commit to `producerOrchestrator.ts` would flip the stamp and
+   turn this job red on every unrelated PR — paging `main-status` over a date string, which is
+   precisely the noise that job exists to remove. The stamp was dropped instead: CI enforcing
+   freshness is what a "last changed" date was for, so once this job existed the stamp was
+   redundant. The page now depends on the cited files' CONTENT alone.
 
-Until then `CLAUDE.md`'s registry line must keep saying the check is on demand. Do not describe
-it as automatic while this entry still reads ON DEMAND ONLY.
+### Adding another anchored artifact
+
+Extend the `check:artifact-anchors` script in `package.json`. Keep the no-deps rule: builders
+that need `sharp` or funnel fonts (e.g. `build-gb-001-brief.mjs`) must NOT join this job, or an
+unrelated PR starts failing on a missing dependency.

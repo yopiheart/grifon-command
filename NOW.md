@@ -25,9 +25,9 @@ clip that was already generated AND billed. `withRetry` already exists in the re
 page. Docs/tooling only — no `api/` `services/` `components/` code, cannot affect the fix pass
 above. `verify`+`e2e` green; review bot left 2 SHOULD-FIX, both addressed. Page
 <https://claude.ai/code/artifact/c2a8db6e-3dc2-4d88-a3aa-a40f67ad7c06> · twin
-`artifacts/eli5-image-gate.html` — line numbers resolve from source anchors, **on demand only
-(`npm run check:artifact-anchors`); wiring it into CI is an OPEN call for you, `loops.md` 0d.**
-**Also open for you: the throwaway-twin carve-out `.claude/skills/eli5/` proposes — unruled.**
+`artifacts/eli5-image-gate.html` — line numbers resolve from source anchors, now **enforced by the
+new `artifacts` CI job** (you wired it; `loops.md` Tier 0d, in `main-status` needs).
+**Still open for you: the throwaway-twin carve-out `.claude/skills/eli5/` proposes — unruled.**
 
 ## ⚠ FIVE THINGS THE NEXT SESSION MUST NOT REDISCOVER
 

@@ -140,6 +140,52 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+  # ── artifacts ──────────────────────────────────────────────────────────────
+  # Makes the anchor guarantee real (Neil, 2026-08-26; loops.md Tier 0d).
+  #
+  # artifacts/eli5-image-gate.html cites five source line numbers. The builder
+  # resolves each from a unique anchor string and throws if one goes missing or
+  # ambiguous, so a REBUILD can never silently emit a stale number. Before this
+  # job nothing rebuilt it, so a refactor landed green and the published page
+  # kept citing the old line forever -- a page confidently wrong about the exact
+  # thing its own header comment says a page must never be wrong about.
+  #
+  # Separate job, same reasoning as e2e above: its result stays distinguishable
+  # from the build/unit gate and it runs in parallel.
+  #
+  # NO `npm ci`. The builder imports only node: builtins plus ./_gates.mjs, so
+  # this job is checkout + node + run, in seconds. Do not add an install step
+  # without a reason -- the cheapness is why this can gate every PR.
+  artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Default shallow checkout is enough ON PURPOSE. An earlier draft of this
+      # job needed fetch-depth: 0 because the builder stamped the page with a
+      # `git log` date over the cited sources -- which also meant any later
+      # commit to producerOrchestrator.ts would flip that stamp and turn this
+      # job red on every unrelated PR, paging main-status over a date string.
+      # The stamp was dropped instead (see build-eli5-image-gate.mjs), so this
+      # now depends on the cited files' CONTENT alone: no history, no blobs, no
+      # false red. Do not reintroduce a history dependency without rereading that.
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Artifact anchor check
+        run: npm run check:artifact-anchors
+
+      - name: Explain a failure
+        if: failure()
+        run: |
+          echo "::error::A cited call site moved, or an anchor is gone/ambiguous."
+          echo "Fix locally, then commit the rebuilt twin:"
+          echo "    npm run check:artifact-anchors"
+          echo "If an anchor is GONE, reread the code before re-anchoring --"
+          echo "the page may now describe behaviour that no longer exists."
+
   # ── main-status ────────────────────────────────────────────────────────────
   # The 2026-08-04→08-07 outage was not a detection failure — CI went red
   # immediately and stayed red for three days. It was a READER failure: the
@@ -158,7 +204,7 @@ jobs:
   # it. Paging on PRs would rebuild the noise this job exists to remove.
   main-status:
     if: always() && github.event_name == 'push'
-    needs: [verify, e2e]
+    needs: [verify, e2e, artifacts]
     runs-on: ubuntu-latest
     # Serialize so two quick pushes cannot race into two duplicate issues.
     concurrency:
@@ -178,7 +224,13 @@ jobs:
             // 2026-08-07).
             const verifyResult = '${{ needs.verify.result }}';
             const e2eResult = '${{ needs.e2e.result }}';
-            const red = verifyResult !== 'success' || e2eResult !== 'success';
+            // artifacts joined the alarm 2026-08-26. Leaving it out would have
+            // recreated this job's own founding failure in miniature: the signal
+            // exists (the job goes red) but reaches nobody, so a merged refactor
+            // leaves the published explainer citing a line that moved.
+            const artifactsResult = '${{ needs.artifacts.result }}';
+            const red = verifyResult !== 'success' || e2eResult !== 'success'
+              || artifactsResult !== 'success';
             const LABEL = 'ci-red';
             const TITLE = 'main is RED — CI failing';
             const { owner, repo } = context.repo;

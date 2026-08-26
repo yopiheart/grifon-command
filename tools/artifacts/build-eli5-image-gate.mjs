@@ -30,7 +30,6 @@
  */
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { execFileSync } from 'node:child_process';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { finalize } from './_gates.mjs';
@@ -110,21 +109,27 @@ for (const anchor of ANCHORS) {
   console.log(`  ${anchor.file}:${line}`.padEnd(46) + anchor.what);
 }
 
-// Stamp the SOURCES, not the clock. The first version used `new Date()`, which meant a
-// rebuild on any later date rewrote the twin even when all five anchors resolved
-// identically. That defeats the only check worth having here: `git diff --exit-code
-// artifacts/` after a rebuild is meant to answer "did a cited call site move?", and a
-// wall-clock stamp makes it answer "did someone rerun this today?" instead.
+// NO DATE STAMP, deliberately. Three versions of this got it wrong before landing:
 //
-// Newest commit date across the cited files, so the stamp is a fact about the code the
-// page describes and is byte-identical for anyone rebuilding at the same commit.
-const stamped = execFileSync('git',
-  ['log', '-1', '--format=%cs', '--', ...ANCHORS.map((a) => a.file)],
-  { cwd: ROOT, encoding: 'utf8' }).trim();
-if (!/^\d{4}-\d{2}-\d{2}$/.test(stamped)) {
-  throw new Error(`BUILD_FAILED [eli5-image-gate]: git gave no commit date for the cited sources (got ${JSON.stringify(stamped)}).`);
-}
-tokens.__BUILT_AT__ = stamped;
+//   v1  `new Date()`      -- rewrote the twin on any later date even when every anchor
+//                            resolved identically, so `git diff` on it answered "did
+//                            someone rerun this today?" instead of "did a call site move?".
+//   v2  git commit date   -- reproducible, but couples the page to the cited files'
+//       over the cited      HISTORY rather than their CONTENT. Once the CI job below
+//       sources             runs on full history, ANY later commit to
+//                           producerOrchestrator.ts flips the stamp and turns this red on
+//                           every unrelated PR, opening the main-red alarm issue over a
+//                           date string. That is precisely the noise main-status exists
+//                           to remove.
+//   v3  none              -- this one.
+//
+// The stamp's only real job was telling a reader whether the citations had gone stale.
+// Wiring `npm run check:artifact-anchors` into CI (Neil, 2026-08-26) does that job
+// properly: a moved call site is now a red build, not a date a reader has to interpret.
+// So the stamp is redundant, and dropping it makes the twin depend on the cited files'
+// CONTENT alone -- which is the only thing this page actually claims.
+//
+// Consequence worth keeping: the CI job needs no git history and no npm install.
 
 let html = await readFile(TPL, 'utf8');
 for (const [token, value] of Object.entries(tokens)) {
