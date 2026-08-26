@@ -28,12 +28,16 @@ the same research. One less variable, and one less paid Gemini call.
 npm run dev -- --port 5173 --strictPort
 ```
 
-The flag must be **`GRIFON_DEV_UNMETERED_VIDEO`** — read at
-[api/gemini/video.ts:62](../api/gemini/video.ts#L62) and
-[api/gemini/omni-video.ts:181](../api/gemini/omni-video.ts#L181). `GRIFON_DEV_UNMETERED`
-(without the suffix) is **not a real key** and buys nothing; NOW.md carried that typo until
-2026-08-25. The wrong key looks armed and still walks into the 402 quota gate and the 429
-rate-limit, which locks the account out for ~50 minutes mid-render.
+⚠ **CORRECTED 2026-08-27 — you need BOTH flags, and the script above already sets both.**
+This sheet used to say `GRIFON_DEV_UNMETERED` (no suffix) was "not a real key". It is one:
+[api/_lib/quota.ts](../api/_lib/quota.ts) reads it to bypass **all monthly meters** — images,
+reports, captions — and a storyboard renders 6+ scene images before any video. Neil burned
+images 150/150 mid-smoke on 2026-06-21 for exactly this reason.
+
+`GRIFON_DEV_UNMETERED_VIDEO` is the other half — the video 402 quota and the 429 hourly
+rate-limit, read at [api/gemini/video.ts](../api/gemini/video.ts) and the Kling pollers.
+Arm only one and the run dies partway on the meter you skipped; the 429 window then locks
+the account for ~50 minutes. Run the script rather than setting either by hand.
 
 **Restart the dev server after setting it** — it is read at server start, not per request.
 
