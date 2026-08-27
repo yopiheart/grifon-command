@@ -89,6 +89,20 @@ describe('buildStoryboardPrompt — HOOK START-FRAME SUBJECT (morph-hook formats
     expect(out).toContain('Do NOT name a full face or eyes in the start frame');
   });
 
+  it('keeps the problem area FLAT, which is what stopped it morphing into an object', () => {
+    // Run apr_34d06c7f (2026-08-27) rolled the same scene twice and grew the problem patch into
+    // an object both times: a cluster of peanuts stuck to the cheek, then a raised glossy
+    // blister. Both sat under the caption for roughly half of a 3s hook, and BOTH survived into
+    // cuts Neil had already watched. The rule said the start frame is a cropped detail of the
+    // performer and the end frame is that performer holding the product; it never said the
+    // problem must stay flat, so the model closed the gap by inflating the patch.
+    const out = morphHookPrompt();
+    expect(out).toContain('The problem the start frame carries is FLAT');
+    expect(out).toContain('never an object sitting ON it');
+    // The failure modes banned by name, not by principle alone.
+    expect(out).toContain('no bumps, blisters, lumps, beads, nodules, or growths');
+  });
+
   it('carries THREE worked examples on three different products', () => {
     const out = morphHookPrompt();
     expect(out).toContain('dull, uneven patch of skin on a cheek');       // skincare

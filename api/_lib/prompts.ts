@@ -1736,6 +1736,8 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       A start frame that is NOT this performer's body is BANNED -- a fruit, a fabric, a wall, any stand-in that merely happens to be a similar colour. It breaks the anchor and forces the video model to interpolate between two unrelated subjects, which is what produces formless flesh-toned mush, the worst failure mode for the hook. Do NOT name a full face or eyes in the start frame; a cropped detail carries the problem while keeping the anchor safe.
 
+      The problem the start frame carries is FLAT -- a feature OF the skin or surface, never an object sitting ON it. Name it as texture, tone, or marking (a dull patch, an uneven area, a dry area, a red area) with the surface staying continuous and unbroken. Raised or clustered forms are BANNED: no bumps, blisters, lumps, beads, nodules, or growths. A raised form reads to the video model as an object it may enlarge across the shot, which is how one flat patch became a cluster of peanuts and another became a glossy blister on the same scene; a flat marking gives it nothing to inflate.
+
       The product does NOT carry the anchor and does not need to match anything. It enters only in the end frame, alongside the performer, and it keeps its real colour. NEVER recolor, mute, or restyle the product's packaging: the uploaded product photo is ground truth.
 
       **HOOK START-FRAME SUBJECT (Scene 1 startFramePrompt):** Name a concrete subject a viewer recognises in under one second. Naming only a material, texture, or colour ("a dry matte textured surface", "a rough neutral surface") is FORBIDDEN -- with no subject named the model renders an arbitrary object and the hook opens on something the viewer cannot decode.
