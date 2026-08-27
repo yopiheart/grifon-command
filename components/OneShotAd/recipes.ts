@@ -37,8 +37,12 @@ export interface Recipe {
 }
 
 /** A silent 9:16 sample loop + poster for a recipe card. Populated by Slice B (the paid
- * render batch); a recipe absent from SAMPLES keeps the "Sample soon" placeholder. */
-export interface RecipeSample { video: string; poster: string; }
+ * render batch); a recipe absent from SAMPLES keeps the "Sample soon" placeholder.
+ *
+ * `video` is OPTIONAL so a card can ship as a STILL while its loop is pending. Every producer
+ * run already yields 8 stills, and a real still beats "Sample soon" — the grid is allowed to
+ * mix static and moving tiles rather than waiting for all 12 loops to exist. */
+export interface RecipeSample { video?: string; poster: string; }
 
 // Axes taken verbatim from the old LaunchScreen FORMATS / STRATEGIES / UGC_PRO_SUBFORMATS.
 export const RECIPES: Recipe[] = [
@@ -103,6 +107,14 @@ export const visibleRecipes = (vertical: string, opts?: { producerEngine?: boole
       return o ? { ...r, label: o.label, desc: o.desc } : r;
     });
 
-/** Which recipe ids have sample media. EMPTY until Slice B (the paid render batch) lands —
- * every card therefore renders the "Sample soon" placeholder today, which is expected. */
-export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {};
+/** Which recipe ids have sample media. Filled in one card at a time as the render batch lands;
+ * a recipe still absent renders the "Sample soon" placeholder, which is expected.
+ *
+ * `commercial` is Business-tier locked and needs no sample. Clips are cut from real finished
+ * runs with ffmpeg (silent, 540x960, ~8s, no audio track at all) and live in public/samples/. */
+export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {
+  // Run apr_34d06c7f (Hiraya Glow). Cut from 13.97s-22.03s of the finished ad: the presenter
+  // holding the bottle, then the payoff line. Deliberately NOT the hook — that run's morph grew
+  // the problem patch into a raised object, the failure api/_lib/prompts.ts now bans by name.
+  real_talk: { video: '/samples/real_talk.mp4', poster: '/samples/real_talk.jpg' },
+};

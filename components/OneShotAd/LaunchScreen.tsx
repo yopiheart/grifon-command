@@ -122,21 +122,35 @@ function useIsMobile(): boolean {
   return mobile;
 }
 
-/** True when the device has a real hover pointer (desktop mouse) — gates the recipe
- * card's hover-to-play sample. Touch devices fall back to a poster + Play chip. SSR-safe. */
-function useHoverCapable(): boolean {
-  const [can, setCan] = useState<boolean>(
-    typeof window !== 'undefined' ? window.matchMedia('(hover: hover)').matches : true,
-  );
+/** Plays a muted sample loop while its card is on screen and pauses it the moment it leaves.
+ * Replaces hover-to-play, which meant phone users never saw the one thing that sells the format
+ * — they got a poster and a Play chip nobody taps. Returns the ref to attach to the <video>.
+ *
+ * `enabled` is false for reduced-motion and for a card that has no loop (a still-only sample),
+ * where the poster is the whole card. SSR-safe; degrades to the poster wherever
+ * IntersectionObserver is missing, since a paused <video> still paints its poster. */
+function usePlayInView(enabled: boolean) {
+  const ref = useRef<HTMLVideoElement>(null);
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mq = window.matchMedia('(hover: hover)');
-    const onChange = () => setCan(mq.matches);
-    onChange();
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
-  return can;
+    const el = ref.current;
+    if (!enabled || !el || typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Refused autoplay is not an error worth surfacing — the poster stays up.
+          void el.play().catch(() => { /* poster stays */ });
+        } else {
+          el.pause();
+          el.currentTime = 0;
+        }
+      },
+      // Half the tile visible, so a card only plays once it is genuinely being looked at.
+      { threshold: 0.5 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [enabled]);
+  return ref;
 }
 
 export const LaunchScreen: React.FC<{
@@ -323,7 +337,6 @@ export const LaunchScreen: React.FC<{
   const [pulseId, setPulseId] = useState<RecipeId | null>(null);
   const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReducedMotion = useReducedMotion();
-  const hoverCapable = useHoverCapable();
   const scrollToGallery = () => {
     if (formatLocked) return;
     sfx.play('open');
@@ -973,7 +986,6 @@ export const LaunchScreen: React.FC<{
                   selected={recipe === r.id}
                   pulse={pulseId === r.id}
                   reduceMotion={!!prefersReducedMotion}
-                  hoverCapable={hoverCapable}
                   onSelect={() => chooseRecipe(r.id)}
                 />
               ))}
@@ -1492,23 +1504,21 @@ const SoonBadge: React.FC = () => (
   </span>
 );
 
-/** One recipe card — 9:16, sample video under a scrim, outcome-named copy, badges, and a gold
- * selected-state. Hover plays the sample loop (desktop); touch / reduced-motion shows the poster
- * with a Play chip. A recipe absent from SAMPLES falls back to the "Sample soon" placeholder —
- * SAMPLES is empty until Slice B lands, so every card renders the placeholder today (expected). */
+/** One recipe card — 9:16, sample media under a scrim, outcome-named copy, badges, and a gold
+ * selected-state. The loop plays while the card is on screen and pauses when it scrolls away, on
+ * phone and desktop alike. A sample with no `video` renders as a still; a recipe absent from
+ * SAMPLES falls back to the "Sample soon" placeholder. */
 const RecipeCard: React.FC<{
   recipe: Recipe;
   sample?: RecipeSample;
   selected: boolean;
   pulse: boolean;
   reduceMotion: boolean;
-  hoverCapable: boolean;
   onSelect: () => void;
-}> = ({ recipe, sample, selected, pulse, reduceMotion, hoverCapable, onSelect }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [tapped, setTapped] = useState(false); // touch/reduced-motion: user tapped Play
+}> = ({ recipe, sample, selected, pulse, reduceMotion, onSelect }) => {
   const locked = !!recipe.locked;
-  const autoplay = hoverCapable && !reduceMotion; // hover-to-play only on hover-capable, motion-OK devices
+  const plays = !!sample?.video && !reduceMotion;
+  const videoRef = usePlayInView(plays);
 
   return (
     <button
@@ -1526,48 +1536,24 @@ const RecipeCard: React.FC<{
             : 'border-white/10 hover:border-white/30 hover:scale-[1.01]'
       }`}
     >
-      {/* Media — sample video (hover-play) or the Sample-soon placeholder */}
+      {/* Media — the sample loop (plays while on screen), a still, or the Sample-soon placeholder */}
       {sample ? (
-        <>
-          {autoplay ? (
-            <video
-              ref={videoRef}
-              src={sample.video}
-              poster={sample.poster}
-              muted
-              loop
-              playsInline
-              preload="none"
-              className="absolute inset-0 h-full w-full object-cover"
-              onMouseEnter={() => { void videoRef.current?.play().catch(() => { /* autoplay refused — poster stays */ }); }}
-              onMouseLeave={() => { const v = videoRef.current; if (v) { v.pause(); v.currentTime = 0; } }}
-            />
-          ) : tapped ? (
-            <video
-              src={sample.video}
-              poster={sample.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          ) : (
-            <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
-          )}
-          {/* Touch / reduced-motion: explicit Play chip (span, not a nested button) */}
-          {!autoplay && !tapped && (
-            <span
-              role="button"
-              tabIndex={-1}
-              aria-label="Play preview"
-              onClick={(e) => { e.stopPropagation(); setTapped(true); }}
-              className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-zinc-950/60 text-white"
-            >
-              <Play className="h-4 w-4" />
-            </span>
-          )}
-        </>
+        plays ? (
+          <video
+            ref={videoRef}
+            src={sample.video}
+            poster={sample.poster}
+            muted
+            loop
+            playsInline
+            preload="none"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          // Still-only sample, or reduced motion: the poster IS the card. No Play chip — the
+          // old one sat over every phone card and went untapped.
+          <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        )
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-on-surface-sublabel">
           <Film className="h-6 w-6" />
