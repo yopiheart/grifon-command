@@ -37,27 +37,35 @@ reverts). Client-side only — no rebuild needed, but the defreezer wipes `local
 `34cbaef` — `scripts/pull-run-input.mjs`: pull a run's hero photo, presenter and typed brief
 back out of `producer_runs`. Sibling of `pull-run-frames.mjs`.
 
-## ⏭ THE SAMPLE PLAN — decided with Neil, do it in this order
+## ⏭ THE SAMPLE BATCH — Neil decided 2026-08-27: do ALL of them, one wave
 
 Preview cards live **inside the app** (One-Shot LaunchScreen, logged in), NOT on the landing
-page. `SAMPLES = {}` — all 13 recipes still read "Sample soon". Purpose per Neil: *"para
-magkaroon lang sila ng idea ano ung pagkakaiba ng mga format."*
+page. `SAMPLES = {}` — every card reads "Sample soon". Purpose per Neil: *"para magkaroon lang
+sila ng idea ano ung pagkakaiba ng mga format."*
 
-1. **Prompt fix above.** Nothing else runs first.
-2. **Cut samples from the ad we already have — free, no credit, no meter.** The card wants a
-   6–10s muted loop, not 35s: three usable clips live in one finished ad (bottle reveal,
-   a talking beat, product b-roll). ffmpeg locally. This also makes the blister moot — no short
-   cut has to contain the morph.
-3. **Fill every empty card, video where we have it, STILL where we don't.** Higgsfield mixes
-   static and motion tiles in one grid; a good still beats "Sample soon". Needs a small change:
-   `RecipeSample` requires both `video` and `poster` ([recipes.ts:41](components/OneShotAd/recipes.ts#L41)) —
-   make `video` optional and branch the render. Every run already yields 8 stills.
-4. **Play on scroll-into-view, not on hover.** Today desktop needs a hover and mobile shows a
+**12 recipes, not 13** ([recipes.ts:44](components/OneShotAd/recipes.ts#L44)). `commercial` is
+locked so it needs no sample; `real_talk` is done. **10 runs to go.**
+
+0. **The prompt fix above — FIRST.** All 10 runs pass through the same hook morph. Two rolls,
+   two object-artifacts. Shipping the batch before the fix risks 10 cards with the same defect.
+1. **Hero photos via `codex-image`** (gpt-image-2, billed to the ChatGPT plan — zero Claude
+   quota, zero video credits). **One product cannot carry every format**: Try-On needs apparel,
+   Unboxing needs packaging, Before & After needs a visible change, Watch It Work needs
+   something that visibly works. A serum bottle can do none of those. Budget 4–5 invented
+   brands, not 10.
+2. **The 10 runs**, ordered by which card a user actually reaches for.
+   **Credits: Pro = 8/month, 1 spent, 7 left. Neil's call — reset the counter as we go**, the
+   same prod write done once this session (delete the `video_ads:monthly:<YYYY-MM>:<uid>` row in
+   `rate_limits`). Stays Pro, so the tier UI on First Cut stays honest. He holds each reset.
+3. **Cut each card to a 6–10s muted loop** — ffmpeg locally, free. One finished ad yields three
+   usable clips (reveal, a talking beat, product b-roll), so a run can fill more than one slot.
+4. **Make `video` optional on `RecipeSample`** ([recipes.ts:41](components/OneShotAd/recipes.ts#L41))
+   so a card can ship as a STILL while its video is pending. Higgsfield mixes static and motion
+   tiles in one grid; a good still beats "Sample soon". Every run already yields 8 stills.
+5. **Play on scroll-into-view, not on hover.** Today desktop needs a hover and mobile shows a
    poster + Play chip ([LaunchScreen.tsx:1543](components/OneShotAd/LaunchScreen.tsx#L1543)), so
    phone users never see the one thing that sells. Higgsfield starts playback on viewport entry,
    muted, `preload="none"` — verified in their DOM.
-5. **Then batch the remaining formats — 4 this month, MAX.** Pro = 8 video ads/month, 1 spent.
-   13 recipes cannot be done in one wave; that is arithmetic, not preference.
 
 **Where we can beat them:** their tiles are gorgeous and anonymous — Western studio stock, and
 every one is a *look*, not an *ad*. No hook, no offer, no CTA. Ours are muted too, but SPOTLIGHT
