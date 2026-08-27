@@ -117,4 +117,10 @@ export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {
   // holding the bottle, then the payoff line. Deliberately NOT the hook — that run's morph grew
   // the problem patch into a raised object, the failure api/_lib/prompts.ts now bans by name.
   real_talk: { video: '/samples/real_talk.mp4', poster: '/samples/real_talk.jpg' },
+  // Cut from tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4, already committed —
+  // no new render. 3.9s-12.0s: applying the serum at the mirror, then the result. Scene 1 is
+  // skipped on purpose: its morph resolved into a HALLUCINATED bottle (rose-gold, glitter, the
+  // garbled label "RYA CWYA"), a PRODUCT_TRUTH_RULE break in the same family as the hook morph.
+  // This cut carries no burned captions — the source is a RAW render, before the caption pass.
+  before_after: { video: '/samples/before_after.mp4', poster: '/samples/before_after.jpg' },
 };
