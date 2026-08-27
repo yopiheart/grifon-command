@@ -67,10 +67,10 @@ locked so it needs no sample; `real_talk` is done. **10 runs to go.**
    phone users never see the one thing that sells. Higgsfield starts playback on viewport entry,
    muted, `preload="none"` — verified in their DOM.
 
-**Where we can beat them:** their tiles are gorgeous and anonymous — Western studio stock, and
-every one is a *look*, not an *ad*. No hook, no offer, no CTA. Ours are muted too, but SPOTLIGHT
-already burns the Taglish line. A silent looping card reading "TIGILAN ANG PEELING!" over a
-Filipina in a Filipino room tells Bryan in one second: *para sa merkado ko to.*
+**Where we beat them:** Higgsfield's tiles are gorgeous and anonymous — Western studio stock,
+and every one is a *look*, not an *ad*: no hook, no offer, no CTA. Ours are muted too, but
+SPOTLIGHT already burns the Taglish line, and a silent card reading "TIGILAN ANG PEELING!" over
+a Filipina in a Filipino room tells Bryan in one second: *para sa merkado ko to.*
 
 ## ⚠ OPEN — ranked
 
@@ -80,13 +80,13 @@ Filipina in a Filipino room tells Bryan in one second: *para sa merkado ko to.*
    writes `video: failed`; the true reason reaches Postgres but never the UI.
 3. **Landing page has one false claim.** `ProofGallery` says real businesses ran these ads over
    CSS mockups; `/exit/proof-ad.mp4` does not exist. Copy fix, no render.
-4. **Quota race in `consumeFinishedAd`** — the meter read 9/8 before this session's reset.
-   Supabase FREE tier past grace. Cap founder invites at 5–10.
+4. **Quota race in `consumeFinishedAd`** — the meter read 9/8 before this session's reset (it
+   can exceed its own limit). Supabase FREE tier past grace. Cap founder invites at 5–10.
 
 ## ⚠ CARRIED
-- `video_ads` counter was reset on prod with Neil's yes (was 9/8, 0 credits). Now 1 of 8 used.
 - Uncommitted junk in the repo root: `scene*.png`, `storyboard-gate.png`, `.playwright-mcp/`.
-- Desktop assets pulled from Postgres live in `Desktop\oneshot-assets\` — the defreezer eats them.
+- Pulled assets live in `Desktop\oneshot-assets\`; the three approved cuts in `.tmp/` — the
+  defreezer eats both. The MP4s persist in R2; re-sign rather than re-render.
 - 31 branches still ahead of `main`.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
