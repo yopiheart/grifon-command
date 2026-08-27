@@ -1,90 +1,85 @@
 # NOW — the resume doc
-**Stamped: 2026-08-27** (session 35)
+**Stamped: 2026-08-27** (session 36)
 
-## ▶ NEXT ACTION — the One-Shot you want is behind a FLAG
+## ▶ NEXT ACTION — one line in a TUNED prompt, before any new sample run
 
-```
-http://localhost:5173/app?osaEngine=producer
-```
+The hook morph turns a FLAT problem area into a 3D OBJECT. Two independent rolls on the same
+scene, same failure class: a cluster of peanuts stuck to the cheek, then a raised glossy
+blister. Both sat under the caption for ~1.5s of a 3s hook.
 
-**Without it you get the LEGACY path**, whose GENERATE VIDEO NOW hands you to the old manual module
-([App.tsx:1897](App.tsx#L1897)). You never reach FirstCutScreen. Opt-in since **2026-07-01**
-(`0db2da3`) — nothing regressed, it was always off by default. It persists to
-`localStorage.osa_engine`, and **the defreezer wipes the browser profile** — the likely reason a
-session that set it once worked and the next did not. UNVERIFIED but it fits. `?osaEngine=steps`
-forces legacy back.
+The rule at [`api/_lib/prompts.ts:1735`](api/_lib/prompts.ts#L1735) says the START frame is a
+cropped detail of the performer and the END frame is that same performer holding the product.
+It never says **the problem area must stay flat and must not become an object**, so the model
+fills the gap between "textured patch" and "woman holding bottle" by growing the patch.
 
-Right path = **Running → storyboard gate → FIRST CUT.** Seeing "YOUR AD PLAN"? The flag did not take.
+⛔ TUNED file — propose the line, get Neil's per-diff yes, never edit it and report after.
+This blocks the sample batch: every new sample run passes through the same morph.
 
-## ✅ WHAT LANDED (main, CI green)
+## 🎬 THE PRODUCER PATH IS PROVEN END TO END
 
-The seven fixes from `fix/poll-download-retry` are merged (`3f32d4f`). Also on main: `/eli5`, the
-`artifacts` anchor CI job + its 9 tests, and a correction to the film run sheet.
+Run `apr_34d06c7f` (Hiraya Glow, Real Talk Review, **auto-cast presenter**) reached FIRST CUT on
+**grifon.ai**, 8 scenes, `final_render` done. Neil's verdict: *"pati ung pag bigkas, lipsync!
+Solid!"* — character consistency, wardrobe/set, legible label, clean resolve. Fixes 1 and 5 met
+video at last. Three cuts saved in `.tmp/` (RAW / EDITED / EDITED WITH NEW HOOK).
 
-⛔ **A whole session was wasted rebuilding three of those seven** before noticing the branch existed,
-though SessionStart listed it second under "UNMERGED WORK IN FLIGHT". Reverted in `1615f21`. CLAUDE.md
-warns about this in bold and logs three prior recurrences; this was the fourth. **Run `git branch -a`
-and `git log --all --grep=<feature>` before touching any bug.**
+The URL is still flag-gated: `https://grifon.ai/app?osaEngine=producer` (`?osaEngine=steps`
+reverts). Client-side only — no rebuild needed, but the defreezer wipes `localStorage`.
 
-## 🎬 FILM RUN — first real evidence, storyboard gate only
+## ✅ SHIPPED THIS SESSION (main, deployed to prod)
 
-Ran on the LEGACY path, so 10 scenes not 8. Inputs reused from `apr_fa7cedc3`. No render. ~$1.09.
+`e11535e` — **the watchdog was killing renders that were still working.** ffmpeg runs under
+`spawnSync`, which blocks the event loop, so the heartbeat PUT can never leave the process; a
+120s gap therefore failed EVERY render over two minutes. Raised to 330s to clear the 300s
+`maxDuration` in vercel.json. A live 134s render had been declared dead twice, the second time
+8 seconds before it wrote a finished 11.3MB MP4. Also: a Veo RAI refusal now separates from
+`VEO_NO_OUTPUT` and stops taking the re-render path. Tests pin both.
 
-| Fix | Result |
-|---|---|
-| 2+3 invented packaging | ✅ **Clean.** Zero of 10 prompts name a box. Scene 7 = *"standing upright alone"* |
-| 4 product description | ✅ **Clean.** Describes the PHOTO. It used to be a byte copy of the offer text |
-| 7 wardrobe/set drift | ✅ **Clean.** Same blouse + same room across every human scene |
-| 6 reference-mode routing | ✅ **Fired live:** `reference mode 'both' -> 'avatar' (avatar: true, product: false)` |
-| 1 retry + 5 dialogue lock | ⬜ Neither exercised. Both need VIDEO, and Neil must LISTEN for 5 |
+`34cbaef` — `scripts/pull-run-input.mjs`: pull a run's hero photo, presenter and typed brief
+back out of `producer_runs`. Sibling of `pull-run-frames.mjs`.
 
-**Neil, later legacy run: "SOLID, 100% character consistent, wala na ung cinematic/warm lightings."**
-Scene 1 opened on the PERFORMER, not bare skin — the old complaint, gone.
+## ⏭ THE SAMPLE PLAN — decided with Neil, do it in this order
 
-## ⚠ THINGS THE NEXT SESSION MUST NOT REDISCOVER
+Preview cards live **inside the app** (One-Shot LaunchScreen, logged in), NOT on the landing
+page. `SAMPLES = {}` — all 13 recipes still read "Sample soon". Purpose per Neil: *"para
+magkaroon lang sila ng idea ano ung pagkakaiba ng mga format."*
 
-- **The end frame is NOT missing and was NOT removed.** `ReviewScreen` never renders it — its only
-  mention is the ZIP export (`scene_N_end.png`, line 131). `StoryboardGateScreen:78-107` DOES show
-  it. Confirm free: Download Assets (.zip) → `scenes/scene_1_end.png`. Scene 2 is NOT the end
-  frame; the end frame is scene 1's partner.
-- **The script box on "YOUR AD PLAN" is not new** — it shipped with `ReviewScreen` on 2026-07-30.
-- **One-Shot legacy writes NO `producer_runs` row** (it carries a `finishedAdId`). A storyboard on
-  that path lives ONLY in the browser tab. Do not go hunting for a run id.
-- **Smoke tests stall on sign-in, every time.** OTP-only, no dev bypass, and
-  `scripts/get-smoke-otp.ps1` **fails HTTP 401** (the key is an `sb_secret`; admin `generate_link`
-  rejects it). Workaround: read the app's own email via the Gmail connector,
-  `to:neilmaglaya.business22+smoke@gmail.com`. The classifier then blocks the agent from TYPING
-  it, so **Neil enters the OTP by hand.** Fix the script or every smoke needs him.
-- **BOTH unmetered flags are real** and `scripts/enable-dev-unmetered-video.ps1` sets both:
-  `GRIFON_DEV_UNMETERED` covers the MONTHLY meters (a storyboard burns 11 images before any video),
-  `_VIDEO` covers the 402/429. The sheet claimed the first was fake — fixed in `86ae245`.
-- **An agent CAN run a puller with node's env-file flag** (measured). The warden blocks READING .env.
-- **`avatar_url` is NOT always dropped** — 833,726 bytes on `apr_fa7cedc3`; the >700KB slim rule
-  applies to `input`, not that column. Identity-reference blocker CLOSED: 7 of 27 runs carry it,
-  the four biggest 809k–846k with `input.avatar.url` empty. `ProducerFlow` rehydrates on resume.
+1. **Prompt fix above.** Nothing else runs first.
+2. **Cut samples from the ad we already have — free, no credit, no meter.** The card wants a
+   6–10s muted loop, not 35s: three usable clips live in one finished ad (bottle reveal,
+   a talking beat, product b-roll). ffmpeg locally. This also makes the blister moot — no short
+   cut has to contain the morph.
+3. **Fill every empty card, video where we have it, STILL where we don't.** Higgsfield mixes
+   static and motion tiles in one grid; a good still beats "Sample soon". Needs a small change:
+   `RecipeSample` requires both `video` and `poster` ([recipes.ts:41](components/OneShotAd/recipes.ts#L41)) —
+   make `video` optional and branch the render. Every run already yields 8 stills.
+4. **Play on scroll-into-view, not on hover.** Today desktop needs a hover and mobile shows a
+   poster + Play chip ([LaunchScreen.tsx:1543](components/OneShotAd/LaunchScreen.tsx#L1543)), so
+   phone users never see the one thing that sells. Higgsfield starts playback on viewport entry,
+   muted, `preload="none"` — verified in their DOM.
+5. **Then batch the remaining formats — 4 this month, MAX.** Pro = 8 video ads/month, 1 spent.
+   13 recipes cannot be done in one wave; that is arithmetic, not preference.
 
-## ⏭ OPEN — ranked
+**Where we can beat them:** their tiles are gorgeous and anonymous — Western studio stock, and
+every one is a *look*, not an *ad*. No hook, no offer, no CTA. Ours are muted too, but SPOTLIGHT
+already burns the Taglish line. A silent looping card reading "TIGILAN ANG PEELING!" over a
+Filipina in a Filipino room tells Bryan in one second: *para sa merkado ko to.*
 
-1. **A film run on the PRODUCER path.** Nothing above is proven until fixes 1 and 5 meet video.
-   Sheet: [`workflows/film_run_sheet.md`](workflows/film_run_sheet.md). Neil holds the spend.
-2. **Sample previews.** `SAMPLES = {}`, all 13 recipes still say "Sample soon". The batch wants a
-   FRESH brand, not the Hiraya Glow test set.
-3. **Landing page has one false claim.** `ProofGallery` says real businesses ran these ads, over
-   CSS mockups; `/exit/proof-ad.mp4` does not exist. Copy fix needs no render — do it first.
-4. **"Presents as succeeding while failing" — LAUNCH BLOCKER.** Did NOT recur this run.
-5. **Quota race in `consumeFinishedAd`. Supabase FREE tier past grace. PRO loss-making at full
-   use** — cap founder invites at 5–10.
+## ⚠ OPEN — ranked
 
-## ⚠ CARRIED / LOOSE ENDS
-- **Dev server may still be running on 5173.** Both unmetered flags are set in `.env`, local only.
-- **Uncommitted junk in the repo root:** `storyboard-gate.png`, `scene1-full.png` …
-  `scene10-full.png`, and `.playwright-mcp/hero.jpg`. Delete or move them.
-- Desktop assets (wiped by the defreezer): `hiraya-hero.jpg` (the real upload — one bottle, no box)
-  and `hiraya-presenter.png`, both pulled from Postgres.
-- Scene grade stays REJECTED — the **luma term** killed it. Only Kling takes an end frame
-  (`image_tail`); Kling paid, 100 points to 09-22. Two different 402s on `api/kling/video.ts`
-  (our meter vs Kling's balance) — **read the body.** `VITE_` flags are build-time.
-- Branch `feat/hook-layout-system` (`1245d14`) unmerged; 31 branches still ahead of main.
+1. **A refused scene still dies and the user must regenerate by hand** — exactly what Neil did.
+   Correctly labelled now, but no auto-reroll and no user-facing explanation. Top pre-launch risk.
+2. **The in-memory flag reason is generic.** [`producerOrchestrator.ts:1795`](services/producerOrchestrator.ts#L1795)
+   writes `video: failed`; the true reason reaches Postgres but never the UI.
+3. **Landing page has one false claim.** `ProofGallery` says real businesses ran these ads over
+   CSS mockups; `/exit/proof-ad.mp4` does not exist. Copy fix, no render.
+4. **Quota race in `consumeFinishedAd`** — the meter read 9/8 before this session's reset.
+   Supabase FREE tier past grace. Cap founder invites at 5–10.
+
+## ⚠ CARRIED
+- `video_ads` counter was reset on prod with Neil's yes (was 9/8, 0 credits). Now 1 of 8 used.
+- Uncommitted junk in the repo root: `scene*.png`, `storyboard-gate.png`, `.playwright-mcp/`.
+- Desktop assets pulled from Postgres live in `Desktop\oneshot-assets\` — the defreezer eats them.
+- 31 branches still ahead of `main`.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
