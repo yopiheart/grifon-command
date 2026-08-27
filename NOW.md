@@ -1,88 +1,88 @@
 # NOW — the resume doc
-**Stamped: 2026-08-27** (session 36)
+**Stamped: 2026-08-27** (session 37)
 
-## ▶ NEXT ACTION — one line in a TUNED prompt, before any new sample run
+## ▶ NEXT ACTION — three person assets, then the nine runs
 
-The hook morph turns a FLAT problem area into a 3D OBJECT. Two independent rolls on the same
-scene, same failure class: a cluster of peanuts stuck to the cheek, then a raised glossy
-blister. Both sat under the caption for ~1.5s of a 3s hook.
+Owed: `buhok-before` / `buhok-after` (same woman, damaged hair then smooth) and
+`arawwear-onbody` (a woman wearing the Araw Wear dress). Person shots, so they CANNOT be
+independent rolls — chain them with `codex-image --edit` off one base so the face holds.
+The old Hiraya set is the cautionary tale: `onbody.png` is a DIFFERENT WOMAN from
+`before.png`/`after.png`, which the spec claims are one person.
 
-The rule at [`api/_lib/prompts.ts:1735`](api/_lib/prompts.ts#L1735) says the START frame is a
-cropped detail of the performer and the END frame is that same performer holding the product.
-It never says **the problem area must stay flat and must not become an object**, so the model
-fills the gap between "textured patch" and "woman holding bottle" by growing the patch.
+Both of those runs also upload the presenter BY HAND (see the presenter rule below).
 
-⛔ TUNED file — propose the line, get Neil's per-diff yes, never edit it and report after.
-This blocks the sample batch: every new sample run passes through the same morph.
+## ✅ SHIPPED THIS SESSION (main, four commits)
 
-## 🎬 THE PRODUCER PATH IS PROVEN END TO END
+- `c9fe2b4` — **TUNED prompt fix.** The hook morph turned a FLAT problem area into a 3D
+  OBJECT: peanuts stuck to a cheek, then a glossy blister, two rolls, one scene. The
+  HOOK ANCHOR RULE never said the problem must stay flat, so the model closed the gap
+  between "textured patch" and "woman holding bottle" by inflating the patch. One
+  paragraph added beside the two bans it belongs with, pinned by a new test case.
+  **Untested against a live run — the next storyboard generation is its first real test.**
+- `5833b2b` — **first real format card + the phone fix.** `real_talk` cut from the
+  approved run (13.97s–22.03s, silent, 540×960, 391 KB). `RecipeSample.video` is now
+  optional so a card can ship as a still. Playback moved from hover to viewport entry
+  (`usePlayInView`) — hover meant phone users saw a poster and a Play chip nobody taps.
+- `329d012` — **`before_after` card for free**, cut from the raw render already committed
+  at `tests/fixtures/sample-batch/`. Scene 1 skipped: its morph resolved into a
+  HALLUCINATED bottle (rose-gold, glitter, garbled label "RYA CWYA").
+- `c2fa9d6` — **13 assets, nine invented brands**, via `codex-image` (zero Claude quota,
+  zero video credits). JPG not PNG: 30 MB → 2.9 MB.
 
-Run `apr_34d06c7f` (Hiraya Glow, Real Talk Review, **auto-cast presenter**) reached FIRST CUT on
-**grifon.ai**, 8 scenes, `final_render` done. Neil's verdict: *"pati ung pag bigkas, lipsync!
-Solid!"* — character consistency, wardrobe/set, legible label, clean resolve. Fixes 1 and 5 met
-video at last. Three cuts saved in `.tmp/` (RAW / EDITED / EDITED WITH NEW HOOK).
+## 🎬 THE SAMPLE BATCH — Neil's call: a different product per card
 
-The URL is still flag-gated: `https://grifon.ai/app?osaEngine=producer` (`?osaEngine=steps`
-reverts). Client-side only — no rebuild needed, but the defreezer wipes `localStorage`.
+One brand across twelve tiles would make the PRODUCT the thing the eye reads; the gallery
+exists to show what separates the FORMATS. `sample_batch_test_spec.md` §1 says the
+opposite ("one locked brand") and its reason does not survive checking — Higgsfield's
+tiles are all different subjects. **That section is superseded; this is the live plan.**
 
-## ✅ SHIPPED THIS SESSION (main, deployed to prod)
+**Nine runs left. Seven credits. Two resets, and Neil holds each one** (delete the
+`video_ads:monthly:<YYYY-MM>:<uid>` row in `rate_limits`).
 
-`e11535e` — the render watchdog was killing renders that were still working (ffmpeg is
-`spawnSync`, so the heartbeat can never leave the process); threshold now clears the 300s
-`maxDuration`. A Veo safety refusal also stops being treated as an expired handle. Tests pin
-both; the why is in `agent_lessons.md`. `34cbaef` — `scripts/pull-run-input.mjs` pulls a run's
-hero photo, presenter and typed brief back out of `producer_runs`.
+| Format | Brand | Assets | Presenter |
+|---|---|---|---|
+| Before & After | Buhok Lab | hero ✅ · before ❌ · after ❌ | **UPLOAD** |
+| Try-On Reveal | Araw Wear | hero ✅ · onbody ❌ | **UPLOAD** |
+| Unboxing | Bukid Coffee | hero ✅ · packaging ✅ | Auto |
+| Unboxing ASMR | Silid Home | hero ✅ · packaging ✅ | Auto |
+| Watch It Work | Kislap | hero ✅ · inuse ✅ | Auto |
+| Steps 1-2-3 | Timpla | hero ✅ · inuse ✅ | Auto |
+| Hype Drop | Tunog Audio | hero ✅ | Auto |
+| Rapid Fire | Lola Bising | hero ✅ | Auto |
+| Pure Hype | Hangin | hero ✅ | Auto |
 
-## ⏭ THE SAMPLE BATCH — Neil decided 2026-08-27: do ALL of them, one wave
+**The presenter column is not a preference.** The storyboard puts `referenceImage="avatar"`
+AND the before/after slot on the SAME scene, so an auto-cast face that differs from the
+uploaded one renders two different people in one ad. Face in the uploads → upload the
+presenter. Hands and product only → Auto.
 
-Preview cards live **inside the app** (One-Shot LaunchScreen, logged in), NOT on the landing
-page. `SAMPLES = {}` — every card reads "Sample soon". Purpose per Neil: *"para magkaroon lang
-sila ng idea ano ung pagkakaiba ng mga format."*
+`real_talk` is done, `Let AI Pick` borrows a clip (no run of its own), `commercial` is
+Business-locked and needs none. Slots come from `components/guidedPhotoSlots.tsx`, which
+is authoritative over the spec's older table.
 
-**12 recipes, not 13** ([recipes.ts:44](components/OneShotAd/recipes.ts#L44)). `commercial` is
-locked so it needs no sample; `real_talk` is done. **10 runs to go.**
-
-0. **The prompt fix above — FIRST.** All 10 runs pass through the same hook morph. Two rolls,
-   two object-artifacts. Shipping the batch before the fix risks 10 cards with the same defect.
-1. **Hero photos via `codex-image`** (gpt-image-2, billed to the ChatGPT plan — zero Claude
-   quota, zero video credits). **One product cannot carry every format**: Try-On needs apparel,
-   Unboxing needs packaging, Before & After needs a visible change, Watch It Work needs
-   something that visibly works. A serum bottle can do none of those. Budget 4–5 invented
-   brands, not 10.
-2. **The 10 runs**, ordered by which card a user actually reaches for.
-   **Credits: Pro = 8/month, 1 spent, 7 left. Neil's call — reset the counter as we go**, the
-   same prod write done once this session (delete the `video_ads:monthly:<YYYY-MM>:<uid>` row in
-   `rate_limits`). Stays Pro, so the tier UI on First Cut stays honest. He holds each reset.
-3. **Cut each card to a 6–10s muted loop** — ffmpeg locally, free. One finished ad yields three
-   usable clips (reveal, a talking beat, product b-roll), so a run can fill more than one slot.
-4. **Make `video` optional on `RecipeSample`** ([recipes.ts:41](components/OneShotAd/recipes.ts#L41))
-   so a card can ship as a STILL while its video is pending. Higgsfield mixes static and motion
-   tiles in one grid; a good still beats "Sample soon". Every run already yields 8 stills.
-5. **Play on scroll-into-view, not on hover.** Today desktop needs a hover and mobile shows a
-   poster + Play chip ([LaunchScreen.tsx:1543](components/OneShotAd/LaunchScreen.tsx#L1543)), so
-   phone users never see the one thing that sells. Higgsfield starts playback on viewport entry,
-   muted, `preload="none"` — verified in their DOM.
-
-**Where we beat them:** Higgsfield's tiles are gorgeous and anonymous — Western studio stock,
-and every one is a *look*, not an *ad*: no hook, no offer, no CTA. Ours are muted too, but
-SPOTLIGHT already burns the Taglish line, and a silent card reading "TIGILAN ANG PEELING!" over
-a Filipina in a Filipino room tells Bryan in one second: *para sa merkado ko to.*
+Asset register: light held CONSTANT (flat window daylight, open shade, phone camera, no
+studio — the register the working Hiraya hero proved). Room and colour VARIED on purpose.
 
 ## ⚠ OPEN — ranked
 
-1. **A refused scene still dies and the user must regenerate by hand** — exactly what Neil did.
-   Correctly labelled now, but no auto-reroll and no user-facing explanation. Top pre-launch risk.
-2. **The in-memory flag reason is generic.** [`producerOrchestrator.ts:1795`](services/producerOrchestrator.ts#L1795)
-   writes `video: failed`; the true reason reaches Postgres but never the UI.
-3. **Landing page has one false claim.** `ProofGallery` says real businesses ran these ads over
-   CSS mockups; `/exit/proof-ad.mp4` does not exist. Copy fix, no render.
-4. **Quota race in `consumeFinishedAd`** — the meter read 9/8 before this session's reset (it
-   can exceed its own limit). Supabase FREE tier past grace. Cap founder invites at 5–10.
+1. **The `before_after` card has no burned captions.** Its source is a RAW render, from
+   before the caption pass, and captions cannot be added after the fact. Neil wants a
+   captioned replacement, which is why that run is in the nine. The current cut stays as a
+   placeholder meanwhile — still better than "Sample soon".
+2. **Nothing is smoke-tested in a browser.** The scroll-into-view playback is verified by
+   build and unit tests only. No one has watched a card play on a phone.
+3. **A refused scene still dies and the user must regenerate by hand.** No auto-reroll, no
+   user-facing explanation. Top pre-launch risk.
+4. **Landing page has one false claim.** `ProofGallery` says real businesses ran these ads;
+   `/exit/proof-ad.mp4` does not exist. Copy fix, no render.
+5. **Quota race in `consumeFinishedAd`** — the meter can exceed its own limit. Cap founder
+   invites at 5–10.
 
 ## ⚠ CARRIED
-- Uncommitted junk in the repo root: `scene*.png`, `storyboard-gate.png`, `.playwright-mcp/`.
-- Pulled assets live in `Desktop\oneshot-assets\`; the three approved cuts in `.tmp/` — the
-  defreezer eats both. The MP4s persist in R2; re-sign rather than re-render.
+- Sparse-checkout now includes `/tests/fixtures/sample-batch/`. A fresh lite clone must
+  re-add it — and note `git sparse-checkout add` mangles a leading `/` under Git Bash.
+- 12 junk PNGs at the repo root (`scene*.png`, `storyboard-gate.png`) left uncommitted on
+  purpose, plus `.playwright-mcp/`.
 - 31 branches still ahead of `main`.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
