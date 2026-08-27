@@ -27,15 +27,11 @@ reverts). Client-side only — no rebuild needed, but the defreezer wipes `local
 
 ## ✅ SHIPPED THIS SESSION (main, deployed to prod)
 
-`e11535e` — **the watchdog was killing renders that were still working.** ffmpeg runs under
-`spawnSync`, which blocks the event loop, so the heartbeat PUT can never leave the process; a
-120s gap therefore failed EVERY render over two minutes. Raised to 330s to clear the 300s
-`maxDuration` in vercel.json. A live 134s render had been declared dead twice, the second time
-8 seconds before it wrote a finished 11.3MB MP4. Also: a Veo RAI refusal now separates from
-`VEO_NO_OUTPUT` and stops taking the re-render path. Tests pin both.
-
-`34cbaef` — `scripts/pull-run-input.mjs`: pull a run's hero photo, presenter and typed brief
-back out of `producer_runs`. Sibling of `pull-run-frames.mjs`.
+`e11535e` — the render watchdog was killing renders that were still working (ffmpeg is
+`spawnSync`, so the heartbeat can never leave the process); threshold now clears the 300s
+`maxDuration`. A Veo safety refusal also stops being treated as an expired handle. Tests pin
+both; the why is in `agent_lessons.md`. `34cbaef` — `scripts/pull-run-input.mjs` pulls a run's
+hero photo, presenter and typed brief back out of `producer_runs`.
 
 ## ⏭ THE SAMPLE BATCH — Neil decided 2026-08-27: do ALL of them, one wave
 
