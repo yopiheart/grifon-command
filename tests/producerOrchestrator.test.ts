@@ -579,6 +579,35 @@ describe('runProduction — retry-then-flag (a bad scene gates, never errors the
     expect(out.scenes[1].flaggedReason).toContain('video');
     expect(store2Count(deps, 'flagScene')).toBeGreaterThanOrEqual(1);
   });
+
+  // Regression, run apr_34d06c7f (2026-08-27). Veo's RAI filter refused one scene
+  // ("we can't create videos with real people's names or likenesses"). That refusal is
+  // PERMANENT, but VEO_NO_OUTPUT sat inside the expired-handle regex, so it took the
+  // requeue + re-render path and surfaced at the gate as "video: expired" — a second
+  // render spent to earn the same refusal, described to the user as a broken link.
+  it('a provider safety refusal flags permanently — no re-render, and the reason says why', async () => {
+    const pollMock = vi.fn(async (handle: VideoJobHandle) => {
+      if (handle.sceneIdx === 1) throw new Error('VEO_CONTENT_REFUSED: Sorry, we can\'t create videos with real people\'s likenesses.');
+      return { url: `vid://${handle.sceneIdx}`, downloadUrl: 'd', mimeType: 'video/mp4' };
+    });
+    const { deps, spies, store } = makeFakeDeps({ pollVideo: pollMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+    const out = await approveStoryboard(run, cb(), deps);
+
+    expect(out.scenes[1].status).toBe('flagged');
+    // The recorded reason names the refusal and carries the provider's own wording — this is
+    // the row a later session reads back out of producer_scenes to explain the run.
+    const flagReason = (store.flagScene.mock.calls as any[]).find((c) => c[1] === 1)?.[2];
+    expect(flagReason).toContain('safety filter');
+    expect(flagReason).toContain("real people's likenesses");
+    expect(flagReason).not.toContain('expired');
+    // The refused scene is submitted and polled ONCE — the requeue + re-render path, which
+    // exists for LOST handles, must never spend a second render to earn the same refusal.
+    expect((spies.submitVideo.mock.calls as any[]).filter((c) => c[1]?.sceneIdx === 1)).toHaveLength(1);
+    expect((pollMock.mock.calls as any[]).filter((c) => c[0]?.sceneIdx === 1)).toHaveLength(1);
+  });
 });
 
 // --- 7. Gates are persist-backed; Phase-C gate semantics ------------------

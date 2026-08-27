@@ -40,12 +40,23 @@ export interface RenderSidecar {
 // until the 48h cron reaps it, with the client polling the whole time. This is the
 // deterministic staleness predicate the poll handler uses to convert a dead job into
 // a 'failed:watchdog_stalled' sidecar. Poll-driven = no new cron, no new function.
-export const WATCHDOG_STALE_MS = 120_000; // heartbeat gap while processing → stalled
+// THE HEARTBEAT CANNOT BE TRUSTED TO ADVANCE (measured 2026-08-27, run apr_34d06c7f).
+// renderFinalVideo drives ffmpeg through `spawnSync` (api/_lib/renderFfmpeg.ts), which blocks
+// the event loop for the whole render, so the onStep heartbeat's sidecar PUT can never leave the
+// process while ffmpeg is working. `updatedAt` therefore sits frozen at `startedAt` for the whole
+// render, and a 120s gap killed two consecutive live renders at 126s each — while the second was
+// 8 seconds from writing a finished 11.3MB MP4. So the gap threshold must exceed the longest a
+// render can legally live, which is the FUNCTION's own ceiling: vercel.json pins
+// `api/render/final.ts` to maxDuration 300s. Past that Vercel has killed the invocation, so a
+// still-'processing' sidecar really is dead. 330s = 300s + slack for the terminal write.
+// Lowering this below the maxDuration in vercel.json re-arms the false kill.
+// The real fix is a non-blocking ffmpeg; until then these two are deliberately equal.
+export const WATCHDOG_STALE_MS = 330_000; // heartbeat gap while processing → stalled
 export const WATCHDOG_MAX_AGE_MS = 330_000; // absolute backstop on total job age
 
 /**
  * Pure staleness decision. Returns true ONLY for a 'processing' sidecar that either
- * (a) has an `updatedAt` more than 120s old (heartbeat stopped), or (b) has any
+ * (a) has an `updatedAt` older than WATCHDOG_STALE_MS, or (b) has any
  * available timestamp showing total job age > 330s (absolute backstop). A legacy
  * 'processing' sidecar with NEITHER timestamp is never killed here (returns false) —
  * we don't guess; the 48h cron still reaps it. done/failed sidecars are never touched.

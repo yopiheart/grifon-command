@@ -113,12 +113,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     op.response?.generated_videos;
   const video = generated?.[0]?.video;
   if (!video) {
+    // Veo returns a 200 with NO sample in two very different situations, and they need
+    // different recovery. When its RAI filter refuses the prompt/reference the response
+    // carries `raiMediaFilteredCount` + `raiMediaFilteredReasons` — that is PERMANENT, and
+    // re-rendering the identical scene can only be refused again (measured 2026-08-27:
+    // "we can't create videos with real people's names or likenesses"). Anything else with
+    // no sample stays VEO_NO_OUTPUT, whose caller-side recovery (re-render on a fresh
+    // handle) is unchanged.
+    const vr = op.response?.generateVideoResponse ?? op.response?.generate_video_response;
+    const refusedCount = vr?.raiMediaFilteredCount ?? vr?.rai_media_filtered_count ?? 0;
+    const refusedReasons: string[] = vr?.raiMediaFilteredReasons ?? vr?.rai_media_filtered_reasons ?? [];
     console.error(
-      '[api/gemini/video/poll] VEO_NO_OUTPUT — response keys:',
+      `[api/gemini/video/poll] ${refusedCount ? 'VEO_CONTENT_REFUSED' : 'VEO_NO_OUTPUT'} — response keys:`,
       op.response ? Object.keys(op.response) : 'no response',
       'full response (truncated):',
       JSON.stringify(op.response ?? {}).slice(0, 1000)
     );
+    if (refusedCount) {
+      return res.status(200).json({
+        done: true,
+        error: { code: 'VEO_CONTENT_REFUSED', message: refusedReasons[0] ?? 'Blocked by the provider safety filter.' },
+      });
+    }
     return res.status(200).json({ done: true, error: { code: 'VEO_NO_OUTPUT' } });
   }
 

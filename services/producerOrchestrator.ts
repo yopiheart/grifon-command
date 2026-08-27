@@ -1246,7 +1246,17 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
  * messages like `poll_http_404`, `NOT_FOUND`, `VEO_NO_OUTPUT`, `invalid_operation`. */
 function isExpiredHandleError(e: any): boolean {
   const m = String(e?.message ?? '');
+  if (isContentRefusal(e)) return false; // a refusal is permanent — never re-render it
   return /poll_http_40|not[_ ]?found|unknown|expired|invalid_operation|VEO_NO_OUTPUT|VEO_EMPTY_VIDEO/i.test(m);
+}
+
+/** The provider's safety filter refused this scene. PERMANENT: the identical prompt +
+ * references can only be refused again, so the requeue + re-render path (which exists for
+ * lost handles) would spend a second render to earn the same refusal. Flag it instead, and
+ * carry the provider's own wording so the user learns WHY (2026-08-27: a Veo likeness
+ * refusal was reaching the storyboard gate labelled "video: expired"). */
+function isContentRefusal(e: any): boolean {
+  return /VEO_CONTENT_REFUSED/i.test(String(e?.message ?? ''));
 }
 
 type PollOutcome = { kind: 'done'; url: string } | { kind: 'expired' } | { kind: 'failed'; reason: string };
@@ -1258,6 +1268,10 @@ async function pollHandle(handle: VideoJobHandle, cb: ProducerCallbacks, deps: P
     return { kind: 'done', url: res.url };
   } catch (e: any) {
     if (e?.message === 'ABORTED') throw e;
+    if (isContentRefusal(e)) {
+      const detail = String(e?.message ?? '').split(/:\s*/).slice(1).join(': ').trim();
+      return { kind: 'failed', reason: `refused by the provider safety filter${detail ? ` — ${detail}` : ''}` };
+    }
     if (isExpiredHandleError(e)) return { kind: 'expired' };
     return { kind: 'failed', reason: e?.message ?? 'failed' };
   }

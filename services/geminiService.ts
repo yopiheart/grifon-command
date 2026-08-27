@@ -785,7 +785,12 @@ export const generateVideo = async (
 
   if ('error' in result) {
     if (persisted) await clearActiveJob(jobId);
-    if (result.error.code) throw new Error(result.error.code);
+    // Keep the code as the message PREFIX so every existing code-matching caller still
+    // matches, and append the provider's own explanation when it sent one (a safety
+    // refusal carries the only text that tells the user WHY the scene will never render).
+    if (result.error.code) {
+      throw new Error(result.error.message ? `${result.error.code}: ${result.error.message}` : result.error.code);
+    }
     throw new Error(`VEO_ERROR: ${result.error.message ?? 'Unknown Veo error'}`);
   }
 
@@ -816,7 +821,12 @@ export const resumeVideoOperation = async (
   };
   const result = await pollUntilDone(job.operation, metadata, opts);
   if ('error' in result) {
-    if (result.error.code) throw new Error(result.error.code);
+    // Keep the code as the message PREFIX so every existing code-matching caller still
+    // matches, and append the provider's own explanation when it sent one (a safety
+    // refusal carries the only text that tells the user WHY the scene will never render).
+    if (result.error.code) {
+      throw new Error(result.error.message ? `${result.error.code}: ${result.error.message}` : result.error.code);
+    }
     throw new Error(`VEO_ERROR: ${result.error.message ?? 'Unknown Veo error'}`);
   }
   return { url: result.url, downloadUrl: result.downloadUrl, mimeType: result.mimeType };
