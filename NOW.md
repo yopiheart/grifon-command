@@ -26,29 +26,27 @@ Session start: `.\scripts\restore-ffmpeg.ps1` (idempotent; skips the 32-min down
 | Rapid Fire | Lola Bising | Auto |
 | **Pure Hype** | Hangin | Auto — **run this one LAST** |
 
-Pure Hype is `producerOnly: true` and the producer path is opt-in (`?osaEngine=producer`,
-`components/OneShotAd/index.tsx:19`), so a customer on the default legacy path cannot see
-it today. Keep it — it is the only `sfx_only` recipe, the cleanest proof of the editing
-preset — but run it last, so it is the natural sacrifice if an earlier run needs a retry.
+Pure Hype is `producerOnly` and the producer path is opt-in (`?osaEngine=producer`,
+`OneShotAd/index.tsx:19`), so the default legacy path hides it. Keep it — the only `sfx_only`
+recipe, the cleanest proof of the editing preset — but run it last, the natural sacrifice.
 
-**Blocked, needs a reset each:** Before & After (Buhok Lab) and Try-On Reveal (Araw Wear).
-Both owe person assets that do not exist: `buhok-before`, `buhok-after`, `arawwear-onbody`.
-Chain them with `codex-image --edit` off one base or the face drifts — the old Hiraya set
-is the cautionary tale. Both also upload the presenter BY HAND: the storyboard puts
-`referenceImage="avatar"` and the before/after slot on the SAME scene, so an auto-cast face
-renders two different people in one ad.
+**Blocked, a reset each:** Before & After (Buhok Lab), Try-On Reveal (Araw Wear). Both owe
+`buhok-before`, `buhok-after`, `arawwear-onbody` — chain with `codex-image --edit` off one
+base or the face drifts. Both upload the presenter BY HAND: `referenceImage="avatar"` and
+the before/after slot share a scene, so an auto-cast face renders two people in one ad.
 
-Neil also wants `before_after` re-shot entirely — he rejected the current model. The cut
-now shipping is a placeholder.
+Neil rejected the current `before_after` model — that cut is a placeholder, re-shoot it.
 
-## ✅ SHIPPED THIS SESSION (main, seven commits, ZERO credits spent)
+## ✅ SHIPPED THIS SESSION (main, eight commits, ZERO credits spent)
 
-- `1eb073a` `9878880` — **the card chrome is now tied to the renderer.** `drawPlan.ts:52`
-  reserves `SZ_BOTTOM = 0.22`, so nothing is ever burned below `0.78h`. The card's name
-  overlay is capped at `h-[22%]`, which means it can never cover a burned caption on any
-  clip or preset, including the nine not yet made. Measured 0.219 at both 1440 and 390.
-  Description moved out of the frame; `line-clamp-2` + `min-h` makes every card in a row
-  the same height.
+- `42c2069` — **tap the tile, watch the WHOLE ad, with the voiceover.** The loop is 25.6%
+  of the ad and silent; a `Maximize2` control opens a 9:16 modal playing the full 35.33s
+  unmuted. Needs a `full` in `SAMPLES` — **so every one of the nine owes TWO files, the
+  short tile cut and a `<recipe>-full.mp4`.** Verified: audio really decodes (275308 bytes).
+- `1eb073a` `9878880` — **card chrome is tied to the renderer.** `drawPlan.ts:52` reserves
+  `SZ_BOTTOM = 0.22`, so nothing is burned below `0.78h`; the name overlay is capped at
+  `h-[22%]` and can never cover a caption. Measured 0.219 at 1440 and 390. Description
+  moved out of the frame, `line-clamp-2` + `min-h` keeps a row level.
 - `a837b29` — **gallery left the composer's `max-w-4xl`.** Tiles were ~170px and never grew
   with the monitor; now `max-w-7xl` + 4 columns = 311px measured. Composer untouched at 896.
 - `6c7b7a2` — **`real_talk` re-cut**: `540x960 @ 386kbps` → `720x1280 @ ~1345kbps`, and
@@ -81,6 +79,9 @@ Cut settings and the scene-cut finder are printed by `restore-ffmpeg.ps1`.
    in-memory backstop all session. `w32tm /resync` before trusting any metering test.
 
 ## ⚠ CARRIED
+- **Vite does not serve a file dropped into `public/` after the dev server started** — it
+  returns the SPA fallback `index.html`, so a new sample plays nothing and looks like a code
+  bug. Restart the dev server after adding one. Cost a full smoke cycle on 2026-08-28.
 - Sparse-checkout needs `/tests/fixtures/sample-batch/` re-added on a fresh lite clone.
 - `winget` is a dead stub on cafe PCs. `drawPlan.snapshot.test.ts.snap` shows modified but
   has zero content diff — it is a CRLF artifact, leave it.
