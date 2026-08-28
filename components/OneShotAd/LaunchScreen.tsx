@@ -970,29 +970,36 @@ export const LaunchScreen: React.FC<{
             )}
           </div>
         </GlassPanel>
-
-        {/* ---- Recipe gallery — Higgsfield-style merchandising strip BELOW the CTA. Each card
-            is a named preset over the creative axes; picking one loads it into the composer
-            above. Hidden for the locked/"Auto" vertical (app) where there's nothing to pick. ---- */}
-        {recipeOptions.length > 0 && (
-          <section ref={galleryRef} className="mt-8 scroll-mt-6">
-            <p className={`text-on-surface-sublabel ${T_LABEL}`}>// Pick the format that hits</p>
-            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-              {recipeOptions.map((r) => (
-                <RecipeCard
-                  key={r.id}
-                  recipe={r}
-                  sample={SAMPLES[r.id]}
-                  selected={recipe === r.id}
-                  pulse={pulseId === r.id}
-                  reduceMotion={!!prefersReducedMotion}
-                  onSelect={() => chooseRecipe(r.id)}
-                />
-              ))}
-            </div>
-          </section>
-        )}
       </div>
+
+      {/* ---- Recipe gallery - Higgsfield-style merchandising strip BELOW the CTA. Each card
+          is a named preset over the creative axes; picking one loads it into the composer
+          above. Hidden for the locked/"Auto" vertical (app) where there's nothing to pick.
+
+          DELIBERATELY OUTSIDE the composer's max-w-4xl. Measured 2026-08-28: inside it at
+          lg:grid-cols-5 every tile was ~170px wide ((896 - 4*12) / 5) and never grew with the
+          monitor, against ~330px on the page this strip is modelled on. The tile IS the sample,
+          so a tile too small to read is a sample that cannot sell. Same split the reference
+          page uses: narrow centred composer, wide template grid. 4 columns at max-w-7xl gives
+          (1280 - 3*12) / 4 = ~311px. ---- */}
+      {recipeOptions.length > 0 && (
+        <section ref={galleryRef} className="relative mx-auto mt-8 w-full max-w-7xl scroll-mt-6">
+          <p className={`text-on-surface-sublabel ${T_LABEL}`}>// Pick the format that hits</p>
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {recipeOptions.map((r) => (
+              <RecipeCard
+                key={r.id}
+                recipe={r}
+                sample={SAMPLES[r.id]}
+                selected={recipe === r.id}
+                pulse={pulseId === r.id}
+                reduceMotion={!!prefersReducedMotion}
+                onSelect={() => chooseRecipe(r.id)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ---- Product modal — single product photo (Product vertical) ---- */}
       {assetModal === 'product' && !isGuided && (
