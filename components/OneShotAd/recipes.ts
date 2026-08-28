@@ -113,9 +113,18 @@ export const visibleRecipes = (vertical: string, opts?: { producerEngine?: boole
  * `commercial` is Business-tier locked and needs no sample. Clips are cut from real finished
  * runs with ffmpeg (silent, 540x960, ~8s, no audio track at all) and live in public/samples/. */
 export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {
-  // Run apr_34d06c7f (Hiraya Glow). Cut from 13.97s-22.03s of the finished ad: the presenter
-  // holding the bottle, then the payoff line. Deliberately NOT the hook — that run's morph grew
-  // the problem patch into a raised object, the failure api/_lib/prompts.ts now bans by name.
+  // Run apr_34d06c7f (Hiraya Glow). Cut 17.47s-26.50s of the finished ad, 720x1280 @ ~1345kbps:
+  // "Ngayon, fresh at ang balat ko walang makeup." to camera, then the bottle on the counter.
+  // Both ends land on real scene cuts AND the sentence completes inside the cut - the previous
+  // 13.97-22.03 cut was scene-aligned but opened mid-sentence (a caption reading "kahit"), which
+  // is what made it feel like an excerpt rather than an ad. Re-cut 2026-08-28 from the 1080x1920
+  // source pulled back out of R2 (scripts/pull-run-final.mjs), so it cost no render: the old
+  // 540x960 @ 386kbps encode was ~a third of the width and a quarter of the bitrate of the
+  // galleries this one is measured against, which is the "malabo" Neil flagged.
+  // Captions are KEPT on purpose - the burned Taglish caption is the thing competitors' sample
+  // galleries do not have, so hiding it would hide the differentiator.
+  // Deliberately NOT the hook — that run's morph grew the problem patch into a raised object,
+  // the failure api/_lib/prompts.ts now bans by name.
   real_talk: { video: '/samples/real_talk.mp4', poster: '/samples/real_talk.jpg' },
   // Cut from tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4, already committed —
   // no new render. 3.9s-12.0s: applying the serum at the mirror, then the result. Scene 1 is
