@@ -41,8 +41,12 @@ export interface Recipe {
  *
  * `video` is OPTIONAL so a card can ship as a STILL while its loop is pending. Every producer
  * run already yields 8 stills, and a real still beats "Sample soon" — the grid is allowed to
- * mix static and moving tiles rather than waiting for all 12 loops to exist. */
-export interface RecipeSample { video?: string; poster: string; }
+ * mix static and moving tiles rather than waiting for all 12 loops to exist.
+ *
+ * `full` is the WHOLE finished ad, WITH audio (the voiceover the tile loop cannot carry — the
+ * tile clip has no audio track at all). It is played only in the expand modal, never in the
+ * tile, and is OPTIONAL: a sample without one simply shows no expand control. */
+export interface RecipeSample { video?: string; poster: string; full?: string; }
 
 // Axes taken verbatim from the old LaunchScreen FORMATS / STRATEGIES / UGC_PRO_SUBFORMATS.
 export const RECIPES: Recipe[] = [
@@ -128,7 +132,10 @@ export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {
   // galleries do not have, so hiding it would hide the differentiator.
   // Deliberately NOT the hook — that run's morph grew the problem patch into a raised object,
   // the failure api/_lib/prompts.ts now bans by name.
-  real_talk: { video: '/samples/real_talk.mp4', poster: '/samples/real_talk.jpg' },
+  // `full` is that same run's finished 35.33s ad WITH audio — the tile loop is a 9.03s cut of
+  // it (25.6%) and carries no voiceover, so the expand modal is the only place the whole thing
+  // can be seen and heard. 720x1280 h264+aac, 6.92 MB, preload="none" until someone opens it.
+  real_talk: { video: '/samples/real_talk.mp4', poster: '/samples/real_talk.jpg', full: '/samples/real_talk-full.mp4' },
   // Cut from tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4, already committed —
   // no new render. 3.9s-12.0s: applying the serum at the mirror, then the result. Scene 1 is
   // skipped on purpose: its morph resolved into a HALLUCINATED bottle (rose-gold, glitter, the

@@ -317,6 +317,7 @@ export const LaunchScreen: React.FC<{
   const [menu, setMenu] = useState<null | 'niche' | 'settings'>(null);
   const [assetModal, setAssetModal] = useState<null | 'product' | 'avatar'>(null);
   const [viewImage, setViewImage] = useState<string | null>(null);
+  const [fullAd, setFullAd] = useState<{ src: string; label: string } | null>(null); // recipe gallery: the whole ad, with sound
   const [confirmReset, setConfirmReset] = useState(false); // two-tap guard on Reset
 
   // UGC Pro is a cross-vertical FORMAT, checked BEFORE the vertical mapping (service/real-estate
@@ -995,6 +996,7 @@ export const LaunchScreen: React.FC<{
                 pulse={pulseId === r.id}
                 reduceMotion={!!prefersReducedMotion}
                 onSelect={() => chooseRecipe(r.id)}
+                onExpand={() => { const full = SAMPLES[r.id]?.full; if (full) setFullAd({ src: full, label: r.label }); }}
               />
             ))}
           </div>
@@ -1226,6 +1228,9 @@ export const LaunchScreen: React.FC<{
       )}
 
       {viewImage && <ImageModal imageUrl={viewImage} onClose={() => setViewImage(null)} />}
+
+      {/* ---- Full-ad player — the whole finished ad, with the voiceover the tile loop drops ---- */}
+      {fullAd && <FullAdModal src={fullAd.src} label={fullAd.label} onClose={() => setFullAd(null)} />}
     </div>
   );
 };
@@ -1433,6 +1438,58 @@ const Modal: React.FC<{ title: string; onClose: () => void; children: React.Reac
   </div>
 );
 
+/** Full-ad player — a HEIGHT-sized shell, deliberately NOT the generic Modal above. That one is
+ * max-w-md/max-w-2xl with overflow-y-auto, so a 9:16 ad would overflow and have to be scrolled;
+ * this one sizes the box by the viewport height (85vh cap) and lets the width follow the aspect
+ * ratio. Unmuted and un-looped on purpose: the tile loop is silent, so this is the only place the
+ * voiceover is ever heard. Backdrop click, the X, and Escape all close; the <video> unmounts with
+ * the modal (and is paused on the way out) so audio can never outlive the shell. */
+const FullAdModal: React.FC<{ src: string; label: string; onClose: () => void }> = ({ src, label, onClose }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      videoRef.current?.pause();
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 ${MAT_VEIL}`}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${label} — full ad`}
+    >
+      {/* The box IS the ad: 9:16, as tall as 85vh allows, width derived so it never distorts. */}
+      <div
+        className="relative aspect-[9/16] max-h-[85vh] w-full max-w-[calc(85vh*9/16)]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <video
+          ref={videoRef}
+          src={src}
+          controls
+          autoPlay
+          playsInline
+          preload="none"
+          className={`h-full w-full border border-white/10 bg-zinc-950 object-contain ${R_MODAL}`}
+        />
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-zinc-950/80 text-zinc-200 transition-colors hover:text-[#FFCC00]"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 /** Soft upload-quality nudges (dark / blurry / low-res). Advisory — renders nothing when clean. */
 const QualityNudge: React.FC<{ warnings?: string[]; className?: string }> = ({ warnings, className }) => {
   if (!warnings || warnings.length === 0) return null;
@@ -1522,101 +1579,125 @@ const RecipeCard: React.FC<{
   pulse: boolean;
   reduceMotion: boolean;
   onSelect: () => void;
-}> = ({ recipe, sample, selected, pulse, reduceMotion, onSelect }) => {
+  /** Open the full-ad player. Only ever reachable on a sample that HAS a `full`. */
+  onExpand: () => void;
+}> = ({ recipe, sample, selected, pulse, reduceMotion, onSelect, onExpand }) => {
   const locked = !!recipe.locked;
   const plays = !!sample?.video && !reduceMotion;
   const videoRef = usePlayInView(plays);
 
+  // The select button and the expand button are SIBLINGS under this wrapper, never nested -
+  // a <button> inside a <button> is invalid HTML and breaks keyboard + screen-reader behaviour.
   return (
-    <button
-      type="button"
-      disabled={locked}
-      onClick={() => { if (!locked) onSelect(); }}
-      aria-pressed={selected}
-      className={`group text-left transition-all ${locked ? 'cursor-not-allowed' : ''}`}
-    >
-      {/* The frame - 9:16. The ONLY thing allowed on top of the video is the name overlay
-          below, and its height is capped, not text-driven. */}
-      <div
-        className={`relative aspect-[9/16] overflow-hidden border transition-all ${R_PANEL} ${
-          pulse && !reduceMotion ? 'animate-pulse' : ''
-        } ${
-          locked
-            ? 'border-white/5'
-            : selected
-              ? 'border-[#FFCC00] shadow-[0_0_20px_rgba(255,204,0,0.4)]'
-              : 'border-white/10 group-hover:scale-[1.01] group-hover:border-white/30'
-        }`}
+    <div className="group relative">
+      <button
+        type="button"
+        disabled={locked}
+        onClick={() => { if (!locked) onSelect(); }}
+        aria-pressed={selected}
+        className={`block w-full text-left transition-all ${locked ? 'cursor-not-allowed' : ''}`}
       >
-        {/* Media - the sample loop (plays while on screen), a still, or the Sample-soon placeholder */}
-        {sample ? (
-          plays ? (
-            <video
-              ref={videoRef}
-              src={sample.video}
-              poster={sample.poster}
-              muted
-              loop
-              playsInline
-              preload="none"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+        {/* The frame - 9:16. The ONLY thing allowed on top of the video is the name overlay
+            below, and its height is capped, not text-driven. */}
+        <div
+          className={`relative aspect-[9/16] overflow-hidden border transition-all ${R_PANEL} ${
+            pulse && !reduceMotion ? 'animate-pulse' : ''
+          } ${
+            locked
+              ? 'border-white/5'
+              : selected
+                ? 'border-[#FFCC00] shadow-[0_0_20px_rgba(255,204,0,0.4)]'
+                : 'border-white/10 group-hover:scale-[1.01] group-hover:border-white/30'
+          }`}
+        >
+          {/* Media - the sample loop (plays while on screen), a still, or the Sample-soon placeholder */}
+          {sample ? (
+            plays ? (
+              <video
+                ref={videoRef}
+                src={sample.video}
+                poster={sample.poster}
+                muted
+                loop
+                playsInline
+                preload="none"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              // Still-only sample, or reduced motion: the poster IS the card. No Play chip - the
+              // old one sat over every phone card and went untapped.
+              <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            )
           ) : (
-            // Still-only sample, or reduced motion: the poster IS the card. No Play chip - the
-            // old one sat over every phone card and went untapped.
-            <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
-          )
-        ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-on-surface-sublabel">
-            <Film className="h-6 w-6" />
-            <span className={T_LABEL}>Sample soon</span>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-on-surface-sublabel">
+              <Film className="h-6 w-6" />
+              <span className={T_LABEL}>Sample soon</span>
+            </div>
+          )}
+
+          {/* Name overlay - h-[22%] is NOT a taste call. The renderer reserves the bottom 22%
+              of every frame (SZ_BOTTOM in api/_lib/drawPlan.ts), so no caption is ever burned
+              below 0.78h. Chrome that stays inside that reserve therefore CANNOT cover a
+              caption - on any clip, any preset, including the nine samples not yet rendered.
+              The bar this replaces was sized by its own text instead and grew past a third of
+              a narrow tile, swallowing the video and the caption with it (Neil, 2026-08-28).
+              Gradient, not solid: nothing is burned behind it that is worth hiding. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-[22%] items-end bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent px-3 pb-2">
+            <span className={`line-clamp-2 text-sm font-bold leading-tight ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
           </div>
-        )}
 
-        {/* Name overlay - h-[22%] is NOT a taste call. The renderer reserves the bottom 22%
-            of every frame (SZ_BOTTOM in api/_lib/drawPlan.ts), so no caption is ever burned
-            below 0.78h. Chrome that stays inside that reserve therefore CANNOT cover a
-            caption - on any clip, any preset, including the nine samples not yet rendered.
-            The bar this replaces was sized by its own text instead and grew past a third of
-            a narrow tile, swallowing the video and the caption with it (Neil, 2026-08-28).
-            Gradient, not solid: nothing is burned behind it that is worth hiding. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-[22%] items-end bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent px-3 pb-2">
-          <span className={`line-clamp-2 text-sm font-bold leading-tight ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
-        </div>
+          {/* Badges - top-left: Business lock, ASMR */}
+          <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
+            {locked && (
+              <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
+                <Lock className="h-2.5 w-2.5" /> Biz
+              </span>
+            )}
+            {recipe.asmr && (
+              <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
+                <AudioLines className="h-2.5 w-2.5" /> ASMR
+              </span>
+            )}
+          </div>
 
-        {/* Badges - top-left: Business lock, ASMR */}
-        <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-          {locked && (
-            <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
-              <Lock className="h-2.5 w-2.5" /> Biz
-            </span>
-          )}
-          {recipe.asmr && (
-            <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
-              <AudioLines className="h-2.5 w-2.5" /> ASMR
+          {/* Selected check - top-right, gold glow (the only elevation) */}
+          {selected && !locked && (
+            <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)]">
+              <Check className="h-3 w-3" />
             </span>
           )}
         </div>
 
-        {/* Selected check - top-right, gold glow (the only elevation) */}
-        {selected && !locked && (
-          <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)]">
-            <Check className="h-3 w-3" />
-          </span>
-        )}
-      </div>
+        {/* Description - OUTSIDE the frame, so it costs the video nothing. Kept rather than
+            dropped the way the reference gallery drops it: their names explain themselves
+            ("Selfie Testimonial"), ours do not - "Steps 1-2-3" needs "Teach it, then sell it".
+            line-clamp-2 + min-h keeps every card in a row the same height; free wrapping is
+            what made the old bars ragged across a row. */}
+        <div className="px-0.5 pt-2">
+          <span className="line-clamp-2 min-h-[2.4em] text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
+          {recipe.audioMode === 'sfx_only' && (
+            <span className="mt-1 block text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">No voiceover</span>
+          )}
+        </div>
+      </button>
 
-      {/* Description - OUTSIDE the frame, so it costs the video nothing. Kept rather than
-          dropped the way the reference gallery drops it: their names explain themselves
-          ("Selfie Testimonial"), ours do not - "Steps 1-2-3" needs "Teach it, then sell it".
-          line-clamp-2 + min-h keeps every card in a row the same height; free wrapping is
-          what made the old bars ragged across a row. */}
-      <div className="px-0.5 pt-2">
-        <span className="line-clamp-2 min-h-[2.4em] text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
-        {recipe.audioMode === 'sfx_only' && (
-          <span className="mt-1 block text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">No voiceover</span>
-        )}
-      </div>
-    </button>
+      {/* Watch the full ad - a SIBLING of the select button (see the nested-button note above).
+          The anchor mirrors the frame's geometry exactly (same width, same 9:16, same top), so
+          bottom-2 lands inside the SAME renderer-safe bottom 22% band the name label sits in -
+          in line with it, opposite corner. pointer-events are re-enabled on the button alone so
+          the rest of the anchor never steals a tap meant for the card. */}
+      {sample?.full && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 aspect-[9/16]">
+          <button
+            type="button"
+            onClick={onExpand}
+            aria-label={`Watch the full ${recipe.label} ad`}
+            className="pointer-events-auto absolute bottom-2 right-2 z-10 flex h-7 w-7 items-center justify-center rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 text-[#FFCC00] transition-all hover:bg-[#FFCC00] hover:text-black"
+          >
+            <Maximize2 className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
