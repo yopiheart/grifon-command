@@ -1561,16 +1561,20 @@ const RecipeCard: React.FC<{
         </div>
       )}
 
-      {/* Scrim — keeps the copy legible over the video */}
-      <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent" />
-
-      {/* Copy — outcome-named label + one-line desc */}
-      <div className="absolute inset-x-0 bottom-0 p-3">
-        <span className={`block text-sm font-bold ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
-        <span className="mt-0.5 block text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
-        {recipe.audioMode === 'sfx_only' && (
-          <span className="mt-1 block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">No voiceover</span>
-        )}
+      {/* Copy bar - SOLID, not a scrim. The sample clips are 540x960 into a 9:16 card, so
+          object-cover shows the frame WHOLE: there is no crop headroom, and the ad's own
+          burned captions land in the bottom third, where they collided with this label
+          (caught in the 2026-08-28 phone smoke). A solid bar ends that for every clip, not
+          just the one we happened to cut. The short fade keeps the top edge soft. */}
+      <div className="absolute inset-x-0 bottom-0">
+        <div className="h-6 bg-gradient-to-t from-zinc-950 to-transparent" />
+        <div className="bg-zinc-950 px-3 pb-3 pt-0.5">
+          <span className={`block text-sm font-bold ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
+          <span className="mt-0.5 block text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
+          {recipe.audioMode === 'sfx_only' && (
+            <span className="mt-1 block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">No voiceover</span>
+          )}
+        </div>
       </div>
 
       {/* Badges — top-left: Business lock · ASMR */}
