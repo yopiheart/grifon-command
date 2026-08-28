@@ -1533,77 +1533,90 @@ const RecipeCard: React.FC<{
       disabled={locked}
       onClick={() => { if (!locked) onSelect(); }}
       aria-pressed={selected}
-      className={`group relative aspect-[9/16] overflow-hidden border text-left transition-all ${R_PANEL} ${
-        pulse && !reduceMotion ? 'animate-pulse' : ''
-      } ${
-        locked
-          ? 'cursor-not-allowed border-white/5'
-          : selected
-            ? 'border-[#FFCC00] shadow-[0_0_20px_rgba(255,204,0,0.4)]'
-            : 'border-white/10 hover:border-white/30 hover:scale-[1.01]'
-      }`}
+      className={`group text-left transition-all ${locked ? 'cursor-not-allowed' : ''}`}
     >
-      {/* Media — the sample loop (plays while on screen), a still, or the Sample-soon placeholder */}
-      {sample ? (
-        plays ? (
-          <video
-            ref={videoRef}
-            src={sample.video}
-            poster={sample.poster}
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+      {/* The frame - 9:16. The ONLY thing allowed on top of the video is the name overlay
+          below, and its height is capped, not text-driven. */}
+      <div
+        className={`relative aspect-[9/16] overflow-hidden border transition-all ${R_PANEL} ${
+          pulse && !reduceMotion ? 'animate-pulse' : ''
+        } ${
+          locked
+            ? 'border-white/5'
+            : selected
+              ? 'border-[#FFCC00] shadow-[0_0_20px_rgba(255,204,0,0.4)]'
+              : 'border-white/10 group-hover:scale-[1.01] group-hover:border-white/30'
+        }`}
+      >
+        {/* Media - the sample loop (plays while on screen), a still, or the Sample-soon placeholder */}
+        {sample ? (
+          plays ? (
+            <video
+              ref={videoRef}
+              src={sample.video}
+              poster={sample.poster}
+              muted
+              loop
+              playsInline
+              preload="none"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            // Still-only sample, or reduced motion: the poster IS the card. No Play chip - the
+            // old one sat over every phone card and went untapped.
+            <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          )
         ) : (
-          // Still-only sample, or reduced motion: the poster IS the card. No Play chip — the
-          // old one sat over every phone card and went untapped.
-          <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        )
-      ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-on-surface-sublabel">
-          <Film className="h-6 w-6" />
-          <span className={T_LABEL}>Sample soon</span>
-        </div>
-      )}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-on-surface-sublabel">
+            <Film className="h-6 w-6" />
+            <span className={T_LABEL}>Sample soon</span>
+          </div>
+        )}
 
-      {/* Copy bar - SOLID, not a scrim. The sample clips are 540x960 into a 9:16 card, so
-          object-cover shows the frame WHOLE: there is no crop headroom, and the ad's own
-          burned captions land in the bottom third, where they collided with this label
-          (caught in the 2026-08-28 phone smoke). A solid bar ends that for every clip, not
-          just the one we happened to cut. The short fade keeps the top edge soft. */}
-      <div className="absolute inset-x-0 bottom-0">
-        <div className="h-6 bg-gradient-to-t from-zinc-950 to-transparent" />
-        <div className="bg-zinc-950 px-3 pb-3 pt-0.5">
-          <span className={`block text-sm font-bold ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
-          <span className="mt-0.5 block text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
-          {recipe.audioMode === 'sfx_only' && (
-            <span className="mt-1 block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">No voiceover</span>
+        {/* Name overlay - h-[22%] is NOT a taste call. The renderer reserves the bottom 22%
+            of every frame (SZ_BOTTOM in api/_lib/drawPlan.ts), so no caption is ever burned
+            below 0.78h. Chrome that stays inside that reserve therefore CANNOT cover a
+            caption - on any clip, any preset, including the nine samples not yet rendered.
+            The bar this replaces was sized by its own text instead and grew past a third of
+            a narrow tile, swallowing the video and the caption with it (Neil, 2026-08-28).
+            Gradient, not solid: nothing is burned behind it that is worth hiding. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-[22%] items-end bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent px-3 pb-2">
+          <span className={`line-clamp-2 text-sm font-bold leading-tight ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
+        </div>
+
+        {/* Badges - top-left: Business lock, ASMR */}
+        <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
+          {locked && (
+            <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
+              <Lock className="h-2.5 w-2.5" /> Biz
+            </span>
+          )}
+          {recipe.asmr && (
+            <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
+              <AudioLines className="h-2.5 w-2.5" /> ASMR
+            </span>
           )}
         </div>
-      </div>
 
-      {/* Badges — top-left: Business lock · ASMR */}
-      <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-        {locked && (
-          <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
-            <Lock className="h-2.5 w-2.5" /> Biz
-          </span>
-        )}
-        {recipe.asmr && (
-          <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
-            <AudioLines className="h-2.5 w-2.5" /> ASMR
+        {/* Selected check - top-right, gold glow (the only elevation) */}
+        {selected && !locked && (
+          <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)]">
+            <Check className="h-3 w-3" />
           </span>
         )}
       </div>
 
-      {/* Selected check — top-right, gold glow (the only elevation) */}
-      {selected && !locked && (
-        <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)]">
-          <Check className="h-3 w-3" />
-        </span>
-      )}
+      {/* Description - OUTSIDE the frame, so it costs the video nothing. Kept rather than
+          dropped the way the reference gallery drops it: their names explain themselves
+          ("Selfie Testimonial"), ours do not - "Steps 1-2-3" needs "Teach it, then sell it".
+          line-clamp-2 + min-h keeps every card in a row the same height; free wrapping is
+          what made the old bars ragged across a row. */}
+      <div className="px-0.5 pt-2">
+        <span className="line-clamp-2 min-h-[2.4em] text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
+        {recipe.audioMode === 'sfx_only' && (
+          <span className="mt-1 block text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">No voiceover</span>
+        )}
+      </div>
     </button>
   );
 };

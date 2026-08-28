@@ -114,10 +114,13 @@ export const visibleRecipes = (vertical: string, opts?: { producerEngine?: boole
  * runs with ffmpeg (silent, 540x960, ~8s, no audio track at all) and live in public/samples/. */
 export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {
   // Run apr_34d06c7f (Hiraya Glow). Cut 17.47s-26.50s of the finished ad, 720x1280 @ ~1345kbps:
-  // "Ngayon, fresh at ang balat ko walang makeup." to camera, then the bottle on the counter.
-  // Both ends land on real scene cuts AND the sentence completes inside the cut - the previous
-  // 13.97-22.03 cut was scene-aligned but opened mid-sentence (a caption reading "kahit"), which
-  // is what made it feel like an excerpt rather than an ad. Re-cut 2026-08-28 from the 1080x1920
+  // "Ngayon, fresh at glowing na ang balat ko kahit walang makeup." straight to camera, then
+  // the bottle on the counter under "NO MATAPANG NA PEELING!". The whole sentence lives inside
+  // the cut and the cut ends on a payoff. The previous 13.97-22.03 cut also held that sentence -
+  // an earlier version of this comment claimed it opened mid-sentence on "kahit", which is wrong,
+  // "kahit" sits mid-sentence in BOTH cuts. What was actually wrong: it opened on ~3.5s of
+  // caption-free serum-application b-roll and then stopped the instant the sentence ended, so it
+  // began with nothing to read and finished with nothing to land on. Re-cut 2026-08-28 from the 1080x1920
   // source pulled back out of R2 (scripts/pull-run-final.mjs), so it cost no render: the old
   // 540x960 @ 386kbps encode was ~a third of the width and a quarter of the bitrate of the
   // galleries this one is measured against, which is the "malabo" Neil flagged.
