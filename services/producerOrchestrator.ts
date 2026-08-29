@@ -1005,7 +1005,10 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
           prompt,
           run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
           '1K',
-          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
+          // A scene that names a venueSlot must be anchored to THAT uploaded photo, not the
+          // hero. Without this the regen paths ignored venueSlot entirely, so hitting
+          // REGENERATE on an unboxing scene quietly swapped its box back for the pouch.
+          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64) },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
@@ -1153,7 +1156,10 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
           prompt,
           run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
           '1K',
-          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
+          // A scene that names a venueSlot must be anchored to THAT uploaded photo, not the
+          // hero. Without this the regen paths ignored venueSlot entirely, so hitting
+          // REGENERATE on an unboxing scene quietly swapped its box back for the pouch.
+          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64) },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
@@ -1286,6 +1292,16 @@ async function pollHandle(handle: VideoJobHandle, cb: ProducerCallbacks, deps: P
  * Returns the url, or null if it failed or another driver owns/finished it.
  */
 const PRODUCT_STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'this', 'that', 'from', 'sleek', 'clean', 'portable']);
+
+/** The uploaded photo a scene's `venueSlot` points at, or undefined when it names none.
+ *
+ * Declared as a hoisted function on purpose — the regen paths above call it, and a `const`
+ * arrow here would be in the temporal dead zone at those call sites. */
+function slotPhotoFor(run: ProductionRun, scene: Scene) {
+  return scene.venueSlot
+    ? run.input.servicePhotos?.find((p) => p.slot === scene.venueSlot)
+    : undefined;
+}
 
 /**
  * Render the optional END keyframe for a hook-morph scene (startFramePrompt + endFramePrompt —
@@ -1569,11 +1585,20 @@ async function runStage(
           // A real place or product state on a scene with no performer: anchor the thing itself.
           const useVenue = !!slotPhoto && !isHookMorph && !isPersonStateSlot && !isAvatarScene;
           const refMode = usePersonState ? 'avatar_state' : useVenue ? 'venue' : mode;
+          // THE THIRD CASE, missing until 2026-08-29: a PRODUCT-state slot (packaging, inuse,
+          // hero) on a scene that HAS a performer. usePersonState wants a person-state slot;
+          // useVenue wants no performer. An unboxing S1/S2 is neither — it is the creator's
+          // hands on the real uploaded box — so both tests failed and the slot fell through to
+          // the hero, silently. Measured on run apr_ceddf31e: the storyboard emitted
+          // venueSlot="packaging" on scenes 1 AND 2 exactly as instructed, and both rendered
+          // the hero pouch. Two prompt fixes were spent before the drop was found here.
+          // The slot photo now wins over the hero in the fallback too, so the face stays locked
+          // to the avatar while the OBJECT locks to the photo the user actually uploaded.
           const refs = usePersonState
             ? { avatarUrl, productUrl: slotPhoto!.url }
             : useVenue
               ? { productUrl: slotPhoto!.url }
-              : { avatarUrl, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 };
+              : { avatarUrl, productUrl: isHookMorph ? undefined : (slotPhoto?.url ?? run.input.heroImageBase64) };
 
           const genMainImage = (variationIndex: number) =>
             deps.generateSceneImage(
