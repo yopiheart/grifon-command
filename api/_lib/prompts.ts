@@ -1578,6 +1578,13 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
               hard-cut rule above still governs every cut BETWEEN scenes.
            S3 TACTILE SHOWCASE — extreme close-up of the texture beat (foam, wrap,
               finish, click mechanism). referenceImage="product".
+              FRAME THE CLOSE-UP ON THE LABEL, not on blank material. "Extreme close-up"
+              and the front-of-label rule pull against each other: crop tight onto bare
+              matte film or a bare seal edge and the wordmark leaves frame, which renders
+              as the BACK of the pack and reads as the wrong product (Neil, 2026-08-29).
+              So name the label as the thing the close-up is ON — the texture is the
+              SURFACE AROUND the wordmark, never a substitute for it. At this distance
+              the brand mark must still be readable.
            S4 PLACE/WEAR + CTA — the product where it lives, creator in frame.
               referenceImage="both".
            An overhead or locked-off framing variant is allowed — state it in the

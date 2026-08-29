@@ -1299,6 +1299,57 @@ async function pollHandle(handle: VideoJobHandle, cb: ProducerCallbacks, deps: P
  */
 const PRODUCT_STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'this', 'that', 'from', 'sleek', 'clean', 'portable']);
 
+/** Compose two uploaded reference photos into ONE image, side by side on a white ground.
+ *
+ * `generateSceneImage` accepts a single `productUrl`, so a scene that must show TWO real
+ * uploaded objects at the same time has no way to anchor both. The unboxing end frame is
+ * exactly that: the product coming OUT of its own packaging. Given only the hero, the model
+ * rendered the pouch correctly and invented a generic shipping carton for the box (Neil,
+ * 2026-08-29) — it was allowed to draw a box because the prompt named one, but it had no
+ * photo of ours to copy.
+ *
+ * This is the CHEAP probe, chosen over widening the generator's signature and writing a new
+ * tuned "Reference Image 3" block. Be honest about the odds: a two-object reference is what
+ * the old packaging photos were, and on a scene whose prompt said "the product" the model
+ * simply picked one of them. The bet is that an end prompt naming BOTH objects and their
+ * relationship reads differently. If it does not, the signature change is unavoidable and
+ * we will have bought that knowledge for one free storyboard run.
+ *
+ * Both inputs are data URLs (the composer stores uploads as `c.dataUrl`), so nothing here can
+ * taint the canvas. Browser-only: returns undefined without a DOM, and every caller falls
+ * back to the single reference, which is the behaviour that shipped before this existed. */
+async function composeReferenceSheet(a: string, b: string): Promise<string | undefined> {
+  if (typeof document === 'undefined') return undefined;
+  const load = (src: string) => new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('reference load failed'));
+    img.src = src;
+  });
+  try {
+    const [ia, ib] = await Promise.all([load(a), load(b)]);
+    if (!ia.height || !ib.height) return undefined;
+    const h = Math.min(1024, Math.max(ia.height, ib.height));
+    const wa = Math.round(ia.width * (h / ia.height));
+    const wb = Math.round(ib.width * (h / ib.height));
+    const gap = 24;
+    const canvas = document.createElement('canvas');
+    canvas.width = wa + gap + wb;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return undefined;
+    // A plain white gutter, so the sheet reads as two separate objects rather than one
+    // strange wide product.
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(ia, 0, 0, wa, h);
+    ctx.drawImage(ib, wa + gap, 0, wb, h);
+    return canvas.toDataURL('image/jpeg', 0.92);
+  } catch {
+    return undefined;
+  }
+}
+
 /** The uploaded photo a scene's `venueSlot` points at, or undefined when it names none.
  *
  * Declared as a hoisted function on purpose — the regen paths above call it, and a `const`
@@ -1324,14 +1375,30 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
     .split(/[^a-z0-9]+/)
     .filter((w) => w.length >= 3 && !PRODUCT_STOPWORDS.has(w));
   const reveals = productWords.some((w) => scene.endFramePrompt!.toLowerCase().includes(w));
+  // TWO real objects in one frame (the unboxing reveal: product out of its own packaging).
+  // One productUrl cannot carry both, so compose a reference sheet when the scene names a
+  // slot photo AND the end prompt reveals the product. The identity guard matters: on the
+  // product path heroImageBase64 IS servicePhotos[0].url, so a hero-slot scene would
+  // otherwise be composited against itself.
+  const slot = slotPhotoFor(run, scene);
+  const sheet = reveals && slot?.url && run.input.heroImageBase64 && slot.url !== run.input.heroImageBase64
+    ? await composeReferenceSheet(slot.url, run.input.heroImageBase64)
+    : undefined;
+  // The tuned block tells the model to reproduce Reference Image 1 EXACTLY, which on a sheet
+  // could mean reproducing the SIDE-BY-SIDE LAYOUT. This is per-scene prompt text, not the
+  // tuned registry, so it is the one lever available to say "identity only". Kept short:
+  // generateSceneImage truncates the prompt at 400 characters.
+  const endPrompt = sheet
+    ? `${scene.endFramePrompt!} Reference shows both real objects side by side for identity only — do NOT reproduce that side-by-side layout.`
+    : scene.endFramePrompt!;
   try {
     return await withRetry(
       () =>
         deps.generateSceneImage(
-          scene.endFramePrompt!,
+          endPrompt,
           run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
           '1K',
-          { avatarUrl: run.input.avatar.url, productUrl: reveals ? run.input.heroImageBase64 : undefined },
+          { avatarUrl: run.input.avatar.url, productUrl: reveals ? (sheet ?? run.input.heroImageBase64) : undefined },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
