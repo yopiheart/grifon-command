@@ -1,90 +1,89 @@
 # NOW — the resume doc
-**Stamped: 2026-08-28** (session 38)
+**Stamped: 2026-08-29** (session 39)
 
-## ▶ NEXT ACTION — one free storyboard run, THEN the seven
+## ▶ NEXT ACTION — Neil is bringing a sample of the unboxing reveal he wants
 
-**Do not open the seven paid runs first.** The FLAT hook fix (`c9fe2b4`) has still never
-faced a live generation, and the storyboard stage does not cost a video credit: the meter
-is only touched in `api/gemini/video.ts:81`, `api/kling/video.ts:88`, and
-`api/kling/omni-video.ts:98`, all via `meterVideoRequest`. Storyboard spends `images`.
+**Do not start fixing before he shows it.** He ended the session with *"may ipapakita akong
+sample para magets mo ung gusto ko mangyari"* — the reference shot for how the product
+should come out of its packaging. Everything below is context for that conversation.
 
-So: run ONE brief to the storyboard gate, look at the hook end frame, and confirm the
-problem area stayed FLAT instead of inflating into a glossy object. Free. Only then spend.
+Session start: `.\scripts\restore-ffmpeg.ps1`, `.\scripts\enable-dev-unmetered-video.ps1`
+(then RESTART the dev server), and the two sparse-checkout pulls in `sample_brand_briefs.md`.
+`/director-smoke` before driving the wizard.
 
-Session start: `.\scripts\restore-ffmpeg.ps1` (idempotent; skips the 32-min download if
-`.tools\ffmpeg` survived). `/director-smoke` before driving the wizard, as always.
+## 🔴 THE OPEN DEFECT — the wordmark vanished from BOTH objects
 
-## 🎬 THE SEVEN — asset-complete today, exactly seven credits, no reset needed
+Last run (`?osaEngine=producer`, Bukid Coffee, Unboxing). The scene-2 END frame finally held
+**both** real objects — kraft box AND brown pouch, side by side. Two things went wrong:
 
-| Format | Brand | Presenter |
-|---|---|---|
-| Unboxing | Bukid Coffee | Auto |
-| Unboxing ASMR | Silid Home | Auto |
-| Watch It Work | Kislap | Auto |
-| Steps 1-2-3 | Timpla | Auto |
-| Hype Drop | Tunog Audio | Auto |
-| Rapid Fire | Lola Bising | Auto |
-| **Pure Hype** | Hangin | Auto — **run this one LAST** |
+1. **Both lost their "BUKID COFFEE" wordmark.** Blank kraft, blank brown, only the bean
+   window survived. Scenes 1/2/4 kept their labels, so it is the END frame specifically.
+2. **It reproduced the side-by-side layout** the appended prompt line told it not to — the
+   two objects just stand next to each other instead of one coming out of the other.
 
-Pure Hype is `producerOnly` and the producer path is opt-in (`?osaEngine=producer`,
-`OneShotAd/index.tsx:19`), so the default legacy path hides it. Keep it — the only `sfx_only`
-recipe, the cleanest proof of the editing preset — but run it last, the natural sacrifice.
+**Leading hypothesis, NOT verified:** `composeReferenceSheet`
+([producerOrchestrator.ts](services/producerOrchestrator.ts), added `e8d80d6`) caps each photo
+at 1024 height side by side, so each object carries roughly half the pixel width a single
+reference would, then ships as JPEG 0.92 — less text detail to copy. Cheap probes first: raise
+the sheet resolution, use PNG, or crop tighter so each object fills more of its half.
 
-**Blocked, a reset each:** Before & After (Buhok Lab), Try-On Reveal (Araw Wear). Both owe
-`buhok-before`, `buhok-after`, `arawwear-onbody` — chain with `codex-image --edit` off one
-base or the face drifts. Both upload the presenter BY HAND: `referenceImage="avatar"` and
-the before/after slot share a scene, so an auto-cast face renders two people in one ad.
+**If that fails, Option B is unavoidable** and was already scoped: widen
+`generateSceneImage`'s `references` ([geminiService.ts:2328](services/geminiService.ts#L2328))
+to a third image, add a `referenceImageMode`, and write a "Reference Image 3" instruction
+block. That is a TUNED edit and needs Neil's explicit go.
 
-Neil rejected the current `before_after` model — that cut is a placeholder, re-shoot it.
+## ✅ SHIPPED THIS SESSION — 10 commits, ZERO video credits (storyboards spend `images`)
 
-## ✅ SHIPPED THIS SESSION (main, eight commits, ZERO credits spent)
-
-- `42c2069` — **tap the tile, watch the WHOLE ad, with the voiceover.** The loop is 25.6%
-  of the ad and silent; a `Maximize2` control opens a 9:16 modal playing the full 35.33s
-  unmuted. Needs a `full` in `SAMPLES` — **so every one of the nine owes TWO files, the
-  short tile cut and a `<recipe>-full.mp4`.** Verified: audio really decodes (275308 bytes).
-- `1eb073a` `9878880` — **card chrome is tied to the renderer.** `drawPlan.ts:52` reserves
-  `SZ_BOTTOM = 0.22`, so nothing is burned below `0.78h`; the name overlay is capped at
-  `h-[22%]` and can never cover a caption. Measured 0.219 at 1440 and 390. Description
-  moved out of the frame, `line-clamp-2` + `min-h` keeps a row level.
-- `a837b29` — **gallery left the composer's `max-w-4xl`.** Tiles were ~170px and never grew
-  with the monitor; now `max-w-7xl` + 4 columns = 311px measured. Composer untouched at 896.
-- `6c7b7a2` — **`real_talk` re-cut**: `540x960 @ 386kbps` → `720x1280 @ ~1345kbps`, and
-  `17.47-26.50` instead of `13.97-22.03` so it opens on the sentence and lands on the
-  product. No render: the 1080p source came back out of R2.
-- `c3604e3` — `scripts/pull-run-final.mjs`, and `79c0b8a` — `MEDIA_STORE` + `R2_*` in
-  `.env.example`, which never listed them.
-
-## 🔑 THE THING THAT SAVES MONEY
-
-A finished run's mp4 is in R2 and `artifacts.finalVideoUrl` is a PRESIGNED url whose
-signature expires. An old run looks unrecoverable while the object sits untouched. 403 =
-expired signature, 404 = actually gone. **Never re-render to get a file you already own.**
-
-The pull needs Neil's own terminal — the agent's env access is walled:
-`node --env-file=<the env file> scripts/pull-run-final.mjs <run_id> .tmp/<name>.mp4`
-
-Cut settings and the scene-cut finder are printed by `restore-ffmpeg.ps1`.
+- `20f6e97` — **the packaging slot could not be routed to.** `venueSlot` legend listed
+  `packaging`, but the sentence telling the model WHEN to set a slot named only onbody/inuse/
+  after, while PRODUCT_TRUTH_RULE bans inventing a box. Unreachable by construction.
+- `c82b5ec` — **and the orchestrator threw it away anyway.** A product-state slot on a scene
+  WITH a performer matched neither `usePersonState` (wants person-state) nor `useVenue`
+  (wants no performer), so it silently fell back to the hero. Proven from Postgres: the
+  storyboard emitted `venueSlot="packaging"` on scenes 1 AND 2 and both rendered the pouch.
+  Same half-finished repair as the 2026-08-16 REAL-PHOTO ROUTING note 20 lines above it.
+  The two REGENERATE paths had no slot lookup at all.
+- `ab57726` — **S2 carries a frame pair now.** A single still cannot tell the video model
+  what a sealed box opens INTO. `isHookMorph` was scoped to scene 0 (it kills both slot
+  routes, so unscoped it would have undone `c82b5ec`); the two bans were narrowed rather than
+  deleted, and `transitionEffect` stays banned everywhere — hard cuts still hold.
+- `e8d80d6` — composed two-object reference sheet + **S3 framed on the label**. S3 was
+  rendering as the back of the pack: TACTILE SHOWCASE wants an extreme texture close-up and
+  the front-of-label rule wants a readable wordmark, and a tight crop on bare film cannot do
+  both. **The S3 half worked** — the label is readable now.
+- `10d1c31` — three script-stage rules. `body` pinned to N-1 entries (6 scenes on a 4-beat
+  spec is what broke the per-beat shot direction, which is POSITIONAL); CTA must name what to
+  click (the SOFT CTA GUARD's ban on "link sa bio" had the model dropping "link" entirely);
+  hook may not invent an occupation ("bago mag-login" on a coffee brief).
+- `158f453` — **voice and auto-cast decided gender separately.** Pinay Vlogger voice, male
+  avatar. Presenter SET → the picker filters; AUTO → the VOICE decides the cast, since the
+  user's pick is explicit and the cast gender was only inferred. Tested, and the test was
+  proved to bite by flipping a row.
+- `bcba547` — packaging photos and the upload EXAMPLE now show the container ALONE. The
+  example mattered as much: the app was teaching users to upload the two-object shot.
+- `ebf8f01` `1990647` `2e5c8d3` — the nine brand briefs (they had photos and no offer),
+  the corrected engine rationale, and the `public/examples` sparse-checkout gap.
 
 ## ⚠ OPEN — ranked
 
-1. **Nine empty tiles now dominate the gallery.** At 311px the missing samples are the
-   biggest thing on the page. This is the cost of the bigger tiles and the reason the
-   seven runs matter more than they did yesterday.
-2. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
-3. **Landing page has one false claim.** `ProofGallery` says real businesses ran these ads;
-   `/exit/proof-ad.mp4` does not exist. Copy fix, no render.
-4. **Quota race in `consumeFinishedAd`** — the meter can exceed its own limit.
-5. **This PC's clock is skewed.** `[rateLimit] JWT issued at future` ran the limiter on its
-   in-memory backstop all session. `w32tm /resync` before trusting any metering test.
+1. **The wordmark loss above.** Blocks the Unboxing sample, which blocks 2 of the 9.
+2. **CTA still drops "unang 50"** though the brief now states it. The tuned CTA block calls
+   scarcity OPTIONAL in this format, so the model is inside its rules. Needs a TUNED go.
+3. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
+4. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
+5. **Quota race in `consumeFinishedAd`** — the meter can exceed its own limit.
 
 ## ⚠ CARRIED
-- **Vite does not serve a file dropped into `public/` after the dev server started** — it
-  returns the SPA fallback `index.html`, so a new sample plays nothing and looks like a code
-  bug. Restart the dev server after adding one. Cost a full smoke cycle on 2026-08-28.
-- Sparse-checkout needs `/tests/fixtures/sample-batch/` re-added on a fresh lite clone.
-- `winget` is a dead stub on cafe PCs. `drawPlan.snapshot.test.ts.snap` shows modified but
-  has zero content diff — it is a CRLF artifact, leave it.
+- **Two sparse-checkout holes**, both present as broken UI rather than missing files:
+  `/tests/fixtures/sample-batch` (hero photos) and `/public/examples` (the upload guides).
+  From Git Bash prefix `MSYS_NO_PATHCONV=1` or the leading slash is rewritten to
+  `C:/Program Files/Git/...` and the add silently does nothing.
+- **Vite does not serve a file dropped into `public/` after the dev server started.** Verify
+  with the CONTENT TYPE, never the status code — the SPA fallback also answers 200.
+- **Killing `npm run dev` leaves the vite child holding the port.** It keeps answering 200
+  with the OLD code while the restart lands on 5174. Kill the listener by PID.
+- `drawPlan.snapshot.test.ts.snap` shows modified with ZERO content diff. CRLF. Leave it.
+  The clock skew warning is retired: `w32tm /resync` on 2026-08-29 moved it 0.2s.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
