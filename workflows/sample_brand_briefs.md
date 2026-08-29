@@ -109,7 +109,27 @@ check out. Re-add it with the pattern below before any run.
 
 - **Brand:** `Bukid Coffee` · **Price:** `₱280`
 - **Offer:**
-  > Barako na galing mismo sa bukid, 250g medium roast. ₱249 ngayong launch week, dating ₱280. Libreng padala sa unang 50.
+  > Barako na swabe sa tiyan, hindi mapait. 250g medium roast, galing mismo sa bukid. ₱249 ngayong launch week, dating ₱280. Libreng padala sa unang 50 lang.
+
+  **Revised 2026-08-29 after the second run**, and the two changes are for different reasons.
+
+  *"Swabe sa tiyan, hindi mapait"* is now stated because the model **invented it in run 1 and
+  correctly dropped it in run 2** — the SCENE COUNT / HOOK SITUATION rules added that day
+  stopped it claiming what the brief never licensed. That guard working is good. But this is
+  barako's whole objection: the category's reputation is that it is harsh, and nothing else
+  in the ad answers "why THIS one". A claim the product owns belongs in the brief, not in a
+  prompt. It leads the line because the model reaches for the opening clause first.
+
+  *"Unang 50 lang"* gained its `lang` on purpose. Run 2 dropped the scarcity entirely while
+  keeping the free shipping, leaving a gift with no reason to act today. The tuned CTA block
+  names its preferred spoken-casual form outright — [`prompts.ts:771`](../api/_lib/prompts.ts#L771)
+  says *"if used, keep it spoken-casual (\"first 50 lang\")"* — so the brief now hands the
+  model the exact shape its own rules already ask for, instead of a phrasing it has to
+  convert.
+
+  Deliberately NOT phrased as *"hindi sumasakit ang tiyan"*: that reads as a medical claim.
+  Swabe and mapait are taste and comfort words, which is what the product can actually stand
+  behind.
 
 ### 2 · Silid Home — Unboxing ASMR
 
