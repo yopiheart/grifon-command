@@ -158,14 +158,28 @@ and gets re-shot, not patched.
 ## Before any run
 
 ```powershell
-# hero photos are excluded from the lite clone's sparse checkout
+# BOTH of these are excluded from the lite clone's sparse checkout, and the
+# config lives in .git/, which the defreezer eats — so this is per-machine.
 # NOTE: from Git Bash, prefix MSYS_NO_PATHCONV=1 or the leading slash is
-# rewritten to C:/Program Files/Git/... and the add silently does nothing
-git sparse-checkout add /tests/fixtures/sample-batch
+# rewritten to C:/Program Files/Git/... and the add silently does nothing.
+git sparse-checkout add /tests/fixtures/sample-batch   # the hero photos
+git sparse-checkout add /public/examples               # the upload guide images
 
 .\scripts\restore-ffmpeg.ps1              # cutting the tile clips afterwards
 .\scripts\enable-dev-unmetered-video.ps1  # then RESTART the dev server
 ```
+
+⚠ **`public/examples` reads as a code bug and is not one.** Those 23 images are the
+good/bad reference tiles beside every upload slot — the thing that tells a user what to
+photograph. Missing locally, the modals render empty placeholder icons and look broken.
+Nothing is wrong: Vercel builds from the full repo, so production has always had them.
+Neil hit this on 2026-08-29 and reasonably read it as a regression.
+
+**Restart the dev server after either pull.** Vite does not serve a file dropped into
+`public/` after it started — it returns the SPA fallback `index.html`, so the image still
+does not appear and the restart looks unnecessary. Verify with the content type, not the
+status code: `curl -s -o /dev/null -w "%{content_type}" http://localhost:5173/examples/ex-product-handheld.png`
+must print `image/png`. A `text/html` there is the fallback, i.e. still broken.
 
 The unmeter flag matters more than it looks. Seven runs is seven video renders against an
 **hourly limit of 5**, so renders 6 and 7 hit a 429 and a ~50 minute lockout; and seven
