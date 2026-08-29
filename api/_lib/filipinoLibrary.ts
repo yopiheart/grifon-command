@@ -12,7 +12,8 @@
 //
 // To add a voice for shared user access:
 //   1. Clone it on ElevenLabs and verify acceptable Tag-lish performance.
-//   2. Append a new entry below with a clear displayName + description.
+//   2. Append a new entry below with a clear displayName + description, and set
+//      `gender` unless the voice genuinely has none (see the field's note).
 //   3. Redeploy.
 //
 // Display names override whatever is set in the ElevenLabs dashboard so the
@@ -25,6 +26,13 @@ export interface FilipinoLibraryEntry {
   voice_id: string;
   displayName: string;
   description: string;
+  /** Speaker gender, used to keep an AUTO-cast presenter from contradicting the
+   * chosen voice (a Pinay vlogger voice over a male avatar). Declared here rather
+   * than parsed out of `description`: the Kid entry is "Child, 8-14" and has no
+   * gender at all, so prose-sniffing would have to guess on a real row. OMIT the
+   * field for any voice whose gender is genuinely not one of the two — callers
+   * treat `undefined` as "do not constrain" and behave exactly as before. */
+  gender?: 'male' | 'female';
 }
 
 export const FILIPINO_LIBRARY: FilipinoLibraryEntry[] = [
@@ -32,21 +40,25 @@ export const FILIPINO_LIBRARY: FilipinoLibraryEntry[] = [
     voice_id: 'PKbMtaWYBHcnO1CK4WcR',
     displayName: 'Pinay Spokesperson',
     description: 'Female, 30s · Polished brand voiceover',
+    gender: 'female',
   },
   {
     voice_id: 'dYyGSlRIJpFhfgqtqiF9',
     displayName: 'Pinoy Reviewer',
     description: 'Male, 30s · Confident testimonial / DR pitch',
+    gender: 'male',
   },
   {
     voice_id: 'mPEHjC4AussYOrtIPSUB',
     displayName: 'Pinay Vlogger',
     description: 'Female, 20s · Bubbly TikTok / IG creator',
+    gender: 'female',
   },
   {
     voice_id: 'fH6D32IX4zlu35JrIpxf',
     displayName: 'Pinoy TikToker',
     description: 'Male, 20s · Fast-paced short-form hook',
+    gender: 'male',
   },
   {
     voice_id: 'hEXLVIK39FEDRaONh6dY',

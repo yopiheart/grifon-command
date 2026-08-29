@@ -210,6 +210,7 @@ async function handleList(req: VercelRequest, res: VercelResponse) {
           name: entry.displayName,
           preview_url: upstream.preview_url,
           description: entry.description,
+          gender: entry.gender,
         };
       })
       .filter(<T,>(v: T | null): v is T => v !== null);

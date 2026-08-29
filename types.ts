@@ -883,6 +883,9 @@ export interface LibraryVoice {
   name: string;
   preview_url?: string;
   description?: string;
+  /** Speaker gender, curated in `api/_lib/filipinoLibrary.ts`. Absent when the voice
+   * has none (the Kid entry). Consumers must treat `undefined` as "do not constrain". */
+  gender?: 'male' | 'female';
 }
 
 export interface VoiceLibrary {

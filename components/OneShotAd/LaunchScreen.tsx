@@ -53,8 +53,10 @@ const T_VALUE = 'text-xs font-mono';                     // current value
 const T_LABEL = 'text-[10px] uppercase tracking-widest font-mono'; // meta labels only
 
 /** A voice option for the picker. `name` is the chip label, `label` the dropdown row,
- * `preview` the ElevenLabs sample URL that powers the 3-sec play-preview (Grifon edge). */
-type VoiceOpt = { id: string; name: string; label: string; sub?: string; preview?: string };
+ * `preview` the ElevenLabs sample URL that powers the 3-sec play-preview (Grifon edge).
+ * `gender` keeps the voice from contradicting the presenter — see PRESENTER_VOICE_COHERENCE
+ * below. It is absent for clones and for voices that genuinely have no gender (the Kid). */
+type VoiceOpt = { id: string; name: string; label: string; sub?: string; preview?: string; gender?: 'male' | 'female' };
 
 /** Curated stock fallback — only used when the account has no Filipino/cloned voices
  * (e.g. the auth-less preview). Stock voices have no preview clip (play-preview disabled). */
@@ -63,6 +65,7 @@ const STOCK_FALLBACK: VoiceOpt[] = RECOMMENDED_VOICES.map((v) => ({
   name: v.name,
   label: `${v.name} — ${v.vibe} (stock)`,
   sub: `${v.vibe} (stock)`,
+  gender: v.gender,
 }));
 
 // --- Creative taxonomy ---
@@ -275,7 +278,9 @@ export const LaunchScreen: React.FC<{
     let alive = true;
     void fetchVoices().then((lib) => {
       if (!alive) return;
-      const filipino: VoiceOpt[] = lib.libraryVoices.map((v) => ({ id: v.voice_id, name: v.name, label: v.description ? `${v.name} — ${v.description}` : v.name, sub: v.description || undefined, preview: v.preview_url }));
+      const filipino: VoiceOpt[] = lib.libraryVoices.map((v) => ({ id: v.voice_id, name: v.name, label: v.description ? `${v.name} — ${v.description}` : v.name, sub: v.description || undefined, preview: v.preview_url, gender: v.gender }));
+      // Clones carry no gender — nobody labels them — so they stay unconstrained and
+      // always remain pickable, whatever the presenter is set to.
       const mine: VoiceOpt[] = lib.myVoices.map((v) => ({ id: v.voice_id, name: v.name, label: `${v.name} (your clone)`, sub: 'Your clone', preview: v.preview_url }));
       const opts = [...filipino, ...mine];
       if (opts.length === 0) return; // keep stock fallback
@@ -287,6 +292,43 @@ export const LaunchScreen: React.FC<{
     });
     return () => { alive = false; };
   }, []);
+
+  // --- PRESENTER_VOICE_COHERENCE ------------------------------------------
+  // Gender used to be decided in two places that never spoke: the voice picker here,
+  // and the AUTO cast, which resolves only AFTER research runs. Neil hit the result on
+  // 2026-08-29 — he chose Pinay Vlogger, research read the target market as men, and the
+  // ad came back a male avatar speaking with a woman's voice.
+  //
+  // The two halves are fixed in opposite directions, because the timing differs:
+  //
+  //   Presenter gender SET (Male/Female) -> we know it while the user is still picking,
+  //   so the picker hides the voices that would contradict it.
+  //
+  //   Presenter AUTO ('Any') -> nothing is known yet at pick time, so filtering is
+  //   impossible. Instead the VOICE decides the cast (see castHints below). The user
+  //   listened to a preview and chose deliberately; the cast gender was only ever
+  //   inferred. An explicit human choice outranks an inference.
+  const wantGender: 'male' | 'female' | null =
+    gender === 'Male' ? 'male' : gender === 'Female' ? 'female' : null;
+
+  // A voice with no gender (clones, the Kid voice) is never filtered out — unknown means
+  // "do not constrain", never "reject". And if a filter would empty the picker, it is
+  // dropped entirely: `ready` below requires a voiceId, so an empty list would silently
+  // block Launch with no visible reason.
+  const visibleVoiceOpts = useMemo(() => {
+    if (!wantGender) return voiceOpts;
+    const kept = voiceOpts.filter((v) => !v.gender || v.gender === wantGender);
+    return kept.length > 0 ? kept : voiceOpts;
+  }, [voiceOpts, wantGender]);
+
+  // If the presenter gender changes under a selection that no longer qualifies, move to
+  // the first one that does. Same shape as the fetch effect above, deliberately.
+  useEffect(() => {
+    setVoiceId((prev) => (visibleVoiceOpts.some((o) => o.id === prev) ? prev : (visibleVoiceOpts[0]?.id ?? prev)));
+  }, [visibleVoiceOpts]);
+
+  /** The chosen voice's gender, or null when it has none. Feeds the AUTO cast. */
+  const chosenVoiceGender = voiceOpts.find((v) => v.id === voiceId)?.gender ?? null;
 
   // --- Voice play-preview (3-sec ElevenLabs clip) -------------------------
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -483,7 +525,14 @@ export const LaunchScreen: React.FC<{
       avatar: presenterMode === 'upload'
         ? { url: avatarUrl, description: ethnicity.trim() ? `A ${ethnicity.trim()} presenter` : 'An uploaded presenter', ethnicity, gender, prompt: '' }
         : { url: '', description: '', ethnicity: '', gender: 'Any', prompt: '' },
-      castHints: presenterMode === 'auto' ? { gender, ageRange, ethnicity } : undefined,
+      // PRESENTER_VOICE_COHERENCE: on AUTO the cast gender is otherwise resolved after
+      // research, long after the voice was picked, which is how a male avatar ended up
+      // speaking with the Pinay Vlogger voice. When the user left gender on 'Any' but DID
+      // choose a gendered voice, that voice decides the cast. An explicit pick beats an
+      // inference. A genderless voice (a clone, the Kid) leaves 'Any' untouched.
+      castHints: presenterMode === 'auto'
+        ? { gender: gender === 'Any' && chosenVoiceGender ? (chosenVoiceGender === 'male' ? 'Male' : 'Female') : gender, ageRange, ethnicity }
+        : undefined,
       voiceId,
       language,
       aspectRatio,
@@ -589,7 +638,7 @@ export const LaunchScreen: React.FC<{
         <div className="min-w-0">
           <SettingRow label="Voice" icon={Mic}>
             <div className="max-h-[45vh] space-y-1.5 overflow-y-auto pr-1 sm:max-h-72">
-              {voiceOpts.map((v) => (
+              {visibleVoiceOpts.map((v) => (
                 <VoiceRow
                   key={v.id}
                   opt={v}
@@ -600,6 +649,14 @@ export const LaunchScreen: React.FC<{
                 />
               ))}
             </div>
+            {/* Say WHY the list got shorter. Hiding options with no reason reads as a bug,
+                and the user cannot see the presenter setting from here. Only shown when the
+                filter actually removed something. */}
+            {wantGender && visibleVoiceOpts.length < voiceOpts.length && (
+              <p className={`mt-2 text-on-surface-sublabel ${T_LABEL}`}>
+                // Showing {gender.toLowerCase()} voices only, to match your presenter
+              </p>
+            )}
             {/* Clone-your-own-voice on-ramp → Signal Modulator Voice Cloning tab.
                 Always visible; cloning's own paywall/flag messaging gates ineligible users. */}
             {onCloneVoice && (
