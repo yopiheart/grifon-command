@@ -780,6 +780,23 @@ export const buildAdScriptPrompt = (
       INQUIRE / viewing — "buy now", "add to cart", "order now", and product-scarcity
       ("only 3 left") are BANNED. NO peso amount ever, and no invented free-consult/
       inspection offer the "${offer}" does not state.` : ''}
+      CTA DESTINATION (HARD RULE): the CTA must NAME the thing to act on — the link,
+      the button, the message. A bare direction with no named object ("click mo 'yong
+      baba") is not a CTA, it is a broken sentence. The direction modifies the named
+      object; it never replaces it. NOTE the BANNED list above bans the phrase "link sa
+      bio" — it does NOT ban the word "link". "Tara, click mo na 'yong link sa baba" is
+      CORRECT and is the pattern to follow; dropping the noun to satisfy that ban is a
+      misreading of it.
+      HOOK SITUATION (HARD RULE): the hook's situation comes from the offer, the
+      product, or the audience this brief names. NEVER invent an occupation, workplace,
+      commute, or daily routine the brief does not state — a coffee brief that never
+      mentions office work must not open on "bago mag-login". An invented situation
+      narrows the ad to an audience that was never the target.
+      SCENE COUNT (HARD RULE): the BEATS block above names N scenes. \`body\` MUST hold
+      EXACTLY N-1 entries — the hook is scene 1, and each body line becomes one scene
+      after it. Extra body lines silently add scenes, and the storyboard's per-beat shot
+      direction was written for N; past N the beats stop landing on the scenes that are
+      supposed to carry them.
 
       **DIRECTOR_CRITIQUE_PROTOCOL:**
       Include a field "strategicAudit" in your JSON response.
