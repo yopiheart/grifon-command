@@ -36,23 +36,41 @@ auto-cast avatar. (The two blocked runs are the opposite case — see the bottom
 
 ### Run every one of them on `?osaEngine=producer`
 
-Not just Pure Hype. `NOW.md` names the producer engine only as the thing that unhides
-`pure_hype`, which undersells it: the producer flow is the **only** path with a storyboard
-gate that stops and waits for a human tap
-([`ProducerFlow.tsx:301-308`](../components/OneShotAd/ProducerFlow.tsx#L301-L308) — the gate
-offers image-only regen because *"the cost gate hasn't fired yet"*). The legacy
-`useOneShotGeneration`→Step 8 path has no such stop.
+Not just Pure Hype, which is the only reason `NOW.md` gives.
 
-That gate is what makes a free storyboard-only run possible at all, and it is where the
-`c9fe2b4` FLAT hook fix gets checked before a single video credit is spent. Running six
-formats on legacy and one on producer would also mix two orchestrators inside one gallery.
-So: one engine, all seven, no switch mid-batch. The choice persists to `localStorage`, so it
-survives a reload.
+⚠ **An earlier version of this section said the producer flow is the ONLY path that stops
+before spending. That was wrong** (corrected 2026-08-29 after Neil asked where the plan
+screen went). The legacy path stops too, at
+[`ReviewScreen`](../components/OneShotAd/ReviewScreen.tsx) — and shows *more*: script,
+scene stills, spokesperson, cover frame, plus a Download Assets zip. The render starts only
+when the user clicks Generate Video. So a free look before spending was never the
+differentiator, and nobody should pick an engine for that reason.
 
-The trade-off, stated plainly: legacy is the path real users hit today, and producer is the
-newer one still baking behind it. These samples will therefore be produced by the flow that
-is *becoming* the product rather than the one shipping right now. Accepted for the gate and
-the consistency; revisit if the two paths ever diverge visibly.
+The two real reasons to stay on producer for this batch:
+
+1. **Per-scene REGENERATE at the storyboard gate** — image-only, and
+   [`ProducerFlow.tsx:308`](../components/OneShotAd/ProducerFlow.tsx#L308) notes it is cheap
+   because *"the cost gate hasn't fired yet"*. Fixing one bad scene without redoing the run
+   is worth a lot across nine samples.
+2. **`pure_hype` is invisible anywhere else.**
+
+Running six on legacy and one on producer would also mix two orchestrators inside one
+gallery. One engine, all seven, no switch mid-batch. The choice persists to `localStorage`.
+
+**The two paths are different screens, not one screen with a lean variant.** Producer goes
+LaunchScreen → Running → StoryboardGateScreen (181 lines: scene cards + approve) →
+FirstCutScreen. Legacy goes LaunchScreen → research → the generation chain → ReviewScreen
+(296 lines) → GenerateVideo. The sample MP4s are identical either way — the pre-video screen
+does not touch the render — but **whoever produces the batch is not looking at the screen
+real users get.** Walk the legacy path (drop `?osaEngine=producer`, or force it with
+`?osaEngine=steps`) at least once per session to confirm ReviewScreen still works; that is
+the surface Free sees before it is asked to upgrade.
+
+Tier behaviour there, for reference — same screen, same button, label only
+([`ReviewScreen.tsx:266-274`](../components/OneShotAd/ReviewScreen.tsx#L266-L274)): Free
+without a credit reads `I-RENDER ANG VIDEO — STARTER ₱997`, Free holding a paid credit reads
+`GAMIT ANG CREDIT MO`, and paid tiers read `GENERATE VIDEO NOW >`. Free additionally gets the
+`1/1 FREE WORKFLOW USED · EXPORTS WATERMARKED` bridge panel above it.
 
 Offer lines are **ad copy**, so they are Taglish per the language lock. No em dash, no
 apostrophes in contractions, calm rather than salesy. Prices are ordinary Philippine SMB
