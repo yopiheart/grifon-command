@@ -1564,6 +1564,18 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
               referenceImage="both". venueSlot="packaging" when that slot is available
               — the lid being lifted is the packaging's own, so this beat anchors to
               the packaging photo, never to the bare product.
+              **THIS BEAT CARRIES A FRAME PAIR — the only one in this format.** Emit BOTH
+              \`startFramePrompt\` and \`endFramePrompt\` here, and NO \`transitionEffect\`:
+                START = the packaging still closed or barely opened, hands on it. Name the
+                  packaging's own real colour and material.
+                END   = the PRODUCT ITSELF now out of that packaging, held or standing
+                  beside it. NAME THE PRODUCT BY NAME and state its real colour.
+              Why this one beat and nothing else: the packaging and the product usually do
+              not look alike, so from a single still the video model has no way to know what
+              the box opens INTO — it invents a wrong object, or cuts away and the reveal
+              never happens on screen. The pair supplies the destination. It is NOT a morph
+              and NOT a transition; it is two real states of one real object, and the
+              hard-cut rule above still governs every cut BETWEEN scenes.
            S3 TACTILE SHOWCASE — extreme close-up of the texture beat (foam, wrap,
               finish, click mechanism). referenceImage="product".
            S4 PLACE/WEAR + CTA — the product where it lives, creator in frame.
@@ -1735,10 +1747,15 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : isUGCPro ? `**HOOK FRAMES (Scene 1, UGC Pro) = A HARD CUT, NOT A MORPH:** This format has NO transition
       into scene 2 — the cut IS the effect. Scene 1 emits a SINGLE \`imagePrompt\` exactly like scenes
-      2+. Do NOT emit \`startFramePrompt\`, \`endFramePrompt\`, or \`transitionEffect\` for Scene 1 or for
-      ANY scene. There is no metaphor still, no anchor color, no silhouette match, no reveal. The
-      hook is the creator, on camera, in the room where the whole ad happens — talking. Keep the
-      still STATIC (STILL_FRAME_RULE applies in full).` : isRealEstate ? `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
+      2+. Do NOT emit \`startFramePrompt\`, \`endFramePrompt\`, or \`transitionEffect\` for Scene 1, and
+      not for any other scene EXCEPT one whose BEATS block above asks for a frame pair BY NAME —
+      today that is the UNBOXING S2 and nothing else. There is no metaphor still, no anchor color,
+      no silhouette match, no reveal. The hook is the creator, on camera, in the room where the
+      whole ad happens — talking. Keep the still STATIC (STILL_FRAME_RULE applies in full).
+      \`transitionEffect\` stays banned EVERYWHERE regardless — HARD CUTS ONLY still governs every
+      cut between scenes. A frame pair on that one permitted beat is not a transition and not a
+      morph: it is two real states of one real object, supplied because a single still cannot tell
+      the video model what the object opens INTO.` : isRealEstate ? `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
 
       **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.
 
@@ -1921,7 +1938,10 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "venueSlot": "onbody",   // OPTIONAL — set per VENUE_SLOT_ROUTING; omit when none fits
         "imagePrompt": "Description of the single image"
       }
-      NEVER emit "startFramePrompt", "endFramePrompt", or "transitionEffect" in a UGC Pro storyboard.
+      NEVER emit "transitionEffect" in a UGC Pro storyboard. "startFramePrompt" and
+      "endFramePrompt" are banned too, with ONE exception: a scene whose BEATS block names a frame
+      pair outright (today, UNBOXING S2 only). On that scene emit BOTH of them, and still no
+      "transitionEffect".
 
       - IF SCENE 2 onwards:
       {

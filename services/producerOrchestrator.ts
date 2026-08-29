@@ -998,7 +998,10 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
     const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
     // Hook morph: regen the PAIR (product-free start, then the end frame below) — a lone
     // fresh start against a stale end frame would morph between mismatched compositions.
-    const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+    // Scene 0 only. The name means what it says: the HOOK's morph, whose start frame is a
+    // product-free metaphor. Any other scene carrying a frame pair is showing two real states
+    // of a real object (a sealed box, then the pouch out of it) and MUST keep its references.
+    const isHookMorph = sceneIdx === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
     const imageUrl = await withRetry(
       () =>
         deps.generateSceneImage(
@@ -1149,7 +1152,10 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
   try {
     // 1. Fresh image (a hook-morph scene regens the PAIR — see regenSceneImage)
     const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
-    const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+    // Scene 0 only. The name means what it says: the HOOK's morph, whose start frame is a
+    // product-free metaphor. Any other scene carrying a frame pair is showing two real states
+    // of a real object (a sealed box, then the pouch out of it) and MUST keep its references.
+    const isHookMorph = sceneIdx === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
     const imageUrl = await withRetry(
       () =>
         deps.generateSceneImage(
@@ -1560,7 +1566,10 @@ async function runStage(
           // Hook morph (start+end frame): the START frame is the "before" metaphor and must stay
           // product-free; the hero reference belongs on the END frame (reveal). Mirrors
           // utils/sceneRender.ts so the two surfaces don't drift.
-          const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+          // SCENE 0 ONLY — see the same note in regenSceneImage. Left unscoped, a frame pair on
+          // any other scene switches off BOTH slot routes below and strips that scene back to
+          // the hero, undoing the packaging anchor. The index here is `i`, not `sceneIdx`.
+          const isHookMorph = i === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
           const imgAspect = (run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio) as '9:16' | '16:9' | '1:1';
 
           // REAL-PHOTO ROUTING (2026-08-16). Until this landed the producer passed ONLY the
