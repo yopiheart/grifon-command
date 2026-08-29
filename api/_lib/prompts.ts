@@ -1541,9 +1541,12 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         3. **BEATS (4 scenes):**
            S1 HOOK — the sealed package on the surface, the creator's hands on it
               (taps / mic-check framing). referenceImage="product" (or "both" if the
-              creator's face is in frame).
+              creator's face is in frame). venueSlot="packaging" when that slot is
+              available — the sealed box IS the subject of this beat.
            S2 THE OPEN — hands mid-open, lid or flap lifted, contents just visible.
-              referenceImage="both".
+              referenceImage="both". venueSlot="packaging" when that slot is available
+              — the lid being lifted is the packaging's own, so this beat anchors to
+              the packaging photo, never to the bare product.
            S3 TACTILE SHOWCASE — extreme close-up of the texture beat (foam, wrap,
               finish, click mechanism). referenceImage="product".
            S4 PLACE/WEAR + CTA — the product where it lives, creator in frame.
@@ -1673,7 +1676,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         : (isUGCPro && bt !== 'product')
         ? ' For UGC Pro, the operator/agent IS in nearly every scene, so a scene may carry BOTH referenceImage="avatar" AND a venueSlot — set "venueSlot" whenever the scene depicts a real uploaded place or state (the problem -> before, the finished work -> after, a toured room -> its room slot). OMIT it only on a neutral talking-head not tied to any place or state.'
         : isUGCPro
-        ? ' For UGC Pro, the creator IS in nearly every scene, so a scene may carry BOTH referenceImage="avatar" AND a venueSlot — set "venueSlot" whenever the scene depicts one of the real uploaded product states above (the worn garment -> onbody, the application -> inuse, the after-reveal -> after). OMIT it only on a pure talking-head with no product state in frame.'
+        ? ' For UGC Pro, the creator IS in nearly every scene, so a scene may carry BOTH referenceImage="avatar" AND a venueSlot — set "venueSlot" whenever the scene depicts one of the real uploaded product states above (the worn garment -> onbody, the application -> inuse, the after-reveal -> after, the sealed box / wrapper / retail carton -> packaging). OMIT it only on a pure talking-head with no product state in frame.'
         : ' Avatar talking-head scenes (referenceImage="avatar") OMIT "venueSlot".'}
   ` : '';
 
