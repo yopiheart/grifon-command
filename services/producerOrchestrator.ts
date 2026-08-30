@@ -739,22 +739,39 @@ async function persistAvatarReference(run: ProductionRun, deps: ProducerDeps): P
   }
   try {
     await deps.run.recordAvatar(run.runId, url);
-  } catch {
-    /* best-effort — the refusal guard reports the consequence to the user if it matters */
+  } catch (e: any) {
+    // Was a bare `catch {}`. That is what hid this for a month: api/producer/advance.ts rejects
+    // EVERY action with 404 'run_not_found' before its switch when the run row does not exist
+    // yet, post() throws on it, and the swallow made a guaranteed failure look like a success.
+    // Still best-effort — never throws — but now it says so. Same doctrine as the size cap above.
+    emitRunEvent('node_fail', run.runId, {
+      node: 'avatar_persist', error: String(e?.message ?? 'record_avatar_failed'), status: e?.status,
+    });
   }
 }
 
 async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
   let run = initial;
 
-  // Fire-and-forget: the reference is needed by a LATER regen, never by this run's own stages
-  // (which still hold `input` in memory), so nothing here should wait on a durability write.
-  void persistAvatarReference(run, deps);
-
+  // The avatar write is fire-and-forget — the reference is needed by a LATER regen, never by this
+  // run's own stages (which still hold `input` in memory) — but it CANNOT fire before the run row
+  // exists. api/producer/advance.ts checks ownership against producer_runs for every action and
+  // 404s 'run_not_found' ahead of its switch, so firing here (as this did) hit a row that no
+  // persist had created yet, threw, and was swallowed. Measured 2026-08-30: 25 of 33 runs have a
+  // NULL avatar_url, and no 'avatar_too_large' event was ever emitted, i.e. it never got that far.
+  //
+  // So hang it off the FIRST successful persist instead. Deliberately not an extra persist of our
+  // own: api/producer/run.ts guards on `revision`, and a concurrent write would risk the
+  // optimistic-concurrency conflict this run depends on.
+  let avatarPersistFired = false;
   const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);
+    if (!avatarPersistFired) {
+      avatarPersistFired = true;
+      void persistAvatarReference(run, deps);
+    }
     cb.onUpdate(run);
   };
   const setStage = (id: ProductionStageId, patch: Partial<ProductionStageState>) =>

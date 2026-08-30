@@ -2071,3 +2071,55 @@ describe('voice word timings — producer threads forced alignment to the render
     }
   });
 });
+
+// --- Durable presenter reference (producer_runs.avatar_url) ---------------
+
+// Regression guard, 2026-08-30. persistAvatarReference used to fire at the very top of
+// runProductionInner, before any deps.persist had created the run row. api/producer/advance.ts
+// checks ownership against producer_runs and 404s 'run_not_found' ahead of its switch, post()
+// throws on that, and a bare `catch {}` swallowed it — so the write failed on every fresh run
+// and looked like it had worked. Measured in Postgres: 25 of 33 runs carry a NULL avatar_url,
+// with no 'avatar_too_large' event anywhere, i.e. it never reached the size check.
+//
+// The user-visible cost was a lie: identityRefLost then refuses regens with "Presenter reference
+// was lost on reload — Start over", when in truth it was never saved and starting over cannot
+// help. Ordering is the whole fix, so ordering is what this asserts.
+describe('durable presenter reference', () => {
+  const flush = async () => { for (let i = 0; i < 5; i++) await Promise.resolve(); };
+
+  it('writes the avatar only AFTER the run row has been persisted', async () => {
+    const order: string[] = [];
+    const { deps, store } = makeFakeDeps({ persist: vi.fn(async () => { order.push('persist'); }) });
+    (store.recordAvatar as any).mockImplementation(async () => { order.push('recordAvatar'); return { changed: true }; });
+
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    await flush();
+
+    expect(order).toContain('recordAvatar');
+    // The assertion that bites: with the old top-of-function placement this index is 0.
+    expect(order.indexOf('recordAvatar')).toBeGreaterThan(0);
+    expect(order.indexOf('persist')).toBeLessThan(order.indexOf('recordAvatar'));
+    expect(order[0]).toBe('persist');
+  });
+
+  it('writes it exactly once even though commit runs on every stage', async () => {
+    const { deps, store } = makeFakeDeps();
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    await flush();
+
+    expect((store.recordAvatar as any).mock.calls.length).toBe(1);
+  });
+
+  it('skips the write when there is no data: reference to save', async () => {
+    // makeInput()'s placeholder is a remote 'avatar.png', which generateSceneImage could never
+    // attach as a part — persisting it would store a reference that cannot be used.
+    const { deps, store } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+    await flush();
+
+    expect((store.recordAvatar as any).mock.calls.length).toBe(0);
+  });
+});
