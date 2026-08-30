@@ -79,8 +79,13 @@ any voiced run — it is read only when `audioMode === 'sfx_only'`.
 - Branch is 15 commits ahead of `main`, still NOT merged. Merge after the eyeball.
 - **Vite will not serve a file dropped into `public/` after the dev server started.** Check
   the CONTENT TYPE, never the status code — the SPA fallback also answers 200.
-- **Killing `npm run dev` leaves the vite child on the port**, answering 200 with OLD code
-  while the restart lands on 5174. Kill the listener by PID.
+- **NEVER pipe `npm run dev` into `head`.** `head` closes the pipe once it has its lines and
+  the EPIPE kills vite — twice tonight, the second time within 2 minutes, and it dies with
+  `code: 'ECONNRESET'` + `exited with code 0`, which reads like a clean shutdown. Redirect to
+  a log file and `cat` the log; do not probe the server with `curl` to check it is up.
+- **A dead `npm run dev` leaves a vite child holding the port.** The restart then lands on
+  5174 while 5173 still answers (sometimes with OLD code, sometimes not at all). Free it with
+  `Get-NetTCPConnection -LocalPort 5173 -State Listen` -> `Stop-Process -Id <OwningProcess>`.
 - Sparse-checkout: `assets/` needs `git add --sparse`; `/tests/fixtures/sample-batch` and
   `/public/examples` need re-adding on a fresh clone (both pulled today).
 
