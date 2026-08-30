@@ -366,6 +366,33 @@ describe('generateStoryboard schema', () => {
     // A box/carton must keep its natural placement — the Unboxing format needs it.
     expect(prompt).toMatch(/box, carton, or tin keeps its natural placement/);
   });
+
+  // TRIPWIRE, not a style check. The render's ACTION_HOLD_SEC (renderFfmpeg.ts)
+  // fires on `hasEndFrame`, which is set from endFrameImageUrl. That is scoped to
+  // the unboxing reveal ONLY because this prompt bans a frame pair everywhere else
+  // — the scoping lives HERE, not in the render.
+  //
+  // Neil, 2026-08-30: "ayokong umabot sa point na dahil lang dito, masisira lahat
+  // ng pinaghirapan sa ibang formats."
+  //
+  // So if you are here because this test went red, you widened the frame pair to
+  // another format and that format's scene just silently inherited a 1.5s hold
+  // past its VO. Decide that on purpose: either exclude it from the hold, or
+  // confirm on a real render that the longer scene reads better. Do not simply
+  // update the string.
+  it('a frame pair stays scoped to UNBOXING S2 — widening it also widens the render hold', () => {
+    // The ban + its single exception are stated for every UGC Pro storyboard.
+    const anyFormat = buildStoryboardPrompt(storyboardInput);
+    expect(anyFormat).toMatch(/"endFramePrompt" are banned too/);
+    expect(anyFormat).toMatch(/UNBOXING S2 only/);
+
+    // And only the unboxing beats actually hand a scene the pair.
+    const unboxing = buildStoryboardPrompt({
+      ...storyboardInput,
+      businessInfo: { ...businessInfo, scriptType: 'UGCPro', ugcProFormat: 'unboxing' },
+    } as any);
+    expect(unboxing).toMatch(/THIS BEAT CARRIES A FRAME PAIR — the only one in this format/);
+  });
 });
 
 // ----------------------------------------------------------------------------
