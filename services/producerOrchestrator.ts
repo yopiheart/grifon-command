@@ -1360,6 +1360,26 @@ function slotPhotoFor(run: ProductionRun, scene: Scene) {
     : undefined;
 }
 
+/** Suffix appended to a hook-morph END prompt when the reference is a composed two-object sheet.
+ *
+ * Rides NO_UNSOLICITED_PRODUCT's own carve-out ("unless the Scene Prompt explicitly names it")
+ * so the sheet's second object stops reading as an invented prop. See buildEndFramePrompt. */
+export const SHEET_NOTE = ' Reference Image 1 shows TWO real objects, both named by this scene, so neither is an unsolicited prop: reproduce BOTH labels and wordmarks exactly. Do NOT copy their side-by-side layout.';
+
+/** generateSceneImage truncates its prompt at 400 chars from the END. */
+export const SCENE_PROMPT_CAP = 400;
+
+/** Build the END-frame prompt, guaranteeing SHEET_NOTE survives the downstream truncation.
+ *
+ * Appending blind is what makes this fail silently: a long scene prompt pushes the note past
+ * 400 chars and it is cut, which on screen is indistinguishable from a note the model ignored.
+ * Reserve the note and trim the scene prompt instead. Exported for tests — the sheet path needs
+ * a canvas, so this is the only seam that runs in node. */
+export function buildEndFramePrompt(scenePrompt: string, hasSheet: boolean): string {
+  if (!hasSheet) return scenePrompt;
+  return `${scenePrompt.slice(0, Math.max(0, SCENE_PROMPT_CAP - SHEET_NOTE.length))}${SHEET_NOTE}`;
+}
+
 /**
  * Render the optional END keyframe for a hook-morph scene (startFramePrompt + endFramePrompt —
  * the storyboard prompt emits the pair for scene-1 visual hooks in every structure). Mirrors
@@ -1384,13 +1404,24 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
   const sheet = reveals && slot?.url && run.input.heroImageBase64 && slot.url !== run.input.heroImageBase64
     ? await composeReferenceSheet(slot.url, run.input.heroImageBase64)
     : undefined;
-  // The tuned block tells the model to reproduce Reference Image 1 EXACTLY, which on a sheet
-  // could mean reproducing the SIDE-BY-SIDE LAYOUT. This is per-scene prompt text, not the
-  // tuned registry, so it is the one lever available to say "identity only". Kept short:
-  // generateSceneImage truncates the prompt at 400 characters.
-  const endPrompt = sheet
-    ? `${scene.endFramePrompt!} Reference shows both real objects side by side for identity only — do NOT reproduce that side-by-side layout.`
-    : scene.endFramePrompt!;
+  // Rewritten 2026-08-30 after diagnosing the blank-wordmark defect from Postgres (runs
+  // apr_0326cbc4 / apr_c0ddfe27). The sheet arrives as a SINGLE productUrl, and EVERY tuned
+  // branch that accepts one carries NO_UNSOLICITED_PRODUCT: "Do NOT add an outer box, carton,
+  // sleeve, pouch, gift set, second unit" ('product' rule 8, 'both' rule 10). A two-object
+  // sheet IS a second unit, so the model was told to reproduce Reference Image 1 exactly AND
+  // to not render what it contains. It split the difference by BLANKING both wordmarks while
+  // keeping the unbranded bean window. That selective erasure is the fingerprint: lost
+  // resolution blurs a label, it does not delete exactly the class of element a rule names —
+  // which is why the earlier resolution/JPEG hypothesis is refuted and raising the sheet's
+  // quality would have bought nothing. The lever is rule 8/10's OWN carve-out, "unless the
+  // Scene Prompt explicitly names it": naming both objects here makes them solicited.
+  //
+  // The suffix MUST survive. generateSceneImage truncates at 400 chars from the END, so a long
+  // scene prompt silently eats this instruction (measured endFramePrompt: 190 and 194, so the
+  // margin is real but thin). Reserve the suffix and trim the scene prompt instead of appending
+  // blind — a vanished instruction reads exactly like an ignored one, and costs a run to tell
+  // apart.
+  const endPrompt = buildEndFramePrompt(scene.endFramePrompt!, !!sheet);
   try {
     return await withRetry(
       () =>
