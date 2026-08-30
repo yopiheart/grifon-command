@@ -189,10 +189,13 @@ everything else in that brief was already WAT doctrine.
 > loop runs in the **browser** — `ProducerFlow.tsx` calls `runProduction()` on mount, so
 > server state is the checkpoint but the tab is the engine, and a closed tab stops
 > advancing the run. The gap is bounded (both human gates park the run anyway, so it only
-> bites during the unattended stretches — fan-out video render and market research) and
-> its true size is **unmeasured**: how much `activeJobsService` already covers was not
-> checked. If that gap is ever worked, take the queue-and-worker shape against our own
-> `producer_scenes` table. Take the pattern, not the SDK.
+> bites during the unattended stretches — fan-out video render and market research).
+> **Measured same day** and filed as `post_beta_roadmap.md` #29: the final render already
+> survives a closed tab (server-side job + sidecar + `serverJobsService`), but the per-scene
+> fan-out does not (`action: 'complete'` has exactly one caller repo-wide, and it is the
+> client), and neither does research/script/storyboard (`activeJobsService` is in-memory by
+> its own header). If that gap is ever worked, take the queue-and-worker shape against our
+> own `producer_scenes` table. Take the pattern, not the SDK.
 
 ### Closed-loop eval harness — build it BEFORE the brain (noted 2026-08-05)
 Deferred along with the AUTO Director brain — recorded here so the gate exists the
