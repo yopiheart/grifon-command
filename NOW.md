@@ -1,5 +1,5 @@
 # NOW — the resume doc
-**Stamped: 2026-08-29** (session 39)
+**Stamped: 2026-08-30** (session 40 — docs only; the blocker below is unchanged)
 
 ## ▶ NEXT ACTION — Neil is bringing a sample of the unboxing reveal he wants
 
@@ -72,6 +72,7 @@ block. That is a TUNED edit and needs Neil's explicit go.
 3. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
 4. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
 5. **Quota race in `consumeFinishedAd`** — the meter can exceed its own limit.
+6. **Fan-out scene: paid but uncollected** if the tab closes mid-run. Parked, roadmap #29.
 
 ## ⚠ CARRIED
 - **Two sparse-checkout holes**, both present as broken UI rather than missing files:
