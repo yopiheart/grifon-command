@@ -182,38 +182,54 @@ describe('chooseTrim', () => {
     expect(plan.padAudio).toBe(true);
   });
 
-  // A silent scene's clip carries an ACTION, and the VO end says nothing about
-  // when that action finishes. The speech-end trim is there to cut Veo's filler
-  // speech, which only a talking clip produces — so it must not govern b-roll.
-  it('b-roll: holds ACTION_HOLD_SEC past the VO end so the action finishes', () => {
+  // A frame PAIR means the clip transforms between two states, and the VO end
+  // says nothing about when that motion finishes. The speech-end trim is there
+  // to cut Veo's filler speech, which only a talking clip produces.
+  it('action scene: holds ACTION_HOLD_SEC past the VO end so the motion finishes', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll', hasEndFrame: true }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(2.8 + ACTION_HOLD_SEC, 3);
+    expect(plan.padAudio).toBe(true);
+  });
+
+  it('cinematic with a frame pair: same hold', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'cinematic', hasEndFrame: true }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(2.8 + ACTION_HOLD_SEC, 3);
+  });
+
+  // The narrowing Neil asked for: a silent scene that merely LOOKS at the
+  // product has no end frame, and stretching it would only add dead air.
+  it('silent scene WITHOUT a frame pair is NOT held — no dead air', () => {
     const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, PROBE, 2.8);
-    expect(plan.trimSec).toBeCloseTo(2.8 + ACTION_HOLD_SEC, 3);
-    expect(plan.padAudio).toBe(true);
+    expect(plan.trimSec).toBeCloseTo(2.8, 3);
+    expect(plan.padAudio).toBe(false);
   });
 
-  it('cinematic: gets the same action hold as b-roll', () => {
-    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'cinematic' }, PROBE, 2.8);
-    expect(plan.trimSec).toBeCloseTo(2.8 + ACTION_HOLD_SEC, 3);
-    expect(plan.padAudio).toBe(true);
-  });
-
-  it('talking: NOT held — the VO end still governs, so filler speech stays cut', () => {
-    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'talking' }, PROBE, 2.8);
+  it('talking: NOT held even with a frame pair, so filler speech stays cut', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'talking', hasEndFrame: true }, PROBE, 2.8);
     expect(plan.trimSec).toBeCloseTo(2.8, 3);
     expect(plan.padAudio).toBe(false);
   });
 
   it('the action hold cannot overrun the clip', () => {
-    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, 3.2, 2.8);
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll', hasEndFrame: true }, 3.2, 2.8);
     expect(plan.trimSec).toBeCloseTo(3.2, 3); // 2.8 + 1.5 capped to the 3.2 clip
   });
 
-  // Regression, measured off the 2026-08-30 Bukid render (run apr_bed3c4d2):
-  // the unbox scene was a 5s Kling clip cut to 2.77s at the VO end, and the pouch
-  // never finished coming out of the box. ffprobe cuts: 2.90 / 5.67 / 9.03 / 13.60.
-  it('Bukid unbox scene: 2.77s of a 5s clip becomes 4.27s', () => {
-    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, 5.0, 2.77);
-    expect(plan.trimSec).toBeCloseTo(4.27, 3);
+  // Regression, measured off the 2026-08-30 Bukid render (run apr_bed3c4d2).
+  // ffprobe cuts: 2.90 / 5.667 / 9.033, total 13.600s. Exactly ONE scene of the
+  // four carried an end frame (scene 1, the unbox) and it is the one that was
+  // cut mid-pull, so only it moves: 13.6s -> 15.1s, not 16.6s.
+  it('Bukid: only the unbox scene moves — 2.77s of a 5s clip becomes 4.27s', () => {
+    const unbox = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll', hasEndFrame: true }, 5.0, 2.77);
+    expect(unbox.trimSec).toBeCloseTo(4.27, 3);
+
+    // Scene 2, the macro push-in on the package: silent, but no frame pair.
+    const lookAt = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, 5.0, 3.37);
+    expect(lookAt.trimSec).toBeCloseTo(3.37, 3);
+
+    // Scene 3, the talking CTA.
+    const cta = chooseTrim({ audioUrl: 'x', sceneType: 'talking' }, 6.0, 4.57);
+    expect(cta.trimSec).toBeCloseTo(4.57, 3);
   });
 
   it('falls back to the word-count estimate when there is no measured VO end', () => {

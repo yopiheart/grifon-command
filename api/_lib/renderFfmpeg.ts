@@ -631,15 +631,19 @@ export interface TrimPlan {
 }
 
 /**
- * How long a NON-TALKING scene holds past the VO end so a physical action —
- * opening a box, pouring, lifting the product out — finishes on screen.
+ * How long an ACTION scene holds past the VO end so a physical motion — opening
+ * a box, pouring, lifting the product out — finishes on screen.
  *
- * The speech-end trim exists to cut Veo's hallucinated FILLER speech, which only
- * talking clips produce (see utils/spokenDuration.ts). A b-roll clip has no
- * speech to filler, so trimming it at the VO end cut the action mid-motion: on
- * the 2026-08-30 Bukid run the unbox scene got 2.77s of its 5s clip because that
- * is how long its line takes to say, and the pouch never finished coming out.
- * Always capped by the clip, so a short clip is never over-held.
+ * Gated on `hasEndFrame`, NOT on scene type. A frame PAIR is the storyboard
+ * saying this clip transforms between two states, which is what an action is;
+ * a silent scene that merely LOOKS at the product has no end frame and keeps
+ * today's tight cut. Holding every silent scene would re-open the dead-air
+ * problems that show up when nothing is happening and nobody is talking.
+ *
+ * On the 2026-08-30 Bukid run exactly one scene of four carried an end frame,
+ * and it was the unbox scene that got 2.77s of its 5s clip and never finished
+ * pulling the pouch out. Always capped by the clip, so a short clip is never
+ * over-held.
  */
 export const ACTION_HOLD_SEC = 1.5;
 
@@ -651,7 +655,8 @@ export const ACTION_HOLD_SEC = 1.5;
  *    This never cuts the VO and removes BOTH the silent video tail AND any
  *    trailing silence baked into the MP3. The hook (`keepFullClip`) holds the
  *    product reveal a beat past the VO instead of a long silent morph tail; a
- *    non-talking scene holds `ACTION_HOLD_SEC` for the same reason.
+ *    scene with a frame PAIR (`hasEndFrame`) holds `ACTION_HOLD_SEC` for the
+ *    same reason — its clip carries a motion the VO end says nothing about.
  *    Replaces the old word-count `targetDurationSec` estimate, which under-trimmed
  *    some scenes (dead air) and over-trimmed others (cut the VO mid-word).
  *
@@ -660,7 +665,7 @@ export const ACTION_HOLD_SEC = 1.5;
  *    fallbackDurationSec → explicit duration · else → full clip.
  */
 export function chooseTrim(
-  scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'fallbackDurationSec' | 'sceneType'>,
+  scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'fallbackDurationSec' | 'sceneType' | 'hasEndFrame'>,
   probeSec: number | null,
   detectedSec: number | null,
   // Defaults to CLASSIC so the trim math is unchanged for every existing caller
@@ -673,7 +678,7 @@ export function chooseTrim(
     if (scene.keepFullClip) {
       return { trimSec: cap(detectedSec + preset.hook.revealHoldSec), padAudio: true };
     }
-    if (scene.sceneType && scene.sceneType !== 'talking') {
+    if (scene.hasEndFrame && scene.sceneType !== 'talking') {
       return { trimSec: cap(detectedSec + ACTION_HOLD_SEC), padAudio: true };
     }
     return { trimSec: cap(detectedSec), padAudio: false };

@@ -233,6 +233,12 @@ export interface FinalRenderScene {
   scriptLine?: string;
   /** Scene type from the batch — picks the caption band (talking→face-clear). */
   sceneType?: 'talking' | 'b-roll' | 'cinematic';
+  /** The scene was generated from a START frame AND an END frame, so the clip
+   *  carries a transformation between two states — a box opening, a product
+   *  coming out. Such a scene needs the action to finish on screen, so the trim
+   *  holds past the VO end (see ACTION_HOLD_SEC). A scene that merely LOOKS at
+   *  the product has no end frame and keeps the tight cut. */
+  hasEndFrame?: boolean;
   /** Scene 1 = the hook (slide-up reveal + crimson wipe-box on the last word). */
   isHook?: boolean;
   /** Face-clear band (fractions of height) from browser detection; caption goes here. */

@@ -2036,6 +2036,11 @@ async function runStage(
             // speech to anchor to, and the silence/keepSegments path is the right one there.
             voiceWords: sfxOnly || !s.audioUrl ? undefined : s.words,
             sceneType: run.videoPrompts?.[s.sceneIdx]?.type ?? 'b-roll',
+            // A frame PAIR means the storyboard decided this clip transforms between
+            // two states, which is the only per-scene action signal we have. Read off
+            // the storyboard, same object scriptLine comes from. No default: an unknown
+            // scene must NOT inherit the hold.
+            hasEndFrame: !!run.storyboard?.[s.sceneIdx]?.endFrameImageUrl,
             isHook,
           };
         });
