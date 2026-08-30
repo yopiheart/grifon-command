@@ -31,9 +31,12 @@ unbranded bean window. Lost pixels blur a label; they do not delete exactly the 
 r8/r10's own carve-out ("unless the Scene Prompt explicitly names it"); no tuned file touched.
 Also fixed a silent truncation (the 400-char cap ate blind appends). ▶ **Next: run Bukid Coffee
 Unboxing, look at the S2 END frame.** If wordmarks return, done; if not, Option B (third
-reference + "Reference Image 3" block) is TUNED and needs your go. Side finding:
-`input.avatar.url` is absent from the checkpoint so `resolveMode` silently downgrades
-`both`→`product` — not the cause here, but a live bug.
+reference + "Reference Image 3" block) is TUNED and needs your go.
+
+**Second fix in the same run (`45f2127`):** the presenter reference never reached
+`producer_runs.avatar_url` on a fresh run (fired before the row existed → 404 → eaten by a bare
+`catch {}`; 25 of 33 runs NULL), so `identityRefLost`'s "Start over" was a dead end. Now fires
+after the first persist. ▶ **Same run answers both: wordmarks back? `avatar_url` non-NULL?**
 
 ## ✅ SHIPPED THIS SESSION — 10 commits, ZERO video credits (storyboards spend `images`)
 
@@ -41,19 +44,14 @@ reference + "Reference Image 3" block) is TUNED and needs your go. Side finding:
   `packaging`, but the sentence telling the model WHEN to set a slot named only onbody/inuse/
   after, while PRODUCT_TRUTH_RULE bans inventing a box. Unreachable by construction.
 - `c82b5ec` — **and the orchestrator threw it away anyway.** A product-state slot on a scene
-  WITH a performer matched neither `usePersonState` (wants person-state) nor `useVenue`
-  (wants no performer), so it silently fell back to the hero. Proven from Postgres: the
-  storyboard emitted `venueSlot="packaging"` on scenes 1 AND 2 and both rendered the pouch.
-  Same half-finished repair as the 2026-08-16 REAL-PHOTO ROUTING note 20 lines above it.
-  The two REGENERATE paths had no slot lookup at all.
+  WITH a performer matched neither `usePersonState` nor `useVenue`, so it fell back to the
+  hero; the two REGENERATE paths had no slot lookup at all. Proven from Postgres.
 - `ab57726` — **S2 carries a frame pair now.** A single still cannot tell the video model
   what a sealed box opens INTO. `isHookMorph` was scoped to scene 0 (it kills both slot
   routes, so unscoped it would have undone `c82b5ec`); the two bans were narrowed rather than
   deleted, and `transitionEffect` stays banned everywhere — hard cuts still hold.
-- `e8d80d6` — composed two-object reference sheet + **S3 framed on the label**. S3 was
-  rendering as the back of the pack: TACTILE SHOWCASE wants an extreme texture close-up and
-  the front-of-label rule wants a readable wordmark, and a tight crop on bare film cannot do
-  both. **The S3 half worked** — the label is readable now.
+- `e8d80d6` — composed two-object reference sheet + **S3 framed on the label** (TACTILE
+  SHOWCASE's texture close-up fought the readable-wordmark rule). **The S3 half worked.**
 - `10d1c31` — three script-stage rules: `body` pinned to N-1 entries (per-beat shot direction
   is POSITIONAL), CTA must name what to click, hook may not invent an occupation.
 - `158f453` — **voice and auto-cast decided gender separately.** Pinay Vlogger voice, male
