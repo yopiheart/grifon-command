@@ -353,6 +353,19 @@ describe('generateStoryboard schema', () => {
     expect(prompt).toContain('FRONT of the bag');
     expect(prompt).toMatch(/banned/i);
   });
+
+  it('BAG_ORIENTATION_RULE treats the still as a video seed — no hand over the label, plus posture', () => {
+    const prompt = buildStoryboardPrompt(storyboardInput);
+    // Regression: the hand was once allowed to cover the bag's front. When the
+    // video model moved that hand it INVENTED the covered pixels and rendered a
+    // second, fake wordmark (verified on a real render, session 40).
+    expect(prompt).not.toMatch(/MAY occlude part of the bag/);
+    expect(prompt).toMatch(/MUST NOT cover any part of the label/);
+    expect(prompt).toContain('POSTURE:');
+    expect(prompt).toContain('HAND:');
+    // A box/carton must keep its natural placement — the Unboxing format needs it.
+    expect(prompt).toMatch(/box, carton, or tin keeps its natural placement/);
+  });
 });
 
 // ----------------------------------------------------------------------------
