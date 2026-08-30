@@ -45,17 +45,12 @@ already says a good frame proves only that it CAN recur. One run is not verifica
 
 ## 📐 THE CUT MECHANISM — measured, not inferred
 
-From ffprobe on the delivered MP4 (run `apr_bed3c4d2`), against the four VO MP3s:
-
-```
-cuts 2.90 / 5.667 / 9.033, total 13.600s
-VO mp3   2.400  2.880  3.280  6.037
-in cut   2.90   2.77   3.37   4.57      s0 is +0.50 = the hook's revealHoldSec exactly
-```
-
-Every scene sat on its voice end. 21s generated, 13.6s kept, **7.4s of paid footage binned.**
-Note the EDL's own `keepSegments` (`scriptLine.length/18`) is computed and then DISCARDED on
-any voiced run — it is read only when `audioMode === 'sfx_only'`.
+ffprobe on the delivered MP4 (`apr_bed3c4d2`) vs the four VO MP3s: cuts at 2.90 / 5.667 /
+9.033, total 13.600s; VO ends 2.400 / 2.880 / 3.280 / 6.037. Every scene sat on its voice
+end, and s0 is +0.50 on its VO — the hook's `revealHoldSec` exactly, which is what named the
+mechanism. 21s generated, 13.6s kept, **7.4s of paid footage binned.** Note the EDL's own
+`keepSegments` (`scriptLine.length/18`) is computed then DISCARDED on any voiced run — it is
+read only when `audioMode === 'sfx_only'`. Full numbers in `7cb2020`.
 
 ## ⚠ TUNED LIST — still needs Neil's go
 1. **Pinned claim** for FEATURE FILTER. "unang 50 lang" has now dropped 4 runs straight.
