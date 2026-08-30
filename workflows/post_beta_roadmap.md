@@ -1658,6 +1658,71 @@ Max→Pro block; the prune itself stays parked behind the sample batch.
 
 ---
 
+### 29. Server-side run advancement — the browser is currently the engine
+
+**What:** Move producer-run advancement off the open tab. Today `ProducerFlow.tsx` calls
+`runProduction()` on mount (`components/OneShotAd/ProducerFlow.tsx:195`) and the whole
+claim → record → poll → complete cycle is driven client-side through
+`api/producer/advance.ts`. Server state is the *checkpoint*; the tab is the *engine*.
+Close it mid-run and nothing advances until a tab comes back.
+
+**Coverage is partial today — measured 2026-08-30, not estimated:**
+
+| Stage | Survives tab close? | Evidence |
+|---|---|---|
+| Final render (FFmpeg assembly) | ✅ **yes** | fires server-side, status in a Storage sidecar, `serverJobsService.ts` reads `api/render/final/list.ts` so any device sees it |
+| Per-scene video fan-out (Veo/Kling) | ❌ **no** | `'complete'` is called from exactly one place, `services/producerRunService.ts:272` — the client. No server reaper, no cron |
+| Market research / script / storyboard | ❌ **no** | `activeJobsService.ts` says so in its own header: *"In-memory pub/sub … Cleared on tab close — Phase 1 doesn't persist"* |
+
+So the already-shipped engagement Phase 4 solved this for the **final render only**. The
+expensive middle of the run is still tab-bound.
+
+**Why it matters:** The failure mode is not a stalled run, it is an *uncollected paid one*.
+A fan-out scene that was claimed and submitted has already been billed by the provider; the
+result simply never gets fetched. `producer_claim_scene` correctly prevents a double-spend on
+resume, so nothing is spent twice — but nothing collects the first spend either until a human
+reopens the tab. The unattended stretches (fan-out render, market research) are exactly where
+a user walks away, which is precisely when this bites.
+
+**Open question, deliberately NOT asserted:** whether an uncollected scene is *recoverable* or
+*lost* depends on the **provider's** artifact retention (Veo/Kling side), which was not
+verified. Note the adjacent-but-different thing: our own `api/cron/cleanup-gemini-videos.ts`
+reaps the `gemini-videos` bucket by **age only** (48h, `MAX_AGE_MS`) with no guard against a
+live producer run. That is not the loss path for an uncollected scene (it never reached our
+bucket), but an age-only reap with no live-run check is worth its own look while in here.
+
+**Why parked:** Bounded, and not the launch blocker. Both human gates park the run anyway, so
+the exposure is only the unattended stretches. Fixing it means adding a queue and a worker —
+real infrastructure — while the actual blocker is creative-quality work (the scene-2 wordmark
+defect) and there are zero paying users to strand.
+
+**When to resume:** When a real user reports a run that never finished, or when beta traffic
+makes walk-away runs common. Whichever comes first. Also revisit if provider artifact
+retention turns out to be short, which would upgrade this from annoyance to money lost.
+
+**Where to start:**
+1. **Measure the loss path first, before building anything.** Submit one fan-out scene, close
+   the tab, wait past the provider's retention window, reopen. Recoverable or lost? That single
+   answer decides whether this is a polish item or a defect.
+2. Check whether the 48h age-only reap can delete an artifact a parked run still references.
+3. Only then design the worker. The reference shape is the Anthropic self-hosted-sandbox
+   cookbook's **webhook → drain-queue → detached-runner** pattern, which unlike the rest of that
+   announcement *is* serverless-compatible (a 60s webhook function; work detaches). **Take the
+   pattern, not the SDK** — build it against our own `producer_scenes` table, which already has
+   the atomic claim the pattern needs. Full rejection record for the SDK itself:
+   `concierge_director_plan.md` §2, corroboration #3.
+4. Whatever is built must preserve `producer_claim_scene` semantics exactly. Exactly-once
+   provider spend under resume, retry and two open tabs is load-bearing financial logic.
+
+**Scope estimate:** Step 1 is ~30 minutes and is the whole decision. Steps 3-4, if they happen,
+are days, not hours — a queue, a worker, and a new class of partial-failure to reason about.
+
+**Source:** Fell out of the Claude Managed Agents / Vercel Chat SDK evaluation (2026-08-30).
+The announcement itself was rejected for the product; this gap is the one real thing it
+surfaced, and the coverage table above was measured during that evaluation rather than assumed.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
