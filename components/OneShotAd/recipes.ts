@@ -136,10 +136,24 @@ export const SAMPLES: Partial<Record<RecipeId, RecipeSample>> = {
   // it (25.6%) and carries no voiceover, so the expand modal is the only place the whole thing
   // can be seen and heard. 720x1280 h264+aac, 6.92 MB, preload="none" until someone opens it.
   real_talk: { video: '/samples/real_talk.mp4', poster: '/samples/real_talk.jpg', full: '/samples/real_talk-full.mp4' },
-  // Cut from tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4, already committed —
-  // no new render. 3.9s-12.0s: applying the serum at the mirror, then the result. Scene 1 is
-  // skipped on purpose: its morph resolved into a HALLUCINATED bottle (rose-gold, glitter, the
-  // garbled label "RYA CWYA"), a PRODUCT_TRUTH_RULE break in the same family as the hook morph.
-  // This cut carries no burned captions — the source is a RAW render, before the caption pass.
-  before_after: { video: '/samples/before_after.mp4', poster: '/samples/before_after.jpg' },
+  // Run apr_c64449dd (Bukid Coffee), the 2026-08-30 render. Cut 2.90s-9.90s of the finished
+  // 14.00s ad: the whole reveal beat (hands opening the box, the pouch drawn out) straight into
+  // the product hero, so the loop ends on the pouch standing alone rather than mid-motion. Two
+  // complete burned captions live inside the cut ("SOBRANG BANGO AGAD!", "SWABE SA TIYAN") —
+  // kept for the same reason real_talk keeps its own, they are what a competitor's gallery does
+  // not have. Poster is the loop's FIRST frame so the tile does not jump when it starts.
+  //
+  // This is the first sample cut from a run where the S2 frame pair is CONTINUITY-locked
+  // (4bc850d), which is what lets the reveal read as one continuous take, and the first where
+  // the action hold (7cb2020/29fe7eb) let the pull finish: that scene ran 2.77s before the fix
+  // and 4.29s here, measured off the delivered MP4.
+  //
+  // KNOWN, and Neil chose to ship it: the label's SUB-LINE renders as "Barake Medium Roast 250g"
+  // on the box (the standalone pouch at 8.2s is correct). The image gate cannot catch it —
+  // expectedLabelText is the product NAME only. Tracked in NOW.md OPEN #1; recut this sample
+  // from a clean run once that is fixed.
+  //
+  // `full` is the whole 14.00s ad WITH audio for the expand modal; the tile clip has no audio
+  // track at all.
+  unboxing: { video: '/samples/unboxing.mp4', poster: '/samples/unboxing.jpg', full: '/samples/unboxing-full.mp4' },
 };
