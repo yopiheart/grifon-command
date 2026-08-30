@@ -137,6 +137,63 @@ everything else in that brief was already WAT doctrine.
 > plan, an exhausted Gemini video budget, and zero paying users. Full rejection
 > record: `post_beta_roadmap.md` #27.
 
+> **Corroboration #3 (2026-08-30, Anthropic Claude Managed Agents + the Vercel
+> self-hosted-sandbox cookbook).** The strongest of the three, because #1 and #2 were
+> *briefs* — an investor's thesis and a CEO's framework post — while this is the vendor
+> **shipping the runtime**. The self-hosted-sandbox runner (`runner/runner.mjs`)
+> downloads agent skills into `/workspace/skills/<name>/` and executes
+> `EnvironmentWorker.handleItem()` against them: orchestration loaded from versioned
+> skill files at run time, which is the exact shape recorded above in 2026-07. That
+> clears the repo's ≥3-corroboration bar, so **skills-as-orchestration moves from
+> `noted` to `proposed`** for `api/director/run.ts` — the design is settled; only the
+> brain's own gate still holds it.
+>
+> **Does NOT move either gate** — same verdict as #2. The §10 rescope (Concierge =
+> productized Expert, no new AI brain) and the closed-loop eval harness gate both stand.
+> A better-specified brain is still a brain this repo has not earned: capped plan,
+> exhausted Gemini video budget, zero paying users.
+>
+> **The rest of the announcement was evaluated and REJECTED (2026-08-30) — recorded here
+> so it is not re-derived:**
+>
+> 1. **The Vercel Chat SDK half — no.** Its value is 15+ chat adapters (Slack, Teams,
+>    Discord). Grifon has no chat surface and should not grow one; the market ruling in
+>    the MCP-ready flow layer above applies verbatim with different nouns — Filipino SMBs
+>    do not live in Slack workspaces either. `IntelligenceUplink.tsx` is the only
+>    chat-adjacent module and is not a conversational agent surface.
+> 2. **Hard architectural conflict: held streams vs serverless.** The quickstart states
+>    plainly that `/api/chat` holds the response stream for the whole turn and that
+>    serverless will not work; its deploy target is Vercel *Services*. Every `api/*`
+>    handler here is a Vercel *Function* capped at 30-300s (`vercel.json`), and the
+>    fire-then-poll video pattern exists precisely because of that ceiling. Adoption means
+>    a second always-on service beside the Vercel app — new deploy target, new ops.
+> 3. **The session/memory pitch is already solved here, and our version is money-aware.**
+>    Managed Agents sells session state, event-log replay and compaction. We have
+>    `producer_runs` + `producer_scenes`, an event vocabulary a generic store does not
+>    have (`gate_park` / `gate_approve` / `cogs` / `watchdog_kill`, and the deliberate
+>    `check_skip` vs `check_fail` split in `api/_lib/runEvents.ts`), and above all the
+>    atomic `producer_claim_scene` RPC in `api/producer/advance.ts` that makes provider
+>    spend **exactly-once under resume, retry and two open tabs**. A generic agent session
+>    store has no concept of a step that costs money and must fire once. Migrating toward
+>    one is not lateral — it is a downgrade that would be paid in double-spent Veo/Kling
+>    renders.
+> 4. **It would reopen the opex §10 banked.** Verified 2026-08-30:
+>    `grep -rn "anthropic\|claude-"` across `api/ services/ components/ package.json`
+>    returns **zero** — there is no Claude anywhere in production today. Adoption is a new
+>    vendor plus a new per-run billing line, which is the exact cost the rescope recorded
+>    as saved ("no new per-run opex now that the Claude brain is deferred").
+>
+> **One pattern worth keeping (reference only, no dependency).** The cookbook's
+> webhook -> drain-queue -> detached-runner shape *is* serverless-compatible (a 60s
+> webhook function; work detaches into sandboxes) and maps to a real gap: the production
+> loop runs in the **browser** — `ProducerFlow.tsx` calls `runProduction()` on mount, so
+> server state is the checkpoint but the tab is the engine, and a closed tab stops
+> advancing the run. The gap is bounded (both human gates park the run anyway, so it only
+> bites during the unattended stretches — fan-out video render and market research) and
+> its true size is **unmeasured**: how much `activeJobsService` already covers was not
+> checked. If that gap is ever worked, take the queue-and-worker shape against our own
+> `producer_scenes` table. Take the pattern, not the SDK.
+
 ### Closed-loop eval harness — build it BEFORE the brain (noted 2026-08-05)
 Deferred along with the AUTO Director brain — recorded here so the gate exists the
 day Option A resurfaces. Source: Waymo/Dolgov "the demo is 1%" brief eval
