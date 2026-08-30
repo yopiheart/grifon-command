@@ -21,16 +21,19 @@ Last run (`?osaEngine=producer`, Bukid Coffee, Unboxing). The scene-2 END frame 
 2. **It reproduced the side-by-side layout** the appended prompt line told it not to — the
    two objects just stand next to each other instead of one coming out of the other.
 
-**Leading hypothesis, NOT verified:** `composeReferenceSheet`
-([producerOrchestrator.ts](services/producerOrchestrator.ts), added `e8d80d6`) caps each photo
-at 1024 height side by side, so each object carries roughly half the pixel width a single
-reference would, then ships as JPEG 0.92 — less text detail to copy. Cheap probes first: raise
-the sheet resolution, use PNG, or crop tighter so each object fills more of its half.
+**DIAGNOSED 2026-08-30 from Postgres — the resolution/JPEG hypothesis is REFUTED; do not spend
+a run on sheet quality.** Every tuned branch taking a product photo bans a "second unit"
+(NO_UNSOLICITED_PRODUCT: `product` r8, `both` r10). The sheet IS one, so the model was told to
+reproduce Ref 1 exactly AND not to render it, and blanked both wordmarks while keeping the
+unbranded bean window. Lost pixels blur a label; they do not delete exactly the class a rule names.
 
-**If that fails, Option B is unavoidable** and was already scoped: widen
-`generateSceneImage`'s `references` ([geminiService.ts:2328](services/geminiService.ts#L2328))
-to a third image, add a `referenceImageMode`, and write a "Reference Image 3" instruction
-block. That is a TUNED edit and needs Neil's explicit go.
+**Fix pushed (`bbbed45`), NOT yet eyeballed.** The per-scene line now names both objects, riding
+r8/r10's own carve-out ("unless the Scene Prompt explicitly names it"); no tuned file touched.
+Also fixed a silent truncation (the 400-char cap ate blind appends). ▶ **Next: run Bukid Coffee
+Unboxing, look at the S2 END frame.** If wordmarks return, done; if not, Option B (third
+reference + "Reference Image 3" block) is TUNED and needs your go. Side finding:
+`input.avatar.url` is absent from the checkpoint so `resolveMode` silently downgrades
+`both`→`product` — not the cause here, but a live bug.
 
 ## ✅ SHIPPED THIS SESSION — 10 commits, ZERO video credits (storyboards spend `images`)
 
@@ -51,18 +54,15 @@ block. That is a TUNED edit and needs Neil's explicit go.
   rendering as the back of the pack: TACTILE SHOWCASE wants an extreme texture close-up and
   the front-of-label rule wants a readable wordmark, and a tight crop on bare film cannot do
   both. **The S3 half worked** — the label is readable now.
-- `10d1c31` — three script-stage rules. `body` pinned to N-1 entries (6 scenes on a 4-beat
-  spec is what broke the per-beat shot direction, which is POSITIONAL); CTA must name what to
-  click (the SOFT CTA GUARD's ban on "link sa bio" had the model dropping "link" entirely);
-  hook may not invent an occupation ("bago mag-login" on a coffee brief).
+- `10d1c31` — three script-stage rules: `body` pinned to N-1 entries (per-beat shot direction
+  is POSITIONAL), CTA must name what to click, hook may not invent an occupation.
 - `158f453` — **voice and auto-cast decided gender separately.** Pinay Vlogger voice, male
   avatar. Presenter SET → the picker filters; AUTO → the VOICE decides the cast, since the
   user's pick is explicit and the cast gender was only inferred. Tested, and the test was
   proved to bite by flipping a row.
-- `bcba547` — packaging photos and the upload EXAMPLE now show the container ALONE. The
-  example mattered as much: the app was teaching users to upload the two-object shot.
-- `ebf8f01` `1990647` `2e5c8d3` — the nine brand briefs (they had photos and no offer),
-  the corrected engine rationale, and the `public/examples` sparse-checkout gap.
+- `bcba547` — packaging photos AND the upload example now show the container ALONE; the app
+  was teaching users to upload the two-object shot.
+- `ebf8f01` `1990647` `2e5c8d3` — nine brand briefs, engine rationale, examples checkout gap.
 
 ## ⚠ OPEN — ranked
 
