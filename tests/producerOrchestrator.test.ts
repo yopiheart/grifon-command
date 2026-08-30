@@ -917,7 +917,11 @@ describe('end-frame (hook morph) generation', () => {
     expect(startCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: undefined });
     expect(plainCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: 'data:image/png;base64,AAAA' });
     // END frame names the product ("Bukidnon Brew") → hero-anchored, 'both' mode, +100 seed.
-    expect(endCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: 'data:image/png;base64,AAAA' });
+    // continuityUrl is the START frame of this same beat (CONTINUITY_LOCK, 2026-08-30): the two
+    // stills used to be generated blind to each other and landed in different rooms at different
+    // camera distances, which animates as a blink rather than a reveal. The start frame is the
+    // only input that can carry "same shot, seconds later" — a description cannot.
+    expect(endCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: 'data:image/png;base64,AAAA', continuityUrl: 'img://START0' });
     expect(endCall[9]).toBe(100);
     expect(endCall[10]).toBe('both');
     // Both urls persisted on the storyboard scene.
@@ -936,7 +940,9 @@ describe('end-frame (hook morph) generation', () => {
     await runProduction(run, cb(), deps);
 
     const endCall = (spies.generateSceneImage.mock.calls as any[]).find((c) => String(c[0]).startsWith('ENDX'))!;
-    expect(endCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: undefined });
+    // Product-free, but STILL continuity-locked: an abstract reveal has all the more reason to
+    // stay in the room the start frame established, since no product photo anchors it either.
+    expect(endCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: undefined, continuityUrl: 'img://START0' });
     expect(endCall[10]).toBe('none'); // falls back to the scene's own referenceImage
   });
 

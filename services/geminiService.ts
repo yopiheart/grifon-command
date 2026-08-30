@@ -2325,7 +2325,7 @@ export const generateSceneImage = async (
     prompt: string, 
     aspectRatio: '9:16' | '16:9' | '1:1' | '4:5' | '3:4', 
     imageQuality: '1K' | '2K',
-    references: { avatarUrl?: string; productUrl?: string } = {},
+    references: { avatarUrl?: string; productUrl?: string; continuityUrl?: string } = {},
     ethnicity: string = 'Global',
     brandColors: string[] = [],
     scriptType: string = 'MrBeast',
@@ -2351,6 +2351,25 @@ export const generateSceneImage = async (
     if (references.productUrl) {
         const match = references.productUrl.match(/data:(image\/.+);base64,(.+)/);
         if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+    }
+
+    // CONTINUITY reference — the PREVIOUS still of this same shot (today: an unboxing S2 start
+    // frame, when generating its end frame). Pushed LAST, and its ordinal is COMPUTED from the
+    // parts actually pushed, never hard-coded.
+    //
+    // Hard-coding it would repeat this file's oldest bug twice over. "Reference Image N" is
+    // POSITIONAL — it names whatever landed in parts[N-1] — and the two documented incidents
+    // above both come from an ordinal that no longer pointed where its prompt text claimed
+    // (2026-07-25: a missing avatar made "Reference Image 1" the PRODUCT, so IDENTITY_LOCK tried
+    // to preserve a bottle's face). The avatar is exactly the reference that goes missing here:
+    // input.avatar.url does not survive a checkpoint. So the number is interpolated below.
+    let continuityIdx = 0;
+    if (references.continuityUrl) {
+        const match = references.continuityUrl.match(/data:(image\/.+);base64,(.+)/);
+        if (match) {
+            parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+            continuityIdx = parts.length;
+        }
     }
 
     // --- REFERENCE-MODE RESOLUTION (routing, not prompt content) ---
@@ -2527,6 +2546,28 @@ export const generateSceneImage = async (
         `;
     }
 
+    // CONTINUITY_LOCK — appended, never a mode of its own. A continuity frame is an EXTRA
+    // reference, orthogonal to which mode is running, so none of the six branches above and
+    // none of resolveMode's downgrade paths change behavior when it is absent.
+    //
+    // Why it exists (Neil, 2026-08-30, on a real unboxing pair): the start frame rendered as
+    // hands at a window and the end frame as a man at a bookshelf, because the two stills are
+    // generated from two independent prompts and NEITHER can see the other. Animated, that is
+    // a magic/blink cut, not an unboxing. The hook works around the same blind spot in prose
+    // (HOOK ANCHOR RULE makes the two PROMPTS name one anchor) and still lands in "formless
+    // flesh-toned mush" often enough to say so in its own text. Handing the model the actual
+    // previous frame replaces that agreement-by-description with the picture itself.
+    if (continuityIdx > 0) {
+        consistencyRules += `
+        **CONTINUITY_LOCK (Reference Image ${continuityIdx} = the PREVIOUS frame of THIS SAME shot — outranks every framing instruction above):**
+        1. **SAME SHOT, SECONDS LATER.** Reference Image ${continuityIdx} is not a style guide, not a mood board, and not a different scene. It is this exact shot a moment earlier. What you render must look like the NEXT frame of that same continuous take.
+        2. **COPY EXACTLY from Reference Image ${continuityIdx}:** the location and every background element in it, the camera angle, the camera distance and framing, the lens height, the lighting direction and colour temperature, and — if a person is present — that same person, same face, same hair, same wardrobe, seated or standing in the same place.
+        3. **CHANGE ONLY what this scene's prompt explicitly names** — the state of the objects, and the person's pose, hand position and expression. Everything the prompt does not name MUST stay as Reference Image ${continuityIdx} has it.
+        4. **BANNED:** a new room, a new background, a new camera angle, a new distance, a new time of day, a different person, or a different outfit. Any one of these breaks the take and the two frames read as two unrelated shots.
+        5. **The product references still govern what the objects LOOK like** (labels, wordmarks, colour, material). Reference Image ${continuityIdx} governs WHERE the camera is and WHAT SURROUNDS them. They do not compete: identity from the product photos, continuity from this frame.
+        `;
+    }
+
     // 1. RE-INSERT THE CAMERA LOGIC
     // AVATAR_CAMERA_ANGLES describe a HUMAN subject ("face fully toward camera", "focus: eyes").
     // Only inject them when a human belongs in frame (avatar/both). In product/none modes the
@@ -2538,7 +2579,13 @@ export const generateSceneImage = async (
     // and the after beat two different shots — directly contradicting the PERSON_STATE rule 3
     // parity requirement (and the skeleton's own "framed IDENTICALLY to S1"). That mode pins its
     // own framing and its own face rule instead. Rotation still applies to every other beat.
-    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue';
+    // A continuity frame suppresses the rotation for the same reason 'avatar_state' is excluded
+    // above: the rotation hands consecutive frames two DIFFERENT framings, which is precisely
+    // what CONTINUITY_LOCK rule 2 forbids. Left in, the mandate and the lock would contradict
+    // each other inside one prompt, and the whole point of the lock is that the camera does not
+    // move between the two stills.
+    const humanSubjectInFrame = (referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue')
+        && continuityIdx === 0;
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
     const cameraMandatory = humanSubjectInFrame ? `
     **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**

@@ -276,7 +276,7 @@ export interface ProducerDeps {
     prompt: string,
     aspectRatio: '9:16' | '16:9' | '1:1' | '4:5' | '3:4',
     imageQuality: '1K' | '2K',
-    references: { avatarUrl?: string; productUrl?: string },
+    references: { avatarUrl?: string; productUrl?: string; continuityUrl?: string },
     ethnicity: string,
     brandColors: string[],
     scriptType: string,
@@ -1050,7 +1050,7 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
       s.gateVerdict = undefined;
     });
     if (scene.endFramePrompt) {
-      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps);
+      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps, imageUrl);
       await commit((r) => {
         if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
       });
@@ -1200,7 +1200,7 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
       s.gateVerdict = undefined; // fresh image — stale verdict must not ride along (PR #70 critic)
     });
     if (scene.endFramePrompt) {
-      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps);
+      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps, imageUrl);
       await commit((r) => {
         if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
       });
@@ -1405,7 +1405,7 @@ export function buildEndFramePrompt(scenePrompt: string, hasSheet: boolean): str
  * on failure — endFrame is optional downstream, so a failed end frame degrades the scene to
  * a single-frame render instead of flagging it.
  */
-async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number, deps: ProducerDeps): Promise<string | undefined> {
+async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number, deps: ProducerDeps, startFrameUrl?: string): Promise<string | undefined> {
   if (!scene.endFramePrompt) return undefined;
   const productWords = (run.input.productName || '')
     .toLowerCase()
@@ -1446,7 +1446,12 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
           endPrompt,
           run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
           '1K',
-          { avatarUrl: run.input.avatar.url, productUrl: reveals ? (sheet ?? run.input.heroImageBase64) : undefined },
+          // continuityUrl = the START frame of this same beat. The two stills were previously
+          // generated from two independent prompts with no sight of each other, so they landed
+          // in different rooms at different distances and animated as a blink rather than an
+          // unboxing (Neil, 2026-08-30, on a real pair). Passing the frame itself is what makes
+          // the end still read as the same take seconds later.
+          { avatarUrl: run.input.avatar.url, productUrl: reveals ? (sheet ?? run.input.heroImageBase64) : undefined, continuityUrl: startFrameUrl },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
@@ -1864,7 +1869,7 @@ async function runStage(
               }
             }
             if (needsEnd) {
-              const endUrl = await renderEndFrame(run, scene, i, deps);
+              const endUrl = await renderEndFrame(run, scene, i, deps, scene.imageUrl);
               await commit((r) => {
                 if (r.storyboard) r.storyboard[i].endFrameImageUrl = endUrl;
               });
