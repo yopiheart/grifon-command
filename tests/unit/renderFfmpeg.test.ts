@@ -4,7 +4,7 @@ import {
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
   planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx, voiceChunkWindows,
-  sceneNormalizeFilter, musicMixPlan,
+  sceneNormalizeFilter, musicMixPlan, ACTION_HOLD_SEC,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import { CLASSIC, CLEAN, HYPE, IMPACT, PRESETS } from '../../api/_lib/renderPresets.js';
@@ -180,6 +180,40 @@ describe('chooseTrim', () => {
     const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, 3.9, 3.6);
     expect(plan.trimSec).toBeCloseTo(3.9, 3); // 3.6 + 0.5 capped to the 3.9 clip
     expect(plan.padAudio).toBe(true);
+  });
+
+  // A silent scene's clip carries an ACTION, and the VO end says nothing about
+  // when that action finishes. The speech-end trim is there to cut Veo's filler
+  // speech, which only a talking clip produces — so it must not govern b-roll.
+  it('b-roll: holds ACTION_HOLD_SEC past the VO end so the action finishes', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(2.8 + ACTION_HOLD_SEC, 3);
+    expect(plan.padAudio).toBe(true);
+  });
+
+  it('cinematic: gets the same action hold as b-roll', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'cinematic' }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(2.8 + ACTION_HOLD_SEC, 3);
+    expect(plan.padAudio).toBe(true);
+  });
+
+  it('talking: NOT held — the VO end still governs, so filler speech stays cut', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'talking' }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(2.8, 3);
+    expect(plan.padAudio).toBe(false);
+  });
+
+  it('the action hold cannot overrun the clip', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, 3.2, 2.8);
+    expect(plan.trimSec).toBeCloseTo(3.2, 3); // 2.8 + 1.5 capped to the 3.2 clip
+  });
+
+  // Regression, measured off the 2026-08-30 Bukid render (run apr_bed3c4d2):
+  // the unbox scene was a 5s Kling clip cut to 2.77s at the VO end, and the pouch
+  // never finished coming out of the box. ffprobe cuts: 2.90 / 5.67 / 9.03 / 13.60.
+  it('Bukid unbox scene: 2.77s of a 5s clip becomes 4.27s', () => {
+    const plan = chooseTrim({ audioUrl: 'x', sceneType: 'b-roll' }, 5.0, 2.77);
+    expect(plan.trimSec).toBeCloseTo(4.27, 3);
   });
 
   it('falls back to the word-count estimate when there is no measured VO end', () => {
