@@ -230,6 +230,24 @@ touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
   2026-08-31 rewrite dropped that half, and `NOW.md` is at exactly 90 of its
   90-line cap (`tools/resume_doc_check.mjs`), so it cannot carry a second home for
   parked work. Do not re-add it there; if a session needs the rule, it reads this.
+  - **2026-08-31 — Pocock `/implement-spec` evaluated against this gate: DECLINED.**
+    The upstream skill's core move is parallel implementer subagents on worktrees
+    plus a merger subagent, at "maximum concurrency". Rejected on three counts.
+    **(1)** The headline gate is unmet: `main` is `"protected": false`, checked
+    against the GitHub API, so it requires neither a PR nor an approving review.
+    **(2)** Issue #87's operating rule — "**One ticket per session**" — is the
+    direct negation of "maximum concurrency", and it was written after the #79
+    lesson, not before it. **(3)** A *background* subagent auto-denies a permission
+    prompt (`agent_lessons.md` 2026-06-10) and `tuned-file-gate.sh` is an **ask**
+    hook, so a background implementer touching a TUNED file fails closed but
+    ILLEGIBLY — it reports a confusing block instead of escalating to Neil.
+    One piece was adopted: the exploration-notes pointer (a subagent writes its
+    findings to a file and returns the PATH), now in `CLAUDE.md` Context Hygiene.
+    ⚠ **The re-open condition is the headline gate verbatim — a PR AND an approving
+    review. Branch protection alone does NOT qualify**, and that is not pedantry:
+    GitHub's common default is "require a PR, 0 required approvals", which
+    satisfies protection while leaving every sticky comment unread. That is the
+    weaker condition this entry was already amended once to kill.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
     to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
