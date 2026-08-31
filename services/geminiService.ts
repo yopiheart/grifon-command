@@ -2358,9 +2358,19 @@ export const generateSceneImage = async (
         if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
     }
 
+    // POSITIONAL, exactly like continuityIdx below. The avatar above is pushed on its own
+    // presence and NOT on referenceImageMode, so on every producer call site (they all pass
+    // avatarUrl unconditionally) the product lands at parts[1], not parts[0].
+    // PRODUCT_IDENTITY_LOCK hard-coded "Reference Image 1" and therefore aimed all seven of
+    // its rules at the presenter's portrait, leaving the product photo unnamed by any rule.
+    // Defaults to 1, so the emitted text is byte-identical wherever no avatar was pushed.
+    let productIdx = 1;
     if (references.productUrl) {
         const match = references.productUrl.match(/data:(image\/.+);base64,(.+)/);
-        if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+        if (match) {
+            parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+            productIdx = parts.length;
+        }
     }
 
     // CONTINUITY reference — the PREVIOUS still of this same shot (today: an unboxing S2 start
@@ -2455,14 +2465,14 @@ export const generateSceneImage = async (
     } else if (referenceImageMode === 'product' && references.productUrl) {
         consistencyRules = `
         **PRODUCT_IDENTITY_LOCK:**
-        1. **IDENTITY:** Reproduce the product from Reference Image 1 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
-        2. **VISUAL_GROUND_TRUTH_PRIORITY (overrides text metadata):** Reference Image 1 is the VISUAL GROUND TRUTH for the product. Do NOT infer visual properties (color, jar shape, label design, finish, fill level, packaging material) from the product NAME or DESCRIPTION text fields below. If text says "Ube-Calamansi Marmalade" but Reference Image 1 shows a red/strawberry-jam jar with a pink label, render the RED/strawberry jar exactly as photographed — do NOT render a purple ube jar. Text metadata controls ONLY: wordmark text language, product category confirmation, and the words appearing on the label. IMAGE wins every visual tie.
-        3. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 1 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
+        1. **IDENTITY:** Reproduce the product from Reference Image ${productIdx} EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
+        2. **VISUAL_GROUND_TRUTH_PRIORITY (overrides text metadata):** Reference Image ${productIdx} is the VISUAL GROUND TRUTH for the product. Do NOT infer visual properties (color, jar shape, label design, finish, fill level, packaging material) from the product NAME or DESCRIPTION text fields below. If text says "Ube-Calamansi Marmalade" but Reference Image ${productIdx} shows a red/strawberry-jam jar with a pink label, render the RED/strawberry jar exactly as photographed — do NOT render a purple ube jar. Text metadata controls ONLY: wordmark text language, product category confirmation, and the words appearing on the label. IMAGE wins every visual tie.
+        3. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image ${productIdx} must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
         4. **ANATOMICAL_LOCK:** Render ONLY the number of hands the action needs — one hand pouring/holding the product = exactly ONE hand; a two-handed action = exactly TWO. Five fingers each. NEVER add an extra, third, phantom, or duplicate hand to "complete a pair", and never a disembodied hand entering frame. Anatomy matches the action, not a fixed count.
-        5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image 1 shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
-        6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
-        7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
-        8. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 1, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
+        5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image ${productIdx} shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
+        6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image ${productIdx}. Match the warmth/coolness of its highlights.
+        7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image ${productIdx} is the hero.
+        8. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image ${productIdx}, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
         `;
     } else if (referenceImageMode === 'both' && references.avatarUrl && references.productUrl) {
         consistencyRules = `
