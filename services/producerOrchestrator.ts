@@ -1113,6 +1113,33 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
  *  `wantIdentity` — kept as its own constant because this one guards GENERATION, not a check. */
 const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue']);
 
+/** ASMR is voiceover over b-roll, not a talking head, and that has to be decided HERE.
+ *
+ *  The storyboard prompt's ASMR TREATMENT asks for "hands and textures over faces". It cannot
+ *  win on its own: any scene holding an identity reference also gets DUAL_REFERENCE_LOCK
+ *  (services/geminiService.ts), whose FACE_TO_CAMERA clause is "REQUIRED when the avatar speaks
+ *  the script line" and BANS face-away. Every scene has a script line, so the lock fires on every
+ *  identity-mode scene and outranks the softer instruction every time.
+ *
+ *  Measured on run apr_dddc492a (Silid Home, 2026-08-31): the three `both` scenes each rendered a
+ *  face their own imagePrompt never asked for -- "Hands positioned on either side of the
+ *  packaging ... static freeze-frame" came back as a portrait -- while the one `product` scene
+ *  obeyed it exactly. 3 of 3 against, 1 of 1 for.
+ *
+ *  So route the tactile beats off the avatar instead of asking the model twice. The LAST scene is
+ *  the spoken CTA, the one beat that genuinely wants the presenter, and keeps its reference. With
+ *  no hero photo to fall back on nothing is clamped at all -- never drop a reference the run
+ *  cannot replace (the same invariant utils/expertScenePostProcess.ts holds for Expert Mode). */
+export const clampAsmrSceneRefs = (scenes: Scene[], hasProduct: boolean): Scene[] => {
+  if (!hasProduct || scenes.length < 2) return scenes;
+  const lastIdx = scenes.length - 1;
+  return scenes.map((s, i) =>
+    i !== lastIdx && IDENTITY_MODES.has(s.referenceImage ?? 'avatar')
+      ? { ...s, referenceImage: 'product' as const }
+      : s
+  );
+};
+
 /** Shown to the user on a refused regen/reshoot. Names the cause and the only real escape. */
 export const IDENTITY_REF_LOST_REASON =
   'Presenter reference was lost on reload — Start over to re-shoot this scene';
@@ -1682,9 +1709,15 @@ async function runStage(
         MAX_STAGE_ATTEMPTS,
         bump
       );
+      // ASMR routes its tactile beats off the presenter BEFORE the storyboard is stored, so a
+      // later REGENERATE (which re-reads run.storyboard, never re-plans it) inherits the route.
+      const isAsmr = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+      const scenes = isAsmr
+        ? clampAsmrSceneRefs(sb.scenes, !!run.input.heroImageBase64)
+        : sb.scenes;
       await commit((r) => {
-        r.storyboard = sb.scenes;
-        r.scenes = sb.scenes.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus }));
+        r.storyboard = scenes;
+        r.scenes = scenes.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus }));
       });
       await setStage(id, { detail: `${sb.scenes.length} scenes` });
       return;

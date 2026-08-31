@@ -636,6 +636,13 @@ export const buildAdScriptPrompt = (
         marks. Soft noticing ("ang linis ng gilid nito…"), never hype delivery.
       - The hook MAY be a pure sound instruction ("…listen.") — 2-4 words allowed,
         overriding the 5-8 word pattern.
+      - NAME ONLY A SOUND THIS PACKAGING CAN ACTUALLY MAKE. The texture examples in the
+        beats above (tape rip, foam lift, magnetic click) are a MENU, not an answer — do
+        NOT copy them literally. A lift-off lid box has no tape to rip; a pouch has no lid
+        to lift. When the brief does not settle what the closure is, name a sound ANY
+        container makes (the lid coming off, the wrap, the weight settling on wood) instead
+        of a fastener that may not exist. In ASMR the sound IS the product, so an invented
+        one is the one lie the viewer can hear.
       ` : ''}
       ` : sub === 'demo' ? `
       **DEMO 5-BEAT (bold claim first; the payoff stunt kills the mid-video dip):**
@@ -1590,10 +1597,19 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
            An overhead or locked-off framing variant is allowed — state it in the
            sceneDescription.
         ${businessInfo.asmrFlag ? `
-        **ASMR TREATMENT:** Every scene favors EXTREME tactile close-ups and a
-        locked-off or overhead camera. Hands and textures over faces. Describe surfaces
-        and materials concretely in the imagePrompt (matte foam, glossy seal, brushed
-        metal) — texture is the subject.
+        **ASMR TREATMENT (HARD OVERRIDE — outranks the S1-S4 framing above):**
+        - S1, S2 and S3 carry NO PERSON. Not seated, not standing, no torso, no face, no
+          gaze. The words "seated", "sitting", "smile", "looking at the camera" and
+          "creator in frame" are BANNED in those imagePrompts — the beats above ask for a
+          creator and here they do not get one. This is not a style note: those scenes
+          render with NO presenter reference attached, so any person named in the prompt is
+          INVENTED and comes back as a DIFFERENT face from the one in the final scene.
+        - Write "one hand" or "both hands of one person", never a bare plural "hands". An
+          unowned plural renders extra, free-floating hands.
+        - The LAST scene is the spoken CTA and is the ONLY scene that keeps the creator.
+        - Every scene favors EXTREME tactile close-ups and a locked-off or overhead camera.
+          Describe surfaces and materials concretely in the imagePrompt (matte foam, glossy
+          seal, brushed metal) — texture is the subject.
         ` : ''}
         ` : ugcSub === 'demo' ? `
         **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Demo / Addiction)**
