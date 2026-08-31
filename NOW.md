@@ -1,41 +1,54 @@
 # NOW — the resume doc
-**Stamped: 2026-08-30** (session 41)
+**Stamped: 2026-08-31** (session 42)
 
-## ▶ NEXT ACTION — merge the branch, then produce the next sample
+## ▶ NEXT ACTION — merge, then RE-RUN the unboxing sample before moving on
 
-The unboxing sample is DONE and shipped to the recipe card. `claude/eval-managed-agents-vr01gs`
-is now ~20 commits ahead of `main` and is a clean fast-forward (0 commits on main are missing
-from it). Merge it before starting anything new — it has been carrying tonight's fixes alone.
+`claude/eval-managed-agents-vr01gs` is merged; `origin/main` carries it. The live branch is
+**`claude/code-review-ecszcz` (+1, `34ccb7d`)** — three defects a `/code-review` pass found
+under a green build. Merge it first.
 
-Then the next brand from `workflows/sample_brand_briefs.md`: **2 · Silid Home (Unboxing ASMR)**
-is the natural follow-on, since it exercises the same S2 frame pair under `asmrFlag`.
+Then **re-run the SAME unboxing brand, not Silid Home yet.** Session 41 could not tell whether
+the blank-wordmark fix worked; we now know it was never active (see below), so that run is the
+first real test of it. Only after a clean pair go to **2 · Silid Home (Unboxing ASMR)** from
+`workflows/sample_brand_briefs.md` — it exercises the same S2 pair under `asmrFlag`.
 
 Setup after a reboot: `restore-ffmpeg.ps1`, `enable-dev-unmetered-video.ps1`, `npm run dev`.
 Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH photos.
 **Paste the offer, never type it** — a past run typed 113 of 153 chars and lost the first
 sentence. Smoke login: `workflows/expert_manual_mode.md:440`.
 
-## ✅ VERIFIED TONIGHT — measured, not reported
+## 🔴 THE FINDING — the wordmark fix was pointing at the wrong photo
+`SHEET_NOTE` opened with "Reference Image 1". That ordinal is POSITIONAL inside
+`generateSceneImage`, which pushes avatar → product → continuity, and the sheet arrives as the
+**productUrl**. The only path that composes a sheet (`reveals` → mode `'both'`) also passes an
+avatar, so image 1 was the avatar PORTRAIT: the NO_UNSOLICITED_PRODUCT carve-out landed on the
+wrong photo every time. `bbbed45` was not a 🎲 that lost a coin flip — it was never in play.
+Now named by ROLE ("The product reference image"), which cannot go stale when parts order moves.
+This is the third time an ordinal has drifted from its parts index in this file's history.
 
-- **The action hold works, to the number.** The unbox scene ran **2.77s before and 4.29s
-  after**, against a predicted 4.27s, measured with ffprobe on the delivered MP4. Cause was
-  never mysterious once measured: every scene was cut the instant the VO stopped, so a 5s clip
-  gave 2.77s because that is how long its line takes to say. 21s generated, 13.6s kept.
-- **CONTINUITY_LOCK works.** The S2 pair now reads as one take — same room, person, table and
-  camera. It never could before: `renderEndFrame` passed only `{avatarUrl, productUrl}`, so
-  two stills of ONE shot were generated blind to each other and landed in different rooms.
-- **The sample shipped** (`cc9ceab`): `/samples/unboxing.{mp4,jpg}` + `-full.mp4`, cut
-  2.90-9.90s. `before_after`'s sample entry and media are retired; its RECIPE stays.
+## ✅ FIXED + VERIFIED THIS SESSION (`34ccb7d`) — unit-verified, NOT yet eyeballed
+1. `SHEET_NOTE` ordinal → role, above.
+2. **The avatar write latched on a persist that had only been ATTEMPTED.** `deps.persist`
+   swallows its own errors and always resolves, so a dropped create checkpoint spent the single
+   try on the exact `run_not_found` 404 the ordering fix existed to avoid. Now closes the door
+   on the AVATAR write settling, and retries on the next commit until it does.
+3. **A REFUSED morph kept its 1.5s action hold.** `submitVideo` strips `config.lastFrame` and
+   re-submits single-frame when the provider rejects the pair (Veo 3.1 Lite → 400), and nothing
+   recorded it, so `hasEndFrame` stayed true off the STILLS and the render held static tail over
+   padded silence. Downgrade now rides the job handle, so a resumed run reads it too.
 
-## 🔴 THE PROCESS FINDING — "VERIFIED" was claimed on a sample of ONE
-Session 40 marked the blank-wordmark fix verified. It failed again today and one REGENERATE
-brought it back, so `bbbed45` **moved the odds and never pinned them** — a 🎲, not a 🔒. Three
-hypotheses died first (truncation 187+198<400; avatar slot identical in both runs; a `26a69ad`
-regression, refuted by the regenerate). One run is not verification on a generative pipeline.
+Each new test was run against the unfixed source: **3 failed, 100 passed, no collateral.** Then
+full suite **1356 passed / 32 skipped**, tsc clean, build clean, bundle-leak 0. **No render has
+been eyeballed** — that is what the re-run above is for.
 
 ## ⚠ TUNED LIST — still needs Neil's go
-1. **Pinned claim** for FEATURE FILTER. "unang 50 lang" has now dropped 4 runs straight.
-2. **Route `objectionToUs`** (+ `bigIdea`, `deepFear`, `statusUpgrade`) into the script stage.
+1. **CONTINUITY_LOCK is appended to STRICT_NEGATIVE too** (`geminiService.ts:2560`). Reachable
+   only when a scene OMITS `referenceImage`: the start frame defaults `'avatar'` and the end
+   frame `'none'`, so one prompt bans all faces/skin/hands while the lock orders "that same
+   person". Narrow — the storyboard prompt asks for the field on every scene — but it is the
+   documented floating-head/disembodied-hand recipe. Fix is a guard, not prompt text.
+2. **Pinned claim** for FEATURE FILTER. "unang 50 lang" has now dropped 4 runs straight.
+3. **Route `objectionToUs`** (+ `bigIdea`, `deepFear`, `statusUpgrade`) into the script stage.
    Market Research already produces them; the ad-script prompt never sees them.
 
 ## ⚠ OPEN — ranked
@@ -52,30 +65,31 @@ regression, refuted by the regenerate). One run is not verification on a generat
    exactly this, in its own words: *"the SAME silhouette occupying the SAME position in frame"*.
    **Add that clause before testing a different video model** — the drift originates in the
    STILL, and no video model can decline to interpolate two frames that genuinely differ.
-   Neil deferred this to save credits; he intends to test it later.
-3. Two smaller things in the same storyboard: the box SHIFTS position between start and end
+3. **The end-frame call now sends THREE inline images** (avatar + sheet + start frame) and
+   `api/gemini/image.ts` sets no body limit against Vercel's 4.5 MB cap. `renderEndFrame`'s
+   bare `catch { return undefined }` turns an overflow into a silently missing end frame — which
+   also zeroes `hasEndFrame`, so both features fail together and look like pre-change behaviour.
+   Downscale the continuity frame; emit an event instead of swallowing.
+4. `SCENE_PROMPT_CAP = 400` (producerOrchestrator) is an unlinked duplicate of the literal at
+   `geminiService.ts:2340`. Drift silently restores the invisible truncation. One line.
+5. Two smaller things in the same storyboard: the box SHIFTS position between start and end
    frame (it should stay put, only the pouch appears), and S2 says "punit" over a box FLAP.
-4. **No script gate exists.** Build it AFTER TUNED #2 — a gate hunting for a claim the script
+6. **No script gate exists.** Build it AFTER TUNED #3 — a gate hunting for a claim the script
    was never given is pointless.
-5. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
-6. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
-7. **Quota race in `consumeFinishedAd`** — the meter can exceed its own limit.
-8. **Fan-out scene: paid but uncollected** if the tab closes mid-run. Parked, roadmap #29.
+7. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
+8. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
+9. **Quota race in `consumeFinishedAd`**; **fan-out paid-but-uncollected** on tab close (#29).
 
 ## ⚠ CARRIED
 - **UNANSWERED: is this branch Vercel's Production source?** The deploy list showed
   "Environment Production" against a feature branch. If yes, every push here is a deploy.
 - **The agent cannot read `.env`** (ENV WARDEN), so `scripts/pull-run-*.mjs` needs Neil's own
-  terminal. Postgres via the Supabase MCP works fine and did all of tonight's forensics; the
-  finished MP4 pulls straight from its R2 signed url with curl.
+  terminal. Postgres via the Supabase MCP works fine; the finished MP4 pulls from its R2 url.
 - **Vite will not serve a file dropped into `public/` after the dev server started** — restart
-  it, then check the CONTENT TYPE, never the status code (the SPA fallback also answers 200,
-  and returns `text/html` for a file that is genuinely gone).
-- **NEVER pipe `npm run dev` into `head`.** head closes the pipe and the EPIPE kills vite; it
-  dies as `ECONNRESET` + `exited with code 0`, which reads like a clean shutdown. Redirect to a
-  log file and read the log.
-- **A dead `npm run dev` leaves a vite child holding the port**, so the restart lands on 5174.
-  Free it: `Get-NetTCPConnection -LocalPort 5173 -State Listen` -> `Stop-Process -Id <pid>`.
+  it, then check the CONTENT TYPE, never the status code (the SPA fallback also answers 200).
+- **NEVER pipe `npm run dev` into `head`** — EPIPE kills vite and it reads as a clean exit.
+  A dead dev server leaves a vite child on 5173: `Get-NetTCPConnection -LocalPort 5173 -State
+  Listen` → `Stop-Process -Id <pid>`.
 - Sparse-checkout: `assets/` and `public/samples/` need `git add --sparse`;
   `/tests/fixtures/sample-batch` and `/public/examples` need re-adding on a fresh clone.
 
