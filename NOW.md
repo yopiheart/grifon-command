@@ -3,7 +3,7 @@
 
 ## ▶ NEXT ACTION — produce the next sample
 
-Nothing to merge: `origin/main` is at `6257542` and carries session 41 + 42 in full.
+Nothing to merge: `origin/main` is at `4f76359` and carries session 41 + 42 in full.
 
 The shipped `/samples/unboxing.*` is FINE — the wordmark came back on a regenerate in session 41
 and nothing since has touched it. So the next run is a free choice, not a rescue: re-run the same
