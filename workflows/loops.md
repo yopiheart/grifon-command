@@ -225,8 +225,33 @@ touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
     thing being protected; the PR is only the container.** If merges stay
     unblocked by choice, then the rule is that Neil reads each sticky comment
     before merging, and that is what has to be true before agent count goes up.
-  NOW.md's PARKED line says the same; if these two ever disagree, this entry
-  is the one NOW.md points at, so fix both.
+
+  - ⚠ **This entry is the SOLE home of the unlock rule, on purpose: one home, so
+    the rule cannot drift out of sync with itself.** It used to be paired with a PARKED
+    line in `NOW.md` under an instruction to fix both — and the 2026-08-31 rewrite
+    silently dropped that half, which is exactly what a second home buys you.
+    **Do not re-add it there. That decision does not expire.** Supporting evidence at
+    the time, NOT the reason: `NOW.md` was also at 90 of its 90-line cap
+    (`tools/resume_doc_check.mjs:43`), so it had no room either. A later rewrite that
+    frees lines does **not** reopen this — the line count was never the argument.
+  - **2026-08-31 — Pocock `/implement-spec` evaluated against this gate: DECLINED.**
+    The upstream skill's core move is parallel implementer subagents on worktrees
+    plus a merger subagent, at "maximum concurrency". Rejected on three counts.
+    **(1)** The headline gate is unmet: `main` is `"protected": false`, checked
+    against the GitHub API, so it requires neither a PR nor an approving review.
+    **(2)** Issue #87's operating rule — "**One ticket per session**" — is the
+    direct negation of "maximum concurrency", and it was written after the #79
+    lesson, not before it. **(3)** A *background* subagent auto-denies a permission
+    prompt (`agent_lessons.md` 2026-06-10) and `tuned-file-gate.sh` is an **ask**
+    hook, so a background implementer touching a TUNED file fails closed but
+    ILLEGIBLY — it reports a confusing block instead of escalating to Neil.
+    One piece was adopted: the exploration-notes pointer (a subagent writes its
+    findings to a file and returns the PATH), now in `CLAUDE.md` Context Hygiene.
+    ⚠ **The re-open condition is the headline gate verbatim — a PR AND an approving
+    review. Branch protection alone does NOT qualify**, and that is not pedantry:
+    GitHub's common default is "require a PR, 0 required approvals", which
+    satisfies protection while leaving every sticky comment unread. That is the
+    weaker condition this entry was already amended once to kill.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
     to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
@@ -234,7 +259,7 @@ touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
     also records what is still untested about it). Parallel agents multiply exactly
     the paths that skip the reviewer, so **if agent count goes up, put branch
     protection on `main` first** — otherwise the unlock is louder than the guard
-    behind it. NOW.md's PARKED line carries this caveat too; keep them together.
+    behind it. This caveat has no second home either — see the sole-home note above.
 - Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
   The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
   `claude setup-token`) is set, which bills the **Pro subscription, not the API**
