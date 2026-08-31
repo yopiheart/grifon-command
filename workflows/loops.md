@@ -225,14 +225,15 @@ touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
     thing being protected; the PR is only the container.** If merges stay
     unblocked by choice, then the rule is that Neil reads each sticky comment
     before merging, and that is what has to be true before agent count goes up.
-  ⚠ **This entry is the SOLE home of the unlock rule, on purpose: one home, so the
-  rule cannot drift out of sync with itself.** It used to be paired with a PARKED
-  line in `NOW.md` under an instruction to fix both — and the 2026-08-31 rewrite
-  silently dropped that half, which is exactly what a second home buys you.
-  **Do not re-add it there. That decision does not expire.** Supporting evidence at
-  the time, NOT the reason: `NOW.md` was also at 90 of its 90-line cap
-  (`tools/resume_doc_check.mjs:43`), so it had no room either. A later rewrite that
-  frees lines does **not** reopen this — the line count was never the argument.
+
+  - ⚠ **This entry is the SOLE home of the unlock rule, on purpose: one home, so
+    the rule cannot drift out of sync with itself.** It used to be paired with a PARKED
+    line in `NOW.md` under an instruction to fix both — and the 2026-08-31 rewrite
+    silently dropped that half, which is exactly what a second home buys you.
+    **Do not re-add it there. That decision does not expire.** Supporting evidence at
+    the time, NOT the reason: `NOW.md` was also at 90 of its 90-line cap
+    (`tools/resume_doc_check.mjs:43`), so it had no room either. A later rewrite that
+    frees lines does **not** reopen this — the line count was never the argument.
   - **2026-08-31 — Pocock `/implement-spec` evaluated against this gate: DECLINED.**
     The upstream skill's core move is parallel implementer subagents on worktrees
     plus a merger subagent, at "maximum concurrency". Rejected on three counts.
