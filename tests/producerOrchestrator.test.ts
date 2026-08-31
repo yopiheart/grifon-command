@@ -990,6 +990,37 @@ describe('end-frame (hook morph) generation', () => {
     expect(req.scenes.find((x: any) => x.sceneIdx === 1).hasEndFrame).toBe(false);
   });
 
+  // The flag ASSIGNS, it does not latch. Caught while answering "wala bang masisira?" — the first
+  // cut of this fix only ever set it true, so a scene whose first submit was refused could never
+  // earn its hold back, even after a reshoot the provider accepted. Permanent and invisible: the
+  // stills look right, the clip morphs, and the beat is just quietly cut short forever.
+  it('a reshoot the provider ACCEPTS wins the hold back', async () => {
+    const { deps, spies } = makeMorphDeps();
+    let refuse = true;
+    (deps as any).submitVideo = vi.fn(async (config: any, opts: any): Promise<VideoJobHandle> => ({
+      operation: {},
+      prompt: config.prompt,
+      sceneIdx: opts?.sceneIdx,
+      model: config.model,
+      aspectRatio: config.aspectRatio,
+      duration: config.duration,
+      ...(config.endFrame && refuse ? { morphDowngraded: true } : {}),
+    }));
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+
+    await runProduction(run, callbacks, deps);
+    await approveStoryboard(run, callbacks, deps);
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.morphDowngraded).toBe(true); // precondition
+
+    refuse = false; // this time the pair is taken
+    await reshootScene(run, 0, callbacks, deps);
+
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.morphDowngraded).toBeUndefined();
+    const req = spies.renderFinalVideo.mock.calls[spies.renderFinalVideo.mock.calls.length - 1][0] as any;
+    expect(req.scenes.find((x: any) => x.sceneIdx === 0).hasEndFrame).toBe(true);
+  });
+
   it('the video fan-out threads the end frame to submitVideo (morph scene only)', async () => {
     const { deps, spies } = makeMorphDeps();
     const run = createProductionRun(makeInput(), 'u1');

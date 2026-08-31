@@ -1522,10 +1522,15 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
   // hold ACTION_HOLD_SEC of static tail over padded silence: exactly the dead air the hold exists
   // to remove. The flag rides the job handle, which is what a resumed run re-reads, so this seam
   // reads the same on a fresh submit and on a resume that never submits at all.
+  // ASSIGNS, never latches. A reshoot re-renders the end frame and calls this function again,
+  // so a scene whose first submit was refused can have its second one ACCEPTED — and a flag that
+  // only ever went true would keep the new clip's morph from earning its hold, permanently and
+  // invisibly. A missing handle means nothing currently describes this clip (a handle-less orphan
+  // on resume), which is not evidence either way, so leave what we already know.
   const noteMorph = (h?: VideoJobHandle | null) => {
-    if (!h?.morphDowngraded) return;
+    if (!h) return;
     const s = run.scenes.find((x) => x.sceneIdx === job.sceneIdx);
-    if (s) s.morphDowngraded = true;
+    if (s) s.morphDowngraded = h.morphDowngraded || undefined;
   };
 
   let claim = await deps.run.claimScene(run.runId, job.sceneIdx);
