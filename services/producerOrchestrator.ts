@@ -1435,6 +1435,37 @@ function slotPhotoFor(run: ProductionRun, scene: Scene) {
     : undefined;
 }
 
+/** Whether the END frame's product reference should be a composed two-object sheet.
+ *
+ *  ASMR answers NO, and the reason is that NOTHING EVER LOOKS AT THIS IMAGE. The
+ *  deterministic check and the AI gate both run on the MAIN still only — "thumbnail/end-frames
+ *  are not gated this phase" — so an end frame is the one render in the pipeline with no
+ *  automated defence at all. Quality cannot be inspected into it; the failure has to be
+ *  designed out.
+ *
+ *  The sheet is where the failures came from (Neil, 2026-08-31, on Silid Home). It normalises
+ *  both photos to a shared height, so two 1024x1536 uploads become 683x1024 each and the jar
+ *  keeps 44% of its pixels — that is the wrong-proportions defect. It also puts a box in a
+ *  frame that NO_UNSOLICITED_PRODUCT bans outright ("outer box, carton, sleeve"), which is why
+ *  SHEET_NOTE has to exist at all. And two objects will not fit at the start frame's distance,
+ *  so the camera pulls back and the box appears to SHRINK mid-shot.
+ *
+ *  Neil's call: hand the END frame the hero ALONE, at full resolution, and let the storyboard
+ *  move the packaging aside. Three failure modes leave with the sheet, and the two references
+ *  that remain each do exactly one job — the hero says WHAT the product looks like, the
+ *  continuity frame (startFrameUrl) says WHERE the camera is.
+ *
+ *  Non-ASMR is untouched: plain Unboxing ships today and keeps the sheet until this is proven.
+ */
+export const wantsReferenceSheet = (
+  run: ProductionRun,
+  slotUrl: string | undefined,
+  reveals: boolean,
+): boolean => {
+  if (run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false) return false;
+  return !!(reveals && slotUrl && run.input.heroImageBase64 && slotUrl !== run.input.heroImageBase64);
+};
+
 /** Suffix appended to a hook-morph END prompt when the reference is a composed two-object sheet.
  *
  * Rides NO_UNSOLICITED_PRODUCT's own carve-out ("unless the Scene Prompt explicitly names it")
@@ -1487,8 +1518,8 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
   // product path heroImageBase64 IS servicePhotos[0].url, so a hero-slot scene would
   // otherwise be composited against itself.
   const slot = slotPhotoFor(run, scene);
-  const sheet = reveals && slot?.url && run.input.heroImageBase64 && slot.url !== run.input.heroImageBase64
-    ? await composeReferenceSheet(slot.url, run.input.heroImageBase64)
+  const sheet = wantsReferenceSheet(run, slot?.url, reveals)
+    ? await composeReferenceSheet(slot!.url, run.input.heroImageBase64!)
     : undefined;
   // Rewritten 2026-08-30 after diagnosing the blank-wordmark defect from Postgres (runs
   // apr_0326cbc4 / apr_c0ddfe27). The sheet arrives as a SINGLE productUrl, and EVERY tuned

@@ -1617,12 +1617,23 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         - Every scene favors EXTREME tactile close-ups. Describe surfaces and materials
           concretely in the imagePrompt (matte foam, glossy seal, brushed metal) — texture is
           the subject, but never at the cost of the wordmark leaving the frame.
-        - THE S2 FRAME PAIR IS ONE LOCKED SHOT. The END frame is the SAME camera at the SAME
-          distance as the START: the packaging occupies the SAME size and the SAME position in
-          frame in BOTH. The product appears NEXT TO it at that distance. If the two objects
-          do not both fit, CROP them — widening the shot, pulling back, or letting more of the
-          room in is BANNED. Packaging that is large in the START and small in the END animates
-          as the box SHRINKING on screen, which is the most visible defect this format has.
+        - STAY CLOSE. The subject fills the frame: the packaging or the product occupies AT
+          LEAST a third of the frame height in every scene, and its wordmark stays large enough
+          to read. Wide shots, establishing shots and room shots are BANNED — the room is never
+          the subject. Distance is not a style choice here: the further the camera, the fewer
+          pixels land on the label, and a label rendered small comes back blurred, garbled or
+          blank.
+        - THE S2 FRAME PAIR ENDS ON THE PRODUCT ALONE. START = the closed packaging, one hand
+          on it. END = the PRODUCT ITSELF, by name and in its real colour, held or standing in
+          the SAME spot the packaging occupied, at the SAME camera distance. The packaging has
+          been SET ASIDE and is out of frame or barely at the edge — name that movement in the
+          endFramePrompt ("the box moved aside", "the box now out of frame") so it reads as
+          being put down rather than vanishing.
+        - Why the END frame carries ONE object and not two: nothing downstream ever inspects
+          this still, so it gets no second chance. Two objects force the camera back to fit
+          them, which shrinks the packaging on screen mid-shot, and they cost the product half
+          its reference resolution. One object, close, is the only version of this frame that
+          cannot go wrong.
         ` : ''}
         ` : ugcSub === 'demo' ? `
         **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Demo / Addiction)**

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { clampAsmrSceneRefs } from '../../services/producerOrchestrator.js';
+import { clampAsmrSceneRefs, wantsReferenceSheet } from '../../services/producerOrchestrator.js';
 import type { Scene } from '../../types.js';
 
 // Intent: ASMR is voiceover over b-roll, not a talking head.
@@ -97,5 +97,37 @@ describe('clampAsmrSceneRefs — the tactile beats leave the avatar behind', () 
     const out = clampAsmrSceneRefs([scene({ referenceImage: 'both' })], true);
 
     expect(out[0].referenceImage).toBe('both');
+  });
+});
+
+// The END frame is the one render nothing downstream inspects: both gates run on the MAIN
+// still only ("thumbnail/end-frames are not gated this phase", producerOrchestrator). So its
+// failures have to be designed out rather than caught. The composed two-object sheet was
+// where they came from — half the reference resolution, a box that NO_UNSOLICITED_PRODUCT
+// bans on sight, and a camera forced back to fit both objects. ASMR hands the end frame the
+// hero alone instead. Neil's call, 2026-08-31.
+
+const runFor = (o: { asmr?: boolean; hero?: string } = {}) =>
+  ({
+    businessInfo: { asmrFlag: o.asmr },
+    input: { heroImageBase64: 'hero' in o ? o.hero : 'data:image/jpeg;base64,HERO' },
+  }) as never;
+
+describe('wantsReferenceSheet — ASMR ends on the hero alone', () => {
+  it('refuses the sheet on an ASMR run', () => {
+    expect(wantsReferenceSheet(runFor({ asmr: true }), 'data:image/jpeg;base64,BOX', true)).toBe(false);
+  });
+
+  it('still composes it for every other format — plain Unboxing ships today', () => {
+    expect(wantsReferenceSheet(runFor({ asmr: false }), 'data:image/jpeg;base64,BOX', true)).toBe(true);
+    expect(wantsReferenceSheet(runFor(), 'data:image/jpeg;base64,BOX', true)).toBe(true);
+  });
+
+  it('keeps every pre-existing guard when the flag is off', () => {
+    const run = runFor({ asmr: false });
+    expect(wantsReferenceSheet(run, 'data:image/jpeg;base64,BOX', false)).toBe(false); // end prompt names no product
+    expect(wantsReferenceSheet(run, undefined, true)).toBe(false);                      // scene names no slot photo
+    expect(wantsReferenceSheet(runFor({ asmr: false, hero: undefined }), 'box', true)).toBe(false); // no hero
+    expect(wantsReferenceSheet(run, 'data:image/jpeg;base64,HERO', true)).toBe(false);  // slot IS the hero
   });
 });
