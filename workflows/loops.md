@@ -225,8 +225,11 @@ touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
     thing being protected; the PR is only the container.** If merges stay
     unblocked by choice, then the rule is that Neil reads each sticky comment
     before merging, and that is what has to be true before agent count goes up.
-  NOW.md's PARKED line says the same; if these two ever disagree, this entry
-  is the one NOW.md points at, so fix both.
+  ⚠ **This entry is now the SOLE home of the unlock rule.** It used to be paired
+  with a PARKED line in `NOW.md`, with an instruction to fix both — but the
+  2026-08-31 rewrite dropped that half, and `NOW.md` is at exactly 90 of its
+  90-line cap (`tools/resume_doc_check.mjs`), so it cannot carry a second home for
+  parked work. Do not re-add it there; if a session needs the rule, it reads this.
   - ⚠ **The unlock rests on a precondition nothing enforces: every change reaches
     `main` through a PR.** Tier 0c fires on `pull_request` only, so a direct push
     to `main` is unreviewed, and a PR editing **`claude-review.yml` itself** is
@@ -234,7 +237,7 @@ touching `.github/workflows/`, which is a separate one-line PR and Neil's call.
     also records what is still untested about it). Parallel agents multiply exactly
     the paths that skip the reviewer, so **if agent count goes up, put branch
     protection on `main` first** — otherwise the unlock is louder than the guard
-    behind it. NOW.md's PARKED line carries this caveat too; keep them together.
+    behind it. This caveat has no second home either — see the sole-home note above.
 - Arm: nothing — wired to `pull_request` on `main`, and armed since 2026-08-10.
   The Claude GitHub App is installed and `CLAUDE_CODE_OAUTH_TOKEN` (from
   `claude setup-token`) is set, which bills the **Pro subscription, not the API**
