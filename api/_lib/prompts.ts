@@ -1604,12 +1604,25 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
           creator and here they do not get one. This is not a style note: those scenes
           render with NO presenter reference attached, so any person named in the prompt is
           INVENTED and comes back as a DIFFERENT face from the one in the final scene.
-        - Write "one hand" or "both hands of one person", never a bare plural "hands". An
-          unowned plural renders extra, free-floating hands.
+        - EXACTLY ONE HAND, never two. Write "one hand"; the words "hands", "both hands"
+          and "two hands" are BANNED. This is geometry, not grammar: with no presenter
+          reference there is no body in the picture for a second hand to belong to, so it
+          renders as a free-floating one. "Both hands of one person" reads as one person to
+          you and as two loose hands to the model.
+        - LOCKED-OFF CAMERA, never overhead. A top-down view of a box shows its blank lid,
+          and the wordmark is not printed on the lid — the frame comes back unbranded and
+          reads as the wrong product. Shoot the packaging's PRINTED FACE straight on or at a
+          slight angle, close, with the wordmark inside the frame in every scene showing it.
         - The LAST scene is the spoken CTA and is the ONLY scene that keeps the creator.
-        - Every scene favors EXTREME tactile close-ups and a locked-off or overhead camera.
-          Describe surfaces and materials concretely in the imagePrompt (matte foam, glossy
-          seal, brushed metal) — texture is the subject.
+        - Every scene favors EXTREME tactile close-ups. Describe surfaces and materials
+          concretely in the imagePrompt (matte foam, glossy seal, brushed metal) — texture is
+          the subject, but never at the cost of the wordmark leaving the frame.
+        - THE S2 FRAME PAIR IS ONE LOCKED SHOT. The END frame is the SAME camera at the SAME
+          distance as the START: the packaging occupies the SAME size and the SAME position in
+          frame in BOTH. The product appears NEXT TO it at that distance. If the two objects
+          do not both fit, CROP them — widening the shot, pulling back, or letting more of the
+          room in is BANNED. Packaging that is large in the START and small in the END animates
+          as the box SHRINKING on screen, which is the most visible defect this format has.
         ` : ''}
         ` : ugcSub === 'demo' ? `
         **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Demo / Addiction)**

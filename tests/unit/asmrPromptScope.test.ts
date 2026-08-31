@@ -47,7 +47,13 @@ const board = (info: BusinessInfo) =>
   });
 
 /** Strings that may appear ONLY when asmrFlag is on. */
-const ASMR_ONLY_BOARD = ['HARD OVERRIDE', 'S1, S2 and S3 carry NO PERSON', 'free-floating hands'];
+const ASMR_ONLY_BOARD = [
+  'HARD OVERRIDE',
+  'S1, S2 and S3 carry NO PERSON',
+  'EXACTLY ONE HAND, never two',
+  'LOCKED-OFF CAMERA, never overhead',
+  'THE S2 FRAME PAIR IS ONE LOCKED SHOT',
+];
 const ASMR_ONLY_SCRIPT = ['NAME ONLY A SOUND THIS PACKAGING CAN ACTUALLY MAKE', 'are a MENU, not an answer'];
 
 const ALL_SUBS = ['tryon', 'unboxing', 'demo', 'transformation', 'tutorial'] as const;
