@@ -1,90 +1,85 @@
 # NOW — the resume doc
-**Stamped: 2026-08-31** (session 42)
+**Stamped: 2026-08-31** (session 43)
 
-## ▶ NEXT ACTION — produce the next sample
+## ▶ NEXT ACTION — VERIFY before patching. Four fixes landed and the run still got worse.
 
-Nothing to merge: `origin/main` is at `4f76359` and carries session 41 + 42 in full.
+Branch `fix/asmr-tactile-scenes` (4 commits, **pushed, NOT merged**) is ahead of `main` at
+`da15e0f`. Everything below is on it. Setup after a reboot: `restore-ffmpeg.ps1` (use the
+`curl -C -` note under CARRIED), `enable-dev-unmetered-video.ps1`, `npm run dev`.
 
-The shipped `/samples/unboxing.*` is FINE — the wordmark came back on a regenerate in session 41
-and nothing since has touched it. So the next run is a free choice, not a rescue: re-run the same
-unboxing brand to add a second data point to the 🎲 (`bbbed45` still has a sample of one), or go
-straight to **2 · Silid Home (Unboxing ASMR)** in `workflows/sample_brand_briefs.md`, which
-exercises the same S2 pair under `asmrFlag` and doubles as that data point. Neil picks.
+**Do NOT open with a fifth prompt patch.** Four landed in one night and Neil's last run was the
+worst of the five. Open by answering the two questions below from stored data — both are free.
 
-Setup after a reboot: `restore-ffmpeg.ps1`, `enable-dev-unmetered-video.ps1`, `npm run dev`.
-Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH photos. **Paste the
-offer, never type it** — a past run typed 113 of 153 chars and lost the first sentence. Smoke
-login: `workflows/expert_manual_mode.md:440`.
+1. **Did `wantsReferenceSheet` actually fire?** The ASMR end frame is supposed to get the hero
+   ALONE at full resolution now. Neil's last END inset still looks like it holds a box AND a jar.
+   If the box is there, the change did not take and the whole `acefcb7` theory is unproven.
+   Check the newest run's scene-2 `endFramePrompt` in `producer_runs.artifacts->'storyboard'`.
+2. **Was the CINEMATIC PRESET chip on scene 4 the gate firing?** `judgeImageGate` has a
+   produced-light watcher scoped to identity scenes, and scene 4 is the only identity scene left.
+   If it fired, the gate works and is flag-only by design — that is a product decision, not a bug.
 
-## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
-`SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
-for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
-was image 1. But the ordinal is POSITIONAL — `generateSceneImage` pushes avatar → product →
-continuity — so the moment an avatar IS present the sheet becomes image 2 and the carve-out
-points at the portrait. Right sometimes, wrong sometimes, on a condition nobody was tracking.
-Now named by ROLE, correct either way. **Note the interaction: the avatar-persist fix below
-makes the avatar present MORE often, i.e. it would have made this ordinal wrong more often.**
-⚠ This is hardening, NOT the missing fix — `bbbed45` stays a 🎲. Do not re-verify on one run.
+## 🔴 THE FIND OF THE NIGHT — `PRODUCT_IDENTITY_LOCK` was aimed at the avatar's face
+`generateSceneImage` pushes avatar → product → continuity and gates the avatar push on
+`references.avatarUrl` alone, **never on `referenceImageMode`**. Every producer call site passes
+the avatar unconditionally, so in `'product'` mode the portrait IS parts[0] and the product sat
+unnamed at parts[1] — while seven of the lock's eight rules said "Reference Image 1". One root
+cause for the blank wordmark, the box rendered as a CYLINDER reading "300g", and both frames
+moving into the AVATAR PHOTO'S KITCHEN against their own "wooden shelf" prompt. Fixed in
+`12de6b9`; ordinal now computed like `continuityIdx`. **This one is real and worth keeping even
+if everything else gets reverted.**
 
-## ✅ ALSO FIXED — unit-verified, NOT yet eyeballed on a render
-1. **The avatar write latched on a persist that had only been ATTEMPTED.** `deps.persist`
-   swallows its own errors and always resolves, so a dropped create checkpoint spent the single
-   try on the exact `run_not_found` 404 the ordering fix existed to avoid. Now closes on the
-   AVATAR write settling, and retries on the next commit until it does.
-2. **A REFUSED morph kept its 1.5s action hold.** `submitVideo` strips `config.lastFrame` and
-   re-submits single-frame when the provider rejects the pair (Veo 3.1 Lite → 400) and nothing
-   recorded it, so `hasEndFrame` stayed true off the STILLS and the render held static tail over
-   padded silence. The downgrade now rides the job handle, so a resumed run reads it too.
+## ⚠ STILL BROKEN — Neil's own eyeball on the last run, all four unexplained
+1. **Wordmark back on scene 1, gone again on scene 2.** Intermittent across five runs. A 🎲, and
+   the gate cannot catch it — see the blank-label hole below.
+2. **Scene 2 END hero still does not match the reference.** Product reads TALLER than the real
+   jar. This is what `acefcb7` was meant to fix, hence check #1 above.
+3. **Scene 3 product FLOATS with a finger pointing at it.** Almost certainly self-inflicted: the
+   `EXACTLY ONE HAND` rule (`25f532a`) pushed the model toward a single pointing index finger in
+   three scenes. The hand should BEAR the object (hold it, or rest on it), never point at it.
+4. **Scene 4 came back with a high-saturation cinematic LUT**, and its product does not match the
+   hero either.
 
-Each new test was run against the unfixed source: **3 failed, 100 passed, no collateral.** Then
-**1356 passed / 32 skipped**, tsc + build clean, bundle-leak 0. **No render eyeballed.**
+## 🕳 TWO GATE HOLES FOUND (neither fixed — deliberate, out of scope last night)
+- **A blank label passes.** `judgeImageGate` only judges garble when the model READ label text;
+  `productLabelText: null` is treated as "product simply wasn't framed" and **never flags**. So a
+  product in frame with its branding erased is indistinguishable from no product. This is why the
+  wordmark defect always reaches Neil instead of the automated reroll.
+- **The END frame is not gated AT ALL.** Both gates run on the MAIN still only
+  ("thumbnail/end-frames are not gated this phase") and `renderEndFrame` is called after that
+  block. Every end-frame defect has zero automated defence.
 
-## ⚠ TUNED LIST — still needs Neil's go
-1. **CONTINUITY_LOCK is appended to STRICT_NEGATIVE too** (`geminiService.ts:2560`). Reachable
-   only when a scene OMITS `referenceImage`: the start frame defaults `'avatar'` and the end
-   frame `'none'`, so one prompt bans faces/skin/hands while the lock orders "that same person".
-   Narrow, but it is the documented floating-head recipe. A guard, not prompt text.
-2. **Pinned claim** for FEATURE FILTER. "unang 50 lang" has now dropped 4 runs straight.
-3. **Route `objectionToUs`** (+ `bigIdea`, `deepFear`, `statusUpgrade`) into the script stage.
-   Market Research already produces them; the ad-script prompt never sees them.
+## ✅ WHAT LANDED (branch `fix/asmr-tactile-scenes`)
+- `0e1d5ba` `clampAsmrSceneRefs` — ASMR tactile beats route off the presenter BEFORE the
+  storyboard is stored, so REGENERATE (which re-reads it, never re-plans) inherits the route.
+  Plus the script's invented "tape rip" on a lift-off lid box.
+- `25f532a` one hand not two, locked-off never overhead, S2 pair pinned to one camera distance.
+- `12de6b9` the ordinal fix above.
+- `acefcb7` ASMR end frame takes the hero alone (no composed sheet); STAY CLOSE camera rule.
 
-## ⚠ OPEN — ranked
-1. **Garbled label SUB-LINE — deliberately shipped by Neil 2026-08-30.** "Barake Medium Roast
-   250g" on the box; the pouch is correct. The gate passed all 4 scenes and always will:
-   `expectedLabelText` is `run.input.productName` alone
-   ([producerOrchestrator.ts:1830](services/producerOrchestrator.ts#L1830)), so it matches the
-   brand name and never reads the line underneath. Scope gap, not a gate defect. Recut the
-   sample from a clean run once fixed.
-2. **Residual framing drift, and the fix is already named.** In the S2 pair the CAMERA PULLS
-   BACK, which reads as "gumalaw ang background". `CONTINUITY_LOCK` says to copy "camera
-   distance and framing" — abstract, nothing to hold. `HOOK_ANCHOR_RULE` already solved this:
-   *"the SAME silhouette occupying the SAME position in frame"*. **Add that clause before
-   testing another video model** — the drift is in the STILL, and no video model can decline to
-   interpolate two frames that genuinely differ.
-3. **The end-frame call now sends THREE inline images** (avatar + sheet + start frame), no body
-   limit in `api/gemini/image.ts` against Vercel's 4.5 MB cap, and `renderEndFrame`'s bare
-   `catch { return undefined }` turns an overflow into a silently missing end frame — which also
-   zeroes `hasEndFrame`. Downscale the continuity frame; emit an event instead of swallowing.
-4. `SCENE_PROMPT_CAP = 400` duplicates the literal at `geminiService.ts:2340`; drift silently
-   restores the invisible truncation. One line.
-5. Same storyboard: the box SHIFTS between the frames, and S2 says "punit" over a box FLAP.
-6. **No script gate exists.** Build it AFTER TUNED #3 — a gate hunting a claim the script was never given is pointless.
-7. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
-8. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
-9. **Quota race in `consumeFinishedAd`**; **fan-out paid-but-uncollected** on tab close (#29).
+**Scope was held all night and is provable:** 64 of 68 prompts byte-identical to the pre-session
+baseline, the 4 changed all `unboxing` + `asmr-true`. `asmrPromptScope.test.ts` keeps it that way.
+1379 tests pass, tsc + build clean. **No render has been eyeballed as good.**
+
+## ⚠ THE HONEST READ, for whoever resumes
+Five paid runs, four fixes, and the output got worse. Every fix traded one defect for another:
+the clamp caused the identity split AND disarmed the identity gate check; the ASMR rewrite caused
+the blank overhead box; the one-hand rule likely caused the pointing finger. The pattern is
+**adding words to fight a model on scenes whose constraining reference was removed.** Before
+patch five, consider whether `clampAsmrSceneRefs` should be reverted and ASMR shipped as a
+talking-head format — `bbbed45`'s 🎲 doctrine applies: a distribution does not owe us a good frame.
 
 ## ⚠ CARRIED
-- **UNANSWERED: is this branch Vercel's Production source?** The deploy list showed
-  "Environment Production" against a feature branch. If yes, every push here is a deploy.
-- **The agent cannot read the env file** (ENV WARDEN) — `scripts/pull-run-*.mjs` needs Neil's
-  own terminal. Supabase MCP works fine; the finished MP4 pulls from its R2 url.
-- **Vite will not serve a file dropped into `public/` after startup** — restart, then check the
-  CONTENT TYPE, never the status code (the SPA fallback also answers 200).
-- **NEVER pipe `npm run dev` into `head`** — EPIPE kills vite and it reads as a clean exit. A
-  dead server leaves a vite child on 5173: `Get-NetTCPConnection -LocalPort 5173 -State Listen`
-  → `Stop-Process -Id <pid>`.
-- Sparse-checkout: `assets/` + `public/samples/` need `git add --sparse`; `sample-batch` +
-  `/public/examples` need re-adding on a fresh clone.
+- **`restore-ffmpeg.ps1` uses `Invoke-WebRequest`, which has NO resume.** It died at 68 MB of 106
+  on cafe wifi. gyan.dev DOES support range requests (`Accept-Ranges: bytes`), so
+  `curl -C - -L --retry 20 -o .tools/ffmpeg.zip <url>` resumes. Worth patching into the script.
+- **The render pipeline does NOT need PATH ffmpeg** — it uses `ffmpeg-static` from `node_modules`.
+  The 106 MB download is only for CUTTING `public/samples/*.mp4` afterwards. Do not block on it.
+- `git sparse-checkout add /tests/...` **fails silently in Git Bash** — MSYS rewrites the leading
+  slash to `C:/Program Files/Git/...`, exit 0, nothing checked out. Edit `.git/info/sparse-checkout`
+  directly, then `git sparse-checkout reapply`.
+- **The agent cannot read `.env`** (ENV WARDEN). Supabase MCP works fine and is how every finding
+  above was verified. `scripts/pull-run-*.mjs` needs Neil's own terminal.
+- **NEVER pipe `npm run dev` into `head`** — EPIPE kills vite and it reads as a clean exit.
 
 ### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
 Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
