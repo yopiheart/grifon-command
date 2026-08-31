@@ -62,4 +62,15 @@ describe('buildEndFramePrompt', () => {
     expect(SHEET_NOTE).toContain('unsolicited prop');
     expect(SHEET_NOTE).toContain('Do NOT copy their side-by-side layout');
   });
+
+  // The second half of the same defect, found in review 2026-08-31. The note used to open with
+  // "Reference Image 1", but "Reference Image N" is POSITIONAL inside generateSceneImage, which
+  // pushes avatar -> product -> continuity. The sheet arrives as the productUrl, and the ONLY
+  // path that composes one (`reveals` -> mode 'both') also passes an avatar, so image 1 was the
+  // avatar PORTRAIT: the carve-out landed on the wrong photo and the blank-wordmark fix never
+  // reached the sheet. Naming the sheet by ROLE cannot go stale when the parts order changes.
+  it('identifies the sheet by role, never by a positional ordinal', () => {
+    expect(SHEET_NOTE).toContain('The product reference image');
+    expect(SHEET_NOTE).not.toMatch(/Reference Image \d/);
+  });
 });

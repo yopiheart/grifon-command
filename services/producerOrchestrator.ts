@@ -80,6 +80,10 @@ export interface VideoJobHandle {
   model: VideoModelType;
   aspectRatio: string;
   duration: number;
+  /** The provider refused startFrame+endFrame and this clip was re-submitted single-frame.
+   *  Absent = the pair was accepted (or none was sent). Recorded on the handle so it survives
+   *  the checkpoint and a resumed run does not re-derive it by re-submitting. */
+  morphDowngraded?: boolean;
 }
 
 export type ProductionStageId =
@@ -135,6 +139,12 @@ export interface ProductionSceneState {
    * checkpoint's artifacts.scenes jsonb so gate precision can be measured offline before
    * the gate is ever given reroll authority. Absent when the scene wasn't gated. */
   gateVerdict?: ImageGateResult['verdict'];
+  /** The provider refused this scene's startFrame+endFrame pair and the clip was re-submitted
+   *  single-frame (submitVideo's morph fallback). The stills still exist, so endFrameImageUrl
+   *  stays set — but the CLIP carries no morph, and the final render's action hold must not
+   *  hold a beat on a tail that never moves. Read off the recorded job handle, so a resumed
+   *  run learns it without re-submitting. */
+  morphDowngraded?: boolean;
 }
 
 /** Everything the intake form collects (3 hero inputs + Customize-drawer defaults). */
@@ -727,18 +737,25 @@ const MAX_AVATAR_CHARS = 3_000_000;
  * emitted with the actual char count, which turns a silent failure into the exact number needed to
  * choose the next step (compress before storing, or move to Supabase Storage). Never throws —
  * telemetry and durability must not be able to fail a run.
+ *
+ * Returns SETTLED: true when there is nothing left to try — the write landed, or the case is
+ * terminal (no recordAvatar dep, no data: avatar, over the cap). False ONLY when the attempt
+ * threw, which is the retryable case: the run row not existing yet is exactly that 404, and it
+ * stops being true the moment a checkpoint creates the row. The caller uses this to decide
+ * whether to close the door; see the commit wrapper.
  */
-async function persistAvatarReference(run: ProductionRun, deps: ProducerDeps): Promise<void> {
+async function persistAvatarReference(run: ProductionRun, deps: ProducerDeps): Promise<boolean> {
   const url = run.input.avatar?.url;
-  if (!deps.run.recordAvatar || typeof url !== 'string' || !url.startsWith('data:')) return;
+  if (!deps.run.recordAvatar || typeof url !== 'string' || !url.startsWith('data:')) return true;
   if (url.length > MAX_AVATAR_CHARS) {
     emitRunEvent('node_fail', run.runId, {
       node: 'avatar_persist', error: 'avatar_too_large', chars: url.length, cap: MAX_AVATAR_CHARS,
     });
-    return;
+    return true;
   }
   try {
     await deps.run.recordAvatar(run.runId, url);
+    return true;
   } catch (e: any) {
     // Was a bare `catch {}`. That is what hid this for a month: api/producer/advance.ts rejects
     // EVERY action with 404 'run_not_found' before its switch when the run row does not exist
@@ -747,6 +764,7 @@ async function persistAvatarReference(run: ProductionRun, deps: ProducerDeps): P
     emitRunEvent('node_fail', run.runId, {
       node: 'avatar_persist', error: String(e?.message ?? 'record_avatar_failed'), status: e?.status,
     });
+    return false;
   }
 }
 
@@ -760,17 +778,30 @@ async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks,
   // persist had created yet, threw, and was swallowed. Measured 2026-08-30: 25 of 33 runs have a
   // NULL avatar_url, and no 'avatar_too_large' event was ever emitted, i.e. it never got that far.
   //
-  // So hang it off the FIRST successful persist instead. Deliberately not an extra persist of our
-  // own: api/producer/run.ts guards on `revision`, and a concurrent write would risk the
+  // So hang it off a persist instead. Deliberately not an extra persist of our own:
+  // api/producer/run.ts guards on `revision`, and a concurrent write would risk the
   // optimistic-concurrency conflict this run depends on.
-  let avatarPersistFired = false;
+  //
+  // The door is closed by the AVATAR write settling, never by the checkpoint before it.
+  // `deps.persist` is best-effort and swallows its own errors (producerDeps.ts), so it always
+  // resolves — awaiting it proves the checkpoint was ATTEMPTED, not that the run row exists.
+  // Latching on that attempt spent the single try on precisely the case this fix is about: a
+  // dropped create checkpoint means recordAvatar still 404s 'run_not_found', and avatar_url
+  // stays NULL for the life of the run. So retry on the next commit until the write settles.
+  // The in-flight guard keeps that to one outstanding attempt — commits are frequent and this
+  // is fire-and-forget, so without it a slow POST would fan out into a burst.
+  let avatarPersistSettled = false;
+  let avatarPersistInFlight = false;
   const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);
-    if (!avatarPersistFired) {
-      avatarPersistFired = true;
-      void persistAvatarReference(run, deps);
+    if (!avatarPersistSettled && !avatarPersistInFlight) {
+      avatarPersistInFlight = true;
+      void persistAvatarReference(run, deps).then((settled) => {
+        avatarPersistSettled = settled;
+        avatarPersistInFlight = false;
+      });
     }
     cb.onUpdate(run);
   };
@@ -1380,8 +1411,19 @@ function slotPhotoFor(run: ProductionRun, scene: Scene) {
 /** Suffix appended to a hook-morph END prompt when the reference is a composed two-object sheet.
  *
  * Rides NO_UNSOLICITED_PRODUCT's own carve-out ("unless the Scene Prompt explicitly names it")
- * so the sheet's second object stops reading as an invented prop. See buildEndFramePrompt. */
-export const SHEET_NOTE = ' Reference Image 1 shows TWO real objects, both named by this scene, so neither is an unsolicited prop: reproduce BOTH labels and wordmarks exactly. Do NOT copy their side-by-side layout.';
+ * so the sheet's second object stops reading as an invented prop. See buildEndFramePrompt.
+ *
+ * Names the sheet by its ROLE, never by an ordinal. "Reference Image N" is POSITIONAL — it
+ * means whatever landed in parts[N-1] inside generateSceneImage, which pushes avatar →
+ * product → continuity and skips any reference that is not an inline data URL. This note
+ * said "Reference Image 1" and the sheet arrives as the productUrl, so on the ONLY path that
+ * composes a sheet (`reveals` → mode 'both', avatar passed) it pointed at the avatar portrait
+ * and the carve-out never reached the sheet — the same positional-ordinal bug generateSceneImage's
+ * own continuityIdx comment exists to prevent, and the reason the blank-wordmark fix did not
+ * land. The role is unambiguous in every branch that accepts a product photo (DUAL_REFERENCE_LOCK
+ * rule 6 "FROM PRODUCT", PRODUCT_IDENTITY_LOCK rule 1) and cannot go stale when the parts
+ * order changes, so there is no ordinal to keep in sync. */
+export const SHEET_NOTE = ' The product reference image shows TWO real objects, both named by this scene, so neither is an unsolicited prop: reproduce BOTH labels and wordmarks exactly. Do NOT copy their side-by-side layout.';
 
 /** generateSceneImage truncates its prompt at 400 chars from the END. */
 export const SCENE_PROMPT_CAP = 400;
@@ -1474,7 +1516,20 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
   const duration = job.duration ?? pickSceneDuration('talking', fallbackModel, resolution);
   const inFlight = (status?: SceneJobStatus) => status === 'submitting' || status === 'rendering';
 
+  // A REFUSED frame pair must not keep its downstream action hold. submitVideo strips
+  // config.lastFrame when the provider rejects startFrame+endFrame and re-submits single-frame,
+  // so the clip carries no morph — but endFrameImageUrl is still set, and the final render would
+  // hold ACTION_HOLD_SEC of static tail over padded silence: exactly the dead air the hold exists
+  // to remove. The flag rides the job handle, which is what a resumed run re-reads, so this seam
+  // reads the same on a fresh submit and on a resume that never submits at all.
+  const noteMorph = (h?: VideoJobHandle | null) => {
+    if (!h?.morphDowngraded) return;
+    const s = run.scenes.find((x) => x.sceneIdx === job.sceneIdx);
+    if (s) s.morphDowngraded = true;
+  };
+
   let claim = await deps.run.claimScene(run.runId, job.sceneIdx);
+  noteMorph(claim.jobHandle);
   if (!claim.claimed) {
     // A scene that's genuinely DONE (has a url) — reuse it, never re-submit.
     if (claim.videoUrl) return claim.videoUrl;
@@ -1497,6 +1552,7 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
     // by runId, so at most one extra provider render per crashed scene.
     await deps.run.requeueScene(run.runId, job.sceneIdx);
     claim = await deps.run.claimScene(run.runId, job.sceneIdx);
+    noteMorph(claim.jobHandle);
     if (!claim.claimed) {
       // Lost the reclaim race to another driver. Reuse a finished url, poll their in-flight
       // handle, or leave the scene to the owner.
@@ -1525,6 +1581,7 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
     await deps.run.flagScene(run.runId, job.sceneIdx, `video: ${e?.message ?? 'submit failed'}`);
     return null;
   }
+  noteMorph(handle);
 
   // Record the handle so a crash between spend and completeScene resumes by polling, not re-spending.
   const rec = await deps.run.recordScene(run.runId, job.sceneIdx, handle);
@@ -2045,7 +2102,9 @@ async function runStage(
             // two states, which is the only per-scene action signal we have. Read off
             // the storyboard, same object scriptLine comes from. No default: an unknown
             // scene must NOT inherit the hold.
-            hasEndFrame: !!run.storyboard?.[s.sceneIdx]?.endFrameImageUrl,
+            // `&& !morphDowngraded`: the stills are only half the signal. A provider that
+            // refused the pair rendered a single-frame clip, which has no action to finish.
+            hasEndFrame: !!run.storyboard?.[s.sceneIdx]?.endFrameImageUrl && !s.morphDowngraded,
             isHook,
           };
         });

@@ -602,6 +602,9 @@ export interface VideoJobHandle {
   model: VideoModelType;
   aspectRatio: string;
   duration: number;
+  /** The provider refused startFrame+endFrame and this clip was re-submitted single-frame.
+   *  Absent = the pair was accepted (or none was sent). See submitVideo's morph fallback. */
+  morphDowngraded?: boolean;
 }
 
 /**
@@ -631,6 +634,11 @@ export const submitVideo = async (
 
   opts.onStatus?.('SUBMITTING_JOB');
   let initialOperation: any;
+  // Set when the Veo morph fallback below strips config.lastFrame. Rides the handle because the
+  // handle is what survives a checkpoint (producer_scenes.job_handle), so a resumed run learns
+  // the pair was refused without re-submitting. Downstream consumer: the final render's
+  // per-scene action hold, which must NOT hold a beat on a clip that never morphed.
+  let morphDowngraded = false;
 
   if (routing.apiSurface === 'kling-omni-video') {
     // Kling Omni (kling-video-o1) — used for the hook scene. Morph requires
@@ -709,6 +717,7 @@ export const submitVideo = async (
         console.warn('[grifon:gv:morph-fallback] Veo rejected startFrame+endFrame, retrying without endFrame');
         delete params.config.lastFrame;
         proxyResult = await proxyGenerateVideo(params);
+        morphDowngraded = true;
         console.warn('[grifon:gv:morph-fallback] Fallback render succeeded');
       } else {
         throw err;
@@ -724,6 +733,7 @@ export const submitVideo = async (
     model: config.model,
     aspectRatio: config.aspectRatio,
     duration: config.duration,
+    ...(morphDowngraded ? { morphDowngraded: true } : {}),
   };
 };
 

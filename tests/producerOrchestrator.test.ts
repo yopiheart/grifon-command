@@ -946,6 +946,50 @@ describe('end-frame (hook morph) generation', () => {
     expect(endCall[10]).toBe('none'); // falls back to the scene's own referenceImage
   });
 
+  // Found in review 2026-08-31. `hasEndFrame` drives ACTION_HOLD_SEC in the final render, and it
+  // was read purely off endFrameImageUrl — a STILLS fact. But submitVideo deletes config.lastFrame
+  // and re-submits single-frame when the provider rejects the pair (Veo 3.1 Lite answers 400
+  // INVALID_ARGUMENT), and nothing recorded that. The stills survive, so the scene kept claiming a
+  // frame pair while its CLIP had no morph to finish, and the render held 1.5s of static tail over
+  // padded silence: precisely the dead air the hold was added to remove.
+  it('a morph the provider REFUSED does not keep its action hold', async () => {
+    const { deps, spies } = makeMorphDeps();
+    (deps as any).submitVideo = vi.fn(async (config: any, opts: any): Promise<VideoJobHandle> => ({
+      operation: {},
+      prompt: config.prompt,
+      sceneIdx: opts?.sceneIdx,
+      model: config.model,
+      aspectRatio: config.aspectRatio,
+      duration: config.duration,
+      // Only the scene that actually sent a pair can have one refused.
+      ...(config.endFrame ? { morphDowngraded: true } : {}),
+    }));
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+
+    await runProduction(run, callbacks, deps);
+    await approveStoryboard(run, callbacks, deps);
+
+    // The stills are untouched — this is a CLIP fact, not an image failure.
+    expect(run.storyboard![0].endFrameImageUrl).toBe('img://END0 Bukidnon Brew bottle reveal');
+    const req = spies.renderFinalVideo.mock.calls[spies.renderFinalVideo.mock.calls.length - 1][0] as any;
+    expect(req.scenes.find((x: any) => x.sceneIdx === 0).hasEndFrame).toBe(false);
+  });
+
+  it('a morph the provider ACCEPTED still gets its action hold', async () => {
+    // The control. Without it the test above passes for a scene that never had a pair at all.
+    const { deps, spies } = makeMorphDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+
+    await runProduction(run, callbacks, deps);
+    await approveStoryboard(run, callbacks, deps);
+
+    const req = spies.renderFinalVideo.mock.calls[spies.renderFinalVideo.mock.calls.length - 1][0] as any;
+    expect(req.scenes.find((x: any) => x.sceneIdx === 0).hasEndFrame).toBe(true);
+    expect(req.scenes.find((x: any) => x.sceneIdx === 1).hasEndFrame).toBe(false);
+  });
+
   it('the video fan-out threads the end frame to submitVideo (morph scene only)', async () => {
     const { deps, spies } = makeMorphDeps();
     const run = createProductionRun(makeInput(), 'u1');
@@ -2127,5 +2171,29 @@ describe('durable presenter reference', () => {
     await flush();
 
     expect((store.recordAvatar as any).mock.calls.length).toBe(0);
+  });
+
+  // Found in review 2026-08-31. The ordering fix above hung the write off a persist and then
+  // latched a flag — but `deps.persist` is best-effort and swallows its own errors, so it
+  // ALWAYS resolves. Awaiting it proves the checkpoint was attempted, never that the run row
+  // exists. A dropped create checkpoint therefore spent the single attempt on the exact 404
+  // this whole thing exists to avoid, and avatar_url stayed NULL for the life of the run —
+  // the original bug, wearing the fix as a disguise. The door is closed by the AVATAR write
+  // settling, not by the checkpoint before it.
+  it('retries on the next commit when the write itself failed', async () => {
+    const { deps, store } = makeFakeDeps();
+    let calls = 0;
+    (store.recordAvatar as any).mockImplementation(async () => {
+      calls += 1;
+      if (calls === 1) throw Object.assign(new Error('run_not_found'), { status: 404 });
+      return { changed: true };
+    });
+
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    await flush();
+
+    // Exactly two: the 404, then the retry that landed. A third would mean the door never shut.
+    expect(calls).toBe(2);
   });
 });
