@@ -1,29 +1,30 @@
 # NOW — the resume doc
 **Stamped: 2026-08-31** (session 42)
 
-## ▶ NEXT ACTION — merge, then RE-RUN the unboxing sample before moving on
+## ▶ NEXT ACTION — produce the next sample
 
-`claude/eval-managed-agents-vr01gs` is merged; `origin/main` carries it. The live branch is
-**`claude/code-review-ecszcz`** — three defects a `/code-review` pass found under a green build.
-Merge it first.
+Nothing to merge: `origin/main` is at `6257542` and carries session 41 + 42 in full.
 
-Then **re-run the SAME unboxing brand, not Silid Home yet.** Session 41 could not tell whether
-the blank-wordmark fix worked; we now know it was never active (below), so that run is its
-first real test. Only after a clean pair go to **2 · Silid Home (Unboxing ASMR)** from
-`workflows/sample_brand_briefs.md` — same S2 pair under `asmrFlag`.
+The shipped `/samples/unboxing.*` is FINE — the wordmark came back on a regenerate in session 41
+and nothing since has touched it. So the next run is a free choice, not a rescue: re-run the same
+unboxing brand to add a second data point to the 🎲 (`bbbed45` still has a sample of one), or go
+straight to **2 · Silid Home (Unboxing ASMR)** in `workflows/sample_brand_briefs.md`, which
+exercises the same S2 pair under `asmrFlag` and doubles as that data point. Neil picks.
 
 Setup after a reboot: `restore-ffmpeg.ps1`, `enable-dev-unmetered-video.ps1`, `npm run dev`.
 Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH photos. **Paste the
 offer, never type it** — a past run typed 113 of 153 chars and lost the first sentence. Smoke
 login: `workflows/expert_manual_mode.md:440`.
 
-## 🔴 THE FINDING — the wordmark fix was pointing at the wrong photo
-`SHEET_NOTE` opened with "Reference Image 1". That ordinal is POSITIONAL inside
-`generateSceneImage`, which pushes avatar → product → continuity, and the sheet arrives as the
-**productUrl**. The only path that composes a sheet (`reveals` → mode `'both'`) also passes an
-avatar, so image 1 was the avatar PORTRAIT: the NO_UNSOLICITED_PRODUCT carve-out landed on the
-wrong photo every time. `bbbed45` was not a 🎲 that lost a coin flip — it was never in play. Now
-named by ROLE, which cannot go stale when the parts order moves.
+## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
+`SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
+for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
+was image 1. But the ordinal is POSITIONAL — `generateSceneImage` pushes avatar → product →
+continuity — so the moment an avatar IS present the sheet becomes image 2 and the carve-out
+points at the portrait. Right sometimes, wrong sometimes, on a condition nobody was tracking.
+Now named by ROLE, correct either way. **Note the interaction: the avatar-persist fix below
+makes the avatar present MORE often, i.e. it would have made this ordinal wrong more often.**
+⚠ This is hardening, NOT the missing fix — `bbbed45` stays a 🎲. Do not re-verify on one run.
 
 ## ✅ ALSO FIXED — unit-verified, NOT yet eyeballed on a render
 1. **The avatar write latched on a persist that had only been ATTEMPTED.** `deps.persist`
@@ -64,11 +65,10 @@ Each new test was run against the unfixed source: **3 failed, 100 passed, no col
    limit in `api/gemini/image.ts` against Vercel's 4.5 MB cap, and `renderEndFrame`'s bare
    `catch { return undefined }` turns an overflow into a silently missing end frame — which also
    zeroes `hasEndFrame`. Downscale the continuity frame; emit an event instead of swallowing.
-4. `SCENE_PROMPT_CAP = 400` is an unlinked duplicate of the literal at `geminiService.ts:2340`.
-   Drift silently restores the invisible truncation. One line.
+4. `SCENE_PROMPT_CAP = 400` duplicates the literal at `geminiService.ts:2340`; drift silently
+   restores the invisible truncation. One line.
 5. Same storyboard: the box SHIFTS between the frames, and S2 says "punit" over a box FLAP.
-6. **No script gate exists.** Build it AFTER TUNED #3 — a gate hunting for a claim the script
-   was never given is pointless.
+6. **No script gate exists.** Build it AFTER TUNED #3 — a gate hunting a claim the script was never given is pointless.
 7. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
 8. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
 9. **Quota race in `consumeFinishedAd`**; **fan-out paid-but-uncollected** on tab close (#29).
