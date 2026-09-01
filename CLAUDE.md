@@ -251,6 +251,7 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/app_audit.md` — prioritized punch list of what's broken/stubbed/risky
 - `workflows/fix_broken_feature.md` — SOP for fixing one item from the audit
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist
+- `workflows/market_viability_2026.md` — **the September 2026 "is this still worth doing" check.** Sourced read on Meta's URL-to-campaign automation, the Higgsfield/Arcads/Creatify field, the AI-creative conversion data (and why sub-$100 AOV is our band), the wrapper-commoditization clock, and the six ranked changes it implies. Open it before any repositioning or pricing debate; it carries its own re-open triggers.
 - `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). The SessionStart hook surfaces these automatically.
 - `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, cloud CI, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
