@@ -100,13 +100,53 @@ percentage loses to a week of real conversations.
 - No self-serve launch, no pricing-page redesign, no paid spend on Grifon's own brand.
 - No Concierge, no Autopilot, no new module. The build backlog in `NOW.md` waits seven days.
 
-## Pricing call for the pilots
+## This is NOT a change of offer
 
-Free for the first three, in exchange for permission to publish the numbers. That permission is the
-actual price and it is worth more than ₱997. From the fourth onward, charge for the outcome
-(a three-ad pack plus setup) rather than for seats, and only route people to the ₱997/₱2,497 self-
-serve tiers once they have seen an ad of their own perform. **This is a recommendation to test in
-week two, not a settled price.**
+The product offer stays exactly as it is: ₱997 Starter, ₱2,497 Pro, self-serve. What changes for
+seven days is the **first step of the funnel**, not the thing being sold.
+
+Selling ₱997/month software cold to a Filipino SMB who has never seen it work asks them to believe
+a claim. Saying *"gagawan kita ng ad, ikaw na lang bahala sa ad spend mo"* asks them to believe
+nothing. The service is the on-ramp; the software is still the destination.
+
+**The trap this creates, named so it can be avoided:** a solo founder on cafe wifi cannot run an
+agency. If pilots are still the main activity in month three, the week failed, whatever the numbers
+said. Hence the hard cap below.
+
+## Who pays what, and the cap
+
+| Item | Who pays | Rough size |
+|---|---|---|
+| Ad production (API calls: text, images, video render) | **Neil** | ~₱200-800 per finished ad |
+| Ad spend on Meta | **The client, from peso one. Never Neil.** | their call, ₱500 minimum to count |
+| The "price" of the free ad | The client: permission to publish the numbers, plus a yes/no date | — |
+
+Production cost is derived from [`cogs_analysis.md`](cogs_analysis.md): ~$0.02 text + ~$0.30 images
++ ~$3.00 per ~30s video render per ad. ⚠ That file flags its unit prices as order-of-magnitude
+placeholders, and a 4-scene ad carries more than one render, so **confirm against live pricing
+before committing to a number publicly.** Three pilots land somewhere under ₱2,500 all-in, which is
+less than one day of the ad spend the plan is trying to earn the right to ask for.
+
+**The client's ad spend is non-negotiable and it is the point, not a cost.** If Neil funds the
+spend he learns nothing: every pilot "works" and nobody has revealed anything about their intent.
+A business owner who will not risk ₱500 of their own money on an ad made for them for free is a
+business owner who will never pay ₱997 a month. That refusal is a result, and it arrives free.
+
+**Hard cap: three pilots. Written down here so it is a rule and not a mood.** From the fourth
+onward, charge, and charge for the outcome (a three-ad pack plus setup) rather than for seats.
+Route people to the self-serve tiers only after they have watched an ad of their own perform.
+The paid price is a week-two decision, not settled here.
+
+## The landing page: one change now, the rewrite later
+
+**Day 0 touches the proof section only** — the false `ProofGallery` claim comes out, the Oceanides
+receipt goes in. Nothing else.
+
+**The full repositioning waits, deliberately.** Rewriting the page today means rewriting it from a
+guess, and the guess would be this file's, not the market's. The thirty conversations on Day 2 ARE
+the copy research: whichever sentence makes a stranger reply, and whichever objection keeps coming
+back, is the headline and the FAQ. Write the page in week two out of their words. Doing it in the
+other order is how a page ends up beautiful and unread.
 
 ## The honest risk
 
