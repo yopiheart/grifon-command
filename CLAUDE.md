@@ -251,6 +251,7 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/app_audit.md` — prioritized punch list of what's broken/stubbed/risky
 - `workflows/fix_broken_feature.md` — SOP for fixing one item from the audit
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist
+- `workflows/one_week_plan_2026-09.md` — **the seven-day decision that came out of the viability check.** Stop selling software for a week; sell the outcome using KM-003's real ₱13.33/message receipt. Day-by-day, what is explicitly NOT done, and the three Day-7 numbers that replace every probability estimate. Rewrite it 2026-09-08 with those numbers.
 - `workflows/market_viability_2026.md` — **the September 2026 "is this still worth doing" check.** Sourced read on Meta's URL-to-campaign automation, the Higgsfield/Arcads/Creatify field, the AI-creative conversion data (and why sub-$100 AOV is our band), the wrapper-commoditization clock, and the six ranked changes it implies. Open it before any repositioning or pricing debate; it carries its own re-open triggers.
 - `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). The SessionStart hook surfaces these automatically.

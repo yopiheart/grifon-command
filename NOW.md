@@ -1,27 +1,28 @@
 # NOW — the resume doc
 **Stamped: 2026-09-01** (session 43)
 
-## ▶ NEXT ACTION — Neil picks: distribution, or the next sample
+## ▶ NEXT ACTION — execute the one-week plan
 
-Session 43 was research only, no code. `origin/main` is at `4f76359`; the viability doc sits on
-`claude/project-viability-research-8se685` (`32ca51b`, 2 commits, not merged).
+Session 43 was research only, no code. `origin/main` is at `4f76359`; three docs sit on
+`claude/project-viability-research-8se685` (`c3c70c0`), not merged.
 
-**A · The strategy answer, if it lands:** `workflows/market_viability_2026.md` says the product bet
-survived and the *sequencing* is the risk. Ranked: ship, narrow the pitch from "AI video ads" to
-research→offer→Taglish script→finished ad, position WITH Meta's automation (it eats creative
-variety, we make it), move the compounding loop into the product, **fix the false `ProofGallery`
-claim before any traffic**, hold sub-$100 AOV as the ICP. Probability, end-2027: ~50% alive, ~15%
-replaces a salary, ~4% breakout — but 90 days of distribution puts the first near ~70% and 90 more
-days of engineering drops it to ~15%. Unverified probe it names: go inside one PH AI-OS community.
+**THE CALL: [`workflows/one_week_plan_2026-09.md`](workflows/one_week_plan_2026-09.md).** For seven
+days Grifon stops being a product launch and becomes a service that manufactures proof. The pivot is
+an asset already in the repo, in the wrong folder: KM-003 hit **₱13.33 per message** against a
+₱40-80 band on Day 1, pulled from Meta's API. Grok, Meta automation and Higgsfield cannot show a
+Filipino owner a septic-tank business with a receipt. ⚠ Verified to **Day 1 only** and that record is
+a month old, so pull the current number before publishing anything.
 
-**B · The build path, unchanged from session 42:** re-run the same unboxing brand for a second data
-point on the 🎲 (`bbbed45` still has a sample of one), or go to **2 · Silid Home (Unboxing ASMR)** in
-`workflows/sample_brand_briefs.md` — same S2 pair under `asmrFlag`, and it doubles as that data
-point. The shipped `/samples/unboxing.*` is FINE, no rescue needed.
-Setup after a reboot: `restore-ffmpeg.ps1`, `enable-dev-unmetered-video.ps1`, `npm run dev`.
-Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH photos. **Paste the
-offer, never type it** — a past run typed 113 of 153 chars and lost the first sentence. Smoke
-login: `workflows/expert_manual_mode.md:440`.
+**Day 0 is tonight, ~2 hours:** pull KM-003's real numbers, rip out the false `ProofGallery` claim
+(open item #8), replace it with the Oceanides receipt. Then Day 1 one case-study page via
+`funnel-forge`, Day 2 thirty real conversations (one inside a PH AI-OS community), Days 3-4 three
+pilot ads by hand, Day 5 one client spends their own money, Day 6 publish the win or the failure,
+Day 7 three real numbers. **Not this week: samples, pipeline work, self-serve launch, paid spend.**
+
+Reasoning: [`workflows/market_viability_2026.md`](workflows/market_viability_2026.md). Everything
+below is the build backlog, parked seven days. Reboot setup: `restore-ffmpeg.ps1`,
+`enable-dev-unmetered-video.ps1`, `npm run dev`. Smoke login: `workflows/expert_manual_mode.md:440`.
+Sample path if the week is abandoned: `workflows/sample_brand_briefs.md` · 2 · Silid Home.
 
 ## 🔴 THE FINDING (session 42) — SHEET_NOTE's ordinal was right only while the avatar was missing
 `SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was right for
