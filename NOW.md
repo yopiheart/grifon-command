@@ -67,8 +67,7 @@ build clean, bundle-leak 0. **No render eyeballed.**
    limit in `api/gemini/image.ts` against Vercel's 4.5 MB cap, and `renderEndFrame`'s bare
    `catch { return undefined }` turns an overflow into a silently missing end frame, zeroing
    `hasEndFrame` too. Downscale the continuity frame; emit an event instead of swallowing.
-4. `SCENE_PROMPT_CAP = 400` duplicates the literal at `geminiService.ts:2340`. One line.
-5. Same storyboard: the box SHIFTS between the frames, and S2 says "punit" over a box FLAP.
+4. `SCENE_PROMPT_CAP = 400` duplicates the literal at `geminiService.ts:2340`. One line. 5. Same storyboard: the box SHIFTS between the frames, and S2 says "punit" over a box FLAP.
 6. **No script gate exists.** Build AFTER TUNED #3 — a gate hunting a claim the script was never given is pointless.
 7. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
 8. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
