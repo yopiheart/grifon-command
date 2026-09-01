@@ -109,6 +109,91 @@ already the right shape — worth defending against any future "just make it a f
 
 ---
 
+## 5. Correction to section 2: xAI is a closer competitor than Higgsfield
+
+The first pass of this file treated the generative-video field as clip generators. That was right
+about Higgsfield and wrong about xAI, and the gap matters.
+
+- **Grok Imagine Agent Mode** shipped 2026-05-01: an infinite-canvas creative agent that plans,
+  generates, edits, and **stitches 6-second clips into longer films** — explicitly pitched at the
+  "prompt to image variations to short video previews" loop for rapid ad concepts, storyboards, and
+  social creative testing ([codersera](https://codersera.com/blog/grok-imagine-agent-mode-launch-2026/),
+  [LinkStart](https://www.linkstartai.com/en/agents/grok-imagine)).
+- **Grok Bot** shipped in beta 2026-08-11: persistent agents, each on its own cloud computer, that
+  sign into the user's existing tools and finish multi-step work unattended
+  ([ayautomate](https://www.ayautomate.com/blog/grok-bot-xai-ai-agents-explained),
+  [Beam](https://beam.ai/agentic-insights/grok-bot-enterprise-ai-agents)).
+- In one quarter xAI shipped Build Mode, Automations, Imagine Image 2.0, a voice-agent builder, and
+  Office/Workspace integrations ([Big Hat Group](https://www.bighatgroup.com/blog/xai-weekly-2026-05-06/)).
+
+That is a general-purpose engine that can assemble a video ad. It still does not do market research
+into a Filipino offer, does not write in register, and is English-first on a USD card. But the honest
+statement is that **the assembly step is no longer our differentiator; only the Filipino
+direct-response layer is.** Any pitch that leans on "we string clips into a finished ad" is already
+commoditized.
+
+## 6. The "AI OS community" threat is real but points the other way
+
+The pattern Neil is seeing — communities teaching Filipino entrepreneurs to run a one-person
+business on agent stacks — is the visible edge of a genuine 2026 shift. AI-OS products for
+entrepreneurs are launching ([Genius OS, July 2026](https://tashios.com/blog/ai-os-entrepreneurs-july-2026)),
+and PH businesses are named as well positioned because they already run on the exact tools agents
+orchestrate: Messenger, Gmail, spreadsheets
+([Quantum Growth PH](https://thequantum-growth.com/blog/ai-trends-2026-philippines)).
+
+Three reads, in order of how much they should change behavior:
+
+1. **It compresses our price ceiling and competes with our story.** "Bakit ka magbabayad ng software
+   kung kaya na ng bot" is a real objection we will now hear in every sales conversation. It needs a
+   scripted answer, and the answer is time-to-first-ad, not features.
+2. **But it is also the best distribution channel we have.** People who join an AI-OS community are
+   self-selected early adopters with budget who already believe AI can run their marketing. They are
+   the warmest possible list. Historically, DIY-agent enthusiasts are heavy tool BUYERS, not
+   abstainers — they buy the thing that removes the setup.
+3. **The person who can wire a Grok agent stack is not our ICP.** Our buyer is the owner who cannot
+   brief in English, will not maintain a workflow, and wants a finished ad. The community member is
+   a potential reseller or affiliate, not a lost sale.
+
+**Unverified.** No specific Philippine community was inspected for this file. Before acting on any
+of the above, go into one, see what members actually ship, and how much they pay per month. That is
+a cheap probe and it beats every citation here.
+
+## 7. Probability of success, 2026-2027
+
+Asked directly, so answered directly. **These are calibrated judgments, not measurements** — there
+is no Grifon usage data to compute them from, and the largest term in every one is founder
+behaviour, not market structure.
+
+Success bar defined three ways, from launch through end of 2027:
+
+| Tier | Bar | Probability |
+|---|---|---|
+| A — Alive and validated | 30+ paying users, ~₱30-50k MRR, still operating end-2027 | **~50%** |
+| B — Replaces a salary | ~₱150k+ MRR (roughly 100 Pro seats or the credit equivalent) | **~15%** |
+| C — Breakout | ₱1M+ MRR, hiring, category presence in PH | **~4%** |
+
+**Why Tier A is a coin flip and not lower:** the product exists and works, which already puts it past
+where most attempts die; the ICP band is evidence-backed (section 3); PH distribution via Facebook is
+cheap and reachable; and there is an existing client channel (Oceanides) that proves the founder can
+deliver outcomes, not just software.
+
+**Why it is not higher:** zero paying users today, no list, no launched distribution, a solo founder
+whose whole capacity has gone to engineering for 40+ sessions, and a two-front clock (Meta full-auto
+creative, xAI shipping monthly).
+
+**The conditional is the whole answer.** These are the numbers that should actually drive the
+decision:
+
+- If the next 90 days are **distribution** — samples out, 10 real conversations a week, first paid
+  users, price tested — Tier A goes to roughly **70%**.
+- If the next 90 days are **more engineering**, Tier A falls to roughly **15%**, because the
+  advantage decays whether or not the code improves.
+
+Same product, same market, same competitors. The spread between 70% and 15% is entirely about which
+work gets done next. That is the finding.
+
+---
+
 ## What this changes — ranked
 
 1. **Ship. The clock is the finding, not the competition.** Meta's full-auto creative lands "later
@@ -143,6 +228,9 @@ Revisit this file when any one of these happens:
 - Meta's URL-to-campaign creative ships to PH advertisers in general availability.
 - Any competitor ships Filipino-register (not merely Tagalog-language) ad copy as a headline feature.
 - We have 10 paying users — real churn and retention data outrank every citation above.
+- Grok Imagine ships Filipino-register output or a PH-priced tier.
+- A Philippine AI-OS community is actually inspected (section 6) — that probe replaces guesswork
+  with observation and may move the section 7 numbers in either direction.
 
 ---
 *Research conducted 2026-09-01 from live sources. No claim here was verified against Grifon's own
