@@ -6,18 +6,16 @@
 Session 43 was **Oceanides client work**, not Grifon product. Branch:
 `claude/oceanides-business-card-design-ppwhtx` (2 commits, pushed, no PR opened).
 
-**Blocked on Neil, two things, one line each:**
-1. **Push the font-combo folder** to `clients/oceanides/brand/type-inspo/` (README there
-   states what a face must survive). The wordmark is a placeholder until it lands.
-2. **Marvin's real job title.** He is Talent under the likeness agreement. Inventing
-   "Field Inspector" rebuilds the fake-credential problem in a nicer font.
+**Blocked on Neil, one thing:** **Marvin's real job title.** He is Talent under the
+likeness agreement. Inventing "Field Inspector" rebuilds the fake-credential problem in a
+nicer font. Everything else on the card is unblocked.
 
 Then: rebuild the business card on the new mark. Card spine is **registrations only**
 (SEC · BIR · OPC legal name) — Certificate of Treatment is CUT, Neil and CEO Agosto
 both rejected it. Four services: **Siphoning · Declogging · Plumbing · Pest Management**
 ("Grease Trap" was invented by the agent; zero repo hits). **No location line.**
 
-## ✅ SHIPPED — the vector brand mark
+## ✅ SHIPPED — the vector brand mark + the typeface
 
 `clients/oceanides/brand/` — mark, mark-small (<24px, no mosquito), mark-mono,
 logo-primary, logo-lockup. All from ONE geometry source,
@@ -28,6 +26,12 @@ Why it was rebuilt, measured not guessed: **18,832 distinct colours** in a 316px
 a gradient wordmark, seven competing elements, and **no vector master anywhere**
 (`public/logo.svg` is a stub rendering the word "LOGO"). Full write-up now lives in
 `clients/oceanides/DESIGN.md` under "Ang marka".
+
+**Typeface settled: Archivo Expanded ExtraBold** (SIL OFL), committed at
+`brand/fonts/`. Neil's six-slide board is filed at `brand/type-inspo/` with the verdict
+per pairing in its README — four of six failed on licence or register; the winner is the
+Archivo half of his own slide 05. Picked by setting all six at **11px (~5pt, real card
+size)**, not by eye at poster scale.
 
 ⚠️ **Amber has ZERO basis in the mark** — 0 of 99,856 pixels are warm. Navy matches
 well (RGB distance 14.7 to `surface`). Whether the shield gains a warm accent is
