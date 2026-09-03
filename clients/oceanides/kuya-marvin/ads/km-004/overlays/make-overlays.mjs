@@ -172,7 +172,7 @@ const JOBS = [
       `<div class="card">
          <div class="cta" id="cta">BASAHIN MO MUNA</div>
          <div class="url" id="url">OCEANIDESPH.COM</div>
-         <img class="logo" id="logo" src="../../../assets/logo.jpg" alt="">
+         <img class="logo" id="logo" src="../../../brand/logo-source.png" alt="">
        </div>`,
       `const c=document.getElementById('cta'),u=document.getElementById('url'),g=document.getElementById('logo');
        window.render=function(t){

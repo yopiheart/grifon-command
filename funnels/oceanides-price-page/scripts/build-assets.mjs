@@ -68,7 +68,15 @@ const JOBS = [
   //     as a deliberate decal/seal instead of a pasted rectangle — and print
   //     brands put full-colour seals on white by convention anyway.
   // `circle: true` composites an SVG circle with dest-in, and webp keeps the alpha.
-  { src: 'logo.jpg', out: 'logo.webp', width: 320, quality: 90, circle: true },
+  // 2026-09-03: Neil replaced the mark. Source moved to clients/oceanides/brand/
+  // and logo.jpg was deleted, so this job is repointed with `dir` rather than
+  // left dangling -- a missing src fails the whole prebuild, not just this job.
+  //
+  // ⚠ circle:true still crops the square corners, but the NEW artwork is light-on-
+  // BLACK where the old was navy-on-white. ComplianceFooter renders this on a PAPER
+  // chip (bg-brand-proof-band), which was correct for the old file and is now
+  // backwards: a dark disc on a light chip. Flagged for Neil, not silently restyled.
+  { dir: 'clients/oceanides/brand', src: 'logo-source.png', out: 'logo.webp', width: 320, quality: 90, circle: true },
 
   // Official marks. Both carry alpha, BUT their artwork is near-black, so they are
   // effectively invisible on navy (Neil: "hindi rin masyadong visible dahil black").
