@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Oceanides card - front</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  /* FRONT. Navy full bleed. The job of this face is "who is standing in front of
+     you and how do you reach him" -- Marvin hands it over on a cold B2B visit, so
+     the mark and the human come first and the service list waits for the back.
+
+     The mark sits left and the block reads right of it, which keeps the whole
+     card on one left rail (DESIGN.md, "Layout: isang rail"). */
+  #canvas { background: var(--deep); }
+</style>
+</head>
+<body>
+<div id="canvas">
+
+  <!-- the amber tab runs off the left bleed edge on purpose: a tab is cut, not floated -->
+  <div class="abs" style="left:0; top:40px;">
+    <span class="tab">SEC &amp; BIR Registered</span>
+  </div>
+
+  <div class="abs seal" style="left:44px; top:124px; width:116px; height:116px;">
+    <img src="../brand/logo-source.png" alt="Oceanides">
+  </div>
+
+  <div class="abs" style="left:188px; top:118px; right:36px;">
+    <div class="nm">Marvin Balaba</div>
+    <div class="rl" style="margin-top:6px;">Authorized Representative</div>
+  </div>
+
+  <hr class="dash abs" style="left:188px; right:36px; top:172px;">
+
+  <div class="abs" style="left:188px; top:190px;">
+    <div class="ph"><span class="amdot">&#9679;</span> Globe &nbsp;0917 671 6383</div>
+    <div class="ph" style="margin-top:9px;"><span class="amdot">&#9679;</span> Smart &nbsp;0939 245 6217</div>
+    <div class="web" style="margin-top:14px;">oceanidesph.com</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,72 +1,52 @@
 # NOW — the resume doc
 **Stamped: 2026-09-03** (session 43)
 
-## ▶ NEXT ACTION — Neil pushes his font board, then the card gets rebuilt
+## ▶ NEXT ACTION — ipa-print ang card, tapos i-redeploy ang funnel
 
-Session 43 was **Oceanides client work**, not Grifon product. Branch:
-`claude/oceanides-business-card-design-ppwhtx` (2 commits, pushed, no PR opened).
+Session 43 ay **Oceanides client work**. Branch:
+`claude/oceanides-business-card-design-ppwhtx` (pushed, walang PR).
 
-**Blocked on Neil, one thing:** **Marvin's real job title.** He is Talent under the
-likeness agreement. Inventing "Field Inspector" rebuilds the fake-credential problem in a
-nicer font. Everything else on the card is unblocked.
+**1 · Ipa-print ang business card.** Tapos na at na-gate.
+`clients/oceanides/card/` — ibigay sa printer ang `press-front.png` +
+`press-back.png`. Buong spec: [`card/PRINT-SPEC.md`](clients/oceanides/card/PRINT-SPEC.md).
+90x50mm trim + 3mm bleed, 350gsm, matte lam, double-sided, **100-200 lang muna**.
+🔴 **Kumpirmahin muna kay CEO Agosto ang "Authorized Representative" ni Marvin**
+bago ang malaking run — totoo lang yun kung may sulat na nagbibigay ng awtoridad.
 
-Then: rebuild the business card on the new mark. Card spine is **registrations only**
-(SEC · BIR · OPC legal name) — Certificate of Treatment is CUT, Neil and CEO Agosto
-both rejected it. Four services: **Siphoning · Declogging · Plumbing · Pest Management**
-("Grease Trap" was invented by the agent; zero repo hits). **No location line.**
+**2 · I-redeploy ang `oceanides-price-page`.** Dalawang bagay ang naghihintay
+sabay: **ang bagong logo** at **ang DENR claim sa footer** na inalis. Tapos na
+ang source, hindi pa naka-live.
 
-## ✅ SHIPPED — TWO marks, with a role each
+## ✅ SHIPPED — bagong logo, business card, at ang typeface
 
-🔴 **Read the role table in `clients/oceanides/DESIGN.md` before picking any logo file.**
-**Primary = Neil's new mark** (`brand/logo-source.png`, dropped 2026-09-03) — FB, cover,
-endcards, signage, anything large or on dark. It is 149,907 colours with NO alpha and a
-baked-in black ground; it turns to **mush at 40px** (the funnel footer size) and its glow
-has no CMYK equivalent. So the **vector family is the print/small half** — card, favicon,
-one-colour embroidery. Neil's call, not a downgrade of his mark.
+**ISA lang ang marka:** `clients/oceanides/brand/logo-source.png`. Binura ang
+vector shield at ang `assets/logo.jpg` sa utos ni Neil. Ang `logo.jpg` ay **build
+input** pala ng dalawang funnel — naka-repoint na lahat (tatlong lugar), at
+ni-regenerate ang parehong `logo.webp`.
 
-`clients/oceanides/brand/` — mark, mark-small (<24px, no mosquito), mark-mono,
-logo-primary, logo-lockup. All from ONE geometry source,
-`tools/brand/build-oceanides-logo.py`. **Never hand-edit the SVGs; edit the script.**
-Artifact: `https://claude.ai/code/artifact/5c523b6d-caa7-49ec-9ffe-bc71ac25d586`
+**Typeface: Archivo Expanded 800** (SIL OFL, naka-commit sa `brand/fonts/`).
+Ang board ni Neil ay nasa `brand/type-inspo/` na may verdict kada pares — apat sa
+anim ay bagsak sa licence o register. Ang panalo ay ang Archivo half ng sarili
+nyang slide 05. **Anton pa rin ang video captions** — nakadikit sya sa drawPlan
+constants at sa 98.5% retention; hatian ayon sa surface, nasa DESIGN.md.
 
-Why it was rebuilt, measured not guessed: **18,832 distinct colours** in a 316px JPEG,
-a gradient wordmark, seven competing elements, and **no vector master anywhere**
-(`public/logo.svg` is a stub rendering the word "LOGO"). Full write-up now lives in
-`clients/oceanides/DESIGN.md` under "Ang marka".
+**Kulay: walang binago.** Sinukat laban sa bagong logo — `surface` 15.7, `deep`
+17.4, `void` 10.8. Tugma lahat. Ang amber ay **13 pixel sa 1,572,516** — wala sa
+marka, pero signage color sya, hindi hango sa marka.
 
-**Typeface settled: Archivo Expanded ExtraBold** (SIL OFL), committed at
-`brand/fonts/`. Neil's six-slide board is filed at `brand/type-inspo/` with the verdict
-per pairing in its README — four of six failed on licence or register; the winner is the
-Archivo half of his own slide 05. Picked by setting all six at **11px (~5pt, real card
-size)**, not by eye at poster scale.
+🔴 **Aral ng session:** ipinakita ko ang 40px na mush ng logo tapos hinatulan ko
+agad na hindi kaya ang business card. **Mali** — apat na beses mas malaki ang card,
+at malinis ang logo sa 12mm pataas. **Sukatin sa TOTOONG laki ng surface**, wag
+i-generalize mula sa isang sukat.
 
-⚠️ **Amber has ZERO basis in the mark** — 0 of 99,856 pixels are warm. Navy matches
-well (RGB distance 14.7 to `surface`). Whether the shield gains a warm accent is
-**Neil's call**, deliberately not decided inside a redraw.
+## 🔴 OPEN — unshipped compliance landmine
 
-## 🔴 OPEN — an unshipped compliance landmine
+`funnels/oceanides-paolo/src/funnel.config.ts:288-311` ay may
+`'DENR-registered hauler'`, `'LLDA permit'`, at **parehong ID number ng ibang
+kompanya** bilang receipt rows na nakapangalan sa Oceanides.
 
-`funnels/oceanides-paolo/src/funnel.config.ts:288-311` still carries
-`'DENR-registered hauler'`, `'LLDA permit'`, and **both third-party ID numbers**
-(`OL-TR-R3-14-000080` is Globaltec's; `BEHMC(1)WHN0095001WW260318` is another
-company's, with a confidentiality clause) as receipt rows attributed to Oceanides.
-
-That funnel is **NOT** in `workflows/funnel_deploys.md`, so it is unshipped, not live.
-**Do not deploy oceanides-paolo until those rows are pulled.** The same claim in the
-FOOTER of both funnels WAS live and is fixed — Neil still needs to redeploy
-`oceanides-price-page` for that to reach production.
-
-## 📌 The card comps from round 1 (superseded, kept for the record)
-
-`https://claude.ai/code/artifact/1c17b8c3-2373-4a0b-a4d0-aad6d98d65fd` — three concepts
-built on the Certificate of Treatment spine. **That spine is dead**; the layouts and the
-print lessons are still good. Two of those lessons are worth carrying forward:
-
-- **540px = 90mm, so 1pt = 2.117px.** A ladder set by eye put every tier at 4–6pt and
-  the legal line at 3.3pt, which no press holds. Size print type in POINTS.
-- The 390×844 mobile gate ran through a **local script**, not the configured
-  smoke-tester — Playwright MCP fails to connect in the web sandbox (`ENOENT: cmd`,
-  a Windows shim on Linux). Say which path was used; don't imply the real gate ran.
+**HINDI** sya nasa `workflows/funnel_deploys.md`, kaya unshipped — landmine, hindi
+leak. **Wag i-deploy ang oceanides-paolo hangga't nandyan ang mga row na yun.**
 
 ## ⏸ GRIFON PRODUCT — parked exactly where session 42 left it
 

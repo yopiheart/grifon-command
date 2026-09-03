@@ -1,0 +1,105 @@
+/* Oceanides business card -- shared print stylesheet for front.html + back.html.
+   Layout A "Work Order" (Neil, 2026-09-03).
+
+   GEOMETRY. The canvas is 576x336 px == 96x56mm at 6px/mm. That is the PH
+   standard 90x50mm card plus a 3mm bleed on every side (18px). So:
+
+       bleed edge   0                     576
+       TRIM        18 ....................558     (90mm)
+       SAFE        36 ....................540     (a further 3mm in)
+
+   Nothing that must survive the guillotine goes outside SAFE. Backgrounds run to
+   the bleed edge on purpose -- that is what bleed is for.
+
+   POINTS, NOT PIXELS. 6px == 1mm, so 1pt (0.3528mm) == 2.117px. Divide any
+   font-size here by 2.117 to read it in print points. An earlier pass on this
+   card was sized by eye and every tier landed between 4pt and 6pt, with a 3.3pt
+   legal line no press can hold. Sizes below were chosen from the points column.
+   6pt (12.7px) is the floor for anything a customer must READ. */
+
+@font-face {
+  font-family: 'ArchivoX';
+  src: url('../brand/fonts/Archivo-Expanded-800.ttf') format('truetype');
+  font-weight: 800;
+  font-display: block;
+}
+
+:root {
+  --amber:   #F5B301;
+  --surface: #0E2C5E;
+  --deep:    #0A1F45;
+  --ocean:   #1C63AD;
+  --sky:     #5AA6E6;
+  --dim:     #8FB3DD;
+  --muted:   #DFE8F5;
+  --paper:   #F4F6FA;
+  --ink:     #0B1B33;
+  --meta:    #5B6B85;
+
+  /* Display face matches the logo's own wordmark -- flat C and S terminals,
+     wide O. Anton stays on video captions where it is proven; it is the wrong
+     width beside this mark. See clients/oceanides/DESIGN.md, Typography. */
+  --display: 'ArchivoX', 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body:    'Helvetica Neue', Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: #555; }
+
+#canvas {
+  position: relative;
+  width: 576px;
+  height: 336px;
+  overflow: hidden;
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.abs { position: absolute; }
+
+/* ---- type roles. px / 2.117 == points ---- */
+.nm  { font-family: var(--display); font-weight: 800; font-size: 21px;   /* 9.9pt */
+       letter-spacing: .4px; text-transform: uppercase; color: #fff; }
+.rl  { font-family: var(--display); font-weight: 800; font-size: 11.5px; /* 5.4pt */
+       letter-spacing: 1.5px; text-transform: uppercase; color: var(--sky); }
+.ph  { font-family: var(--display); font-weight: 800; font-size: 15px;   /* 7.1pt */
+       letter-spacing: .3px; color: #fff; }
+.web { font-family: var(--display); font-weight: 800; font-size: 12.5px; /* 5.9pt */
+       letter-spacing: 1.1px; text-transform: uppercase; color: var(--dim); }
+.svc { font-family: var(--display); font-weight: 800; font-size: 14px;   /* 6.6pt */
+       letter-spacing: .5px; text-transform: uppercase; color: var(--ink); }
+.cr  { font-family: var(--display); font-weight: 800; font-size: 12.5px; /* 5.9pt */
+       letter-spacing: 1.1px; text-transform: uppercase; color: var(--meta); }
+.fn  { font-family: var(--body); font-size: 10.5px; line-height: 1.45;   /* 5.0pt */
+       color: var(--meta); }
+
+/* ---- print devices from the design system: amber tab, dashed ticket rule ---- */
+.tab { font-family: var(--display); font-weight: 800; font-size: 11px;   /* 5.2pt */
+       letter-spacing: 1.2px; text-transform: uppercase;
+       background: var(--amber); color: var(--deep);
+       padding: 7px 14px 7px 36px;      /* left padding clears the bleed edge */
+       display: inline-block; border-radius: 0 4px 4px 0; }
+.dash  { border: 0; border-top: 1.5px dashed rgba(245,179,1,.6); }
+.hairo { border: 0; border-top: 2px solid var(--ocean); }
+.amdot { color: var(--amber); }
+.ocdot { color: var(--ocean); }
+
+/* ---- the mark ----
+   logo-source.png is a circular badge on a baked-in near-black square (it has no
+   alpha). The circular clip removes the square, not the artwork -- the same move
+   build-assets.mjs makes for the funnels. At 108px == 18mm it holds every line;
+   measured at 300dpi down to 12mm before the service line softens. */
+.seal { border-radius: 50%; overflow: hidden; background: #00000A; }
+.seal img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.qr { background: #fff; padding: 5px; border-radius: 3px; display: inline-block; }
+.qr svg { display: block; }
+
+/* ---- guides. Toggled off for the press file; on for the review comp. ---- */
+#canvas.guides::after {
+  content: '';
+  position: absolute;
+  inset: 18px;                                   /* the trim line */
+  outline: 1px dashed rgba(255,0,80,.75);
+  box-shadow: inset 0 0 0 18px rgba(255,0,80,.10); /* the safe margin */
+  pointer-events: none;
+}

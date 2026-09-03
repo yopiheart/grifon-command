@@ -348,107 +348,90 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 - Kuya Marvin Messenger cheat sheet:
   `https://claude.ai/code/artifact/3c5a2aec-2c71-4866-b454-8a57530025de`
 
-## Ang marka — DALAWA, at may hatian ng trabaho (2026-09-03)
+## Ang marka (2026-09-03)
 
-🔴 **BASAHIN MUNA TO BAGO KA PUMILI NG LOGO FILE.** May dalawang marka ang
-Oceanides, at hindi sila magkaribal — magkaiba ang trabaho.
+**ISA lang ang marka: `clients/oceanides/brand/logo-source.png`.** Bagong logo ni
+Neil. Yun ang gagamitin sa lahat. Ang vector shield na ginawa kanina ng araw ding
+yun ay **binura** sa utos nya.
 
-| Gamit | File |
+⚠️ **Binura din ang `assets/logo.jpg`.** Hindi lang sya larawan — **build input**
+sya ng dalawang funnel (`build-assets.mjs:71`). Naka-repoint na sa `brand/` gamit
+ang `dir`, pati ang `km-004/overlays/make-overlays.mjs`. **Kailangan ng redeploy**
+ng `oceanides-price-page`.
+
+### Sinukat, hindi hinula
+
+- 1254x1254 PNG, **149,907 na magkaibang kulay**, **WALANG alpha channel** —
+  naka-bake ang halos-itim na background (`#00000A` sa apat na sulok).
+- **Circle mask ang paraan para magamit sya kahit saang ground.** Bilog na sya,
+  kaya ang itim na sulok ay tinatanggal lang, hindi binubura ang artwork. Ganun
+  ang `build-assets.mjs` (`circle: true`) at ang business card (`.seal`).
+- **Sa 12mm pataas, malinis.** Sinukat sa 300dpi: 12mm (142px) mababasa pa ang
+  OCEANIDES; 16mm (189px) pataas, buo kasama ang service line. **19mm ang nasa
+  card.**
+- **Sa 3-4mm (40px), mush.** Yan ang laki sa footer ng funnel. Sa ganung liit,
+  **huwag ang buong logo** — wordmark o pangalan lang.
+
+🔴 **Aral, at akin ang mali:** ipinakita ko ang 40px na mush, tapos hinatulan ko
+agad na hindi kaya ang business card. **Mali yun** — apat na beses mas malaki ang
+card. Ang sukat ay sa TOTOONG laki ng surface, hindi sa isang laking nasukat mo
+tapos ipinapalagay mo na sa lahat.
+
+### Kulay — tugma pa rin, walang babaguhin
+
+Sinukat laban sa bagong logo (RGB distance, 0 = pareho):
+
+| Token | Layo | Verdict |
+| --- | --- | --- |
+| `surface` `#0E2C5E` | **15.7** | tugma |
+| `surface-deep` `#0A1F45` | **17.4** | tugma |
+| `surface-void` `#071630` | **10.8** | tugma |
+| `ocean` `#1C63AD` | 97.9 | mas maliwanag kaysa logo, pero UI color sya |
+| `primary` amber `#F5B301` | 292.6 | **13 pixel sa 1,572,516** |
+
+Tama pa rin ang navy ladder — huwag galawin. Ang amber ay **wala pa rin sa marka**,
+pareho ng lumang logo. Hindi sya sira: signage color sya, hindi hango sa marka.
+
+### Typography — dito ang tanging hindi tugma
+
+Ang `headline-display` sa frontmatter ay **Anton**: makitid, siksik. Ang wordmark
+sa logo ay **malapad na grotesque** — patag ang dulo ng `C` at `S`, malapad ang `O`.
+
+**Ang pinakamalapit na face ay `Archivo Expanded 800`**
+(`brand/fonts/Archivo-Expanded-800.ttf`, SIL OFL). Napili sa board ni Neil
+(`brand/type-inspo/`, may verdict kada pares), tapos ipinatong sa totoong crop ng
+wordmark.
+
+⚠️ **Hindi basta-basta ang pagpalit ng Anton sa buong repo.** Nakadikit sya sa
+`build-captions.mjs` (exact drawPlan constants), sa `templates/`, at sa video
+pipeline na may 98.5% retention. **Kaya hatian ayon sa surface:**
+
+| Surface | Display face |
 | --- | --- |
-| **FB profile at cover, endcard ng video, signage — lahat ng MALAKI o nasa MADILIM** | `brand/logo-source.png` |
-| Business card, invoice, letterhead | `brand/logo-primary.svg` |
-| Uniform, trak, FB page (kasama ang Malabanan Services) | `brand/logo-lockup.svg` |
-| App icon, selyo, social avatar | `brand/mark.svg` |
-| Favicon at kahit anong **wala pang 24px** | `brand/mark-small.svg` |
-| Isang kulay — burda, ukit | `brand/mark-mono.svg` |
+| Print (business card, letterhead) | **Archivo Expanded 800** |
+| Video captions at overlays | **Anton** — patunayan na, wag galawin nang walang dahilan |
+| Static templates at dashboards | **Anton** hanggang may desisyon |
 
-**Ang primary ay ang bagong marka ni Neil** (`brand/logo-source.png`, 2026-09-03).
-Yun ang mukha ng brand. Pero may dalawang bagay syang hindi kaya, at nasukat:
+## Ang business card (2026-09-03)
 
-- **1254x1254 PNG, 149,907 na magkaibang kulay, WALANG alpha** — naka-bake ang
-  halos-itim na background (`#00000A` sa apat na sulok). Kaya ng circle mask sa
-  80px pataas. **Sa 40px, mush** — at 40px mismo ang render ng `ComplianceFooter`,
-  at malapit dun ang laki sa business card.
-- **Hindi kayang i-print ang glow at gradient.** Walang katumbas yan sa CMYK; sa
-  matte lamination, putik.
+`clients/oceanides/card/` — buong spec para sa printer nasa
+[`PRINT-SPEC.md`](card/PRINT-SPEC.md). Layout **A "Work Order"** (pinili ni Neil).
 
-Kaya may **pangalawang marka** para sa maliit at sa print. Yun ang vector family
-sa ibaba. Desisyon ni Neil ito (2026-09-03): itago bilang print/small version,
-hindi burahin.
-
-⚠️ **Ang `assets/logo.jpg` ay BINURA na.** Hindi lang sya asset — **build input**
-sya ng dalawang funnel (`build-assets.mjs:71`). Naka-repoint na sa
-`brand/logo-source.png` gamit ang `dir`; ang `km-004/overlays/make-overlays.mjs`
-ay naayos din. **Kailangan ng redeploy** ng `oceanides-price-page` para lumabas
-ang bago.
-
----
-
-### Ang vector family (print at maliit)
-
-**Ang `clients/oceanides/assets/logo.jpg` ay HINDI NA ang master.** Ginawa syang
-tunay na vector matapos itanong ni Neil kung bakit mukha syang slop. Ang sagot ay
-nasukat, hindi hinula:
-
-- **18,832 na magkaibang kulay** sa isang 316x316 na JPEG (ang malinis na logo ay
-  may ilang daan lang) — artifacts ng compression sa ibabaw ng gradient.
-- **Walang vector master kahit saan.** Ang `public/logo.svg` ay placeholder stub na
-  nagre-render ng salitang "LOGO". Kaya bawat paglabas ng marka kahit saan —
-  dalawang funnel, card, trak, damit — ay resample ng iisang maliit na JPEG.
-- **May vertical gradient ang wordmark.** Iyan ang pangunahing dahilan kung bakit
-  mukha syang 2012.
-- **Pitong elemento** ang nag-aagawan sa isang badge.
-
-Sa vector na to: **pito naging tatlo** — kalasag, alon, lamok. Tinanggal ang concentric
-rings, ang arc na service text, at lahat ng gradient. Ang ribbon ay nabubuhay sa
-full lockup lang.
-
-| File | Gamit |
-| --- | --- |
-| `brand/mark.svg` | simbolo lang — app icon, selyo, social avatar |
-| `brand/mark-small.svg` | favicon at kahit anong **wala pang 24px** (walang lamok) |
-| `brand/mark-mono.svg` | isang kulay — burda, ukit, selyo |
-| `brand/logo-primary.svg` | **ang default.** Card, page, invoice, email |
-| `brand/logo-lockup.svg` | uniform, trak, FB page (kasama ang Malabanan Services) |
-
-Lahat ay galing sa **isang** geometry source: `tools/brand/build-oceanides-logo.py`.
-Baguhin ang kalasag doon at susunod ang lahat — ito ang pumipigil sa pag-drift ng
-magkakaibang bersyon. **Huwag mag-edit ng SVG nang diretso**; ang script ang galawin.
-
-🔴 **Aral 1 — side-view lamok = pusit.** Ang unang draw ay side view (mas
-identifiable daw ang pose). Sa 200px, mukha syang pusit: naging galamay ang manipis
-na paa at naging talim ang pakpak. **Top-down at symmetrical** ang tama — heraldry
-ang basa, hindi litrato ng hayop, at nasa vertical axis ang proboscis kung saan
-hindi sya mapagkakamalan. Kalahati lang ang iginuhit, sinasalamin ang kabila, kaya
-hindi kayang mag-drift na hindi pantay.
-
-🔴 **Aral 2 — sukat, hindi kosmetiko.** Sa 1:1, tumatawid ang paa ng lamok sa
-puting crest at pumapasok sa tubig. `scale(.82)` about (48,37) ang nagpapalinis —
-para ang navy field ay mabasa bilang hangin sa ibabaw ng tubig, na siyang punto.
-
-⚠️ **Walang amber sa marka, at sinadya iyon.** 0 sa 99,856 na pixel ng lumang logo
-ang mainit — walang basehan sa marka ang accent ng buong sistema. Hindi ito mali:
-ang trabaho ng amber ay pigilan ang scroll sa dagat ng asul (DESIGN.md:93), iba iyon
-sa trabaho ng isang marka. **Desisyon ni Neil** kung dadagdagan ng mainit na accent
-ang kalasag — hindi ito dapat ipuslit ng isang redraw.
-
-✅ **Sarado na ang typeface: Archivo Expanded ExtraBold** (wdth 125, wght 800),
-naka-commit sa `brand/fonts/Archivo-Expanded-800.ttf`. SIL OFL — libre sa
-commercial, kasama ang logo.
-
-Anim na pares ang board ni Neil (`brand/type-inspo/`, pinangalanan kada pares).
-**Apat ang bagsak sa licence o register:** bayad o hindi maabot ang Switzer,
-Vanguard, Athelas, Balboa at Epic Pro; at mali ang script o handwriting para sa
-kompanyang ang buong bentahan ay **kumpleto ang papeles**. Ang natira ay ang
-**kalahating Archivo ng slide 05** nya — nagtagpo ang board nya at ang
-placeholder ng agent sa iisang pamilya nang hindi nag-uusap.
-
-**Sinukat, hindi tinantya:** lahat ng anim ay isinet na OCEANIDES sa 50px, sa
-19px na baliktad sa navy, at sa **11px — ang totoong ~5pt na sukat sa card.**
-Doon, hawak ng Archivo Expanded ang counters nya. Ang **Abril Fatface**, ang
-kabilang kalahati ng parehong slide, ay nagsasara: nawawala ang manipis na
-stroke ng Didone sa 5pt at sa layo ng trak. Mas malapad din ang Expanded, at
-ang lapad ang nagpapamukhang **matagal na** sa isang service company, hindi bago.
+- **576x336 px = 96x56mm** — 90x50mm trim + 3mm bleed. **6px = 1mm.**
+- **1pt = 2.117px.** Hatiin ang font-size sa 2.117 para mabasa sa puntos. Ang
+  floor ay **6pt (12.7px)** para sa kahit anong dapat BASAHIN.
+- Harap: navy, logo 19mm, `Marvin Balaba`, `Authorized Representative`, dalawang
+  numero. Likod: paper, apat na serbisyo, SEC at BIR, TIN, buong OPC name, QR.
+- **Dalawang gate sa `render-card.mjs`**, at bumabagsak ang render kapag pumalya:
+  **font gate** (kapag hindi nag-load ang Archivo, tahimik na Arial ang lalabas at
+  mapapansin mo lang pagdating ng kahon) at **safe-margin gate** (pinapangalanan
+  ang elementong lumagpas sa 3mm). Ang amber tab lang ang exempt — sadya syang
+  tinatabas sa gilid.
+- **QR: 16.3mm, 0.439mm kada module**, sinukat sa mismong press file at
+  na-decode pabalik. Sa 0.387mm (ang unang sukat) nasa floor pa lang sya, kaya
+  nilakihan. ⚠️ Kapag pinaikli ang URL, bumababa ang QR version at lumalaki ang
+  module — yun ang tunay na upgrade kung magiging matigas sa field.
+- ⛔ **Walang Certificate of Treatment, DENR, LLDA, lokasyon, o presyo.**
 
 ## Do's and Don'ts
 

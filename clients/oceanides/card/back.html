@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Oceanides card - back</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  /* BACK. Paper stock -- the receipt half. The front says who is standing there;
+     this says what the company does and that it is a real registered business.
+
+     Paper, not navy, for two reasons: it is the DESIGN.md paper-surface exception
+     (checklists, before/after, anything that reads as a document), and a QR wants
+     a light ground so a phone camera locks on in a dim lobby.
+
+     Accent text here is OCEAN, never amber -- amber on paper is 1.7:1 and banned
+     (DESIGN.md contrast floor). Amber survives only as a filled chip with navy
+     text on it, which is what the tab is. */
+  #canvas { background: var(--paper); }
+
+  .svcgrid {
+    display: grid;
+    grid-template-columns: 176px 1fr;
+    row-gap: 17px;
+    column-gap: 12px;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+
+  <div class="abs" style="left:0; top:40px;">
+    <span class="tab">Ang serbisyo namin</span>
+  </div>
+
+  <div class="abs svcgrid" style="left:44px; top:106px; width:352px;">
+    <div class="svc"><span class="ocdot">&#9679;</span> Siphoning</div>
+    <div class="svc"><span class="ocdot">&#9679;</span> Declogging</div>
+    <div class="svc"><span class="ocdot">&#9679;</span> Plumbing</div>
+    <div class="svc"><span class="ocdot">&#9679;</span> Pest Control</div>
+  </div>
+
+  <hr class="hairo abs" style="left:44px; width:352px; top:176px;">
+
+  <div class="abs cr" style="left:44px; top:194px; line-height:1.75;">
+    SEC-Registered &middot; BIR-Registered<br>
+    TIN 260-084-087-000
+  </div>
+
+  <div class="abs fn" style="left:44px; top:250px; width:366px;">
+    Oceanides Plumbing Siphoning &amp; Pest Management Services OPC<br>
+    Globe 0917 671 6383 &nbsp;&middot;&nbsp; Smart 0939 245 6217
+  </div>
+
+  <!-- QR -> oceanidesph.com with a print UTM. It is the only element on this card
+       that can be measured, so canvassing stops being a guess.
+
+       SIZE IS A SCAN DECISION. At 100px the dark modules measured 14.3mm on the
+       card == 0.387mm per module, which sits ON the floor a phone camera needs
+       rather than above it. 114px lifts that to ~0.44mm. Do not shrink it back to
+       tidy the layout -- shrink the URL instead. The 79-character UTM link forces
+       QR version 5 (37x37); a short redirect like /c1 would drop it to version 2
+       (25x25) and nearly double the module size at the same physical width. -->
+  <div class="abs" style="right:36px; top:106px; text-align:center;">
+    <span class="qr"><img src="qr.svg" width="114" height="114" alt="oceanidesph.com"></span>
+    <div class="cr" style="margin-top:8px; font-size:9.5px; letter-spacing:.5px;">Presyo at papeles</div>
+  </div>
+
+</div>
+</body>
+</html>

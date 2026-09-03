@@ -35,8 +35,13 @@ sample of two opinions, not a test with users.
 
 ## To change it
 
-One line: `FACE` in `tools/brand/build-oceanides-logo.py`, then rerun. Every
-variant regenerates from the same geometry, so nothing else moves.
+The vector mark family this face was originally cut for was DELETED on
+2026-09-03 -- Neil's new logo is the single mark now. The face survives that
+decision because it is still the closest match to the new logo's own wordmark,
+and it is what print surfaces are set in. To change it: swap the file at
+`../fonts/`, update the `@font-face` in `clients/oceanides/card/_card.css`, and
+rerun `node clients/oceanides/card/render-card.mjs`. The font gate there fails
+the render if the new file does not load, so a silent Arial fallback cannot ship.
 
 ## What a replacement must survive
 
