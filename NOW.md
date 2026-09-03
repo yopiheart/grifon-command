@@ -15,7 +15,14 @@ Then: rebuild the business card on the new mark. Card spine is **registrations o
 both rejected it. Four services: **Siphoning · Declogging · Plumbing · Pest Management**
 ("Grease Trap" was invented by the agent; zero repo hits). **No location line.**
 
-## ✅ SHIPPED — the vector brand mark + the typeface
+## ✅ SHIPPED — TWO marks, with a role each
+
+🔴 **Read the role table in `clients/oceanides/DESIGN.md` before picking any logo file.**
+**Primary = Neil's new mark** (`brand/logo-source.png`, dropped 2026-09-03) — FB, cover,
+endcards, signage, anything large or on dark. It is 149,907 colours with NO alpha and a
+baked-in black ground; it turns to **mush at 40px** (the funnel footer size) and its glow
+has no CMYK equivalent. So the **vector family is the print/small half** — card, favicon,
+one-colour embroidery. Neil's call, not a downgrade of his mark.
 
 `clients/oceanides/brand/` — mark, mark-small (<24px, no mosquito), mark-mono,
 logo-primary, logo-lockup. All from ONE geometry source,

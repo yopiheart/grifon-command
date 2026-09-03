@@ -348,7 +348,43 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 - Kuya Marvin Messenger cheat sheet:
   `https://claude.ai/code/artifact/3c5a2aec-2c71-4866-b454-8a57530025de`
 
-## Ang marka (bagong vector family, 2026-09-03)
+## Ang marka — DALAWA, at may hatian ng trabaho (2026-09-03)
+
+🔴 **BASAHIN MUNA TO BAGO KA PUMILI NG LOGO FILE.** May dalawang marka ang
+Oceanides, at hindi sila magkaribal — magkaiba ang trabaho.
+
+| Gamit | File |
+| --- | --- |
+| **FB profile at cover, endcard ng video, signage — lahat ng MALAKI o nasa MADILIM** | `brand/logo-source.png` |
+| Business card, invoice, letterhead | `brand/logo-primary.svg` |
+| Uniform, trak, FB page (kasama ang Malabanan Services) | `brand/logo-lockup.svg` |
+| App icon, selyo, social avatar | `brand/mark.svg` |
+| Favicon at kahit anong **wala pang 24px** | `brand/mark-small.svg` |
+| Isang kulay — burda, ukit | `brand/mark-mono.svg` |
+
+**Ang primary ay ang bagong marka ni Neil** (`brand/logo-source.png`, 2026-09-03).
+Yun ang mukha ng brand. Pero may dalawang bagay syang hindi kaya, at nasukat:
+
+- **1254x1254 PNG, 149,907 na magkaibang kulay, WALANG alpha** — naka-bake ang
+  halos-itim na background (`#00000A` sa apat na sulok). Kaya ng circle mask sa
+  80px pataas. **Sa 40px, mush** — at 40px mismo ang render ng `ComplianceFooter`,
+  at malapit dun ang laki sa business card.
+- **Hindi kayang i-print ang glow at gradient.** Walang katumbas yan sa CMYK; sa
+  matte lamination, putik.
+
+Kaya may **pangalawang marka** para sa maliit at sa print. Yun ang vector family
+sa ibaba. Desisyon ni Neil ito (2026-09-03): itago bilang print/small version,
+hindi burahin.
+
+⚠️ **Ang `assets/logo.jpg` ay BINURA na.** Hindi lang sya asset — **build input**
+sya ng dalawang funnel (`build-assets.mjs:71`). Naka-repoint na sa
+`brand/logo-source.png` gamit ang `dir`; ang `km-004/overlays/make-overlays.mjs`
+ay naayos din. **Kailangan ng redeploy** ng `oceanides-price-page` para lumabas
+ang bago.
+
+---
+
+### Ang vector family (print at maliit)
 
 **Ang `clients/oceanides/assets/logo.jpg` ay HINDI NA ang master.** Ginawa syang
 tunay na vector matapos itanong ni Neil kung bakit mukha syang slop. Ang sagot ay
@@ -363,7 +399,7 @@ nasukat, hindi hinula:
   mukha syang 2012.
 - **Pitong elemento** ang nag-aagawan sa isang badge.
 
-Ngayon: **pito naging tatlo** — kalasag, alon, lamok. Tinanggal ang concentric
+Sa vector na to: **pito naging tatlo** — kalasag, alon, lamok. Tinanggal ang concentric
 rings, ang arc na service text, at lahat ng gradient. Ang ribbon ay nabubuhay sa
 full lockup lang.
 
