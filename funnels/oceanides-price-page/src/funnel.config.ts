@@ -770,7 +770,7 @@ export const funnelConfig: FunnelConfig = {
         // katulad ng `/thank-you`.
         links: [{ label: 'Privacy Policy', href: '/privacy' }],
         brandLine:
-          'Oceanides Plumbing Siphoning & Pest Management Services OPC. Registered sa SEC, BIR, at DENR.',
+          'Oceanides Plumbing Siphoning & Pest Management Services OPC. Registered sa SEC at BIR.',
         disclaimer:
           'Ang presyong nasa page na to ay para sa residential siphoning sa loob ng Metro Manila. Ang mga dagdag na singil ay nakalista sa itaas at sasabihin bago magsimula ang trabaho.',
       },

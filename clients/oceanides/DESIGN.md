@@ -248,6 +248,12 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **Mark Rebuild — vector logo family (2026-09-03):** ang before/after ng logo, ang
+  apat na sukat na nagpapatunay, ang mono at reversed test, at ang dalawang lockup.
+  `https://claude.ai/code/artifact/5c523b6d-caa7-49ec-9ffe-bc71ac25d586`
+  Twin: [`artifacts/oceanides-logo.html`](../../artifacts/oceanides-logo.html) ·
+  Build: `node tools/artifacts/build-oceanides-logo.mjs`. Pumasa sa 390x844 gate.
+
 - **Business Card Concepts A/B/C (2026-09-03):** tatlong comp ng business card para sa
   B2B canvassing ni Marvin, front at back, naka-trim size (90x50mm). Kasama ang
   print-safe fact set at ang dalawang pulang placeholder na hindi ko hinulaan.
@@ -342,6 +348,59 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 - Kuya Marvin Messenger cheat sheet:
   `https://claude.ai/code/artifact/3c5a2aec-2c71-4866-b454-8a57530025de`
 
+## Ang marka (bagong vector family, 2026-09-03)
+
+**Ang `clients/oceanides/assets/logo.jpg` ay HINDI NA ang master.** Ginawa syang
+tunay na vector matapos itanong ni Neil kung bakit mukha syang slop. Ang sagot ay
+nasukat, hindi hinula:
+
+- **18,832 na magkaibang kulay** sa isang 316x316 na JPEG (ang malinis na logo ay
+  may ilang daan lang) — artifacts ng compression sa ibabaw ng gradient.
+- **Walang vector master kahit saan.** Ang `public/logo.svg` ay placeholder stub na
+  nagre-render ng salitang "LOGO". Kaya bawat paglabas ng marka kahit saan —
+  dalawang funnel, card, trak, damit — ay resample ng iisang maliit na JPEG.
+- **May vertical gradient ang wordmark.** Iyan ang pangunahing dahilan kung bakit
+  mukha syang 2012.
+- **Pitong elemento** ang nag-aagawan sa isang badge.
+
+Ngayon: **pito naging tatlo** — kalasag, alon, lamok. Tinanggal ang concentric
+rings, ang arc na service text, at lahat ng gradient. Ang ribbon ay nabubuhay sa
+full lockup lang.
+
+| File | Gamit |
+| --- | --- |
+| `brand/mark.svg` | simbolo lang — app icon, selyo, social avatar |
+| `brand/mark-small.svg` | favicon at kahit anong **wala pang 24px** (walang lamok) |
+| `brand/mark-mono.svg` | isang kulay — burda, ukit, selyo |
+| `brand/logo-primary.svg` | **ang default.** Card, page, invoice, email |
+| `brand/logo-lockup.svg` | uniform, trak, FB page (kasama ang Malabanan Services) |
+
+Lahat ay galing sa **isang** geometry source: `tools/brand/build-oceanides-logo.py`.
+Baguhin ang kalasag doon at susunod ang lahat — ito ang pumipigil sa pag-drift ng
+magkakaibang bersyon. **Huwag mag-edit ng SVG nang diretso**; ang script ang galawin.
+
+🔴 **Aral 1 — side-view lamok = pusit.** Ang unang draw ay side view (mas
+identifiable daw ang pose). Sa 200px, mukha syang pusit: naging galamay ang manipis
+na paa at naging talim ang pakpak. **Top-down at symmetrical** ang tama — heraldry
+ang basa, hindi litrato ng hayop, at nasa vertical axis ang proboscis kung saan
+hindi sya mapagkakamalan. Kalahati lang ang iginuhit, sinasalamin ang kabila, kaya
+hindi kayang mag-drift na hindi pantay.
+
+🔴 **Aral 2 — sukat, hindi kosmetiko.** Sa 1:1, tumatawid ang paa ng lamok sa
+puting crest at pumapasok sa tubig. `scale(.82)` about (48,37) ang nagpapalinis —
+para ang navy field ay mabasa bilang hangin sa ibabaw ng tubig, na siyang punto.
+
+⚠️ **Walang amber sa marka, at sinadya iyon.** 0 sa 99,856 na pixel ng lumang logo
+ang mainit — walang basehan sa marka ang accent ng buong sistema. Hindi ito mali:
+ang trabaho ng amber ay pigilan ang scroll sa dagat ng asul (DESIGN.md:93), iba iyon
+sa trabaho ng isang marka. **Desisyon ni Neil** kung dadagdagan ng mainit na accent
+ang kalasag — hindi ito dapat ipuslit ng isang redraw.
+
+⚠️ **Placeholder pa ang typeface.** Naka-**Archivo Black** ang wordmark, pinili sa
+apat na nasa repo na. Ilalagay ni Neil ang kanyang combo board sa
+`brand/type-inspo/` (may README doon kung ano ang dapat kayanin ng face). Ang
+palit ay isang linya: ang `FACE` sa build script.
+
 ## Do's and Don'ts
 
 **Do:**
@@ -372,6 +431,8 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
   (`₱99,999`, `999`, `9.99%`) at petsang `1999` — walang campaign na ganito;
   (2) **`danger`-red na banner** na nasa taas bago ang unang panel. Bantayan din
   ang rounding: ang `₱9,999.99` ay nagiging `₱10,000` na mukhang totoo.
+- 🔴 **Huwag gamitin ang `assets/logo.jpg`.** Hindi na sya ang master — ang
+  `brand/logo-primary.svg` na. Ang JPEG ay reference/kasaysayan na lang.
 - Huwag ang Grifon system dito — walang `#FFCC00`, walang zinc/charcoal
   grounds, walang glass/backdrop-blur, walang MrBeast plates.
 - Huwag ang safety orange `#FF8324` — deprecated (improvised bago naitala ang

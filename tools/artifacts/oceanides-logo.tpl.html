@@ -1,0 +1,170 @@
+<title>Oceanides Mark Rebuild</title>
+<style>
+  /* Oceanides logo review. World = clients/oceanides/DESIGN.md (matte navy +
+     amber print). NOT Grifon NOIR -- no glass, no #FFCC00, no charcoal.
+     Deliberately single-look, so the ground is painted explicitly. */
+  @font-face { font-family: 'AntonX'; src: url(__FONT_ANTON__) format('truetype'); font-weight: 400; font-display: block; }
+  @font-face { font-family: 'InterX'; src: url(__FONT_INTER__) format('truetype'); font-weight: 900; font-display: block; }
+  :root {
+    --amber:#F5B301; --surface:#0E2C5E; --deep:#0A1F45; --void:#071630;
+    --ocean:#1C63AD; --sky:#5AA6E6; --dim:#8FB3DD; --muted:#DFE8F5;
+    --paper:#F4F6FA; --ink:#0B1B33; --meta:#5B6B85; --good:#3ED36B; --danger:#D7263D;
+    --display:'AntonX','Roboto Condensed','Arial Narrow',Impact,sans-serif;
+    --heavy:'InterX','Helvetica Neue',Arial,sans-serif;
+    --body:'Helvetica Neue',Arial,sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--void); color: var(--muted); font-family: var(--body); line-height: 1.55; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 28px 18px 72px; }
+  .kicker { font-family: var(--heavy); font-weight:900; font-size:10px; letter-spacing:1.4px;
+            text-transform:uppercase; color:var(--amber); margin:0 0 10px; }
+  h1 { font-family: var(--display); font-weight:400; text-transform:uppercase; line-height:.95;
+       letter-spacing:.5px; font-size:34px; color:#fff; margin:0 0 12px; }
+  h1 em { font-style: normal; color: var(--amber); }
+  h2 { font-family: var(--display); font-weight:400; text-transform:uppercase; line-height:.95;
+       letter-spacing:.5px; font-size:24px; color:#fff; margin:0 0 10px; }
+  p { margin:0 0 12px; font-size:15px; }
+  .lede { font-size:15px; }
+  .stamp { font-family:var(--heavy); font-weight:900; font-size:10px; letter-spacing:1.2px;
+           text-transform:uppercase; color:var(--dim); margin:16px 0 0; }
+  .lbl { font-family:var(--heavy); font-weight:900; font-size:10px; letter-spacing:1.2px;
+         text-transform:uppercase; color:var(--sky); margin:0 0 8px; }
+  .lbl.bad{color:var(--danger)} .lbl.good{color:var(--good)}
+  .panel { background:var(--surface); border:1px solid rgba(255,255,255,.1); border-radius:3px;
+           padding:18px 16px; margin:0 0 20px; }
+  .panel.ok{background:var(--deep);border-left:4px solid var(--good)}
+  .panel.warn{background:var(--deep);border-left:4px solid var(--amber)}
+  hr.rule { border:0; border-top:2px dashed rgba(245,179,1,.4); margin:30px 0 26px; }
+  code { font-family:var(--body); font-weight:bold; background:rgba(255,255,255,.09);
+         padding:1px 5px; border-radius:3px; font-size:13px; color:#fff; }
+  table { width:100%; border-collapse:collapse; margin:0 0 14px; font-size:13.5px; }
+  th,td { text-align:left; padding:8px 8px 8px 0; border-bottom:1px solid rgba(255,255,255,.11); vertical-align:top; }
+  th { font-family:var(--heavy); font-weight:900; font-size:9px; letter-spacing:1.1px;
+       text-transform:uppercase; color:var(--sky); }
+  td b { color:#fff; }
+  ul{margin:0 0 4px;padding-left:18px} li{font-size:14px;margin-bottom:7px} li::marker{color:var(--dim)}
+
+  /* --- specimen surfaces. The mark is shown on the two grounds it actually
+         lives on, never floating on the page ground. --- */
+  .light { background: var(--paper); border-radius:4px; padding:22px 18px; margin:0 0 14px; }
+  .dark  { background: var(--deep);  border-radius:4px; padding:22px 18px; margin:0 0 14px;
+           border:1px solid rgba(255,255,255,.09); }
+  .row { display:flex; gap:20px; align-items:flex-end; flex-wrap:wrap; }
+  .cell{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .cap { font-family:var(--heavy); font-weight:900; font-size:9px; letter-spacing:1.2px;
+         text-transform:uppercase; color:var(--meta); }
+  .dark .cap { color: var(--dim); }
+  .ba { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:center; }
+  .ba img { width:100%; display:block; border-radius:3px; }
+  .ba .cap { text-align:center; margin-top:7px; display:block; }
+  .wide { overflow-x:auto; }
+</style>
+
+<div class="wrap">
+  <p class="kicker">Oceanides &middot; brand mark</p>
+  <h1>Seven things<br>became <em>three.</em></h1>
+  <p class="lede">The old mark was a 316&times;316 JPEG carrying a gradient wordmark and seven
+     competing elements. This one is vector, flat, and built from a single geometry source.</p>
+  <p class="stamp">2026-09-03 &middot; typeface is interim, pending your folder</p>
+
+  <hr class="rule">
+
+  <h2>Before / after</h2>
+  <div class="light">
+    <div class="ba">
+      <div><img src="__OLD_LOGO__" alt="Old Oceanides logo"><span class="cap">Old &middot; 21 KB JPEG</span></div>
+      <div style="text-align:center">__MARK_BA__<span class="cap">New &middot; 2 KB SVG</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="lbl">What was measured, not guessed</p>
+    <div class="wide"><table>
+      <tr><th>Question</th><th>Answer</th></tr>
+      <tr><td>Does the navy match the palette?</td>
+          <td><b>Yes.</b> Logo <code>#003060</code> vs <code>surface</code> <code>#0E2C5E</code> =
+              RGB distance <b>14.7</b>. Near identical.</td></tr>
+      <tr><td>Does amber match?</td>
+          <td><b>No. 0 of 99,856 pixels are warm.</b> Zero. Amber is a signage decision
+              (<code>DESIGN.md:93</code>), never derived from the mark.</td></tr>
+      <tr><td>Was it low quality?</td>
+          <td><b>Yes. 18,832 distinct colours</b> in a 316px file. A clean logo has a few hundred.</td></tr>
+      <tr><td>Was there a vector master?</td>
+          <td><b>No.</b> <code>public/logo.svg</code> is a stub rendering the word "LOGO".
+              Every use everywhere was a resample of one small JPEG.</td></tr>
+    </table></div>
+  </div>
+
+  <hr class="rule">
+
+  <h2>The mark at size</h2>
+  <p>The only test that matters. If it dies small, it is not a logo.</p>
+  <div class="light"><div class="row">__SIZES__</div></div>
+  <div class="panel warn">
+    <p class="lbl">The mosquito is the risk element, so it has a small variant</p>
+    <p style="margin-bottom:0">Below roughly 24px the insect turns to mush &mdash; that is true of every
+       spindly mark, not a flaw in this one. <code>mark-small.svg</code> drops it and keeps the
+       shield and wave. Use it for favicons and anything under 24px.</p>
+  </div>
+  <div class="light"><div class="row">__SMALLS__</div></div>
+
+  <hr class="rule">
+
+  <h2>Single colour and reversed</h2>
+  <p>A mark that only works in full colour is not finished. Stamps, faxes, embroidery,
+     one-colour printing, and etched signage all need this.</p>
+  <div class="light"><div class="row">__MONO__</div></div>
+  <div class="dark"><div class="row">__REV__</div></div>
+
+  <hr class="rule">
+
+  <h2>Two lockups</h2>
+  <p><b>Primary</b> is the default everywhere &mdash; card, page, invoice, email.</p>
+  <div class="light">__PRIMARY__</div>
+  <p><b>Full lockup</b> keeps Malabanan Services for the uniform, the truck and the Facebook
+     page, so nothing in the field goes out of sync with the card. Your own note
+     (<code>NEXT-SESSION-PRICE-PAGE.md:122</code>) says that word is on the uniform and is the
+     category people search &mdash; this is how it survives without cluttering the primary.</p>
+  <div class="light">__LOCKUP__</div>
+
+  <hr class="rule">
+
+  <h2>What is still open</h2>
+
+  <div class="panel">
+    <p class="lbl">1 &middot; The typeface is a placeholder</p>
+    <p>The wordmark is set in <b>Archivo Black</b> &mdash; picked from the four faces already in
+       the repo, because Anton is a condensed headline face that goes claustrophobic as a wordmark,
+       Inter Black is a UI face, and Montserrat ExtraBold is the geometric default that reads as
+       generated.</p>
+    <p style="margin-bottom:0">Drop your combos at <code>clients/oceanides/brand/type-inspo/</code>,
+       commit and push. I swap one line and rerun. <b>This session runs in the cloud, so your local
+       folder is not reachable until it is pushed.</b> I am not going to pretend to have chosen
+       from a folder I have not seen.</p>
+  </div>
+
+  <div class="panel">
+    <p class="lbl">2 &middot; Amber is not in the mark, on purpose</p>
+    <p style="margin-bottom:0">Your accent has zero basis in the logo. That may be exactly right
+       &mdash; amber earns its place on signage and CTAs by stopping the scroll against a sea of
+       blue, which is a different job from a mark. Adding a warm accent to the shield is your call
+       to make after seeing it, not something a redraw should smuggle in.</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2>Files</h2>
+  <div class="wide"><table>
+    <tr><th>File</th><th>Use</th></tr>
+    <tr><td><code>mark.svg</code></td><td>Symbol alone &mdash; app icon, stamp, social avatar</td></tr>
+    <tr><td><code>mark-small.svg</code></td><td>Favicon and anything under 24px</td></tr>
+    <tr><td><code>mark-mono.svg</code></td><td>One colour &mdash; embroidery, etching, fax, stamps</td></tr>
+    <tr><td><code>logo-primary.svg</code></td><td><b>The default.</b> Card, page, invoice, email</td></tr>
+    <tr><td><code>logo-lockup.svg</code></td><td>Uniform, truck, Facebook page</td></tr>
+  </table></div>
+  <p>All in <code>clients/oceanides/brand/</code>, all generated by
+     <code>tools/brand/build-oceanides-logo.py</code> from one shield. Change the shield once and
+     every variant follows &mdash; which is how the family stops drifting apart.</p>
+
+  <p class="stamp">Vector only. No raster, no gradients, no embedded images. Nothing printed yet.</p>
+</div>

@@ -791,7 +791,7 @@ export const funnelConfig: FunnelConfig = {
         messenger: MESSENGER || undefined,
         links: [{ label: 'Privacy Policy', href: '/privacy' }],
         brandLine:
-          'Oceanides Plumbing Siphoning & Pest Management Services OPC. Registered sa SEC, BIR, at DENR.',
+          'Oceanides Plumbing Siphoning & Pest Management Services OPC. Registered sa SEC at BIR.',
         disclaimer:
           'Ang ₱999 ay para sa septic check at report sa loob ng Metro Manila. Ang presyo ng dokumentadong load ay depende sa laki at sa bilang ng load, at nakasulat sya sa quotation bago magsimula. Ang Certificate of Treatment ay galing sa treatment facility at 15 days ang karaniwang hintay.',
       },
