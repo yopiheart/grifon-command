@@ -1,0 +1,511 @@
+<title>Oceanides Card Concepts</title>
+<style>
+  /* Oceanides business card -- 3 concepts for review.
+     World = clients/oceanides/DESIGN.md (matte navy + amber print). NOT Grifon
+     NOIR: no glass, no backdrop-filter, no #FFCC00, no charcoal. This page is
+     deliberately single-look (navy), so it paints its own ground explicitly
+     rather than carrying a light/dark token pair.
+
+     CARD GEOMETRY. Every .card is a fixed 540x300 px frame == 90x50mm at
+     6px/mm, the PH standard card. Internals are absolute px against that
+     frame, so the proportions on screen are the proportions on press. The
+     frame is then scaled with transform at three breakpoints -- NOT container
+     query units, and NOT a JS resize hook. Both work; a two-line media query
+     cannot fail silently on a phone, which is the only rule that matters here
+     (see the mobile-safe checklist in CLAUDE.md).
+
+     The 3mm bleed is NOT drawn. These are trim-size comps for a look decision.
+     Bleed, crop marks and the CMYK press file come at artwork stage. */
+
+  @font-face { font-family: 'AntonX'; src: url(__FONT_ANTON__) format('truetype'); font-weight: 400; font-display: block; }
+  @font-face { font-family: 'InterX';  src: url(__FONT_INTER__) format('truetype'); font-weight: 900; font-display: block; }
+
+  :root {
+    --amber:   #F5B301;
+    --surface: #0E2C5E;
+    --deep:    #0A1F45;
+    --void:    #071630;
+    --ocean:   #1C63AD;
+    --sky:     #5AA6E6;
+    --dim:     #8FB3DD;
+    --muted:   #DFE8F5;
+    --paper:   #F4F6FA;
+    --ink:     #0B1B33;
+    --meta:    #5B6B85;
+    --good:    #3ED36B;
+    --danger:  #D7263D;
+    --display: 'AntonX', 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+    --heavy:   'InterX', 'Helvetica Neue', Arial, sans-serif;
+    --body:    'Helvetica Neue', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--void); color: var(--muted); font-family: var(--body); line-height: 1.55; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 28px 18px 72px; }
+
+  /* ---------- page chrome ---------- */
+  .kicker { font-family: var(--heavy); font-weight: 900; font-size: 10px; letter-spacing: 1.4px;
+            text-transform: uppercase; color: var(--amber); margin: 0 0 10px; }
+  h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase;
+       line-height: .95; letter-spacing: .5px; font-size: 34px; color: #fff; margin: 0 0 12px; }
+  h1 em { font-style: normal; color: var(--amber); }
+  .lede { font-size: 15px; color: var(--muted); margin: 0 0 8px; }
+  .stamp { font-family: var(--heavy); font-weight: 900; font-size: 10px; letter-spacing: 1.2px;
+           text-transform: uppercase; color: var(--dim); margin: 18px 0 0; }
+
+  h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; line-height: .95;
+       letter-spacing: .5px; font-size: 25px; color: #fff; margin: 0 0 4px; }
+  h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; line-height: .95;
+       letter-spacing: .5px; font-size: 18px; color: #fff; margin: 0 0 8px; }
+  p { margin: 0 0 12px; font-size: 15px; }
+  a { color: var(--sky); }
+
+  .panel { background: var(--surface); border: 1px solid rgba(255,255,255,.1);
+           border-radius: 3px; padding: 18px 16px; margin: 0 0 20px; }
+  .panel.alert { background: var(--deep); border-left: 4px solid var(--danger); }
+  .panel.ok    { background: var(--deep); border-left: 4px solid var(--good); }
+
+  .lbl { font-family: var(--heavy); font-weight: 900; font-size: 10px; letter-spacing: 1.2px;
+         text-transform: uppercase; color: var(--sky); margin: 0 0 8px; }
+  .lbl.bad  { color: var(--danger); }
+  .lbl.good { color: var(--good); }
+
+  ul { margin: 0 0 4px; padding-left: 18px; }
+  li { font-size: 14px; margin-bottom: 7px; }
+  li::marker { color: var(--dim); }
+  code { font-family: var(--body); font-weight: bold; background: rgba(255,255,255,.09);
+         padding: 1px 5px; border-radius: 3px; font-size: 13px; color: #fff; }
+
+  hr.rule { border: 0; border-top: 2px dashed rgba(245,179,1,.4); margin: 30px 0 26px; }
+
+  /* ---------- concept blocks ---------- */
+  .concept { margin: 0 0 12px; }
+  .chead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 0 0 4px; }
+  .rank { font-family: var(--heavy); font-weight: 900; font-size: 11px; letter-spacing: 1px;
+          background: var(--amber); color: var(--deep); border-radius: 4px; padding: 4px 8px;
+          text-transform: uppercase; }
+  .prob { font-family: var(--display); font-size: 30px; color: var(--amber); line-height: 1; }
+  .probnote { font-size: 12px; color: var(--dim); }
+  .verdict { font-size: 14px; margin: 10px 0 16px; color: var(--muted); }
+  .verdict b { color: #fff; }
+  .risk { font-size: 13px; color: var(--dim); border-left: 2px solid rgba(255,255,255,.18);
+          padding-left: 11px; margin: 0 0 4px; }
+
+  figure { margin: 0 0 14px; }
+  figcaption { font-family: var(--heavy); font-weight: 900; font-size: 9px; letter-spacing: 1.4px;
+               text-transform: uppercase; color: var(--dim); margin-top: 7px; }
+
+  /* ---------- the card stage ---------- */
+  .stage { --s: .62; width: calc(540px * var(--s)); height: calc(300px * var(--s));
+           position: relative; overflow: hidden; border-radius: 4px;
+           box-shadow: 0 10px 26px rgba(0,0,0,.5); }
+  @media (min-width: 560px) { .stage { --s: .84; } }
+  @media (min-width: 900px) { .stage { --s: 1; } }
+  .card { position: absolute; top: 0; left: 0; width: 540px; height: 300px;
+          transform: scale(var(--s)); transform-origin: top left;
+          overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+  .navy  { background: var(--deep); }
+  .paperbg { background: var(--paper); }
+
+  .card .abs { position: absolute; }
+  /* LOGO SEAL. clients/oceanides/assets/logo.jpg is a 316x316 JPEG whose corners
+     are WHITE, and the mark inside is dark blue. Dropped straight onto navy it
+     looked like a sticker (caught on the first render, all three comps).
+     Knocking the white out is not an option -- navy-on-navy erases the shield.
+     So the white becomes deliberate: a circular plate that clips the corners and
+     reads as a stamp.
+
+     Do NOT scale the image up to chase the last white pixel. The first attempt used
+     object-fit:cover + scale(1.06) and clipped the wordmark itself -- OCEANIDES lost
+     a letter on both sides, which is worse than the sticker it was fixing. The badge
+     is already inscribed in the square asset, so a 50% radius IS the badge circle:
+     object-fit:contain at scale 1 lands the clip exactly on the artwork edge. */
+  .seal { border-radius: 50%; background: #fff; overflow: hidden; }
+  .logo { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  /* CARD TYPE LADDER -- sizes are POINTS in disguise.
+     The frame is 540px == 90mm, so 6px == 1mm and 1pt (0.3528mm) == 2.117px.
+     Divide any px value here by 2.117 to read it as print points.
+
+     The first pass was set by eye and every tier landed between 4pt and 6pt --
+     the legal line was 7px, i.e. 3.3pt, which no press will hold and no admin
+     will read. Sizes below are chosen against the points column, not the render.
+     6pt (12.7px) is the comfort floor for anything a customer must READ; the
+     single OPC legal line is allowed to sit near 5pt, which is normal on real
+     cards for a line that only has to be present. */
+  .cd  { font-family: var(--display); font-weight: 400; text-transform: uppercase;
+         line-height: .92; letter-spacing: .5px; color: #fff; }
+  .cd .am { color: var(--amber); }
+  .ch  { font-family: var(--heavy); font-weight: 900; }
+  .cb  { font-family: var(--body); }
+
+  .chip { font-family: var(--heavy); font-weight: 900; font-size: 10.5px; letter-spacing: 1.1px;
+          text-transform: uppercase; background: var(--amber); color: var(--deep);
+          border-radius: 4px; padding: 5px 9px; display: inline-block; }
+  .tab  { font-family: var(--heavy); font-weight: 900; font-size: 10.5px; letter-spacing: 1px;
+          text-transform: uppercase; background: var(--amber); color: var(--deep);
+          padding: 5px 11px 5px 30px; display: inline-block;
+          border-radius: 0 4px 4px 0; }
+  .dash { border: 0; border-top: 1.5px dashed rgba(245,179,1,.55); margin: 0; }
+  .hair { border: 0; border-top: 2px solid var(--amber); margin: 0; }
+  .hairo{ border: 0; border-top: 2px solid var(--ocean); margin: 0; }
+
+  .nm  { font-family: var(--heavy); font-weight: 900; font-size: 17px; letter-spacing: .6px;
+         color: #fff; text-transform: uppercase; }
+  .nm.dark { color: var(--ink); }
+  .rl  { font-family: var(--heavy); font-weight: 900; font-size: 11.5px; letter-spacing: 1.3px;
+         text-transform: uppercase; color: var(--sky); }
+  .rl.dark { color: var(--ocean); }
+  .ph  { font-family: var(--heavy); font-weight: 900; font-size: 14px; color: #fff; letter-spacing: .3px; }
+  .ph.dark { color: var(--ink); }
+  .cr  { font-family: var(--heavy); font-weight: 900; font-size: 12.5px; letter-spacing: 1.15px;
+         text-transform: uppercase; color: var(--dim); }
+  .cr.dark { color: var(--meta); }
+  .fn  { font-family: var(--body); font-size: 11px; line-height: 1.45; color: var(--dim); }
+  .fn.dark { color: var(--meta); }
+  .svc { font-family: var(--heavy); font-weight: 900; font-size: 13px; letter-spacing: .7px;
+         text-transform: uppercase; color: #fff; }
+  .svc.dark { color: var(--ink); }
+  .amdot { color: var(--amber); }
+  .ocdot { color: var(--ocean); }
+
+  .qr { background: #fff; padding: 4px; border-radius: 3px; }
+  .qr svg { display: block; }
+
+  /* placeholder marker -- anything on a comp that is NOT yet a settled fact */
+  .tbc { color: var(--danger); }
+
+  .note { font-size: 12.5px; color: var(--dim); margin: 0 0 18px; }
+  .note b { color: var(--amber); }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 14px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 8px 8px 0; border-bottom: 1px solid rgba(255,255,255,.11);
+           vertical-align: top; }
+  th { font-family: var(--heavy); font-weight: 900; font-size: 9px; letter-spacing: 1.1px;
+       text-transform: uppercase; color: var(--sky); }
+  td b { color: #fff; }
+</style>
+
+<div class="wrap">
+
+  <p class="kicker">Oceanides &middot; Kuya Marvin &middot; B2B canvassing</p>
+  <h1>Three cards.<br>One <em>picks itself.</em></h1>
+  <p class="lede">90&times;50mm, 350gsm, matte lamination, double-sided. Handed by Marvin
+     on cold B2B visits. Its whole job is the eight seconds before it gets filed or binned.</p>
+  <p class="stamp">2026-09-03 &middot; comps at trim size, no bleed drawn</p>
+
+  <hr class="rule">
+
+  <div class="panel alert">
+    <p class="lbl bad">Read this before you look at anything</p>
+    <p>The credentials you were about to print are <b>not Oceanides'</b>.
+       DENR ID <code>OL-TR-R3-14-000080</code> belongs to <b>Globaltec Waste Management</b>.
+       Certificate <code>BEHMC(1)WHN0095001WW260318</code> is <b>another company's</b>, and it
+       carries a confidentiality clause. The DOH ESC is Globaltec's, Region 3 only
+       &mdash; Bataan, Bulacan, Pampanga, Tarlac. <b>No NCR.</b></p>
+    <p style="margin-bottom:0">Source: <code>compliance-findings-2026-08-08.md:135</code>.
+       All of it was already scrubbed from 22 files on 2026-08-08. So every card below
+       leads with <b>the paper Paolo receives</b>, not a badge Oceanides holds.
+       That is the stronger claim anyway: a deliverable beats an assertion.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- =============== A =============== -->
+  <div class="concept">
+    <div class="chead">
+      <span class="rank">A</span>
+      <h2 style="margin:0">The Work Order</h2>
+      <span class="prob">55%</span>
+    </div>
+    <p class="probnote">Fit-to-brief confidence. Not a measurement &mdash; nothing here has met a real buyer.</p>
+
+    <figure>
+      <div class="stage"><div class="card navy">
+        <div class="abs" style="left:0;top:26px"><span class="tab">Compliance-documented siphoning</span></div>
+        <div class="abs seal" style="right:26px;top:22px;width:58px;height:58px"><img class="logo" src="__LOGO__" alt="Oceanides"></div>
+
+        <div class="abs cd" style="left:30px;top:76px;font-size:44px">Certificate of<br><span class="am">Treatment</span></div>
+        <div class="abs ch" style="left:30px;top:182px;font-size:13px;color:#DFE8F5;letter-spacing:.2px">Nakapangalan sa negosyo mo.</div>
+
+        <hr class="dash abs" style="left:30px;right:30px;top:214px">
+
+        <div class="abs" style="left:30px;top:234px">
+          <div class="nm">Marvin Balaba</div>
+          <div class="rl"><span class="tbc">[role &mdash; TBC]</span></div>
+        </div>
+        <div class="abs" style="right:30px;top:234px;text-align:right">
+          <div class="ph"><span class="amdot">&#9679;</span> 0917 671 6383</div>
+          <div class="cr" style="margin-top:5px">oceanidesph.com</div>
+        </div>
+      </div></div>
+      <figcaption>A &middot; front</figcaption>
+    </figure>
+
+    <figure>
+      <div class="stage"><div class="card paperbg">
+        <div class="abs" style="left:0;top:24px"><span class="tab">Ano ang natatanggap mo</span></div>
+
+        <div class="abs" style="left:30px;top:68px;right:150px">
+          <div class="svc dark" style="margin-bottom:9px"><span class="ocdot">&#9679;</span> Septic Siphoning &nbsp;<span class="ocdot">&#9679;</span> Grease Trap</div>
+          <div class="svc dark"><span class="ocdot">&#9679;</span> Pest Management</div>
+        </div>
+
+        <hr class="hairo abs" style="left:30px;right:150px;top:130px">
+
+        <div class="abs fn dark" style="left:30px;top:144px;right:150px">
+          Disposal at a <b>DENR-accredited treatment facility</b>. Certificate of Treatment
+          is issued to <b>your business</b> as waste generator, naming Oceanides as the
+          transporter, within <b class="tbc">10<sup>*</sup></b> days.
+        </div>
+
+        <div class="abs cr dark" style="left:30px;top:206px;right:150px;line-height:1.7">
+          SEC-Registered &middot; BIR-Registered<br>TIN 260-084-087-000
+        </div>
+
+        <div class="abs fn dark" style="left:30px;top:252px;right:150px;font-size:10px;line-height:1.4">
+          Oceanides Plumbing Siphoning &amp; Pest Management Services OPC<br>
+          Globe 0917 671 6383 &nbsp;&middot;&nbsp; Smart 0939 245 6217
+        </div>
+
+        <div class="abs" style="right:30px;top:96px">
+          <div class="qr">__QR__</div>
+          <div class="cr dark" style="text-align:center;margin-top:6px;font-size:10px">Presyo at papeles</div>
+        </div>
+      </div></div>
+      <figcaption>A &middot; back</figcaption>
+    </figure>
+
+    <p class="verdict"><b>Why it leads.</b> It is the only comp where the differentiator lands
+       inside the eight seconds <i>and</i> the card is unmistakably Oceanides face-down. The
+       amber section tab, the dashed rule and the left rail are the brand's own print devices,
+       not decoration borrowed from somewhere else. The back flips to paper stock so it reads
+       as the receipt half &mdash; the same receipts-strip logic already sitting in
+       <code>trust-card-template.html</code>.</p>
+    <p class="risk"><b>Risk:</b> the ticket device reads utilitarian instead of premium if the
+       typography goes even slightly loose. This one lives or dies on the setting.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- =============== B =============== -->
+  <div class="concept">
+    <div class="chead">
+      <span class="rank">B</span>
+      <h2 style="margin:0">The Document</h2>
+      <span class="prob">30%</span>
+    </div>
+
+    <figure>
+      <div class="stage"><div class="card paperbg">
+        <div class="abs" style="left:0;right:0;top:0;height:76px;background:#0A1F45"></div>
+        <div class="abs seal" style="left:26px;top:13px;width:50px;height:50px"><img class="logo" src="__LOGO__" alt="Oceanides"></div>
+        <div class="abs cd" style="left:86px;top:22px;font-size:27px">Oceanides</div>
+        <div class="abs cr" style="left:88px;top:52px;font-size:10px;color:#8FB3DD">Siphoning &middot; Pest Management &middot; Metro Manila</div>
+        <hr class="hair abs" style="left:0;right:0;top:76px">
+
+        <div class="abs rl dark" style="left:30px;top:104px">Certificate of Treatment</div>
+        <div class="abs ch" style="left:30px;top:124px;right:30px;font-size:22px;color:#0B1B33;line-height:1.15;letter-spacing:-.2px">Nakapangalan sa negosyo mo.</div>
+        <div class="abs fn dark" style="left:30px;top:164px;right:30px;font-size:11px">
+          Issued to your business as waste generator, naming Oceanides as the transporter.
+          Disposal at a DENR-accredited treatment facility.
+        </div>
+
+        <hr class="hairo abs" style="left:30px;width:52px;top:206px">
+
+        <div class="abs" style="left:30px;top:224px">
+          <div class="nm dark">Marvin Balaba</div>
+          <div class="rl dark"><span class="tbc">[role &mdash; TBC]</span></div>
+        </div>
+        <div class="abs" style="right:30px;top:228px;text-align:right">
+          <div class="ph dark">0917 671 6383</div>
+          <div class="cr dark" style="margin-top:4px">oceanidesph.com</div>
+        </div>
+      </div></div>
+      <figcaption>B &middot; front</figcaption>
+    </figure>
+
+    <figure>
+      <div class="stage"><div class="card navy">
+        <div class="abs" style="left:30px;top:34px;right:150px">
+          <div class="svc" style="margin-bottom:10px"><span class="amdot">&#9679;</span> Septic Siphoning</div>
+          <div class="svc" style="margin-bottom:10px"><span class="amdot">&#9679;</span> Grease Trap Pumping</div>
+          <div class="svc"><span class="amdot">&#9679;</span> Pest Management</div>
+        </div>
+
+        <hr class="dash abs" style="left:30px;right:150px;top:136px">
+
+        <div class="abs cr" style="left:30px;top:152px;right:150px;line-height:1.75">
+          SEC-Registered &middot; BIR-Registered<br>TIN 260-084-087-000
+        </div>
+
+        <div class="abs" style="left:30px;top:196px">
+          <div class="ph">Globe 0917 671 6383</div>
+          <div class="ph" style="margin-top:5px">Smart 0939 245 6217</div>
+          <div class="cr" style="margin-top:8px">oceanidesph.com</div>
+        </div>
+
+        <div class="abs fn" style="left:30px;bottom:16px;right:150px;font-size:10px">
+          Oceanides Plumbing Siphoning &amp; Pest Management Services OPC
+        </div>
+
+        <div class="abs" style="right:30px;top:92px">
+          <div class="qr">__QR__</div>
+        </div>
+      </div></div>
+      <figcaption>B &middot; back</figcaption>
+    </figure>
+
+    <p class="verdict"><b>Why it is second.</b> The closest match to your literal words &mdash;
+       premium, simple, beautiful, modern. Most restrained of the three and the best object
+       in the hand. A miniature letterhead.</p>
+    <p class="risk"><b>Risk:</b> the contrast floor bans amber text on paper
+       (1.7:1, DESIGN.md:123), so the front loses the brand's stopping colour and goes quiet
+       &mdash; at the one place the card has to win against a stack of other cards.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- =============== C =============== -->
+  <div class="concept">
+    <div class="chead">
+      <span class="rank">C</span>
+      <h2 style="margin:0">The Shield</h2>
+      <span class="prob">15%</span>
+    </div>
+
+    <figure>
+      <div class="stage"><div class="card navy">
+        <div class="abs" style="left:0;right:0;top:58px;text-align:center">
+          <div class="seal" style="width:100px;height:100px;margin:0 auto"><img class="logo" src="__LOGO__" alt="Oceanides"></div>
+        </div>
+        <hr class="hair abs" style="left:222px;width:96px;top:186px">
+        <div class="abs cr" style="left:0;right:0;top:208px;text-align:center;font-size:10.5px;letter-spacing:1.9px;color:#DFE8F5">
+          Siphoning &middot; Pest Management
+        </div>
+        <div class="abs cr" style="left:0;right:0;top:232px;text-align:center;font-size:10px;letter-spacing:1.6px">
+          Metro Manila &middot; Cavite &middot; Bulacan
+        </div>
+      </div></div>
+      <figcaption>C &middot; front</figcaption>
+    </figure>
+
+    <figure>
+      <div class="stage"><div class="card navy">
+        <div class="abs" style="left:0;top:24px"><span class="tab">Certificate of Treatment</span></div>
+        <div class="abs ch" style="left:30px;top:66px;right:150px;font-size:13px;color:#F5B301;letter-spacing:.2px">Nakapangalan sa negosyo mo.</div>
+        <div class="abs fn" style="left:30px;top:92px;right:150px">
+          Issued to your business as waste generator, naming Oceanides as transporter.
+          Disposal at a DENR-accredited treatment facility.
+        </div>
+
+        <hr class="dash abs" style="left:30px;right:150px;top:132px">
+
+        <div class="abs" style="left:30px;top:148px">
+          <div class="nm">Marvin Balaba</div>
+          <div class="rl"><span class="tbc">[role &mdash; TBC]</span></div>
+        </div>
+
+        <div class="abs" style="left:30px;top:196px">
+          <div class="ph">Globe 0917 671 6383</div>
+          <div class="ph" style="margin-top:5px">Smart 0939 245 6217</div>
+        </div>
+
+        <div class="abs cr" style="left:30px;bottom:34px">SEC-Registered &middot; BIR-Registered</div>
+        <div class="abs fn" style="left:30px;bottom:16px;font-size:10px">TIN 260-084-087-000 &middot; oceanidesph.com</div>
+
+        <div class="abs" style="right:30px;top:88px">
+          <div class="qr">__QR__</div>
+        </div>
+      </div></div>
+      <figcaption>C &middot; back</figcaption>
+    </figure>
+
+    <p class="verdict"><b>Why it is last.</b> It spends the eight seconds on a logo. Every
+       fly-by-night card in that drawer also leads with a logo &mdash; this one just looks
+       better doing it. Conventionally premium, strategically weakest.</p>
+    <p class="risk"><b>Risk:</b> nothing on the front separates Oceanides from the cheap crew.
+       All the work is on a face nobody is guaranteed to turn over.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- =============== facts =============== -->
+  <h2>What is printable</h2>
+  <p class="note">Everything on the comps above comes from this list. Nothing was invented.</p>
+
+  <div class="panel ok">
+    <p class="lbl good">True &mdash; safe to print</p>
+    <table>
+      <tr><th>Claim</th><th>Where it comes from</th></tr>
+      <tr><td><b>Oceanides Plumbing Siphoning &amp; Pest Management Services OPC</b></td><td>SEC, OPC</td></tr>
+      <tr><td><b>SEC-Registered</b> &middot; <b>BIR-Registered</b> &middot; TIN 260-084-087-000</td><td>Confirmed by you</td></tr>
+      <tr><td><b>DENR-accredited disposal facility</b></td><td>True of the <i>facility</i> &mdash; never of Oceanides</td></tr>
+      <tr><td><b>Certificate of Treatment</b> to the waste generator, Oceanides as transporter</td><td>MOA Clause 7</td></tr>
+      <tr><td>Globe 0917 671 6383 &middot; Smart 0939 245 6217 &middot; oceanidesph.com</td><td>Live</td></tr>
+    </table>
+  </div>
+
+  <div class="panel alert">
+    <p class="lbl bad">Never print</p>
+    <ul>
+      <li>"DENR-accredited" or "DENR-registered hauler" applied to <b>Oceanides</b></li>
+      <li>DENR ID <code>OL-TR-R3-14-000080</code> &middot; cert <code>BEHMC(1)WHN0095001WW260318</code></li>
+      <li>Any LLDA claim &middot; any DOH ESC number &middot; the blue vacuum tanker</li>
+      <li><b>JetBrains Mono.</b> DESIGN.md:140 restricts <code>data-mono</code> to internal
+          dashboards. Card numbers are set in Inter &mdash; note none of the comps above use mono.</li>
+      <li>White on amber (1.9:1) &middot; amber text on paper (1.7:1, use <code>ocean</code>)
+          &middot; <code>#5B6B85</code> on navy (3.0:1). DESIGN.md:111&ndash;123.</li>
+    </ul>
+  </div>
+
+  <hr class="rule">
+
+  <h2>Two red placeholders</h2>
+  <p>Every <span class="tbc">red</span> string on the comps is a fact I refused to guess.
+     One line from you clears each.</p>
+
+  <div class="panel">
+    <p class="lbl">1 &middot; Marvin's role</p>
+    <p style="margin-bottom:0">He is Talent under the likeness agreement
+       (<code>consent-agreement-FINAL-2026-07-20.md</code>), legal name <b>Dan Marvin Balaba</b>.
+       Inventing "Field Inspector" or anything with "Licensed" rebuilds the fake-credential
+       problem in a nicer font. What is he, truthfully?</p>
+  </div>
+
+  <div class="panel">
+    <p class="lbl">2 &middot; 10 days or 15?</p>
+    <p style="margin-bottom:0">MOA Clause 7 says <b>10</b>. Your website says <b>15</b>
+       (<code>paolo-page-copy.md:630</code> and <code>:790</code>). Paolo will read both.
+       A company whose promise is "walang hidden charges" cannot contradict itself in print.</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2>The premortem stands</h2>
+  <p>You confirmed three failure modes. They are already folded into the comps.</p>
+  <table>
+    <tr><th>Confirmed risk</th><th>What changed</th></tr>
+    <tr><td><b>MOA expires 2027-03-06</b></td>
+        <td>The Certificate promise rests on a contract lapsing in ~6 months.
+            <b>Pilot run of 100&ndash;200, not 1,000.</b> Treat the card as a reprintable
+            six-month asset and revisit before March.</td></tr>
+    <tr><td><b>Pest management has no substance</b></td>
+        <td>Demoted. It is no longer a co-equal headline &mdash; it sits in the service
+            list only. The logo still says PEST CONTROL; that is real branding and stays.</td></tr>
+    <tr><td><b>QR + navy CMYK</b></td>
+        <td>Process gate, not a design change. The QR above is <b>real</b> (v5, 37&times;37,
+            error-correction M) and encodes the live UTM URL. One test card scanned under
+            the matte lam, in poor lobby light, on a mid-range Android &mdash; before the run.
+            One printed proof held against the actual van before the press file is approved.</td></tr>
+  </table>
+
+  <hr class="rule">
+
+  <h2>Next</h2>
+  <p>Pick a letter. Then answer the two red placeholders and I will cut the artwork:
+     trim + 3mm bleed, crop marks, CMYK at 300dpi, front and back as separate press files.</p>
+  <p class="stamp">Comps only. No press file exists yet. The QR has not been scanned off paper.</p>
+
+</div>

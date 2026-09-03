@@ -248,6 +248,32 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **Business Card Concepts A/B/C (2026-09-03):** tatlong comp ng business card para sa
+  B2B canvassing ni Marvin, front at back, naka-trim size (90x50mm). Kasama ang
+  print-safe fact set at ang dalawang pulang placeholder na hindi ko hinulaan.
+  `https://claude.ai/code/artifact/1c17b8c3-2373-4a0b-a4d0-aad6d98d65fd`
+  Twin: [`artifacts/oceanides-biz-card.html`](../../artifacts/oceanides-biz-card.html) ·
+  Build: `node tools/artifacts/build-oceanides-biz-card.mjs` (QR: `tools/artifacts/make-card-qr.py`).
+  Pumasa sa 390x844 gate.
+  🔴 **Ang una at pinakamahalagang aral: hindi kay Oceanides ang DENR credentials.**
+  Kay **Globaltec** ang `OL-TR-R3-14-000080`, at sa **ibang kompanya** ang
+  `BEHMC(1)WHN0095001WW260318` (may confidentiality clause pa) — nakasulat na sa
+  `compliance-findings-2026-08-08.md:135`, pero muntik ulit mailimbag. Kaya may
+  **build gate** na ngayon ang builder: binabasa nya ang loob ng `<figure>` blocks
+  lang (ang card artwork), at babagsak kapag may banned na credential doon. Hindi
+  buong file — dahil PINAPANGALANAN ng page mismo ang dalawang ID sa babala nya,
+  at pinalpak ng whole-file scan ang mismong seksyong nagbabantay. Nangyari yun sa
+  unang build.
+  ⚠️ **Print ay hindi screen — 540px = 90mm, kaya 1pt = 2.117px.** Ang unang pass
+  ay sinukat sa mata at LAHAT ng tier ay napunta sa 4–6pt; ang legal line ay 7px,
+  ibig sabihin **3.3pt**, na walang press na kayang hawakan. Kapag may bagong print
+  surface, sukatin sa puntos, huwag sa render.
+  ⚠️ **Puti ang sulok ng `assets/logo.jpg`, at asul ang marka sa loob.** Direktang
+  ipinatong sa navy, mukha syang sticker. Bawal din i-knock-out ang puti — mawawala
+  ang shield sa navy. Ang tama ay **bilog na puting seal** (`border-radius:50%` +
+  `object-fit:contain`, walang scale). Huwag i-scale pataas para habulin ang huling
+  puting pixel: `cover` + `scale(1.06)` ang unang subok at pinutol nito ang wordmark.
+
 - **KM Value Week 01 — Posting Pack (2026-08-04):** ang weekly run sheet para sa admin
   ni Neil: 7 organic posts (Fibo-model value week), bawat isa may embedded na litrato
   (JPEG data URI, save-able), buong caption na may copy button, schedule (6PM kada araw),
