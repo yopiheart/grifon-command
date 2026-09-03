@@ -248,12 +248,12 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
-- **Mark Rebuild — vector logo family (2026-09-03):** ang before/after ng logo, ang
-  apat na sukat na nagpapatunay, ang mono at reversed test, at ang dalawang lockup.
+- ~~**Mark Rebuild — vector logo family (2026-09-03)**~~ — **SUPERSEDED nang araw
+  ding yun.** Pinalitan ni Neil ng sarili nyang logo at ipinabura ang vector shield,
+  kaya tinanggal ang twin (`artifacts/oceanides-logo.html`) at ang builder. Buhay pa
+  ang URL bilang talaan ng desisyon, pero **hindi na sya i-redeploy** at wala nang
+  source na magbubuo nito. Ang kasalukuyang marka ay nasa "Ang marka" sa ibaba.
   `https://claude.ai/code/artifact/5c523b6d-caa7-49ec-9ffe-bc71ac25d586`
-  Twin: [`artifacts/oceanides-logo.html`](../../artifacts/oceanides-logo.html) ·
-  Build: `node tools/artifacts/build-oceanides-logo.mjs`. Pumasa sa 390x844 gate.
-
 - **Business Card Concepts A/B/C (2026-09-03):** tatlong comp ng business card para sa
   B2B canvassing ni Marvin, front at back, naka-trim size (90x50mm). Kasama ang
   print-safe fact set at ang dalawang pulang placeholder na hindi ko hinulaan.
@@ -463,8 +463,9 @@ pipeline na may 98.5% retention. **Kaya hatian ayon sa surface:**
   (`₱99,999`, `999`, `9.99%`) at petsang `1999` — walang campaign na ganito;
   (2) **`danger`-red na banner** na nasa taas bago ang unang panel. Bantayan din
   ang rounding: ang `₱9,999.99` ay nagiging `₱10,000` na mukhang totoo.
-- 🔴 **Huwag gamitin ang `assets/logo.jpg`.** Hindi na sya ang master — ang
-  `brand/logo-primary.svg` na. Ang JPEG ay reference/kasaysayan na lang.
+- 🔴 **BINURA na ang `assets/logo.jpg`.** Ang master ay `brand/logo-source.png`.
+  Kung may makita kang tumuturo pa sa `logo.jpg`, sira yun — tatlong lugar ang
+  naayos noong 2026-09-03 (dalawang `build-assets.mjs` at ang `km-004` overlays).
 - Huwag ang Grifon system dito — walang `#FFCC00`, walang zinc/charcoal
   grounds, walang glass/backdrop-blur, walang MrBeast plates.
 - Huwag ang safety orange `#FF8324` — deprecated (improvised bago naitala ang
