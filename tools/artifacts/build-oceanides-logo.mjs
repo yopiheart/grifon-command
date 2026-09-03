@@ -108,7 +108,7 @@ if (inlined !== 13) {
 html = finalize(html, {
   label: 'oceanides-logo',
   leftover: [/__[A-Z0-9_]+__/g],
-  required: ['Before / after', 'The mark at size', 'Two lockups', 'Archivo Black'],
+  required: ['Before / after', 'The mark at size', 'Two lockups', 'Archivo Expanded'],
 });
 
 await mkdir(dirname(OUT), { recursive: true });

@@ -135,18 +135,29 @@ def shield_group(with_mosquito=True, mono=None):
 # matters -- the printer's RIP, a partner's deck, a sign shop's plotter. Outlined
 # paths have no dependency and no licence question at all.
 #
-# INTERIM FACE: Archivo Black. Chosen over the other three already committed to
-# api/_lib/assets/fonts/ -- Anton is a condensed headline face and goes claustro-
-# phobic as a wordmark; Inter Black is a UI face; Montserrat ExtraBold is the
-# geometric-sans default that reads as generated. Archivo Black is a wide
-# grotesque with real authority at small sizes, which is the job.
+# THE FACE: Archivo Expanded ExtraBold (wdth 125, wght 800).
 #
-# This is a PLACEHOLDER PENDING NEIL'S TYPE FOLDER (clients/oceanides/brand/
-# type-inspo/). Swap FACE below and rerun -- nothing else changes.
+# Chosen 2026-09-03 against Neil's own font-combo board, now filed at
+# brand/type-inspo/. Six pairings came in; four are unusable here on licence or
+# register grounds (Switzer/Vanguard/Athelas/Balboa/Epic Pro are paid or
+# unreachable; a script or handwriting face is wrong for a compliance brand).
+# Of what remained, this is the Archivo half of his slide 05 -- so his board and
+# the interim placeholder converged on the same family, which is a good sign
+# rather than a coincidence worth ignoring.
+#
+# It was picked by MEASURING, not by taste: all six candidates were set as
+# OCEANIDES at 50px, at 19px reversed on navy, and at 11px (~5pt, real card
+# size). Archivo Expanded holds its counters at 11px where Abril Fatface -- the
+# other half of that same slide -- closes up, because a Didone's thin strokes
+# vanish at 5pt and at truck distance. Expanded also reads wider, and width is
+# what makes a service company look established rather than new.
+#
+# Licence: SIL Open Font License 1.1. Free for commercial use, logos included.
+# The instance is committed at brand/fonts/ so this never depends on a CDN.
 from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
 
-FACE = pathlib.Path(__file__).resolve().parents[2] / "api" / "_lib" / "assets" / "fonts" / "ArchivoBlack-Regular.ttf"
+FACE = pathlib.Path(__file__).resolve().parents[2] / "clients" / "oceanides" / "brand" / "fonts" / "Archivo-Expanded-800.ttf"
 
 
 def outline(text, cap_h, tracking=0.0):

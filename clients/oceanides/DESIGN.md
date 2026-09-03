@@ -396,10 +396,23 @@ ang trabaho ng amber ay pigilan ang scroll sa dagat ng asul (DESIGN.md:93), iba 
 sa trabaho ng isang marka. **Desisyon ni Neil** kung dadagdagan ng mainit na accent
 ang kalasag — hindi ito dapat ipuslit ng isang redraw.
 
-⚠️ **Placeholder pa ang typeface.** Naka-**Archivo Black** ang wordmark, pinili sa
-apat na nasa repo na. Ilalagay ni Neil ang kanyang combo board sa
-`brand/type-inspo/` (may README doon kung ano ang dapat kayanin ng face). Ang
-palit ay isang linya: ang `FACE` sa build script.
+✅ **Sarado na ang typeface: Archivo Expanded ExtraBold** (wdth 125, wght 800),
+naka-commit sa `brand/fonts/Archivo-Expanded-800.ttf`. SIL OFL — libre sa
+commercial, kasama ang logo.
+
+Anim na pares ang board ni Neil (`brand/type-inspo/`, pinangalanan kada pares).
+**Apat ang bagsak sa licence o register:** bayad o hindi maabot ang Switzer,
+Vanguard, Athelas, Balboa at Epic Pro; at mali ang script o handwriting para sa
+kompanyang ang buong bentahan ay **kumpleto ang papeles**. Ang natira ay ang
+**kalahating Archivo ng slide 05** nya — nagtagpo ang board nya at ang
+placeholder ng agent sa iisang pamilya nang hindi nag-uusap.
+
+**Sinukat, hindi tinantya:** lahat ng anim ay isinet na OCEANIDES sa 50px, sa
+19px na baliktad sa navy, at sa **11px — ang totoong ~5pt na sukat sa card.**
+Doon, hawak ng Archivo Expanded ang counters nya. Ang **Abril Fatface**, ang
+kabilang kalahati ng parehong slide, ay nagsasara: nawawala ang manipis na
+stroke ng Didone sa 5pt at sa layo ng trak. Mas malapad din ang Expanded, at
+ang lapad ang nagpapamukhang **matagal na** sa isang service company, hindi bago.
 
 ## Do's and Don'ts
 
