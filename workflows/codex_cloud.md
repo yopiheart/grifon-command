@@ -7,22 +7,64 @@ legacy local Windows route during migration.
 
 ## One-time Codex Cloud environment configuration
 
-1. In Codex Cloud, open **Settings -> Environments**, create or edit the Grifon
-   environment, and connect `yopiheart/grifon-command` with permission to create
-   branches and pull requests.
-2. In that environment's **Environment variables**, set the non-secret variable
-   `CODEX_ENV_NODE_VERSION` to `24`. The audited universal image reads this
-   variable before the repository setup script, runs `nvm alias default 24`,
-   and activates Node 24. This matters because a temporary `export PATH=...`
-   inside setup does not prove that a later agent shell gets the same Node.
-3. In **Setup script**, use the inline bootstrap below until the commit adding
-   `scripts/codex-cloud-setup.sh` exists on the remote branch selected for the
-   task. Setup runs after checkout, so it cannot call a file that is still only
-   in an unpushed working tree:
+1. In Codex Cloud, open **Settings -> Environments** and edit the environment
+   connected to `yopiheart/grifon-command`. Leave the runtime selector on Node
+   20; the real editor currently offers only 18/20/22. Do not add
+   `CODEX_ENV_NODE_VERSION` as a generic variable: the editor removes that row,
+   so it is not a validated way to select Node 24.
+2. Put this self-contained block in **Setup script**. Initial setup runs against
+   the cached default-branch checkout, before a task branch is applied, so this
+   block installs and persists the toolchain only. It deliberately does not run
+   the default branch's older `npm ci` before PR #124's lock repair is present:
 
    ```bash
    set -euo pipefail
-   test "$(node --version | cut -d. -f1)" = "v24"
+   export NVM_DIR="$HOME/.nvm"
+   . "$NVM_DIR/nvm.sh"
+   if [ "$(nvm version v24.15.0)" = "N/A" ]; then
+     nvm install v24.15.0
+   fi
+   nvm alias default v24.15.0
+   nvm use v24.15.0
+   if [ "$(npm --version | cut -d. -f1)" != "11" ]; then
+     npm install --global npm@11.4.2
+   fi
+   if ! grep -Fq '# GRIFON_CODEX_NODE_BEGIN' "$HOME/.profile"; then
+     cat >> "$HOME/.profile" <<'EOF'
+
+   # GRIFON_CODEX_NODE_BEGIN
+   export NVM_DIR="$HOME/.nvm"
+   if [ -s "$NVM_DIR/nvm.sh" ]; then
+     . "$NVM_DIR/nvm.sh"
+     nvm use --silent v24.15.0 >/dev/null
+   fi
+   # GRIFON_CODEX_NODE_END
+   EOF
+   fi
+   node --version
+   npm --version
+   ```
+
+3. Put this block in **Maintenance script**. Maintenance runs after the task
+   branch checkout, so it sees PR #124's script and repaired lockfile without
+   switching branches. Once this commit is on the remote PR branch, use:
+
+   ```bash
+   bash scripts/codex-cloud-setup.sh
+   ```
+
+   If the branch has not been updated yet and that file is absent, use this
+   self-contained maintenance block instead:
+
+   ```bash
+   set -euo pipefail
+   export NVM_DIR="$HOME/.nvm"
+   . "$NVM_DIR/nvm.sh"
+   if [ "$(nvm version v24.15.0)" = "N/A" ]; then
+     nvm install v24.15.0
+   fi
+   nvm alias default v24.15.0
+   nvm use v24.15.0
    if [ "$(npm --version | cut -d. -f1)" != "11" ]; then
      npm install --global npm@11.4.2
    fi
@@ -31,19 +73,18 @@ legacy local Windows route during migration.
    npm ci
    ```
 
-4. After this migration commit is available remotely, replace the inline
-   bootstrap with:
+   The initial Setup block has already written the login-shell persistence
+   marker, so Maintenance only has to reassert the active version before the
+   clean install.
 
-   ```bash
-   bash scripts/codex-cloud-setup.sh
-   ```
-
-   Leave setup-phase internet access enabled for `registry.npmjs.org`. Routine
-   agent internet access can remain disabled; dependency installation belongs
-   in setup. Save the environment and start a **new task** so both setup and the
-   later agent shell are created from the revised configuration.
-5. At the beginning of that new task, verify persistence rather than exporting a
-   path manually:
+   Do not use `git switch`, `git checkout`, `npm install`, or a fallback lockfile
+   command in either box. Maintenance must run `npm ci` against the task branch
+   exactly as checked out.
+4. Leave setup/maintenance internet access enabled for `registry.npmjs.org`.
+   Routine agent internet can remain disabled. Save the environment and use
+   **Update branch** as needed, then start a **new task** so the cached setup,
+   task checkout, and maintenance command all run in their real order.
+5. At the start of the new task, verify persistence without changing `PATH`:
 
    ```bash
    command -v node
@@ -53,9 +94,10 @@ legacy local Windows route during migration.
    test -x node_modules/.bin/vitest
    ```
 
-   Expected majors are Node 24 and npm 11. If the agent shell still reports Node
-   20, stop: the environment variable was not saved or the task reused an old
-   container. Do not paper over it with a task-local `PATH` export.
+   Expected exact versions are Node `v24.15.0` and npm `11.4.2`. If the agent
+   shell still reports Node 20, stop: setup did not update the cached home or the
+   task reused an old cache. Do not paper over it with a task-local `PATH`
+   export.
 6. Add secrets through the Codex Cloud environment settings, never through the
    task prompt and never by committing `.env`. The basic build and unit suite
    need no live provider secrets. Add only the variables required for an
@@ -105,7 +147,8 @@ when the task touches it; root setup does not install funnel dependencies.
 
 ## Diagnosing install failures by phase
 
-The environment Setup script and the subsequent agent run are separate phases.
+Environment Setup, task-branch checkout, Maintenance, and the subsequent agent
+run are separate phases.
 Check the failing command's timestamp and task transcript before assigning a
 cause. A failure from an `npm ci` typed by the agent proves only that agent-phase
 network request failed; it does not prove setup-phase access failed.
