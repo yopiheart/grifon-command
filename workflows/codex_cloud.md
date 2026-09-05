@@ -159,3 +159,75 @@ a printed log label, never an exported variable.
 Review `git diff`, run the applicable checks, and report setup failures
 separately from application failures. Commit and create a pull request only when
 the task requests them. Do not merge the pull request from the development task.
+
+## Cafe session quickstart
+
+Use this procedure on any computer-shop PC. No VS Code, local Git/Node install,
+manual clone, sparse checkout, or Windows cafe-start.ps1 is needed for cloud work.
+The saved Grifon environment performs repository checkout and dependency setup.
+See the official [Codex Cloud guide](https://learn.chatgpt.com/docs/cloud).
+
+### When you arrive
+
+1. Open https://chatgpt.com/codex/cloud and sign in to your ChatGPT account.
+2. Select the existing environment for `yopiheart/grifon-command`. Do not recreate
+   its setup each day. Leave the verified saved settings in place.
+3. Check existing tasks for running work before submitting another coding task.
+   Reuse the active task for the same PR; never run two writers on the same branch.
+4. Check [PR #124](https://github.com/yopiheart/grifon-command/pull/124). While it
+   remains open, migration work uses `codex/audit-repository-for-claude-to-codex-migration`.
+   After it is merged, start new work from updated `main`.
+5. Send the start prompt below, replacing the bracketed work item. Cloud setup
+   may take a few minutes; you do not need to run installation commands on the PC.
+
+```text
+Work in yopiheart/grifon-command. Read AGENTS.md, NOW.md, agent_lessons.md,
+UBIQUITOUS_LANGUAGE.md, and the latest five commits before editing. Confirm the
+current branch and remote PR head. My task today is: [describe today's work].
+Check for an existing task working on this PR where visible; do not start duplicate
+work. If resuming an old task, reconcile its checkout with the latest remote commits
+before editing or using Update branch. Preserve existing files and tuned content.
+Run the applicable checks, commit the authorized changes, and update the same PR
+when continuing that PR. Report any blocker clearly. Do not merge, deploy, or run
+paid/live operations without my explicit instruction. Never print secret values.
+```
+
+For tomorrow's first visit after the migration session, inspect PR #124 checks and
+review findings before taking the next action. Later GitHub web commits are newer
+than the original coding task checkout; do not blindly click its Update branch.
+Read NOW.md for current project state and the PR description for test evidence.
+Migration phase 1 retains Claude assets; skills/hooks still need a separate phase.
+Known remaining work at this handoff: 15 development-only audit findings, the legacy
+Claude Review failure, and missing Linux libraries for cloud Chromium. Production
+audit was zero; GitHub build/unit/E2E passed on the previously verified commit.
+Always check the latest commit's CI status rather than assuming those results carry forward.
+
+### While working
+
+Review the changed files and check results in the task/PR. Ask for corrections in
+the same task. Browser-only work does not require copying your Bitwarden .env to
+the cafe PC. Basic build/unit checks use no live provider secrets. If a particular
+feature needs credentials, configure only what it needs through the appropriate
+environment settings; never paste .env into a prompt or commit it.
+
+### Before leaving
+
+Send this while there is still time to finish saving work:
+
+```text
+Wrap up this cafe session. Review the diff, run the applicable checks, and commit
+only the intended changes. Update the existing PR (or create one for this work
+if none exists) and verify that the commits are visible on GitHub. Update NOW.md
+within its 90-line limit with the actual state, test results, blockers, and next
+action. Give me the PR link, task link, branch, and commit to resume from. Do not
+merge or deploy. If work is still running, state that clearly instead of saying done.
+```
+
+Confirm the PR contains the latest work; a task result alone is not proof it was
+pushed to GitHub. Save its link on your phone. NOW.md remains the project resume
+document; this section is a reusable procedure. Cloud tasks run remotely, while a
+local desktop session depends on the cafe PC. Do not rely on a local coordinator
+continuing after shutdown. On return, inspect the saved task before starting another.
+
+Sign out of ChatGPT, GitHub, and your password manager on the shared PC; avoid
+saving passwords there. Close the browser session when finished.
