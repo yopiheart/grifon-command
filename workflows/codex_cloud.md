@@ -133,12 +133,15 @@ Uncached Setup, cache preparation, cache-resume Maintenance, and the subsequent
 agent run are separate phases. Do not use a result from one as evidence for
 another.
 
-The fresh uncached validation at remote PR head `78cbde108250d090304a752e5d3e851cc0fce41c`
-reported Node 24.15.0/npm 11.4.2 but no `node_modules`. That is direct evidence
-that the previous cold-start Setup recipe omitted dependency installation, not
-an application failure. It does not validate cache preparation or Maintenance
-ordering. An older agent-phase request separately received HTTP 403 for
-`https://registry.npmjs.org/ink`; it was not retried for this documentation fix.
+The fresh verification task at remote PR head
+`07edfb09c7d0346630d9b183b677fd0e41188e54` confirmed that the saved uncached
+Setup produced Node 24.15.0/npm 11.4.2 and installed dependencies: build, unit,
+bundle-leak, voice-sync, domain, and artifact-anchor checks passed. Cloud E2E
+was not run because the Chromium 1228 executable was missing; GitHub E2E was a
+separate green check. The task did not expose whether a cache hit or miss
+occurred, so cache startup ordering remains unvalidated. Do not infer Setup
+failure from an absent `SETUP_COMMIT` environment variable: that name was only
+a printed log label, never an exported variable.
 
 ## Safety boundaries
 

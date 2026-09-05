@@ -1,5 +1,5 @@
 # NOW — the resume doc
-**Stamped: 2026-09-05** (Codex Cloud migration phase 1)
+**Stamped: 2026-09-06** (Codex Cloud migration phase 1)
 ## ▶ NEXT ACTION — produce the next sample
 
 Nothing to merge: `origin/main` is at `4f76359` and carries session 41 + 42 in full.
@@ -15,7 +15,7 @@ offer, never type it** — a past run typed 113 of 153 chars and lost the first 
 login: `workflows/expert_manual_mode.md:440`.
 
 ## CODEX CLOUD BASELINE — implemented, dependency download blocked in this workspace
-Root/scoped `AGENTS.md`, the setup runbook, and `codex_migration_inventory.md` define phase 1; both PR #124 review fixes are resolved and GitHub verify/e2e/artifacts are green at `78cbde1`. Fresh validation confirmed Node 24.15.0/npm 11.4.2 but no `node_modules`: cold Setup must run `npm ci` itself. Pre-merge recipe is caching Off + agent internet Off + self-contained Setup on the selected PR commit; enable caching later only after the repaired lock/bootstrap reach `main`, with `npm ci` in both Setup and Maintenance.
+Root/scoped `AGENTS.md`, the setup runbook, and `codex_migration_inventory.md` define phase 1; both PR #124 review fixes are resolved. Fresh verification at `07edfb0` passed Node 24.15.0/npm 11.4.2, build (2,589 modules), unit (111 files passed/9 skipped; 1,357 tests passed/32 skipped), bundle-leak (6 bundles), voice-sync, domain (290 files), artifact anchors, and clean git. GitHub verify/e2e/artifacts are green. Saved environment: caching Off, full initial NVM+profile+`npm ci`, agent internet Off; cloud E2E was not run because Chromium 1228 was missing.
 ## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
 `SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
 for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
