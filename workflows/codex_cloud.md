@@ -5,110 +5,92 @@ PC needs only a browser: Git checkout, dependencies, commands, commits, and pull
 requests run in the cloud workspace. Keep `workflows/cafe_session.md` for the
 legacy local Windows route during migration.
 
-## One-time Codex Cloud environment configuration
+## Exact pre-merge Codex Cloud configuration
 
-1. In Codex Cloud, open **Settings -> Environments** and edit the environment
-   connected to `yopiheart/grifon-command`. Leave the runtime selector on Node
-   20; the real editor currently offers only 18/20/22. Do not add
-   `CODEX_ENV_NODE_VERSION` as a generic variable: the editor removes that row,
-   so it is not a validated way to select Node 24.
-2. Put this self-contained block in **Setup script**. Initial setup runs against
-   the cached default-branch checkout, before a task branch is applied, so this
-   block installs and persists the toolchain only. It deliberately does not run
-   the default branch's older `npm ci` before PR #124's lock repair is present:
+The official [Cloud environments documentation](https://learn.chatgpt.com/docs/environments/cloud-environment)
+says a new run checks out the selected branch/commit and then runs Setup. Cache
+preparation is the separate case that uses the default branch; Maintenance runs
+when that cache is resumed.
 
-   ```bash
-   set -euo pipefail
-   export NVM_DIR="$HOME/.nvm"
-   . "$NVM_DIR/nvm.sh"
-   if [ "$(nvm version v24.15.0)" = "N/A" ]; then
-     nvm install v24.15.0
-   fi
-   nvm alias default v24.15.0
-   nvm use v24.15.0
-   if [ "$(npm --version | cut -d. -f1)" != "11" ]; then
-     npm install --global npm@11.4.2
-   fi
-   if ! grep -Fq '# GRIFON_CODEX_NODE_BEGIN' "$HOME/.profile"; then
-     cat >> "$HOME/.profile" <<'EOF'
+For PR #124 validation, open **Settings -> Environments**, edit the environment
+connected to `yopiheart/grifon-command`, and use these settings:
 
-   # GRIFON_CODEX_NODE_BEGIN
-   export NVM_DIR="$HOME/.nvm"
-   if [ -s "$NVM_DIR/nvm.sh" ]; then
-     . "$NVM_DIR/nvm.sh"
-     nvm use --silent v24.15.0 >/dev/null
-   fi
-   # GRIFON_CODEX_NODE_END
-   EOF
-   fi
-   node --version
-   npm --version
-   ```
+- Runtime selector: leave **Node 20** selected (the editor offers 18/20/22 only).
+- Container caching: **Off**.
+- Agent internet access: **Off**.
+- Setup script: paste the complete block below.
+- Maintenance script: leave empty while caching is Off.
 
-3. Put this block in **Maintenance script**. Maintenance runs after the task
-   branch checkout, so it sees PR #124's script and repaired lockfile without
-   switching branches. Once this commit is on the remote PR branch, use:
+Do not add `CODEX_ENV_NODE_VERSION` as a generic variable; the real editor
+removes that row. The Setup block is intentionally self-contained instead of
+calling a repo script that is not yet on `main`. It activates and persists Node
+24/npm 11 **and runs `npm ci` on the selected PR commit**:
 
-   ```bash
-   bash scripts/codex-cloud-setup.sh
-   ```
+```bash
+set -euo pipefail
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+if [ "$(nvm version v24.15.0)" = "N/A" ]; then
+  nvm install v24.15.0
+fi
+nvm alias default v24.15.0
+nvm use v24.15.0
+if [ "$(npm --version | cut -d. -f1)" != "11" ]; then
+  npm install --global npm@11.4.2
+fi
+if ! grep -Fq '# GRIFON_CODEX_NODE_BEGIN' "$HOME/.profile"; then
+  cat >> "$HOME/.profile" <<'EOF'
 
-   If the branch has not been updated yet and that file is absent, use this
-   self-contained maintenance block instead:
+# GRIFON_CODEX_NODE_BEGIN
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  . "$NVM_DIR/nvm.sh"
+  nvm use --silent v24.15.0 >/dev/null
+fi
+# GRIFON_CODEX_NODE_END
+EOF
+fi
+node --version
+npm --version
+npm ci
+```
 
-   ```bash
-   set -euo pipefail
-   export NVM_DIR="$HOME/.nvm"
-   . "$NVM_DIR/nvm.sh"
-   if [ "$(nvm version v24.15.0)" = "N/A" ]; then
-     nvm install v24.15.0
-   fi
-   nvm alias default v24.15.0
-   nvm use v24.15.0
-   if [ "$(npm --version | cut -d. -f1)" != "11" ]; then
-     npm install --global npm@11.4.2
-   fi
-   node --version
-   npm --version
-   npm ci
-   ```
+Save the environment, update PR #124's branch, and start a new task. At the
+start of that task, verify setup without changing `PATH`:
 
-   The initial Setup block has already written the login-shell persistence
-   marker, so Maintenance only has to reassert the active version before the
-   clean install.
+```bash
+command -v node
+node --version
+command -v npm
+npm --version
+test -x node_modules/.bin/vitest
+```
 
-   Do not use `git switch`, `git checkout`, `npm install`, or a fallback lockfile
-   command in either box. Maintenance must run `npm ci` against the task branch
-   exactly as checked out.
-4. Leave setup/maintenance internet access enabled for `registry.npmjs.org`.
-   Routine agent internet can remain disabled. Save the environment and use
-   **Update branch** as needed, then start a **new task** so the cached setup,
-   task checkout, and maintenance command all run in their real order.
-5. At the start of the new task, verify persistence without changing `PATH`:
+Expected exact versions are Node `v24.15.0` and npm `11.4.2`, and Vitest must
+exist. If any check fails, stop; do not repair it with an agent-phase `PATH`
+export or install.
 
-   ```bash
-   command -v node
-   node --version
-   command -v npm
-   npm --version
-   test -x node_modules/.bin/vitest
-   ```
+## Configuration after phase 1 reaches `main`
 
-   Expected exact versions are Node `v24.15.0` and npm `11.4.2`. If the agent
-   shell still reports Node 20, stop: setup did not update the cached home or the
-   task reused an old cache. Do not paper over it with a task-local `PATH`
-   export.
-6. Add secrets through the Codex Cloud environment settings, never through the
-   task prompt and never by committing `.env`. The basic build and unit suite
-   need no live provider secrets. Add only the variables required for an
-   explicitly authorized integration task; names and purposes live in
-   `.env.example`.
-7. For zero-cost browser boot tests, install Chromium in the environment image or
-   setup step:
+Caching may be enabled only after `main` contains the repaired lockfile and
+`scripts/codex-cloud-setup.sh`. Keep the same self-contained block above as the
+initial **Setup script**, including its `npm ci`. Set **Maintenance script** to:
 
-   ```bash
-   npx playwright install chromium
-   ```
+```bash
+bash scripts/codex-cloud-setup.sh
+```
+
+Both paths therefore run a clean install: Setup covers a cold start, while
+Maintenance refreshes dependencies on a resumed cache. Neither script switches
+branches, runs `npm install` for project dependencies, or bypasses the lockfile.
+
+Add secrets through environment settings, never through the task prompt or a
+committed `.env`. The basic build and unit suite need no live provider secrets.
+For zero-cost browser boot tests, add this to Setup after `npm ci` when needed:
+
+```bash
+npx playwright install chromium
+```
 
 ## Start of each task
 
@@ -147,21 +129,16 @@ when the task touches it; root setup does not install funnel dependencies.
 
 ## Diagnosing install failures by phase
 
-Environment Setup, task-branch checkout, Maintenance, and the subsequent agent
-run are separate phases.
-Check the failing command's timestamp and task transcript before assigning a
-cause. A failure from an `npm ci` typed by the agent proves only that agent-phase
-network request failed; it does not prove setup-phase access failed.
+Uncached Setup, cache preparation, cache-resume Maintenance, and the subsequent
+agent run are separate phases. Do not use a result from one as evidence for
+another.
 
-The 2026-09-05 failure was reproduced in the **agent phase** with Node 24.15.0
-and npm 11.4.2. npm requested `https://registry.npmjs.org/ink`; the CONNECT path
-returned HTTP 403, and npm emitted `E403` with its generic message that the
-package may be forbidden by security policy or inaccessible to the client. A
-direct request also received `HTTP/1.1 403 Forbidden` from the configured Envoy
-proxy. Those observations identify the failed boundary; they do not establish
-whether the account policy, environment allowlist, or upstream access rule made
-the decision. No setup-phase install log was available, so the earlier claim
-that the Codex environment itself could not install dependencies was too broad.
+The fresh uncached validation at remote PR head `78cbde108250d090304a752e5d3e851cc0fce41c`
+reported Node 24.15.0/npm 11.4.2 but no `node_modules`. That is direct evidence
+that the previous cold-start Setup recipe omitted dependency installation, not
+an application failure. It does not validate cache preparation or Maintenance
+ordering. An older agent-phase request separately received HTTP 403 for
+`https://registry.npmjs.org/ink`; it was not retried for this documentation fix.
 
 ## Safety boundaries
 

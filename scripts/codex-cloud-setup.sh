@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# Noninteractive bootstrap for a Codex Cloud checkout after the task branch is
-# present (normally the Maintenance phase). It installs/activates the required
-# runtime, persists it for later login shells, then installs locked dependencies.
+# Noninteractive bootstrap for a checked-out Codex Cloud task. Use the same
+# runtime + npm-ci sequence for initial Setup and cache-resume Maintenance.
 # Secret values are supplied by the cloud environment; this script never reads
 # or prints .env files.
 set -euo pipefail

@@ -15,7 +15,7 @@ offer, never type it** — a past run typed 113 of 153 chars and lost the first 
 login: `workflows/expert_manual_mode.md:440`.
 
 ## CODEX CLOUD BASELINE — implemented, dependency download blocked in this workspace
-Root/scoped `AGENTS.md`, the setup runbook, and `codex_migration_inventory.md` define phase 1. PR #124 review fixes match the live API and actual component/service ownership. The cloud runtime selector cannot set Node 24: Setup must install/persist Node 24.15.0/npm 11.4.2, then Maintenance runs the task branch's `npm ci` after checkout. Start a fresh task to validate the real cache/setup/maintenance order; this task's agent-phase registry access remains blocked.
+Root/scoped `AGENTS.md`, the setup runbook, and `codex_migration_inventory.md` define phase 1; both PR #124 review fixes are resolved and GitHub verify/e2e/artifacts are green at `78cbde1`. Fresh validation confirmed Node 24.15.0/npm 11.4.2 but no `node_modules`: cold Setup must run `npm ci` itself. Pre-merge recipe is caching Off + agent internet Off + self-contained Setup on the selected PR commit; enable caching later only after the repaired lock/bootstrap reach `main`, with `npm ci` in both Setup and Maintenance.
 ## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
 `SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
 for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
