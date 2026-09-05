@@ -3,9 +3,10 @@
 These rules apply to `services/` in addition to the repository root
 instructions.
 
-Services are lazily initialized singletons for AI proxy calls, Supabase auth,
-billing, voice, active jobs, and wizard persistence. React components and
-general UI state do not belong here.
+Services contain client adapters and stores for AI proxy calls, Supabase auth,
+billing, voice, active jobs, and wizard persistence. Environment-dependent SDK
+clients such as Supabase are initialized lazily; some stores are intentional
+module-scope instances. React components do not belong here.
 
 ## `geminiService.ts` is TUNED
 
@@ -29,7 +30,8 @@ that an edit is structural before touching this file.
   `@google/genai` into client code.
 - Preserve the 55-second client abort before Vercel's 60-second ceiling.
 - Preserve structured error metadata, including status/body and retry timing.
-- Expose lazy `getX()` accessors rather than import-time instances.
+- Initialize environment-dependent external clients lazily. Preserve existing
+  module-scope stores when they do not require import-time environment access.
 - Add shared types to `types.ts` and schema tests under `tests/unit/`.
 - Run `npm run build`, relevant tests, and `npm run check:bundle-leak` after
   applicable changes.

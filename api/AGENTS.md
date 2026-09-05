@@ -13,7 +13,8 @@ rate-limit, quota, billing, render, voice, and prompt infrastructure.
   without explicit approval for the exact diff.
 - Other `_lib/` contracts are load-bearing. Do not change auth, rate-limit, or
   quota function signatures/RPC names incidentally.
-- Every AI proxy authenticates with `verifySupabaseToken()` before the upstream
+- Client-facing AI proxies extract the bearer token and authenticate it with
+  `getUserFromAccessToken()` from `_lib/supabaseAdmin.ts` before the upstream
   call. Apply rate limiting before quota checks.
 - Server-only credentials must not use `VITE_` names or enter response bodies or
   client bundles.
@@ -23,7 +24,8 @@ rate-limit, quota, billing, render, voice, and prompt infrastructure.
   a 60-second platform ceiling; clients normally abort at 55 seconds.
 - Use `.js` extensions for TypeScript ESM imports.
 
-The five server-side prompt flows are registered in `gemini/flow.ts` and built
-in `_lib/prompts.ts`: `marketmind`, `adscript`, `offer-optimizer`,
+The five server-side prompt flows are registered and handled in
+`gemini/text.ts`, with prompt builders and parsers in `_lib/prompts.ts`:
+`marketmind`, `adscript`, `offer-optimizer`,
 `influencer-script`, and `storyboard`. After relevant structural work, run the
 build and `npm run check:bundle-leak`.

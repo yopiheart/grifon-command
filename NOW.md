@@ -15,7 +15,7 @@ offer, never type it** — a past run typed 113 of 153 chars and lost the first 
 login: `workflows/expert_manual_mode.md:440`.
 
 ## CODEX CLOUD BASELINE — implemented, dependency download blocked in this workspace
-Root/scoped `AGENTS.md`, the setup script/runbook, and `codex_migration_inventory.md` now define phase 1. Node 24.15.0/npm 11.4.2 added only the missing optional-peer `@types/react@19.2.18` lock record; no version changed. The 403 was an AGENT-phase request for `https://registry.npmjs.org/ink` rejected at the Envoy CONNECT boundary, not evidence that setup failed. Set `CODEX_ENV_NODE_VERSION=24` and run `npm ci` in the cloud Setup script; then start a new task and run the zero-cost verification block.
+Root/scoped `AGENTS.md`, the setup runbook, and `codex_migration_inventory.md` define phase 1. PR #124 review corrections now match the live API (`gemini/text.ts`, `getUserFromAccessToken`) and actual component/service ownership. Node 24.15.0/npm 11.4.2 added only the missing optional-peer lock record; no version changed. Set `CODEX_ENV_NODE_VERSION=24`, run `npm ci` in cloud Setup, then start a new task and run the zero-cost verification block; this task's agent-phase registry access remains blocked.
 ## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
 `SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
 for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really

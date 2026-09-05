@@ -23,7 +23,8 @@ in server handlers; browser code calls the `api/*` proxies.
 
 - `App.tsx` owns manual URL routing, auth state, wizard state, and dashboard
   module selection. There is no React Router or global state framework.
-- `components/` contains presentational UI and dashboard modules.
+- `components/` contains wizard UI and dashboard modules; several wizard steps
+  also own local state and existing generation calls.
 - `services/` contains lazy client-side service singletons and persistence.
 - `api/` contains Vercel handlers and server-only shared infrastructure.
 - `types.ts` is the shared type source; the main pipeline value is `AllData`.
