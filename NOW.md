@@ -1,10 +1,8 @@
 # NOW — the resume doc
-**Stamped: 2026-08-31** (session 42)
-
+**Stamped: 2026-09-05** (Codex Cloud migration phase 1)
 ## ▶ NEXT ACTION — produce the next sample
 
 Nothing to merge: `origin/main` is at `4f76359` and carries session 41 + 42 in full.
-
 The shipped `/samples/unboxing.*` is FINE — the wordmark came back on a regenerate in session 41
 and nothing since has touched it. So the next run is a free choice, not a rescue: re-run the same
 unboxing brand to add a second data point to the 🎲 (`bbbed45` still has a sample of one), or go
@@ -16,6 +14,8 @@ Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH pho
 offer, never type it** — a past run typed 113 of 153 chars and lost the first sentence. Smoke
 login: `workflows/expert_manual_mode.md:440`.
 
+## CODEX CLOUD BASELINE — implemented, dependency download blocked in this workspace
+Root/scoped `AGENTS.md`, the setup script/runbook, and `codex_migration_inventory.md` now define phase 1. Node 24.15.0/npm 11.4.2 added only the missing optional-peer `@types/react@19.2.18` lock record; no version changed. The 403 was an AGENT-phase request for `https://registry.npmjs.org/ink` rejected at the Envoy CONNECT boundary, not evidence that setup failed. Set `CODEX_ENV_NODE_VERSION=24` and run `npm ci` in the cloud Setup script; then start a new task and run the zero-cost verification block.
 ## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
 `SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
 for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
