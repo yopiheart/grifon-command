@@ -1,10 +1,8 @@
 # NOW — the resume doc
-**Stamped: 2026-08-31** (session 42)
-
+**Stamped: 2026-09-06** (Codex Cloud migration phase 1)
 ## ▶ NEXT ACTION — produce the next sample
 
 Nothing to merge: `origin/main` is at `4f76359` and carries session 41 + 42 in full.
-
 The shipped `/samples/unboxing.*` is FINE — the wordmark came back on a regenerate in session 41
 and nothing since has touched it. So the next run is a free choice, not a rescue: re-run the same
 unboxing brand to add a second data point to the 🎲 (`bbbed45` still has a sample of one), or go
@@ -16,6 +14,8 @@ Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH pho
 offer, never type it** — a past run typed 113 of 153 chars and lost the first sentence. Smoke
 login: `workflows/expert_manual_mode.md:440`.
 
+## CODEX CLOUD BASELINE — phase 1 and targeted dependency remediation verified
+PR #124 at `4ed8b1c` contains root/scoped `AGENTS.md`, the cloud setup/runbook and migration inventory; both API review findings are resolved. Clean cloud Setup verified Node 24.15.0/npm 11.4.2 and `npm ci` (720 packages, 21s); the Rolldown WASM lock record, closure and registry integrity are repaired. All seven targeted versions are installed and absent from the fresh audit: full findings fell 23 to 15 (9 high, 4 moderate, 2 low; all development tooling), production 4 to 0. Cloud build (2,589 modules), unit (111 files passed/9 skipped; 1,357 tests passed/32 skipped), bundle-leak (6 bundles), voice-sync, domain (290 files), artifact anchors and resume checks passed with clean git. GitHub verify, four browser smoke tests, artifacts and Vercel preview passed. Cloud browser tests could not launch: Chromium lacks `libatk-1.0.so.0`; no application assertions ran there. Legacy Claude Review still fails; skill/hook ports remain later work. Saved setup is full NVM+profile+`npm ci`, caching Off, agent internet Off. PR remains open and unmerged; Claude assets and tuned application content are retained.
 ## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
 `SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
 for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
