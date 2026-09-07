@@ -1,0 +1,12 @@
+[features]
+# Project hooks still require the user's trust review in Codex.
+hooks = true
+
+[mcp_servers.playwright]
+command = "cmd"
+args = [
+    "/c",
+    "npx",
+    "-y",
+    "@playwright/mcp@0.0.80",
+]

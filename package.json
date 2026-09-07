@@ -25,7 +25,9 @@
     "design:tailwind": "design.md export --format tailwind DESIGN.md > design.tokens.json",
     "design:spec": "design.md spec",
     "check:ps1-ascii": "node tools/check-ps1-ascii.mjs",
-    "check:artifact-anchors": "node tools/artifacts/check-anchors.mjs"
+    "check:artifact-anchors": "node tools/artifacts/check-anchors.mjs",
+    "check:codex": "node tools/check-codex-skills.mjs && node --test tools/check-codex-skills.test.mjs tools/codex-assets.test.mjs tools/codex-hooks.test.mjs tools/codex-readiness.test.mjs",
+    "codex:ready": "node tools/codex-readiness.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.46.0",

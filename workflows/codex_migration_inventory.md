@@ -1,4 +1,78 @@
-# Claude Code to Codex Cloud migration inventory
+# Claude Code to Codex migration inventory
+
+## Desktop capability map
+
+The current daily entry point is [codex_desktop.md](codex_desktop.md). This map
+describes available entry points and validation boundaries; current task state
+and remaining actions stay in `NOW.md`. The older phase-1 tables below are
+retained historical context, not current "Pending" verdicts.
+
+| Capability | Desktop implementation | Evidence boundary |
+|---|---|---|
+| Instructions and continuity | Root/scoped AGENTS.md; desktop runbook; Git branch/PR plus NOW.md | Files discovered; tracked controls travel with Git. Task state and auth do not. |
+| All 30 original skills | `.agents/skills`, preserved with platform/path adapters | Full structural inventory and negative tests pass; does not prove every skill's subjective output. |
+| Additional Zam skill | `.agents/skills/generate-zam-images` routes to original canonical workflow package | Canonical master and bundled references restored; no identity/prompt rewrite. |
+| Executor and smoke agents | `.codex/agents/*.toml`; inherited selected model | TOML parsed; independent migration review and browser smoke performed. |
+| Secret/tuned/ad/Veo guardrails | Native Node handler in `.codex/hooks/guard.mjs` | Protocol/Windows deny/allow/cap tests; trusted desktop runtime delivery verified on this PC, with harmless allowed/denied probes. Not every policy path. |
+| Startup, language, build and lock checks | Supported SessionStart/UserPromptSubmit/PreToolUse/Stop hooks | Stop checks build only; tests remain explicit. Startup cleanup is report-only. |
+| Browser tooling | Built-in browser tools or pinned Playwright MCP in project config | MCP initialize/tools-list passed; eight local Playwright tests passed. |
+| Image generation | Native image tool first; optional local CLI adapter | Entrypoint/path/CLI flag checks; no paid generation during migration. |
+| Video/ad editing and analysis | Existing tools/scripts and Gemini/FFmpeg/ElevenLabs workflows | Sources restored; bundled ffmpeg runs. Real media/provider calls need exact paid-test approval. |
+| Static/viral/funnel research and swipe files | Existing skills and committed workflow libraries | Instruction coverage restored; login/network/provider inputs remain task-specific. |
+| Growth and retargeting | Existing Python fixture/export entry points | Growth and segment fixture dry runs pass; no live account writes or roster upload. |
+| Artifacts | Local standalone HTML and existing builders/gates; publish only on explicit request | Anchor twin rebuild/check passed; other builders use the asset profile and separate funnel deps. |
+| Skills evaluation | Fresh-task manual Codex evaluation; existing aggregation/viewer/package tools | Old Claude subprocess trigger harness fails closed with an actionable message; no automatic trigger-parity claim. |
+| Review/CI | Independent Codex critic before merge approval plus existing CI and new check:codex | Legacy Claude reviewer retained behind explicit repository-variable opt-in; no Claude account needed for normal PRs. |
+| Cafe setup | `codex-cafe-start.ps1`, readiness, selective asset helper, portable Python option | Windows 5.1 checks and local runtime execution; no global config/secret copying. |
+
+Skill coverage (all retained): ad-recon, ai-editor, artifact-noir, brand-check,
+codex-executor, codex-image, director-smoke, eli5, fable-mode, funnel-autopsy,
+funnel-forge, gauntlet-loop, gemini-eval, grifon-ad-strategist, grifon-cmo,
+grifon-creative-director, grill-me, growth-debrief, img2threejs-lab,
+kuya-marvin-ads, marvin-avatar, retargeting-briefs, skill-creator, static-autopsy,
+straw-man-audit, surgical-edit, tldr, ubiquitous-language, verify-changes,
+viral-autopsy; plus the newly discoverable generate-zam-images alias.
+
+### Hook trust and limitations
+
+Codex does not support the old `permissionDecision: ask` response. The native
+gate denies a sensitive call and supplies `APPROVE CODEX HOOK <digest>` for the
+user to send after reviewing that exact action. Approval is single-use, bound
+to session/cwd/payload and expires in ten minutes. Tuned shell edits must be
+expressed as a literal patch. Live ad activation/budget changes remain user-run.
+Veo commands additionally require their nearby approved spec, passing preflight
+and remaining paid-roll cap. A denial is never permission to switch tools.
+
+On 2026-09-07, all five definitions at `438c651` were reviewed/trusted through
+normal Codex controls on this PC. Fresh desktop tasks confirmed SessionStart
+guard and report-only sweep launch, allowed/denied PreToolUse probes, Stop
+dispatch, and UserPromptSubmit from the actual desktop composer. Verification
+task: `01a07ac2-b795-7762-8c46-217f0fb1f539`; final prompt event at 08:00:26 UTC.
+This confirms runtime delivery at the tested scope, not every policy path.
+Other PCs still require review/trust; local approval/auth state is not committed.
+Hooks are not a security sandbox: hosted/specialized tools, write_stdin continuations,
+opaque connector names and indirect script behavior can fall outside matching;
+local approval state is not tamper-proof. Root policy applies everywhere.
+The eight old shell hook copies and original `.claude/` controls are retained;
+the native registration invokes only the supported Node adapter.
+
+### Sparse coverage
+
+Baseline HEAD had 2,565 tracked paths: 1,189 present and 1,376 sparse-excluded.
+Migration selectively restored 247 instruction/script/template inputs, the 44
+wizard files, Zam's missing anchors and 14 Marvin reference inputs. All other
+tracked paths remain inventoried by Git, including media intentionally omitted.
+Use `tools/codex-assets.mjs` profiles rather than deleting all exclusions.
+NOIR reference imagery, the large ad-swipe library, ad clips and per-artifact
+dependencies remain on-demand inputs. Root installation does not install
+funnel or Python workflow-specific dependencies.
+
+The checked dependency audit remained 15 development findings (9 high, 4 moderate,
+2 low), zero production findings. Existing install-script warnings did not block
+the tested Vite build, Sharp PNG render or ffmpeg executable. Broad remediation,
+prompt audits, duplicate cleanup and new product features are separate work.
+
+## Historical Cloud phase-1 inventory
 
 **Scope:** migration phase 1 inventory only. Existing Claude files and assets
 remain in place. Status meanings:

@@ -1,5 +1,10 @@
 # Cafe Session Runbook
 
+> **Legacy VS Code / Claude route.** For the current Codex desktop workflow use
+> [codex_desktop.md](codex_desktop.md) and `scripts/codex-cafe-start.ps1`.
+> This older route remains for compatibility; its Claude MCP restore scripts
+> do not configure Codex. Cloud is optional: [codex_cloud.md](codex_cloud.md).
+
 The SOP for renting a PC at a computer shop. The defreezer wipes
 `C:\Users\Administrator\` every night, so only the GitHub repo survives.
 

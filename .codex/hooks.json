@@ -1,0 +1,24 @@
+{
+  "description": "Windows-native Codex gates. Trust this project and these hooks in Codex before use; legacy .sh copies are inactive.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/guard.mjs\"",
+            "commandWindows": "powershell.exe -NoProfile -Command \"& node (Join-Path (git rev-parse --show-toplevel) '.codex/hooks/guard.mjs')\""
+          },
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/tools/ad_asset_sweep.mjs\" --quiet --report",
+            "commandWindows": "powershell.exe -NoProfile -Command \"& node (Join-Path (git rev-parse --show-toplevel) 'tools/ad_asset_sweep.mjs') --quiet --report\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [{ "hooks": [{ "type": "command", "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/guard.mjs\"", "commandWindows": "powershell.exe -NoProfile -Command \"& node (Join-Path (git rev-parse --show-toplevel) '.codex/hooks/guard.mjs')\"", "timeout": 300 }] }],
+    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/guard.mjs\"", "commandWindows": "powershell.exe -NoProfile -Command \"& node (Join-Path (git rev-parse --show-toplevel) '.codex/hooks/guard.mjs')\"" }] }],
+    "Stop": [{ "hooks": [{ "type": "command", "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/guard.mjs\"", "commandWindows": "powershell.exe -NoProfile -Command \"& node (Join-Path (git rev-parse --show-toplevel) '.codex/hooks/guard.mjs')\"", "timeout": 600 }] }]
+  }
+}
