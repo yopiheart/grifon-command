@@ -13,7 +13,7 @@ retained historical context, not current "Pending" verdicts.
 | All 30 original skills | `.agents/skills`, preserved with platform/path adapters | Full structural inventory and negative tests pass; does not prove every skill's subjective output. |
 | Additional Zam skill | `.agents/skills/generate-zam-images` routes to original canonical workflow package | Canonical master and bundled references restored; no identity/prompt rewrite. |
 | Executor and smoke agents | `.codex/agents/*.toml`; inherited selected model | TOML parsed; independent migration review and browser smoke performed. |
-| Secret/tuned/ad/Veo guardrails | Native Node handler in `.codex/hooks/guard.mjs` | Real-process protocol/Windows tests, deny/allow/cap tests; app trust/event delivery still a user check. |
+| Secret/tuned/ad/Veo guardrails | Native Node handler in `.codex/hooks/guard.mjs` | Protocol/Windows deny/allow/cap tests; trusted desktop runtime delivery verified on this PC, with harmless allowed/denied probes. Not every policy path. |
 | Startup, language, build and lock checks | Supported SessionStart/UserPromptSubmit/PreToolUse/Stop hooks | Stop checks build only; tests remain explicit. Startup cleanup is report-only. |
 | Browser tooling | Built-in browser tools or pinned Playwright MCP in project config | MCP initialize/tools-list passed; eight local Playwright tests passed. |
 | Image generation | Native image tool first; optional local CLI adapter | Entrypoint/path/CLI flag checks; no paid generation during migration. |
@@ -43,9 +43,14 @@ expressed as a literal patch. Live ad activation/budget changes remain user-run.
 Veo commands additionally require their nearby approved spec, passing preflight
 and remaining paid-roll cap. A denial is never permission to switch tools.
 
-The user must review/trust the project hook source in Codex; protocol tests
-cannot prove that a particular desktop task delivered the event. Hooks are
-not a security sandbox: hosted/specialized tools, write_stdin continuations,
+On 2026-09-07, all five definitions at `438c651` were reviewed/trusted through
+normal Codex controls on this PC. Fresh desktop tasks confirmed SessionStart
+guard and report-only sweep launch, allowed/denied PreToolUse probes, Stop
+dispatch, and UserPromptSubmit from the actual desktop composer. Verification
+task: `01a07ac2-b795-7762-8c46-217f0fb1f539`; final prompt event at 08:00:26 UTC.
+This confirms runtime delivery at the tested scope, not every policy path.
+Other PCs still require review/trust; local approval/auth state is not committed.
+Hooks are not a security sandbox: hosted/specialized tools, write_stdin continuations,
 opaque connector names and indirect script behavior can fall outside matching;
 local approval state is not tamper-proof. Root policy applies everywhere.
 The eight old shell hook copies and original `.claude/` controls are retained;

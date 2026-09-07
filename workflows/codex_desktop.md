@@ -44,8 +44,8 @@ node tools/codex-assets.mjs instructions --apply
 node tools/codex-assets.mjs wizard --apply
 ```
 
-Before this migration is merged, switch to its saved PR branch before running
-the new tools. Preserve a clone's existing sparse patterns: the asset helper
+Check PR #126's status: use its branch if still open, or current `main` once
+merged. Preserve a clone's existing sparse patterns: the asset helper
 adds exact tracked files, never replaces rules or restores non-sparse deletions.
 
 ## Controls and connections
@@ -56,6 +56,10 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
 - Review and trust the project configuration and hook source in Codex when
   prompted. Do not use `--dangerously-bypass-hook-trust`. A hook file on disk
   is not evidence that the running app trusted and executed it.
+  This PC passed fresh desktop delivery checks on 2026-09-07 at `438c651`:
+  SessionStart guard/sweep, allowed/denied PreToolUse probes, Stop dispatch,
+  and direct-composer UserPromptSubmit. This is not every-policy-path coverage;
+  each other PC still needs its own normal hook review/trust.
 - `.codex/config.toml` configures the optional Playwright MCP server using a
   pinned package. Built-in browser tools can also drive manual checks. The old
   `restore-playwright-mcp.ps1` writes Claude configuration and is unnecessary

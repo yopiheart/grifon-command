@@ -1,12 +1,13 @@
 # NOW - the resume doc
 **Stamped: 2026-09-07** (Codex desktop migration)
-## ▶ NEXT ACTION - review migration, then hands-on testing
+## ▶ NEXT ACTION - finish approved merge, then hands-on testing
 
 Branch: `codex/desktop-workflow-migration`, based on `main` at `32a09fd`.
-Draft PR: https://github.com/yopiheart/grifon-command/pull/126. Do not merge.
+PR: https://github.com/yopiheart/grifon-command/pull/126; merge approved after final checks.
+GitHub PR status is authoritative; after merge resume from current `main`.
 Daily entry point: `workflows/codex_desktop.md`; Cloud is optional.
 Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/codex-cafe-start.ps1 -CheckOnly`.
-Open this saved project in Codex; review/trust its project config and hooks.
+This PC's hooks are trusted; other PCs must review/trust their project hooks.
 Then `npm.cmd run dev`: inspect dashboard, One-Shot guide and shipped previews.
 User login and real paid generation are separate checks, not migration evidence.
 
@@ -32,12 +33,15 @@ User login and real paid generation are separate checks, not migration evidence.
 - Both agent TOMLs parsed; legacy Claude trigger-eval harness fails closed as intended.
 - Growth and segment fixture dry runs passed; no live data or roster uploads.
 - Independent review found and fixed startup deletion + subdirectory gate defects.
+- Fresh desktop tasks verified SessionStart guard/report-only sweep, allowed/denied
+  PreToolUse probes, Stop dispatch, and direct-composer UserPromptSubmit on 2026-09-07.
+  All five definitions were trusted normally at `438c651`; no bypass or source edits.
 - Audit: 15 development findings (9 high/4 moderate/2 low), production zero.
   Existing lifecycle warnings did not block verified build, Sharp or ffmpeg-static.
 
 ## Remaining checks and boundaries
-- Actual Codex desktop hook trust/event delivery must be confirmed in a fresh task.
-  Protocol tests passed; hooks are guardrails, not a complete security sandbox.
+- Runtime delivery passed at the tested scope; this is not every-policy-path coverage.
+  Trust is machine-specific. Hooks are guardrails, not a complete security sandbox.
 - Account-backed tools/providers, paid image/video/voice, and subjective skill output
   still need their own exact-input tests. No paid operation was run here.
 - NOIR/ad-swipe imagery, individual ad clips, funnel dependencies and task-specific
