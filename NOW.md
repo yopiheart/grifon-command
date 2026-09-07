@@ -3,7 +3,7 @@
 ## ▶ NEXT ACTION - review migration, then hands-on testing
 
 Branch: `codex/desktop-workflow-migration`, based on `main` at `32a09fd`.
-Draft PR: being prepared in this task; add its link after creation. Do not merge.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/126. Do not merge.
 Daily entry point: `workflows/codex_desktop.md`; Cloud is optional.
 Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/codex-cafe-start.ps1 -CheckOnly`.
 Open this saved project in Codex; review/trust its project config and hooks.
