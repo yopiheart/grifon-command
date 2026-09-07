@@ -636,6 +636,13 @@ export const buildAdScriptPrompt = (
         marks. Soft noticing ("ang linis ng gilid nito…"), never hype delivery.
       - The hook MAY be a pure sound instruction ("…listen.") — 2-4 words allowed,
         overriding the 5-8 word pattern.
+      - NAME ONLY A SOUND THIS PACKAGING CAN ACTUALLY MAKE. The texture examples in the
+        beats above (tape rip, foam lift, magnetic click) are a MENU, not an answer — do
+        NOT copy them literally. A lift-off lid box has no tape to rip; a pouch has no lid
+        to lift. When the brief does not settle what the closure is, name a sound ANY
+        container makes (the lid coming off, the wrap, the weight settling on wood) instead
+        of a fastener that may not exist. In ASMR the sound IS the product, so an invented
+        one is the one lie the viewer can hear.
       ` : ''}
       ` : sub === 'demo' ? `
       **DEMO 5-BEAT (bold claim first; the payoff stunt kills the mid-video dip):**
@@ -1590,10 +1597,48 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
            An overhead or locked-off framing variant is allowed — state it in the
            sceneDescription.
         ${businessInfo.asmrFlag ? `
-        **ASMR TREATMENT:** Every scene favors EXTREME tactile close-ups and a
-        locked-off or overhead camera. Hands and textures over faces. Describe surfaces
-        and materials concretely in the imagePrompt (matte foam, glossy seal, brushed
-        metal) — texture is the subject.
+        **ASMR TREATMENT (HARD OVERRIDE — outranks the S1-S4 framing above):**
+        - S1, S2 and S3 carry NO PERSON. Not seated, not standing, no torso, no face, no
+          gaze. The words "seated", "sitting", "smile", "looking at the camera" and
+          "creator in frame" are BANNED in those imagePrompts — the beats above ask for a
+          creator and here they do not get one. This is not a style note: those scenes
+          render with NO presenter reference attached, so any person named in the prompt is
+          INVENTED and comes back as a DIFFERENT face from the one in the final scene.
+        - EXACTLY ONE HAND, never two. Write "one hand"; the words "hands", "both hands"
+          and "two hands" are BANNED. This is geometry, not grammar: with no presenter
+          reference there is no body in the picture for a second hand to belong to, so it
+          renders as a free-floating one. "Both hands of one person" reads as one person to
+          you and as two loose hands to the model.
+        - PHYSICAL SUPPORT: describe the product either held by one complete, believable
+          hand grip with its weight supported by the palm/fingers, OR resting base-down on
+          a visible stable surface with a contact shadow. If a finger points at or touches
+          the label, the product MUST rest on the surface. Never describe a floating jar
+          or a pointing finger as its only support. Keep the real product proportions.
+        - LOCKED-OFF CAMERA, never overhead. A top-down view of a box shows its blank lid,
+          and the wordmark is not printed on the lid — the frame comes back unbranded and
+          reads as the wrong product. Shoot the packaging's PRINTED FACE straight on or at a
+          slight angle, close, with the wordmark inside the frame in every scene showing it.
+        - The LAST scene is the spoken CTA and is the ONLY scene that keeps the creator.
+        - Every scene favors EXTREME tactile close-ups. Describe surfaces and materials
+          concretely in the imagePrompt (matte foam, glossy seal, brushed metal) — texture is
+          the subject, but never at the cost of the wordmark leaving the frame.
+        - PRODUCT-ONLY TACTILE SHOTS STAY CLOSE. Frame the packaging or product closely
+          enough for its wordmark and texture to read; use camera position and composition,
+          never an enlarged or reshaped object. The room is not the subject.
+          The presenter CTA keeps both the face and the supported product visible without
+          a minimum product share of the frame. Preserve the product's apparent physical
+          size relative to the reference hand/grip and surrounding objects.
+        - THE S2 FRAME PAIR ENDS ON THE PRODUCT ALONE. START = the closed packaging, one hand
+          on it. END = the PRODUCT ITSELF, by name and in its real colour, held or standing in
+          the SAME spot the packaging occupied, at the SAME camera distance. The packaging has
+          been SET ASIDE and is out of frame or barely at the edge — name that movement in the
+          endFramePrompt ("the box moved aside", "the box now out of frame") so it reads as
+          being put down rather than vanishing.
+        - Why the END frame carries ONE object and not two: nothing downstream ever inspects
+          this still, so it gets no second chance. Two objects force the camera back to fit
+          them, which shrinks the packaging on screen mid-shot, and they cost the product half
+          its reference resolution. One object, close, is the only version of this frame that
+          cannot go wrong.
         ` : ''}
         ` : ugcSub === 'demo' ? `
         **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Demo / Addiction)**
