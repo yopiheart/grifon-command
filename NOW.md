@@ -1,10 +1,11 @@
 # NOW - the resume doc
 **Stamped: 2026-09-07** (Codex desktop migration)
-## ▶ NEXT ACTION - finish approved merge, then hands-on testing
+## ▶ NEXT ACTION - hands-on testing on main
 
-Branch: `codex/desktop-workflow-migration`, based on `main` at `32a09fd`.
-PR: https://github.com/yopiheart/grifon-command/pull/126; merge approved after final checks.
-GitHub PR status is authoritative; after merge resume from current `main`.
+PR: https://github.com/yopiheart/grifon-command/pull/126 merged on 2026-09-07.
+Merge commit: `1ef6d4f`; local `main` was safely fast-forwarded to it.
+Final PR head `6156b38` passed verify, e2e, artifacts and automatic preview checks.
+Original snapshot bytes and user lock file preserved; migration branch retained.
 Daily entry point: `workflows/codex_desktop.md`; Cloud is optional.
 Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/codex-cafe-start.ps1 -CheckOnly`.
 This PC's hooks are trusted; other PCs must review/trust their project hooks.
