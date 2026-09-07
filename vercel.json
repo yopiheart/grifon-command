@@ -18,6 +18,7 @@
     { "path": "/api/cron/cleanup-gemini-videos", "schedule": "0 3 * * *" }
   ],
   "rewrites": [
+    { "source": "/design-review", "destination": "/design-review.html" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
