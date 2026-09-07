@@ -55,11 +55,11 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
       >
         <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
-          <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Everything</span>{' '}
-          YOU NEED. NOTHING YOU DON'T.
+          One studio.{' '}
+          <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Every step.</span>
         </h2>
         <p className={`text-zinc-400 ${MEASURE} text-base mt-4`}>
-          Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time. Hindi lang sinasabi — ipinapakita.
+          Move from research to creative in one place. Explore the tools behind your next ad.
         </p>
       </motion.div>
 

@@ -1,21 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Aurora } from './ui/Aurora';
+import { MotionConfig } from 'motion/react';
+import { LandingAtmosphere } from './landing/LandingAtmosphere';
+import './landing/landing.css';
 import { SiteHeader, type SiteNavLink } from './ui/SiteHeader';
-import { UrgencyBar } from './ui/UrgencyBar';
-import { ExitIntentModal } from './ui/ExitIntentModal';
-import { useExitIntent } from './ui/useExitIntent';
-import { Marquee } from './landing/Marquee';
 import { PinnedCtaPill } from './landing/PinnedCtaPill';
 import { VerticalPickerModal } from './landing/VerticalPickerModal';
 import { setIntendedVertical } from '../services/verticalIntentService';
 import { trackEvent } from '../services/analyticsService';
 import { Hero } from './landing/sections/Hero';
-import { ProofGallery } from './landing/sections/ProofGallery';
 import { ProofBand } from './landing/sections/ProofBand';
 import { ReceiptsRail } from './landing/sections/ReceiptsRail';
 import { Modules } from './landing/sections/Modules';
-import { StackReplace } from './landing/sections/StackReplace';
-import { RoiMetrics } from './landing/sections/RoiMetrics';
 import { OfferStack } from './landing/sections/OfferStack';
 import { TrustFaq } from './landing/sections/TrustFaq';
 import { LandingFooter } from './landing/sections/LandingFooter';
@@ -53,14 +48,6 @@ const markVerticalDecided = () => {
 };
 
 const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal, isAuthenticated = false }) => {
-  // Desktop-only exit-intent recapture — once/session, never for logged-in
-  // visitors. Decoupled from FOUNDING_OFFER.enabled (2026-07-29): the modal is
-  // a free-trial pitch that stands without the founding urgency row, so a dead
-  // promo must not kill the recapture.
-  const { triggered: exitTriggered, dismiss: dismissExit } = useExitIntent({
-    enabled: !isAuthenticated,
-  });
-
   const heroSentinelRef = useRef<HTMLDivElement>(null);
   const offerStackRef = useRef<HTMLElement>(null);
   // Trust/FAQ/footer zone has its own CTAs (Viber, login, footer links) — pill stays out of it.
@@ -137,29 +124,19 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-clip selection:bg-[#FFCC00] selection:text-black">
-
-      <ExitIntentModal triggered={exitTriggered} onDismiss={dismissExit} onEnterApp={onEnterApp} />
+    <MotionConfig reducedMotion="user">
+    <div className="landing-page min-h-screen bg-zinc-950 text-white font-sans overflow-x-clip selection:bg-[#FFCC00] selection:text-black">
+      <a href="#how-it-works" className="landing-skip">Skip introduction</a>
 
       <VerticalPickerModal open={askVertical} onPick={handlePickVertical} onSkip={handleSkipVertical} />
 
-      <Aurora intensity="marketing" />
+      <LandingAtmosphere />
 
-      {/* STICKY TOP — founding urgency bar + nav */}
-      <div className="sticky top-0 z-50">
-        <UrgencyBar />
+      <div className="landing-nav sticky top-0 z-50">
         <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} showLogin activeHref={activeHref} />
       </div>
 
       <Hero onEnterApp={enterAppWithSegmentation} heroSentinelRef={heroSentinelRef} />
-
-      <Marquee
-        items={['Scripts', 'CAPTIONS', 'Storyboards', 'MARKET RESEARCH', 'Image Ads', 'OFFERS']}
-        duration={32}
-        className="relative z-10 bg-zinc-950/60"
-      />
-
-      <ProofGallery />
 
       <ProofBand />
 
@@ -168,17 +145,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       </div>
 
       <Modules onEnterApp={onEnterApp} />
-
-      <StackReplace />
-
-      <RoiMetrics />
-
-      <Marquee
-        items={['30 minutes', 'NOT 3 DAYS', 'FROM ₱997/MO', 'BUILT FOR FILIPINO BUSINESSES']}
-        duration={26}
-        reverse
-        className="relative z-10 bg-zinc-950/60"
-      />
 
       <OfferStack onNavigatePricing={onNavigatePricing} sectionRef={offerStackRef} />
 
@@ -197,6 +163,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
         hideRefs={[railZoneRef, offerStackRef, bottomZoneRef]}
       />
     </div>
+    </MotionConfig>
   );
 };
 

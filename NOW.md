@@ -1,69 +1,65 @@
-# NOW - the resume doc
-**Stamped: 2026-09-07** (Codex desktop migration)
-## ▶ NEXT ACTION - hands-on testing on main
+﻿# NOW - the resume doc
+**Stamped: 2026-09-07** (landing implementation)
 
-PR: https://github.com/yopiheart/grifon-command/pull/126 merged on 2026-09-07.
-Merge commit: `1ef6d4f`; local `main` was safely fast-forwarded to it.
-Final PR head `6156b38` passed verify, e2e, artifacts and automatic preview checks.
-Original snapshot bytes and user lock file preserved; migration branch retained.
-Daily entry point: `workflows/codex_desktop.md`; Cloud is optional.
-Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/codex-cafe-start.ps1 -CheckOnly`.
-This PC's hooks are trusted; other PCs must review/trust their project hooks.
-Then `npm.cmd run dev`: inspect dashboard, One-Shot guide and shipped previews.
-User login and real paid generation are separate checks, not migration evidence.
+## Next action
+Push `codex/landing-reveal`, keep a draft PR, and confirm its Vercel Preview.
+Review the real landing page at the deployment root on mobile.
+The user approved landing implementation and recurring preview deployment.
+Production merge is not requested. Independent review is required before merge.
+Hero film stays blank until its story and assets are approved.
 
-## Migration delivered
-- Preserved the original Claude controls and all 65 pre-existing local port files.
-- Repaired 30 skill ports, added Zam alias; 31 entrypoints, zero structural errors.
-- Native hook adapter uses supported deny/approval semantics and Windows launchers.
-- Exact subdirectory tuned edits now protected; startup cleanup is report-only.
-- Optional Playwright MCP pinned to 0.0.80; initialize + 24-tool discovery passed.
-- Desktop starter/readiness and selective asset profiles added; no bulk media clone.
-- Restored hidden instructions/templates, 44 wizard inputs, Zam and Marvin references.
-- Official portable Python 3.12.8 + pip works after MSI package-cache failure.
-  Restore: `scripts/restore-python.ps1 -Portable`; executable under `.tools`.
-- Normal PRs use CI + independent Codex review. Claude review is legacy opt-in.
-- Inventory and limitations: `workflows/codex_migration_inventory.md`.
+## Delivered in this branch
+- Real React landing: editorial hero, native scroll film reveal, gold headline
+  light sweep, pointer-responsive atmosphere, button sheen and section entrances.
+- Static reduced-motion hero; hidden hero controls leave keyboard focus order.
+- Three-step workflow, quieter Pro invitation, keyboard-operable animated FAQ,
+  revised closing CTA, and working refund/support footer links.
+- Preserved signup segmentation, module intent, header, testimonial rail and demos.
+- Removed repeated urgency/exit prompts, illustrative "real campaign" proof and
+  repetitive value/ROI sections from the page composition. Source files remain.
+- Removed unsupported online-presence copy from the FAQ.
+- Typography/CSS scoped to the landing; DESIGN.md records the approved direction.
+- No changes to App routing, authentication, checkout, dashboard or tuned content.
 
-## Verified locally
-- Build passed: 2,589 modules. Unit: 111 files / 1,357 tests passed; 32 expected skips.
-- Migration contracts: 26 passed, including Windows hook launcher and negative cases.
-- Browser: 8/8 passed: public routes, API 405/401, 23 real PNGs, two MP4 previews,
-  and mobile 390x844 mount. Full-page visual fidelity was not comprehensively graded.
-- Bundle leak, voice sync, domain language, artifact anchors, PS ASCII and design lint passed.
-- Both agent TOMLs parsed; legacy Claude trigger-eval harness fails closed as intended.
-- Growth and segment fixture dry runs passed; no live data or roster uploads.
-- Independent review found and fixed startup deletion + subdirectory gate defects.
-- Fresh desktop tasks verified SessionStart guard/report-only sweep, allowed/denied
-  PreToolUse probes, Stop dispatch, and direct-composer UserPromptSubmit on 2026-09-07.
-  All five definitions were trusted normally at `438c651`; no bypass or source edits.
-- Audit: 15 development findings (9 high/4 moderate/2 low), production zero.
-  Existing lifecycle warnings did not block verified build, Sharp or ffmpeg-static.
+## Verification
+- TypeScript/Vite build passed (2,584 modules); main JS gzip 593.36 kB.
+- 111 unit files / 1,357 tests passed; 9 files / 32 tests skipped.
+- 11 browser tests passed: public routes, shipped media and API guards, desktop
+  wheel reveal, mobile film reveal/reverse, segmentation-to-login, preserved
+  module intent, keyboard FAQ, reduced-motion layout and pricing navigation.
+- New browser assertion caught a native ViewTimeline opacity mismatch; it failed
+  before the measured-progress fix and passed after it.
+- Screenshots inspected: desktop/mobile hero, blank film, workflow, plan and FAQ.
+- Additional 320x568 and 844x390 checks: CTA stays in view, no horizontal overflow.
+- Bundle leak, voice sync, domain language, artifact anchors and PS ASCII passed.
+- Design lint passed via its explicit Node entry point (zero errors/warnings).
+  The npm shorthand resolves DESIGN.md as a Windows document here and was stopped.
+- Checks used dummy auth configuration; no live auth, payment or paid generation.
+- Existing Motion scroll-container warning and dummy telemetry setup noise remain.
+- Existing main checkout snapshot edit preserved; do not stage generated snapshot
+  or Word lock files from this worktree.
+- GitHub/Vercel deployment status is checked after push; draft PR carries its link.
 
-## Remaining checks and boundaries
-- Runtime delivery passed at the tested scope; this is not every-policy-path coverage.
-  Trust is machine-specific. Hooks are guardrails, not a complete security sandbox.
-- Account-backed tools/providers, paid image/video/voice, and subjective skill output
-  still need their own exact-input tests. No paid operation was run here.
-- NOIR/ad-swipe imagery, individual ad clips, funnel dependencies and task-specific
-  Python packages remain on-demand. Use the owning asset profile before testing.
-- Automatic Claude trigger-eval is retained but gated; use manual Codex evaluation.
-- GitHub branch-rules API returned 403 (plan limitation); no remote rules changed.
-- Broad prompt audits, duplicate cleanup and general quality backlog are deferred.
+## Related work
+Standalone prototype: PR #128, branch `codex/design-review-vercel`,
+commit `eea5934`, at /design-review on its Vercel preview. Auth/payment there are
+simulated. This branch implements landing only in the actual application.
+Next design phases: real pricing/auth/checkout, then dashboard and loading states.
 
-## Product work preserved for later
-- Finish One-Shot / Director preview formats: `workflows/sample_brand_briefs.md`.
-  Existing Real Talk and Unboxing previews are present; Silid Home is an option.
-  Approve exact assets, format, evidence and cost before any generation.
-- Inspiration/ad recreation (user character/location/clothing/animation/effects)
-  and website improvements are future product tasks, not implemented by migration.
-- Pending tuned approvals: CONTINUITY_LOCK vs STRICT_NEGATIVE; missing pinned claim;
-  route objectionToUs/bigIdea/deepFear/statusUpgrade into the script stage.
-- Carried defects: garbled label sub-line; framing drift; oversized inline images;
-  duplicated scene prompt cap; box/punit mismatch; missing script gate; scene refusal
-  recovery; false ProofGallery claim; quota race and paid-but-uncollected fan-out.
-- Avatar persistence and refused-morph holds were unit-fixed, not render-verified.
-  The role-based SHEET_NOTE hardening remains a sample-of-one quality finding.
-- No changes to tuned product content, models, paid switches, production data or deploys.
+## Existing migration and deferred work
+Baseline main: `0121111`; migration PR #126 merged. Daily entry:
+`workflows/codex_desktop.md`; see `workflows/codex_migration_inventory.md`.
+Hook trust is PC-specific; never restore credentials by reading/copying values.
+Assets, funnel dependencies and account connections stay on-demand.
+Portable Python: .tools/python-3.12.8/tools/python.exe on the main checkout.
+Paid generation still needs an exact-input maximum-cost approved test spec.
+One-Shot / Director sample work: workflows/sample_brand_briefs.md.
+Pending tuned approvals: CONTINUITY_LOCK vs STRICT_NEGATIVE; missing pinned
+claim; route objectionToUs/bigIdea/deepFear/statusUpgrade into the script stage.
+Carried defects: garbled sub-line, framing drift, oversized inline images,
+duplicated prompt cap, box/punit mismatch, missing script gate, scene refusal
+recovery, quota race and paid-but-uncollected fan-out.
+Avatar/refused-morph holds are unit-fixed, not render-verified.
+No production merge, provider execution, campaign operation or data change.
 
-### Maintain: overwrite, never append; maximum 90 lines. GitHub is durable continuity.
+Maintain: overwrite, maximum 90 lines. GitHub is durable continuity.
