@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
+import { FREE_PLAN_CTA, CTA_REASSURANCE } from '../microcopy';
 
 interface HeroProps {
   onEnterApp: () => void;
@@ -69,24 +70,24 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
         <motion.div ref={copyRef} className="landing-hero-copy"
           aria-hidden={!reduce && copyHidden ? true : undefined}
           style={reduce ? undefined : { opacity: copyOpacity, y: copyY, scale: copyScale }}>
-          <p className="landing-eyebrow"><span className="landing-signal" /> The AI ad studio for Filipino businesses</p>
+          <p className="landing-eyebrow"><span className="landing-signal" /> For Filipino business owners doing their own marketing</p>
           <h1 id="landing-headline" className="landing-headline">
             <span>Your next ad.</span>
             <span className="font-serif italic normal-case tracking-normal landing-gold-type">Made to move.</span>
           </h1>
           <p className="landing-hero-description">
-            From a business idea to a finished video ad.{' '}<br className="hidden sm:block" />
-            Research, script, scenes, and captions. All in Grifon.
+            Running the business and making the ads? Grifon helps turn what you sell into video ads, with AI research, scripts, and scenes in one place.
           </p>
           <div className="landing-hero-actions">
             <GoldButton glossy onClick={onEnterApp} className="landing-primary">
-              <span>Start my first ad <ArrowUpRight size={18} aria-hidden="true" /></span>
+              <span>{FREE_PLAN_CTA} <ArrowUpRight size={18} aria-hidden="true" /></span>
             </GoldButton>
             <a href="#hero-film" onClick={revealFilm} className="landing-reveal-link">
               Explore the story <ArrowDown size={16} aria-hidden="true" />
             </a>
           </div>
-          <p className="landing-reassurance">Free to preview <span aria-hidden="true">·</span> No card needed</p>
+          <p className="landing-reassurance">{CTA_REASSURANCE}</p>
+          <p className="landing-paid-note">Finished video ads require a paid plan.</p>
         </motion.div>
         <motion.figure className="landing-film-wrap" style={reduce ? undefined : { y: filmY, scale: filmScale }}>
           <motion.div ref={filmRef} id="hero-film" className="landing-film"

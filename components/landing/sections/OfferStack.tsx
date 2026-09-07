@@ -17,15 +17,15 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
       viewport={{ once: true }} transition={{ duration: DUR.entrance, ease: EASE.expressive }}>
       <GlassPanel className="landing-plan-panel p-0">
         <div>
-          <p className="landing-eyebrow">A little idea. Room to grow.</p>
-          <h2 className="landing-section-title">Find your<br /><span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">next chapter.</span></h2>
-          <p className="landing-plan-description">Preview your first ad plan for free. Choose the production capacity that fits your business when you are ready to create more.</p>
+          <p className="landing-eyebrow">Start with a plan. Pay for production.</p>
+          <h2 className="landing-section-title">Start small.<br /><span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Create more.</span></h2>
+          <p className="landing-plan-description">Preview your first ad plan for free. Starter includes one finished video ad a month. Choose Pro when you need a regular flow of creative and more editing control.</p>
           <GoldButton glossy onClick={onNavigatePricing} className="landing-primary">
-            <span>Explore the plans <ArrowUpRight size={18} aria-hidden="true" /></span>
+            <span>Compare the plans <ArrowUpRight size={18} aria-hidden="true" /></span>
           </GoldButton>
         </div>
         <div className="landing-plan-detail">
-          <p className="landing-eyebrow">For a regular content rhythm</p>
+          <p className="landing-eyebrow">For owners creating ads regularly</p>
           <p className="landing-plan-name">Grifon Pro</p>
           <p className="landing-plan-price">{PRO_PRICE_LABEL}</p>
           <ul>

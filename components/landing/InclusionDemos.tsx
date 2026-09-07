@@ -90,7 +90,7 @@ export const ResearchDemo: React.FC = () => {
 /* ── Offer Optimizer — line items check in, building a price ── */
 export const OfferDemo: React.FC = () => {
   const reduce = useReducedMotion();
-  const rows = ['Bonus stack', 'Scarcity', 'Guarantee'];
+  const rows = ['Your buyer', 'Your value', 'Your offer'];
   return (
     <div className={DEMO_BOX}>
       <div className="absolute inset-0 p-3 flex flex-col justify-center gap-2">
@@ -113,8 +113,8 @@ export const OfferDemo: React.FC = () => {
           </motion.div>
         ))}
         <div className="mt-1 flex items-baseline gap-2">
-          <span className="text-[10px] text-on-surface-sublabel line-through font-mono">₱30,000</span>
-          <span className="text-[#FFCC00] font-bold font-mono text-sm">₱997</span>
+          <span className="text-[10px] text-on-surface-sublabel font-mono">The goal</span>
+          <span className="text-[#FFCC00] font-bold font-mono text-sm">A clearer offer</span>
         </div>
       </div>
     </div>
@@ -123,9 +123,9 @@ export const OfferDemo: React.FC = () => {
 
 /* ── Caption & Headline — headlines cycle with a blinking cursor ── */
 const HEADLINES = [
-  'Stop scrolling. Start selling.',
-  'Your ad, done in 30 minutes.',
-  'Hooks na talagang kumikita.',
+  'A closer look at what we make.',
+  'See what makes it different.',
+  'Find the right fit for you.',
 ];
 export const CaptionDemo: React.FC = () => {
   const reduce = useReducedMotion();

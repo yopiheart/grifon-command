@@ -40,6 +40,7 @@ body:has(.landing-page) > .flashlight { display:none; }
 .landing-reveal-link:hover,.landing-text-link:hover { color:#ffcc00; }
 .landing-reassurance { margin-top:18px; display:flex; align-items:center; gap:10px; font-size:11px; color:#a1a1aa; }
 .landing-reassurance span { color:#ffcc00; }
+.landing-paid-note { margin-top:5px; color:#a1a1aa; font-size:11px; }
 .landing-film-wrap { position:absolute; width:min(calc(100% - 64px),1160px); top:50%; left:0; right:0; margin:auto; translate:0 -50%; z-index:1; }
 .landing-film { aspect-ratio:16/9; max-height:calc(100svh - 180px); width:100%; border:1px solid #ffffff1f; border-radius:32px; background:#101012; box-shadow:0 1px 0 #ffffff06 inset; }
 .landing-film-wrap figcaption { display:flex; justify-content:space-between; gap:16px; margin-top:14px; color:#a1a1aa; font:400 9px/1.5 'JetBrains Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
@@ -91,12 +92,13 @@ body:has(.landing-page) > .flashlight { display:none; }
   .landing-hero { height:165svh; }
   .landing-hero-stage { min-height:480px; }
   .landing-hero-copy { padding:0 20px 70px; }
-  .landing-hero-copy .landing-eyebrow { max-width:300px; font-size:8px; letter-spacing:.13em; margin-bottom:25px; }
+  .landing-hero-copy .landing-eyebrow { max-width:310px; font-size:10px; letter-spacing:.08em; margin-bottom:22px; }
   .landing-page .landing-headline { font-size:clamp(47px,12.8vw,86px); }
   .landing-hero-description { font-size:14px; margin-top:26px; max-width:310px; }
   .landing-hero-actions { flex-direction:column; gap:9px; margin-top:26px; width:100%; }
   .landing-hero-actions .landing-primary { width:min(100%,320px); }
   .landing-reassurance { margin-top:6px; font-size:10px; }
+  .landing-paid-note { font-size:10px; }
   .landing-film-wrap { width:calc(100% - 32px); }
   .landing-film-wrap figcaption { font-size:8px; letter-spacing:.05em; gap:10px; }
   .landing-process { padding-block:70px 25px; }

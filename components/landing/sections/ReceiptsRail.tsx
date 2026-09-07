@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
 import { Star, ArrowRight, Building2, UtensilsCrossed, ShoppingBag, ChevronsRight } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
+import { FREE_PLAN_CTA } from '../microcopy';
 import { SignatureScribble } from '../SignatureScribble';
 import { BAND } from '../../ui/layoutTokens';
 
@@ -49,12 +50,11 @@ const QUOTES = [
 ];
 
 // Clearly-labeled sample-ad receipts — illustrative sample creative, never user
-// testimony and never campaign data. The stat states only the defensible
-// product-speed claim (~30-min build), not fabricated ROAS.
+// testimony, generated outputs, timing evidence or campaign data.
 const SAMPLES = [
-  { label: 'REAL ESTATE', icon: Building2, hook: 'YOUR DREAM CONDO.', accent: 'Closer than you think.', stat: 'COMPLETE AD · ~30 MIN' },
-  { label: 'F&B', icon: UtensilsCrossed, hook: 'LUTONG BAHAY.', accent: 'Delivered in 30.', stat: 'COMPLETE AD · ~30 MIN' },
-  { label: 'E-COMMERCE', icon: ShoppingBag, hook: 'BIG SALE.', accent: 'Ends tonight.', stat: 'COMPLETE AD · ~30 MIN' },
+  { label: 'REAL ESTATE', icon: Building2, hook: 'YOUR DREAM CONDO.', accent: 'Closer than you think.', stat: 'ILLUSTRATIVE CONCEPT' },
+  { label: 'F&B', icon: UtensilsCrossed, hook: 'LUTONG BAHAY.', accent: 'Delivered in 30.', stat: 'ILLUSTRATIVE CONCEPT' },
+  { label: 'E-COMMERCE', icon: ShoppingBag, hook: 'BIG SALE.', accent: 'Ends tonight.', stat: 'ILLUSTRATIVE CONCEPT' },
 ];
 
 // Interleave: quote, sample, quote, sample... then the reserved CTA card.
@@ -115,8 +115,8 @@ const RailCards: React.FC<{ onEnterApp: () => void; snap?: boolean }> = ({ onEnt
                 </span>
               </div>
             </div>
-            <div className="mt-6 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-              Made with Director AI
+            <div className="mt-6 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
+              Example layout, not a customer campaign
             </div>
             <div className="mt-3 inline-flex w-fit items-center rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10 px-3 py-1.5 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
               {card.data.stat}
@@ -133,11 +133,11 @@ const RailCards: React.FC<{ onEnterApp: () => void; snap?: boolean }> = ({ onEnt
         </p>
         <div className="mt-6">
           <GoldButton glossy onClick={onEnterApp} className="w-full px-8 py-3.5 text-sm">
-            START MY FIRST AD — FREE
+            {FREE_PLAN_CTA}
             <ArrowRight className="ml-2 inline h-4 w-4" />
           </GoldButton>
           <p className="mt-3 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-            ₱0 today · no card needed
+            Free ad plan · video creation is paid
           </p>
         </div>
       </figure>
@@ -286,7 +286,7 @@ export const ReceiptsRail: React.FC<ReceiptsRailProps> = ({ onEnterApp }) => {
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           {label}
           <h2 className="text-3xl font-bold uppercase tracking-tight text-zinc-900 md:text-5xl">
-            TRUSTED BY FILIPINO BUSINESS OWNERS
+            From owners doing the marketing, too.
           </h2>
         </div>
         <div
@@ -328,7 +328,7 @@ export const ReceiptsRail: React.FC<ReceiptsRailProps> = ({ onEnterApp }) => {
             <div>
               {label}
               <motion.h2 style={{ color: headingColor }} className="text-3xl font-bold uppercase tracking-tight md:text-5xl">
-                TRUSTED BY FILIPINO BUSINESS OWNERS
+                From owners doing the marketing, too.
               </motion.h2>
             </div>
             <div className="flex items-center gap-3 pb-1">

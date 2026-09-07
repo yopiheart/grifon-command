@@ -133,7 +133,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       <LandingAtmosphere />
 
       <div className="landing-nav sticky top-0 z-50">
-        <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} showLogin activeHref={activeHref} />
+        <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} showLogin ctaLabel="Try it free" activeHref={activeHref} />
       </div>
 
       <Hero onEnterApp={enterAppWithSegmentation} heroSentinelRef={heroSentinelRef} />

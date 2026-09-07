@@ -34,9 +34,9 @@ test('mobile hero reveals the blank film through native scroll and restores its 
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await expect.poll(() => copy.evaluate(el => el.inert)).toBe(false);
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await hero.getByRole('button', { name: 'Start my first ad' }).click();
-  await expect(page.getByRole('dialog', { name: 'Anong business mo?' })).toBeVisible();
-  await page.getByRole('button', { name: 'Skip muna' }).click();
+  await hero.getByRole('button', { name: 'Build my free ad plan' }).click();
+  await expect(page.getByRole('dialog', { name: 'What do you sell?' })).toBeVisible();
+  await page.getByRole('button', { name: 'Skip for now' }).click();
   await expect(page).toHaveURL(/\/login/);
 });
 
@@ -53,7 +53,7 @@ test('reduced-motion landing keeps the hero readable and FAQ works with a keyboa
   await expect(page.getByRole('button', { name: 'Do I need design or editing experience?' })).toHaveAttribute('aria-expanded', 'false');
   await page.keyboard.press('Space');
   await expect(question).toHaveAttribute('aria-expanded', 'false');
-  await page.getByRole('button', { name: 'Explore the plans' }).click();
+  await page.getByRole('button', { name: 'Compare the plans' }).click();
   await expect(page).toHaveURL(/\/pricing/);
   await expect(page.getByText('Starter', { exact: true }).first()).toBeVisible();
 });

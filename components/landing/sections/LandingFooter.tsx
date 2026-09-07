@@ -6,6 +6,7 @@ import { CONTACT } from '../../../config/contact';
 import { Marquee } from '../Marquee';
 import { SignatureScribble } from '../SignatureScribble';
 import { GoldButton } from '../../ui/GoldButton';
+import { FREE_PLAN_CTA } from '../microcopy';
 import { FacebookIcon, InstagramIcon, TikTokIcon, ViberIcon } from '../SocialIcons';
 
 type LegalRoute = 'terms' | 'privacy' | 'refund' | 'support';
@@ -75,7 +76,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
               itself would cheapen the realism that sells it. */}
           <div className="relative z-10 mt-10 flex justify-center md:mt-12">
             <GoldButton glossy onClick={onEnterApp} className="landing-primary">
-              <span>Start my first ad <ArrowRight className="inline h-4 w-4" aria-hidden="true" /></span>
+              <span>{FREE_PLAN_CTA} <ArrowRight className="inline h-4 w-4" aria-hidden="true" /></span>
             </GoldButton>
           </div>
           <div className="relative">

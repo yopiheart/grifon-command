@@ -5,10 +5,13 @@ import { CONTACT } from '../../../config/contact';
 import { DUR, EASE } from '../../ui/motionTokens';
 
 const FAQS = [
+  { q: 'Is Grifon for my business?', a: 'Grifon is built for business owners who already sell a product, service, or property and need help making ads. It is a good starting point when you handle your own marketing or work with a small team.' },
   { q: 'Do I need design or editing experience?', a: 'You can start with a description of your business. Grifon guides you through the ad plan, script, scenes, and creative. You review the work as you go.' },
-  { q: 'What can I try for free?', a: 'The Free plan includes one complete ad plan per month, available to preview. Creating and downloading a finished video ad requires a paid plan.' },
+  { q: 'What can I try for free?', a: 'The Free plan includes one complete ad plan per month: research, a script, and a storyboard to review. No card is needed to start. Finished video creation is not included in Free; choose a paid plan when you are ready.' },
   { q: 'How many video ads can I create?', a: 'Starter includes one finished video ad per month, Pro includes eight, and Business includes fifteen. Each plan also has its own workflow and tool limits. The pricing page lists the full breakdown.' },
   { q: 'Can I control the creative direction?', a: 'Start with the guided One-Shot Ad workflow, or use Director mode on Pro for more control over the script, storyboard, and scenes.' },
+  { q: 'Will the ad fit my business?', a: 'Your product details, offer, and audience shape the result. Review the script and scenes for accuracy and fit before publishing. Start with the free ad plan to judge the direction for yourself.' },
+  { q: 'Does Grifon publish or run my ads?', a: 'This workflow helps you plan and create the ad. You review and download the finished creative, then publish it or run it through your own advertising account. Ad spend is separate from your Grifon plan.' },
   { q: 'What if it is not right for my business?', a: 'Paid plans include a 7-day money-back guarantee. Review the refund policy for the terms, or contact our team if you need help choosing a plan.' },
 ];
 
@@ -20,7 +23,7 @@ export const TrustFaq: React.FC = () => {
         viewport={{ once: true }} transition={{ duration: DUR.entrance, ease: EASE.expressive }}
         className="landing-faq-layout">
         <div className="landing-faq-intro">
-          <p className="landing-eyebrow">Before your first ad</p>
+          <p className="landing-eyebrow">Before you get started</p>
           <h2 className="landing-section-title">Good questions.<br /><span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Clear answers.</span></h2>
           <p>Still thinking it through? Talk to our team.</p>
           <a href={CONTACT.messengerUrl} target="_blank" rel="noopener noreferrer" className="landing-text-link">

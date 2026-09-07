@@ -5,9 +5,9 @@ import { DUR, EASE } from '../../ui/motionTokens';
 import { CreamBand } from '../CreamBand';
 
 const STEPS = [
-  { num: '01', title: 'Start with your business.', desc: 'Tell Grifon what you sell, who it is for, and what makes it different. Your idea is the starting point.', icon: MessageSquare },
-  { num: '02', title: 'See the idea take shape.', desc: 'Research, an offer, a script, and a storyboard come together in one guided workflow. Review your ad plan for free.', icon: Layers3 },
-  { num: '03', title: 'Make your next move.', desc: 'Choose a paid plan to create a finished video ad. Download your creative and publish it on your own channels.', icon: ArrowUpRight },
+  { num: '01', title: 'Tell us what you sell.', desc: 'Start with your product, service, or property listing. Add your offer and the details that make your business different.', icon: MessageSquare },
+  { num: '02', title: 'Review your free ad plan.', desc: 'See the research, script, and storyboard together. Check the direction and business details before paying to create the video.', icon: Layers3 },
+  { num: '03', title: 'Create a video you can post.', desc: 'Choose a paid plan to turn your ad plan into a finished video. Review it, download it, and publish it on your own channels.', icon: ArrowUpRight },
 ];
 
 export const ProofBand: React.FC = () => (
@@ -16,9 +16,9 @@ export const ProofBand: React.FC = () => (
       <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }} transition={{ duration: DUR.entrance, ease: EASE.expressive }}
         className="landing-process-heading">
-        <p className="landing-eyebrow">01 / A simpler way to create</p>
-        <h2 className="landing-section-title">Your idea.<br />A complete production.</h2>
-        <p>You bring the business. Grifon brings the pieces together.</p>
+        <p className="landing-eyebrow">01 / From your business to your ad</p>
+        <h2 className="landing-section-title">You know your business.<br />Start your ad here.</h2>
+        <p>For owners who already have something to sell, but need help turning it into an ad. You can start on your own or with a small team.</p>
       </motion.div>
       <div className="landing-process-grid">
         {STEPS.map((step, index) => (
