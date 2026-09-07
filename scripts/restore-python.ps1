@@ -18,6 +18,9 @@
 #      rely on the installer's PrependPath (effective after a fresh login).
 #   2. The tools self-install their pip deps on first run; just call them.
 
+[CmdletBinding()]
+param([switch]$Portable)
+
 $ErrorActionPreference = "Stop"
 
 # Pin a known-good 3.12 patch; bump when a newer Python is needed. Cafe PCs are
@@ -31,6 +34,38 @@ $toolsDir  = Join-Path $repoRoot ".tools"
 $installDir = Join-Path $env:LOCALAPPDATA "Programs\Python\Python312"
 $pyExe     = Join-Path $installDir "python.exe"
 $scriptsDir = Join-Path $installDir "Scripts"
+
+# Official CPython NuGet distribution for machines where the MSI service cannot
+# access the per-user package cache. Same pinned interpreter, includes pip.
+# https://docs.python.org/3.12/using/windows.html#the-nuget-org-packages
+if ($Portable) {
+    $portableDir = Join-Path $toolsDir "python-$Version"
+    $portableBin = Join-Path $portableDir 'tools'
+    $portableExe = Join-Path $portableBin 'python.exe'
+    if (-not (Test-Path -LiteralPath $portableExe)) {
+        New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
+        $archive = Join-Path $toolsDir "python-$Version-nuget.zip"
+        $expectedHash = '406856BE971D957E0BEE7A5CEFE20A5EC78D70A495E9E33CD0E53D31FAEC049D'
+        if (-not (Test-Path -LiteralPath $archive)) {
+            Invoke-WebRequest -Uri "https://api.nuget.org/v3-flatcontainer/python/$Version/python.$Version.nupkg" -OutFile $archive -UseBasicParsing
+        }
+        if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne $expectedHash) {
+            throw 'Portable Python archive checksum mismatch. Do not extract it.'
+        }
+        Expand-Archive -LiteralPath $archive -DestinationPath $portableDir -Force
+    }
+    $signature = Get-AuthenticodeSignature -LiteralPath $portableExe
+    if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'O=Python Software Foundation') {
+        throw 'Portable Python executable does not have a valid Python Software Foundation signature.'
+    }
+    & $portableExe --version
+    if ($LASTEXITCODE -ne 0) { throw 'Portable Python could not start.' }
+    & $portableExe -m pip --version
+    if ($LASTEXITCODE -ne 0) { throw 'Portable Python pip is missing.' }
+    $env:Path = "$portableBin;$(Join-Path $portableBin 'Scripts');$env:Path"
+    Write-Host "OK: portable Python ready at $portableExe. PATH updated for this shell only."
+    return
+}
 
 function Add-PythonToPath {
     foreach ($dir in @($installDir, $scriptsDir)) {
@@ -64,7 +99,7 @@ try {
 Write-Host "Installing Python $Version (user-scope, silent) ..." -ForegroundColor Cyan
 # /quiet = no UI; InstallAllUsers=0 = per-user (no admin); PrependPath=1 = future
 # shells get it on PATH; Include_pip/launcher = pip + the `py` launcher.
-$proc = Start-Process -FilePath $exePath -Wait -PassThru -ArgumentList @(
+$proc = Start-Process -FilePath $exePath -WindowStyle Hidden -Wait -PassThru -ArgumentList @(
     "/quiet", "InstallAllUsers=0", "PrependPath=1",
     "Include_pip=1", "Include_launcher=1", "Include_test=0"
 )
@@ -72,6 +107,7 @@ Remove-Item -Force $exePath
 
 if ($proc.ExitCode -ne 0) {
     Write-Host "ERROR: installer exited $($proc.ExitCode)." -ForegroundColor Red
+    Write-Host 'For a blocked MSI package cache, use .\scripts\restore-python.ps1 -Portable.'
     exit 1
 }
 if (-not (Test-Path $pyExe)) {

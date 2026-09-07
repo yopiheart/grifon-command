@@ -1,90 +1,64 @@
-# NOW — the resume doc
-**Stamped: 2026-09-06** (Codex Cloud migration phase 1)
-## ▶ NEXT ACTION — produce the next sample
+# NOW - the resume doc
+**Stamped: 2026-09-07** (Codex desktop migration)
+## ▶ NEXT ACTION - review migration, then hands-on testing
 
-Nothing to merge: `origin/main` is at `4f76359` and carries session 41 + 42 in full.
-The shipped `/samples/unboxing.*` is FINE — the wordmark came back on a regenerate in session 41
-and nothing since has touched it. So the next run is a free choice, not a rescue: re-run the same
-unboxing brand to add a second data point to the 🎲 (`bbbed45` still has a sample of one), or go
-straight to **2 · Silid Home (Unboxing ASMR)** in `workflows/sample_brand_briefs.md`, which
-exercises the same S2 pair under `asmrFlag` and doubles as that data point. Neil picks.
+Branch: `codex/desktop-workflow-migration`, based on `main` at `32a09fd`.
+Draft PR: being prepared in this task; add its link after creation. Do not merge.
+Daily entry point: `workflows/codex_desktop.md`; Cloud is optional.
+Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/codex-cafe-start.ps1 -CheckOnly`.
+Open this saved project in Codex; review/trust its project config and hooks.
+Then `npm.cmd run dev`: inspect dashboard, One-Shot guide and shipped previews.
+User login and real paid generation are separate checks, not migration evidence.
 
-Setup after a reboot: `restore-ffmpeg.ps1`, `enable-dev-unmetered-video.ps1`, `npm run dev`.
-Run at `/app?osaEngine=producer`, vertical `product`, presenter `Auto`, BOTH photos. **Paste the
-offer, never type it** — a past run typed 113 of 153 chars and lost the first sentence. Smoke
-login: `workflows/expert_manual_mode.md:440`.
+## Migration delivered
+- Preserved the original Claude controls and all 65 pre-existing local port files.
+- Repaired 30 skill ports, added Zam alias; 31 entrypoints, zero structural errors.
+- Native hook adapter uses supported deny/approval semantics and Windows launchers.
+- Exact subdirectory tuned edits now protected; startup cleanup is report-only.
+- Optional Playwright MCP pinned to 0.0.80; initialize + 24-tool discovery passed.
+- Desktop starter/readiness and selective asset profiles added; no bulk media clone.
+- Restored hidden instructions/templates, 44 wizard inputs, Zam and Marvin references.
+- Official portable Python 3.12.8 + pip works after MSI package-cache failure.
+  Restore: `scripts/restore-python.ps1 -Portable`; executable under `.tools`.
+- Normal PRs use CI + independent Codex review. Claude review is legacy opt-in.
+- Inventory and limitations: `workflows/codex_migration_inventory.md`.
 
-## CODEX CLOUD BASELINE — phase 1 and targeted dependency remediation verified
-PR #124 at `4ed8b1c` contains root/scoped `AGENTS.md`, the cloud setup/runbook and migration inventory; both API review findings are resolved. Clean cloud Setup verified Node 24.15.0/npm 11.4.2 and `npm ci` (720 packages, 21s); the Rolldown WASM lock record, closure and registry integrity are repaired. All seven targeted versions are installed and absent from the fresh audit: full findings fell 23 to 15 (9 high, 4 moderate, 2 low; all development tooling), production 4 to 0. Cloud build (2,589 modules), unit (111 files passed/9 skipped; 1,357 tests passed/32 skipped), bundle-leak (6 bundles), voice-sync, domain (290 files), artifact anchors and resume checks passed with clean git. GitHub verify, four browser smoke tests, artifacts and Vercel preview passed. Cloud browser tests could not launch: Chromium lacks `libatk-1.0.so.0`; no application assertions ran there. Legacy Claude Review still fails; skill/hook ports remain later work. Saved setup is full NVM+profile+`npm ci`, caching Off, agent internet Off. PR remains open and unmerged; Claude assets and tuned application content are retained.
-## 🔴 THE FINDING — SHEET_NOTE's ordinal was right only while the avatar was missing
-`SHEET_NOTE` opened with "Reference Image 1". `bbbed45` chose that DELIBERATELY and was correct
-for the two runs it diagnosed: the avatar was absent from the checkpoint, so the sheet really
-was image 1. But the ordinal is POSITIONAL — `generateSceneImage` pushes avatar → product →
-continuity — so the moment an avatar IS present the sheet becomes image 2 and the carve-out
-points at the portrait. Right sometimes, wrong sometimes, on a condition nobody was tracking.
-Now named by ROLE, correct either way. **Note the interaction: the avatar-persist fix below
-makes the avatar present MORE often, i.e. it would have made this ordinal wrong more often.**
-⚠ This is hardening, NOT the missing fix — `bbbed45` stays a 🎲. Do not re-verify on one run.
+## Verified locally
+- Build passed: 2,589 modules. Unit: 111 files / 1,357 tests passed; 32 expected skips.
+- Migration contracts: 26 passed, including Windows hook launcher and negative cases.
+- Browser: 8/8 passed: public routes, API 405/401, 23 real PNGs, two MP4 previews,
+  and mobile 390x844 mount. Full-page visual fidelity was not comprehensively graded.
+- Bundle leak, voice sync, domain language, artifact anchors, PS ASCII and design lint passed.
+- Both agent TOMLs parsed; legacy Claude trigger-eval harness fails closed as intended.
+- Growth and segment fixture dry runs passed; no live data or roster uploads.
+- Independent review found and fixed startup deletion + subdirectory gate defects.
+- Audit: 15 development findings (9 high/4 moderate/2 low), production zero.
+  Existing lifecycle warnings did not block verified build, Sharp or ffmpeg-static.
 
-## ✅ ALSO FIXED — unit-verified, NOT yet eyeballed on a render
-1. **The avatar write latched on a persist that had only been ATTEMPTED.** `deps.persist`
-   swallows its own errors and always resolves, so a dropped create checkpoint spent the single
-   try on the exact `run_not_found` 404 the ordering fix existed to avoid. Now closes on the
-   AVATAR write settling, and retries on the next commit until it does.
-2. **A REFUSED morph kept its 1.5s action hold.** `submitVideo` strips `config.lastFrame` and
-   re-submits single-frame when the provider rejects the pair (Veo 3.1 Lite → 400) and nothing
-   recorded it, so `hasEndFrame` stayed true off the STILLS and the render held static tail over
-   padded silence. The downgrade now rides the job handle, so a resumed run reads it too.
+## Remaining checks and boundaries
+- Actual Codex desktop hook trust/event delivery must be confirmed in a fresh task.
+  Protocol tests passed; hooks are guardrails, not a complete security sandbox.
+- Account-backed tools/providers, paid image/video/voice, and subjective skill output
+  still need their own exact-input tests. No paid operation was run here.
+- NOIR/ad-swipe imagery, individual ad clips, funnel dependencies and task-specific
+  Python packages remain on-demand. Use the owning asset profile before testing.
+- Automatic Claude trigger-eval is retained but gated; use manual Codex evaluation.
+- GitHub branch-rules API returned 403 (plan limitation); no remote rules changed.
+- Broad prompt audits, duplicate cleanup and general quality backlog are deferred.
 
-Each new test was run against the unfixed source: **3 failed, 100 passed, no collateral.** Then
-**1356 passed / 32 skipped**, tsc + build clean, bundle-leak 0. **No render eyeballed.**
+## Product work preserved for later
+- Finish One-Shot / Director preview formats: `workflows/sample_brand_briefs.md`.
+  Existing Real Talk and Unboxing previews are present; Silid Home is an option.
+  Approve exact assets, format, evidence and cost before any generation.
+- Inspiration/ad recreation (user character/location/clothing/animation/effects)
+  and website improvements are future product tasks, not implemented by migration.
+- Pending tuned approvals: CONTINUITY_LOCK vs STRICT_NEGATIVE; missing pinned claim;
+  route objectionToUs/bigIdea/deepFear/statusUpgrade into the script stage.
+- Carried defects: garbled label sub-line; framing drift; oversized inline images;
+  duplicated scene prompt cap; box/punit mismatch; missing script gate; scene refusal
+  recovery; false ProofGallery claim; quota race and paid-but-uncollected fan-out.
+- Avatar persistence and refused-morph holds were unit-fixed, not render-verified.
+  The role-based SHEET_NOTE hardening remains a sample-of-one quality finding.
+- No changes to tuned product content, models, paid switches, production data or deploys.
 
-## ⚠ TUNED LIST — still needs Neil's go
-1. **CONTINUITY_LOCK is appended to STRICT_NEGATIVE too** (`geminiService.ts:2560`). Reachable
-   only when a scene OMITS `referenceImage`: the start frame defaults `'avatar'` and the end
-   frame `'none'`, so one prompt bans faces/skin/hands while the lock orders "that same person".
-   Narrow, but it is the documented floating-head recipe. A guard, not prompt text.
-2. **Pinned claim** for FEATURE FILTER. "unang 50 lang" has now dropped 4 runs straight.
-3. **Route `objectionToUs`** (+ `bigIdea`, `deepFear`, `statusUpgrade`) into the script stage.
-   Market Research already produces them; the ad-script prompt never sees them.
-
-## ⚠ OPEN — ranked
-1. **Garbled label SUB-LINE — deliberately shipped by Neil 2026-08-30.** "Barake Medium Roast
-   250g" on the box; the pouch is correct. The gate passed all 4 scenes and always will:
-   `expectedLabelText` is `run.input.productName` alone
-   ([producerOrchestrator.ts:1830](services/producerOrchestrator.ts#L1830)), so it matches the
-   brand name and never reads the line underneath. Scope gap, not a gate defect. Recut the
-   sample from a clean run once fixed.
-2. **Residual framing drift, and the fix is already named.** In the S2 pair the CAMERA PULLS
-   BACK, which reads as "gumalaw ang background". `CONTINUITY_LOCK` says to copy "camera
-   distance and framing" — abstract, nothing to hold. `HOOK_ANCHOR_RULE` already solved this:
-   *"the SAME silhouette occupying the SAME position in frame"*. **Add that clause before
-   testing another video model** — the drift is in the STILL, and no video model can decline to
-   interpolate two frames that genuinely differ.
-3. **The end-frame call now sends THREE inline images** (avatar + sheet + start frame), no body
-   limit in `api/gemini/image.ts` against Vercel's 4.5 MB cap, and `renderEndFrame`'s bare
-   `catch { return undefined }` turns an overflow into a silently missing end frame — which also
-   zeroes `hasEndFrame`. Downscale the continuity frame; emit an event instead of swallowing.
-4. `SCENE_PROMPT_CAP = 400` duplicates the literal at `geminiService.ts:2340`; drift silently
-   restores the invisible truncation. One line.
-5. Same storyboard: the box SHIFTS between the frames, and S2 says "punit" over a box FLAP.
-6. **No script gate exists.** Build it AFTER TUNED #3 — a gate hunting a claim the script was never given is pointless.
-7. **A refused scene still dies** and the user regenerates by hand. Top pre-launch risk.
-8. **Landing page has one false claim** — `ProofGallery` says real businesses ran these ads.
-9. **Quota race in `consumeFinishedAd`**; **fan-out paid-but-uncollected** on tab close (#29).
-
-## ⚠ CARRIED
-- **UNANSWERED: is this branch Vercel's Production source?** The deploy list showed
-  "Environment Production" against a feature branch. If yes, every push here is a deploy.
-- **The agent cannot read the env file** (ENV WARDEN) — `scripts/pull-run-*.mjs` needs Neil's
-  own terminal. Supabase MCP works fine; the finished MP4 pulls from its R2 url.
-- **Vite will not serve a file dropped into `public/` after startup** — restart, then check the
-  CONTENT TYPE, never the status code (the SPA fallback also answers 200).
-- **NEVER pipe `npm run dev` into `head`** — EPIPE kills vite and it reads as a clean exit. A
-  dead server leaves a vite child on 5173: `Get-NetTCPConnection -LocalPort 5173 -State Listen`
-  → `Stop-Process -Id <pid>`.
-- Sparse-checkout: `assets/` + `public/samples/` need `git add --sparse`; `sample-batch` +
-  `/public/examples` need re-adding on a fresh clone.
-
-### Maintain: **overwrite, never append**, last step of any session that changed state, max 90.
-Repo artifacts are ENGLISH; ads stay Taglish. Cafe-PC warnings: `cafe_session.md` §A6.
+### Maintain: overwrite, never append; maximum 90 lines. GitHub is durable continuity.

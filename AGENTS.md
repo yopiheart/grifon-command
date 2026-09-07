@@ -1,5 +1,34 @@
 # GRIFON COMMAND agent instructions
 
+## Codex desktop entry point
+
+The daily workspace is Codex desktop on Windows cafe PCs. Start with
+`workflows/codex_desktop.md`; Codex Cloud is an optional secondary route.
+Project skills live in `.agents/skills/`, agents in `.codex/agents/`, and
+supported hooks in `.codex/hooks.json`. Keep the original `.claude/` controls
+for legacy compatibility; they do not configure Codex. Do not assume that a
+copied hook is active: the user must trust its current source in Codex.
+
+Use `npm.cmd` in Windows PowerShell. `scripts/codex-cafe-start.ps1 -CheckOnly`
+reports readiness without restoring secrets or changing branches. Selective
+workflow inputs are managed by `node tools/codex-assets.mjs --help`; check the
+owning profile before reporting a missing image, fixture, or client rule as a
+product defect. Client work follows `clients/<name>/DESIGN.md`.
+
+Before committing migration/control changes, run `npm.cmd run check:codex`.
+Keep paid/live switches unset for ordinary checks. Hooks are guardrails, not
+a complete sandbox: the secret, exact-diff approval, paid-spec, and no-spend
+rules below still apply to every tool and delegated task.
+
+GitHub is the durable handoff: commit and push authorized work on its own
+branch, keep a draft PR for review, and update `NOW.md` with the actual checks
+and remaining work. A local task, untracked file, or running process does not
+survive a cafe-PC wipe. Never commit auth/session files or hook approval state.
+Before asking to merge non-trivial work, obtain an independent Codex review
+and resolve actionable findings. The legacy Claude PR reviewer is opt-in via
+the repository variable `ENABLE_LEGACY_CLAUDE_REVIEW`; it is not the desktop
+review gate. CI remains enabled.
+
 These instructions are the Codex counterpart to `CLAUDE.md`. Keep the Claude
 files while the migration is in progress. When the two disagree, follow this
 file for Codex work and flag the discrepancy instead of silently choosing one.

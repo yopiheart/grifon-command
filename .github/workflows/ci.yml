@@ -85,6 +85,9 @@ jobs:
       - name: Permission-gate harness
         run: bash tools/hook_gate_test.sh
 
+      - name: Codex desktop migration contracts
+        run: npm run check:codex
+
       - name: Test (vitest)
         run: npm run test
 

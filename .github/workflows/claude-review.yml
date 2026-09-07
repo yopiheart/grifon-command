@@ -1,4 +1,8 @@
-name: Claude Review
+name: Legacy Claude Review (opt-in)
+
+# Codex desktop migration: retained for explicitly requested legacy reviews.
+# Ordinary PRs use CI plus an independent Codex review before merge approval;
+# they must not require a Claude login/token or start a Claude subscription run.
 
 # ── Tier 0c — the cloud-side REVIEWER (workflows/loops.md) ────────────────────
 # CI (Tier 0b) answers "does it build and pass". This answers "should it merge".
@@ -48,6 +52,9 @@ permissions:
 
 jobs:
   review:
+    # Explicit legacy account opt-in; CI and Codex review stay required in the
+    # current workflow. Preserve the original PR event/prompt when opted in.
+    if: vars.ENABLE_LEGACY_CLAUDE_REVIEW == 'true' && !github.event.pull_request.draft
     runs-on: ubuntu-latest
     timeout-minutes: 20
 

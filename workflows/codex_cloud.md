@@ -1,5 +1,10 @@
 # Codex Cloud development runbook
 
+> **Optional cloud route.** The daily Windows cafe workflow now starts in
+> [codex_desktop.md](codex_desktop.md). PR #124 was merged at `32a09fd`;
+> references below to its pre-merge environment and open PR are historical
+> validation evidence, not current instructions to reopen that work.
+
 This is the browser-only development path for GRIFON COMMAND. The computer-shop
 PC needs only a browser: Git checkout, dependencies, commands, commits, and pull
 requests run in the cloud workspace. Keep `workflows/cafe_session.md` for the
