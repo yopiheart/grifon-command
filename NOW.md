@@ -2,7 +2,8 @@
 **Stamped: 2026-09-07** (Silid Home ASMR fidelity)
 ## ▶ NEXT ACTION - review draft PR, then prepare a fresh storyboard test
 
-Branch: `codex/silid-asmr-fidelity`; draft PR creation pending.
+Branch: `codex/silid-asmr-fidelity`; code commit: `b35d1b1`.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/127 (CI pending).
 Base: `origin/main` at `01211117`; Codex migration PR #126 remains merged.
 Worktree: `C:/Users/Administrator/Desktop/grifon-asmr-fidelity`.
 Daily entry point: `workflows/codex_desktop.md`; Cloud is optional.
