@@ -2342,7 +2342,8 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state' = 'none',
+    asmrFlag: boolean = false
 ): Promise<string> => {
     
     await delay(2500);
@@ -2358,9 +2359,19 @@ export const generateSceneImage = async (
         if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
     }
 
+    // POSITIONAL, exactly like continuityIdx below. The avatar above is pushed on its own
+    // presence and NOT on referenceImageMode, so on every producer call site (they all pass
+    // avatarUrl unconditionally) the product lands at parts[1], not parts[0].
+    // PRODUCT_IDENTITY_LOCK hard-coded "Reference Image 1" and therefore aimed all seven of
+    // its rules at the presenter's portrait, leaving the product photo unnamed by any rule.
+    // Defaults to 1, so the emitted text is byte-identical wherever no avatar was pushed.
+    let productIdx = 1;
     if (references.productUrl) {
         const match = references.productUrl.match(/data:(image\/.+);base64,(.+)/);
-        if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+        if (match) {
+            parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+            productIdx = parts.length;
+        }
     }
 
     // CONTINUITY reference — the PREVIOUS still of this same shot (today: an unboxing S2 start
@@ -2455,14 +2466,14 @@ export const generateSceneImage = async (
     } else if (referenceImageMode === 'product' && references.productUrl) {
         consistencyRules = `
         **PRODUCT_IDENTITY_LOCK:**
-        1. **IDENTITY:** Reproduce the product from Reference Image 1 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
-        2. **VISUAL_GROUND_TRUTH_PRIORITY (overrides text metadata):** Reference Image 1 is the VISUAL GROUND TRUTH for the product. Do NOT infer visual properties (color, jar shape, label design, finish, fill level, packaging material) from the product NAME or DESCRIPTION text fields below. If text says "Ube-Calamansi Marmalade" but Reference Image 1 shows a red/strawberry-jam jar with a pink label, render the RED/strawberry jar exactly as photographed — do NOT render a purple ube jar. Text metadata controls ONLY: wordmark text language, product category confirmation, and the words appearing on the label. IMAGE wins every visual tie.
-        3. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 1 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
+        1. **IDENTITY:** Reproduce the product from Reference Image ${productIdx} EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
+        2. **VISUAL_GROUND_TRUTH_PRIORITY (overrides text metadata):** Reference Image ${productIdx} is the VISUAL GROUND TRUTH for the product. Do NOT infer visual properties (color, jar shape, label design, finish, fill level, packaging material) from the product NAME or DESCRIPTION text fields below. If text says "Ube-Calamansi Marmalade" but Reference Image ${productIdx} shows a red/strawberry-jam jar with a pink label, render the RED/strawberry jar exactly as photographed — do NOT render a purple ube jar. Text metadata controls ONLY: wordmark text language, product category confirmation, and the words appearing on the label. IMAGE wins every visual tie.
+        3. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image ${productIdx} must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
         4. **ANATOMICAL_LOCK:** Render ONLY the number of hands the action needs — one hand pouring/holding the product = exactly ONE hand; a two-handed action = exactly TWO. Five fingers each. NEVER add an extra, third, phantom, or duplicate hand to "complete a pair", and never a disembodied hand entering frame. Anatomy matches the action, not a fixed count.
-        5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image 1 shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
-        6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
-        7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
-        8. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 1, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
+        5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image ${productIdx} shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
+        6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image ${productIdx}. Match the warmth/coolness of its highlights.
+        7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image ${productIdx} is the hero.
+        8. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image ${productIdx}, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
         `;
     } else if (referenceImageMode === 'both' && references.avatarUrl && references.productUrl) {
         consistencyRules = `
@@ -2484,7 +2495,9 @@ export const generateSceneImage = async (
         10. **NO_UNSOLICITED_PRODUCT:** Render ONLY the product shown in Reference Image 2, and ONLY the packaging elements actually visible in that photo. Do NOT add an outer box, carton, sleeve, pouch, gift set, second unit, or ANY additional branded/labeled prop unless the Scene Prompt explicitly names it. Packaging you invent carries a label that does not exist — the same brand-trust failure as a fake logo. Generic unbranded props (plain mug, plain towel) are fine.
 
         **LIGHTING (DUAL_LUMEN_SYNC):**
-        - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
+        ${asmrFlag
+          ? '- Scene lighting matches the ACTUAL available light and white balance in Reference Image 1. Do not add an amber/orange cast, rim light, studio key, or cinematic grade. Preserve the person and the product under that same natural light.'
+          : '- Scene lighting prioritizes the avatar\'s environment (Reference Image 1) — the scene IS in the avatar\'s home, so use that warm/natural light profile for the overall image.'}
         - Product label colors are preserved as PRINTED on Reference Image 2 — do not relight the label with studio lighting; let it sit naturally in the avatar's environmental light.
         `;
     } else if (referenceImageMode === 'venue' && references.productUrl) {
@@ -2597,7 +2610,10 @@ export const generateSceneImage = async (
     const humanSubjectInFrame = (referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue')
         && continuityIdx === 0;
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
-    const cameraMandatory = humanSubjectInFrame ? `
+    const cameraMandatory = humanSubjectInFrame && asmrFlag && referenceImageMode === 'both' ? `
+    **CAMERA_MANDATORY (ASMR presenter CTA):**
+    Follow the Scene Prompt's camera position. Keep the presenter's face, both eyes and mouth visible AND the supported product with its readable label in the same frame. Use a close chest-up/table composition; never crop to a neck-up portrait that excludes the product. Preserve the product's apparent physical size relative to the reference hand/grip and surrounding objects. Obtain readable detail through camera position and composition, never by enlarging the product. No wide room shot.
+    ` : humanSubjectInFrame ? `
     **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**
     You MUST render this exact framing: ${randomAngle}.
     - The DISTANCE (close-up vs medium vs wide) and ELEVATION (eye-level vs above-eye selfie) are MANDATORY — do NOT collapse to a standard chest-up frontal medium shot.
@@ -2630,6 +2646,17 @@ export const generateSceneImage = async (
       ? `\n**FILIPINO_CAST_LOCK:** This is a Philippine business. Any human who appears — customer, staff, agent, bystander, or even just hands — MUST be Filipino${ethnicity && !ethnicity.startsWith('Global') ? ` (${ethnicity})` : ''} (authentically Filipino face, build, and styling). NEVER render a foreign / Western / non-Filipino person.`
       : "";
 
+    // Scope these constraints to the producer's existing ASMR treatment.
+    const sceneTextConstraint = asmrFlag && carriesProductRef ? `
+    **TEXT CONSTRAINTS (ASMR PRODUCT):**
+    Preserve ALL words, letters, logos and artwork already printed on the supplied product or packaging photo, in their original positions. Never blank, simplify or replace the existing label. Do not add captions, overlay text, watermarks, slogans or new branding elsewhere in the image.
+    ` : NO_TEXT_CONSTRAINT;
+    const asmrSceneRules = asmrFlag && carriesProductRef ? `
+    **ASMR PRODUCT PHYSICS AND LIGHT:**
+    Preserve the reference object's width-to-height proportions, silhouette, lid/opening construction and label placement. A held object must be visibly supported by a believable hand grip or palm beneath its base. Otherwise its base must rest on a visible stable surface with contact shadow. A pointing or touching finger is NOT a support: if a finger indicates the label, the object rests on the surface. Never float the product or invent a second hand.
+    Match the actual available-light character of the product reference for product-only frames, or the avatar reference when the presenter appears. A continuity reference keeps the established shot's light. Preserve natural reference colors; do not add an amber/orange cast, studio lighting, rim light or cinematic grade. These reference-matching rules override the generic bright/airy/pastel aesthetic below.
+    ` : '';
+
     // 4. COMBINE EVERYTHING INTO THE FINAL PROMPT
     const finalPromptText = `
     ${consistencyRules}
@@ -2638,9 +2665,9 @@ export const generateSceneImage = async (
     ${wardrobeInstruction}
     ${productContext}
     ${brandColorInstruction}
-    **Scene Prompt:** ${sanitizedPrompt}
+    **Scene Prompt:** ${sanitizedPrompt}${asmrSceneRules}
     ${realismProtocol} 
-    ${NO_TEXT_CONSTRAINT}
+    ${sceneTextConstraint}
     `;
 
     parts.push({ text: finalPromptText });

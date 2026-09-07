@@ -293,7 +293,8 @@ export interface ProducerDeps {
     productDescription?: string,
     productName?: string,
     variationIndex?: number,
-    referenceImageMode?: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state'
+    referenceImageMode?: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | 'avatar_state',
+    asmrFlag?: boolean
   ) => Promise<string>;
   generateVideoPrompts: (storyboard: Scene[], businessInfo: BusinessInfo) => Promise<VideoPrompt[]>;
   /** P4 deterministic still check (decode/dims/min-res) — the ONLY automated reroll driver
@@ -1050,6 +1051,10 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
     // product-free metaphor. Any other scene carrying a frame pair is showing two real states
     // of a real object (a sealed box, then the pouch out of it) and MUST keep its references.
     const isHookMorph = sceneIdx === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
+    const asmrFlag = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+    const productUrl = isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64);
+    const avatarUrl = asmrFlag && scene.referenceImage === 'product' && productUrl
+      ? undefined : run.input.avatar.url;
     const imageUrl = await withRetry(
       () =>
         deps.generateSceneImage(
@@ -1059,14 +1064,15 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
           // A scene that names a venueSlot must be anchored to THAT uploaded photo, not the
           // hero. Without this the regen paths ignored venueSlot entirely, so hitting
           // REGENERATE on an unboxing scene quietly swapped its box back for the pouch.
-          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64) },
+          { avatarUrl, productUrl },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
           run.input.productDescription,
           run.input.productName,
           1, // fresh variation
-          scene.referenceImage ?? 'avatar'
+          scene.referenceImage ?? 'avatar',
+          asmrFlag
         ),
       MAX_STAGE_ATTEMPTS
     );
@@ -1112,6 +1118,33 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
 /** Reference modes whose render REQUIRES the locked presenter photo. Same set as the gate's
  *  `wantIdentity` — kept as its own constant because this one guards GENERATION, not a check. */
 const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue']);
+
+/** ASMR is voiceover over b-roll, not a talking head, and that has to be decided HERE.
+ *
+ *  The storyboard prompt's ASMR TREATMENT asks for "hands and textures over faces". It cannot
+ *  win on its own: any scene holding an identity reference also gets DUAL_REFERENCE_LOCK
+ *  (services/geminiService.ts), whose FACE_TO_CAMERA clause is "REQUIRED when the avatar speaks
+ *  the script line" and BANS face-away. Every scene has a script line, so the lock fires on every
+ *  identity-mode scene and outranks the softer instruction every time.
+ *
+ *  Measured on run apr_dddc492a (Silid Home, 2026-08-31): the three `both` scenes each rendered a
+ *  face their own imagePrompt never asked for -- "Hands positioned on either side of the
+ *  packaging ... static freeze-frame" came back as a portrait -- while the one `product` scene
+ *  obeyed it exactly. 3 of 3 against, 1 of 1 for.
+ *
+ *  So route the tactile beats off the avatar instead of asking the model twice. The LAST scene is
+ *  the spoken CTA, the one beat that genuinely wants the presenter, and keeps its reference. With
+ *  no hero photo to fall back on nothing is clamped at all -- never drop a reference the run
+ *  cannot replace (the same invariant utils/expertScenePostProcess.ts holds for Expert Mode). */
+export const clampAsmrSceneRefs = (scenes: Scene[], hasProduct: boolean): Scene[] => {
+  if (!hasProduct || scenes.length < 2) return scenes;
+  const lastIdx = scenes.length - 1;
+  return scenes.map((s, i) =>
+    i !== lastIdx && IDENTITY_MODES.has(s.referenceImage ?? 'avatar')
+      ? { ...s, referenceImage: 'product' as const }
+      : s
+  );
+};
 
 /** Shown to the user on a refused regen/reshoot. Names the cause and the only real escape. */
 export const IDENTITY_REF_LOST_REASON =
@@ -1204,6 +1237,10 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
     // product-free metaphor. Any other scene carrying a frame pair is showing two real states
     // of a real object (a sealed box, then the pouch out of it) and MUST keep its references.
     const isHookMorph = sceneIdx === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
+    const asmrFlag = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+    const productUrl = isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64);
+    const avatarUrl = asmrFlag && scene.referenceImage === 'product' && productUrl
+      ? undefined : run.input.avatar.url;
     const imageUrl = await withRetry(
       () =>
         deps.generateSceneImage(
@@ -1213,14 +1250,15 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
           // A scene that names a venueSlot must be anchored to THAT uploaded photo, not the
           // hero. Without this the regen paths ignored venueSlot entirely, so hitting
           // REGENERATE on an unboxing scene quietly swapped its box back for the pouch.
-          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64) },
+          { avatarUrl, productUrl },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
           run.input.productDescription,
           run.input.productName,
           1,
-          scene.referenceImage ?? 'avatar'
+          scene.referenceImage ?? 'avatar',
+          asmrFlag
         ),
       MAX_STAGE_ATTEMPTS
     );
@@ -1408,6 +1446,37 @@ function slotPhotoFor(run: ProductionRun, scene: Scene) {
     : undefined;
 }
 
+/** Whether the END frame's product reference should be a composed two-object sheet.
+ *
+ *  ASMR answers NO, and the reason is that NOTHING EVER LOOKS AT THIS IMAGE. The
+ *  deterministic check and the AI gate both run on the MAIN still only — "thumbnail/end-frames
+ *  are not gated this phase" — so an end frame is the one render in the pipeline with no
+ *  automated defence at all. Quality cannot be inspected into it; the failure has to be
+ *  designed out.
+ *
+ *  The sheet is where the failures came from (Neil, 2026-08-31, on Silid Home). It normalises
+ *  both photos to a shared height, so two 1024x1536 uploads become 683x1024 each and the jar
+ *  keeps 44% of its pixels — that is the wrong-proportions defect. It also puts a box in a
+ *  frame that NO_UNSOLICITED_PRODUCT bans outright ("outer box, carton, sleeve"), which is why
+ *  SHEET_NOTE has to exist at all. And two objects will not fit at the start frame's distance,
+ *  so the camera pulls back and the box appears to SHRINK mid-shot.
+ *
+ *  Neil's call: hand the END frame the hero ALONE, at full resolution, and let the storyboard
+ *  move the packaging aside. Three failure modes leave with the sheet, and the two references
+ *  that remain each do exactly one job — the hero says WHAT the product looks like, the
+ *  continuity frame (startFrameUrl) says WHERE the camera is.
+ *
+ *  Non-ASMR is untouched: plain Unboxing ships today and keeps the sheet until this is proven.
+ */
+export const wantsReferenceSheet = (
+  run: ProductionRun,
+  slotUrl: string | undefined,
+  reveals: boolean,
+): boolean => {
+  if (run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false) return false;
+  return !!(reveals && slotUrl && run.input.heroImageBase64 && slotUrl !== run.input.heroImageBase64);
+};
+
 /** Suffix appended to a hook-morph END prompt when the reference is a composed two-object sheet.
  *
  * Rides NO_UNSOLICITED_PRODUCT's own carve-out ("unless the Scene Prompt explicitly names it")
@@ -1460,8 +1529,8 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
   // product path heroImageBase64 IS servicePhotos[0].url, so a hero-slot scene would
   // otherwise be composited against itself.
   const slot = slotPhotoFor(run, scene);
-  const sheet = reveals && slot?.url && run.input.heroImageBase64 && slot.url !== run.input.heroImageBase64
-    ? await composeReferenceSheet(slot.url, run.input.heroImageBase64)
+  const sheet = wantsReferenceSheet(run, slot?.url, reveals)
+    ? await composeReferenceSheet(slot!.url, run.input.heroImageBase64!)
     : undefined;
   // Rewritten 2026-08-30 after diagnosing the blank-wordmark defect from Postgres (runs
   // apr_0326cbc4 / apr_c0ddfe27). The sheet arrives as a SINGLE productUrl, and EVERY tuned
@@ -1481,6 +1550,9 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
   // blind — a vanished instruction reads exactly like an ignored one, and costs a run to tell
   // apart.
   const endPrompt = buildEndFramePrompt(scene.endFramePrompt!, !!sheet);
+  const asmrFlag = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+  const tactileEnd = asmrFlag && scene.referenceImage === 'product'
+    && sceneIdx < (run.storyboard?.length ?? 0) - 1 && reveals && !!run.input.heroImageBase64;
   try {
     return await withRetry(
       () =>
@@ -1493,14 +1565,15 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
           // in different rooms at different distances and animated as a blink rather than an
           // unboxing (Neil, 2026-08-30, on a real pair). Passing the frame itself is what makes
           // the end still read as the same take seconds later.
-          { avatarUrl: run.input.avatar.url, productUrl: reveals ? (sheet ?? run.input.heroImageBase64) : undefined, continuityUrl: startFrameUrl },
+          { avatarUrl: tactileEnd ? undefined : run.input.avatar.url, productUrl: reveals ? (sheet ?? run.input.heroImageBase64) : undefined, continuityUrl: startFrameUrl },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
           run.input.productDescription,
           run.input.productName,
           sceneIdx + 100, // end-frame variation seed — matches utils/sceneRender.ts
-          reveals ? 'both' : (scene.referenceImage ?? 'none')
+          tactileEnd ? 'product' : reveals ? 'both' : (scene.referenceImage ?? 'none'),
+          asmrFlag
         ),
       MAX_STAGE_ATTEMPTS
     );
@@ -1682,9 +1755,15 @@ async function runStage(
         MAX_STAGE_ATTEMPTS,
         bump
       );
+      // ASMR routes its tactile beats off the presenter BEFORE the storyboard is stored, so a
+      // later REGENERATE (which re-reads run.storyboard, never re-plans it) inherits the route.
+      const isAsmr = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+      const scenes = isAsmr
+        ? clampAsmrSceneRefs(sb.scenes, !!run.input.heroImageBase64)
+        : sb.scenes;
       await commit((r) => {
-        r.storyboard = sb.scenes;
-        r.scenes = sb.scenes.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus }));
+        r.storyboard = scenes;
+        r.scenes = scenes.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus }));
       });
       await setStage(id, { detail: `${sb.scenes.length} scenes` });
       return;
@@ -1764,6 +1843,9 @@ async function runStage(
             ? run.input.servicePhotos?.find((p) => p.slot === scene.venueSlot)
             : undefined;
           const isAvatarScene = mode === 'avatar' || mode === 'both';
+          const asmrFlag = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+          const asmrProductScene = asmrFlag && mode === 'product'
+            && !isHookMorph && !!(slotPhoto?.url ?? run.input.heroImageBase64);
           // A person-STATE slot is the same human in a different condition; a place/product slot
           // is a different subject entirely. They need opposite render modes, so split on it.
           const isPersonStateSlot = scene.venueSlot === 'before'
@@ -1774,7 +1856,7 @@ async function runStage(
           // the upload. This is what makes a before/after an actual proof instead of a claim.
           const usePersonState = !!slotPhoto && !isHookMorph && isPersonStateSlot && isAvatarScene && !!avatarUrl;
           // A real place or product state on a scene with no performer: anchor the thing itself.
-          const useVenue = !!slotPhoto && !isHookMorph && !isPersonStateSlot && !isAvatarScene;
+          const useVenue = !!slotPhoto && !isHookMorph && !isPersonStateSlot && !isAvatarScene && !asmrProductScene;
           const refMode = usePersonState ? 'avatar_state' : useVenue ? 'venue' : mode;
           // THE THIRD CASE, missing until 2026-08-29: a PRODUCT-state slot (packaging, inuse,
           // hero) on a scene that HAS a performer. usePersonState wants a person-state slot;
@@ -1789,7 +1871,7 @@ async function runStage(
             ? { avatarUrl, productUrl: slotPhoto!.url }
             : useVenue
               ? { productUrl: slotPhoto!.url }
-              : { avatarUrl, productUrl: isHookMorph ? undefined : (slotPhoto?.url ?? run.input.heroImageBase64) };
+              : { avatarUrl: asmrProductScene ? undefined : avatarUrl, productUrl: isHookMorph ? undefined : (slotPhoto?.url ?? run.input.heroImageBase64) };
 
           const genMainImage = (variationIndex: number) =>
             deps.generateSceneImage(
@@ -1803,7 +1885,8 @@ async function runStage(
               run.input.productDescription,
               run.input.productName,
               variationIndex,
-              refMode
+              refMode,
+              asmrFlag
             );
           try {
             if (needsMain) {
