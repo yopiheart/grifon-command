@@ -1,0 +1,18 @@
+{
+  "verdict": "PASS",
+  "date": "2026-09-10",
+  "artifact": "artifacts/grifon-studio-pilot.html",
+  "browser": "configured Playwright Chromium",
+  "mobileViewport": {"width": 390, "height": 844, "documentWidth": 390},
+  "desktopViewport": {"width": 1440, "height": 1000, "documentWidth": 1440},
+  "images": {"decoded": 3, "dimensions": "1280x720", "posterDecoded": true},
+  "layout": {"continuousDarkGround": true, "visibleGlass": true, "solidReadableText": true, "transparentTextElements": 0, "horizontalOverflow": false, "motionAnchorWorks": true},
+  "playback": {"startSeconds": 0, "endSeconds": 6, "ended": true, "decodeError": null, "reportedFrames": 144, "droppedFrames": 4},
+  "consoleWarnings": 0,
+  "consoleErrors": 0,
+  "externalNetworkRequests": 0,
+  "correctnessReview": "No actionable defect found in artifact builder and template. All media embeds resolve from repository assets; finalize gates and CSP are present.",
+  "screenshots": ["mobile-390x844.png", "mobile-video-poster.jpg", "desktop-1440.jpg"],
+  "limits": ["Viewport check is not a real Android WebView test.", "Playback completion is not a perceptual motion-quality or perfect-smoothness grade.", "Four dropped frames were reported during playback on this runtime.", "Poster-only update was rechecked after the playback test; the same embedded MP4 remains."],
+  "helperCleanup": "Localhost-only helper PIDs 15244 and 17964 stopped individually."
+}

@@ -12,6 +12,8 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
+- [ ] **Astra launch-film study (2026-09-10): specificity HOLD.** The single newly approved `gemini-3.8-flash` request on the exact official film returned two qualifying findings (minimum three). No retry or gate change; no analyzed entry or pattern-count increment. Public captions and independent visual samples are retained in [the research report](grifon_hero_film_research.md). Final audiovisual autopsy and timed Grifon storyboard remain open; a new paid scope needs new approval. Usage-derived estimate US$0.0216795, not an invoice.
+
 - [x] **P9 reached 3 corroborations (2026-06-26).** E6 (authority/gastro VSL) did
   NOT corroborate (→ new candidate P10); **E7 (IM8 GLP-1 kinetic VSL) did** — Neil
   accepted it as #3 (kernel match). The `vsl` preset is now a **Gated Proposal**

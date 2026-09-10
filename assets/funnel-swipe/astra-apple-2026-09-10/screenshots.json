@@ -1,0 +1,84 @@
+{
+  "capturedDate": "2026-09-10",
+  "method": "Configured Playwright MCP; JPEG re-encoding with existing sharp dependency; original CSS viewport dimensions preserved.",
+  "screenshots": [
+    {
+      "file": "astra-hero-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 84653
+    },
+    {
+      "file": "astra-film-sample-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 65657
+    },
+    {
+      "file": "astra-hero-mobile.jpg",
+      "width": 390,
+      "height": 844,
+      "bytes": 44653
+    },
+    {
+      "file": "astra-film-mobile.jpg",
+      "width": 390,
+      "height": 844,
+      "bytes": 46831
+    },
+    {
+      "file": "apple-hero-mobile.jpg",
+      "width": 390,
+      "height": 844,
+      "bytes": 21226
+    },
+    {
+      "file": "apple-hero-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 41841
+    },
+    {
+      "file": "apple-highlights-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 63064
+    },
+    {
+      "file": "apple-film-sample-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 57643
+    },
+    {
+      "file": "astra-computer-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 83035
+    },
+    {
+      "file": "astra-availability-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 98953
+    },
+    {
+      "file": "apple-upgrade-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 68245
+    },
+    {
+      "file": "apple-highlights-mobile.jpg",
+      "width": 390,
+      "height": 844,
+      "bytes": 29854
+    },
+    {
+      "file": "apple-pricing-desktop.jpg",
+      "width": 1440,
+      "height": 900,
+      "bytes": 64634
+    }
+  ]
+}

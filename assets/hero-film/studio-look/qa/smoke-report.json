@@ -1,0 +1,152 @@
+{
+  "verdict": "PASS",
+  "date": "2026-09-10T13:36:28.524Z",
+  "browser": "Isolated configured Playwright MCP 0.0.80 / Chromium viewport check; not real Android",
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "scrollWidth": 390,
+    "overflow": [],
+    "ground": {
+      "position": "fixed",
+      "background": "radial-gradient(at 18% 0%, rgba(255, 204, 0, 0.067), rgba(0, 0, 0, 0) 46%), radial-gradient(at 50% 0%, rgb(19, 19, 22), rgb(9, 9, 11) 62%, rgb(7, 7, 8))"
+    },
+    "bodyBackground": "rgb(7, 7, 8)",
+    "headingColor": "rgb(245, 245, 247)",
+    "glass": {
+      "background": "linear-gradient(130deg, rgba(255, 255, 255, 0.047), rgba(255, 255, 255, 0.008) 55%)",
+      "shadow": "rgba(255, 255, 255, 0.03) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 16px 50px 0px"
+    },
+    "images": [
+      {
+        "alt": "Demo 01 coffee bottle in a charcoal and gold studio, with reflective glass, a paper label and a detailed dark cap.",
+        "complete": true,
+        "width": 1920,
+        "height": 1080,
+        "embedded": true
+      },
+      {
+        "alt": "Original light-gray studio blockout with plain opaque bottle.",
+        "complete": false,
+        "width": 0,
+        "height": 0,
+        "embedded": true
+      }
+    ]
+  },
+  "mobileExpanded": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "scrollWidth": 390,
+    "overflow": [],
+    "ground": {
+      "position": "fixed",
+      "background": "radial-gradient(at 18% 0%, rgba(255, 204, 0, 0.067), rgba(0, 0, 0, 0) 46%), radial-gradient(at 50% 0%, rgb(19, 19, 22), rgb(9, 9, 11) 62%, rgb(7, 7, 8))"
+    },
+    "bodyBackground": "rgb(7, 7, 8)",
+    "headingColor": "rgb(245, 245, 247)",
+    "glass": {
+      "background": "linear-gradient(130deg, rgba(255, 255, 255, 0.047), rgba(255, 255, 255, 0.008) 55%)",
+      "shadow": "rgba(255, 255, 255, 0.03) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 16px 50px 0px"
+    },
+    "images": [
+      {
+        "alt": "Demo 01 coffee bottle in a charcoal and gold studio, with reflective glass, a paper label and a detailed dark cap.",
+        "complete": true,
+        "width": 1920,
+        "height": 1080,
+        "embedded": true
+      },
+      {
+        "alt": "Original light-gray studio blockout with plain opaque bottle.",
+        "complete": true,
+        "width": 1280,
+        "height": 720,
+        "embedded": true
+      }
+    ]
+  },
+  "desktop": {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "scrollWidth": 1440,
+    "overflow": [],
+    "ground": {
+      "position": "fixed",
+      "background": "radial-gradient(at 18% 0%, rgba(255, 204, 0, 0.067), rgba(0, 0, 0, 0) 46%), radial-gradient(at 50% 0%, rgb(19, 19, 22), rgb(9, 9, 11) 62%, rgb(7, 7, 8))"
+    },
+    "bodyBackground": "rgb(7, 7, 8)",
+    "headingColor": "rgb(245, 245, 247)",
+    "glass": {
+      "background": "linear-gradient(130deg, rgba(255, 255, 255, 0.047), rgba(255, 255, 255, 0.008) 55%)",
+      "shadow": "rgba(255, 255, 255, 0.03) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 16px 50px 0px"
+    },
+    "images": [
+      {
+        "alt": "Demo 01 coffee bottle in a charcoal and gold studio, with reflective glass, a paper label and a detailed dark cap.",
+        "complete": true,
+        "width": 1920,
+        "height": 1080,
+        "embedded": true
+      },
+      {
+        "alt": "Original light-gray studio blockout with plain opaque bottle.",
+        "complete": true,
+        "width": 1280,
+        "height": 720,
+        "embedded": true
+      }
+    ]
+  },
+  "anchor": {
+    "hash": "#frame",
+    "targetPresent": 1
+  },
+  "expanded": {
+    "open": true,
+    "width": 1280,
+    "height": 720
+  },
+  "errors": [],
+  "requests": [
+    "http://127.0.0.1:54065/"
+  ],
+  "externalRequests": [],
+  "sourceReview": {
+    "verdict": "PASS",
+    "findings": [],
+    "sharedDependenciesTracked": true,
+    "artifactMatchesReconstruction": true,
+    "bytes": 4320080,
+    "sha256": "a79cde9b54cb922fc077ed3091bf0f4748e07c9ca0da00a3e219dc43b94ee035",
+    "notes": [
+      "New hero asset, builder, template and standalone twin require committing together for durable delivery.",
+      "No clipped transparent heading text, fixed-background attachment, external font dependency, or backdrop-filter dependency.",
+      "Strict CSP permits only inline styles and embedded images."
+    ]
+  },
+  "visualReview": {
+    "verdict": "PASS",
+    "notes": [
+      "Readable solid near-white display and body text, gold emphasis, visible gradient glass, and dark ground.",
+      "Mobile and desktop screenshots inspected, including expanded comparison and final material warning."
+    ]
+  },
+  "evidence": [
+    "mobile.png",
+    "mobile-expanded.png",
+    "desktop.jpg"
+  ],
+  "helperCleanup": {
+    "harnessPid": 13604,
+    "mcpPid": 21180,
+    "stopped": true,
+    "noUnrelatedProcessKilled": true
+  }
+}

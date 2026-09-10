@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-10",
+  "scope": "One local look-development candidate; provisional Demo 01 identity, not actual Grifon output.",
+  "axis": "Trust through physical credibility and a clear product focal point",
+  "method": "Independent Codex still critique and code review, no paid rubric scorer or numeric ranking",
+  "reference": "assets/funnel-swipe/higgsfield-astra-2026-09-10/oval-contact.jpg",
+  "reference_limit": "Physical staging and material separation only; not a coffee-specific quality benchmark",
+  "render_cap": 3,
+  "renders_completed": 3,
+  "rounds": [
+    {"round": 1, "gap": "Planar label lettering casts a separate shadow and reads as raised signage.", "correctness": "Bottle is 0.0095 scene units above the plinth."},
+    {"round": 2, "resolved": "Label vertices follow the paper cylinder; whole bottle assembly meets the support.", "gap": "Lower bottle reads honey-gold while shoulder reads dark brown."},
+    {"round": 3, "change": "Neutral glass and transmissive coffee with IOR 1.333 and volume absorption density 30.", "result": "Clear-glass shoulder improves, but lower bottle remains gold. Stop at cap."}
+  ],
+  "technical_delivery": "PASS",
+  "final_look_approval": "HOLD",
+  "remaining_issue": "Lower bottle reads bright gold, closely matching the pedestal and weakening continuous coffee-fill appearance.",
+  "optical_diagnosis": "A dominant plinth reflection is an inference, not a verified cause.",
+  "independent_reopen": {"exit_code": 0, "support_gap": 0, "label_vertex_offset_approx": 0.00015},
+  "negative_control": {"input": "Actual round-1 Blender backup before correction", "exit_code": 1, "detected_gap": 0.0095},
+  "limits": ["Geometry checks do not grade rendered materials.", "No full-film, motion, conversion or reference-beaten claim.", "No paid AI/render operation or product app change."]
+}
