@@ -31,7 +31,7 @@ import { GoogleGenAI, Type } from '@google/genai';
  *  this one is NOT behaviorally inert — it drives the only automated reroll, so
  *  watch flag/reroll rates after this ships. ⏪ Instant rollback WITHOUT a deploy:
  *  set the IMAGE_GATE_MODEL env var back to 'gemini-3.5-flash' on Vercel. */
-export const IMAGE_GATE_MODEL = process.env.IMAGE_GATE_MODEL || 'gemini-3.7-flash';
+export const IMAGE_GATE_MODEL = process.env.IMAGE_GATE_MODEL || 'gemini-3.8-flash';
 
 // ----------------------------------------------------------------------------
 // IMAGE_GATE_PROMPT — EVAL infra. Main-loop review requested on this wording.

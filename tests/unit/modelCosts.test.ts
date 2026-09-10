@@ -8,6 +8,7 @@ import {
   logVideoUsage,
   gemini37IntroRateExpired,
   GEMINI_37_INTRO_RATE_LAST_DAY,
+  GEMINI_38_INTRO_RATE_LAST_DAY,
 } from '../../api/_lib/modelCosts.js';
 
 const OMNI_MODEL = 'gemini-omni-flash-preview';
@@ -64,6 +65,19 @@ describe('modelCosts — billing-grade text rates (verified 2026-07-22)', () => 
 
   it('gemini-3.7-flash: 0.75 in + 3.75 out (INTRODUCTORY rate)', () => {
     expect(estimateTextCostUsd('gemini-3.7-flash', ONE_M)).toBeCloseTo(4.5, 10);
+  });
+
+  it('gemini-3.8-flash: 0.75 in + 3.75 out (INTRODUCTORY rate)', () => {
+    expect(estimateTextCostUsd('gemini-3.8-flash', ONE_M)).toBeCloseTo(4.5, 10);
+  });
+
+  it('gemini-3.8-flash pricing remains inside its introductory window', () => {
+    expect(
+      Date.now(),
+      'Re-verify Gemini 3.8 pricing and update its price row after the introductory window.'
+    ).toBeLessThanOrEqual(
+      Date.parse(`${GEMINI_38_INTRO_RATE_LAST_DAY}T23:59:59.999Z`)
+    );
   });
 
   it('gemini-3.7-flash intro rate is exactly half of gemini-3.6-flash', () => {

@@ -139,7 +139,7 @@ describe('generateAdScript schema', () => {
     // models by accident. Flipped flash-lite -> 3.7-flash 2026-08-16 on Neil's explicit
     // call for output quality (see api/_lib/prompts.ts:90 for the cost trade and the
     // 2027-01-01 intro-window expiry). Changing this line is a deliberate act.
-    expect(MODEL_TEXT).toBe('gemini-3.7-flash');
+    expect(MODEL_TEXT).toBe('gemini-3.8-flash');
   }, 10_000);
 
   it('preserves tuned-prompt invariants: NO PRICE rule and Sabri Suby Slide pacing', () => {
@@ -465,12 +465,12 @@ describe('generateVideoPrompts — expression continuity (identity survives the 
     expect(dump).toContain('OR** SCENE 1 HAS NO END FRAME');
   });
 
-  it('runs on the 3.7-flash lane, asserted on the wire not on a private const', async () => {
+  it('runs on the 3.8-flash lane, asserted on the wire not on a private const', async () => {
     fetchMock.mockResolvedValueOnce(okGemini([]));
     await generateVideoPrompts(storyboard, businessInfo);
     // `fastTextModel` has exactly ONE caller — this brain — so the flip had zero blast radius.
     // It is the last reasoning step before paid video, where a bad prompt costs a render.
-    expect(captureLastFetchBody().model).toBe('gemini-3.7-flash');
+    expect(captureLastFetchBody().model).toBe('gemini-3.8-flash');
   });
 });
 

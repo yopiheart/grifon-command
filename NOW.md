@@ -1,6 +1,21 @@
 # NOW - the resume doc
-**Stamped: 2026-09-07** (Codex desktop migration)
-## ▶ NEXT ACTION - hands-on testing on main
+**Stamped: 2026-09-10** (Gemini 3.8 Flash migration)
+## ▶ NEXT ACTION - review the Gemini migration draft
+
+Branch: `codex/gemini-38-flash`, based on main `0121111`.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/131 (implementation `e3ae01d`).
+Approved: five 3.7 defaults -> 3.8; two thinking budgets -> MEDIUM plus regression
+mirror; retain 3.7/add 3.8 allowlist; 3.8 introductory cost row and expiry guard.
+Prompt wording, other model families, SDK and production environment are unchanged.
+Verified: build; 66 targeted tests; full Vitest 111 files/1,360 tests passed,
+9 gated files/32 tests skipped; bundle leak, voice sync, domain, ASCII and anchors.
+New allowlist/cost/expiry tests failed against old source, then passed after patch.
+Independent Codex review and scoped straw-man audit passed with no new findings.
+No paid calls or A/B run; live output quality/latency/provider acceptance untested.
+No merge or deploy authorized. Website work stays on `codex/landing-reveal`
+at `46cf803`; do not combine its changes or overwrite its handoff.
+
+## Previous desktop migration handoff (2026-09-07)
 
 PR: https://github.com/yopiheart/grifon-command/pull/126 merged on 2026-09-07.
 Merge commit: `1ef6d4f`; local `main` was safely fast-forwarded to it.

@@ -28,7 +28,7 @@ import { GoogleGenAI } from '@google/genai';
  *  infra. Measured −59% cost / −24% latency across the research tier
  *  (workflows/gemini37_adoption.md Slice 1). ⏪ Instant rollback WITHOUT a deploy:
  *  set the OMNI_GATE_MODEL env var back to 'gemini-3.5-flash' on Vercel. */
-export const OMNI_GATE_MODEL = process.env.OMNI_GATE_MODEL || 'gemini-3.7-flash';
+export const OMNI_GATE_MODEL = process.env.OMNI_GATE_MODEL || 'gemini-3.8-flash';
 
 // ----------------------------------------------------------------------------
 // OMNI_GATE_PROMPT — EVAL infra. Main-loop review requested on this wording.

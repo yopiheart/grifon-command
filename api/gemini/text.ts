@@ -233,7 +233,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
         config: {
           responseMimeType: 'application/json',
           safetySettings: SAFETY_SETTINGS,
-          thinkingConfig: { thinkingBudget: 4000 },
+          thinkingConfig: { thinkingLevel: 'MEDIUM' },
         },
       } as any);
       logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata, runId, userId);
@@ -300,7 +300,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       config: {
         responseMimeType: 'application/json',
         safetySettings: SAFETY_SETTINGS,
-        thinkingConfig: { thinkingBudget: 4000 },
+        thinkingConfig: { thinkingLevel: 'MEDIUM' },
       },
     } as any);
     logModelUsage('flow:influencer-script', MODEL_TEXT, (response as any).usageMetadata, runId, userId);
@@ -433,6 +433,7 @@ export const LegacyBody = z.object({
     'gemini-3.5-flash',
     'gemini-3.6-flash',
     'gemini-3.7-flash',
+    'gemini-3.8-flash',
     'gemini-3.5-flash-lite',
   ]),
   contents: z.unknown(),

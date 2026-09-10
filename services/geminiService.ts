@@ -331,7 +331,7 @@ const textModel = 'gemini-3.1-flash-lite';
 // ONE call site — `generateVideoPrompts`, the brain that turns each storyboard scene into the
 // Veo/Kling prompt. Zero blast radius, and it is the last reasoning step before paid video, where
 // a bad prompt costs a render rather than a retry. ⏪ Rollback: 'gemini-3.1-flash-lite'.
-const fastTextModel = 'gemini-3.7-flash';
+const fastTextModel = 'gemini-3.8-flash';
 const researchTextModel = 'gemini-3.6-flash';
 // premise check: pin RETIRED 2026-08-16 (Neil's explicit call). The 3.5 pin existed because a
 // 3.6 eval measured 3.5 at 0/6 empty shells; the 6-sample rerun in gemini37_adoption.md Slice 2
@@ -340,7 +340,7 @@ const researchTextModel = 'gemini-3.6-flash';
 // answer, not the model, so the pin was paying 4.2x cost and 2x latency for the same failure
 // rate. ⚠️ THE PARSE BUG IS STILL LIVE — ~1 in 6 users silently lose this feature regardless of
 // model. Parser hardening is its own job. ⏪ Rollback: 'gemini-3.5-flash'.
-const premiseCheckModel = 'gemini-3.7-flash';
+const premiseCheckModel = 'gemini-3.8-flash';
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
 const sceneImageModel = 'gemini-3.1-flash-lite-image';
 const thumbnailModel = 'gemini-3.1-flash-image-preview';
