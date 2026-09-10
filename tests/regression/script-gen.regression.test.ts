@@ -190,7 +190,7 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
           config: {
             responseMimeType: 'application/json',
             safetySettings: SAFETY_SETTINGS,
-            thinkingConfig: { thinkingBudget: 4000 },
+            thinkingConfig: { thinkingLevel: 'MEDIUM' },
           },
         } as any);
         return parseAdScriptResponse(response.text || '{}');

@@ -97,7 +97,7 @@ export const cleanJson = (text: string): string => {
 // ⚠️ 2027-01-01 the intro window closes and 3.7 doubles to $1.50/$7.50 — see
 // modelCosts.ts INTRO_PRICING_LAST_DAY. Revisit before then.
 // ⏪ Rollback: set both back to 'gemini-3.1-flash-lite'.
-export const MODEL_TEXT = 'gemini-3.7-flash';
+export const MODEL_TEXT = 'gemini-3.8-flash';
 // MODEL_FAST deliberately stays on flash-lite: its only remaining callers are three cheap
 // sub-type classifiers (temu, ugcpro, ugcpro-service) that pick one enum value. The storyboard
 // flow was moved off it to MODEL_TEXT in the same commit.

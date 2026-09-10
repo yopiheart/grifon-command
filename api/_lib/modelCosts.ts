@@ -41,6 +41,8 @@ const MODEL_PRICES: Record<string, TextPrice | ImagePrice | VideoPrice> = {
   // once the intro window closes, so the reversion can't be silently missed by a
   // session that never saw this comment.
   'gemini-3.7-flash': { kind: 'text', inputPerMTok: 0.75, outputPerMTok: 3.75 },
+  // 3.8 introductory rate through 2026-12-31; then 1.50 input / 7.50 output.
+  'gemini-3.8-flash': { kind: 'text', inputPerMTok: 0.75, outputPerMTok: 3.75 },
   'gemini-3.5-flash-lite': { kind: 'text', inputPerMTok: 0.3, outputPerMTok: 2.5 },
   'gemini-3.1-flash-image-preview': { kind: 'image', perImage: 0.04 },
   'gemini-omni-flash-preview': { kind: 'video', perSecondUsd: 0.1 },
@@ -51,6 +53,7 @@ const MODEL_PRICES: Record<string, TextPrice | ImagePrice | VideoPrice> = {
 // UNDER-estimate. Exported so the unit test can assert against it rather than
 // re-hardcoding the date.
 export const GEMINI_37_INTRO_RATE_LAST_DAY = '2026-12-31';
+export const GEMINI_38_INTRO_RATE_LAST_DAY = '2026-12-31';
 
 /**
  * True once the 3.7-flash introductory window has closed. Pure (takes `now`) so
