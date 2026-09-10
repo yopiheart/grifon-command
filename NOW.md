@@ -7,7 +7,8 @@ Deliverable: Astra/Apple launch research and Grifon production preparation.
 Research: `workflows/grifon_hero_film_research.md`.
 Brief: `workflows/grifon_hero_film_brief.md` (untimed, HOLD).
 Evidence: `assets/funnel-swipe/astra-apple-2026-09-10/`.
-Draft PR creation/push are pending in this working snapshot.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/132
+Research commit `41eecf4` pushed; this resume update accompanies the final handoff.
 Independent review PASS; disclosure ambiguity fixed and targeted recheck passed.
 
 ## Actual analysis result and next gate
@@ -30,11 +31,12 @@ Free = one ad-plan preview/month, no card; finished videos require paid plan.
 Premortem: demo exceeds ordinary product quality. Reproduction is a release gate.
 Exact draft spoken lines are in the brief for review, not generation approval.
 
-## Checks completed so far
+## Verification
 Public desktop/mobile browser evidence: 13 captures, scoped CTA/section inventories.
 Independent visual spot-check: 25 labeled film frames; audio remains unverified.
 Delivery verifier: 4 documents, 22 local links, 14 JPEGs totaling 938397 bytes pass.
 Attempt ledger arithmetic and unchanged analyzer SHA pass; git diff --check passes.
+Remote CI status not checked; no merge requested. Keep PR draft.
 No application/build/test requirement introduced by this docs-and-evidence diff.
 No new F/P/L pattern counts; failed video output not promoted into analyzed entries.
 
