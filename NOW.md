@@ -3,6 +3,7 @@
 ## ▶ NEXT ACTION - review the Gemini migration draft
 
 Branch: `codex/gemini-38-flash`, based on main `0121111`.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/131 (implementation `e3ae01d`).
 Approved: five 3.7 defaults -> 3.8; two thinking budgets -> MEDIUM plus regression
 mirror; retain 3.7/add 3.8 allowlist; 3.8 introductory cost row and expiry guard.
 Prompt wording, other model families, SDK and production environment are unchanged.
