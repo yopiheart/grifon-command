@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { DUR } from './motionTokens';
+import { motion, useReducedMotion } from 'motion/react';
+import { DUR, reducedMotion } from './motionTokens';
 import { Clock, ArrowRight, Film } from 'lucide-react';
 import type { RecentItem, RecentWorkKind } from '../../services/recentWorkService';
 import { MODULE_IDENTITY } from '../../config/moduleIdentity';
@@ -15,7 +15,7 @@ const iconFor = (moduleId: string): React.ComponentType<{ className?: string }> 
 
 const KIND_LABEL: Record<RecentWorkKind, string> = {
   visit: 'Opened',
-  ad: 'Ad shipped',
+  ad: 'Ad activity',
   research: 'Research',
   storyboard: 'Storyboard',
   image: 'Image',
@@ -41,6 +41,7 @@ interface RecentWorkCardProps {
 }
 
 export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume, delay = 0 }) => {
+  const reduce = useReducedMotion();
   const TOP_N = 3;
   const top = items.slice(0, TOP_N);
 
@@ -48,14 +49,14 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: DUR.slow, delay }}
+      transition={reducedMotion(reduce, { duration: DUR.slow, delay })}
       className={`${MAT_PLATE} rounded-2xl p-4 lg:p-5`}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Clock className="w-3.5 h-3.5 text-[#FFCC00]" />
           <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
-            // RECENTLY OPENED
+            Recently used tools
           </span>
         </div>
         {items.length > TOP_N && (
@@ -65,9 +66,10 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
         )}
       </div>
 
+      <p className="text-xs text-on-surface-sublabel mb-3">These shortcuts open tools. Your saved ad plan appears separately above.</p>
       {top.length === 0 ? (
         <div className="py-4 text-center">
-          <p className="text-xs text-on-surface-sublabel">Open a module above para magsimula.</p>
+          <p className="text-xs text-on-surface-sublabel">Your recently used tools will appear here.</p>
         </div>
       ) : (
         <div className="space-y-1.5">
@@ -78,15 +80,16 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
               <button
                 key={item.id}
                 onClick={() => onResume(item)}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group text-left"
+                aria-label={`Open ${MODULE_IDENTITY[item.moduleId]?.name ?? item.title}`}
+                className="w-full min-h-11 flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group text-left"
               >
                 <div className="w-7 h-7 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center flex-shrink-0">
                   <Icon className="w-3.5 h-3.5 text-[#FFCC00]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-white truncate leading-tight">{item.title}</div>
-                  <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-0.5">
-                    {isVisit ? formatRelative(item.ts) : `${KIND_LABEL[item.kind]} · ${formatRelative(item.ts)}`}
+                  <div className="text-sm font-semibold text-white break-words leading-tight">{item.title}</div>
+                  <div className="text-xs text-on-surface-sublabel mt-0.5">
+                    {isVisit ? `Tool opened · ${formatRelative(item.ts)}` : `${KIND_LABEL[item.kind]} · ${formatRelative(item.ts)}`}
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-on-surface-sublabel group-hover:text-[#FFCC00] group-hover:translate-x-0.5 transition-all flex-shrink-0" />

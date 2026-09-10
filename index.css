@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Approved public purchase flow: the landing's editorial register, scoped away
+   from authenticated product screens and provider/payment behavior. */
+.public-purchase :is(h1, h2, h3) {
+  text-transform: none !important;
+  font-weight: 600 !important;
+  letter-spacing: -.045em !important;
+}
+.public-purchase .purchase-display { font-weight: 400 !important; }
+.public-purchase button:not(.font-mono) {
+  font-family: Inter, sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+.pricing-page header button { font-size: 0.75rem !important; }
+.public-purchase :is(button, a, summary):focus-visible {
+  outline: 2px solid #FFCC00;
+  outline-offset: 4px;
+}
+.auth-gateway form > button,
+.auth-gateway button:has(svg) { border-radius: 9999px; }
+.public-purchase summary::-webkit-details-marker { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .public-purchase *, .public-purchase *::before, .public-purchase *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Dashboard gold "volumetric haze" backdrop (components/ui/SmokeAura.tsx).
    GPU-cheap transform/opacity loops; all motion stops under reduced-motion. */
 @keyframes aura-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.85; } }

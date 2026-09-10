@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Lock } from 'lucide-react';
-import { GLOSSY_GOLD_CLASS, ButtonSheen } from './glossyGoldButton';
+import { GoldButton } from '../ui/GoldButton';
 
 export type CardFormData = {
   cardNumber: string;
@@ -111,24 +111,24 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
         />
       </div>
 
-      <p className="text-[10px] text-on-surface-sublabel flex items-center gap-1.5">
-        <Lock className="w-3 h-3" /> Encrypted by PayMongo &middot; 256-bit TLS
+      <p className="text-xs text-on-surface-sublabel flex items-center gap-2">
+        <Lock className="w-4 h-4 shrink-0" /> Payment processed by PayMongo
       </p>
 
       {termsSlot}
 
-      <button
+      <GoldButton
         type="submit"
         disabled={isSubmitting || submitDisabled}
-        className={GLOSSY_GOLD_CLASS}
+        glossy
+        className="w-full min-h-12"
       >
-        <ButtonSheen />
         <span className="relative z-10 inline-flex items-center justify-center gap-2 leading-tight">
           {isSubmitting ? 'Processing…' : (<><Lock className="w-4 h-4 shrink-0" /> {totalLabel}</>)}
         </span>
-      </button>
+      </GoldButton>
 
-      <p className="text-[11px] text-on-surface-sublabel leading-relaxed">{authorizationText}</p>
+      <p className="text-xs text-on-surface-sublabel leading-relaxed">{authorizationText}</p>
     </form>
   );
 };

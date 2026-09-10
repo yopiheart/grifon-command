@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronDown, Tag, Check, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Tag, Check } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
-import { AnimatedBorder } from '../ui/AnimatedBorder';
 import { CheckoutReservation } from './CheckoutReservation';
 import { CycleToggle } from './CycleToggle';
-import { SignatureScribble } from '../landing/SignatureScribble';
 import { ORDER_BUMP } from '../../config/checkout';
 
 interface OrderSummaryProps {
@@ -59,12 +57,12 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   const planCentavos = Math.max(0, totalCentavos - addOn);
 
   return (
-    <GlassPanel className="lg:sticky lg:top-8 self-start">
+    <GlassPanel className="p-6 md:p-8 min-w-0 self-start">
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-on-surface-sublabel hover:text-white transition-colors mb-6 text-sm"
+        className="flex min-h-11 items-center gap-2 text-on-surface-sublabel hover:text-[#FFCC00] transition-colors mb-6 text-sm"
       >
-        <ArrowLeft className="w-4 h-4" /> Back to plans
+        <ArrowLeft className="w-4 h-4 shrink-0" /> Back to plans
       </button>
 
       {reservationKey && <CheckoutReservation storageKey={reservationKey} />}
@@ -78,28 +76,19 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         />
       )}
 
-      <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">Subscribe to</p>
-      <h1 className="text-xl font-semibold text-white mb-6">
+      <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">Your selected plan</p>
+      <h2 className="text-2xl text-white mb-6">
         {planName}{' '}
-        <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">— {cycle}</span>
-      </h1>
+        <span className="text-zinc-400 text-base">— {cycle}</span>
+      </h2>
 
       <div className="mb-6">
-        <p className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 leading-none">
+        <p className="text-4xl sm:text-5xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 leading-none">
           {formatPHP(planCentavos)}
         </p>
         <p className="text-zinc-400 text-sm mt-2">
           per {cycle === 'monthly' ? 'month' : 'year'}
         </p>
-        {cycle === 'monthly' && (
-          <p className="text-zinc-400 text-sm mt-2.5">
-            Just{' '}
-            <SignatureScribble variant="circle" delay={0.5} strokeWidth={2}>
-              <span className="font-serif italic text-lg text-[#FFCC00] px-0.5">₱{Math.floor(planCentavos / 100 / 30)}/day</span>
-            </SignatureScribble>{' '}
-            — less than your morning coffee.
-          </p>
-        )}
         {cycle === 'annual' && monthlyEquivalentCentavos !== undefined && (
           <p className="text-on-surface-sublabel text-xs mt-1">
             {formatPHP(monthlyEquivalentCentavos)} / month, billed annually
@@ -130,16 +119,6 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           </ul>
         </>
       )}
-
-      {/* 7-day guarantee — risk-reversal at the pay moment, framed by the rotating gold light */}
-      <AnimatedBorder intense className="bg-zinc-950" containerClassName="mb-6">
-        <div className="flex items-start gap-3 px-4 py-3.5 text-sm text-zinc-300 leading-relaxed">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#FFCC00]" />
-          <span>
-            <strong className="text-white">7-day money-back guarantee.</strong> Hindi nag-work? Full refund, walang tanong.
-          </span>
-        </div>
-      </AnimatedBorder>
 
       <div className="border-t border-white/10 my-6" />
 
@@ -186,7 +165,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         <button
           type="button"
           onClick={() => setPromoOpen((v) => !v)}
-          className="flex items-center gap-2 text-on-surface-sublabel hover:text-white text-xs transition-colors"
+          className="flex min-h-11 items-center gap-2 text-on-surface-sublabel hover:text-white text-xs transition-colors"
         >
           <Tag className="w-3.5 h-3.5" />
           Have a promo code?
@@ -197,7 +176,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
             <input
               type="text"
               placeholder="PROMO_CODE"
-              className="flex-1 bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+              className="min-w-0 flex-1 bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
               disabled
             />
             <button
@@ -214,21 +193,21 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
       {/* Receipt stub — perforated edge, mono ledger type. The money moment gets ceremony. */}
       <div className="border-t border-dashed border-white/25 my-6" />
 
-      <div className="flex justify-between items-baseline font-mono">
-        <span className="text-[11px] text-zinc-300 uppercase tracking-[0.2em]">Total due today</span>
+      <div className="flex flex-wrap gap-3 justify-between items-baseline">
+        <span className="text-sm text-zinc-300">Total due today</span>
         <span className="text-2xl font-bold text-white tracking-tight">
           <span className="text-[#FFCC00]">&#8369;</span>
           {(totalCentavos / 100).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
       </div>
-      <p className="mt-2 text-right text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
-        // One-time payment — no auto-renew
+      <p className="mt-2 text-right text-xs text-on-surface-sublabel">
+        One-time payment — no auto-renew
       </p>
 
       <button
         type="button"
         onClick={() => setVatOpen((v) => !v)}
-        className="flex items-center gap-1.5 text-on-surface-sublabel hover:text-white text-xs mt-3 transition-colors"
+        className="flex min-h-11 items-center gap-2 text-on-surface-sublabel hover:text-white text-xs mt-3 transition-colors"
       >
         View tax breakdown
         <ChevronDown className={`w-3 h-3 transition-transform ${vatOpen ? 'rotate-180' : ''}`} />
@@ -247,7 +226,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
             <span>Total</span>
             <span>{formatPHP(totalCentavos)}</span>
           </div>
-          <p className="text-on-surface-sublabel text-[10px] pt-2 leading-relaxed">
+          <p className="text-on-surface-sublabel text-xs pt-2 leading-relaxed">
             12% VAT included as required by BIR. Receipt with full breakdown will be emailed.
           </p>
         </div>

@@ -1,114 +1,120 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { DUR, EASE } from '../../ui/motionTokens';
-import { Star, ArrowDown } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'motion/react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
-import { AdMontagePhone } from '../AdMontagePhone';
-import { SignatureScribble } from '../SignatureScribble';
-import { CTA_REASSURANCE } from '../microcopy';
+import { DUR, EASE } from '../../ui/motionTokens';
+import { HeroTrails } from '../HeroTrails';
+import { FREE_PLAN_CTA, CTA_REASSURANCE } from '../microcopy';
 
 interface HeroProps {
   onEnterApp: () => void;
-  /** Sentinel observed by PinnedCtaPill — pill appears once the hero scrolls past. */
   heroSentinelRef: React.RefObject<HTMLDivElement>;
 }
 
-const lineReveal = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: DUR.entrance, ease: EASE.out } },
-};
+/** Native scroll drives the reveal; no wheel interception or video request. */
+export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const filmRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const [reduce, setReduce] = useState(() => typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [copyHidden, setCopyHidden] = useState(false);
+  const startY = useMotionValue(600);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
+  // Keep opacity on the same measured progress as the frame. The native
+  // ViewTimeline path otherwise measures this sticky scene differently.
+  const copyOpacity = useTransform(() => Math.max(0, 1 - scrollYProgress.get() / 0.32));
+  const copyY = useTransform(scrollYProgress, [0, 0.36], [0, -90]);
+  const copyScale = useTransform(scrollYProgress, [0, 0.36], [1, 0.96]);
+  const filmProgress = useTransform(scrollYProgress, [0.3, 0.68], [0, 1]);
+  const filmY = useTransform(() => startY.get() * (1 - filmProgress.get()));
+  const filmScale = useTransform(filmProgress, [0, 1], [0.76, 1]);
+  const filmRadius = useTransform(filmProgress, [0, 1], [32, 16]);
 
-/**
- * Kinetic ad-output hero: editorial headline (serif accent words must live in
- * <span>s — the global heading LAW in index.html forces Inter 900 uppercase on
- * the h1 itself) + phone montage cycling finished Grifon ads.
- */
-export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
-  <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 px-4 sm:px-6 lg:px-8 min-h-[88vh] flex flex-col justify-center overflow-hidden z-10">
-    <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-8 items-center">
-      {/* Headline column */}
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        transition={{ staggerChildren: 0.08 }}
-        className="text-center lg:text-left"
-      >
-        <motion.p
-          variants={lineReveal}
-          className="text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel mb-6"
-        >
-          // AI MARKETING STUDIO — BUILT FOR FILIPINO BUSINESSES
-        </motion.p>
+  useEffect(() => {
+    // React to a preference change during the hold, including focus/inert state.
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduce(preference.matches);
+    update();
+    preference.addEventListener('change', update);
+    return () => preference.removeEventListener('change', update);
+  }, []);
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-bold uppercase tracking-tighter leading-[0.9]">
-          <motion.span
-            variants={lineReveal}
-            className="block bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 pb-1"
-          >
-            CREATE YOUR ENTIRE AD CAMPAIGN IN
-          </motion.span>
-          <motion.span variants={lineReveal} className="block mt-2">
-            <SignatureScribble variant="underline" delay={0.9}>
-              <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">
-                30 minutes.
-              </span>
-            </SignatureScribble>{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
-              NOT 3 DAYS.
-            </span>
-          </motion.span>
-        </h1>
+  useEffect(() => {
+    const measure = () => {
+      if (stageRef.current && filmRef.current) {
+        startY.set((stageRef.current.clientHeight + filmRef.current.clientHeight) / 2 - 72);
+      }
+    };
+    const observer = new ResizeObserver(measure);
+    if (stageRef.current) observer.observe(stageRef.current);
+    if (filmRef.current) observer.observe(filmRef.current);
+    measure();
+    return () => observer.disconnect();
+  }, [startY]);
 
-        <motion.p
-          variants={lineReveal}
-          className="mt-7 text-zinc-400 text-base md:text-lg max-w-xl mx-auto lg:mx-0"
-        >
-          You're spending 6 hours making one ad that doesn't convert. Your competitor just dropped 10. Grifon fixes that.
-        </motion.p>
+  useMotionValueEvent(scrollYProgress, 'change', progress => setCopyHidden(progress >= 0.32));
+  useEffect(() => {
+    // Invisible CTA controls must leave the keyboard order as well.
+    if (copyRef.current) copyRef.current.inert = !reduce && copyHidden;
+  }, [copyHidden, reduce]);
 
-        <motion.div variants={lineReveal} className="mt-9">
-          {/* Primary (gold) + demoted glass-ghost secondary (GitHub pairing).
-              Stacks on mobile so the ghost never crowds the fold. */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start">
-            <GoldButton glossy onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
-              START MY FIRST AD — FREE
+  const revealFilm = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (reduce) {
+      filmRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
+      return;
+    }
+    const section = sectionRef.current;
+    if (!section) return;
+    window.scrollTo({
+      top: section.getBoundingClientRect().top + window.scrollY
+        + Math.max(0, section.clientHeight - window.innerHeight) * 0.8,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <section ref={sectionRef} className={`landing-hero ${reduce ? 'landing-hero-static' : ''}`} aria-labelledby="landing-headline">
+      <div ref={stageRef} className="landing-hero-stage">
+        <div className="landing-horizon" aria-hidden="true" />
+        <motion.div ref={copyRef} className="landing-hero-copy"
+          aria-hidden={!reduce && copyHidden ? true : undefined}
+          style={reduce ? undefined : { opacity: copyOpacity, y: copyY, scale: copyScale }}>
+          <p className="landing-eyebrow"><span className="landing-signal" /> For Filipino business owners doing their own marketing</p>
+          <h1 id="landing-headline" className="landing-headline">
+            <span>Your next ad.</span>
+            <motion.span className="font-serif italic normal-case tracking-normal landing-gold-type"
+              initial={reduce ? false : { backgroundPosition: '100% 0' }}
+              animate={reduce ? undefined : { backgroundPosition: '0% 0', textShadow: ['0 0 0 #ffcc0000', '0 0 28px #ffcc0055', '0 0 0 #ffcc0000'] }}
+              transition={{ duration: DUR.ambient.pulse, delay: DUR.entrance, ease: EASE.inOut }}>
+              Made to move.
+            </motion.span>
+          </h1>
+          <p className="landing-hero-description">
+            Running the business and making the ads? Grifon helps turn what you sell into video ads, with AI research, scripts, and scenes in one place.
+          </p>
+          <div className="landing-hero-actions">
+            <GoldButton glossy onClick={onEnterApp} className="landing-primary">
+              <span>{FREE_PLAN_CTA} <ArrowUpRight size={18} aria-hidden="true" /></span>
             </GoldButton>
-            <a
-              href="#reviews"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition"
-            >
-              SEE A COMPLETE CAMPAIGN
-              <ArrowDown className="w-4 h-4" />
+            <a href="#hero-film" onClick={revealFilm} className="landing-reveal-link">
+              Explore the story <ArrowDown size={16} aria-hidden="true" />
             </a>
           </div>
-          {/* Click-trigger trust row: one last "why believe" at the decision pixel.
-              Claims mirror the proof band — nothing new is asserted here. */}
-          <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-on-surface-sublabel">
-            <span className="flex items-center gap-0.5" aria-label="5 stars">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <Star key={s} size={11} strokeWidth={0} fill="#FFCC00" />
-              ))}
-            </span>
-            <span>20+ Filipino business owners</span>
-            <span className="text-on-surface-sublabel">·</span>
-            <span>{CTA_REASSURANCE}</span>
-          </div>
+          <p className="landing-reassurance">{CTA_REASSURANCE}</p>
+          <p className="landing-paid-note">Finished video ads require a paid plan.</p>
         </motion.div>
-      </motion.div>
-
-      {/* Output column */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: DUR.expressive, delay: 0.3, ease: EASE.out }}
-      >
-        <AdMontagePhone />
-      </motion.div>
-    </div>
-
-    {/* Pill trigger sentinel */}
-    <div ref={heroSentinelRef} className="absolute bottom-0 h-px w-px" aria-hidden="true" />
-  </section>
-);
+        <motion.figure className="landing-film-wrap" style={reduce ? undefined : { y: filmY, scale: filmScale }}>
+          <motion.div ref={filmRef} id="hero-film" className="landing-film"
+            style={reduce ? undefined : { borderRadius: filmRadius }}
+            role="img" aria-label="Blank frame reserved for the Grifon hero film" />
+          <figcaption><span>Grifon / In motion</span><span>Hero film in development</span></figcaption>
+        </motion.figure>
+        {!reduce && <HeroTrails progress={scrollYProgress} />}
+      </div>
+      <div ref={heroSentinelRef} className="absolute bottom-0 h-px w-px" aria-hidden="true" />
+    </section>
+  );
+};

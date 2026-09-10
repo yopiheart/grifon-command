@@ -7,27 +7,27 @@ import { GlassPanel } from '../ui/GlassPanel';
 import { DUR, SPRING } from '../ui/motionTokens';
 
 /** The four chips. `vertical` is the EXISTING One-Shot taxonomy (LaunchScreen
- * VERTICALS → deriveBusinessType); "Iba pa" maps to 'product' silently while the
+ * VERTICALS → deriveBusinessType); "Something else" maps to 'product' while the
  * raw label still rides the analytics event so the two stay distinguishable. */
 const CHOICES: { label: string; vertical: string; Icon: typeof Package }[] = [
-  { label: 'Produkto', vertical: 'product', Icon: Package },
-  { label: 'Serbisyo', vertical: 'service', Icon: Wrench },
+  { label: 'Product', vertical: 'product', Icon: Package },
+  { label: 'Service', vertical: 'service', Icon: Wrench },
   { label: 'Real Estate', vertical: 'real_estate', Icon: Building2 },
-  { label: 'Iba pa', vertical: 'product', Icon: Sparkles },
+  { label: 'Something else', vertical: 'product', Icon: Sparkles },
 ];
 
 interface VerticalPickerModalProps {
   open: boolean;
   /** A chip tap — `vertical` is the stashed value, `rawLabel` the chip the user hit. */
   onPick: (vertical: string, rawLabel: string) => void;
-  /** "Skip muna", Escape, or a backdrop click — all the same silent skip. */
+  /** "Skip for now", Escape, or a backdrop click — the same silent skip. */
   onSkip: () => void;
 }
 
 /**
  * One-question segmentation (workflows/post_preview_bridge.md Part 2). Intercepts
  * the landing page's primary signup CTA exactly once per session: one tap answers
- * "Anong business mo?" and the answer pre-fills the One-Shot vertical. Deliberately
+ * "What do you sell?" and the answer pre-fills the One-Shot vertical. Deliberately
  * tiny — every path out of it (chip, skip, Escape, backdrop) continues into signup,
  * so it can add friction but never a dead end. Portals to <body> so `fixed` escapes
  * any backdrop-filter ancestor (same reason as ExitIntentModal).
@@ -68,7 +68,7 @@ export const VerticalPickerModal: React.FC<VerticalPickerModalProps> = ({ open, 
           onClick={onSkip}
           role="dialog"
           aria-modal="true"
-          aria-label="Anong business mo?"
+          aria-label="What do you sell?"
           className={`fixed inset-0 z-[80] flex items-center justify-center p-4 ${MAT_VEIL}`}
         >
           <motion.div
@@ -81,10 +81,10 @@ export const VerticalPickerModal: React.FC<VerticalPickerModalProps> = ({ open, 
           >
             <GlassPanel className="p-6 shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]">
               <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">
-                // ISANG TANONG LANG
+                One quick question
               </p>
               <h2 className="!normal-case mt-2 text-2xl font-black leading-tight tracking-tight text-white">
-                Anong business mo?
+                What do you sell?
               </h2>
 
               <div className="mt-5 grid grid-cols-2 gap-3">
@@ -106,7 +106,7 @@ export const VerticalPickerModal: React.FC<VerticalPickerModalProps> = ({ open, 
                 onClick={onSkip}
                 className="mt-4 w-full text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest transition-colors hover:text-white"
               >
-                Skip muna
+                Skip for now
               </button>
             </GlassPanel>
           </motion.div>

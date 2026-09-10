@@ -6,6 +6,7 @@ import { CONTACT } from '../../../config/contact';
 import { Marquee } from '../Marquee';
 import { SignatureScribble } from '../SignatureScribble';
 import { GoldButton } from '../../ui/GoldButton';
+import { FREE_PLAN_CTA } from '../microcopy';
 import { FacebookIcon, InstagramIcon, TikTokIcon, ViberIcon } from '../SocialIcons';
 
 type LegalRoute = 'terms' | 'privacy' | 'refund' | 'support';
@@ -35,11 +36,11 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
     {/* Mobile Login Link */}
     <div className="md:hidden text-center py-6">
       <p className="text-sm text-on-surface-sublabel">
-        Already have an account? <span onClick={onEnterApp} className="text-[#FFCC00] hover:underline cursor-pointer">Log in</span>
+        Already have an account? <button onClick={onEnterApp} className="text-[#FFCC00] hover:underline cursor-pointer min-h-11 px-2">Log in</button>
       </p>
     </div>
 
-    <footer className="relative z-10 bg-zinc-950 pt-12">
+    <footer className="landing-footer relative z-10 bg-zinc-950 pt-12">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-zinc-900/60">
           {/* Where Bryan's ads end up — honest platform row, not fake partnerships. */}
@@ -62,11 +63,10 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
               own border-b is the only divider needed — no border-t here). */}
           <div className="px-6 pt-16 text-center md:pt-24">
             <h2 className="text-4xl font-black uppercase tracking-tighter leading-[0.95] sm:text-6xl md:text-7xl">
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">ALWAYS </span>
+              <span className="text-white">Your business. </span>
               <SignatureScribble variant="underline" strokeWidth={2.5} delay={0.4}>
-                <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">shipping</span>
+                <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">In motion.</span>
               </SignatureScribble>
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500"> THE AD.</span>
             </h2>
           </div>
 
@@ -75,9 +75,8 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
               rise-on-reveal + a slow-breathing gold aura — animating the emblem
               itself would cheapen the realism that sells it. */}
           <div className="relative z-10 mt-10 flex justify-center md:mt-12">
-            <GoldButton glossy onClick={onEnterApp} className="rounded-full px-10 py-4 text-sm">
-              START FREE
-              <ArrowRight className="ml-2 inline h-4 w-4" />
+            <GoldButton glossy onClick={onEnterApp} className="landing-primary">
+              <span>{FREE_PLAN_CTA} <ArrowRight className="inline h-4 w-4" aria-hidden="true" /></span>
             </GoldButton>
           </div>
           <div className="relative">
@@ -124,9 +123,11 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
 
           {/* Legal + copyright */}
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
-            <nav className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest">
+            <nav className="flex flex-wrap justify-center items-center gap-x-4 text-xs font-bold uppercase tracking-widest" aria-label="Policies and support">
               <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Privacy Policy</a>
               <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Terms</a>
+              <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Refunds</a>
+              <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Support</a>
             </nav>
             <span className="text-xs font-normal text-black/70">© 2026 Haste Enterprises. All rights reserved</span>
           </div>

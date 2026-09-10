@@ -32,10 +32,10 @@ const ViewfinderFrame: React.FC<{ children: React.ReactNode }> = ({ children }) 
 // through signup; App.tsx pops the intent post-auth to land the user in-module.
 // `moduleId` values are the exact activeModule strings App.tsx switches on.
 const SECONDARY_MODULES = [
-  { title: 'Market Research', label: 'Intelligence', desc: 'Know your market, competitors, and dream buyer before you spend a single peso on ads.', icon: Search, Demo: ResearchDemo, moduleId: 'market_research', cta: 'Research my market' },
-  { title: 'Offer Optimizer', label: 'Conversion', desc: 'Build an offer people feel stupid saying no to — using real pricing psychology.', icon: Target, Demo: OfferDemo, moduleId: 'offer_optimizer', cta: 'Fix my offer' },
-  { title: 'Caption & Headline', label: 'Copywriting', desc: 'Scroll-stopping hooks and captions for every platform, generated in seconds.', icon: Type, Demo: CaptionDemo, moduleId: 'caption_headline', cta: 'Write my captions' },
-  { title: 'Image Studio', label: 'Visuals', desc: 'Studio-grade ad images — product shots, lifestyle, anything — walang photographer.', icon: ImageIcon, Demo: ImageDemo, moduleId: 'image_ads', cta: 'Make my image ads' },
+  { title: 'Market Research', label: 'Understand your buyer', desc: 'Explore your audience, competitors, and possible ad angles before deciding what to say.', icon: Search, Demo: ResearchDemo, moduleId: 'market_research', cta: 'Research my market' },
+  { title: 'Offer Optimizer', label: 'Explain the value', desc: 'Shape your offer around what your buyer wants and why they would choose your business.', icon: Target, Demo: OfferDemo, moduleId: 'offer_optimizer', cta: 'Fix my offer' },
+  { title: 'Caption & Headline', label: 'Find the words', desc: 'Get headline and caption ideas to review and adapt for your Facebook ads and posts.', icon: Type, Demo: CaptionDemo, moduleId: 'caption_headline', cta: 'Write my captions' },
+  { title: 'Image Studio', label: 'Show what you sell', desc: 'Create product and lifestyle image concepts for your ads. Check the details against your real product before publishing.', icon: ImageIcon, Demo: ImageDemo, moduleId: 'image_ads', cta: 'Make my image ads' },
 ];
 
 interface ModulesProps {
@@ -55,12 +55,13 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
       >
         <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
-          <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Everything</span>{' '}
-          YOU NEED. NOTHING YOU DON'T.
+          One studio.{' '}
+          <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Every step.</span>
         </h2>
         <p className={`text-zinc-400 ${MEASURE} text-base mt-4`}>
-          Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time. Hindi lang sinasabi — ipinapakita.
+          Stop piecing together a brief across blank documents and separate tools. Start with a guided ad plan, or open the tool you need.
         </p>
+        <p className="mt-3 text-xs text-on-surface-sublabel">Illustrative tool previews below. Your output depends on your brief.</p>
       </motion.div>
 
       {/* Director AI — full-width feature row */}
@@ -78,9 +79,9 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
                 <Film className="w-3.5 h-3.5 text-[#FFCC00]" />
                 Video Ads
               </div>
-              <h3 className="mt-3 text-2xl md:text-3xl font-bold text-white uppercase tracking-tight">Director AI</h3>
+              <h3 className="mt-3 text-2xl md:text-3xl font-bold text-white uppercase tracking-tight">Shape your video, scene by scene.</h3>
               <p className="mt-3 text-zinc-400 leading-relaxed md:text-lg">
-                Your whole video ad — script, storyboard, shot list — in one 8-step flow. Replaces a ₱24k/yr video team.
+                Start with One-Shot Ad for a guided workflow. On Pro, Director mode gives you more control over your script, storyboard, and scenes.
               </p>
             </div>
             <DirectorDemo />

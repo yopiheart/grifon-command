@@ -276,6 +276,28 @@ flags inline transition values against this section.)
   the `reducedMotion(reduce, transition)` helper to standardize the `reduce ? {duration:0} : …`
   ternary.
 
+### Landing editorial direction
+
+The approved September 2026 landing design is scoped to `.landing-page`.
+It uses sentence-case headings at 600, a regular-weight hero headline, and
+regular Instrument Serif accents. The approved hero line "Made to move." is
+licensed as a whole serif line. Marketing buttons use Inter at 600; metadata
+keeps JetBrains Mono. The resumed website phase extends this register to pricing,
+the pre-auth gateway and checkout under `.public-purchase`: sentence-case headings
+at 600, page display headings at 400, Inter button labels and restrained gold.
+These public purchase surfaces use pill buttons and the existing material tiers;
+inputs retain rounded-xl. The authenticated app remains outside this exception.
+Native scrolling reveals an intentionally blank film frame. Motion stays
+decorative, hidden hero controls leave the focus order, and reduced-motion
+visitors receive a static hero. Gold remains the only interaction accent.
+The hero alone uses gold ribbons that unfold from the center after the copy clears,
+with staggered leading light coordinated with the blank film's rise. Their shape
+and internal current keep flowing at both margins during the film hold, leaving
+its center clear. Native scrolling reverses the opening; the edge aura leaves with
+the film stage. It uses no literal wings or stars and suspends drawing offscreen.
+The gold headline receives one deliberate highlight pass on entry. Both effects
+are omitted for reduced motion, and motion below the hero stays restrained.
+
 ## Dashboard pilot (Gemini-inspired)
 
 The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot that intentionally deviates from two rules above. The rest of the app still follows them — do not propagate these without sign-off.

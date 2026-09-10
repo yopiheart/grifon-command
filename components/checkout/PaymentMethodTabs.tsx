@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreditCard } from 'lucide-react';
+import { CreditCard, Wallet } from 'lucide-react';
 
 export type PaymentMethod = 'card' | 'gcash' | 'paymaya' | 'grab_pay';
 
@@ -9,32 +9,26 @@ interface PaymentMethodTabsProps {
 }
 
 const TABS: Array<{ id: PaymentMethod; label: string; icon: React.ReactNode }> = [
-  { id: 'card', label: 'Card', icon: <CreditCard className="w-4 h-4" /> },
+  { id: 'card', label: 'Card', icon: <CreditCard aria-hidden="true" className="w-5 h-5 shrink-0" /> },
   {
     id: 'gcash',
     label: 'GCash',
     icon: (
-      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-black">
-        G
-      </span>
+      <Wallet aria-hidden="true" className="w-5 h-5 shrink-0" />
     ),
   },
   {
     id: 'paymaya',
     label: 'Maya',
     icon: (
-      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500 text-white text-[10px] font-black">
-        M
-      </span>
+      <Wallet aria-hidden="true" className="w-5 h-5 shrink-0" />
     ),
   },
   {
     id: 'grab_pay',
     label: 'GrabPay',
     icon: (
-      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-green-700 text-white text-[10px] font-black">
-        Gr
-      </span>
+      <Wallet aria-hidden="true" className="w-5 h-5 shrink-0" />
     ),
   },
 ];
@@ -48,10 +42,11 @@ export const PaymentMethodTabs: React.FC<PaymentMethodTabsProps> = ({ active, on
           key={tab.id}
           type="button"
           onClick={() => onChange(tab.id)}
-          className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl border text-sm font-medium transition-all ${
+          aria-pressed={isActive}
+          className={`flex min-h-12 items-center justify-center gap-3 py-3 px-3 rounded-full border text-sm transition-colors ${
             isActive
               ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-white'
-              : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-white/30 hover:text-white'
+              : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00] hover:text-white'
           }`}
         >
           {tab.icon}

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple, Sparkles } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Apple, Sparkles } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry, LockablePresetId } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -80,6 +80,7 @@ import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 import { LAUNCH_LOCK_ENABLED, hasValidPass } from './services/launchGate';
 import { MAT_PLATE } from './components/ui/materialTokens';
+import { isTopUpId } from './config/topups';
 
 const TOTAL_STEPS = 8;
 
@@ -145,6 +146,17 @@ const ROUTE_PATHS: Record<Route, string> = {
   support: '/support',
 };
 
+type LegalReturn = { route: Route; href: string };
+const CHECKOUT_RETURN_KEY = 'grifon_checkout_return';
+const checkoutReturnHref = (search: string): string => {
+  const params = new URLSearchParams(search);
+  const topup = params.get('topup');
+  if (isTopUpId(topup)) return `/checkout?topup=${topup}`;
+  const plan = params.get('plan');
+  if (plan !== 'starter' && plan !== 'pro' && plan !== 'business') return '/pricing';
+  return `/checkout?plan=${plan}&cycle=${params.get('cycle') === 'annual' ? 'annual' : 'monthly'}`;
+};
+
 // Landing task-specific CTAs deep-link into these modules via moduleIntentService.
 // Allowlist so a stale/tampered sessionStorage value can never route to an
 // unexpected activeModule. Ids match the strings the activeModule switch uses.
@@ -178,7 +190,7 @@ const App: React.FC = () => {
   // route + URL to return to so the page's Back button restores exactly where
   // the user was. Form entries survive automatically — they live in this
   // component's state, which doesn't unmount while a legal route renders.
-  const [legalReturn, setLegalReturn] = useState<{ route: Route; href: string } | null>(null);
+  const [legalReturn, setLegalReturn] = useState<LegalReturn | null>(() => window.history.state?.legalReturn ?? null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
 
@@ -408,30 +420,31 @@ const App: React.FC = () => {
     return () => window.clearTimeout(t);
   }, [isBooting, isCheckingSession, isLoadingSession]);
 
-  // Post-auth redirect — once authenticated, move an operator who's sitting on the
-  // marketing gateway INTO the app (the boot screen is a visual beat, not a route
-  // change). Fires once per auth so a deliberate /pricing or /billing visit by a
-  // logged-in user is preserved. Without this, login lands back on '/'.
+  // Auth callbacks enter the app; deliberate public-page visits stay public.
+  // The provider returns to '/', while email authentication stays on /login.
   const postAuthRedirectedRef = useRef(false);
   useEffect(() => {
     if (!isAuthenticated) {
       postAuthRedirectedRef.current = false;
       return;
     }
-    if (postAuthRedirectedRef.current) return;
+    const firstAuth = !postAuthRedirectedRef.current;
     postAuthRedirectedRef.current = true;
-    // The marketing gateway and the /login screen get bounced into the app; a
-    // deliberate /pricing or /billing visit by a logged-in user is preserved.
-    if (currentRoute === 'landing' || currentRoute === 'login') {
+    const oauthReturn = isBooting || !!sessionStorage.getItem('grifon_oauth_pending');
+    if ((firstAuth && oauthReturn && currentRoute === 'landing') || currentRoute === 'login') {
       setCurrentRoute('app');
       if (typeof window !== 'undefined') {
         window.history.replaceState({}, '', ROUTE_PATHS.app);
       }
     }
-    // Fires once per authentication (ref-guarded) — intentionally keyed on
-    // isAuthenticated only, capturing the route at the moment auth resolves.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [isAuthenticated, currentRoute, isBooting]);
+
+  useEffect(() => {
+    if (!isCheckingSession && !isAuthenticated && currentRoute === 'app') {
+      window.history.replaceState({}, '', ROUTE_PATHS.login);
+      setCurrentRoute('login');
+    }
+  }, [isCheckingSession, isAuthenticated, currentRoute]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -454,7 +467,24 @@ const App: React.FC = () => {
     if (plan === 'starter' || plan === 'pro' || plan === 'business') {
       saveIntendedPlan(plan, cycle);
     }
-  }, []);
+  }, [currentRoute]);
+
+  useEffect(() => {
+    if (currentRoute !== 'checkout') return;
+    const rememberCheckout = () => {
+      const href = checkoutReturnHref(window.location.search);
+      try { sessionStorage.setItem(CHECKOUT_RETURN_KEY, href); } catch { /* retry falls back to pricing */ }
+    };
+    rememberCheckout();
+    window.addEventListener('pagehide', rememberCheckout);
+    return () => window.removeEventListener('pagehide', rememberCheckout);
+  }, [currentRoute]);
+
+  useEffect(() => {
+    if (currentRoute !== 'landing' || !window.location.hash) return;
+    const frame = requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView());
+    return () => cancelAnimationFrame(frame);
+  }, [currentRoute]);
 
   // Manual routing (no React Router): keep the React route in sync with the
   // browser's back/forward buttons. Without this, a history pop changes the URL
@@ -462,7 +492,10 @@ const App: React.FC = () => {
   // vercel.json, which lets deep links / refreshes resolve to index.html.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const onPop = () => setCurrentRoute(detectInitialRoute());
+    const onPop = () => {
+      setCurrentRoute(detectInitialRoute());
+      setLegalReturn(window.history.state?.legalReturn ?? null);
+    };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
@@ -938,6 +971,7 @@ const App: React.FC = () => {
       popIntendedModule();
       popIntendedPlan();
       popIntendedVertical();
+      try { sessionStorage.removeItem(CHECKOUT_RETURN_KEY); } catch { /* storage unavailable */ }
       setPreferredVertical(null);
       setAuthEmail('');
       setAuthCode('');
@@ -1033,12 +1067,26 @@ const App: React.FC = () => {
 
   // Generic URL-syncing navigation: swap the route AND the address bar so the
   // URL matches the view (deep-linkable / refresh-safe under the vercel.json
-  // catch-all). Used for the legal pages and /pricing.
-  const goToLegal = (route: Route) => {
-    if (typeof window !== 'undefined' && window.history.replaceState) {
-      window.history.replaceState({}, '', ROUTE_PATHS[route]);
+  // catch-all). User navigation adds history; auth redirects replace it.
+  const goToLegal = (route: Route, options: { href?: string; replace?: boolean; legalReturn?: LegalReturn } = {}) => {
+    if (typeof window !== 'undefined') {
+      const href = options.href ?? ROUTE_PATHS[route];
+      if (window.location.pathname + window.location.search + window.location.hash !== href) {
+        window.history[options.replace ? 'replaceState' : 'pushState']({ legalReturn: options.legalReturn }, '', href);
+      }
+      window.scrollTo(0, 0);
     }
+    setLegalReturn(options.legalReturn ?? null);
     setCurrentRoute(route);
+  };
+
+  const retryCheckout = () => {
+    let href = '/pricing';
+    try {
+      const saved = sessionStorage.getItem(CHECKOUT_RETURN_KEY);
+      if (saved?.startsWith('/checkout?')) href = checkoutReturnHref(saved.slice('/checkout?'.length));
+    } catch { /* no stored selection */ }
+    goToLegal(href === '/pricing' ? 'pricing' : 'checkout', { href, replace: true });
   };
 
   // "Enter the app" CTA (landing / pricing). Unauthenticated visitors land on the
@@ -1054,10 +1102,7 @@ const App: React.FC = () => {
     const href = intent
       ? `${ROUTE_PATHS.login}?plan=${intent.plan_id}&cycle=${intent.billing_cycle}`
       : ROUTE_PATHS.login;
-    if (typeof window !== 'undefined' && window.history.replaceState) {
-      window.history.replaceState({}, '', href);
-    }
-    setCurrentRoute('login');
+    goToLegal('login', { href });
   };
 
   // Route-transition veil (marketing pages only): cover 0.36s → swap route under
@@ -1116,12 +1161,7 @@ const App: React.FC = () => {
   // Open a legal page from checkout, remembering the exact checkout URL (incl. ?plan=&cycle=)
   // so we can return the buyer to it with their entries intact.
   const handleViewLegal = (route: 'terms' | 'privacy') => {
-    setLegalReturn(
-      typeof window !== 'undefined'
-        ? { route: 'checkout', href: window.location.pathname + window.location.search }
-        : null
-    );
-    goToLegal(route);
+    goToLegal(route, { legalReturn: { route: 'checkout', href: window.location.pathname + window.location.search } });
   };
 
   // Open a legal page from the auth gateway (sign in / sign up), remembering the
@@ -1129,24 +1169,14 @@ const App: React.FC = () => {
   // opt-in survive (App state persists across the legal route). Reading a policy
   // never costs them their place, which lifts signup completion.
   const openLegalFromAuth = (route: Route) => {
-    setLegalReturn(
-      typeof window !== 'undefined'
-        ? { route: currentRoute, href: window.location.pathname + window.location.search }
-        : null
-    );
-    goToLegal(route);
+    goToLegal(route, { legalReturn: { route: currentRoute, href: window.location.pathname + window.location.search } });
   };
 
   // Back button on a legal page: return to wherever the user opened it from
   // (checkout / auth gateway), else fall back to the marketing landing.
   const handleLegalBack = () => {
     if (legalReturn) {
-      if (typeof window !== 'undefined' && window.history.replaceState) {
-        window.history.replaceState({}, '', legalReturn.href);
-      }
-      const dest = legalReturn.route;
-      setLegalReturn(null);
-      setCurrentRoute(dest);
+      window.history.back();
     } else {
       runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'));
     }
@@ -1196,20 +1226,20 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:billing_success"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('app')}
+        onReset={() => goToLegal('app', { replace: true })}
         resetLabel="CONTINUE TO APP"
       >
         <BillingSuccess
           // This screen IS the fork, so both buttons consume the return-to-ad
           // intent — otherwise the pop effect would drag a "create my first ad"
           // click back to the old run.
-          onContinue={() => { popReturnToAd(); setCurrentRoute('app'); }}
+          onContinue={() => { popReturnToAd(); goToLegal('app', { replace: true }); }}
           email={userEmail}
           // The ad they just bought the plan FOR — only offered when a finished
           // (Step 8) run actually exists, in memory or in the saved session.
           onReturnToAd={
             currentStep === TOTAL_STEPS || pendingSession?.currentStep === TOTAL_STEPS
-              ? () => { popReturnToAd(); setCurrentRoute('app'); restoreFinishedAd(); }
+              ? () => { popReturnToAd(); goToLegal('app', { replace: true }); restoreFinishedAd(); }
               : undefined
           }
         />
@@ -1217,15 +1247,11 @@ const App: React.FC = () => {
     );
   }
 
-  // A logged-in user — or one mid-OAuth-return (provider bounces back to '/',
-  // resetting the route to 'landing') — must NEVER see the marketing landing:
-  // it would flash for a frame before the post-auth redirect / Film Leader boot
-  // takes over. The OAuth flag distinguishes a returning login from a genuine
-  // public visit during the brief session check, so public visitors still get
-  // the landing immediately (no blank).
+  // Hold the landing only during an OAuth return/boot. Signed-in users can
+  // deliberately browse public pages, including returning Home from pricing.
   const oauthReturning =
     typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('grifon_oauth_pending');
-  if (currentRoute === 'landing' && !isAuthenticated && !isBooting && !oauthReturning) {
+  if (currentRoute === 'landing' && !isBooting && !oauthReturning) {
     return (
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
@@ -1248,12 +1274,12 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:pricing"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('landing')}
+        onReset={() => goToLegal('landing')}
         resetLabel="RETURN TO LANDING"
       >
         <GrifonPricingPage
           onEnterApp={enterApp}
-          onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
+          onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))}
           onNavigateLegal={veilToLegal}
         />
         <ConsentBanner
@@ -1280,13 +1306,13 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:checkout"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('pricing')}
+        onReset={() => goToLegal('pricing')}
         resetLabel="BACK TO PRICING"
       >
         {isTopupCheckout ? (
-          <TopUpCheckoutPage email={userEmail} onBack={() => setCurrentRoute('app')} onViewLegal={handleViewLegal} />
+          <TopUpCheckoutPage email={userEmail} onBack={() => goToLegal('app')} onViewLegal={handleViewLegal} />
         ) : (
-          <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+          <CheckoutPage email={userEmail} onBack={() => goToLegal('pricing')} onViewLegal={handleViewLegal} />
         )}
       </ErrorBoundary>
     );
@@ -1297,12 +1323,12 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:billing_3ds_return"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('checkout')}
+        onReset={retryCheckout}
         resetLabel="BACK TO CHECKOUT"
       >
         <Billing3dsReturn
-          onContinue={() => setCurrentRoute('app')}
-          onRetry={() => setCurrentRoute('checkout')}
+          onContinue={() => goToLegal('app', { replace: true })}
+          onRetry={retryCheckout}
         />
       </ErrorBoundary>
     );
@@ -1351,7 +1377,7 @@ const App: React.FC = () => {
   if (!isAuthenticated || isBooting) {
     return (
       <ErrorBoundary name="route:auth" resetLabel="RETRY">
-      <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      <div className="auth-gateway public-purchase min-h-screen bg-zinc-950 font-sans flex flex-col items-center justify-center px-4 py-10 md:py-16 relative overflow-x-clip">
         {/* Cinematic backdrop — CSS-only HUD gradient (no image weight). */}
         <div className="absolute inset-0 pointer-events-none z-0">
           {/* Ad reel — the thing the gateway glass refracts. Sits at the very
@@ -1399,29 +1425,26 @@ const App: React.FC = () => {
           <BootScreen userEmail={userEmail} />
         ) : (
           <div className="relative z-10 w-full flex flex-col items-center">
-            {/* Compact header — the whole gateway must fit one phone screen without scrolling */}
-            <div className="mb-2 md:mb-6 text-center flex flex-col items-center">
+            {/* Keep the offer readable; short screens scroll naturally to the form. */}
+            <div className="mb-6 md:mb-8 text-center flex flex-col items-center max-w-lg">
               <div className="mb-1 md:mb-3 flex items-center gap-2.5">
                 <GrifonMark className="h-8 w-8 md:h-14 md:w-14" />
-                <h1 className="text-2xl md:text-4xl font-[900] italic text-white uppercase tracking-tighter">
+                <p className="text-2xl font-bold italic text-white tracking-tighter">
                   GRIFON
-                </h1>
+                </p>
               </div>
               {/* Outcome-first gateway copy — what the visitor GETS, not what the engine does */}
-              <h2 className="text-sm md:text-lg font-bold uppercase tracking-tight text-zinc-200 mb-1">
-                YOUR FIRST AD IS{' '}
-                <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">30 minutes</span>{' '}
-                AWAY.
-              </h2>
-              <p className="auth-compact-hide text-[9px] md:text-[10px] font-mono text-on-surface-sublabel tracking-[0.3em] uppercase flex items-center justify-center gap-2">
-                <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
-                // FREE PLAN — NO CREDIT CARD NEEDED
+              <h1 className="purchase-display text-3xl md:text-4xl tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mt-4 mb-3">
+                Your business. Your next ad.
+              </h1>
+              <p className="text-sm text-zinc-400 leading-relaxed max-w-sm">
+                Sign in to build your ad plan or continue with your selected plan.
               </p>
             </div>
 
             {/* CHROME — the one panel in the app that genuinely floats over live
                 content (the reel behind it), so it's the one that earns real glass. */}
-            <GlassPanel tier="chrome" className="relative w-full max-w-md p-4 md:p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <GlassPanel tier="chrome" className="relative w-full max-w-md p-6 md:p-8 rounded-3xl">
                 {/* Terminal-frame hairlines — gold HUD corners */}
                 <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-3 h-px bg-[#FFCC00]/60" />
                 <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-px h-3 bg-[#FFCC00]/60" />
@@ -1478,7 +1501,7 @@ const App: React.FC = () => {
                         )}
                       </div>
                     )}
-                    <div className="flex items-center gap-3 mb-4 md:mb-6">
+                    <div className="flex items-center gap-3 my-6">
                       <div className="flex-1 border-t border-white/10"></div>
                       <span className="text-[10px] font-mono text-on-surface-sublabel tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
                       <div className="flex-1 border-t border-white/10"></div>
@@ -1489,10 +1512,9 @@ const App: React.FC = () => {
                 {authMode === 'email' && (
                   <form onSubmit={handleEmailSubmit} className="space-y-3 md:space-y-5">
                     {/* Free-plan claims mirror the pricing page — no invented numbers */}
-                    <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 -mt-1 text-[10px] md:text-xs text-zinc-400 whitespace-nowrap">
-                      <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> 3 free ad workflows/mo</span>
-                      <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> No credit card</span>
-                      <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> Cancel anytime</span>
+                    <div className="text-sm text-zinc-400 leading-relaxed text-center pb-2">
+                      <p className="text-zinc-200">Free: one ad-plan preview a month.</p>
+                      <p className="text-xs mt-1">No credit card. Finished videos are paid.</p>
                     </div>
                     <div>
                       <Input
@@ -1539,7 +1561,7 @@ const App: React.FC = () => {
                             reads sentence-case. Benefit-first framing (Reciprocity) lifts the
                             tick rate while staying an informed, affirmative, unchecked opt-in:
                             the outcome leads, the Meta data-sharing is the demoted mechanism. */}
-                        <span className="mt-1 block text-xs text-zinc-300 leading-snug normal-case">
+                        <span className="mt-1 block text-xs text-zinc-300 leading-relaxed normal-case font-sans !font-normal !tracking-normal">
                           Yes — send me deals and offers picked for my business. I'm okay sharing
                           limited data with partners like Meta to keep them relevant.{' '}
                           {/* stopPropagation so opening the policy doesn't toggle the checkbox. */}
@@ -1560,7 +1582,7 @@ const App: React.FC = () => {
                         from the opt-in above: this is generic legal acknowledgment, fine to
                         carry by the continue action — NOT the Meta data-sharing consent, which
                         stays the explicit unchecked box. font-sans keeps it out of the mono law. */}
-                    <p className="text-center text-[11px] text-on-surface-sublabel leading-snug normal-case font-sans">
+                    <p className="text-center text-xs text-on-surface-sublabel leading-relaxed normal-case font-sans">
                       By continuing, you agree to our{' '}
                       <button type="button" onClick={() => openLegalFromAuth('terms')} className="inline-flex min-h-11 items-center font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
                       and{' '}
@@ -1618,31 +1640,22 @@ const App: React.FC = () => {
                         type="button"
                         onClick={handleResendOtp}
                         disabled={isSigningIn}
-                        className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest hover:text-[#FFCC00] transition-colors disabled:opacity-50"
+                        className="min-h-11 text-xs text-zinc-400 hover:text-[#FFCC00] transition-colors disabled:opacity-50"
                       >
-                        {isSigningIn ? '// SENDING...' : '// RESEND_CODE'}
+                        {isSigningIn ? 'Sending…' : 'Resend code'}
                       </button>
                       <button
                         type="button"
                         onClick={() => { setAuthMode('email'); setAuthCode(''); setAuthError(''); setAuthNotice(''); }}
-                        className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                        className="min-h-11 text-xs text-on-surface-sublabel hover:text-[#FFCC00] transition-colors"
                       >
-                        // CHANGE_EMAIL
+                        Change email
                       </button>
                     </div>
                   </form>
                 )}
 
                 <div className="mt-3 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col items-center gap-1.5 md:gap-3">
-                  {/* Same trust claim as the pricing page social-proof pill — stars stacked above */}
-                  <div className="auth-compact-hide flex flex-col items-center gap-1.5 text-xs text-zinc-400 text-center">
-                    <span className="flex gap-1">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} className="w-3.5 h-3.5 shrink-0" strokeWidth={0} fill="#FFCC00" />
-                      ))}
-                    </span>
-                    Trusted by 100+ Filipino business owners
-                  </div>
                   {/* Terms + Privacy live in the passive line above the button now, so the
                       footer carries only what's unique here: Refund + Support. All return
                       to the auth form (openLegalFromAuth) so reading them costs no entries. */}
@@ -1651,7 +1664,6 @@ const App: React.FC = () => {
                     <span className="text-on-surface-sublabel">·</span>
                     <button type="button" onClick={() => openLegalFromAuth('support')} className="inline-flex min-h-11 items-center px-2 hover:text-[#FFCC00] transition-colors">SUPPORT</button>
                   </div>
-                  <p className="hidden md:block text-[10px] font-mono text-on-surface-sublabel tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
                 </div>
             </GlassPanel>
           </div>

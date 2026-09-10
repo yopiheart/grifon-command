@@ -15,6 +15,7 @@ import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
 import { useServerRenderJobs } from '../hooks/useServerRenderJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
+import { RecentWorkCard } from './ui/RecentWorkCard';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
 import { SignatureScribble } from './landing/SignatureScribble';
 import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
@@ -132,6 +133,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [onboardingDismissed, setOnboardingDismissed] = useState(true);
+  const [draftLoading, setDraftLoading] = useState(Boolean(userId));
+  const [draftError, setDraftError] = useState(false);
+  const [draftReload, setDraftReload] = useState(0);
   const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
   const [heroInput, setHeroInput] = useState('');
   const [promptIndex, setPromptIndex] = useState(0);
@@ -159,17 +163,19 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   useEffect(() => {
-    if (!userId) { setDraftSession(null); return; }
+    if (!userId) { setDraftSession(null); setDraftLoading(false); return; }
+    setDraftLoading(true);
+    setDraftError(false);
     let cancelled = false;
     getSession(userId).then((s) => {
       if (cancelled) return;
-      // Step 8 counts: a finished ad is the thing the user most wants back
-      // after a paywall exit, so the card offers it too (finished-ad copy).
+      // Keep the final step resumable without assuming a render has completed.
       if (s && s.currentStep > 1 && s.currentStep <= WIZARD_TOTAL_STEPS) setDraftSession(s);
       else setDraftSession(null);
-    });
+    }).catch(() => { if (!cancelled) setDraftError(true); })
+      .finally(() => { if (!cancelled) setDraftLoading(false); });
     return () => { cancelled = true; };
-  }, [userId, activeModule]);
+  }, [userId, activeModule, draftReload]);
 
   // Rotating hero placeholder
   useEffect(() => {
@@ -183,6 +189,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     const handleKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        setMobileOpen(false);
         setPaletteQuery('');
         setPaletteOpen((p) => !p);
       }
@@ -229,7 +236,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   // Sidebar select routes any tier-locked module → upgrade.
   const sidebarSelect = (id: string) => {
-    if (MODULE_TIER[id] && !moduleUnlocked(id)) { onUpgrade?.(); return; }
+    if (MODULE_TIER[id] && !moduleUnlocked(id)) { setMobileOpen(false); onUpgrade?.(); return; }
     handleSelectModule(id);
   };
 
@@ -271,13 +278,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   // Quota label + low-nudge
   const quotaLabel = quota.loading
-    ? '—'
-    : userPlan === 'pro' || userPlan === 'business'
-      ? 'Unlimited'
-      : typeof quota.workflows.remaining === 'number'
-        ? `${quota.workflows.remaining} left`
-        : '';
-  const quotaLow = Boolean(computeUpgradeNudge(userPlan, quota.workflows, quota.loading));
+    ? 'Loading usage...'
+    : !quota.loaded
+      ? 'Usage unavailable'
+      : `${quota.workflows.remaining} ad plans left`;
+  const quotaLow = quota.loaded && Boolean(computeUpgradeNudge(userPlan, quota.workflows, quota.loading));
 
   // Sidebar departments from registry
   const navGroups: SidebarNavGroup[] = RAIL_GROUPS.map((g) => ({
@@ -312,7 +317,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const recentForSidebar = recent.map((r) => ({ id: r.id, moduleId: r.moduleId, title: r.title }));
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-[#FFCC00] selection:text-black relative">
+    <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-[#FFCC00] selection:text-black relative [&_button:focus-visible]:outline [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-[#FFCC00]">
       <SmokeAura />
 
       <DashboardSidebar
@@ -325,20 +330,20 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         recent={recentForSidebar}
         onSelect={sidebarSelect}
         onNewAd={() => handleSelectModule('creative_director')}
-        onSearch={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-        onOpenNotifications={() => setNotifOpen(true)}
+        onSearch={() => { setMobileOpen(false); setPaletteQuery(''); setPaletteOpen(true); }}
+        onOpenNotifications={() => { setMobileOpen(false); setNotifOpen(true); }}
         notifDot={activeJobs.length > 0 || quotaLow}
         userName={userName}
         userEmail={displayEmail}
         quotaLabel={quotaLabel}
-        onOpenSettings={() => setSettingsOpen(true)}
+        onOpenSettings={() => { setMobileOpen(false); setSettingsOpen(true); }}
       />
 
       {/* Mobile top bar */}
       {/* CHROME + scroll edge — the slate scrolls under this bar, so content
           grades out beneath it instead of colliding with the icons. */}
       <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between ${MAT_CHROME} ${SCROLL_EDGE} border-b ${HAIRLINE}`}>
-        <button onClick={() => setMobileOpen(true)} aria-label="Menu" className={`w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
+        <button onClick={() => setMobileOpen(true)} aria-label="Menu" aria-expanded={mobileOpen} aria-controls="dashboard-navigation" className={`w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <Menu className="w-5 h-5" />
         </button>
         <button onClick={() => setNotifOpen(true)} aria-label="Notifications" className={`relative w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
@@ -349,9 +354,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
       {/* Main */}
       <motion.main
+        aria-hidden={mobileOpen || undefined}
         initial={false}
         animate={{ paddingLeft: isDesktop ? (collapsed ? 76 : 268) : 0 }}
-        transition={SPRING.standard}
+        transition={reducedMotion(reduce, SPRING.standard)}
         className="relative z-10 pt-14 lg:pt-0 min-h-screen flex flex-col"
       >
         <div className="w-full max-w-3xl lg:max-w-4xl mx-auto px-4 lg:px-8 flex-1 flex flex-col">
@@ -392,6 +398,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <div className={`${CARD_TONAL} rounded-2xl ${RING_FIELD} p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all`}>
                 <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0 ml-1" />
                 <input
+                  aria-label="Describe your business"
                   type="text"
                   value={heroInput}
                   onChange={(e) => setHeroInput(e.target.value)}
@@ -401,8 +408,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 />
                 <button
                   onClick={submitHero}
-                  aria-label="Make my ad"
-                  className={`w-10 h-10 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 ${GOLD_GLOW_HOVER} active:scale-95 transition-all`}
+                  aria-label="Research my business"
+                  className={`w-11 h-11 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 ${GOLD_GLOW_HOVER} active:scale-95 transition-all`}
                 >
                   <ArrowRight className="w-5 h-5 text-black" />
                 </button>
@@ -424,13 +431,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               </div>
 
               <p className="text-center text-xs text-on-surface-sublabel mt-4">
-                One prompt → a full video ad. Grifon researches, scripts, and storyboards it for you.
+                Start with your business. Build the ad plan, then choose a paid plan for a finished video.
               </p>
 
-              {!quota.loading && quota.workflows.used > 0 && (
+              {quota.loaded && !quota.loading && quota.workflows.used > 0 && (
                 <p className="text-center text-xs text-on-surface-sublabel mt-3">
-                  You've shipped <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
-                  workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
+                  You've used <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
+                  ad plan{quota.workflows.used === 1 ? '' : 's'} this month.
                   {weeklyActiveDays >= 2 && (
                     <span className="inline-flex items-center gap-1 ml-2 text-zinc-400">
                       <Flame className="w-3.5 h-3.5 text-[#FFCC00]" /> {weeklyActiveDays} days this week
@@ -441,6 +448,24 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </motion.div>
           </div>
 
+          {/* Saved work is separate from module visits. */}
+          <section aria-label="Your work" className="mb-6 max-w-2xl mx-auto w-full space-y-3">
+            <p className="text-lg font-semibold text-white">Pick up where you left off</p>
+            {draftLoading ? (
+              <p role="status" className="text-sm text-on-surface-sublabel">Checking your saved ad plan...</p>
+            ) : draftError ? (
+              <div role="status" className="text-sm text-on-surface-sublabel">
+                <p>We couldn't check your saved ad plan.</p>
+                <button onClick={() => setDraftReload((n) => n + 1)} className="min-h-11 text-[#FFCC00]">Try again</button>
+              </div>
+            ) : !draftSession && (
+              <div className="bg-zinc-900/70 rounded-2xl p-5">
+                <p className="text-sm text-white">No saved Director ad plan found on this device</p>
+                <p className="text-sm text-on-surface-sublabel mt-1">Research your business above, or open Director to start your ad plan.</p>
+                <button onClick={() => setDraftReload((n) => n + 1)} className="min-h-11 mr-4 text-sm text-zinc-300 hover:text-[#FFCC00]">Check again</button>
+                <button onClick={() => handleSelectModule('creative_director')} className="min-h-11 mt-2 text-sm text-[#FFCC00]">Open Director <ArrowRight aria-hidden className="inline w-4 h-4 ml-2" /></button>
+              </div>
+            )}
           {/* Resume / onboarding */}
           {draftSession && (
             <div className="mb-6 max-w-2xl mx-auto w-full">
@@ -450,8 +475,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 savedAt={draftSession.savedAt}
                 brandName={draftSession.clientDetails?.brandName}
                 onResume={() => {
-                  // A finished ad gets the one-click restore App provides; mid-flow
-                  // drafts keep the existing open-the-module + resume-pill path.
+                  // Final-step sessions use App's direct restore; earlier drafts
+                  // retain the module's existing resume flow.
                   if (draftSession.currentStep >= WIZARD_TOTAL_STEPS && onResumeFinishedAd) onResumeFinishedAd();
                   else handleSelectModule('creative_director');
                 }}
@@ -460,7 +485,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               />
             </div>
           )}
-          {showOnboarding && !draftSession && (
+          {showOnboarding && !draftLoading && !draftError && !draftSession && (
             <div className="mb-6 max-w-2xl mx-auto w-full">
               <OnboardingNudge onStart={() => handleSelectModule('creative_director')} onDismiss={dismissOnboarding} delay={0.25} />
             </div>
@@ -468,6 +493,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
           {activeJobs.length > 0 && (
             <div className="mb-6 max-w-2xl mx-auto w-full">
               <ActiveJobsPanel jobs={activeJobs} delay={0.3} />
+            </div>
+          )}
+
+          </section>
+
+          {recent.length > 0 && (
+            <div className="mb-8 max-w-2xl mx-auto w-full">
+              <RecentWorkCard items={recent} onResume={(item) => sidebarSelect(item.moduleId)} />
             </div>
           )}
 
