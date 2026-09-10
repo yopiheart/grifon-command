@@ -80,6 +80,7 @@ import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 import { LAUNCH_LOCK_ENABLED, hasValidPass } from './services/launchGate';
 import { MAT_PLATE } from './components/ui/materialTokens';
+import { isTopUpId } from './config/topups';
 
 const TOTAL_STEPS = 8;
 
@@ -145,6 +146,17 @@ const ROUTE_PATHS: Record<Route, string> = {
   support: '/support',
 };
 
+type LegalReturn = { route: Route; href: string };
+const CHECKOUT_RETURN_KEY = 'grifon_checkout_return';
+const checkoutReturnHref = (search: string): string => {
+  const params = new URLSearchParams(search);
+  const topup = params.get('topup');
+  if (isTopUpId(topup)) return `/checkout?topup=${topup}`;
+  const plan = params.get('plan');
+  if (plan !== 'starter' && plan !== 'pro' && plan !== 'business') return '/pricing';
+  return `/checkout?plan=${plan}&cycle=${params.get('cycle') === 'annual' ? 'annual' : 'monthly'}`;
+};
+
 // Landing task-specific CTAs deep-link into these modules via moduleIntentService.
 // Allowlist so a stale/tampered sessionStorage value can never route to an
 // unexpected activeModule. Ids match the strings the activeModule switch uses.
@@ -178,7 +190,7 @@ const App: React.FC = () => {
   // route + URL to return to so the page's Back button restores exactly where
   // the user was. Form entries survive automatically — they live in this
   // component's state, which doesn't unmount while a legal route renders.
-  const [legalReturn, setLegalReturn] = useState<{ route: Route; href: string } | null>(null);
+  const [legalReturn, setLegalReturn] = useState<LegalReturn | null>(() => window.history.state?.legalReturn ?? null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
 
@@ -408,30 +420,31 @@ const App: React.FC = () => {
     return () => window.clearTimeout(t);
   }, [isBooting, isCheckingSession, isLoadingSession]);
 
-  // Post-auth redirect — once authenticated, move an operator who's sitting on the
-  // marketing gateway INTO the app (the boot screen is a visual beat, not a route
-  // change). Fires once per auth so a deliberate /pricing or /billing visit by a
-  // logged-in user is preserved. Without this, login lands back on '/'.
+  // Auth callbacks enter the app; deliberate public-page visits stay public.
+  // The provider returns to '/', while email authentication stays on /login.
   const postAuthRedirectedRef = useRef(false);
   useEffect(() => {
     if (!isAuthenticated) {
       postAuthRedirectedRef.current = false;
       return;
     }
-    if (postAuthRedirectedRef.current) return;
+    const firstAuth = !postAuthRedirectedRef.current;
     postAuthRedirectedRef.current = true;
-    // The marketing gateway and the /login screen get bounced into the app; a
-    // deliberate /pricing or /billing visit by a logged-in user is preserved.
-    if (currentRoute === 'landing' || currentRoute === 'login') {
+    const oauthReturn = isBooting || !!sessionStorage.getItem('grifon_oauth_pending');
+    if ((firstAuth && oauthReturn && currentRoute === 'landing') || currentRoute === 'login') {
       setCurrentRoute('app');
       if (typeof window !== 'undefined') {
         window.history.replaceState({}, '', ROUTE_PATHS.app);
       }
     }
-    // Fires once per authentication (ref-guarded) — intentionally keyed on
-    // isAuthenticated only, capturing the route at the moment auth resolves.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [isAuthenticated, currentRoute, isBooting]);
+
+  useEffect(() => {
+    if (!isCheckingSession && !isAuthenticated && currentRoute === 'app') {
+      window.history.replaceState({}, '', ROUTE_PATHS.login);
+      setCurrentRoute('login');
+    }
+  }, [isCheckingSession, isAuthenticated, currentRoute]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -454,7 +467,24 @@ const App: React.FC = () => {
     if (plan === 'starter' || plan === 'pro' || plan === 'business') {
       saveIntendedPlan(plan, cycle);
     }
-  }, []);
+  }, [currentRoute]);
+
+  useEffect(() => {
+    if (currentRoute !== 'checkout') return;
+    const rememberCheckout = () => {
+      const href = checkoutReturnHref(window.location.search);
+      try { sessionStorage.setItem(CHECKOUT_RETURN_KEY, href); } catch { /* retry falls back to pricing */ }
+    };
+    rememberCheckout();
+    window.addEventListener('pagehide', rememberCheckout);
+    return () => window.removeEventListener('pagehide', rememberCheckout);
+  }, [currentRoute]);
+
+  useEffect(() => {
+    if (currentRoute !== 'landing' || !window.location.hash) return;
+    const frame = requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView());
+    return () => cancelAnimationFrame(frame);
+  }, [currentRoute]);
 
   // Manual routing (no React Router): keep the React route in sync with the
   // browser's back/forward buttons. Without this, a history pop changes the URL
@@ -462,7 +492,10 @@ const App: React.FC = () => {
   // vercel.json, which lets deep links / refreshes resolve to index.html.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const onPop = () => setCurrentRoute(detectInitialRoute());
+    const onPop = () => {
+      setCurrentRoute(detectInitialRoute());
+      setLegalReturn(window.history.state?.legalReturn ?? null);
+    };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
@@ -938,6 +971,7 @@ const App: React.FC = () => {
       popIntendedModule();
       popIntendedPlan();
       popIntendedVertical();
+      try { sessionStorage.removeItem(CHECKOUT_RETURN_KEY); } catch { /* storage unavailable */ }
       setPreferredVertical(null);
       setAuthEmail('');
       setAuthCode('');
@@ -1033,12 +1067,26 @@ const App: React.FC = () => {
 
   // Generic URL-syncing navigation: swap the route AND the address bar so the
   // URL matches the view (deep-linkable / refresh-safe under the vercel.json
-  // catch-all). Used for the legal pages and /pricing.
-  const goToLegal = (route: Route) => {
-    if (typeof window !== 'undefined' && window.history.replaceState) {
-      window.history.replaceState({}, '', ROUTE_PATHS[route]);
+  // catch-all). User navigation adds history; auth redirects replace it.
+  const goToLegal = (route: Route, options: { href?: string; replace?: boolean; legalReturn?: LegalReturn } = {}) => {
+    if (typeof window !== 'undefined') {
+      const href = options.href ?? ROUTE_PATHS[route];
+      if (window.location.pathname + window.location.search + window.location.hash !== href) {
+        window.history[options.replace ? 'replaceState' : 'pushState']({ legalReturn: options.legalReturn }, '', href);
+      }
+      window.scrollTo(0, 0);
     }
+    setLegalReturn(options.legalReturn ?? null);
     setCurrentRoute(route);
+  };
+
+  const retryCheckout = () => {
+    let href = '/pricing';
+    try {
+      const saved = sessionStorage.getItem(CHECKOUT_RETURN_KEY);
+      if (saved?.startsWith('/checkout?')) href = checkoutReturnHref(saved.slice('/checkout?'.length));
+    } catch { /* no stored selection */ }
+    goToLegal(href === '/pricing' ? 'pricing' : 'checkout', { href, replace: true });
   };
 
   // "Enter the app" CTA (landing / pricing). Unauthenticated visitors land on the
@@ -1054,10 +1102,7 @@ const App: React.FC = () => {
     const href = intent
       ? `${ROUTE_PATHS.login}?plan=${intent.plan_id}&cycle=${intent.billing_cycle}`
       : ROUTE_PATHS.login;
-    if (typeof window !== 'undefined' && window.history.replaceState) {
-      window.history.replaceState({}, '', href);
-    }
-    setCurrentRoute('login');
+    goToLegal('login', { href });
   };
 
   // Route-transition veil (marketing pages only): cover 0.36s → swap route under
@@ -1116,12 +1161,7 @@ const App: React.FC = () => {
   // Open a legal page from checkout, remembering the exact checkout URL (incl. ?plan=&cycle=)
   // so we can return the buyer to it with their entries intact.
   const handleViewLegal = (route: 'terms' | 'privacy') => {
-    setLegalReturn(
-      typeof window !== 'undefined'
-        ? { route: 'checkout', href: window.location.pathname + window.location.search }
-        : null
-    );
-    goToLegal(route);
+    goToLegal(route, { legalReturn: { route: 'checkout', href: window.location.pathname + window.location.search } });
   };
 
   // Open a legal page from the auth gateway (sign in / sign up), remembering the
@@ -1129,24 +1169,14 @@ const App: React.FC = () => {
   // opt-in survive (App state persists across the legal route). Reading a policy
   // never costs them their place, which lifts signup completion.
   const openLegalFromAuth = (route: Route) => {
-    setLegalReturn(
-      typeof window !== 'undefined'
-        ? { route: currentRoute, href: window.location.pathname + window.location.search }
-        : null
-    );
-    goToLegal(route);
+    goToLegal(route, { legalReturn: { route: currentRoute, href: window.location.pathname + window.location.search } });
   };
 
   // Back button on a legal page: return to wherever the user opened it from
   // (checkout / auth gateway), else fall back to the marketing landing.
   const handleLegalBack = () => {
     if (legalReturn) {
-      if (typeof window !== 'undefined' && window.history.replaceState) {
-        window.history.replaceState({}, '', legalReturn.href);
-      }
-      const dest = legalReturn.route;
-      setLegalReturn(null);
-      setCurrentRoute(dest);
+      window.history.back();
     } else {
       runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'));
     }
@@ -1196,20 +1226,20 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:billing_success"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('app')}
+        onReset={() => goToLegal('app', { replace: true })}
         resetLabel="CONTINUE TO APP"
       >
         <BillingSuccess
           // This screen IS the fork, so both buttons consume the return-to-ad
           // intent — otherwise the pop effect would drag a "create my first ad"
           // click back to the old run.
-          onContinue={() => { popReturnToAd(); setCurrentRoute('app'); }}
+          onContinue={() => { popReturnToAd(); goToLegal('app', { replace: true }); }}
           email={userEmail}
           // The ad they just bought the plan FOR — only offered when a finished
           // (Step 8) run actually exists, in memory or in the saved session.
           onReturnToAd={
             currentStep === TOTAL_STEPS || pendingSession?.currentStep === TOTAL_STEPS
-              ? () => { popReturnToAd(); setCurrentRoute('app'); restoreFinishedAd(); }
+              ? () => { popReturnToAd(); goToLegal('app', { replace: true }); restoreFinishedAd(); }
               : undefined
           }
         />
@@ -1217,15 +1247,11 @@ const App: React.FC = () => {
     );
   }
 
-  // A logged-in user — or one mid-OAuth-return (provider bounces back to '/',
-  // resetting the route to 'landing') — must NEVER see the marketing landing:
-  // it would flash for a frame before the post-auth redirect / Film Leader boot
-  // takes over. The OAuth flag distinguishes a returning login from a genuine
-  // public visit during the brief session check, so public visitors still get
-  // the landing immediately (no blank).
+  // Hold the landing only during an OAuth return/boot. Signed-in users can
+  // deliberately browse public pages, including returning Home from pricing.
   const oauthReturning =
     typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('grifon_oauth_pending');
-  if (currentRoute === 'landing' && !isAuthenticated && !isBooting && !oauthReturning) {
+  if (currentRoute === 'landing' && !isBooting && !oauthReturning) {
     return (
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
@@ -1248,12 +1274,12 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:pricing"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('landing')}
+        onReset={() => goToLegal('landing')}
         resetLabel="RETURN TO LANDING"
       >
         <GrifonPricingPage
           onEnterApp={enterApp}
-          onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
+          onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))}
           onNavigateLegal={veilToLegal}
         />
         <ConsentBanner
@@ -1280,13 +1306,13 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:checkout"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('pricing')}
+        onReset={() => goToLegal('pricing')}
         resetLabel="BACK TO PRICING"
       >
         {isTopupCheckout ? (
-          <TopUpCheckoutPage email={userEmail} onBack={() => setCurrentRoute('app')} onViewLegal={handleViewLegal} />
+          <TopUpCheckoutPage email={userEmail} onBack={() => goToLegal('app')} onViewLegal={handleViewLegal} />
         ) : (
-          <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+          <CheckoutPage email={userEmail} onBack={() => goToLegal('pricing')} onViewLegal={handleViewLegal} />
         )}
       </ErrorBoundary>
     );
@@ -1297,12 +1323,12 @@ const App: React.FC = () => {
       <ErrorBoundary
         name="route:billing_3ds_return"
         resetKey={currentRoute}
-        onReset={() => setCurrentRoute('checkout')}
+        onReset={retryCheckout}
         resetLabel="BACK TO CHECKOUT"
       >
         <Billing3dsReturn
-          onContinue={() => setCurrentRoute('app')}
-          onRetry={() => setCurrentRoute('checkout')}
+          onContinue={() => goToLegal('app', { replace: true })}
+          onRetry={retryCheckout}
         />
       </ErrorBoundary>
     );

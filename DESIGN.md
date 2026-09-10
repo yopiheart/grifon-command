@@ -290,6 +290,11 @@ inputs retain rounded-xl. The authenticated app remains outside this exception.
 Native scrolling reveals an intentionally blank film frame. Motion stays
 decorative, hidden hero controls leave the focus order, and reduced-motion
 visitors receive a static hero. Gold remains the only interaction accent.
+The hero alone uses thin gold light arcs that part left/right after the copy
+clears, with sparse dust fading before the blank film settles. This scroll-driven
+reveal reverses directly with native scrolling; it uses no literal wings or stars.
+The gold headline receives one deliberate highlight pass on entry. Both effects
+are omitted for reduced motion, and motion below the hero stays restrained.
 
 ## Dashboard pilot (Gemini-inspired)
 

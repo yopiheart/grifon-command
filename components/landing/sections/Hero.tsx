@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
+import { DUR, EASE } from '../../ui/motionTokens';
+import { HeroTrails } from '../HeroTrails';
 import { FREE_PLAN_CTA, CTA_REASSURANCE } from '../microcopy';
 
 interface HeroProps {
@@ -73,7 +75,12 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
           <p className="landing-eyebrow"><span className="landing-signal" /> For Filipino business owners doing their own marketing</p>
           <h1 id="landing-headline" className="landing-headline">
             <span>Your next ad.</span>
-            <span className="font-serif italic normal-case tracking-normal landing-gold-type">Made to move.</span>
+            <motion.span className="font-serif italic normal-case tracking-normal landing-gold-type"
+              initial={reduce ? false : { backgroundPosition: '100% 0' }}
+              animate={reduce ? undefined : { backgroundPosition: '0% 0', textShadow: ['0 0 0 #ffcc0000', '0 0 28px #ffcc0055', '0 0 0 #ffcc0000'] }}
+              transition={{ duration: DUR.ambient.pulse, delay: DUR.entrance, ease: EASE.inOut }}>
+              Made to move.
+            </motion.span>
           </h1>
           <p className="landing-hero-description">
             Running the business and making the ads? Grifon helps turn what you sell into video ads, with AI research, scripts, and scenes in one place.
@@ -95,6 +102,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
             role="img" aria-label="Blank frame reserved for the Grifon hero film" />
           <figcaption><span>Grifon / In motion</span><span>Hero film in development</span></figcaption>
         </motion.figure>
+        {!reduce && <HeroTrails progress={scrollYProgress} />}
       </div>
       <div ref={heroSentinelRef} className="absolute bottom-0 h-px w-px" aria-hidden="true" />
     </section>

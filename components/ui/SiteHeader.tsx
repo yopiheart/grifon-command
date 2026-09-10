@@ -109,7 +109,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
   const handleLogo = () => {
     if (onLogoClick) onLogoClick();
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
+    else {
+      if (window.location.hash) window.history.pushState({}, '', window.location.pathname + window.location.search);
+      window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    }
   };
 
   const handleNav = (link: SiteNavLink) => {

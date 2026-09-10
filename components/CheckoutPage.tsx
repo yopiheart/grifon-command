@@ -58,6 +58,13 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   const [agreedToTerms, setAgreedToTerms] = useState(draft?.agreedToTerms ?? false);
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>(draft?.selectedAddOns ?? []);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('plan', planId);
+    params.set('cycle', cycle);
+    window.history.replaceState(window.history.state, '', `/checkout?${params.toString()}`);
+  }, [planId, cycle]);
+
   // Persist non-sensitive selections so "Back to checkout" restores them. Card data is never stored.
   useEffect(() => {
     saveCheckoutDraft({ phone, agreedToTerms, selectedAddOns, cycle });
