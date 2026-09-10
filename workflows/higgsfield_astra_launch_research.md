@@ -85,7 +85,7 @@ The [API model page](https://developers.openai.com/api/docs/models/gpt-6-astra) 
 | 4 | Edit and export coordination | Inspectable timeline, source mapping, subtitle handling, correct output formats and explicit sound cues |
 | Later | Interactive scene or making-of content | Separate scope after the hero succeeds; it should not delay the film or imply a new Grifon feature |
 
-The initial studio feasibility pilot should be small: one scene, placeholder geometry, three still camera views and a short camera playblast. This is a proposed next deliverable, not generated footage. Judge space and framing first, then materials, then motion. Keep the new coffee UGC/cinematic product-proof pilot as a separate requirement; a beautiful wrapper cannot clear that gate.
+The initial studio feasibility pilot was scoped to one scene, placeholder geometry, three still camera views and a short camera playblast. Neil subsequently approved it; the [local Blender pilot](../assets/hero-film/studio-pilot/README.md) now contains the editable scene, three stills and a six-second shaded camera preview. Judge space and framing first, then materials, then motion. Keep the new coffee UGC/cinematic product-proof pilot as a separate requirement; a beautiful wrapper cannot clear that gate.
 
 Use the [Gauntlet Loop](../.agents/skills/gauntlet-loop/SKILL.md) for the still art direction, bounded to at most three rounds, with trust in output quality as the axis and Neil deciding the taste bar. A separate motion review checks camera continuity, clipping and pacing; the complete audiovisual cut needs listening and performance review. No gauntlet or paid generation was run for this research.
 
@@ -96,6 +96,8 @@ Audience remains PH business owners evaluating output quality. The film's job is
 ## Local feasibility and remaining work
 
 Read-only check found `C:/Program Files/Blender Foundation/Blender 5.2/blender.exe`; `--version` succeeded and reported **5.2.1 LTS**. Windows reports an **NVIDIA GeForce GTX 1660**. Blender is not on PATH. This is installation evidence, not a successful scene render, GPU benchmark or proof that an external plugin works. No Higgsfield connection or new subscription was installed.
+
+Subsequent approved local pilot: Blender built and saved 103 scene objects and four cameras, rendered three Cycles stills, then reopened the scene for a 144-frame Workbench camera preview. Independent still critique completed in two rounds; visible light-rail brackets resolved its single composition gap. Independent reopen/geometry verification passed. This establishes a local scripting/render route, not AAA finish, external-plugin access, a GPU benchmark or real Grifon output. See the pilot README for precise checks and reproduction commands.
 
 Next production decision: approve the exact studio/proof assets and bounded test specs before paid generation. A local Blender scripting route is worth testing before adding external workflow dependencies. The previous audiovisual autopsy remains unresolved; final duration and the timed storyboard are still held under the existing brief. No app code, tuned prompts, source generators, production data, deployment, campaign or publishing behavior changed.
 

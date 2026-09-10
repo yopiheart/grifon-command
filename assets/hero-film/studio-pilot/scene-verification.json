@@ -1,0 +1,15 @@
+{
+  "blender": "5.2.1 LTS",
+  "cameras": [
+    "01_Establish",
+    "02_Owner_workspace",
+    "03_Product",
+    "04_Preview_dolly"
+  ],
+  "objects": 103,
+  "checked_frames": 144,
+  "six_axis_probe_distance_m": 0.2,
+  "bottle_center_visible_all_frames": true,
+  "external_images": 0,
+  "scope": "Integer-frame bottle-center visibility and six axis obstruction probes only. Does not establish full camera-volume clearance, whole-bottle silhouette, subframe motion, or film quality."
+}
