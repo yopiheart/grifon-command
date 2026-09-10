@@ -15,6 +15,10 @@ Neil reviews the look candidate; final-look approval is HOLD, not silently passe
 Three-round cap reached. Lower bottle still reads gold rather than continuous coffee.
 No fourth render or production expansion is authorized by this completed bounded pass.
 Human taste, coffee identity, actual product proof and final film timing remain open.
+Shutdown handoff: all source/assets are on PR #132; resume here on the next PC.
+Next proposed diagnostic: isolate pedestal reflection, glass and coffee material
+to identify the lower-bottle gold cause before another polish pass. No render started.
+Neil can review composition/mood from the GitHub frame on mobile in the meantime.
 
 ## Look-development result
 Blender 5.2.1 LTS / Cycles GPU rendered 1920x1080 at 128 samples; 188 editable objects.
