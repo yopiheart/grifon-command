@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Lock } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
+import { GoldButton } from './ui/GoldButton';
 import { GrifonMark } from './ui/GrifonMark';
-import { MessengerFloat } from './ui/MessengerFloat';
-import { RecentActivityToast } from './ui/RecentActivityToast';
+import { CONTACT } from '../config/contact';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
 import { CardForm, type CardFormData } from './checkout/CardForm';
@@ -49,6 +49,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   // Cycle is lifted into state so the in-checkout monthly↔annual toggle can re-fetch the intent.
   const [cycle, setCycle] = useState<BillingCycle>(draft?.cycle ?? initialCycle);
   const [intent, setIntent] = useState<IntentResponse | null>(null);
+  const [resolvedIntentKey, setResolvedIntentKey] = useState<string | null>(null);
   const [intentError, setIntentError] = useState<string | null>(null);
   const [activeMethod, setActiveMethod] = useState<PaymentMethod>('card');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,6 +76,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   // every cached entry is a real server-issued intent for exactly that combination.
   const intentCache = useRef<Map<string, IntentResponse>>(new Map());
   const intentKey = (c: BillingCycle, addOns: string[]) => `${c}|${[...addOns].sort().join(',')}`;
+  const intentCurrent = resolvedIntentKey === intentKey(cycle, selectedAddOns);
 
   useEffect(() => {
     let cancelled = false;
@@ -83,11 +85,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
     const cached = intentCache.current.get(key);
     if (cached) {
       setIntent(cached);
+      setResolvedIntentKey(key);
     } else {
       fetchIntent(planId, cycle, selectedAddOns)
         .then((res) => {
           intentCache.current.set(key, res);
-          if (!cancelled) setIntent(res);
+          if (!cancelled) { setIntent(res); setResolvedIntentKey(key); }
         })
         .catch((err: Error) => {
           if (cancelled) return;
@@ -132,7 +135,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   }, [intent]);
 
   const handleCardSubmit = async (data: CardFormData) => {
-    if (!intent) return;
+    if (!intent || !intentCurrent) return;
     if (!email) {
       setSubmitError('You need to sign in before checking out.');
       return;
@@ -176,7 +179,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   };
 
   const handleEwalletContinue = async () => {
-    if (!intent) return;
+    if (!intent || !intentCurrent) return;
     if (activeMethod === 'card') return;
     setIsSubmitting(true);
     setSubmitError(null);
@@ -207,16 +210,16 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
 
   if (intentError) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center p-6">
+      <div className="checkout-page public-purchase min-h-screen bg-zinc-950 text-white flex items-center justify-center p-6">
         <GlassPanel className="max-w-md w-full text-center">
           <h1 className="text-xl font-semibold text-white mb-3">Checkout couldn't start</h1>
           <p className="text-zinc-400 text-sm mb-6">{intentError}</p>
-          <button
+          <GoldButton
             onClick={onBack}
-            className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-3 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-all"
+            className="w-full min-h-12"
           >
             Back to plans
-          </button>
+          </GoldButton>
         </GlassPanel>
       </div>
     );
@@ -234,10 +237,9 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   }
 
   const { breakdown } = intent;
-  const totalLabel = `Unlock ${intent.plan.name} — ${formatPHP(breakdown.total_centavos)}`;
+  const totalLabel = intentCurrent ? `Pay ${formatPHP(breakdown.total_centavos)}` : 'Updating total…';
   const cycleNoun = cycle === 'monthly' ? '30 days' : '1 year';
-  const outcomeCycle = cycle === 'monthly' ? 'an entire month' : 'an entire year';
-  const outcomeDescription = `Replaces your marketing agency. End-to-end: research, offer, scripts, AI video ads, captions, and images — for ${outcomeCycle}. Walang ₱30K agency, walang freelancer.`;
+  const outcomeDescription = 'Turn your ad ideas into finished videos for your business. Review your plan, billing period and total before you pay.';
   const authorizationText = `By clicking the button above, you authorize Grifon Command to charge ${formatPHP(
     breakdown.total_centavos
   )} to your selected payment method. This is a one-time payment for ${cycleNoun} of ${intent.plan.name} access. We'll email you before renewal — your subscription does not auto-renew.`;
@@ -262,7 +264,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white py-6 lg:py-10 px-4 lg:px-8 relative">
+    <div className="checkout-page public-purchase min-h-screen bg-zinc-950 text-white py-6 lg:py-10 px-4 lg:px-8 relative">
       {/* Command-environment backdrop — same family as the auth gateway */}
       <div className="pointer-events-none fixed inset-0" aria-hidden="true">
         <div
@@ -284,7 +286,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
         </p>
       </div>
 
-      <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      <div className="relative max-w-6xl mx-auto mb-8 lg:mb-12">
+        <h1 className="purchase-display text-3xl md:text-5xl tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mb-3">Your next ad starts here.</h1>
+        <p className="text-sm md:text-base text-zinc-400">Confirm your plan. Choose how to pay.</p>
+      </div>
+      {!intentCurrent && <p role="status" className="relative max-w-6xl mx-auto mb-4 text-sm text-[#FFCC00]">Updating your total. Payment will be available when your new total is ready.</p>}
+      <div aria-busy={!intentCurrent} className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         <OrderSummary
           planName={intent.plan.name}
           cycle={cycle}
@@ -296,20 +303,19 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
           monthlyEquivalentCentavos={breakdown.monthly_equivalent_centavos ?? undefined}
           monthlyComparisonSavingsCentavos={breakdown.annual_savings_centavos ?? undefined}
           onCycleChange={setCycle}
-          reservationKey={`${planId}`}
           addOnSelected={selectedAddOns.includes(ORDER_BUMP.id)}
           addOnCentavos={breakdown.add_on_centavos}
           onToggleAddOn={toggleAddOn}
           onBack={onBack}
         />
 
-        <GlassPanel>
+        <GlassPanel className="p-6 md:p-8 min-w-0 self-start">
           <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
             Contact information
           </p>
           <div className="bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 mb-4">
-            <p className="text-zinc-300 text-sm">{email ?? 'Not signed in'}</p>
-            <p className="text-[10px] text-on-surface-sublabel mt-1">Receipt will be sent here</p>
+            <p className="text-zinc-300 text-sm break-all">{email ?? 'Not signed in'}</p>
+            <p className="text-xs text-on-surface-sublabel mt-1">Receipt will be sent here</p>
           </div>
 
           <div className="mb-6">
@@ -327,7 +333,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
               required
             />
-            <p className="text-[10px] text-on-surface-sublabel mt-1.5">For order updates and support via Viber / SMS.</p>
+            <p className="text-xs text-on-surface-sublabel mt-1.5">For order updates and support via Viber / SMS.</p>
           </div>
 
           <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-3">
@@ -349,7 +355,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
               isSubmitting={isSubmitting}
               totalLabel={totalLabel}
               authorizationText={authorizationText}
-              submitDisabled={!canSubmit}
+              submitDisabled={!canSubmit || !intentCurrent}
               termsSlot={termsCheckbox}
             />
           ) : (
@@ -358,7 +364,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
               onContinue={handleEwalletContinue}
               isSubmitting={isSubmitting}
               authorizationText={authorizationText}
-              submitDisabled={!canSubmit}
+              submitDisabled={!canSubmit || !intentCurrent}
               termsSlot={termsCheckbox}
             />
           )}
@@ -367,7 +373,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
 
       {/* Payment trust strip — every badge is a real capability, no fake marks */}
       <div className="relative max-w-6xl mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
-        <span className="flex items-center gap-1.5"><Lock className="w-3 h-3 shrink-0 text-[#FFCC00]" /> 256-bit SSL</span>
+        <span className="flex items-center gap-2"><Lock className="w-4 h-4 shrink-0 text-[#FFCC00]" /> Secure payment</span>
         <span className="text-on-surface-sublabel">·</span>
         <span>Powered by PayMongo</span>
         <span className="text-on-surface-sublabel">·</span>
@@ -380,17 +386,18 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
         <span>Mastercard</span>
       </div>
       <p className="relative text-center text-on-surface-sublabel text-xs mt-3">
-        <button type="button" onClick={() => onViewLegal?.('terms')} className="hover:text-zinc-400 transition-colors">
+        <button type="button" onClick={() => onViewLegal?.('terms')} className="min-h-11 px-2 hover:text-zinc-400 transition-colors">
           Terms
         </button>{' '}
         &middot;{' '}
-        <button type="button" onClick={() => onViewLegal?.('privacy')} className="hover:text-zinc-400 transition-colors">
+        <button type="button" onClick={() => onViewLegal?.('privacy')} className="min-h-11 px-2 hover:text-zinc-400 transition-colors">
           Privacy
         </button>
       </p>
 
-      <RecentActivityToast />
-      <MessengerFloat side="right" />
+      <p className="relative mt-4 text-center text-sm text-zinc-400">
+        Need help? <a href={CONTACT.messengerUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-[#FFCC00] underline">Chat with us</a>
+      </p>
     </div>
   );
 };

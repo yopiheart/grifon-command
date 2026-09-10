@@ -282,7 +282,11 @@ The approved September 2026 landing design is scoped to `.landing-page`.
 It uses sentence-case headings at 600, a regular-weight hero headline, and
 regular Instrument Serif accents. The approved hero line "Made to move." is
 licensed as a whole serif line. Marketing buttons use Inter at 600; metadata
-keeps JetBrains Mono. These overrides do not extend to pricing, auth or the app.
+keeps JetBrains Mono. The resumed website phase extends this register to pricing,
+the pre-auth gateway and checkout under `.public-purchase`: sentence-case headings
+at 600, page display headings at 400, Inter button labels and restrained gold.
+These public purchase surfaces use pill buttons and the existing material tiers;
+inputs retain rounded-xl. The authenticated app remains outside this exception.
 Native scrolling reveals an intentionally blank film frame. Motion stays
 decorative, hidden hero controls leave the focus order, and reduced-motion
 visitors receive a static hero. Gold remains the only interaction accent.
