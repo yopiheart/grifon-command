@@ -16,7 +16,7 @@ body:has(.landing-page) > .flashlight { display:none; }
 .landing-pointer-light > div { width:760px; height:760px; margin:-380px; background:radial-gradient(circle,#ffcc000c,transparent 66%); }
 .landing-nav { height:64px; }
 .landing-nav header { height:64px; }
-.landing-hero { position:relative; z-index:10; height:180svh; }
+.landing-hero { position:relative; z-index:10; height:240svh; }
 .landing-hero-stage { position:sticky; top:64px; height:calc(100svh - 64px); min-height:500px; overflow:clip; }
 .landing-horizon { position:absolute; left:50%; top:69%; width:110%; height:48%; transform:translateX(-50%); border-radius:50%; background:radial-gradient(ellipse at center,#ffcc000c,transparent 66%); pointer-events:none; }
 .landing-hero-copy { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 24px 80px; z-index:2; }
@@ -44,9 +44,7 @@ body:has(.landing-page) > .flashlight { display:none; }
 .landing-film { aspect-ratio:16/9; max-height:calc(100svh - 180px); width:100%; border:1px solid #ffffff1f; border-radius:32px; background:#101012; box-shadow:0 1px 0 #ffffff06 inset; }
 .landing-film-wrap figcaption { display:flex; justify-content:space-between; gap:16px; margin-top:14px; color:#a1a1aa; font:400 9px/1.5 'JetBrains Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
 .landing-hero-trails { position:absolute; inset:0; z-index:1; pointer-events:none; }
-.landing-trail-wing { position:absolute; left:50%; top:10%; width:58%; height:86%; }
-.landing-trail-wing[data-trail-wing=left] { left:auto; right:50%; }
-.landing-trail-wing svg { width:100%; height:100%; overflow:visible; }
+.landing-hero-trails canvas { display:block; width:100%; height:100%; mask-image:linear-gradient(transparent, #fff 12%, #fff 88%, transparent); }
 .landing-process { padding-block:110px 50px; scroll-margin-top:80px; color:#18181b; }
 .landing-process-heading { display:grid; grid-template-columns:1.3fr 1fr; gap:20px 80px; align-items:end; }
 .landing-process-heading .landing-eyebrow { grid-column:1/-1; color:#52525b; }
@@ -92,7 +90,7 @@ body:has(.landing-page) > .flashlight { display:none; }
 .landing-footer h2 { font-size:clamp(40px,6vw,84px); }
 @media(max-width:767px) {
   .landing-shell { width:calc(100% - 40px); }
-  .landing-hero { height:165svh; }
+  .landing-hero { height:220svh; }
   .landing-hero-stage { min-height:480px; }
   .landing-hero-copy { padding:0 20px 70px; }
   .landing-hero-copy .landing-eyebrow { max-width:310px; font-size:10px; letter-spacing:.08em; margin-bottom:22px; }

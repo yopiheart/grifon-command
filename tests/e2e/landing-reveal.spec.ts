@@ -1,8 +1,59 @@
 import { test, expect } from '@playwright/test';
+import sharp from 'sharp';
 
 test.use({ video: { mode: 'on', size: { width: 1280, height: 900 } } });
 
 for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 667 }]) {
+  test(`gold flow stays alive at both film edges while scrolling is stopped at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Decline', exact: true }).click();
+    const hero = page.locator('.landing-hero');
+    await hero.evaluate(el => window.scrollTo({ top: el.offsetTop + (el.clientHeight - innerHeight) * 0.82, behavior: 'instant' }));
+    await expect(page.locator('.landing-hero-copy')).toHaveCSS('opacity', '0');
+    await page.waitForTimeout(700);
+    const first = await page.screenshot({ path: `test-results/hero-living-${viewport.width}-hold-a.png` });
+    const position = await page.evaluate(() => scrollY);
+    await page.waitForTimeout(900);
+    const second = await page.screenshot({ path: `test-results/hero-living-${viewport.width}-hold-b.png` });
+    expect(await page.evaluate(() => scrollY)).toBe(position);
+    const a = await sharp(first).removeAlpha().raw().toBuffer();
+    const b = await sharp(second).removeAlpha().raw().toBuffer();
+    const changes = (start: number, end: number) => {
+      let changed = 0;
+      for (let y = 100; y < viewport.height - 80; y++) {
+        for (let x = Math.floor(viewport.width * start); x < viewport.width * end; x++) {
+          const at = (y * viewport.width + x) * 3;
+          if (Math.abs(a[at] - b[at]) + Math.abs(a[at + 1] - b[at + 1]) > 18) changed++;
+        }
+      }
+      return changed;
+    };
+    expect(changes(0, 0.13), 'left light must visibly flow without scroll').toBeGreaterThan(100);
+    expect(changes(0.87, 1), 'right light must visibly flow without scroll').toBeGreaterThan(100);
+    expect(changes(0.3, 0.7), 'film center must stay clear and still').toBeLessThan(5);
+  });
+
+  test(`ordinary native scrolling carries the living reveal into the film hold at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Decline', exact: true }).click();
+    const distance = await page.locator('.landing-hero').evaluate(el => el.offsetTop + (el.clientHeight - innerHeight) * 0.82);
+    // Ordinary wheel increments, recorded at real speed; no animation clock manipulation.
+    for (let step = 0; step < 24; step++) {
+      await page.mouse.wheel(0, distance / 24);
+      await page.waitForTimeout(90);
+      if ([10, 14, 18, 23].includes(step)) {
+        await page.screenshot({ path: `test-results/hero-living-${viewport.width}-scroll-${step}.png` });
+      }
+    }
+    await expect(page.locator('.landing-hero-trails')).toHaveCSS('opacity', '1');
+    await expect(page.locator('.landing-hero-copy')).toHaveCSS('opacity', '0');
+    await page.waitForTimeout(1300);
+    await page.mouse.wheel(0, viewport.height * 1.5);
+    await expect.poll(() => page.locator('.landing-hero-trails').evaluate(el => el.getBoundingClientRect().bottom)).toBeLessThan(64);
+  });
+
   test.describe(`headline motion at ${viewport.width}px`, () => {
     test('highlight visibly travels once then settles, with a static reduced-motion equivalent', async ({ page }) => {
       await page.setViewportSize(viewport);
@@ -30,7 +81,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 667 
     });
   });
 
-  test(`gold hero trails part, clear the film and reverse at ${viewport.width}px`, async ({ page }) => {
+  test(`gold ribbons unfold, hold beside the film and reverse at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.goto('/');
     const hero = page.locator('.landing-hero');
@@ -44,8 +95,21 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 667 
         behavior: 'instant',
       }), progress);
     };
-    const wingCenters = () => hero.locator('[data-trail-wing]').evaluateAll(els =>
-      els.map(el => { const r = el.getBoundingClientRect(); return r.x + r.width / 2; }));
+    const lightBounds = () => trails.locator('canvas').evaluate(el => {
+      const canvas = el as HTMLCanvasElement;
+      const pixels = canvas.getContext('2d')!.getImageData(0, 0, canvas.width, canvas.height).data;
+      let left = canvas.width;
+      let right = 0;
+      for (let y = 0; y < canvas.height; y += 3) {
+        for (let x = 0; x < canvas.width; x++) {
+          if (pixels[(y * canvas.width + x) * 4 + 3] > 80) {
+            left = Math.min(left, x);
+            right = Math.max(right, x);
+          }
+        }
+      }
+      return [left / canvas.width, right / canvas.width];
+    });
 
     await expect(trails).toHaveAttribute('aria-hidden', 'true');
     await expect(trails).toHaveCSS('pointer-events', 'none');
@@ -54,18 +118,17 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 667 
     await goToProgress(0.45);
     await expect.poll(opacity).toBeGreaterThan(0.5);
     await expect(copy).toHaveCSS('opacity', '0');
-    const middle = await wingCenters();
-    expect(middle).toHaveLength(2);
-    expect(middle[0]).toBeLessThan(viewport.width / 2);
-    expect(middle[1]).toBeGreaterThan(viewport.width / 2);
+    const middle = await lightBounds();
+    expect(middle[0]).toBeLessThan(0.5);
+    expect(middle[1]).toBeGreaterThan(0.5);
     await page.screenshot({ path: `test-results/hero-gold-${viewport.width}-opening.png` });
 
     await goToProgress(0.7);
-    await expect.poll(async () => (await wingCenters())[0]).toBeLessThan(middle[0] - 5);
-    await expect.poll(async () => (await wingCenters())[1]).toBeGreaterThan(middle[1] + 5);
+    await expect.poll(async () => (await lightBounds())[0]).toBeLessThan(middle[0] - 0.05);
+    await expect.poll(async () => (await lightBounds())[1]).toBeGreaterThan(middle[1] + 0.05);
     await page.screenshot({ path: `test-results/hero-gold-${viewport.width}-clearing.png` });
     await goToProgress(1);
-    await expect.poll(opacity).toBe(0);
+    await expect.poll(opacity).toBe(1);
     await expect(hero.locator('video, source')).toHaveCount(0);
     await expect.poll(() => page.locator('#hero-film').evaluate(el => {
       const r = el.getBoundingClientRect();
@@ -75,7 +138,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 667 
 
     await goToProgress(0.45);
     await expect.poll(opacity).toBeGreaterThan(0.5);
-    await expect.poll(async () => Math.abs((await wingCenters())[0] - middle[0])).toBeLessThan(1);
+    await expect.poll(async () => Math.abs((await lightBounds())[0] - middle[0])).toBeLessThan(0.05);
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await expect.poll(opacity).toBe(0);
     await expect(copy).toHaveCSS('opacity', '1');
@@ -144,4 +207,20 @@ test('reduced-motion landing keeps the hero readable and FAQ works with a keyboa
   await page.getByRole('button', { name: 'Compare the plans' }).click();
   await expect(page).toHaveURL(/\/pricing/);
   await expect(page.getByText('Starter', { exact: true }).first()).toBeVisible();
+});
+
+test('changing reduced motion during the film hold restores the visible hero controls', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Decline', exact: true }).click();
+  const hero = page.locator('.landing-hero');
+  const copy = hero.locator('.landing-hero-copy');
+  await page.getByRole('link', { name: 'Explore the story' }).click();
+  await expect.poll(() => copy.evaluate(el => el.inert)).toBe(true);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(hero).toHaveClass(/landing-hero-static/);
+  await expect(copy).not.toHaveAttribute('aria-hidden', 'true');
+  await expect.poll(() => copy.evaluate(el => el.inert)).toBe(false);
+  await expect(hero.locator('.landing-hero-trails')).toHaveCount(0);
+  await hero.getByRole('button', { name: 'Build my free ad plan' }).click();
+  await expect(page.getByRole('dialog', { name: 'What do you sell?' })).toBeVisible();
 });

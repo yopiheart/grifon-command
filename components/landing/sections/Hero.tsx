@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'motion/react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
 import { DUR, EASE } from '../../ui/motionTokens';
@@ -17,7 +17,8 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
   const stageRef = useRef<HTMLDivElement>(null);
   const filmRef = useRef<HTMLDivElement>(null);
   const copyRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const [reduce, setReduce] = useState(() => typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [copyHidden, setCopyHidden] = useState(false);
   const startY = useMotionValue(600);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
@@ -26,10 +27,19 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
   const copyOpacity = useTransform(() => Math.max(0, 1 - scrollYProgress.get() / 0.32));
   const copyY = useTransform(scrollYProgress, [0, 0.36], [0, -90]);
   const copyScale = useTransform(scrollYProgress, [0, 0.36], [1, 0.96]);
-  const filmProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 1]);
+  const filmProgress = useTransform(scrollYProgress, [0.3, 0.68], [0, 1]);
   const filmY = useTransform(() => startY.get() * (1 - filmProgress.get()));
   const filmScale = useTransform(filmProgress, [0, 1], [0.76, 1]);
   const filmRadius = useTransform(filmProgress, [0, 1], [32, 16]);
+
+  useEffect(() => {
+    // React to a preference change during the hold, including focus/inert state.
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduce(preference.matches);
+    update();
+    preference.addEventListener('change', update);
+    return () => preference.removeEventListener('change', update);
+  }, []);
 
   useEffect(() => {
     const measure = () => {
@@ -60,7 +70,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => {
     if (!section) return;
     window.scrollTo({
       top: section.getBoundingClientRect().top + window.scrollY
-        + Math.max(0, section.clientHeight - window.innerHeight),
+        + Math.max(0, section.clientHeight - window.innerHeight) * 0.8,
       behavior: 'smooth',
     });
   };

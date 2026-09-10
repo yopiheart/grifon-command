@@ -1,12 +1,13 @@
 ﻿# NOW - the resume doc
-**Stamped: 2026-09-10, website review follow-up**
+**Stamped: 2026-09-10, living hero revision**
 
 ## Current state
 Branch: `codex/landing-reveal`. Draft PR: https://github.com/yopiheart/grifon-command/pull/129
 Neil reviewed/accepted the website and confirmed preview access is resolved.
-Current follow-up: hero gold reveal + stronger headline light, existing route URL
-consistency, and bounded cookie-banner usability improvements. Implementation
-is complete, with final integrated checks and independent reviews passed.
+Neil rejected the rigid gold arc reveal and explicitly approved a genuine
+center-out opening with continuous light at the film edges. That revision is
+implemented and independently reviewed; all local checks pass. Check the draft
+PR's latest CI and branch preview statuses before review; keep the PR draft.
 Preview: https://grifon-command-git-1d765a-neilmaglayabusiness22-2085s-projects.vercel.app/
 No production merge/deploy or paid operation authorized. Read latest PR checks.
 
@@ -19,9 +20,14 @@ Public editorial typography is scoped in DESIGN.md; app primitives stay intact.
 No new hero film concept/assets approved. The film frame must remain blank.
 
 ## Current implementation
-- Hero: thin gold arcs open left/right, sparse dust fades as film is revealed.
-  Native scroll remains reversible; no stars, literal wings or wheel interception.
-  Controls restore on reverse; reduced motion stays static without trails.
+- Hero: canvas gold ribbons unfold with staggered leading light as the film rises.
+  Curvature and highlights keep flowing at both edges during stopped scrolling;
+  the film center stays clear. Longer native scroll scene gives opening/hold room.
+  Explore the story lands in the hold; the aura leaves naturally with the stage.
+  No stars, literal wings, wheel interception, video asset or new dependency.
+  Canvas resolution is capped; drawing suspends offscreen and in hidden tabs.
+  Native reverse restores controls. Live reduced-motion preference changes now
+  restore static content, keyboard access and semantics while removing canvas.
 - Made to move: a clearly brighter single white-gold highlight pass, then rest.
 - URLs: home/back/continue callbacks use existing manual route helper; ordinary
   navigation pushes history, auth/payment redirects replace as appropriate.
@@ -50,16 +56,22 @@ No publishing requested. Actual Android WebView remains untested.
 
 ## Verification
 Earlier accepted website: build, 1,357 unit tests and all 29 browser tests passed.
-New hero tests failed before implementation; all 7 now pass, including actual
-headline animation progression/settling, reverse scroll, mobile CTA/reduced motion.
-Independent hero BRAND_PASS 44/50, no critical/nits; independent smoke 7 passed.
+Original rigid hero passed technical checks but failed Neil's visual intent.
+New stopped-scroll edge-motion tests failed it on desktop and mobile; the live
+reduced-motion preference regression also failed before its fix. Ordinary wheel
+recordings, pixel comparisons, reverse, CTA and reduced-motion checks cover the
+revision. Independent motion PASS and BRAND_PASS 45/50, zero new flags/nits.
+Fresh correctness review found no actionable final-diff findings; independently
+verified runtime preference toggles both ways, CTA fit and offscreen suspension.
 Routing original stale paths/history/guest/app/checkout-cycle failures reproduced;
 All 14 focused route cases passed, including terminal paths and invalid retry stash.
 Cookie original: 16px privacy target, CTA/footer overlap; 4 fixed checks pass.
 Independent cookie BRAND_PASS 44/50; footer/resize/dismissal recheck passed.
 Independent correctness review: no actionable findings; 25 targeted tests passed.
-Final integrated build passed (2,580 modules; main JS gzip 589.38 kB), all 1,357
-unit tests passed (32 existing skips), all 51 browser tests passed (1.3 minutes).
+Current build passed (2,580 modules; main JS gzip 589.79 kB).
+All 56 browser tests passed (2.4 minutes); all 1,357 unit tests passed (32 existing
+skips). One overlapping run hit a 5s artifact-anchor timeout; its 9 tests and then
+the complete suite passed without overlapping load. No timeout/gate changes.
 Bundle-leak, voice-sync, domain, PS ASCII, artifact-anchor and design lint passed.
 No real auth or charges used in fixtures. Do not claim fixtures prove live billing.
 Prior real Supabase auth fix below was verified in configuration and user review.
