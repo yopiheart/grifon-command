@@ -1,36 +1,36 @@
 # NOW - the resume doc
-**Stamped: 2026-09-10, local Blender studio pilot**
+**Stamped: 2026-09-10, studio hero-frame look development**
 
 ## Current task
 Branch: codex/hero-film-research, based on merged main 4acbaef (PR #129).
 Draft PR: https://github.com/yopiheart/grifon-command/pull/132
-Neil approved the local studio pilot after the Higgsfield/Astra research.
-Source: tools/build_grifon_studio.py
-Editable scene, stills, MP4 and verification: assets/hero-film/studio-pilot/
-Offline review: artifacts/grifon-studio-pilot.html (all media embedded).
-Rebuild instructions and scope: assets/hero-film/studio-pilot/README.md
+Neil approved one polished local hero frame after the studio pilot.
+Source: tools/polish_grifon_studio.py; verifier: tools/verify_grifon_studio_look.py
+New frame, editable scene, critique and verification: assets/hero-film/studio-look/
+Offline review: artifacts/grifon-studio-look.html (new frame + original comparison).
+Original studio and camera preview preserved at assets/hero-film/studio-pilot/.
 
 ## ▶ NEXT ACTION
-Neil reviews the room and three camera relationships in the local review page.
-The small local pilot is complete; do not silently expand it into paid production.
-Human taste approval remains open. Final film timing and actual product proof remain
-separate gates. No new paid input, asset identity, voice or render spec is approved.
+Neil reviews the look candidate; final-look approval is HOLD, not silently passed.
+Three-round cap reached. Lower bottle still reads gold rather than continuous coffee.
+No fourth render or production expansion is authorized by this completed bounded pass.
+Human taste, coffee identity, actual product proof and final film timing remain open.
 
-## Studio pilot result
-Blender 5.2.1 LTS built 103 objects and four cameras; saved editable .blend.
-Three 1280x720 Cycles stills; same plain bottle and deliberately empty displays.
-Six-second Workbench camera preview: 144 frames, 960x540, 24fps, H.264/yuv420p.
-Two bounded independent still-critique rounds, trust through coherent staging.
-Visible rail mounts resolved the single composition gap; critic passed and stopped.
-Independent .blend reopen and verification passed, no external image dependencies.
-All integer frames passed bottle-center visibility and six axis obstruction probes.
-These checks do not prove full camera clearance, whole silhouette or subframe motion.
-FFmpeg full decode passed; no black/freeze interval at documented thresholds.
-390x844/mobile and 1440/desktop browser checks passed; video played through six seconds.
-Browser playback dropped four displayed frames; no perfect-smoothness claim.
-QA evidence is under the pilot's qa/; viewport smoke is not physical Android proof.
-Standalone builder and artifact-anchor check passed; no app build/tests needed.
-No paid calls, plugin installation, actual Grifon generation or deployment in this pilot.
+## Look-development result
+Blender 5.2.1 LTS / Cycles GPU rendered 1920x1080 at 128 samples; 188 editable objects.
+Three local renders with independent still/code review. Technical delivery PASS.
+Curved printed lettering and zero support gap fixed the two initial physical defects.
+Neutral glass plus transmissive/absorbing coffee improved the shoulder; lower-body
+gold remains. Reflection as cause is an inference, not a verified optical diagnosis.
+Independent final reopen passed. No external image dependencies. Provisional Demo 01.
+Verifier failed on the actual round-1 0.0095 gap, then passed corrected contact and
+label-vertex offsets (~0.00015). It does not certify optics or triangle interiors.
+390x844 and 1440px artifact smoke passed; before comparison and anchor work.
+QA evidence under studio-look/qa/. Chromium viewport is not physical Android proof.
+Standalone builder and artifact-anchor check passed; application unchanged, no app tests.
+Earlier pilot retains three stills and six-second shaded preview; its checks remain
+scoped to integer-frame bottle-center visibility and six axis obstruction probes.
+No paid calls, new plugin, actual Grifon generation or deployment in either local pass.
 
 ## Reference research
 workflows/grifon_hero_film_research.md: Astra/Apple launch research.

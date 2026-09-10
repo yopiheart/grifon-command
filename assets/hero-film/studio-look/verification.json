@@ -1,0 +1,17 @@
+{
+  "blender": "5.2.1 LTS",
+  "objects": 188,
+  "render_engine": "CYCLES",
+  "samples": 128,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "bottle_support_gap_m": 0.0,
+  "label_radial_offset_m": [
+    0.00014999245080291046,
+    0.0001500075894088071
+  ],
+  "external_images": [],
+  "scope": "Contact and label-vertex checks only. Does not certify all surface points, optical realism, motion or film quality."
+}
