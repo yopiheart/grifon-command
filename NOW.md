@@ -3,7 +3,7 @@
 
 ## Current state
 Branch: `codex/landing-reveal`. Draft PR: https://github.com/yopiheart/grifon-command/pull/129
-Neil reviewed/accepted the website and confirmed preview access is resolved.
+Neil accepted the website; preview access is resolved.
 Neil rejected the rigid gold arc reveal and explicitly approved a genuine
 center-out opening with continuous light at the film edges. That revision is
 implemented and independently reviewed; all local checks pass. Check the draft
@@ -84,9 +84,7 @@ Total redirect entries 4; http://localhost:5173/**, https://app.grifon.ai/**,
 https://grifon.ai/** remain unchanged. User subsequently confirmed preview works.
 
 ## Cafe-PC continuity
-Use workflows/codex_desktop.md, Node 24/npm 11 and npm.cmd in PowerShell.
-Dependencies/Chromium restored; local dev uses dummy Supabase config only.
+Use workflows/codex_desktop.md, Node 24/npm 11, npm.cmd; local dev uses dummy config.
 Never commit session/auth files or generated test-results/ and drawPlan snapshot noise.
 Gemini migration is a separate task/branch; no tuned/model/API changes here.
-No fabricated terminal render history. Existing attribution/og-card/hero film
-assets remain later design work. No production merge/deployment requested.
+Attribution/og-card/hero film assets remain later work. No production merge/deploy.
