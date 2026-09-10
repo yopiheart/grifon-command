@@ -1,0 +1,55 @@
+{
+  "source": "https://x.com/OpenAI/status/2095595741528125780",
+  "video_sha256": "D649D1EE93A3B63DF7BE324324CB3A757B723D9F9E0A8E556F9E79F5FCC91064",
+  "analyzer_sha256": "8D464DD8DC3C1AD31F30C885BEEF20B3DEF2B1BF7BD82307188BE5CC940125E8",
+  "prompt_sha256": "502f4785ff930ebb46aee02bb2d879888bd9e4d2d3ab3957fc7c9a984dfc978b",
+  "model": "gemini-3.8-flash",
+  "input_limit": 1048576,
+  "output_limit": 65536,
+  "standard_input_usd_per_million": 0.75,
+  "standard_output_usd_per_million_including_thinking": 3.75,
+  "model_limit_cost_bound_usd": 1.032192,
+  "approved_budget_usd": 1.25,
+  "automatic_attempts": 1,
+  "generation_config": {
+    "response_mime_type": "application/json",
+    "temperature": 0.2
+  },
+  "thinking": "provider default (medium per current docs)",
+  "stage": "generic_output",
+  "generation_requests": 1,
+  "usage_metadata": {
+    "cache_tokens_details": null,
+    "cached_content_token_count": null,
+    "candidates_token_count": 1975,
+    "candidates_tokens_details": null,
+    "prompt_token_count": 16321,
+    "prompt_tokens_details": [
+      {
+        "modality": "VIDEO",
+        "token_count": 14833
+      },
+      {
+        "modality": "TEXT",
+        "token_count": 1488
+      }
+    ],
+    "thoughts_token_count": 542,
+    "tool_use_prompt_token_count": null,
+    "tool_use_prompt_tokens_details": null,
+    "total_token_count": 18838,
+    "traffic_type": null
+  },
+  "validation_problems": [
+    "why_it_works has 2 entries (need >= 3)"
+  ],
+  "usage_based_estimate_usd": 0.0216795,
+  "review_status": "REJECTED_SPECIFICITY_NO_RETRY",
+  "pricing_sources": [
+    "https://ai.google.dev/gemini-api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/latest-model"
+  ],
+  "provider_upload_cleanup": "deleted",
+  "billing_invoice_verified": false,
+  "reviewed_date": "2026-09-10"
+}

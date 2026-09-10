@@ -37,6 +37,8 @@ Status legend: `observed` (counting corroborations) → `proposed` (≥3 corrobo
 
 ## Gated Proposals
 
+**Related bounded launch research (2026-09-10):** [Astra / Apple → Grifon](grifon_hero_film_research.md) includes selected desktop/mobile screenshots, scoped CTA inventories, public product journeys and a Grifon recommendation. These are not completed lead-generation autopsies: no opt-in/account/checkout or paid-ad attribution was exercised, and not every section was visually captured. No F-number, L-pattern promotion or corroboration count is assigned; the existing Next F-number remains F07.
+
 Template/build changes distilled from ≥3-corroborated L-patterns, awaiting Neil's explicit approval before entering `funnels/_template/`. Each FGP pairs a **CMO angle** (copy/structure pattern + guardrail) with a **CD recipe** (exact visual spec). Nothing here self-applies.
 
 *(none yet)*
