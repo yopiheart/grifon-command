@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Made to move - three light sweeps</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#09090b;color:#f5f5f7;font-family:Arial,sans-serif}button,input{font:inherit}.ground{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 0%,#ffcc000f,transparent 60%),radial-gradient(ellipse at top,#131316,#09090b 70%,#070708)}main{position:relative;max-width:1080px;margin:auto;padding:52px 24px 32px}.eyebrow{font:12px/1.5 monospace;letter-spacing:.2em;color:#ffcc00;text-transform:uppercase}h1{font-size:clamp(30px,5vw,54px);line-height:1.08;letter-spacing:-.04em;text-transform:uppercase;margin:16px 0;font-weight:900}header p{max-width:660px;color:#d4d4d8;font-size:16px;line-height:1.6}.controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:28px 0 12px}button{cursor:pointer;color:#f5f5f7;background:#202023;border:1px solid #ffffff30;padding:12px 20px;border-radius:999px;min-height:44px;font-weight:600}button:hover{border-color:#ffcc00}button:disabled{cursor:default;color:#a1a1aa}button:focus-visible,input:focus-visible{outline:2px solid #ffcc00;outline-offset:5px}.replay{background:#ffcc00;color:#09090b;border-color:#ffcc00}.scrubber{display:flex;align-items:center;gap:12px;flex:1;min-width:220px;font-size:14px;color:#d4d4d8}.scrubber input{accent-color:#ffcc00;flex:1;min-width:90px;height:44px}.status{font-size:13px;line-height:1.6;color:#a1a1aa;min-height:24px;margin-bottom:20px}.options{display:grid;gap:18px}.option{border:1px solid #ffffff1f;border-radius:20px;overflow:hidden;background:linear-gradient(120deg,#ffffff06,transparent 45%),#141417;box-shadow:inset 0 1px #ffffff0d}.option.recommended{border-color:#ffcc0066}.option-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 26px 0}h2{font-size:19px;letter-spacing:-.02em;margin:0}.badge{font:11px/1.4 monospace;color:#ffcc00;text-transform:uppercase;letter-spacing:.07em}.stage{padding:0 24px;max-width:760px;margin:0 auto}.stage svg{display:block;width:100%;height:auto;overflow:visible}.stage text{font-family:Georgia,serif;font-size:112px;font-style:italic}.option p{font-size:14px;line-height:1.6;color:#a1a1aa;margin:0;padding:0 26px 20px}.note{margin-top:24px;color:#a1a1aa;font-size:13px;line-height:1.7}footer{font:11px monospace;letter-spacing:.25em;color:#9a9aa3;margin-top:32px}#scrub{touch-action:pan-y}@media(max-width:600px){main{padding:32px 18px}header p{font-size:14px}.controls{gap:12px}.scrubber{flex-basis:100%}.option-head{padding:18px 18px 8px;align-items:flex-start;gap:12px}h2{font-size:17px}.badge{font-size:10px;max-width:95px;text-align:right}.stage{padding:12px 8px 16px}.option p{padding:0 18px 18px;font-size:13px}.status{font-size:12px}.note{font-size:12px}}@media(prefers-reduced-motion:reduce){.shine{display:none}}
+</style>
+</head>
+<body>
+<div class="ground" aria-hidden="true"></div>
+<main>
+<header><div class="eyebrow">Grifon / Motion review</div><h1>Make the light count.</h1><p>Three ways to give <em>Made to move.</em> a visible, deliberate highlight. A is the current implementation direction. B and C are options for review.</p></header>
+<div class="controls"><button id="replay" class="replay">Replay all</button><button id="pause">Pause</button><label class="scrubber" for="scrub">Compare moment <input id="scrub" type="range" min="0" max="100" value="0" aria-label="Sweep progress"></label></div>
+<div class="status" id="status" role="status">One pass. Gold at rest. No looping.</div>
+<section class="options" aria-label="Headline light sweep options">
+<article class="option recommended" data-option="a"><div class="option-head"><h2>A / Specular pass</h2><span class="badge">Recommended / current</span></div><div class="stage"><svg viewBox="0 0 760 150" role="img" aria-label="Made to move, specular pass"><defs><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="0" x2="1900" y1="0" y2="0"><stop offset="0" stop-color="#ffcc00"/><stop offset=".42" stop-color="#ffcc00"/><stop offset=".46" stop-color="#fff4ba"/><stop offset=".48" stop-color="#fffdf0"/><stop offset=".5" stop-color="#fffdf0"/><stop offset=".54" stop-color="#fff4ba"/><stop offset=".57" stop-color="#ffcc00"/><stop offset="1" stop-color="#ffcc00"/></linearGradient></defs><text x="20" y="111" textLength="716" lengthAdjust="spacingAndGlyphs" fill="#ffcc00">Made to move.</text><text class="shine" x="20" y="111" textLength="716" lengthAdjust="spacingAndGlyphs" fill="url(#a)">Made to move.</text></svg></div><p>A bright, smooth pass with a crisp white-gold center. Noticeable without taking over the hero; leaves space for the wing reveal.</p></article>
+<article class="option" data-option="b"><div class="option-head"><h2>B / Sharp glint</h2><span class="badge">Quicker / more bite</span></div><div class="stage"><svg viewBox="0 0 760 150" role="img" aria-label="Made to move, sharp glint"><defs><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="0" x2="1900" y1="0" y2="0"><stop offset="0" stop-color="#ffcc00"/><stop offset=".45" stop-color="#ffcc00"/><stop offset=".48" stop-color="#fffdf0"/><stop offset=".5" stop-color="#ffffff"/><stop offset=".515" stop-color="#fffdf0"/><stop offset=".55" stop-color="#ffcc00"/><stop offset="1" stop-color="#ffcc00"/></linearGradient></defs><text x="20" y="111" textLength="716" lengthAdjust="spacingAndGlyphs" fill="#ffcc00">Made to move.</text><text class="shine" x="20" y="111" textLength="716" lengthAdjust="spacingAndGlyphs" fill="url(#b)">Made to move.</text></svg></div><p>A narrower, faster highlight with a tighter bloom. Strongest punctuation, but can feel abrupt beside the slower gold arcs.</p></article>
+<article class="option" data-option="c"><div class="option-head"><h2>C / Luminous wash</h2><span class="badge">Broader / slower</span></div><div class="stage"><svg viewBox="0 0 760 150" role="img" aria-label="Made to move, luminous wash"><defs><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="0" x2="1900" y1="0" y2="0"><stop offset="0" stop-color="#ffcc00"/><stop offset=".35" stop-color="#ffcc00"/><stop offset=".43" stop-color="#fff4ba"/><stop offset=".5" stop-color="#fffdf0"/><stop offset=".57" stop-color="#fff4ba"/><stop offset=".65" stop-color="#ffcc00"/><stop offset="1" stop-color="#ffcc00"/></linearGradient></defs><text x="20" y="111" textLength="716" lengthAdjust="spacingAndGlyphs" fill="#ffcc00">Made to move.</text><text class="shine" x="20" y="111" textLength="716" lengthAdjust="spacingAndGlyphs" fill="url(#c)">Made to move.</text></svg></div><p>A wider light wash lingers across more letters. More luminous overall, with a softer sense of surprise.</p></article>
+</section>
+<p class="note">Motion study, not a replacement for the live hero. This offline page uses a system serif and SVG light to keep the comparison self-contained; the website uses Instrument Serif. No selection is applied from this page. Reduced-motion visitors see static gold.</p>
+<footer>GRIFON</footer>
+</main>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const slider = document.querySelector('#scrub');
+const replay = document.querySelector('#replay');
+const pause = document.querySelector('#pause');
+const status = document.querySelector('#status');
+const treatments = [{id:'a',duration:2500,glow:12,alpha:.25,start:-1140,end:0},{id:'b',duration:1800,glow:9,alpha:.4,start:-1140,end:0},{id:'c',duration:3200,glow:14,alpha:.25,start:-1400,end:200}];
+let frame = 0, running = false, start = 0, elapsed = 0;
+const limit = 3800;
+const ease = p => (1 - Math.cos(p * Math.PI)) / 2;
+function paint(ms, normalized = false) {
+  treatments.forEach(t => {
+    const p = Math.max(0, Math.min(1, normalized ? ms : (ms - 600) / t.duration));
+    document.getElementById(t.id).setAttribute('gradientTransform', 'translate(' + (t.start + (t.end - t.start) * ease(p)) + ' 0)');
+    document.querySelector('[data-option="' + t.id + '"] .shine').style.filter = 'drop-shadow(0 0 ' + t.glow + 'px rgba(255,204,0,' + (Math.sin(p * Math.PI) * t.alpha) + '))';
+  });
+}
+function stop() { running = false; cancelAnimationFrame(frame); pause.textContent = 'Resume'; }
+function tick(now) {
+  elapsed = Math.min(limit, now - start); paint(elapsed);
+  slider.value = String(Math.round(elapsed / limit * 100));
+  if (elapsed < limit && running) frame = requestAnimationFrame(tick);
+  else { stop(); pause.disabled = true; status.textContent = 'Pass complete. Replay or drag to compare a moment.'; }
+}
+function play(reset = false) {
+  if (reduce.matches) return;
+  cancelAnimationFrame(frame); if (reset) elapsed = 0;
+  running = true; start = performance.now() - elapsed; pause.disabled = false; pause.textContent = 'Pause';
+  status.textContent = 'Playing once: A 2.5s / B 1.8s / C 3.2s, after a short pause.';
+  frame = requestAnimationFrame(tick);
+}
+replay.addEventListener('click', () => play(true));
+pause.addEventListener('click', () => { if (running) { stop(); status.textContent = 'Paused. Resume or drag to compare.'; } else play(); });
+slider.addEventListener('input', () => { stop(); pause.disabled = true; paint(Number(slider.value) / 100, true); status.textContent = 'Comparing the same progress in all three sweeps. Replay to see their timing.'; });
+function preference() {
+  stop(); replay.disabled = reduce.matches; pause.disabled = true; slider.disabled = reduce.matches;
+  paint(0); if (reduce.matches) status.textContent = 'Reduced motion is on. All three show static gold.'; else play(true);
+}
+reduce.addEventListener('change', preference); preference();
+</script>
+</body>
+</html>
