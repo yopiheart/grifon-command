@@ -74,14 +74,14 @@ Payment acceptance and production merge/deployment remain outside this session. 
 
 ## Real preview auth follow-up (2026-09-10)
 User reports sign-in returns to grifon.ai and loses checkout. Source OAuth uses window.location.origin; plan/cycle sessionStorage cannot cross into production.
-Likely Supabase redirect allowlist/Site URL fallback; NOT configuration-confirmed.
-Supabase dashboard requires login; no connector/session available to inspect it.
-Check Auth > URL Configuration > Redirect URLs for this EXACT OAuth return value:
+Confirmed in authenticated GRIFON AI URL Configuration: preview was absent; unmatched redirect falls back to Site URL https://grifon.ai. Neil approved adding:
 https://grifon-command-git-1d765a-neilmaglayabusiness22-2085s-projects.vercel.app
-If absent, add only that URL; retain production Site URL. No settings changed.
-Then retry pricing > selected plan/cycle > OAuth in the same preview tab, verify return to preview checkout with that selection, and stop before payment.
+Saved exact origin (no wildcard/path), success toast and persisted reload verified.
+Site URL unchanged. Total redirects now 4; prior http://localhost:5173/**,
+https://app.grifon.ai/** and https://grifon.ai/** remain unchanged.
+Neil must retry pricing > selected plan/cycle > OAuth in the same preview tab, verify return to preview checkout with that selection, and stop before payment.
 Email UI expects a six-digit OTP; actual provider/email method still unconfirmed.
-No app defect established or code changed; real auth acceptance remains blocked.
+No app defect established or code changed; real auth acceptance awaits Neil's retry.
 
 ## Cafe-PC continuity
 Use workflows/codex_desktop.md; Node 24 / npm 11, npm.cmd in PowerShell.
