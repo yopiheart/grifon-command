@@ -11,6 +11,17 @@ Draft PR: https://github.com/yopiheart/grifon-command/pull/132
 Research commit `41eecf4` pushed; this resume update accompanies the final handoff.
 Independent review PASS; disclosure ambiguity fixed and targeted recheck passed.
 
+## Higgsfield follow-up
+Research: `workflows/higgsfield_astra_launch_research.md`.
+35 post texts after the Astra launch; purposeful sample, not a full-feed census.
+Evidence: `assets/funnel-swipe/higgsfield-astra-2026-09-10/` (ledger + 4 contact sheets).
+Recommendation: Astra-authored editable studio/cameras and precise wrapper motion;
+actual Grifon UGC/cinematic outputs remain the product proof. No 3D feature promised.
+Blender 5.2.1 LTS version command passed; GTX 1660 detected. No scene render tested.
+Gauntlet proposed for stills only, max 3 rounds; no new paid or production run.
+Follow-up verification PASS: 35 unique posts, dates, 24 samples, 4 image hashes,
+417410 image bytes and 15 local links. Independent review PASS, no P1/P2 findings.
+
 ## Actual analysis result and next gate
 One newly approved `gemini-3.8-flash` request returned JSON but FAILED specificity:
 2 qualifying why-it-works findings, minimum 3. No retry/model switch/gate edit.

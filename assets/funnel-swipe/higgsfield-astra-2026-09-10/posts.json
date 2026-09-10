@@ -1,0 +1,410 @@
+{
+  "reviewed": "2026-09-10",
+  "selection": "Purposeful public-post sample via launch/3D/post-production discovery articles and current public profile; NOT a complete timeline or representative usage census.",
+  "launch_anchor": {
+    "url": "https://x.com/OpenAI/status/2095595741528125780",
+    "posted_utc": "2026-09-03T19:32:13.000Z"
+  },
+  "post_count": 35,
+  "excluded": [
+    {
+      "id": "2095535254027264001",
+      "reason": "Published before the launch anchor; post text does not name Astra."
+    }
+  ],
+  "direct_browser_cross_checks": [
+    "https://x.com/higgsfield",
+    "https://x.com/higgsfield_ai/status/2096352124754104618",
+    "https://x.com/higgsfield_ai/status/2096543590159880342"
+  ],
+  "frames": [
+    {
+      "file": "oval-contact.jpg",
+      "source_post": "https://x.com/higgsfield_ai/status/2095630197257367857",
+      "frames": 6,
+      "sampling": "FFmpeg fps=6/duration, 3x2 tile; approximate visual coverage, not exact cut boundaries",
+      "bytes": 115090,
+      "sha256": "85a851883e98636b19a2543aa17c3d6401b3e131c3013a1aca833c813bc198aa",
+      "downloaded_video_sha256": "74371843adedd3faccec9f80b818706a907d3c21f42ae9297780bf4bea32c464"
+    },
+    {
+      "file": "anime-contact.jpg",
+      "source_post": "https://x.com/higgsfield_ai/status/2096352124754104618",
+      "frames": 6,
+      "sampling": "FFmpeg fps=6/duration, 3x2 tile; approximate visual coverage, not exact cut boundaries",
+      "bytes": 164994,
+      "sha256": "5483b6592482c2f16e3073b809e5275712bf8bc4ae08af89fc6522030d031ef7",
+      "downloaded_video_sha256": "18ec29691c9fea6b5525daa3f5fc0d269548fbe43c0624a2ec1bc4c5aec44c21"
+    },
+    {
+      "file": "canvas-contact.jpg",
+      "source_post": "https://x.com/higgsfield_ai/status/2096543590159880342",
+      "frames": 6,
+      "sampling": "FFmpeg fps=6/duration, 3x2 tile; approximate visual coverage, not exact cut boundaries",
+      "bytes": 45578,
+      "sha256": "444df55204730cc278adf6256e11a5d5ca5361bc7dc04e3ce6da70d9e7597909",
+      "downloaded_video_sha256": "b20915b36cc0efb4a672a6ae0414bfb2b6be5226983eb6fc24ea97191fec9a1f"
+    },
+    {
+      "file": "broadcast-contact.jpg",
+      "source_post": "https://x.com/higgsfield_ai/status/2096320620862841139",
+      "frames": 6,
+      "sampling": "FFmpeg fps=6/duration, 3x2 tile; approximate visual coverage, not exact cut boundaries",
+      "bytes": 91748,
+      "sha256": "3e7d6947eff17f65f841d220b2f9b5c9e4fa4ad880c087f8627c65ffee1edb2c",
+      "downloaded_video_sha256": "5289aa3d28e77597b26d572211fb55b50fd07a766dcfcf214f8dc726b1fa088d"
+    }
+  ],
+  "posts": [
+    {
+      "id": "2095630197257367857",
+      "url": "https://x.com/higgsfield_ai/status/2095630197257367857",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-03T21:49:08.000Z",
+      "category": "3d_set",
+      "summary": "Written set description becomes scene code, Blender geometry and a Cycles render of the Oval Office.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 30
+    },
+    {
+      "id": "2096284092593758631",
+      "url": "https://x.com/higgsfield_ai/status/2096284092593758631",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T17:07:29.000Z",
+      "category": "3d_set",
+      "summary": "Floor-plan input becomes scene code, a Blender location and Cycles imagery.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 30
+    },
+    {
+      "id": "2096292350180163648",
+      "url": "https://x.com/higgsfield_ai/status/2096292350180163648",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T17:40:18.000Z",
+      "category": "3d_motion",
+      "summary": "Piano composition paired with a 3D pianist whose hands reportedly follow the notes.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 34.566
+    },
+    {
+      "id": "2096303855806058934",
+      "url": "https://x.com/higgsfield_ai/status/2096303855806058934",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T18:26:01.000Z",
+      "category": "3d_motion",
+      "summary": "A 3D Manhattan timeline moves from historical landscape through the present to an imagined future.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 18.8
+    },
+    {
+      "id": "2096306588978196786",
+      "url": "https://x.com/higgsfield_ai/status/2096306588978196786",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T18:36:52.000Z",
+      "category": "motion_compositing",
+      "summary": "After Effects reference recreation with separately editable transparent compositions.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 87.7
+    },
+    {
+      "id": "2096320620862841139",
+      "url": "https://x.com/higgsfield_ai/status/2096320620862841139",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T19:32:38.000Z",
+      "category": "3d_motion",
+      "summary": "Blender broadcast opener combines a globe, orbit lines and animated typography.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 11.125
+    },
+    {
+      "id": "2096325376809341069",
+      "url": "https://x.com/higgsfield_ai/status/2096325376809341069",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T19:51:32.000Z",
+      "category": "3d_motion",
+      "summary": "Cinema 4D kart-racing animation, attributed to Astra and Higgsfield.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 23.966
+    },
+    {
+      "id": "2096334648016253339",
+      "url": "https://x.com/higgsfield_ai/status/2096334648016253339",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T20:28:22.000Z",
+      "category": "sound_color",
+      "summary": "Reference-matched color grade in Resolve and Higgsfield; four-minute claim not reproduced.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 14.958
+    },
+    {
+      "id": "2096342420543660277",
+      "url": "https://x.com/higgsfield_ai/status/2096342420543660277",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T20:59:15.000Z",
+      "category": "3d_character",
+      "summary": "Soul concept, textured mesh, Blender topology, UVs, rig and readiness review, then Seedance cartoon.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 32.166
+    },
+    {
+      "id": "2096346331623358796",
+      "url": "https://x.com/higgsfield_ai/status/2096346331623358796",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T21:14:48.000Z",
+      "category": "workflow_delivery",
+      "summary": "Research, channel setup and ten Shorts reportedly published; no independent performance or labor verification.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 122.055
+    },
+    {
+      "id": "2096352124754104618",
+      "url": "https://x.com/higgsfield_ai/status/2096352124754104618",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-05T21:37:49.000Z",
+      "category": "3d_character",
+      "summary": "Anime brief becomes Blender previs, Seedance 2.5 shots and an assembled final cut.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 28
+    },
+    {
+      "id": "2096430282329235694",
+      "url": "https://x.com/higgsfield_ai/status/2096430282329235694",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T02:48:23.000Z",
+      "category": "workflow_delivery",
+      "summary": "Announcement of a film made through Astra computer use; announcement is not a delivery audit.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 80
+    },
+    {
+      "id": "2096430284648652934",
+      "url": "https://x.com/higgsfield_ai/status/2096430284648652934",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T02:48:24.000Z",
+      "category": "workflow_delivery",
+      "summary": "Companion process-reel post; text alone does not establish its individual production steps.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 25.458
+    },
+    {
+      "id": "2096495974734794840",
+      "url": "https://x.com/higgsfield_ai/status/2096495974734794840",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T07:09:26.000Z",
+      "category": "3d_set",
+      "summary": "New York reconstruction attributed to Astra, Blender and Higgsfield.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 22.133
+    },
+    {
+      "id": "2096543590159880342",
+      "url": "https://x.com/higgsfield_ai/status/2096543590159880342",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T10:18:38.000Z",
+      "category": "motion_compositing",
+      "summary": "Canvas launch recreation uses editable After Effects motion with Higgsfield-generated image and video assets.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 43
+    },
+    {
+      "id": "2096546094050394227",
+      "url": "https://x.com/higgsfield_ai/status/2096546094050394227",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T10:28:35.000Z",
+      "category": "motion_compositing",
+      "summary": "Meme explainer uses Higgsfield visuals and Premiere editing, sound and assembly.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 25
+    },
+    {
+      "id": "2096561374667342186",
+      "url": "https://x.com/higgsfield_ai/status/2096561374667342186",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T11:29:18.000Z",
+      "category": "workflow_delivery",
+      "summary": "Children's cartoon workflow spans Higgsfield, Premiere and YouTube.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 25.166
+    },
+    {
+      "id": "2096572609983037660",
+      "url": "https://x.com/higgsfield_ai/status/2096572609983037660",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-06T12:13:57.000Z",
+      "category": "motion_compositing",
+      "summary": "Fable launch-video recreation described as programmatic production.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 57.002
+    },
+    {
+      "id": "2097042760423633405",
+      "url": "https://x.com/higgsfield_ai/status/2097042760423633405",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-07T19:22:09.000Z",
+      "category": "workflow_delivery",
+      "summary": "Video creation, editing and TikTok posting attributed to Astra with account access.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 11.541
+    },
+    {
+      "id": "2097048446276452710",
+      "url": "https://x.com/higgsfield_ai/status/2097048446276452710",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-07T19:44:45.000Z",
+      "category": "workflow_delivery",
+      "summary": "Higgsfield generation and Premiere editing followed by YouTube publishing.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 19.791
+    },
+    {
+      "id": "2097054300614856823",
+      "url": "https://x.com/higgsfield_ai/status/2097054300614856823",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-07T20:08:01.000Z",
+      "category": "motion_compositing",
+      "summary": "After Effects typography tutorial with expressions, voiceover, edit, project file and preset.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 60
+    },
+    {
+      "id": "2097102486058537059",
+      "url": "https://x.com/higgsfield_ai/status/2097102486058537059",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-07T23:19:29.000Z",
+      "category": "sound_color",
+      "summary": "Launch-video sound-effects arrangement in Logic Pro.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 79.8
+    },
+    {
+      "id": "2097103612816380070",
+      "url": "https://x.com/higgsfield_ai/status/2097103612816380070",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-07T23:23:58.000Z",
+      "category": "motion_compositing",
+      "summary": "After Effects footage cleanup attributed to Astra and Higgsfield.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 27.533
+    },
+    {
+      "id": "2097129518645612987",
+      "url": "https://x.com/higgsfield_ai/status/2097129518645612987",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T01:06:54.000Z",
+      "category": "workflow_delivery",
+      "summary": "Combined workflow assigns generation to Higgsfield, editing to Premiere, audio to Ableton and color to Resolve.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 15.458
+    },
+    {
+      "id": "2097162253414146053",
+      "url": "https://x.com/higgsfield_ai/status/2097162253414146053",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T03:16:59.000Z",
+      "category": "3d_motion",
+      "summary": "Houdini Eiffel Tower construction and animation.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 13.983
+    },
+    {
+      "id": "2097167943587299482",
+      "url": "https://x.com/higgsfield_ai/status/2097167943587299482",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T03:39:35.000Z",
+      "category": "programmed_experience",
+      "summary": "Concert lighting program reportedly synchronizes cues to one track.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 50.686
+    },
+    {
+      "id": "2097191986474451069",
+      "url": "https://x.com/higgsfield_ai/status/2097191986474451069",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T05:15:08.000Z",
+      "category": "programmed_experience",
+      "summary": "Camera-path-to-drone demonstration; actual physical flight and safety are not verified.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 19.56
+    },
+    {
+      "id": "2097197612327985480",
+      "url": "https://x.com/higgsfield_ai/status/2097197612327985480",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T05:37:29.000Z",
+      "category": "3d_motion",
+      "summary": "Houdini rocket-launch simulation with a surprise ending.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 12
+    },
+    {
+      "id": "2097407934598930472",
+      "url": "https://x.com/higgsfield_ai/status/2097407934598930472",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T19:33:14.000Z",
+      "category": "3d_object",
+      "summary": "Soul design variants and Blender modeling for an AirPods case; functional and printability claims untested.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 13.213
+    },
+    {
+      "id": "2097474491857482142",
+      "url": "https://x.com/higgsfield_ai/status/2097474491857482142",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-08T23:57:42.000Z",
+      "category": "3d_set",
+      "summary": "Mies house reconstruction uses 3ds Max, Corona, Higgsfield and GPT-Images 2.5; accuracy claim untested.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 38.041
+    },
+    {
+      "id": "2097481392313758124",
+      "url": "https://x.com/higgsfield_ai/status/2097481392313758124",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-09T00:25:07.000Z",
+      "category": "3d_object",
+      "summary": "Interactive Space Shuttle model with disassembly and interior exploration.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 23.3
+    },
+    {
+      "id": "2097488254555857226",
+      "url": "https://x.com/higgsfield_ai/status/2097488254555857226",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-09T00:52:23.000Z",
+      "category": "3d_object",
+      "summary": "Photo-to-building-block app with rotation, assembly slider, instructions and parts list.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 25.044
+    },
+    {
+      "id": "2097515771782205831",
+      "url": "https://x.com/higgsfield_ai/status/2097515771782205831",
+      "author": "higgsfield_ai",
+      "posted_utc": "2026-09-09T02:41:44.000Z",
+      "category": "3d_object",
+      "summary": "Soul nail-design concepts reconstructed as Blender objects for claimed 3D printing.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 20.201
+    },
+    {
+      "id": "2097832465624887774",
+      "url": "https://x.com/higgsfield/status/2097832465624887774",
+      "author": "higgsfield",
+      "posted_utc": "2026-09-09T23:40:10.000Z",
+      "category": "programmed_experience",
+      "summary": "Astra-built animation site uses GPT 2.5 for intermediate images and assembles them into animation.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 19.602
+    },
+    {
+      "id": "2097874884676522105",
+      "url": "https://x.com/higgsfield/status/2097874884676522105",
+      "author": "higgsfield",
+      "posted_utc": "2026-09-10T02:28:43.000Z",
+      "category": "3d_set",
+      "summary": "Farm blueprint workflow passes through AutoCAD, Blender and Higgsfield visualization.",
+      "evidence": "Publisher post text retrieved through public FxTwitter mirror; selected originals cross-checked in X browser",
+      "video_duration_reported_s": 25.022
+    }
+  ]
+}

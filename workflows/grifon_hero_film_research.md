@@ -10,6 +10,8 @@ Reviewed 2026-09-10. Base product: `4acbaef` (merged landing upgrade). Owner: Ne
 
 Read alongside the [production preparation brief](grifon_hero_film_brief.md), [browser evidence](../assets/funnel-swipe/astra-apple-2026-09-10/evidence.md), [independent frame audit](../assets/funnel-swipe/astra-apple-2026-09-10/frame-audit.md), and [attempt ledger](../assets/funnel-swipe/astra-apple-2026-09-10/analysis-attempt.json).
 
+Follow-up: [Higgsfield's Astra production workflows](higgsfield_astra_launch_research.md) reviews 35 post texts and four sampled videos, with an editable-studio and motion-graphics recommendation. It does not clear the audiovisual gate or authorize production generation.
+
 ## What was actually researched
 
 | Evidence | Status | What it establishes |
