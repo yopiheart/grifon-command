@@ -5,10 +5,9 @@
 Branch: `codex/landing-reveal`. Draft PR: https://github.com/yopiheart/grifon-command/pull/129
 The saved public website upgrade is implemented through pricing, sign-in,
 checkout and dashboard navigation / saved-work / loading states.
-The approved landing remains intact. No production merge or deploy requested.
-Check the PR's latest head/checks before resuming; GitHub is the durable source.
+The approved landing remains intact. No production merge/deploy requested. Check the PR's latest head/checks before resuming.
 Prior preview: https://grifon-command-git-1d765a-neilmaglayabusiness22-2085s-projects.vercel.app/
-Fresh arrival check confirmed 51660bf CI/Vercel success; preview requires Vercel login.
+Website head 46cf803 passed CI/Vercel; branch preview now accessible in-browser.
 This session does not authorize production deployment or paid operations.
 
 ## Positioning and boundaries
@@ -71,12 +70,21 @@ ideas are deferred until the user revisits design LAST. Star fields were a
 reference; gold wing trails, smoke and dark glass were brainstorming only.
 No new hero concept or assets have been approved. Existing og-card artwork
 and original testimonial attribution evidence remain later launch-review work.
-Real auth/payment acceptance and production merge/deployment need their own
-user-authorized session. Dashboard/provider generation is not validated here.
+Payment acceptance and production merge/deployment remain outside this session. Dashboard/provider generation is not validated here.
+
+## Real preview auth follow-up (2026-09-10)
+User reports sign-in returns to grifon.ai and loses checkout. Source OAuth uses window.location.origin; plan/cycle sessionStorage cannot cross into production.
+Likely Supabase redirect allowlist/Site URL fallback; NOT configuration-confirmed.
+Supabase dashboard requires login; no connector/session available to inspect it.
+Check Auth > URL Configuration > Redirect URLs for this EXACT OAuth return value:
+https://grifon-command-git-1d765a-neilmaglayabusiness22-2085s-projects.vercel.app
+If absent, add only that URL; retain production Site URL. No settings changed.
+Then retry pricing > selected plan/cycle > OAuth in the same preview tab, verify return to preview checkout with that selection, and stop before payment.
+Email UI expects a six-digit OTP; actual provider/email method still unconfirmed.
+No app defect established or code changed; real auth acceptance remains blocked.
 
 ## Cafe-PC continuity
 Use workflows/codex_desktop.md; Node 24 / npm 11, npm.cmd in PowerShell.
 Dependencies and Playwright Chromium restored; wizard asset profile restored.
-No secrets read/restored. Hook trust remains specific to this PC.
-Migration PR #126 remains merged. Historical pipeline issues in earlier main
+No secrets read/restored. Hook trust remains PC-specific. Migration PR #126 remains merged. Historical pipeline issues in earlier main
 handoffs were not part of this website upgrade.
