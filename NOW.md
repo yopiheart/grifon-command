@@ -1,90 +1,71 @@
-﻿# NOW - the resume doc
-**Stamped: 2026-09-10, living hero revision**
+# NOW - the resume doc
+**Stamped: 2026-09-10, approved website merged and deployed**
 
 ## Current state
-Branch: `codex/landing-reveal`. Draft PR: https://github.com/yopiheart/grifon-command/pull/129
-Neil accepted the website; preview access is resolved.
-Neil rejected the rigid gold arc reveal and explicitly approved a genuine
-center-out opening with continuous light at the film edges. That revision is
-implemented and independently reviewed; all local checks pass. Check the draft
-PR's latest CI and branch preview statuses before review; keep the PR draft.
-Preview: https://grifon-command-git-1d765a-neilmaglayabusiness22-2085s-projects.vercel.app/
-No production merge/deploy or paid operation authorized. Read latest PR checks.
+Neil explicitly authorized merging the approved website edits.
+PR #129 is MERGED: https://github.com/yopiheart/grifon-command/pull/129
+Merge commit: `4acbaefcfac14169dbd7c49b12eee88408e8aed1` on `main`.
+Approved source head: `fec657c`; implementation: `7326436` plus earlier accepted work.
+Merge tree exactly matches that reviewed head; no API, prompt, model or video changes.
+Production: https://grifon.ai/ - Vercel READY, assigned to this merge.
+Deployment: https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/AjBYR8JjZjt9XtLTtT76fRuELEBV
+This `codex/landing-reveal` branch retains the post-merge resume update.
 
-## Approved design and offer
-English public copy for Filipino owners already selling and doing their marketing.
-Build my free ad plan: one preview/month, no card; finished videos are paid.
-Starter/Pro/Business include 1/8/15 videos/month; catalog owns billing charges.
-Accepted pricing/login/checkout/dashboard work remains on this branch (46cf803).
-Public editorial typography is scoped in DESIGN.md; app primitives stay intact.
-No new hero film concept/assets approved. The film frame must remain blank.
-
-## Current implementation
-- Hero: canvas gold ribbons unfold with staggered leading light as the film rises.
-  Curvature and highlights keep flowing at both edges during stopped scrolling;
-  the film center stays clear. Longer native scroll scene gives opening/hold room.
-  Explore the story lands in the hold; the aura leaves naturally with the stage.
-  No stars, literal wings, wheel interception, video asset or new dependency.
-  Canvas resolution is capped; drawing suspends offscreen and in hidden tabs.
-  Native reverse restores controls. Live reduced-motion preference changes now
-  restore static content, keyboard access and semantics while removing canvas.
-- Made to move: a clearly brighter single white-gold highlight pass, then rest.
-- URLs: home/back/continue callbacks use existing manual route helper; ordinary
-  navigation pushes history, auth/payment redirects replace as appropriate.
-  Reviews remains #reviews; logo returns to top and clears the hash.
-- Auth: guest /app normalizes to /login; intentional signed-in landing survives
-  refresh; marked OAuth still enters app/resumes selected checkout.
-- Legal return survives browser Back/Forward and refresh via history state.
-- Checkout URL reflects its actual displayed billing cycle; retry keeps validated
-  plan/cycle or top-up, falling back to pricing if no valid selection remains.
-  Existing intent/payment guard and consent semantics remain intact.
-- Cookie notice: compact, equal Accept/Decline emphasis, 44px privacy target,
-  visible focus outlines, safe-area spacing. Hero CTA is clear on 375px mobile.
-  Focused controls scroll clear without focus theft; a measured page-end spacer
-  keeps even the last footer help link visible and disappears with the notice.
-  Storage/callback/analytics meaning unchanged.
-  Checkout previously mounted no cookie banner; this remains unchanged.
-
-## Headline comparison artifact
-Self-contained `artifacts/hero-sweep-review.html`, builder/template in tools/artifacts/.
-Committed through 8a42f14; opened for Neil in the originating task.
-A Specular pass was explicitly selected by Neil; B Sharp glint and C Luminous wash
-remain review-only. Replay/pause/scrub controls.
-Offline study uses Georgia/SVG; live hero uses Instrument Serif.
-Independent 390x844/1280x900, controls, reduced motion and offline smoke passed.
-No publishing requested. Actual Android WebView remains untested.
+## Shipped and accepted
+- Landing: English copy for Filipino owners doing their own marketing.
+  One free ad-plan preview/month, no card; finished video creation is paid.
+  Starter/Pro/Business include 1/8/15 finished videos/month.
+- Hero: native scroll unfolds living gold ribbons around the blank film.
+  Shape and travelling highlights continue at both edges while scrolling stops.
+  Center stays clear; drawing suspends offscreen and in hidden tabs; DPR is capped.
+  Reverse and live reduced-motion changes restore usable hero controls.
+  Neil's Option A single white-gold sweep across Made to move remains accepted.
+- Pricing, login, checkout, dashboard navigation, saved-work and loading states.
+  Exact-selection payment intent guard and validated retry selection persist.
+  Fixtures cover checkout cycle/history; no actual payment was made in closeout.
+- Manual routing keeps URL/history aligned: Home, Back/Forward, legal return,
+  guest /app, intentional signed-in Home and marked OAuth redirects.
+- Compact cookie notice, equal Accept/Decline, 44px privacy target, focus and
+  safe-area handling; measured footer spacer. Existing consent semantics retained.
 
 ## Verification
-Earlier accepted website: build, 1,357 unit tests and all 29 browser tests passed.
-Original rigid hero passed technical checks but failed Neil's visual intent.
-New stopped-scroll edge-motion tests failed it on desktop and mobile; the live
-reduced-motion preference regression also failed before its fix. Ordinary wheel
-recordings, pixel comparisons, reverse, CTA and reduced-motion checks cover the
-revision. Independent motion PASS and BRAND_PASS 45/50, zero new flags/nits.
-Fresh correctness review found no actionable final-diff findings; independently
-verified runtime preference toggles both ways, CTA fit and offscreen suspension.
-Routing original stale paths/history/guest/app/checkout-cycle failures reproduced;
-All 14 focused route cases passed, including terminal paths and invalid retry stash.
-Cookie original: 16px privacy target, CTA/footer overlap; 4 fixed checks pass.
-Independent cookie BRAND_PASS 44/50; footer/resize/dismissal recheck passed.
-Independent correctness review: no actionable findings; 25 targeted tests passed.
-Current build passed (2,580 modules; main JS gzip 589.79 kB).
-All 56 browser tests passed (2.4 minutes); all 1,357 unit tests passed (32 existing
-skips). One overlapping run hit a 5s artifact-anchor timeout; its 9 tests and then
-the complete suite passed without overlapping load. No timeout/gate changes.
-Bundle-leak, voice-sync, domain, PS ASCII, artifact-anchor and design lint passed.
-No real auth or charges used in fixtures. Do not claim fixtures prove live billing.
-Prior real Supabase auth fix below was verified in configuration and user review.
+Before merge: CI run 34452720905 passed verify, e2e and artifacts; Vercel preview green.
+Independent final correctness review: no actionable findings.
+Independent motion PASS and BRAND_PASS 45/50; earlier cookie BRAND_PASS 44/50.
+Local build passed: 2,580 modules; main JS gzip 589.79 kB.
+All 1,357 unit tests and 56 browser tests passed; 32 existing unit skips.
+One concurrent run hit a 5s anchor timeout; isolated anchors and full suite passed
+without overlapping load. No test, timeout or gate was weakened.
+Bundle-leak, voice-sync, domain, PS ASCII, artifact anchors and design lint passed.
+Post-merge CI: https://github.com/yopiheart/grifon-command/actions/runs/34457163365
+Build/verify, e2e, artifacts and final main-status all passed.
+Production desktop: new headline/canvas, Explore film hold, sustained edge movement,
+pricing with annual totals, Home URL, login, Terms and its return to Home verified.
+Independent production mobile 375x667 PASS: new hero, stationary edge flow, reverse,
+clear center, compact cookie/visible CTA, menu to Pricing, login and legal pages.
+Mobile routes returned HTTP 200 with no overflow or runtime page errors.
+No real authentication, request-invite submission, generation or payment exercised.
 
-## Preview auth configuration (verified)
-GRIFON AI project varoqxjccqmskzeejagn Site URL remains https://grifon.ai.
-Neil approved adding only this exact origin (no wildcard/path), saved/reloaded:
+## Remaining work and boundaries
+The hero film is intentionally blank. Neil approved a living creative-studio concept;
+film planning belongs to task `01a08a7d-c9d5-7e21-b0ec-ab3dd98064da`.
+No film assets were generated or shipped with this website merge.
+Production login currently displays the existing invite-only gate.
+This is the approved website deployment, not completion of the entire public launch.
+Later review: testimonial provenance, first real free-plan-to-paid journey, analytics
+consent wording versus first-party events, OG card, and social destination ownership.
+These were not silently changed during merge closeout. Physical-device checks remain.
+Gemini migration PR #131 is separate and was not merged by this task.
+
+## Preview auth configuration
+Supabase project varoqxjccqmskzeejagn Site URL remains https://grifon.ai.
+Neil approved the exact branch preview origin; save/reload verified four redirects:
 https://grifon-command-git-1d765a-neilmaglayabusiness22-2085s-projects.vercel.app
-Total redirect entries 4; http://localhost:5173/**, https://app.grifon.ai/**,
-https://grifon.ai/** remain unchanged. User subsequently confirmed preview works.
+Original localhost:5173/**, app.grifon.ai/** and grifon.ai/** redirects remain.
+Neil confirmed preview access worked. No auth settings changed during merge closeout.
 
 ## Cafe-PC continuity
-Use workflows/codex_desktop.md, Node 24/npm 11, npm.cmd; local dev uses dummy config.
-Never commit session/auth files or generated test-results/ and drawPlan snapshot noise.
-Gemini migration is a separate task/branch; no tuned/model/API changes here.
-Attribution/og-card/hero film assets remain later work. No production merge/deploy.
+Use workflows/codex_desktop.md, Node 24/npm 11 and npm.cmd.
+Do not commit auth/session files, generated test-results or drawPlan snapshot noise.
+Standalone headline study artifacts/hero-sweep-review.html remains reference-only.
+No additional paid calls, film work, merge or deployment is running in this task.
