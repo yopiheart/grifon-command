@@ -17,3 +17,14 @@
 The clear blockers are added chalkboard wording/prop and inadequate lower-hand margin; exact third-line label fidelity also remains uncertified. These are distinct from taste preferences about casting, color or set styling. Preserve the original and show these observations; the one-call scope permits no automatic repair or retry.
 
 This combined still does not prove video quality, lip sync, motion anatomy, multi-view product consistency or actual Grifon generation. No subsequent generation is authorized by this review.
+# Subsequent user visual approval
+
+After this independent review, Neil viewed A04 and was specifically asked to
+check grip, label and background text. He replied "Okay na to" (reported by the
+originating task, 2026-09-13). Current state: USER-ACCEPTED combined landscape
+visual reference. The originally unrequested chalkboard wording is a knowingly
+accepted deviation and must not be silently removed or regenerated.
+
+The original observations below remain the audit record. Tight head/fingertip
+margins and the uncertified smallest label line are technical limitations; this
+acceptance does not prove motion/continuity or authorize another generation.

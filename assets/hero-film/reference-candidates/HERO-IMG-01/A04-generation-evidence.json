@@ -38,11 +38,12 @@
     "model":  "Not exposed; no selector used",
     "tokenUsage":  "Not exposed",
     "dollarCost":  "Not exposed; native allowance",
-    "status":  "Independent review HOLD: unrequested chalkboard promo text; resting fingertips/head have insufficient generous margins. Owner/product/grip/daylight broadly consistent; third label microline not confidently certified. No repeat or edit authorized.",
+    "status":  "USER-ACCEPTED combined landscape visual reference. Original added-chalkboard deviation knowingly accepted by Neil. Retain tight head/fingertip margins and unverified smallest label line as technical limitations, not new generation authorization. Motion remains untested.",
     "promptSha256":  "33927d81be96247195b226a46c73a9692ead63459d328cf4489a4a66387308f2",
     "dimensions":  [
                        1672,
                        941
                    ],
-    "aspectNote":  "Native landscape output is 1672x941, approximately 16:9 (integer-size rounding), not 1920x1080. No crop/upscale applied."
+    "aspectNote":  "Native landscape output is 1672x941, approximately 16:9 (integer-size rounding), not 1920x1080. No crop/upscale applied.",
+    "userVisualApproval":  "Neil viewed A04; after frontend specifically asked him to check grip, label and background text, he replied Okay na to. Reported by originating task on 2026-09-13. Acceptance includes visible chalkboard wording."
 }

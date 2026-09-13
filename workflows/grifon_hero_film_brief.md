@@ -2,16 +2,20 @@
 
 2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
 
-## Current step: review A04 combined still; proof production still pending
+## Current step: A04 combined visual reference accepted; motion/proof still pending
 
 HERO-SCENE-01 was explicitly approved with "Go, go, go" after the exact setup and
 one-call bound were read back. One native call using the saved prompt and A01/A03
 references produced `A04-owner-coffee-scene-16x9-original.png`, 1672x941 (native
 approximately 16:9, not a 1920x1080 deliverable). Original portraits are unchanged.
-The combined scene is on technical HOLD because it adds chalkboard wording not
-in the brief and leaves tight head/fingertip margins. The smallest label line is
-not confidently certified; no definite typo is claimed. See `A04-generation-evidence.json` and independent review in the
-candidate folder. No retry, paid fallback, video or Blender run followed.
+Initial review held the scene for added chalkboard wording and tight head/fingertip
+margins. Neil subsequently viewed A04 after being asked to check grip, label and
+background text, then said "Okay na to". A04 is now accepted as the combined
+landscape visual reference, including the knowingly accepted chalkboard deviation.
+Do not remove it or reroll. Tight margins remain a technical framing limitation;
+the smallest label line is not confidently certified, with no definite typo
+claimed. See `A04-generation-evidence.json` and independent review in the candidate
+folder. No extra generation or paid video follows from visual acceptance.
 
 ### Saved first-scene setup (now executed once)
 

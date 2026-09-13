@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-09-13, A04 combined owner/coffee scene generated**
+**Stamped: 2026-09-13, A04 combined landscape visual reference accepted**
 
 ## Current task
 Branch: codex/hero-film-storyboard, isolated from research head 302292a.
@@ -20,11 +20,11 @@ Independent animatic playback PASS; exact cuts 6/13/20/28/35s, 40s total.
 Native calls: initial 2 + separate A03 + approved HERO-SCENE-01 A04 = 4; no retries.
 A01 chosen for combined-scene proposal; A03 accepted visual reference.
 A02 rejected for dull palette/cropped hand. A03 MASTER DAYLIGHT visually accepted.
-A04 1672x941 original saved; HOLD for unrequested chalkboard wording; no motion proof.
+A04 1672x941 visually accepted including chalkboard; tight margins, no motion proof.
 Original studio source/assets/review preserved on #132; story remains primary.
 
 ## ▶ NEXT ACTION
-Review A04 findings; its one-call scope used. No additional image/video call approved.
+A04 accepted visual reference; one-call scope used. No extra image/video call approved.
 Order: storyboard > rough edit/temp audio > individual shots > assembly/review
 > separately approved website integration. Blender is optional per shot only.
 Final-look approval remains HOLD; the storyboard does not clear the optics issue.
