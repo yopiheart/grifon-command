@@ -1,0 +1,64 @@
+{
+  "id": "HERO-PROOF-02",
+  "status": "DEPENDENCY SPEC ONLY / CASTING AND PAID APPROVAL HOLD / NOT EXECUTABLE",
+  "purpose": "Test real Grifon UGC and cinematic scene quality and repeatability using one coffee product, before producing the final hero film's two complete sample ads.",
+  "authorization": {"paidApproved": false, "proposedMaxUsd": 15, "proposedMaxPaidRolls": 4, "note": "A ceiling proposal, not a current provider quote or an approved test. No API/video call is authorized by native-image preparation."},
+  "inputs": {
+    "productMaster": "assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+    "productSha256": "df01401ad33ed67ee78b92c3894267d84bd508fdb4baab18c075599a9da3770e",
+    "brand": "KAPE 01",
+    "businessBrief": "Fictional Filipino bottled-coffee demo brand. Show the same bottle consistently. No invented price, ingredient, health, sales, testimonial, delivery or availability claims. One believable human presentation and one restrained cinematic product reveal. Natural Taglish speech with English UI and subtitle presentation.",
+    "ownerMaster": null,
+    "ownerState": "A-series and B-series casting rejected; a new concrete casting direction is required. Never silently use either rejected identity.",
+    "ugcStartFrame": null,
+    "cinematicStartFrame": null,
+    "generatedPlanAndScript": null,
+    "freezeRequirement": "Save exact real plan, script, scene prompt, frame bytes/hashes and model configuration before video dispatch. These missing values cannot be fabricated to make a spec appear ready."
+  },
+  "ordinaryProductPath": [
+    "Read director-smoke. Stage the accepted handheld hero first. Market Research precedes Director; use Send to Director for business-field transfer, never hand-type replacement brand/offer fields in the wizard.",
+    "Record the actual planning path and edited wait. Freeze the original plan/storyboard. Do not run One-Shot automatically for a supposed two-scene test: its ordinary script can expand to nine or ten scenes.",
+    "GenerateVideo has an ordinary single-scene handler and GENERATE SCENE control. Select only the approved talking or cinematic scene; do not Render All. Source inspected at components/GenerateVideo/index.tsx handleGenerateSingle; actual signed-in flow has not yet been exercised.",
+    "Repeat the exact same inputs/settings once per selected scene, preserving originals with variant behavior. Never replace or delete earlier library evidence.",
+    "If a UI path cannot use the approved assets/ordinary eligible tier, record the limitation and stop. No API bypass, unmetered mode, model-source edit or silent alternate actor."
+  ],
+  "proposedVideoRolls": [
+    {"roll":1,"type":"talking","model":"Veo_3.1_Lite","resolution":"720p","aspectRatio":"16:9","durationSeconds":6,"audioEnabled":true,"prompt":"PENDING exact real Grifon talking scene/script; one spoken line only","startFrame":"PENDING approved owner/product frame"},
+    {"roll":2,"type":"cinematic","model":"Kling_3_0","resolution":"720p","aspectRatio":"16:9","durationSeconds":10,"audioEnabled":false,"prompt":"PENDING exact real Grifon cinematic scene prompt","startFrame":"PENDING same-product cinematic frame"},
+    {"roll":3,"repeatOf":1,"changedInputsAllowed":false},
+    {"roll":4,"repeatOf":2,"changedInputsAllowed":false}
+  ],
+  "limits": {
+    "videoRolls":4,
+    "allStagesTotalUsd":15,
+    "planningAndFrameSubceilingUsd":5,
+    "videoSubceilingUsd":10,
+    "billableFailuresCount":true,
+    "automaticRetries":false,
+    "creditPurchases":false,
+    "subscriptions":false,
+    "apiFallbacks":false,
+    "costPolicy":"Verify current account rates and worst-case request charge before dispatch, including internal retries or auxiliary operations. Reserve that amount against the remaining cap. If charge bounds cannot be established, stop before calling. Historical repository model-cost estimates are not billing evidence; no current Kling account rate has been verified. Planning/frame call counts remain unresolved until the actual workflow is mapped, so this is not execution-ready."
+  },
+  "requiredBeforeVeo": "A nearby script.spec.json with the actual frozen hook/lines/beatMap/plates, preset and maxPaidRolls=4; node tools/ad_preflight.mjs --script <path> must pass. No placeholder script file or misleading passing preflight has been created.",
+  "pass": [
+    "Actual normal Grifon UI, run ID, eligible paid tier, exact inputs, model settings and exports retained.",
+    "Consistent label, bottle shape, coffee fill, face and hands over the full selected excerpt; no visible identity or material drift.",
+    "Talking speech is intelligible natural Taglish, synchronized and not clipped. Listen to original audio; still review cannot certify voice.",
+    "Cinematic motion is coherent and controlled, without warped text, liquefying objects or unexplained color changes.",
+    "Original 720p/full-frame exports retained. A 1920x1080 wrapper assembly must not be called native 1080p or 4K product output.",
+    "Both unchanged repeats meet the same material criteria; record every roll and judge independently before making a repeatable-quality claim."
+  ],
+  "failOrStop": [
+    "Casting not selected, exact script/frame missing, failed preflight, no verified account access/eligibility/rate bound, or scope cannot fit the ceiling.",
+    "A material defect, request rejection or provider failure consumes its allotted attempt; no fifth video roll or paid repair follows.",
+    "Do not externally repair face, hand, label, voice or footage inside the product proof. Keep failures visible in the private evidence ledger."
+  ],
+  "evidence": ["Original inputs and hashes", "Run IDs and ordinary account tier", "Screen captures of real controls and plan", "Exact generated scene prompts and script", "Request/response timing and settings without credentials", "All original clips and audio", "Charge ledger and provider usage evidence", "Independent full-video/listening review", "Mobile legibility and playback QA"],
+  "releaseDependenciesBeyondThisTest": [
+    "Two actual complete sample ads still require the ordinary finishing path, full scene counts, voice/edit/export QA and a separately concrete budget. Passing these scene tests does not establish two finished ads.",
+    "Owner motion/performance, final Blender studio shot and final audio edit remain production work.",
+    "Complete final audiovisual/timing review, mute comprehension and live free-plan journey verification.",
+    "Website integration, merge, deployment or publication requires explicit user authorization."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "HERO-CAST-02",
+  "status": "USER REJECTED B01 identity and realism; all dependent images provisional/rejected. No further generation authorized.",
+  "authorization": "Neil approved new distinctive fictional Filipina founder direction then rejected B01 after four dependent calls were already in flight. No new call dispatched after rejection.",
+  "callsCompleted": 5,
+  "totalNativeCallsThisTask": 13,
+  "correctionCalls": 0,
+  "callsInFlight": 0,
+  "paidApiCalls": 0,
+  "paidVideoCalls": 0,
+  "entries": [
+    {
+      "id": "B01",
+      "file": "B01-founder-master-original.png",
+      "prompt": "Create ONE photorealistic casting master portrait, waist-up landscape 16:9, of a wholly fictional Filipino woman coffee founder about 39, with an individually memorable, ordinary believable face. Fresh casting, not a stock AI influencer or polished generic model: softly square face, broad cheekbones, slightly asymmetric natural eyebrows with the left arch a little higher, deep-set dark brown eyes, a broad natural nose with softly rounded tip, a defined slightly off-center cupid's bow, a small healed mark near one eyebrow, real subtle under-eye lines and sun freckles, warm medium-tan skin with visible pores. Short dark wavy bob ending around the jaw, loosely tucked behind one ear, practical and slightly unruly. Her expression is focused, observant and quietly confident, lips relaxed closed, not smiling for a commercial. She looks up briefly from checking a blank paper packing slip at her coffee work counter. She wears a rich petrol-teal cotton work shirt with rolled sleeves and a rust-red canvas waist apron; no jewelry except plain small studs. Both full hands rest separately on a warm wood counter, hands comfortably inside the frame. A cared-for modest Filipino coffee business workspace: kraft bags, coffee jars, practical shelves, an open doorway to saturated green tropical plants, blue sky and white clouds. MASTER DAYLIGHT: bright colorful tropical day outdoors, soft even open-shade light on entire face and body, neutral white balance, rich natural colors, no harsh patches of sun, no gray wash, no golden face cast, no rim light, no glam retouch. Natural face and body proportions, no caricature, no exoticized styling, no real person likeness. Give comfortable head and hand margins. No bottle yet, no readable text, no logos, no interface, no graphic captions. High-end candid documentary photograph, 50mm equivalent camera, eye-level.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-c7a6d997-5ce0-4965-9fdf-30e07b3a20c0.png",
+      "refs": [],
+      "sha256": "ceea49c3f772382c81e61ae0589c133cf0c483f2d855857fa314b4633a8e144c",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "737e9a6128641181f345b0e10c4876d4b3386c93efea229a84358601185401a1"
+    },
+    {
+      "id": "B02",
+      "file": "B02-founder-bottle-16x9-original.png",
+      "prompt": "One photorealistic 16:9 landscape film production still. Reference 1 is the EXACT fictional Filipino coffee founder identity, short wavy dark bob, subtly asymmetric features, natural textured freckled warm tan skin, petrol-teal rolled-sleeve work shirt, rust-red bib apron. Preserve her distinctive face, age, hair, body and practical wardrobe, and the same workspace: shelves/coffee roaster on image left, open tropical doorway on right, warm wood counter. Reference 2 fixes the EXACT KAPE 01 product: small clear cylindrical bottle with rounded shoulders, charcoal screw cap, dark brown coffee above and below off-white paper sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve bottle proportions, fill and label. Bright colorful tropical day outside, soft even open-shade face/body light, neutral white balance, deep natural colors, real pores. Comfortable full head and hand margins, realistic hand anatomy and physical contact, not generic model posing. No graphic captions, extra readable text, interface, logos, watermarks or fake ad output. Combined identity/product anchor: medium wide front three-quarter view. She holds the bottle near her lower chest with one palm underneath its base and the other hand lightly steadying its side, fingers away from the label. She looks closely at the label as a founder checking her own product, thoughtful and quietly confident, not smiling at camera. Both hands and full bottle comfortably visible. Label faces film camera at a legible three-quarter angle.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-42370fcb-e112-4f25-bcf1-fb660ec269d7.png",
+      "refs": [
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-CAST-02/B01-founder-master-original.png",
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png"
+      ],
+      "sha256": "573dd7ccf8026951100a1db55da44ad45cc881b1d2bf218e3be573cb312a11cb",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "139cfdff2ad9b966e0856f5bddcef358f997bfc26d2aa57969fc6439608e4e0a"
+    },
+    {
+      "id": "B03",
+      "file": "B03-opening-photo-16x9-original.png",
+      "prompt": "One photorealistic 16:9 landscape film production still. Reference 1 is the EXACT fictional Filipino coffee founder identity, short wavy dark bob, subtly asymmetric features, natural textured freckled warm tan skin, petrol-teal rolled-sleeve work shirt, rust-red bib apron. Preserve her distinctive face, age, hair, body and practical wardrobe, and the same workspace: shelves/coffee roaster on image left, open tropical doorway on right, warm wood counter. Reference 2 fixes the EXACT KAPE 01 product: small clear cylindrical bottle with rounded shoulders, charcoal screw cap, dark brown coffee above and below off-white paper sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve bottle proportions, fill and label. Bright colorful tropical day outside, soft even open-shade face/body light, neutral white balance, deep natural colors, real pores. Comfortable full head and hand margins, realistic hand anatomy and physical contact, not generic model posing. No graphic captions, extra readable text, interface, logos, watermarks or fake ad output. Opening action: SIDE VIEW along the countertop. Founder left of frame, bottle standing upright right of frame. She leans down to bottle height to line up a phone photograph. Hold a dark smartphone vertically 40cm LEFT of bottle, with rear camera lenses exactly level with bottle's upper label. Screen faces LEFT toward her, rear lens faces RIGHT toward bottle; film camera sees thin side edge of phone. This is a low phone held near counter, not raised to her face. She bends slightly so gaze meets screen. Both hands grip phone naturally, elbows supported by counter. Full bottle and two full hands in frame, both phone and bottle on same clear horizontal sightline. Bottle label three-quarter toward film camera.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-c6ef2666-520e-4301-adc1-d2b8fa0eec3b.png",
+      "refs": [
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-CAST-02/B01-founder-master-original.png",
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png"
+      ],
+      "sha256": "34b44791a6b04fb99722e5d500ca0ca41cd705467cd3c9e9500050c4e6d3929a",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "daf73a6e8bba2808508d1410cab137548450efecf308c13a771e49eeb33fb4f4"
+    },
+    {
+      "id": "B04",
+      "file": "B04-work-counter-16x9-original.png",
+      "prompt": "One photorealistic 16:9 landscape film production still. Reference 1 is the EXACT fictional Filipino coffee founder identity, short wavy dark bob, subtly asymmetric features, natural textured freckled warm tan skin, petrol-teal rolled-sleeve work shirt, rust-red bib apron. Preserve her distinctive face, age, hair, body and practical wardrobe, and the same workspace: shelves/coffee roaster on image left, open tropical doorway on right, warm wood counter. Reference 2 fixes the EXACT KAPE 01 product: small clear cylindrical bottle with rounded shoulders, charcoal screw cap, dark brown coffee above and below off-white paper sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve bottle proportions, fill and label. Bright colorful tropical day outside, soft even open-shade face/body light, neutral white balance, deep natural colors, real pores. Comfortable full head and hand margins, realistic hand anatomy and physical contact, not generic model posing. No graphic captions, extra readable text, interface, logos, watermarks or fake ad output. Working scene: wider three-quarter customer-side shot. Founder concentrates on a plain silver laptop at counter center, using trackpad with her right hand. Left hand rests fully visible on wood beside laptop. We see only BACK of laptop screen; no display or UI visible. Same bottle stands to the right of laptop, label toward camera. Focused attentive expression, slight forward lean, convincing actual laptop use. Full hands, bottle and head with margins.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-60ac27b8-9c98-4597-bd34-03609f854847.png",
+      "refs": [
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-CAST-02/B01-founder-master-original.png",
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png"
+      ],
+      "sha256": "fbc1de566deeaa50cf1168b32c06e125e70efa1f2e3dfb0353c4d09e901ee188",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "01bd41d3a2e3d846019be5d908c63d998081b91a238ee136eefd7fd980d9e44e"
+    },
+    {
+      "id": "B05",
+      "file": "B05-closing-review-16x9-original.png",
+      "prompt": "One photorealistic 16:9 landscape film production still. Reference 1 is the EXACT fictional Filipino coffee founder identity, short wavy dark bob, subtly asymmetric features, natural textured freckled warm tan skin, petrol-teal rolled-sleeve work shirt, rust-red bib apron. Preserve her distinctive face, age, hair, body and practical wardrobe, and the same workspace: shelves/coffee roaster on image left, open tropical doorway on right, warm wood counter. Reference 2 fixes the EXACT KAPE 01 product: small clear cylindrical bottle with rounded shoulders, charcoal screw cap, dark brown coffee above and below off-white paper sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve bottle proportions, fill and label. Bright colorful tropical day outside, soft even open-shade face/body light, neutral white balance, deep natural colors, real pores. Comfortable full head and hand margins, realistic hand anatomy and physical contact, not generic model posing. No graphic captions, extra readable text, interface, logos, watermarks or fake ad output. Closing reaction after playback: same plain silver laptop center of counter and bottle to its right, same angle as working scene but a slightly wider framing. Founder has STOPPED typing and leaned back from laptop, two hands resting visibly on wood on either side of it, outside its outline. She looks at hidden laptop screen, small closed-mouth satisfied half-smile and relaxed shoulders, a clear quiet pause. Not a generic beaming influencer. Only BACK of laptop screen visible; no fake UI or results. Bottle label toward camera. Full head, hands and bottle with comfortable margins.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-22dffeb1-68bc-479f-8240-00ab4b2ba310.png",
+      "refs": [
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-CAST-02/B01-founder-master-original.png",
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png"
+      ],
+      "sha256": "6ceae0b678445b359c6cc2415668545a365ad0778c3476e48ff8583e353fe030",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "1fd68ea270d0c0852ff7204d828a2550db88da0420c705c3e0e28deec0dba5f9"
+    }
+  ],
+  "currentCastingStatus": "USER REJECTED / preserve originals, do not use as final casting"
+}

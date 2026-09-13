@@ -1,0 +1,25 @@
+{
+  "id": "HERO-CAST-03",
+  "status": "ONE CANDIDATE / internal sample comparison pending / no derivative generation",
+  "authorization": "Neil delegated best casting choice again, anchored to actual believability samples and Marvin Master Daylight; one corrective candidate before independent sample comparison.",
+  "callsCompleted": 1,
+  "totalNativeCallsThisTask": 14,
+  "callsInFlight": 0,
+  "paidApiCalls": 0,
+  "entries": [
+    {
+      "id": "C01",
+      "file": "C01-founder-master-original.png",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-42981eaa-e57d-4377-90dd-da095c433b66.png",
+      "prompt": "Make a NEW ordinary smartphone photograph of a wholly fictional Filipina small-business founder, about 32, in the Philippines. The attached photo is ONLY the target for daylight color, photographic softness, exposure and believable face-body integration. Do NOT copy its man's identity, facial features, body, haircut, tattoo, uniform, vehicle or company. This must be a completely different fictional woman, no real-person likeness.\nShe has a recognizable relaxed adult face, naturally full cheeks, almond-shaped brown eyes, a softly rounded nose and slightly uneven closed-mouth smile. Straight dark shoulder-length hair loosely pulled behind her ears. Everyday mustard-yellow cotton overshirt, sleeves rolled, plain white crewneck underneath, dark jeans, no apron, no makeup styling. A coworker takes the photo on a normal phone rear camera from about two meters away, standard photo mode, framing from head to hips with both hands visible. She is standing beside a simple stainless packing table, one hand resting on a closed plain cardboard box and the other resting naturally beside it, looking at the coworker who just called her attention. Simple real-looking covered storefront entrance, pale wall, one blue doorway edge, ordinary concrete and a small area of green plants and bright blue sky outside. No roaster, styled shelves, coffee-bag display, decorative rustic set, signage or readable text.\nMatch the attached daylight register: bright, colorful, well-exposed tropical surroundings; she stands in soft even open shade. Warm natural Filipino skin. Her face, neck, arms and hands belong to ONE continuous person with the SAME softness, exposure, grain, white balance and focus. Matte natural skin, ordinary fabric creases, mild phone-image softness and gentle shadow grain, neutral white balance. Face must not be sharper, brighter, smoother or more contrasty than the body. Natural proportions and comfortable head/hand margins. Landscape 16:9. No portrait-mode bokeh, HDR look, cinema grade, fashion polish, studio lighting, dramatic shadow, beauty filter, exaggerated freckles, added scars, hyper-detailed pores or face-swap look. It should feel like a casual real workplace photo, not an authored advertisement.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/Desktop/grifon-hero-storyboard/clients/oceanides/kuya-marvin/daylight-register/marvin-daylight-master.png"
+      ],
+      "referenceRole": "LIGHT/COLOR/PHOTOGRAPHIC REGISTER ONLY; copying Marvin identity/body/company prohibited",
+      "sha256": "7864d8b09073392df2de26e91e3ddc1577039e8ba4f5db5932db1e313e57252a",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "7fd4a6e9c7bee43729694ab490f8cfef025e6e12e233e92e16ca4972d54dc265"
+    }
+  ]
+}

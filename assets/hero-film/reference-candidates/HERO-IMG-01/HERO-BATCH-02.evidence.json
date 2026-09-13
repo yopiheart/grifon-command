@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-13",
+  "tool": "image_gen.imagegen",
+  "scope": "HERO-BATCH-02",
+  "callsCompleted": 4,
+  "allNativeCallsThisTask": 8,
+  "apiCalls": 0,
+  "paidVideoCalls": 0,
+  "references": [
+    "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+    "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A03-owner-master-daylight-original.png",
+    "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A04-owner-coffee-scene-16x9-original.png"
+  ],
+  "metadata": "No quota/token usage or billing exposed by tool; no API fallback or credit purchase.",
+  "entries": [
+    {
+      "id": "A05",
+      "file": "A05-opening-photo-16x9-original.png",
+      "promptSpec": "HERO-BATCH-02.spec.json",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-3231cff2-9c3c-4c69-b883-a8f7b1ffa8fb.png",
+      "sha256": "0cd863fa56bc87997bc54b3927ad692c0f2d669363b0946d25e19e3a01530962",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "A06",
+      "file": "A06-work-counter-16x9-original.png",
+      "promptSpec": "HERO-BATCH-02.spec.json",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-b95da038-0eb6-4a97-8d4b-9c63283e78a7.png",
+      "sha256": "f4202672d1277d7927dbfc8c4b2e49e1b576bef5531954e0aa670d2cf6236d73",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "A07",
+      "file": "A07-closing-review-16x9-original.png",
+      "promptSpec": "HERO-BATCH-02.spec.json",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-36e67709-dfc2-4f46-a2be-61102abf6521.png",
+      "sha256": "3c278af6ab28b99c7fff6fcf51bb4c56fd70ebd0fdfbbffc9dd58937119ce780",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "A08",
+      "file": "A08-opening-corrected-16x9-original.png",
+      "promptSpec": "A08-correction.spec.json",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-b5dc2b6e-299e-45d2-82c5-1e8b8da3e295.png",
+      "sha256": "2788141fb136a5838668aaa6566d7946d096943245fb1ed1864a0cd1c8fd80cf",
+      "width": 1672,
+      "height": 941
+    }
+  ],
+  "currentCastingStatus": "USER REJECTED / preserve originals, do not use as final casting"
+}

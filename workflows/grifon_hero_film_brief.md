@@ -2,7 +2,50 @@
 
 2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
 
-## Current step: A04 combined visual reference accepted; motion/proof still pending
+## Current state: C01 reference-based candidate at internal quality checkpoint
+
+After rejecting B01, Neil delegated the best next choice based on actual house
+believability samples, especially Marvin Master Daylight. The actual daylight
+master, register-1 raw UGC and approved sari-sari selfie were restored from git
+and visually inspected. One new C01 candidate uses the Marvin image ONLY for
+light/color/photographic register, explicitly prohibiting identity/body copying.
+C01 wears ordinary mustard/white clothes in a simpler packing entrance. It is
+saved in HERO-CAST-03 with exact prompt, reference role, hash and dimensions.
+Independent source-vs-candidate comparison is complete: closer daylight/register,
+no obvious anatomical/compositing defect, but candidness/casting remains HOLD.
+Neil's believability verdict remains open. No dependent C-series call launched.
+Current native total: 14. The following rejection chronology remains preserved.
+
+Neil superseded A03/A04 casting acceptance after the A05-A08 batch, describing
+the owner as generic and resembling common AI-video actors. Master Daylight,
+KAPE 01, the story and Blender studio remain. A fresh short-wavy-hair founder
+direction was approved, producing B01. Neil then rejected B01 for both generic
+casting and insufficient realism. Four dependent B02-B05 calls were already
+in flight; they finished without retry. No further B-series call followed rejection.
+All owner images are preserved as historical/provisional casting, not final art.
+The total at the B-batch stop was 13: A01-A08 and B01-B05; C01 later made it 14.
+No paid API/video or new Blender render was made in these native batches.
+
+The overall film is CINEMATIC through composition, camera, edit and sound.
+Owner scenes retain believable natural Master Daylight; the controlled gold
+living studio supplies the transformation; actual UGC and cinematic samples
+retain their original product-generated look. No modern-entrepreneur replacement
+has been selected. Do not interpret realism feedback as permission for glamour.
+
+The updated eight-shot timing/data, local builder and HTML template are saved
+under tools/artifacts/*hero-film-review*. They are UNBUILT and blocked on casting;
+no updated video or review HTML was delivered. The original silent diagram
+animatic remains the latest built cut. No character-dependent polishing proceeds.
+The proposed next proof-test dependencies are in
+assets/hero-film/proof-tests/HERO-PROOF-02/test-spec.json; not execution-ready.
+
+Blender remains the plan-to-output transformation beat. Use the existing pilot
+as provisional camera evidence, not as a real Grifon ad. Final production needs
+a new shot copy of the studio, KAPE 01 replacement, lower-bottle optics diagnosis,
+gold-ribbon animation, actual plan/output display mapping and bounded local QA.
+No expanded Blender render scope is authorized by the casting work.
+
+## Historical step: A04 combined visual acceptance (casting now superseded)
 
 HERO-SCENE-01 was explicitly approved with "Go, go, go" after the exact setup and
 one-call bound were read back. One native call using the saved prompt and A01/A03
