@@ -1,6 +1,33 @@
 # Grifon hero film — production preparation
 
-2026-09-10 · **HOLD: untimed preparation brief, not an approved production script.**
+2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
+
+## Current step: first reference images
+
+Neil approved the story-first journey and its rough edit, then selected built-in
+Codex image generation for the first assets. The concrete review spec is
+[HERO-IMG-01](../artifacts/grifon-hero-first-images.html), built from
+`tools/artifacts/data/hero-film-image-test.json`. It proposes KAPE 01 demo packaging
+and a wholly fictional Filipina owner. No owner photo is required from Neil.
+Both exact prompts, pass/fail criteria and evidence are in the spec. Neither
+master exists or is approved yet. Maximum proposed scope: two native calls within
+existing allowance; no rerolls, API fallback or extra purchases. No generation
+has been performed. Exact-spec approval is the next decision.
+
+After reviewing and locking both returned masters, prepare a separate combined
+owner/bottle handheld plate using their approved hashes; only then specify short
+real Grifon UGC and cinematic proof tests. The legacy studio proxy is preserved,
+not an approved product master. The next action is image references, not Blender.
+
+The [six-panel storyboard](../artifacts/grifon-hero-film-storyboard.html) and
+[silent landscape rough cut](../assets/hero-film/storyboard-animatic/rough-cut.mp4)
+now exist, with a [portrait review copy](../assets/hero-film/storyboard-animatic/mobile-rough-cut.mp4).
+Forty seconds is an initial editorial hypothesis, not reference-derived timing
+or a passed audiovisual gate. Actual exports remain diagram placeholders.
+Order stays storyboard -> rough timed edit with temporary audio -> individual
+shots -> final assembly/review -> separately approved website integration.
+This pass is silent with written sound cues; temporary audio is still pending.
+Blender is optional for selected shots, not the whole-film starting point.
 
 The approved reference-analysis attempt failed the specificity gate. Accordingly this document preserves approved creative decisions, drafts independent copy/asset requirements and costs the known production work. It does not lock runtime, shot timings, music/edit grammar, or an evidence-based final storyboard. See the [research report](grifon_hero_film_research.md).
 

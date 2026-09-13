@@ -1,12 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-09-13, story-first hero-film storyboard**
+**Stamped: 2026-09-13, storyboard/rough cut delivered; first-image spec ready**
 
 ## Current task
 Branch: codex/hero-film-storyboard, isolated from research head 302292a.
-Parent draft PR: https://github.com/yopiheart/grifon-command/pull/132
-Neil approved story-first direction: one owner/product, real plan, UGC + cinematic.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/134 (stacked on #132).
+Next review: artifacts/grifon-hero-first-images.html, exact spec HERO-IMG-01.
 Storyboard: artifacts/grifon-hero-film-storyboard.html (offline, diagrams only).
-Source: tools/artifacts/data/hero-film-storyboard.json and sibling builder/template.
+Specs/builders: tools/artifacts/data/hero-film-*.json and tools/artifacts/build-hero-film-*.mjs.
 Six panels in three acts; exact identities, final duration/dialogue/audio remain open.
 Neil reviewed the storyboard and approved a rough timed edit on 2026-09-13.
 Silent cuts: assets/hero-film/storyboard-animatic/{rough-cut,mobile-rough-cut}.mp4.
@@ -14,17 +14,17 @@ Holds: 6/7/7/8/7/5 seconds; actual ads remain explicit placeholders.
 Builder: tools/artifacts/build-hero-film-animatic.mjs (local sharp/ffmpeg-static).
 Run storyboard builder first; animatic accepts --runtime-root for installed npm deps.
 Independent storyboard 390x844/1440px smoke PASS; all anchors/details, no overflow.
-Builder/gates, deterministic HTML rebuild, artifact-anchor check and diff check PASS.
+Builder/anchor/diff checks PASS; first-image spec independent 390x844 review PASS.
 MP4 full decode PASS: 1280x720, H.264/yuv420p, 24fps, 960 frames, no audio track.
 Independent animatic playback PASS; exact cuts 6/13/20/28/35s, 40s total.
-Existing studio work is preserved, subordinate to the approved story direction.
-Source: tools/polish_grifon_studio.py; verifier: tools/verify_grifon_studio_look.py
-New frame, editable scene, critique and verification: assets/hero-film/studio-look/
-Offline review: artifacts/grifon-studio-look.html (new frame + original comparison).
-Original studio and camera preview preserved at assets/hero-film/studio-pilot/.
+HERO-IMG-01 proposes KAPE 01 bottle + fictional owner, no reference photo from Neil.
+Selected built-in route; proposed max 2 native calls, existing allowance only.
+No images made, rerolls, API fallback or extra purchases; exact spec not approved.
+Then approve returned hashes before a separate combined plate or real proof clips.
+Original studio source/assets/review preserved on #132; story remains primary.
 
 ## ▶ NEXT ACTION
-Neil approved preparing one production-test package; assets/spec/spend not approved.
+Review/approve the two-image spec. No image generation begins from brief approval alone.
 Order: storyboard > rough edit/temp audio > individual shots > assembly/review
 > separately approved website integration. Blender is optional per shot only.
 Final-look approval remains HOLD; the storyboard does not clear the optics issue.
