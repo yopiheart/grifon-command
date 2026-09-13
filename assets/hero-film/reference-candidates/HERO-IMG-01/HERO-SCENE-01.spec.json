@@ -1,0 +1,35 @@
+{
+  "id": "HERO-SCENE-01",
+  "status": "Prepared for exact one-call approval; NOT GENERATED",
+  "purpose": "Verify the accepted fictional owner and chosen coffee bottle together: identity, product continuity, grip and coherent shared daylight before any video.",
+  "composition": "NEW landscape 16:9 medium-wide counter scene. Owner centered slightly left, head through waist, bottle upright near lower chest at center, one hand supporting its base and sides below the print, other empty hand resting on counter. Keep full head, bottle/cap and both complete hands inside generous margins. This is a combined still reference, not Grifon output or a testimonial.",
+  "references": [
+    {
+      "order": 1,
+      "file": "assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+      "sha256": "df01401ad33ed67ee78b92c3894267d84bd508fdb4baab18c075599a9da3770e",
+      "role": "Chosen product reference: exact bottle, cap, sleeve, wording, dark coffee and believable hand-relative scale. Its anonymous hand is NOT the owner's identity reference."
+    },
+    {
+      "order": 2,
+      "file": "assets/hero-film/reference-candidates/HERO-IMG-01/A03-owner-master-daylight-original.png",
+      "sha256": "3dc0b976744b527634d392b7d40386cc6e4aa80c2a829122bffb496754faf390",
+      "role": "User-accepted fictional owner identity/skin/body, cobalt shirt, terracotta apron, MASTER DAYLIGHT treatment and modest doorway workspace."
+    }
+  ],
+  "prompt": "Create one NEW landscape 16:9 photorealistic combined-scene reference, guided by the two supplied reference images. Do not simply stretch, crop or frame either portrait as a widescreen image; compose a new coherent scene. Reference image 1 is ONLY the exact KAPE 01 product: preserve its clear cylindrical bottle silhouette, rounded shoulder, matte charcoal screw cap, off-white sleeve proportions and exact three printed lines KAPE 01 / BOTTLED COFFEE / DEMO BRAND (slashes mean line breaks, not printed symbols). Preserve continuous dark brown coffee above and below the sleeve, realistic glass and plausible small-bottle scale. Do not copy its anonymous hand as a separate pasted hand. Reference image 2 is the SAME fictional Filipina owner: preserve her facial identity, natural warm tan skin texture, head-to-body proportions, tied-back dark hair, cobalt-blue shirt and terracotta apron. Preserve the MASTER DAYLIGHT world: a modest coffee-business counter by an open doorway, vivid natural blue sky and green tropical plants outside, bright well-exposed surroundings, neutral white balance. Her face, neck, arms and the bottle share soft even open-shade daylight; natural reflections must belong to this location. No golden-hour cast, dull grey grade, hard sun patches on skin or studio rim light. Medium-wide eye-level composition around a natural 50mm-equivalent view, owner centered slightly left and framed head to waist, looking toward the camera with the same small approachable expression. One hand naturally supports the bottle upright near lower chest in the center of the picture: palm under the base and fingers around the lower sides, entirely below the printed label. The other empty hand rests naturally on the counter. Keep both complete hands, every fingertip, the complete cap and bottle, and the head safely inside generous frame margins; credible grip, weight, perspective and bottle-to-hand scale, no floating object or extra fingers. Label faces camera, unobscured and sharp enough to inspect all three lines at original resolution. Keep owner and bottle dominant and recognizable when the full 16:9 image is viewed on a phone; no tiny subject far away. Simple warm wood counter; at most one plain kraft box at the far side, no extra bottles or elaborate props. Natural continuous face-body-hand anatomy, same light and texture throughout, no pasted face or pasted product, no glamour/beauty filter, plastic skin, neon saturation, exaggerated smile, additional text, invented claims, sales numbers or testimonial framing. This is an externally prepared fictional reference scene, not finished Grifon video output.",
+  "tool": "image_gen__imagegen",
+  "invocation": "After exact approval: one call with prompt exactly as above and referenced_image_paths containing the two inspected originals in the stated order; omit num_last_images_to_include. Verify both SHA-256 hashes before sending. No model selector, API or CLI route.",
+  "limit": "ONE native built-in call within existing allowance; no retries, edits, alternative variants, paid fallback or extra purchase. Stop if access requires extra paid usage. No generation has run under this scope. The prior 2+1 calls are separate completed approvals.",
+  "output": "assets/hero-film/reference-candidates/HERO-IMG-01/A04-owner-coffee-scene-16x9-original.png (future path; preserve original returned bytes and actual dimensions, even if native format differs). Do not overwrite A01/A03.",
+  "pass": [
+    "Owner visually matches A03: face, skin, body proportions, hair and blue/terracotta outfit; do not silently replace her identity.",
+    "Bottle matches A01: silhouette/cap/sleeve and exact three lines; brown contents remain continuous, no gold lower body. Reflections may change to match the new location.",
+    "One physically plausible supporting grip; label unobscured, other hand readable, all fingertips/cap/head in frame, no extra fingers or floating contact.",
+    "Soft even open-shade face/body light with bright tropical background, neutral whites, coherent bottle/hand shadows and reflections, natural texture without pasted edges.",
+    "New 16:9 composition with owner/product dominant. Check all label wording at original resolution; at 390px display width check recognizable owner/product and safe framing, not legibility of packaging microtype. This is not a vertical crop test.",
+    "Any continuity/anatomy/label failure means HOLD and show the original; no automatic repair or retry. Final visual acceptance belongs to Neil."
+  ],
+  "evidence": "Save exact approval, these input hashes and prompt hash, actual native arguments/call timestamp and returned IDs if exposed, original output bytes/hash/dimensions, comparison against both references and concise pass/fail. Model/token/dollar data unavailable unless explicitly returned.",
+  "approval": "Approve HERO-SCENE-01: this exact A01+A03 reference pair and prompt for one new native 16:9 combined scene, one call only within existing allowance, no paid fallback or reroll. This does not approve any video generation."
+}

@@ -18,13 +18,13 @@ Builder/anchor/diff checks PASS; first-image spec independent 390x844 review PAS
 MP4 full decode PASS: 1280x720, H.264/yuv420p, 24fps, 960 frames, no audio track.
 Independent animatic playback PASS; exact cuts 6/13/20/28/35s, 40s total.
 Initial 2 native calls complete; one separately requested fresh A03 call complete.
-A01-product-original.png: visual PASS, exact label/dark coffee; taste lock pending.
+A01 chosen for combined-scene proposal; A03 accepted visual reference.
 A02 rejected for dull palette/cropped hand. A03 MASTER DAYLIGHT visually accepted.
 All 1086x1448; A03 still review PASS, both hands complete; no motion proof yet.
 Original studio source/assets/review preserved on #132; story remains primary.
 
 ## ▶ NEXT ACTION
-A03 visual approved; coffee lock/combined plate/video await scope. No calls remain.
+HERO-SCENE-01.spec.json in candidate folder: exact A01+A03 one-call scene proposal.
 Order: storyboard > rough edit/temp audio > individual shots > assembly/review
 > separately approved website integration. Blender is optional per shot only.
 Final-look approval remains HOLD; the storyboard does not clear the optics issue.

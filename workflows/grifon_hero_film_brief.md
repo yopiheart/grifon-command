@@ -4,6 +4,17 @@
 
 ## Current step: A03 visual reference accepted; proof production still pending
 
+First combined-scene proposal is ready at
+`assets/hero-film/reference-candidates/HERO-IMG-01/HERO-SCENE-01.spec.json`.
+Neil delegated the setup and chose existing A01 as the product reference; no
+coffee regeneration is needed merely to match daylight. Proposed new 16:9
+medium-wide scene: A03 at the counter, one natural supporting grip below A01's
+unobscured label, other hand on the counter, soft open-shade face/body light
+against bright tropical surroundings. Exact inspected A01/A03 hashes, reference
+roles, prompt and pass/fail are in the spec. One native call within existing
+allowance is proposed; exact combined-reference generation has NOT been approved
+or run. No reroll, paid fallback, Blender or moving-video scope follows.
+
 Neil rejected A02's dull palette and explicitly requested one NEW owner image,
 not an edit, clarifying the look as MASTER DAYLIGHT. The one separately authorized
 native call produced `A03-owner-master-daylight-original.png` (1086x1448).
