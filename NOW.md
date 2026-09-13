@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-09-13, A03 MASTER DAYLIGHT owner visually accepted**
+**Stamped: 2026-09-13, A04 combined owner/coffee scene generated**
 
 ## Current task
 Branch: codex/hero-film-storyboard, isolated from research head 302292a.
@@ -17,14 +17,14 @@ Independent storyboard 390x844/1440px smoke PASS; all anchors/details, no overfl
 Builder/anchor/diff checks PASS; first-image spec independent 390x844 review PASS.
 MP4 full decode PASS: 1280x720, H.264/yuv420p, 24fps, 960 frames, no audio track.
 Independent animatic playback PASS; exact cuts 6/13/20/28/35s, 40s total.
-Initial 2 native calls complete; one separately requested fresh A03 call complete.
+Native calls: initial 2 + separate A03 + approved HERO-SCENE-01 A04 = 4; no retries.
 A01 chosen for combined-scene proposal; A03 accepted visual reference.
 A02 rejected for dull palette/cropped hand. A03 MASTER DAYLIGHT visually accepted.
-All 1086x1448; A03 still review PASS, both hands complete; no motion proof yet.
+A04 1672x941 original saved; HOLD for unrequested chalkboard wording; no motion proof.
 Original studio source/assets/review preserved on #132; story remains primary.
 
 ## ▶ NEXT ACTION
-HERO-SCENE-01.spec.json in candidate folder: exact A01+A03 one-call scene proposal.
+Review A04 findings; its one-call scope used. No additional image/video call approved.
 Order: storyboard > rough edit/temp audio > individual shots > assembly/review
 > separately approved website integration. Blender is optional per shot only.
 Final-look approval remains HOLD; the storyboard does not clear the optics issue.

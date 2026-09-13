@@ -2,7 +2,18 @@
 
 2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
 
-## Current step: A03 visual reference accepted; proof production still pending
+## Current step: review A04 combined still; proof production still pending
+
+HERO-SCENE-01 was explicitly approved with "Go, go, go" after the exact setup and
+one-call bound were read back. One native call using the saved prompt and A01/A03
+references produced `A04-owner-coffee-scene-16x9-original.png`, 1672x941 (native
+approximately 16:9, not a 1920x1080 deliverable). Original portraits are unchanged.
+The combined scene is on technical HOLD because it adds chalkboard wording not
+in the brief and leaves tight head/fingertip margins. The smallest label line is
+not confidently certified; no definite typo is claimed. See `A04-generation-evidence.json` and independent review in the
+candidate folder. No retry, paid fallback, video or Blender run followed.
+
+### Saved first-scene setup (now executed once)
 
 First combined-scene proposal is ready at
 `assets/hero-film/reference-candidates/HERO-IMG-01/HERO-SCENE-01.spec.json`.
@@ -11,9 +22,9 @@ coffee regeneration is needed merely to match daylight. Proposed new 16:9
 medium-wide scene: A03 at the counter, one natural supporting grip below A01's
 unobscured label, other hand on the counter, soft open-shade face/body light
 against bright tropical surroundings. Exact inspected A01/A03 hashes, reference
-roles, prompt and pass/fail are in the spec. One native call within existing
-allowance is proposed; exact combined-reference generation has NOT been approved
-or run. No reroll, paid fallback, Blender or moving-video scope follows.
+roles, prompt and pass/fail are in the historical spec. Its one native call within
+existing allowance has now been used as recorded above. No reroll, paid fallback,
+Blender or moving-video scope follows.
 
 Neil rejected A02's dull palette and explicitly requested one NEW owner image,
 not an edit, clarifying the look as MASTER DAYLIGHT. The one separately authorized
