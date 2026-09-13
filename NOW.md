@@ -1,13 +1,13 @@
 # NOW - the resume doc
-**Stamped: 2026-09-13, storyboard/rough cut delivered; first-image spec ready**
+**Stamped: 2026-09-13, A03 MASTER DAYLIGHT owner visually accepted**
 
 ## Current task
 Branch: codex/hero-film-storyboard, isolated from research head 302292a.
 Draft PR: https://github.com/yopiheart/grifon-command/pull/134 (stacked on #132).
-Next review: artifacts/grifon-hero-first-images.html, exact spec HERO-IMG-01.
+Review originals/evidence: assets/hero-film/reference-candidates/HERO-IMG-01/.
 Storyboard: artifacts/grifon-hero-film-storyboard.html (offline, diagrams only).
 Specs/builders: tools/artifacts/data/hero-film-*.json and tools/artifacts/build-hero-film-*.mjs.
-Six panels in three acts; exact identities, final duration/dialogue/audio remain open.
+Main film 16:9, target 1920x1080; final duration/dialogue/audio remain open.
 Neil reviewed the storyboard and approved a rough timed edit on 2026-09-13.
 Silent cuts: assets/hero-film/storyboard-animatic/{rough-cut,mobile-rough-cut}.mp4.
 Holds: 6/7/7/8/7/5 seconds; actual ads remain explicit placeholders.
@@ -17,14 +17,14 @@ Independent storyboard 390x844/1440px smoke PASS; all anchors/details, no overfl
 Builder/anchor/diff checks PASS; first-image spec independent 390x844 review PASS.
 MP4 full decode PASS: 1280x720, H.264/yuv420p, 24fps, 960 frames, no audio track.
 Independent animatic playback PASS; exact cuts 6/13/20/28/35s, 40s total.
-HERO-IMG-01 proposes KAPE 01 bottle + fictional owner, no reference photo from Neil.
-Selected built-in route; proposed max 2 native calls, existing allowance only.
-No images made, rerolls, API fallback or extra purchases; exact spec not approved.
-Then approve returned hashes before a separate combined plate or real proof clips.
+Initial 2 native calls complete; one separately requested fresh A03 call complete.
+A01-product-original.png: visual PASS, exact label/dark coffee; taste lock pending.
+A02 rejected for dull palette/cropped hand. A03 MASTER DAYLIGHT visually accepted.
+All 1086x1448; A03 still review PASS, both hands complete; no motion proof yet.
 Original studio source/assets/review preserved on #132; story remains primary.
 
 ## ▶ NEXT ACTION
-Review/approve the two-image spec. No image generation begins from brief approval alone.
+A03 visual approved; coffee lock/combined plate/video await scope. No calls remain.
 Order: storyboard > rough edit/temp audio > individual shots > assembly/review
 > separately approved website integration. Blender is optional per shot only.
 Final-look approval remains HOLD; the storyboard does not clear the optics issue.

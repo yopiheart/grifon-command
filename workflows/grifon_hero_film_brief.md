@@ -2,17 +2,50 @@
 
 2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
 
-## Current step: first reference images
+## Current step: A03 visual reference accepted; proof production still pending
+
+Neil rejected A02's dull palette and explicitly requested one NEW owner image,
+not an edit, clarifying the look as MASTER DAYLIGHT. The one separately authorized
+native call produced `A03-owner-master-daylight-original.png` (1086x1448).
+The preserved Marvin daylight master was inspected for lighting/color only;
+neither it nor A02 was passed into the generation. No Marvin identity was requested.
+A03 uses bright tropical surroundings and softly shaded face/arms, cobalt blue
+and terracotta clothing, with both hands fully inside the frame. Independent
+still review PASS. Neil then accepted its clarity, believability and visual look.
+See `A03-generation-evidence.json` for the exact prompt, original hash and approval.
+This accepts the visual/lighting reference; continuity in other views or motion
+has not been tested. Preserve A01, rejected A02 and accepted A03 originals.
+
+Final hero direction is 16:9 with 1920x1080 delivery target and mobile-readable
+composition. Portrait reference images do not set the final film ratio; no native
+4K or source-resolution quality claim follows. No combined image or proof video
+generation is authorized by the A03 visual approval.
+
+### Initial two-call result
+
+Neil explicitly said "Proceed" for the two built-in generations on 2026-09-13.
+Both calls completed with the exact prompts; no references, rerolls, edits or API
+fallback. Originals and the immutable approved spec/prompt hashes are under
+`assets/hero-film/reference-candidates/HERO-IMG-01/` with `generation-evidence.json`.
+A01-product-original.png visually passes the label/coffee/hand criteria; aesthetic
+approval and phone-scale check remain open. A02-owner-original.png has believable
+face/skin/clothing, but the viewer-right fingers are cropped and fail the exact
+full-hands criterion. Preserve it for review; no repair or third call is authorized.
+Both outputs are 1086x1448 PNGs. No backend model, token use or dollar price was
+exposed. That initial two-call cap is exhausted; A03 used its separate one-call
+authorization. A01's final product-reference lock remains open.
+
+### Approved generation brief (historical preparation)
 
 Neil approved the story-first journey and its rough edit, then selected built-in
 Codex image generation for the first assets. The concrete review spec is
 [HERO-IMG-01](../artifacts/grifon-hero-first-images.html), built from
 `tools/artifacts/data/hero-film-image-test.json`. It proposes KAPE 01 demo packaging
 and a wholly fictional Filipina owner. No owner photo is required from Neil.
-Both exact prompts, pass/fail criteria and evidence are in the spec. Neither
-master exists or is approved yet. Maximum proposed scope: two native calls within
-existing allowance; no rerolls, API fallback or extra purchases. No generation
-has been performed. Exact-spec approval is the next decision.
+Both exact prompts, pass/fail criteria and evidence are in the spec. This review
+page records the preparation before generation; the execution status above and
+saved originals now supersede its "not generated" inventory. Authorized scope
+was two native calls within existing allowance, no rerolls/fallback/purchases.
 
 After reviewing and locking both returned masters, prepare a separate combined
 owner/bottle handheld plate using their approved hashes; only then specify short
