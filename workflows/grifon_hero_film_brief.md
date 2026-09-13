@@ -2,7 +2,39 @@
 
 2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
 
-## Current state: C01 reference-based candidate at internal quality checkpoint
+## Current delivery: C-series selected; updated rough cut built for one final review
+
+Neil subsequently delegated creative selection and requested completion while
+away, with only the final result to review. C01 was internally selected for its
+coherent everyday daylight. Four engaged scenes C02-C05 replaced the posed gaze:
+bottle-cap check, photo setup, laptop work and a pause looking toward the product.
+Independent scene triage passed their review-cut roles; no correction was needed.
+This is agent selection, not a claim that Neil already accepted the new likeness.
+Total native calls: 18, with no C correction and no image call still running.
+
+Current offline package: artifacts/grifon-hero-film-review.html.
+Landscape: assets/hero-film/review-cut-v2/hero-review-16x9.mp4.
+Portrait review container: assets/hero-film/review-cut-v2/mobile-review.mp4.
+Eight shots retain the original six-panel story in a 40-second timing hypothesis:
+5/4/4/6/8/7/4/2 seconds, cuts at 5/9/13/19/27/34/38. The owner is held still;
+13-19s is the preserved Blender shaded camera pilot, explicitly provisional.
+Actual UI/plan/UGC/cinematic proof is missing and labeled, never substituted.
+1920x1080 wrapper assembly does not establish native 1080p product output.
+Temporary local sound cues are present; no VO, final score or actual ad audio.
+Both videos built and fully decoded. Independent 390x844/1440 desktop review
+passed, as did full 40s embedded playback with audio, 960 frames and zero drops.
+All cuts are exact; final audio peak -20.9dB, silent proof interiors at -91dB.
+QA evidence: artifacts/hero-film-review-qa/review.md and screenshots. This is
+Chromium viewport/playback QA, not physical-device or final listening/taste proof.
+Original silent animatics and rejected casting remain intact.
+
+The paid-test spec now names C01 and A01 originals, but actual Grifon plan,
+script and scene frames remain ungenerated. It is a dependency-bound proposal,
+not a fake execution-ready spec. USD15/four rolls is an unapproved ceiling,
+not a verified provider quote; the run stops if charge bounds cannot be checked.
+Single scenes alone cannot establish two full finished sample ads.
+
+## Historical C01 checkpoint (user later delegated selection)
 
 After rejecting B01, Neil delegated the best next choice based on actual house
 believability samples, especially Marvin Master Daylight. The actual daylight

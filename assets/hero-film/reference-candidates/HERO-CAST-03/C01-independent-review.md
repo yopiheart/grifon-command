@@ -21,4 +21,13 @@
 
 No blocking anatomical or obvious face/body-compositing defect found in this inspection. The useful change is simpler everyday context and a more consistent daylight photographic treatment. The unresolved issue is the human/candid quality of the casting and pose relative to Neil's actual references. B01 and earlier rejected casting remain rejected; this comparison does not recertify them.
 
+## Subsequent user instruction and internal selection
+
+After this checkpoint, Neil explicitly delegated creative selection, stepped away,
+and requested completion through one final review without per-image approvals.
+The main agent selected C01's coherent daylight/identity and addressed the posed
+quality through engaged C02-C05 actions. Those received a separate independent
+review-cut triage. The earlier request to wait for Neil below is historical and
+superseded by his later instruction; his final taste verdict is still not claimed.
+
 Show C01 beside the actual Marvin daylight and raw UGC references for the checkpoint. Do not generate derivatives or call the casting locked before Neil's judgment. No real identity, age, ethnicity, camera provenance, multi-view consistency, motion quality or finished Grifon output is established by this still review.

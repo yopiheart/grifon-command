@@ -1,0 +1,57 @@
+{
+  "refs": [
+    "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-CAST-03/C01-founder-master-original.png",
+    "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png"
+  ],
+  "entries": [
+    {
+      "id": "C02",
+      "file": "C02-founder-bottle-16x9-original.png",
+      "prompt": "Create one NEW ordinary smartphone photograph, landscape 16:9. Reference1 fixes EXACT fictional Filipina founder identity and body, warm tan skin, dark shoulder-length straight hair, mustard cotton overshirt over white tee and dark jeans, SAME covered packing entrance and steel table with plain pale wall/blue door edge, ordinary concrete and green plants. Reference2 fixes EXACT KAPE 01 small clear coffee bottle, charcoal cap, rounded shoulder, dark brown coffee above/below cream sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve label, proportions, fill. Match reference1's real phone register: evenly softly shaded face and body, same focus/softness/grain/exposure/white balance throughout the person, matte natural warm skin with mild normal sheen, bright colorful ordinary surroundings. Normal phone rear-camera standard photo mode from coworker position. No portrait bokeh, studio/cinema grading, beauty filter, artificial hypertexture, stock-photo posing, staged rustic props, extra text or signage. This is a candid moment while doing a task, not looking at camera. Full head, full hands and full bottle comfortably inside frame. Medium view of her checking the cap seal on her bottle. One palm supports bottle base near lower chest, other hand's fingers lightly touch cap; both hands visible, cream label unobscured facing our camera. Bottle stays upright. Her eyes naturally look DOWN at cap, lips relaxed, concentrating on a small real task rather than modeling a product. Plain closed cardboard box on table nearby. Body slightly angled, shoulders relaxed.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-03e3cbb6-6d71-467c-81fa-2a13f60913f4.png",
+      "sha256": "a79789568ec944da0b1c3cfbcf1bcc62f0278840c0c547b255b4b4a4345424b6",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "985f1ea31b07bd0de74592f9de87abc2c687a80b22d200601b7cc65cd9efad57"
+    },
+    {
+      "id": "C03",
+      "file": "C03-opening-photo-16x9-original.png",
+      "prompt": "Create one NEW ordinary smartphone photograph, landscape 16:9. Reference1 fixes EXACT fictional Filipina founder identity and body, warm tan skin, dark shoulder-length straight hair, mustard cotton overshirt over white tee and dark jeans, SAME covered packing entrance and steel table with plain pale wall/blue door edge, ordinary concrete and green plants. Reference2 fixes EXACT KAPE 01 small clear coffee bottle, charcoal cap, rounded shoulder, dark brown coffee above/below cream sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve label, proportions, fill. Match reference1's real phone register: evenly softly shaded face and body, same focus/softness/grain/exposure/white balance throughout the person, matte natural warm skin with mild normal sheen, bright colorful ordinary surroundings. Normal phone rear-camera standard photo mode from coworker position. No portrait bokeh, studio/cinema grading, beauty filter, artificial hypertexture, stock-photo posing, staged rustic props, extra text or signage. This is a candid moment while doing a task, not looking at camera. Full head, full hands and full bottle comfortably inside frame. Candid photo preparation: view from her left SIDE, founder left and upright bottle on steel table right. She bends forward naturally, holding a plain smartphone close to table level with both hands, several hand widths LEFT of bottle. Phone rear camera aims directly toward bottle, screen faces her, film camera sees thin edge of phone. Put lens level near bottle shoulder and visibly angle a little downward toward bottle label. Her gaze is at her phone screen. No phone UI visible to our viewpoint. This is lining up a photo, not looking at camera. Comfortable arm positions and space between phone and bottle. Keep bottle label legible at a three-quarter angle.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-c828c4a0-e94f-4f43-a200-cb36a0b63eed.png",
+      "sha256": "1c9cc7b0ab4831db22861147e065db8674e572c3c27f23a91e12ef8aa65a8781",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "529ca67281abffa532a2a13822f1a95f22b12569269ee1fb0bd36fbd38fcc3e1"
+    },
+    {
+      "id": "C04",
+      "file": "C04-work-counter-16x9-original.png",
+      "prompt": "Create one NEW ordinary smartphone photograph, landscape 16:9. Reference1 fixes EXACT fictional Filipina founder identity and body, warm tan skin, dark shoulder-length straight hair, mustard cotton overshirt over white tee and dark jeans, SAME covered packing entrance and steel table with plain pale wall/blue door edge, ordinary concrete and green plants. Reference2 fixes EXACT KAPE 01 small clear coffee bottle, charcoal cap, rounded shoulder, dark brown coffee above/below cream sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve label, proportions, fill. Match reference1's real phone register: evenly softly shaded face and body, same focus/softness/grain/exposure/white balance throughout the person, matte natural warm skin with mild normal sheen, bright colorful ordinary surroundings. Normal phone rear-camera standard photo mode from coworker position. No portrait bokeh, studio/cinema grading, beauty filter, artificial hypertexture, stock-photo posing, staged rustic props, extra text or signage. This is a candid moment while doing a task, not looking at camera. Full head, full hands and full bottle comfortably inside frame. Candid working view: a plain unbranded silver laptop sits on steel table in front of her and bottle stands alongside it to camera-right, label facing camera. A closed plain cardboard box farther back. She leans slightly toward laptop, right hand naturally using trackpad, other hand resting on tabletop fully outside laptop silhouette. Her focused eyes look at its screen. Our customer-side angle sees only BACK of laptop display, no UI or results visible. Shoulders a little asymmetric in ordinary working posture, not centered symmetrical portrait.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-591540de-75bd-40a3-8945-a4e918e28a9a.png",
+      "sha256": "1daf87cd8c4ba77293779ba8f2855a330e9240d8c564defcf8f2e38c601024e1",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "915a9670746f9ce6d0e98a60251adb35305bcbb5f9829f209317c83dc77400f5"
+    },
+    {
+      "id": "C05",
+      "file": "C05-closing-review-16x9-original.png",
+      "prompt": "Create one NEW ordinary smartphone photograph, landscape 16:9. Reference1 fixes EXACT fictional Filipina founder identity and body, warm tan skin, dark shoulder-length straight hair, mustard cotton overshirt over white tee and dark jeans, SAME covered packing entrance and steel table with plain pale wall/blue door edge, ordinary concrete and green plants. Reference2 fixes EXACT KAPE 01 small clear coffee bottle, charcoal cap, rounded shoulder, dark brown coffee above/below cream sleeve printed KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Preserve label, proportions, fill. Match reference1's real phone register: evenly softly shaded face and body, same focus/softness/grain/exposure/white balance throughout the person, matte natural warm skin with mild normal sheen, bright colorful ordinary surroundings. Normal phone rear-camera standard photo mode from coworker position. No portrait bokeh, studio/cinema grading, beauty filter, artificial hypertexture, stock-photo posing, staged rustic props, extra text or signage. This is a candid moment while doing a task, not looking at camera. Full head, full hands and full bottle comfortably inside frame. Quiet closing after reviewing laptop: same silver laptop on steel table and bottle to camera-right. She has leaned back a little from the screen and stopped typing; one relaxed hand rests on table well LEFT of laptop, other on table to right beyond bottle. She glances from hidden laptop screen toward the coffee bottle with a small natural private half-smile, not smiling toward camera. This physical pause is distinctly different from working lean-forward. Laptop display BACK faces our viewpoint, so no UI or output appears. Hands do not touch bottle or each other, full hands inside frame. Unforced coworker snapshot, not advertising pose.",
+      "sourcePath": "C:\\Users\\Administrator\\.codex\\generated_images\\01a098fb-0f02-7902-bdc3-8970161e4d9e\\exec-b7d1e6f4-3997-4e95-a06d-08af9746844e.png",
+      "sha256": "3c298015eb56955d7dfaf41a002df70d7a49abb50999c7e77bb1911ab9f7a5a8",
+      "width": 1672,
+      "height": 941,
+      "promptSha256": "9febd5e9d517a2c97608124cb3c1b6e042a3a3a1b6f6d15f23cd7fff92589518"
+    }
+  ],
+  "maxCalls": 5,
+  "correctionReserve": 1,
+  "authorization": "User delegates creative selection and says complete through end, final review only. Use C01 lighting/identity with naturally engaged scenes to resolve posed quality; internal triage, no Neil taste-pass claim.",
+  "callsCompleted": 4,
+  "correctionCalls": 0,
+  "totalNativeCallsThisTask": 18,
+  "paidApiCalls": 0,
+  "paidVideoCalls": 0,
+  "status": "Internally selected C01 identity in natural action scenes; final user taste review remains open, no intermediate approval required."
+}

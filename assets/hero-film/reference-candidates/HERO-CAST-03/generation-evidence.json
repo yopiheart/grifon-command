@@ -1,6 +1,6 @@
 {
   "id": "HERO-CAST-03",
-  "status": "ONE CANDIDATE / internal sample comparison pending / no derivative generation",
+  "status": "C01 internally selected under subsequent user instruction to finish with delegated creative judgment; C02-C05 independently reviewed; final user taste review pending",
   "authorization": "Neil delegated best casting choice again, anchored to actual believability samples and Marvin Master Daylight; one corrective candidate before independent sample comparison.",
   "callsCompleted": 1,
   "totalNativeCallsThisTask": 14,
@@ -21,5 +21,6 @@
       "height": 941,
       "promptSha256": "7fd4a6e9c7bee43729694ab490f8cfef025e6e12e233e92e16ca4972d54dc265"
     }
-  ]
+  ],
+  "subsequentScope": "Four dependent scene calls completed after explicit renewed finish-through-end authorization; total18native including all batches"
 }

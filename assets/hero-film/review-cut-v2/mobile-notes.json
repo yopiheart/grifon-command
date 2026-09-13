@@ -1,0 +1,11 @@
+{
+  "durationSeconds": 40,
+  "resolution": [
+    720,
+    1280
+  ],
+  "fps": 24,
+  "status": "Portrait review container preserves full landscape film; not final aspect ratio",
+  "source": "hero-review-16x9.mp4",
+  "audio": "Same local temporary cues"
+}
