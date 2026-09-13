@@ -1,24 +1,38 @@
 # NOW - the resume doc
-**Stamped: 2026-09-10, studio hero-frame look development**
+**Stamped: 2026-09-13, story-first hero-film storyboard**
 
 ## Current task
-Branch: codex/hero-film-research, based on merged main 4acbaef (PR #129).
-Draft PR: https://github.com/yopiheart/grifon-command/pull/132
-Neil approved one polished local hero frame after the studio pilot.
+Branch: codex/hero-film-storyboard, isolated from research head 302292a.
+Parent draft PR: https://github.com/yopiheart/grifon-command/pull/132
+Neil approved story-first direction: one owner/product, real plan, UGC + cinematic.
+Storyboard: artifacts/grifon-hero-film-storyboard.html (offline, diagrams only).
+Source: tools/artifacts/data/hero-film-storyboard.json and sibling builder/template.
+Six panels in three acts; exact identities, final duration/dialogue/audio remain open.
+Neil reviewed the storyboard and approved a rough timed edit on 2026-09-13.
+Silent cuts: assets/hero-film/storyboard-animatic/{rough-cut,mobile-rough-cut}.mp4.
+Holds: 6/7/7/8/7/5 seconds; actual ads remain explicit placeholders.
+Builder: tools/artifacts/build-hero-film-animatic.mjs (local sharp/ffmpeg-static).
+Run storyboard builder first; animatic accepts --runtime-root for installed npm deps.
+Independent storyboard 390x844/1440px smoke PASS; all anchors/details, no overflow.
+Builder/gates, deterministic HTML rebuild, artifact-anchor check and diff check PASS.
+MP4 full decode PASS: 1280x720, H.264/yuv420p, 24fps, 960 frames, no audio track.
+Independent animatic playback PASS; exact cuts 6/13/20/28/35s, 40s total.
+Existing studio work is preserved, subordinate to the approved story direction.
 Source: tools/polish_grifon_studio.py; verifier: tools/verify_grifon_studio_look.py
 New frame, editable scene, critique and verification: assets/hero-film/studio-look/
 Offline review: artifacts/grifon-studio-look.html (new frame + original comparison).
 Original studio and camera preview preserved at assets/hero-film/studio-pilot/.
 
 ## ▶ NEXT ACTION
-Neil reviews the look candidate; final-look approval is HOLD, not silently passed.
+Neil approved preparing one production-test package; assets/spec/spend not approved.
+Order: storyboard > rough edit/temp audio > individual shots > assembly/review
+> separately approved website integration. Blender is optional per shot only.
+Final-look approval remains HOLD; the storyboard does not clear the optics issue.
 Three-round cap reached. Lower bottle still reads gold rather than continuous coffee.
 No fourth render or production expansion is authorized by this completed bounded pass.
 Human taste, coffee identity, actual product proof and final film timing remain open.
-Shutdown handoff: all source/assets are on PR #132; resume here on the next PC.
-Next proposed diagnostic: isolate pedestal reflection, glass and coffee material
-to identify the lower-bottle gold cause before another polish pass. No render started.
-Neil can review composition/mood from the GitHub frame on mobile in the meantime.
+Prior source/assets remain on PR #132. No existing work discarded.
+Optics diagnostic remains a separate unexecuted proposal, not the immediate task.
 
 ## Look-development result
 Blender 5.2.1 LTS / Cycles GPU rendered 1920x1080 at 128 samples; 188 editable objects.
