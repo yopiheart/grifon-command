@@ -1,0 +1,43 @@
+{
+  "durationSeconds": 40,
+  "fps": 24,
+  "resolution": [
+    1280,
+    720
+  ],
+  "audio": "none; written sound intent only",
+  "transition": "hard cuts",
+  "status": "Provisional editorial pacing hypothesis, not passed audiovisual analysis or finished film",
+  "panels": [
+    {
+      "panel": 1,
+      "durationSeconds": 6,
+      "title": "01 / A product worth showing"
+    },
+    {
+      "panel": 2,
+      "durationSeconds": 7,
+      "title": "02 / Give Grifon the real brief"
+    },
+    {
+      "panel": 3,
+      "durationSeconds": 7,
+      "title": "03 / The idea becomes a plan"
+    },
+    {
+      "panel": 4,
+      "durationSeconds": 8,
+      "title": "04 / First, make it feel human"
+    },
+    {
+      "panel": 5,
+      "durationSeconds": 7,
+      "title": "05 / Then, give it presence"
+    },
+    {
+      "panel": 6,
+      "durationSeconds": 5,
+      "title": "06 / Back to the owner"
+    }
+  ]
+}

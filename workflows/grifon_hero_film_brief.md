@@ -1,6 +1,167 @@
 # Grifon hero film — production preparation
 
-2026-09-10 · **HOLD: untimed preparation brief, not an approved production script.**
+2026-09-13 · **Story direction approved; silent rough cut delivered. Final timing and production remain gated.**
+
+## Current delivery: C-series selected; updated rough cut built for one final review
+
+Neil subsequently delegated creative selection and requested completion while
+away, with only the final result to review. C01 was internally selected for its
+coherent everyday daylight. Four engaged scenes C02-C05 replaced the posed gaze:
+bottle-cap check, photo setup, laptop work and a pause looking toward the product.
+Independent scene triage passed their review-cut roles; no correction was needed.
+This is agent selection, not a claim that Neil already accepted the new likeness.
+Total native calls: 18, with no C correction and no image call still running.
+
+Current offline package: artifacts/grifon-hero-film-review.html.
+Landscape: assets/hero-film/review-cut-v2/hero-review-16x9.mp4.
+Portrait review container: assets/hero-film/review-cut-v2/mobile-review.mp4.
+Eight shots retain the original six-panel story in a 40-second timing hypothesis:
+5/4/4/6/8/7/4/2 seconds, cuts at 5/9/13/19/27/34/38. The owner is held still;
+13-19s is the preserved Blender shaded camera pilot, explicitly provisional.
+Actual UI/plan/UGC/cinematic proof is missing and labeled, never substituted.
+1920x1080 wrapper assembly does not establish native 1080p product output.
+Temporary local sound cues are present; no VO, final score or actual ad audio.
+Both videos built and fully decoded. Independent 390x844/1440 desktop review
+passed, as did full 40s embedded playback with audio, 960 frames and zero drops.
+All cuts are exact; final audio peak -20.9dB, silent proof interiors at -91dB.
+QA evidence: artifacts/hero-film-review-qa/review.md and screenshots. This is
+Chromium viewport/playback QA, not physical-device or final listening/taste proof.
+Original silent animatics and rejected casting remain intact.
+
+The paid-test spec now names C01 and A01 originals, but actual Grifon plan,
+script and scene frames remain ungenerated. It is a dependency-bound proposal,
+not a fake execution-ready spec. USD15/four rolls is an unapproved ceiling,
+not a verified provider quote; the run stops if charge bounds cannot be checked.
+Single scenes alone cannot establish two full finished sample ads.
+
+## Historical C01 checkpoint (user later delegated selection)
+
+After rejecting B01, Neil delegated the best next choice based on actual house
+believability samples, especially Marvin Master Daylight. The actual daylight
+master, register-1 raw UGC and approved sari-sari selfie were restored from git
+and visually inspected. One new C01 candidate uses the Marvin image ONLY for
+light/color/photographic register, explicitly prohibiting identity/body copying.
+C01 wears ordinary mustard/white clothes in a simpler packing entrance. It is
+saved in HERO-CAST-03 with exact prompt, reference role, hash and dimensions.
+Independent source-vs-candidate comparison is complete: closer daylight/register,
+no obvious anatomical/compositing defect, but candidness/casting remains HOLD.
+Neil's believability verdict remains open. No dependent C-series call launched.
+Current native total: 14. The following rejection chronology remains preserved.
+
+Neil superseded A03/A04 casting acceptance after the A05-A08 batch, describing
+the owner as generic and resembling common AI-video actors. Master Daylight,
+KAPE 01, the story and Blender studio remain. A fresh short-wavy-hair founder
+direction was approved, producing B01. Neil then rejected B01 for both generic
+casting and insufficient realism. Four dependent B02-B05 calls were already
+in flight; they finished without retry. No further B-series call followed rejection.
+All owner images are preserved as historical/provisional casting, not final art.
+The total at the B-batch stop was 13: A01-A08 and B01-B05; C01 later made it 14.
+No paid API/video or new Blender render was made in these native batches.
+
+The overall film is CINEMATIC through composition, camera, edit and sound.
+Owner scenes retain believable natural Master Daylight; the controlled gold
+living studio supplies the transformation; actual UGC and cinematic samples
+retain their original product-generated look. No modern-entrepreneur replacement
+has been selected. Do not interpret realism feedback as permission for glamour.
+
+The updated eight-shot timing/data, local builder and HTML template are saved
+under tools/artifacts/*hero-film-review*. They are UNBUILT and blocked on casting;
+no updated video or review HTML was delivered. The original silent diagram
+animatic remains the latest built cut. No character-dependent polishing proceeds.
+The proposed next proof-test dependencies are in
+assets/hero-film/proof-tests/HERO-PROOF-02/test-spec.json; not execution-ready.
+
+Blender remains the plan-to-output transformation beat. Use the existing pilot
+as provisional camera evidence, not as a real Grifon ad. Final production needs
+a new shot copy of the studio, KAPE 01 replacement, lower-bottle optics diagnosis,
+gold-ribbon animation, actual plan/output display mapping and bounded local QA.
+No expanded Blender render scope is authorized by the casting work.
+
+## Historical step: A04 combined visual acceptance (casting now superseded)
+
+HERO-SCENE-01 was explicitly approved with "Go, go, go" after the exact setup and
+one-call bound were read back. One native call using the saved prompt and A01/A03
+references produced `A04-owner-coffee-scene-16x9-original.png`, 1672x941 (native
+approximately 16:9, not a 1920x1080 deliverable). Original portraits are unchanged.
+Initial review held the scene for added chalkboard wording and tight head/fingertip
+margins. Neil subsequently viewed A04 after being asked to check grip, label and
+background text, then said "Okay na to". A04 is now accepted as the combined
+landscape visual reference, including the knowingly accepted chalkboard deviation.
+Do not remove it or reroll. Tight margins remain a technical framing limitation;
+the smallest label line is not confidently certified, with no definite typo
+claimed. See `A04-generation-evidence.json` and independent review in the candidate
+folder. No extra generation or paid video follows from visual acceptance.
+
+### Saved first-scene setup (now executed once)
+
+First combined-scene proposal is ready at
+`assets/hero-film/reference-candidates/HERO-IMG-01/HERO-SCENE-01.spec.json`.
+Neil delegated the setup and chose existing A01 as the product reference; no
+coffee regeneration is needed merely to match daylight. Proposed new 16:9
+medium-wide scene: A03 at the counter, one natural supporting grip below A01's
+unobscured label, other hand on the counter, soft open-shade face/body light
+against bright tropical surroundings. Exact inspected A01/A03 hashes, reference
+roles, prompt and pass/fail are in the historical spec. Its one native call within
+existing allowance has now been used as recorded above. No reroll, paid fallback,
+Blender or moving-video scope follows.
+
+Neil rejected A02's dull palette and explicitly requested one NEW owner image,
+not an edit, clarifying the look as MASTER DAYLIGHT. The one separately authorized
+native call produced `A03-owner-master-daylight-original.png` (1086x1448).
+The preserved Marvin daylight master was inspected for lighting/color only;
+neither it nor A02 was passed into the generation. No Marvin identity was requested.
+A03 uses bright tropical surroundings and softly shaded face/arms, cobalt blue
+and terracotta clothing, with both hands fully inside the frame. Independent
+still review PASS. Neil then accepted its clarity, believability and visual look.
+See `A03-generation-evidence.json` for the exact prompt, original hash and approval.
+This accepts the visual/lighting reference; continuity in other views or motion
+has not been tested. Preserve A01, rejected A02 and accepted A03 originals.
+
+Final hero direction is 16:9 with 1920x1080 delivery target and mobile-readable
+composition. Portrait reference images do not set the final film ratio; no native
+4K or source-resolution quality claim follows. No combined image or proof video
+generation is authorized by the A03 visual approval.
+
+### Initial two-call result
+
+Neil explicitly said "Proceed" for the two built-in generations on 2026-09-13.
+Both calls completed with the exact prompts; no references, rerolls, edits or API
+fallback. Originals and the immutable approved spec/prompt hashes are under
+`assets/hero-film/reference-candidates/HERO-IMG-01/` with `generation-evidence.json`.
+A01-product-original.png visually passes the label/coffee/hand criteria; aesthetic
+approval and phone-scale check remain open. A02-owner-original.png has believable
+face/skin/clothing, but the viewer-right fingers are cropped and fail the exact
+full-hands criterion. Preserve it for review; no repair or third call is authorized.
+Both outputs are 1086x1448 PNGs. No backend model, token use or dollar price was
+exposed. That initial two-call cap is exhausted; A03 used its separate one-call
+authorization. A01's final product-reference lock remains open.
+
+### Approved generation brief (historical preparation)
+
+Neil approved the story-first journey and its rough edit, then selected built-in
+Codex image generation for the first assets. The concrete review spec is
+[HERO-IMG-01](../artifacts/grifon-hero-first-images.html), built from
+`tools/artifacts/data/hero-film-image-test.json`. It proposes KAPE 01 demo packaging
+and a wholly fictional Filipina owner. No owner photo is required from Neil.
+Both exact prompts, pass/fail criteria and evidence are in the spec. This review
+page records the preparation before generation; the execution status above and
+saved originals now supersede its "not generated" inventory. Authorized scope
+was two native calls within existing allowance, no rerolls/fallback/purchases.
+
+After reviewing and locking both returned masters, prepare a separate combined
+owner/bottle handheld plate using their approved hashes; only then specify short
+real Grifon UGC and cinematic proof tests. The legacy studio proxy is preserved,
+not an approved product master. The next action is image references, not Blender.
+
+The [six-panel storyboard](../artifacts/grifon-hero-film-storyboard.html) and
+[silent landscape rough cut](../assets/hero-film/storyboard-animatic/rough-cut.mp4)
+now exist, with a [portrait review copy](../assets/hero-film/storyboard-animatic/mobile-rough-cut.mp4).
+Forty seconds is an initial editorial hypothesis, not reference-derived timing
+or a passed audiovisual gate. Actual exports remain diagram placeholders.
+Order stays storyboard -> rough timed edit with temporary audio -> individual
+shots -> final assembly/review -> separately approved website integration.
+This pass is silent with written sound cues; temporary audio is still pending.
+Blender is optional for selected shots, not the whole-film starting point.
 
 The approved reference-analysis attempt failed the specificity gate. Accordingly this document preserves approved creative decisions, drafts independent copy/asset requirements and costs the known production work. It does not lock runtime, shot timings, music/edit grammar, or an evidence-based final storyboard. See the [research report](grifon_hero_film_research.md).
 

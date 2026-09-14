@@ -1,0 +1,49 @@
+{
+    "id":  "HERO-SCENE-01-A04",
+    "specCommit":  "1d94d83ebe10dcd276d88e0347e465fe17744514",
+    "authorization":  "Coordinator conveyed authorization under delegated first-scene setup; then Neil explicitly replied \u0027Go, go, go\u0027 after exact first-scene setup, two references, one native call and no paid fallback were read back. This confirmation applies to the SAME call, not a duplicate.",
+    "startUtc":  "2026-09-13 05:01:13 UTC",
+    "endUtc":  "2026-09-13 05:01:53 UTC",
+    "generationCalls":  1,
+    "maximumApprovedCalls":  1,
+    "callsRemaining":  0,
+    "tool":  "image_gen__imagegen",
+    "arguments":  {
+                      "prompt":  "Create one NEW landscape 16:9 photorealistic combined-scene reference, guided by the two supplied reference images. Do not simply stretch, crop or frame either portrait as a widescreen image; compose a new coherent scene. Reference image 1 is ONLY the exact KAPE 01 product: preserve its clear cylindrical bottle silhouette, rounded shoulder, matte charcoal screw cap, off-white sleeve proportions and exact three printed lines KAPE 01 / BOTTLED COFFEE / DEMO BRAND (slashes mean line breaks, not printed symbols). Preserve continuous dark brown coffee above and below the sleeve, realistic glass and plausible small-bottle scale. Do not copy its anonymous hand as a separate pasted hand. Reference image 2 is the SAME fictional Filipina owner: preserve her facial identity, natural warm tan skin texture, head-to-body proportions, tied-back dark hair, cobalt-blue shirt and terracotta apron. Preserve the MASTER DAYLIGHT world: a modest coffee-business counter by an open doorway, vivid natural blue sky and green tropical plants outside, bright well-exposed surroundings, neutral white balance. Her face, neck, arms and the bottle share soft even open-shade daylight; natural reflections must belong to this location. No golden-hour cast, dull grey grade, hard sun patches on skin or studio rim light. Medium-wide eye-level composition around a natural 50mm-equivalent view, owner centered slightly left and framed head to waist, looking toward the camera with the same small approachable expression. One hand naturally supports the bottle upright near lower chest in the center of the picture: palm under the base and fingers around the lower sides, entirely below the printed label. The other empty hand rests naturally on the counter. Keep both complete hands, every fingertip, the complete cap and bottle, and the head safely inside generous frame margins; credible grip, weight, perspective and bottle-to-hand scale, no floating object or extra fingers. Label faces camera, unobscured and sharp enough to inspect all three lines at original resolution. Keep owner and bottle dominant and recognizable when the full 16:9 image is viewed on a phone; no tiny subject far away. Simple warm wood counter; at most one plain kraft box at the far side, no extra bottles or elaborate props. Natural continuous face-body-hand anatomy, same light and texture throughout, no pasted face or pasted product, no glamour/beauty filter, plastic skin, neon saturation, exaggerated smile, additional text, invented claims, sales numbers or testimonial framing. This is an externally prepared fictional reference scene, not finished Grifon video output.",
+                      "referenced_image_paths":  [
+                                                     "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+                                                     "C:/Users/Administrator/Desktop/grifon-hero-storyboard/assets/hero-film/reference-candidates/HERO-IMG-01/A03-owner-master-daylight-original.png"
+                                                 ]
+                  },
+    "references":  [
+                       {
+                           "order":  1,
+                           "file":  "assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+                           "sha256":  "df01401ad33ed67ee78b92c3894267d84bd508fdb4baab18c075599a9da3770e",
+                           "role":  "Chosen product reference: exact bottle, cap, sleeve, wording, dark coffee and believable hand-relative scale. Its anonymous hand is NOT the owner\u0027s identity reference."
+                       },
+                       {
+                           "order":  2,
+                           "file":  "assets/hero-film/reference-candidates/HERO-IMG-01/A03-owner-master-daylight-original.png",
+                           "sha256":  "3dc0b976744b527634d392b7d40386cc6e4aa80c2a829122bffb496754faf390",
+                           "role":  "User-accepted fictional owner identity/skin/body, cobalt shirt, terracotta apron, MASTER DAYLIGHT treatment and modest doorway workspace."
+                       }
+                   ],
+    "sourceFile":  "exec-424a0998-a447-4d07-990d-b4cafa0b689c.png",
+    "image":  "A04-owner-coffee-scene-16x9-original.png",
+    "imageSha256":  "267da77528daeb72e50ed9f428a4af128091e24308668dc93b74b0cee9c1d18a",
+    "originalsPreserved":  true,
+    "paidApiFallback":  false,
+    "retries":  0,
+    "model":  "Not exposed; no selector used",
+    "tokenUsage":  "Not exposed",
+    "dollarCost":  "Not exposed; native allowance",
+    "status":  "USER-ACCEPTED combined landscape visual reference. Original added-chalkboard deviation knowingly accepted by Neil. Retain tight head/fingertip margins and unverified smallest label line as technical limitations, not new generation authorization. Motion remains untested.",
+    "promptSha256":  "33927d81be96247195b226a46c73a9692ead63459d328cf4489a4a66387308f2",
+    "dimensions":  [
+                       1672,
+                       941
+                   ],
+    "aspectNote":  "Native landscape output is 1672x941, approximately 16:9 (integer-size rounding), not 1920x1080. No crop/upscale applied.",
+    "userVisualApproval":  "Neil viewed A04; after frontend specifically asked him to check grip, label and background text, he replied Okay na to. Reported by originating task on 2026-09-13. Acceptance includes visible chalkboard wording."
+}

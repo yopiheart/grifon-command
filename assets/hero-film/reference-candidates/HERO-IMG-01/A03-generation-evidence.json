@@ -1,0 +1,39 @@
+{
+    "specId":  "HERO-IMG-01-A03",
+    "authorization":  "Neil explicitly requested ONE fresh new owner image, not an edit, and clarified MASTER DAYLIGHT. Reported by originating task 01a098e6-0f9e-74a1-9beb-25c4c1c3efc3. This is a new one-call scope after the initial two-call scope; no further calls authorized.",
+    "generationCalls":  1,
+    "maximumApprovedCalls":  1,
+    "callsRemaining":  0,
+    "startUtc":  "2026-09-13 04:51:19 UTC",
+    "endUtc":  "2026-09-13 04:51:49 UTC",
+    "tool":  "image_gen__imagegen",
+    "arguments":  {
+                      "prompt":  "Create ONE NEW photorealistic reference photo, a fresh text-to-image generation of a wholly fictional adult Filipina small-business owner approximately 35 years old. Portrait 3:4. Do not recreate any named real person or customer. MASTER DAYLIGHT look: a bright, colorful tropical Philippine day, well-exposed natural skin, neutral white balance, blue sky and white clouds with rich natural green foliage visible outside a modest coffee-business packing workspace. She stands in open shade at the wide open doorway, with soft, even skylight across her entire face and body; the daylight outside is bright and alive. Warm tan medium-brown Filipino skin with real pores and everyday texture, not pale or grey, no yellow/orange cast. Face and arms share the same exposure, color, softness and texture. A believable ordinary woman with natural body proportions, dark brown eyes, dark hair simply tied low, head and face fully toward the camera, both eyes and mouth visible, small warm approachable expression, relaxed shoulders. Wear a clean cobalt-blue cotton T-shirt and a simple muted terracotta work apron with no text or logos: real rich fabric colors, not neon or artificially oversaturated. Simple warm wood packing counter, at most two plain kraft boxes placed to the side, natural green plants beyond the doorway; believable modest operating business, not a luxury studio or prop-filled set. No coffee bottle in this owner reference. Frame from head to mid-thigh at ordinary rear-phone-camera perspective around 50mm equivalent; place her head, both forearms, BOTH COMPLETE EMPTY HANDS and every fingertip safely inside the image with generous margins on both sides. Both hands rest naturally near the center of the counter, separated, not holding anything, never cut by image edges. Natural head-to-body scale and continuous jaw-neck-collar anatomy; face no sharper, smoother or brighter than the body. Authentic ordinary daylight photo with subtle natural texture and restrained phone-camera contrast. No studio lighting, dramatic rim light, harsh sun patches on skin, golden-hour grade, gloomy desaturation, heavy HDR, beauty filter, plastic skin, glamour makeup, pasted face, enlarged head, cropped hands, duplicate fingers, logos, captions, watermark, testimonial or sales numbers. This is a fictional identity candidate for internal review, not a real customer or finished Grifon advertisement."
+                  },
+    "imageReferencesIncluded":  0,
+    "freshTextToImage":  true,
+    "editedExistingImage":  false,
+    "lightingResearch":  {
+                             "skill":  ".agents/skills/marvin-avatar/SKILL.md",
+                             "inspectedReference":  "clients/oceanides/kuya-marvin/daylight-register/marvin-daylight-master.png",
+                             "sourceCommit":  "302292a",
+                             "role":  "Human-readable lighting/color interpretation only. Reference not supplied to generation; no Marvin identity requested.",
+                             "recipe":  "Bright colorful tropical day, well exposed neutral balance; soft even open-shade face/body lighting, natural warm tan skin, real sky/greenery colors. No dull gray grade or golden cast."
+                         },
+    "image":  "A03-owner-master-daylight-original.png",
+    "imageSha256":  "3dc0b976744b527634d392b7d40386cc6e4aa80c2a829122bffb496754faf390",
+    "sourceFile":  "exec-e7f540ae-b7fe-4116-baa8-8821b977d91e.png",
+    "model":  "Not exposed; no model selector used",
+    "tokenUsage":  "Not exposed",
+    "dollarCost":  "Not exposed; native Codex allowance",
+    "paidApiFallback":  false,
+    "additionalPurchases":  0,
+    "retries":  0,
+    "status":  "User-accepted visual/lighting candidate; independent still review PASS. Not multi-view or motion/identity continuity proof. A02 rejected for dull palette and cropped hand.",
+    "promptSha256":  "612090f581a79a5d9b8c6e57a61974dfa40c98bac7a2f800edf5fa15165b671b",
+    "dimensions":  [
+                       1086,
+                       1448
+                   ],
+    "userVisualApproval":  "Neil viewed A03 and said: Ayan, ang ganda, mas malinaw. Mas believable siya, yung quality niya. I like this. Reported by originating task on 2026-09-13."
+}

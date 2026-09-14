@@ -1,0 +1,7 @@
+# Reproducible local assembly intermediates; originals and final videos stay tracked.
+shot-*.png
+shot-*.mp4
+mobile-overlay-*.png
+mobile-shot-*.mp4
+studio-review-poster.png
+temp-cues.wav

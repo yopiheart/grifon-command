@@ -1,0 +1,87 @@
+{
+  "title": "One coffee. A visible transformation.",
+  "status": "Review cut 02 / 40-second editorial hypothesis / final user review pending",
+  "castingStatus": "approved-for-assembly",
+  "shots": [
+    {
+      "id": "01",
+      "seconds": 5,
+      "title": "A product worth showing",
+      "line": "The owner lines up a product photo.",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png",
+      "kind": "still",
+      "badge": "EXTERNAL OWNER STILL / C03",
+      "next": "Founder lines up the photo. Actual shutter capture and motion are not proven by this still. A01 remains the exact product input."
+    },
+    {
+      "id": "02",
+      "seconds": 4,
+      "title": "Give Grifon the brief",
+      "line": "Owner at work. Cut to the actual upload controls.",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png",
+      "kind": "still",
+      "badge": "EXTERNAL OWNER STILL / REAL UI MISSING",
+      "next": "Record the actual hero upload and business brief in Grifon. Laptop screen is hidden; no generated interface is used."
+    },
+    {
+      "id": "03",
+      "seconds": 4,
+      "title": "Photo becomes an ad plan",
+      "line": "ACTUAL GRIFON PLAN CAPTURE MISSING",
+      "kind": "missing",
+      "badge": "PROOF SLOT / EDITED WAIT MUST REMAIN VISIBLE",
+      "next": "Capture a readable hook and scene excerpt from the real plan, with run ID and settings. Gold ribbon leads from that capture into the Blender studio."
+    },
+    {
+      "id": "04",
+      "seconds": 6,
+      "title": "The living studio opens",
+      "line": "Real plan > gold-ribbon studio > actual output",
+      "source": "assets/hero-film/studio-pilot/shaded-camera-preview.mp4",
+      "poster": "assets/hero-film/studio-pilot/01_Establish.png",
+      "kind": "video",
+      "badge": "EXISTING BLENDER PILOT / PROXY PRODUCT / EXTERNAL",
+      "next": "This is the preserved six-second shaded camera test, not a new render or final lighting. Replace Demo 01 with KAPE 01, resolve lower-bottle gold optics, animate the ribbon and map actual plan/output captures into the studio."
+    },
+    {
+      "id": "05",
+      "seconds": 8,
+      "title": "First, make it feel human",
+      "line": "ACTUAL GRIFON UGC EXPORT MISSING",
+      "kind": "missing",
+      "badge": "PAID-PLAN PROOF SLOT / NO SUBSTITUTE FOOTAGE",
+      "next": "Play an uninterrupted original UGC excerpt with its original voice. Preserve full frame and export; no external face, hand, label or voice repairs inside proof."
+    },
+    {
+      "id": "06",
+      "seconds": 7,
+      "title": "Then, give it presence",
+      "line": "ACTUAL GRIFON CINEMATIC EXPORT MISSING",
+      "kind": "missing",
+      "badge": "PAID-PLAN PROOF SLOT / SAME KAPE 01 PRODUCT",
+      "next": "Use actual product motion from Grifon and repeat the selected recipe. The Blender pilot cannot fill this proof slot."
+    },
+    {
+      "id": "07",
+      "seconds": 4,
+      "title": "Back to the owner",
+      "line": "A quiet return to the work counter.",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png",
+      "kind": "still",
+      "badge": "EXTERNAL REACTION STILL / DISPLAY HIDDEN",
+      "next": "Founder stops working and glances toward her product. Actual exports will appear in adjacent proof captures; none is invented on this hidden screen."
+    },
+    {
+      "id": "08",
+      "seconds": 2,
+      "title": "Build my free ad plan",
+      "line": "One preview a month. No card required.",
+      "kind": "cta",
+      "badge": "FINISHED VIDEOS REQUIRE A PAID PLAN",
+      "next": "Website CTA stays available outside playback. Recheck the live free-plan journey and extend this provisional two-second hold if needed; no website integration is included here."
+    }
+  ],
+  "audio": "Locally synthesized temporary edit cues only. No VO, final music, licensed score or actual ad audio. Proof slots are deliberately silent.",
+  "blender": "Blender remains the transformation beat. Existing pilot/source/look tests are preserved. This package includes no new Blender render.",
+  "native": "C01-C05 are internally selected for one final review under user-delegated creative judgment. C01 used actual Marvin Master Daylight only for light/color/register, never identity; C02-C05 used only C01 plus A01 product. A/B rejected casting is preserved and excluded. Eighteen native calls total, five C images, no C correction or paid API/video calls."
+}

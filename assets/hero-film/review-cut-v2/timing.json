@@ -1,0 +1,105 @@
+{
+  "durationSeconds": 40,
+  "fps": 24,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "audio": "Locally synthesized temporary edit cues only. No VO, final music, licensed score or actual ad audio. Proof slots are deliberately silent.",
+  "shots": [
+    {
+      "id": "01",
+      "seconds": 5,
+      "title": "A product worth showing",
+      "line": "The owner lines up a product photo.",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png",
+      "kind": "still",
+      "badge": "EXTERNAL OWNER STILL / C03",
+      "next": "Founder lines up the photo. Actual shutter capture and motion are not proven by this still. A01 remains the exact product input.",
+      "start": 0,
+      "end": 5
+    },
+    {
+      "id": "02",
+      "seconds": 4,
+      "title": "Give Grifon the brief",
+      "line": "Owner at work. Cut to the actual upload controls.",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png",
+      "kind": "still",
+      "badge": "EXTERNAL OWNER STILL / REAL UI MISSING",
+      "next": "Record the actual hero upload and business brief in Grifon. Laptop screen is hidden; no generated interface is used.",
+      "start": 5,
+      "end": 9
+    },
+    {
+      "id": "03",
+      "seconds": 4,
+      "title": "Photo becomes an ad plan",
+      "line": "ACTUAL GRIFON PLAN CAPTURE MISSING",
+      "kind": "missing",
+      "badge": "PROOF SLOT / EDITED WAIT MUST REMAIN VISIBLE",
+      "next": "Capture a readable hook and scene excerpt from the real plan, with run ID and settings. Gold ribbon leads from that capture into the Blender studio.",
+      "start": 9,
+      "end": 13
+    },
+    {
+      "id": "04",
+      "seconds": 6,
+      "title": "The living studio opens",
+      "line": "Real plan > gold-ribbon studio > actual output",
+      "source": "assets/hero-film/studio-pilot/shaded-camera-preview.mp4",
+      "poster": "assets/hero-film/studio-pilot/01_Establish.png",
+      "kind": "video",
+      "badge": "EXISTING BLENDER PILOT / PROXY PRODUCT / EXTERNAL",
+      "next": "This is the preserved six-second shaded camera test, not a new render or final lighting. Replace Demo 01 with KAPE 01, resolve lower-bottle gold optics, animate the ribbon and map actual plan/output captures into the studio.",
+      "start": 13,
+      "end": 19
+    },
+    {
+      "id": "05",
+      "seconds": 8,
+      "title": "First, make it feel human",
+      "line": "ACTUAL GRIFON UGC EXPORT MISSING",
+      "kind": "missing",
+      "badge": "PAID-PLAN PROOF SLOT / NO SUBSTITUTE FOOTAGE",
+      "next": "Play an uninterrupted original UGC excerpt with its original voice. Preserve full frame and export; no external face, hand, label or voice repairs inside proof.",
+      "start": 19,
+      "end": 27
+    },
+    {
+      "id": "06",
+      "seconds": 7,
+      "title": "Then, give it presence",
+      "line": "ACTUAL GRIFON CINEMATIC EXPORT MISSING",
+      "kind": "missing",
+      "badge": "PAID-PLAN PROOF SLOT / SAME KAPE 01 PRODUCT",
+      "next": "Use actual product motion from Grifon and repeat the selected recipe. The Blender pilot cannot fill this proof slot.",
+      "start": 27,
+      "end": 34
+    },
+    {
+      "id": "07",
+      "seconds": 4,
+      "title": "Back to the owner",
+      "line": "A quiet return to the work counter.",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png",
+      "kind": "still",
+      "badge": "EXTERNAL REACTION STILL / DISPLAY HIDDEN",
+      "next": "Founder stops working and glances toward her product. Actual exports will appear in adjacent proof captures; none is invented on this hidden screen.",
+      "start": 34,
+      "end": 38
+    },
+    {
+      "id": "08",
+      "seconds": 2,
+      "title": "Build my free ad plan",
+      "line": "One preview a month. No card required.",
+      "kind": "cta",
+      "badge": "FINISHED VIDEOS REQUIRE A PAID PLAN",
+      "next": "Website CTA stays available outside playback. Recheck the live free-plan journey and extend this provisional two-second hold if needed; no website integration is included here.",
+      "start": 38,
+      "end": 40
+    }
+  ],
+  "videoSha256": "c589f57a8361d099bf6664a2b0027755317fbe69eafda093d0ff0e156fec2f5b"
+}

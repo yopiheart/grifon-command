@@ -1,0 +1,51 @@
+{
+    "specId":  "HERO-IMG-01",
+    "approvedSpecCommit":  "73cbc5f4a5dc1829efca258808c3a1c6dc058747",
+    "authorization":  "Neil replied Proceed after the originating task asked to generate the two reference images using built-in. Approval reported by task 01a098e6-0f9e-74a1-9beb-25c4c1c3efc3.",
+    "batchStartUtc":  "2026-09-13 04:46:08 UTC",
+    "batchEndUtc":  "2026-09-13 04:47:13 UTC",
+    "generationCalls":  2,
+    "maximumApprovedCalls":  2,
+    "callsRemaining":  0,
+    "retries":  0,
+    "nativeReferencesIncluded":  0,
+    "paidApiFallback":  false,
+    "model":  "Not exposed by native tool; no model selector used",
+    "tokenUsage":  "Not exposed",
+    "dollarCost":  "Not exposed; consumes general Codex allowance",
+    "additionalPurchases":  0,
+    "sourceFiles":  [
+                        "exec-6360a5cc-fd42-4bff-ae6a-a6be0997dbf8.png",
+                        "exec-f2b52785-1ee6-450d-8013-c81c6261e940.png"
+                    ],
+    "assets":  [
+                   {
+                       "id":  "A01 / Product master candidate",
+                       "tool":  "image_gen__imagegen",
+                       "arguments":  {
+                                         "prompt":  "Create one photorealistic reference photograph for a fictional bottled-coffee demo product, not an advertisement layout. Portrait 3:4. One believable adult hand enters from the lower left and supports the bottom of one clear cylindrical 250 mL glass bottle. The complete bottle and cap are inside the image; the hand does not cover the label. The bottle has a short rounded shoulder, a matte charcoal screw cap, and one off-white paper sleeve with exactly three centered lines of dark ink: KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Treat the slash marks as line breaks, not printed characters. No other text or symbols. The contents are continuous dark brown coffee, visibly dark both above and below the label, with a small headspace. Neutral soft daylight, pale grey background, a natural unglamorous product photo, front label square to camera, realistic glass thickness and modest reflections, clear paper texture, believable hand scale and fingers. No gold metal or golden liquid, no glowing edges, no floating bottle, no condensation hiding the print, no extra bottle, no logos beyond the requested wording, no ingredients, health claims, awards, seals, price, testimonial or sales claims. This image will be an input reference, not proof of AI video output."
+                                     },
+                       "promptSha256":  "85bd1df2bcbd728439616634ee015f181b4f1923d1773647576a667eea5312f0",
+                       "image":  "A01-product-original.png",
+                       "imageSha256":  "df01401ad33ed67ee78b92c3894267d84bd508fdb4baab18c075599a9da3770e",
+                       "width":  1086,
+                       "height":  1448,
+                       "originalFormat":  "png",
+                       "state":  "generated candidate; identity approval pending"
+                   },
+                   {
+                       "id":  "A02 / Fictional owner candidate",
+                       "tool":  "image_gen__imagegen",
+                       "arguments":  {
+                                         "prompt":  "Create one photorealistic casting reference portrait of a wholly fictional adult Filipina small-business owner, approximately 35 years old. Do not depict or imitate a named real person, celebrity, customer, or supplied identity. Portrait 3:4, from head to mid-thigh, face and both empty hands clearly visible, natural ordinary body proportions, medium-brown skin with realistic pores and small everyday imperfections, dark brown eyes, dark hair tied simply low at the back. Plain ivory cotton T-shirt and a plain charcoal apron without text or logos. Relaxed posture and a small approachable expression, not posing like a model and not an exaggerated smile. Stand behind a simple pale work counter in a modest, clean packing corner; two plain unmarked kraft boxes softly out of focus, neutral daylight and believable shadow contact. No coffee bottle or product packaging in this image. No jewelry prominence, glamour makeup, airbrushed skin, enlarged head, cinematic golden glow, luxury loft, poverty caricature, caption, watermark, testimonial, revenue numbers or customer endorsement. The purpose is a fictional owner identity candidate for an internal film, not evidence of a real customer or a finished Grifon advertisement."
+                                     },
+                       "promptSha256":  "c45f2849098b87051fdd7ea94dccf4aceed168df057452f203db2d7a0bb4aa1d",
+                       "image":  "A02-owner-original.png",
+                       "imageSha256":  "9c810f26259611d5b4bc1040e5bf1c453265d30ac5a7519b54be8fe5ce0707ca",
+                       "width":  1086,
+                       "height":  1448,
+                       "originalFormat":  "png",
+                       "state":  "generated candidate; identity approval pending"
+                   }
+               ]
+}
