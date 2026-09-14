@@ -1,5 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-09-13, C-series hero review package built**
+**Stamped: 2026-09-14, PAUSED at Neil's request; review package saved**
+
+## Resume point
+Wait for Neil to resume; no further generation, rendering or implementation.
+First open artifacts/grifon-hero-film-review.html and review the 40-second cut.
+C-series are selected review candidates, not final user-approved casting.
+Approved direction: Master Daylight, KAPE 01, 16:9 and the six-panel storyboard.
+Then resolve final review and exact real-product test inputs/budget before spend.
 
 ## Delivery
 Branch codex/hero-film-storyboard, isolated grifon-hero-storyboard worktree.
