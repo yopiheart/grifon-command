@@ -6,8 +6,8 @@ Branch: `codex/script-failure-audit`, stacked on `codex/eval-fidelity` at 7cc03f
 Dependency PR #136: https://github.com/yopiheart/grifon-command/pull/136
 PR #136 is still open/draft; verify, e2e, artifacts and Vercel checks are green.
 Follow-up draft PR #137: https://github.com/yopiheart/grifon-command/pull/137
-Independent review and local verification passed. CI only targets main, so it
-does not run while #137 is stacked on codex/eval-fidelity; check again on retarget.
+Independent review and local verification passed. PR #137 now targets main so
+the complete change receives cloud CI; the verification run is pending.
 The only production-code change is the approved steam|vacuum| detector addition.
 Prompt wording, schema, model, retry limits and transport settings are unchanged.
 No paid run, Actions dispatch, production-data change, merge or production deploy.
@@ -15,7 +15,8 @@ No paid run, Actions dispatch, production-data change, merge or production deplo
 ## ▶ NEXT ACTION
 The approved detector fix is complete, reviewed and verified in draft PR #137.
 Review #136 then #137 in dependency order; keep both draft until user direction.
-Recheck cloud CI after #137 targets main. No merge/deployment authorization.
+Check PR #137 cloud CI before the final merge decision. Explicit authorization
+to merge to main and allow its automatic production deployment is still pending.
 Content compliance (jargon/proof), retry cancellation and rule/input ambiguities
 remain separate follow-ups in workflows/script_failure_audit_2026-09-16.md.
 Another live run still needs an exact-input/cost spec; offline checks are not one.
