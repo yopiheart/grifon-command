@@ -3,7 +3,8 @@
 
 ## Current state
 Branch: `codex/eval-fidelity`, based on current main (`4acbaefc`).
-Implementation and independent review complete; draft PR creation follows commit.
+Implementation and independent review complete. Draft PR:
+https://github.com/yopiheart/grifon-command/pull/136
 No production application, tuned prompt, schema, model or generation setting changed.
 No paid runs, Actions dispatch, production-data changes, merge or deployment.
 
