@@ -18,9 +18,9 @@
 //   2. Mocks ../../services/supabaseClient so proxyCall passes the
 //      access_token guard with a fake "test-token".
 //   3. Stubs global fetch to recognize calls to /api/gemini/text and
-//      route them straight to the @google/genai SDK using GEMINI_API_KEY.
-//      Same code path as production geminiService.ts — same prompt
-//      construction, same response parsing.
+//      route them through production FLOW_REGISTRY.adscript with a real SDK
+//      client. Classification, parsing and retries are shared with production;
+//      the adapter blocks telemetry writes. HTTP server guards are bypassed.
 //   4. Calls generateAdScript with the Bukidnon Brew + OFW-wife test
 //      fixtures for both MrBeast and TESTIMONIAL formulas. Prints the
 //      full script JSON (hooks, body, strategicAudit) for human review.
@@ -29,31 +29,20 @@
 //   - hook1 / hook2 / body arrays exist and are non-empty (Hook starvation
 //     guard — 5357780 / 651a993).
 //   - strategicAudit string exists.
-//   - body has at least 5 lines (sanity check on completeness).
+//   - body has at least 5 lines for baseline formulas, or 3 for UGC Pro.
 //
 // What it does NOT assert:
 //   - Content quality. That's the human / CMO agent reviewing console output.
 //
-// Cost: each test = one Gemini text generation call (~$0.001-0.01 depending
-// on model + prompt length). Two tests per run = ~$0.02 max. Cheap enough
-// to run on every prompt-tuning iteration.
+// Cost varies with the selected fixtures, production classifiers and retries.
+// Before a live run, approve the exact inputs, pass/fail criteria, evidence and
+// maximum cost. RUN_REGRESSION is an execution switch, not spend approval.
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, it, expect, vi } from 'vitest';
 import { GoogleGenAI } from '@google/genai';
-// Real server-side adscript flow building blocks (TUNED — imported/read, never
-// edited here). The mock below mirrors the api/gemini/text.ts FLOW_REGISTRY
-// 'adscript' handler exactly, so the regression exercises the real prompt.
-import {
-  buildAdScriptPrompt,
-  parseAdScriptResponse,
-  MODEL_TEXT,
-  MODEL_FAST,
-  SAFETY_SETTINGS,
-  UGCPRO_CLASSIFIER_PROMPT,
-  UGCPRO_SERVICE_CLASSIFIER_PROMPT,
-} from '../../api/_lib/prompts.js';
+import { createAdscriptRegressionFetch } from '../support/adscriptRegressionFetch.js';
 
 // --- 1. Load .env manually (no dotenv dep) -------------------------------
 
@@ -104,130 +93,7 @@ const apiKey = process.env.GEMINI_API_KEY;
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 const originalFetch = globalThis.fetch.bind(globalThis);
 
-const fetchMock = vi.fn(async (url: any, init: any = {}) => {
-  const urlStr =
-    typeof url === 'string'
-      ? url
-      : (url?.url as string | undefined) ?? (url?.toString?.() as string | undefined) ?? '';
-
-  if (urlStr.includes('/api/gemini/text')) {
-    if (!ai) {
-      throw new Error('script-gen.regression: GEMINI_API_KEY missing from .env');
-    }
-    const body = JSON.parse(init.body as string);
-
-    // Flow mode — `{ flow, input }`. generateAdScript sends this since the
-    // crown-jewel refactor moved the prompt server-side. Mirror the real
-    // api/gemini/text.ts FLOW_REGISTRY.adscript handler (build → generate →
-    // parse), minus the auth/rate-limit/quota the server does (the test
-    // deliberately bypasses those). Returns the parsed Script directly, which
-    // is exactly what the server returns and what proxyCall hands back.
-    // Also mirrors the server-side hook-starvation retry (issue #59): regenerate
-    // once when hook1/hook2 come back empty, falling back to the first result if
-    // the regeneration throws.
-    // NOTE: keep this config in sync with FLOW_REGISTRY.adscript in
-    // api/gemini/text.ts. v1 covers adscript only.
-    if (body.flow === 'adscript') {
-      // Mirror the FLOW_REGISTRY.adscript UGCPro sub-format resolution — the A4
-      // (Slice 4) businessType clamp in resolveUgcProSubType: realestate forces
-      // 'tutorial' with NO classifier call; service honors only its 2 legal picks
-      // (transformation/tutorial) else runs the 2-way SERVICE classifier; product
-      // keeps the 5-way behavior (honor explicit pick, else auto-classify).
-      let ugcProSubType:
-        | 'tryon'
-        | 'unboxing'
-        | 'demo'
-        | 'transformation'
-        | 'tutorial'
-        | undefined;
-      if (body.input.businessInfo?.scriptType === 'UGCPro') {
-        const bi = body.input.businessInfo;
-        const picked = bi.ugcProFormat;
-        const bt = bi.businessType ?? 'product';
-        if (bt === 'realestate') {
-          ugcProSubType = 'tutorial';
-        } else if (bt === 'service') {
-          if (picked === 'transformation' || picked === 'tutorial') {
-            ugcProSubType = picked;
-          } else {
-            const clsResponse = await ai.models.generateContent({
-              model: MODEL_FAST,
-              contents: UGCPRO_SERVICE_CLASSIFIER_PROMPT(bi.product, bi.features),
-            } as any);
-            const clsText = clsResponse.text?.trim().toUpperCase() || '';
-            ugcProSubType = clsText.includes('TUTORIAL') ? 'tutorial' : 'transformation';
-          }
-        } else if (
-          picked === 'tryon' ||
-          picked === 'unboxing' ||
-          picked === 'demo' ||
-          picked === 'transformation' ||
-          picked === 'tutorial'
-        ) {
-          ugcProSubType = picked;
-        } else {
-          const clsResponse = await ai.models.generateContent({
-            model: MODEL_FAST,
-            contents: UGCPRO_CLASSIFIER_PROMPT(bi.product, bi.features),
-          } as any);
-          const clsText = clsResponse.text?.trim().toUpperCase() || '';
-          ugcProSubType = clsText.includes('TRYON')
-            ? 'tryon'
-            : clsText.includes('UNBOXING')
-              ? 'unboxing'
-              : clsText.includes('TUTORIAL')
-                ? 'tutorial'
-                : clsText.includes('DEMO')
-                  ? 'demo'
-                  : 'transformation';
-        }
-      }
-      const prompt = buildAdScriptPrompt(body.input, undefined, ugcProSubType);
-      const generate = async () => {
-        const response = await ai.models.generateContent({
-          model: MODEL_TEXT,
-          contents: prompt,
-          config: {
-            responseMimeType: 'application/json',
-            safetySettings: SAFETY_SETTINGS,
-            thinkingConfig: { thinkingBudget: 4000 },
-          },
-        } as any);
-        return parseAdScriptResponse(response.text || '{}');
-      };
-      let result = await generate();
-      if (!(result?.hook1?.length && result?.hook2?.length)) {
-        result = await generate().catch(() => result);
-      }
-      return { ok: true, status: 200, json: async () => result } as any;
-    }
-    if (body.flow) {
-      throw new Error(
-        `script-gen.regression: flow '${body.flow}' not supported by this mock (v1 covers adscript only)`
-      );
-    }
-
-    // Legacy passthrough mode — client-built `{ model, contents, config }`.
-    const result = await ai.models.generateContent({
-      model: body.model,
-      contents: body.contents,
-      config: body.config,
-    });
-    return {
-      ok: true,
-      status: 200,
-      json: async () => ({
-        text: result.text ?? '',
-        candidates: result.candidates ?? [],
-        usageMetadata: (result as any).usageMetadata,
-        promptFeedback: (result as any).promptFeedback,
-      }),
-    } as any;
-  }
-
-  // Pass through to real fetch (Gemini SDK calling Google's API, etc.)
-  return originalFetch(url, init);
-});
+const fetchMock = vi.fn(createAdscriptRegressionFetch(ai, originalFetch));
 vi.stubGlobal('fetch', fetchMock);
 
 // --- 4. Import the unit under test (after stubs) -------------------------
