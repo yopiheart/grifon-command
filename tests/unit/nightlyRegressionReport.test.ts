@@ -82,7 +82,7 @@ describe('nightly report evidence', () => {
     expect(read).not.toHaveBeenCalled();
   });
 
-  it('lists real failed assertions and links only a confirmed artifact', async () => {
+  it('lists failed tests and links only a confirmed artifact', async () => {
     const { issue } = await report({
       regression: { outcome: 'failure' },
       upload: { outcome: 'success', outputs: { 'artifact-id': '456' } },
@@ -93,10 +93,26 @@ describe('nightly report evidence', () => {
         { fullName: 'healthy script', status: 'passed' },
       ] }],
     });
-    expect(issue.title).toContain('assertions FAILED');
+    expect(issue.title).toContain('tests FAILED');
     expect(issue.body).toContain('- TRANSFORMATION body shape');
     expect(issue.body).not.toContain('healthy script');
     expect(issue.body).toContain('https://github.com/owner/repo/actions/runs/123/artifacts/456');
+  });
+
+  it('does not call a timeout-shaped JSON result an assertion failure', async () => {
+    // Historical Vitest JSON keeps the creation stack, losing the timeout message.
+    const { issue } = await report({ regression: { outcome: 'failure' } }, {
+      success: false,
+      testResults: [{ assertionResults: [{
+        fullName: 'Baseline MrBeast', status: 'failed', duration: 120006,
+        failureMessages: ['Error: STACK_TRACE_ERROR\n    at task (runner.js:1784:27)'],
+      }] }],
+    });
+    expect(issue.title).toContain('tests FAILED');
+    expect(issue.body).toContain('Baseline MrBeast');
+    expect(issue.body).toContain('timeouts');
+    expect(issue.body).not.toContain('failed assertion');
+    expect(issue.body).not.toContain('prompt defect confirmed');
   });
 
   it.each([
@@ -142,7 +158,7 @@ describe('nightly report evidence', () => {
       success: false,
       testResults: [{ assertionResults: [{ fullName: 'EDL live video attach', status: 'failed' }] }],
     });
-    expect(issue.body).toContain('EDL canary has a failed assertion');
+    expect(issue.body).toContain('EDL canary test failed');
     expect(issue.body).not.toContain('editor is going blind');
     expect(issue.body).not.toContain('EDL_MAX_ATTACHED_VIDEOS = 0');
   });
@@ -157,5 +173,11 @@ describe('nightly report evidence', () => {
     expect(workflow).toContain("cron: '0 18 * * *'");
     expect(workflow).toContain("RUN_REGRESSION: '1'");
     expect(workflow).not.toMatch(/^\s+RUN_EDL_FULL_CAP:/m);
+  });
+
+  it('retains JSON results and separately captures actual errors and output in JUnit', () => {
+    expect(workflow).toContain('--reporter=junit');
+    expect(workflow).toContain('--outputFile.json=.tmp/regression/results.json');
+    expect(workflow).toContain('--outputFile.junit=.tmp/regression/results.xml');
   });
 });

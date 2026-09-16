@@ -1,0 +1,754 @@
+{
+  "auditedAt": "2026-09-16",
+  "scope": "Historical generated script blocks and result statuses only; no provider calls made. Output presence is not a passing status. Raw job logs and credentials are excluded.",
+  "runs": [
+    {
+      "id": "34644107954",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/34644107954",
+      "createdAt": "2026-09-11T20:25:09Z",
+      "headSha": "4acbaefcfac14169dbd7c49b12eee88408e8aed1",
+      "resultsSha256": "0c836085e2203e70fd1933a66df45de999e501b2a31f5494097dc91141e7f7e8",
+      "tests": [
+        {
+          "name": "EDL live — one attached video part returns 200 (not 429) with exactly ONE Files-API video part attached",
+          "status": "passed",
+          "durationMs": 39275.463865000005
+        },
+        {
+          "name": "EDL live — a full-cap batch returns 200 (not 429) with 10 Files-API video parts attached",
+          "status": "skipped"
+        },
+        {
+          "name": "Baseline — Bukidnon Brew + OFW-wife audience MrBeast",
+          "status": "passed",
+          "durationMs": 8498.18475
+        },
+        {
+          "name": "Baseline — Bukidnon Brew + OFW-wife audience TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 5494.3769250000005
+        },
+        {
+          "name": "Stress Test — Service Business (Cleaning, BGC) MrBeast",
+          "status": "passed",
+          "durationMs": 18028.337657999997
+        },
+        {
+          "name": "Stress Test — Service Business (Cleaning, BGC) TESTIMONIAL",
+          "status": "failed",
+          "durationMs": 120037.626364,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Stress Test — Skincare (Adult Acne) MrBeast",
+          "status": "passed",
+          "durationMs": 48647.27043199999
+        },
+        {
+          "name": "Stress Test — Skincare (Adult Acne) TESTIMONIAL",
+          "status": "failed",
+          "durationMs": 120017.70085099997,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "UGC Pro — Slice 1 (Try-On + Transformation) TRY-ON (fashion)",
+          "status": "passed",
+          "durationMs": 15216.154196000018
+        },
+        {
+          "name": "UGC Pro — Slice 1 (Try-On + Transformation) TRANSFORMATION (skincare — appearance guardrail live)",
+          "status": "failed",
+          "durationMs": 120016.46787400002,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial) BEFORE & AFTER (service — sofa deep-clean, operator voice + no-peso CTA)",
+          "status": "failed",
+          "durationMs": 120048.24788000004,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial) TUTORIAL (real-estate — condo listicle, PRICE RULE live with listingPrice)",
+          "status": "failed",
+          "durationMs": 120045.733595,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Stress Test — Gym/Fitness (Online Coaching) MrBeast",
+          "status": "failed",
+          "durationMs": 120034.19931200007,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Stress Test — Gym/Fitness (Online Coaching) TESTIMONIAL",
+          "status": "failed",
+          "durationMs": 120004.49439400004,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "BUKIDNON BREW — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit ito ang sikretong pampagising sa abroad?"
+            ],
+            "hook2": [
+              "Ano ang pampainit ng umaga niya sa abroad?"
+            ],
+            "body": [
+              "Tuwing nag-iimpake ka ng padala para kay mister sa abroad,",
+              "Minsan hirap siyang magising at nangungulila sa pamilya tuwing umaga.",
+              "Kaya ilagay mo itong Bukidnon Brew sa balikbayan box niya.",
+              "Galing ito sa bundok ng Bukidnon kaya kakaiba ang bango.",
+              "Diretso ito mula sa magsasaka, hindi blend ng kung anu-ano.",
+              "Sa bawat higop niya, ramdam niya ang yakap ng pamilya.",
+              "Tara, click mo sa baba, first 50 lang may free shipping ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: We highlighted 'single-origin Bukidnon highland' framed emotionally as coffee sourced direct from local farmers. Rather than bogging the viewer down with technical specs like bag grams or roast levels, focusing on the highland origin delivers an authentic 'lasang probinsya/lasang bahay' sensory trigger essential for care packages.\n2. Slide Effect & Retention: Every body line adheres strictly to the 7-12 word discipline. This creates a rhythmic, effortless momentum where each line resolves quickly and propels the viewer immediately into the next emotional beat, eliminating cognitive friction and drop-off before reaching the CTA."
+          }
+        },
+        {
+          "label": "BUKIDNON BREW — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Ito ang sikreto sa bawat padala ko."
+            ],
+            "hook2": [
+              "Bakit laging sabik magkape asawa ko abroad?"
+            ],
+            "body": [
+              "Ako si Elena, palaging nag-iimpake ng balikbayan box para kay mister.",
+              "Tuwing video call namin, ramdam ko ang matinding pagod niya roon.",
+              "Hanggang sa natuklasan ko itong specialty kape mula Bukidnon Brew.",
+              "Ngayon, amoy at lasang Pinas na ang bawat umaga niya.",
+              "Dahil single-origin beans ito, ramdam agad ang purong sarap nito.",
+              "Naka-resealable valve bag pa kaya laging sariwa kahit ipadala malayo.",
+              "Akala ko mawawala ang bango sa biyahe, pero buo pa rin.",
+              "Tara, click mo na sa baba para sa first fifty orders ngayon."
+            ],
+            "strategicAudit": "1. Selected Features: 'Single-origin highland beans' and the 'resealable valve bag' were prioritized because they directly address the core emotional and practical anxieties of OFW wives sending care packages. Single-origin provides an authentic, unadulterated taste of home (emotional value), while the resealable valve bag assures freshness during long international transits (practical objection).\n2. Pacing & Slide Effect: Every body line strictly obeys the 7-12 word metric. This rhythmic brevity pulls the reader down an effortless slippery slide—from marital empathy during lonely video calls, through product discovery, to an authentic unboxing experience overseas—driving high emotional retention and conversion."
+          }
+        },
+        {
+          "label": "MALINISPH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit amoy bago agad ang unit?"
+            ],
+            "hook2": [
+              "Tatlong linggong kalat sa condo, nawala?"
+            ],
+            "body": [
+              "Pagkatapos ng sunod-sunod na OT, pagod ka na maglinis.",
+              "Puyat ka na sa kakaisip maglinis bago mag-Monday morning.",
+              "Buti na lang may same-day booking ang MalinisPH dito.",
+              "May apat na oras ka na para magpahinga ngayong Sabado.",
+              "Ligtas pa sa pets dahil plant-based ang gamit nila.",
+              "Tara, click sa baba para sa first 20 may free upgrade ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: 'Same-day booking' was isolated because time-starved BGC/Makati corporate professionals operate on impulse when weekend burnout peaks, eliminating friction. Plant-based pet-safety was layered as the primary differentiator to address condo-living pet parents' safety anxiety. 2. Slide Pacing: Every body line is strictly calibrated to 9-12 words. This rhythmic cadence feeds one visceral micro-thought per breath, pulling the viewer continuously through the identity-struggle-payoff arc without mental fatigue."
+          }
+        },
+        {
+          "label": "GLAZE PH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit may breakouts ka pa rin ngayon?"
+            ],
+            "hook2": [
+              "Akala mo ba normal ang adult breakouts?"
+            ],
+            "body": [
+              "Bago mag-morning Zoom meeting, tinitingnan mo na naman ang pisngi mo.",
+              "Kahit dis-oras ng gabi, naghahanap ka pa rin ng bagong pamahid.",
+              "Naka-ilang mamahaling routine ka na pero bumabalik pa rin ito.",
+              "Subukan ang Niacinamide at Tea Tree drop mula sa Glaze PH.",
+              "Mas fresh at confident ka na humarap sa trabaho araw-araw.",
+              "Iwas sa mamahaling clinic sessions para sa natural na glowing skin.",
+              "Tara, click sa baba—first 100 lang may libreng consultation ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: Niacinamide 5% and Tea Tree were isolated because they are the highest-converting, widely trusted ingredients for balancing adult blemishes and soothing redness. Highlighting these two keeps the message razor-sharp and avoids confusing the audience with product-spec bloat.\n2. Pacing & Slide Effect: Every body line is strictly calibrated between 7-12 words. This creates an effortless, fast-paced cadence that feels conversational on video, preventing drop-off before the viewer reaches the CTA."
+          }
+        },
+        {
+          "label": "HIRAYA ACTIVE — UGC PRO TRY-ON",
+          "script": {
+            "hook1": [
+              "Tingnan natin 'tong Hiraya Active set."
+            ],
+            "hook2": [
+              "Sukatin natin 'tong viral Hiraya Active."
+            ],
+            "body": [
+              "Ang ganda ng lapat sa tummy.",
+              "Squat test tayo, hindi talaga siya see-through.",
+              "Sa akin na 'to, Tara, tap mo 'yong link sa baba ngayon."
+            ],
+            "strategicAudit": "1. Feature Selection: We narrowed the focus exclusively to high-waist tummy support and squat-proof opacity. For Filipina gym-goers dealing with gym anxiety around sheer leggings and midsection fit, these two visceral pain points overcome all buying hesitation faster than generic spec callouts like color variety or fabric blend.\n2. UGC Retention & Pacing: Spoken across 4 tight beats within 10-14 seconds, each body line adheres strictly to the 4-12 word UGC range. The hard cut directly to the worn state lets the visual do the heavy lifting, followed immediately by an undeniable squat-test proof beat that retains attention straight into the keep-it verdict and friction-free CTA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "34161876539",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/34161876539",
+      "createdAt": "2026-09-07T21:06:09Z",
+      "headSha": "01211117d18cdf608b017c4785f85074828ef20c",
+      "resultsSha256": "545a3f6977a1c0e5b5e03ba2341e89ae50e6e5f95adff502c789dc3d46865554",
+      "tests": [
+        {
+          "name": "EDL live — one attached video part returns 200 (not 429) with exactly ONE Files-API video part attached",
+          "status": "passed",
+          "durationMs": 16486.094799
+        },
+        {
+          "name": "EDL live — a full-cap batch returns 200 (not 429) with 10 Files-API video parts attached",
+          "status": "skipped"
+        },
+        {
+          "name": "Baseline — Bukidnon Brew + OFW-wife audience MrBeast",
+          "status": "failed",
+          "durationMs": 120006.692215,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Baseline — Bukidnon Brew + OFW-wife audience TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 72993.81089200001
+        },
+        {
+          "name": "Stress Test — Service Business (Cleaning, BGC) MrBeast",
+          "status": "passed",
+          "durationMs": 41192.420790000004
+        },
+        {
+          "name": "Stress Test — Service Business (Cleaning, BGC) TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 29347.684714000003
+        },
+        {
+          "name": "Stress Test — Skincare (Adult Acne) MrBeast",
+          "status": "passed",
+          "durationMs": 24860.98889899999
+        },
+        {
+          "name": "Stress Test — Skincare (Adult Acne) TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 57874.343605
+        },
+        {
+          "name": "UGC Pro — Slice 1 (Try-On + Transformation) TRY-ON (fashion)",
+          "status": "passed",
+          "durationMs": 28177.624109000026
+        },
+        {
+          "name": "UGC Pro — Slice 1 (Try-On + Transformation) TRANSFORMATION (skincare — appearance guardrail live)",
+          "status": "passed",
+          "durationMs": 23636.036406999978
+        },
+        {
+          "name": "UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial) BEFORE & AFTER (service — sofa deep-clean, operator voice + no-peso CTA)",
+          "status": "passed",
+          "durationMs": 21160.23486299999
+        },
+        {
+          "name": "UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial) TUTORIAL (real-estate — condo listicle, PRICE RULE live with listingPrice)",
+          "status": "passed",
+          "durationMs": 37972.18056999997
+        },
+        {
+          "name": "Stress Test — Gym/Fitness (Online Coaching) MrBeast",
+          "status": "passed",
+          "durationMs": 104335.68637199997
+        },
+        {
+          "name": "Stress Test — Gym/Fitness (Online Coaching) TESTIMONIAL",
+          "status": "failed",
+          "durationMs": 120044.74731999997,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "BUKIDNON BREW — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit ito laging hinahanap sa balikbayan box?"
+            ],
+            "hook2": [
+              "May lihim na pampagising ang bawat padala."
+            ],
+            "body": [
+              "Tuwing nagbabalot ka ng padala, pamilya ang naiisip mo.",
+              "Malungkot ang umaga niya sa abroad kapag walang lasang Pinas.",
+              "Kahit sa video call lang, ramdam mo ang matinding pagod.",
+              "Kaya ilagay mo sa kahon itong masarap na Bukidnon Brew.",
+              "Galing direkta sa Bukidnon farmers, purong specialty kape talaga ito.",
+              "Bawat higop niya doon, ramdam ang init ng pamilya dito.",
+              "Tara, click mo na sa baba, first 50 may libreng shipping ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: We focused exclusively on single-origin highland authenticity ('direct from Bukidnon farmers') and care package compatibility (pasalubong/balikbayan box suitability). For an OFW spouse audience, emotional connection to home and direct unadulterated quality far outperform technical SKU specs like 'medium roast' or 'valve bag', anchoring value in homesickness relief.\n2. 7-12 Word Slide Effect Pacing: Each line is metered strictly between 9 and 12 words to maintain a rapid, frictionless cadence. This sentence rhythm mimics natural conversational speech while accelerating comprehension, eliminating retention drop-offs between the problem (lonely mornings abroad) and the emotional payoff (feeling home in every cup)."
+          }
+        },
+        {
+          "label": "BUKIDNON BREW — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Ito ang sikreto sa bawat balikbayan box."
+            ],
+            "hook2": [
+              "Bakit ito ang paboritong kape ng mister ko?"
+            ],
+            "body": [
+              "Ako si Elena, limang taon nang nagpapadala ng package kay mister.",
+              "Lagi niyang sinasabi sa video call na miss niya ang Pinas.",
+              "Hirap siyang magising sa umaga dahil matabang ang kape doon.",
+              "Buti na lang, naisipan kong ipadala itong Bukidnon Brew.",
+              "Ngayon, ramdam na niya ang init ng tahanan tuwing umaga.",
+              "Mas ganado siyang magtrabaho at nakakatipid pa sa kape.",
+              "Direct galing sa Bukidnon farmers kaya purong specialty kape talaga.",
+              "Naka-resealable bag ito kaya laging fresh kahit matagal ang biyahe.",
+              "Tara, click sa baba, first 50 may free shipping, subukan mo na."
+            ],
+            "strategicAudit": "1. VIRAL FEATURE SELECTION: We spotlighted 'single-origin Bukidnon highland beans' (framed simply as direct from Bukidnon farmers) and the 'resealable valve bag'. For an OFW spouse sending care packages, freshness retention during long cargo shipping is the critical trust hurdle, while local single-origin sourcing satisfies the deep emotional hunger for authentic Philippine home taste. 2. PACING & RETENTION: Every body line adheres strictly to the 7-12 word 'Slide' rhythm. This cadence prevents cognitive fatigue, pulls the viewer effortlessly down the narrative slide from pain point to emotional transformation, and secures Veo TTS voice-accent locking with consistent Tagalog-dominant framing."
+          }
+        },
+        {
+          "label": "MALINISPH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit ganito kadumi ang condo mo ngayon?"
+            ],
+            "hook2": [
+              "Tingnan mo ang dumi sa ilalim nito!"
+            ],
+            "body": [
+              "Pagod ka na sa OT tapos magwawalis pa?",
+              "Tatlong linggong tambak ang alikabok sa iyong condo.",
+              "Kahit weekend na, hindi ka pa rin makapagpahinga talaga.",
+              "Buti na lang may same-day booking ang MalinisPH.",
+              "May background-checked cleaners na agad tutulong sa iyo.",
+              "Apat na oras ang balik sa bawat weekend mo.",
+              "Gamit pa nila ay plant-based at safe na sabon.",
+              "Tara, click sa baba, first 20 may free deep clean upgrade ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: 'Same-day booking' and 'Background-checked cleaners' were isolated as the primary hooks because high-stress corporate professionals in BGC/Makati suffer from urgent time scarcity and strict condo security/trust friction. Highlighting convenience and vetted safety directly eliminates their primary hesitation points without cognitive clutter.\n2. Pacing & Slide Effect: Every body line is strictly constrained between 7 and 12 words, maintaining high-velocity sub-5-second beats. Tagalog dominance triggers natural localized TTS cadence, while opening and closing on Tagalog frames preserves natural prosody and keeps viewers locked down the slippery slope from problem recognition to conversion."
+          }
+        },
+        {
+          "label": "MALINISPH — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Tatlong linggong tambak ang kalat sa condo ko."
+            ],
+            "hook2": [
+              "Grabe, wala na akong lakas maglinis ng condo."
+            ],
+            "body": [
+              "Ako si Miggy, laging subsob sa trabaho dito sa Makati.",
+              "Uuwi gabi na, tapos tambak na naman ang alikabok.",
+              "Puyat na nga sa deadline, wala pang pahinga tuwing Sabado.",
+              "Buti na lang talaga, nasubukan ko itong MalinisPH sa wakas.",
+              "Ngayon, relax na ako tuwing weekend at laging sariwa bahay.",
+              "Same-day booking sila at talagang background-checked pa ang mga cleaners.",
+              "Sobrang panatag ako kahit iwan ko mga gamit ko.",
+              "Tara, click sa baba — first 20 may libreng upgrade, subukan mo na."
+            ],
+            "strategicAudit": "1. Feature Selection: 'Same-day booking' and 'Background-checked cleaners' were selected because they directly solve the acute emotional friction of time-starved BGC/Makati professionals—instant gratification when overwhelmed, combined with complete psychological safety when letting strangers into their private living space. 2. Pacing & Retention: Every line adheres strictly to the 7-12 word 'Slide' rhythm. This eliminates cognitive drag, prevents micro-drop-offs, and mimics the natural, breathless cadence of an authentic peer recommendation."
+          }
+        },
+        {
+          "label": "GLAZE PH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit laging may bagong breakout tuwing umaga?"
+            ],
+            "hook2": [
+              "Akala mo tapos na ang breakout years?"
+            ],
+            "body": [
+              "Bago mag-Zoom call, tinitignan mo na naman 'yang mukha mo.",
+              "Kahit anong mahal na gamit, may bagong tubo pa rin.",
+              "Nasa harap ka pa rin ng salamin tuwing hatinggabi.",
+              "Subukan mo ang Niacinamide at Tea Tree ng Glaze PH.",
+              "Kitang-kita ang mas fresh na glow sa labing-apat na araw.",
+              "Mas confident ka na humarap sa morning meetings mo.",
+              "Tara, click sa baba, first 100 lang may libreng consultation ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: Niacinamide 5% and Tea Tree were prioritized because they represent the gold standard for adult breakout control without barrier damage. Tea Tree actively calms surface redness while Niacinamide restores texture and oil balance, creating an immediate, relatable value proposition for working professionals tired of harsh, ineffective routines.\n2. Pacing & Slide Effect: Every body line is strictly metered between 7 and 12 words to maintain rhythmic momentum. This short sentence structure acts as a frictionless slide—propelling the viewer seamlessly from the relatable late-night mirror struggle directly into the brand discovery, visual payoff, and compliant high-urgency call to action."
+          }
+        },
+        {
+          "label": "GLAZE PH — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Bakit laging may breakout bago mag-meeting?"
+            ],
+            "hook2": [
+              "Puyat na naman sa salamin kakatingin?"
+            ],
+            "body": [
+              "Ako si Elena, laging pagod sa dami ng mga deadline sa trabaho.",
+              "Gabi-gabi akong nakatitig sa salamin habang stressed sa mga bagong pimples.",
+              "Hanggang sa sinubukan ko itong gentle serum galing sa Glaze PH.",
+              "Ngayon, mas fresh na humarap sa morning Zoom calls araw-araw.",
+              "Kombinasyon ng Niacinamide at Tea Tree ang nagpakalma sa balat ko.",
+              "Akala ko dati malagkit, pero mabilis lang pala itong ma-absorb.",
+              "Tara, click sa baba, first 100 may libreng consultation, subukan mo na."
+            ],
+            "strategicAudit": "1. Feature Selection: Niacinamide 5% and Tea Tree were prioritized because they represent the gold-standard power duo for adult acne in the millennial skincare zeitgeist—Niacinamide targets post-breakout marks while Tea Tree naturally calms active inflammation without the harshness of pharmaceutical drying agents. 2. Slide Pacing: Restricting every body line strictly to 7-12 words creates a rhythmic, breath-matched cadence that prevents cognitive overload. The reader effortlessly 'slides' from the emotional relatability of corporate stress into product discovery and transformation, driving seamless CTA conversions without friction."
+          }
+        },
+        {
+          "label": "HIRAYA ACTIVE — UGC PRO TRY-ON",
+          "script": {
+            "hook1": [
+              "Subukan natin 'tong Hiraya Active set."
+            ],
+            "hook2": [
+              "Ito na ang bagong gym set ko."
+            ],
+            "body": [
+              "Ang ganda ng lapat sa katawan.",
+              "Tago ang puson at safe mag-squat.",
+              "Kukunin ko 'to. Tara, click mo 'yong link sa baba ngayon."
+            ],
+            "strategicAudit": "1. Feature Selection: We focused exclusively on high-waist tummy support and squat-proof opacity because these address the target Filipina gym girl's primary emotional friction points (fear of see-through leggings and muffin-top insecurity). Highlighting these two visible, high-stakes benefits drives immediate visual proof and emotional relief. 2. Pacing & Retention: Utilizing the 4-12 word UGC line range allows for rapid, punchy cuts perfectly timed with the physical try-on action (product in-hand -> worn reveal -> squat test -> verdict). Eliminating filler text ensures the entire demo lands within a crisp 10-12 second window, maximizing viewer retention on TikTok/Reels algorithms."
+          }
+        },
+        {
+          "label": "GLAZE PH — UGC PRO TRANSFORMATION",
+          "script": {
+            "hook1": [
+              "Bakit may breakout pa rin ako ngayon?"
+            ],
+            "hook2": [
+              "Ang mahal ng skincare pero breakout pa rin."
+            ],
+            "body": [
+              "Tingnan mo, tatlong patak lang nitong Glaze PH.",
+              "Sobrang fresh at kalmado na ng balat ko.",
+              "Tara, click mo 'yong link sa baba ngayon."
+            ],
+            "strategicAudit": "Niacinamide and Tea Tree were prioritized as the core hero features because adult acne sufferers in their late 20s to mid 30s respond strongest to gentle barrier-repair and soothing anti-inflammatory solutions rather than aggressive teenage acne treatments. In this 10-16s Transformation format, constraining lines strictly to the 4-12 word UGC range eliminates dead air and forces a rapid visual rhythm: Beat 0 instantly hooks with relatable morning-mirror frustration, Beat 1 cuts straight to physical dropper application without corporate pitch intros, Beat 2 lands the instant fresh-skin reveal with policy-compliant glow claims, and Beat 3 resolves on a frictionless conversational CTA."
+          }
+        },
+        {
+          "label": "SOFAFRESH PH — UGC PRO SERVICE BEFORE&AFTER",
+          "script": {
+            "hook1": [
+              "Tingnan mo 'tong sofa, tatlong taon nang madumi."
+            ],
+            "hook2": [
+              "Grabe 'tong dumi ng sofa, tatlong taon na."
+            ],
+            "body": [
+              "Steam muna namin tapos deep vacuum para tanggal lahat.",
+              "Ayan, tingnan mo, parang bago na ulit.",
+              "Kaya tara, message mo kami sa SofaFresh PH ngayon."
+            ],
+            "strategicAudit": "1. Feature Selection: Steam clean and deep vacuum were isolated as the primary visual drivers because extraction-based cleaning creates peak ASMR visual gratification (extracting years of deep-seated grime and dirt water), which is proven to drive hyper-engagement and shareability on TikTok/Reels.\n\n2. Retention & Pacing: By adhering to the punchy 4-12 word UGC line length across 4 distinct beats (Hook, The Work, Instant Reveal, Verdict/CTA), the entire script delivers a complete, satisfying transformation within 10-14 spoken seconds. The hard cuts sync seamlessly with hands-on tool action and the sudden reveal, eliminating dead air and maximizing watch time and completion rate."
+          }
+        },
+        {
+          "label": "AMAIA ORTIGAS — UGC PRO REAL-ESTATE TUTORIAL",
+          "script": {
+            "hook1": [
+              "Takot ka sa hidden fees? Silipin ito."
+            ],
+            "hook2": [
+              "Unang condo mo? Tatlong tips bago mag-downpayment."
+            ],
+            "body": [
+              "Una, siguraduhing malinaw ang transparent terms ng developer.",
+              "Pangalawa, silipin kung flood-free ang mismong daan papasok.",
+              "Pangatlo, bisitahin ang mismong unit dito sa Amaia Ortigas.",
+              "Tara, message mo kami para sa free viewing ngayon."
+            ],
+            "strategicAudit": "1. Feature Selection: 'Transparent terms' and 'flood-free' were selected because they directly target the primary anxieties of 26-35 first-time Filipino buyers (fear of surprise expenses/hidden clauses and Metro Manila monsoon commute risks). Highlighting buyer security drives higher engagement than cosmetic features. 2. Pacing & Retention: Utilizing the 4-12 word UGC range with hard visual cuts per tip keeps spoken delivery snappy and friction-free across a 12-14 second runtime. Opening each beat with numeric anchors ('Una', 'Pangalawa', 'Pangatlo') maintains structured curiosity and prevents drop-off before the CTA."
+          }
+        },
+        {
+          "label": "BULKPH COACH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit parang walang pagbabago katawan mo?"
+            ],
+            "hook2": [
+              "Dalawang taon ka nang stuck dito?"
+            ],
+            "body": [
+              "Tatlong taon ka nang nagbubuhat pero pareho pa rin.",
+              "Puro plano tuwing gabi pero stagnant pa rin sa salamin.",
+              "Nakaka-frustrate 'yung tatlong buwan nang walang dagdag sa buhat.",
+              "Dito papasok ang bagong coaching program ng BulkPH Coach.",
+              "May customized program kada two weeks at direct form check.",
+              "Kayang mag-add ng ten kilos sa bench in twelve weeks.",
+              "Mas lumalaki ang buhat habang lumalabas ang iyong abs.",
+              "Tara, click mo sa baba, first thirty may libreng meal plan ngayon!"
+            ],
+            "strategicAudit": "1. VIRAL FEATURE SELECTION: Chose 'customized programming' and 'direct form check videos' because the target Pinoy gym bro's core pain is plateauing on generic cookie-cutter PDFs without feedback. These two features directly promise personalized correction and measurable progressive overload.\n\n2. SABRI SUBY SLIDE PACING: The 7-12 word body lines build a frictionless rhythmic tempo that hooks audience frustration immediately, smoothly transitioning into social proof and PR gains, keeping retention high through to the scarcity-driven CTA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "34056546118",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/34056546118",
+      "createdAt": "2026-09-06T19:58:55Z",
+      "headSha": "32a09fde2230ee8f80e45b0b4fd3ed2ea4ed08a0",
+      "resultsSha256": "aa2111e4f862ca33c398ac45d79c063d04ac24a8145cca38d1cf9fb429b40435",
+      "tests": [
+        {
+          "name": "EDL live — one attached video part returns 200 (not 429) with exactly ONE Files-API video part attached",
+          "status": "passed",
+          "durationMs": 31276.290292
+        },
+        {
+          "name": "EDL live — a full-cap batch returns 200 (not 429) with 10 Files-API video parts attached",
+          "status": "skipped"
+        },
+        {
+          "name": "Baseline — Bukidnon Brew + OFW-wife audience MrBeast",
+          "status": "failed",
+          "durationMs": 120008.380623,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Baseline — Bukidnon Brew + OFW-wife audience TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 50728.94110200001
+        },
+        {
+          "name": "Stress Test — Service Business (Cleaning, BGC) MrBeast",
+          "status": "failed",
+          "durationMs": 120000.91869899997,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Stress Test — Service Business (Cleaning, BGC) TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 11018.690631999983
+        },
+        {
+          "name": "Stress Test — Skincare (Adult Acne) MrBeast",
+          "status": "passed",
+          "durationMs": 9644.024440000008
+        },
+        {
+          "name": "Stress Test — Skincare (Adult Acne) TESTIMONIAL",
+          "status": "passed",
+          "durationMs": 65157.65681299998
+        },
+        {
+          "name": "UGC Pro — Slice 1 (Try-On + Transformation) TRY-ON (fashion)",
+          "status": "passed",
+          "durationMs": 41120.29127700004
+        },
+        {
+          "name": "UGC Pro — Slice 1 (Try-On + Transformation) TRANSFORMATION (skincare — appearance guardrail live)",
+          "status": "passed",
+          "durationMs": 5659.102753000043
+        },
+        {
+          "name": "UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial) BEFORE & AFTER (service — sofa deep-clean, operator voice + no-peso CTA)",
+          "status": "failed",
+          "durationMs": 120000.35273399996,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial) TUTORIAL (real-estate — condo listicle, PRICE RULE live with listingPrice)",
+          "status": "passed",
+          "durationMs": 6828.898508999962
+        },
+        {
+          "name": "Stress Test — Gym/Fitness (Online Coaching) MrBeast",
+          "status": "failed",
+          "durationMs": 120007.68810699997,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        },
+        {
+          "name": "Stress Test — Gym/Fitness (Online Coaching) TESTIMONIAL",
+          "status": "failed",
+          "durationMs": 120051.04169700004,
+          "logError": "Test timed out in 120000ms.",
+          "jsonError": "Error: STACK_TRACE_ERROR"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "BUKIDNON BREW — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Ito ang sikretong pampagising ng asawa ko."
+            ],
+            "hook2": [
+              "Bakit laging masaya asawa ko sa video call?"
+            ],
+            "body": [
+              "Ako si Cristina, limang taon nang nagpapadala ng balikbayan box kay mister.",
+              "Lagi niyang reklamo sa video call, sobrang nakakapagod at malungkot ang trabaho.",
+              "Hanggang sa sinubukan ko ipasok sa padala itong Bukidnon Brew.",
+              "Ngayon, ganado na siya magising at ramdam niya ang yakap ng Pinas.",
+              "Ito lang ang kape na direct Bukidnon highland beans, walang ibang halo.",
+              "Akala ko mawawala ang bango sa biyahe, pero sobrang fresh pa rin.",
+              "Tara, click mo sa baba — first 50 may libreng shipping, subukan mo."
+            ],
+            "strategicAudit": "1. Feature Selection: Focused exclusively on 'single-origin Bukidnon highland beans' and long-distance freshness retention. For an OFW wife sending care packages, these two features carry the highest emotional weight—proving the coffee is authentic Philippine heritage (a true piece of home) while reassuring her that the beans won't go stale in international transit.\n2. Pacing & Slide Effect: Each body line strictly adheres to 7-12 words, eliminating mental friction and creating a rhythmic micro-cadence. By starting every line with a relatable narrative beat (balikbayan box, video calls, homesickness), the viewer slips effortlessly from the husband's emotional struggle to the warm ritual of Bukidnon Brew without feeling like they are sitting through an ad."
+          }
+        },
+        {
+          "label": "MALINISPH — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Tatlong linggong tambak ang kalat sa condo ko."
+            ],
+            "hook2": [
+              "Sobrang gulo na ng unit ko sa BGC."
+            ],
+            "body": [
+              "Ako si JP, laging overtime sa opisina kaya napabayaan ko ang unit.",
+              "Alas-tres ng madaling araw, gising pa ako kakaisip sa darating na bisita.",
+              "Buti na lang talaga, na-discover ko itong MalinisPH nung nakaraang linggo.",
+              "Ngayon, may apat na oras na ulit ako magpahinga tuwing Sabado.",
+              "Same-day booking sila at background-checked pa ang lahat ng cleaners nila.",
+              "Kaya kahit wala ako sa condo, kampante akong ligtas ang gamit.",
+              "Tara, click sa baba, first 20 may libreng deep clean upgrade, dali."
+            ],
+            "strategicAudit": "1. Feature Selection: We focused exclusively on 'Same-day booking' and 'Background-checked cleaners'. For busy Makati/BGC professionals working long hours, friction in scheduling and anxiety about letting strangers into condo units are the two biggest conversion blockers. Highlighting rapid availability and vetted security directly neutralizes these objections while keeping the message razor-sharp.\n\n2. The 'Slide' Effect: By enforcing a strict 7-12 word limit per line alongside natural Taglish conversational cadences, each sentence delivers one micro-idea before immediately handing momentum to the next. This rhythmic, low-cognitive-load structure prevents mid-video drop-off and pulls the viewer down the page to the final call-to-action seamlessly."
+          }
+        },
+        {
+          "label": "GLAZE PH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit laging may bagong breakout tuwing umaga?"
+            ],
+            "hook2": [
+              "Puyat ka na naman sa harap ng salamin?"
+            ],
+            "body": [
+              "Kahit anong mahal ng skincare mo, pabalik-balik pa rin ang pimples.",
+              "Madaling araw na, nakatitig ka pa rin sa salamin habang nag-aalala.",
+              "Iniisip mo kung paano tatakpan 'yan bago mag-start ang morning meeting.",
+              "Kaya ginawa ang Glaze PH na may Niacinamide at Tea Tree.",
+              "Tumutulong ito pakalmahin ang skin nang walang mabigat na lagkit.",
+              "Kahit sa Zoom calls, fresh at confident ka nang humarap araw-araw.",
+              "Kitang-kita ang blooming na resulta sa loob lang ng 14 days.",
+              "Tara, click mo sa baba para sa first 100 slots ngayon!",
+              "May libreng dermatologist consultation at skin assessment pa para sa'yo, subukan!"
+            ],
+            "strategicAudit": "1. Feature Selection: We isolated Niacinamide 5% and Tea Tree because they directly address the core viral pain point of adult breakouts without sounding like a dry ingredient list. Tea Tree provides instant visual recognition for soothing angry skin, while Niacinamide speaks to visible texture and clarity, cutting out secondary features that clutter direct-response creative. 2. Pacing & Slide Effect: Every single body line is locked strictly between 10 and 11 words. By keeping sentence structures tight and rhythmically balanced, the script forces momentum from the 3 AM mirror struggle into the product reveal and corporate Zoom payoff, preventing drop-off and keeping retention high throughout the entire pitch."
+          }
+        },
+        {
+          "label": "GLAZE PH — TESTIMONIAL",
+          "script": {
+            "hook1": [
+              "Bakit ba ang hirap mawala ng breakouts?"
+            ],
+            "hook2": [
+              "Ubos na ang sweldo ko sa acne!"
+            ],
+            "body": [
+              "Ako si Jenny, laging puyat kakaisip sa mga adult breakouts ko.",
+              "Puyat sa deadline, laging nakatitig sa salamin tuwing madaling araw na.",
+              "Hanggang sa sinubukan ko itong serum mula sa Glaze PH.",
+              "Ngayon, mas fresh na humarap sa morning meetings araw-araw.",
+              "Dahil sa Niacinamide at Tea Tree, kalmado na aking balat.",
+              "Hindi ito malagkit sa mukha at sobrang gaan lang gamitin.",
+              "Tara, click sa baba, first 100 may libreng derma consultation, subukan mo."
+            ],
+            "strategicAudit": "1. Feature Virality: Niacinamide 5% and Tea Tree were selected because they represent the industry gold-standard duo for calming redness and balancing excess oil in adult acne without sounding overly clinical. 2. Pacing & Retention: The strict 7-12 word body pacing creates rapid micro-commitments, allowing the viewer to glide effortlessly from pain to discovery and CTA without cognitive fatigue."
+          }
+        },
+        {
+          "label": "MALINISPH — MrBeast",
+          "script": {
+            "hook1": [
+              "Bakit ganito ang itsura ng condo mo?"
+            ],
+            "hook2": [
+              "Tingnan mo ang dumi sa ilalim ng kama."
+            ],
+            "body": [
+              "Pagkatapos ng OT buong linggo, tambak na naman ang kalat mo.",
+              "Wala ka nang oras maglinis dahil sa sunod-sunod na deadline.",
+              "Kaya subukan mo ang same-day booking dito sa MalinisPH.",
+              "Lahat ng cleaners ay background-checked kaya panatag ang loob mo.",
+              "Bawi mo na ang weekend mo para makapagpahinga nang husto.",
+              "Tara, click mo sa baba para sa first 20 ngayon!"
+            ],
+            "strategicAudit": "1. Feature Selection: 'Same-day booking' and 'Background-checked cleaners' were isolated as the primary hooks because busy corporate professionals in Makati/BGC prioritize speed and trust above all else. They need immediate resolution without the friction of waiting days, and letting strangers into their personal condo requires guaranteed safety.\n2. Pacing & Slide Effect: Every body line is strictly calibrated to 7-12 words. This rapid-fire rhythmic delivery prevents cognitive drop-off, feeding one visual thought per breath. By eliminating compound clauses and maintaining Tagalog dominance, the viewer effortlessly slides from corporate burnout straight into conversion."
+          }
+        },
+        {
+          "label": "HIRAYA ACTIVE — UGC PRO TRY-ON",
+          "script": {
+            "hook1": [
+              "Tingnan natin 'tong Hiraya Active set."
+            ],
+            "hook2": [
+              "Suotin natin 'tong Hiraya Active ngayon."
+            ],
+            "body": [
+              "Hala, ang ganda ng lapat sa tummy!",
+              "Squat-proof talaga siya at hindi bakat kahit anong galaw.",
+              "Hindi ko na 'to huhubarin, tara click mo 'yong link sa baba."
+            ],
+            "strategicAudit": "1. Feature Selection: High-waist tummy support and squat-proof opacity were prioritized because they target the #1 and #2 visceral friction points for Filipina gym-goers (fear of muffin tops and sheer fabric under gym lighting). Omitting secondary specs (12 colors, XS-3XL) prevents cognitive overload and sharpens the core emotional promise of worry-free gym sessions.\n\n2. UGC Retention Architecture: Operating within the 4-12 word UGC line limit maintains a rapid, real-time pacing of 10-14 seconds total. The hard cut from the in-hand teaser to the worn reveal delivers immediate visual gratification within the first 3 seconds, while punchy proof and an explicit keep-it verdict sustain momentum directly into the soft CTA without dead air."
+          }
+        },
+        {
+          "label": "GLAZE PH — UGC PRO TRANSFORMATION",
+          "script": {
+            "hook1": [
+              "Bakit may breakout na naman ako ngayon?"
+            ],
+            "hook2": [
+              "Ang hirap talaga mawala ng adult breakouts."
+            ],
+            "body": [
+              "Lagay lang ng two drops nitong Glaze PH.",
+              "Grabe, ang fresh at kalma na ng balat ko.",
+              "Tara, click mo 'yong link sa baba para sa assessment ngayon."
+            ],
+            "strategicAudit": "1. Selected Features: Niacinamide and Tea Tree were prioritized because they are the quintessential viral power-duo for adult acne—targeting redness and sebum without stripping the skin barrier, directly appealing to millennial women fatigued by harsh routines.\n2. UGC Retention Architecture: By utilizing ultra-short 4-12 word lines across a 4-beat transformation arc (Problem Hook -> Active Application -> Calmed Reveal -> Native Soft CTA), dead air is eliminated. Rapid visual cuts paired with conversational in-the-moment Taglish maintain viewer momentum, preventing drop-off in a tight 12-14 second demo format."
+          }
+        },
+        {
+          "label": "AMAIA ORTIGAS — UGC PRO REAL-ESTATE TUTORIAL",
+          "script": {
+            "hook1": [
+              "Bago ka mag-downpayment, check mo muna 'to."
+            ],
+            "hook2": [
+              "Takot sa hidden fees? Silipin mo muna 'to."
+            ],
+            "body": [
+              "Una, siguraduhing transparent ang terms at walang hidden fees.",
+              "Pangalawa, tignan kung flood-free ang mismong location.",
+              "Pangatlo, pumili ng developer na subok tulad ng Amaia Ortigas.",
+              "Tara, send message para sa libreng viewing schedule ngayon."
+            ],
+            "strategicAudit": "1. Feature Selection: 'Transparent terms' and 'flood-free' were selected to directly dismantle the primary anxieties of first-time 26-35 condo buyers—fear of predatory hidden charges and bad urban locations. By framing developer honesty as a non-negotiable checklist item, Amaia Ortigas is positioned as the safe, legitimate solution without sounding like a standard sales brochure.\n2. Retention Mechanics: The short 4-12 word UGC line structure eliminates conversational dead air and forces a snappy, hard-cut visual rhythm. In a rapid 10-16s tutorial format, delivering one numbered tip per 2-3 second visual cut sustains TikTok/Reels scroll-stopping momentum, ensuring the viewer slides effortlessly into the DM CTA before dropping off."
+          }
+        }
+      ]
+    }
+  ]
+}

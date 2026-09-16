@@ -91,7 +91,8 @@ jobs:
             tests/regression/script-gen.regression.test.ts \
             tests/regression/edl-video-part.regression.test.ts \
             --reporter=verbose \
-            --reporter=json --outputFile=.tmp/regression/results.json
+            --reporter=json --outputFile.json=.tmp/regression/results.json \
+            --reporter=junit --outputFile.junit=.tmp/regression/results.xml
 
       # Persistence #1: the run output survives the conversation/run (the
       # paper's "memory"). Always upload, pass or fail, so a flaky night is
@@ -153,10 +154,10 @@ jobs:
               detail = 'GEMINI_API_KEY was not set. Gemini tests did not run.';
               needsIssue = false;
             } else if (failed.length) {
-              title = 'Nightly regression assertions FAILED';
-              detail = `**Failed checks:**\n${failed.map(n => `- ${n}`).join('\n')}\n\nInspect assertion errors and generated output before assigning a cause.`;
+              title = 'Nightly regression tests FAILED';
+              detail = `**Failed checks:**\n${failed.map(n => `- ${n}`).join('\n')}\n\nFailed tests can include assertion failures, timeouts, or provider/transport errors. Inspect results.xml (when produced) and the run log before assigning a cause; JSON failureMessages can contain only a creation stack.`;
               if (failed.some(n => /EDL live/i.test(n))) {
-                detail += '\n\nThe EDL canary has a failed assertion. Consult workflows/edl_files_api_plan.md; the test name alone does not establish provider failure, quota exhaustion, or a production incident.';
+                detail += '\n\nThe EDL canary test failed. Consult workflows/edl_files_api_plan.md; the test name alone does not establish provider failure, quota exhaustion, or a production incident.';
               }
             } else if (execution?.outcome === 'success' && completeResults) {
               title = 'Nightly regression passed';
@@ -168,7 +169,7 @@ jobs:
               needsIssue = false;
             } else {
               title = 'Nightly regression execution FAILED';
-              detail = 'Test execution did not produce a successful result with identifiable failed assertions. Evidence is incomplete; inspect the run log. No prompt-defect diagnosis is established.';
+              detail = 'Test execution did not produce a successful result with identifiable failed tests. Evidence is incomplete; inspect the run log. No prompt-defect diagnosis is established.';
             }
 
             if (steps.upload?.outcome === 'failure') {
