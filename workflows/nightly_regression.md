@@ -82,7 +82,7 @@ without adding provider calls. If execution is killed before reporters finish,
 either file can still be absent; use the run log and report incomplete evidence.
 
 See the [saved-output audit](script_failure_audit_2026-09-16.md) for the 14 timeout
-failures, separate content findings, and an exact detector proposal. A later
+failures, separate content findings, and the approved service detector fix. A later
 printed script does not retroactively turn a timed-out test into a pass.
 
 For example, [run 34898931978](https://github.com/yopiheart/grifon-command/actions/runs/34898931978)

@@ -163,6 +163,32 @@ describe('adscript regression adapter', () => {
     expect(generateContent).toHaveBeenCalledTimes(2);
   });
 
+  it.each([
+    'Steam muna namin tapos deep vacuum para tanggal lahat.', // Saved SofaFresh output, run 34161876539.
+    'Steam muna namin ang sofa.',
+    'Deep vacuum muna namin ang sofa.',
+  ])('keeps a valid service application without rerolling: %s', async (line) => {
+    const script = { ...healthy, body: [line, 'Result'] };
+    generateContent.mockResolvedValue(response(script));
+    expect(await run(input({
+      product: 'Sofa deep cleaning', features: 'Steam clean, deep vacuum',
+      scriptType: 'UGCPro', businessType: 'service', ugcProFormat: 'transformation',
+    }))).toEqual({ ...script, ugcProFormatResolved: 'transformation' });
+    expect(generateContent).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(['This is our steam cleaner.', 'Eto ang vacuum namin.'])(
+    'still rerolls a posed service intro once: %s', async (line) => {
+      const script = { ...healthy, body: [line, 'Result'] };
+      generateContent.mockResolvedValue(response(script));
+      expect(await run(input({
+        product: 'Sofa deep cleaning', features: 'Steam clean, deep vacuum',
+        scriptType: 'UGCPro', businessType: 'service', ugcProFormat: 'transformation',
+      }))).toEqual({ ...script, ugcProFormatResolved: 'transformation' });
+      expect(generateContent).toHaveBeenCalledTimes(2);
+    }
+  );
+
   it('propagates a rejected transformation retry', async () => {
     generateContent
       .mockResolvedValueOnce(response(posed))

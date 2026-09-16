@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-09-16, saved script failure audit**
+**Stamped: 2026-09-16, approved service detector fix**
 
 ## Current state
 Branch: `codex/script-failure-audit`, stacked on `codex/eval-fidelity` at 7cc03f88.
@@ -8,16 +8,17 @@ PR #136 is still open/draft; verify, e2e, artifacts and Vercel checks are green.
 Follow-up draft PR #137: https://github.com/yopiheart/grifon-command/pull/137
 Independent review and local verification passed. CI only targets main, so it
 does not run while #137 is stacked on codex/eval-fidelity; check again on retarget.
-No production application, prompt, schema, model or generation setting changed.
+The only production-code change is the approved steam|vacuum| detector addition.
+Prompt wording, schema, model, retry limits and transport settings are unchanged.
 No paid run, Actions dispatch, production-data change, merge or production deploy.
 
 ## ▶ NEXT ACTION
-User approval is pending for the exact one-line service detector proposal:
-`workflows/evaluations/service-application-verbs.proposed.patch`.
-Add only steam|vacuum| to APPLICATION_VERBS, then verify one-generation service
-behavior through the shared adapter and preserve posed-intro retry bounds.
-Do not apply from this resume note; check whether explicit approval arrived.
-Keep both PRs draft and preserve their dependency order. No merge authorization.
+The approved detector fix is complete, reviewed and verified in draft PR #137.
+Review #136 then #137 in dependency order; keep both draft until user direction.
+Recheck cloud CI after #137 targets main. No merge/deployment authorization.
+Content compliance (jargon/proof), retry cancellation and rule/input ambiguities
+remain separate follow-ups in workflows/script_failure_audit_2026-09-16.md.
+Another live run still needs an exact-input/cost spec; offline checks are not one.
 
 ## Completed in this follow-up
 - Audited Sept. 6, 7 and 11 run logs/results. All 14 failed script tests timed out
@@ -31,7 +32,9 @@ Keep both PRs draft and preserve their dependency order. No merge authorization.
   workflows/script_failure_audit_2026-09-16.md.
 - Found service prompt vs detector mismatch (steam/deep vacuum rejected), plus
   ambiguous noun detection, price-rule precedence and contradictory skincare input.
-  Exact detector proposal saved but NOT APPLIED; no arbitrary prompt rewrite.
+  Neil approved the exact detector diff with "GOGOGO"; it is now applied.
+  The .proposed.patch filename is retained as the original approval record.
+  Valid steam/vacuum service lines use one generation; posed intros still reroll.
 - Reporter now names failed tests without assuming assertions were reached.
   JUnit XML captures actual errors and console output alongside retained JSON.
   Setup/skip/upload handling, schedule and live fixtures remain unchanged.
@@ -41,14 +44,20 @@ New report checks first failed on original code: 4 red, then 20/20 green.
 Independent Vitest smoke: timeout, assertion and synthetic provider error plus
 pass/skip; expected exit 1. JSON lost timeout text, XML retained it and console
 output; evidence assertions passed. No provider calls or secrets read by probe.
-Full suite: 1,396 passed, 32 gated skips, 113 files passed / 9 skipped.
+Detector regression: 3 valid service cases failed before the fix (2 calls vs 1).
+Focused suite after fix: 65 passed, including 2 new posed-intro retry cases.
+Final full suite: 1,401 passed, 32 gated skips, 113 files passed / 9 skipped.
+First full run had one existing checkAnchors 5s timeout while checks ran together;
+the file passed in isolation (9/9), then the unchanged full suite passed alone.
 Build passed: 2,580 modules, main JS gzip 589.79 kB; existing size warnings remain.
 Bundle-leak, voice-sync, domain, PS ASCII, artifact-anchor and check:codex passed
 (26 Codex tests, 31 skill entrypoints). Generated snapshot EOL noise restored.
-Independent correctness review: no actionable findings; archive matches raw
-sources exactly. Proposed patch passes git apply --check and six regex cases;
-this is not flow verification of an applied production fix.
-No UI/API implementation changed, so no browser smoke is required for this slice.
+Independent correctness review: exact approved diff, no actionable findings.
+Independent offline smoke: 45/45 passed, envDir:false, providers mocked; in-memory
+removal of the fix reproduced all 3 failing service cases without disk edits.
+Archive contents independently match raw sources. No UI change; live browser/API
+generation is untested. Fake client/adapter/registry smoke verifies flow behavior,
+not actual HTTP authentication, quota handling or live-provider output quality.
 
 ## Prior slice retained
 PR #136 uses real FLOW_REGISTRY.adscript through the shared offline/live adapter,

@@ -56,7 +56,7 @@ timeout, schedule, model or provider setting was changed in this slice.
 the JSON summary and additionally save JUnit XML with actual error messages and
 console output. Setup/skip/artifact reporting from PR #136 is preserved.
 
-### 2. Fix the demonstrated service application-detector mismatch
+### 2. Fixed the demonstrated service application-detector mismatch
 
 September 7 SofaFresh body[0]:
 `Steam muna namin tapos deep vacuum para tanggal lahat.`
@@ -65,16 +65,18 @@ The service transformation prompt explicitly accepts `steam muna namin, tapos
 deep vacuum` (`api/_lib/prompts.ts`, service beat 1). The supplied service features
 include both operations. However, `APPLICATION_VERBS` omits both verbs, and
 `FLOW_REGISTRY.adscript` applies this check to service transformation too. The
-current production flow therefore rerolls a line that its own prompt accepts.
+pre-fix production flow therefore rerolled a line that its own prompt accepts.
 The historical copied harness concealed that additional call.
 
-**Exact proposal, not applied:** add only `steam|vacuum|` at the start of
-`APPLICATION_VERBS`. The [full one-line diff](evaluations/service-application-verbs.proposed.patch)
-is against the current file. No prompt wording, schema, model, retry limit or
-transport setting is part of that proposal. Acceptance tests must show the saved
-service line completes in one generation, while posed intros still trigger the
-existing bounded retry. Approval is required before changing this output rule
-and its resulting generation behavior in the tuned module.
+**Approved and applied September 16:** added only `steam|vacuum|` at the start of
+`APPLICATION_VERBS`, after Neil approved the exact diff with "GOGOGO". The
+[approved one-line diff](evaluations/service-application-verbs.proposed.patch)
+is retained under its original proposal filename as the approval record; it is
+already applied. No prompt wording, schema, model, retry limit or transport
+setting changed. Three shared-adapter regression cases first failed (two calls
+instead of one), then passed after the fix. Two additional posed-intro cases
+preserve the existing single bounded retry, including when the intro names one
+of the newly recognized tools.
 
 The patch is intentionally narrower than a semantic action detector. September 7
 Glaze UGC says `Tingnan mo, tatlong patak lang nitong Glaze PH.` The token `patak`
@@ -144,10 +146,14 @@ passing and skipped cases: expected exit 1, three failed / one passed / one
 skipped. JSON lost the timeout message to `STACK_TRACE_ERROR`; XML retained the
 real message and console output. Parsing/evidence assertions passed.
 
-The proposed regex was evaluated separately without applying the patch: the saved
+Before approval, the proposed regex was evaluated separately: the saved
 service line and prompt exemplar fail the old detector and pass the proposal;
 four product/negative/ambiguity controls retain their prior results. This is
-limited regex evidence, not production-flow verification of an applied fix.
+limited regex evidence. After approval, the actual production flow was exercised
+through the shared adapter with a fake Gemini client and isolated telemetry:
+24 adapter, 21 storyboard/detector and 20 reporting tests passed (65 total).
+This offline check does not exercise live provider behavior or HTTP auth/quota.
 Build, full-suite and repository gate results are recorded in NOW.md and the PR.
-No live provider call, model migration, production edit, merge or production deployment was
-performed. PR #136 remains the dependency for this follow-up.
+The only production-code edit is the approved detector addition. No live provider
+call, model migration, merge or production deployment was performed. PR #136
+remains the dependency for this follow-up.

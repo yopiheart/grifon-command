@@ -1110,7 +1110,7 @@ export const AdScriptOutputSchema = z
 // mid-action, with a real verb. Prompt instructions alone don't hold it — 4/4
 // formulations failed the Slice-1 eval loop and it only passed on a re-roll.
 // Enforce deterministically, same escape hatch as capHookLine.
-const APPLICATION_VERBS = /\b(swipe|swipes|spray|sprays|apply|applies|rub|rubs|wipe|wipes|dab|dabs|pump|pumps|pat|pats|smooth|smooths|massage|massages|scrub|scrubs|pour|pours|drop|drops|glide|glides|press|presses|i?punas|punasan|pahid|pahiran|swipe\s+lang|spray\s+lang|lagay|ilagay|patak|kuskos|masahe)\b/i;
+const APPLICATION_VERBS = /\b(steam|vacuum|swipe|swipes|spray|sprays|apply|applies|rub|rubs|wipe|wipes|dab|dabs|pump|pumps|pat|pats|smooth|smooths|massage|massages|scrub|scrubs|pour|pours|drop|drops|glide|glides|press|presses|i?punas|punasan|pahid|pahiran|swipe\s+lang|spray\s+lang|lagay|ilagay|patak|kuskos|masahe)\b/i;
 
 const POSED_INTRO = /^\s*(eto|ito|heto|this is|here'?s|meet)\b/i;
 
