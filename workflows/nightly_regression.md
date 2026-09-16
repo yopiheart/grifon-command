@@ -63,15 +63,27 @@ results. These structural assertions do not establish creative quality.
 ## Failure output (persistence)
 
 1. **Step summary** — distinguishes setup failure (names the step; tests did
-   not run), failed assertions (lists the names), incomplete execution evidence,
+   not run), failed tests (lists the names), incomplete execution evidence,
    missing-key skip, and successful execution. Cancellation has no quality verdict.
-2. **GitHub Issue** — opened for setup, assertion, execution, or artifact-upload
+2. **GitHub Issue** — opened for setup, test, execution, or artifact-upload
    failure, label `regression`, with the failure class and date in the title.
    Successful and missing-key-skipped runs do not create failure issues.
-3. **Artifact** — `nightly-regression-results` contains the Vitest JSON when
+3. **Artifact** — `nightly-regression-results` contains Vitest JSON and JUnit XML when
    produced. The report links it only after successful upload returns an artifact
    id (30-day retention). Otherwise use the Actions log; an empty upload does not
    prove an artifact exists.
+
+Vitest JSON's `assertionResults` entries represent whole tests, including timeouts
+and thrown provider errors. They do not prove an assertion was reached. In the
+saved September runs, `failureMessages` contained only `STACK_TRACE_ERROR` and
+the test creation stack, while the Actions log showed the real timeout message.
+The additional `results.xml` preserves error messages and captured console output
+without adding provider calls. If execution is killed before reporters finish,
+either file can still be absent; use the run log and report incomplete evidence.
+
+See the [saved-output audit](script_failure_audit_2026-09-16.md) for the 14 timeout
+failures, separate content findings, and an exact detector proposal. A later
+printed script does not retroactively turn a timed-out test into a pass.
 
 For example, [run 34898931978](https://github.com/yopiheart/grifon-command/actions/runs/34898931978)
 on September 14 failed during `npm ci`: the `ffmpeg-static` binary download
