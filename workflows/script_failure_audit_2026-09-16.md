@@ -149,5 +149,5 @@ service line and prompt exemplar fail the old detector and pass the proposal;
 four product/negative/ambiguity controls retain their prior results. This is
 limited regex evidence, not production-flow verification of an applied fix.
 Build, full-suite and repository gate results are recorded in NOW.md and the PR.
-No live provider call, model migration, production edit, merge or deployment was
+No live provider call, model migration, production edit, merge or production deployment was
 performed. PR #136 remains the dependency for this follow-up.

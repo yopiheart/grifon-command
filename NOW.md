@@ -6,9 +6,10 @@ Branch: `codex/script-failure-audit`, stacked on `codex/eval-fidelity` at 7cc03f
 Dependency PR #136: https://github.com/yopiheart/grifon-command/pull/136
 PR #136 is still open/draft; verify, e2e, artifacts and Vercel checks are green.
 Follow-up draft PR #137: https://github.com/yopiheart/grifon-command/pull/137
-Independent review and local verification passed; follow-up CI is pending.
+Independent review and local verification passed. CI only targets main, so it
+does not run while #137 is stacked on codex/eval-fidelity; check again on retarget.
 No production application, prompt, schema, model or generation setting changed.
-No paid run, Actions dispatch, production-data change, merge or deployment.
+No paid run, Actions dispatch, production-data change, merge or production deploy.
 
 ## ▶ NEXT ACTION
 User approval is pending for the exact one-line service detector proposal:
