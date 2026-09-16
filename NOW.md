@@ -1,22 +1,21 @@
 # NOW - the resume doc
-**Stamped: 2026-09-16, approved service detector fix**
+**Stamped: 2026-09-16, evaluation fixes merged**
 
 ## Current state
-Branch: `codex/script-failure-audit`, stacked on `codex/eval-fidelity` at 7cc03f88.
-Dependency PR #136: https://github.com/yopiheart/grifon-command/pull/136
-PR #136 is still open/draft; verify, e2e, artifacts and Vercel checks are green.
-Follow-up draft PR #137: https://github.com/yopiheart/grifon-command/pull/137
-Independent review and local verification passed. PR #137 now targets main so
-the complete change receives cloud CI; the verification run is pending.
+Neil explicitly authorized merging both PRs and the automatic production deployment.
+PR #136 merged as 8b5a7086: https://github.com/yopiheart/grifon-command/pull/136
+PR #137 merged as 06d7f857: https://github.com/yopiheart/grifon-command/pull/137
+Both implementations are on main. PR #137 cloud CI passed on b1edef07:
+verify, artifacts and 56 browser smoke tests (run 35105628203).
+Post-merge CI for runtime commit 06d7f857 is run 35107059174; consult its current
+GitHub status and the commit's Vercel status for release verification.
 The only production-code change is the approved steam|vacuum| detector addition.
 Prompt wording, schema, model, retry limits and transport settings are unchanged.
-No paid run, Actions dispatch, production-data change, merge or production deploy.
+No paid test, manual Actions dispatch or direct production-data change was made.
 
 ## ▶ NEXT ACTION
-The approved detector fix is complete, reviewed and verified in draft PR #137.
-Review #136 then #137 in dependency order; keep both draft until user direction.
-Check PR #137 cloud CI before the final merge decision. Explicit authorization
-to merge to main and allow its automatic production deployment is still pending.
+The evaluation-fidelity/reporting slice and approved detector fix are complete
+and merged. Do not repeat their approval or implementation steps.
 Content compliance (jargon/proof), retry cancellation and rule/input ambiguities
 remain separate follow-ups in workflows/script_failure_audit_2026-09-16.md.
 Another live run still needs an exact-input/cost spec; offline checks are not one.
