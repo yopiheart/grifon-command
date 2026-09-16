@@ -43,22 +43,27 @@ permissions:
 jobs:
   regression:
     runs-on: ubuntu-latest
-    # Circuit breaker (paper's "cap before you ship"): the suite is a fixed
-    # 8 tests, no parallel fan-out, no retries — but cap wall-clock anyway so a
-    # hung Gemini call can never spin the job (and the bill) overnight.
+    # Fixed fixtures; production classifiers/retries can add provider calls.
+    # Bound wall time too, so a hung call cannot run overnight.
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        id: checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Set up Node
+        id: setup_node
+        uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
 
       - name: Install dependencies
+        id: install
         run: npm ci
 
       - name: Stage output dir
+        id: stage
         run: mkdir -p .tmp/regression
 
       # RUN_REGRESSION=1 opts the live suite in (it is describe.skipIf'd off by
@@ -71,11 +76,13 @@ jobs:
       # before the secret is added. A skipped run is annotated, never silent
       # (the paper's "no silent caps"). Once the secret exists it runs for real.
       - name: Run live Gemini regressions (ad-script + EDL video-attach canary)
+        id: regression
         env:
           RUN_REGRESSION: '1'
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           if [ -z "$GEMINI_API_KEY" ]; then
+            echo "skipped_reason=missing_key" >> "$GITHUB_OUTPUT"
             echo "::warning::GEMINI_API_KEY secret not set — skipping nightly regression (no-op). Add it in repo Settings → Secrets and variables → Actions to activate the loop."
             echo "### ⏭️ Nightly regression skipped — GEMINI_API_KEY not set" >> "$GITHUB_STEP_SUMMARY"
             exit 0
@@ -90,6 +97,7 @@ jobs:
       # paper's "memory"). Always upload, pass or fail, so a flaky night is
       # diagnosable from the artifact.
       - name: Upload regression results
+        id: upload
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -98,69 +106,96 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-      # Persistence #2 + the "say no" surfaced: on failure, open a GitHub Issue
-      # (the spec's v1 output channel — zero setup). The human-review door:
-      # this opens an issue for Neil; it never commits, edits a tuned prompt,
-      # or merges anything.
-      - name: Open issue on regression failure
-        if: failure()
+      # Report the failed stage, not a guessed prompt defect. Inline so setup
+      # failures can still be reported without checkout or npm dependencies.
+      - name: Report nightly regression outcome
+        if: always()
         uses: actions/github-script@v7
+        env:
+          NIGHTLY_STEPS: ${{ toJSON(steps) }}
         with:
           script: |
             const fs = require('fs');
+            const steps = JSON.parse(process.env.NIGHTLY_STEPS);
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            let failed = [];
-            try {
-              const raw = JSON.parse(fs.readFileSync('.tmp/regression/results.json', 'utf8'));
-              for (const f of raw.testResults || []) {
-                for (const a of f.assertionResults || []) {
-                  if (a.status === 'failed') failed.push(a.fullName || a.title);
+            const setupStages = [
+              ['checkout', 'Checkout repository'],
+              ['setup_node', 'Set up Node'],
+              ['install', 'Install dependencies'],
+              ['stage', 'Stage output dir'],
+            ];
+            const setupFailure = setupStages.find(([id]) => steps[id]?.outcome === 'failure');
+            const execution = steps.regression;
+            const missingKey = execution?.outputs?.skipped_reason === 'missing_key';
+            const failed = [];
+            let completeResults = false;
+            if (!setupFailure && !missingKey && ['success', 'failure'].includes(execution?.outcome)) {
+              try {
+                const raw = JSON.parse(fs.readFileSync('.tmp/regression/results.json', 'utf8'));
+                const assertions = raw.testResults.flatMap(f => f.assertionResults || []);
+                for (const a of assertions) {
+                  if (a.status === 'failed') failed.push(a.fullName || a.title || '(unnamed assertion)');
                 }
+                completeResults = raw.success === true && assertions.some(a => a.status === 'passed');
+              } catch (e) {
+                core.warning(`No usable regression results: ${e.message}`);
               }
-            } catch (e) {
-              core.warning(`Could not parse results.json: ${e.message}`);
             }
+
+            let title;
+            let detail;
+            let needsIssue = true;
+            if (setupFailure) {
+              title = 'Nightly regression setup FAILED';
+              detail = `Failed setup stage: **${setupFailure[1]}**. Gemini tests did not run. Inspect the setup log; this is not evidence of a prompt defect.`;
+            } else if (missingKey) {
+              title = 'Nightly regression skipped';
+              detail = 'GEMINI_API_KEY was not set. Gemini tests did not run.';
+              needsIssue = false;
+            } else if (failed.length) {
+              title = 'Nightly regression assertions FAILED';
+              detail = `**Failed checks:**\n${failed.map(n => `- ${n}`).join('\n')}\n\nInspect assertion errors and generated output before assigning a cause.`;
+              if (failed.some(n => /EDL live/i.test(n))) {
+                detail += '\n\nThe EDL canary has a failed assertion. Consult workflows/edl_files_api_plan.md; the test name alone does not establish provider failure, quota exhaustion, or a production incident.';
+              }
+            } else if (execution?.outcome === 'success' && completeResults) {
+              title = 'Nightly regression passed';
+              detail = 'The live regression step passed with recorded test results.';
+              needsIssue = false;
+            } else if (!execution || ['skipped', 'cancelled'].includes(execution.outcome)) {
+              title = 'Nightly regression skipped or cancelled';
+              detail = 'No completed Gemini test execution was recorded. Check the run status; no output-quality verdict is available.';
+              needsIssue = false;
+            } else {
+              title = 'Nightly regression execution FAILED';
+              detail = 'Test execution did not produce a successful result with identifiable failed assertions. Evidence is incomplete; inspect the run log. No prompt-defect diagnosis is established.';
+            }
+
+            if (steps.upload?.outcome === 'failure') {
+              detail += '\n\nRegression artifact upload failed; consult the upload step.';
+              if (!needsIssue) title = 'Nightly regression artifact upload FAILED';
+              needsIssue = true;
+            }
+            const artifactId = steps.upload?.outputs?.['artifact-id'];
+            const artifact = steps.upload?.outcome === 'success' && artifactId
+              ? `**Artifact:** [nightly-regression-results](${runUrl}/artifacts/${artifactId}) (30-day retention)`
+              : 'No regression artifact was uploaded. Use the run log.';
             const date = new Date().toISOString().slice(0, 10);
-            const list = failed.length
-              ? failed.map(n => `- ${n}`).join('\n')
-              : '_Could not parse failed test names — see the run log / artifact._';
-            // The EDL canary and the ad-script suite fail for completely different
-            // reasons and send the triager to different files, so say which one broke
-            // instead of printing "ad-script" over both.
-            const edlFailed = failed.some(n => /EDL live/i.test(n));
             const body = [
-              `Nightly live-Gemini regression failed.`,
-              ``,
+              detail,
+              '',
               `**Run:** ${runUrl}`,
-              `**Artifact:** \`nightly-regression-results\` (attached to the run, 30-day retention)`,
-              ``,
-              `**Failed checks:**`,
-              list,
-              ``,
-              `---`,
-              ...(edlFailed ? [
-                `🔴 **THE EDL CANARY IS RED — the editor is going blind again.**`,
-                ``,
-                `That check exists because this exact failure hid for ~2 weeks: Gemini stopped`,
-                `accepting our video URIs, so every producer run edited from script text alone`,
-                `while looking healthy. If it is a 429 \`RESOURCE_EXHAUSTED\`, the attach path is`,
-                `broken, NOT your quota — that misreading cost two wrong diagnoses on 2026-08-13.`,
-                `Read workflows/edl_files_api_plan.md before touching anything.`,
-                ``,
-                `**Containment, if runs are stalling:** set \`EDL_MAX_ATTACHED_VIDEOS = 0\` in`,
-                `\`services/geminiService.ts\`. Runs complete blind instead of failing.`,
-                ``,
-              ] : []),
-              `The ad-script half is a deterministic-invariant regression (hook/body starvation`,
-              `+ schema shape). The loop only *reads* output — it never edits a tuned prompt.`,
-              `Triage per workflows/nightly_regression.md; any fix touching`,
-              `\`services/geminiService.ts\` / \`api/_lib/prompts.ts\` is TUNED — escalate, do`,
-              `not auto-apply.`,
+              artifact,
+              '',
+              'Triage per workflows/nightly_regression.md. The loop never edits prompts or merges.',
+              'Tuned changes require explicit approval of the exact diff; do not auto-apply.',
             ].join('\n');
+            await core.summary.addRaw(`### ${title}\n\n${body}\n`).write();
+            if (!needsIssue) return;
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Nightly regression FAILED — ${date}`,
+              title: `${title} — ${date}`,
               body,
               labels: ['regression'],
             });

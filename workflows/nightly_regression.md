@@ -15,13 +15,13 @@ clone with the machine off.
 - **Scheduled:** `cron '0 18 * * *'` — 18:00 UTC ≈ 02:00 PHT (overnight, Manila).
 - **Manual:** `workflow_dispatch` (Actions tab → "Nightly Regression" → Run).
 - Workflow: [.github/workflows/nightly-regression.yml](../.github/workflows/nightly-regression.yml).
-- ⚠️ The schedule only fires once the workflow is on **`main`** (GitHub runs
-  schedules from the default branch only). Test on a branch via `workflow_dispatch`.
+- The schedule only fires on **`main`**. A manual branch dispatch is a paid
+  operation and requires the approved exact-input/cost test spec first.
 
-## Golden inputs (v1: adscript)
+## Golden inputs
 
 The existing suite [tests/regression/script-gen.regression.test.ts](../tests/regression/script-gen.regression.test.ts),
-gated by `RUN_REGRESSION=1`. Four brand briefs × two formulas (8 generations):
+gated by `RUN_REGRESSION=1`. Its baseline is four brand briefs × two formulas:
 
 | Brand | Category | Formulas |
 |---|---|---|
@@ -33,6 +33,19 @@ gated by `RUN_REGRESSION=1`. Four brand briefs × two formulas (8 generations):
 The three non-coffee briefs are deliberate stress tests — they probe whether the
 prompt's hardcoded archetypes generalize beyond the OFW-coffee shape.
 
+The current suite also includes four UGC Pro cases: fashion Try-On, skincare
+Transformation, service Before & After, and real-estate Tutorial (12 script
+cases total). The workflow also runs the one-video EDL attachment canary;
+`RUN_EDL_FULL_CAP` stays unset. Fixtures and assertions are unchanged by the
+September 2026 fidelity fix.
+
+The script harness retains the client `generateAdScript` call and fake-auth
+fetch boundary, then invokes the real server `FLOW_REGISTRY.adscript` through
+the shared test adapter. Classification, retries, parsing, and resolved-format
+metadata therefore follow production. Telemetry is mocked so evaluation cannot
+write production data. This does not test real authentication, rate limits,
+quotas, or the complete HTTP handler.
+
 ## Success criteria (the "say no")
 
 v1's check is the suite's **deterministic-invariant assertions** — stable across
@@ -40,18 +53,31 @@ Gemini's stochastic output, no LLM judgment needed:
 
 - `hook1` / `hook2` present, arrays, non-empty (the hook-starvation guard from
   commits `5357780` / `651a993`).
-- `body` is an array of **≥ 5 lines**.
+- `body` is an array of **≥ 5 lines** for baseline formulas, **≥ 3** for the
+  four UGC Pro cases.
 - `strategicAudit` is a string.
 
-A run PASSES when all 8 generations satisfy every assertion. Any failure = the
-loop says "no".
+A run passes when the selected suites finish successfully with recorded
+results. These structural assertions do not establish creative quality.
 
 ## Failure output (persistence)
 
-1. **GitHub Issue** — opened automatically on failure, label `regression`, title
-   `Nightly regression FAILED — <date>`, body lists the failed checks + run link.
-2. **Artifact** — `nightly-regression-results` (the vitest JSON + log) attached to
-   every run, pass or fail, 30-day retention.
+1. **Step summary** — distinguishes setup failure (names the step; tests did
+   not run), failed assertions (lists the names), incomplete execution evidence,
+   missing-key skip, and successful execution. Cancellation has no quality verdict.
+2. **GitHub Issue** — opened for setup, assertion, execution, or artifact-upload
+   failure, label `regression`, with the failure class and date in the title.
+   Successful and missing-key-skipped runs do not create failure issues.
+3. **Artifact** — `nightly-regression-results` contains the Vitest JSON when
+   produced. The report links it only after successful upload returns an artifact
+   id (30-day retention). Otherwise use the Actions log; an empty upload does not
+   prove an artifact exists.
+
+For example, [run 34898931978](https://github.com/yopiheart/grifon-command/actions/runs/34898931978)
+on September 14 failed during `npm ci`: the `ffmpeg-static` binary download
+returned HTTP 500. Gemini tests were skipped. Its old generic issue is not
+evidence of a script-generation defect. A failed EDL test name likewise does not
+by itself establish a production incident or authorize changing tuned settings.
 
 Neil triages from the issue. **Human-review door:** the loop only *reads*
 generation output — it never commits, edits a tuned prompt, or merges. Any fix
@@ -59,11 +85,38 @@ that would touch `services/geminiService.ts` or `api/_lib/prompts.ts` is TUNED �
 escalate, never auto-apply (same flag-don't-apply rule as
 [pr_review_loop.md](pr_review_loop.md)).
 
-## Cost cap
+## Cost boundaries
 
-Fixed 8-test suite, no parallel fan-out, no retries → ≈$0.08/night of Gemini
-(`gemini-3.1-flash-lite`). `timeout-minutes: 20` is the circuit breaker so a hung
-call can't spin the job overnight. `concurrency` prevents overlapping runs.
+The fixture set is fixed, but classifiers and production retries add provider
+calls; one case is not necessarily one generation. Restoring transformation
+retry parity can increase evaluation calls relative to the old broken mirror.
+The earlier eight-call/$0.08 estimate is obsolete. Recalculate the exact-input
+budget before an approved live verification; no paid run is authorized by a
+passing offline test. `timeout-minutes: 20` bounds wall time, not dollars.
+`concurrency` prevents overlapping workflow runs.
+
+## Image-evaluation audit (September 16, 2026)
+
+The two tools below are separate experiments, not part of the nightly suites.
+Their saved historical results remain evidence about their original inputs;
+they must not be presented as current-production comparisons without checking
+the assembled requests against current code.
+
+- `tools/eval_scene_image_models.mjs` still has four `AVATAR_CAMERA_ANGLES`,
+  including `HIGH_ANGLE_SELFIE`; production has three after the approved July 25
+  removal. This changes modulo-based angle selection too. Its replicated image
+  assembly is not a live import of production.
+- `tools/eval_realism_formula.mjs` calls its copied arm "current" but also
+  reconstructs prompts independently. Matching individual constants alone cannot
+  establish complete request parity.
+- Static comparison found `REALISM_INSTRUCTION` and `SAFETY_SETTINGS` equal in
+  both tools; `REALISM_INSTRUCTION_UGC` also matches in the model tool. The compared
+  `NO_TEXT_CONSTRAINT` difference is trailing whitespace only, not a semantic rule
+  change. Do not classify every textual mismatch as a quality defect.
+
+No image prompts, models, assets, or generations were changed by this slice.
+Any resynchronization of copied tuned content requires its exact diff for Neil's
+approval. Historical experiments must retain their original input provenance.
 
 ## Prerequisite
 
