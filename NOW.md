@@ -1,7 +1,25 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, Grifon Spark reference-led motion preview**
+**Stamped: 2026-09-17, Apple reference study and corrected Spark direction**
 
 ## Current state
+Neil questioned whether Spark actually followed the Apple video. Its technical
+and brand checks passed, but reference fidelity and creative acceptance did not.
+New durable study: workflows/assets/grifon-motion-spark/reference-analysis.md
+and reference-evidence.json; a one-off entry was added to viral_swipe_file.md.
+The full 54.821s source was downloaded without cookies; 110 half-second frames
+were inspected across the whole timeline. Audio decoded and scanned; effects
+are described from uploader captions, not subjective listening. Source media
+and sheets remain ignored in .tmp/apple-reference/. No paid analysis.
+Corrected direction: actual product/project -> Script/Storyboard -> matching
+finished ad -> brand, proposed 25s with independent aspect-ratio layouts.
+Replacement preview is NOT rendered. Next: secure matching project captures
+and review a coherent source excerpt. The shipped Hiraya sample is silent and
+9.03s; the proposed 7s proof beat needs an edit or a timing revision. Avoid the
+full ad's known early morph defect and Bukid's documented box-label defect.
+The wizard input profile has all 44 tracked inputs; missing matching capture
+evidence is not an app defect. No fabricated end-to-end run or instant-output claim.
+
+## Existing preview and branch
 Branch: `codex/grifon-motion-spark`, stacked on `codex/grifon-motion-director`.
 Draft PR #144: https://github.com/yopiheart/grifon-command/pull/144
 Preview/source commit `0dd51ebd` is pushed; this handoff update follows it.
@@ -16,6 +34,12 @@ frame sheets, brief, reproduction commands and verification evidence are saved.
 No app changes, tuned edits, paid calls, publishing, merge or deployment.
 
 ## Checks and limitations
+This study's fresh checks: check:codex passes 32 entrypoints and all 26 tests;
+wizard asset profile reports 44 tracked inputs with none absent. Independent
+reference/source review inspected all ten sheets and the captions; its motion,
+depicted-output and sample-timing corrections are incorporated in the study.
+Reference playback/listening and replacement-preview acceptance remain pending.
+The following export checks apply to the older 15-second Spark study only:
 Hyperframes lint/runtime/sampled layout and transitions pass both formats.
 Both exports fully decode; zero nearly-black intervals >= 0.3s at test threshold.
 Both AAC tracks measure -13.83 LUFS and -1.41 dBTP.

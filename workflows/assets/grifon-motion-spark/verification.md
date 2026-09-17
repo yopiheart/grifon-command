@@ -1,5 +1,12 @@
 # Spark preview verification — 2026-09-17
 
+**Creative status correction:** Neil questioned the connection to the Apple
+reference. This preview's brand/encoding checks remain valid, but it has not
+passed reference fidelity or user creative acceptance. The broader timeline
+study and corrected product-evidence direction are in `reference-analysis.md`.
+That replacement preview has not been rendered. The reference notes below
+describe the original limited sampling, not the later 110-frame study.
+
 ## Scope and actual result
 
 New reference-led motion study only. Existing demo, app code, skills, tuned prompts,
