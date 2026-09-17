@@ -1,0 +1,50 @@
+{
+  "id": "HERO-GENJUTSU-01",
+  "status": "PROPOSED; exact approval pending; no submission",
+  "purpose": "Test the website hero film's 13-19s studio beat: preserve its camera orbit, improve realism and use KAPE 01. External production, not proof of Grifon app output.",
+  "inputs": [
+    {
+      "role": "video",
+      "path": "assets/hero-film/studio-pilot/shaded-camera-preview.mp4",
+      "sha256": "443d254edec912ff4cf3666e712d48b640cc7755bee8ae22586453baed010c46",
+      "purpose": "Camera, timing, room layout and staging only. Six seconds, 144 frames, 24fps, 960x540, no audio."
+    },
+    {
+      "role": "image",
+      "path": "assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+      "sha256": "df01401ad33ed67ee78b92c3894267d84bd508fdb4baab18c075599a9da3770e",
+      "purpose": "Bottle identity only, excluding hand and background. Test approval includes using this exact candidate."
+    }
+  ],
+  "params": {
+    "model": "hf_mult_motion_control",
+    "resolution": "480p",
+    "duration": 6,
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "use_free_gens": true,
+    "prompt": "Create one continuous six-second cinematic studio shot. Use the reference video for the camera orbit, timing, room layout, pedestal position and stationary bottle placement. Preserve the direction and pace of its smooth camera move, with no cuts or extra camera moves. Rebuild the shaded preview as a believable photographed creative studio: charcoal walls, restrained gold accents, softly lit vertical wall slats, natural glass reflections, grounded objects and a soft neutral key light. Use the reference image ONLY for the single KAPE 01 bottle: clear glass, rounded shoulder, black ribbed screw cap, continuous dark brown coffee above and below an off-white paper label. Keep its proportions and these three label lines: KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Do not transfer the hand or pale background from that image. Keep one upright bottle in contact with the pedestal throughout; no floating, duplication or shape changes. Keep gold in the set accents, not in the coffee. Make all display screens clean blank dark panels. Remove the source preview's placeholder writing and wall lettering. No people, invented interface, sample ads, captions, logos or extra writing. Do not add a magical morph or ribbon animation; this shot tests camera transfer and studio realism. No dialogue or music."
+  },
+  "budget": {
+    "maxAttempts": 1,
+    "maxPaidRolls": 0,
+    "maximumAdditionalChargeUSD": 0,
+    "allowance": "One Genjutsu free attempt; read-only model query on 2026-09-17 reports 480p and maximum 30 seconds. Recheck before submission.",
+    "stop": "No credits, top-ups, subscriptions, retries or fallback. Refused free eligibility means stop. Unknown submission outcome must be reconciled before any action; never blindly resubmit. Ordinary agent usage is separate."
+  },
+  "submission": "After exact approval, upload only the two hash-matched files through a supported upload path. Add their confirmed media IDs to params.medias with roles video and image. Local-file ingestion is not yet tested. Do not substitute a local path for a media ID. No automatic preset, model or material setting changes are authorized.",
+  "passCriteria": [
+    "Continuous six-second landscape shot; recognizable original camera direction, pacing, room layout and stationary bottle staging.",
+    "One grounded bottle with stable glass outline, black cap, off-white label and dark coffee. No reference hand or gold liquid.",
+    "No major background warping, geometry jumps, duplicate bottle, black frames or invented screen content. Inspect full playback as well as frames.",
+    "Visible material/light realism improvement over Workbench shading, subject to Neil's taste review. Technical success alone is not creative acceptance.",
+    "Inspect label spelling wherever readable; small unreadable lettering at 480p is unverified, not passed. This is not final website quality."
+  ],
+  "evidence": "Save original output, exact params, input/output hashes, job ID, provider adjustments, reported charge, entitlement before/after, dimensions/fps/duration and comparison at 0/1/2/3/4/5 seconds plus final decoded frame. Record actual full playback/listening status. Preserve failures without automatic rerolls.",
+  "excluded": [
+    "Old studio-look/hero-frame.png: wrong DEMO 01 identity and unresolved gold-looking lower coffee.",
+    "No new owner assets, real-product proof runs, app/provider/skill changes, website replacement or publication.",
+    "No AE installation or paid render. Working After Effects editor/bridge has not been established.",
+    "No whole-film rebuild; no finishing edits that conceal failed motion/identity checks in the original comparison."
+  ]
+}
