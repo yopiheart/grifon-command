@@ -3,6 +3,8 @@
 
 ## Current state
 Branch: `codex/grifon-motion-spark`, stacked on `codex/grifon-motion-director`.
+Draft PR #144: https://github.com/yopiheart/grifon-command/pull/144
+Preview/source commit `0dd51ebd` is pushed; this handoff update follows it.
 Motion Director installation remains in draft PR #143; its exact approved skill
 patch was installed unchanged. Neil liked the first demo and approved a second
 preview based on his Apple Facebook ad and YouTube reference.
