@@ -10,9 +10,9 @@
 # so production stays fully metered. Neil hit both gates mid-smoke twice on
 # 2026-06-10; this script makes the dev-unmetered state one command to restore.
 #
-# The cafe-PC defreezer wipes .env (gitignored) on reboot, so this is NOT a
-# one-time setup - run it at the START of any local smoke-test session, AFTER
-# .env has its API keys restored.
+# Local .env settings persist on the personal desktop. This is NOT routine
+# setup. Use only for an explicitly approved test authorizing unmetered mode;
+# ordinary checks keep these flags unset. Restore prior state after the test.
 #
 # Usage (from the grifon-command folder):
 #   .\scripts\enable-dev-unmetered-video.ps1

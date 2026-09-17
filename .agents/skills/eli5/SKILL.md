@@ -90,7 +90,7 @@ summary; if the two ever disagree, `AGENTS.md` wins.
 | Kind | Builder + twin | Registry line |
 |---|---|---|
 | **Throwaway** - explaining one thing once, mid-session, to unblock a decision in front of you | not required | no |
-| **Kept** - a mental model the repo will need again after a defreeze | required | yes, in AGENTS.md |
+| **Kept** - a mental model the repo will need again in a later task | required | yes, in AGENTS.md |
 
 ⚠ **Exempt from the twin ONLY.** A throwaway still goes through `finalize()`, still obeys the
 NOIR mobile-safe rules, and still passes the 390x844 gate before anyone sees a URL. Speed is the
@@ -98,7 +98,7 @@ point of the carve-out; a page that mispaints on a phone is not faster, it is ju
 
 **Promotion is Neil's word, not your judgement.** The trigger is him saying "keep this one" -
 not your own read of how good the page is. When he does, build the builder and add the registry
-line *while the sources are still in context*, because after a `/clear` or a defreeze the
+line *while the sources are still in context*, because after a context reset the
 reasoning that produced the page is gone and only the page is left.
 
 (History, so nobody re-litigates it: the session that wrote this skill originally dated this

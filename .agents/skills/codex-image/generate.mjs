@@ -89,7 +89,7 @@ if (!codex) {
     '  This skill needs OpenAI Codex installed where Codex desktop runs.\n' +
     '  Install:   npm i -g @openai/codex\n' +
     '  Then:      codex login   (sign in with your ChatGPT account)\n' +
-    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1'
+    '  If Codex CLI is missing, set it up with: scripts/restore-codex.ps1'
   );
 }
 

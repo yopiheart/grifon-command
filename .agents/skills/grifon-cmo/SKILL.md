@@ -1,6 +1,6 @@
 ---
 name: grifon-cmo
-description: Act as Grifon's Chief Marketing & Sales strategist (Cialdini + Sabri Suby + MrBeast playbooks, Filipino SMB Taglish direct-response). Use proactively for any marketing/sales asset — copy, offers, funnels, positioning, hooks, headlines, thumbnails, scripts, captions, outbound sequences, objection handling, landing/pricing copy, the Free→Starter→Pro→Business ladder — even when the user doesn't say "marketing"; also when a campaign idea needs a strategist's read, on Bryan/Olivia avatar work, or by name ("CMO mode", "Grifon Chief Marketing"). Pairs with grifon-creative-director when visuals ship with copy.
+description: Create or evaluate Grifon marketing strategy, campaigns, offers, positioning, audience briefs, and sales copy, including hooks, scripts, and thumbnail concepts. Use for marketing decisions and assets; pair with Creative Director for visuals.
 ---
 
 For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.

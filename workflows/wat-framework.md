@@ -47,9 +47,10 @@ skillspector scan <target> --no-llm --format json --output .tmp/skillspector-<na
 ```
 
 Rules:
-- **Static-only (`--no-llm`), Claude judges the JSON inline.** The tool's LLM stage stays off
-  (no extra keys/quota); the main loop reads the report and filters false positives itself —
-  same "review stays in the Claude main loop" doctrine as PR review.
+- **Static-only (`--no-llm`); the current agent interprets the JSON.** The tool's LLM
+  stage stays off (no extra keys/quota). Interpret scanner findings in context.
+  This triage does not replace the independent Codex review required by AGENTS.md
+  for non-trivial changes.
 - **HIGH/CRITICAL or DO_NOT_INSTALL → stop and show Neil the findings verbatim.** Advisory,
   not auto-blocking — Neil stays the approver, exactly as today.
 - **Calibrate for false positives:** regex can't see negation ("Never bypass safety gates"
@@ -78,8 +79,8 @@ well-formed. Apply them whenever a plan doc breaks work into slices, phases, or 
 4. **Explicit blocking edges.** Every slice states what it's blocked by ("Slice 2 blocked by
    Slice 0 landing"). Order by dependency, not by convenience.
 5. **Wide refactors use expand–contract.** Add the new path alongside the old, migrate callers,
-   then remove — CI stays green at every intermediate commit (matters here because the defreezer
-   means any session can be the last one before a wipe).
+   then remove — CI stays green at each reviewable checkpoint so interrupted work
+   can be resumed safely.
 
 The build-slices list in `concierge_director_plan.md` §10 is the house example of this shape.
 

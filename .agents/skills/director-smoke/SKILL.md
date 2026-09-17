@@ -38,14 +38,17 @@ to test quickly" — the rule didn't land; re-read the hard rules above. The tra
 leitmotif is the cheapest proof you won't repeat the exact failure this skill exists to stop (the
 one Neil had to correct every time).
 
-## Pre-flight: unmeter local video FIRST (do this BEFORE Step 0)
+## Pre-flight: verify the approved local video-test configuration
 
-If this smoke will reach the video stage (RENDER ALL / GENERATE VIDEO / FINAL_RENDER),
-set the dev-unmetered flag **before** you start — not after the render dies. A real
+If an explicitly approved paid smoke will reach the video stage (RENDER ALL /
+GENERATE VIDEO / FINAL_RENDER), check whether its spec authorizes unmetered mode
+before changing local configuration. A real
 account hits TWO server gates mid-render: the monthly `video_ads` quota (HTTP 402) and
 the hourly 5-renders rate-limit (HTTP 429, the "50M TO RESUME" wall). Both are bypassed
-locally by `GRIFON_DEV_UNMETERED_VIDEO=true` in `.env`. The defreezer wipes `.env`, so
-this is per-session, not one-time:
+locally by `GRIFON_DEV_UNMETERED_VIDEO=true` in `.env`. Local configuration persists on the personal desktop. This flag is not a
+standing setup requirement: AGENTS.md keeps it unset for ordinary checks. Only
+use it within an explicitly approved paid test that authorizes unmetered mode,
+and restore its prior state after that test. For such an approved test:
 
 ```powershell
 .\scripts\enable-dev-unmetered-video.ps1   # appends/flips the flag in .env
@@ -54,7 +57,7 @@ this is per-session, not one-time:
 
 The flag is LOCAL-ONLY (never on Vercel; prod stays metered). Neil hit both gates
 mid-smoke on 2026-06-10 — it destroys the run because the render queue fails partway and
-the rate-limit window locks you out for ~50 min. ALWAYS unmeter first.
+the rate-limit window locks you out for ~50 min. For an approved unmetered test, verify the authorized setting before generation.
 
 ## The exact sequence
 

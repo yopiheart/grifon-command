@@ -1,6 +1,6 @@
 ---
 name: codex-executor
-description: Delegate a mechanical, spec-tight implementation brief to GPT 5.6 Sol via the Codex CLI — the second executor lane beside the code-executor subagent. Use only for unambiguous MECHANICAL briefs (api/ handlers, type plumbing, spec'd refactors, test writing). NOT for UI/DESIGN.md work, ambiguous briefs, or anything near TUNED files (those stay with code-executor), and NEVER as the checker/reviewer of any diff — review stays in the Codex main loop. Requires Codex CLI installed + logged in (cafe PC only, not the web sandbox).
+description: Execute approved, unambiguous mechanical implementation briefs through the optional Codex CLI. Excludes UI design, ambiguous work, tuned files, and independent review.
 ---
 
 For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
@@ -14,7 +14,7 @@ This is the optional local CLI executor lane. In Codex desktop, prefer the `code
 | Mechanical, spec-tight: api/ handlers, type plumbing, refactors with acceptance criteria, test writing | **This skill** (optional Codex CLI) |
 | UI-heavy, DESIGN.md surfaces, ambiguous briefs, anything near TUNED files | `code-executor` subagent (inherits the selected model) |
 | Fallback when this skill exits 10/11/12 | `code-executor` subagent (inherits the selected model), same brief |
-| Checking / reviewing ANY diff | Codex main loop — **never the same builder** (builder ≠ reviewer, see `workflows/pr_review_loop.md`) |
+| Checking / reviewing ANY diff | Main loop coordinates review by a fresh independent Codex agent, never the builder; follow AGENTS.md and `workflows/pr_review_loop.md`. This executor lane is not the independent reviewer. |
 
 ## Prerequisites (one-time per machine)
 

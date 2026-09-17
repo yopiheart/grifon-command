@@ -133,8 +133,8 @@ the niche, and `--source fb-ad-library`, plus the *why-autopsied* rationale
 Gemini analysis, the Swipe File entry, the Pattern Index update, and all gating.
 
 ### Step 5 — Commit
-Cafe-PC rule: the `.tmp/ad-recon/` JSON is disposable, but any Swipe File entry
-viral-autopsy writes must be committed immediately. Ad Recon itself produces no
+Checkpoint reviewed Swipe File entries with the completed task. The
+`.tmp/ad-recon/` JSON is a disposable cache; retain evidence needed by each entry. Ad Recon itself produces no
 committed artifact beyond what viral-autopsy appends.
 
 ## Choosing brands to recon (when the user asks "who should I spy on?")

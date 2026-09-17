@@ -1,6 +1,6 @@
 ---
 name: static-autopsy
-description: Run an evidence-bound breakdown of an existing STATIC image ad (layout walk, verbatim copy, visual DNA, persuasion levers) via Gemini vision, append it to the Static Ad Swipe File, and optionally remix findings into Grifon-voice angles/copy or a Creative Director brief. Use when Neil drops one or more static ad image files (Facebook/Instagram feed or story creatives, competitor stills) and wants them decoded, asks "why does this ad work" / "what can we steal from this image", says "static autopsy" or "add to the static swipe file", or wants the winning-image-ads library grown. NOT for video (that's viral-autopsy), NOT for grading Grifon's own generated ads (gemini-eval / brand-check), NOT for scraping a competitor's FB page (ad-recon).
+description: Analyze supplied static ads and record evidence in the Static Ad Swipe File. Use for competitor image-ad teardowns or remixes; excludes videos, ad discovery, and grading Grifon outputs.
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,7 @@ This is the still-image counterpart to `viral-autopsy`: Neil supplies a winning
 static ad, Gemini vision decodes it, and the findings compound in the committed
 **Static Ad Swipe File** (`workflows/static_ad_swipe_file.md`) instead of
 evaporating with the session. The source ad is compressed and committed to
-`assets/ad-swipe/` so the reference survives the cafe-PC defreezer. Discovery
+`assets/ad-swipe/` for reproducible analysis and future comparison. Discovery
 stays human (FB Ad Library sorted by longest-running, competitor feeds); analysis
 is what this skill systematizes.
 
@@ -51,7 +51,7 @@ Read `workflows/static_ad_swipe_file.md` end to end:
   feed the right one.
 
 Pre-flight: confirm `GEMINI_API_KEY` is in `.env` (the tool fails fast with
-`GEMINI_NOT_CONFIGURED` otherwise; the defreezer can wipe `.env`).
+`GEMINI_NOT_CONFIGURED` otherwise; credentials may be absent on a new setup).
 
 ### Step 1 — Collect context from Neil
 
@@ -115,10 +115,9 @@ using the template below. Then update:
 - **Gated Proposals**: only if a pattern just crossed **≥3 corroborations** AND
   implies an Image Ads Gen template or CMO-playbook change.
 
-### Step 6 — Commit immediately
+### Step 6 — Checkpoint reviewed work
 
-Cafe-PC rule: uncommitted work dies with the reboot. Commit the Swipe File update +
-the committed image(s) right away (`swipe(static): add E18-E2x <brand> batch`). The
+Checkpoint the reviewed Swipe File update and source images with the completed task (`swipe(static): add E18-E2x <brand> batch`). The
 `.tmp/` JSONs are disposable; the entry + the committed JPG must stand alone.
 
 ### Step 7 — Offer the remix (on demand, not automatic)

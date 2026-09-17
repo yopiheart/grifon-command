@@ -1,6 +1,6 @@
 ---
 name: artifact-noir
-description: Build a Grifon-project Codex Artifact in the NOIR visual world — charcoal ground, gold accent, liquid glass — with the mobile-safe rules that keep it readable on Neil's phone. Use BEFORE writing any artifact HTML/CSS: dashboards, eval or review pages, debrief and ledger reports, swipe-file galleries, session or launch scoreboards, UI mockups, PR-review findings. Also on "publish an artifact", "make me a page", "redeploy the artifact", or any styling/contrast/mobile-rendering question about one. NOT for client work under clients/ (that follows the client's own DESIGN.md — see the STOP below), NOT for app UI (brand-check / grifon-creative-director), NOT for the product's own screens.
+description: Create or revise Grifon HTML artifacts in the mobile-safe NOIR style. Load before artifact HTML/CSS work. Excludes product UI and client artifacts governed by their own DESIGN.md.
 ---
 
 For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
@@ -109,7 +109,7 @@ Deliver the verified local HTML with a clickable absolute file link and open it 
 
 **Every artifact ships with a committed standalone twin** (Neil, 2026-07-29). A chat-only response is not a durable delivery path, so an artifact is **not delivered** until its self-contained
 HTML also exists at **`artifacts/<slug>.html`**, committed, built by a script under `tools/artifacts/`
-that regenerates it **from committed sources only** — never a `.tmp/` cache, which the defreezer eats.
+that regenerates it **from committed sources only** — never rely solely on a disposable `.tmp/` cache.
 
 Because the page inlines every asset, that one file *is* the share mechanism: Neil sends it over
 Viber/email/Drive and it opens offline in any browser — no sign-in, no link permissions.

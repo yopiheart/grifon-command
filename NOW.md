@@ -1,54 +1,42 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, approved A+B+D prompt fixes applied**
+**Stamped: 2026-09-17, approved workflow and personal-desktop updates applied**
 
 ## Current state
-Branch: `codex/prompt-quality-audit`, based on main `87546343`.
-Draft PR #139: https://github.com/yopiheart/grifon-command/pull/139
-Neil explicitly approved A+B+D as written after reviewing the linked exact patches.
-Applied five prompt-line replacements in `api/_lib/prompts.ts` and three fixture
-replacements in `tests/regression/script-gen.regression.test.ts`.
-A clarifies language handling; B preserves required differentiator proof; D corrects
-contradictory topical-serum and pre-selling condo inputs.
-C/E/F, models, schemas, safety settings, generation knobs and retries are unchanged.
-The original proposed patches and saved 24-output corpus are unchanged.
+Neil uses his persistent personal Windows desktop, sometimes remotely from mobile.
+Cafe-PC wipe/reinstall/sign-out assumptions no longer govern work.
+Branch: `codex/workflow-instruction-cleanup`.
+Draft PR #141: https://github.com/yopiheart/grifon-command/pull/141.
+Neil explicitly approved both exact patches; both are now applied to 36 active
+files. Do not ask for their approval again. Installs, accounts, dependencies and
+assets are reused. Setup is conditional on actual need. Historical cafe helpers
+remain under explicit current overrides; mobile disconnects do not force commits.
 
-## ▶ NEXT ACTION
-Review the implemented A+B+D change in draft PR #139 for a separately requested
-merge. No merge or production deployment is authorized by the prompt approval.
-A live quality comparison still requires its own exact-input/evidence/max-cost spec.
-Price precedence (C), factual-source policy (E) and beat mapping (F) remain
-unapproved proposals. Do not repeat A+B+D approval or implementation.
-Full audit and implementation evidence: `workflows/prompt_quality_audit_2026-09-17.md`.
+## Next action
+Work is applied and verified on the PR branch. Merge/deployment are not authorized.
+Review PR/CI before any separately requested merge. Changed hook source follows
+Codex's normal review/trust UI; tests do not establish current app trust/delivery.
+Fresh tasks discover updated skill descriptions; the initial catalog may be stale.
 
-## Verification
-`node workflows/evaluations/check-prompt-proposals.mjs --approved` first failed on
-original source, then passed: actual files equal exactly approved A+B+D after
-line-ending normalization. All six proposal files match approval commit `7e619a61`.
-Historical C/E/F candidate checks are in-memory only, not shipped changes.
-Focused tests: 70 passed. Full suite: 1,401 passed, 32 gated skips,
-113 files passed / 9 skipped. Paid/live flags remained unset.
-Build passed: 2,580 modules, main JS gzip 589.79 kB; existing size/Browserslist warnings.
-Bundle-leak, voice-sync, domain, PS ASCII and artifact-anchor checks passed.
-Independent correctness review: no actionable findings; A+B+D reverse checks pass.
-Independent offline smoke: 29/29 passed, including 28 real-flow/fake-provider
-combinations across Testimonial, MrBeast and all five product UGC formats,
-both languages and empty/nonempty separators, plus exact D fixture source check.
-Original-prompt negative control: 28 expected failures. Env loading disabled,
-telemetry mocked, network blocked; model/safety/thinking settings unchanged.
-This proves source/assembly/plumbing, not live quality or HTTP auth/quota behavior.
-No browser generation or paid comparison was run. Generated snapshot EOL noise restored.
+## Evidence
+`workflows/workflow_instruction_cleanup_2026-09-17.md` records approved hashes,
+scope, proposal evidence, applied verification, and the TypeSafe Jev assessment.
+Exact applied-source comparison passed for both ordered patches.
+Independent applied review: no actionable findings; all 36 final blobs match;
+independent narrow SessionStart test passed.
+`npm.cmd run check:codex`: all 26 tests passed.
+Build passed, including PowerShell ASCII; existing chunk warnings remain.
+Full tests: 113 files / 1,401 tests passed; 9 files / 32 opt-in tests skipped.
+Initial concurrent run had one checkAnchors timeout; full rerun passed unchanged.
+Bundle-leak, voice-sync, domain-language, artifact-anchor and JS syntax checks pass.
+Prior isolated candidate tests: 16/16; new startup assertion failed original hook.
+Tabletop scenarios were hypothetical, not live automatic-trigger tests.
+Generic skill validator rejects existing invocation metadata in two autopsy skills
+in baseline and candidate; neither metadata nor validator was weakened.
+No paid run, provider integration, secret/auth changes, OS or remote-access changes,
+production writes, deployment, merge, or hook trust modification occurred.
 
-## Remaining findings
-The audit scored 24 saved outputs, representing 22 passing script tests and two
-late outputs after timeout. Three complete differentiator omissions; language
-leakage, partial proof, unsupported claims and rule/input conflicts are documented.
-One Glaze UGC reveal exceeds its local 3-8-word limit; no new retry was added.
-Offline smoke additionally found existing `ipahid` detector omission:
-`Ipahid ko ito sa mukha.` causes two identical fake-provider generation requests.
-Do not expand the approved detector diff without a separate exact-diff decision.
-Noun-fragment tolerance and English action exemplars remain explicit policy boundaries.
-Cancellation/124s backoff vs 120s timeout remains a separate transport follow-up.
-Image-evaluation camera-copy drift remains in `workflows/nightly_regression.md`.
-PRs #136-#138 are merged and complete; do not redo their evaluation fixes.
-Hero film remains paused (PR #134, stacked on #132). Gemini migration #131 and
-ASMR fidelity #127 remain separate. No paid run or production-data mutation here.
+## Related work
+Prompt-quality A+B+D merged in PR #139; release evidence is PR #140 / `f71f6365`.
+Do not repeat those changes or request their approval again. Unapproved C/E/F
+proposals remain separate. Jev is a possible future classifier comparison, not a
+generation replacement. Tweet text/replies were read; embedded videos did not play.

@@ -23,4 +23,4 @@ Match the scope of your edit to the scope of the request. Three lines fixed is b
 
 - Read enough of the file to understand the surrounding context
 - Confirm the edit is the minimum required to complete the task
-- If you find yourself touching more than ~30 lines for a fix, stop and ask whether the scope changed
+- If a fix grows, re-check it against the requested outcome. Continue with changes necessary to complete the authorized scope; ask only when the proposed change expands that scope or crosses an approval boundary in AGENTS.md. Line count alone is not an approval trigger.

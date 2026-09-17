@@ -45,7 +45,7 @@ function main(input) {
     // Retain a verified baseline across resume/compact; initialize only once per session.
     if (!state.baseline) { state.baseline = fingerprint(); save(); }
     const branches = run('git', ['branch', '-r', '--no-merged', 'origin/main'], root);
-    return context(event, `LOCAL CLOCK: ${new Date().toString()}. Read NOW.md, agent_lessons.md and UBIQUITOUS_LANGUAGE.md before work. Check latest commits and remote branches before calling work missing. Cached unmerged branches (fetch when needed): ${branches.status === 0 ? branches.stdout.trim() || '(none)' : '(unavailable)'}. Review workflows/session_reminders.md and workflows/loops.md; Codex automations require explicit user scheduling, do not replay Claude /loop commands. Check Git identity and required account sign-ins after a cafe reboot.`);
+    return context(event, `LOCAL CLOCK: ${new Date().toString()}. Read NOW.md, agent_lessons.md and UBIQUITOUS_LANGUAGE.md before work. Check latest commits and remote branches before calling work missing. Cached unmerged branches (fetch when needed): ${branches.status === 0 ? branches.stdout.trim() || '(none)' : '(unavailable)'}. This is Neil's persistent personal Windows desktop, sometimes accessed remotely from mobile. Reuse working setup and local state; repair Git identity or account access only if actually missing. Mobile disconnects do not require cleanup, sign-out, or forced commits. Codex automations require explicit user scheduling; do not replay legacy session-reminder or Claude /loop commands.`);
   }
   if (event === 'UserPromptSubmit') {
     if (typeof input.prompt !== 'string') throw new Error('Missing user prompt');

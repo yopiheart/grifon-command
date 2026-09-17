@@ -88,7 +88,7 @@ export function collectReadiness(root = repoRoot) {
     const result = run(command, ['--version'], root);
     return result.status === 0 && /^Python 3\./.test(`${result.stdout}${result.stderr}`.trim());
   });
-  add('creative', 'python', pythonCommand, pythonCommand ? `Python 3 available via ${pythonCommand === portablePython ? '.tools/python-3.12.8/tools/python.exe' : pythonCommand}; workflow packages not checked` : 'Python 3 unavailable', 'Run scripts/restore-python.ps1 -Portable for the official local package, then the workflow dependencies.');
+  add('creative', 'python', pythonCommand, pythonCommand ? `Python 3 available via ${pythonCommand === portablePython ? '.tools/python-3.12.8/tools/python.exe' : pythonCommand}; workflow packages not checked` : 'Python 3 unavailable', 'Reuse a compatible installed Python with the required workflow packages, or install Python if absent. scripts/restore-python.ps1 -Portable is an optional fallback.');
   let bashOk = false;
   if (process.platform === 'win32') {
     const location = run('where.exe', ['git.exe'], root);

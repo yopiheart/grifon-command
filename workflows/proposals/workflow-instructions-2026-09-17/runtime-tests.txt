@@ -1,0 +1,24 @@
+✔ registration includes all native lifecycle gates (4.6868ms)
+✔ malformed input fails closed (88.4728ms)
+✔ Windows registration resolves from a repository subdirectory (729.5156ms)
+✔ environment content and edits denied; template and metadata allowed (1238.3485ms)
+✔ exact tuned approval is single-use and does not authorize another input (736.9718ms)
+✔ ad reads pass; writes and spend switches deny (543.6365ms)
+✔ edit targets resolve cwd, dot segments and move destinations before protection (854.9261ms)
+✔ unknown or malformed patch envelopes fail closed (445.5945ms)
+✔ paid Veo missing approved spec is denied and standalone dry-run passes (340.2377ms)
+✔ Veo checks preflight, binds approval to spec, and counts an attempt before allowing (1393.8397ms)
+✔ commit rejects an invalid changed lockfile without running install scripts (3258.4013ms)
+✔ prompt and session context point at continuity and language rules (270.0692ms)
+✔ Stop detects source changes and blocks failed build; tests stay explicit (2153.3431ms)
+✔ a directory or empty node_modules cannot stand in for missing core files (43.4909ms)
+✔ sparse checkout missing even one tracked example or sample is reported (23.009ms)
+✔ hook feature flag must be active in its own section, with registration present (27.079ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12284.9618

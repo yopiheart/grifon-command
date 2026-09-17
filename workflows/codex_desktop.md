@@ -1,38 +1,40 @@
-# Codex desktop cafe workflow
+# Codex personal desktop workflow
 
-Work locally in Codex desktop; use GitHub for continuity between cafe PCs.
+Work directly on Neil's persistent Windows desktop, including when controlling it
+remotely from mobile. Reuse the existing checkout, installed tools, dependencies,
+assets, and signed-in accounts. GitHub remains the backup and review channel.
 The application still uses Gemini, ElevenLabs, Kling, Supabase and its existing
 API handlers. Migrating the coding workspace does not change those providers.
 Cloud development is optional; its runbook is `codex_cloud.md`.
 
-## Arrive and resume
+## Resume work
 
-1. Install/open Codex desktop and sign in yourself. Install Git for Windows,
-   Node 24 and npm 11 if this PC has been wiped. Open the saved repository in
-   Codex. Sign in to GitHub through its normal credential flow when requested.
-2. For a fresh clone, use the lite clone below. For an existing checkout, read
+1. Open the saved repository in Codex. Reuse working installations and account
+   sessions. Install Git for Windows, Node 24 and npm 11 only if missing or
+   incompatible; use normal sign-in only when an account actually requires it.
+2. Read the existing checkout first. A full clone is supported; the lite clone
+   below is optional for storage or transfer constraints. For an existing checkout, read
    `git status --short --branch` before fetching or switching anything. Never
    replace untracked work or reset somebody else's branch.
 3. Read `AGENTS.md`, `NOW.md`, `agent_lessons.md`, `UBIQUITOUS_LANGUAGE.md`, the
    latest five commits, and the saved PR. Resume its branch, or start a new
    `codex/<task>` branch from current `main` for new work.
-4. Run the readiness check, then explicitly install dependencies if needed:
+4. If setup needs diagnosis, run the read-only readiness check. Install
+   dependencies only when missing or when the lockfile requires it:
 
 ```powershell
-.\scripts\codex-cafe-start.ps1 -CheckOnly
-.\scripts\codex-cafe-start.ps1 -InstallDependencies
+npm.cmd run codex:ready
+# Only when dependency installation is needed:
+npm.cmd ci
 ```
 
-If Windows blocks script files, use a process-only invocation (no persistent
-policy change): `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
-scripts/codex-cafe-start.ps1 -CheckOnly`. This affects PowerShell script loading,
-not Codex hook trust or approval controls.
+Run existing restore/setup helpers only for a demonstrated missing dependency.
+They are not a daily routine and must not overwrite working configuration or
+credentials. Each `funnels/<name>` has its own manifest and lockfile.
+The old `scripts/codex-cafe-start.ps1` filename is retained for historical callers;
+it is not the default entry point or a restriction on personal-desktop installs.
 
-The script does not restore credentials, switch branches, push, or open VS Code.
-Root installation uses `npm.cmd ci`. Each `funnels/<name>` has its own lockfile
-and dependency installation; install there only when using that funnel.
-
-Fresh clone (run from the parent directory):
+Optional lite clone (run from the parent directory):
 
 ```powershell
 git clone --filter=blob:none --no-checkout https://github.com/yopiheart/grifon-command.git
@@ -44,8 +46,8 @@ node tools/codex-assets.mjs instructions --apply
 node tools/codex-assets.mjs wizard --apply
 ```
 
-Check PR #126's status: use its branch if still open, or current `main` once
-merged. Preserve a clone's existing sparse patterns: the asset helper
+Use the current task branch when resuming or updated `main` for new work.
+Preserve a clone's existing sparse patterns when using selective restoration: the asset helper
 adds exact tracked files, never replaces rules or restores non-sparse deletions.
 
 ## Controls and connections
@@ -59,7 +61,7 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
   This PC passed fresh desktop delivery checks on 2026-09-07 at `438c651`:
   SessionStart guard/sweep, allowed/denied PreToolUse probes, Stop dispatch,
   and direct-composer UserPromptSubmit. This is not every-policy-path coverage;
-  each other PC still needs its own normal hook review/trust.
+  changed hook source still needs its normal review/trust on this desktop.
 - `.codex/config.toml` configures the optional Playwright MCP server using a
   pinned package. Built-in browser tools can also drive manual checks. The old
   `restore-playwright-mcp.ps1` writes Claude configuration and is unnecessary
@@ -74,9 +76,10 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
 - Legacy Bash creative scripts need Git Bash. The bundled `ffmpeg-static`
   executable supports the app renderer. Standalone editing also needs ffmpeg
   and ffprobe: `scripts/restore-ffmpeg.ps1` restores the existing optional tool
-  bundle. Python tools may need their documented dependencies on a wiped PC.
+  bundle. Reuse installed Python and FFmpeg; repair only a dependency that is absent
+  or incompatible with the task.
 
-For this PC's MSI installation failure, the tested Python route is
+If a normal Python installation is unavailable, an optional tested fallback is
 `.\scripts\restore-python.ps1 -Portable`. It restores the official CPython
 3.12.8 NuGet package into ignored `.tools`, checks its pinned archive digest
 and Python Software Foundation executable signature, and verifies pip.
@@ -86,7 +89,9 @@ No global configuration is replaced.
 
 ## Secrets and starting the app
 
-The user restores `.env` from Bitwarden locally. It stays ignored; the agent
+Reuse existing local configuration. If credentials are missing, the user supplies
+them through the normal local secret workflow (for example Bitwarden). `.env`
+stays ignored; the agent
 does not open or print its contents. Restore only the credentials the intended
 feature needs. Readiness reports file/variable presence, never values.
 
@@ -149,7 +154,7 @@ Do not treat a successful build or fixture dry run as proof that a provider,
 voice clone, paid model or completed render works. Current run evidence and
 remaining manual checks belong in `NOW.md` and the draft PR.
 
-## Save before leaving
+## Checkpoint and remote use
 
 Review the combined diff, including new files. Run relevant checks, commit only
 intended work, push the branch and create/update its draft PR. No merge or
@@ -157,8 +162,16 @@ production deployment occurs without a separate explicit instruction.
 
 Update `NOW.md` (the only resume document, maximum 90 lines) with the branch/PR,
 checks, known limitations and next action. Verify the commit exists on GitHub;
-a local commit or task completion alone is insufficient. Save the PR link on
-your phone. Sign out of personal accounts on the shared PC before leaving.
+a claim that work is backed up requires the remote commit to exist. Local drafts
+and assets may remain on this desktop between tasks. Checkpoint at meaningful
+review boundaries; do not force a commit or sign out because mobile disconnects.
+
+Remote control uses the same desktop state. A disconnected phone does not erase
+files or necessarily stop desktop work, but do not assume a job survives sleep,
+shutdown, or an app exit. Inspect actual process/task status when reconnecting.
+Keep mobile previews readable; use the existing remote connection instead of
+opening public ports or deploying a page solely for phone access. Change remote
+access or power settings only when that setup is requested.
 
 ## Scope kept for the next product tasks
 

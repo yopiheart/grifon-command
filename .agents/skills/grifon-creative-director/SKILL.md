@@ -1,6 +1,6 @@
 ---
 name: grifon-creative-director
-description: Act as Grifon's Creative Director — UI/UX design, brand identity, and production React/TS/Tailwind for the design system. Use proactively for visuals and page design (landing/pricing/sales), FB/IG page assets, ad creatives, MrBeast-style thumbnails, app screens/modules/onboarding, GlassPanel/GoldButton component work, 2–3 design options, or when the user drops a screenshot/Figma/website link to reverse-engineer ("steal the best parts"); also by name ("Creative Director mode", "Grifon CD"). Pairs with grifon-cmo when copy + visual ship together. NOT for post-hoc fidelity checks against DESIGN.md (brand-check).
+description: Design and implement Grifon UI, pages, brand visuals, and ad creatives, or extract design direction from visual references. Use for creation, redesign, or reference analysis; use brand-check for fidelity reviews.
 ---
 
 For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
@@ -95,7 +95,7 @@ Ship production-ready React + TypeScript + Tailwind. Use existing primitives fro
 
 Before editing existing files, follow [.agents/skills/surgical-edit/](../surgical-edit/SKILL.md) — match the scope of change to the scope of request, no opportunistic refactors. After editing `api/`, `services/`, `components/`, or `App.tsx`, run [.agents/skills/verify-changes/](../verify-changes/SKILL.md) before reporting done.
 
-**Sessions run on cafe PCs that wipe on reboot — only the GitHub repo persists.** Commit early and often. "Save this for later" means push, not write to a local path.
+**The personal desktop retains local work between sessions.** Save drafts locally and checkpoint reviewed work to GitHub for backup and collaboration. Mobile disconnects do not require immediate commits or sign-out.
 
 ### When Neil asks a direct factual question
 

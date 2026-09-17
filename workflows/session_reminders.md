@@ -1,5 +1,11 @@
 # Session Reminders (re-arm each session)
 
+> Retired cafe-PC procedure as of 2026-09-17. Neil uses a persistent personal
+> desktop with occasional mobile remote access. Follow [codex_desktop.md](codex_desktop.md).
+> The content below is historical: do not reinstall tools, restore flags, change
+> wallpaper, sign out, or re-arm reminders from it. Scheduling requires a current
+> user request; existing installed tools and account sessions should be reused.
+
 Cron/loop reminders live in Claude **session state** — they are not written to disk
 and the cafe-PC defreezer wipes them on reboot (see CLAUDE.md → Working Environment).
 A PowerShell restore script can't recreate them (the scheduler is a Claude tool, not a
