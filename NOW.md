@@ -1,40 +1,35 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, Grifon Motion Director skill and local demos**
+**Stamped: 2026-09-17, Grifon Spark reference-led motion preview**
 
 ## Current state
-Branch: `codex/grifon-motion-director`.
-Draft PR: https://github.com/yopiheart/grifon-command/pull/143
-Implementation committed and pushed as `448654d1`; this handoff update follows it.
-Neil approved the implementation plan and then the exact installation patch
-SHA-256 `2b542b8b135997e33a322856de8bd00d45c5bacf75fa3b37dfdbc046ce462074`.
-The new `.agents/skills/grifon-motion-director/` skill is installed unchanged.
-Existing application code, tuned prompts, other skills and hero-film work are untouched.
-Portrait and landscape demos are ready: 12 seconds, 24 fps, 288 frames,
-1080x1920 and 1920x1080, H.264/AAC with existing music, no voiceover.
-Editable source and reproduction commands: workflows/assets/grifon-motion-director-demo/.
-Offline player: artifacts/grifon-motion-director-review.html.
+Branch: `codex/grifon-motion-spark`, stacked on `codex/grifon-motion-director`.
+Motion Director installation remains in draft PR #143; its exact approved skill
+patch was installed unchanged. Neil liked the first demo and approved a second
+preview based on his Apple Facebook ad and YouTube reference.
+New project: workflows/assets/grifon-motion-spark/.
+15s / 24 fps / 360 frames, portrait 1080x1920 and landscape 1920x1080.
+DESCRIBE / BUILD / LAUNCH with light-led glass cards, canonical mark and URL.
+This is a motion study, not actual Grifon app output. Editable source, MP4s,
+frame sheets, brief, reproduction commands and verification evidence are saved.
+No app changes, tuned edits, paid calls, publishing, merge or deployment.
 
-## Remaining review
-CUA rejected the local file URL and expressly prohibited browser workarounds.
-Mobile/desktop review-page screenshots, controls/overflow, full browser playback,
-physical-phone playback and subjective listening are unverified; do not claim done.
-Independent actual-MP4 frame review and 390px samples pass.
-Neil's creative approval and fresh-session automatic skill-trigger testing remain open.
-No publishing, merge, deployment, campaign changes, or paid generation occurred.
+## Checks and limitations
+Hyperframes lint/runtime/sampled layout and transitions pass both formats.
+Both exports fully decode; zero nearly-black intervals >= 0.3s at test threshold.
+Both AAC tracks measure -13.83 LUFS and -1.41 dBTP.
+Fresh independent brand/source/frame review: BRAND_PASS, 44/50, no open findings.
+The earlier dark handoff and noncanonical icons were corrected before final export.
+390px ending samples and 200% logo/icon inspection pass.
+Text-revision test passes ten samples under a recorded one-level RGB / 0.02 mean
+limit; an unintended BUILD -> BROKEN edit is rejected. This is NOT a pixel-identical
+claim: strict equality initially failed on a tiny panel difference, reviewed and
+measured independently. See qa/revision-check.json and verification.md.
+check:codex: 32 entrypoints, zero errors, all 26 tests pass.
+No app build/full application suite needed; source/dependencies are unchanged.
+Continuous playback, subjective listening, physical-phone review and Neil's
+creative acceptance of this new preview remain pending. No local browser workaround.
 
-## Evidence
-Installed check:codex: 32 entrypoints, zero errors, all 26 tests pass.
-Hyperframes lint/runtime/layout checks pass both layouts, including transitions.
-Both exports fully decode; final audio measures -13.82 LUFS and -1.41 dBTP.
-The audio checker reproduces and rejects the original +5.27 dBTP clipping defect.
-Ten browser-frame revision checks pass; unchanged beats are pixel-identical.
-Independent source review resolved the initial logo mismatch; canonical mark used.
-Three skill dry-run cases plus baseline outputs and static evaluation viewer saved.
-Rubric-exposed dry runs are not a skill-superiority benchmark or live trigger test.
-JS syntax and artifact-anchor checks pass; no app build/full suite needed for this scope.
-Git whitespace checks pass after normalizing only vendored/log trailing whitespace.
-The separate verification and smoke records include hashes and browser limitations.
-
-## Related work
-Workflow/personal-desktop updates are already merged in PR #141; no repeat needed.
-Prompt-quality A+B+D merged in PR #139; release evidence remains PR #140.
+## Related handoff
+PR #143: https://github.com/yopiheart/grifon-command/pull/143
+First demo/player: artifacts/grifon-motion-director-review.html.
+Workflow defaults merged in #141; prompt audit in #139; release evidence in #140.
