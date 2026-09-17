@@ -1,6 +1,6 @@
 # Website hero film: one Genjutsu test
 
-**Prepared; no generation submitted.** This is the 13-19 second studio beat from the unfinished website film on PR #134.
+**Exact spec approved; one free generation submitted and waiting.** This is the 13-19 second studio beat from the unfinished website film on PR #134.
 
 [Original six-second camera preview](../studio-pilot/shaded-camera-preview.mp4)
 
@@ -10,7 +10,7 @@
 
 [Exact test spec, prompt and hashes](test-spec.json)
 
-## Proposed test
+## Approved test
 
 One Genjutsu Motion Transfer attempt, six seconds, landscape, **480p**. Use the account's single free attempt. Additional generation charge: **USD 0**. Paid attempts: **0**. No retries or paid fallback.
 
@@ -26,7 +26,7 @@ This is external studio production, not an example of what the Grifon app genera
 - FFmpeg full decode: exit 0, 144 frames, 960x540, 24fps, six seconds, no audio. This establishes decoding, not motion quality.
 - Visually inspected original product and source sheet. Bottle is small in the wide shot; 480p cannot certify small label text or final website quality.
 - Read-only Higgsfield model query on 2026-09-17 reports one shared Genjutsu free attempt at 480p, max 30 seconds. Provider is Higgsfield; hidden engine unknown.
-- No upload, generation or paid call. Local-file ingestion remains to be validated through a supported upload path after approval.
+- Both exact assets uploaded via local presigned PUT (HTTP 200) and confirmed. One job submitted: 3c388994-7613-424e-95f5-3d30227702cb. Free counter changed from 1 to 0; no paid fallback. Generation is still waiting, with no result to inspect. See execution.json.
 - Creative Cloud exists locally; usable After Effects editor/bridge not established. This test does not depend on AE.
 
 ## Reproduce source checks
@@ -44,3 +44,11 @@ Get-FileHash assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-origi
 ```
 
 Application, provider routing, skills and tuned prompts unchanged. App build/tests are not applicable to this preparation-only change. JSON/input-hash/diff checks apply; generation quality and user acceptance remain untested.
+
+## Result review, once the existing job completes
+
+Save the provider original as genjutsu-original.mp4, then run:
+
+    node assets/hero-film/genjutsu-sample/build-review.mjs --runtime-root C:/Users/ADMIN/Desktop/grifon-command
+
+This makes a muted before-after.mp4 (original left, Genjutsu right), comparison-sheet.jpg, inspection frames and media-checks.json. No output file exists yet. Syntax validation passed; media execution awaits the real result. No placeholder is substituted.

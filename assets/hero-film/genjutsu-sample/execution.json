@@ -1,0 +1,65 @@
+{
+  "id": "HERO-GENJUTSU-01",
+  "authorization": "User replied G after exact spec/free-attempt approval question on 2026-09-17.",
+  "approvedSpecSha256": "4bac42a706d6d5c097abc9ae2c441032890d06fd701885623f08fded95fcf9de",
+  "generationAttempts": 1,
+  "paidRolls": 0,
+  "retries": 0,
+  "transport": "Provider sandbox explicitly directed local media_upload -> local PUT -> media_confirm; both PUTs HTTP 200. No base64 sandbox transfer performed.",
+  "jobId": "3c388994-7613-424e-95f5-3d30227702cb",
+  "submittedParams": {
+    "model": "hf_mult_motion_control",
+    "resolution": "480p",
+    "duration": 6,
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "use_free_gens": true,
+    "prompt": "Create one continuous six-second cinematic studio shot. Use the reference video for the camera orbit, timing, room layout, pedestal position and stationary bottle placement. Preserve the direction and pace of its smooth camera move, with no cuts or extra camera moves. Rebuild the shaded preview as a believable photographed creative studio: charcoal walls, restrained gold accents, softly lit vertical wall slats, natural glass reflections, grounded objects and a soft neutral key light. Use the reference image ONLY for the single KAPE 01 bottle: clear glass, rounded shoulder, black ribbed screw cap, continuous dark brown coffee above and below an off-white paper label. Keep its proportions and these three label lines: KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Do not transfer the hand or pale background from that image. Keep one upright bottle in contact with the pedestal throughout; no floating, duplication or shape changes. Keep gold in the set accents, not in the coffee. Make all display screens clean blank dark panels. Remove the source preview's placeholder writing and wall lettering. No people, invented interface, sample ads, captions, logos or extra writing. Do not add a magical morph or ribbon animation; this shot tests camera transfer and studio realism. No dialogue or music.",
+    "medias": [
+      {
+        "role": "video",
+        "value": "7e071b7c-da30-4133-ba2e-95cd0239f492"
+      },
+      {
+        "role": "image",
+        "value": "1dda74a9-10e4-48ef-9596-afb9b6b3fed1"
+      }
+    ]
+  },
+  "submissionResult": {
+    "results": [
+      {
+        "id": "3c388994-7613-424e-95f5-3d30227702cb",
+        "type": "video",
+        "status": "pending",
+        "model": "hf_mult_motion_control",
+        "params": {
+          "prompt": "Create one continuous six-second cinematic studio shot. Use the reference video for the camera orbit, timing, room layout, pedestal position and stationary bottle placement. Preserve the direction and pace of its smooth camera move, with no cuts or extra camera moves. Rebuild the shaded preview as a believable photographed creative studio: charcoal walls, restrained gold accents, softly lit vertical wall slats, natural glass reflections, grounded objects and a soft neutral key light. Use the reference image ONLY for the single KAPE 01 bottle: clear glass, rounded shoulder, black ribbed screw cap, continuous dark brown coffee above and below an off-white paper label. Keep its proportions and these three label lines: KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Do not transfer the hand or pale background from that image. Keep one upright bottle in contact with the pedestal throughout; no floating, duplication or shape changes. Keep gold in the set accents, not in the coffee. Make all display screens clean blank dark panels. Remove the source preview's placeholder writing and wall lettering. No people, invented interface, sample ads, captions, logos or extra writing. Do not add a magical morph or ribbon animation; this shot tests camera transfer and studio realism. No dialogue or music.",
+          "aspect_ratio": "16:9",
+          "duration": 6,
+          "reference_images": [
+            "7e071b7c-da30-4133-ba2e-95cd0239f492",
+            "1dda74a9-10e4-48ef-9596-afb9b6b3fed1"
+          ],
+          "resolution": "480p"
+        }
+      }
+    ],
+    "adjustments": {
+      "medias[0].role": {
+        "requested": "video",
+        "used": "video_references",
+        "reason": "Genjutsu backend expects schema-key media roles"
+      },
+      "medias[1].role": {
+        "requested": "image",
+        "used": "image_references",
+        "reason": "Genjutsu backend expects schema-key media roles"
+      }
+    }
+  },
+  "cost": "Free-attempt counter changed from 1 to 0 after submission with use_free_gens:true. No paid fallback was requested. No separate invoice field returned.",
+  "status": "pending",
+  "freeAttemptsBefore": 1,
+  "freeAttemptsAfterSubmission": 0
+}

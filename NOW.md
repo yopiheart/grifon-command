@@ -3,7 +3,7 @@
 
 ## Current task
 Neil resumed the website hero film and agreed to sample its 13-19s studio beat.
-Exact input/prompt/free-attempt approval is pending. No upload or generation.
+Neil approved the exact spec with G. Both assets uploaded and confirmed; one job submitted.
 Branch: codex/hero-film-genjutsu-sample, based on hero-film-storyboard at 916f387f.
 Worktree: C:/Users/ADMIN/Desktop/grifon-hero-genjutsu.
 Main checkout stays on codex/grifon-motion-spark. Never switch it for this task.
@@ -14,9 +14,9 @@ README beside it links the source video, product original and source sheet.
 Inputs: unchanged studio-pilot/shaded-camera-preview.mp4 plus
 reference-candidates/HERO-IMG-01/A01-product-original.png. Hashes in spec.
 Six seconds,16:9,480p,one Genjutsu free attempt,USD0 additional charge,
-zero paid rolls,zero retries. Tool currently reports one eligible free attempt.
-Exact approval includes consuming this free attempt. Do not infer approval here.
-Stop if free eligibility fails; no paid fallback. Local-file ingestion untested.
+zero paid rolls,zero retries. Free attempt was consumed by the recorded job; remaining count is zero.
+Job: 3c388994-7613-424e-95f5-3d30227702cb. Free counter changed from1 to0. No retry.
+Local presigned PUT uploads passed HTTP200 and media_confirm. No paid fallback.
 Working After Effects editor/bridge not established; no installation authorized.
 
 ## Scope and actual checks
@@ -43,8 +43,8 @@ HERO-PROOF-02 USD15/four-roll proposal remains unapproved/non-executable.
 Grifon product proof must stay separate from external production footage.
 
 ## Next
-After exact approval, validate supported media transport and submit at most one
-free attempt. Record actual output/charge/settings and compare honestly.
+Await the existing job; never submit a second job. Record the original output from this one
+attempt. Record actual output/charge/settings and compare honestly.
 Keep failures. Obtain Neil's taste review before further film production.
 
 Draft PR145: https://github.com/yopiheart/grifon-command/pull/145.
