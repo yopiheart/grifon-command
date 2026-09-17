@@ -1,0 +1,14 @@
+{
+  "duration": 25,
+  "fps": 24,
+  "copy": {
+    "opening": "YOUR PRODUCT.",
+    "proof": "MADE WITH GRIFON.",
+    "sample": "AI-GENERATED SAMPLE AD",
+    "lead": "GIVE IT",
+    "payoff": "THE SPOTLIGHT.",
+    "brand": "GRIFON",
+    "url": "GRIFON.AI"
+  },
+  "formats": {"portrait":{"width":1080,"height":1920},"landscape":{"width":1920,"height":1080}}
+}

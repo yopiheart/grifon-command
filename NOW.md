@@ -1,61 +1,47 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, Apple reference study and corrected Spark direction**
+**Stamped: 2026-09-17, Grifon Spotlight preview**
 
 ## Current state
-Neil questioned whether Spark actually followed the Apple video. Its technical
-and brand checks passed, but reference fidelity and creative acceptance did not.
-New durable study: workflows/assets/grifon-motion-spark/reference-analysis.md
-and reference-evidence.json; a one-off entry was added to viral_swipe_file.md.
-The full 54.821s source was downloaded without cookies; 110 half-second frames
-were inspected across the whole timeline. Audio decoded and scanned; effects
-are described from uploader captions, not subjective listening. Source media
-and sheets remain ignored in .tmp/apple-reference/. No paid analysis.
-Corrected direction: actual product/project -> Script/Storyboard -> matching
-finished ad -> brand, proposed 25s with independent aspect-ratio layouts.
-Replacement preview is NOT rendered. Next: secure matching project captures
-and review a coherent source excerpt. The shipped Hiraya sample is silent and
-9.03s; the proposed 7s proof beat needs an edit or a timing revision. Avoid the
-full ad's known early morph defect and Bukid's documented box-label defect.
-The wizard input profile has all 44 tracked inputs; missing matching capture
-evidence is not an app defect. No fabricated end-to-end run or instant-output claim.
+Neil delegated creative direction: "G surprise me!". Built the new 25-second
+Spotlight product showcase in workflows/assets/grifon-motion-spotlight/.
+Portrait 1080x1920 and independently composed landscape 1920x1080, 24fps,
+600 frames each, H.264/AAC. Editable template, demo.json, source assets,
+render/check/revision commands, actual encoded sheets and README included.
+Product macro reveal -> real nine-second Grifon sample -> spotlight statement
+-> canonical GrifonMark / GRIFON.AI. Uses local Hyperframes/FFmpeg and existing
+music. No paid calls, app edits, tuned changes, deployment or publishing.
 
-## Existing preview and branch
-Branch: `codex/grifon-motion-spark`, stacked on `codex/grifon-motion-director`.
-Draft PR #144: https://github.com/yopiheart/grifon-command/pull/144
-Preview/source commit `0dd51ebd` is pushed; this handoff update follows it.
-Motion Director installation remains in draft PR #143; its exact approved skill
-patch was installed unchanged. Neil liked the first demo and approved a second
-preview based on his Apple Facebook ad and YouTube reference.
-New project: workflows/assets/grifon-motion-spark/.
-15s / 24 fps / 360 frames, portrait 1080x1920 and landscape 1920x1080.
-DESCRIBE / BUILD / LAUNCH with light-led glass cards, canonical mark and URL.
-This is a motion study, not actual Grifon app output. Editable source, MP4s,
-frame sheets, brief, reproduction commands and verification evidence are saved.
-No app changes, tuned edits, paid calls, publishing, merge or deployment.
+The proposed app walkthrough became an honest product-output showcase because
+matching saved-project capture evidence was not secured. No fake UI or implied
+instant generation. Original sample, old Spark and first demo are preserved.
+A matching-project walkthrough remains a separate possible next direction,
+not a hidden claim in this export.
 
-## Checks and limitations
-This study's fresh checks: check:codex passes 32 entrypoints and all 26 tests;
-wizard asset profile reports 44 tracked inputs with none absent. Independent
-reference/source review inspected all ten sheets and the captions; its motion,
-depicted-output and sample-timing corrections are incorporated in the study.
-Reference playback/listening and replacement-preview acceptance remain pending.
-The following export checks apply to the older 15-second Spark study only:
-Hyperframes lint/runtime/sampled layout and transitions pass both formats.
-Both exports fully decode; zero nearly-black intervals >= 0.3s at test threshold.
-Both AAC tracks measure -13.83 LUFS and -1.41 dBTP.
-Fresh independent brand/source/frame review: BRAND_PASS, 44/50, no open findings.
-The earlier dark handoff and noncanonical icons were corrected before final export.
-390px ending samples and 200% logo/icon inspection pass.
-Text-revision test passes ten samples under a recorded one-level RGB / 0.02 mean
-limit; an unintended BUILD -> BROKEN edit is rejected. This is NOT a pixel-identical
-claim: strict equality initially failed on a tiny panel difference, reviewed and
-measured independently. See qa/revision-check.json and verification.md.
-check:codex: 32 entrypoints, zero errors, all 26 tests pass.
-No app build/full application suite needed; source/dependencies are unchanged.
-Continuous playback, subjective listening, physical-phone review and Neil's
-creative acceptance of this new preview remain pending. No local browser workaround.
+## Evidence and corrections
+Final Hyperframes checks pass both layouts. FFprobe counts correct 600 frames,
+25s and audio; full decode succeeds. Final measurements and hashes are in
+qa/media-check.json. Text revision passes ten sampled comparisons and a wrong
+later-copy negative control. check:codex passes 32 entrypoints and all 26 tests.
 
-## Related handoff
-PR #143: https://github.com/yopiheart/grifon-command/pull/143
-First demo/player: artifacts/grifon-motion-director-review.html.
-Workflow defaults merged in #141; prompt audit in #139; release evidence in #140.
+Independent review caught the sample returning to a person after the product.
+Actual source inspection: 271 decoded frames at 30 fps, last frame begins next scene
+(despite recipes.ts describing approximately 9.03s). Only the new task-local copy
+is trimmed to 270 frames / 9s; original frame269 holds above the video at 16.5s.
+Fresh independent final critic: BRAND_PASS_WITH_NITS, 42/50; no critical findings. Final boundary sheets include frames 396,397,398,402,408,415,598,599.
+The first source-match check failed due to YUV odd-coordinate crop rounding;
+RGB crop handling fixed it without loosening the <=4 mean-channel limit.
+Source-match frozen control is rejected. See verification.md for actual scope.
+
+Portrait is the phone-feed version. Landscape source captions need landscape
+playback; do not claim readability in a 375px-wide landscape thumbnail.
+Continuous playback, subjective listening and Neil's creative acceptance remain
+pending; no browser workaround. The delivered mix is music-only.
+
+## Handoff
+Branch: codex/grifon-motion-spark, stacked on codex/grifon-motion-director.
+Draft PR144: https://github.com/yopiheart/grifon-command/pull/144
+Draft PR143: https://github.com/yopiheart/grifon-command/pull/143
+The original installed Motion Director skill remains unchanged.
+Earlier reference analysis: workflows/assets/grifon-motion-spark/reference-analysis.md.
+Its 110 half-second frames and audio scans cover the supplied YouTube timeline;
+it is one-off evidence, not a validated winning pattern. No pattern counts changed.

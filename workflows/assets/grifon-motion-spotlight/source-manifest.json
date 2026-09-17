@@ -1,0 +1,37 @@
+{
+  "spec": {
+    "duration": 25,
+    "fps": 24,
+    "copy": {
+      "opening": "YOUR PRODUCT.",
+      "proof": "MADE WITH GRIFON.",
+      "sample": "AI-GENERATED SAMPLE AD",
+      "lead": "GIVE IT",
+      "payoff": "THE SPOTLIGHT.",
+      "brand": "GRIFON",
+      "url": "GRIFON.AI"
+    },
+    "formats": {
+      "portrait": {
+        "width": 1080,
+        "height": 1920
+      },
+      "landscape": {
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  },
+  "assets": {
+    "public/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "workflows/assets/grifon-promo-canvas/fonts/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "workflows/assets/grifon-promo-canvas/fonts/jbmono-600.ttf": "df54dbfafba61d4911eb3dab9bba2d20531fb009f01d64dd42fa96ab862584d8",
+    "media/sample.mp4": "b1d2b68d88fd70765273065febf4f27dee5df9ff7e35c8228941175d7c5510cc",
+    "media/product.jpg": "f491d39352f3c638565caef9e02f62da23e9ab5968cd2afa30933770b9e0d6ad",
+    "media/product-end.jpg": "536152b760230622cf1668bc1ee0936abed53e6d709e8ddcac54dec5866405c6",
+    "media/presenter.jpg": "1f6c31451dea96c4274a5e8b0b235beb82fea5e33803620af124078ec824aba1"
+  },
+  "footage": "First270frames of public/samples/real_talk.mp4;271 decoded original frames@30fps; last frame belongs to next scene and is excluded. Source run apr_34d06c7f per recipes.ts; edited excerpt9.0s.",
+  "productStill": "sample.mp4 at 8s; not a separate input-photo claim",
+  "generationSpendUsd": 0
+}
