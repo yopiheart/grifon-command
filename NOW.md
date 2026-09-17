@@ -1,19 +1,24 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, approved workflow and personal-desktop updates applied**
+**Stamped: 2026-09-17, workflow and personal-desktop updates merged**
 
 ## Current state
 Neil uses his persistent personal Windows desktop, sometimes remotely from mobile.
 Cafe-PC wipe/reinstall/sign-out assumptions no longer govern work.
-Branch: `codex/workflow-instruction-cleanup`.
-Draft PR #141: https://github.com/yopiheart/grifon-command/pull/141.
+PR #141 merged: https://github.com/yopiheart/grifon-command/pull/141.
+Merge commit: `5d1b583c2bf8d92cb3968ad0f93780982a1a48e5`.
+Local main was fast-forwarded to this commit. Handoff-only branch:
+`codex/workflow-release-handoff`; the feature is already on main.
 Neil explicitly approved both exact patches; both are now applied to 36 active
 files. Do not ask for their approval again. Installs, accounts, dependencies and
 assets are reused. Setup is conditional on actual need. Historical cafe helpers
 remain under explicit current overrides; mobile disconnects do not force commits.
 
 ## Next action
-Work is applied and verified on the PR branch. Merge/deployment are not authorized.
-Review PR/CI before any separately requested merge. Changed hook source follows
+The user explicitly requested the final CI check and merge; both are complete.
+Pre-merge CI verify, E2E, artifacts and Vercel preview checks passed on the
+independently reviewed head `dec9946a`. Automatic post-merge CI run
+`35175238294` was still running at the handoff check; no result is claimed yet.
+No additional feature implementation or approval is pending. Changed hook source follows
 Codex's normal review/trust UI; tests do not establish current app trust/delivery.
 Fresh tasks discover updated skill descriptions; the initial catalog may be stale.
 
@@ -32,8 +37,11 @@ Prior isolated candidate tests: 16/16; new startup assertion failed original hoo
 Tabletop scenarios were hypothetical, not live automatic-trigger tests.
 Generic skill validator rejects existing invocation metadata in two autopsy skills
 in baseline and candidate; neither metadata nor validator was weakened.
+Post-merge librarian sweep ran explicitly against `5d1b583c` (the default selects
+the previous two-parent merge and misses squash commits). Its broad historical
+migration/product hits do not establish new defects or reopen prior work.
 No paid run, provider integration, secret/auth changes, OS or remote-access changes,
-production writes, deployment, merge, or hook trust modification occurred.
+manual deployment, or hook trust modification occurred.
 
 ## Related work
 Prompt-quality A+B+D merged in PR #139; release evidence is PR #140 / `f71f6365`.
