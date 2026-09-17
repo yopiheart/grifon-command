@@ -108,7 +108,7 @@ The whole point is to **stop re-burning budget on lessons we already paid for.**
 1. **Read the ledger first, every invocation.** Skim the **Pattern Index** and **North-Star Tracker** before recommending any structure or budget — let history inform the buy.
 2. **After every campaign review, append a timestamped entry** (template in the ledger): structure run, creatives/hooks tested, spend, ROAS/MER, hook/hold/CTR/CPA, what was killed/scaled and *why*, and the **So-What for the next campaign**.
 3. **Corroborate patterns.** Increment counts in the Pattern Index; a spend-strategy change only becomes a **Gated Proposal** for Neil at **≥3 corroborating campaigns** (one campaign is an anecdote — variance is brutal at low spend).
-4. **Commit immediately** (`ad-strategist: log <campaign> — MER <x>`). Cafe-PC rule: uncommitted work dies with the reboot, and the ledger is the only thing that makes this skill smarter over time.
+4. **Checkpoint the reviewed ledger** with the completed task (`ad-strategist: log <campaign> — MER <x>`). Local drafts persist; versioned evidence lets future work reuse the findings.
 
 ## Out of scope / wrong tool
 

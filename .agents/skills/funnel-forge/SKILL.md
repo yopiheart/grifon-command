@@ -59,7 +59,7 @@ Proven end-to-end 2026-07-29 on `grifon-starter` (live: grifon-starter.vercel.ap
 5. **QA.** `brand-check` → `smoke-tester` mobile+desktop pass including a full opt-in walk against local dev (test rows use `funnel_id: '<slug>-smoke'`, deleted after). Fix loop until clean.
 6. **Deploy.** From the instance dir: `npx vercel deploy --prod --yes` (CLI, logged in as Neil's account — creates the project on first run; NOT git-connected, redeploys are manual). Then env vars per hard-won rule #2, then redeploy. vercel.app alias unless Neil provides a domain. Meta Pixel stays OFF until a live campaign points at it. Record everything in `workflows/funnel_deploys.md`.
 7. **Live verify.** Per hard-won rule #7 (POST → row → delete) → thank-you renders with the magnet → the bridge CTA carries the email to `/login` → ⛔ **Neil gate — eyeball on his phone.**
-8. **Record.** Commit everything + append a handoff note (Vercel project name, root dir, env vars set, domain) to `workflows/funnel_deploys.md` — Vercel settings aren't in git and the defreezer eats local state.
+8. **Record.** Commit everything + append a handoff note (Vercel project name, root dir, env vars set, domain) to `workflows/funnel_deploys.md` — Vercel settings are external state and need a reproducible handoff.
 
 ## Hard constraints
 

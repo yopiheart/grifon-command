@@ -49,6 +49,13 @@ Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
 
 ## Working Environment
 
+**Current environment (Neil, 2026-09-17):** a persistent personal Windows desktop,
+sometimes controlled remotely from mobile. Use `workflows/codex_desktop.md` for
+the current setup. Reuse installed tools and local state; do not force lite
+clones, reinstallations, sign-outs or immediate commits for cafe-PC reasons.
+The cafe-specific paragraphs below are historical and superseded; security,
+paid-operation and production approval rules remain in force.
+
 Sessions run on rented cafe PCs with a defreezer that wipes `C:\Users\Administrator\` (including `~/.claude/` and `~/.claude.json`) on reboot. **Only the GitHub repo persists across sessions.** Practical implications:
 
 > ⚠️ **A full `git clone` no longer finishes on cafe wifi — use the lite clone in [workflows/cafe_session.md](workflows/cafe_session.md).** The repo is **1.5 GB** (134 MB in June 2026); at the ~30 KiB/s measured on 2026-08-16 a full clone is ~13 hours, and `git clone` has no resume, so a dropped connection restarts from zero. This cost Neil 3 blocked days across 3 different shops. The lite clone (`--filter=blob:none --no-checkout` + `sparse-checkout` excluding media) is **68 MB** and keeps all 1,689 commits, every remote branch, and the whole `.claude/` + `.github/` setup — verified 2026-08-16 with `npm run build` passing and 1,214 tests green. Media is still on GitHub, pulled one folder at a time with `git sparse-checkout add`. `scripts/cafe-start.ps1` automates the whole session start.

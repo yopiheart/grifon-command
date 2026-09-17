@@ -1,6 +1,6 @@
 ---
 name: verify-changes
-description: Validate code changes in two phases — a 3-line contract (success / failure / verification) BEFORE editing, then build + test + smoke loop AFTER. Use before any non-trivial edit to api/, services/, components/, or App.tsx, and before reporting a task complete.
+description: Define and verify the success contract for non-trivial Grifon application changes. Load before editing api/, services/, components/, or App.tsx when the change is non-trivial, and use through completion.
 ---
 
 For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
@@ -32,7 +32,7 @@ A clean type-check is necessary, not sufficient.
 
 **Adversarial diff review (correctness, not just behavior).** The smoke critic above checks *does it do what the contract says* — it doesn't hunt for correctness bugs the contract never anticipated. Before declaring non-trivial work done, also run an independent diff review on the diff: it reviews the current changes for bugs in a fresh subagent context, so the model that wrote the code isn't the one grading it. This is the project-code analogue of what `gemini-eval` / `brand-check` do for *model output* — a fresh pair of eyes on the artifact you just produced. Treat findings the way the best-practices doc advises: fix what affects correctness or the stated contract, and don't over-engineer chasing every speculative flag.
 
-**Leading-words trace check (cheap, do it inline).** Grifon's skills steer with dense leitmotifs — *surgical edit*, *vertical slice*, *single source of truth*, *TUNED files*, *outcome before feature*. Steering only worked if the model speaks those words back to itself: scan your own reasoning trace for this change and confirm the leitmotif that governs the edit actually showed up. A `services/geminiService.ts` / `api/_lib/prompts.ts` touch should have *TUNED files* in the trace; a new module should have *vertical slice*; a one-line fix that started sprawling should have *surgical edit*. If the governing leading word never appears, the instruction didn't land — re-read the owning skill before declaring done, rather than trusting you "knew" the rule. The term echoing in the trace is the cheapest proof the steering took.
+**Verify scope with observable evidence.** Compare the actual diff and verification results with the requested outcome and applicable rules. Check that unrelated behavior is untouched, tuned-content changes match their exact approval, and required checks and independent review are complete. Repeating a rule or keyword is not evidence that it was followed.
 
 ## Goal-compatible contract (when paired with `/goal`)
 

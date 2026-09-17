@@ -53,7 +53,7 @@ Grifon launch video. Full verdict, per-move ownership table, and guardrails:
   `workflows/assets/grifon-launch-video/composition-index.html` — copy into a fresh
   `npx hyperframes init` scaffold and customize per ad; phone-frame sample videos are
   file-swappable slots.
-- **Re-arm after defreezer:** `scripts/restore-hyperframes.ps1`. Never add
+- **If the tool is missing:** `scripts/restore-hyperframes.ps1`. Never add
   hyperframes to the product `package.json` — this lane never enters the product
   runtime.
 - **Mode B split is three-way** (see step 3 below): FFmpeg-executable /
@@ -110,8 +110,8 @@ Grifon launch video. Full verdict, per-move ownership table, and guardrails:
    fast zoom with visible easing — the viewer should FEEL the camera travel; no
    instant jump-cut reframes" — Neil's Sample-4 fix). Validated move vocab lives in
    the registry templates.
-7. **Commit early** (cafe-PC defreezer). Registry entries and skill edits commit
-   immediately; `.tmp/omni-poc/` artifacts are disposable — round entries must stand
+7. **Checkpoint reviewed work.** Save registry entries and skill edits with the
+   completed task; `.tmp/omni-poc/` artifacts are disposable — round entries must stand
    alone without them.
 8. **720p/24 reality.** Omni outputs 720p/24: always run the `upscale` step to 1080p
    BEFORE the FFmpeg deterministic layer. SynthID watermark is embedded in all Omni

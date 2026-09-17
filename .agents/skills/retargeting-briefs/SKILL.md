@@ -16,8 +16,7 @@ audience. Neil approves, builds in Director AI, uploads the roster, and publishe
 The deterministic membership math (who is in each segment, hashed rosters) is done by
 `tools/segment_pull.py`; this skill owns the **creative judgment** — what to say to
 each audience (via `grifon-cmo`) and how it should look (via
-`grifon-creative-director`). Briefs compound in a committed log so they survive the
-cafe-PC defreezer.
+`grifon-creative-director`). Briefs compound in a versioned log so future tasks can reuse the evidence.
 
 ## Hard guardrails (read first)
 
@@ -117,7 +116,7 @@ Append to `workflows/retargeting_briefs.md` (entry template there). Then:
 
 ### Step 6 — Commit
 
-Cafe-PC rule: commit the brief-log update immediately
+Checkpoint the reviewed brief-log update with the completed task
 (`retargeting-briefs: add <date> segment briefs`). Rosters in `.tmp/` are disposable
 and **never committed** (they contain hashed PII) — regenerate them when Neil uploads.
 

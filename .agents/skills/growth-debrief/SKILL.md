@@ -16,7 +16,7 @@ It owns no spend decisions: it proposes, Neil ships.
 The deterministic math (per-creative rollups, funnel step-down, NPS) is done by
 `tools/growth_debrief_pull.py`; this skill owns the **judgment** on top of it
 (the WAT split: tool = math, skill = read). Findings compound in a committed
-**debrief log** so they survive the cafe-PC defreezer.
+**debrief log** so future tasks can reuse the evidence.
 
 ## Hard guardrails (read first)
 
@@ -62,8 +62,7 @@ python tools/growth_debrief_pull.py --days 7 --out .tmp/growth/debrief_input.jso
 The tool emits one consolidated JSON: `ad_performance.by_creative` (per-creative
 rollups + derived rates), `funnel` (event step-down + checkout-abandon), and
 `feedback` (NPS + free-text). It is read-only and never logs secrets. Exit `1
-SECRETS_NOT_CONFIGURED` (live, no `.env`) → fall back to `--fixture`. The cafe PC
-may have no Python (a known pending item) — if `python`/`py` is missing, install
+SECRETS_NOT_CONFIGURED` (live, no `.env`) → fall back to `--fixture`. Check the installed Python before assuming it is missing. If unavailable, install
 Python 3.10+ first, or do the read via the Supabase MCP `execute_sql` against the
 same three tables and shape the numbers by hand.
 
@@ -118,8 +117,7 @@ must re-check — fatiguing creatives, an unproven winner needing more spend).
 
 ### Step 6 — Commit
 
-Cafe-PC rule: uncommitted work dies with the reboot. Commit the debrief-log update
-immediately (`growth-debrief: add <date> debrief`). `.tmp/` artifacts are
+Checkpoint the reviewed debrief-log update with the completed task (`growth-debrief: add <date> debrief`). `.tmp/` artifacts are
 disposable; the entry must stand alone without them.
 
 ## Thresholds (starting heuristics — tune as real data arrives)

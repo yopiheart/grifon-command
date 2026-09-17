@@ -1,5 +1,11 @@
 # Codex desktop execution
 
+Neil now works on a persistent personal Windows desktop, sometimes remotely from mobile.
+Reuse working tools, account sessions, dependencies and local files. Do not apply
+historical cafe-PC wipe/reinstall/sign-out routines or force immediate commits
+solely for session continuity. Repair missing setup as needed for the task; normal
+secret, paid-operation, publication and review boundaries still apply.
+
 The domain rules in these skills survive the Claude Code migration. Use this adapter for tool execution; historical workflow notes are evidence, not proof that a tool or hook is installed.
 
 - **Skills:** project entrypoints live under `.agents/skills/`. Invoke by name (or `$skill-name`); old `/skill-name` wording is a user request, not a guaranteed slash command. Read referenced files from the skill's directory. Before using a missing asset, check `git ls-files` and the sparse checkout; selectively restore required inputs. Never manufacture an identity anchor or replace an approved asset.

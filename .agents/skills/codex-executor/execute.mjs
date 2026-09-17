@@ -107,7 +107,7 @@ if (!codex) {
     'Codex CLI not found — falling back to the code-executor subagent is the SOP.\n' +
     '  Install:   npm i -g @openai/codex\n' +
     '  Then:      codex login   (sign in with your ChatGPT account)\n' +
-    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1',
+    '  If Codex CLI is missing, set it up with: scripts/restore-codex.ps1',
     10
   );
 }
@@ -118,7 +118,7 @@ if (ver.error?.code === 'ENOENT') {
     'Codex CLI not found on PATH — falling back to the code-executor subagent is the SOP.\n' +
     '  Install:   npm i -g @openai/codex\n' +
     '  Then:      codex login\n' +
-    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1',
+    '  If Codex CLI is missing, set it up with: scripts/restore-codex.ps1',
     10
   );
 }

@@ -1,6 +1,6 @@
 ---
 name: viral-autopsy
-description: Run an evidence-bound breakdown of an existing social video or ad (hook anatomy, Edit DNA, storytelling format) via Gemini video analysis, append it to the Swipe File, and optionally remix findings into Grifon-voice hooks/scripts. Use when the user drops a TikTok/YouTube/Instagram/FB-ad link or a video file and wants it analyzed, asks "why does this work" / "what can we steal from this", says "viral autopsy" or "add to swipe file", or wants to know what kind of videos/ads are working so Grifon's output can learn from them. NOT for evaluating Grifon's own generated output (that's gemini-eval) or for auto-discovering trends (this skill analyzes videos the user supplies).
+description: Analyze supplied social videos or ads and record hook, Edit DNA, and storytelling evidence in the Swipe File. Use for video teardowns or remixes; excludes trend discovery and grading Grifon outputs.
 disable-model-invocation: true
 ---
 
@@ -130,7 +130,7 @@ Diff its `deterministic` block + `timeline` against the autopsy's `shots`,
 render_audit" in the entry (see E6). A material mismatch (e.g. ffmpeg finds 18
 cuts where Gemini said 6) → trust ffmpeg for timing, re-read captions off the
 frames, and correct the entry before it pollutes a pattern decision. (Node, not
-Python — survives the defreezer; same engine backs FINAL_RENDER smoke.)
+Python; the same engine backs FINAL_RENDER smoke.)
 
 The same frame vision also **cross-checks the visual register**: confirm Gemini's
 `believability.observed_register` against the still frames (raw-ugc = unretouched
@@ -164,8 +164,7 @@ ang detalyadong map sa recreation brief ng ad na gagawa (hal. km-XXX-brief.md).
 
 If the Jockey by TwelveLabs MCP connector is authed (pilot PASSED 2026-07-25 —
 see `workflows/twelvelabs_decision.md`), ingest the MP4 into the
-`grifon-swipe-file` knowledge store so the *video itself* survives the
-defreezer and joins the queryable corpus:
+`grifon-swipe-file` knowledge store so the *video itself* has a durable backup and joins the queryable corpus:
 
 - Prefer a **direct public URL** as `jockey_add_media`'s `source` (e.g. the
   signed fbcdn URL from `yt-dlp --get-url`) — server-side fetch, no upload.
@@ -189,8 +188,7 @@ template below. Then update:
 
 ### Step 5 — Commit
 
-Cafe-PC rule: uncommitted work dies with the reboot. Commit the Swipe File
-update immediately (`viral-autopsy: add <slug> entry`). `.tmp/` artifacts are
+Checkpoint the reviewed Swipe File update with the completed task (`viral-autopsy: add <slug> entry`). `.tmp/` artifacts are
 disposable; the entry must stand alone without them.
 
 ### Step 6 — Offer the remix (on demand, not automatic)

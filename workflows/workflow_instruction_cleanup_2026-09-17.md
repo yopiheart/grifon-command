@@ -1,16 +1,28 @@
 # Workflow instruction cleanup proposal and Jev evaluation
 
 Date: 2026-09-17. Base: `ee9ad8d123e81f19f74dcd92296ff4d4c4361bc9` (merged prompt-quality PR #139).
-Status: exact candidate prepared and reviewed; active instructions are unchanged.
+Status: Neil explicitly approved both exact patches on 2026-09-17; both are now applied to active repository files on `codex/workflow-instruction-cleanup`.
 GitHub review package: [draft PR #141](https://github.com/yopiheart/grifon-command/pull/141).
 This report records evidence, not additional standing instructions.
 
-## Decision requested
+## Approved patch record
 
-Approve these exact patches in order: [cleanup.patch](proposals/workflow-instructions-2026-09-17/cleanup.patch), then [personal-desktop.patch](proposals/workflow-instructions-2026-09-17/personal-desktop.patch).
+Applied these exact patches in order: [cleanup.patch](proposals/workflow-instructions-2026-09-17/cleanup.patch), then [personal-desktop.patch](proposals/workflow-instructions-2026-09-17/personal-desktop.patch).
 SHA-256: `88f6e26ed663ee6f21fccc99e5e658a79a650c16ec2d120721383cc847c5fde4`.
 The first changes 11 instruction files with 32 insertions and 15 deletions, grouped into the four requested improvements. The second implements Neil's subsequent personal-desktop clarification (details below).
-AGENTS.md requires approval of the specific instruction diff. Approval of the cleanup topic authorized preparing and checking this candidate, not silently changing live instructions.
+The user's subsequent "approved" response authorized this specific pair of patches. No merge or deployment was requested.
+
+## Applied verification
+
+The active changes exactly match the ordered approved patches in an isolated-index comparison. An independent reviewer separately confirmed final Git blob hashes for all 36 changed files, found no actionable findings, and passed the narrow SessionStart protocol test. This verifies source and fixture behavior, not current Codex hook trust or delivery.
+
+- `npm.cmd run check:codex`: 26/26 passed on the applied files.
+- Build: passed, including PowerShell ASCII; existing chunk-size/performance warnings remain.
+- Full test suite: 113 files / 1,401 tests passed; 9 files / 32 existing opt-in tests skipped. The initial run alongside build/control checks had one 5-second timeout in `checkAnchors.test.ts`; a full rerun without the concurrent build passed with unchanged code and timeout settings.
+- Bundle-leak, voice-sync, domain-language, artifact-anchor, four changed JavaScript syntax checks, and applied-diff whitespace checks: passed.
+- No paid generation, Jev integration, OS setting, remote-access configuration, secrets, or hook trust state changed.
+
+The sections below retain original proposal evidence and limitations. Statements about candidates being unapplied or builds not being run describe that earlier phase; this applied-verification section supersedes their status.
 
 ## What the candidate changes
 

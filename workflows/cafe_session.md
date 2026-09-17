@@ -1,5 +1,11 @@
 # Cafe Session Runbook
 
+> Retired cafe-PC procedure as of 2026-09-17. Neil uses a persistent personal
+> desktop with occasional mobile remote access. Follow [codex_desktop.md](codex_desktop.md).
+> The content below is historical: do not reinstall tools, restore flags, change
+> wallpaper, sign out, or re-arm reminders from it. Scheduling requires a current
+> user request; existing installed tools and account sessions should be reused.
+
 > **Legacy VS Code / Claude route.** For the current Codex desktop workflow use
 > [codex_desktop.md](codex_desktop.md) and `scripts/codex-cafe-start.ps1`.
 > This older route remains for compatibility; its Claude MCP restore scripts

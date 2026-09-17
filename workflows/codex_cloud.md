@@ -1,14 +1,15 @@
 # Codex Cloud development runbook
 
-> **Optional cloud route.** The daily Windows cafe workflow now starts in
+> **Optional cloud route.** The primary personal Windows desktop workflow now starts in
 > [codex_desktop.md](codex_desktop.md). PR #124 was merged at `32a09fd`;
 > references below to its pre-merge environment and open PR are historical
 > validation evidence, not current instructions to reopen that work.
 
-This is the browser-only development path for GRIFON COMMAND. The computer-shop
-PC needs only a browser: Git checkout, dependencies, commands, commits, and pull
-requests run in the cloud workspace. Keep `workflows/cafe_session.md` for the
-legacy local Windows route during migration.
+Use Cloud only when a cloud task is requested. Mobile remote control of the
+personal desktop does not require Cloud or a new checkout. In Cloud, checkout,
+dependencies, commands, commits and pull requests run in the cloud workspace.
+The configuration and session instructions below are historical migration
+evidence, not a daily setup, sign-out, or recovery routine for the personal desktop.
 
 ## Exact pre-merge Codex Cloud configuration
 

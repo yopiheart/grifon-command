@@ -1,5 +1,21 @@
 # Workflow: PR Review Loop (fresh-context critic)
 
+## Codex desktop entry point
+
+For Codex, follow AGENTS.md and the [desktop adapter](../.agents/skills/_shared/codex-runtime.md).
+Use the available GitHub connector or authenticated CLI to read the current diff,
+then give the task contract and diff to a fresh independent Codex agent. The main
+loop resolves actionable findings and obtains a fresh review of relevant fixes;
+it does not count its own review or an executor self-review as independent.
+Keep findings local or in the authorized draft PR description unless the user
+explicitly requests a posted comment. Merge and deployment require explicit requests.
+The legacy Claude CI reviewer remains opt-in via ENABLE_LEGACY_CLAUDE_REVIEW.
+
+The remaining procedure preserves the legacy Claude workflow. Its tool names,
+reviewer allocation, CI assumptions, and posting steps do not configure Codex.
+
+## Legacy Claude workflow
+
 **Objective:** Before a PR merges, get a high-recall code review from a *fresh* sub-agent — never
 the agent that wrote the code. A builder cannot reliably self-critique; "fresh eyes" catch what the
 author is blind to.

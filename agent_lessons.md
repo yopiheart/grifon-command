@@ -1,5 +1,11 @@
 # Agent Lessons — Standing Rules
 
+**Current environment override (Neil, 2026-09-17):** work uses a persistent personal
+Windows desktop, sometimes through mobile remote control. Historical cafe-PC
+wipe and setup anecdotes below explain past failures; they do not require daily
+restores, sparse clones, account sign-outs, or rushed commits. Reuse working
+local tools and assets. Follow `workflows/codex_desktop.md` for current operation.
+
 Distilled standing rules from real mistakes in this repo. The full 71-entry history (2026-05 → 2026-07) with complete context lives in [workflows/agent_lessons_archive.md](workflows/agent_lessons_archive.md) — grep it by date or keyword when a rule's backstory matters.
 
 **How to add a lesson (since 2026-07-28):** when something goes sideways, first ask *"can this be a check instead of prose?"* — a hook, a test, a lint, a skill checklist step. Encode it as a verifier where possible; write the full story in the archive; add (or update) only the durable rule here. This file is read every session — it stays small on purpose. Do not pre-write rules for hypothetical mistakes.

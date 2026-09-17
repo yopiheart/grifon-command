@@ -121,7 +121,11 @@ test('commit rejects an invalid changed lockfile without running install scripts
 });
 test('prompt and session context point at continuity and language rules', () => {
   assert.match(JSON.stringify(invoke('UserPromptSubmit', { prompt: 'gusto natin caption' })), /taglish-voice/);
-  assert.match(JSON.stringify(invoke('SessionStart')), /NOW.md/);
+  const startup = JSON.stringify(invoke('SessionStart'));
+  assert.match(startup, /NOW.md/);
+  assert.match(startup, /persistent personal Windows desktop/);
+  assert.match(startup, /Mobile disconnects do not require cleanup, sign-out, or forced commits/);
+  assert.doesNotMatch(startup, /after a cafe reboot/);
 });
 test('Stop detects source changes and blocks failed build; tests stay explicit', () => {
   mkdirSync(join(fixture, 'components'), { recursive: true });

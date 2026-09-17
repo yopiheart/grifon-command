@@ -29,7 +29,7 @@ product-facing image-to-3D feature is ever wanted, it goes through a hosted
 API evaluation (parked in `workflows/post_beta_roadmap.md`) via grill-me →
 Neil → code-executor.
 
-## Setup (clone-on-demand, defreezer-proof)
+## Setup (reuse the local installation; clone if absent)
 
 Nothing is vendored. Upstream churn can't break our repo; this doc survives in
 the repo, the clone is disposable:
@@ -51,7 +51,7 @@ from v1.2.0, flag it to Neil before relying on it.
 1. **Isolation first.** The reference must be the subject alone on a clean
    white/transparent plate before intake — floor clutter and backgrounds
    poison the spec. If the source isn't clean, cut it out via `codex-image`
-   (cafe PC) or a Gemini image-edit pass; already-clean assets (e.g.
+   on the desktop or a Gemini image-edit pass; already-clean assets (e.g.
    `public/griffin-emblem.png`) skip this.
 2. **Multi-angle for complex geometry.** Anything non-symmetrical or
    hardware-like needs overhead + perspective references, not one glamour
@@ -75,7 +75,7 @@ from v1.2.0, flag it to Neil before relying on it.
    `check:bundle-leak` and `brand-check`) delegated to `code-executor`.
 6. **TUNED freeze.** Never touch `services/geminiService.ts`,
    `api/_lib/prompts.ts`, `api/_lib/renderPresets.ts` from this skill.
-7. **Commit what's durable** (cafe-PC defreezer): the sculpt spec, generated
+7. **Checkpoint keeper assets** with the reviewed task: the sculpt spec, generated
    factory `.ts`, and demo HTML for a keeper asset go to
    `assets/3d-lab/<object-slug>/`; `.tmp/` artifacts are disposable. Brand
    assets follow DESIGN.md's world (zinc-950 canvas, Grifon Gold #FFCC00

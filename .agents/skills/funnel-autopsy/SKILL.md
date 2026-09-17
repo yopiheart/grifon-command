@@ -21,7 +21,7 @@ Screenshots: `assets/funnel-swipe/F<NN>/` (compressed, committed).
 4. **The trust line.** Steal the *structure* and the *lever*, never the lie. Fake stock counters, evergreen countdowns, unverifiable claims → record in `trust_flags`, mark do-not-replicate.
 5. **Specificity validator.** An entry must contain: verbatim headline quotes per section, real form field names + required flags, an exact CTA census (count + variants), and verbatim consent/disclaimer language. If you can't produce those, the read is GENERIC_OUTPUT — STOP, re-capture, don't write a fluffy entry.
 6. **Playwright NEVER in the main loop.** All browsing/screenshots/funnel walks go through the `smoke-tester` subagent (foreground).
-7. **Commit immediately** after each entry: `swipe(funnel): add F<NN> <brand>`. Cafe-PC defreezer.
+7. **Checkpoint reviewed entries** with the completed task: `swipe(funnel): add F<NN> <brand>`.
 
 ## Procedure
 
