@@ -1,0 +1,19 @@
+{
+  "title": "Grifon hero film / music and pacing rough cut 03",
+  "width": 960,
+  "height": 540,
+  "fps": 24,
+  "music": "api/_lib/assets/music/testimonial.mp3",
+  "musicNote": "Existing Inspirational Piano library track. Temporary editorial score; no voiceover or product audio.",
+  "shots": [
+    {"id":"01","seconds":4,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png","title":"A product worth showing","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.025},
+    {"id":"02","seconds":2,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C02-founder-bottle-16x9-original.png","title":"Made with care","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.018},
+    {"id":"03","seconds":3,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png","title":"Give Grifon the brief","label":"OWNER STILL / REAL UI STILL NEEDED","zoom":1.02},
+    {"id":"04","seconds":4,"kind":"placeholder","title":"The ad plan","subtitle":"Actual Grifon screen capture pending","label":"PLAN / PLACEHOLDER","note":"Reserve a real hook and scene-plan excerpt. No simulated interface."},
+    {"id":"05","seconds":6,"kind":"video","source":"assets/hero-film/studio-pilot/shaded-camera-preview.mp4","title":"Inside the studio","label":"BLENDER PROXY / GENJUTSU SHOT PENDING","note":"Existing camera preview, wrong proxy product. External production shot; never Grifon output proof."},
+    {"id":"06","seconds":7,"kind":"placeholder","title":"Make it feel human.","subtitle":"Actual Grifon UGC export pending","label":"UGC / PLACEHOLDER","note":"Reserve an uninterrupted same-product excerpt with its original voice."},
+    {"id":"07","seconds":6,"kind":"placeholder","title":"Give it presence.","subtitle":"Actual Grifon cinematic export pending","label":"CINEMATIC / PLACEHOLDER","note":"Reserve same-product output from Grifon, not externally generated studio footage."},
+    {"id":"08","seconds":4,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png","title":"Back to the owner","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.02},
+    {"id":"09","seconds":4,"kind":"endcard","title":"GRIFON.AI","subtitle":"Your product. Your next story.","label":"END CARD / COPY FOR REVIEW"}
+  ]
+}

@@ -1,14 +1,16 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17 07:59 UTC, approved Genjutsu job waiting at provider**
+**Stamped: 2026-09-17, hero rough cut 03 delivered; Genjutsu escalated to support**
 
 ## Current task
-Neil resumed the website hero film and agreed to sample its 13-19s studio beat.
-Neil approved the exact spec with G. Both assets uploaded and confirmed; one job submitted.
+Neil approved continuing the rough cut with existing assets while support handles
+the stalled Genjutsu shot. New 40s music/pacing assembly is saved separately at
+assets/hero-film/rough-cut-v3/hero-rough-cut-03.mp4, with timeline.json, builder,
+contact sheet, README and actual media verification. No new generation calls.
 Branch: codex/hero-film-genjutsu-sample, based on hero-film-storyboard at 916f387f.
 Worktree: C:/Users/ADMIN/Desktop/grifon-hero-genjutsu.
 Main checkout stays on codex/grifon-motion-spark. Never switch it for this task.
 
-## Concrete proposal
+## Existing approved job
 assets/hero-film/genjutsu-sample/test-spec.json: HERO-GENJUTSU-01.
 README beside it links the source video, product original and source sheet.
 Inputs: unchanged studio-pilot/shaded-camera-preview.mp4 plus
@@ -19,7 +21,20 @@ Job: 3c388994-7613-424e-95f5-3d30227702cb. Free counter changed from1 to0. No re
 Local presigned PUT uploads passed HTTP200 and media_confirm. No paid fallback.
 Working After Effects editor/bridge not established; no installation authorized.
 
-## Scope and actual checks
+## Rough cut and checks
+New delivery: 960x540 (matches lowest video source),24fps,960frames,H264/AAC stereo.
+Existing C03/C02/C04/C05 stills get small editorial pushes, no subject animation.
+Added product insert, existing Inspirational Piano library music with fades, and
+a four-second neutral end card. Studio remains at13-19s, marked Genjutsu pending.
+Actual Grifon plan/UGC/cinematic exports remain explicitly labeled empty slots.
+Full decode exit0; no black interval >=0.25s at98% threshold; audio peak-4.6dBFS.
+Opening/ending encoded samples of all nine scenes inspected, last frame intact.
+check:codex passes:31 entrypoints,26 tests,zero failures. git diff --check passes.
+All original source hashes unchanged. Continuous browser playback, subjective
+listening, physical-phone readability and Neil's taste verdict remain pending.
+No app/control/prompt/spec changes, paid audiovisual audit, publish or deploy.
+
+## Genjutsu source checks
 Source is a camera orbit, not a transformation. Test camera preservation,
 KAPE01 identity and studio realism. No new ribbon animation in this test.
 Old studio-look still excluded: wrong DEMO01 bottle and gold-looking coffee.
@@ -43,10 +58,14 @@ HERO-PROOF-02 USD15/four-roll proposal remains unapproved/non-executable.
 Grifon product proof must stay separate from external production footage.
 
 ## Next
-Job still waiting at07:59UTC, over10minutes after submission; no result URL or error.
-Await only this existing job; never submit a second job. Record output from this one
-attempt. Record actual output/charge/settings and compare honestly.
-Keep failures. Obtain Neil's taste review before further film production.
+Last connector check remained waiting with zero Genjutsu attempts, no output/error.
+Support ticket269974: exact login email confirmed privately in the email thread.
+Jason escalated to development at2026-09-17 08:59UTC, promised follow-up within24h
+(Sept18 around17:00Manila). No resolution or free-attempt restoration confirmed.
+Await only this existing job; never submit a second job or paid retry. If recovered,
+save original output and use genjutsu-sample/build-review.mjs for comparison.
+Get Neil's pacing/music review; missing same-product proof still needs its own
+approved production inputs/budget. No automatic support monitor was configured.
 
 Draft PR145: https://github.com/yopiheart/grifon-command/pull/145.
 Preflight JSON parse, both input SHA-256s and git diff checks passed.
