@@ -4,6 +4,13 @@ Date: September 17, 2026. Baseline: `8754634334dc44b8d2d4768f03d8a2ba5b07b241`.
 Status: **A+B+D approved and applied September 17** after Neil's explicit approval
 of those exact patches in this task. C/E/F remain unapplied and unapproved.
 The original proposal files are retained unchanged as the approval record.
+PR [#139](https://github.com/yopiheart/grifon-command/pull/139) was subsequently
+merged on September 17 as `ee9ad8d123e81f19f74dcd92296ff4d4c4361bc9` after Neil's
+separate merge authorization. A+B+D are on main; C/E/F remain proposals.
+Post-merge verify, browser E2E and artifact jobs passed in
+[CI run 35171687631](https://github.com/yopiheart/grifon-command/actions/runs/35171687631).
+The merge commit's Vercel deployment succeeded. Its tree matches reviewed head
+`f76e7ab4`; the exact approved-file checker also passed on main.
 
 ## Approved implementation
 
@@ -17,8 +24,8 @@ patches against the proposal commit. `--approved` additionally compares the actu
 two target files with exactly A+B+D applied. That check failed on the original
 files, then passed after application. It normalizes line endings only. Historical
 C/E/F candidate checks remain in memory and do not imply those proposals shipped.
-Live output improvement remains unmeasured; this approval does not authorize a
-paid comparison, merge or production deployment.
+Live output improvement remains unmeasured. The original prompt approval did not
+authorize a paid comparison; the subsequent merge authorization is recorded above.
 
 Implementation checks: 70 focused tests passed; full suite 1,401 passed and
 32 gated skips across 113 passing/9 skipped files. Build passed (2,580 modules;

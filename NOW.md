@@ -1,9 +1,11 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, approved A+B+D prompt fixes applied**
+**Stamped: 2026-09-17, A+B+D merged in PR #139**
 
 ## Current state
-Branch: `codex/prompt-quality-audit`, based on main `87546343`.
-Draft PR #139: https://github.com/yopiheart/grifon-command/pull/139
+PR #139 merged as `ee9ad8d123e81f19f74dcd92296ff4d4c4361bc9`:
+https://github.com/yopiheart/grifon-command/pull/139
+Neil separately authorized the merge; A+B+D are now on main.
+This documentation handoff is on `codex/prompt-quality-release-handoff`.
 Neil explicitly approved A+B+D as written after reviewing the linked exact patches.
 Applied five prompt-line replacements in `api/_lib/prompts.ts` and three fixture
 replacements in `tests/regression/script-gen.regression.test.ts`.
@@ -13,14 +15,18 @@ C/E/F, models, schemas, safety settings, generation knobs and retries are unchan
 The original proposed patches and saved 24-output corpus are unchanged.
 
 ## ▶ NEXT ACTION
-Review the implemented A+B+D change in draft PR #139 for a separately requested
-merge. No merge or production deployment is authorized by the prompt approval.
+The approved prompt-quality slice is complete and merged. Ready for another task.
+Post-merge CI: https://github.com/yopiheart/grifon-command/actions/runs/35171687631
+Vercel reported successful deployment for merge commit `ee9ad8d1`.
+Post-merge verify, browser E2E and artifact checks all passed on `ee9ad8d1`.
 A live quality comparison still requires its own exact-input/evidence/max-cost spec.
 Price precedence (C), factual-source policy (E) and beat mapping (F) remain
-unapproved proposals. Do not repeat A+B+D approval or implementation.
+unapproved proposals. Do not repeat A+B+D approval, implementation or merge.
 Full audit and implementation evidence: `workflows/prompt_quality_audit_2026-09-17.md`.
 
 ## Verification
+Merged tree is identical to reviewed PR head `f76e7ab4`; approved-file checker
+also passed on main. Post-merge librarian sweep completed; merge handoff updated.
 `node workflows/evaluations/check-prompt-proposals.mjs --approved` first failed on
 original source, then passed: actual files equal exactly approved A+B+D after
 line-ending normalization. All six proposal files match approval commit `7e619a61`.
