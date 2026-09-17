@@ -1,0 +1,18 @@
+diff --git a/tests/regression/script-gen.regression.test.ts b/tests/regression/script-gen.regression.test.ts
+--- a/tests/regression/script-gen.regression.test.ts
++++ b/tests/regression/script-gen.regression.test.ts
+@@ -213,3 +213,3 @@
+   benefit:
+-    'Walang acne sa morning meeting, kayang mag-sukat ng makeup nang hindi kasama ang acne, mas confident sa Zoom calls',
++    'Mas fresh sa morning meeting, mas confident mag-makeup at humarap sa Zoom calls',
+   painPoint:
+@@ -217,3 +217,3 @@
+   separator:
+-    'Inumin lang at may visible results sa 14 days, hindi P10K facial sessions',
++    'Ipahid lang para sa fresh na glow sa 14 days, hindi P10K facial sessions',
+   features:
+@@ -288,3 +288,3 @@
+   benefit:
+-    'Move-in ready malapit sa trabaho, malinaw ang title at terms, walang gulat na singil',
++    'Malapit sa trabaho, malinaw ang title at terms, walang gulat na singil',
+   painPoint:

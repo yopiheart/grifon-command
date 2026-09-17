@@ -378,7 +378,7 @@ export const UGCPRO_SERVICE_CLASSIFIER_PROMPT = (service: string, description: s
 export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: string, language: 'English' | 'Taglish'): string => `
   **CORE CONSTRAINTS (MANDATORY):**
   - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
-  - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit everything else.
+  - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit other optional features. This filter does not remove a nonempty differentiator when the selected formula explicitly requires it in a proof, turn, or standout beat.
   - **LOGIC LOCK:** Use Brand Name "${brandName}" EXACTLY. Product mentions can be shortened naturally — say "this kape", "ito", "${brandName}", or descriptive shorthand. Do NOT recite the full SKU/product name verbatim ("${businessInfo.product}"); that reads like a product page, not an ad.
   - **READING LEVEL:** 4th-5th Grade. Simple, punchy, visceral storytelling.
   - **AUDIENCE REGISTER:** Tune vocabulary, idiom, and mental pictures to match this person: "${businessInfo.audience}".
@@ -397,12 +397,12 @@ export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: str
       (a) Brand names — proper nouns like "${brandName}" stay English.
       (b) Prices and numbers — "₱650", "P22 vs P180", "30 days".
       (c) A borrowed CTA verb ("Click", "Tap", "Visit") — but ONLY embedded inside a Tagalog frame (see TAGLISH ACCENT LOCK below). An all-English CTA like "Click below" is BANNED in Taglish mode.
-    English is FORBIDDEN for product-spec terms. Translate to natural Taglish or OMIT:
+    English is FORBIDDEN for product/service specifications and marketing terms, including text copied from the supplied product, features, or separator. Translate to natural Taglish or OMIT optional specs:
       "single-origin medium roast" → "specialty kape" or drop it (visuals carry it)
       "cafe-quality goodness"      → "parang barista ang lasa" or drop it
       "delivered to your doorstep" → "padala sa bahay"
       "premium packaging"          → "mukhang sosyal" or drop it
-    If you cannot find natural Taglish for a technical term, OMIT IT. Visuals carry technical specs; copy carries emotion.
+    If you cannot find natural Taglish for an OPTIONAL technical term, OMIT IT. For a differentiator required by the selected formula, simplify the wording while preserving its concrete meaning in the designated proof/turn/standout beat; do not drop the proof merely to avoid jargon. Visuals carry optional technical specs; copy carries emotion and required proof.
   - If ENGLISH: stay 4th-5th grade English. No Taglish slips. No "po", "naman", "talaga", "lasa".
   - NEVER mix registers inside one line. A Taglish line stays Taglish; an English line stays English.
   - **TAGLISH ACCENT LOCK (Taglish mode only):** Veo reads the spoken accent from each line's DOMINANT language — an English-leaning line renders an American accent. Every line MUST be TAGALOG-DOMINANT (~70/30 Tagalog-to-English by word count). The CTA is the highest-risk line and MUST additionally OPEN and CLOSE on a Tagalog word (open "Tara,"/"Ngayon na,"; close "ngayon"/"subukan mo na"). English is limited to carve-outs that stay verbatim and buried mid-line: brand name, numbers/scarcity ("first 50"), and offer value-add nouns ("free shipping", "recipe ebook"). The frame — verbs (except a borrowed "click"/"tap"), connectors, pronouns — is Tagalog.
@@ -939,7 +939,7 @@ export const buildAdScriptPrompt = (
       2. **Before Story:** Agitate the 'Main Problem': "${businessInfo.painPoint}".
       3. **Discovery:** Speaker introduces the hero "${brandName}'s ${businessInfo.product}" with a COMPLETE verb construction. NEVER drop the verb — verbless fragments break the line. PATTERN: "Hanggang sa [verb-phrase] [hero-product]" or "Pero simula nung [verb + na/ko/tong] [hero-product]". Examples: "Hanggang sa natikman ko itong ${brandName}." / "Pero simula nung na-try ko tong ${brandName}." / "Buti na lang, sinubukan ko ang ${brandName}." BANNED: "Pero simula nung ${brandName}" alone (verbless fragment).
       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.benefit}").
-      5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
+      5. **Proof:** Make the concrete differentiator "${businessInfo.separator}" the reason to believe. Preserve its distinguishing meaning in natural language, not necessarily its exact words; a generic result or unrelated selected feature is not a substitute. Keep it in this proof beat, not the hook or CTA. Add a selected feature only if it fits the existing line budget. If separator is empty, highlight the 1-2 selected features without inventing a differentiator.
       6. **Objection Killer:** Solve the common doubt.
       7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad. In Taglish mode the CTA MUST obey the TAGLISH ACCENT LOCK (Tagalog-dominant, opens + closes on a Tagalog word).
 
@@ -997,7 +997,7 @@ export const buildAdScriptPrompt = (
         2. **Identity:** Relatable audience statement (5-10 words). Direct address to the audience using "ka", "mo", "tayo", or "kayo" — name a scene from their life they immediately recognize. Reference their world (work, home, daily struggle, environment). NEVER name them by demographic label ("para sa mga OFW", "sa mga moms" — banned). Audience: "${businessInfo.audience}". (See IDENTITY PATTERN EXAMPLES below.)
         3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
-        5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
+        5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}", grounded in the concrete differentiator "${businessInfo.separator}". Preserve its distinguishing meaning in natural language, not necessarily its exact words; a generic result or unrelated selected feature is not a substitute. This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, use the benefit without inventing a differentiator.
         6. **CTA:** High-energy ad-native call-to-action. Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad. In Taglish mode the CTA MUST obey the TAGLISH ACCENT LOCK (Tagalog-dominant, opens + closes on a Tagalog word).
 
            BANNED CTA PHRASES (organic-IG patterns, not for paid ads):

@@ -1,0 +1,18 @@
+diff --git a/api/_lib/prompts.ts b/api/_lib/prompts.ts
+--- a/api/_lib/prompts.ts
++++ b/api/_lib/prompts.ts
+@@ -379,3 +379,3 @@
+   **CORE CONSTRAINTS (MANDATORY):**
+-  - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
++  - ${businessInfo.scriptType === 'RealEstate' || (businessInfo.scriptType === 'UGCPro' && businessInfo.businessType === 'realestate') ? '**PRICE PRECEDENCE:** Follow the real-estate PRICE RULE below for the supplied listingPrice only. Offer prices remain forbidden. With no listingPrice, remain inquiry-only and never invent a price.' : '**NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.'}
+   - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit everything else.
+@@ -510,3 +510,3 @@
+   const PRICE_RULE = priceGiven
+-    ? `A price was given: "${businessInfo.listingPrice!.trim()}". AFFORDABILITY REFRAME (PH first-time buyers think in monthly + downpayment, NOT lump sum): if the value reads as monthly/DP terms (e.g. "25k/month", "50k DP"), LEAD with that, stated once EXACTLY as given. If it is ONLY a large lump sum (e.g. "₱4.2M"), do NOT make that scary sticker the headline — fold it in once softly, OR (better) withhold it and drive the DM ("PM kita ng full computation") to protect curiosity and qualify the lead. NEVER invent, round, convert, or fabricate monthly/financing/DP terms the user did not actually provide.`
++    ? `A price was given: "${businessInfo.listingPrice!.trim()}". AFFORDABILITY REFRAME (PH first-time buyers think in monthly + downpayment, NOT lump sum): if the value reads as monthly/DP terms (e.g. "25k/month", "50k DP"), LEAD the price-bearing beat with those terms, stated once EXACTLY as given. Placement: UGC Pro real-estate tutorial uses tip 1, not its hook or CTA; RealEstate walkthrough uses its Affordability + CTA beat, not its hook. If it is ONLY a large lump sum (e.g. "₱4.2M"), do NOT make that scary sticker the headline — fold it in once softly in the same designated beat, OR (better) withhold it and drive the DM ("PM kita ng full computation") to protect curiosity and qualify the lead. NEVER invent, round, convert, or fabricate monthly/financing/DP terms the user did not actually provide.`
+     : `NO price was given — INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for the price, computation & viewing".`;
+@@ -780,3 +780,3 @@
+       INQUIRE / viewing — "buy now", "add to cart", "order now", and product-scarcity
+-      ("only 3 left") are BANNED. NO peso amount ever, and no invented free-consult/
++      ("only 3 left") are BANNED. ${bt === 'realestate' ? 'NO peso amount in the CTA' : 'NO peso amount ever'}, and no invented free-consult/
+       inspection offer the "${offer}" does not state.` : ''}

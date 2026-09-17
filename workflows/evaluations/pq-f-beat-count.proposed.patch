@@ -1,0 +1,13 @@
+diff --git a/api/_lib/prompts.ts b/api/_lib/prompts.ts
+--- a/api/_lib/prompts.ts
++++ b/api/_lib/prompts.ts
+@@ -936,2 +936,3 @@
+-      **TESTIMONIAL STRUCTURE:**
++      **TESTIMONIAL STRUCTURE:**
++      **BODY MAPPING:** Put hooks only in hook1/hook2. Return exactly 7 body entries, one for each numbered beat 1-7 below. Keep proof in body[4], objection in body[5], and the complete CTA in body[6]; do not split a beat or add filler entries.
+       0. **Hook (3s/5-8 words):** Shock or extreme curiosity. PROVIDE 2 VARIATIONS — both 5-8 words, both curiosity-driven pattern interrupts. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip this beat.
+@@ -995,2 +996,3 @@
+-        **MRBEAST STRUCTURE:**
++        **MRBEAST STRUCTURE:**
++        **BODY MAPPING:** Put hooks only in hook1/hook2. Return exactly 5 body entries, one for each numbered beat 2-6 below. Keep result + proof together in body[3] and the complete CTA in body[4]; do not split a beat or add filler entries.
+         1. **Hook (3s/5-8 words):** Curiosity-driven pattern interrupt. PROVIDE 2 VARIATIONS — both 5-8 words. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip. Hook stays curiosity-gap-pure — no offer, no differentiator. NEVER use demographic labels in the hook ("for OFWs", "sa mga moms", "para sa OFW", "for Filipino dads" — all banned). Curiosity comes from the situation/visual, not the audience tag.

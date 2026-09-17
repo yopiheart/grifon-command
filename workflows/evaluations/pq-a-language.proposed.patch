@@ -1,0 +1,13 @@
+diff --git a/api/_lib/prompts.ts b/api/_lib/prompts.ts
+--- a/api/_lib/prompts.ts
++++ b/api/_lib/prompts.ts
+@@ -399,3 +399,3 @@
+       (c) A borrowed CTA verb ("Click", "Tap", "Visit") — but ONLY embedded inside a Tagalog frame (see TAGLISH ACCENT LOCK below). An all-English CTA like "Click below" is BANNED in Taglish mode.
+-    English is FORBIDDEN for product-spec terms. Translate to natural Taglish or OMIT:
++    English is FORBIDDEN for product/service specifications and marketing terms, including text copied from the supplied product, features, or separator. Translate to natural Taglish or OMIT optional specs:
+       "single-origin medium roast" → "specialty kape" or drop it (visuals carry it)
+@@ -404,3 +404,3 @@
+       "premium packaging"          → "mukhang sosyal" or drop it
+-    If you cannot find natural Taglish for a technical term, OMIT IT. Visuals carry technical specs; copy carries emotion.
++    If you cannot find natural Taglish for an OPTIONAL technical term, OMIT IT. For a differentiator required by the selected formula, simplify the wording while preserving its concrete meaning in the designated proof/turn/standout beat; do not drop the proof merely to avoid jargon. Visuals carry optional technical specs; copy carries emotion and required proof.
+   - If ENGLISH: stay 4th-5th grade English. No Taglish slips. No "po", "naman", "talaga", "lasa".
