@@ -1,0 +1,44 @@
+{
+  "expectations": [
+    {
+      "text": "Preserves all four approved beats and exact visible words without requesting the same creative approval again.",
+      "passed": true,
+      "evidence": "Four approved 0-3/3-6/6-9/9-12 beats are present, without asking again for their approval."
+    },
+    {
+      "text": "Names DESIGN.md, brand-spec.md and existing launch/demo source; uses public/logo.png in the transparent thin gold GrifonMark ring with italic GRIFON, keeps GRIFON.AI as a separate address, and makes no application edits.",
+      "passed": false,
+      "evidence": "FAIL: output says retain GRIFON AI and cites public/logo-badge.png; it omits brand-spec.md and conflicts with the canonical lockup."
+    },
+    {
+      "text": "Plans separately composed portrait and landscape outputs plus editable source and frame sheet.",
+      "passed": true,
+      "evidence": "Separate vertical/horizontal layouts, editable composition, MP4s and contact sheet are explicitly planned."
+    },
+    {
+      "text": "Includes actual playback/audio inspection and a disposable text-revision check; does not claim these have passed.",
+      "passed": true,
+      "evidence": "Full MP4/audio review and disposable text replacement are planned; all checks remain pending."
+    },
+    {
+      "text": "Makes no paid render, generation, or provider-backed QA call.",
+      "passed": true,
+      "evidence": "Output explicitly states no render, generation, paid/provider QA or playback occurred."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.8
+  },
+  "user_notes_summary": {
+    "uncertainties": [
+      "Rubric-exposed authored dry runs, not blind benchmarks. With-skill output 1 was corrected after an independent reviewer found a wrong-logo recommendation. Baseline output is preserved as originally authored. Scores describe written rubric coverage only; no skill superiority, automatic activation, live provider, render quality, or user approval is established. Time/token metrics were not captured and are unavailable."
+    ],
+    "needs_review": [
+      "Human review of the written plans and the separate actual demo."
+    ],
+    "workarounds": []
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "eval_id": 3,
+  "method": "Author self-check of written dry-run output with deterministic marker presence; not independent grading or media execution.",
+  "expectations": [
+    {
+      "text": "Routes reference-only analysis to viral-autopsy.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"Viral Autopsy\", \"viral-autopsy\""
+    },
+    {
+      "text": "Routes ordinary trim/music work to ai-editor.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"AI Editor\", \"ai-editor\""
+    },
+    {
+      "text": "Does not create a motion storyboard, paid job, or application feature for either request.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"No analysis, edit, storyboard, render, paid job, or app change was started\""
+    }
+  ]
+}

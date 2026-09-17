@@ -1,0 +1,24 @@
+{
+  "portrait": {
+    "sha256": "02183925170c26199c42090166448ab7f8190fc80513048fa3d9acd5d4d2c9a3",
+    "integratedLufs": -13.82,
+    "truePeakDbtp": -1.41,
+    "loudnessRange": 1,
+    "pass": true
+  },
+  "landscape": {
+    "sha256": "2b2c750ac965270268d7df3f0d7f8da0fe09fcb74f01a8fde254b401aa29102f",
+    "integratedLufs": -13.82,
+    "truePeakDbtp": -1.41,
+    "loudnessRange": 1,
+    "pass": true
+  },
+  "negativeControl": {
+    "sha256": "0beb23e69748c52607a36417bfd5e46c5008c668e7ae1974e926f657863c7443",
+    "integratedLufs": -13.28,
+    "truePeakDbtp": 5.27,
+    "loudnessRange": 1.1,
+    "rejected": true,
+    "reason": "Original single-pass loudnorm mix without post-resample limiter"
+  }
+}

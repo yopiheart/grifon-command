@@ -1,0 +1,82 @@
+{
+  "portrait": {
+    "probe": {
+      "exit": 0
+    },
+    "media": {
+      "duration": "12.000000",
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "width": 1080,
+          "height": 1920,
+          "fps": "24/1",
+          "frames": "288",
+          "duration": "12.000000"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "fps": "0/0",
+          "frames": "563",
+          "duration": "12.000000",
+          "sample_rate": "48000",
+          "channels": 2
+        }
+      ]
+    },
+    "decode": {
+      "exit": 0
+    },
+    "sound": {
+      "exit": 0
+    },
+    "black": {
+      "exit": 0
+    },
+    "sheet": {
+      "exit": 0
+    }
+  },
+  "landscape": {
+    "probe": {
+      "exit": 0
+    },
+    "media": {
+      "duration": "12.000000",
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "width": 1920,
+          "height": 1080,
+          "fps": "24/1",
+          "frames": "288",
+          "duration": "12.000000"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "fps": "0/0",
+          "frames": "563",
+          "duration": "12.000000",
+          "sample_rate": "48000",
+          "channels": 2
+        }
+      ]
+    },
+    "decode": {
+      "exit": 0
+    },
+    "sound": {
+      "exit": 0
+    },
+    "black": {
+      "exit": 0
+    },
+    "sheet": {
+      "exit": 0
+    }
+  }
+}

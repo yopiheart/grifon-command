@@ -1,0 +1,69 @@
+{
+  "mode": "classification_simulation",
+  "actual_skill_activation_tested": false,
+  "expected_labels_read": false,
+  "candidate_skill_read": false,
+  "limitation": "Candidate trigger description was not loaded. Predictions infer motion-production scope; not a measured activation benchmark. Production eval responses were rubric-exposed.",
+  "results": [
+    {
+      "index": 1,
+      "query": "Create a Grifon launch bumper with kinetic typography and animated prompt cards; deliver an editable composition and MP4.",
+      "predicted_motion_director": true,
+      "reason": "Authored kinetic typography, prompt-card motion and editable video composition."
+    },
+    {
+      "index": 2,
+      "query": "For a client promo, animate this approved logo and product photo with two benefit cards in portrait and landscape.",
+      "predicted_motion_director": true,
+      "reason": "Client-branded logo/photo motion composition in two aspect ratios."
+    },
+    {
+      "index": 3,
+      "query": "Add authored animated labels and icon graphics beside the speaker in my launch footage, timed to the three phrases.",
+      "predicted_motion_director": true,
+      "reason": "New authored animated labels and icons synchronized to footage; compositing work rather than ordinary trimming."
+    },
+    {
+      "index": 4,
+      "query": "Turn this static process diagram into a short narrated motion graphic using existing audio and editable text.",
+      "predicted_motion_director": true,
+      "reason": "Animate an existing diagram with editable text and existing narration; authored motion production."
+    },
+    {
+      "index": 5,
+      "query": "Analyze this competitor reel's motion design and hook. I only want the breakdown, no video.",
+      "predicted_motion_director": false,
+      "reason": "Analysis-only request belongs to viral-autopsy."
+    },
+    {
+      "index": 6,
+      "query": "Trim dead air and lower the background music in this reel; keep the existing graphics.",
+      "predicted_motion_director": false,
+      "reason": "Ordinary dead-air trim and music-level adjustment belong to ai-editor."
+    },
+    {
+      "index": 7,
+      "query": "Add a Motion Design tab to the Grifon dashboard and wire up billing.",
+      "predicted_motion_director": false,
+      "reason": "Application feature and billing implementation, not creative video production."
+    },
+    {
+      "index": 8,
+      "query": "Generate a new Kuya Marvin talking shot with the approved identity anchors.",
+      "predicted_motion_director": false,
+      "reason": "Identity-consistent character shot generation belongs to marvin-avatar and the Kuya Marvin ad pipeline."
+    },
+    {
+      "index": 9,
+      "query": "Apply the approved Omni editing preset to this footage.",
+      "predicted_motion_director": false,
+      "reason": "Explicit existing Omni preset application belongs to ai-editor."
+    },
+    {
+      "index": 10,
+      "query": "Review this app button animation against DESIGN.md; do not create a video.",
+      "predicted_motion_director": false,
+      "reason": "Existing UI animation fidelity review belongs to brand-check."
+    }
+  ]
+}

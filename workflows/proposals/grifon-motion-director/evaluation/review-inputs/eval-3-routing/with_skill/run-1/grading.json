@@ -1,0 +1,34 @@
+{
+  "expectations": [
+    {
+      "text": "Routes reference-only analysis to viral-autopsy.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"Viral Autopsy\", \"viral-autopsy\""
+    },
+    {
+      "text": "Routes ordinary trim/music work to ai-editor.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"AI Editor\", \"ai-editor\""
+    },
+    {
+      "text": "Does not create a motion storyboard, paid job, or application feature for either request.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"No analysis, edit, storyboard, render, paid job, or app change was started\""
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3,
+    "pass_rate": 1
+  },
+  "user_notes_summary": {
+    "uncertainties": [
+      "Rubric-exposed authored dry runs, not blind benchmarks. With-skill output 1 was corrected after an independent reviewer found a wrong-logo recommendation. Baseline output is preserved as originally authored. Scores describe written rubric coverage only; no skill superiority, automatic activation, live provider, render quality, or user approval is established. Time/token metrics were not captured and are unavailable."
+    ],
+    "needs_review": [
+      "Human review of the written plans and the separate actual demo."
+    ],
+    "workarounds": []
+  }
+}

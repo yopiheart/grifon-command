@@ -1,50 +1,37 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, workflow and personal-desktop updates merged**
+**Stamped: 2026-09-17, Grifon Motion Director skill and local demos**
 
 ## Current state
-Neil uses his persistent personal Windows desktop, sometimes remotely from mobile.
-Cafe-PC wipe/reinstall/sign-out assumptions no longer govern work.
-PR #141 merged: https://github.com/yopiheart/grifon-command/pull/141.
-Merge commit: `5d1b583c2bf8d92cb3968ad0f93780982a1a48e5`.
-Local main was fast-forwarded to this commit. Handoff-only branch:
-`codex/workflow-release-handoff`; the feature is already on main.
-Neil explicitly approved both exact patches; both are now applied to 36 active
-files. Do not ask for their approval again. Installs, accounts, dependencies and
-assets are reused. Setup is conditional on actual need. Historical cafe helpers
-remain under explicit current overrides; mobile disconnects do not force commits.
+Branch: `codex/grifon-motion-director`.
+Neil approved the implementation plan and then the exact installation patch
+SHA-256 `2b542b8b135997e33a322856de8bd00d45c5bacf75fa3b37dfdbc046ce462074`.
+The new `.agents/skills/grifon-motion-director/` skill is installed unchanged.
+Existing application code, tuned prompts, other skills and hero-film work are untouched.
+Portrait and landscape demos are ready: 12 seconds, 24 fps, 288 frames,
+1080x1920 and 1920x1080, H.264/AAC with existing music, no voiceover.
+Editable source and reproduction commands: workflows/assets/grifon-motion-director-demo/.
+Offline player: artifacts/grifon-motion-director-review.html.
 
-## Next action
-The user explicitly requested the final CI check and merge; both are complete.
-Pre-merge CI verify, E2E, artifacts and Vercel preview checks passed on the
-independently reviewed head `dec9946a`. Automatic post-merge CI run
-`35175238294` was still running at the handoff check; no result is claimed yet.
-No additional feature implementation or approval is pending. Changed hook source follows
-Codex's normal review/trust UI; tests do not establish current app trust/delivery.
-Fresh tasks discover updated skill descriptions; the initial catalog may be stale.
+## Remaining review
+CUA rejected the local file URL and expressly prohibited browser workarounds.
+Mobile/desktop review-page screenshots, controls/overflow, full browser playback,
+physical-phone playback and subjective listening are unverified; do not claim done.
+Independent actual-MP4 frame review and 390px samples pass.
+Neil's creative approval and fresh-session automatic skill-trigger testing remain open.
+No publishing, merge, deployment, campaign changes, or paid generation occurred.
 
 ## Evidence
-`workflows/workflow_instruction_cleanup_2026-09-17.md` records approved hashes,
-scope, proposal evidence, applied verification, and the TypeSafe Jev assessment.
-Exact applied-source comparison passed for both ordered patches.
-Independent applied review: no actionable findings; all 36 final blobs match;
-independent narrow SessionStart test passed.
-`npm.cmd run check:codex`: all 26 tests passed.
-Build passed, including PowerShell ASCII; existing chunk warnings remain.
-Full tests: 113 files / 1,401 tests passed; 9 files / 32 opt-in tests skipped.
-Initial concurrent run had one checkAnchors timeout; full rerun passed unchanged.
-Bundle-leak, voice-sync, domain-language, artifact-anchor and JS syntax checks pass.
-Prior isolated candidate tests: 16/16; new startup assertion failed original hook.
-Tabletop scenarios were hypothetical, not live automatic-trigger tests.
-Generic skill validator rejects existing invocation metadata in two autopsy skills
-in baseline and candidate; neither metadata nor validator was weakened.
-Post-merge librarian sweep ran explicitly against `5d1b583c` (the default selects
-the previous two-parent merge and misses squash commits). Its broad historical
-migration/product hits do not establish new defects or reopen prior work.
-No paid run, provider integration, secret/auth changes, OS or remote-access changes,
-manual deployment, or hook trust modification occurred.
+Installed check:codex: 32 entrypoints, zero errors, all 26 tests pass.
+Hyperframes lint/runtime/layout checks pass both layouts, including transitions.
+Both exports fully decode; final audio measures -13.82 LUFS and -1.41 dBTP.
+The audio checker reproduces and rejects the original +5.27 dBTP clipping defect.
+Ten browser-frame revision checks pass; unchanged beats are pixel-identical.
+Independent source review resolved the initial logo mismatch; canonical mark used.
+Three skill dry-run cases plus baseline outputs and static evaluation viewer saved.
+Rubric-exposed dry runs are not a skill-superiority benchmark or live trigger test.
+JS syntax and artifact-anchor checks pass; no app build/full suite needed for this scope.
+The separate verification and smoke records include hashes and browser limitations.
 
 ## Related work
-Prompt-quality A+B+D merged in PR #139; release evidence is PR #140 / `f71f6365`.
-Do not repeat those changes or request their approval again. Unapproved C/E/F
-proposals remain separate. Jev is a possible future classifier comparison, not a
-generation replacement. Tweet text/replies were read; embedded videos did not play.
+Workflow/personal-desktop updates are already merged in PR #141; no repeat needed.
+Prompt-quality A+B+D merged in PR #139; release evidence remains PR #140.

@@ -1,0 +1,42 @@
+{
+  "skill_name": "grifon-motion-director",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Dry-run only: plan the already approved 12-second Grifon motion demo using the supplied local launch assets. Logo at 0-3s, DESCRIBE at 3-6s, BUILD at 6-9s, LAUNCH and GRIFON.AI at 9-12s. Use music, no voiceover, portrait and landscape. Explain the files, exact copy, preview, final checks, and revision test. Do not render, generate, publish, install the skill, or call AI analysis.",
+      "expected_output": "A concise production brief reusing approval, Grifon design/assets, independent layouts, authored text, Hyperframes plus FFmpeg, and truthful zero-paid verification boundaries.",
+      "files": [],
+      "expectations": [
+        "Preserves all four approved beats and exact visible words without requesting the same creative approval again.",
+        "Names DESIGN.md, brand-spec.md and existing launch/demo source; uses public/logo.png in the transparent thin gold GrifonMark ring with italic GRIFON, keeps GRIFON.AI as a separate address, and makes no application edits.",
+        "Plans separately composed portrait and landscape outputs plus editable source and frame sheet.",
+        "Includes actual playback/audio inspection and a disposable text-revision check; does not claim these have passed.",
+        "Makes no paid render, generation, or provider-backed QA call."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Dry-run only: I need a 10-second motion promo for fictional client Harbor Tools. Treat the provided design brief as its approved client rules: navy #102A43, cream #FFF7E8, supplied unchanged logo, product photo with no new views. Exact approved copy: HARBOR TOOLS, BUILT FOR THE JOB, EXPLORE THE RANGE. Draft the portrait and landscape scene plan. The asset files will be supplied later, so do not invent file contents or render. No paid tools, publishing, or generation.",
+      "expected_output": "A client-branded product treatment using the supplied rules, exact copy, explicit missing assets, authored text and distinct layouts, without Grifon palette contamination or fabricated product imagery.",
+      "files": [],
+      "expectations": [
+        "Uses navy and cream rather than Grifon Gold and identifies the logo/product files as pending.",
+        "Keeps the three approved text lines and does not invent discounts, dates, prices, or product claims.",
+        "Selects the client product/service treatment and explains a coherent reveal-benefit-CTA motion sequence.",
+        "Uses separate aspect-ratio layouts and calls for a timed preview before an unapproved direction is finalized.",
+        "Does not imply dry-run planning proves rendering or client approval."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Dry-run routing check only: First, I have a competitor reel and only want to understand its hook and editing pattern, with no new video. Separately, I want dead air trimmed from my existing reel and the music lowered, with no new animated graphics. Which skill should own each? Do not run tools, analyses, renders, or edits.",
+      "expected_output": "Routes the analysis-only request to Viral Autopsy and ordinary trim/music editing to AI Editor; does not start Motion Director production or app work.",
+      "files": [],
+      "expectations": [
+        "Routes reference-only analysis to viral-autopsy.",
+        "Routes ordinary trim/music work to ai-editor.",
+        "Does not create a motion storyboard, paid job, or application feature for either request."
+      ]
+    }
+  ]
+}

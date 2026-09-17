@@ -1,0 +1,32 @@
+{
+  "eval_id": 1,
+  "method": "Author self-check of written dry-run output with deterministic marker presence; not independent grading or media execution.",
+  "expectations": [
+    {
+      "text": "Preserves all four approved beats and exact visible words without requesting the same creative approval again.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"0-3s\", \"3-6s\", \"6-9s\", \"9-12s\", \"No repeated creative approval\""
+    },
+    {
+      "text": "Names DESIGN.md, brand-spec.md and existing launch/demo source; uses public/logo.png in the transparent thin gold GrifonMark ring with italic GRIFON, keeps GRIFON.AI as a separate address, and makes no application edits.",
+      "passed": true,
+      "evidence": "Revised after reviewer finding. Written-plan markers: brand-spec.md, public/logo.png, transparent thin gold GrifonMark ring, GRIFON, Inter Black italic, separate text"
+    },
+    {
+      "text": "Plans separately composed portrait and landscape outputs plus editable source and frame sheet.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"portrait\", \"landscape\", \"editable spec/template/assets\", \"sample-frame sheet\""
+    },
+    {
+      "text": "Includes actual playback/audio inspection and a disposable text-revision check; does not claim these have passed.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"Watch both complete videos\", \"listen to the entire music\", \"disposable directory\", \"remain pending\""
+    },
+    {
+      "text": "Makes no paid render, generation, or provider-backed QA call.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"No render, generation, paid AI analysis\""
+    }
+  ],
+  "limitations": "Original marker checks missed a wrong-logo recommendation. Reviewer finding caused this output and brand-specific assertion to be corrected; no independent rerun claimed."
+}

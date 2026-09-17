@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "eval-1-grifon",
+  "prompt": "Dry-run only: plan the already approved 12-second Grifon motion demo using the supplied local launch assets. Logo at 0-3s, DESCRIBE at 3-6s, BUILD at 6-9s, LAUNCH and GRIFON.AI at 9-12s. Use music, no voiceover, portrait and landscape. Explain the files, exact copy, preview, final checks, and revision test. Do not render, generate, publish, install the skill, or call AI analysis.",
+  "assertions": [
+    "Preserves all four approved beats and exact visible words without requesting the same creative approval again.",
+    "Names DESIGN.md, brand-spec.md and existing launch/demo source; uses public/logo.png in the transparent thin gold GrifonMark ring with italic GRIFON, keeps GRIFON.AI as a separate address, and makes no application edits.",
+    "Plans separately composed portrait and landscape outputs plus editable source and frame sheet.",
+    "Includes actual playback/audio inspection and a disposable text-revision check; does not claim these have passed.",
+    "Makes no paid render, generation, or provider-backed QA call."
+  ]
+}

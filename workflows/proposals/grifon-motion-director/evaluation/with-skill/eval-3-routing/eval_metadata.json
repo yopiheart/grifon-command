@@ -1,0 +1,10 @@
+{
+  "eval_id": 3,
+  "eval_name": "eval-3-routing",
+  "prompt": "Dry-run routing check only: First, I have a competitor reel and only want to understand its hook and editing pattern, with no new video. Separately, I want dead air trimmed from my existing reel and the music lowered, with no new animated graphics. Which skill should own each? Do not run tools, analyses, renders, or edits.",
+  "assertions": [
+    "Routes reference-only analysis to viral-autopsy.",
+    "Routes ordinary trim/music work to ai-editor.",
+    "Does not create a motion storyboard, paid job, or application feature for either request."
+  ]
+}
