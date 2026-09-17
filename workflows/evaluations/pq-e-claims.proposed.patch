@@ -1,0 +1,14 @@
+diff --git a/api/_lib/prompts.ts b/api/_lib/prompts.ts
+--- a/api/_lib/prompts.ts
++++ b/api/_lib/prompts.ts
+@@ -382,3 +382,4 @@
+   - **LOGIC LOCK:** Use Brand Name "${brandName}" EXACTLY. Product mentions can be shortened naturally — say "this kape", "ito", "${brandName}", or descriptive shorthand. Do NOT recite the full SKU/product name verbatim ("${businessInfo.product}"); that reads like a product page, not an ad.
+-  - **READING LEVEL:** 4th-5th Grade. Simple, punchy, visceral storytelling.
++  - **READING LEVEL:** 4th-5th Grade. Simple, punchy, visceral storytelling.
++  - **CLAIM SOURCE:** Product/service claims must be supported by the supplied product, features, separator, or benefit. Use supplied audience and painPoint for story context, not as evidence of product performance. Use listingPrice only where the selected real-estate PRICE RULE allows it; offer bonuses and scarcity must come from the offer. Do not invent performance, absorption, texture, popularity, reputation, credentials, or guarantees to fill a beat. Category examples suggest structure, not facts about this business. The appearance-claim and speed guardrails still override conflicting input claims.
+   - **AUDIENCE REGISTER:** Tune vocabulary, idiom, and mental pictures to match this person: "${businessInfo.audience}".
+@@ -942,3 +943,3 @@
+       5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
+-      6. **Objection Killer:** Solve the common doubt.
++      6. **Objection Killer:** Address a common doubt using a supplied fact. If the brief supplies no answer, acknowledge the concern without asserting an unsupported product property or outcome; do not invent evidence to reassure the viewer.
+       7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad. In Taglish mode the CTA MUST obey the TAGLISH ACCENT LOCK (Tagalog-dominant, opens + closes on a Tagalog word).

@@ -1,75 +1,67 @@
 # NOW - the resume doc
-**Stamped: 2026-09-16, evaluation fixes merged**
+**Stamped: 2026-09-17, prompt-quality audit and proposed fixes**
 
 ## Current state
-Neil explicitly authorized merging both PRs and the automatic production deployment.
-PR #136 merged as 8b5a7086: https://github.com/yopiheart/grifon-command/pull/136
-PR #137 merged as 06d7f857: https://github.com/yopiheart/grifon-command/pull/137
-Both implementations are on main. PR #137 cloud CI passed on b1edef07:
-verify, artifacts and 56 browser smoke tests (run 35105628203).
-Post-merge CI for runtime commit 06d7f857 is run 35107059174; consult its current
-GitHub status and the commit's Vercel status for release verification.
-The only production-code change is the approved steam|vacuum| detector addition.
-Prompt wording, schema, model, retry limits and transport settings are unchanged.
-No paid test, manual Actions dispatch or direct production-data change was made.
+Branch: `codex/prompt-quality-audit`, based on main `87546343`.
+PRs #136, #137 and #138 are merged, verified through GitHub and fetched main.
+The evaluation-fidelity/reporting and approved steam/vacuum fix are complete.
+This task audits the remaining script-quality findings and prepares exact diffs.
+No application source, live fixture, prompt, schema, model or generation knob changed.
+Independent proposal review is complete; both actionable findings are resolved.
+Draft PR link will be recorded after the branch is pushed.
 
 ## ▶ NEXT ACTION
-The evaluation-fidelity/reporting slice and approved detector fix are complete
-and merged. Do not repeat their approval or implementation steps.
-Content compliance (jargon/proof), retry cancellation and rule/input ambiguities
-remain separate follow-ups in workflows/script_failure_audit_2026-09-16.md.
-Another live run still needs an exact-input/cost spec; offline checks are not one.
+Review the six separate proposed patches linked from
+`workflows/prompt_quality_audit_2026-09-17.md`.
+They are NOT applied or approved. Recommend reviewing corrected fixtures/rubric
+first, then A+B (language/proof); price, claim-source and body-count policy remain
+separate decisions. Exact-diff approval is required before tuned implementation.
+Any paid comparison needs its own exact-input/evidence/max-cost test spec.
 
-## Completed in this follow-up
-- Audited Sept. 6, 7 and 11 run logs/results. All 14 failed script tests timed out
-  at 120 seconds; retry waits alone can total 124 seconds. Quota-warning text
-  does not distinguish actual upstream 429 from every other retry trigger.
-- Preserved 24 generated script blocks, 42 test statuses and source digests in
-  workflows/evaluations/script-audit-2026-09-16.json. Only 22 script tests passed;
-  two timed-out tests later printed outputs. Raw job logs remain ignored.
-- Independent gemini-eval critic confirmed repeated English specification leakage
-  and omitted proof differentiators. Detailed evidence/ranking is in
-  workflows/script_failure_audit_2026-09-16.md.
-- Found service prompt vs detector mismatch (steam/deep vacuum rejected), plus
-  ambiguous noun detection, price-rule precedence and contradictory skincare input.
-  Neil approved the exact detector diff with "GOGOGO"; it is now applied.
-  The .proposed.patch filename is retained as the original approval record.
-  Valid steam/vacuum service lines use one generation; posed intros still reroll.
-- Reporter now names failed tests without assuming assertions were reached.
-  JUnit XML captures actual errors and console output alongside retained JSON.
-  Setup/skip/upload handling, schedule and live fixtures remain unchanged.
+## Audit findings
+Independent gemini-eval critic reviewed all 24 saved scripts from Sept. 6/7/11.
+There were 22 passing script tests; two outputs arrived after timeout.
+Three complete Malinis differentiator omissions; five other cases preserve only
+part of the proof; three preserve the core distinction. Five skincare cases are
+blocked for proof scoring by contradictory input. Full-proposition scoring differs.
+Strict language rubric: 18 specification flags, two explicit-exemplar conflicts,
+four with no clear language flag. These are not whole-script pass counts.
+Five output rows add unsupported texture/absorption, popularity or reputation.
+Price precedence conflicts, topical-serum swallowing instruction, pre-selling vs
+move-in-ready input, and ordinary beat expansion have specific proposed fixes.
+All 48 hooks meet 5-8 words; all eight UGC body counts fit their formats.
+One Glaze UGC reveal has nine words against its local 3-8-word limit.
+Full matrix, source references, policy choices and limitations are in the report.
+
+## Prepared patches
+A: language treatment of supplied specs and required proof.
+B: feature-filter exception plus meaning-preserving differentiator proof.
+C: real-estate price precedence and explicit price-bearing beat.
+D: three synthetic fixture corrections (skincare and pre-selling condo).
+E: factual claim sources and grounded Testimonial objections.
+F: optional explicit 7/5 body-entry contract for Testimonial/MrBeast.
+Files: `workflows/evaluations/pq-*.proposed.patch`.
+The original evidence archive is unchanged. No improvement in live output claimed.
 
 ## Verification
-New report checks first failed on original code: 4 red, then 20/20 green.
-Independent Vitest smoke: timeout, assertion and synthetic provider error plus
-pass/skip; expected exit 1. JSON lost timeout text, XML retained it and console
-output; evidence assertions passed. No provider calls or secrets read by probe.
-Detector regression: 3 valid service cases failed before the fix (2 calls vs 1).
-Focused suite after fix: 65 passed, including 2 new posed-intro retry cases.
-Final full suite: 1,401 passed, 32 gated skips, 113 files passed / 9 skipped.
-First full run had one existing checkAnchors 5s timeout while checks ran together;
-the file passed in isolation (9/9), then the unchanged full suite passed alone.
-Build passed: 2,580 modules, main JS gzip 589.79 kB; existing size warnings remain.
-Bundle-leak, voice-sync, domain, PS ASCII, artifact-anchor and check:codex passed
-(26 Codex tests, 31 skill entrypoints). Generated snapshot EOL noise restored.
-Independent correctness review: exact approved diff, no actionable findings.
-Independent offline smoke: 45/45 passed, envDir:false, providers mocked; in-memory
-removal of the fix reproduced all 3 failing service cases without disk edits.
-Archive contents independently match raw sources. No UI change; live browser/API
-generation is untested. Fake client/adapter/registry smoke verifies flow behavior,
-not actual HTTP authentication, quota handling or live-provider output quality.
+Readiness passed core/desktop checks: Node 24.21.0, npm 11.19.0; live flags unset.
+Optional Python and local backend environment are absent; neither is needed here.
+`node workflows/evaluations/check-prompt-proposals.mjs` passed:
+six patches independently apply; six real-estate price combinations checked;
+13 non-real-estate C-only controls remain byte-identical; combined candidates
+transpile/build in memory. No provider calls or runtime file writes.
+An earlier C draft altered service wording; control check failed, then passed
+after restricting the candidate change to real estate.
+This is not full type-checking, HTTP/auth coverage or generated-output validation.
+Syntax, domain-language, strict resume-doc and diff-whitespace checks passed.
+Application build/full suite/browser generation were not rerun for proposal-only work.
 
-## Prior slice retained
-PR #136 uses real FLOW_REGISTRY.adscript through the shared offline/live adapter,
-with fake client auth and isolated telemetry. Original copied flow failed three
-parity cases: transformation retry, Temu classification, resolved-format output.
-Its prior full suite passed 1,394 tests; focused adapter/report checks passed 37.
-HTTP auth/quota/schema ladder is outside that flow-level harness.
-Sept. 14 run 34898931978 failed npm ci (ffmpeg-static HTTP 500); tests never ran.
-Image camera drift remains documented in workflows/nightly_regression.md;
-no copied tuned image blocks were changed.
-
-## Other work remains separate
+## Separate work
+Application-verb noun fragments and English action exemplars need explicit boundary
+decisions; no new detector edit is included. Retry cancellation and 124s backoff
+vs 120s timeout remain a transport follow-up, not evidence of content regression.
+Image-evaluation camera-copy drift remains in `workflows/nightly_regression.md`.
+No saved image/storyboard/video outputs were available in this script corpus.
 Website PR #129 is merged. Hero film remains paused at Neil's request (PR #134,
-stacked on #132). Gemini migration PR #131 and ASMR fidelity PR #127 are drafts.
-Use workflows/codex_desktop.md and Node 24/npm 11. Never commit secrets/session state.
+stacked on #132). Gemini migration #131 and ASMR fidelity #127 remain separate.
+No paid run, merge, deployment or production-data mutation was performed here.

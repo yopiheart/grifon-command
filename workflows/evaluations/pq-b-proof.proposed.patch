@@ -1,0 +1,18 @@
+diff --git a/api/_lib/prompts.ts b/api/_lib/prompts.ts
+--- a/api/_lib/prompts.ts
++++ b/api/_lib/prompts.ts
+@@ -380,3 +380,3 @@
+   - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
+-  - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit everything else.
++  - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit other optional features. This filter does not remove a nonempty differentiator when the selected formula explicitly requires it in a proof, turn, or standout beat.
+   - **LOGIC LOCK:** Use Brand Name "${brandName}" EXACTLY. Product mentions can be shortened naturally — say "this kape", "ito", "${brandName}", or descriptive shorthand. Do NOT recite the full SKU/product name verbatim ("${businessInfo.product}"); that reads like a product page, not an ad.
+@@ -941,3 +941,3 @@
+       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.benefit}").
+-      5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
++      5. **Proof:** Make the concrete differentiator "${businessInfo.separator}" the reason to believe. Preserve its distinguishing meaning in natural language, not necessarily its exact words; a generic result or unrelated selected feature is not a substitute. Keep it in this proof beat, not the hook or CTA. Add a selected feature only if it fits the existing line budget. If separator is empty, highlight the 1-2 selected features without inventing a differentiator.
+       6. **Objection Killer:** Solve the common doubt.
+@@ -999,3 +999,3 @@
+         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
+-        5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
++        5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}", grounded in the concrete differentiator "${businessInfo.separator}". Preserve its distinguishing meaning in natural language, not necessarily its exact words; a generic result or unrelated selected feature is not a substitute. This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, use the benefit without inventing a differentiator.
+         6. **CTA:** High-energy ad-native call-to-action. Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad. In Taglish mode the CTA MUST obey the TAGLISH ACCENT LOCK (Tagalog-dominant, opens + closes on a Tagalog word).
