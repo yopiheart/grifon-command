@@ -1,54 +1,46 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, approved A+B+D prompt fixes applied**
+**Stamped: 2026-09-17, workflow cleanup and personal-desktop proposals**
 
 ## Current state
-Branch: `codex/prompt-quality-audit`, based on main `87546343`.
-Draft PR #139: https://github.com/yopiheart/grifon-command/pull/139
-Neil explicitly approved A+B+D as written after reviewing the linked exact patches.
-Applied five prompt-line replacements in `api/_lib/prompts.ts` and three fixture
-replacements in `tests/regression/script-gen.regression.test.ts`.
-A clarifies language handling; B preserves required differentiator proof; D corrects
-contradictory topical-serum and pre-selling condo inputs.
-C/E/F, models, schemas, safety settings, generation knobs and retries are unchanged.
-The original proposed patches and saved 24-output corpus are unchanged.
+Neil now works on his persistent personal Windows desktop, sometimes remotely
+from mobile. Cafe-PC wipe/reinstall/sign-out assumptions no longer govern work.
+Branch: `codex/workflow-instruction-cleanup`, based on merged main `ee9ad8d1`.
+The original prompt-quality A+B+D changes are already merged in PR #139;
+post-merge release evidence is preserved on PR #140 / commit `f71f6365`.
+Do not repeat that implementation or request its approval again.
 
-## ▶ NEXT ACTION
-Review the implemented A+B+D change in draft PR #139 for a separately requested
-merge. No merge or production deployment is authorized by the prompt approval.
-A live quality comparison still requires its own exact-input/evidence/max-cost spec.
-Price precedence (C), factual-source policy (E) and beat mapping (F) remain
-unapproved proposals. Do not repeat A+B+D approval or implementation.
-Full audit and implementation evidence: `workflows/prompt_quality_audit_2026-09-17.md`.
+## Next action
+Review and obtain exact approval for the two ordered candidate patches:
+1. `workflows/proposals/workflow-instructions-2026-09-17/cleanup.patch`
+2. `workflows/proposals/workflow-instructions-2026-09-17/personal-desktop.patch`
+Active instruction files and hook source have NOT been changed yet.
+The user's broad instruction-cleanup/personal-desktop request is authorized;
+AGENTS.md's exact instruction-diff approval remains the final application gate.
+No merge or deployment is authorized. After application, review the actual diff,
+run applicable control checks, and handle changed hook trust through normal UI.
 
-## Verification
-`node workflows/evaluations/check-prompt-proposals.mjs --approved` first failed on
-original source, then passed: actual files equal exactly approved A+B+D after
-line-ending normalization. All six proposal files match approval commit `7e619a61`.
-Historical C/E/F candidate checks are in-memory only, not shipped changes.
-Focused tests: 70 passed. Full suite: 1,401 passed, 32 gated skips,
-113 files passed / 9 skipped. Paid/live flags remained unset.
-Build passed: 2,580 modules, main JS gzip 589.79 kB; existing size/Browserslist warnings.
-Bundle-leak, voice-sync, domain, PS ASCII and artifact-anchor checks passed.
-Independent correctness review: no actionable findings; A+B+D reverse checks pass.
-Independent offline smoke: 29/29 passed, including 28 real-flow/fake-provider
-combinations across Testimonial, MrBeast and all five product UGC formats,
-both languages and empty/nonempty separators, plus exact D fixture source check.
-Original-prompt negative control: 28 expected failures. Env loading disabled,
-telemetry mocked, network blocked; model/safety/thinking settings unchanged.
-This proves source/assembly/plumbing, not live quality or HTTP auth/quota behavior.
-No browser generation or paid comparison was run. Generated snapshot EOL noise restored.
+## Evidence
+`workflows/workflow_instruction_cleanup_2026-09-17.md` contains the assessment,
+patch hashes, scope, checks and TypeSafe Jev evaluation with official sources.
+The first patch shortens eight descriptions by 66.2% in characters, replaces
+line-count and reasoning-keyword rituals, and clarifies independent review.
+The second retires active cafe-PC assumptions, reuses persistent setup and local
+assets, and makes mobile remote access part of the same desktop workflow.
+Native `check:codex`: 31 entrypoints, 0 errors, all 26 tests passed.
+Both patches apply cleanly in an isolated Git index.
+Candidate hook/readiness tests: 16/16 passed in an isolated test repository.
+New startup assertion fails against original cafe hook, passes against candidate.
+Independent diff reviews: no actionable findings after two trigger fixes.
+Baseline/candidate tabletop: 20 scenarios each, not live automatic-trigger tests.
+Candidate YAML parses; non-description metadata preserved. Generic quick validator
+rejects existing legacy invocation metadata for two autopsy skills in both
+baseline and candidate; that compatibility issue is documented, not bypassed.
+No application build/full suite or live/paid generation ran in this task.
+No secrets, auth state, production data, OS settings or remote-access config changed.
 
-## Remaining findings
-The audit scored 24 saved outputs, representing 22 passing script tests and two
-late outputs after timeout. Three complete differentiator omissions; language
-leakage, partial proof, unsupported claims and rule/input conflicts are documented.
-One Glaze UGC reveal exceeds its local 3-8-word limit; no new retry was added.
-Offline smoke additionally found existing `ipahid` detector omission:
-`Ipahid ko ito sa mukha.` causes two identical fake-provider generation requests.
-Do not expand the approved detector diff without a separate exact-diff decision.
-Noun-fragment tolerance and English action exemplars remain explicit policy boundaries.
-Cancellation/124s backoff vs 120s timeout remains a separate transport follow-up.
-Image-evaluation camera-copy drift remains in `workflows/nightly_regression.md`.
-PRs #136-#138 are merged and complete; do not redo their evaluation fixes.
-Hero film remains paused (PR #134, stacked on #132). Gemini migration #131 and
-ASMR fidelity #127 remain separate. No paid run or production-data mutation here.
+## Related findings
+Original tweet and replies were read in the browser; embedded videos did not play.
+Jev is a possible future enum-classification comparison, not a generation swap.
+No provider integration, install, account setup, or paid test was performed.
+Unapproved prompt-quality C/E/F proposals and other project work remain separate.
+Historical cafe runbooks/tools are retained; proposed active overrides retire them.

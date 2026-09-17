@@ -1,0 +1,177 @@
+diff --git a/.agents/skills/grifon-cmo/SKILL.md b/.agents/skills/grifon-cmo/SKILL.md
+index ac19d71e..5d8116da 100644
+--- a/.agents/skills/grifon-cmo/SKILL.md
++++ b/.agents/skills/grifon-cmo/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: grifon-cmo
+-description: Act as Grifon's Chief Marketing & Sales strategist (Cialdini + Sabri Suby + MrBeast playbooks, Filipino SMB Taglish direct-response). Use proactively for any marketing/sales asset — copy, offers, funnels, positioning, hooks, headlines, thumbnails, scripts, captions, outbound sequences, objection handling, landing/pricing copy, the Free→Starter→Pro→Business ladder — even when the user doesn't say "marketing"; also when a campaign idea needs a strategist's read, on Bryan/Olivia avatar work, or by name ("CMO mode", "Grifon Chief Marketing"). Pairs with grifon-creative-director when visuals ship with copy.
++description: Create or evaluate Grifon marketing strategy, campaigns, offers, positioning, audience briefs, and sales copy, including hooks, scripts, and thumbnail concepts. Use for marketing decisions and assets; pair with Creative Director for visuals.
+ ---
+ 
+ For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
+diff --git a/.agents/skills/grifon-creative-director/SKILL.md b/.agents/skills/grifon-creative-director/SKILL.md
+index 628e03cc..e456ff0d 100644
+--- a/.agents/skills/grifon-creative-director/SKILL.md
++++ b/.agents/skills/grifon-creative-director/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: grifon-creative-director
+-description: Act as Grifon's Creative Director — UI/UX design, brand identity, and production React/TS/Tailwind for the design system. Use proactively for visuals and page design (landing/pricing/sales), FB/IG page assets, ad creatives, MrBeast-style thumbnails, app screens/modules/onboarding, GlassPanel/GoldButton component work, 2–3 design options, or when the user drops a screenshot/Figma/website link to reverse-engineer ("steal the best parts"); also by name ("Creative Director mode", "Grifon CD"). Pairs with grifon-cmo when copy + visual ship together. NOT for post-hoc fidelity checks against DESIGN.md (brand-check).
++description: Design and implement Grifon UI, pages, brand visuals, and ad creatives, or extract design direction from visual references. Use for creation, redesign, or reference analysis; use brand-check for fidelity reviews.
+ ---
+ 
+ For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
+diff --git a/.agents/skills/artifact-noir/SKILL.md b/.agents/skills/artifact-noir/SKILL.md
+index afb8afd0..8313993f 100644
+--- a/.agents/skills/artifact-noir/SKILL.md
++++ b/.agents/skills/artifact-noir/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: artifact-noir
+-description: Build a Grifon-project Codex Artifact in the NOIR visual world — charcoal ground, gold accent, liquid glass — with the mobile-safe rules that keep it readable on Neil's phone. Use BEFORE writing any artifact HTML/CSS: dashboards, eval or review pages, debrief and ledger reports, swipe-file galleries, session or launch scoreboards, UI mockups, PR-review findings. Also on "publish an artifact", "make me a page", "redeploy the artifact", or any styling/contrast/mobile-rendering question about one. NOT for client work under clients/ (that follows the client's own DESIGN.md — see the STOP below), NOT for app UI (brand-check / grifon-creative-director), NOT for the product's own screens.
++description: Create or revise Grifon HTML artifacts in the mobile-safe NOIR style. Load before artifact HTML/CSS work. Excludes product UI and client artifacts governed by their own DESIGN.md.
+ ---
+ 
+ For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
+diff --git a/.agents/skills/static-autopsy/SKILL.md b/.agents/skills/static-autopsy/SKILL.md
+index 1ffb3259..d95d4d02 100644
+--- a/.agents/skills/static-autopsy/SKILL.md
++++ b/.agents/skills/static-autopsy/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: static-autopsy
+-description: Run an evidence-bound breakdown of an existing STATIC image ad (layout walk, verbatim copy, visual DNA, persuasion levers) via Gemini vision, append it to the Static Ad Swipe File, and optionally remix findings into Grifon-voice angles/copy or a Creative Director brief. Use when Neil drops one or more static ad image files (Facebook/Instagram feed or story creatives, competitor stills) and wants them decoded, asks "why does this ad work" / "what can we steal from this image", says "static autopsy" or "add to the static swipe file", or wants the winning-image-ads library grown. NOT for video (that's viral-autopsy), NOT for grading Grifon's own generated ads (gemini-eval / brand-check), NOT for scraping a competitor's FB page (ad-recon).
++description: Analyze supplied static ads and record evidence in the Static Ad Swipe File. Use for competitor image-ad teardowns or remixes; excludes videos, ad discovery, and grading Grifon outputs.
+ disable-model-invocation: true
+ ---
+ 
+diff --git a/.agents/skills/viral-autopsy/SKILL.md b/.agents/skills/viral-autopsy/SKILL.md
+index f770f562..8068b56d 100644
+--- a/.agents/skills/viral-autopsy/SKILL.md
++++ b/.agents/skills/viral-autopsy/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: viral-autopsy
+-description: Run an evidence-bound breakdown of an existing social video or ad (hook anatomy, Edit DNA, storytelling format) via Gemini video analysis, append it to the Swipe File, and optionally remix findings into Grifon-voice hooks/scripts. Use when the user drops a TikTok/YouTube/Instagram/FB-ad link or a video file and wants it analyzed, asks "why does this work" / "what can we steal from this", says "viral autopsy" or "add to swipe file", or wants to know what kind of videos/ads are working so Grifon's output can learn from them. NOT for evaluating Grifon's own generated output (that's gemini-eval) or for auto-discovering trends (this skill analyzes videos the user supplies).
++description: Analyze supplied social videos or ads and record hook, Edit DNA, and storytelling evidence in the Swipe File. Use for video teardowns or remixes; excludes trend discovery and grading Grifon outputs.
+ disable-model-invocation: true
+ ---
+ 
+diff --git a/.agents/skills/skill-creator/SKILL.md b/.agents/skills/skill-creator/SKILL.md
+index 4d5ccebc..3795cc23 100644
+--- a/.agents/skills/skill-creator/SKILL.md
++++ b/.agents/skills/skill-creator/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: skill-creator
+-description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.
++description: Create, revise, or evaluate a skill and its trigger description. Use for skill authoring or skill-performance work.
+ ---
+ 
+ For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
+@@ -66,7 +66,7 @@ Check available MCPs - if useful for research (searching docs, finding similar s
+ Based on the user interview, fill in these components:
+ 
+ - **name**: Skill identifier
+-- **description**: When to trigger, what it does. This is the primary triggering mechanism - include both what the skill does AND specific contexts for when to use it. All "when to use" info goes here, not in the body. Note: currently Codex has a tendency to "undertrigger" skills -- to not use them when they'd be useful. To combat this, please make the skill descriptions a little bit "pushy". So for instance, instead of "How to build a simple fast dashboard to display internal Anthropic data.", you might write "How to build a simple fast dashboard to display internal Anthropic data. Make sure to use this skill whenever the user mentions dashboards, data visualization, internal metrics, or wants to display any kind of company data, even if they don't explicitly ask for a 'dashboard.'"
++- **description**: State what the skill does and the specific task that should trigger it. Keep discovery concise; avoid broad keyword catchalls or pressure to load the skill for adjacent work. Keep the essential trigger here, and place detailed procedures, examples, and mode-specific routing in the body or supporting references. Include an exclusion only when it prevents likely confusion with another skill.
+ - **compatibility**: Required tools, dependencies (optional, rarely needed)
+ - **the rest of the skill :)**
+ 
+diff --git a/.agents/skills/verify-changes/SKILL.md b/.agents/skills/verify-changes/SKILL.md
+index cfdb273d..780a6fac 100644
+--- a/.agents/skills/verify-changes/SKILL.md
++++ b/.agents/skills/verify-changes/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: verify-changes
+-description: Validate code changes in two phases — a 3-line contract (success / failure / verification) BEFORE editing, then build + test + smoke loop AFTER. Use before any non-trivial edit to api/, services/, components/, or App.tsx, and before reporting a task complete.
++description: Define and verify the success contract for non-trivial Grifon application changes. Load before editing api/, services/, components/, or App.tsx when the change is non-trivial, and use through completion.
+ ---
+ 
+ For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
+@@ -32,7 +32,7 @@ A clean type-check is necessary, not sufficient.
+ 
+ **Adversarial diff review (correctness, not just behavior).** The smoke critic above checks *does it do what the contract says* — it doesn't hunt for correctness bugs the contract never anticipated. Before declaring non-trivial work done, also run an independent diff review on the diff: it reviews the current changes for bugs in a fresh subagent context, so the model that wrote the code isn't the one grading it. This is the project-code analogue of what `gemini-eval` / `brand-check` do for *model output* — a fresh pair of eyes on the artifact you just produced. Treat findings the way the best-practices doc advises: fix what affects correctness or the stated contract, and don't over-engineer chasing every speculative flag.
+ 
+-**Leading-words trace check (cheap, do it inline).** Grifon's skills steer with dense leitmotifs — *surgical edit*, *vertical slice*, *single source of truth*, *TUNED files*, *outcome before feature*. Steering only worked if the model speaks those words back to itself: scan your own reasoning trace for this change and confirm the leitmotif that governs the edit actually showed up. A `services/geminiService.ts` / `api/_lib/prompts.ts` touch should have *TUNED files* in the trace; a new module should have *vertical slice*; a one-line fix that started sprawling should have *surgical edit*. If the governing leading word never appears, the instruction didn't land — re-read the owning skill before declaring done, rather than trusting you "knew" the rule. The term echoing in the trace is the cheapest proof the steering took.
++**Verify scope with observable evidence.** Compare the actual diff and verification results with the requested outcome and applicable rules. Check that unrelated behavior is untouched, tuned-content changes match their exact approval, and required checks and independent review are complete. Repeating a rule or keyword is not evidence that it was followed.
+ 
+ ## Goal-compatible contract (when paired with `/goal`)
+ 
+diff --git a/.agents/skills/codex-executor/SKILL.md b/.agents/skills/codex-executor/SKILL.md
+index 948a3b60..47ebbf0c 100644
+--- a/.agents/skills/codex-executor/SKILL.md
++++ b/.agents/skills/codex-executor/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: codex-executor
+-description: Delegate a mechanical, spec-tight implementation brief to GPT 5.6 Sol via the Codex CLI — the second executor lane beside the code-executor subagent. Use only for unambiguous MECHANICAL briefs (api/ handlers, type plumbing, spec'd refactors, test writing). NOT for UI/DESIGN.md work, ambiguous briefs, or anything near TUNED files (those stay with code-executor), and NEVER as the checker/reviewer of any diff — review stays in the Codex main loop. Requires Codex CLI installed + logged in (cafe PC only, not the web sandbox).
++description: Execute approved, unambiguous mechanical implementation briefs through the optional Codex CLI. Excludes UI design, ambiguous work, tuned files, and independent review.
+ ---
+ 
+ For Codex tool execution, read [the desktop adapter](../_shared/codex-runtime.md) before following the workflow below.
+@@ -14,7 +14,7 @@ This is the optional local CLI executor lane. In Codex desktop, prefer the `code
+ | Mechanical, spec-tight: api/ handlers, type plumbing, refactors with acceptance criteria, test writing | **This skill** (optional Codex CLI) |
+ | UI-heavy, DESIGN.md surfaces, ambiguous briefs, anything near TUNED files | `code-executor` subagent (inherits the selected model) |
+ | Fallback when this skill exits 10/11/12 | `code-executor` subagent (inherits the selected model), same brief |
+-| Checking / reviewing ANY diff | Codex main loop — **never the same builder** (builder ≠ reviewer, see `workflows/pr_review_loop.md`) |
++| Checking / reviewing ANY diff | Main loop coordinates review by a fresh independent Codex agent, never the builder; follow AGENTS.md and `workflows/pr_review_loop.md`. This executor lane is not the independent reviewer. |
+ 
+ ## Prerequisites (one-time per machine)
+ 
+diff --git a/.agents/skills/surgical-edit/SKILL.md b/.agents/skills/surgical-edit/SKILL.md
+index 45acaf92..dc3bc1cb 100644
+--- a/.agents/skills/surgical-edit/SKILL.md
++++ b/.agents/skills/surgical-edit/SKILL.md
+@@ -23,4 +23,4 @@ Match the scope of your edit to the scope of the request. Three lines fixed is b
+ 
+ - Read enough of the file to understand the surrounding context
+ - Confirm the edit is the minimum required to complete the task
+-- If you find yourself touching more than ~30 lines for a fix, stop and ask whether the scope changed
++- If a fix grows, re-check it against the requested outcome. Continue with changes necessary to complete the authorized scope; ask only when the proposed change expands that scope or crosses an approval boundary in AGENTS.md. Line count alone is not an approval trigger.
+diff --git a/workflows/wat-framework.md b/workflows/wat-framework.md
+index 0208354a..d3ada335 100644
+--- a/workflows/wat-framework.md
++++ b/workflows/wat-framework.md
+@@ -47,9 +47,10 @@ skillspector scan <target> --no-llm --format json --output .tmp/skillspector-<na
+ ```
+ 
+ Rules:
+-- **Static-only (`--no-llm`), Claude judges the JSON inline.** The tool's LLM stage stays off
+-  (no extra keys/quota); the main loop reads the report and filters false positives itself —
+-  same "review stays in the Claude main loop" doctrine as PR review.
++- **Static-only (`--no-llm`); the current agent interprets the JSON.** The tool's LLM
++  stage stays off (no extra keys/quota). Interpret scanner findings in context.
++  This triage does not replace the independent Codex review required by AGENTS.md
++  for non-trivial changes.
+ - **HIGH/CRITICAL or DO_NOT_INSTALL → stop and show Neil the findings verbatim.** Advisory,
+   not auto-blocking — Neil stays the approver, exactly as today.
+ - **Calibrate for false positives:** regex can't see negation ("Never bypass safety gates"
+diff --git a/workflows/pr_review_loop.md b/workflows/pr_review_loop.md
+index db73f73e..e77e5252 100644
+--- a/workflows/pr_review_loop.md
++++ b/workflows/pr_review_loop.md
+@@ -1,5 +1,21 @@
+ # Workflow: PR Review Loop (fresh-context critic)
+ 
++## Codex desktop entry point
++
++For Codex, follow AGENTS.md and the [desktop adapter](../.agents/skills/_shared/codex-runtime.md).
++Use the available GitHub connector or authenticated CLI to read the current diff,
++then give the task contract and diff to a fresh independent Codex agent. The main
++loop resolves actionable findings and obtains a fresh review of relevant fixes;
++it does not count its own review or an executor self-review as independent.
++Keep findings local or in the authorized draft PR description unless the user
++explicitly requests a posted comment. Merge and deployment require explicit requests.
++The legacy Claude CI reviewer remains opt-in via ENABLE_LEGACY_CLAUDE_REVIEW.
++
++The remaining procedure preserves the legacy Claude workflow. Its tool names,
++reviewer allocation, CI assumptions, and posting steps do not configure Codex.
++
++## Legacy Claude workflow
++
+ **Objective:** Before a PR merges, get a high-recall code review from a *fresh* sub-agent — never
+ the agent that wrote the code. A builder cannot reliably self-critique; "fresh eyes" catch what the
+ author is blind to.

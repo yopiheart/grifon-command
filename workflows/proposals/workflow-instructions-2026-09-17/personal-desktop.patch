@@ -1,0 +1,725 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 7d269674..8f1c76f2 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -2,15 +2,19 @@
+ 
+ ## Codex desktop entry point
+ 
+-The daily workspace is Codex desktop on Windows cafe PCs. Start with
++The daily workspace is Codex on Neil's persistent personal Windows desktop,
++occasionally accessed remotely from mobile. Start with
+ `workflows/codex_desktop.md`; Codex Cloud is an optional secondary route.
+ Project skills live in `.agents/skills/`, agents in `.codex/agents/`, and
+ supported hooks in `.codex/hooks.json`. Keep the original `.claude/` controls
+ for legacy compatibility; they do not configure Codex. Do not assume that a
+ copied hook is active: the user must trust its current source in Codex.
+ 
+-Use `npm.cmd` in Windows PowerShell. `scripts/codex-cafe-start.ps1 -CheckOnly`
+-reports readiness without restoring secrets or changing branches. Selective
++Use `npm.cmd` in Windows PowerShell. `npm.cmd run codex:ready` reports readiness
++when setup or diagnostics are needed; routine work reuses installed tools, account
++sessions, dependencies, and local assets. Do not reinstall, reauthenticate, clean
++local state, or require a sparse clone merely because a new task or reboot occurred.
++Set up or repair only what the current task actually needs. Selective
+ workflow inputs are managed by `node tools/codex-assets.mjs --help`; check the
+ owning profile before reporting a missing image, fixture, or client rule as a
+ product defect. Client work follows `clients/<name>/DESIGN.md`.
+@@ -20,10 +24,13 @@ Keep paid/live switches unset for ordinary checks. Hooks are guardrails, not
+ a complete sandbox: the secret, exact-diff approval, paid-spec, and no-spend
+ rules below still apply to every tool and delegated task.
+ 
+-GitHub is the durable handoff: commit and push authorized work on its own
+-branch, keep a draft PR for review, and update `NOW.md` with the actual checks
+-and remaining work. A local task, untracked file, or running process does not
+-survive a cafe-PC wipe. Never commit auth/session files or hook approval state.
++GitHub provides version history, backup, and review: commit and push completed
++authorized work on its own branch, keep a draft PR for review, and update NOW.md
++with actual checks and remaining work. Local files persist across sessions; a
++phone disconnect is not a wipe or a reason to force an unfinished commit, close
++tools, or sign out. A machine shutdown still stops local processes. Never commit
++auth/session files or hook approval state. Historical cafe-PC restrictions do
++not govern this desktop; retain task-specific safety and approval rules.
+ Before asking to merge non-trivial work, obtain an independent Codex review
+ and resolve actionable findings. The legacy Claude PR reviewer is opt-in via
+ the repository variable `ENABLE_LEGACY_CLAUDE_REVIEW`; it is not the desktop
+diff --git a/workflows/codex_desktop.md b/workflows/codex_desktop.md
+index f414b345..bb9e495f 100644
+--- a/workflows/codex_desktop.md
++++ b/workflows/codex_desktop.md
+@@ -1,38 +1,40 @@
+-# Codex desktop cafe workflow
++# Codex personal desktop workflow
+ 
+-Work locally in Codex desktop; use GitHub for continuity between cafe PCs.
++Work directly on Neil's persistent Windows desktop, including when controlling it
++remotely from mobile. Reuse the existing checkout, installed tools, dependencies,
++assets, and signed-in accounts. GitHub remains the backup and review channel.
+ The application still uses Gemini, ElevenLabs, Kling, Supabase and its existing
+ API handlers. Migrating the coding workspace does not change those providers.
+ Cloud development is optional; its runbook is `codex_cloud.md`.
+ 
+-## Arrive and resume
++## Resume work
+ 
+-1. Install/open Codex desktop and sign in yourself. Install Git for Windows,
+-   Node 24 and npm 11 if this PC has been wiped. Open the saved repository in
+-   Codex. Sign in to GitHub through its normal credential flow when requested.
+-2. For a fresh clone, use the lite clone below. For an existing checkout, read
++1. Open the saved repository in Codex. Reuse working installations and account
++   sessions. Install Git for Windows, Node 24 and npm 11 only if missing or
++   incompatible; use normal sign-in only when an account actually requires it.
++2. Read the existing checkout first. A full clone is supported; the lite clone
++   below is optional for storage or transfer constraints. For an existing checkout, read
+    `git status --short --branch` before fetching or switching anything. Never
+    replace untracked work or reset somebody else's branch.
+ 3. Read `AGENTS.md`, `NOW.md`, `agent_lessons.md`, `UBIQUITOUS_LANGUAGE.md`, the
+    latest five commits, and the saved PR. Resume its branch, or start a new
+    `codex/<task>` branch from current `main` for new work.
+-4. Run the readiness check, then explicitly install dependencies if needed:
++4. If setup needs diagnosis, run the read-only readiness check. Install
++   dependencies only when missing or when the lockfile requires it:
+ 
+ ```powershell
+-.\scripts\codex-cafe-start.ps1 -CheckOnly
+-.\scripts\codex-cafe-start.ps1 -InstallDependencies
++npm.cmd run codex:ready
++# Only when dependency installation is needed:
++npm.cmd ci
+ ```
+ 
+-If Windows blocks script files, use a process-only invocation (no persistent
+-policy change): `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
+-scripts/codex-cafe-start.ps1 -CheckOnly`. This affects PowerShell script loading,
+-not Codex hook trust or approval controls.
+-
+-The script does not restore credentials, switch branches, push, or open VS Code.
+-Root installation uses `npm.cmd ci`. Each `funnels/<name>` has its own lockfile
+-and dependency installation; install there only when using that funnel.
++Run existing restore/setup helpers only for a demonstrated missing dependency.
++They are not a daily routine and must not overwrite working configuration or
++credentials. Each `funnels/<name>` has its own manifest and lockfile.
++The old `scripts/codex-cafe-start.ps1` filename is retained for historical callers;
++it is not the default entry point or a restriction on personal-desktop installs.
+ 
+-Fresh clone (run from the parent directory):
++Optional lite clone (run from the parent directory):
+ 
+ ```powershell
+ git clone --filter=blob:none --no-checkout https://github.com/yopiheart/grifon-command.git
+@@ -44,8 +46,8 @@ node tools/codex-assets.mjs instructions --apply
+ node tools/codex-assets.mjs wizard --apply
+ ```
+ 
+-Check PR #126's status: use its branch if still open, or current `main` once
+-merged. Preserve a clone's existing sparse patterns: the asset helper
++Use the current task branch when resuming or updated `main` for new work.
++Preserve a clone's existing sparse patterns when using selective restoration: the asset helper
+ adds exact tracked files, never replaces rules or restores non-sparse deletions.
+ 
+ ## Controls and connections
+@@ -59,7 +61,7 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
+   This PC passed fresh desktop delivery checks on 2026-09-07 at `438c651`:
+   SessionStart guard/sweep, allowed/denied PreToolUse probes, Stop dispatch,
+   and direct-composer UserPromptSubmit. This is not every-policy-path coverage;
+-  each other PC still needs its own normal hook review/trust.
++  changed hook source still needs its normal review/trust on this desktop.
+ - `.codex/config.toml` configures the optional Playwright MCP server using a
+   pinned package. Built-in browser tools can also drive manual checks. The old
+   `restore-playwright-mcp.ps1` writes Claude configuration and is unnecessary
+@@ -74,9 +76,10 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
+ - Legacy Bash creative scripts need Git Bash. The bundled `ffmpeg-static`
+   executable supports the app renderer. Standalone editing also needs ffmpeg
+   and ffprobe: `scripts/restore-ffmpeg.ps1` restores the existing optional tool
+-  bundle. Python tools may need their documented dependencies on a wiped PC.
++  bundle. Reuse installed Python and FFmpeg; repair only a dependency that is absent
++  or incompatible with the task.
+ 
+-For this PC's MSI installation failure, the tested Python route is
++If a normal Python installation is unavailable, an optional tested fallback is
+ `.\scripts\restore-python.ps1 -Portable`. It restores the official CPython
+ 3.12.8 NuGet package into ignored `.tools`, checks its pinned archive digest
+ and Python Software Foundation executable signature, and verifies pip.
+@@ -86,7 +89,9 @@ No global configuration is replaced.
+ 
+ ## Secrets and starting the app
+ 
+-The user restores `.env` from Bitwarden locally. It stays ignored; the agent
++Reuse existing local configuration. If credentials are missing, the user supplies
++them through the normal local secret workflow (for example Bitwarden). `.env`
++stays ignored; the agent
+ does not open or print its contents. Restore only the credentials the intended
+ feature needs. Readiness reports file/variable presence, never values.
+ 
+@@ -149,7 +154,7 @@ Do not treat a successful build or fixture dry run as proof that a provider,
+ voice clone, paid model or completed render works. Current run evidence and
+ remaining manual checks belong in `NOW.md` and the draft PR.
+ 
+-## Save before leaving
++## Checkpoint and remote use
+ 
+ Review the combined diff, including new files. Run relevant checks, commit only
+ intended work, push the branch and create/update its draft PR. No merge or
+@@ -157,8 +162,16 @@ production deployment occurs without a separate explicit instruction.
+ 
+ Update `NOW.md` (the only resume document, maximum 90 lines) with the branch/PR,
+ checks, known limitations and next action. Verify the commit exists on GitHub;
+-a local commit or task completion alone is insufficient. Save the PR link on
+-your phone. Sign out of personal accounts on the shared PC before leaving.
++a claim that work is backed up requires the remote commit to exist. Local drafts
++and assets may remain on this desktop between tasks. Checkpoint at meaningful
++review boundaries; do not force a commit or sign out because mobile disconnects.
++
++Remote control uses the same desktop state. A disconnected phone does not erase
++files or necessarily stop desktop work, but do not assume a job survives sleep,
++shutdown, or an app exit. Inspect actual process/task status when reconnecting.
++Keep mobile previews readable; use the existing remote connection instead of
++opening public ports or deploying a page solely for phone access. Change remote
++access or power settings only when that setup is requested.
+ 
+ ## Scope kept for the next product tasks
+ 
+diff --git a/.agents/skills/_shared/codex-runtime.md b/.agents/skills/_shared/codex-runtime.md
+index cf65b1a5..7f8b3aa6 100644
+--- a/.agents/skills/_shared/codex-runtime.md
++++ b/.agents/skills/_shared/codex-runtime.md
+@@ -1,5 +1,11 @@
+ # Codex desktop execution
+ 
++Neil now works on a persistent personal Windows desktop, sometimes remotely from mobile.
++Reuse working tools, account sessions, dependencies and local files. Do not apply
++historical cafe-PC wipe/reinstall/sign-out routines or force immediate commits
++solely for session continuity. Repair missing setup as needed for the task; normal
++secret, paid-operation, publication and review boundaries still apply.
++
+ The domain rules in these skills survive the Claude Code migration. Use this adapter for tool execution; historical workflow notes are evidence, not proof that a tool or hook is installed.
+ 
+ - **Skills:** project entrypoints live under `.agents/skills/`. Invoke by name (or `$skill-name`); old `/skill-name` wording is a user request, not a guaranteed slash command. Read referenced files from the skill's directory. Before using a missing asset, check `git ls-files` and the sparse checkout; selectively restore required inputs. Never manufacture an identity anchor or replace an approved asset.
+diff --git a/.codex/hooks/guard.mjs b/.codex/hooks/guard.mjs
+index c11cc8ae..29acefb2 100644
+--- a/.codex/hooks/guard.mjs
++++ b/.codex/hooks/guard.mjs
+@@ -45,7 +45,7 @@ function main(input) {
+     // Retain a verified baseline across resume/compact; initialize only once per session.
+     if (!state.baseline) { state.baseline = fingerprint(); save(); }
+     const branches = run('git', ['branch', '-r', '--no-merged', 'origin/main'], root);
+-    return context(event, `LOCAL CLOCK: ${new Date().toString()}. Read NOW.md, agent_lessons.md and UBIQUITOUS_LANGUAGE.md before work. Check latest commits and remote branches before calling work missing. Cached unmerged branches (fetch when needed): ${branches.status === 0 ? branches.stdout.trim() || '(none)' : '(unavailable)'}. Review workflows/session_reminders.md and workflows/loops.md; Codex automations require explicit user scheduling, do not replay Claude /loop commands. Check Git identity and required account sign-ins after a cafe reboot.`);
++    return context(event, `LOCAL CLOCK: ${new Date().toString()}. Read NOW.md, agent_lessons.md and UBIQUITOUS_LANGUAGE.md before work. Check latest commits and remote branches before calling work missing. Cached unmerged branches (fetch when needed): ${branches.status === 0 ? branches.stdout.trim() || '(none)' : '(unavailable)'}. This is Neil's persistent personal Windows desktop, sometimes accessed remotely from mobile. Reuse working setup and local state; repair Git identity or account access only if actually missing. Mobile disconnects do not require cleanup, sign-out, or forced commits. Codex automations require explicit user scheduling; do not replay legacy session-reminder or Claude /loop commands.`);
+   }
+   if (event === 'UserPromptSubmit') {
+     if (typeof input.prompt !== 'string') throw new Error('Missing user prompt');
+diff --git a/.codex/agents/smoke-tester.toml b/.codex/agents/smoke-tester.toml
+index 1e62532d..08bccbfa 100644
+--- a/.codex/agents/smoke-tester.toml
++++ b/.codex/agents/smoke-tester.toml
+@@ -3,4 +3,4 @@ description = "Runs smoke tests on modules. Use for any smoke test or quick sani
+ developer_instructions = """
+ You run smoke tests. Execute the test, report pass/fail and errors. No fixes unless asked.
+ When a smoke test needs the browser, use the available Codex browser tools (CUA or configured Playwright MCP) yourself inside this agent and return only pass/fail plus key findings — never raw page snapshots or screenshots.
+-If you start a helper process (e.g. a throwaway static server), record its PID and kill ONLY that PID when done. NEVER `taskkill` by image name or window-title filter — this is a shared cafe PC and a broad kill can take down the project's own dev server or another session's work (bit us 2026-07-27)."""
++If you start a helper process (e.g. a throwaway static server), record its PID and kill ONLY that PID when done. NEVER `taskkill` by image name or window-title filter — a broad kill can take down the project's dev server or another task on this desktop."""
+diff --git a/workflows/wat-framework.md b/workflows/wat-framework.md
+index d3ada335..588890dc 100644
+--- a/workflows/wat-framework.md
++++ b/workflows/wat-framework.md
+@@ -79,8 +79,8 @@ well-formed. Apply them whenever a plan doc breaks work into slices, phases, or
+ 4. **Explicit blocking edges.** Every slice states what it's blocked by ("Slice 2 blocked by
+    Slice 0 landing"). Order by dependency, not by convenience.
+ 5. **Wide refactors use expand–contract.** Add the new path alongside the old, migrate callers,
+-   then remove — CI stays green at every intermediate commit (matters here because the defreezer
+-   means any session can be the last one before a wipe).
++   then remove — CI stays green at each reviewable checkpoint so interrupted work
++   can be resumed safely.
+ 
+ The build-slices list in `concierge_director_plan.md` §10 is the house example of this shape.
+ 
+diff --git a/workflows/codex_cloud.md b/workflows/codex_cloud.md
+index e5030b4d..06a3638a 100644
+--- a/workflows/codex_cloud.md
++++ b/workflows/codex_cloud.md
+@@ -1,14 +1,15 @@
+ # Codex Cloud development runbook
+ 
+-> **Optional cloud route.** The daily Windows cafe workflow now starts in
++> **Optional cloud route.** The primary personal Windows desktop workflow now starts in
+ > [codex_desktop.md](codex_desktop.md). PR #124 was merged at `32a09fd`;
+ > references below to its pre-merge environment and open PR are historical
+ > validation evidence, not current instructions to reopen that work.
+ 
+-This is the browser-only development path for GRIFON COMMAND. The computer-shop
+-PC needs only a browser: Git checkout, dependencies, commands, commits, and pull
+-requests run in the cloud workspace. Keep `workflows/cafe_session.md` for the
+-legacy local Windows route during migration.
++Use Cloud only when a cloud task is requested. Mobile remote control of the
++personal desktop does not require Cloud or a new checkout. In Cloud, checkout,
++dependencies, commands, commits and pull requests run in the cloud workspace.
++The configuration and session instructions below are historical migration
++evidence, not a daily setup, sign-out, or recovery routine for the personal desktop.
+ 
+ ## Exact pre-merge Codex Cloud configuration
+ 
+diff --git a/workflows/session_reminders.md b/workflows/session_reminders.md
+index 21597ce5..8a6b7df6 100644
+--- a/workflows/session_reminders.md
++++ b/workflows/session_reminders.md
+@@ -1,5 +1,11 @@
+ # Session Reminders (re-arm each session)
+ 
++> Retired cafe-PC procedure as of 2026-09-17. Neil uses a persistent personal
++> desktop with occasional mobile remote access. Follow [codex_desktop.md](codex_desktop.md).
++> The content below is historical: do not reinstall tools, restore flags, change
++> wallpaper, sign out, or re-arm reminders from it. Scheduling requires a current
++> user request; existing installed tools and account sessions should be reused.
++
+ Cron/loop reminders live in Claude **session state** — they are not written to disk
+ and the cafe-PC defreezer wipes them on reboot (see CLAUDE.md → Working Environment).
+ A PowerShell restore script can't recreate them (the scheduler is a Claude tool, not a
+diff --git a/workflows/cafe_session.md b/workflows/cafe_session.md
+index 69062da0..a34a5047 100644
+--- a/workflows/cafe_session.md
++++ b/workflows/cafe_session.md
+@@ -1,5 +1,11 @@
+ # Cafe Session Runbook
+ 
++> Retired cafe-PC procedure as of 2026-09-17. Neil uses a persistent personal
++> desktop with occasional mobile remote access. Follow [codex_desktop.md](codex_desktop.md).
++> The content below is historical: do not reinstall tools, restore flags, change
++> wallpaper, sign out, or re-arm reminders from it. Scheduling requires a current
++> user request; existing installed tools and account sessions should be reused.
++
+ > **Legacy VS Code / Claude route.** For the current Codex desktop workflow use
+ > [codex_desktop.md](codex_desktop.md) and `scripts/codex-cafe-start.ps1`.
+ > This older route remains for compatibility; its Claude MCP restore scripts
+diff --git a/CLAUDE.md b/CLAUDE.md
+index a063908a..630c9ed8 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -49,6 +49,13 @@ Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
+ 
+ ## Working Environment
+ 
++**Current environment (Neil, 2026-09-17):** a persistent personal Windows desktop,
++sometimes controlled remotely from mobile. Use `workflows/codex_desktop.md` for
++the current setup. Reuse installed tools and local state; do not force lite
++clones, reinstallations, sign-outs or immediate commits for cafe-PC reasons.
++The cafe-specific paragraphs below are historical and superseded; security,
++paid-operation and production approval rules remain in force.
++
+ Sessions run on rented cafe PCs with a defreezer that wipes `C:\Users\Administrator\` (including `~/.claude/` and `~/.claude.json`) on reboot. **Only the GitHub repo persists across sessions.** Practical implications:
+ 
+ > ⚠️ **A full `git clone` no longer finishes on cafe wifi — use the lite clone in [workflows/cafe_session.md](workflows/cafe_session.md).** The repo is **1.5 GB** (134 MB in June 2026); at the ~30 KiB/s measured on 2026-08-16 a full clone is ~13 hours, and `git clone` has no resume, so a dropped connection restarts from zero. This cost Neil 3 blocked days across 3 different shops. The lite clone (`--filter=blob:none --no-checkout` + `sparse-checkout` excluding media) is **68 MB** and keeps all 1,689 commits, every remote branch, and the whole `.claude/` + `.github/` setup — verified 2026-08-16 with `npm run build` passing and 1,214 tests green. Media is still on GitHub, pulled one folder at a time with `git sparse-checkout add`. `scripts/cafe-start.ps1` automates the whole session start.
+diff --git a/agent_lessons.md b/agent_lessons.md
+index fb50e29c..0a9a2913 100644
+--- a/agent_lessons.md
++++ b/agent_lessons.md
+@@ -1,5 +1,11 @@
+ # Agent Lessons — Standing Rules
+ 
++**Current environment override (Neil, 2026-09-17):** work uses a persistent personal
++Windows desktop, sometimes through mobile remote control. Historical cafe-PC
++wipe and setup anecdotes below explain past failures; they do not require daily
++restores, sparse clones, account sign-outs, or rushed commits. Reuse working
++local tools and assets. Follow `workflows/codex_desktop.md` for current operation.
++
+ Distilled standing rules from real mistakes in this repo. The full 71-entry history (2026-05 → 2026-07) with complete context lives in [workflows/agent_lessons_archive.md](workflows/agent_lessons_archive.md) — grep it by date or keyword when a rule's backstory matters.
+ 
+ **How to add a lesson (since 2026-07-28):** when something goes sideways, first ask *"can this be a check instead of prose?"* — a hook, a test, a lint, a skill checklist step. Encode it as a verifier where possible; write the full story in the archive; add (or update) only the durable rule here. This file is read every session — it stays small on purpose. Do not pre-write rules for hypothetical mistakes.
+diff --git a/tools/codex-readiness.mjs b/tools/codex-readiness.mjs
+index c251f335..5fb129ab 100644
+--- a/tools/codex-readiness.mjs
++++ b/tools/codex-readiness.mjs
+@@ -88,7 +88,7 @@ export function collectReadiness(root = repoRoot) {
+     const result = run(command, ['--version'], root);
+     return result.status === 0 && /^Python 3\./.test(`${result.stdout}${result.stderr}`.trim());
+   });
+-  add('creative', 'python', pythonCommand, pythonCommand ? `Python 3 available via ${pythonCommand === portablePython ? '.tools/python-3.12.8/tools/python.exe' : pythonCommand}; workflow packages not checked` : 'Python 3 unavailable', 'Run scripts/restore-python.ps1 -Portable for the official local package, then the workflow dependencies.');
++  add('creative', 'python', pythonCommand, pythonCommand ? `Python 3 available via ${pythonCommand === portablePython ? '.tools/python-3.12.8/tools/python.exe' : pythonCommand}; workflow packages not checked` : 'Python 3 unavailable', 'Reuse a compatible installed Python with the required workflow packages, or install Python if absent. scripts/restore-python.ps1 -Portable is an optional fallback.');
+   let bashOk = false;
+   if (process.platform === 'win32') {
+     const location = run('where.exe', ['git.exe'], root);
+diff --git a/tools/codex-hooks.test.mjs b/tools/codex-hooks.test.mjs
+index 6bb529ea..69c7c892 100644
+--- a/tools/codex-hooks.test.mjs
++++ b/tools/codex-hooks.test.mjs
+@@ -121,7 +121,11 @@ test('commit rejects an invalid changed lockfile without running install scripts
+ });
+ test('prompt and session context point at continuity and language rules', () => {
+   assert.match(JSON.stringify(invoke('UserPromptSubmit', { prompt: 'gusto natin caption' })), /taglish-voice/);
+-  assert.match(JSON.stringify(invoke('SessionStart')), /NOW.md/);
++  const startup = JSON.stringify(invoke('SessionStart'));
++  assert.match(startup, /NOW.md/);
++  assert.match(startup, /persistent personal Windows desktop/);
++  assert.match(startup, /Mobile disconnects do not require cleanup, sign-out, or forced commits/);
++  assert.doesNotMatch(startup, /after a cafe reboot/);
+ });
+ test('Stop detects source changes and blocks failed build; tests stay explicit', () => {
+   mkdirSync(join(fixture, 'components'), { recursive: true });
+diff --git a/scripts/enable-dev-unmetered-video.ps1 b/scripts/enable-dev-unmetered-video.ps1
+index 2b13d817..81cefb9e 100644
+--- a/scripts/enable-dev-unmetered-video.ps1
++++ b/scripts/enable-dev-unmetered-video.ps1
+@@ -10,9 +10,9 @@
+ # so production stays fully metered. Neil hit both gates mid-smoke twice on
+ # 2026-06-10; this script makes the dev-unmetered state one command to restore.
+ #
+-# The cafe-PC defreezer wipes .env (gitignored) on reboot, so this is NOT a
+-# one-time setup - run it at the START of any local smoke-test session, AFTER
+-# .env has its API keys restored.
++# Local .env settings persist on the personal desktop. This is NOT routine
++# setup. Use only for an explicitly approved test authorizing unmetered mode;
++# ordinary checks keep these flags unset. Restore prior state after the test.
+ #
+ # Usage (from the grifon-command folder):
+ #   .\scripts\enable-dev-unmetered-video.ps1
+diff --git a/.agents/skills/codex-image/generate.mjs b/.agents/skills/codex-image/generate.mjs
+index 4acdc481..b88d701d 100644
+--- a/.agents/skills/codex-image/generate.mjs
++++ b/.agents/skills/codex-image/generate.mjs
+@@ -89,7 +89,7 @@ if (!codex) {
+     '  This skill needs OpenAI Codex installed where Codex desktop runs.\n' +
+     '  Install:   npm i -g @openai/codex\n' +
+     '  Then:      codex login   (sign in with your ChatGPT account)\n' +
+-    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1'
++    '  If Codex CLI is missing, set it up with: scripts/restore-codex.ps1'
+   );
+ }
+ 
+diff --git a/.agents/skills/codex-executor/execute.mjs b/.agents/skills/codex-executor/execute.mjs
+index ece0aadf..9a52036d 100644
+--- a/.agents/skills/codex-executor/execute.mjs
++++ b/.agents/skills/codex-executor/execute.mjs
+@@ -107,7 +107,7 @@ if (!codex) {
+     'Codex CLI not found — falling back to the code-executor subagent is the SOP.\n' +
+     '  Install:   npm i -g @openai/codex\n' +
+     '  Then:      codex login   (sign in with your ChatGPT account)\n' +
+-    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1',
++    '  If Codex CLI is missing, set it up with: scripts/restore-codex.ps1',
+     10
+   );
+ }
+@@ -118,7 +118,7 @@ if (ver.error?.code === 'ENOENT') {
+     'Codex CLI not found on PATH — falling back to the code-executor subagent is the SOP.\n' +
+     '  Install:   npm i -g @openai/codex\n' +
+     '  Then:      codex login\n' +
+-    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1',
++    '  If Codex CLI is missing, set it up with: scripts/restore-codex.ps1',
+     10
+   );
+ }
+diff --git a/.agents/skills/grifon-creative-director/SKILL.md b/.agents/skills/grifon-creative-director/SKILL.md
+index e456ff0d..9e3a3f58 100644
+--- a/.agents/skills/grifon-creative-director/SKILL.md
++++ b/.agents/skills/grifon-creative-director/SKILL.md
+@@ -95,7 +95,7 @@ Ship production-ready React + TypeScript + Tailwind. Use existing primitives fro
+ 
+ Before editing existing files, follow [.agents/skills/surgical-edit/](../surgical-edit/SKILL.md) — match the scope of change to the scope of request, no opportunistic refactors. After editing `api/`, `services/`, `components/`, or `App.tsx`, run [.agents/skills/verify-changes/](../verify-changes/SKILL.md) before reporting done.
+ 
+-**Sessions run on cafe PCs that wipe on reboot — only the GitHub repo persists.** Commit early and often. "Save this for later" means push, not write to a local path.
++**The personal desktop retains local work between sessions.** Save drafts locally and checkpoint reviewed work to GitHub for backup and collaboration. Mobile disconnects do not require immediate commits or sign-out.
+ 
+ ### When Neil asks a direct factual question
+ 
+diff --git a/.agents/skills/artifact-noir/SKILL.md b/.agents/skills/artifact-noir/SKILL.md
+index 8313993f..9a09d060 100644
+--- a/.agents/skills/artifact-noir/SKILL.md
++++ b/.agents/skills/artifact-noir/SKILL.md
+@@ -109,7 +109,7 @@ Deliver the verified local HTML with a clickable absolute file link and open it
+ 
+ **Every artifact ships with a committed standalone twin** (Neil, 2026-07-29). A chat-only response is not a durable delivery path, so an artifact is **not delivered** until its self-contained
+ HTML also exists at **`artifacts/<slug>.html`**, committed, built by a script under `tools/artifacts/`
+-that regenerates it **from committed sources only** — never a `.tmp/` cache, which the defreezer eats.
++that regenerates it **from committed sources only** — never rely solely on a disposable `.tmp/` cache.
+ 
+ Because the page inlines every asset, that one file *is* the share mechanism: Neil sends it over
+ Viber/email/Drive and it opens offline in any browser — no sign-in, no link permissions.
+diff --git a/.agents/skills/ai-editor/SKILL.md b/.agents/skills/ai-editor/SKILL.md
+index feeb0cf1..f84a268f 100644
+--- a/.agents/skills/ai-editor/SKILL.md
++++ b/.agents/skills/ai-editor/SKILL.md
+@@ -53,7 +53,7 @@ Grifon launch video. Full verdict, per-move ownership table, and guardrails:
+   `workflows/assets/grifon-launch-video/composition-index.html` — copy into a fresh
+   `npx hyperframes init` scaffold and customize per ad; phone-frame sample videos are
+   file-swappable slots.
+-- **Re-arm after defreezer:** `scripts/restore-hyperframes.ps1`. Never add
++- **If the tool is missing:** `scripts/restore-hyperframes.ps1`. Never add
+   hyperframes to the product `package.json` — this lane never enters the product
+   runtime.
+ - **Mode B split is three-way** (see step 3 below): FFmpeg-executable /
+@@ -110,8 +110,8 @@ Grifon launch video. Full verdict, per-move ownership table, and guardrails:
+    fast zoom with visible easing — the viewer should FEEL the camera travel; no
+    instant jump-cut reframes" — Neil's Sample-4 fix). Validated move vocab lives in
+    the registry templates.
+-7. **Commit early** (cafe-PC defreezer). Registry entries and skill edits commit
+-   immediately; `.tmp/omni-poc/` artifacts are disposable — round entries must stand
++7. **Checkpoint reviewed work.** Save registry entries and skill edits with the
++   completed task; `.tmp/omni-poc/` artifacts are disposable — round entries must stand
+    alone without them.
+ 8. **720p/24 reality.** Omni outputs 720p/24: always run the `upscale` step to 1080p
+    BEFORE the FFmpeg deterministic layer. SynthID watermark is embedded in all Omni
+diff --git a/.agents/skills/ad-recon/SKILL.md b/.agents/skills/ad-recon/SKILL.md
+index cb1ea846..2197170c 100644
+--- a/.agents/skills/ad-recon/SKILL.md
++++ b/.agents/skills/ad-recon/SKILL.md
+@@ -133,8 +133,8 @@ the niche, and `--source fb-ad-library`, plus the *why-autopsied* rationale
+ Gemini analysis, the Swipe File entry, the Pattern Index update, and all gating.
+ 
+ ### Step 5 — Commit
+-Cafe-PC rule: the `.tmp/ad-recon/` JSON is disposable, but any Swipe File entry
+-viral-autopsy writes must be committed immediately. Ad Recon itself produces no
++Checkpoint reviewed Swipe File entries with the completed task. The
++`.tmp/ad-recon/` JSON is a disposable cache; retain evidence needed by each entry. Ad Recon itself produces no
+ committed artifact beyond what viral-autopsy appends.
+ 
+ ## Choosing brands to recon (when the user asks "who should I spy on?")
+diff --git a/.agents/skills/funnel-autopsy/SKILL.md b/.agents/skills/funnel-autopsy/SKILL.md
+index 5ab7de7b..b252842b 100644
+--- a/.agents/skills/funnel-autopsy/SKILL.md
++++ b/.agents/skills/funnel-autopsy/SKILL.md
+@@ -21,7 +21,7 @@ Screenshots: `assets/funnel-swipe/F<NN>/` (compressed, committed).
+ 4. **The trust line.** Steal the *structure* and the *lever*, never the lie. Fake stock counters, evergreen countdowns, unverifiable claims → record in `trust_flags`, mark do-not-replicate.
+ 5. **Specificity validator.** An entry must contain: verbatim headline quotes per section, real form field names + required flags, an exact CTA census (count + variants), and verbatim consent/disclaimer language. If you can't produce those, the read is GENERIC_OUTPUT — STOP, re-capture, don't write a fluffy entry.
+ 6. **Playwright NEVER in the main loop.** All browsing/screenshots/funnel walks go through the `smoke-tester` subagent (foreground).
+-7. **Commit immediately** after each entry: `swipe(funnel): add F<NN> <brand>`. Cafe-PC defreezer.
++7. **Checkpoint reviewed entries** with the completed task: `swipe(funnel): add F<NN> <brand>`.
+ 
+ ## Procedure
+ 
+diff --git a/.agents/skills/grifon-ad-strategist/SKILL.md b/.agents/skills/grifon-ad-strategist/SKILL.md
+index 5e1453fb..e9da9ccc 100644
+--- a/.agents/skills/grifon-ad-strategist/SKILL.md
++++ b/.agents/skills/grifon-ad-strategist/SKILL.md
+@@ -108,7 +108,7 @@ The whole point is to **stop re-burning budget on lessons we already paid for.**
+ 1. **Read the ledger first, every invocation.** Skim the **Pattern Index** and **North-Star Tracker** before recommending any structure or budget — let history inform the buy.
+ 2. **After every campaign review, append a timestamped entry** (template in the ledger): structure run, creatives/hooks tested, spend, ROAS/MER, hook/hold/CTR/CPA, what was killed/scaled and *why*, and the **So-What for the next campaign**.
+ 3. **Corroborate patterns.** Increment counts in the Pattern Index; a spend-strategy change only becomes a **Gated Proposal** for Neil at **≥3 corroborating campaigns** (one campaign is an anecdote — variance is brutal at low spend).
+-4. **Commit immediately** (`ad-strategist: log <campaign> — MER <x>`). Cafe-PC rule: uncommitted work dies with the reboot, and the ledger is the only thing that makes this skill smarter over time.
++4. **Checkpoint the reviewed ledger** with the completed task (`ad-strategist: log <campaign> — MER <x>`). Local drafts persist; versioned evidence lets future work reuse the findings.
+ 
+ ## Out of scope / wrong tool
+ 
+diff --git a/.agents/skills/growth-debrief/SKILL.md b/.agents/skills/growth-debrief/SKILL.md
+index 3655127d..fbfef490 100644
+--- a/.agents/skills/growth-debrief/SKILL.md
++++ b/.agents/skills/growth-debrief/SKILL.md
+@@ -16,7 +16,7 @@ It owns no spend decisions: it proposes, Neil ships.
+ The deterministic math (per-creative rollups, funnel step-down, NPS) is done by
+ `tools/growth_debrief_pull.py`; this skill owns the **judgment** on top of it
+ (the WAT split: tool = math, skill = read). Findings compound in a committed
+-**debrief log** so they survive the cafe-PC defreezer.
++**debrief log** so future tasks can reuse the evidence.
+ 
+ ## Hard guardrails (read first)
+ 
+@@ -62,8 +62,7 @@ python tools/growth_debrief_pull.py --days 7 --out .tmp/growth/debrief_input.jso
+ The tool emits one consolidated JSON: `ad_performance.by_creative` (per-creative
+ rollups + derived rates), `funnel` (event step-down + checkout-abandon), and
+ `feedback` (NPS + free-text). It is read-only and never logs secrets. Exit `1
+-SECRETS_NOT_CONFIGURED` (live, no `.env`) → fall back to `--fixture`. The cafe PC
+-may have no Python (a known pending item) — if `python`/`py` is missing, install
++SECRETS_NOT_CONFIGURED` (live, no `.env`) → fall back to `--fixture`. Check the installed Python before assuming it is missing. If unavailable, install
+ Python 3.10+ first, or do the read via the Supabase MCP `execute_sql` against the
+ same three tables and shape the numbers by hand.
+ 
+@@ -118,8 +117,7 @@ must re-check — fatiguing creatives, an unproven winner needing more spend).
+ 
+ ### Step 6 — Commit
+ 
+-Cafe-PC rule: uncommitted work dies with the reboot. Commit the debrief-log update
+-immediately (`growth-debrief: add <date> debrief`). `.tmp/` artifacts are
++Checkpoint the reviewed debrief-log update with the completed task (`growth-debrief: add <date> debrief`). `.tmp/` artifacts are
+ disposable; the entry must stand alone without them.
+ 
+ ## Thresholds (starting heuristics — tune as real data arrives)
+diff --git a/.agents/skills/retargeting-briefs/SKILL.md b/.agents/skills/retargeting-briefs/SKILL.md
+index 9ff6819e..4bca9761 100644
+--- a/.agents/skills/retargeting-briefs/SKILL.md
++++ b/.agents/skills/retargeting-briefs/SKILL.md
+@@ -16,8 +16,7 @@ audience. Neil approves, builds in Director AI, uploads the roster, and publishe
+ The deterministic membership math (who is in each segment, hashed rosters) is done by
+ `tools/segment_pull.py`; this skill owns the **creative judgment** — what to say to
+ each audience (via `grifon-cmo`) and how it should look (via
+-`grifon-creative-director`). Briefs compound in a committed log so they survive the
+-cafe-PC defreezer.
++`grifon-creative-director`). Briefs compound in a versioned log so future tasks can reuse the evidence.
+ 
+ ## Hard guardrails (read first)
+ 
+@@ -117,7 +116,7 @@ Append to `workflows/retargeting_briefs.md` (entry template there). Then:
+ 
+ ### Step 6 — Commit
+ 
+-Cafe-PC rule: commit the brief-log update immediately
++Checkpoint the reviewed brief-log update with the completed task
+ (`retargeting-briefs: add <date> segment briefs`). Rosters in `.tmp/` are disposable
+ and **never committed** (they contain hashed PII) — regenerate them when Neil uploads.
+ 
+diff --git a/.agents/skills/static-autopsy/SKILL.md b/.agents/skills/static-autopsy/SKILL.md
+index d95d4d02..1505791b 100644
+--- a/.agents/skills/static-autopsy/SKILL.md
++++ b/.agents/skills/static-autopsy/SKILL.md
+@@ -10,7 +10,7 @@ This is the still-image counterpart to `viral-autopsy`: Neil supplies a winning
+ static ad, Gemini vision decodes it, and the findings compound in the committed
+ **Static Ad Swipe File** (`workflows/static_ad_swipe_file.md`) instead of
+ evaporating with the session. The source ad is compressed and committed to
+-`assets/ad-swipe/` so the reference survives the cafe-PC defreezer. Discovery
++`assets/ad-swipe/` for reproducible analysis and future comparison. Discovery
+ stays human (FB Ad Library sorted by longest-running, competitor feeds); analysis
+ is what this skill systematizes.
+ 
+@@ -51,7 +51,7 @@ Read `workflows/static_ad_swipe_file.md` end to end:
+   feed the right one.
+ 
+ Pre-flight: confirm `GEMINI_API_KEY` is in `.env` (the tool fails fast with
+-`GEMINI_NOT_CONFIGURED` otherwise; the defreezer can wipe `.env`).
++`GEMINI_NOT_CONFIGURED` otherwise; credentials may be absent on a new setup).
+ 
+ ### Step 1 — Collect context from Neil
+ 
+@@ -115,10 +115,9 @@ using the template below. Then update:
+ - **Gated Proposals**: only if a pattern just crossed **≥3 corroborations** AND
+   implies an Image Ads Gen template or CMO-playbook change.
+ 
+-### Step 6 — Commit immediately
++### Step 6 — Checkpoint reviewed work
+ 
+-Cafe-PC rule: uncommitted work dies with the reboot. Commit the Swipe File update +
+-the committed image(s) right away (`swipe(static): add E18-E2x <brand> batch`). The
++Checkpoint the reviewed Swipe File update and source images with the completed task (`swipe(static): add E18-E2x <brand> batch`). The
+ `.tmp/` JSONs are disposable; the entry + the committed JPG must stand alone.
+ 
+ ### Step 7 — Offer the remix (on demand, not automatic)
+diff --git a/.agents/skills/viral-autopsy/SKILL.md b/.agents/skills/viral-autopsy/SKILL.md
+index 8068b56d..6263a074 100644
+--- a/.agents/skills/viral-autopsy/SKILL.md
++++ b/.agents/skills/viral-autopsy/SKILL.md
+@@ -130,7 +130,7 @@ Diff its `deterministic` block + `timeline` against the autopsy's `shots`,
+ render_audit" in the entry (see E6). A material mismatch (e.g. ffmpeg finds 18
+ cuts where Gemini said 6) → trust ffmpeg for timing, re-read captions off the
+ frames, and correct the entry before it pollutes a pattern decision. (Node, not
+-Python — survives the defreezer; same engine backs FINAL_RENDER smoke.)
++Python; the same engine backs FINAL_RENDER smoke.)
+ 
+ The same frame vision also **cross-checks the visual register**: confirm Gemini's
+ `believability.observed_register` against the still frames (raw-ugc = unretouched
+@@ -164,8 +164,7 @@ ang detalyadong map sa recreation brief ng ad na gagawa (hal. km-XXX-brief.md).
+ 
+ If the Jockey by TwelveLabs MCP connector is authed (pilot PASSED 2026-07-25 —
+ see `workflows/twelvelabs_decision.md`), ingest the MP4 into the
+-`grifon-swipe-file` knowledge store so the *video itself* survives the
+-defreezer and joins the queryable corpus:
++`grifon-swipe-file` knowledge store so the *video itself* has a durable backup and joins the queryable corpus:
+ 
+ - Prefer a **direct public URL** as `jockey_add_media`'s `source` (e.g. the
+   signed fbcdn URL from `yt-dlp --get-url`) — server-side fetch, no upload.
+@@ -189,8 +188,7 @@ template below. Then update:
+ 
+ ### Step 5 — Commit
+ 
+-Cafe-PC rule: uncommitted work dies with the reboot. Commit the Swipe File
+-update immediately (`viral-autopsy: add <slug> entry`). `.tmp/` artifacts are
++Checkpoint the reviewed Swipe File update with the completed task (`viral-autopsy: add <slug> entry`). `.tmp/` artifacts are
+ disposable; the entry must stand alone without them.
+ 
+ ### Step 6 — Offer the remix (on demand, not automatic)
+diff --git a/.agents/skills/img2threejs-lab/SKILL.md b/.agents/skills/img2threejs-lab/SKILL.md
+index 068b0dee..d7994c95 100644
+--- a/.agents/skills/img2threejs-lab/SKILL.md
++++ b/.agents/skills/img2threejs-lab/SKILL.md
+@@ -29,7 +29,7 @@ product-facing image-to-3D feature is ever wanted, it goes through a hosted
+ API evaluation (parked in `workflows/post_beta_roadmap.md`) via grill-me →
+ Neil → code-executor.
+ 
+-## Setup (clone-on-demand, defreezer-proof)
++## Setup (reuse the local installation; clone if absent)
+ 
+ Nothing is vendored. Upstream churn can't break our repo; this doc survives in
+ the repo, the clone is disposable:
+@@ -51,7 +51,7 @@ from v1.2.0, flag it to Neil before relying on it.
+ 1. **Isolation first.** The reference must be the subject alone on a clean
+    white/transparent plate before intake — floor clutter and backgrounds
+    poison the spec. If the source isn't clean, cut it out via `codex-image`
+-   (cafe PC) or a Gemini image-edit pass; already-clean assets (e.g.
++   on the desktop or a Gemini image-edit pass; already-clean assets (e.g.
+    `public/griffin-emblem.png`) skip this.
+ 2. **Multi-angle for complex geometry.** Anything non-symmetrical or
+    hardware-like needs overhead + perspective references, not one glamour
+@@ -75,7 +75,7 @@ from v1.2.0, flag it to Neil before relying on it.
+    `check:bundle-leak` and `brand-check`) delegated to `code-executor`.
+ 6. **TUNED freeze.** Never touch `services/geminiService.ts`,
+    `api/_lib/prompts.ts`, `api/_lib/renderPresets.ts` from this skill.
+-7. **Commit what's durable** (cafe-PC defreezer): the sculpt spec, generated
++7. **Checkpoint keeper assets** with the reviewed task: the sculpt spec, generated
+    factory `.ts`, and demo HTML for a keeper asset go to
+    `assets/3d-lab/<object-slug>/`; `.tmp/` artifacts are disposable. Brand
+    assets follow DESIGN.md's world (zinc-950 canvas, Grifon Gold #FFCC00
+diff --git a/.agents/skills/eli5/SKILL.md b/.agents/skills/eli5/SKILL.md
+index 102d9dd1..d2bbab33 100644
+--- a/.agents/skills/eli5/SKILL.md
++++ b/.agents/skills/eli5/SKILL.md
+@@ -90,7 +90,7 @@ summary; if the two ever disagree, `AGENTS.md` wins.
+ | Kind | Builder + twin | Registry line |
+ |---|---|---|
+ | **Throwaway** - explaining one thing once, mid-session, to unblock a decision in front of you | not required | no |
+-| **Kept** - a mental model the repo will need again after a defreeze | required | yes, in AGENTS.md |
++| **Kept** - a mental model the repo will need again in a later task | required | yes, in AGENTS.md |
+ 
+ ⚠ **Exempt from the twin ONLY.** A throwaway still goes through `finalize()`, still obeys the
+ NOIR mobile-safe rules, and still passes the 390x844 gate before anyone sees a URL. Speed is the
+@@ -98,7 +98,7 @@ point of the carve-out; a page that mispaints on a phone is not faster, it is ju
+ 
+ **Promotion is Neil's word, not your judgement.** The trigger is him saying "keep this one" -
+ not your own read of how good the page is. When he does, build the builder and add the registry
+-line *while the sources are still in context*, because after a `/clear` or a defreeze the
++line *while the sources are still in context*, because after a context reset the
+ reasoning that produced the page is gone and only the page is left.
+ 
+ (History, so nobody re-litigates it: the session that wrote this skill originally dated this
+diff --git a/.agents/skills/funnel-forge/SKILL.md b/.agents/skills/funnel-forge/SKILL.md
+index 3c547cb3..b3c17cb2 100644
+--- a/.agents/skills/funnel-forge/SKILL.md
++++ b/.agents/skills/funnel-forge/SKILL.md
+@@ -59,7 +59,7 @@ Proven end-to-end 2026-07-29 on `grifon-starter` (live: grifon-starter.vercel.ap
+ 5. **QA.** `brand-check` → `smoke-tester` mobile+desktop pass including a full opt-in walk against local dev (test rows use `funnel_id: '<slug>-smoke'`, deleted after). Fix loop until clean.
+ 6. **Deploy.** From the instance dir: `npx vercel deploy --prod --yes` (CLI, logged in as Neil's account — creates the project on first run; NOT git-connected, redeploys are manual). Then env vars per hard-won rule #2, then redeploy. vercel.app alias unless Neil provides a domain. Meta Pixel stays OFF until a live campaign points at it. Record everything in `workflows/funnel_deploys.md`.
+ 7. **Live verify.** Per hard-won rule #7 (POST → row → delete) → thank-you renders with the magnet → the bridge CTA carries the email to `/login` → ⛔ **Neil gate — eyeball on his phone.**
+-8. **Record.** Commit everything + append a handoff note (Vercel project name, root dir, env vars set, domain) to `workflows/funnel_deploys.md` — Vercel settings aren't in git and the defreezer eats local state.
++8. **Record.** Commit everything + append a handoff note (Vercel project name, root dir, env vars set, domain) to `workflows/funnel_deploys.md` — Vercel settings are external state and need a reproducible handoff.
+ 
+ ## Hard constraints
+ 
+diff --git a/.agents/skills/director-smoke/SKILL.md b/.agents/skills/director-smoke/SKILL.md
+index 0a60a07d..58405542 100644
+--- a/.agents/skills/director-smoke/SKILL.md
++++ b/.agents/skills/director-smoke/SKILL.md
+@@ -38,14 +38,17 @@ to test quickly" — the rule didn't land; re-read the hard rules above. The tra
+ leitmotif is the cheapest proof you won't repeat the exact failure this skill exists to stop (the
+ one Neil had to correct every time).
+ 
+-## Pre-flight: unmeter local video FIRST (do this BEFORE Step 0)
++## Pre-flight: verify the approved local video-test configuration
+ 
+-If this smoke will reach the video stage (RENDER ALL / GENERATE VIDEO / FINAL_RENDER),
+-set the dev-unmetered flag **before** you start — not after the render dies. A real
++If an explicitly approved paid smoke will reach the video stage (RENDER ALL /
++GENERATE VIDEO / FINAL_RENDER), check whether its spec authorizes unmetered mode
++before changing local configuration. A real
+ account hits TWO server gates mid-render: the monthly `video_ads` quota (HTTP 402) and
+ the hourly 5-renders rate-limit (HTTP 429, the "50M TO RESUME" wall). Both are bypassed
+-locally by `GRIFON_DEV_UNMETERED_VIDEO=true` in `.env`. The defreezer wipes `.env`, so
+-this is per-session, not one-time:
++locally by `GRIFON_DEV_UNMETERED_VIDEO=true` in `.env`. Local configuration persists on the personal desktop. This flag is not a
++standing setup requirement: AGENTS.md keeps it unset for ordinary checks. Only
++use it within an explicitly approved paid test that authorizes unmetered mode,
++and restore its prior state after that test. For such an approved test:
+ 
+ ```powershell
+ .\scripts\enable-dev-unmetered-video.ps1   # appends/flips the flag in .env
+@@ -54,7 +57,7 @@ this is per-session, not one-time:
+ 
+ The flag is LOCAL-ONLY (never on Vercel; prod stays metered). Neil hit both gates
+ mid-smoke on 2026-06-10 — it destroys the run because the render queue fails partway and
+-the rate-limit window locks you out for ~50 min. ALWAYS unmeter first.
++the rate-limit window locks you out for ~50 min. For an approved unmetered test, verify the authorized setting before generation.
+ 
+ ## The exact sequence
+ 

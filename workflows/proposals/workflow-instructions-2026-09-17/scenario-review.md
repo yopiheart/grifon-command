@@ -1,0 +1,15 @@
+# Independent tabletop interpretation
+
+Compared all 20 scenarios with both supplied-packet decision reports. These are hypothetical semantic routing decisions, not executions or measurements of automatic skill triggering. No automatic-trigger score is warranted.
+
+- **Meaningful improvement: scenario 14.** Baseline pauses because the necessary fix exceeds roughly 30 lines; candidate proceeds within the established scope. The replacement removes that line-count interruption without authorizing unrelated changes.
+- **Approval boundaries survive.** Both defer the unrelated billing fix (15), require exact tuned-diff approval (16), and refuse to substitute a paid-test asset under its old approval (17). Both prepare the skill-description diff before application (11), keep reports local (5), keep campaign inspection read-only (10), and reserve paid analysis for a separately approved spec (7–8).
+- **Verification remains incomplete until evidence exists.** Both reject a builder's self-review as independent review (13), reject keyword repetition as proof of smoke/review completion (18), and require independent review, applicable checks, and explicit merge authorization beyond a clean static scan (19). Candidate wording clarifies these rules, but these decisions show no new behavioral improvement on those scenarios because baseline already reaches the same outcome.
+- **Routing coverage is preserved in this exercise.** Both route campaign assessment and hooks/thumbnail concepts to CMO (1–2), reference extraction to Creative Director (3), fidelity checks to brand-check (4), competitor teardowns to the autopsy skills (7–8), and saved Grifon output grading to gemini-eval (9). Oceanides remains under client design rules (6). No meaningful candidate regression is evident in the supplied decisions.
+- **Unresolved undesirable pause: scenario 20.** Both packets require exact-line Taglish approval even for a simple conversational restatement. The candidate does not fix that pause; the shared broad Taglish-copy rule lies outside this proposed cleanup. Do not report scenario 20 as an improvement.
+
+## Metadata compatibility
+
+Compared frontmatter for all nine skill files in the baseline/candidate trees: metadata other than `description` is identical. `static-autopsy` and `viral-autopsy` retain `disable-model-invocation: true` in both. The generic system `skill-creator/scripts/quick_validate.py` allows only `name`, `description`, `license`, `allowed-tools`, and `metadata`, so it rejects that existing key in both versions. This is a pre-existing validator compatibility limitation, not a regression introduced by the proposal. Removing the key just to make that generic validator pass would alter invocation behavior and is not justified by this review.
+
+Limitations: this comparison assesses the supplied reports and local metadata, not runtime loading, full workflow execution, paid-provider behavior, or all repository instruction conflicts. No scenarios were executed and no external calls were made.
