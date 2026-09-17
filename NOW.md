@@ -8,7 +8,8 @@ The evaluation-fidelity/reporting and approved steam/vacuum fix are complete.
 This task audits the remaining script-quality findings and prepares exact diffs.
 No application source, live fixture, prompt, schema, model or generation knob changed.
 Independent proposal review is complete; both actionable findings are resolved.
-Draft PR link will be recorded after the branch is pushed.
+Draft PR #139: https://github.com/yopiheart/grifon-command/pull/139
+Audit/proposal commit: `80e4f683`, pushed to GitHub. Runtime baseline stays `87546343`.
 
 ## ▶ NEXT ACTION
 Review the six separate proposed patches linked from
