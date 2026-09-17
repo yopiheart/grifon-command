@@ -46,3 +46,6 @@ Grifon product proof must stay separate from external production footage.
 After exact approval, validate supported media transport and submit at most one
 free attempt. Record actual output/charge/settings and compare honestly.
 Keep failures. Obtain Neil's taste review before further film production.
+
+Draft PR145: https://github.com/yopiheart/grifon-command/pull/145.
+Preflight JSON parse, both input SHA-256s and git diff checks passed.
