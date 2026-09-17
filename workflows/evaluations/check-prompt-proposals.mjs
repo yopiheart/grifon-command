@@ -8,12 +8,16 @@ import assert from 'node:assert/strict';
 const require = createRequire(new URL('../../package.json', import.meta.url));
 const root = new URL('../../', import.meta.url);
 const read = path => readFileSync(new URL(path, root), 'utf8').replace(/\r\n/g, '\n');
-const original = read('api/_lib/prompts.ts');
+const baseline = '8754634334dc44b8d2d4768f03d8a2ba5b07b241';
+const approvalRecord = '7e619a618b85e57a5827b3544dfa44024b9e9160';
+const historical = (revision, path) => execFileSync('git', ['show', `${revision}:${path}`], { cwd: root, encoding: 'utf8' }).replace(/\r\n/g, '\n');
+const original = historical(baseline, 'api/_lib/prompts.ts');
+const checkApproved = process.argv.includes('--approved');
 const ids = ['a-language', 'b-proof', 'c-price', 'd-fixtures', 'e-claims', 'f-beat-count'];
 const proposals = ids.map(id => {
   const file = `workflows/evaluations/pq-${id}.proposed.patch`;
-  execFileSync('git', ['apply', '--check', '--', file], { cwd: root, stdio: 'pipe' });
   const patch = read(file);
+  assert(patch === historical(approvalRecord, file), `proposal changed since approval: ${id}`);
   const edits = patch.split(/^@@[^\n]*\n/m).slice(1).map(hunk => {
     const lines = hunk.split('\n');
     return [
@@ -41,6 +45,14 @@ function apply(source, entries) {
   return source;
 }
 const base = compile(original);
+for (const proposal of proposals) apply(historical(baseline, proposal.target), [proposal]);
+if (checkApproved) {
+  for (const target of ['api/_lib/prompts.ts', 'tests/regression/script-gen.regression.test.ts']) {
+    const approved = proposals.filter(p => p.target === target && ['a-language', 'b-proof', 'd-fixtures'].includes(p.id));
+    const expected = apply(historical(baseline, target), approved);
+    assert(read(target) === expected, `${target} must match exactly approved A+B+D; C/E/F remain unapplied`);
+  }
+}
 const price = compile(apply(original, proposals.filter(p => p.id === 'c-price')));
 const all = compile(apply(original, proposals.filter(p => p.target === 'api/_lib/prompts.ts')));
 const input = (scriptType, businessType, listingPrice = '') => ({
@@ -75,4 +87,4 @@ for (const [type, bt, temu, ugc] of controls) {
   assert.equal(all.MODEL_TEXT, base.MODEL_TEXT);
   assert.equal(typeof all.buildAdScriptPrompt(value, temu, ugc), 'string');
 }
-console.log(JSON.stringify({ patchesApply: proposals.length, originalBlanketRule, proposedPriceCases, unaffectedPriceControlsByteEqual: controls.length, combinedCandidateTranspilesAndBuilds: true, scope: 'in-memory prompt assembly only; not full type-checking or generated-output quality' }, null, 2));
+console.log(JSON.stringify({ historicalProposalPreimagesVerified: proposals.length, approvedFilesMatch: checkApproved ? 2 : 'not checked; use --approved', originalBlanketRule, proposedPriceCases, unaffectedPriceControlsByteEqual: controls.length, combinedCandidateTranspilesAndBuilds: true, scope: 'historical candidates in memory; --approved checks current A+B+D files; not generated-output quality' }, null, 2));

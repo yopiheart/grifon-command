@@ -211,11 +211,11 @@ const skincareFixture: BusinessInfoFixture = {
   audience:
     'Filipino millennial women 25-35 dealing with adult acne na hindi nawawala kahit P5K worth of products',
   benefit:
-    'Walang acne sa morning meeting, kayang mag-sukat ng makeup nang hindi kasama ang acne, mas confident sa Zoom calls',
+    'Mas fresh sa morning meeting, mas confident mag-makeup at humarap sa Zoom calls',
   painPoint:
     '3 AM, naka-mirror pa rin pagkatapos ng kape niya, hinahanap kung saan kaya nagkakapimples na naman bukas',
   separator:
-    'Inumin lang at may visible results sa 14 days, hindi P10K facial sessions',
+    'Ipahid lang para sa fresh na glow sa 14 days, hindi P10K facial sessions',
   features:
     'Niacinamide 5% · Tea Tree · Hyaluronic acid · Fragrance-free · 30ml lasts 60 days',
   productImageUrls: [],
@@ -286,7 +286,7 @@ const condoFixture: BusinessInfoFixture = {
   audience:
     'First-time condo buyers 26-35 na natatakot sa hidden fees at magulong terms ng developer',
   benefit:
-    'Move-in ready malapit sa trabaho, malinaw ang title at terms, walang gulat na singil',
+    'Malapit sa trabaho, malinaw ang title at terms, walang gulat na singil',
   painPoint:
     '3 AM, hindi makatulog iniisip kung legit ba ang developer at kung kaya ba ng budget ang monthly',
   separator: 'Malinis na title, transparent na terms, malapit sa MRT at CBD',

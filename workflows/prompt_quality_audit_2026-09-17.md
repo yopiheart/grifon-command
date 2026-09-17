@@ -1,7 +1,46 @@
 # Prompt-quality audit and exact fix proposals
 
 Date: September 17, 2026. Baseline: `8754634334dc44b8d2d4768f03d8a2ba5b07b241`.
-Status: audit and proposal preparation complete; patches are **not applied or approved**.
+Status: **A+B+D approved and applied September 17** after Neil's explicit approval
+of those exact patches in this task. C/E/F remain unapplied and unapproved.
+The original proposal files are retained unchanged as the approval record.
+
+## Approved implementation
+
+Applied the five approved prompt-line replacements in `api/_lib/prompts.ts`
+(A+B) and the three approved fixture-line replacements in
+`tests/regression/script-gen.regression.test.ts` (D). No model, response schema,
+generation setting, retry policy or C/E/F change is included.
+
+The offline checker now reads the pinned audit baseline and verifies the saved
+patches against the proposal commit. `--approved` additionally compares the actual
+two target files with exactly A+B+D applied. That check failed on the original
+files, then passed after application. It normalizes line endings only. Historical
+C/E/F candidate checks remain in memory and do not imply those proposals shipped.
+Live output improvement remains unmeasured; this approval does not authorize a
+paid comparison, merge or production deployment.
+
+Implementation checks: 70 focused tests passed; full suite 1,401 passed and
+32 gated skips across 113 passing/9 skipped files. Build passed (2,580 modules;
+main JS gzip 589.79 kB, existing chunk-size/Browserslist warnings). Bundle-leak,
+voice-sync, domain-language, PowerShell ASCII and artifact-anchor checks passed.
+The independent diff reviewer found no actionable issues and confirmed reverse
+patch applicability for A+B+D. No duplicate live script prompt block was found
+in services/tests/tools; the regression adapter imports the production flow.
+
+Independent offline smoke passed 29/29: 28 real-flow/fake-provider combinations
+(Testimonial, MrBeast, all five product UGC formats x both languages x empty/nonempty
+separator), plus the exact D fixture comparison without importing the live harness.
+Original-prompt negative control failed all 28 assembly checks as expected. Requests
+match baseline plus exactly A+B; model/safety/thinking settings are unchanged.
+The probe used `envDir:false`, mocked telemetry and blocked network fetch. It does
+not establish browser behavior, live HTTP auth/quota handling or output quality.
+
+The smoke also exposed an existing detector gap: `Ipahid ko ito sa mukha.` causes
+two fake-provider calls with identical requests because `APPLICATION_VERBS` does
+not recognize `ipahid`. The word is now in D's corrected input, so this is relevant
+to a later live comparison, but whether the model outputs it is unmeasured. No
+additional detector edit is authorized or included; preserve it as a follow-up.
 
 ## Scope and conclusion
 
@@ -133,8 +172,8 @@ not independent evidence that the script followed its rules.
 
 ## Exact proposed diffs and acceptance conditions
 
-Each linked patch applies independently to the pinned baseline. They are review
-artifacts, not runtime instructions or approval records. If several are approved,
+Each linked patch applies independently to the pinned baseline. A/B/D now also
+record the exact approved changes; C/E/F remain review artifacts. If several are approved,
 combine their edits against current main and recheck context; nearby hunks can
 overlap after an earlier patch is applied. No schema, model, retry cap or generation
 setting is proposed to change.
@@ -184,20 +223,22 @@ A mocked model response proves plumbing only and cannot establish content qualit
   are not authoritative over current code. This audit uses current formula definitions;
   no skill/system instructions were silently changed.
 
-## Verification performed and limits
+## Proposal-stage verification and limits
 
 Run from the repository root:
 
 ```powershell
-node workflows/evaluations/check-prompt-proposals.mjs
+node workflows/evaluations/check-prompt-proposals.mjs --approved
 git diff --check
 node tools/resume_doc_check.mjs --strict
 ```
 
-The offline review aid checks all six patches with `git apply --check`, then
-transpiles current/proposed prompt source and builds candidate prompts in memory.
-It makes no provider call and does not apply patches to disk. It is intentionally
-specific to this approval package, not a permanent runtime quality gate.
+Before application, all six patches passed `git apply --check`. After A+B+D were
+approved, the review aid was updated to check historical patch preimages against
+the pinned baseline, then transpile source and build candidates in memory.
+The command above also verifies actual files contain exactly the approved edits.
+It makes no provider call or runtime-file write. It is specific to this approval
+package, not a permanent runtime quality gate.
 
 Six real-estate combinations (two modes x empty/monthly/lump-sum) contain the
 blanket rule on the baseline; four priced cases demonstrate the contradiction.
@@ -214,10 +255,10 @@ timing violation is recorded above. Review findings do not authorize the proposa
 Independent re-review confirmed both findings resolved with no remaining actionable
 findings. Syntax, domain-language and strict resume-doc checks also passed.
 
-No application source or live fixture changed. Build, full suite and browser
-generation are not evidence required for a documentation/proposal-only delivery;
-they remain required when approved runtime changes are implemented. No paid run,
-merge, deployment, campaign operation or production-data mutation occurred.
+During proposal preparation, no application source or live fixture changed and
+build/full suite/browser generation were not rerun. That historical verification
+does not cover the subsequent A+B+D implementation described above. No paid run,
+merge, manual deployment, campaign operation or production-data mutation occurred.
 
 Any future paid comparison needs a separate exact-input test spec: fixture/asset
 digests, accepted patches, comparison arms and repetitions, pass/fail rubric,
@@ -225,6 +266,6 @@ evidence files, maximum cost and stop condition. No run count or budget is appro
 by this report. An independent critic must grade output without seeing its arm.
 
 Applying tuned diffs requires the user's exact-diff approval under `AGENTS.md`,
-`api/AGENTS.md` and `services/AGENTS.md`. The gemini-eval skill's grill-me step
-belongs before applying a tuned edit; preparation of these reviewable proposals
-does not itself authorize that edit.
+`api/AGENTS.md` and `services/AGENTS.md`. Neil explicitly approved A+B+D after
+reviewable patches and the proposed execution scope were presented. C/E/F and
+any changed prompt wording require their own exact-diff approval.

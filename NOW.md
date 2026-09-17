@@ -1,68 +1,54 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, prompt-quality audit and proposed fixes**
+**Stamped: 2026-09-17, approved A+B+D prompt fixes applied**
 
 ## Current state
 Branch: `codex/prompt-quality-audit`, based on main `87546343`.
-PRs #136, #137 and #138 are merged, verified through GitHub and fetched main.
-The evaluation-fidelity/reporting and approved steam/vacuum fix are complete.
-This task audits the remaining script-quality findings and prepares exact diffs.
-No application source, live fixture, prompt, schema, model or generation knob changed.
-Independent proposal review is complete; both actionable findings are resolved.
 Draft PR #139: https://github.com/yopiheart/grifon-command/pull/139
-Audit/proposal commit: `80e4f683`, pushed to GitHub. Runtime baseline stays `87546343`.
+Neil explicitly approved A+B+D as written after reviewing the linked exact patches.
+Applied five prompt-line replacements in `api/_lib/prompts.ts` and three fixture
+replacements in `tests/regression/script-gen.regression.test.ts`.
+A clarifies language handling; B preserves required differentiator proof; D corrects
+contradictory topical-serum and pre-selling condo inputs.
+C/E/F, models, schemas, safety settings, generation knobs and retries are unchanged.
+The original proposed patches and saved 24-output corpus are unchanged.
 
 ## ▶ NEXT ACTION
-Review the six separate proposed patches linked from
-`workflows/prompt_quality_audit_2026-09-17.md`.
-They are NOT applied or approved. Recommend reviewing corrected fixtures/rubric
-first, then A+B (language/proof); price, claim-source and body-count policy remain
-separate decisions. Exact-diff approval is required before tuned implementation.
-Any paid comparison needs its own exact-input/evidence/max-cost test spec.
-
-## Audit findings
-Independent gemini-eval critic reviewed all 24 saved scripts from Sept. 6/7/11.
-There were 22 passing script tests; two outputs arrived after timeout.
-Three complete Malinis differentiator omissions; five other cases preserve only
-part of the proof; three preserve the core distinction. Five skincare cases are
-blocked for proof scoring by contradictory input. Full-proposition scoring differs.
-Strict language rubric: 18 specification flags, two explicit-exemplar conflicts,
-four with no clear language flag. These are not whole-script pass counts.
-Five output rows add unsupported texture/absorption, popularity or reputation.
-Price precedence conflicts, topical-serum swallowing instruction, pre-selling vs
-move-in-ready input, and ordinary beat expansion have specific proposed fixes.
-All 48 hooks meet 5-8 words; all eight UGC body counts fit their formats.
-One Glaze UGC reveal has nine words against its local 3-8-word limit.
-Full matrix, source references, policy choices and limitations are in the report.
-
-## Prepared patches
-A: language treatment of supplied specs and required proof.
-B: feature-filter exception plus meaning-preserving differentiator proof.
-C: real-estate price precedence and explicit price-bearing beat.
-D: three synthetic fixture corrections (skincare and pre-selling condo).
-E: factual claim sources and grounded Testimonial objections.
-F: optional explicit 7/5 body-entry contract for Testimonial/MrBeast.
-Files: `workflows/evaluations/pq-*.proposed.patch`.
-The original evidence archive is unchanged. No improvement in live output claimed.
+Review the implemented A+B+D change in draft PR #139 for a separately requested
+merge. No merge or production deployment is authorized by the prompt approval.
+A live quality comparison still requires its own exact-input/evidence/max-cost spec.
+Price precedence (C), factual-source policy (E) and beat mapping (F) remain
+unapproved proposals. Do not repeat A+B+D approval or implementation.
+Full audit and implementation evidence: `workflows/prompt_quality_audit_2026-09-17.md`.
 
 ## Verification
-Readiness passed core/desktop checks: Node 24.21.0, npm 11.19.0; live flags unset.
-Optional Python and local backend environment are absent; neither is needed here.
-`node workflows/evaluations/check-prompt-proposals.mjs` passed:
-six patches independently apply; six real-estate price combinations checked;
-13 non-real-estate C-only controls remain byte-identical; combined candidates
-transpile/build in memory. No provider calls or runtime file writes.
-An earlier C draft altered service wording; control check failed, then passed
-after restricting the candidate change to real estate.
-This is not full type-checking, HTTP/auth coverage or generated-output validation.
-Syntax, domain-language, strict resume-doc and diff-whitespace checks passed.
-Application build/full suite/browser generation were not rerun for proposal-only work.
+`node workflows/evaluations/check-prompt-proposals.mjs --approved` first failed on
+original source, then passed: actual files equal exactly approved A+B+D after
+line-ending normalization. All six proposal files match approval commit `7e619a61`.
+Historical C/E/F candidate checks are in-memory only, not shipped changes.
+Focused tests: 70 passed. Full suite: 1,401 passed, 32 gated skips,
+113 files passed / 9 skipped. Paid/live flags remained unset.
+Build passed: 2,580 modules, main JS gzip 589.79 kB; existing size/Browserslist warnings.
+Bundle-leak, voice-sync, domain, PS ASCII and artifact-anchor checks passed.
+Independent correctness review: no actionable findings; A+B+D reverse checks pass.
+Independent offline smoke: 29/29 passed, including 28 real-flow/fake-provider
+combinations across Testimonial, MrBeast and all five product UGC formats,
+both languages and empty/nonempty separators, plus exact D fixture source check.
+Original-prompt negative control: 28 expected failures. Env loading disabled,
+telemetry mocked, network blocked; model/safety/thinking settings unchanged.
+This proves source/assembly/plumbing, not live quality or HTTP auth/quota behavior.
+No browser generation or paid comparison was run. Generated snapshot EOL noise restored.
 
-## Separate work
-Application-verb noun fragments and English action exemplars need explicit boundary
-decisions; no new detector edit is included. Retry cancellation and 124s backoff
-vs 120s timeout remain a transport follow-up, not evidence of content regression.
+## Remaining findings
+The audit scored 24 saved outputs, representing 22 passing script tests and two
+late outputs after timeout. Three complete differentiator omissions; language
+leakage, partial proof, unsupported claims and rule/input conflicts are documented.
+One Glaze UGC reveal exceeds its local 3-8-word limit; no new retry was added.
+Offline smoke additionally found existing `ipahid` detector omission:
+`Ipahid ko ito sa mukha.` causes two identical fake-provider generation requests.
+Do not expand the approved detector diff without a separate exact-diff decision.
+Noun-fragment tolerance and English action exemplars remain explicit policy boundaries.
+Cancellation/124s backoff vs 120s timeout remains a separate transport follow-up.
 Image-evaluation camera-copy drift remains in `workflows/nightly_regression.md`.
-No saved image/storyboard/video outputs were available in this script corpus.
-Website PR #129 is merged. Hero film remains paused at Neil's request (PR #134,
-stacked on #132). Gemini migration #131 and ASMR fidelity #127 remain separate.
-No paid run, merge, deployment or production-data mutation was performed here.
+PRs #136-#138 are merged and complete; do not redo their evaluation fixes.
+Hero film remains paused (PR #134, stacked on #132). Gemini migration #131 and
+ASMR fidelity #127 remain separate. No paid run or production-data mutation here.

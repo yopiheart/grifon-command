@@ -1,8 +1,9 @@
 # Saved script failure audit — September 16, 2026
 
 Follow-up: [September 17 prompt-quality audit and exact proposals](prompt_quality_audit_2026-09-17.md)
-scores the preserved outputs and prepares separate, unapplied fixes. Evaluation
-implementation PRs #136-#138 are merged; the implementation history below is retained.
+scores the preserved outputs and tracks exact fixes. A+B+D were subsequently
+approved and applied; C/E/F remain proposals. Evaluation implementation PRs
+#136-#138 are merged; the implementation history below is retained.
 
 The recent red runs do not establish a prompt regression. All 14 failed script
 tests in the three sampled runs timed out at 120 seconds. Separately, review of
