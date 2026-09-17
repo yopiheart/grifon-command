@@ -59,7 +59,10 @@
     }
   },
   "cost": "Free-attempt counter changed from 1 to 0 after submission with use_free_gens:true. No paid fallback was requested. No separate invoice field returned.",
-  "status": "pending",
+  "status": "waiting",
   "freeAttemptsBefore": 1,
-  "freeAttemptsAfterSubmission": 0
+  "freeAttemptsAfterSubmission": 0,
+  "lastObservedUtc": "2026-09-17T07:59:10Z",
+  "resultAvailable": false,
+  "blocker": "Provider still reports waiting after more than 10 minutes; no result URL or terminal error. Do not treat polling timeouts as generation failure; do not resubmit."
 }

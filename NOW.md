@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, website hero-film Genjutsu test prepared**
+**Stamped: 2026-09-17 07:59 UTC, approved Genjutsu job waiting at provider**
 
 ## Current task
 Neil resumed the website hero film and agreed to sample its 13-19s studio beat.
@@ -27,7 +27,7 @@ Source FFmpeg full decode: exit0,144frames,24fps,960x540,6s,no audio.
 Product original and six-frame source sheet visually inspected.
 Small source bottle and 480p cannot establish final small-label readability.
 JSON/input-hash/diff verification is recorded in the task handoff.
-No paid call, app/provider/skill edit, website replacement or publishing.
+One approved FREE call; no paid fallback, app/provider/skill edit or publishing.
 
 ## Existing film preserved
 Parent draft PR134: https://github.com/yopiheart/grifon-command/pull/134.
@@ -43,7 +43,8 @@ HERO-PROOF-02 USD15/four-roll proposal remains unapproved/non-executable.
 Grifon product proof must stay separate from external production footage.
 
 ## Next
-Await the existing job; never submit a second job. Record the original output from this one
+Job still waiting at07:59UTC, over10minutes after submission; no result URL or error.
+Await only this existing job; never submit a second job. Record output from this one
 attempt. Record actual output/charge/settings and compare honestly.
 Keep failures. Obtain Neil's taste review before further film production.
 
