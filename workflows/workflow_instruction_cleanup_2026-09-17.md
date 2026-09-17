@@ -2,6 +2,7 @@
 
 Date: 2026-09-17. Base: `ee9ad8d123e81f19f74dcd92296ff4d4c4361bc9` (merged prompt-quality PR #139).
 Status: exact candidate prepared and reviewed; active instructions are unchanged.
+GitHub review package: [draft PR #141](https://github.com/yopiheart/grifon-command/pull/141).
 This report records evidence, not additional standing instructions.
 
 ## Decision requested

@@ -5,6 +5,8 @@
 Neil now works on his persistent personal Windows desktop, sometimes remotely
 from mobile. Cafe-PC wipe/reinstall/sign-out assumptions no longer govern work.
 Branch: `codex/workflow-instruction-cleanup`, based on merged main `ee9ad8d1`.
+Review package: draft PR #141, https://github.com/yopiheart/grifon-command/pull/141.
+Proposal and evidence committed as `53eec616` and pushed on that branch.
 The original prompt-quality A+B+D changes are already merged in PR #139;
 post-merge release evidence is preserved on PR #140 / commit `f71f6365`.
 Do not repeat that implementation or request its approval again.
