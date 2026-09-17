@@ -1,7 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, hero rough cut 03 delivered; Genjutsu escalated to support**
+**Stamped: 2026-09-17, paused at Neil's request; pacing revision next**
 
 ## Current task
+Neil asked to save and continue tomorrow. Stop production until he resumes.
+Rough cut03 is committed and pushed at865de70b. Neil's feedback: pacing is too
+slow per scene; the preview should already hook viewers. He accepted a shorter
+22-26s direction with meaningful visual changes roughly every2-3s, not mandatory
+hard cuts. Lead with the strongest product moment in the first3s; accelerate
+owner/brief/studio beats; let compelling actual output breathe; end card2-3s.
+Long6-7s placeholder holds are the main pacing problem. Do not merely add effects.
+No revised cut has been rendered yet. Music and casting approval remain open.
 Neil approved continuing the rough cut with existing assets while support handles
 the stalled Genjutsu shot. New 40s music/pacing assembly is saved separately at
 assets/hero-film/rough-cut-v3/hero-rough-cut-03.mp4, with timeline.json, builder,
@@ -31,7 +39,8 @@ Full decode exit0; no black interval >=0.25s at98% threshold; audio peak-4.6dBFS
 Opening/ending encoded samples of all nine scenes inspected, last frame intact.
 check:codex passes:31 entrypoints,26 tests,zero failures. git diff --check passes.
 All original source hashes unchanged. Continuous browser playback, subjective
-listening, physical-phone readability and Neil's taste verdict remain pending.
+listening and physical-phone readability remain pending. Neil rejected the slow
+pacing; the current40s cut is retained as a review version, not an accepted film.
 No app/control/prompt/spec changes, paid audiovisual audit, publish or deploy.
 
 ## Genjutsu source checks
@@ -64,8 +73,11 @@ Jason escalated to development at2026-09-17 08:59UTC, promised follow-up within2
 (Sept18 around17:00Manila). No resolution or free-attempt restoration confirmed.
 Await only this existing job; never submit a second job or paid retry. If recovered,
 save original output and use genjutsu-sample/build-review.mjs for comparison.
-Get Neil's pacing/music review; missing same-product proof still needs its own
-approved production inputs/budget. No automatic support monitor was configured.
+When Neil resumes, build a separate22-26s pacing revision using existing assets
+and the direction above. Preserve cut03. Keep missing footage explicitly labeled.
+Missing same-product proof still needs its own approved production inputs/budget.
+Check the existing support thread/job on resumption; no automatic monitor or
+scheduled restart is configured. Do not generate or retry during this pause.
 
 Draft PR145: https://github.com/yopiheart/grifon-command/pull/145.
 Preflight JSON parse, both input SHA-256s and git diff checks passed.
