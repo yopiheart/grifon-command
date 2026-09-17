@@ -3,6 +3,8 @@
 
 ## Current state
 Branch: `codex/grifon-motion-director`.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/143
+Implementation committed and pushed as `448654d1`; this handoff update follows it.
 Neil approved the implementation plan and then the exact installation patch
 SHA-256 `2b542b8b135997e33a322856de8bd00d45c5bacf75fa3b37dfdbc046ce462074`.
 The new `.agents/skills/grifon-motion-director/` skill is installed unchanged.
@@ -30,6 +32,7 @@ Independent source review resolved the initial logo mismatch; canonical mark use
 Three skill dry-run cases plus baseline outputs and static evaluation viewer saved.
 Rubric-exposed dry runs are not a skill-superiority benchmark or live trigger test.
 JS syntax and artifact-anchor checks pass; no app build/full suite needed for this scope.
+Git whitespace checks pass after normalizing only vendored/log trailing whitespace.
 The separate verification and smoke records include hashes and browser limitations.
 
 ## Related work
