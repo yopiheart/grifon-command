@@ -1,0 +1,151 @@
+{
+  "durationSeconds": 40,
+  "decodedFrames": 960,
+  "fps": 24,
+  "dimensions": [
+    960,
+    540
+  ],
+  "fullDecodeExit": 0,
+  "scanExit": 0,
+  "blackIntervals": [],
+  "maxVolumeDb": -4.6,
+  "outputSha256": "4cb1edae0ca04ead3fb8ea7f655d5243efa6c9f45e100e19b11ba941138632da",
+  "sources": [
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png",
+      "sha256": "1c9cc7b0ab4831db22861147e065db8674e572c3c27f23a91e12ef8aa65a8781"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C02-founder-bottle-16x9-original.png",
+      "sha256": "a79789568ec944da0b1c3cfbcf1bcc62f0278840c0c547b255b4b4a4345424b6"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png",
+      "sha256": "1daf87cd8c4ba77293779ba8f2855a330e9240d8c564defcf8f2e38c601024e1"
+    },
+    {
+      "path": "assets/hero-film/studio-pilot/shaded-camera-preview.mp4",
+      "sha256": "443d254edec912ff4cf3666e712d48b640cc7755bee8ae22586453baed010c46"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png",
+      "sha256": "3c298015eb56955d7dfaf41a002df70d7a49abb50999c7e77bb1911ab9f7a5a8"
+    },
+    {
+      "path": "api/_lib/assets/music/testimonial.mp3",
+      "sha256": "18ecbbb1301d98919be3e832f1ffb184c53aeb4d6e9889021a5aab738d83c33f"
+    },
+    {
+      "path": "public/logo.png",
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "path": "api/_lib/assets/fonts/Inter-Black.ttf",
+      "sha256": "68be2a10f64af792a4b1feaecb07e0d0363a6252290bc2c4de9f4cde5de13397"
+    }
+  ],
+  "shots": [
+    {
+      "id": "01",
+      "seconds": 4,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png",
+      "title": "A product worth showing",
+      "label": "OWNER STILL / CAMERA MOVE ONLY",
+      "zoom": 1.025,
+      "start": 0,
+      "end": 4
+    },
+    {
+      "id": "02",
+      "seconds": 2,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C02-founder-bottle-16x9-original.png",
+      "title": "Made with care",
+      "label": "OWNER STILL / CAMERA MOVE ONLY",
+      "zoom": 1.018,
+      "start": 4,
+      "end": 6
+    },
+    {
+      "id": "03",
+      "seconds": 3,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png",
+      "title": "Give Grifon the brief",
+      "label": "OWNER STILL / REAL UI STILL NEEDED",
+      "zoom": 1.02,
+      "start": 6,
+      "end": 9
+    },
+    {
+      "id": "04",
+      "seconds": 4,
+      "kind": "placeholder",
+      "title": "The ad plan",
+      "subtitle": "Actual Grifon screen capture pending",
+      "label": "PLAN / PLACEHOLDER",
+      "note": "Reserve a real hook and scene-plan excerpt. No simulated interface.",
+      "start": 9,
+      "end": 13
+    },
+    {
+      "id": "05",
+      "seconds": 6,
+      "kind": "video",
+      "source": "assets/hero-film/studio-pilot/shaded-camera-preview.mp4",
+      "title": "Inside the studio",
+      "label": "BLENDER PROXY / GENJUTSU SHOT PENDING",
+      "note": "Existing camera preview, wrong proxy product. External production shot; never Grifon output proof.",
+      "start": 13,
+      "end": 19
+    },
+    {
+      "id": "06",
+      "seconds": 7,
+      "kind": "placeholder",
+      "title": "Make it feel human.",
+      "subtitle": "Actual Grifon UGC export pending",
+      "label": "UGC / PLACEHOLDER",
+      "note": "Reserve an uninterrupted same-product excerpt with its original voice.",
+      "start": 19,
+      "end": 26
+    },
+    {
+      "id": "07",
+      "seconds": 6,
+      "kind": "placeholder",
+      "title": "Give it presence.",
+      "subtitle": "Actual Grifon cinematic export pending",
+      "label": "CINEMATIC / PLACEHOLDER",
+      "note": "Reserve same-product output from Grifon, not externally generated studio footage.",
+      "start": 26,
+      "end": 32
+    },
+    {
+      "id": "08",
+      "seconds": 4,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png",
+      "title": "Back to the owner",
+      "label": "OWNER STILL / CAMERA MOVE ONLY",
+      "zoom": 1.02,
+      "start": 32,
+      "end": 36
+    },
+    {
+      "id": "09",
+      "seconds": 4,
+      "kind": "endcard",
+      "title": "GRIFON.AI",
+      "subtitle": "Your product. Your next story.",
+      "label": "END CARD / COPY FOR REVIEW",
+      "start": 36,
+      "end": 40
+    }
+  ],
+  "audio": "Existing Inspirational Piano library track. Temporary editorial score; no voiceover or product audio.",
+  "visualReview": "Contact sheet requires inspection; this script does not certify taste, readability or listening.",
+  "newGenerationCalls": 0
+}

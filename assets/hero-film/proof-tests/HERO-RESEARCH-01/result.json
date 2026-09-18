@@ -1,0 +1,28 @@
+{
+  "id": "HERO-RESEARCH-01",
+  "date": "2026-09-18",
+  "startObservedUtc": "2026-09-18 05:24:10 UTC",
+  "authorization": "Neil: Okay go; same staged input, US$5 research ceiling.",
+  "manualSubmissions": 1,
+  "model": "gemini-3.7-flash",
+  "result": "STOPPED_PROVIDER_QUOTA",
+  "providerError": {"code": 429, "status": "RESOURCE_EXHAUSTED", "messageSummary": "Current quota exceeded; check plan and billing details."},
+  "observedClientAttempts": {
+    "premiseCheck": 2,
+    "marketmindAtLeast": 3,
+    "evidence": "Client logs: premise retry at 13:24:18, failed and fell through at 13:24:21; MarketMind retries scheduled at 13:24:23 (4s), 13:24:29 (8s), 13:24:39 (16s), Asia/Manila.",
+    "scope": "Counts inferred from client retry logs, not an authoritative provider request ledger."
+  },
+  "stopAction": "Reloaded active app tab to stop its client retry timers; then verified normal dashboard without an active research screen. No second submission.",
+  "reportGenerated": false,
+  "directorHandoffPerformed": false,
+  "newVideoJobs": 0,
+  "billing": {"actualUsd": null, "usageRecordObserved": false, "note": "No successful generation/COGS record observed in dev output. This does not establish zero provider charges."},
+  "readOnlyDiagnosis": {
+    "modelMetadataRequest": "Succeeded with existing configured key, returned models/gemini-3.7-flash, input limit 1048576, output limit 65536.",
+    "inference": "Model metadata access works; generation quota remains blocked. Specific RPM/TPM/daily/spend/billing cause was not present in the observed error.",
+    "reference": "https://ai.google.dev/gemini-api/docs/rate-limits",
+    "accountCheck": "Project-specific usage/limits require inspection in Google AI Studio; no billing or quota settings changed."
+  },
+  "next": "Resolve or identify the Gemini project's quota restriction. The exact original brief remains in test-spec.json. Manual reruns were not authorized by that spec; request an explicit same-input retry after quota recovery, within the original unspent US$5 ceiling and observed billing."
+}

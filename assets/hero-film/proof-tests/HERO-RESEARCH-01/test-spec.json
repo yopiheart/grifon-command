@@ -1,0 +1,61 @@
+{
+  "id": "HERO-RESEARCH-01",
+  "status": "EXECUTION STOPPED: GEMINI RESOURCE_EXHAUSTED / NO REPORT",
+  "purpose": "Produce the real KAPE 01 MarketMind report and inspect its Send to Director handoff as the first dependency of the final hero film.",
+  "runtimeRoot": "C:/Users/ADMIN/Desktop/grifon-command",
+  "runtimeCommit": "d9274f9315d81fa11dd1fed48f681802b775f9ec",
+  "authorization": {
+    "paidApproved": true,
+    "approvalEvidence": "Neil replied Okay go to the exact HERO-RESEARCH-01 research-only US$5 approval request on 2026-09-18.",
+    "maximumUsd": 5,
+    "scope": "One Recon submission, its existing Premise Check and MarketMind research, then read-only review and Send to Director. No image generation, script generation, voice or video rendering.",
+    "manualReruns": 0,
+    "budgetNote": "USD5 is the proposed spending ceiling, not a quoted charge or an automatic provider billing limit. Existing request retries and search grounding can incur charges. Do not describe the account's remaining ad plans as free API usage."
+  },
+  "input": {
+    "brandName": "KAPE 01",
+    "productName": "KAPE 01 Bottled Coffee",
+    "productDescription": "Fictional Filipino bottled-coffee demo brand for a Grifon product-launch film. The supplied handheld photo is the product identity: one clear bottle of dark coffee, a black screw cap, and an off-white label reading KAPE 01 / BOTTLED COFFEE / DEMO BRAND. Research the Philippine bottled-coffee category and distinguish category evidence from hypotheses about this fictional brand. Do not invent ingredients, health benefits, sales results, testimonials, prices, promotions, delivery coverage or availability. The intended creative direction is a believable human presentation and a restrained cinematic product reveal using the same bottle.",
+    "priceOffer": "Not specified. Demo only; no sales offer or price claim.",
+    "isLocalService": false,
+    "businessAddress": "",
+    "uploadedImage": "assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-original.png",
+    "uploadedImageSha256": "df01401ad33ed67ee78b92c3894267d84bd508fdb4baab18c075599a9da3770e",
+    "uploadProcessing": "Normal Recon upload uses utils/imageCompression.ts at the frozen runtime commit. No replacement image, edit, crop or additional asset."
+  },
+  "execution": {
+    "entryPoint": "Recon / ANALYZE MARKET (LAUNCH MARKETMIND)",
+    "model": "gemini-3.7-flash",
+    "promptSource": "Existing buildPremiseCheckPrompt in services/geminiService.ts and buildMarketMindParts plus MARKETMIND_SYSTEM_INSTRUCTION in api/_lib/prompts.ts at runtimeCommit. No prompt/model/config edits.",
+    "premiseDecision": "Use the existing Skip action to retain exactly the staged description. Do not select a generated alternative or append a new premise.",
+    "automaticCalls": "Premise Check: up to 2 attempts (one retry for 429/503, zero timeout retries). MarketMind: up to 8 attempts (initial plus five 429/503 retries and two timeout retries). No manual rerun. Ordinary successful path is two model requests.",
+    "grounding": "Existing Google Search grounding in both requests. Search terms are model generated, not additional user-edited inputs.",
+    "completion": "Save actual report and visible evidence, then Send to Director and inspect prefill. Stop before AI Analysis, script or storyboard generation."
+  },
+  "costEvidence": {
+    "checkedOn": "2026-09-18",
+    "source": "https://ai.google.dev/gemini-api/docs/pricing",
+    "standardInputUsdPerMillionTokens": 0.75,
+    "standardOutputIncludingThinkingUsdPerMillionTokens": 3.75,
+    "searchUsdPerQueryBeyondFreeAllowance": 0.014,
+    "freeAllowanceAssumed": false,
+    "limitation": "The normal UI does not expose a dollar budget or search-query cap. Check request usage and remaining budget before any subsequent paid stage. Stop on uncertain billing, unexpected extra work or a cost estimate exceeding the approved ceiling. Never increase the ceiling or silently change request configuration."
+  },
+  "pass": [
+    "The real normal Grifon UI returns a usable MarketMind report for the supplied bottle and explicitly fictional brand.",
+    "Category research is distinguishable from invented facts about KAPE 01; no unsupported product, price or sales claims enter final footage.",
+    "Send to Director transfers brand and product fields correctly without hand-typing wizard Step 1 or Step 2."
+  ],
+  "failOrStop": [
+    "Missing paid approval, changed source/input, authentication or quota rejection, unexpected extra generation, or uncertain cost beyond the ceiling.",
+    "Blank or object-string prefill, wrong product identity, unusable report or unsupported claims requiring new paid inputs.",
+    "Do not repair missing wizard fields manually, enable unmetered mode, bypass app auth/quotas or launch a second submission."
+  ],
+  "evidence": [
+    "Original product image/hash and this exact input spec",
+    "Actual research report and visible source references",
+    "Real UI capture before/after handoff with secrets and account details excluded",
+    "Request count, usage and observed spend where available; unknown billing stays unknown"
+  ],
+  "nextStage": "Freeze the generated Director inputs, script and selected frames before proposing the exact remaining production calls. This research approval is not approval of the old HERO-PROOF-02 or of unspecified final video generation."
+}

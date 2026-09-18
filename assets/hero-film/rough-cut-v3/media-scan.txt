@@ -1,0 +1,48 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\ADMIN\Desktop\grifon-hero-genjutsu\assets\hero-film\rough-cut-v3\hero-rough-cut-03.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.3.100
+  Duration: 00:00:40.00, start: 0.000000, bitrate: 694 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 960x540 [SAR 1:1 DAR 16:9], 527 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 161 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> wrapped_avframe (native))
+  Stream #0:1 -> #0:1 (aac (native) -> pcm_s16le (native))
+Output #0, null, to 'pipe:':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.3.100
+  Stream #0:0(und): Video: wrapped_avframe, yuv420p(progressive), 960x540 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 24 fps, 24 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 wrapped_avframe
+  Stream #0:1(und): Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 pcm_s16le
+frame=    0 fps=0.0 q=-0.0 size=N/A time=00:00:00.49 bitrate=N/A speed=39.2x
+frame=  816 fps=0.0 q=-0.0 size=N/A time=00:00:34.47 bitrate=N/A speed=67.3x
+frame=  960 fps=0.0 q=-0.0 Lsize=N/A time=00:00:39.97 bitrate=N/A speed=68.5x
+video:450kB audio:7500kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[Parsed_volumedetect_0 @ 000001870d03ea80] n_samples: 3840000
+[Parsed_volumedetect_0 @ 000001870d03ea80] mean_volume: -21.7 dB
+[Parsed_volumedetect_0 @ 000001870d03ea80] max_volume: -4.6 dB
+[Parsed_volumedetect_0 @ 000001870d03ea80] histogram_4db: 13
+[Parsed_volumedetect_0 @ 000001870d03ea80] histogram_5db: 26
+[Parsed_volumedetect_0 @ 000001870d03ea80] histogram_6db: 68
+[Parsed_volumedetect_0 @ 000001870d03ea80] histogram_7db: 248
+[Parsed_volumedetect_0 @ 000001870d03ea80] histogram_8db: 1015
+[Parsed_volumedetect_0 @ 000001870d03ea80] histogram_9db: 3192

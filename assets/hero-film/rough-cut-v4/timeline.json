@@ -1,0 +1,20 @@
+{
+  "title": "Grifon hero film / 24-second pacing review 04",
+  "width": 854,
+  "height": 480,
+  "fps": 24,
+  "music": "api/_lib/assets/music/testimonial.mp3",
+  "musicNote": "Existing Inspirational Piano library track; temporary music-only score. No original ad speech or final mix.",
+  "shots": [
+    {"id":"01","seconds":2.5,"kind":"video","source":"assets/hero-film/genjutsu-sample/genjutsu-original.mp4","inSeconds":3.5,"title":"Product first","label":"EXTERNAL STUDIO / PROVISIONAL","note":"Natural-speed late close-up from existing Genjutsu output, not Grifon product proof."},
+    {"id":"02","seconds":2,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png","title":"A product worth showing","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.025},
+    {"id":"03","seconds":2,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C02-founder-bottle-16x9-original.png","title":"Made with care","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.018},
+    {"id":"04","seconds":2,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png","title":"Give Grifon the brief","label":"OWNER STILL / UI CAPTURE PENDING","zoom":1.02},
+    {"id":"05","seconds":2,"kind":"placeholder","title":"The ad plan","subtitle":"Actual Grifon screen capture pending","label":"PLAN / PLACEHOLDER"},
+    {"id":"06","seconds":3,"kind":"video","source":"assets/hero-film/genjutsu-sample/genjutsu-original.mp4","inSeconds":0,"title":"Inside the studio","label":"EXTERNAL STUDIO / PROVISIONAL","note":"Unretimed first three seconds. Material improvement; exact camera transfer and fine label text not certified."},
+    {"id":"07","seconds":2.5,"kind":"placeholder","title":"Make it feel human.","subtitle":"Actual Grifon UGC export pending","label":"UGC / PLACEHOLDER"},
+    {"id":"08","seconds":2.5,"kind":"placeholder","title":"Give it presence.","subtitle":"Actual Grifon cinematic export pending","label":"CINEMATIC / PLACEHOLDER"},
+    {"id":"09","seconds":2.5,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png","title":"Back to the owner","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.02},
+    {"id":"10","seconds":3,"kind":"endcard","subtitle":"Your product. Your next story.","label":"END CARD / COPY FOR REVIEW"}
+  ]
+}
