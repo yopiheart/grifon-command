@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-09-18, final production requested; app access blocked**
+**Stamped: 2026-09-18, local account/library verified; exact research staged**
 
 ## Current task
 Neil now asked: "Pwede ikaw na gumawa? tapusin mo na lahat! Then pakita mo sakin final!!"
@@ -30,7 +30,22 @@ absent; do not assume voice generation is ready or required before choosing audi
 Started existing Vite on http://127.0.0.1:5173 with loopback binding. The local app
 renders its actual login screen; provider validity and authenticated access remain
 unverified. Neil was asked to sign in in the browser and reply logged in.
-Saved in-app KAPE01 projects cannot yet be inspected; do not claim none exist.
+After sign-in and a browser-tab crash/reopen, actual local account access works:
+dashboard shows 40 ad plans left. No saved Director plan on this local origin.
+Render Bay successfully loaded its 30-entry gallery: visible prompts concern
+Bukid Coffee, Hiraya Glow and Lunaria, with no KAPE 01 match. This gallery has a
+30-item server cap; do not claim it proves there are no older/cloud KAPE01 assets.
+No render was generated, deleted, or replaced. No unrelated product is used as
+KAPE01 proof. No authentication/URL tokens or signed media links saved as evidence.
+
+Recon is staged in the actual UI with A01 product photo and exact fictional-brand
+brief. Compressed upload preview loaded at 960x1280. ANALYZE has NOT been pressed.
+New assets/hero-film/proof-tests/HERO-RESEARCH-01/test-spec.json is awaiting paid
+approval: USD5 proposed ceiling for one Recon submission (Premise Check + research)
+and the no-generation Send to Director handoff. It explicitly discloses existing
+automatic retries and the absence of a provider-side hard dollar cap. Model is
+gemini-3.7-flash in the actual main checkout, not a stale Flash Lite assumption.
+JSON validation and source-image SHA256 check pass. No tuned code/config changed.
 
 Neil resumed the paused edit with "Sige go". Cut04 is complete for review:
 assets/hero-film/rough-cut-v4/hero-rough-cut-04.mp4.
@@ -87,8 +102,9 @@ plan/script/start frames. Its USD15/four-roll proposal is not permission to spen
 No paid planning/generation, second Genjutsu job, repair or fallback is authorized.
 Use C01-C05 under Neil's delegated creative judgment; final performance, audio
 and final-resolution footage still need production and full audiovisual review.
-Next: after local sign-in, inspect saved KAPE01 projects read-only and reuse
-verified same-product outputs if available. Dev process was left running.
+Next: obtain exact HERO-RESEARCH-01 paid approval before the staged Recon action.
+Use its unchanged input, retain real results, and verify Send to Director prefill.
+Dev process is running; browser work can resume from the staged Recon tab.
 If new paid production is necessary, freeze exact inputs and bounded call costs
 for approval under AGENTS.md before dispatch. The old USD15/four-roll proposal
 does not cover an unspecified final production or authorize spending.
