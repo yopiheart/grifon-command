@@ -1,0 +1,46 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\ADMIN\Desktop\grifon-hero-genjutsu\assets\hero-film\rough-cut-v4\hero-rough-cut-04.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.3.100
+  Duration: 00:00:24.00, start: 0.000000, bitrate: 796 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 854x480 [SAR 1:1 DAR 427:240], 628 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 161 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> wrapped_avframe (native))
+  Stream #0:1 -> #0:1 (aac (native) -> pcm_s16le (native))
+Output #0, null, to 'pipe:':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.3.100
+  Stream #0:0(und): Video: wrapped_avframe, yuv420p(progressive), 854x480 [SAR 1:1 DAR 427:240], q=2-31, 200 kb/s, 24 fps, 24 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 wrapped_avframe
+  Stream #0:1(und): Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.3.100 pcm_s16le
+frame=    0 fps=0.0 q=-0.0 size=N/A time=00:00:00.49 bitrate=N/A speed=  34x
+frame=  576 fps=0.0 q=-0.0 Lsize=N/A time=00:00:23.97 bitrate=N/A speed=55.2x
+video:270kB audio:4500kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[Parsed_volumedetect_0 @ 000001fb35140780] n_samples: 2304000
+[Parsed_volumedetect_0 @ 000001fb35140780] mean_volume: -22.2 dB
+[Parsed_volumedetect_0 @ 000001fb35140780] max_volume: -6.6 dB
+[Parsed_volumedetect_0 @ 000001fb35140780] histogram_6db: 18
+[Parsed_volumedetect_0 @ 000001fb35140780] histogram_7db: 140
+[Parsed_volumedetect_0 @ 000001fb35140780] histogram_8db: 544
+[Parsed_volumedetect_0 @ 000001fb35140780] histogram_9db: 1374
+[Parsed_volumedetect_0 @ 000001fb35140780] histogram_10db: 2982

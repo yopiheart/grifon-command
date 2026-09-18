@@ -1,0 +1,161 @@
+{
+  "durationSeconds": 24,
+  "decodedFrames": 576,
+  "fps": 24,
+  "dimensions": [
+    854,
+    480
+  ],
+  "fullDecodeExit": 0,
+  "scanExit": 0,
+  "blackIntervals": [],
+  "maxVolumeDb": -6.6,
+  "outputSha256": "ff5b1901b174e5ea0dc04a042ee9f64adb1e64d5d3edf7d1b1508e290646e7b9",
+  "sources": [
+    {
+      "path": "assets/hero-film/genjutsu-sample/genjutsu-original.mp4",
+      "sha256": "339a6b45ad0448e9e2e34e07df6a2444c1421002bbc2a05b3d2b2ae8db0adef9"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png",
+      "sha256": "1c9cc7b0ab4831db22861147e065db8674e572c3c27f23a91e12ef8aa65a8781"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C02-founder-bottle-16x9-original.png",
+      "sha256": "a79789568ec944da0b1c3cfbcf1bcc62f0278840c0c547b255b4b4a4345424b6"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png",
+      "sha256": "1daf87cd8c4ba77293779ba8f2855a330e9240d8c564defcf8f2e38c601024e1"
+    },
+    {
+      "path": "assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png",
+      "sha256": "3c298015eb56955d7dfaf41a002df70d7a49abb50999c7e77bb1911ab9f7a5a8"
+    },
+    {
+      "path": "api/_lib/assets/music/testimonial.mp3",
+      "sha256": "18ecbbb1301d98919be3e832f1ffb184c53aeb4d6e9889021a5aab738d83c33f"
+    },
+    {
+      "path": "public/logo.png",
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "path": "api/_lib/assets/fonts/Inter-Black.ttf",
+      "sha256": "68be2a10f64af792a4b1feaecb07e0d0363a6252290bc2c4de9f4cde5de13397"
+    }
+  ],
+  "shots": [
+    {
+      "id": "01",
+      "seconds": 2.5,
+      "kind": "video",
+      "source": "assets/hero-film/genjutsu-sample/genjutsu-original.mp4",
+      "inSeconds": 3.5,
+      "title": "Product first",
+      "label": "EXTERNAL STUDIO / PROVISIONAL",
+      "note": "Natural-speed late close-up from existing Genjutsu output, not Grifon product proof.",
+      "start": 0,
+      "end": 2.5
+    },
+    {
+      "id": "02",
+      "seconds": 2,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C03-opening-photo-16x9-original.png",
+      "title": "A product worth showing",
+      "label": "OWNER STILL / CAMERA MOVE ONLY",
+      "zoom": 1.025,
+      "start": 2.5,
+      "end": 4.5
+    },
+    {
+      "id": "03",
+      "seconds": 2,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C02-founder-bottle-16x9-original.png",
+      "title": "Made with care",
+      "label": "OWNER STILL / CAMERA MOVE ONLY",
+      "zoom": 1.018,
+      "start": 4.5,
+      "end": 6.5
+    },
+    {
+      "id": "04",
+      "seconds": 2,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C04-work-counter-16x9-original.png",
+      "title": "Give Grifon the brief",
+      "label": "OWNER STILL / UI CAPTURE PENDING",
+      "zoom": 1.02,
+      "start": 6.5,
+      "end": 8.5
+    },
+    {
+      "id": "05",
+      "seconds": 2,
+      "kind": "placeholder",
+      "title": "The ad plan",
+      "subtitle": "Actual Grifon screen capture pending",
+      "label": "PLAN / PLACEHOLDER",
+      "start": 8.5,
+      "end": 10.5
+    },
+    {
+      "id": "06",
+      "seconds": 3,
+      "kind": "video",
+      "source": "assets/hero-film/genjutsu-sample/genjutsu-original.mp4",
+      "inSeconds": 0,
+      "title": "Inside the studio",
+      "label": "EXTERNAL STUDIO / PROVISIONAL",
+      "note": "Unretimed first three seconds. Material improvement; exact camera transfer and fine label text not certified.",
+      "start": 10.5,
+      "end": 13.5
+    },
+    {
+      "id": "07",
+      "seconds": 2.5,
+      "kind": "placeholder",
+      "title": "Make it feel human.",
+      "subtitle": "Actual Grifon UGC export pending",
+      "label": "UGC / PLACEHOLDER",
+      "start": 13.5,
+      "end": 16
+    },
+    {
+      "id": "08",
+      "seconds": 2.5,
+      "kind": "placeholder",
+      "title": "Give it presence.",
+      "subtitle": "Actual Grifon cinematic export pending",
+      "label": "CINEMATIC / PLACEHOLDER",
+      "start": 16,
+      "end": 18.5
+    },
+    {
+      "id": "09",
+      "seconds": 2.5,
+      "kind": "still",
+      "source": "assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png",
+      "title": "Back to the owner",
+      "label": "OWNER STILL / CAMERA MOVE ONLY",
+      "zoom": 1.02,
+      "start": 18.5,
+      "end": 21
+    },
+    {
+      "id": "10",
+      "seconds": 3,
+      "kind": "endcard",
+      "title": "GRIFON.AI",
+      "subtitle": "Your product. Your next story.",
+      "label": "END CARD / COPY FOR REVIEW",
+      "start": 21,
+      "end": 24
+    }
+  ],
+  "audio": "Existing Inspirational Piano library track; temporary music-only score. No original ad speech or final mix.",
+  "visualReview": "Contact sheet requires inspection; this script does not certify taste, readability or listening.",
+  "newGenerationCalls": 0
+}

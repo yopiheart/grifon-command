@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "path": "/assets/hero-film/studio-pilot/shaded-camera-preview.mp4",
+      "sha256": "443d254edec912ff4cf3666e712d48b640cc7755bee8ae22586453baed010c46",
+      "decodeExit": 0,
+      "decodedFrames": 144,
+      "lastTimestamp": "00:00:05.958333"
+    },
+    {
+      "path": "/assets/hero-film/genjutsu-sample/genjutsu-original.mp4",
+      "sha256": "339a6b45ad0448e9e2e34e07df6a2444c1421002bbc2a05b3d2b2ae8db0adef9",
+      "decodeExit": 0,
+      "decodedFrames": 145,
+      "lastTimestamp": "00:00:06.000000"
+    }
+  ],
+  "comparison": "left=original Blender, right=Genjutsu; muted; comparison ends with shortest input; output originals preserved",
+  "comparisonDecodeExit": 0,
+  "visualQuality": "Requires human/agent inspection; not certified by this script"
+}

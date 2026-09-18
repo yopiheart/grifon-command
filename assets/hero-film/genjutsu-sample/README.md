@@ -1,6 +1,6 @@
 # Website hero film: one Genjutsu test
 
-**Exact spec approved; one free generation submitted and waiting.** This is the 13-19 second studio beat from the unfinished website film on PR #134.
+**Update Sept 18: existing job completed and original recovered.** See [result-review.md](result-review.md): improved realism, but FAIL for exact camera preservation. It is usable as provisional editorial footage, not certified final product proof. The historical preparation and submission record below remains for provenance. This was the 13-19 second studio beat from the unfinished website film on PR #134.
 
 [Original six-second camera preview](../studio-pilot/shaded-camera-preview.mp4)
 
@@ -45,10 +45,10 @@ Get-FileHash assets/hero-film/reference-candidates/HERO-IMG-01/A01-product-origi
 
 Application, provider routing, skills and tuned prompts unchanged. App build/tests are not applicable to this preparation-only change. JSON/input-hash/diff checks apply; generation quality and user acceptance remain untested.
 
-## Result review, once the existing job completes
+## Reproduce the completed result review
 
 Save the provider original as genjutsu-original.mp4, then run:
 
     node assets/hero-film/genjutsu-sample/build-review.mjs --runtime-root C:/Users/ADMIN/Desktop/grifon-command
 
-This makes a muted before-after.mp4 (original left, Genjutsu right), comparison-sheet.jpg, inspection frames and media-checks.json. No output file exists yet. Syntax validation passed; media execution awaits the real result. No placeholder is substituted.
+This makes a muted before-after.mp4 (original left, Genjutsu right), comparison-sheet.jpg, inspection frames and media-checks.json. Media execution passed on Sept 18 using the recovered original. No placeholder is substituted. The records above saying waiting describe the Sept 17 checkpoint, not current job status.
