@@ -4,7 +4,7 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\ADMIN\Desktop\grifon-hero-genj
     minor_version   : 512
     compatible_brands: isomiso2avc1mp41
     encoder         : Lavf60.3.100
-  Duration: 00:00:24.00, start: 0.000000, bitrate: 796 kb/s
+  Duration: 00:00:24.00, start: 0.000000, bitrate: 795 kb/s
   Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 854x480 [SAR 1:1 DAR 427:240], 628 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
     Metadata:
       handler_name    : VideoHandler
@@ -33,14 +33,14 @@ Output #0, null, to 'pipe:':
       handler_name    : SoundHandler
       vendor_id       : [0][0][0][0]
       encoder         : Lavc60.3.100 pcm_s16le
-frame=    0 fps=0.0 q=-0.0 size=N/A time=00:00:00.49 bitrate=N/A speed=  34x
-frame=  576 fps=0.0 q=-0.0 Lsize=N/A time=00:00:23.97 bitrate=N/A speed=55.2x
+frame=    0 fps=0.0 q=-0.0 size=N/A time=00:00:00.49 bitrate=N/A speed=55.4x
+frame=  576 fps=0.0 q=-0.0 Lsize=N/A time=00:00:23.97 bitrate=N/A speed= 114x
 video:270kB audio:4500kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
-[Parsed_volumedetect_0 @ 000001fb35140780] n_samples: 2304000
-[Parsed_volumedetect_0 @ 000001fb35140780] mean_volume: -22.2 dB
-[Parsed_volumedetect_0 @ 000001fb35140780] max_volume: -6.6 dB
-[Parsed_volumedetect_0 @ 000001fb35140780] histogram_6db: 18
-[Parsed_volumedetect_0 @ 000001fb35140780] histogram_7db: 140
-[Parsed_volumedetect_0 @ 000001fb35140780] histogram_8db: 544
-[Parsed_volumedetect_0 @ 000001fb35140780] histogram_9db: 1374
-[Parsed_volumedetect_0 @ 000001fb35140780] histogram_10db: 2982
+[Parsed_volumedetect_0 @ 000001e047800780] n_samples: 2304000
+[Parsed_volumedetect_0 @ 000001e047800780] mean_volume: -22.2 dB
+[Parsed_volumedetect_0 @ 000001e047800780] max_volume: -6.6 dB
+[Parsed_volumedetect_0 @ 000001e047800780] histogram_6db: 18
+[Parsed_volumedetect_0 @ 000001e047800780] histogram_7db: 140
+[Parsed_volumedetect_0 @ 000001e047800780] histogram_8db: 544
+[Parsed_volumedetect_0 @ 000001e047800780] histogram_9db: 1374
+[Parsed_volumedetect_0 @ 000001e047800780] histogram_10db: 2982

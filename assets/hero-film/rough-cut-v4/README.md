@@ -22,7 +22,7 @@ explicitly labeled. Owner scenes remain still images with small camera pushes.
 | 13.5–16 | Make it feel human. | Actual Grifon UGC pending |
 | 16–18.5 | Give it presence. | Actual Grifon cinematic output pending |
 | 18.5–21 | Return to owner | Existing C05 still |
-| 21–24 | Grifon end card | Canonical logo/ring/italic GRIFON; separate GRIFON.AI |
+| 21–24 | Grifon end card | Canonical logo/ring/italic GRIFON and tagline; redundant website line removed at Neil's request |
 
 The Genjutsu shot improves the room's realism but fails exact camera transfer:
 stronger push-in and changed plinth. See ../genjutsu-sample/result-review.md.

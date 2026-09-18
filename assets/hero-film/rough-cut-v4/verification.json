@@ -10,7 +10,7 @@
   "scanExit": 0,
   "blackIntervals": [],
   "maxVolumeDb": -6.6,
-  "outputSha256": "ff5b1901b174e5ea0dc04a042ee9f64adb1e64d5d3edf7d1b1508e290646e7b9",
+  "outputSha256": "9a0b19d188bf02c2ab69fbe5dd9316540df03652913abb048838c624c9dbeba7",
   "sources": [
     {
       "path": "assets/hero-film/genjutsu-sample/genjutsu-original.mp4",
@@ -148,7 +148,6 @@
       "id": "10",
       "seconds": 3,
       "kind": "endcard",
-      "title": "GRIFON.AI",
       "subtitle": "Your product. Your next story.",
       "label": "END CARD / COPY FOR REVIEW",
       "start": 21,

@@ -53,7 +53,7 @@ for(const s of data.shots){
       base.push({input:svg(`<circle cx="${left+44}" cy="200" r="43" fill="none" stroke="#FFCC00" stroke-width="1"/>`),left:0,top:0},
         {input:logo,left:left+Math.round((88-lm.width)/2),top:Math.round(200-lm.height/2)},
         {input:wordmark,left:left+110,top:Math.round(200-wm.height/2)},
-        await centered(s.title,28,282),await centered(s.subtitle,20,330,'#D4D4D8'));
+        await centered(s.subtitle,20,282,'#D4D4D8'));
     }else{
       base.push(await centered('FOOTAGE PENDING',20,132,'#FFCC00'),await centered(s.title,40,199),await centered(s.subtitle,22,268,'#D4D4D8'),await centered(`${s.seconds} SECOND EDIT SLOT`,16,390,'#A1A1AA'));
     }

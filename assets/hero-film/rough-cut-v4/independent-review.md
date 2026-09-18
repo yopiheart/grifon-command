@@ -4,7 +4,7 @@ Reviewer: separate Codex smoke-tester agent, read-only. No paid audit or generat
 
 **PASS for provisional pacing review; final-film approval remains open.**
 
-Final stable output SHA-256:
+Reviewed output before Neil's subsequent website-line removal, SHA-256:
 `ff5b1901b174e5ea0dc04a042ee9f64adb1e64d5d3edf7d1b1508e290646e7b9`.
 Reviewer independently decoded 24.00s, 576 frames, 24fps, 854x480, stereo AAC/48kHz.
 Exact first/last encoded frames of all ten slots were extracted and inspected.
@@ -29,3 +29,9 @@ footage, casting and Neil's creative approval remain outstanding.
 An intermediate read during a concurrent rebuild encountered an incomplete MP4.
 The reviewer repeated the check after completion; final stable decode and hash
 above passed. No failure was bypassed.
+
+Subsequent small revision: Neil requested removal of the redundant GRIFON.AI
+end-card line. Only that line and tagline vertical placement changed; shot timing
+and other footage are unchanged. The current render hash and fresh decode/scan
+are in verification.json. This separate critic review applies to the earlier hash;
+the end-card text removal was checked directly on the newly encoded final frame.

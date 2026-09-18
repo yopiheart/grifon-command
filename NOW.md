@@ -5,6 +5,8 @@
 Neil resumed the paused edit with "Sige go". Cut04 is complete for review:
 assets/hero-film/rough-cut-v4/hero-rough-cut-04.mp4.
 24s, 854x480, 24fps, 576 frames, H.264/AAC stereo. Original cut03 is preserved.
+Neil requested removing redundant GRIFON.AI from the end card. Removed; original
+logo/ring/GRIFON wordmark plus tagline remain. Rebuilt and checked encoded ending.
 Product close-up opens immediately. All ten edit slots are 2-3s; ending is 3s.
 Owner C03/C02/C04/C05 remain stills with editorial pushes. No subject animation.
 The old 40s cut had 17s of placeholders and a 7s longest hold. New cut has 7s

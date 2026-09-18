@@ -15,6 +15,6 @@
     {"id":"07","seconds":2.5,"kind":"placeholder","title":"Make it feel human.","subtitle":"Actual Grifon UGC export pending","label":"UGC / PLACEHOLDER"},
     {"id":"08","seconds":2.5,"kind":"placeholder","title":"Give it presence.","subtitle":"Actual Grifon cinematic export pending","label":"CINEMATIC / PLACEHOLDER"},
     {"id":"09","seconds":2.5,"kind":"still","source":"assets/hero-film/reference-candidates/HERO-CAST-03/C05-closing-review-16x9-original.png","title":"Back to the owner","label":"OWNER STILL / CAMERA MOVE ONLY","zoom":1.02},
-    {"id":"10","seconds":3,"kind":"endcard","title":"GRIFON.AI","subtitle":"Your product. Your next story.","label":"END CARD / COPY FOR REVIEW"}
+    {"id":"10","seconds":3,"kind":"endcard","subtitle":"Your product. Your next story.","label":"END CARD / COPY FOR REVIEW"}
   ]
 }
