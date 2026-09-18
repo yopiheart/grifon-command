@@ -12,7 +12,7 @@ Keep the 24s edit and logo-only ending; replace the seven seconds of placeholder
 with real same-product Grifon evidence, animate the owner beats, and finish audio.
 Do not request another casting/pacing choice merely to continue authorized work.
 
-Actual access checks this turn: https://grifon.ai/app displays Deployment Paused
+Initial access checks: https://grifon.ai/app displays Deployment Paused
 in the parent agent's browser. The subagent's unavailable browser was a separate
 tool limitation, not evidence about the site. Local app dependencies are installed,
 but no dev server is listening on 5173/5174/3000, local env files are absent in
@@ -22,6 +22,14 @@ No credential values were read. Neil was asked to restore the main checkout's
 ignored .env via the normal Bitwarden workflow and reply ready, never paste keys.
 No production unpause/deployment or secret-store extraction was attempted.
 Higgsfield balance remains zero credits/zero Genjutsu attempts; no new jobs ran.
+Update after Neil restored local configuration: main checkout .env exists and is
+gitignored, not .env.txt. Vite-loaded presence checks show Gemini, Kling, Supabase
+and R2 configuration present (correct bucket variable is R2_BUCKET). Paid/live
+and unmetered flags are unset. No secret values read or shown. ElevenLabs key is
+absent; do not assume voice generation is ready or required before choosing audio.
+Started existing Vite on http://127.0.0.1:5173 with loopback binding. The local app
+renders its actual login screen; provider validity and authenticated access remain
+unverified. Neil was asked to sign in in the browser and reply logged in.
 Saved in-app KAPE01 projects cannot yet be inspected; do not claim none exist.
 
 Neil resumed the paused edit with "Sige go". Cut04 is complete for review:
@@ -79,8 +87,8 @@ plan/script/start frames. Its USD15/four-roll proposal is not permission to spen
 No paid planning/generation, second Genjutsu job, repair or fallback is authorized.
 Use C01-C05 under Neil's delegated creative judgment; final performance, audio
 and final-resolution footage still need production and full audiovisual review.
-Next: after local configuration is restored, boot the existing app, inspect saved
-KAPE01 projects read-only, and reuse verified same-product outputs if available.
+Next: after local sign-in, inspect saved KAPE01 projects read-only and reuse
+verified same-product outputs if available. Dev process was left running.
 If new paid production is necessary, freeze exact inputs and bounded call costs
 for approval under AGENTS.md before dispatch. The old USD15/four-roll proposal
 does not cover an unspecified final production or authorize spending.
