@@ -1,11 +1,12 @@
 {
   "id": "HERO-RESEARCH-01",
-  "status": "AWAITING PAID APPROVAL",
+  "status": "EXECUTION STOPPED: GEMINI RESOURCE_EXHAUSTED / NO REPORT",
   "purpose": "Produce the real KAPE 01 MarketMind report and inspect its Send to Director handoff as the first dependency of the final hero film.",
   "runtimeRoot": "C:/Users/ADMIN/Desktop/grifon-command",
   "runtimeCommit": "d9274f9315d81fa11dd1fed48f681802b775f9ec",
   "authorization": {
-    "paidApproved": false,
+    "paidApproved": true,
+    "approvalEvidence": "Neil replied Okay go to the exact HERO-RESEARCH-01 research-only US$5 approval request on 2026-09-18.",
     "maximumUsd": 5,
     "scope": "One Recon submission, its existing Premise Check and MarketMind research, then read-only review and Send to Director. No image generation, script generation, voice or video rendering.",
     "manualReruns": 0,

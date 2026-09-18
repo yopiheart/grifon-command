@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-09-18, local account/library verified; exact research staged**
+**Stamped: 2026-09-18, approved research rejected by Gemini quota**
 
 ## Current task
 Neil now asked: "Pwede ikaw na gumawa? tapusin mo na lahat! Then pakita mo sakin final!!"
@@ -40,12 +40,22 @@ KAPE01 proof. No authentication/URL tokens or signed media links saved as eviden
 
 Recon is staged in the actual UI with A01 product photo and exact fictional-brand
 brief. Compressed upload preview loaded at 960x1280. ANALYZE has NOT been pressed.
-New assets/hero-film/proof-tests/HERO-RESEARCH-01/test-spec.json is awaiting paid
-approval: USD5 proposed ceiling for one Recon submission (Premise Check + research)
+New assets/hero-film/proof-tests/HERO-RESEARCH-01/test-spec.json received Neil's
+"Okay go" approval: USD5 ceiling for one Recon submission (Premise Check + research)
 and the no-generation Send to Director handoff. It explicitly discloses existing
 automatic retries and the absence of a provider-side hard dollar cap. Model is
 gemini-3.7-flash in the actual main checkout, not a stale Flash Lite assumption.
 JSON validation and source-image SHA256 check pass. No tuned code/config changed.
+Execution: one Analyze click at about 13:24 Manila. Gemini returned 429
+RESOURCE_EXHAUSTED / current quota exceeded. Premise Check tried twice, then
+the normal fallback started MarketMind; logs show at least three rejected
+MarketMind attempts. Reloaded the app to stop remaining client retry timers and
+verified return to dashboard. No report, handoff, new image or video produced.
+No successful generation COGS seen; actual billing is unknown, NOT claimed zero.
+Read-only models.get succeeded for gemini-3.7-flash with the configured key;
+this verifies metadata access, not generation quota. Exact quota category remains
+unknown. No key, model, quota, billing or tuned config changes attempted.
+result.json beside the spec records sanitized evidence and limitations.
 
 Neil resumed the paused edit with "Sige go". Cut04 is complete for review:
 assets/hero-film/rough-cut-v4/hero-rough-cut-04.mp4.
@@ -102,9 +112,11 @@ plan/script/start frames. Its USD15/four-roll proposal is not permission to spen
 No paid planning/generation, second Genjutsu job, repair or fallback is authorized.
 Use C01-C05 under Neil's delegated creative judgment; final performance, audio
 and final-resolution footage still need production and full audiovisual review.
-Next: obtain exact HERO-RESEARCH-01 paid approval before the staged Recon action.
-Use its unchanged input, retain real results, and verify Send to Director prefill.
-Dev process is running; browser work can resume from the staged Recon tab.
+Next: identify/resolve the Gemini project's quota in AI Studio. A new submission
+needs explicit same-input retry authorization because the approved spec allowed
+zero manual reruns; preserve the original US$5 ceiling and account for any actual
+charges. Re-stage from the saved spec after recovery, then retain real research
+and verify Send to Director prefill. Dev server remains running; UI is dashboard.
 If new paid production is necessary, freeze exact inputs and bounded call costs
 for approval under AGENTS.md before dispatch. The old USD15/four-roll proposal
 does not cover an unspecified final production or authorize spending.
