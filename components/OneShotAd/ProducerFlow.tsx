@@ -10,6 +10,7 @@ import { FirstCutScreen } from './FirstCutScreen';
 import { FeedbackWidget } from '../ui/FeedbackWidget';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
+import { CTRL_H, R_CTRL, T_CTRL } from '../ui/wizardTokens';
 import {
   createProductionRun,
   runProduction,
@@ -151,7 +152,8 @@ interface Props {
 
 const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, preferredVertical, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
   const [run, setRun] = useState<ProductionRun | null>(null);
-  const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
+  const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming' | 'resume-error'>('resuming');
+  const [resumeAttempt, setResumeAttempt] = useState(0);
   const [errMsg, setErrMsg] = useState('');
   const [reshooting, setReshooting] = useState<number | null>(null);
   const [presetBusy, setPresetBusy] = useState(false);
@@ -172,6 +174,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     let alive = true;
     const activeId = typeof localStorage !== 'undefined' ? localStorage.getItem(ACTIVE_RUN_KEY) : null;
     if (!activeId) { setPhase('launch'); return; }
+    setPhase('resuming');
     void loadRun(activeId)
       .then((res) => {
         if (!alive) return;
@@ -195,12 +198,12 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
           void runProduction(resumed, cb(resumed), realProducerDeps);
         }
       })
-      .catch(() => alive && setPhase('launch'));
+      .catch(() => alive && setPhase('resume-error'));
     // NOTE: no abort() here — StrictMode's synchronous cleanup would otherwise kill the
     // resumed run before its second mount. Explicit teardown lives in handleMakeAnother.
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [resumeAttempt]);
 
   const start = async (input: IntakeInput) => {
     if (!userId) return;
@@ -373,6 +376,33 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       <div className="relative flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-400">
         {BackBar}
         <p className="text-sm">Sign in to use One-Shot Ad.</p>
+      </div>
+    );
+  }
+
+  if (phase === 'resume-error') {
+    return (
+      <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
+        {BackBar}
+        <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center">
+          <GlassPanel className="w-full p-6 text-center">
+            <AlertTriangle className="mx-auto mb-4 h-8 w-8 text-zinc-400" />
+            <h1 className="mb-3 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
+              Couldn't load your saved ad
+            </h1>
+            <p role="alert" className="mb-6 text-sm text-zinc-400">
+              Your saved ad is still selected. Retry to open it without starting a new one.
+            </p>
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <GoldButton onClick={() => setResumeAttempt((attempt) => attempt + 1)} className="flex min-h-11 items-center gap-3 !rounded-xl">
+                <RotateCw className="h-5 w-5 shrink-0" /> Retry
+              </GoldButton>
+              <button onClick={onBack} className={`${CTRL_H} ${R_CTRL} ${T_CTRL} border border-white/10 bg-zinc-950 px-6 text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}>
+                Back
+              </button>
+            </div>
+          </GlassPanel>
+        </div>
       </div>
     );
   }
