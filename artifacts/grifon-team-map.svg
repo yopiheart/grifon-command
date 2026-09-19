@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 920" width="1600" height="920" role="img" aria-labelledby="team-title team-desc" font-family="Inter,Arial,sans-serif"><title id="team-title">How we build Grifon.</title><desc id="team-desc">A human-led development workflow with specialist execution and independent checks. Task-driven, not a 24/7 bot fleet. Local work depends on the desktop being available.</desc><defs><radialGradient id="team-bg" cx="35%" cy="10%" r="90%"><stop stop-color="#1D1C17"/><stop offset="0.45" stop-color="#131316"/><stop offset="1" stop-color="#09090B"/></radialGradient><linearGradient id="team-panel" x2="0" y2="1"><stop stop-color="#232326"/><stop offset="1" stop-color="#141416"/></linearGradient><marker id="team-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 8 5 L 1 9" fill="none" stroke="#A1A1AA" stroke-width="1.5"/></marker></defs><rect width="1600" height="920" fill="url(#team-bg)"/>
+<text x="40" y="56" font-size="20" fill="#F5F5F7" font-weight="900" letter-spacing="4">GRIFON AI</text>
+<text x="1560" y="56" font-size="14" fill="#9A9AA3" font-weight="400" text-anchor="end" letter-spacing="2">19 SEPTEMBER 2026</text>
+<text x="40" y="98" font-size="14" fill="#FFCC00" font-weight="600" letter-spacing="2">01 / THE TEAM BEHIND GRIFON</text>
+<text x="40" y="157" font-size="48" fill="#F5F5F7" font-weight="900" >HOW WE BUILD GRIFON.</text>
+<text x="40" y="190" font-size="21" fill="#D4D4D8" font-weight="400" >A human-led development workflow with specialist execution and independent checks.</text>
+<line x1="40" y1="231" x2="1560" y2="231" stroke="#FFFFFF" stroke-opacity="0.12"/>
+<text x="40" y="256" font-size="15" fill="#FFCC00" font-weight="600" letter-spacing="1.5">TASK-DRIVEN / AGENTS RUN WHEN ASSIGNED</text>
+<path d="M260 363 H292" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#team-arrow)" fill="none"/>
+<path d="M520 363 H552" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#team-arrow)" fill="none"/>
+<path d="M780 363 H812" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#team-arrow)" fill="none"/>
+<path d="M1040 363 H1072" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#team-arrow)" fill="none"/>
+<path d="M1300 363 H1332" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#team-arrow)" fill="none"/>
+<path d="M930 446 V490 H670 V454" stroke="#9A9AA3" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#team-arrow)" fill="none"/>
+<text x="696" y="520" font-size="14" fill="#9A9AA3" font-weight="400" >FAIL / REPAIR / VERIFY AGAIN</text>
+<path d="M410 535 V454" stroke="#9A9AA3" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#team-arrow)" fill="none"/>
+<text x="590" y="595" font-size="28" fill="#F5F5F7" font-weight="700" >Build tools produce evidence.</text>
+<text x="590" y="634" font-size="21" fill="#D4D4D8" font-weight="400" >Skills guide the work. They are not separate running bots.</text>
+<g data-node="objective" role="button" tabindex="0" aria-label="Set the objective: show explanation" style="cursor:pointer"><title>Neil defines the desired result and the boundaries. A non-trivial change gets an observable success contract before implementation.</title><rect x="40" y="280" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M60 281 H240" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="58" y="309" font-size="14" fill="#FFCC00" font-weight="600" >NEIL / OWNER</text>
+<text x="58" y="343" font-size="21" fill="#F5F5F7" font-weight="700" >Set the objective</text>
+<text x="58" y="389" font-size="17" fill="#D4D4D8" font-weight="400" >Outcome, context,</text>
+<text x="58" y="414" font-size="17" fill="#D4D4D8" font-weight="400" >constraints and budget</text>
+</g>
+<g data-node="lead" role="button" tabindex="0" aria-label="Plan &amp; coordinate: show explanation" style="cursor:pointer"><title>The lead agent reads the current project state, researches the relevant code and routes bounded work to specialists when the task calls for delegation. It integrates the results and reports evidence.</title><rect x="300" y="280" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M320 281 H500" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="318" y="309" font-size="14" fill="#A1A1AA" font-weight="600" >LEAD AGENT</text>
+<text x="318" y="343" font-size="21" fill="#F5F5F7" font-weight="700" >Plan &amp; coordinate</text>
+<text x="318" y="389" font-size="17" fill="#D4D4D8" font-weight="400" >Inspect the code</text>
+<text x="318" y="414" font-size="17" fill="#D4D4D8" font-weight="400" >Scope and assign work</text>
+</g>
+<g data-node="build" role="button" tabindex="0" aria-label="Implement: show explanation" style="cursor:pointer"><title>The configured code-executor implements substantial, approved work within an explicit scope. It follows tuned-content restrictions and returns its changes and validation results to the lead agent.</title><rect x="560" y="280" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M580 281 H760" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="578" y="309" font-size="14" fill="#A1A1AA" font-weight="600" >CODE-EXECUTOR</text>
+<text x="578" y="343" font-size="21" fill="#F5F5F7" font-weight="700" >Implement</text>
+<text x="578" y="389" font-size="17" fill="#D4D4D8" font-weight="400" >Approved changes</text>
+<text x="578" y="414" font-size="17" fill="#D4D4D8" font-weight="400" >Focused tests and fixes</text>
+</g>
+<g data-node="review" role="button" tabindex="0" aria-label="Test &amp; review: show explanation" style="cursor:pointer"><title>The configured smoke-tester checks observable behavior. A separate critic reviews correctness, with brand review for visual work. GitHub CI checks the submitted PR. These are distinct assignments; the critic is a role, not an always-running named bot. Actionable failures return to implementation.</title><rect x="820" y="280" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M840 281 H1020" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="838" y="309" font-size="14" fill="#A1A1AA" font-weight="600" >REVIEW + DRAFT PR + CI</text>
+<text x="838" y="343" font-size="21" fill="#F5F5F7" font-weight="700" >Test &amp; review</text>
+<text x="838" y="389" font-size="17" fill="#D4D4D8" font-weight="400" >Smoke, diff review + CI</text>
+<text x="838" y="414" font-size="17" fill="#D4D4D8" font-weight="400" >Repair and verify again</text>
+</g>
+<g data-node="approve" role="button" tabindex="0" aria-label="Approve release: show explanation" style="cursor:pointer"><title>Reviewed work is committed and offered as a draft PR before the release decision. Merging and deploying require explicit authorization. Paid tests and tuned-content edits have their own earlier approval gates; this release gate is not the only approval point.</title><rect x="1080" y="280" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M1100 281 H1280" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="1098" y="309" font-size="14" fill="#FFCC00" font-weight="600" >NEIL / RELEASE DECISION</text>
+<text x="1098" y="343" font-size="21" fill="#F5F5F7" font-weight="700" >Approve release</text>
+<text x="1098" y="389" font-size="17" fill="#D4D4D8" font-weight="400" >Review the evidence</text>
+<text x="1098" y="414" font-size="17" fill="#D4D4D8" font-weight="400" >Approve merge / deploy</text>
+</g>
+<g data-node="delivery" role="button" tabindex="0" aria-label="Ship &amp; record: show explanation" style="cursor:pointer"><title>After the release decision, the authorized operation can proceed. GitHub retains version history and review; NOW.md records actual checks and remaining work. A draft PR is not proof of deployment.</title><rect x="1340" y="280" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M1360 281 H1540" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="1358" y="309" font-size="14" fill="#A1A1AA" font-weight="600" >CONTROLLED DELIVERY</text>
+<text x="1358" y="343" font-size="21" fill="#F5F5F7" font-weight="700" >Ship &amp; record</text>
+<text x="1358" y="389" font-size="17" fill="#D4D4D8" font-weight="400" >Authorized release</text>
+<text x="1358" y="414" font-size="17" fill="#D4D4D8" font-weight="400" >Versioned handoff</text>
+</g>
+<g data-node="skills" role="button" tabindex="0" aria-label="Research &amp; skills: show explanation" style="cursor:pointer"><title>Research is a capability of the lead or an assigned agent. Skills such as surgical-edit, verify-changes and brand-check provide operating instructions. They are not independent services that continuously run in the background.</title><rect x="300" y="535" width="220" height="166" rx="18" fill="url(#team-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M320 536 H500" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="318" y="564" font-size="14" fill="#A1A1AA" font-weight="600" >ON-DEMAND CAPABILITIES</text>
+<text x="318" y="598" font-size="21" fill="#F5F5F7" font-weight="700" >Research &amp; skills</text>
+<text x="318" y="644" font-size="17" fill="#D4D4D8" font-weight="400" >Read evidence</text>
+<text x="318" y="669" font-size="17" fill="#D4D4D8" font-weight="400" >Use the right workflow</text>
+</g>
+<line x1="40" y1="747" x2="1560" y2="747" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="40" y="787" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">WORKFLOWS + SKILLS</text>
+<text x="430" y="787" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">TOOLS + TESTS</text>
+<text x="820" y="787" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">GIT + SAVED CONTEXT</text>
+<text x="1210" y="787" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">SCHEDULED FOLLOW-UPS</text>
+<text x="40" y="835" font-size="20" fill="#F5F5F7" font-weight="600" >Task-driven, not a 24/7 bot fleet. Local work depends on the desktop being available.</text>
+<text x="40" y="878" font-size="13" fill="#FFCC00" font-weight="600" letter-spacing="1.5">GOLD OUTLINE = HUMAN DECISION</text>
+<text x="1560" y="878" font-size="13" fill="#9A9AA3" font-weight="400" text-anchor="end" letter-spacing="1">CODEBASE SNAPSHOT / NOT A LIVE STATUS VIEW</text>
+</svg>

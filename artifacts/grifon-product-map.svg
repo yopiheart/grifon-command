@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="1600" height="1100" role="img" aria-labelledby="product-title product-desc" font-family="Inter,Arial,sans-serif"><title id="product-title">From brief to creative.</title><desc id="product-desc">AI services work inside defined workflows. Customers make the key creative decisions. Browser-led orchestration today. Full production while the browser is closed is not implemented.</desc><defs><radialGradient id="product-bg" cx="35%" cy="10%" r="90%"><stop stop-color="#1D1C17"/><stop offset="0.45" stop-color="#131316"/><stop offset="1" stop-color="#09090B"/></radialGradient><linearGradient id="product-panel" x2="0" y2="1"><stop stop-color="#232326"/><stop offset="1" stop-color="#141416"/></linearGradient><marker id="product-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 8 5 L 1 9" fill="none" stroke="#A1A1AA" stroke-width="1.5"/></marker></defs><rect width="1600" height="1100" fill="url(#product-bg)"/>
+<text x="40" y="56" font-size="20" fill="#F5F5F7" font-weight="900" letter-spacing="4">GRIFON AI</text>
+<text x="1560" y="56" font-size="14" fill="#9A9AA3" font-weight="400" text-anchor="end" letter-spacing="2">19 SEPTEMBER 2026</text>
+<text x="40" y="98" font-size="14" fill="#FFCC00" font-weight="600" letter-spacing="2">02 / THE CUSTOMER EXPERIENCE</text>
+<text x="40" y="157" font-size="48" fill="#F5F5F7" font-weight="900" >FROM BRIEF TO CREATIVE.</text>
+<text x="40" y="190" font-size="21" fill="#D4D4D8" font-weight="400" >AI services work inside defined workflows. Customers make the key creative decisions.</text>
+<line x1="40" y1="229" x2="1560" y2="229" stroke="#FFFFFF" stroke-opacity="0.12"/>
+<text x="40" y="254" font-size="15" fill="#FFCC00" font-weight="600" letter-spacing="1.5">DEFAULT ONE-SHOT / PLAN FIRST</text>
+<line x1="40" y1="564" x2="1560" y2="564" stroke="#FFFFFF" stroke-opacity="0.12"/>
+<text x="40" y="589" font-size="15" fill="#FFCC00" font-weight="600" letter-spacing="1.5">OPTIONAL PRODUCER FLOW / OPT-IN</text>
+<path d="M260 357 H292" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M520 357 H552" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M780 357 H812" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M1040 357 H1072" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M1300 357 H1332" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M260 693 H292" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M520 693 H552" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M780 693 H812" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M1040 693 H1072" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<path d="M1300 693 H1332" stroke="#A1A1AA" stroke-width="1.5" marker-end="url(#product-arrow)" fill="none"/>
+<g data-node="brief" role="button" tabindex="0" aria-label="Your brief: show explanation" style="cursor:pointer"><title>The customer supplies the business brief and assets. Draft fields and uploaded assets use browser persistence. Other dashboard tools, including Market Research, Offer Optimizer, Caption &amp; Headline and Image Studio, can also be used separately.</title><rect x="40" y="274" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M60 275 H240" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="58" y="303" font-size="14" fill="#FFCC00" font-weight="600" >CUSTOMER</text>
+<text x="58" y="337" font-size="21" fill="#F5F5F7" font-weight="700" >Your brief</text>
+<text x="58" y="383" font-size="17" fill="#D4D4D8" font-weight="400" >Product, offer, photo</text>
+<text x="58" y="408" font-size="17" fill="#D4D4D8" font-weight="400" >Language and style</text>
+</g>
+<g data-node="research" role="button" tabindex="0" aria-label="Research &amp; script: show explanation" style="cursor:pointer"><title>One-Shot runs market research, maps the result into shared app state and invokes the generation chain. This is a defined sequence of service calls, not a team of autonomous conversational bots.</title><rect x="300" y="274" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M320 275 H500" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="318" y="303" font-size="14" fill="#A1A1AA" font-weight="600" >AI GENERATION</text>
+<text x="318" y="337" font-size="21" fill="#F5F5F7" font-weight="700" >Research &amp; script</text>
+<text x="318" y="383" font-size="17" fill="#D4D4D8" font-weight="400" >Market context</text>
+<text x="318" y="408" font-size="17" fill="#D4D4D8" font-weight="400" >Ad script and direction</text>
+</g>
+<g data-node="visuals" role="button" tabindex="0" aria-label="Build the ad plan: show explanation" style="cursor:pointer"><title>The default chain runs script, presenter selection or generation, thumbnail, storyboard, scene images and video prompts. It writes results to shared app state. It deliberately does not start video rendering.</title><rect x="560" y="274" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M580 275 H760" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="578" y="303" font-size="14" fill="#A1A1AA" font-weight="600" >AI GENERATION</text>
+<text x="578" y="337" font-size="21" fill="#F5F5F7" font-weight="700" >Build the ad plan</text>
+<text x="578" y="383" font-size="17" fill="#D4D4D8" font-weight="400" >Presenter, cover, scenes</text>
+<text x="578" y="408" font-size="17" fill="#D4D4D8" font-weight="400" >Images + shot prompts</text>
+</g>
+<g data-node="plan" role="button" tabindex="0" aria-label="Review your plan: show explanation" style="cursor:pointer"><title>The customer sees the consumer Your Ad Plan screen, with the script and visual assets. Choosing video generation hands the plan to the video workspace. Consumer review does not require entering the developer Director wizard.</title><rect x="820" y="274" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M840 275 H1020" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="838" y="303" font-size="14" fill="#FFCC00" font-weight="600" >CUSTOMER REVIEW</text>
+<text x="838" y="337" font-size="21" fill="#F5F5F7" font-weight="700" >Review your plan</text>
+<text x="838" y="383" font-size="17" fill="#D4D4D8" font-weight="400" >Read the script</text>
+<text x="838" y="408" font-size="17" fill="#D4D4D8" font-weight="400" >Inspect the scenes</text>
+</g>
+<g data-node="workspace" role="button" tabindex="0" aria-label="Generate video: show explanation" style="cursor:pointer"><title>The review action opens GenerateVideo. That workspace owns its render controls and usage gates. The ad-plan generation chain has already ended at this point.</title><rect x="1080" y="274" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M1100 275 H1280" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="1098" y="303" font-size="14" fill="#FFCC00" font-weight="600" >SEPARATE ACTION</text>
+<text x="1098" y="337" font-size="21" fill="#F5F5F7" font-weight="700" >Generate video</text>
+<text x="1098" y="383" font-size="17" fill="#D4D4D8" font-weight="400" >Open video workspace</text>
+<text x="1098" y="408" font-size="17" fill="#D4D4D8" font-weight="400" >Choose render settings</text>
+</g>
+<g data-node="outputs" role="button" tabindex="0" aria-label="Review outputs: show explanation" style="cursor:pointer"><title>Video outputs are inspected and exported through the video workspace. This diagram does not claim that the default One-Shot path automatically assembles the Producer First Cut.</title><rect x="1340" y="274" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M1360 275 H1540" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="1358" y="303" font-size="14" fill="#A1A1AA" font-weight="600" >VIDEO WORKSPACE</text>
+<text x="1358" y="337" font-size="21" fill="#F5F5F7" font-weight="700" >Review outputs</text>
+<text x="1358" y="383" font-size="17" fill="#D4D4D8" font-weight="400" >Inspect generated video</text>
+<text x="1358" y="408" font-size="17" fill="#D4D4D8" font-weight="400" >Use available exports</text>
+</g>
+<g data-node="pbrief" role="button" tabindex="0" aria-label="Your brief: show explanation" style="cursor:pointer"><title>The optional Producer uses its own orchestrator. It is selected by an explicit engine override, which can persist locally. It is not enabled for every customer by default.</title><rect x="40" y="610" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M60 611 H240" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="58" y="639" font-size="14" fill="#FFCC00" font-weight="600" >CUSTOMER</text>
+<text x="58" y="673" font-size="21" fill="#F5F5F7" font-weight="700" >Your brief</text>
+<text x="58" y="719" font-size="17" fill="#D4D4D8" font-weight="400" >Product and assets</text>
+<text x="58" y="744" font-size="17" fill="#D4D4D8" font-weight="400" >Creative direction</text>
+</g>
+<g data-node="prepare" role="button" tabindex="0" aria-label="Prepare scenes: show explanation" style="cursor:pointer"><title>The Producer runs its preparation stages and stores run checkpoints and scene artifacts. The diagram groups several deterministic orchestration steps into one readable stage.</title><rect x="300" y="610" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M320 611 H500" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="318" y="639" font-size="14" fill="#A1A1AA" font-weight="600" >PRODUCER WORKFLOW</text>
+<text x="318" y="673" font-size="21" fill="#F5F5F7" font-weight="700" >Prepare scenes</text>
+<text x="318" y="719" font-size="17" fill="#D4D4D8" font-weight="400" >Research and script</text>
+<text x="318" y="744" font-size="17" fill="#D4D4D8" font-weight="400" >Storyboard and images</text>
+</g>
+<g data-node="storyboard" role="button" tabindex="0" aria-label="Approve storyboard: show explanation" style="cursor:pointer"><title>Production parks at the storyboard gate for the customer. Approval allows the video stage to proceed. This is before video rendering, not before every paid generation operation: scene-image generation has already occurred.</title><rect x="560" y="610" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M580 611 H760" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="578" y="639" font-size="14" fill="#FFCC00" font-weight="600" >APPROVAL GATE</text>
+<text x="578" y="673" font-size="21" fill="#F5F5F7" font-weight="700" >Approve</text>
+<text x="578" y="700" font-size="21" fill="#F5F5F7" font-weight="700" >storyboard</text>
+<text x="578" y="729" font-size="17" fill="#D4D4D8" font-weight="400" >Review the images</text>
+<text x="578" y="754" font-size="17" fill="#D4D4D8" font-weight="400" >Approve video stage</text>
+</g>
+<g data-node="produce" role="button" tabindex="0" aria-label="Produce the cut: show explanation" style="cursor:pointer"><title>The orchestrator coordinates provider jobs, voice where applicable, edit decisions and final rendering. Per-scene claims and saved provider handles support resumption. Real-provider billing and database concurrency are not certified by the recovery fixture tests.</title><rect x="820" y="610" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M840 611 H1020" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="838" y="639" font-size="14" fill="#A1A1AA" font-weight="600" >PRODUCER WORKFLOW</text>
+<text x="838" y="673" font-size="21" fill="#F5F5F7" font-weight="700" >Produce the cut</text>
+<text x="838" y="719" font-size="17" fill="#D4D4D8" font-weight="400" >Video and voice</text>
+<text x="838" y="744" font-size="17" fill="#D4D4D8" font-weight="400" >Edit and final render</text>
+</g>
+<g data-node="firstcut" role="button" tabindex="0" aria-label="Review First Cut: show explanation" style="cursor:pointer"><title>The run parks at First Cut so the customer can review the output and use the available edit or reshoot controls. Access to some controls depends on the product entitlement. Customer review is not an automatic quality certification.</title><rect x="1080" y="610" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#FFCC00" stroke-opacity=".65"/><path d="M1100 611 H1280" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="1098" y="639" font-size="14" fill="#FFCC00" font-weight="600" >CUSTOMER REVIEW</text>
+<text x="1098" y="673" font-size="21" fill="#F5F5F7" font-weight="700" >Review First Cut</text>
+<text x="1098" y="719" font-size="17" fill="#D4D4D8" font-weight="400" >Inspect the result</text>
+<text x="1098" y="744" font-size="17" fill="#D4D4D8" font-weight="400" >Request supported edits</text>
+</g>
+<g data-node="download" role="button" tabindex="0" aria-label="Download: show explanation" style="cursor:pointer"><title>First Cut exposes the final file for download when available. This flow does not automatically launch an ad campaign or publish to social channels.</title><rect x="1340" y="610" width="220" height="166" rx="18" fill="url(#product-panel)" stroke="#606068" stroke-opacity=".55"/><path d="M1360 611 H1540" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="1358" y="639" font-size="14" fill="#A1A1AA" font-weight="600" >CUSTOMER OUTPUT</text>
+<text x="1358" y="673" font-size="21" fill="#F5F5F7" font-weight="700" >Download</text>
+<text x="1358" y="719" font-size="17" fill="#D4D4D8" font-weight="400" >Take the finished file</text>
+<text x="1358" y="744" font-size="17" fill="#D4D4D8" font-weight="400" >Publish when ready</text>
+</g>
+<text x="40" y="478" font-size="19" fill="#A1A1AA" font-weight="400" >Video generation is a separate customer action after the ad plan.</text>
+<text x="40" y="815" font-size="19" fill="#A1A1AA" font-weight="400" >Present in the codebase; this is not the default One-Shot path.</text>
+<line x1="40" y1="927" x2="1560" y2="927" stroke="#FFFFFF" stroke-opacity=".15"/>
+<text x="40" y="967" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">SERVER API + USAGE GUARDS</text>
+<text x="430" y="967" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">AI + MEDIA SERVICES</text>
+<text x="820" y="967" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">SAVED PLANS + JOB HANDLES</text>
+<text x="1210" y="967" font-size="15" fill="#D4D4D8" font-weight="600" letter-spacing=".8">HUMAN REVIEW</text>
+<text x="40" y="1015" font-size="20" fill="#F5F5F7" font-weight="600" >Browser-led orchestration today. Full production while the browser is closed is not implemented.</text>
+<text x="40" y="1058" font-size="13" fill="#FFCC00" font-weight="600" letter-spacing="1.5">GOLD OUTLINE = HUMAN DECISION</text>
+<text x="1560" y="1058" font-size="13" fill="#9A9AA3" font-weight="400" text-anchor="end" letter-spacing="1">CODEBASE SNAPSHOT / NOT A LIVE STATUS VIEW</text>
+</svg>
