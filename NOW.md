@@ -59,4 +59,6 @@ billing changes, engine-selection changes, deployment or merge occurred.
 
 ## Next action
 Implementation and local verification are complete; draft PR is open. GitHub CI
-is pending. Review CI before any separately authorized merge or deployment.
+is queued at handoff. The automatic Vercel status reports "Account is blocked."
+No hosting settings were changed or deployment explicitly requested. Review CI
+and the hosting account status before a separately authorized merge/deployment.
