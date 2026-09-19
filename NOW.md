@@ -6,7 +6,8 @@ Branch: `codex/grifon-agent-maps`, based on main `5d1b583c`.
 Neil requested accurate, shareable diagrams for his internal agent setup and the
 customer workflow, suitable for future investor/client conversations.
 Artifact-only work; no product code, prompts, models or infrastructure changed.
-Draft PR: pending creation after final visual verification.
+Draft PR #147: https://github.com/yopiheart/grifon-command/pull/147.
+Artifact implementation commit:400fced0, pushed to GitHub.
 
 ## Deliverables
 - `artifacts/grifon-agent-maps.html`: self-contained interactive viewer, founder
@@ -47,6 +48,7 @@ The exact billing cause was not independently inspected. Neil handles payment.
 The one-shot-recovery-follow-up heartbeat is paused after final CI notification.
 
 ## Next action
-Diagram verification is complete. Commit/push artifacts and open a draft PR.
+Diagrams are verified, committed and pushed; draft PR147 is open. CI pending.
+Neil can open or forward the local HTML and export the diagrams without hosting.
 Release recovery only after hosting is unblocked and Neil authorizes merge/deploy.
 Background production remains a separate proposed project, not approved implementation.
