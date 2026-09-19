@@ -3,7 +3,8 @@
 
 ## Current state
 Branch: `codex/oneshot-recovery`, based on main `5d1b583c`.
-Draft PR: being created from the verified implementation.
+Draft PR #146: https://github.com/yopiheart/grifon-command/pull/146.
+Implementation commit: `c08d6039`, pushed to GitHub.
 Neil approved the recovery-on-return implementation and draft PR delivery.
 No deployment or merge is authorized.
 
@@ -57,5 +58,5 @@ No real generation, production writes, tuned prompt/model/default changes,
 billing changes, engine-selection changes, deployment or merge occurred.
 
 ## Next action
-Commit/push the reviewed diff and create its draft PR. Review CI before any
-separately authorized merge or deployment.
+Implementation and local verification are complete; draft PR is open. GitHub CI
+is pending. Review CI before any separately authorized merge or deployment.
