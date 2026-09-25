@@ -47,6 +47,11 @@ Builders, latest base/camera AEPs, preview, fonts/license and sources are retain
 Older variants/session backups remain local and ignored, not deleted.
 
 ## Next action
+Neil added a Kendel post describing reviews of idea, script, storyboard and
+final edit. Screenshot and source limits are retained in the reference library's
+`PROCESS-NOTE.md`. The four stages are stated by the creator; our proposed
+criteria are not recovered proprietary SOPs. Next film deliverable should be
+a product story and timed storyboard/animatic before another polished render.
 Present the reference catalog and findings. Prioritize K04/Button and
 K05/SourceReady for a compact connected product-action study. The gap is object
 continuity, meaningful composition changes and motivated framing, not merely

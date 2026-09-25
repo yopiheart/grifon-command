@@ -17,6 +17,10 @@ The product names below were read from the videos, not guessed from filenames.
 
 [Detailed autopsy of all five](AUTOPSY.md) · [Verified file manifest](manifest.json)
 
+[Creator's stated process and proposed Grifon review stages](PROCESS-NOTE.md)
+records Neil's follow-up screenshot. It distinguishes the four stated review
+stages from our proposed criteria; the underlying SOPs are not available.
+
 ## What is saved
 
 - `originals/`: all five unchanged supplied MP4s, copied into this repository's
