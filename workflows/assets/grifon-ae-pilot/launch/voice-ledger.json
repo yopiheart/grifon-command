@@ -1,0 +1,20 @@
+{
+  "maxTakes": 2,
+  "attempts": [
+    {
+      "model": "eleven_multilingual_v2",
+      "balanceBefore": 10000,
+      "startedAt": "2026-09-25T10:09:41.3948014Z",
+      "take": 1,
+      "voice": "Brian - Deep, Resonant and Comforting",
+      "status": "generated-download-pending",
+      "transport": "ElevenLabs authenticated browser",
+      "characters": 155,
+      "balanceAfter": 9845,
+      "creditsUsed": 155,
+      "rawDurationSeconds": 10.631835,
+      "completedAt": "2026-09-25T10:12:41.375Z"
+    }
+  ],
+  "maxCredits": 500
+}

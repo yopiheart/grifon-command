@@ -1,0 +1,13 @@
+{
+  "threshold": 0.22,
+  "note": "Luminance-change candidates, NOT verified shot boundaries. Animation and flashes can trigger them; continuous camera movement can produce none.",
+  "times": [
+    8.76667,
+    11.6,
+    18.6,
+    19.8333,
+    26.0333,
+    28.3667,
+    32.1333
+  ]
+}

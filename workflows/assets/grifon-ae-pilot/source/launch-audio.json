@@ -1,0 +1,22 @@
+{
+  "origin": "Original deterministic synthesis; no external recordings",
+  "auditoryReview": "pending",
+  "stems": [
+    {
+      "file": "launch-score.wav",
+      "duration": 30,
+      "channels": 2,
+      "sampleRate": 48000,
+      "peakDb": -15.478216328759348,
+      "rmsDb": -28.786793129809027
+    },
+    {
+      "file": "launch-sfx.wav",
+      "duration": 30,
+      "channels": 2,
+      "sampleRate": 48000,
+      "peakDb": -20.939964561510113,
+      "rmsDb": -43.94536256877558
+    }
+  ]
+}

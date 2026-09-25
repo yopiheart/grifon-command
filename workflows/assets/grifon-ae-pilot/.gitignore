@@ -1,0 +1,32 @@
+probe.jsx
+probe.txt
+recover-pilot.jsx
+package-pilot.jsx
+output/Partial-Build-Backup.aep
+output/build-error.txt
+output/Adobe After Effects Auto-Save/
+film/* Logs/
+film/*.log
+film/Previous-Session-*.aep
+film/Grifon-Direction-30s.aep
+film/Grifon-Direction-30s.mp4
+film/Grifon-Direction-30s-v2.aep
+film/Grifon-Direction-30s-v2.mp4
+animatic/Previous-Session-*.aep
+animatic/* Logs/
+animatic/*.log
+launch/Previous-Session-*.aep
+launch/* Logs/
+launch/*.log
+launch/Grifon-Your-Next-Ad.aep
+launch/Grifon-Your-Next-Ad.mp4
+launch/contact.png
+source/grifon-composer-fixed.png
+source/grifon-composer-panel.jpg
+launch/Grifon-Your-Next-Ad-v2.aep
+launch/Grifon-Your-Next-Ad-v2.mp4
+launch/contact-v2.png
+launch/Grifon-Your-Next-Ad-package.zip
+source/grifon-composer.png
+source/launch-score.wav
+source/launch-sfx.wav

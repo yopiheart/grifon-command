@@ -1,0 +1,5 @@
+BUILD PASS
+30s / 1920x1080 / 30fps
+Native editable AE layers, continuous product and selection frame.
+Camera 14 position keys.
+Audio intentionally pending; animatic is not a final film.

@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-09-25T09:56:13.696Z",
+  "file": "Grifon-Your-Next-Ad-v3.mp4",
+  "sha256": "fe97da4cc865ddaaf8572b59bffb25c66c753199a0142ec7ff3c6dd1f2deb42e",
+  "decodePassed": true,
+  "frames": 900,
+  "duration": "00:00:30.00",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "audio": "AAC stereo 48 kHz",
+  "nativeRenderer": "After Effects Render Queue",
+  "audioMeasurements": "Summary:\r\n\r\n  Integrated loudness:\r\n    I:         -22.7 LUFS\r\n    Threshold: -32.9 LUFS\r\n\r\n  Loudness range:\r\n    LRA:         2.2 LU\r\n    Threshold: -42.8 LUFS\r\n    LRA low:   -24.2 LUFS\r\n    LRA high:  -22.0 LUFS\r\n\r\n  True peak:\r\n    Peak:       -9.4 dBFS\r\n",
+  "creativeReview": "Contact sheets and sampled motion strips; no claim of full auditory review or reference equivalence",
+  "voiceover": "Absent; pending access and approved generation spec"
+}

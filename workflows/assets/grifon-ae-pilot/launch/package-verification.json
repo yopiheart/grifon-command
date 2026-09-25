@@ -1,0 +1,32 @@
+{
+  "packageProject": "package/Grifon-Your-Next-Ad.aep",
+  "footage": [
+    {
+      "name": "logo.png",
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "sourceMatches": true
+    },
+    {
+      "name": "grifon-composer-full.jpg",
+      "sha256": "4a4184e69b67e14efa1ecfe8597925cf2542c03eb8a4d6cd1f4dd8904ced5451",
+      "sourceMatches": true
+    },
+    {
+      "name": "launch-score.wav",
+      "sha256": "4ff11cbcc1480616ed120ce84d58c042c3eef38874d660189d883f408f205ec4",
+      "sourceMatches": true
+    },
+    {
+      "name": "launch-sfx.wav",
+      "sha256": "b84be6d632ea91085744ba16ec7059f5f8b5a7eeffd18d420f796f2d241a970c",
+      "sourceMatches": true
+    }
+  ],
+  "fontCopiesMatch": true,
+  "jsxSyntaxParsed": true,
+  "narrationCharacters": 155,
+  "maxTwoTakeCharacters": 310,
+  "narrationAuthorized": true,
+  "narrationIncluded": false,
+  "narrationStatus": "First take generated in provider UI; local download and integration pending"
+}
