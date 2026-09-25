@@ -1,5 +1,42 @@
 # Grifon native After Effects typography study
 
+## Latest: Your next ad, visual and score preview
+
+`launch/Grifon-Your-Next-Ad-v3.mp4` is a new original 30-second Grifon cut.
+`launch/Grifon-Your-Next-Ad-v3.aep` has native editable text, shapes, a camera
+with 21 position keys, and separate original music/SFX stems. The collected
+project is `launch/package/Grifon-Your-Next-Ad.aep`, with Footage and Fonts.
+No Higgsfield provider, legacy skincare photos or reference soundtrack is used.
+
+The interface is the actual One-Shot LaunchScreen component captured locally
+with empty fields and an inert launch callback. It is not a live generation
+result. Storyboard panels show editable graphics from this film itself.
+Asset provenance, claims and the proposed narration are in `launch/production.json`.
+
+Verified: all 900 frames and stereo audio decode; 1920x1080, 30fps, 30 seconds.
+Audio measured -22.7 LUFS integrated and -9.4 dBFS true peak. Overview frames
+and dense transition strips exposed and helped fix a truncated UI capture,
+inconsistent secondary logo, peripheral card fragments, overlapping headlines
+and an occluded caption. Measurements do not establish an accepted final mix.
+
+**Still open:** final narration, full auditory review, creative acceptance against
+the references, and validation on a second user-selected reference. This is a
+reviewable preview, not a claim of AAA quality or a finished client-facing product.
+The reusable workflow is a draft in `workflow-draft/SKILL.md`, not installed and
+not an MCP integration. The prior `STORYBOARD.md` skincare concept is rejected.
+
+Rebuild this cut: run `node make-launch-audio.mjs`, then execute
+`build-grifon-launch.jsx` in AE, followed by `render-launch.jsx` after the build
+report exists. Inspect any actual dialog before retrying; dispatch success is
+not script completion. Run `node verify-launch.mjs`, then `package-launch.jsx`
+in AE to collect sources. Scripts preserve existing output projects rather than
+silently overwrite them. Exact paths in the builders are relative to this folder.
+
+The browser capture harness was temporary and never modified application code.
+The separate aerender process did not start promptly; the actual native AE
+Render Queue successfully produced the file. An earlier internal AE context
+error has no established root cause; successful later rendering is not a diagnosis.
+
 ## Current checkpoint: camera study, not a finished launch film
 
 The later 30-second study is `film/Grifon-Direction-Camera.aep`, with a rendered

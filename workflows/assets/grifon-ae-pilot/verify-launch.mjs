@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const base=path.dirname(fileURLToPath(import.meta.url));
+const root=path.resolve(base,'../../..');
+const ff=path.join(root,'node_modules/ffmpeg-static/ffmpeg.exe');
+const out=path.join(base,'launch'),movie=path.join(out,'Grifon-Your-Next-Ad-v3.mp4');
+function run(args){const r=spawnSync(ff,['-hide_banner',...args],{encoding:'utf8',windowsHide:true,maxBuffer:8e6});if(r.status!==0)throw Error(r.stderr||r.error?.message||'FFmpeg failed');return r.stderr;}
+const decode=run(['-i',movie,'-f','null','-']);
+const frames=Number([...decode.matchAll(/frame=\s*(\d+)/g)].at(-1)?.[1]);
+const duration=decode.match(/Duration: (\d+:\d+:\d+\.\d+)/)?.[1];
+const dimensions=decode.includes('1920x1080'),fps=decode.includes('30 fps'),audio=decode.includes('48000 Hz, stereo');
+if(frames!==900||duration!=='00:00:30.00'||!dimensions||!fps||!audio)throw Error('Media contract failed');
+run(['-loglevel','error','-y','-i',movie,'-vf','fps=1,scale=384:216,tile=5x6','-frames:v','1',path.join(out,'contact-v3.png')]);
+for(const t of [4.7,8.5,13.4,17.3,23.7,28])run(['-loglevel','error','-y','-ss',String(t),'-i',movie,'-frames:v','1',path.join(out,'frame-'+t+'.png')]);
+for(const [name,t] of [['interface',3.3],['sequence',11.7],['focus',15.9],['signature',25.6]])run(['-loglevel','error','-y','-ss',String(t),'-t','1.2','-i',movie,'-vf','fps=10,scale=320:180,tile=4x3','-frames:v','1',path.join(out,'motion-'+name+'.png')]);
+const loudness=run(['-i',movie,'-vn','-af','ebur128=peak=true','-f','null','-']);
+const summary=loudness.slice(loudness.lastIndexOf('Summary:'));
+const evidence={checkedAt:new Date().toISOString(),file:path.basename(movie),sha256:crypto.createHash('sha256').update(fs.readFileSync(movie)).digest('hex'),decodePassed:true,frames,duration,width:1920,height:1080,fps:30,audio:'AAC stereo 48 kHz',nativeRenderer:'After Effects Render Queue',audioMeasurements:summary,creativeReview:'Contact sheets and sampled motion strips; no claim of full auditory review or reference equivalence',voiceover:'Absent; pending access and approved generation spec'};
+fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify({frames,duration,audio,summary},null,2));

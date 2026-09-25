@@ -1,0 +1,84 @@
+{
+  "title": "Grifon — Your next ad",
+  "status": "visual and score preview; final narration and auditory review pending",
+  "mode": "inspire",
+  "purpose": "Original Grifon launch film for business owners; a repeatable native AE pilot",
+  "referenceUse": "ElevenLabs and Kendel films inform framing, pacing and overlapping transitions. No source audio, brand or footage is embedded.",
+  "sources": [
+    {
+      "file": "../source/logo.png",
+      "origin": "Unchanged canonical public/logo.png"
+    },
+    {
+      "file": "../source/grifon-composer-full.jpg",
+      "origin": "Actual components/OneShotAd/LaunchScreen.tsx, isolated local render with empty inputs and inert launch callback; no authenticated account or generation result",
+      "crop": {
+        "x": 184.5,
+        "y": 268,
+        "width": 896,
+        "height": 682
+      }
+    },
+    {
+      "file": "../source/fonts",
+      "origin": "Packaged Inter fonts with OFL license"
+    },
+    {
+      "file": "../source/launch-score.wav",
+      "origin": "Original deterministic composition, make-launch-audio.mjs"
+    },
+    {
+      "file": "../source/launch-sfx.wav",
+      "origin": "Original deterministic synthesis, make-launch-audio.mjs"
+    }
+  ],
+  "rejectedDirection": "The earlier Worth Seeing skincare animatic was rejected by Neil. It remains an archived study and must not be mistaken for this film.",
+  "copy": [
+    "Your next",
+    "ad.",
+    "Starts here.",
+    "One clear brief.",
+    "Find the angle.",
+    "Make it a story.",
+    "See the sequence.",
+    "Every frame counts.",
+    "Shape it.",
+    "Time it.",
+    "Make it yours.",
+    "From brief to your next ad.",
+    "GRIFON",
+    "Your next ad starts here."
+  ],
+  "claimLimits": "Editorial representation of the ad creation process. Native storyboard panels depict this film, not a customer generation run. No new motion-design product availability claim.",
+  "narrationDraft": "Your next ad starts with a clear idea. Find the angle. Shape the story. See every scene. Then make it yours. Grifon. From your first brief to your next ad.",
+  "voiceProposal": {
+    "provider": "ElevenLabs directly, never Higgsfield",
+    "voice": "Brian, stock voice",
+    "voiceId": "nPczCjzI2devNBz1zQrb",
+    "model": "eleven_multilingual_v2",
+    "maxTakes": 2,
+    "maxExistingCredits": 500,
+    "newPurchasesAllowed": false,
+    "approval": "Neil explicitly approved this exact spec in voice conversation, 2026-09-25",
+    "access": "Signed-in browser verified 10,000 credits; generated exact approved first take using Brian and Multilingual v2. Remaining 9,845. Download not located locally; API history GET denied (401). Await existing MP3 saved locally; do not regenerate.",
+    "pricingReference": "https://help.elevenlabs.io/hc/en-us/articles/27562116787345-Have-characters-changed",
+    "scriptCharacters": 155,
+    "maxTwoTakeCharacters": 310
+  },
+  "narrationPassCriteria": [
+    "Every word matches the script",
+    "Natural Grifon pronunciation",
+    "No clipped words or artifacts",
+    "Fit within the 30-second edit with room at the end",
+    "Re-time visuals to measured phrases; never force a bad read"
+  ],
+  "checks": [
+    "30 seconds, 1920x1080, 30fps, 900 decodable frames",
+    "Native editable text/shapes/camera and separate audio stems",
+    "No legacy product photographs",
+    "No scrollbar or incomplete capture panel",
+    "Consistent canonical logo lockups",
+    "Frame sampling plus dense transition strips",
+    "Audio loudness/peak measurement is not an auditory quality verdict"
+  ]
+}
