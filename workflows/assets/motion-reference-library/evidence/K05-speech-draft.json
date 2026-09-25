@@ -1,0 +1,23 @@
+{
+  "model": "Xenova/whisper-base.en",
+  "method": "Local CPU ASR; draft, not a manually verified transcript. Music may cause hallucinated speech. Timestamps are approximate.",
+  "text": " I'm going to try to get a little bit of a I'm going to go. Thanks for watching!",
+  "chunks": [
+    {
+      "timestamp": [
+        0,
+        2.24
+      ],
+      "text": " I'm going to try to get a little bit of a"
+    },
+    {
+      "timestamp": [
+        2.24,
+        37
+      ],
+      "text": " I'm going to go. Thanks for watching!"
+    }
+  ],
+  "validation_status": "REJECTED_UNSUPPORTED_REPETITIVE_OR_GENERIC_ASR",
+  "use_as_verbatim": false
+}

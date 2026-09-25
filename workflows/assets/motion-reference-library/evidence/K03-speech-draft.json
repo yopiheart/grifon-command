@@ -1,0 +1,107 @@
+{
+  "model": "Xenova/whisper-base.en",
+  "method": "Local CPU ASR; draft, not a manually verified transcript. Music may cause hallucinated speech. Timestamps are approximate.",
+  "text": " I'm not going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water. The End The I'm going to get a little bit of a I'm going to get a little bit of a I'm going to get a little bit of a I'm going to get a little bit of a I'm going to get a little bit of a Let's go. So Thanks for watching!",
+  "chunks": [
+    {
+      "timestamp": [
+        0,
+        26
+      ],
+      "text": " I'm not going to get a little bit of water. I'm going to get a little bit of water. I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        26,
+        28
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        28,
+        30
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        30,
+        32
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        32,
+        34
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        34,
+        36
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        36,
+        38
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        38,
+        40
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        40,
+        42
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        42,
+        44
+      ],
+      "text": " I'm going to get a little bit of water."
+    },
+    {
+      "timestamp": [
+        44,
+        106.72
+      ],
+      "text": " I'm going to get a little bit of water. I'm going to get a little bit of water. The End The I'm going to get a little bit of a I'm going to get a little bit of a I'm going to get a little bit of a"
+    },
+    {
+      "timestamp": [
+        106.72,
+        108.96
+      ],
+      "text": " I'm going to get a little bit of a"
+    },
+    {
+      "timestamp": [
+        108.96,
+        111.2
+      ],
+      "text": " I'm going to get a little bit of a"
+    },
+    {
+      "timestamp": [
+        111.2,
+        157.6
+      ],
+      "text": " Let's go. So Thanks for watching!"
+    }
+  ],
+  "validation_status": "REJECTED_UNSUPPORTED_REPETITIVE_OR_GENERIC_ASR",
+  "use_as_verbatim": false
+}

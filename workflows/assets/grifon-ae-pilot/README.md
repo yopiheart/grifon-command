@@ -1,5 +1,34 @@
 # Grifon native After Effects typography study
 
+## Current checkpoint: camera study, not a finished launch film
+
+The later 30-second study is `film/Grifon-Direction-Camera.aep`, with a rendered
+`film/Grifon-Direction-Camera.mp4`. AE rendered all 900 frames successfully.
+It has an actual camera, 16 position keys, 16 point-of-interest keys, eight
+scene planes and independent phone/paper elements. Native text uses Inter;
+the earlier font limitation below applies only to the original 16-second study.
+
+Neil judged the first 30-second version too basic. The camera revision remains
+a technical study, not an accepted creative solution or a benchmark-quality
+film. Its generated props are illustrations, not real product evidence. Music
+and effects are an original procedural sketch, unauditioned; narration is absent.
+Latest priority is the [five-film reference autopsy](../motion-reference-library/README.md).
+
+Rebuild order: run `make-score.mjs` from Node, install the packaged Inter fonts,
+run `build-film.jsx`, then with its v3 project open run `build-camera-film.jsx`.
+Both scripts refuse to overwrite their output projects. Keep the generated
+assets in `source/`; relink footage there if moving the checkout to another PC.
+The font license is included in `source/fonts/`. Earlier variants and session
+backups remain locally, ignored by Git. `refine-camera.jsx` records the small
+layout repair already incorporated into the camera builder; it is not required
+for a fresh build.
+
+The workflow still uses native ExtendScript, not an implemented MCP bridge.
+No Higgsfield dependency is part of this build. No final sound or quality claim
+is implied by a successful render.
+
+## Original checkpoint
+
 First working checkpoint, built in After Effects 26.5 on 2026-09-25.
 This is a 16-second timing study, not a finished launch film or MCP integration.
 

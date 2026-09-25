@@ -1,0 +1,2 @@
+PASS: actual AE camera; 16 position keys; 16 point-of-interest keys; 8 world planes; phone/paper/depth markers independent 3D layers.
+Music remains a procedural sketch. Narration absent. Generated objects are illustrations, not product proof.

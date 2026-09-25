@@ -12,6 +12,13 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
+- [ ] **Kendel motion reference batch (2026-09-25, E19):** canonical social
+  permalinks and an auditory music/SFX review remain missing. Local originals,
+  hashed audio-preserving proxies and all-five visual autopsies are retained in
+  `workflows/assets/motion-reference-library/`. Use K04/K05 for the next Grifon
+  AE continuity study; do not promote this single-creator taste batch into
+  performance evidence or an automatic prompt/preset change.
+
 - [x] **P9 reached 3 corroborations (2026-06-26).** E6 (authority/gastro VSL) did
   NOT corroborate (→ new candidate P10); **E7 (IM8 GLP-1 kinetic VSL) did** — Neil
   accepted it as #3 (kernel match). The `vsl` preset is now a **Gated Proposal**
@@ -309,6 +316,45 @@ lip-sync drift, impossible lighting, plastic over-clean texture).*
   accumulate. Footage realism is what carried it — never pair TTS with synthetic-looking b-roll.
 
 ## Entries
+
+### 2026-09-25 — E19 Kendel motion-design reference batch (user files, product launch films)
+
+**Why autopsied:** Neil selected five films as motion-quality references after
+finding the Grifon AE pilot too basic, disconnected and lacking camera/framing
+choreography. No view counts, conversion data or ad longevity were supplied.
+**Source:** five user-supplied MP4s, filenames credit Kendel.jpg; canonical
+social URLs absent. Original filenames and SHA-256 identities are preserved in
+[the manifest](assets/motion-reference-library/manifest.json).
+**Files:** [library / playable copies](assets/motion-reference-library/README.md),
+[detailed autopsy](assets/motion-reference-library/AUTOPSY.md). Originals copied
+unchanged locally; audio-preserving 720p proxies retained for Git backup.
+**Method:** manual visual review of 20 full-duration 1 fps sheets and 15 dense
+10 fps transition windows. Local CPU ASR is draft-only; K01/K03/K05 outputs
+rejected as transcript evidence. Full audio/video decode and hash checks passed.
+Standard Gemini analyzer / render_audit were not run; no paid API call made.
+
+| Reference | Length | Hook / sequence | Verified visual evidence | Grifon implication |
+| --- | ---: | --- | --- | --- |
+| K01 Commas Studios | 35.55s | Brand → product → features → brand | Phone pullback 4–6s; post-to-engagement framing 6–8s; unlock/daylight transition 16–18s | Reuse an object between feature beats |
+| K02 Noctal/Lana | 72.10s | Atmospheric intro → analyzed footage → sound timeline → controls/export | Angled/distorted editor push 8–10s; clip rows assemble over incoming editor 17–19s | Coordinate several layers; camera alone is insufficient |
+| K03 Pluto | 162.05s | Planet metaphor → brand/product → features → return to planet | Planet push 11–13s; globes simplify to circles 18–20s; round token expands to pill 75–77s | Preserve meaningful shape continuity; do not copy long intro into 30s |
+| K04 Button | 56.10s | Closet problem → email import → listing/matching → CTA | Button carries next line 2–4s; grid to diagonal cards 22–24s; watchlist action/result 38–40s | Let text and product objects share choreography |
+| K05 SourceReady | 39.80s | Audience promise → query → suppliers → contact/compare → brand | Send-button push 10–12s; supplier panel 13–15s; comparison pullback/tilt 31–33s | Most direct short product-demo reference |
+
+**Confidence:** high for sampled visual elements; timing approximate to the
+sampling grid. Medium for inferred storytelling function. Actual AE camera
+rigs, easing curves, source software, exact fonts and music/SFX are unverified.
+**Believability DNA:** designed product films with mixed UI, graphics, stills
+and some people/footage. Authenticity/generative provenance and lip-sync not
+assessed; no real-human corroboration credit.
+**Weaknesses:** some dense UI is too small to read; the 162-second film cannot
+be used as a literal 30-second timing template. Audio autopsy is incomplete.
+**So What for Grifon:** input evidence for local AE composition, native text,
+object continuity and motivated framing. The current camera pilot remains a
+study. A future repeatable skill must preserve source/evidence and user-specific
+Match/Adapt/Inspire intent; no product integration was added in this task.
+**Patterns:** observational taste corpus only; no Pattern Index counts changed,
+no tuned/preset proposals auto-promoted, no existing app prompts edited.
 
 ### 2026-06-10 — E0 BASELINE: CURRENT EDIT.mp4 (our renderer, skincare PH)
 **Why autopsied:** own-output baseline to measure references against.

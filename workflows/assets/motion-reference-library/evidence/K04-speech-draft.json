@@ -1,0 +1,107 @@
+{
+  "model": "Xenova/whisper-base.en",
+  "method": "Local CPU ASR; draft, not a manually verified transcript. Music may cause hallucinated speech. Timestamps are approximate.",
+  "text": " Listing your closet takes forever, and button breaks that cycle. Connect your email and stay synced. We pull five years of purchases and handle all the work automatically. Every item now appears, photos, descriptions, and prices included. Your purchases are organized into a personalized storefront, where others can discover what you're buying and selling. See what your closet is worth. Click list now and post a Poshmark, Depop, or eBay instantly. No forms, no extra work needed. Your profile gets matched with people who have similar sizes and shopping preferences, letting you bid on their items. Add items to a watch list and get notified when they sell. Users list 150 plus items. Sales happen 10 times faster. Transform your closet into real money within seconds. Understand your closet's real value. Download button today.",
+  "chunks": [
+    {
+      "timestamp": [
+        0,
+        4.96
+      ],
+      "text": " Listing your closet takes forever, and button breaks that cycle."
+    },
+    {
+      "timestamp": [
+        4.96,
+        7.2
+      ],
+      "text": " Connect your email and stay synced."
+    },
+    {
+      "timestamp": [
+        7.2,
+        11.76
+      ],
+      "text": " We pull five years of purchases and handle all the work automatically."
+    },
+    {
+      "timestamp": [
+        11.76,
+        16.48
+      ],
+      "text": " Every item now appears, photos, descriptions, and prices included."
+    },
+    {
+      "timestamp": [
+        16.48,
+        19.76
+      ],
+      "text": " Your purchases are organized into a personalized storefront,"
+    },
+    {
+      "timestamp": [
+        19.76,
+        22.64
+      ],
+      "text": " where others can discover what you're buying and selling."
+    },
+    {
+      "timestamp": [
+        22.64,
+        24.56
+      ],
+      "text": " See what your closet is worth."
+    },
+    {
+      "timestamp": [
+        24.56,
+        30.8
+      ],
+      "text": " Click list now and post a Poshmark, Depop, or eBay instantly. No forms, no extra work"
+    },
+    {
+      "timestamp": [
+        30.8,
+        35.92
+      ],
+      "text": " needed. Your profile gets matched with people who have similar sizes and shopping preferences,"
+    },
+    {
+      "timestamp": [
+        35.92,
+        41.52
+      ],
+      "text": " letting you bid on their items. Add items to a watch list and get notified when they sell."
+    },
+    {
+      "timestamp": [
+        41.52,
+        46
+      ],
+      "text": " Users list 150 plus items. Sales happen 10 times faster."
+    },
+    {
+      "timestamp": [
+        46,
+        50
+      ],
+      "text": " Transform your closet into real money within seconds."
+    },
+    {
+      "timestamp": [
+        50,
+        52
+      ],
+      "text": " Understand your closet's real value."
+    },
+    {
+      "timestamp": [
+        52,
+        54
+      ],
+      "text": " Download button today."
+    }
+  ],
+  "validation_status": "DRAFT_ONLY_NOT_AUDITORILY_VERIFIED",
+  "use_as_verbatim": false
+}

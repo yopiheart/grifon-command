@@ -5,3 +5,10 @@ package-pilot.jsx
 output/Partial-Build-Backup.aep
 output/build-error.txt
 output/Adobe After Effects Auto-Save/
+film/* Logs/
+film/*.log
+film/Previous-Session-*.aep
+film/Grifon-Direction-30s.aep
+film/Grifon-Direction-30s.mp4
+film/Grifon-Direction-30s-v2.aep
+film/Grifon-Direction-30s-v2.mp4

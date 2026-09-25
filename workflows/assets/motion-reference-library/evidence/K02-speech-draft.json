@@ -1,0 +1,135 @@
+{
+  "model": "Xenova/whisper-base.en",
+  "method": "Local CPU ASR; draft, not a manually verified transcript. Music may cause hallucinated speech. Timestamps are approximate.",
+  "text": " Noctal introduces Lana. The narrative intelligence engine that can turn hours of sound design work into seconds. It watches your footage, every movement, every moment, and every shift in atmosphere, and matches those moments with the right sound effects and places them directly on your time road. With over 200,000 human-made sounds, not directly on your time road. With over 200,000 human-made sounds, Noctilana does what used to take one hour in 20 seconds. From there, you're in full control. With our two different editing modes, you can shape the broad strokes of your story in story mode or fine-tune every detail in sound mode. With the Magic Brush Tool, you can also pick any spot in the timeline and place additional sound effects directly from our library. Once you're done, you can easily export the full mix or take the sequence back into the editing software of your choice. So try Lana today and finish your sound design in seconds.",
+  "chunks": [
+    {
+      "timestamp": [
+        0,
+        5
+      ],
+      "text": " Noctal introduces Lana."
+    },
+    {
+      "timestamp": [
+        5,
+        10
+      ],
+      "text": " The narrative intelligence engine that can turn hours of sound design work into seconds."
+    },
+    {
+      "timestamp": [
+        10,
+        16
+      ],
+      "text": " It watches your footage, every movement, every moment, and every shift in atmosphere,"
+    },
+    {
+      "timestamp": [
+        16,
+        21
+      ],
+      "text": " and matches those moments with the right sound effects and places them directly on your time road."
+    },
+    {
+      "timestamp": [
+        21,
+        27
+      ],
+      "text": " With over 200,000 human-made sounds, not directly on your time road."
+    },
+    {
+      "timestamp": [
+        27,
+        30
+      ],
+      "text": " With over 200,000 human-made sounds,"
+    },
+    {
+      "timestamp": [
+        30,
+        35
+      ],
+      "text": " Noctilana does what used to take one hour in 20 seconds."
+    },
+    {
+      "timestamp": [
+        35,
+        37
+      ],
+      "text": " From there, you're in full control."
+    },
+    {
+      "timestamp": [
+        37,
+        39
+      ],
+      "text": " With our two different editing modes,"
+    },
+    {
+      "timestamp": [
+        39,
+        43
+      ],
+      "text": " you can shape the broad strokes of your story in story mode"
+    },
+    {
+      "timestamp": [
+        43,
+        47.76
+      ],
+      "text": " or fine-tune every detail in sound mode."
+    },
+    {
+      "timestamp": [
+        50.4,
+        52.02
+      ],
+      "text": " With the Magic Brush Tool,"
+    },
+    {
+      "timestamp": [
+        52.02,
+        54.7
+      ],
+      "text": " you can also pick any spot in the timeline"
+    },
+    {
+      "timestamp": [
+        54.7,
+        56.68
+      ],
+      "text": " and place additional sound effects"
+    },
+    {
+      "timestamp": [
+        56.68,
+        58.8
+      ],
+      "text": " directly from our library."
+    },
+    {
+      "timestamp": [
+        58.8,
+        62.44
+      ],
+      "text": " Once you're done, you can easily export the full mix"
+    },
+    {
+      "timestamp": [
+        62.44,
+        66
+      ],
+      "text": " or take the sequence back into the editing software of your choice."
+    },
+    {
+      "timestamp": [
+        66,
+        71
+      ],
+      "text": " So try Lana today and finish your sound design in seconds."
+    }
+  ],
+  "validation_status": "DRAFT_ONLY_NOT_AUDITORILY_VERIFIED",
+  "use_as_verbatim": false
+}

@@ -1,0 +1,23 @@
+AE 26.5x89
+Duration 30
+1920x1080 30fps
+It starts | Inter-Regular | 390
+with an idea. | Inter-Bold | 935
+An audience. | Inter-Regular | 621
+A message. | Inter-Bold | 582
+A story. | Inter-Regular | 355
+Give it | Inter-Regular | 264
+direction. | Inter-Bold | 788
+Know who | Inter-Regular | 472
+you're talking to. | Inter-Bold | 836
+Find the | Inter-Regular | 299
+right words. | Inter-Bold | 595
+Your next story. | Inter-Bold | 338
+Watch it take shape. | Inter-Bold | 868
+Your story. | Inter-Bold | 266
+The moment. | Inter-Bold | 304
+The reveal. | Inter-Bold | 252
+From first thought. | Inter-Regular | 808
+To your next ad. | Inter-Bold | 1047
+GRIFON | Inter-Bold | 514
+Give your ideas direction. | Inter-Regular | 468

@@ -1,0 +1,97 @@
+[
+  {
+    "id": "K01",
+    "slug": "five-years",
+    "original_filename": "Kendel.jpg_-_5_years._Countless_projects._One_lesson_that_changed_everything_If_0VSGSQ.mp4",
+    "original_relative": "originals/K01-five-years.mp4",
+    "proxy_relative": "proxies/K01-five-years.mp4",
+    "original_bytes": 18540777,
+    "original_sha256": "b2295d81e2685f465057aed4ae3798fcf693e449b07ec52818a37e8824bdbdbe",
+    "duration_seconds": 35.55,
+    "streams": [
+      "  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 4053 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 60k tbn (default)\r",
+      "  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)\r"
+    ],
+    "canonical_url": null,
+    "source": "User-supplied file; filename credits Kendel.jpg; permalink not supplied",
+    "verification": "Visual sampling and local speech transcription, not source-project inspection",
+    "proxy_bytes": 9153283,
+    "proxy_sha256": "7169519d5ad27ad49378a2e3a46e2d8ec23900cc24d624f38e0e4c43370bb410"
+  },
+  {
+    "id": "K02",
+    "slug": "creative-freedom",
+    "original_filename": "Kendel.jpg_-_The_best_thing_about_motion_design_The_room_to_be_completely_differ_UJQD22.mp4",
+    "original_relative": "originals/K02-creative-freedom.mp4",
+    "proxy_relative": "proxies/K02-creative-freedom.mp4",
+    "original_bytes": 80831511,
+    "original_sha256": "cfd4a454990d622c9556c3652c601a524792d4ea82e51a7b86b2da55c7f1966c",
+    "duration_seconds": 72.1,
+    "streams": [
+      "  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 3840x2160, 8853 kb/s, SAR 1:1 DAR 16:9, 29.97 fps, 29.97 tbr, 60k tbn (default)\r",
+      "  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)\r"
+    ],
+    "canonical_url": null,
+    "source": "User-supplied file; filename credits Kendel.jpg; permalink not supplied",
+    "verification": "Visual sampling and local speech transcription, not source-project inspection",
+    "proxy_bytes": 11693936,
+    "proxy_sha256": "8aa8c4886d98bac4749aae4ffde705a854b66599fe27edabc93f86f27a5da159"
+  },
+  {
+    "id": "K03",
+    "slug": "the-formula",
+    "original_filename": "Kendel.jpg_-_Take_notes_guys_Here_s_the_formula_that_never_fails_science_a_i5078i.mp4",
+    "original_relative": "originals/K03-the-formula.mp4",
+    "proxy_relative": "proxies/K03-the-formula.mp4",
+    "original_bytes": 247589624,
+    "original_sha256": "87eb090b78948e58f15e045373f56022695c6a785300744a409082add8223198",
+    "duration_seconds": 162.05,
+    "streams": [
+      "  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 3840x2160, 12101 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 60k tbn (default)\r",
+      "  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)\r"
+    ],
+    "canonical_url": null,
+    "source": "User-supplied file; filename credits Kendel.jpg; permalink not supplied",
+    "verification": "Visual sampling and local speech transcription, not source-project inspection",
+    "proxy_bytes": 71043440,
+    "proxy_sha256": "4ab52db951094097f0f6bb5c26609067b89aabab8f725ab93d4fe68d65f0e4d4"
+  },
+  {
+    "id": "K04",
+    "slug": "closet-swap",
+    "original_filename": "Kendel.jpg_-_Upload_your_closet._Find_your_size_twins._Swap_clothes_with_confide_UKzQSe.mp4",
+    "original_relative": "originals/K04-closet-swap.mp4",
+    "proxy_relative": "proxies/K04-closet-swap.mp4",
+    "original_bytes": 14530800,
+    "original_sha256": "3d5776d8be17f589a9ea7f120b8c658cd073330170e60a1546c35f96df5c59c6",
+    "duration_seconds": 56.1,
+    "streams": [
+      "  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080, 1942 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 60k tbn (default)\r",
+      "  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)\r"
+    ],
+    "canonical_url": null,
+    "source": "User-supplied file; filename credits Kendel.jpg; permalink not supplied",
+    "verification": "Visual sampling and local speech transcription, not source-project inspection",
+    "proxy_bytes": 4907235,
+    "proxy_sha256": "505d8e5850e0e28e6548ec8521c1f888cd9a8951d2826b3d4e3e3c345122bcb6"
+  },
+  {
+    "id": "K05",
+    "slug": "sourceready",
+    "original_filename": "Kendel.jpg_-_Quick_Clear_Concise_sourceready_waSmcN.mp4",
+    "original_relative": "originals/K05-sourceready.mp4",
+    "proxy_relative": "proxies/K05-sourceready.mp4",
+    "original_bytes": 56132501,
+    "original_sha256": "1e1f67359468a8b9b2899afc498608504c555b02ca3914d55c0609d4efbb3602",
+    "duration_seconds": 39.8,
+    "streams": [
+      "  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 3840x2160, 11194 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 60k tbn (default)\r",
+      "  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)\r"
+    ],
+    "canonical_url": null,
+    "source": "User-supplied file; filename credits Kendel.jpg; permalink not supplied",
+    "verification": "Visual sampling and local speech transcription, not source-project inspection",
+    "proxy_bytes": 9030621,
+    "proxy_sha256": "bb1b46c95f8ae74ce00ad6d98c1e6f1c6bde802ba2009fee881d7cd5bb501d1a"
+  }
+]

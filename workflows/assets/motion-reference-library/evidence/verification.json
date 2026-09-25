@@ -1,0 +1,57 @@
+[
+  {
+    "id": "K01",
+    "proxy_sha256_verified": true,
+    "local_original_sha256_verified": true,
+    "complete_video_and_audio_decode": "PASS",
+    "source_seconds": 35.55,
+    "proxy_seconds": 35.55,
+    "mean_volume_db": -10.2,
+    "max_sample_volume_db": 0,
+    "audio_note": "Measured levels only; not a listening assessment or true-peak/loudness master check."
+  },
+  {
+    "id": "K02",
+    "proxy_sha256_verified": true,
+    "local_original_sha256_verified": true,
+    "complete_video_and_audio_decode": "PASS",
+    "source_seconds": 72.1,
+    "proxy_seconds": 72.1,
+    "mean_volume_db": -17.4,
+    "max_sample_volume_db": -0.2,
+    "audio_note": "Measured levels only; not a listening assessment or true-peak/loudness master check."
+  },
+  {
+    "id": "K03",
+    "proxy_sha256_verified": true,
+    "local_original_sha256_verified": true,
+    "complete_video_and_audio_decode": "PASS",
+    "source_seconds": 162.05,
+    "proxy_seconds": 162.05,
+    "mean_volume_db": -11.2,
+    "max_sample_volume_db": 0,
+    "audio_note": "Measured levels only; not a listening assessment or true-peak/loudness master check."
+  },
+  {
+    "id": "K04",
+    "proxy_sha256_verified": true,
+    "local_original_sha256_verified": true,
+    "complete_video_and_audio_decode": "PASS",
+    "source_seconds": 56.1,
+    "proxy_seconds": 56.1,
+    "mean_volume_db": -15.6,
+    "max_sample_volume_db": 0,
+    "audio_note": "Measured levels only; not a listening assessment or true-peak/loudness master check."
+  },
+  {
+    "id": "K05",
+    "proxy_sha256_verified": true,
+    "local_original_sha256_verified": true,
+    "complete_video_and_audio_decode": "PASS",
+    "source_seconds": 39.8,
+    "proxy_seconds": 39.8,
+    "mean_volume_db": -19.9,
+    "max_sample_volume_db": -1.4,
+    "audio_note": "Measured levels only; not a listening assessment or true-peak/loudness master check."
+  }
+]
