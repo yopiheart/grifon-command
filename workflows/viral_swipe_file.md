@@ -12,6 +12,12 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
+- [ ] **ElevenLabs shared-analysis reconciliation (2026-09-25):**
+  [secondary analysis and direct frame checks](assets/grifon-ae-pilot/references/ANALYSIS-RECONCILIATION.md)
+  distinguish perceived camera movement from group/object/reveal motion. Additional
+  pivot and ending samples are retained. Pilot-specific guidance only; no pattern
+  count or tuned-prompt changes. Canonical source permalink and audio review remain open.
+
 - [ ] **Kendel motion reference batch (2026-09-25, E19):** canonical social
   permalinks and an auditory music/SFX review remain missing. Local originals,
   hashed audio-preserving proxies and all-five visual autopsies are retained in

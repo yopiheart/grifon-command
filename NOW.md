@@ -29,6 +29,13 @@ customer output. Storyboard panels contain native graphics from this film.
 The preview and editable AEP link have been shown in the conversation.
 
 ## Review and remaining work
+Neil supplied a second ChatGPT analysis of the ElevenLabs reference. Read it and
+checked opening evidence plus new pivot/ending strips. Findings and pilot-specific
+implications are saved in references/ANALYSIS-RECONCILIATION.md. Do not interpret its
+Remotion suggestion as permission to abandon native AE. Shared text easing and
+repeated entrance/exit patterns remain a concrete creative weakness of our v3.
+No new film revision was built from this additional analysis yet.
+
 Independent critic: BRAND_PASS_WITH_NITS on sampled v3 evidence. Fixed scrollbar
 and truncated capture, inconsistent secondary lockup, peripheral tile fragments,
 colliding headlines, and covered caption. Full 1fps overview, six full frames,
