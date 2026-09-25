@@ -1,42 +1,29 @@
-# NOW - the resume doc
-**Stamped: 2026-09-17, approved workflow and personal-desktop updates applied**
+﻿# NOW - the resume doc
+**Stamped: 2026-09-25, first native After Effects typography study saved**
 
 ## Current state
-Neil uses his persistent personal Windows desktop, sometimes remotely from mobile.
-Cafe-PC wipe/reinstall/sign-out assumptions no longer govern work.
-Branch: `codex/workflow-instruction-cleanup`.
-Draft PR #141: https://github.com/yopiheart/grifon-command/pull/141.
-Neil explicitly approved both exact patches; both are now applied to 36 active
-files. Do not ask for their approval again. Installs, accounts, dependencies and
-assets are reused. Setup is conditional on actual need. Historical cafe helpers
-remain under explicit current overrides; mobile disconnects do not force commits.
+Branch: `codex/grifon-ae-type-pilot`.
+Neil authorized a Grifon pilot inspired by ElevenLabs motion and Apple-style
+messaging, then clarified typography should lead. This session is on the shop
+PC; the personal PC is off. After Effects 26.5 native script execution works.
+Old reference-branch uncommitted work was not recovered; this is a new checkpoint.
+
+## Deliverable and evidence
+`workflows/assets/grifon-ae-pilot/output/Grifon-Type-Study.aep` contains a
+16-second, 1920x1080, 30fps master and four editable scene compositions.
+Three actual AE frame exports were visually inspected and shown to Neil.
+`verification.txt` records AE version, layers, actual fonts and text widths.
+Initial Scale easing error was fixed (three values required), then build passed.
+Partial failed build is preserved locally. Canonical logo is packaged unchanged.
+No app source, tuned prompts, paid APIs, video model, soundtrack, final video
+export, deployment or merge was involved. Native AE scripting, not MCP, drove it.
 
 ## Next action
-Work is applied and verified on the PR branch. Merge/deployment are not authorized.
-Review PR/CI before any separately requested merge. Changed hook source follows
-Codex's normal review/trust UI; tests do not establish current app trust/delivery.
-Fresh tasks discover updated skill descriptions; the initial catalog may be stale.
-
-## Evidence
-`workflows/workflow_instruction_cleanup_2026-09-17.md` records approved hashes,
-scope, proposal evidence, applied verification, and the TypeSafe Jev assessment.
-Exact applied-source comparison passed for both ordered patches.
-Independent applied review: no actionable findings; all 36 final blobs match;
-independent narrow SessionStart test passed.
-`npm.cmd run check:codex`: all 26 tests passed.
-Build passed, including PowerShell ASCII; existing chunk warnings remain.
-Full tests: 113 files / 1,401 tests passed; 9 files / 32 opt-in tests skipped.
-Initial concurrent run had one checkAnchors timeout; full rerun passed unchanged.
-Bundle-leak, voice-sync, domain-language, artifact-anchor and JS syntax checks pass.
-Prior isolated candidate tests: 16/16; new startup assertion failed original hook.
-Tabletop scenarios were hypothetical, not live automatic-trigger tests.
-Generic skill validator rejects existing invocation metadata in two autopsy skills
-in baseline and candidate; neither metadata nor validator was weakened.
-No paid run, provider integration, secret/auth changes, OS or remote-access changes,
-production writes, deployment, merge, or hook trust modification occurred.
-
-## Related work
-Prompt-quality A+B+D merged in PR #139; release evidence is PR #140 / `f71f6365`.
-Do not repeat those changes or request their approval again. Unapproved C/E/F
-proposals remain separate. Jev is a possible future classifier comparison, not a
-generation replacement. Tweet text/replies were read; embedded videos did not play.
+Review motion playback with Neil, refine narrative and scene transitions.
+Use approved Inter before declaring brand-final; only Arial/Segoe were found
+among checked font families. Current cuts and entrances are a timing study,
+not benchmark-quality launch-film motion. Keep Grifon brand identity while
+adapting layout and motion for film, not copying dashboard chrome.
+Only generate assets for a concrete scene need. Package proven AE operations
+as a skill/MCP bridge later; that product integration remains unbuilt.
+Prior workflow cleanup is already merged on main; do not repeat it.

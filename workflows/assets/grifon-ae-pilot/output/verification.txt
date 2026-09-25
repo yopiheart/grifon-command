@@ -1,0 +1,15 @@
+AE 26.5x89
+Master: GRIFON - TYPE STUDY - 16s
+1920x1080, 30fps, 16s
+01 - Your next big idea: 3 layers
+  Text: big idea. | Arial-BoldMT | width 714
+  Text: Your next | ArialMT | width 390
+02 - Give it direction: 4 layers
+  Text: direction. | Arial-BoldMT | width 758
+  Text: Give it | ArialMT | width 246
+03 - Thought to ad: 3 layers
+  Text: To your next ad. | Arial-BoldMT | width 999
+  Text: From a thought. | ArialMT | width 685
+04 - Grifon signature: 5 layers
+  Text: Give your ideas direction. | ArialMT | width 452
+  Text: GRIFON | Arial-BoldItalicMT | width 477
