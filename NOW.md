@@ -21,7 +21,8 @@ Verified source preview: http://127.0.0.1:4178/compare.html
 Portable twin: artifacts/grifon-reference-pilot.html (15.1 MiB, embeds assets).
 Builder: node tools/artifacts/build-grifon-reference-pilot.mjs
 Local v01/v02 source backups are in the pilot's backups/ directory.
-GitHub draft PR/remote backup checkpoint is being completed this turn.
+GitHub backup: origin/codex/ae-elevenlabs-reference; pilot commit 8a80c38d.
+Draft PR149: https://github.com/yopiheart/grifon-command/pull/149
 
 ## Actual verification
 Hyperframes 0.7.68 check passed: 0 errors/warnings; 10/10 text contrast samples.
