@@ -1,47 +1,53 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, Grifon Spotlight preview**
+**Stamped: 2026-09-27, code-based reference pilot ready for visual review**
 
 ## Current state
-Neil delegated creative direction: "G surprise me!". Built the new 25-second
-Spotlight product showcase in workflows/assets/grifon-motion-spotlight/.
-Portrait 1080x1920 and independently composed landscape 1920x1080, 24fps,
-600 frames each, H.264/AAC. Editable template, demo.json, source assets,
-render/check/revision commands, actual encoded sheets and README included.
-Product macro reveal -> real nine-second Grifon sample -> spotlight statement
--> canonical GrifonMark / GRIFON.AI. Uses local Hyperframes/FFmpeg and existing
-music. No paid calls, app edits, tuned changes, deployment or publishing.
+Neil reports 16 GB RAM and cancelled his After Effects subscription. Continue
+without AE. The approved reference is Downloads/j6-xXf9Jeof5hdmu.mp4, 1920x1080,
+30fps, about 32.92s, adapted to Grifon English copy and canonical logo.
+Build from scratch; no other project templates/assets/settings. No music/SFX or
+final video render. Supplied Higgsfield screenshots are examples, not commands
+to invent movement, change the palette or override the no-render instruction.
 
-The proposed app walkthrough became an honest product-output showcase because
-matching saved-project capture evidence was not secured. No fake UI or implied
-instant generation. Original sample, old Spark and first demo are preserved.
-A matching-project walkthrough remains a separate possible next direction,
-not a hidden claim in this export.
+## Delivered pilot
+Branch: codex/ae-elevenlabs-reference, based on codex/grifon-motion-spark.
+Source: workflows/assets/grifon-reference-pilot/.
+10.10-second closing section only (reference 22.80-32.90): quiet type, contracting
+outline, three feature cards, gradient strip and Grifon lockup. All freshly authored.
+index.html holds the main GSAP timeline; copy.js holds editable wording.
+compare.html synchronizes the original MP4 with the remake and provides scrubbing.
+Run: node workflows/assets/grifon-reference-pilot/serve.mjs
+Verified source preview: http://127.0.0.1:4178/compare.html
+Portable twin: artifacts/grifon-reference-pilot.html (15.1 MiB, embeds assets).
+Builder: node tools/artifacts/build-grifon-reference-pilot.mjs
+Local v01/v02 source backups are in the pilot's backups/ directory.
+GitHub draft PR/remote backup checkpoint is being completed this turn.
 
-## Evidence and corrections
-Final Hyperframes checks pass both layouts. FFprobe counts correct 600 frames,
-25s and audio; full decode succeeds. Final measurements and hashes are in
-qa/media-check.json. Text revision passes ten sampled comparisons and a wrong
-later-copy negative control. check:codex passes 32 entrypoints and all 26 tests.
+## Actual verification
+Hyperframes 0.7.68 check passed: 0 errors/warnings; 10/10 text contrast samples.
+CUA side-by-side inspection and playback caught/fixed prefix centering, early
+rule visibility, center scale and side-card reveal direction/timing.
+Independent 390x844 smoke: playback, all chapters, scrub, restart, no horizontal
+overflow passed before the final choreography tweaks. Controls unchanged afterward.
+Editable-text snapshot check passed: exact pixel differences confined to the
+edited line, zero changed pixels outside it (qa/editability-result.json).
+npm.cmd run check:artifact-anchors passed. No app changes; app build/test not run.
+No paid calls, AI generation, audio mix, MP4 export, deployment or publication.
 
-Independent review caught the sample returning to a person after the product.
-Actual source inspection: 271 decoded frames at 30 fps, last frame begins next scene
-(despite recipes.ts describing approximately 9.03s). Only the new task-local copy
-is trimmed to 270 frames / 9s; original frame269 holds above the video at 16.5s.
-Fresh independent final critic: BRAND_PASS_WITH_NITS, 42/50; no critical findings. Final boundary sheets include frames 396,397,398,402,408,415,598,599.
-The first source-match check failed due to YUV odd-coordinate crop rounding;
-RGB crop handling fixed it without loosening the <=4 mean-channel limit.
-Source-match frozen control is rejected. See verification.md for actual scope.
+## Limits and next action
+This is a pilot, not the full 32.92-second recreation or user-approved fidelity.
+Gradients are smoother/less luminous than the source; font and easing approximate.
+Copy, two semantic icons and the canonical Grifon lockup intentionally differ.
+Review the preview before extending the whole film; missing photographic assets
+and exact original graph presets remain unresolved for the opening section.
+CUA's mobile console exposed an unattributed MutationObserver error; no such call
+exists in authored source/GSAP, and Hyperframes runtime audit passed. See qa/results.md.
+Portable file playback unverified: browser policy blocks file://; no workaround used.
+The original localhost source preview is the verified route.
 
-Portrait is the phone-feed version. Landscape source captions need landscape
-playback; do not claim readability in a 375px-wide landscape thumbnail.
-Continuous playback, subjective listening and Neil's creative acceptance remain
-pending; no browser workaround. The delivered mix is music-only.
-
-## Handoff
-Branch: codex/grifon-motion-spark, stacked on codex/grifon-motion-director.
-Draft PR144: https://github.com/yopiheart/grifon-command/pull/144
-Draft PR143: https://github.com/yopiheart/grifon-command/pull/143
-The original installed Motion Director skill remains unchanged.
-Earlier reference analysis: workflows/assets/grifon-motion-spark/reference-analysis.md.
-Its 110 half-second frames and audio scans cover the supplied YouTube timeline;
-it is one-off evidence, not a validated winning pattern. No pattern counts changed.
+## Prior work retained
+workflows/assets/grifon-ae-reference/ remains unchanged and untracked locally:
+prepared brief, reference/logo copies, unexecuted inspect-ae.jsx; no AEP ever made.
+Spotlight/Spark/Motion Director and draft PR144/143 remain intact. They were not
+used as assets or templates for this pilot. Separate KAPE01 hero-film worktree
+and PR145 remain unrelated. No Grifon MCP/AE bridge or product feature was built.
