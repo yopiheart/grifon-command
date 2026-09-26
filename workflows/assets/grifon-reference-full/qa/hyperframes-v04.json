@@ -1,0 +1,236 @@
+{
+  "ok": true,
+  "strict": true,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 2,
+    "findings": [
+      {
+        "code": "pointer_events_none",
+        "severity": "info",
+        "message": "`#f-field` sets `pointer-events: none`. Elements matching this selector are harder to select in the Studio preview.",
+        "selector": "#f-field",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "If these elements should be selectable in the Studio, remove `pointer-events: none` or move it to a wrapper that doesn't contain editable content."
+      },
+      {
+        "code": "system_font_will_alias",
+        "severity": "info",
+        "message": "Font family will be substituted at render time: 'arial' → Inter. The renderer maps these to bundled fonts for cross-platform consistency. Use the target font name directly for consistent preview and render results.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 3,
+    "findings": [
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 2.75,
+        "selector": "span.f-word",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 217.81,
+          "top": 661.79,
+          "right": 430.53,
+          "bottom": 742.79,
+          "width": 212.72,
+          "height": 81
+        },
+        "containerSelector": "#f-field",
+        "text": "product.",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.44,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 217.81,
+          "y": 661.79,
+          "width": 212.72,
+          "height": 81
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.75,
+        "occurrences": 1
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 6.6,
+        "selector": "div.f-device-art",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 746,
+          "top": 299.22,
+          "right": 1155.47,
+          "bottom": 756.22,
+          "width": 409.48,
+          "height": 457
+        },
+        "containerSelector": "div.f-device-screen",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 797.71,
+          "top": 254.16,
+          "right": 1125.87,
+          "bottom": 822.96,
+          "width": 328.16,
+          "height": 568.8
+        },
+        "overflow": {
+          "left": 51.71,
+          "right": 29.6
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 746,
+          "y": 299.22,
+          "width": 409.48,
+          "height": 457
+        },
+        "firstSeen": 6.6,
+        "lastSeen": 6.6,
+        "occurrences": 1
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 22,
+        "selector": "#f-dialogue",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -27.59,
+          "top": -32.36,
+          "right": 1966.52,
+          "bottom": 1089.33,
+          "width": 1994.11,
+          "height": 1121.69
+        },
+        "containerSelector": "#f-world",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 27.59,
+          "right": 46.52,
+          "top": 32.36,
+          "bottom": 9.33
+        },
+        "dataAttributes": {
+          "data-start": "17.42",
+          "data-duration": "5.38",
+          "data-track-index": "19"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -27.59,
+          "y": -32.36,
+          "width": 1994.11,
+          "height": 1121.69
+        },
+        "firstSeen": 22,
+        "lastSeen": 22,
+        "occurrences": 1
+      }
+    ],
+    "duration": 32.9,
+    "samples": [
+      0.95,
+      1.85,
+      2.1,
+      2.75,
+      3.7,
+      4.9,
+      6.6,
+      7.75,
+      9.6,
+      11.4,
+      13.7,
+      15.4,
+      19.4,
+      22,
+      28.5,
+      30.6
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 3,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.95,
+      2.75,
+      7.75,
+      15.4,
+      30.6
+    ],
+    "checked": 20,
+    "passed": 20
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  },
+  "_meta": {
+    "version": "0.7.68",
+    "latestVersion": "0.8.78",
+    "updateAvailable": true
+  }
+}

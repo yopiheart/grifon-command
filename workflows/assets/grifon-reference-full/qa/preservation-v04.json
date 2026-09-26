@@ -1,0 +1,36 @@
+{
+  "cards": {
+    "changedPixels": 3,
+    "outside": 0,
+    "maxDelta": 1
+  },
+  "brand": {
+    "changedPixels": 0,
+    "outside": 0,
+    "maxDelta": 0
+  },
+  "edit": {
+    "changedPixels": 2234,
+    "outside": 0,
+    "maxDelta": 219
+  },
+  "sceneResets": [
+    {
+      "file": "frame-00-at-4.9s.png",
+      "maxDelta": 0,
+      "pass": true
+    },
+    {
+      "file": "frame-01-at-7.75s.png",
+      "maxDelta": 0,
+      "pass": true
+    },
+    {
+      "file": "frame-02-at-11.4s.png",
+      "maxDelta": 0,
+      "pass": true
+    }
+  ],
+  "cardRoundingTolerance": 1,
+  "pass": true
+}

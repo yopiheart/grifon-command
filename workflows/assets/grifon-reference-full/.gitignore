@@ -1,2 +1,5 @@
 .hyperframes/
 qa/editability/
+qa/motion-control/
+qa/motion-before/
+qa/motion-v04/
