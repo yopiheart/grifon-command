@@ -1,54 +1,55 @@
 # NOW - the resume doc
-**Stamped: 2026-09-27, code-based reference pilot ready for visual review**
+**Stamped: 2026-09-27, full Grifon reference preview ready for review**
 
 ## Current state
-Neil reports 16 GB RAM and cancelled his After Effects subscription. Continue
-without AE. The approved reference is Downloads/j6-xXf9Jeof5hdmu.mp4, 1920x1080,
-30fps, about 32.92s, adapted to Grifon English copy and canonical logo.
-Build from scratch; no other project templates/assets/settings. No music/SFX or
-final video render. Supplied Higgsfield screenshots are examples, not commands
-to invent movement, change the palette or override the no-render instruction.
+Neil approved the 10.1s pilot enthusiastically, then delegated the full sequence:
+"LETS GO! ... Surprise me bro!". Built the complete 32.90s code composition,
+1920x1080 / 30fps, using the supplied ElevenLabs/Reception.ai reference.
+Silent preview only: no music/SFX, final MP4 export, paid calls or AE dependency.
+No other project's compositions/assets/settings used. Canonical logo retained.
 
-## Delivered pilot
+## Deliverable and backup
 Branch: codex/ae-elevenlabs-reference, based on codex/grifon-motion-spark.
-Source: workflows/assets/grifon-reference-pilot/.
-10.10-second closing section only (reference 22.80-32.90): quiet type, contracting
-outline, three feature cards, gradient strip and Grifon lockup. All freshly authored.
-index.html holds the main GSAP timeline; copy.js holds editable wording.
-compare.html synchronizes the original MP4 with the remake and provides scrubbing.
-Run: node workflows/assets/grifon-reference-pilot/serve.mjs
-Verified source preview: http://127.0.0.1:4178/compare.html
-Portable twin: artifacts/grifon-reference-pilot.html (15.1 MiB, embeds assets).
-Builder: node tools/artifacts/build-grifon-reference-pilot.mjs
-Local v01/v02 source backups are in the pilot's backups/ directory.
-GitHub backup: origin/codex/ae-elevenlabs-reference; pilot commit 8a80c38d.
 Draft PR149: https://github.com/yopiheart/grifon-command/pull/149
+Source: workflows/assets/grifon-reference-full/.
+Verified player: http://127.0.0.1:4179/compare.html
+Run: node workflows/assets/grifon-reference-full/serve.mjs
+Builder: node tools/artifacts/build-grifon-reference-full.mjs
+Portable twin: artifacts/grifon-reference-full.html (15.2 MiB).
+Full-v03 source backups and untouched approved-closing input in backups/.
+Preview proof: qa/full-preview.jpg. Exact visible wording: copy.js.
+opening.js/css/html and objects.js are source; builder refreshes index.html.
+The approved pilot remains unchanged in grifon-reference-pilot, port4178.
+
+## What changed
+New cream word/object collages, three blue product reveals, warm transition,
+luminous sphere/orbital rings and concept conversation connect to the approved
+ending at22.8s. Objects are fresh SVGs, not copied photos. Pixel wipes use DOM
+keyframes. Canvas visibility is explicit per scene and ends at22.8s.
+Comparison has8 chapters, frame scrub, half speed and solo view. Failed composition
+loading is handled instead of remaining on Loading. No Grifon product feature,
+MCP or AE bridge was implemented.
 
 ## Actual verification
-Hyperframes 0.7.68 check passed: 0 errors/warnings; 10/10 text contrast samples.
-CUA side-by-side inspection and playback caught/fixed prefix centering, early
-rule visibility, center scale and side-card reveal direction/timing.
-Independent 390x844 smoke: playback, all chapters, scrub, restart, no horizontal
-overflow passed before the final choreography tweaks. Controls unchanged afterward.
-Editable-text snapshot check passed: exact pixel differences confined to the
-edited line, zero changed pixels outside it (qa/editability-result.json).
-npm.cmd run check:artifact-anchors passed. No app changes; app build/test not run.
-No paid calls, AI generation, audio mix, MP4 export, deployment or publication.
+Final Hyperframes0.7.68 check passed: zero errors/warnings,17/17 sampled contrast
+checks. Final-v03 transition/settled frames inspected. Scene-reset regression fails
+on all3 stale-blue v02 scenes and passes v03 exactly. Text edit:3,586 changed pixels,
+zero outside the edited line. Brand ending pixel-identical; cards differ at3 pixels
+by1 channel level. Raw results and explicit1-level card tolerance recorded.
+Parent CUA390x844: controls, playback endpoint, scrub, solo view and no horizontal
+overflow checked; screenshots emitted. Independent mobile agent had no browser
+connection, so its source review only was completed. No independent UI pass claimed.
+Artifact anchors, builder and JS syntax pass. No app changes; app build/test not run.
+Full evidence: workflows/assets/grifon-reference-full/qa/results.md.
 
-## Limits and next action
-This is a pilot, not the full 32.92-second recreation or user-approved fidelity.
-Gradients are smoother/less luminous than the source; font and easing approximate.
-Copy, two semantic icons and the canonical Grifon lockup intentionally differ.
-Review the preview before extending the whole film; missing photographic assets
-and exact original graph presets remain unresolved for the opening section.
-CUA's mobile console exposed an unattributed MutationObserver error; no such call
-exists in authored source/GSAP, and Hyperframes runtime audit passed. See qa/results.md.
-Portable file playback unverified: browser policy blocks file://; no workaround used.
-The original localhost source preview is the verified route.
+## Next action and limits
+Neil reviews the complete silent preview. Music/SFX and final export stay deferred.
+Full visual acceptance is pending. Props are vectors; gradient lighting, typeface,
+easing and entrance blur are approximations. Portable-file playback unverified
+(file URLs blocked); localhost verified. CUA logs have an unattributed
+MutationObserver error; Hyperframes runtime audit passes.
 
 ## Prior work retained
 workflows/assets/grifon-ae-reference/ remains unchanged and untracked locally:
-prepared brief, reference/logo copies, unexecuted inspect-ae.jsx; no AEP ever made.
-Spotlight/Spark/Motion Director and draft PR144/143 remain intact. They were not
-used as assets or templates for this pilot. Separate KAPE01 hero-film worktree
-and PR145 remain unrelated. No Grifon MCP/AE bridge or product feature was built.
+paused brief, reference/logo and unexecuted inspection script; no AEP ever made.
+Spotlight/Spark/Motion Director and PR144/143 intact. KAPE01/PR145 unrelated.

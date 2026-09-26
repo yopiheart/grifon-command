@@ -1,0 +1,39 @@
+{
+  "editable": {
+    "width": 1920,
+    "height": 1080,
+    "changedPixels": 3586,
+    "outsideEditedRegion": 0,
+    "maxChannelDelta": 219,
+    "bounds": {
+      "minX": 802,
+      "minY": 517,
+      "maxX": 1118,
+      "maxY": 563
+    }
+  },
+  "endingCards": {
+    "width": 1920,
+    "height": 1080,
+    "changedPixels": 3,
+    "outsideEditedRegion": 0,
+    "maxChannelDelta": 1,
+    "bounds": {
+      "minX": 458,
+      "minY": 513,
+      "maxX": 1514,
+      "maxY": 590
+    }
+  },
+  "endingBrand": {
+    "width": 1920,
+    "height": 1080,
+    "changedPixels": 0,
+    "outsideEditedRegion": 0,
+    "maxChannelDelta": 0,
+    "bounds": null
+  },
+  "cardRoundingTolerance": 1,
+  "editablePass": true,
+  "endingPass": true
+}

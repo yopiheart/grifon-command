@@ -1,0 +1,29 @@
+/* The reference palette is intentional. These are authored concept graphics. */
+#f-world{position:absolute;inset:0;overflow:hidden;background:#f2f1ec}
+#f-field,#f-mosaic{position:absolute;inset:0;width:1920px;height:1080px;pointer-events:none}
+#f-field{z-index:0}#f-mosaic{z-index:8;visibility:hidden}
+.f-tile{position:absolute;width:110px;height:110px;background:#f2f1ec;opacity:0}
+.f-shot{position:absolute;inset:0;z-index:2;color:#171b19}
+#f-intro{display:flex;align-items:center;justify-content:center;font-size:62px;font-weight:400;letter-spacing:-2.6px}
+.f-words{position:absolute;inset:0;font-size:67px;letter-spacing:-3.5px;font-weight:400;line-height:1.12}
+.f-word{position:absolute;white-space:nowrap}
+.f-prop{position:absolute;transform-origin:center;filter:drop-shadow(0 2px 3px #3136300b)}
+.f-prop svg,.f-hero-object svg{width:100%;height:100%;overflow:visible}
+.f-prop:before{content:'';position:absolute;inset:12% 8%;background:linear-gradient(145deg,#e3e3df,#dfdfdd66);z-index:-1}
+.f-spark{position:absolute;left:909px;top:499px;width:76px;height:76px;transform:rotate(-8deg)}
+.f-spark svg{width:100%;height:100%;fill:#171c1b}
+.f-ticket{position:absolute;left:182px;top:114px;padding:17px 24px;border-radius:16px;background:#f48c64;color:#482819;font-size:25px;letter-spacing:-.4px;box-shadow:0 2px 0 #0000000d;transform:rotate(-3deg)}
+.f-hero-object{position:absolute;left:625px;top:170px;width:690px;height:690px;transform-origin:50% 60%;filter:drop-shadow(0 27px 22px #122b3b59)}
+#f-hero-phone .f-hero-object{left:648px;top:172px;width:625px;height:690px}
+#f-hero-laptop .f-hero-object{left:590px;top:165px;width:750px;height:750px}
+.f-hero-tag{position:absolute;left:1127px;top:380px;border:1px solid #e8f5e955;background:linear-gradient(145deg,#b5c4c991,#426d8580);border-radius:30px;box-shadow:inset 0 1px #fff6,0 4px 15px #182d4122;color:#fbfcf7;font:400 21px/1 Inter,Arial;padding:14px 20px;letter-spacing:-.6px}
+.f-hero-dot{display:inline-block;width:7px;height:7px;background:#dceccb;border-radius:50%;margin:0 9px 3px 0;box-shadow:0 0 9px #eaffd9}
+#f-turn{display:flex;align-items:center;justify-content:center;color:#fff9e2;font-size:83px;letter-spacing:-3.5px;z-index:5}
+#f-turn span{display:inline-block}
+#f-dialogue{color:#eef0d8;z-index:6;transform-origin:center}
+.f-message{position:absolute;left:604px;top:337px;min-height:117px;border-radius:25px;border:1.3px solid #edf4d038;background:linear-gradient(140deg,#e8eed922,#eaf5dc12),#1b361da6;box-shadow:inset 0 1px 0 #ffffff21,0 15px 55px #06150224;padding:28px 37px;font-size:28px;line-height:1.42;letter-spacing:-.55px;max-width:660px}
+.f-message:nth-child(2){left:842px;top:493px;width:610px}
+.f-message:nth-child(3){left:604px;top:663px;width:660px}
+.f-speaker{position:absolute;left:4px;top:-32px;font:400 18px/1 Inter,Arial;color:#fffbed;letter-spacing:-.3px;background:#18351bbf;padding:4px 7px;border-radius:6px}
+.f-orblet{position:absolute;left:-83px;top:38px;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 28% 25%,#fffde3 0%,#fff4b0 15%,#f6a368 40%,#ed7155 56%,#e0ddb3 77%,#87b5b1);box-shadow:0 0 15px #fff2ad88,inset 0 0 4px #fff}
+.f-message-text{display:block;overflow:hidden}
