@@ -1,73 +1,66 @@
 # NOW - the resume doc
-**Stamped: 2026-09-27, V08 approved; repeatable workflow discussion**
+**Stamped: 2026-09-27, motion stack independently reviewed; external gate pending**
 
 ## Current state
-Neil delegated the V07 A/B choice: "Ikaw na bahala bro". Chose B (Digital Clouds)
-and completed the full 32.9s soundtrack and 1080p MP4. V04 visuals remain approved
-and byte-identical. V05/V06 sound was rejected; those backups remain intact.
-Neil approved the completed V08: "Boom! Approved solid brooo!!!" He now asks how
-to make reference- or prompt-led motion repeatable for himself and Grifon users.
-No paid generation, purchases, app changes, deployment, merge or product integration.
+Neil approved V08 and authorized merge-readiness review/fixes for PR143 -> PR144
+-> PR149. All three received independent Codex review with no blocking code
+findings. Two P3 verifier findings were fixed on the combined PR149 branch and
+independently rechecked. No merge or deployment was performed.
+No product integration, tuned skill/prompt changes, purchases or paid generation.
 
-## Deliverables and backup
+## Branch and review
 Branch: codex/ae-elevenlabs-reference; draft PR149:
 https://github.com/yopiheart/grifon-command/pull/149
+Review report: workflows/reviews/motion-stack-2026-09-27.md
+Reviewed heads: PR143 b2247a26; PR144 d9274f93; PR149 48a661a2 plus this
+review-fix commit. Remote main was 5d1b583c; all stack ancestry checks passed.
+Ancestor branches unchanged; the two verifier fixes are carried by PR149.
+Hash checker now exits 1 for missing/corrupt embeds. Spotlight revision checker
+honors explicit tool paths and handles missing cache/FFprobe clearly.
+Original defects reproduced with mocked inputs; fixed cases pass; saved creative
+QA evidence and approved media remain unchanged.
+
+## Checks completed this turn
+Build PASS; Vitest 1,401 passed / 32 default-skipped; Playwright all 56 passed.
+check:codex PASS (32 entrypoints, 61 files, 26 tests); hook harness 25 passed.
+Bundle-leak, voice-sync, domain-language, PS1 ASCII, design lint, artifact anchors,
+changed-script syntax and whitespace PASS. No dependency installs.
+Independent PR149 Chromium checks at 390x844: comparison and portable twin
+play/pause/seek/restart/soundtrack exclusivity pass without overflow or errors.
+Portable file:// playback reaches 32.90s. Builders reproduce committed outputs.
+Independent export hashes/full decodes pass; no fresh creative render/remix,
+direct listening or real Android-engine test. Neil approved creative quality.
+
+## Remaining merge gates
+PR143 has historical passing GitHub verify/e2e/artifacts checks. PR144/149 lack
+regular CI because the workflow targets PRs into main, not stacked branches.
+They need fresh CI when targeting main. Local checks do not replace that gate.
+PR149 Vercel status: failure, "Account is blocked." Underlying cause unconfirmed.
+Branch-protection API returned 403 (plan restriction); requirements unavailable.
+No check bypass or account/billing change. Resolve the external status, then
+assess fresh checks in merge order 143 -> 144 -> 149; preserve stack ancestry.
+Merge/deploy requires explicit user authorization; this turn covered review/fixes.
+
+## Approved deliverable and backup
 Root: workflows/assets/grifon-reference-full/
-Latest: exports/grifon-your-next-ad-v08-1080p.mp4 (16,629,844 bytes).
-Phone: private GitHub blob link to this file, then View raw; audio is in the MP4.
-Native preview: http://127.0.0.1:4179/exports/grifon-your-next-ad-v08-1080p.mp4
-Comparison: http://127.0.0.1:4179/compare.html (V08/reference/V06 selector).
-Portable twin: artifacts/grifon-reference-full.html (37.8 MiB; embeds mixed MP4).
-Source: audio-finish-v08.py. Cue/technical/review evidence: qa/sound-v08/.
-Sources, credits, URLs and hashes: assets/audio-v07/SOURCES.md and manifest.
-Raw stock and isolated work audio remain gitignored; distribute mixed video only.
-Pre-V08 comparison: backups/compare-v06.html. Prior audio/source/exports intact.
-Server: node workflows/assets/grifon-reference-full/serve.mjs (existing process).
+Final: exports/grifon-your-next-ad-v08-1080p.mp4 (16,629,844 bytes).
+H.264 1920x1080/30fps, 987 frames, 32.900s; stereo AAC48k, -16.03LUFS/-1.35dBTP.
+V04 picture and editable source hashes unchanged; V05/V06 rejected audio retained.
+Phone link: GitHub blob at db69d885 for the V08 file, then View raw.
+Preview: http://127.0.0.1:4179/compare.html (V08/reference/V06 selector).
+Portable twin: artifacts/grifon-reference-full.html (embedded mixed videos).
+Source: audio-finish-v08.py. Evidence: qa/sound-v08/results.md and cue sheets.
+Licensed Digital Clouds, source8-40.9s; 99 recorded SFX placements; no voiceover.
+Sources/credits/license notes: assets/audio-v07/SOURCES.md and manifest.
+Raw stock and isolated working audio remain ignored; mixed end product only.
+Pre-V08 comparison: backups/compare-v06.html. All prior exports/source intact.
+Existing node serve.mjs process on4179 retained; runtime/tools reused.
 
-## Sound direction
-Licensed Digital Clouds by Alejandro Magana (A. M.), continuous source 8-40.9s.
-Gain/filter changes shape the problem, reveal, dialogue and closing. 99 recorded
-SFX placements cover typing, swipes, object detail, message cards and logo.
-The bounded revision raised chat pops, reduced music bass and ducked arrivals;
-warm contact was raised and reversed-air attacks softened. Dialogue exit sweep
-was aligned to the actual 22.48s visual start. No voiceover is included.
-
-## Verification
-H.264 1920x1080/30fps,987 frames,32.900s; AAC stereo48kHz.
-Final AAC -16.03LUFS/-1.35dBTP. Full AV decode and silent black tail pass.
-Encoded video SHA256 matches approved V04; editable index.html hash unchanged.
-Python AST, builder/comparison JS syntax, whitespace and artifact-anchor checks
-pass. No application code changed, so application build/test were not run.
-Native browser playback reached ended=true at32.9s, no error, unmuted.
-Parent CUA:390x844 comparison screenshot inspected, no horizontal overflow;
-V08/reference/V06 switch with only one audible track, play/pause/restart/seek work.
-Viewport reset; page left at0s with V08 selected. No real Android-engine test.
-Independent smoke agent had no browser surface. Parent checks are not independent.
-Portable twin has embedded assets and parsed JS; not separately browser-tested.
-
-## Listening evidence and limits
-Existing Gemini web Flash chat reviewed first and revised full mixes, without
-provider API calls/upgrades: https://gemini.google.com/app/f2c267c0b24961fd .
-The assistant did not directly hear audio. The first review contained conflicting
-instrument/timestamp claims; these were not accepted as facts. Targeted clarity
-changes were made, then the final review reported no delivery-blocking flaw,
-clearer chat cues and a smooth ending. Neil subsequently approved the final film.
-The review itself is not exact-reference proof. Details: qa/sound-v08/results.md.
-No stock raw assets/stems may be bundled into a future Grifon product library.
-
-## Next action
-V08 is the approved case study. Recommend extending the existing Motion Director
-skill with reference mapping, motion/audio checks and reusable tools, then testing
-different references and a prompt-only brief before proposing product integration.
-No skill instructions, tuned prompts or product architecture were changed here.
-The existing Hyperframes decision approves local workflow use, not a production
-runtime; user-facing automation needs a separate architecture/cost decision.
+## Next workflow work, separately scoped
+Extend existing Motion Director skill only after exact-diff approval. Validate
+varied references and prompt-only briefs before proposing product automation.
+Local Hyperframes workflow approval does not approve a production runtime.
+Stock rights for this finished video do not grant a Grifon product audio library.
 Do not reopen the approved film without a request.
-The Higgsfield tool-stack post is recorded in the brief; it did not reveal exact
-skills/prompts or establish the original ElevenLabs soundtrack's provenance.
-
-## Runtime and unrelated work
-Existing FFmpeg6.0, FFprobe4.0.2 and Python/NumPy reused; nothing installed.
 .codex-remote-attachments/ and workflows/assets/grifon-ae-reference/ are unrelated
-pre-existing untracked files, untouched. Pilot/Spotlight/Spark and PR144/143 remain
-intact; KAPE01/PR145 unrelated. No merge/publish/deploy requested.
+pre-existing untracked files, untouched. KAPE01/PR145 unrelated.
