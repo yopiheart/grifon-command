@@ -43,6 +43,8 @@ let html=read('compare.html').replace('src="index.html"',`srcdoc="${escapeAttr(e
  .replace('src="assets/reference.mp4"',`src="${data('assets/reference.mp4','video/mp4')}"`)
  .replace('src="assets/audio/score-master.m4a"',`src="${data('assets/audio/score-master.m4a','audio/mp4')}"`)
  .replace('src="assets/audio-v06/score-master.m4a"',`src="${data('assets/audio-v06/score-master.m4a','audio/mp4')}"`)
+ .replace('src="exports/grifon-your-next-ad-v08-1080p.mp4"',`src="${data('exports/grifon-your-next-ad-v08-1080p.mp4','video/mp4')}"`)
+ .replace('href="exports/grifon-your-next-ad-v08-1080p.mp4"','href="#final-export"')
  .replace('<a href="copy.js">copy.js</a>','copy.js in the source folder')
  .replace('<a href="index.html">index.html</a>','index.html in the source folder');
 html=finalize(html,{label:'grifon-reference-full',ascii:false,required:['<meta charset="utf-8">','class="ground"','srcdoc=','data:video/mp4;base64,','seekComposition']});

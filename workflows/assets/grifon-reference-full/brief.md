@@ -1,6 +1,6 @@
 # Your next ad — full reference study
 
-32.90-second, editable 1920x1080 / 30fps composition with original music and SFX.
+32.90-second, editable 1920x1080 / 30fps composition with music and SFX.
 Neil approved the V04 motion pass and authorized music/SFX plus MP4 export. He
 auditioned V05 and rejected its sound as weak and unlike the exciting, curious
 reference. V06 rebuilds the original score and effects using reference signal
@@ -8,7 +8,33 @@ measurements and the approved animation's exact timing. Neil also rejected V06's
 music and SFX on 2026-09-27. Neither sound pass is creatively approved.
 The visual source is the supplied ElevenLabs/Reception.ai reference.
 V05/V06 used no stock samples. V07 offers two short auditions using licensed
-Mixkit music and SFX. No paid calls, video models or application changes.
+Mixkit music and SFX. Neil then delegated the choice and completion. V08 selects
+B (Digital Clouds) and completes the full soundtrack. No paid calls, video models
+or application changes. V04 picture and editable animation remain unchanged.
+
+## V08 full-film delivery
+
+Latest film: `exports/grifon-your-next-ad-v08-1080p.mp4`. Music is Digital Clouds
+by Alejandro Magana (A. M.), Mixkit 175, source seconds 8-40.9. The continuous
+music section is arranged with gain/filter changes, a quieter problem passage,
+a reveal lift, clearer space for messages, and a fade into the final black tail.
+Recorded SFX follow the approved visual timeline: typing, collage swipes,
+rotations, shutter/lens, phone UI, laptop mechanism, messages, cards and logo.
+No voiceover or reference soundtrack is included in the Grifon export.
+
+Run `audio-finish-v08.py` using the existing Python/NumPy runtime, then
+`node tools/artifacts/build-grifon-reference-full.mjs`. The comparison defaults
+to V08 and retains reference/V06 choices. Its audio element plays the mixed MP4
+end product; the portable twin embeds that same MP4, not a stock music-only mix.
+The pre-V08 comparison is preserved in `backups/compare-v06.html`.
+
+Source URLs, credits, license notes and raw-file hashes remain in
+`assets/audio-v07/SOURCES.md` and `source-manifest.json`. V08 reuses those same
+recordings. Raw recordings and V08 work WAVs/first mix stay ignored locally;
+only the combined video end product is distributed. Do not package stock samples
+or isolated stems into a Grifon product/template library.
+V08 cues and technical evidence are under `qa/sound-v08/`. Creative decisions
+were delegated; Neil has not yet listened to or approved this specific full mix.
 
 The opening adapts the reference's object/word collages and blue product reveals
 to a camera, phone and storyboard laptop. These and the supporting objects are
