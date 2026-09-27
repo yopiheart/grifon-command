@@ -33,8 +33,9 @@ Source URLs, credits, license notes and raw-file hashes remain in
 recordings. Raw recordings and V08 work WAVs/first mix stay ignored locally;
 only the combined video end product is distributed. Do not package stock samples
 or isolated stems into a Grifon product/template library.
-V08 cues and technical evidence are under `qa/sound-v08/`. Creative decisions
-were delegated; Neil has not yet listened to or approved this specific full mix.
+V08 cues and technical evidence are under `qa/sound-v08/`. Neil approved the
+completed V08 on 2026-09-27: "Boom! Approved solid brooo!!!" It is now an approved
+case study for future workflow work, not evidence of universal reference coverage.
 
 The opening adapts the reference's object/word collages and blue product reveals
 to a camera, phone and storyboard laptop. These and the supporting objects are

@@ -1,12 +1,13 @@
 # NOW - the resume doc
-**Stamped: 2026-09-27, V08 full film completed**
+**Stamped: 2026-09-27, V08 approved; repeatable workflow discussion**
 
 ## Current state
 Neil delegated the V07 A/B choice: "Ikaw na bahala bro". Chose B (Digital Clouds)
 and completed the full 32.9s soundtrack and 1080p MP4. V04 visuals remain approved
 and byte-identical. V05/V06 sound was rejected; those backups remain intact.
-Neil has not yet listened to or approved this specific V08 full mix. No paid
-generation, purchases, app changes, deployment, merge or product integration.
+Neil approved the completed V08: "Boom! Approved solid brooo!!!" He now asks how
+to make reference- or prompt-led motion repeatable for himself and Grifon users.
+No paid generation, purchases, app changes, deployment, merge or product integration.
 
 ## Deliverables and backup
 Branch: codex/ae-elevenlabs-reference; draft PR149:
@@ -50,13 +51,18 @@ provider API calls/upgrades: https://gemini.google.com/app/f2c267c0b24961fd .
 The assistant did not directly hear audio. The first review contained conflicting
 instrument/timestamp claims; these were not accepted as facts. Targeted clarity
 changes were made, then the final review reported no delivery-blocking flaw,
-clearer chat cues and a smooth ending. This is not exact-reference proof or
-Neil's listening approval. Detailed qualifications are in qa/sound-v08/results.md.
+clearer chat cues and a smooth ending. Neil subsequently approved the final film.
+The review itself is not exact-reference proof. Details: qa/sound-v08/results.md.
 No stock raw assets/stems may be bundled into a future Grifon product library.
 
 ## Next action
-Neil can download/watch V08 on phone. Use specific timestamped listening feedback
-for any further audio changes. Do not reopen approved animation without request.
+V08 is the approved case study. Recommend extending the existing Motion Director
+skill with reference mapping, motion/audio checks and reusable tools, then testing
+different references and a prompt-only brief before proposing product integration.
+No skill instructions, tuned prompts or product architecture were changed here.
+The existing Hyperframes decision approves local workflow use, not a production
+runtime; user-facing automation needs a separate architecture/cost decision.
+Do not reopen the approved film without a request.
 The Higgsfield tool-stack post is recorded in the brief; it did not reveal exact
 skills/prompts or establish the original ElevenLabs soundtrack's provenance.
 

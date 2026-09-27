@@ -2,7 +2,9 @@
 
 2026-09-27. Neil delegated the choice after the V07 auditions ("Ikaw na bahala").
 The assistant selected B, Digital Clouds, and completed a 32.9s music/SFX mix.
-This is a finished export for listening, not a claim that Neil approved its sound.
+Neil subsequently approved this full export on 2026-09-27:
+"Boom! Approved solid brooo!!!" This acceptance is specific to V08; it does not
+retroactively validate uncertain claims in the automated listening reviews.
 
 ## Deliverable and production
 
