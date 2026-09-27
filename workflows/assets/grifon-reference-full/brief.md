@@ -1,10 +1,12 @@
 # Your next ad — full reference study
 
 32.90-second, editable 1920x1080 / 30fps composition with original music and SFX.
-Neil approved the V04 motion pass, then explicitly authorized "Music + SFX, then
-final MP4" on 2026-09-27. V05 keeps the approved picture unchanged and completes
-that sound/export pass. The visual source is the supplied ElevenLabs/Reception.ai
-reference. No paid calls, stock audio, video models or app integration.
+Neil approved the V04 motion pass and authorized music/SFX plus MP4 export. He
+auditioned V05 and rejected its sound as weak and unlike the exciting, curious
+reference. V06 rebuilds the original score and effects using reference signal
+measurements and the approved animation's exact timing. V06 listening acceptance
+is pending. The visual source is the supplied ElevenLabs/Reception.ai reference.
+No paid calls, stock samples, video models or application changes.
 
 The opening adapts the reference's object/word collages and blue product reveals
 to a camera, phone and storyboard laptop. These and the supporting objects are
@@ -59,7 +61,31 @@ The builder refreshes index.html from the sources above and creates the portable
 twin at artifacts/grifon-reference-full.html. Edit source files before rebuilding;
 direct index.html edits work for local review but are overwritten by the builder.
 
-## Audio and export
+## Current V06 audio and export
+
+Run `node workflows/assets/grifon-reference-full/audio-v06.mjs`, then
+`node workflows/assets/grifon-reference-full/audio-master-v06.mjs`, then rebuild
+the portable player with `node tools/artifacts/build-grifon-reference-full.mjs`.
+V06 files live under `assets/audio-v06/`; the final video is
+`exports/grifon-your-next-ad-v06-1080p.mp4`. An audio-only phone copy is
+`assets/audio-v06/grifon-sound-v06.mp3`. Music, detail and motion stems are separate;
+the SFX stem is detail + motion. All are premaster buses with shared headroom.
+
+This is a new 105 BPM syncopated score, with a stronger reveal, brighter plucks
+and percussion, exact character cues (including Until now), panning rotational
+sweeps, different camera/phone/laptop finishes, message accents and a unified
+logo resolution. No reference audio is sampled. The comparison's Soundtrack
+selector can play V06, the actual reference, or V05 at the current timeline time.
+Only the selected track is unmuted. The reference mode is a review aid, not part
+of the authored Grifon master. V05 files and backups remain intact.
+
+Signal analysis: `qa/analyze-sound.py` needs NumPy and Pillow. It measures broad
+spectral balance, onset candidates and section energy; it cannot identify timbre
+or judge excitement. `qa/compare-sound-metrics.py` demonstrates both measured
+defects on V05 and corrections on V06. See `qa/sound-v06/results.md` for evidence
+and the explicit listening limitation.
+
+## V05 audio and export (retained)
 
 The score is a restrained 80 BPM electronic instrumental with soft plucks, pads
 and bass. The middle opens up around the warm/orb transition; the closing resolves

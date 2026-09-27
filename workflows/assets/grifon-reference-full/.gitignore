@@ -6,3 +6,5 @@ qa/motion-v04/
 qa/export-v05/
 assets/audio/mix-premaster.wav
 exports/grifon-picture-v04.mp4
+assets/audio-v06/mix-premaster.wav
+qa/sound-v06/*-features.npz

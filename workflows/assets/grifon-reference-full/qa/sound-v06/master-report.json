@@ -1,0 +1,47 @@
+{
+  "version": 6,
+  "duration": 32.9,
+  "sampleRate": 48000,
+  "channels": 2,
+  "first": {
+    "input_i": "-26.59",
+    "input_tp": "-9.65",
+    "input_lra": "5.50",
+    "input_thresh": "-36.64",
+    "output_i": "-15.71",
+    "output_tp": "-1.70",
+    "output_lra": "2.60",
+    "output_thresh": "-25.73",
+    "normalization_type": "dynamic",
+    "target_offset": "0.21"
+  },
+  "delivered": {
+    "input_i": "-15.87",
+    "input_tp": "-1.39",
+    "input_lra": "5.10",
+    "input_thresh": "-25.92",
+    "output_i": "-15.35",
+    "output_tp": "-1.70",
+    "output_lra": "2.60",
+    "output_thresh": "-25.37",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.15"
+  },
+  "reference": {
+    "input_i": "-16.15",
+    "input_tp": "0.13",
+    "input_lra": "5.20",
+    "input_thresh": "-26.20",
+    "output_i": "-15.55",
+    "output_tp": "-1.70",
+    "output_lra": "4.70",
+    "output_thresh": "-25.60",
+    "normalization_type": "dynamic",
+    "target_offset": "0.05"
+  },
+  "pass": true,
+  "finalSha256": "b0e579f7c35d622b6c1a1cb80e6f5deae9282f6a58f2c2d14e741b09ed70c407",
+  "pictureSourceSha256": "f4cbe8182d8b5f3ee9e198dae11ad41867332c672fcd27927d125c57d902a2da",
+  "compositionSha256": "1cb32367d0aeff59cc4d6aacefa9fbabda12a070a669cb1be833414d244a2bd2",
+  "auditoryReview": "Not claimed; signal metrics and user audition are distinct."
+}

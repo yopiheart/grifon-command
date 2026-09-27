@@ -1,62 +1,66 @@
 # NOW - the resume doc
-**Stamped: 2026-09-27, V05 original sound + final 1080p MP4**
+**Stamped: 2026-09-27, V06 sound revision ready for audition**
 
 ## Current state
-Neil approved V04's full motion pass, including corrected typing, collage pans
-and camera/phone/laptop turns. He explicitly authorized "Music + SFX, then final
-MP4", lifting the earlier no-render constraint. V05 delivers a 32.90s / 1920x1080 /
-30fps MP4 with original synthesized music/SFX. Approved visual source and English
-copy unchanged. No AE, paid calls, third-party audio, other-project assets or app work.
+V04 visuals approved. Neil listened to V05 and rejected its sound as weak and far
+from the exciting/curious reference. V06 rebuilds the original music/SFX and keeps
+the exact approved video stream. Audio acceptance is pending; no listening claim.
+Original full MP4 export authorization persists. No paid calls, AE, external
+samples, other-project assets, application edits or deployment.
 
-## Deliverable and backup
-Branch: codex/ae-elevenlabs-reference, based on codex/grifon-motion-spark.
-Draft PR149: https://github.com/yopiheart/grifon-command/pull/149
-Final: workflows/assets/grifon-reference-full/exports/grifon-your-next-ad-1080p.mp4
-Source: workflows/assets/grifon-reference-full/.
-Player: http://127.0.0.1:4179/compare.html
-Run: node workflows/assets/grifon-reference-full/serve.mjs
+## Deliverables and backup
+Branch: codex/ae-elevenlabs-reference; draft PR149:
+https://github.com/yopiheart/grifon-command/pull/149
+Root: workflows/assets/grifon-reference-full/
+New MP4: exports/grifon-your-next-ad-v06-1080p.mp4 (32.9s, 1080p/30fps).
+Phone MP3: assets/audio-v06/grifon-sound-v06.mp3.
+Source: audio-v06.mjs, audio-master-v06.mjs; assets/audio-v06/ contains music,
+detail, motion and combined SFX stems plus WAV/AAC masters and cue sheet.
+Comparison: http://127.0.0.1:4179/compare.html
+Run server: node workflows/assets/grifon-reference-full/serve.mjs
 Builder: node tools/artifacts/build-grifon-reference-full.mjs
-Portable twin: artifacts/grifon-reference-full.html (16.5 MiB, audio embedded).
-Music/SFX stems, WAV/AAC masters and cue sheet: source assets/audio/.
-Backups: V03, V04, V05 audio, silent player, untouched approved closing pilot.
-Proof: source qa/export-contact-sheet.jpg.
+Standalone twin: artifacts/grifon-reference-full.html (18.0 MiB).
+V05 source/audio/export and previous V03/V04/silent backups remain intact.
 
 ## What changed
-Audio-score.mjs composes an 80 BPM electronic instrumental and timed effects from
-local oscillators/noise, with a three-note ending. 75 cue entries include music
-blocks. Audio-finish.mjs performs measured mastering and the final stream-copy mux.
-Separate stems remain editable. Comparison adds sound on/off and synchronized
-play/pause/seek/half-speed. Serve.mjs handles WAV/M4A/JSON; builder embeds AAC.
+Original 105 BPM syncopated pluck/bass/percussion score. New character-accurate
+clicks including Until now, panning rotations, shutter/glass/hinge finishes at
+actual turn ends, stronger sphere reveal, message accents, and unified logo
+resolution. 138 cue entries including harmony. Comparison offers Grifon V06,
+ElevenLabs reference and Previous V05 at the same timeline position, one audible
+track at a time. Reference audio is not sampled into Grifon's authored score.
 
-## Actual verification
-Final MP4: H.264, 1920x1080, 30fps, 987 frames, stereo AAC 48kHz, 32.90s.
-Full video/audio decode: exit 0, no errors. Audio: -17.02 LUFS, -2.89 dBTP.
-Existing motion verifier passes all five checks on decoded MP4 frames; it previously
-failed all five on V03. Export sheet inspected. Seven source/export comparisons:
-34.72-51.55 dB PSNR. Approved index.html SHA256 unchanged:
-1CB32367D0AEFF59CC4D6AACEFA9FBABDA12A070A669CB1BE833414D244A2BD2.
-V04 Hyperframes, scene-reset, text-editability and closing-preservation evidence
-remain valid for the unchanged picture source.
-Parent CUA 390x844: screenshot, readable controls, no overflow, restart, chapters,
-endpoint scrub, 0.5x sync, mute/resume, solo and full 1x run checked. Native MP4
-playback advances with correct dimensions and no media error.
-Builder, Node syntax, artifact anchors and diff whitespace pass. No app changes;
-app build/test not run. Details: source qa/audio-export-results.md.
+## Evidence
+Local reference signal measurements, not an auditory/model review. Strongest
+pulse candidate ~104.5 BPM, unconfirmed. Reference reveal section rises6.4dB;
+V05 fell2.4dB; V06 rises5.4dB. Energy700Hz-10kHz: reference19.77%, V05 6.38%,
+V06 21.52%. Bounded regression checks fail both V05 defects and pass V06; this
+is not proof of musical taste/reference fidelity. Final V06 -15.87LUFS,
+-1.39dBTP, LRA5.1. First AAC peak test failed -0.91; extra headroom fixed it.
+MP4 probe: H.264 High, 1920x1080, 30fps,987frames, AAC-LC stereo48kHz,32.9s.
+Full audio/video decode passes. Video stream SHA256 is identical to V05:
+71d2bc17fbb4467fdfa7ee1f36a3e2e994a2f617e0eeac8687e9d8a35a443473.
+Approved index.html hash unchanged. Builder, JS syntax, artifact anchors and
+whitespace pass; no app edits, so app build/test not run.
+Parent CUA390x844: screenshot, no overflow, track switching during play, exclusive
+mute states, Sound off/on, half-speed, chapter seek and restart checked.
+V06 full player run and native MP4 playback both finish at32.9s. Pre-existing
+unattributed MutationObserver errors recur without observed playback failure.
+Reports: qa/sound-v06/results.md, master-report.json, reference-signal-report.json,
+regression-metrics.json; reproducer scripts in qa/.
 
-## Next action and limits
-Neil auditions the sound pass; no audio approval claimed. Continuous watch/listen
-review remains pending because this session has no audible perception channel.
-Technical audio levels/sync and sampled visuals checked. No publishing requested.
-Independent mobile agent still had no browser connection; parent viewport check
-is not a real Android test. Portable file-URL playback unverified, localhost
-verified. Pre-existing unattributed MutationObserver log remains without observed
-playback failure. Original photography/font/graph presets unavailable: objects,
-lighting/easing and entrance blur remain the approved brief's approximations.
+## Next action and honest limits
+Neil auditions V06 on phone via private GitHub MP4/MP3 or desktop A/B selector.
+No direct hearing or full perceptual review available in this session. Never say
+waveform/spectral checks prove excitement or instrument identity. No paid analysis
+was run; provider calls require a concrete approved test spec. Independent mobile
+agent has no browser connection; parent screenshot is not a real Android engine
+check. Portable file-URL playback unverified; localhost checked. Keep the existing
+visual approximation disclosures in the brief. No merge/publish/deploy requested.
 
-## Runtime and prior work retained
-Cached Hyperframes 0.7.68 and existing FFmpeg 6.0 reused. Missing FFprobe 4.0.2
-installed via npm ffprobe-static@3.1.0 only in ignored .tools/media-runtime/.
-Silent MP4, premaster WAV and decoded QA frames remain local ignored outputs.
-workflows/assets/grifon-ae-reference/ unchanged and untracked: paused brief,
-reference/logo and unexecuted inspection script; no AEP made. Pilot port4178 source
-unchanged. Spotlight/Spark/Motion Director PR144/143 intact; KAPE01/PR145 unrelated.
+## Runtime and unrelated work
+Existing FFmpeg6.0, cached Hyperframes0.7.68, task-local FFprobe4.0.2 reused.
+Codex bundled Python/NumPy2.3.5/Pillow used; no new dependencies. Intermediate
+premaster WAV and NumPy caches ignored. .codex-remote-attachments/ and
+workflows/assets/grifon-ae-reference/ are pre-existing untracked, untouched.
+Pilot/Spotlight/Spark and PR144/143 intact; KAPE01/PR145 unrelated.
