@@ -3,3 +3,6 @@ qa/editability/
 qa/motion-control/
 qa/motion-before/
 qa/motion-v04/
+qa/export-v05/
+assets/audio/mix-premaster.wav
+exports/grifon-picture-v04.mp4

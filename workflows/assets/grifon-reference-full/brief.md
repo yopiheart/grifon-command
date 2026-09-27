@@ -1,9 +1,10 @@
 # Your next ad — full reference study
 
-32.90-second silent, editable 1920x1080 / 30fps composition. Neil approved the
-closing pilot and delegated the complete sequence on 2026-09-27: "Surprise me".
-The source is the supplied ElevenLabs/Reception.ai reference. Music/SFX and final
-video encoding remain deferred. No paid calls, generated assets or app integration.
+32.90-second, editable 1920x1080 / 30fps composition with original music and SFX.
+Neil approved the V04 motion pass, then explicitly authorized "Music + SFX, then
+final MP4" on 2026-09-27. V05 keeps the approved picture unchanged and completes
+that sound/export pass. The visual source is the supplied ElevenLabs/Reception.ai
+reference. No paid calls, stock audio, video models or app integration.
 
 The opening adapts the reference's object/word collages and blue product reveals
 to a camera, phone and storyboard laptop. These and the supporting objects are
@@ -46,6 +47,10 @@ photographic objects were not supplied; vector objects, easing and light differ.
 - index.html: generated main composition, all animation logic in one document.
 - compare.html: synchronized reference/remake player, solo mode and chapters.
 - serve.mjs: localhost-only preview server, port 4179.
+- audio-score.mjs: original deterministic synthesis and precisely timed cues.
+- audio-finish.mjs: two-pass local mastering, AAC encode and final stream-copy mux.
+- assets/audio/: music/SFX WAV stems, 24-bit master, AAC master and cue sheet.
+- exports/grifon-your-next-ad-1080p.mp4: finished H.264 + stereo AAC, 32.90s.
 
 Build: `node tools/artifacts/build-grifon-reference-full.mjs`.
 Preview: `node workflows/assets/grifon-reference-full/serve.mjs`.
@@ -53,6 +58,31 @@ Open http://127.0.0.1:4179/compare.html.
 The builder refreshes index.html from the sources above and creates the portable
 twin at artifacts/grifon-reference-full.html. Edit source files before rebuilding;
 direct index.html edits work for local review but are overwritten by the builder.
+
+## Audio and export
+
+The score is a restrained 80 BPM electronic instrumental with soft plucks, pads
+and bass. The middle opens up around the warm/orb transition; the closing resolves
+with a three-note signature. Typing, collage glides, object turns, chat entrances,
+card moves and the final logo have individually timed synthesized effects.
+There are 75 cue-sheet entries, including music blocks. No voiceover is included.
+
+Rebuild audio with `node workflows/assets/grifon-reference-full/audio-score.mjs`,
+then `node workflows/assets/grifon-reference-full/audio-finish.mjs`. The latter
+uses the repository's existing ffmpeg-static binary and checks delivered AAC
+loudness/true peak. Run the composition builder again to embed the updated audio
+in the portable comparison. Stems are premaster buses; processing the combined
+mix is required to reproduce the mastered sound.
+
+For a fresh picture export, make FFmpeg and FFprobe available on PATH and run
+Hyperframes 0.7.68 with:
+`hyperframes render workflows/assets/grifon-reference-full --output workflows/assets/grifon-reference-full/exports/grifon-picture-v04.mp4 --fps 30 --quality high --crf 16 --workers 2 --resolution 1080p --sdr --format mp4`.
+Then run `node workflows/assets/grifon-reference-full/audio-finish.mjs --mux`.
+The silent picture and premaster WAV are reproducible intermediates, retained
+locally but ignored by Git. The final MP4, stems, masters and source are backed up.
+The `ffprobe-static@3.1.0` package (FFprobe 4.0.2) was installed into ignored
+`.tools/media-runtime/` for this export;
+the root application manifest and lockfile were not changed.
 
 The V03 opening backup preserves the previous, under-animated pass. V04 fixes
 Neil's feedback about missing typing, collage pans and object rotation. See
@@ -68,4 +98,7 @@ Fail on runtime errors, obscured text, unintended motion during holds, stale
 backgrounds after a cut, missing assets or broken seek/playback. Check transition
 frames as well as settled scenes. Preserve the approved ending's wording and
 timing, verify a text-only revision, and inspect the comparison at phone width.
-Full visual acceptance of the new opening/middle remains Neil's next review.
+Neil approved V04's visuals. V05 checks include final-file decode, metadata,
+foreground motion on decoded MP4 frames, source preservation, measured loudness
+and synchronized comparison playback. See qa/audio-export-results.md for actual
+evidence and the remaining listening/device limitations.

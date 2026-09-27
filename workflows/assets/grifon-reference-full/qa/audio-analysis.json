@@ -1,0 +1,44 @@
+{
+  "sampleRate": 48000,
+  "channels": 2,
+  "duration": 32.9,
+  "targetLUFS": -17,
+  "truePeakCeilingDBTP": -1,
+  "firstPass": {
+    "input_i": "-26.42",
+    "input_tp": "-12.36",
+    "input_lra": "3.90",
+    "input_thresh": "-36.54",
+    "output_i": "-16.95",
+    "output_tp": "-2.85",
+    "output_lra": "4.00",
+    "output_thresh": "-27.02",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.05"
+  },
+  "master": {
+    "input_i": "-26.26",
+    "input_tp": "-12.42",
+    "input_lra": "3.90",
+    "input_thresh": "-36.33",
+    "output_i": "-16.83",
+    "output_tp": "-3.00",
+    "output_lra": "3.90",
+    "output_thresh": "-26.91",
+    "normalization_type": "linear",
+    "target_offset": "-0.17"
+  },
+  "deliveredAAC": {
+    "input_i": "-17.02",
+    "input_tp": "-2.89",
+    "input_lra": "4.00",
+    "input_thresh": "-27.14",
+    "output_i": "-16.94",
+    "output_tp": "-2.74",
+    "output_lra": "3.90",
+    "output_thresh": "-27.01",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.06"
+  },
+  "pass": true
+}
