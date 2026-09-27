@@ -1,0 +1,377 @@
+{
+  "duration": 10.0,
+  "cues": [
+    {
+      "source": "key",
+      "start": 0.08,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 0: Y"
+    },
+    {
+      "source": "key",
+      "start": 0.14833333333333332,
+      "duration": 0.0556875,
+      "gain_db": -16.2,
+      "rate": 1.1700000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 1: o"
+    },
+    {
+      "source": "key",
+      "start": 0.21666666666666667,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 2: u"
+    },
+    {
+      "source": "key",
+      "start": 0.285,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 3: r"
+    },
+    {
+      "source": "key",
+      "start": 0.42166666666666663,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 5: n"
+    },
+    {
+      "source": "key",
+      "start": 0.49,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 6: e"
+    },
+    {
+      "source": "key",
+      "start": 0.5583333333333332,
+      "duration": 0.0556875,
+      "gain_db": -16.2,
+      "rate": 1.1700000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 7: x"
+    },
+    {
+      "source": "key",
+      "start": 0.6266666666666666,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 8: t"
+    },
+    {
+      "source": "key",
+      "start": 0.7633333333333332,
+      "duration": 0.0556875,
+      "gain_db": -16.2,
+      "rate": 1.1700000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 10: a"
+    },
+    {
+      "source": "key",
+      "start": 0.8316666666666666,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 11: d"
+    },
+    {
+      "source": "key",
+      "start": 0.8999999999999999,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 12: ."
+    },
+    {
+      "source": "bubble",
+      "start": 1.13,
+      "duration": 0.0228125,
+      "gain_db": -22.0,
+      "rate": 1.15,
+      "pan_from": -0.25,
+      "pan_to": -0.25,
+      "event": "Launch collage word 1"
+    },
+    {
+      "source": "bubble",
+      "start": 1.25,
+      "duration": 0.021333333333333333,
+      "gain_db": -22.4,
+      "rate": 1.23,
+      "pan_from": -0.08333333333333334,
+      "pan_to": -0.08333333333333334,
+      "event": "Launch collage word 2"
+    },
+    {
+      "source": "bubble",
+      "start": 1.39,
+      "duration": 0.020041666666666666,
+      "gain_db": -22.8,
+      "rate": 1.3099999999999998,
+      "pan_from": 0.08333333333333331,
+      "pan_to": 0.08333333333333331,
+      "event": "Launch collage word 3"
+    },
+    {
+      "source": "bubble",
+      "start": 1.5799999999999998,
+      "duration": 0.018875,
+      "gain_db": -23.2,
+      "rate": 1.39,
+      "pan_from": 0.25,
+      "pan_to": 0.25,
+      "event": "Launch collage word 4"
+    },
+    {
+      "source": "bubble",
+      "start": 4.24,
+      "duration": 0.0228125,
+      "gain_db": -22.0,
+      "rate": 1.15,
+      "pan_from": -0.25,
+      "pan_to": -0.25,
+      "event": "Story collage word 1"
+    },
+    {
+      "source": "bubble",
+      "start": 4.36,
+      "duration": 0.021333333333333333,
+      "gain_db": -22.4,
+      "rate": 1.23,
+      "pan_from": -0.08333333333333334,
+      "pan_to": -0.08333333333333334,
+      "event": "Story collage word 2"
+    },
+    {
+      "source": "bubble",
+      "start": 4.5,
+      "duration": 0.020041666666666666,
+      "gain_db": -22.8,
+      "rate": 1.3099999999999998,
+      "pan_from": 0.08333333333333331,
+      "pan_to": 0.08333333333333331,
+      "event": "Story collage word 3"
+    },
+    {
+      "source": "bubble",
+      "start": 4.69,
+      "duration": 0.018875,
+      "gain_db": -23.2,
+      "rate": 1.39,
+      "pan_from": 0.25,
+      "pan_to": 0.25,
+      "event": "Story collage word 4"
+    },
+    {
+      "source": "bubble",
+      "start": 7.23,
+      "duration": 0.0228125,
+      "gain_db": -22.0,
+      "rate": 1.15,
+      "pan_from": -0.25,
+      "pan_to": -0.25,
+      "event": "Grow collage word 1"
+    },
+    {
+      "source": "bubble",
+      "start": 7.3500000000000005,
+      "duration": 0.021333333333333333,
+      "gain_db": -22.4,
+      "rate": 1.23,
+      "pan_from": -0.08333333333333334,
+      "pan_to": -0.08333333333333334,
+      "event": "Grow collage word 2"
+    },
+    {
+      "source": "bubble",
+      "start": 7.49,
+      "duration": 0.020041666666666666,
+      "gain_db": -22.8,
+      "rate": 1.3099999999999998,
+      "pan_from": 0.08333333333333331,
+      "pan_to": 0.08333333333333331,
+      "event": "Grow collage word 3"
+    },
+    {
+      "source": "bubble",
+      "start": 7.680000000000001,
+      "duration": 0.018875,
+      "gain_db": -23.2,
+      "rate": 1.39,
+      "pan_from": 0.25,
+      "pan_to": 0.25,
+      "event": "Grow collage word 4"
+    },
+    {
+      "source": "sweep",
+      "start": 2.16,
+      "duration": 0.39945833333333336,
+      "gain_db": -13.5,
+      "rate": 1.55,
+      "pan_from": 0.65,
+      "pan_to": -0.65,
+      "event": "Collage swipe left"
+    },
+    {
+      "source": "sweep",
+      "start": 5.03,
+      "duration": 0.39945833333333336,
+      "gain_db": -13.5,
+      "rate": 1.55,
+      "pan_from": 0.65,
+      "pan_to": -0.65,
+      "event": "Collage swipe left"
+    },
+    {
+      "source": "sweep",
+      "start": 8.08,
+      "duration": 0.39945833333333336,
+      "gain_db": -13.5,
+      "rate": 1.55,
+      "pan_from": 0.65,
+      "pan_to": -0.65,
+      "event": "Collage swipe left"
+    },
+    {
+      "source": "air-zoom",
+      "start": 2.63,
+      "duration": 0.34852083333333334,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": -0.5,
+      "pan_to": 0.5,
+      "event": "Camera rotation"
+    },
+    {
+      "source": "lens",
+      "start": 3.52,
+      "duration": 0.3,
+      "gain_db": -21,
+      "rate": 1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Lens settles into camera reveal"
+    },
+    {
+      "source": "shutter",
+      "start": 3.82,
+      "duration": 0.16077083333333334,
+      "gain_db": -12,
+      "rate": 1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Camera turn ends"
+    },
+    {
+      "source": "air-zoom",
+      "start": 5.65,
+      "duration": 0.34852083333333334,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": -0.5,
+      "pan_to": 0.5,
+      "event": "Phone rotation"
+    },
+    {
+      "source": "tech-select",
+      "start": 6.84,
+      "duration": 0.033041666666666664,
+      "gain_db": -17,
+      "rate": 1.15,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Phone turn ends / screen detail"
+    },
+    {
+      "source": "air-zoom",
+      "start": 8.61,
+      "duration": 0.34852083333333334,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": -0.5,
+      "pan_to": 0.5,
+      "event": "Laptop rotation"
+    },
+    {
+      "source": "gear",
+      "start": 9.8,
+      "duration": 0.16,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Laptop turn ends / hinge detail"
+    }
+  ],
+  "sample_preparation": {
+    "sweep": {
+      "trim_start": 0.07310416666666666,
+      "trim_end": 0.69225,
+      "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3"
+    },
+    "air-zoom": {
+      "trim_start": 0.13983333333333334,
+      "trim_end": 0.5580416666666667,
+      "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa"
+    },
+    "shutter": {
+      "trim_start": 0.1020625,
+      "trim_end": 0.2628333333333333,
+      "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824"
+    },
+    "lens": {
+      "trim_start": 0.0060625,
+      "trim_end": 0.5121875,
+      "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3"
+    },
+    "tech-select": {
+      "trim_start": 0.0,
+      "trim_end": 0.03797916666666667,
+      "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed"
+    },
+    "key": {
+      "trim_start": 0.09864583333333334,
+      "trim_end": 0.16379166666666667,
+      "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205"
+    },
+    "bubble": {
+      "trim_start": 0.10616666666666667,
+      "trim_end": 0.13239583333333332,
+      "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f"
+    },
+    "gear": {
+      "trim_start": 0.0023125,
+      "trim_end": 0.20102083333333334,
+      "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af"
+    }
+  }
+}

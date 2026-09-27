@@ -1,0 +1,65 @@
+{
+  "retrieved": "2026-09-27",
+  "files": [
+    {
+      "file": "close-up.mp3",
+      "bytes": 3045294,
+      "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "sweep.wav",
+      "bytes": 138746,
+      "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "air-zoom.wav",
+      "bytes": 224908,
+      "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "shutter.wav",
+      "bytes": 62562,
+      "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "lens.wav",
+      "bytes": 217348,
+      "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "tech-select.wav",
+      "bytes": 88930,
+      "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "key.wav",
+      "bytes": 58022,
+      "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "bubble.wav",
+      "bytes": 54050,
+      "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f",
+      "license": "https://mixkit.co/license/"
+    },
+    {
+      "file": "gear.wav",
+      "bytes": 200748,
+      "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af",
+      "license": "https://mixkit.co/license/"
+    }
+  ]
+}

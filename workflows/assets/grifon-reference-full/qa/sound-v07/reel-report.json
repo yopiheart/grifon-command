@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "duration": "22.400000",
+        "nb_frames": "672"
+      },
+      {
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "duration": "22.400000",
+        "nb_frames": "1051"
+      }
+    ],
+    "format": {
+      "duration": "22.400000",
+      "size": "7911151"
+    }
+  },
+  "loudness": {
+    "input_i": "-16.19",
+    "input_tp": "-1.43",
+    "input_lra": "2.50",
+    "input_thresh": "-26.28",
+    "output_i": "-15.97",
+    "output_tp": "-1.70",
+    "output_lra": "2.50",
+    "output_thresh": "-26.05",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.03"
+  },
+  "chapters": {
+    "A": [
+      1.2,
+      11.2
+    ],
+    "B": [
+      12.4,
+      22.4
+    ]
+  }
+}

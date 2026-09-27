@@ -1,76 +1,62 @@
 # NOW - the resume doc
-**Stamped: 2026-09-27, V06 sound rejected; Higgsfield setup reviewed**
+**Stamped: 2026-09-27, V07 A/B audio auditions ready for Neil**
 
 ## Current state
-V04 visuals approved. Neil listened to V05 and rejected its sound as weak and far
-from the exciting/curious reference. Neil also rejected V06 music/SFX. V06 keeps
-the exact approved video stream, but neither audio pass is creatively approved.
-Original full MP4 export authorization persists. No paid calls, AE, external
-samples, other-project assets, application edits or deployment.
+V04 visuals approved. Neil rejected both V05 and V06 music/SFX. He authorized two
+short audio alternatives. V07 delivers two 10-second mixes with licensed Mixkit
+music and recorded SFX, plus one 22.4-second A/B reel. User preference is pending;
+no new full-film soundtrack has been accepted or produced. Full MP4 export
+permission persists. No app changes, purchases, paid generation or deployment.
 
 ## Deliverables and backup
 Branch: codex/ae-elevenlabs-reference; draft PR149:
 https://github.com/yopiheart/grifon-command/pull/149
 Root: workflows/assets/grifon-reference-full/
-New MP4: exports/grifon-your-next-ad-v06-1080p.mp4 (32.9s, 1080p/30fps).
-Phone MP3: assets/audio-v06/grifon-sound-v06.mp3.
-Source: audio-v06.mjs, audio-master-v06.mjs; assets/audio-v06/ contains music,
-detail, motion and combined SFX stems plus WAV/AAC masters and cue sheet.
-Comparison: http://127.0.0.1:4179/compare.html
-Run server: node workflows/assets/grifon-reference-full/serve.mjs
-Builder: node tools/artifacts/build-grifon-reference-full.mjs
-Standalone twin: artifacts/grifon-reference-full.html (18.0 MiB).
-V05 source/audio/export and previous V03/V04/silent backups remain intact.
+A: exports/grifon-sound-option-a-10s.mp4 (Close Up, Michael Ramir C.).
+B: exports/grifon-sound-option-b-10s.mp4 (Digital Clouds, Alejandro Magana).
+Phone reel: exports/grifon-sound-ab-audition-v07.mp4 (22.4s, 7,911,151 bytes).
+Reel chapters: A 1.2-11.2s; B 12.4-22.4s, separated by silent label cards.
+Source: audio-auditions-v07.py. Credits/URLs/hashes: assets/audio-v07/.
+Detailed technical and review evidence: qa/sound-v07/results.md and JSON reports.
+Native preview: http://127.0.0.1:4179/exports/grifon-sound-ab-audition-v07.mp4
+Server: node workflows/assets/grifon-reference-full/serve.mjs (existing process).
+Old compare.html still offers V06/reference/V05. It was not changed for V07.
+V05/V06 exports, source, audio, portable HTML and earlier backups remain intact.
 
-## What changed
-Original 105 BPM syncopated pluck/bass/percussion score. New character-accurate
-clicks including Until now, panning rotations, shutter/glass/hinge finishes at
-actual turn ends, stronger sphere reveal, message accents, and unified logo
-resolution. 138 cue entries including harmony. Comparison offers Grifon V06,
-ElevenLabs reference and Previous V05 at the same timeline position, one audible
-track at a time. Reference audio is not sampled into Grifon's authored score.
+## Verification
+A/B each H.264 1920x1080/30fps,300frames,10.000s; AAC stereo48kHz.
+A -16.31LUFS/-1.65dBTP, B -16.08LUFS/-1.37dBTP; 0.23LUFS apart.
+Reel 22.400s,672frames,-16.19LUFS/-1.43dBTP. All full AV decodes pass.
+Initial reel AAC-padding drift was fixed with exact segment sample trims.
+Standalone A/B encoded video hashes match each other and V04's first10s.
+Approved index.html hash unchanged. Python syntax and git whitespace pass.
+Parent CUA: native reel ended at22.4s with no media error; 390x844 fits, viewport
+reset. No real Android-engine or independent-agent check. No HTML/app edits.
+Raw stock and intermediate audio are ignored; only mixed MP4 end products ship.
 
-## Evidence
-Local reference signal measurements, not an auditory/model review. Strongest
-pulse candidate ~104.5 BPM, unconfirmed. Reference reveal section rises6.4dB;
-V05 fell2.4dB; V06 rises5.4dB. Energy700Hz-10kHz: reference19.77%, V05 6.38%,
-V06 21.52%. Bounded regression checks fail both V05 defects and pass V06; this
-is not proof of musical taste/reference fidelity. Final V06 -15.87LUFS,
--1.39dBTP, LRA5.1. First AAC peak test failed -0.91; extra headroom fixed it.
-MP4 probe: H.264 High, 1920x1080, 30fps,987frames, AAC-LC stereo48kHz,32.9s.
-Full audio/video decode passes. Video stream SHA256 is identical to V05:
-71d2bc17fbb4467fdfa7ee1f36a3e2e994a2f617e0eeac8687e9d8a35a443473.
-Approved index.html hash unchanged. Builder, JS syntax, artifact anchors and
-whitespace pass; no app edits, so app build/test not run.
-Parent CUA390x844: screenshot, no overflow, track switching during play, exclusive
-mute states, Sound off/on, half-speed, chapter seek and restart checked.
-V06 full player run and native MP4 playback both finish at32.9s. Pre-existing
-unattributed MutationObserver errors recur without observed playback failure.
-Reports: qa/sound-v06/results.md, master-report.json, reference-signal-report.json,
-regression-metrics.json; reproducer scripts in qa/.
+## Listening review and limits
+Existing Gemini web Flash session used as an audio-capable reviewer, with no API
+calls or upgrades. The assistant did not directly hear audio. Reference video
+and audio-only analyses disagreed on exact timbres/timestamps, so these are not
+verified facts. Four stock choices were shortlisted; named final A/B files were
+reviewed. First mix review flagged masking and perceived abrupt endings; music
+was ducked around cues and fades lengthened. Revised review reported improvement,
+but B remains busier. Neil's listening decision is the creative acceptance gate.
+See task QA notes for exact chat links, revisions and qualified observations.
+Mixkit music/SFX license modals were read; no music-only remix or raw sample
+redistribution. Do not package these assets into a future Grifon product library.
 
-## Feedback and proposed next action
-Neil shared https://x.com/higgsfield_ai/status/2103958391144227149 . Its visible
-post lists Opus 5.5 automation, Higgsfield assets, Blender 3D/cameras, After Effects
-animation/compositing, Suno music and Soundly effects. Post text verified through
-CUA; embedded media could not play. This does not establish the ElevenLabs
-reference's audio sources or disclose exact skills/prompts. Research is in the
-task brief. No skills/settings or media were changed in this feedback checkpoint.
-Proposed next step: resolve reference listening and music/SFX sourcing, then
-audition a short comparison before another complete sound pass. No paid spec
-approved and no generation started. Docs diff/whitespace checked.
-
-## Honest limits
-No direct hearing or full perceptual review available in this session. Never say
-waveform/spectral checks prove excitement or instrument identity. No paid analysis
-was run; provider calls require a concrete approved test spec. Independent mobile
-agent has no browser connection; parent screenshot is not a real Android engine
-check. Portable file-URL playback unverified; localhost checked. Keep the existing
-visual approximation disclosures in the brief. No merge/publish/deploy requested.
+## Next action
+Neil watches the A/B reel on phone via its private GitHub blob link and View raw,
+or the native local preview. Ask which direction is closer, including neither.
+Use his feedback before extending a selected direction across the full32.9s.
+The Higgsfield setup post and source-role mapping are recorded in the task brief:
+https://x.com/higgsfield_ai/status/2103958391144227149 . It is a tool-stack claim,
+not an exact skill/prompt release or proof of the ElevenLabs audio's origin.
 
 ## Runtime and unrelated work
-Existing FFmpeg6.0, cached Hyperframes0.7.68, task-local FFprobe4.0.2 reused.
-Codex bundled Python/NumPy2.3.5/Pillow used; no new dependencies. Intermediate
-premaster WAV and NumPy caches ignored. .codex-remote-attachments/ and
-workflows/assets/grifon-ae-reference/ are pre-existing untracked, untouched.
-Pilot/Spotlight/Spark and PR144/143 intact; KAPE01/PR145 unrelated.
+Existing FFmpeg6.0, FFprobe4.0.2, Codex Python/NumPy2.3.5 reused; no installation.
+Sources and work files persist locally under ignored assets/audio-v07/ folders.
+.codex-remote-attachments/ and workflows/assets/grifon-ae-reference/ are unrelated
+pre-existing untracked files, untouched. Pilot/Spotlight/Spark and PR144/143 remain
+intact; KAPE01/PR145 unrelated. No merge/publish/deploy requested.
