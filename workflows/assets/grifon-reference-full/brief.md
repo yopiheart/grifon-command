@@ -4,8 +4,9 @@
 Neil approved the V04 motion pass and authorized music/SFX plus MP4 export. He
 auditioned V05 and rejected its sound as weak and unlike the exciting, curious
 reference. V06 rebuilds the original score and effects using reference signal
-measurements and the approved animation's exact timing. V06 listening acceptance
-is pending. The visual source is the supplied ElevenLabs/Reception.ai reference.
+measurements and the approved animation's exact timing. Neil also rejected V06's
+music and SFX on 2026-09-27. Neither sound pass is creatively approved.
+The visual source is the supplied ElevenLabs/Reception.ai reference.
 No paid calls, stock samples, video models or application changes.
 
 The opening adapts the reference's object/word collages and blue product reveals
@@ -61,7 +62,26 @@ The builder refreshes index.html from the sources above and creates the portable
 twin at artifacts/grifon-reference-full.html. Edit source files before rebuilding;
 direct index.html edits work for local review but are overwritten by the builder.
 
-## Current V06 audio and export
+## V06 audio and export (rejected; retained)
+
+### Sound workflow research, 2026-09-27
+
+Neil supplied [Higgsfield's setup post](https://x.com/higgsfield_ai/status/2103958391144227149).
+Its visible text assigns automation to Claude Opus 5.5, visual assets to
+Higgsfield, 3D/cameras to Blender, animation/compositing to After Effects,
+music to Suno, and sound effects to Soundly. This is the author's reported tool
+stack, not a released skill, exact prompt, mix recipe, or verification of the
+original ElevenLabs reference's audio sources. The embedded video did not play;
+only the post text was inspected.
+
+V05/V06 used local procedural synthesis. Signal and sync checks passed for V06,
+but the listening outcome failed Neil's taste test. Technical measurements did
+not establish musical feel. A proposed next experiment is a short comparison of
+distinct music choices with selected, scene-specific SFX before another full
+mix. Audio-capable reference review and track audition remain unresolved; this
+note does not authorize paid generation or change any skill/provider settings.
+
+### Reproduction
 
 Run `node workflows/assets/grifon-reference-full/audio-v06.mjs`, then
 `node workflows/assets/grifon-reference-full/audio-master-v06.mjs`, then rebuild

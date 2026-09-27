@@ -1,10 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-09-27, V06 sound revision ready for audition**
+**Stamped: 2026-09-27, V06 sound rejected; Higgsfield setup reviewed**
 
 ## Current state
 V04 visuals approved. Neil listened to V05 and rejected its sound as weak and far
-from the exciting/curious reference. V06 rebuilds the original music/SFX and keeps
-the exact approved video stream. Audio acceptance is pending; no listening claim.
+from the exciting/curious reference. Neil also rejected V06 music/SFX. V06 keeps
+the exact approved video stream, but neither audio pass is creatively approved.
 Original full MP4 export authorization persists. No paid calls, AE, external
 samples, other-project assets, application edits or deployment.
 
@@ -49,8 +49,18 @@ unattributed MutationObserver errors recur without observed playback failure.
 Reports: qa/sound-v06/results.md, master-report.json, reference-signal-report.json,
 regression-metrics.json; reproducer scripts in qa/.
 
-## Next action and honest limits
-Neil auditions V06 on phone via private GitHub MP4/MP3 or desktop A/B selector.
+## Feedback and proposed next action
+Neil shared https://x.com/higgsfield_ai/status/2103958391144227149 . Its visible
+post lists Opus 5.5 automation, Higgsfield assets, Blender 3D/cameras, After Effects
+animation/compositing, Suno music and Soundly effects. Post text verified through
+CUA; embedded media could not play. This does not establish the ElevenLabs
+reference's audio sources or disclose exact skills/prompts. Research is in the
+task brief. No skills/settings or media were changed in this feedback checkpoint.
+Proposed next step: resolve reference listening and music/SFX sourcing, then
+audition a short comparison before another complete sound pass. No paid spec
+approved and no generation started. Docs diff/whitespace checked.
+
+## Honest limits
 No direct hearing or full perceptual review available in this session. Never say
 waveform/spectral checks prove excitement or instrument identity. No paid analysis
 was run; provider calls require a concrete approved test spec. Independent mobile
