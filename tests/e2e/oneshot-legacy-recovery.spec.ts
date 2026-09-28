@@ -32,6 +32,7 @@ for (const width of [375, 1280]) {
       expect(backend.calls).toEqual(['describe-upload']);
       expect(backend.unexpected).toEqual([]);
       await reopened.screenshot({ path: testInfo.outputPath(`legacy-draft-${width}.png`) });
+      await testInfo.attach(`legacy-draft-${width}`, { path: testInfo.outputPath(`legacy-draft-${width}.png`), contentType: 'image/png' });
     });
 
     test('actual interrupted generation retains its persisted script in consumer review', async ({ page, context }, testInfo) => {
@@ -64,6 +65,7 @@ for (const width of [375, 1280]) {
       expect(backend.calls).toEqual(before);
       expect(backend.unexpected).toEqual([]);
       await reopened.screenshot({ path: testInfo.outputPath(`legacy-partial-${width}.png`), fullPage: true });
+      await testInfo.attach(`legacy-partial-${width}`, { path: testInfo.outputPath(`legacy-partial-${width}.png`), contentType: 'image/png' });
     });
 
     test('seeded completed plan opens from the real Dashboard with saved script and scenes', async ({ page, context }, testInfo) => {
@@ -85,6 +87,7 @@ for (const width of [375, 1280]) {
       expect(backend.unexpected).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       await page.screenshot({ path: testInfo.outputPath(`legacy-completed-${width}.png`), fullPage: true });
+      await testInfo.attach(`legacy-completed-${width}`, { path: testInfo.outputPath(`legacy-completed-${width}.png`), contentType: 'image/png' });
     });
   });
 }

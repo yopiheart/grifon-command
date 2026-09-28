@@ -125,6 +125,11 @@ uncommitted files, account sessions, Python environments or funnel dependencies.
 
 ## Free validation and hands-on testing
 
+For One-Shot saved-work reports, start with the
+[recovery feature map](recovery-feature-map.md). `npm.cmd run verify:recovery`
+runs the mapped consumer recovery cases and writes evidence with explicit
+PASS, FAIL and NOT RUN coverage. It uses simulated services, not paid providers.
+
 ```powershell
 npm.cmd run check:codex
 npm.cmd run build
