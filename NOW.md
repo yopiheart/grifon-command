@@ -6,6 +6,8 @@ Neil approved a critical-flow map and reusable verification command for One-Shot
 saved-work recovery. Implemented on `codex/recovery-flow-verification`, based on
 PR146 `codex/oneshot-recovery` at `485708c4`. PR146 is still open; main remains
 `5d1b583c`. This follow-up adds tooling and documentation, not product changes.
+Draft PR150: https://github.com/yopiheart/grifon-command/pull/150.
+Implementation commit `fbb002d7` pushed and verified on GitHub.
 No tuned prompt/model, engine-default, billing, hosting or dependency changes.
 No real generation, production writes, merge or deployment performed.
 
@@ -57,9 +59,11 @@ Provider jobs may continue externally, but a complete closed-browser pipeline
 and notifications remain separate work. Fixtures do not certify live billing,
 provider quality, database concurrency, real auth or production deployment.
 Final-render retry can start another final render; scene-job recovery is distinct.
-The draft PR will target `codex/oneshot-recovery`; regular GitHub CI currently
+PR150 targets `codex/oneshot-recovery`; regular GitHub CI currently
 only targets main, so fresh main-target checks are still needed after PR146 lands.
 Do not treat local checks or absent stacked-PR CI as production release clearance.
+Vercel status on implementation head: FAILURE, "Account is blocked."
+Underlying billing/account cause not independently diagnosed; hosting unchanged.
 No hosting-account change or merge is authorized by this implementation request.
 
 ## Unrelated work retained
