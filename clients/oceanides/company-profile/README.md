@@ -2,8 +2,8 @@
 
 Current deliverables:
 
-- `output/pdf/Oceanides-Company-Profile-Minimal-Logo.pdf` — fixed six-page A4 print layout.
-- `output/pptx/Oceanides-Company-Profile-Minimal-Logo.pptx` — editable native text and shapes.
+- `output/pdf/Oceanides-Company-Profile-Minimal-Clean.pdf` — fixed six-page A4 print layout.
+- `output/pptx/Oceanides-Company-Profile-Minimal-Clean.pptx` — editable native text and shapes.
 
 Earlier output filenames are superseded. The current profile uses a warm-white,
 ink and navy palette, sentence-case Arial typography and generous whitespace.

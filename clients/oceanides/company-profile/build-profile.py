@@ -86,10 +86,9 @@ def footer(p, n, dark=False):
 ASSETS = 'clients/oceanides/assets/'
 ART = 'clients/oceanides/company-profile/assets/'
 
-# Minimal cover: quiet wordmark, one subject, one architectural image.
+# Minimal cover: one logo, one subject, one architectural image.
 p=page()
-text(p, 'Oceanides', 64, 56, 530, 27, 'Strong')
-image(p, ART+'logo-transparent.png', 642, 29, 88, 88, alt='Oceanides logo with transparent outer background')
+image(p, ART+'logo-transparent.png', 64, 29, 88, 88, alt='Oceanides logo with transparent outer background')
 text(p, 'Company profile', 64, 160, 666, 17, 'Body', 'gray')
 text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'ink', 68)
 image(p, ART+'cover-property-minimal.png', 0, 382, W, W*2/3, 'contain', 'AI-generated conceptual architecture, not a completed Oceanides project or engineering plan')
@@ -170,8 +169,7 @@ footer(p,5)
 
 # Closing: calm navy, direct contacts, a short operating process.
 p=page('navy')
-text(p,'Oceanides',64,56,530,27,'Strong','#FFFFFF')
-image(p,ART+'logo-transparent.png',642,29,88,88,alt='Oceanides logo with transparent outer background')
+image(p,ART+'logo-transparent.png',64,29,88,88,alt='Oceanides logo with transparent outer background')
 text(p,'Your next step',64,158,666,17,'Body','muted')
 text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','#FFFFFF',64)
 text(p,'Tell us the service, site location and preferred inspection schedule.',64,365,666,21,'Body','muted',31)

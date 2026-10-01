@@ -35,6 +35,10 @@ No deployment or merge requested.
 - No paid/live generation, production data change, merge, or deployment.
 
 ## Company profile
+Single-brand header follow-up: removed the duplicate top Oceanides text on cover
+and closing; transparent logo moved to upper left. Both changed PDF/PPTX pages
+visually inspected; no overlap/crop. Only those two text runs removed; all remaining
+page text verified, package/geometry/hash pass. Current suffix: Minimal-Clean.
 Latest follow-up: Neil rejected the visible square logo matte. Native image edit
 created logo-transparent.png; profile cover/closing now use an 88px cutout.
 PDF alpha soft masks and exact PNG embed in PPTX verified; original JPG unchanged.
@@ -42,8 +46,8 @@ All six pages retain identical text. Changed pages rendered on light/navy backgr
 Neil requested an Apple/OpenAI-inspired minimal redesign after reviewing the
 Metro Rod version. Six A4 portrait pages for management and procurement.
 Current outputs in clients/oceanides/company-profile/output/:
-- pdf/Oceanides-Company-Profile-Minimal-Logo.pdf
-- pptx/Oceanides-Company-Profile-Minimal-Logo.pptx
+- pdf/Oceanides-Company-Profile-Minimal-Clean.pdf
+- pptx/Oceanides-Company-Profile-Minimal-Clean.pptx
 Earlier output filenames are superseded; preserved as version history.
 Warm-white, ink/navy, Arial regular/bold, sentence-case titles and flat service
 rows. Client DESIGN.md has a profile-only exception; other surfaces unchanged.
