@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-01, Oceanides profile rebuilt with custom illustrative assets**
+**Stamped: 2026-10-01, Oceanides minimal profile revision complete**
 
 ## Current work
 Branch: `codex/oceanides-company-profile`, based on `codex/oceanides-latest-logo`
@@ -35,48 +35,35 @@ No deployment or merge requested.
 - No paid/live generation, production data change, merge, or deployment.
 
 ## Company profile
-Neil completed the grill-me interview and authorized production. Metro Rod is
-the selected reference; the result uses Oceanides navy/amber/paper identity.
-Neil rejected the first design: token compliance was not reference fidelity.
-Reopened the actual Metro Rod PDF and rendered its cover/service pages locally.
-Rebuild uses photo mastheads, angled title plates, service bands and branded
-contact strips. Cap: two design passes; both concrete review findings corrected.
-Six A4 portrait pages for an in-person management/procurement meeting.
-Outputs under `clients/oceanides/company-profile/output/`: printable PDF and
-native editable PPTX (`Oceanides-Company-Profile-final.pptx`). Current PDF is
-`Oceanides-Company-Profile-2026.pdf`; the unsuffixed PDF is superseded (open-file
-lock prevented replacement). JSON content and
-Python/JS builders plus a PowerShell rebuild entrypoint are saved alongside.
-Service groups: siphoning; plumbing/declogging; house/condo renovation and
-restoration (ceiling, pipe/roof leaks, waterproofing, house cleaning); pest control.
-Oceanides is the client contact through turnover, including specialist-contractor
-coordination. CTA: site assessment and quotation; request accreditation requirements.
-Contacts confirmed by Neil and screenshot 1000040025.jpg: 0917 671 6383 (Globe),
-marketing@oceanidessepticandpest.com; Tramo Street Corner Dandan, Pasay City 1300.
-The old phone/Gmail were not used in this profile. Existing funnels unchanged.
-No confirmed provider/specs for future treatment system: excluded. No invented
-registration numbers, licenses, accreditation, equipment ownership or guarantees.
-Approved logo, actual vehicle image and one confirmed same-site before/after pair used.
-Neil authorized custom asset generation. Four native generated illustrations:
-conceptual property cutaway cover, plumbing, ceiling repair and pest treatment.
-Each is visibly labeled AI-generated; fictional workers are not employee/project
-evidence. Exact prompts and use boundaries: assets/generated-sources.json.
-Prior stock assets remain recorded in sources.json but are not used in current outputs.
-Checks: six PDF pages; every layout text line extracts; contacts match; old
-contacts absent. PPTX package, geometry, heading/font policy and final import PASS.
-All twelve refreshed PDF/PPTX renders inspected; independent critic opened actual
-reference pages. Ceiling-tool crop and obscured pest-treatment target corrected
-and rechecked. No remaining must-fix layout or claim defect reported.
-111 native text runs match layout per slide; six PDF pages extract every expected
-line, contacts and illustration disclosures match, notes record provenance.
-Package/geometry/font checks and final import pass. PPTX encodes approved Arial
-Narrow, but the portable renderer substitutes a broader display face; native
-PowerPoint remains unverified. Use the fixed PDF for printing.
-Remaining visual gap: fewer actual crew-at-work photos than the reference. No
-generated illustration is presented as project proof. User aesthetic review pending;
-no AAA claim. Builders now revision both PDF and PPTX to avoid open-file locks.
-Evidence stays in
-`.tmp/oceanides-profile/`. Artifact-only change; application tests not repeated.
+Neil requested an Apple/OpenAI-inspired minimal redesign after reviewing the
+Metro Rod version. Six A4 portrait pages for management and procurement.
+Current outputs in clients/oceanides/company-profile/output/:
+- pdf/Oceanides-Company-Profile-Minimal-Final.pdf
+- pptx/Oceanides-Company-Profile-Minimal-Final.pptx
+Earlier output filenames are superseded; preserved as version history.
+Warm-white, ink/navy, Arial regular/bold, sentence-case titles and flat service
+rows. Client DESIGN.md has a profile-only exception; other surfaces unchanged.
+Actual Apple report pages inspected and OpenAI public guidance read; recorded in
+workflows/design_swipe_file.md D18. No proprietary font or third-party logo used.
+New architectural cover generated and corrected once to remove a duplicate toilet.
+Four visible AI disclosures; actual same-site siphoning proof remains separate.
+Exact prompts and provenance: assets/generated-sources.json.
+Services: siphoning, plumbing/declogging, renovation/restoration, ceiling repairs,
+pipe/roof leaks, waterproofing, house cleaning and pest control. Oceanides coordinates
+through turnover, including specialist contractors. No unsupported treatment-system,
+license, accreditation, equipment ownership, project-count or guarantee claim.
+Contacts: 0917 671 6383 (Globe), marketing@oceanidessepticandpest.com;
+Tramo Street Corner Dandan, Pasay City, Philippines 1300.
+CTA: site assessment and written quotation; receive procurement requirements.
+Verification: six PDF and PPTX pages; 100 exact native text runs match the shared
+layout, every PDF line extracts, contacts match, old phone/Gmail absent, all four
+AI disclosures present. Package, geometry, font policy, import and final hash PASS.
+All page renders inspected. Independent critic found no must-fix export issue;
+optional remaining preference is greater emphasis on actual proof on page 3.
+Final cover correction inspected; short heading periods removed.
+Native PowerPoint itself untested; use PDF for fixed printing. User aesthetic
+review pending. No quality score or AAA claim. Artifact-only work, no app tests
+repeated. Evidence: .tmp/oceanides-profile/. No merge or deployment.
 
 ## Other ongoing work retained
 Recovery tooling draft PR150 targets PR146's `codex/oneshot-recovery` branch;

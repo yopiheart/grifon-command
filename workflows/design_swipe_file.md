@@ -1,5 +1,30 @@
 # Design Swipe File
 
+### D18 — Apple report + OpenAI design guidelines — 2026-10-01
+
+Sources: https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf
+and https://openai.com/brand/ . Local Apple reference renders inspected at
+`.tmp/oceanides-profile/reference/minimal/apple-001.png` through `apple-005.png`.
+OpenAI's guidelines were read via web; full brand portal requires authentication,
+and no browser surface was available. No claim of live website screenshot review.
+
+Layout: Apple cover uses a dominant left-aligned subject with generous space and
+contained photography. Inner pages use quiet navigation, restrained rules and
+clear typographic hierarchy. Its card-heavy data pages are not the Oceanides
+composition reference. OpenAI describes a geometric, approachable sans family
+and generous clear space. Exact Apple fonts were not extracted; OpenAI Sans is
+named by its own guidelines. Local editable substitute: Arial Regular/Bold.
+
+System: neutral light/dark grounds, one subject per composition, sentence case,
+large type and subordinate metadata. Colors in Oceanides are a new client-specific
+combination, not claimed extracted reference hex values. Interaction: print PDF
+has none; live motion/hover behavior unobserved. Technical: PDF layout is inspected
+directly, but the websites' frameworks are unverified.
+
+Application: Oceanides company profile uses warm white, ink, retained navy and
+sparse blue. Keep actual evidence and clear service scopes, remove signage plates
+and repeated high-volume contact bands. Axis: clarity and procurement credibility.
+
 Compounding database of decoded **design worlds** — evidence for WHY a premium site reads as
 premium, per niche. The blind spot it exists to close (Neil, 2026-08-01): we compound at funnel
 structure (`funnel_swipe_file.md`) and ad visuals (`static_ad_swipe_file.md`) but had no evidence

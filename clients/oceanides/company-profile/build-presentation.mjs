@@ -18,7 +18,7 @@ const sources = [
  'Service scope, Oceanides coordination and intended audience: user briefing in this chat.',
  'Phone, email and address: user-supplied Facebook Page screenshot 1000040025.jpg; phone also explicitly confirmed by Neil.',
  'Legal company name: workflows/oceanides_business_model.md, existing company records.',
- 'Design reference: Metro Rod Services Explained brochure https://www.metrorod.co.uk/app/themes/metrorod-v2.0.1/assets/flipbook/newcastle/common/data/catalogue.pdf ; Oceanides colors from clients/oceanides/DESIGN.md.',
+ 'Design references: Apple 2025 Environmental Progress Report https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf and OpenAI public Design Guidelines https://openai.com/brand/ ; profile-specific direction in clients/oceanides/DESIGN.md. No third-party brand marks used.',
  'No assertion of supplier accreditation, equipment ownership, licenses, project volume, treatment-system capability or maintenance-free operation.'
 ];
 let count = 0;
@@ -48,7 +48,6 @@ for (const page of spec.pages) {
  }
  slide.speakerNotes.textFrame.setText(sources.join('\n')+'\n'+
    (spec.pages.indexOf(page)===0?'Cover: AI-generated conceptual property cutaway, not a real project or engineering plan. Exact generation brief: company-profile/assets/generated-sources.json.':'' )+
-   (spec.pages.indexOf(page)===1?'Vehicle: clients/oceanides/assets/tb2-truck-street.png, approved actual source in client design/asset records.':'' )+
    (spec.pages.indexOf(page)===2?'Matched before/after pair: clients/oceanides/assets/tb2-ba2-before.png and tb2-ba2-after.png. Neil confirmed real job photos on 2026-08-01; see client DESIGN.md and asset-builder source.':'' )+
    ([2,3,4].includes(spec.pages.indexOf(page))?'Service scene: AI-generated fictional specialist, visibly labeled. Not an actual Oceanides employee or completed project. Exact generation brief: company-profile/assets/generated-sources.json.':''));
 }
@@ -61,7 +60,7 @@ await finalizePresentation({workspaceDir, candidatePath, finalPath:FINAL_PPTX,
  layoutValidatorPath:path.join(SKILL_DIR,'container_tools/inspect_presentation_layout_geometry.py'),
  layoutArgs:['--expected-slide-size-emu',`${spec.width*9525},${spec.height*9525}`,'--validate-bullet-geometry','--validate-heading-fit'],
  explicitTotalSlideCount:6, requiredNativeTableOwnerSlides:[], requiredNativeChartOwnerSlides:[],
- fontPolicy:{basis:'design',families:['Arial','Arial Narrow']}, verifyArtifactToolImport:true,
+ fontPolicy:{basis:'design',families:['Arial']}, verifyArtifactToolImport:true,
  receiptPath:path.join(TMP_DIR,`presentation-validation${revision?'-'+revision:''}.json`)});
 const checked = await PresentationFile.importPptx(await FileBlob.load(FINAL_PPTX));
 for (let i=0;i<spec.pages.length;i++) {

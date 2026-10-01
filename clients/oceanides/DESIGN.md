@@ -74,6 +74,29 @@ square artwork and its dark background; do not apply the old circular mask.
 Both Oceanides funnels use optimized `public/img/logo.webp` copies built from
 that source. The superseded standalone `Oceanides New logo.png` was removed.
 
+### Company profile: minimal editorial direction (2026-10-01)
+
+Neil rejected the signage-heavy brochure and explicitly requested Apple/OpenAI
+inspired simplicity, including changes to fonts and palette combinations.
+For the company profile and its editable presentation only, this overrides the
+uppercase display and amber-panel defaults below. Other client surfaces retain
+their existing rules.
+
+- Warm white `#F7F7F2` is the main canvas. Ink `#17212B` carries text; navy
+  `#0A1F45` anchors the closing page. Blue `#1C63AD` appears sparingly.
+- Arial Regular and Bold form one available, editable sans-serif family.
+  Sentence case, regular-weight large cover type, bold subject headings.
+  These are local substitutes, not claims to use SF Pro or OpenAI Sans.
+- A4 portrait, 64px margins on a 794x1123 design canvas, generous section gaps,
+  flat editorial rows and fine rules. No angled plates, hazard devices, chunky
+  contact strips, decorative chips, all-caps service lists or UI card grids.
+- One principal image per page. Preserve working hands/tools and treatment
+  targets. Generated scenes remain visibly labeled; actual job proof is separate.
+- Preserve the supplied square logo exactly, with its background and proportions.
+  Use it with clear space rather than as a large visual centerpiece.
+- Reference: D18 in `workflows/design_swipe_file.md`; Apple's 2025 Environmental
+  Progress Report and OpenAI's public Design Guidelines. No borrowed brand marks.
+
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at
 pintura**: matte navy panels, amber signage, dashed work-order rules, totoong
