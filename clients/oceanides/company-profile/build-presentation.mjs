@@ -61,7 +61,7 @@ await finalizePresentation({workspaceDir, candidatePath, finalPath:FINAL_PPTX,
  layoutValidatorPath:path.join(SKILL_DIR,'container_tools/inspect_presentation_layout_geometry.py'),
  layoutArgs:['--expected-slide-size-emu',`${spec.width*9525},${spec.height*9525}`,'--validate-bullet-geometry','--validate-heading-fit'],
  explicitTotalSlideCount:6, requiredNativeTableOwnerSlides:[], requiredNativeChartOwnerSlides:[],
- fontPolicy:{basis:'design',families:['Arial']}, verifyArtifactToolImport:true,
+ fontPolicy:{basis:'design',families:['Arial','Segoe UI']}, verifyArtifactToolImport:true,
  receiptPath:path.join(TMP_DIR,`presentation-validation${revision?'-'+revision:''}.json`)});
 const checked = await PresentationFile.importPptx(await FileBlob.load(FINAL_PPTX));
 for (let i=0;i<spec.pages.length;i++) {

@@ -25,8 +25,9 @@ DATA = json.loads((HERE / 'profile-content.json').read_text(encoding='utf-8'))
 W, H = 794, 1123
 C = dict(navy='#0A1F45', surface='#263D5F', paper='#F7F7F2', ink='#17212B',
          blue='#1C63AD', sky='#89C7F4', muted='#D8DFE9', dim='#AABCD3', gray='#63707D', line='#D9DDD9')
-FONTS = {'Body': ('Arial', 'arial.ttf', False), 'Strong': ('Arial', 'arialbd.ttf', True),
-         'Display': ('Arial', 'arial.ttf', False)}
+FONTS = {'Body': ('Arial', 'arial.ttf', False),
+         'Strong': ('Segoe UI', 'segoeuib.ttf', True),
+         'Display': ('Segoe UI', 'segoeui.ttf', False)}
 for key, (_, filename, _) in FONTS.items():
     pdfmetrics.registerFont(TTFont(key, str(Path('C:/Windows/Fonts') / filename)))
 

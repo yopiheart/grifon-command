@@ -35,6 +35,12 @@ No deployment or merge requested.
 - No paid/live generation, production data change, merge, or deployment.
 
 ## Company profile
+Typography follow-up: Neil requested a distinct modern title family versus subtitles.
+Final: Segoe UI Regular display, Segoe UI Bold topic headings, Arial Regular body.
+Semibold-family trial showed portable preview weight substitution; final uses
+recognized Segoe UI regular/bold. PDF fonts embedded; PPTX native fonts encoded.
+Six pages retain identical content; package/geometry/font policy/hash pass.
+Native PowerPoint remains untested. Current suffix: Modern-Type-Final.
 Ocean accent follow-up: Neil requested stronger title/subtitle color distinction
 and a subtle branded background. Light-page headings now ocean blue; navy-page
 headings sky blue. Three native wave ribbons occupy the upper-right margin, clear
@@ -51,8 +57,8 @@ All six pages retain identical text. Changed pages rendered on light/navy backgr
 Neil requested an Apple/OpenAI-inspired minimal redesign after reviewing the
 Metro Rod version. Six A4 portrait pages for management and procurement.
 Current outputs in clients/oceanides/company-profile/output/:
-- pdf/Oceanides-Company-Profile-Ocean-Accent-Final.pdf
-- pptx/Oceanides-Company-Profile-Ocean-Accent-Final.pptx
+- pdf/Oceanides-Company-Profile-Modern-Type-Final.pdf
+- pptx/Oceanides-Company-Profile-Modern-Type-Final.pptx
 Earlier output filenames are superseded; preserved as version history.
 Warm-white, ink/navy, Arial regular/bold, sentence-case titles and flat service
 rows. Client DESIGN.md has a profile-only exception; other surfaces unchanged.
@@ -101,3 +107,4 @@ Next: release review for PR146; PR150 still needs main-target CI after PR146 lan
 
 Logo cutout independent review: PASS on PDF/PPTX pages 1 and 6; no square matte or clipping. Small service lettering needs zoom at page-fit; portable PPTX preview edges slightly rougher than PDF.
 Ocean accent independent review: BRAND_PASS, 0 defects; all final PDF/PPTX pages checked.
+Modern typography independent review: BRAND_PASS, 0 must-fix defects; all twelve final renders inspected.

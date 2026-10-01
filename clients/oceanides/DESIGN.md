@@ -88,8 +88,10 @@ their existing rules.
   headings. Body/subtitle text retains ink/gray and muted white.
   Three fine wave ribbons in the upper-right margin provide a restrained brand
   detail, in pale blue on paper and muted blue on navy; native editable shapes.
-- Arial Regular and Bold form one available, editable sans-serif family.
-  Sentence case, regular-weight large cover type, bold subject headings.
+- Neil requested a distinct title font. Segoe UI Regular carries large display
+  titles and Segoe UI Bold carries topic headings; Arial Regular carries subtitles
+  and body. Both families are available
+  locally and remain native editable text. Sentence case throughout.
   These are local substitutes, not claims to use SF Pro or OpenAI Sans.
 - A4 portrait, 64px margins on a 794x1123 design canvas, generous section gaps,
   flat editorial rows and fine rules. No angled plates, hazard devices, chunky
