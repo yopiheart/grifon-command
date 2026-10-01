@@ -2,10 +2,10 @@
 
 Current deliverables:
 
-- `output/pptx/Oceanides-Company-Profile-Widescreen-Final.pptx` — seven editable 16:9 slides for a laptop/projector.
-- `output/pdf/Oceanides-Company-Profile-Widescreen-Final.pdf` — the same widescreen presentation with embedded fonts.
-- `output/pdf/Oceanides-Company-Profile-Navy-Refined.pdf` — six-page A4 profile for printed copies.
-- `output/pptx/Oceanides-Company-Profile-Navy-Refined.pptx` — editable A4 source.
+- `output/pptx/Oceanides-Company-Profile-Widescreen-Septage-Final.pptx` — eight editable 16:9 slides for a laptop/projector.
+- `output/pdf/Oceanides-Company-Profile-Widescreen-Septage-Final.pdf` — the same widescreen presentation with embedded fonts.
+- `output/pdf/Oceanides-Company-Profile-Print-Septage-Final.pdf` — seven-page A4 profile for printed copies.
+- `output/pptx/Oceanides-Company-Profile-Print-Septage-Final.pptx` — editable A4 source.
 
 Earlier output filenames are superseded. The current profile uses a warm-white,
 ink and navy palette, sentence-case Segoe UI titles and Arial body text and generous whitespace.
@@ -20,6 +20,12 @@ using a rebuilt document; the presentation builder checks package and geometry.
 The widescreen layout uses larger presentation text and a dedicated actual
 before/after slide. Coordination, scope and process details are retained in
 speaker notes. The print profile keeps its full A4 layout.
+
+Neil confirmed the septage treatment facility offer on 2026-10-01. It appears on
+the cover, overview and a dedicated service page in both formats. Oceanides is
+the main contact and specialist coordinator; system details, capacity and
+maintenance requirements follow the agreed technical proposal. No unverified
+facility ownership, supplier specifications or maintenance-free guarantee is stated.
 
 Content comes from `profile-content.json`. Four generated illustrations are visibly
 labeled in the document; their exact prompts and provenance are recorded in

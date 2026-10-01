@@ -21,7 +21,7 @@ const sources = [
  'Phone, email and address: user-supplied Facebook Page screenshot 1000040025.jpg; phone also explicitly confirmed by Neil.',
  'Legal company name: workflows/oceanides_business_model.md, existing company records.',
  'Design references: Apple 2025 Environmental Progress Report https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf and OpenAI public Design Guidelines https://openai.com/brand/ ; profile-specific direction in clients/oceanides/DESIGN.md. No third-party brand marks used.',
- 'No assertion of supplier accreditation, equipment ownership, licenses, project volume, treatment-system capability or maintenance-free operation.'
+ 'Septage treatment facility offer confirmed by Neil on 2026-10-01. Project scope, system details, capacity and maintenance requirements follow specialist assessment and the agreed proposal. No assertion of supplier accreditation, equipment ownership, licenses, project volume or maintenance-free operation.'
 ];
 let count = 0;
 for (const page of spec.pages) {
@@ -52,7 +52,7 @@ for (const page of spec.pages) {
  slide.speakerNotes.textFrame.setText(sources.join('\n')+'\n'+ (page.notes ?? (
    (spec.pages.indexOf(page)===0?'Cover: AI-generated conceptual property cutaway, not a real project or engineering plan. Exact generation brief: company-profile/assets/generated-sources.json.':'' )+
    (spec.pages.indexOf(page)===2?'Matched before/after pair: clients/oceanides/assets/tb2-ba2-before.png and tb2-ba2-after.png. Neil confirmed real job photos on 2026-08-01; see client DESIGN.md and asset-builder source.':'' )+
-   ([2,3,4].includes(spec.pages.indexOf(page))?'Service scene: AI-generated fictional specialist, visibly labeled. Not an actual Oceanides employee or completed project. Exact generation brief: company-profile/assets/generated-sources.json.':''))));
+   ([2,4,5].includes(spec.pages.indexOf(page))?'Service scene: AI-generated fictional specialist, visibly labeled. Not an actual Oceanides employee or completed project. Exact generation brief: company-profile/assets/generated-sources.json.':''))));
 }
 
 const candidatePath = path.join(TMP_DIR,'candidate.pptx');

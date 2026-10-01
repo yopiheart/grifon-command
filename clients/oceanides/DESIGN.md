@@ -96,7 +96,8 @@ their existing rules.
   These are local substitutes, not claims to use SF Pro or OpenAI Sans.
 - Printed profile: A4 portrait, 64px margins on a 794x1123 design canvas.
   Laptop/projector presentation (Neil, 2026-10-01): 16:9 landscape, 1280x720
-  design canvas and 72px margins; seven slides with actual before/after proof
+  design canvas and 72px margins; eight slides after the confirmed septage
+  treatment facility offer was added, with actual before/after proof
   on its own slide. Display titles 48-60px, principal body text 23-27px;
   smaller text is reserved for image disclosures and footer metadata.
   Both use generous section gaps,
