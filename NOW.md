@@ -3,7 +3,9 @@
 
 ## Current work
 Branch: `codex/oceanides-company-profile`, based on `codex/oceanides-latest-logo`
-at `7a374c27`. Profile draft PR: pending creation below.
+at `7a374c27`. Profile draft PR152 (stacked on PR151):
+https://github.com/yopiheart/grifon-command/pull/152.
+Profile implementation `57ace2d3` pushed; no merge or deployment.
 Logo draft PR151: https://github.com/yopiheart/grifon-command/pull/151.
 Logo implementation `63060f33` pushed; independent verification passed.
 No deployment or merge requested.
