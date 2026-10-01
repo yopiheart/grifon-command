@@ -92,8 +92,11 @@ their existing rules.
   contact strips, decorative chips, all-caps service lists or UI card grids.
 - One principal image per page. Preserve working hands/tools and treatment
   targets. Generated scenes remain visibly labeled; actual job proof is separate.
-- Preserve the supplied square logo exactly, with its background and proportions.
-  Use it with clear space rather than as a large visual centerpiece.
+- Neil subsequently requested removal of the visible square around the logo.
+  For this profile, use `company-profile/assets/logo-transparent.png`: an outer
+  background cutout preserving the full emblem, lettering and proportions.
+  Preserve alpha through PDF/PPTX export. Do not crop across the badge or banners.
+  The canonical source JPG and existing funnel assets remain unchanged.
 - Reference: D18 in `workflows/design_swipe_file.md`; Apple's 2025 Environmental
   Progress Report and OpenAI's public Design Guidelines. No borrowed brand marks.
 

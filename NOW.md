@@ -35,11 +35,15 @@ No deployment or merge requested.
 - No paid/live generation, production data change, merge, or deployment.
 
 ## Company profile
+Latest follow-up: Neil rejected the visible square logo matte. Native image edit
+created logo-transparent.png; profile cover/closing now use an 88px cutout.
+PDF alpha soft masks and exact PNG embed in PPTX verified; original JPG unchanged.
+All six pages retain identical text. Changed pages rendered on light/navy backgrounds.
 Neil requested an Apple/OpenAI-inspired minimal redesign after reviewing the
 Metro Rod version. Six A4 portrait pages for management and procurement.
 Current outputs in clients/oceanides/company-profile/output/:
-- pdf/Oceanides-Company-Profile-Minimal-Final.pdf
-- pptx/Oceanides-Company-Profile-Minimal-Final.pptx
+- pdf/Oceanides-Company-Profile-Minimal-Logo.pdf
+- pptx/Oceanides-Company-Profile-Minimal-Logo.pptx
 Earlier output filenames are superseded; preserved as version history.
 Warm-white, ink/navy, Arial regular/bold, sentence-case titles and flat service
 rows. Client DESIGN.md has a profile-only exception; other surfaces unchanged.
@@ -85,3 +89,5 @@ Legacy opt-in review and push-only main-status skipped as configured.
 Vercel remains SUCCESS; GitHub checks now start and complete normally.
 Earlier startup-failure emails remain historical. No merge or production deploy.
 Next: release review for PR146; PR150 still needs main-target CI after PR146 lands.
+
+Logo cutout independent review: PASS on PDF/PPTX pages 1 and 6; no square matte or clipping. Small service lettering needs zoom at page-fit; portable PPTX preview edges slightly rougher than PDF.

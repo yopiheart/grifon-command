@@ -62,7 +62,7 @@ def text(p, value, x, y, w=686, size=18, font='Body', color='ink', leading=None)
 def image(p, source, x, y, w, h, fit='contain', alt=''):
     optimized = PRIVATE / 'images' / (Path(source).stem + '.jpg')
     optimized.parent.mkdir(parents=True, exist_ok=True)
-    if source.endswith('logo.jpg'):
+    if source.endswith(('logo.jpg', 'logo-transparent.png')):
         render_path = ROOT / source
     else:
         im = Image.open(ROOT / source).convert('RGB')
@@ -89,7 +89,7 @@ ART = 'clients/oceanides/company-profile/assets/'
 # Minimal cover: quiet wordmark, one subject, one architectural image.
 p=page()
 text(p, 'Oceanides', 64, 56, 530, 27, 'Strong')
-image(p, ASSETS+'logo.jpg', 672, 41, 58, 58, alt='Approved Oceanides logo, unchanged')
+image(p, ART+'logo-transparent.png', 642, 29, 88, 88, alt='Oceanides logo with transparent outer background')
 text(p, 'Company profile', 64, 160, 666, 17, 'Body', 'gray')
 text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'ink', 68)
 image(p, ART+'cover-property-minimal.png', 0, 382, W, W*2/3, 'contain', 'AI-generated conceptual architecture, not a completed Oceanides project or engineering plan')
@@ -171,7 +171,7 @@ footer(p,5)
 # Closing: calm navy, direct contacts, a short operating process.
 p=page('navy')
 text(p,'Oceanides',64,56,530,27,'Strong','#FFFFFF')
-image(p,ASSETS+'logo.jpg',672,41,58,58,alt='Approved Oceanides logo, unchanged')
+image(p,ART+'logo-transparent.png',642,29,88,88,alt='Oceanides logo with transparent outer background')
 text(p,'Your next step',64,158,666,17,'Body','muted')
 text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','#FFFFFF',64)
 text(p,'Tell us the service, site location and preferred inspection schedule.',64,365,666,21,'Body','muted',31)
@@ -232,7 +232,9 @@ for p in pages:
                 c.linkURL('tel:+639176716383',(x,H-y-h,x+w,H-y),relative=1)
         else:
             src = Path(el['renderPath'])
-            im = Image.open(src).convert('RGB')
+            im = Image.open(src)
+            has_alpha = 'A' in im.getbands()
+            im = im.convert('RGBA' if has_alpha else 'RGB')
             if el['fit']=='cover':
                 im = ImageOps.fit(im,(round(w*3),round(h*3)),method=Image.Resampling.LANCZOS)
             else:
@@ -240,7 +242,10 @@ for p in pages:
                 iw,ih=im.width*ratio,im.height*ratio
                 x+=(w-iw)/2; y+=(h-ih)/2; w,h=iw,ih
             encoded = BytesIO()
-            im.save(encoded, 'JPEG', quality=92, optimize=True)
+            if has_alpha:
+                im.save(encoded, 'PNG')
+            else:
+                im.save(encoded, 'JPEG', quality=92, optimize=True)
             encoded.seek(0)
             c.drawImage(ImageReader(encoded),x,H-y-h,w,h,mask='auto')
     c.restoreState()

@@ -14,7 +14,7 @@ const { finalizePresentation } = await import(pathToFileURL(path.join(SKILL_DIR,
 const spec = JSON.parse(await fs.readFile(path.join(TMP_DIR, 'layout.json'), 'utf8'));
 const presentation = Presentation.create({slideSize: {width: spec.width, height: spec.height}});
 const sources = [
- 'Logo: latest JPG supplied by Neil on 2026-10-01, canonical clients/oceanides/assets/logo.jpg.',
+ 'Logo: transparent outer-background derivative requested by Neil, from canonical clients/oceanides/assets/logo.jpg. Source and edit brief: company-profile/assets/generated-sources.json.',
  'Service scope, Oceanides coordination and intended audience: user briefing in this chat.',
  'Phone, email and address: user-supplied Facebook Page screenshot 1000040025.jpg; phone also explicitly confirmed by Neil.',
  'Legal company name: workflows/oceanides_business_model.md, existing company records.',
@@ -29,7 +29,8 @@ for (const page of spec.pages) {
   const position = {left:el.x, top:el.y, width:el.w, height:el.h};
   if (el.type === 'image') {
    const bytes = new Uint8Array(await fs.readFile(el.renderPath ?? path.join(workspaceDir, el.path)));
-   slide.images.add({blob:bytes, contentType:'image/jpeg', fit:el.fit, position, alt:el.alt});
+   const contentType = path.extname(el.renderPath ?? el.path).toLowerCase()==='.png'?'image/png':'image/jpeg';
+   slide.images.add({blob:bytes, contentType, fit:el.fit, position, alt:el.alt});
   } else if (el.type === 'polygon') {
    slide.shapes.add({geometry:'custom',name:'profile-'+(++count),position,fill:el.color,line:{fill:'none',width:0},
     customPaths:[{width:el.w,height:el.h,commands:[

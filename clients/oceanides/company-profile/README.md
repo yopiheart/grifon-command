@@ -2,8 +2,8 @@
 
 Current deliverables:
 
-- `output/pdf/Oceanides-Company-Profile-Minimal-Final.pdf` — fixed six-page A4 print layout.
-- `output/pptx/Oceanides-Company-Profile-Minimal-Final.pptx` — editable native text and shapes.
+- `output/pdf/Oceanides-Company-Profile-Minimal-Logo.pdf` — fixed six-page A4 print layout.
+- `output/pptx/Oceanides-Company-Profile-Minimal-Logo.pptx` — editable native text and shapes.
 
 Earlier output filenames are superseded. The current profile uses a warm-white,
 ink and navy palette, sentence-case Arial typography and generous whitespace.
@@ -22,3 +22,6 @@ Older cover and vehicle assets remain recorded but are not used in this revision
 
 The PDF embeds its typography. The PPTX uses native Arial text and shapes. Microsoft PowerPoint rendering
 has not been tested. Use the PDF for consistent printing.
+
+Logo: user-requested transparent outer-background derivative in assets/logo-transparent.png.
+Its alpha is preserved in both exports; the supplied canonical JPG remains intact.
