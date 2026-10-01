@@ -84,7 +84,8 @@ their existing rules.
 
 - Warm white `#F7F7F2` is the main canvas. Ink `#17212B` carries text; navy
   `#0A1F45` anchors the closing page. Neil requested clearer colored topics:
-  blue `#1C63AD` carries light-page headings; sky `#89C7F4` carries navy-page
+  blue `#1C63AD` carries light-page headings. Neil rejected the cyan headings
+  on the navy closing page; use warm white `#F7F7F2` for its titles and topic
   headings. Body/subtitle text retains ink/gray and muted white.
   Three fine wave ribbons in the upper-right margin provide a restrained brand
   detail, in pale blue on paper and muted blue on navy; native editable shapes.

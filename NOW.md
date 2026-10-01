@@ -35,6 +35,10 @@ No deployment or merge requested.
 - No paid/live generation, production data change, merge, or deployment.
 
 ## Company profile
+Closing palette correction: Neil rejected cyan headings against navy. Closing
+main title and topic headings now warm white; supporting text stays muted white.
+Changed PDF/PPTX page inspected, six-page text unchanged, package/geometry/hash pass.
+Current suffix: Navy-Refined.
 Typography follow-up: Neil requested a distinct modern title family versus subtitles.
 Final: Segoe UI Regular display, Segoe UI Bold topic headings, Arial Regular body.
 Semibold-family trial showed portable preview weight substitution; final uses
@@ -57,8 +61,8 @@ All six pages retain identical text. Changed pages rendered on light/navy backgr
 Neil requested an Apple/OpenAI-inspired minimal redesign after reviewing the
 Metro Rod version. Six A4 portrait pages for management and procurement.
 Current outputs in clients/oceanides/company-profile/output/:
-- pdf/Oceanides-Company-Profile-Modern-Type-Final.pdf
-- pptx/Oceanides-Company-Profile-Modern-Type-Final.pptx
+- pdf/Oceanides-Company-Profile-Navy-Refined.pdf
+- pptx/Oceanides-Company-Profile-Navy-Refined.pptx
 Earlier output filenames are superseded; preserved as version history.
 Warm-white, ink/navy, Arial regular/bold, sentence-case titles and flat service
 rows. Client DESIGN.md has a profile-only exception; other surfaces unchanged.

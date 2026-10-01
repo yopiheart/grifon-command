@@ -2,8 +2,8 @@
 
 Current deliverables:
 
-- `output/pdf/Oceanides-Company-Profile-Modern-Type-Final.pdf` — fixed six-page A4 print layout.
-- `output/pptx/Oceanides-Company-Profile-Modern-Type-Final.pptx` — editable native text and shapes.
+- `output/pdf/Oceanides-Company-Profile-Navy-Refined.pdf` — fixed six-page A4 print layout.
+- `output/pptx/Oceanides-Company-Profile-Navy-Refined.pptx` — editable native text and shapes.
 
 Earlier output filenames are superseded. The current profile uses a warm-white,
 ink and navy palette, sentence-case Segoe UI titles and Arial body text and generous whitespace.

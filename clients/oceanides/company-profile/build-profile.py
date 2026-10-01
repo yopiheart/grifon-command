@@ -58,7 +58,7 @@ def text(p, value, x, y, w=686, size=18, font='Body', color='ink', leading=None)
         if color == 'ink':
             color = 'blue'
         elif color == '#FFFFFF':
-            color = 'sky'
+            color = 'paper'
     leading = leading or size * 1.3
     lines = []
     for para in value.split('\n'):
@@ -191,7 +191,7 @@ footer(p,5)
 p=page('navy')
 image(p,ART+'logo-transparent.png',64,29,88,88,alt='Oceanides logo with transparent outer background')
 text(p,'Your next step',64,158,666,17,'Body','muted')
-text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','sky',64)
+text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','paper',64)
 text(p,'Tell us the service, site location and preferred inspection schedule.',64,365,666,21,'Body','muted',31)
 text(p,DATA['phone'],64,470,666,47,'Display','#FFFFFF')
 text(p,DATA['email'],64,548,666,22,'Body','muted')
