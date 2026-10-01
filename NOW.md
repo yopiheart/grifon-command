@@ -3,6 +3,8 @@
 
 ## Current work
 Branch: `codex/oceanides-latest-logo`, based on `origin/main` (`5d1b583c`).
+Draft PR151: https://github.com/yopiheart/grifon-command/pull/151.
+Implementation `63060f33` pushed; independent verification passed.
 Neil approved replacing the active Oceanides logo with the exact JPG attached in
 this chat and deleting superseded standalone logo files. No deployment requested.
 
