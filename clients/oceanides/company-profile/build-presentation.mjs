@@ -18,7 +18,7 @@ const sources = [
  'Service scope, Oceanides coordination and intended audience: user briefing in this chat.',
  'Phone, email and address: user-supplied Facebook Page screenshot 1000040025.jpg; phone also explicitly confirmed by Neil.',
  'Legal company name: workflows/oceanides_business_model.md, existing company records.',
- 'Design inspiration: Metro Rod Services Explained brochure; Oceanides colors from clients/oceanides/DESIGN.md.',
+ 'Design reference: Metro Rod Services Explained brochure https://www.metrorod.co.uk/app/themes/metrorod-v2.0.1/assets/flipbook/newcastle/common/data/catalogue.pdf ; Oceanides colors from clients/oceanides/DESIGN.md.',
  'No assertion of supplier accreditation, equipment ownership, licenses, project volume, treatment-system capability or maintenance-free operation.'
 ];
 let count = 0;
@@ -30,6 +30,11 @@ for (const page of spec.pages) {
   if (el.type === 'image') {
    const bytes = new Uint8Array(await fs.readFile(el.renderPath ?? path.join(workspaceDir, el.path)));
    slide.images.add({blob:bytes, contentType:'image/jpeg', fit:el.fit, position, alt:el.alt});
+  } else if (el.type === 'polygon') {
+   slide.shapes.add({geometry:'custom',name:'profile-'+(++count),position,fill:el.color,line:{fill:'none',width:0},
+    customPaths:[{width:el.w,height:el.h,commands:[
+     {moveTo:{x:el.points[0][0],y:el.points[0][1]}},
+     ...el.points.slice(1).map(([x,y])=>({lineTo:{x,y}})),{close:{}}]}]});
   } else {
    const shape = slide.shapes.add({geometry:el.type==='text'?'textbox':'rect', name:`profile-${++count}`, position,
      fill:el.type==='text'?'none':el.color, line:{fill:'none',width:0}});
@@ -43,7 +48,10 @@ for (const page of spec.pages) {
  }
  slide.speakerNotes.textFrame.setText(sources.join('\n')+'\n'+
    (spec.pages.indexOf(page)===0?'Cover vehicle: clients/oceanides/assets/tb2-truck-street.png, approved real vehicle source in client design/asset records.':'' )+
-   (spec.pages.indexOf(page)===2?'Matched before/after pair: clients/oceanides/assets/tb2-ba2-before.png and tb2-ba2-after.png. Neil confirmed real job photos on 2026-08-01; see client DESIGN.md and asset-builder source.':''));
+   (spec.pages.indexOf(page)===2?'Matched before/after pair: clients/oceanides/assets/tb2-ba2-before.png and tb2-ba2-after.png. Neil confirmed real job photos on 2026-08-01; see client DESIGN.md and asset-builder source.':'' )+
+   (spec.pages.indexOf(page)===0?'Matched cover pair: clients/oceanides/assets/tb2-ba3-before.png and tb2-ba3-after.png, confirmed real job photos in the same asset-builder records.':'' )+
+   (spec.pages.indexOf(page)===3?'Illustrative interior: Max Vakhtbovych, Pexels https://www.pexels.com/photo/an-interior-of-a-living-room-8089170/ . Not a completed Oceanides project.':'' )+
+   (spec.pages.indexOf(page)===4?'Illustrative pest: Jari Lobo, Pexels https://www.pexels.com/photo/close-up-of-cockroach-19294665/ .':''));
 }
 
 const candidatePath = path.join(TMP_DIR,'candidate.pptx');

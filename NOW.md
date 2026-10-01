@@ -1,11 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-01, Oceanides company profile delivered**
+**Stamped: 2026-10-01, Oceanides company profile redesigned after visual rejection**
 
 ## Current work
 Branch: `codex/oceanides-company-profile`, based on `codex/oceanides-latest-logo`
 at `7a374c27`. Profile draft PR152 (stacked on PR151):
 https://github.com/yopiheart/grifon-command/pull/152.
-Profile implementation `57ace2d3` pushed; no merge or deployment.
+Initial implementation `57ace2d3` rejected by Neil as visually generic;
+redesigned profile now replaces its outputs. No merge or deployment.
 Logo draft PR151: https://github.com/yopiheart/grifon-command/pull/151.
 Logo implementation `63060f33` pushed; independent verification passed.
 No deployment or merge requested.
@@ -36,6 +37,10 @@ No deployment or merge requested.
 ## Company profile
 Neil completed the grill-me interview and authorized production. Metro Rod is
 the selected reference; the result uses Oceanides navy/amber/paper identity.
+Neil rejected the first design: token compliance was not reference fidelity.
+Reopened the actual Metro Rod PDF and rendered its cover/service pages locally.
+Rebuild uses photo mastheads, angled title plates, service bands and branded
+contact strips. Cap: two design passes; both concrete review findings corrected.
 Six A4 portrait pages for an in-person management/procurement meeting.
 Outputs under `clients/oceanides/company-profile/output/`: printable PDF and
 native editable PPTX (`Oceanides-Company-Profile-final.pptx`). JSON content and
@@ -49,11 +54,19 @@ marketing@oceanidessepticandpest.com; Tramo Street Corner Dandan, Pasay City 130
 The old phone/Gmail were not used in this profile. Existing funnels unchanged.
 No confirmed provider/specs for future treatment system: excluded. No invented
 registration numbers, licenses, accreditation, equipment ownership or guarantees.
-Approved logo and existing real vehicle/matched before-after photos used.
+Approved logo and existing vehicle/two matched before-after pairs used.
+Two Pexels photos illustrate interior/pest subjects, visibly captioned and credited.
+Source metadata in company-profile/assets/sources.json. These are not project proof.
 Checks: six PDF pages; every layout text line extracts; contacts match; old
 contacts absent. PPTX package, geometry, heading/font policy and final import PASS.
-All twelve PDF/PPTX page renders independently inspected: BRAND_PASS, 43/50,
-zero critical/nits. Native PowerPoint execution unverified. Evidence stays in
+All twelve refreshed PDF/PPTX renders inspected; a fresh critic opened actual
+reference pages. Before/after labels and page6 gutter fixed. Stale footer finding
+withdrawn after current PNG/XML check. No remaining concrete export/claim defect.
+118 native text runs match layout per slide; six PDF pages extract every expected
+line, contacts match, package/geometry/font checks pass. Native PowerPoint unverified.
+Remaining visual gap: fewer actual crew-at-work photos than the reference. No
+fabricated operations photos added. User aesthetic review pending; no AAA claim.
+Evidence stays in
 `.tmp/oceanides-profile/`. Artifact-only change; application tests not repeated.
 
 ## Other ongoing work retained
@@ -69,8 +82,10 @@ same tree as `485708c4`, zero changed files). Vercel SUCCESS at 12:24 UTC.
 Preview deployment ID `6784136645`; Vercel inspector:
 https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/4Su52fj6aZnPDfbFViYytqtP9C45
 Preview HTTP redirects to Vercel SSO; authenticated app smoke remains pending.
-Fresh GitHub Actions runs `36861287393` and `36861293642` failed before jobs
-started (`BuildFailed` / `startup_failure`), also seen on unrelated PR151.
-Sept 29 GitHub email reports failed card billing; likely relevant, not proven.
-Next: resolve GitHub account/Actions blocker, obtain fresh CI, then release review.
-PR146's CLEAN merge status omits these startup failures; it is not CI clearance.
+After Neil confirmed successful GitHub payment, closed/reopened draft PR146
+to trigger CI on the unchanged `39a30613` head (old startup runs cannot retry).
+Fresh CI run `36863242626`: SUCCESS at 12:46 UTC; verify, e2e, artifacts PASS.
+Legacy opt-in review and push-only main-status skipped as configured.
+Vercel remains SUCCESS; GitHub checks now start and complete normally.
+Earlier startup-failure emails remain historical. No merge or production deploy.
+Next: release review for PR146; PR150 still needs main-target CI after PR146 lands.

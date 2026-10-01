@@ -68,107 +68,134 @@ def image(p, source, x, y, w, h, fit='contain', alt=''):
         render_path = optimized
     p['elements'].append(dict(type='image', path=source, renderPath=str(render_path), x=x, y=y, w=w, h=h, fit=fit, alt=alt))
 
+def polygon(p, x, y, w, h, points, color):
+    p['elements'].append(dict(type='polygon', x=x, y=y, w=w, h=h,
+                             points=points, color=C.get(color, color)))
+
 def footer(p, n, dark=False):
-    color = 'dim' if dark else 'gray'
-    rect(p, 54, 1065, 686, 1, 'surface' if dark else '#D6DFE9')
-    text(p, 'OCEANIDES  /  COMPANY PROFILE', 54, 1080, 600, 11, 'Strong', color)
-    text(p, f'{n:02d}', 712, 1076, 28, 16, 'Display', 'amber' if dark else 'blue')
+    rect(p, 0, 1037, W, 86, 'navy')
+    polygon(p, 0, 1037, 288, 86, [[0,0],[288,0],[251,86],[0,86]], 'amber')
+    text(p, 'OCEANIDES', 34, 1062, 206, 27, 'Display', 'navy')
+    text(p, DATA['phone'], 312, 1052, 403, 28, 'Strong', '#FFFFFF')
+    text(p, DATA['email'], 312, 1090, 420, 13, 'Body', 'muted')
+    text(p, f'{n:02d}', 751, 1067, 27, 15, 'Strong', 'dim')
+
+def band(p, title, y=241, size=45):
+    # Angled title plate: the recurring layout device of the selected brochure.
+    polygon(p, 27, y, 735, 139, [[54,0],[735,0],[658,139],[0,139]], 'amber')
+    polygon(p, 27, y, 724, 130, [[54,0],[724,0],[652,130],[0,130]], 'paper')
+    text(p, title, 77, y+18, 609, size, 'Display', 'navy', size*1.04)
+
+def scope(p, items, x, y, w, size=19, color='#FFFFFF', gap=18):
+    for item in items:
+        rect(p, x, y+8, 5, 5, 'amber')
+        y = text(p, item, x+19, y, w-19, size, 'Body', color, size*1.38)+gap
+    return y
 
 ASSETS = 'clients/oceanides/assets/'
+STOCK = 'clients/oceanides/company-profile/assets/'
+
+# Cover: brand masthead, large operational photograph and same-site image strip.
 p=page('navy')
-image(p, ASSETS+'logo.jpg', 54, 42, 162, 162, alt='Approved Oceanides logo')
-text(p, 'OCEANIDES', 253, 61, 488, 58, 'Display', '#FFFFFF')
-text(p, 'Plumbing Siphoning &\nPest Management Services OPC', 256, 133, 480, 18, 'Body', 'muted')
-rect(p, 54, 234, 80, 5, 'amber')
-text(p, 'COMPANY\nPROFILE', 48, 272, 692, 110, 'Display', '#FFFFFF', 110)
-text(p, 'Siphoning  /  Plumbing\nRenovation & restoration  /  Pest control', 54, 530, 686, 21, 'Body', 'muted', 31)
-image(p, ASSETS+'tb2-truck-street.png', 54, 643, 686, 335, 'cover', 'Field-service vehicle; source image approved in client design records')
-text(p, DATA['phone']+'  |  '+DATA['carrier'], 54, 1000, 686, 19, 'Strong', '#FFFFFF')
-text(p, DATA['email'], 54, 1030, 686, 16, 'Body', 'muted')
-footer(p, 1, True)
+image(p, ASSETS+'logo.jpg', 31, 26, 155, 155, alt='Approved Oceanides logo')
+text(p, 'OCEANIDES', 216, 37, 540, 67, 'Display', '#FFFFFF')
+text(p, 'Plumbing Siphoning &\nPest Management Services OPC', 218, 120, 540, 18, 'Body', 'muted', 25)
+image(p, ASSETS+'tb2-truck-street.png', 0, 199, W, 432, 'cover', 'Approved field-service vehicle photograph')
+polygon(p,0,533,W,162,[[0,0],[W,0],[W,100],[0,162]],'navy')
+polygon(p,0,533,39,162,[[0,0],[39,0],[39,156],[0,162]],'amber')
+text(p, 'COMPANY PROFILE', 60, 558, 692, 63, 'Display', '#FFFFFF')
+text(p, 'Property services. One coordinated point of contact.', 62, 638, 686, 20, 'Body', 'muted')
+image(p, ASSETS+'tb2-ba3-before.png', 0, 719, 394, 192, 'cover', 'Previous site-work image before service')
+image(p, ASSETS+'tb2-ba3-after.png', 400, 719, 394, 192, 'cover', 'Same site after service')
+text(p, 'BEFORE', 31, 924, 170, 13, 'Strong', 'dim')
+text(p, 'AFTER', 424, 924, 170, 13, 'Strong', 'dim')
+text(p, 'Siphoning  /  Plumbing  /  Renovation & restoration  /  Pest control', 31, 977, 733, 16, 'Body', '#FFFFFF')
+footer(p,1,True)
 
+# Overview: angled masthead, concise introduction and editorial service index.
 p=page()
-text(p, 'OCEANIDES', 54, 56, 686, 48, 'Display', 'blue')
-text(p, 'Company overview', 54, 126, 686, 36, 'Display')
-end=text(p, DATA['overview'], 54, 201, 686, 21, leading=30)
-text(p, DATA['delivery'], 54, end+28, 686, 19, leading=29)
-rect(p, 54, 472, 686, 2, 'blue')
-text(p, 'OUR SERVICES', 54, 505, 686, 15, 'Strong', 'blue')
-y=556
-for idx, group in enumerate(DATA['serviceGroups'], 1):
-    text(p, f'{idx:02d}', 54, y, 58, 38, 'Display', 'blue')
-    text(p, group['title'], 136, y-1, 604, 29, 'Display')
-    text(p, group['summary'], 136, y+45, 604, 17, leading=25)
-    y+=123
-footer(p, 2)
+rect(p,0,0,W,196,'navy')
+image(p, ASSETS+'logo.jpg', 31, 19, 146,146,alt='Approved Oceanides logo')
+text(p,'OCEANIDES',210,42,555,56,'Display','#FFFFFF')
+text(p,'Homes  /  Condominiums  /  Company facilities',212,122,550,17,'Body','muted')
+band(p,'COMPANY OVERVIEW',163,45)
+text(p,DATA['overview'],44,333,706,19,'Body','ink',28)
+polygon(p,0,459,W,233,[[0,0],[W,0],[W-89,233],[0,233]],'navy')
+text(p,'ONE CONTACT THROUGH TURNOVER',44,487,665,29,'Display','#FFFFFF')
+text(p,DATA['delivery'],44,542,650,18,'Body','muted',27)
+text(p,'SERVICE PORTFOLIO',44,730,706,14,'Strong','blue')
+for x,y,idx in [(44,781,0),(414,781,1),(44,886,2),(414,886,3)]:
+    titles=['SIPHONING','PLUMBING','RENOVATION &\nRESTORATION','PEST CONTROL']
+    text(p,titles[idx],x,y,334,28,'Display','navy',30)
+    summaries=['Septic tank siphoning and cleaning.','Declogging and pipe leak repairs.','House and condominium improvements.','Assessment-based service coordination.']
+    text(p,summaries[idx],x,y+(67 if idx==2 else 43),334,15,'Body','gray',21)
+footer(p,2)
 
+# Actual paired job images, distinct from illustrative stock.
 p=page()
-text(p, 'SIPHONING\n& PLUMBING', 54, 65, 686, 53, 'Display', 'ink', 55)
-text(p, 'Assessment before the final scope', 54, 203, 686, 21, 'Strong', 'blue')
-text(p, 'Oceanides reviews the site conditions and coordinates the appropriate work with the field team.', 54, 250, 686, 19, leading=28)
-text(p, 'Siphoning', 54, 355, 320, 29, 'Display')
-text(p, 'Plumbing', 422, 355, 318, 29, 'Display')
-for x, group in [(54, DATA['serviceGroups'][0]), (422, DATA['serviceGroups'][1])]:
-    y=406
-    for item in group['items']:
-        end=text(p, item, x, y, 318, 18, leading=26)
-        y=end+15
-rect(p,54,609,686,2,'blue')
-text(p, 'PREVIOUS SITE WORK', 54, 635, 686, 14, 'Strong', 'blue')
-image(p, ASSETS+'tb2-ba2-before.png', 54, 677, 327, 290, 'cover', 'Matched previous site-work image before siphoning')
-image(p, ASSETS+'tb2-ba2-after.png', 413, 677, 327, 290, 'cover', 'Matched previous site-work image after siphoning')
-text(p, 'BEFORE', 54, 982, 327, 13, 'Strong', 'blue')
-text(p, 'AFTER', 413, 982, 327, 13, 'Strong', 'blue')
-text(p, 'Same site, before and after service.', 54, 1012, 686, 14, 'Body', 'gray')
-footer(p, 3)
+image(p,ASSETS+'tb2-ba2-before.png',0,0,W,320,'cover','Same-site septic opening before service')
+band(p,'SIPHONING\n& PLUMBING',244,43)
+text(p,'BEFORE SERVICE / SAME SITE',44,391,706,11,'Strong','blue')
+rect(p,0,413,W,300,'navy')
+text(p,'SEPTIC TANK SERVICES',44,444,333,27,'Display','#FFFFFF')
+text(p,'PLUMBING SERVICES',418,444,332,27,'Display','#FFFFFF')
+scope(p,DATA['serviceGroups'][0]['items'],44,494,317,17,gap=15)
+scope(p,DATA['serviceGroups'][1]['items'],418,494,326,17,gap=15)
+image(p,ASSETS+'tb2-ba2-after.png',401,739,393,269,'cover','Same-site septic opening after service')
+text(p,'AFTER SERVICE / SAME SITE',419,1015,357,11,'Strong','blue')
+text(p,'ACTUAL SITE WORK',44,762,329,14,'Strong','blue')
+text(p,'BEFORE\n& AFTER',44,801,329,39,'Display','navy',40)
+text(p,'The photographs show the same site before and after service.',44,907,312,17,'Body','ink',25)
+text(p,'Final scope follows site access and tank or pipe conditions.',44,978,312,13,'Body','gray',18)
+footer(p,3)
 
+# Illustrative environment image, not represented as a past project.
+p=page()
+image(p,STOCK+'interior-pexels-8089170.jpg',0,0,W,345,'cover','Illustrative residential interior; Pexels, Max Vakhtbovych')
+band(p,'RENOVATION\n& RESTORATION',268,43)
+text(p,'Illustrative interior photograph / Max Vakhtbovych, Pexels',44,421,706,11,'Body','gray')
+text(p,'HOUSES & CONDOMINIUMS',44,469,706,28,'Display','navy')
+text(p,DATA['serviceGroups'][2]['summary'],44,522,706,19,'Body','ink',28)
+polygon(p,0,653,W,277,[[0,0],[W,0],[W-83,277],[0,277]],'navy')
+scope(p,DATA['serviceGroups'][2]['items'],44,685,671,21,gap=21)
+text(p,'Oceanides coordinates the field team or specialist contractor for the agreed work.',44,954,663,17,'Body','ink',26)
+footer(p,4)
+
+# Recognizable pest subject; does not imply owned equipment or technicians.
+p=page()
+image(p,STOCK+'pest-pexels-19294665.jpg',0,0,W,334,'cover','Illustrative pest photograph; Pexels, Jari Lobo')
+band(p,'PEST CONTROL',260,49)
+text(p,'Illustrative pest photograph / Jari Lobo, Pexels',44,414,706,11,'Body','gray')
+text(p,'SITE FINDINGS FIRST',44,465,706,29,'Display','navy')
+text(p,DATA['serviceGroups'][3]['summary'],44,522,706,20,'Body','ink',29)
+rect(p,0,662,W,237,'navy')
+scope(p,DATA['serviceGroups'][3]['items'],44,694,685,22,gap=26)
+polygon(p,0,915,42,98,[[0,0],[42,0],[18,98],[0,98]],'amber')
+text(p,'The treatment scope, service schedule and specialist requirements are confirmed after assessment.',60,936,673,18,'Body','ink',27)
+footer(p,5)
+
+# Closing: working process and prominent site-assessment contact information.
 p=page('navy')
-text(p, 'RENOVATION\n& RESTORATION', 54, 65, 686, 53, 'Display', '#FFFFFF', 55)
-text(p, 'Homes and condominiums', 54, 205, 686, 21, 'Strong', 'amber')
-text(p, DATA['serviceGroups'][2]['summary'], 54, 252, 686, 20, 'Body', 'muted', 29)
-y=367
-for item in DATA['serviceGroups'][2]['items']:
-    text(p, item, 54, y, 686, 22, 'Body', '#FFFFFF', 31)
-    y+=51
-rect(p,54,604,686,2,'amber')
-text(p, 'PEST CONTROL', 54, 651, 686, 51, 'Display', '#FFFFFF')
-text(p, DATA['serviceGroups'][3]['summary'], 54, 731, 686, 20, 'Body', 'muted', 29)
-y=843
-for item in DATA['serviceGroups'][3]['items']:
-    text(p, item, 54, y, 686, 19, 'Body', '#FFFFFF', 27)
-    y+=46
-text(p, 'Work scope and specialist requirements follow the site assessment.', 54, 1012, 686, 14, 'Body', 'dim')
-footer(p, 4, True)
-
-p=page()
-text(p, 'PROJECT\nCOORDINATION', 54, 64, 686, 53, 'Display', 'ink', 55)
-text(p, 'One main contact through turnover', 54, 205, 686, 21, 'Strong', 'blue')
-y=282
-for idx, step in enumerate(DATA['process'],1):
-    text(p, f'{idx:02d}', 54, y, 60, 43, 'Display', 'blue')
-    text(p, step['title'], 138, y-1, 602, 28, 'Display')
-    text(p, step['detail'], 138, y+43, 602, 18, leading=27)
-    if idx<4: rect(p,138,y+116,602,1,'#D6DFE9')
-    y+=150
-rect(p,54,908,686,2,'blue')
-text(p, 'WORKING WITH PROCUREMENT', 54, 940, 686, 15, 'Strong', 'blue')
-text(p, DATA['procurement'], 54, 978, 686, 17, leading=24)
-footer(p, 5)
-
-p=page('navy')
-image(p, ASSETS+'logo.jpg', 54, 42, 143, 143, alt='Approved Oceanides logo')
-text(p, 'OCEANIDES', 232, 74, 508, 57, 'Display', '#FFFFFF')
-rect(p,54,237,80,5,'amber')
-text(p, 'SITE ASSESSMENT\n& QUOTATION', 54, 284, 686, 58, 'Display', '#FFFFFF', 62)
-text(p, DATA['callToActionBody'], 54, 461, 686, 21, 'Body', 'muted', 31)
-text(p, 'CONTACT', 54, 623, 686, 14, 'Strong', 'amber')
-text(p, DATA['phone'], 54, 668, 686, 51, 'Display', '#FFFFFF')
-text(p, DATA['carrier'], 54, 736, 686, 16, 'Body', 'dim')
-text(p, DATA['email'], 54, 787, 686, 21, 'Strong', '#FFFFFF')
-text(p, DATA['address'], 54, 843, 686, 19, 'Body', 'muted', 28)
-text(p, DATA['company'], 54, 938, 686, 16, 'Body', 'muted', 25)
-text(p, DATA['scopeNote'], 54, 1007, 686, 13, 'Body', 'dim', 19)
-footer(p, 6, True)
+image(p,ASSETS+'logo.jpg',31,20,125,125,alt='Approved Oceanides logo')
+text(p,"LET'S ASSESS\nYOUR SITE.",194,27,563,56,'Display','#FFFFFF',60)
+text(p,'Tell us the service, location and preferred inspection schedule.',44,211,706,20,'Body','muted',29)
+polygon(p,0,302,W,136,[[0,0],[W,0],[W-61,136],[0,136]],'amber')
+text(p,DATA['phone'],44,322,686,57,'Display','navy')
+text(p,'GLOBE  /  '+DATA['email'],46,401,674,16,'Body','navy')
+text(p,'HOW THE WORK MOVES FORWARD',44,482,706,29,'Display','#FFFFFF')
+for idx,(x,y) in enumerate([(44,542),(416,542),(44,690),(416,690)]):
+    step=DATA['process'][idx]
+    text(p,f'{idx+1:02d}',x,y,50,31,'Display','amber')
+    title = 'Coordination' if idx==2 else step['title']
+    text(p,title,x+65,y+1,265,22,'Display','#FFFFFF')
+    text(p,step['detail'],x,y+52,333,16,'Body','muted',24)
+rect(p,44,844,706,1,'surface')
+text(p,'FOR MANAGEMENT & PROCUREMENT',44,873,706,14,'Strong','amber')
+text(p,DATA['procurement'],44,910,706,16,'Body','muted',24)
+text(p,DATA['address'],44,990,706,14,'Body','dim',20)
+rect(p,0,1045,W,78,'paper')
+text(p,DATA['company'],44,1060,706,15,'Strong','navy')
+text(p,DATA['scopeNote'],44,1092,706,11,'Body','gray')
 
 for n,p in enumerate(pages,1):
     for el in p['elements']:
@@ -189,7 +216,14 @@ for p in pages:
     c.rect(0,0,W,H,fill=1,stroke=0)
     for el in p['elements']:
         x,y,w,h = (el[k] for k in ['x','y','w','h'])
-        if el['type']=='rect':
+        if el['type']=='polygon':
+            c.setFillColor(HexColor(el['color']))
+            shape = c.beginPath()
+            for i,(px,py) in enumerate(el['points']):
+                (shape.moveTo if i==0 else shape.lineTo)(x+px,H-y-py)
+            shape.close()
+            c.drawPath(shape,fill=1,stroke=0)
+        elif el['type']=='rect':
             c.setFillColor(HexColor(el['color']))
             c.rect(x,H-y-h,w,h,fill=1,stroke=0)
         elif el['type']=='text':
