@@ -54,21 +54,8 @@ const OUT = join(INSTANCE, 'public', 'img');
  * @type {Array<{src: string, out: string, width: number, quality?: number, circle?: boolean, dir?: string}>}
  */
 const JOBS = [
-  // Logo — 316x316 JPEG. The artwork is a full-colour CIRCULAR badge (navy shield,
-  // blue wave, navy wordmark) sitting on a white ground.
-  //
-  // Neil, 2026-07-30: "paano yan lulutang ng walang white background pero visible."
-  // Three options were on the table and only one is honest:
-  //   ✗ key the white to transparent — the artwork is NAVY on white, so on a navy
-  //     page it would vanish into the background. Worse than the chip.
-  //   ✗ knock it out to solid white — throws away the shield, the wave, and the
-  //     colour, i.e. most of the logo.
-  //   ✓ CIRCULAR MASK. The logo is already a disc; the white is part of the disc,
-  //     not a background behind it. Cutting the square corners off makes it read
-  //     as a deliberate decal/seal instead of a pasted rectangle — and print
-  //     brands put full-colour seals on white by convention anyway.
-  // `circle: true` composites an SVG circle with dest-in, and webp keeps the alpha.
-  { src: 'logo.jpg', out: 'logo.webp', width: 320, quality: 90, circle: true },
+  // Latest logo supplied by Neil on 2026-10-01. Preserve the full square artwork.
+  { src: 'logo.jpg', out: 'logo.webp', width: 320, quality: 90 },
 
   // Official marks. Both carry alpha, BUT their artwork is near-black, so they are
   // effectively invisible on navy (Neil: "hindi rin masyadong visible dahil black").

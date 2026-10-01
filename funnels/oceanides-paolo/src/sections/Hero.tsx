@@ -50,15 +50,14 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
   <SectionShell>
     <div className="grid items-start gap-9 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
       <Reveal className="mx-auto w-full max-w-2xl text-center lg:col-start-1 lg:row-start-1 lg:mx-0 lg:max-w-none lg:text-left">
-        {/* Logo as a floating DISC — build-assets.mjs circle-masks the source so
-            the white square is gone and it reads as a seal, not a pasted box. */}
+        {/* Keep the approved square logo intact, including its dark background. */}
         {logo && (
           <img
             src={logo}
             alt={logoAlt ?? 'Oceanides'}
             width={72}
             height={72}
-            className="mx-auto mb-6 h-16 w-16 rounded-full ring-2 ring-brand-primary md:h-[72px] md:w-[72px] lg:mx-0"
+            className="mx-auto mb-6 h-16 w-16 object-contain md:h-[72px] md:w-[72px] lg:mx-0"
           />
         )}
 

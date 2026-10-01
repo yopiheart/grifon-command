@@ -48,8 +48,7 @@ export const ComplianceFooter: React.FC<PropsOf<'complianceFooter'>> = ({
     )}
 
     <div className="space-y-4 text-center">
-      {/* Paper chip, same treatment as the hero lockup: logo.jpg carries a
-          near-white ground, and keying white out of a JPEG fringes on navy. */}
+      {/* Use the same approved logo as the hero. */}
       {logo && (
         <img
           src={logo}
@@ -57,7 +56,7 @@ export const ComplianceFooter: React.FC<PropsOf<'complianceFooter'>> = ({
           width={40}
           height={40}
           loading="lazy"
-          className="mx-auto h-10 w-10 rounded-[3px] bg-brand-proof-band object-contain p-0.5"
+          className="mx-auto h-10 w-10 object-contain"
         />
       )}
       <p className="text-sm font-semibold text-brand-on-surface">{brandLine}</p>

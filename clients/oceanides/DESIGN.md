@@ -67,6 +67,13 @@ contrast floor, exception discipline, Do's/Don'ts).
 
 ## Overview
 
+### Approved logo (2026-10-01)
+
+Neil's latest supplied image is the canonical `assets/logo.jpg`. Keep the full
+square artwork and its dark background; do not apply the old circular mask.
+Both Oceanides funnels use optimized `public/img/logo.webp` copies built from
+that source. The superseded standalone `Oceanides New logo.png` was removed.
+
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at
 pintura**: matte navy panels, amber signage, dashed work-order rules, totoong
