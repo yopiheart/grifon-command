@@ -13,7 +13,10 @@ from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
-PRIVATE = ROOT / '.tmp' / 'oceanides-profile'
+FORMAT = sys.argv[2] if len(sys.argv) > 2 else 'A4'
+if FORMAT not in ('A4', 'Widescreen'):
+    raise ValueError('Choose A4 or Widescreen.')
+PRIVATE = ROOT / '.tmp' / ('oceanides-widescreen' if FORMAT == 'Widescreen' else 'oceanides-profile')
 PRIVATE.mkdir(parents=True, exist_ok=True)
 OUT = HERE / 'output' / 'pdf'
 OUT.mkdir(parents=True, exist_ok=True)
@@ -22,7 +25,7 @@ if REVISION and not all(char.isascii() and (char.isalnum() or char == '-') for c
     raise ValueError('Use an alphanumeric revision suffix.')
 PDF_NAME = f'Oceanides-Company-Profile{"-" + REVISION if REVISION else ""}.pdf'
 DATA = json.loads((HERE / 'profile-content.json').read_text(encoding='utf-8'))
-W, H = 794, 1123
+W, H = (1280, 720) if FORMAT == 'Widescreen' else (794, 1123)
 C = dict(navy='#0A1F45', surface='#263D5F', paper='#F7F7F2', ink='#17212B',
          blue='#1C63AD', sky='#89C7F4', muted='#D8DFE9', dim='#AABCD3', gray='#63707D', line='#D9DDD9')
 FONTS = {'Body': ('Arial', 'arial.ttf', False),
@@ -45,7 +48,7 @@ def page(bg='paper'):
             thickness = 3 + 3*math.sin(t*math.pi)
             upper.append([144*t, y])
             lower.append([144*t, y+thickness])
-        p['elements'].append(dict(type='polygon', x=650, y=0, w=144, h=132,
+        p['elements'].append(dict(type='polygon', x=W-144, y=0, w=144, h=132,
                                   points=upper+list(reversed(lower)), color=tone))
     pages.append(p)
     return p
@@ -106,109 +109,113 @@ def footer(p, n, dark=False):
 ASSETS = 'clients/oceanides/assets/'
 ART = 'clients/oceanides/company-profile/assets/'
 
-# Minimal cover: one logo, one subject, one architectural image.
-p=page()
-image(p, ART+'logo-transparent.png', 64, 29, 88, 88, alt='Oceanides logo with transparent outer background')
-text(p, 'Company profile', 64, 160, 666, 17, 'Body', 'gray')
-text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'blue', 68)
-image(p, ART+'cover-property-minimal.png', 0, 382, W, W*2/3, 'contain', 'AI-generated conceptual architecture, not a completed Oceanides project or engineering plan')
-text(p, 'AI-generated property-services concept', 64, 922, 666, 10, 'Body', 'gray')
-text(p, 'Siphoning. Plumbing. Renovation & restoration. Pest control.', 64, 974, 666, 17, 'Body', 'ink')
-text(p, DATA['company'], 64, 1016, 666, 12, 'Body', 'gray')
-footer(p,1)
+if FORMAT == 'Widescreen':
+    from widescreen_layout import build_layout
+    build_layout(DATA, page, text, image, rect, ASSETS, ART)
+else:
+    # Minimal cover: one logo, one subject, one architectural image.
+    p=page()
+    image(p, ART+'logo-transparent.png', 64, 29, 88, 88, alt='Oceanides logo with transparent outer background')
+    text(p, 'Company profile', 64, 160, 666, 17, 'Body', 'gray')
+    text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'blue', 68)
+    image(p, ART+'cover-property-minimal.png', 0, 382, W, W*2/3, 'contain', 'AI-generated conceptual architecture, not a completed Oceanides project or engineering plan')
+    text(p, 'AI-generated property-services concept', 64, 922, 666, 10, 'Body', 'gray')
+    text(p, 'Siphoning. Plumbing. Renovation & restoration. Pest control.', 64, 974, 666, 17, 'Body', 'ink')
+    text(p, DATA['company'], 64, 1016, 666, 12, 'Body', 'gray')
+    footer(p,1)
 
-# Company overview: a flat service index, not a collection of panels.
-p=page()
-header(p)
-text(p, 'Services for the places\nyou live and work', 64, 135, 666, 46, 'Strong', 'ink', 53)
-text(p, DATA['overview'], 64, 278, 666, 21, 'Body', 'gray', 31)
-rows=[
-    ('Siphoning', 'Septic tank siphoning and cleaning.'),
-    ('Plumbing', 'Drain declogging and pipe leak repairs.'),
-    ('Renovation &\nrestoration', 'House and condominium repairs and improvements.'),
-    ('Pest control', 'Site assessment, treatment scope and service coordination.'),
-]
-for idx,(title,detail) in enumerate(rows):
-    y=449+idx*114
-    rule(p,y)
-    text(p,title,64,y+28,294,24,'Strong','ink',29)
-    text(p,detail,389,y+29,341,18,'Body','gray',27)
-rule(p,905)
-text(p,'One contact through turnover',64,938,666,23,'Strong')
-text(p,'Oceanides coordinates assessment, quotation and delivery, including specialist contractors where required.',64,980,666,18,'Body','gray',27)
-footer(p,2)
+    # Company overview: a flat service index, not a collection of panels.
+    p=page()
+    header(p)
+    text(p, 'Services for the places\nyou live and work', 64, 135, 666, 46, 'Strong', 'ink', 53)
+    text(p, DATA['overview'], 64, 278, 666, 21, 'Body', 'gray', 31)
+    rows=[
+        ('Siphoning', 'Septic tank siphoning and cleaning.'),
+        ('Plumbing', 'Drain declogging and pipe leak repairs.'),
+        ('Renovation &\nrestoration', 'House and condominium repairs and improvements.'),
+        ('Pest control', 'Site assessment, treatment scope and service coordination.'),
+    ]
+    for idx,(title,detail) in enumerate(rows):
+        y=449+idx*114
+        rule(p,y)
+        text(p,title,64,y+28,294,24,'Strong','ink',29)
+        text(p,detail,389,y+29,341,18,'Body','gray',27)
+    rule(p,905)
+    text(p,'One contact through turnover',64,938,666,23,'Strong')
+    text(p,'Oceanides coordinates assessment, quotation and delivery, including specialist contractors where required.',64,980,666,18,'Body','gray',27)
+    footer(p,2)
 
-# Plumbing and siphoning: image illustration and actual proof remain distinct.
-p=page()
-header(p)
-text(p,'Siphoning &\nplumbing',64,130,666,53,'Strong','ink',59)
-text(p,'Septic tank services, drain declogging and plumbing repairs.',64,279,666,21,'Body','gray',31)
-text(p,'Service scope',64,391,278,23,'Strong')
-text(p,'Septic tank siphoning\nSeptic tank cleaning\nDrain declogging\nPipe leak repairs',64,442,278,19,'Body','ink',39)
-image(p,ART+'plumbing-service.png',372,383,358,358*2/3,'contain','AI-generated fictional plumbing specialist')
-text(p,'AI-generated service illustration',372,638,358,10,'Body','gray')
-rule(p,691)
-text(p,'Actual siphoning work',64,721,666,24,'Strong')
-text(p,'Same site before and after service',64,762,666,16,'Body','gray')
-image(p,ASSETS+'tb2-ba2-before.png',64,801,326,184,'cover','Confirmed actual same-site septic opening before service')
-image(p,ASSETS+'tb2-ba2-after.png',404,801,326,184,'cover','Confirmed actual same-site septic opening after service')
-text(p,'Before service',64,999,326,13,'Body','gray')
-text(p,'After service',404,999,326,13,'Body','gray')
-text(p,'Scope follows site access and tank or pipe conditions.',64,1030,666,13,'Body','gray')
-footer(p,3)
+    # Plumbing and siphoning: image illustration and actual proof remain distinct.
+    p=page()
+    header(p)
+    text(p,'Siphoning &\nplumbing',64,130,666,53,'Strong','ink',59)
+    text(p,'Septic tank services, drain declogging and plumbing repairs.',64,279,666,21,'Body','gray',31)
+    text(p,'Service scope',64,391,278,23,'Strong')
+    text(p,'Septic tank siphoning\nSeptic tank cleaning\nDrain declogging\nPipe leak repairs',64,442,278,19,'Body','ink',39)
+    image(p,ART+'plumbing-service.png',372,383,358,358*2/3,'contain','AI-generated fictional plumbing specialist')
+    text(p,'AI-generated service illustration',372,638,358,10,'Body','gray')
+    rule(p,691)
+    text(p,'Actual siphoning work',64,721,666,24,'Strong')
+    text(p,'Same site before and after service',64,762,666,16,'Body','gray')
+    image(p,ASSETS+'tb2-ba2-before.png',64,801,326,184,'cover','Confirmed actual same-site septic opening before service')
+    image(p,ASSETS+'tb2-ba2-after.png',404,801,326,184,'cover','Confirmed actual same-site septic opening after service')
+    text(p,'Before service',64,999,326,13,'Body','gray')
+    text(p,'After service',404,999,326,13,'Body','gray')
+    text(p,'Scope follows site access and tank or pipe conditions.',64,1030,666,13,'Body','gray')
+    footer(p,3)
 
-# Renovation: full source aspect preserves the ceiling tool and worker posture.
-p=page()
-header(p)
-text(p,'Renovation &\nrestoration',64,130,666,53,'Strong','ink',59)
-text(p,'Repair and improvement work for houses and condominiums.',64,279,666,21,'Body','gray',31)
-image(p,ART+'renovation-service.png',64,359,666,444,'contain','AI-generated fictional ceiling repair specialist')
-text(p,'AI-generated service illustration',64,816,666,10,'Body','gray')
-for x,y,title,detail in [
-    (64,861,'Ceilings','Repair and replacement'),
-    (414,861,'Water protection','Roof leak repair and waterproofing'),
-    (64,948,'Renovation & restoration','Houses and condominiums'),
-    (414,948,'Cleaning','House cleaning to agreed scope'),
-]:
-    text(p,title,x,y,316,20,'Strong','ink',26)
-    text(p,detail,x,y+37,316,17,'Body','gray',25)
-footer(p,4)
+    # Renovation: full source aspect preserves the ceiling tool and worker posture.
+    p=page()
+    header(p)
+    text(p,'Renovation &\nrestoration',64,130,666,53,'Strong','ink',59)
+    text(p,'Repair and improvement work for houses and condominiums.',64,279,666,21,'Body','gray',31)
+    image(p,ART+'renovation-service.png',64,359,666,444,'contain','AI-generated fictional ceiling repair specialist')
+    text(p,'AI-generated service illustration',64,816,666,10,'Body','gray')
+    for x,y,title,detail in [
+        (64,861,'Ceilings','Repair and replacement'),
+        (414,861,'Water protection','Roof leak repair and waterproofing'),
+        (64,948,'Renovation & restoration','Houses and condominiums'),
+        (414,948,'Cleaning','House cleaning to agreed scope'),
+    ]:
+        text(p,title,x,y,316,20,'Strong','ink',26)
+        text(p,detail,x,y+37,316,17,'Body','gray',25)
+    footer(p,4)
 
-# Pest control: image first, title below; no plate obscures the treatment target.
-p=page()
-header(p)
-image(p,ART+'pest-control-service.png',64,132,666,444,'contain','AI-generated fictional pest-control specialist, localized treatment scene')
-text(p,'AI-generated service illustration',64,589,666,10,'Body','gray')
-text(p,'Pest control',64,644,666,52,'Strong')
-text(p,DATA['serviceGroups'][3]['summary'],64,725,666,21,'Body','gray',31)
-for y,label in [(837,'Assessment of pest activity'),(895,'Treatment scope based on site findings'),(953,'Service scheduling and contractor coordination')]:
-    rule(p,y-17)
-    text(p,label,64,y,666,20,'Body','ink',29)
-text(p,'Treatment and specialist requirements follow the site assessment.',64,1025,666,13,'Body','gray')
-footer(p,5)
+    # Pest control: image first, title below; no plate obscures the treatment target.
+    p=page()
+    header(p)
+    image(p,ART+'pest-control-service.png',64,132,666,444,'contain','AI-generated fictional pest-control specialist, localized treatment scene')
+    text(p,'AI-generated service illustration',64,589,666,10,'Body','gray')
+    text(p,'Pest control',64,644,666,52,'Strong')
+    text(p,DATA['serviceGroups'][3]['summary'],64,725,666,21,'Body','gray',31)
+    for y,label in [(837,'Assessment of pest activity'),(895,'Treatment scope based on site findings'),(953,'Service scheduling and contractor coordination')]:
+        rule(p,y-17)
+        text(p,label,64,y,666,20,'Body','ink',29)
+    text(p,'Treatment and specialist requirements follow the site assessment.',64,1025,666,13,'Body','gray')
+    footer(p,5)
 
-# Closing: calm navy, direct contacts, a short operating process.
-p=page('navy')
-image(p,ART+'logo-transparent.png',64,29,88,88,alt='Oceanides logo with transparent outer background')
-text(p,'Your next step',64,158,666,17,'Body','muted')
-text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','paper',64)
-text(p,'Tell us the service, site location and preferred inspection schedule.',64,365,666,21,'Body','muted',31)
-text(p,DATA['phone'],64,470,666,47,'Display','#FFFFFF')
-text(p,DATA['email'],64,548,666,22,'Body','muted')
-text(p,'Globe',64,589,666,14,'Body','dim')
-text(p,DATA['address'],64,629,666,17,'Body','muted',25)
-rule(p,691,color='surface')
-text(p,'Supplier accreditation',64,727,666,22,'Strong','#FFFFFF')
-text(p,'Share your procurement requirements. Oceanides can coordinate the company documents and project information for your review.',64,768,666,18,'Body','muted',27)
-for idx,(x,y) in enumerate([(64,871),(414,871),(64,951),(414,951)]):
-    step=DATA['process'][idx]
-    titles=['Site assessment','Written quotation','Service coordination','Turnover']
-    details=['Review the site and requirements.','Confirm the proposed scope and price.','Arrange the field team or specialist.','Review the agreed work with the client.']
-    text(p,titles[idx],x,y,316,19,'Strong','#FFFFFF')
-    text(p,details[idx],x,y+33,316,16,'Body','muted',24)
-rule(p,1043,color='surface')
-text(p,DATA['company'],64,1063,666,12,'Body','muted')
-text(p,DATA['scopeNote'],64,1090,666,11,'Body','dim',15)
+    # Closing: calm navy, direct contacts, a short operating process.
+    p=page('navy')
+    image(p,ART+'logo-transparent.png',64,29,88,88,alt='Oceanides logo with transparent outer background')
+    text(p,'Your next step',64,158,666,17,'Body','muted')
+    text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','paper',64)
+    text(p,'Tell us the service, site location and preferred inspection schedule.',64,365,666,21,'Body','muted',31)
+    text(p,DATA['phone'],64,470,666,47,'Display','#FFFFFF')
+    text(p,DATA['email'],64,548,666,22,'Body','muted')
+    text(p,'Globe',64,589,666,14,'Body','dim')
+    text(p,DATA['address'],64,629,666,17,'Body','muted',25)
+    rule(p,691,color='surface')
+    text(p,'Supplier accreditation',64,727,666,22,'Strong','#FFFFFF')
+    text(p,'Share your procurement requirements. Oceanides can coordinate the company documents and project information for your review.',64,768,666,18,'Body','muted',27)
+    for idx,(x,y) in enumerate([(64,871),(414,871),(64,951),(414,951)]):
+        step=DATA['process'][idx]
+        titles=['Site assessment','Written quotation','Service coordination','Turnover']
+        details=['Review the site and requirements.','Confirm the proposed scope and price.','Arrange the field team or specialist.','Review the agreed work with the client.']
+        text(p,titles[idx],x,y,316,19,'Strong','#FFFFFF')
+        text(p,details[idx],x,y+33,316,16,'Body','muted',24)
+    rule(p,1043,color='surface')
+    text(p,DATA['company'],64,1063,666,12,'Body','muted')
+    text(p,DATA['scopeNote'],64,1090,666,11,'Body','dim',15)
 
 for n,p in enumerate(pages,1):
     for el in p['elements']:

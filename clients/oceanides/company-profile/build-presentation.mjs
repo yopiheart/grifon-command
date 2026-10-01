@@ -4,7 +4,9 @@ import { pathToFileURL } from 'node:url';
 import { Presentation, PresentationFile, FileBlob } from '@oai/artifact-tool';
 
 const workspaceDir = process.cwd();
-const TMP_DIR = path.join(workspaceDir, '.tmp', 'oceanides-profile');
+const format = process.argv[3] || 'A4';
+if (!['A4', 'Widescreen'].includes(format)) throw new Error('Choose A4 or Widescreen.');
+const TMP_DIR = path.join(workspaceDir, '.tmp', format === 'Widescreen' ? 'oceanides-widescreen' : 'oceanides-profile');
 const SKILL_DIR = 'C:/Users/ADMIN/.codex/plugins/cache/openai-primary-runtime/presentations/26.909.12148/skills/presentations';
 const RUNTIME_PYTHON = 'C:/Users/ADMIN/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe';
 const revision = process.argv[2] || '';
@@ -47,10 +49,10 @@ for (const page of spec.pages) {
    }
   }
  }
- slide.speakerNotes.textFrame.setText(sources.join('\n')+'\n'+
+ slide.speakerNotes.textFrame.setText(sources.join('\n')+'\n'+ (page.notes ?? (
    (spec.pages.indexOf(page)===0?'Cover: AI-generated conceptual property cutaway, not a real project or engineering plan. Exact generation brief: company-profile/assets/generated-sources.json.':'' )+
    (spec.pages.indexOf(page)===2?'Matched before/after pair: clients/oceanides/assets/tb2-ba2-before.png and tb2-ba2-after.png. Neil confirmed real job photos on 2026-08-01; see client DESIGN.md and asset-builder source.':'' )+
-   ([2,3,4].includes(spec.pages.indexOf(page))?'Service scene: AI-generated fictional specialist, visibly labeled. Not an actual Oceanides employee or completed project. Exact generation brief: company-profile/assets/generated-sources.json.':''));
+   ([2,3,4].includes(spec.pages.indexOf(page))?'Service scene: AI-generated fictional specialist, visibly labeled. Not an actual Oceanides employee or completed project. Exact generation brief: company-profile/assets/generated-sources.json.':''))));
 }
 
 const candidatePath = path.join(TMP_DIR,'candidate.pptx');
@@ -60,7 +62,7 @@ await finalizePresentation({workspaceDir, candidatePath, finalPath:FINAL_PPTX,
  integrityValidatorPath:path.join(SKILL_DIR,'container_tools/inspect_presentation_package_integrity.py'),
  layoutValidatorPath:path.join(SKILL_DIR,'container_tools/inspect_presentation_layout_geometry.py'),
  layoutArgs:['--expected-slide-size-emu',`${spec.width*9525},${spec.height*9525}`,'--validate-bullet-geometry','--validate-heading-fit'],
- explicitTotalSlideCount:6, requiredNativeTableOwnerSlides:[], requiredNativeChartOwnerSlides:[],
+ explicitTotalSlideCount:spec.pages.length, requiredNativeTableOwnerSlides:[], requiredNativeChartOwnerSlides:[],
  fontPolicy:{basis:'design',families:['Arial','Segoe UI']}, verifyArtifactToolImport:true,
  receiptPath:path.join(TMP_DIR,`presentation-validation${revision?'-'+revision:''}.json`)});
 const checked = await PresentationFile.importPptx(await FileBlob.load(FINAL_PPTX));

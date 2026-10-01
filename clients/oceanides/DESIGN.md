@@ -94,7 +94,12 @@ their existing rules.
   and body. Both families are available
   locally and remain native editable text. Sentence case throughout.
   These are local substitutes, not claims to use SF Pro or OpenAI Sans.
-- A4 portrait, 64px margins on a 794x1123 design canvas, generous section gaps,
+- Printed profile: A4 portrait, 64px margins on a 794x1123 design canvas.
+  Laptop/projector presentation (Neil, 2026-10-01): 16:9 landscape, 1280x720
+  design canvas and 72px margins; seven slides with actual before/after proof
+  on its own slide. Display titles 48-60px, principal body text 23-27px;
+  smaller text is reserved for image disclosures and footer metadata.
+  Both use generous section gaps,
   flat editorial rows and fine rules. No angled plates, hazard devices, chunky
   contact strips, decorative chips, all-caps service lists or UI card grids.
 - One principal image per page. Preserve working hands/tools and treatment
