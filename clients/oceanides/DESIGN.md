@@ -83,7 +83,11 @@ uppercase display and amber-panel defaults below. Other client surfaces retain
 their existing rules.
 
 - Warm white `#F7F7F2` is the main canvas. Ink `#17212B` carries text; navy
-  `#0A1F45` anchors the closing page. Blue `#1C63AD` appears sparingly.
+  `#0A1F45` anchors the closing page. Neil requested clearer colored topics:
+  blue `#1C63AD` carries light-page headings; sky `#89C7F4` carries navy-page
+  headings. Body/subtitle text retains ink/gray and muted white.
+  Three fine wave ribbons in the upper-right margin provide a restrained brand
+  detail, in pale blue on paper and muted blue on navy; native editable shapes.
 - Arial Regular and Bold form one available, editable sans-serif family.
   Sentence case, regular-weight large cover type, bold subject headings.
   These are local substitutes, not claims to use SF Pro or OpenAI Sans.

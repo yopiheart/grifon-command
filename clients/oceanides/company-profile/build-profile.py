@@ -1,6 +1,7 @@
 """Build the print PDF and a shared layout specification for the editable PPTX."""
 import json
 import sys
+import math
 from pathlib import Path
 from io import BytesIO
 from reportlab.pdfgen import canvas
@@ -23,7 +24,7 @@ PDF_NAME = f'Oceanides-Company-Profile{"-" + REVISION if REVISION else ""}.pdf'
 DATA = json.loads((HERE / 'profile-content.json').read_text(encoding='utf-8'))
 W, H = 794, 1123
 C = dict(navy='#0A1F45', surface='#263D5F', paper='#F7F7F2', ink='#17212B',
-         blue='#1C63AD', muted='#D8DFE9', dim='#AABCD3', gray='#63707D', line='#D9DDD9')
+         blue='#1C63AD', sky='#89C7F4', muted='#D8DFE9', dim='#AABCD3', gray='#63707D', line='#D9DDD9')
 FONTS = {'Body': ('Arial', 'arial.ttf', False), 'Strong': ('Arial', 'arialbd.ttf', True),
          'Display': ('Arial', 'arial.ttf', False)}
 for key, (_, filename, _) in FONTS.items():
@@ -32,6 +33,19 @@ for key, (_, filename, _) in FONTS.items():
 pages = []
 def page(bg='paper'):
     p = {'background': C.get(bg, bg), 'elements': []}
+    # Small wave ribbons stay in the top-right margin, behind page content.
+    tones = ['#10294D', '#173759', '#21486B'] if bg == 'navy' else ['#E5EEF6', '#D7E6F2', '#BED5E8']
+    for idx, tone in enumerate(tones):
+        upper = []
+        lower = []
+        for step in range(41):
+            t = step / 40
+            y = max(0, 122 * (1-t)**2 - idx*16)
+            thickness = 3 + 3*math.sin(t*math.pi)
+            upper.append([144*t, y])
+            lower.append([144*t, y+thickness])
+        p['elements'].append(dict(type='polygon', x=650, y=0, w=144, h=132,
+                                  points=upper+list(reversed(lower)), color=tone))
     pages.append(p)
     return p
 
@@ -39,6 +53,11 @@ def rect(p, x, y, w, h, color):
     p['elements'].append(dict(type='rect', x=x, y=y, w=w, h=h, color=C.get(color, color)))
 
 def text(p, value, x, y, w=686, size=18, font='Body', color='ink', leading=None):
+    if value != 'Oceanides' and font == 'Strong':
+        if color == 'ink':
+            color = 'blue'
+        elif color == '#FFFFFF':
+            color = 'sky'
     leading = leading or size * 1.3
     lines = []
     for para in value.split('\n'):
@@ -90,7 +109,7 @@ ART = 'clients/oceanides/company-profile/assets/'
 p=page()
 image(p, ART+'logo-transparent.png', 64, 29, 88, 88, alt='Oceanides logo with transparent outer background')
 text(p, 'Company profile', 64, 160, 666, 17, 'Body', 'gray')
-text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'ink', 68)
+text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'blue', 68)
 image(p, ART+'cover-property-minimal.png', 0, 382, W, W*2/3, 'contain', 'AI-generated conceptual architecture, not a completed Oceanides project or engineering plan')
 text(p, 'AI-generated property-services concept', 64, 922, 666, 10, 'Body', 'gray')
 text(p, 'Siphoning. Plumbing. Renovation & restoration. Pest control.', 64, 974, 666, 17, 'Body', 'ink')
@@ -171,7 +190,7 @@ footer(p,5)
 p=page('navy')
 image(p,ART+'logo-transparent.png',64,29,88,88,alt='Oceanides logo with transparent outer background')
 text(p,'Your next step',64,158,666,17,'Body','muted')
-text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','#FFFFFF',64)
+text(p,'Site assessment\nWritten quotation',64,206,666,54,'Display','sky',64)
 text(p,'Tell us the service, site location and preferred inspection schedule.',64,365,666,21,'Body','muted',31)
 text(p,DATA['phone'],64,470,666,47,'Display','#FFFFFF')
 text(p,DATA['email'],64,548,666,22,'Body','muted')

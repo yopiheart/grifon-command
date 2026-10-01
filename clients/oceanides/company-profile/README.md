@@ -2,8 +2,8 @@
 
 Current deliverables:
 
-- `output/pdf/Oceanides-Company-Profile-Minimal-Clean.pdf` — fixed six-page A4 print layout.
-- `output/pptx/Oceanides-Company-Profile-Minimal-Clean.pptx` — editable native text and shapes.
+- `output/pdf/Oceanides-Company-Profile-Ocean-Accent-Final.pdf` — fixed six-page A4 print layout.
+- `output/pptx/Oceanides-Company-Profile-Ocean-Accent-Final.pptx` — editable native text and shapes.
 
 Earlier output filenames are superseded. The current profile uses a warm-white,
 ink and navy palette, sentence-case Arial typography and generous whitespace.
@@ -25,3 +25,6 @@ has not been tested. Use the PDF for consistent printing.
 
 Logo: user-requested transparent outer-background derivative in assets/logo-transparent.png.
 Its alpha is preserved in both exports; the supplied canonical JPG remains intact.
+
+Ocean accent revision: colored headings and subtle native wave ribbons in the
+upper-right margin; subtitles/body retain neutral colors.

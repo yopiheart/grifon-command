@@ -35,6 +35,11 @@ No deployment or merge requested.
 - No paid/live generation, production data change, merge, or deployment.
 
 ## Company profile
+Ocean accent follow-up: Neil requested stronger title/subtitle color distinction
+and a subtle branded background. Light-page headings now ocean blue; navy-page
+headings sky blue. Three native wave ribbons occupy the upper-right margin, clear
+of header labels. Six PDF/PPTX renders inspected; text unchanged, package/geometry/
+hash pass. Heading contrasts: 5.7:1 light and 8.9:1 dark (rounded; see tool evidence).
 Single-brand header follow-up: removed the duplicate top Oceanides text on cover
 and closing; transparent logo moved to upper left. Both changed PDF/PPTX pages
 visually inspected; no overlap/crop. Only those two text runs removed; all remaining
@@ -46,8 +51,8 @@ All six pages retain identical text. Changed pages rendered on light/navy backgr
 Neil requested an Apple/OpenAI-inspired minimal redesign after reviewing the
 Metro Rod version. Six A4 portrait pages for management and procurement.
 Current outputs in clients/oceanides/company-profile/output/:
-- pdf/Oceanides-Company-Profile-Minimal-Clean.pdf
-- pptx/Oceanides-Company-Profile-Minimal-Clean.pptx
+- pdf/Oceanides-Company-Profile-Ocean-Accent-Final.pdf
+- pptx/Oceanides-Company-Profile-Ocean-Accent-Final.pptx
 Earlier output filenames are superseded; preserved as version history.
 Warm-white, ink/navy, Arial regular/bold, sentence-case titles and flat service
 rows. Client DESIGN.md has a profile-only exception; other surfaces unchanged.
@@ -95,3 +100,4 @@ Earlier startup-failure emails remain historical. No merge or production deploy.
 Next: release review for PR146; PR150 still needs main-target CI after PR146 lands.
 
 Logo cutout independent review: PASS on PDF/PPTX pages 1 and 6; no square matte or clipping. Small service lettering needs zoom at page-fit; portable PPTX preview edges slightly rougher than PDF.
+Ocean accent independent review: BRAND_PASS, 0 defects; all final PDF/PPTX pages checked.
