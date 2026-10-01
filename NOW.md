@@ -1,50 +1,69 @@
 # NOW - the resume doc
-**Stamped: 2026-10-01, Oceanides logo refresh and company-profile discovery**
+**Stamped: 2026-10-01, Oceanides septage offer added to both profile formats**
 
 ## Current work
-Branch: `codex/oceanides-latest-logo`, based on `origin/main` (`5d1b583c`).
-Draft PR151: https://github.com/yopiheart/grifon-command/pull/151.
-Implementation `63060f33` pushed; independent verification passed.
-Neil approved replacing the active Oceanides logo with the exact JPG attached in
-this chat and deleting superseded standalone logo files. No deployment requested.
+Branch: `codex/oceanides-company-profile`, based on logo branch at `7a374c27`.
+Draft PR152: https://github.com/yopiheart/grifon-command/pull/152 (stacked on PR151).
+No merge or deployment requested. User review of the septage versions is next.
 
-## Logo changes
-- `clients/oceanides/assets/logo.jpg` exactly matches the approved attachment
-  (SHA256 `29a508670644d8e113b36f3b599f58e69c5697cc91df86e98a455a48a90e9bdf`).
-- Replaced both Oceanides funnels' `public/img/logo.webp` with 320px optimized
-  derivatives (24,150 bytes each). Existing references remain valid.
-- Removed superseded `clients/oceanides/Oceanides New logo.png`.
-- Both asset recipes preserve the complete square image; hero/footer no longer
-  apply the old circle crop, amber outline, or paper backing.
-- Client DESIGN.md records the canonical source. Historical rendered creatives
-  and unrelated Grifon logos were not changed.
+## Company profile
+Neil confirmed the Septage Treatment Facility offer. It is added to cover,
+overview and a dedicated service page in the eight-slide widescreen presentation
+and seven-page A4 profile. Oceanides coordinates specialist delivery through
+turnover. System details, capacity and maintenance follow the technical proposal.
+Current files in clients/oceanides/company-profile/output/:
+- pptx/Oceanides-Company-Profile-Widescreen-Septage-Final.pptx
+- pdf/Oceanides-Company-Profile-Widescreen-Septage-Final.pdf
+- pdf/Oceanides-Company-Profile-Print-Septage-Final.pdf
+- pptx/Oceanides-Company-Profile-Print-Septage-Final.pptx
+Older versions are superseded and retained as version history.
+Rebuild: build-profile.ps1 -Revision <new-name> -Format Widescreen; default A4.
+Shared export path; widescreen layout in widescreen_layout.py. Private previews
+and receipts: .tmp/oceanides-widescreen/. A4 evidence: .tmp/oceanides-profile/.
 
-## Verification
-- Root `npm.cmd run build`: PASS (existing chunk-size warning).
-- Root `npm.cmd run test`: PASS, 113 files / 1,401 tests; 32 opt-in tests skipped.
-- Bundle-leak, voice-sync, domain-language, PowerShell ASCII, artifact-anchor:
-  PASS. Asset-builder syntax and `git diff --check`: PASS.
-- Both funnel builds (including voice/layout gates): PASS.
-- Independent brand review: BRAND_PASS, 0 critical / 0 nits, 44/50.
-- Both funnels: hero/footer PASS at 375x667 and 1280x900. No crop,
-  distortion, overflow, or browser errors. Evidence: `.tmp/oceanides-logo/`.
-- Logs: `.tmp/oceanides-logo-root-build.log`, `.tmp/oceanides-logo-root-test.log`.
-- No paid/live generation, production data change, merge, or deployment.
+Approved minimal direction: warm white, ink/navy, ocean-blue light headings,
+warm-white closing headings and muted-white supporting text. Segoe UI display
+and bold topics, Arial body. Subtle corner waves; one transparent logo on cover/
+closing. Client DESIGN.md profile exception governs. Apple report/OpenAI public
+reference extraction recorded in workflows/design_swipe_file.md D18.
+Four generated illustration disclosures remain visible. Real same-site siphoning
+photos are separate and the complete tank opening remains visible in square frames.
+Existing assets reused; no generation calls this turn. Provenance: assets/generated-sources.json.
 
-## Company profile: references first, interview afterward
-Neil wants an Oceanides company profile but explicitly wants to inspect reference
-brochures first, then use `.agents/skills/grill-me/SKILL.md` one question at a time.
-New services will be added: do not lock the profile to existing pest control,
-siphoning, declogging, and plumbing. Clarify service readiness, audience, purpose,
-evidence, scope, and format in the later interview before creating the profile.
-Neil selected Metro Rod for its branding system and premium presentation;
-wants AAA quality adapted to Oceanides and suited to its target clients.
-Official reference PDFs were shared in chat: Metro Rod Services Explained
-(closest service fit), Rentokil Specialist Hygiene Overview, and Veolia Corporate
-Brochure (older edition, structural inspiration only). No profile drafted yet.
+Services: siphoning, plumbing/declogging, pipe leaks, house/condo renovation and
+restoration, ceiling repairs/replacement, roof leak repair/waterproofing, house
+cleaning, pest control and septage treatment facility projects. Oceanides
+coordinates through turnover, including specialists. No supplier/model/capacity,
+owned facility/equipment, project count, license/accreditation or maintenance-free
+guarantee claim. Expanded process/scope/coordination
+information remains in speaker notes; A4 profile preserves its complete layout.
+Contacts: 0917 671 6383 (Globe), marketing@oceanidessepticandpest.com;
+Tramo Street Corner Dandan, Pasay City, Philippines 1300.
+CTA: site assessment and written quotation; receive procurement requirements.
+
+Verification: widescreen eight slides/121 native text runs; A4 seven pages/120
+runs. Native text exactly matches layouts and PDF extraction. Facility offer on
+cover/index/service page, dimensions/contacts/disclosures/transparency, package,
+geometry/font policy/import/final hash PASS. Other service/closing page text is
+unchanged apart from page numbers. Changed PDF/PPTX pages inspected in both formats.
+Independent final review PASS: zero must-fix, two optional line-balance nits.
+Prior widescreen review had a minor caption/footer spacing preference. Native PowerPoint and
+projector hardware have not been tested. Artifact-only work; application suites
+were not repeated. No merge, deployment or production-data mutation.
+
+## Logo PR retained
+PR151: https://github.com/yopiheart/grifon-command/pull/151.
+Canonical assets/logo.jpg exactly matches Neil's latest attachment; both funnel
+logo derivatives updated and superseded standalone PNG removed. Full square
+artwork retained in funnels. Profile-only transparent derivative is authorized.
+Logo builds/tests PASS: 1,401 tests, both funnel builds, bundle/voice/domain/
+ASCII/artifact checks and desktop/mobile browser verification. No deployment.
 
 ## Other ongoing work retained
-Recovery tooling draft PR150 targets PR146's `codex/oneshot-recovery` branch;
-its detailed verified state remains in that branch's NOW.md. Neither is merged.
-Motion work PR143 -> PR144 -> PR149 remains on its branches.
+Recovery tooling draft PR150 targets PR146's codex/oneshot-recovery branch.
+PR146 head 39a30613: user-authorized preview retry succeeded (Vercel inspector
+4Su52fj6aZnPDfbFViYytqtP9C45); preview access redirects to SSO, app smoke pending.
+Fresh CI 36863242626 SUCCESS after confirmed GitHub payment. No production deploy
+or merge. Next: release review for PR146; PR150 needs main-target CI after it lands.
+Motion PR143 -> PR144 -> PR149 remains on its branches.
 Untracked remote attachments and reference/media directories were not staged.

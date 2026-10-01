@@ -1,0 +1,3 @@
+# Preserve exported document bytes and suppress text diffs for binary packages.
+output/pdf/*.pdf binary
+output/pptx/*.pptx binary

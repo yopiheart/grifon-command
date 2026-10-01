@@ -74,6 +74,45 @@ square artwork and its dark background; do not apply the old circular mask.
 Both Oceanides funnels use optimized `public/img/logo.webp` copies built from
 that source. The superseded standalone `Oceanides New logo.png` was removed.
 
+### Company profile: minimal editorial direction (2026-10-01)
+
+Neil rejected the signage-heavy brochure and explicitly requested Apple/OpenAI
+inspired simplicity, including changes to fonts and palette combinations.
+For the company profile and its editable presentation only, this overrides the
+uppercase display and amber-panel defaults below. Other client surfaces retain
+their existing rules.
+
+- Warm white `#F7F7F2` is the main canvas. Ink `#17212B` carries text; navy
+  `#0A1F45` anchors the closing page. Neil requested clearer colored topics:
+  blue `#1C63AD` carries light-page headings. Neil rejected the cyan headings
+  on the navy closing page; use warm white `#F7F7F2` for its titles and topic
+  headings. Body/subtitle text retains ink/gray and muted white.
+  Three fine wave ribbons in the upper-right margin provide a restrained brand
+  detail, in pale blue on paper and muted blue on navy; native editable shapes.
+- Neil requested a distinct title font. Segoe UI Regular carries large display
+  titles and Segoe UI Bold carries topic headings; Arial Regular carries subtitles
+  and body. Both families are available
+  locally and remain native editable text. Sentence case throughout.
+  These are local substitutes, not claims to use SF Pro or OpenAI Sans.
+- Printed profile: A4 portrait, 64px margins on a 794x1123 design canvas.
+  Laptop/projector presentation (Neil, 2026-10-01): 16:9 landscape, 1280x720
+  design canvas and 72px margins; eight slides after the confirmed septage
+  treatment facility offer was added, with actual before/after proof
+  on its own slide. Display titles 48-60px, principal body text 23-27px;
+  smaller text is reserved for image disclosures and footer metadata.
+  Both use generous section gaps,
+  flat editorial rows and fine rules. No angled plates, hazard devices, chunky
+  contact strips, decorative chips, all-caps service lists or UI card grids.
+- One principal image per page. Preserve working hands/tools and treatment
+  targets. Generated scenes remain visibly labeled; actual job proof is separate.
+- Neil subsequently requested removal of the visible square around the logo.
+  For this profile, use `company-profile/assets/logo-transparent.png`: an outer
+  background cutout preserving the full emblem, lettering and proportions.
+  Preserve alpha through PDF/PPTX export. Do not crop across the badge or banners.
+  The canonical source JPG and existing funnel assets remain unchanged.
+- Reference: D18 in `workflows/design_swipe_file.md`; Apple's 2025 Environmental
+  Progress Report and OpenAI's public Design Guidelines. No borrowed brand marks.
+
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at
 pintura**: matte navy panels, amber signage, dashed work-order rules, totoong
