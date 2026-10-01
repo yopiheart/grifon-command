@@ -1,7 +1,7 @@
 param([string]$Revision = (Get-Date -Format 'yyyyMMdd-HHmmss'))
 
 # Rebuild from profile-content.json with the existing bundled Codex runtime.
-# The PDF is refreshed; each editable deck gets a new revision filename.
+# Each PDF and editable deck gets a new revision filename.
 $ErrorActionPreference = 'Stop'
 $taskRoot = (Resolve-Path (Join-Path $PSScriptRoot '../../..')).Path
 $taskRuntime = Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies'
@@ -14,7 +14,7 @@ $previousNode = $env:RUNTIME_NODE
 
 Push-Location $taskRoot
 try {
-    & $taskPython (Join-Path $PSScriptRoot 'build-profile.py')
+    & $taskPython (Join-Path $PSScriptRoot 'build-profile.py') $Revision
     if ($LASTEXITCODE -ne 0) { throw 'PDF build failed.' }
     $taskJunction = Join-Path $taskTmp 'node_modules'
     if (-not (Test-Path -LiteralPath $taskJunction)) {

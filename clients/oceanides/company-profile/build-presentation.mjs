@@ -47,11 +47,10 @@ for (const page of spec.pages) {
   }
  }
  slide.speakerNotes.textFrame.setText(sources.join('\n')+'\n'+
-   (spec.pages.indexOf(page)===0?'Cover vehicle: clients/oceanides/assets/tb2-truck-street.png, approved real vehicle source in client design/asset records.':'' )+
+   (spec.pages.indexOf(page)===0?'Cover: AI-generated conceptual property cutaway, not a real project or engineering plan. Exact generation brief: company-profile/assets/generated-sources.json.':'' )+
+   (spec.pages.indexOf(page)===1?'Vehicle: clients/oceanides/assets/tb2-truck-street.png, approved actual source in client design/asset records.':'' )+
    (spec.pages.indexOf(page)===2?'Matched before/after pair: clients/oceanides/assets/tb2-ba2-before.png and tb2-ba2-after.png. Neil confirmed real job photos on 2026-08-01; see client DESIGN.md and asset-builder source.':'' )+
-   (spec.pages.indexOf(page)===0?'Matched cover pair: clients/oceanides/assets/tb2-ba3-before.png and tb2-ba3-after.png, confirmed real job photos in the same asset-builder records.':'' )+
-   (spec.pages.indexOf(page)===3?'Illustrative interior: Max Vakhtbovych, Pexels https://www.pexels.com/photo/an-interior-of-a-living-room-8089170/ . Not a completed Oceanides project.':'' )+
-   (spec.pages.indexOf(page)===4?'Illustrative pest: Jari Lobo, Pexels https://www.pexels.com/photo/close-up-of-cockroach-19294665/ .':''));
+   ([2,3,4].includes(spec.pages.indexOf(page))?'Service scene: AI-generated fictional specialist, visibly labeled. Not an actual Oceanides employee or completed project. Exact generation brief: company-profile/assets/generated-sources.json.':''));
 }
 
 const candidatePath = path.join(TMP_DIR,'candidate.pptx');

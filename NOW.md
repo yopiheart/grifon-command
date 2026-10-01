@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-01, Oceanides company profile redesigned after visual rejection**
+**Stamped: 2026-10-01, Oceanides profile rebuilt with custom illustrative assets**
 
 ## Current work
 Branch: `codex/oceanides-company-profile`, based on `codex/oceanides-latest-logo`
@@ -43,7 +43,9 @@ Rebuild uses photo mastheads, angled title plates, service bands and branded
 contact strips. Cap: two design passes; both concrete review findings corrected.
 Six A4 portrait pages for an in-person management/procurement meeting.
 Outputs under `clients/oceanides/company-profile/output/`: printable PDF and
-native editable PPTX (`Oceanides-Company-Profile-final.pptx`). JSON content and
+native editable PPTX (`Oceanides-Company-Profile-final.pptx`). Current PDF is
+`Oceanides-Company-Profile-2026.pdf`; the unsuffixed PDF is superseded (open-file
+lock prevented replacement). JSON content and
 Python/JS builders plus a PowerShell rebuild entrypoint are saved alongside.
 Service groups: siphoning; plumbing/declogging; house/condo renovation and
 restoration (ceiling, pipe/roof leaks, waterproofing, house cleaning); pest control.
@@ -54,18 +56,25 @@ marketing@oceanidessepticandpest.com; Tramo Street Corner Dandan, Pasay City 130
 The old phone/Gmail were not used in this profile. Existing funnels unchanged.
 No confirmed provider/specs for future treatment system: excluded. No invented
 registration numbers, licenses, accreditation, equipment ownership or guarantees.
-Approved logo and existing vehicle/two matched before-after pairs used.
-Two Pexels photos illustrate interior/pest subjects, visibly captioned and credited.
-Source metadata in company-profile/assets/sources.json. These are not project proof.
+Approved logo, actual vehicle image and one confirmed same-site before/after pair used.
+Neil authorized custom asset generation. Four native generated illustrations:
+conceptual property cutaway cover, plumbing, ceiling repair and pest treatment.
+Each is visibly labeled AI-generated; fictional workers are not employee/project
+evidence. Exact prompts and use boundaries: assets/generated-sources.json.
+Prior stock assets remain recorded in sources.json but are not used in current outputs.
 Checks: six PDF pages; every layout text line extracts; contacts match; old
 contacts absent. PPTX package, geometry, heading/font policy and final import PASS.
-All twelve refreshed PDF/PPTX renders inspected; a fresh critic opened actual
-reference pages. Before/after labels and page6 gutter fixed. Stale footer finding
-withdrawn after current PNG/XML check. No remaining concrete export/claim defect.
-118 native text runs match layout per slide; six PDF pages extract every expected
-line, contacts match, package/geometry/font checks pass. Native PowerPoint unverified.
+All twelve refreshed PDF/PPTX renders inspected; independent critic opened actual
+reference pages. Ceiling-tool crop and obscured pest-treatment target corrected
+and rechecked. No remaining must-fix layout or claim defect reported.
+111 native text runs match layout per slide; six PDF pages extract every expected
+line, contacts and illustration disclosures match, notes record provenance.
+Package/geometry/font checks and final import pass. PPTX encodes approved Arial
+Narrow, but the portable renderer substitutes a broader display face; native
+PowerPoint remains unverified. Use the fixed PDF for printing.
 Remaining visual gap: fewer actual crew-at-work photos than the reference. No
-fabricated operations photos added. User aesthetic review pending; no AAA claim.
+generated illustration is presented as project proof. User aesthetic review pending;
+no AAA claim. Builders now revision both PDF and PPTX to avoid open-file locks.
 Evidence stays in
 `.tmp/oceanides-profile/`. Artifact-only change; application tests not repeated.
 

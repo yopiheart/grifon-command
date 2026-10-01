@@ -1,5 +1,6 @@
 """Build the print PDF and a shared layout specification for the editable PPTX."""
 import json
+import sys
 from pathlib import Path
 from io import BytesIO
 from reportlab.pdfgen import canvas
@@ -15,6 +16,10 @@ PRIVATE = ROOT / '.tmp' / 'oceanides-profile'
 PRIVATE.mkdir(parents=True, exist_ok=True)
 OUT = HERE / 'output' / 'pdf'
 OUT.mkdir(parents=True, exist_ok=True)
+REVISION = sys.argv[1] if len(sys.argv) > 1 else ''
+if REVISION and not all(char.isascii() and (char.isalnum() or char == '-') for char in REVISION):
+    raise ValueError('Use an alphanumeric revision suffix.')
+PDF_NAME = f'Oceanides-Company-Profile{"-" + REVISION if REVISION else ""}.pdf'
 DATA = json.loads((HERE / 'profile-content.json').read_text(encoding='utf-8'))
 W, H = 794, 1123
 C = dict(navy='#0A1F45', surface='#0E2C5E', paper='#F4F6FA', ink='#0B1B33',
@@ -82,8 +87,9 @@ def footer(p, n, dark=False):
 
 def band(p, title, y=241, size=45):
     # Angled title plate: the recurring layout device of the selected brochure.
-    polygon(p, 27, y, 735, 139, [[54,0],[735,0],[658,139],[0,139]], 'amber')
-    polygon(p, 27, y, 724, 130, [[54,0],[724,0],[652,130],[0,130]], 'paper')
+    height = 139 if '\n' in title else 102
+    polygon(p, 27, y, 735, height, [[54,0],[735,0],[658,height],[0,height]], 'amber')
+    polygon(p, 27, y, 724, height-9, [[54,0],[724,0],[652,height-9],[0,height-9]], 'paper')
     text(p, title, 77, y+18, 609, size, 'Display', 'navy', size*1.04)
 
 def scope(p, items, x, y, w, size=19, color='#FFFFFF', gap=18):
@@ -93,36 +99,30 @@ def scope(p, items, x, y, w, size=19, color='#FFFFFF', gap=18):
     return y
 
 ASSETS = 'clients/oceanides/assets/'
-STOCK = 'clients/oceanides/company-profile/assets/'
+ART = 'clients/oceanides/company-profile/assets/'
 
-# Cover: brand masthead, large operational photograph and same-site image strip.
+# Cover: commissioned conceptual architecture, separate from actual-job proof.
 p=page('navy')
-image(p, ASSETS+'logo.jpg', 31, 26, 155, 155, alt='Approved Oceanides logo')
-text(p, 'OCEANIDES', 216, 37, 540, 67, 'Display', '#FFFFFF')
-text(p, 'Plumbing Siphoning &\nPest Management Services OPC', 218, 120, 540, 18, 'Body', 'muted', 25)
-image(p, ASSETS+'tb2-truck-street.png', 0, 199, W, 432, 'cover', 'Approved field-service vehicle photograph')
-polygon(p,0,533,W,162,[[0,0],[W,0],[W,100],[0,162]],'navy')
-polygon(p,0,533,39,162,[[0,0],[39,0],[39,156],[0,162]],'amber')
-text(p, 'COMPANY PROFILE', 60, 558, 692, 63, 'Display', '#FFFFFF')
-text(p, 'Property services. One coordinated point of contact.', 62, 638, 686, 20, 'Body', 'muted')
-image(p, ASSETS+'tb2-ba3-before.png', 0, 719, 394, 192, 'cover', 'Previous site-work image before service')
-image(p, ASSETS+'tb2-ba3-after.png', 400, 719, 394, 192, 'cover', 'Same site after service')
-text(p, 'BEFORE', 31, 924, 170, 13, 'Strong', 'dim')
-text(p, 'AFTER', 424, 924, 170, 13, 'Strong', 'dim')
-text(p, 'Siphoning  /  Plumbing  /  Renovation & restoration  /  Pest control', 31, 977, 733, 16, 'Body', '#FFFFFF')
+image(p, ASSETS+'logo.jpg', 38, 24, 120, 120, alt='Approved Oceanides logo')
+text(p, 'OCEANIDES', 196, 33, 560, 62, 'Display', '#FFFFFF')
+text(p, 'Plumbing Siphoning & Pest Management Services OPC', 198, 111, 553, 15, 'Body', 'muted', 21)
+image(p, ART+'cover-property-services.png', 0, 176, W, 516, 'cover', 'AI-generated conceptual property-services architecture; not a completed project')
+text(p, 'AI-generated property-services concept', 44, 705, 706, 11, 'Body', 'dim')
+polygon(p,0,743,27,205,[[0,0],[27,0],[27,190],[0,205]],'amber')
+text(p, 'COMPANY PROFILE', 44, 743, 706, 56, 'Display', '#FFFFFF')
+text(p, 'Property services. One coordinated point of contact.', 44, 823, 706, 19, 'Body', 'muted')
+for x,y,label in [(44,890,'SIPHONING'),(414,890,'PLUMBING'),(44,950,'RENOVATION & RESTORATION'),(414,950,'PEST CONTROL')]:
+    text(p,label,x,y,337,24 if x==44 and y==950 else 27,'Display','#FFFFFF')
 footer(p,1,True)
 
 # Overview: angled masthead, concise introduction and editorial service index.
 p=page()
-rect(p,0,0,W,196,'navy')
-image(p, ASSETS+'logo.jpg', 31, 19, 146,146,alt='Approved Oceanides logo')
-text(p,'OCEANIDES',210,42,555,56,'Display','#FFFFFF')
-text(p,'Homes  /  Condominiums  /  Company facilities',212,122,550,17,'Body','muted')
-band(p,'COMPANY OVERVIEW',163,45)
-text(p,DATA['overview'],44,333,706,19,'Body','ink',28)
-polygon(p,0,459,W,233,[[0,0],[W,0],[W-89,233],[0,233]],'navy')
-text(p,'ONE CONTACT THROUGH TURNOVER',44,487,665,29,'Display','#FFFFFF')
-text(p,DATA['delivery'],44,542,650,18,'Body','muted',27)
+image(p,ASSETS+'tb2-truck-street.png',0,0,W,261,'cover','Approved field-service vehicle photograph')
+band(p,'COMPANY OVERVIEW',205,45)
+text(p,DATA['overview'],44,346,706,19,'Body','ink',28)
+polygon(p,0,475,W,225,[[0,0],[W,0],[W-89,225],[0,225]],'navy')
+text(p,'ONE CONTACT THROUGH TURNOVER',44,503,665,29,'Display','#FFFFFF')
+text(p,DATA['delivery'],44,554,650,18,'Body','muted',27)
 text(p,'SERVICE PORTFOLIO',44,730,706,14,'Strong','blue')
 for x,y,idx in [(44,781,0),(414,781,1),(44,886,2),(414,886,3)]:
     titles=['SIPHONING','PLUMBING','RENOVATION &\nRESTORATION','PEST CONTROL']
@@ -131,31 +131,32 @@ for x,y,idx in [(44,781,0),(414,781,1),(44,886,2),(414,886,3)]:
     text(p,summaries[idx],x,y+(67 if idx==2 else 43),334,15,'Body','gray',21)
 footer(p,2)
 
-# Actual paired job images, distinct from illustrative stock.
+# Generated service scene above; actual paired job images in a dedicated proof row.
 p=page()
-image(p,ASSETS+'tb2-ba2-before.png',0,0,W,320,'cover','Same-site septic opening before service')
-band(p,'SIPHONING\n& PLUMBING',244,43)
-text(p,'BEFORE SERVICE / SAME SITE',44,391,706,11,'Strong','blue')
-rect(p,0,413,W,300,'navy')
-text(p,'SEPTIC TANK SERVICES',44,444,333,27,'Display','#FFFFFF')
-text(p,'PLUMBING SERVICES',418,444,332,27,'Display','#FFFFFF')
-scope(p,DATA['serviceGroups'][0]['items'],44,494,317,17,gap=15)
-scope(p,DATA['serviceGroups'][1]['items'],418,494,326,17,gap=15)
-image(p,ASSETS+'tb2-ba2-after.png',401,739,393,269,'cover','Same-site septic opening after service')
-text(p,'AFTER SERVICE / SAME SITE',419,1015,357,11,'Strong','blue')
-text(p,'ACTUAL SITE WORK',44,762,329,14,'Strong','blue')
-text(p,'BEFORE\n& AFTER',44,801,329,39,'Display','navy',40)
-text(p,'The photographs show the same site before and after service.',44,907,312,17,'Body','ink',25)
-text(p,'Final scope follows site access and tank or pipe conditions.',44,978,312,13,'Body','gray',18)
+image(p,ART+'plumbing-service.png',0,0,W,W*2/3,'contain','AI-generated plumbing service illustration')
+rect(p,0,420,W,130,'paper')
+band(p,'SIPHONING\n& PLUMBING',344,43)
+text(p,'AI-generated service illustration',44,497,706,11,'Body','gray')
+rect(p,0,536,W,242,'navy')
+text(p,'SEPTIC TANK SERVICES',44,561,333,25,'Display','#FFFFFF')
+text(p,'PLUMBING SERVICES',418,561,332,25,'Display','#FFFFFF')
+scope(p,DATA['serviceGroups'][0]['items'],44,609,317,16,gap=12)
+scope(p,DATA['serviceGroups'][1]['items'],418,609,326,16,gap=12)
+text(p,'ACTUAL SIPHONING WORK / SAME SITE',44,801,706,13,'Strong','blue')
+image(p,ASSETS+'tb2-ba2-before.png',44,837,342,152,'cover','Actual same-site septic opening before service')
+image(p,ASSETS+'tb2-ba2-after.png',408,837,342,152,'cover','Actual same-site septic opening after service')
+text(p,'BEFORE SERVICE',44,1002,342,11,'Strong','blue')
+text(p,'AFTER SERVICE',408,1002,342,11,'Strong','blue')
 footer(p,3)
 
 # Illustrative environment image, not represented as a past project.
 p=page()
-image(p,STOCK+'interior-pexels-8089170.jpg',0,0,W,345,'cover','Illustrative residential interior; Pexels, Max Vakhtbovych')
-band(p,'RENOVATION\n& RESTORATION',268,43)
-text(p,'Illustrative interior photograph / Max Vakhtbovych, Pexels',44,421,706,11,'Body','gray')
-text(p,'HOUSES & CONDOMINIUMS',44,469,706,28,'Display','navy')
-text(p,DATA['serviceGroups'][2]['summary'],44,522,706,19,'Body','ink',28)
+image(p,ART+'renovation-service.png',0,0,W,W*2/3,'contain','AI-generated ceiling repair service illustration')
+rect(p,0,420,W,130,'paper')
+band(p,'RENOVATION\n& RESTORATION',344,43)
+text(p,'AI-generated service illustration',44,497,706,11,'Body','gray')
+text(p,'HOUSES & CONDOMINIUMS',44,543,706,28,'Display','navy')
+text(p,DATA['serviceGroups'][2]['summary'],44,592,706,18,'Body','ink',26)
 polygon(p,0,653,W,277,[[0,0],[W,0],[W-83,277],[0,277]],'navy')
 scope(p,DATA['serviceGroups'][2]['items'],44,685,671,21,gap=21)
 text(p,'Oceanides coordinates the field team or specialist contractor for the agreed work.',44,954,663,17,'Body','ink',26)
@@ -163,15 +164,15 @@ footer(p,4)
 
 # Recognizable pest subject; does not imply owned equipment or technicians.
 p=page()
-image(p,STOCK+'pest-pexels-19294665.jpg',0,0,W,334,'cover','Illustrative pest photograph; Pexels, Jari Lobo')
-band(p,'PEST CONTROL',260,49)
-text(p,'Illustrative pest photograph / Jari Lobo, Pexels',44,414,706,11,'Body','gray')
-text(p,'SITE FINDINGS FIRST',44,465,706,29,'Display','navy')
-text(p,DATA['serviceGroups'][3]['summary'],44,522,706,20,'Body','ink',29)
-rect(p,0,662,W,237,'navy')
-scope(p,DATA['serviceGroups'][3]['items'],44,694,685,22,gap=26)
-polygon(p,0,915,42,98,[[0,0],[42,0],[18,98],[0,98]],'amber')
-text(p,'The treatment scope, service schedule and specialist requirements are confirmed after assessment.',60,936,673,18,'Body','ink',27)
+image(p,ART+'pest-control-service.png',0,0,W,W*2/3,'contain','AI-generated localized pest-treatment service illustration')
+band(p,'PEST CONTROL',500,49)
+text(p,'AI-generated service illustration',44,616,706,11,'Body','gray')
+text(p,'SITE FINDINGS FIRST',44,653,706,27,'Display','navy')
+text(p,DATA['serviceGroups'][3]['summary'],44,699,706,18,'Body','ink',25)
+rect(p,0,779,W,158,'navy')
+scope(p,DATA['serviceGroups'][3]['items'],44,803,685,18,gap=14)
+polygon(p,0,951,42,70,[[0,0],[42,0],[18,70],[0,70]],'amber')
+text(p,'The treatment scope, service schedule and specialist requirements are confirmed after assessment.',60,964,673,16,'Body','ink',24)
 footer(p,5)
 
 # Closing: working process and prominent site-assessment contact information.
@@ -204,7 +205,7 @@ for n,p in enumerate(pages,1):
 
 spec = dict(width=W, height=H, fonts={k:dict(family=v[0], bold=v[2]) for k,v in FONTS.items()}, pages=pages)
 (PRIVATE/'layout.json').write_text(json.dumps(spec,indent=2),encoding='utf-8')
-pdfpath = OUT/'Oceanides-Company-Profile.pdf'
+pdfpath = OUT/PDF_NAME
 c = canvas.Canvas(str(pdfpath), pagesize=(W*.75,H*.75), pageCompression=1)
 c.setTitle('Oceanides Company Profile')
 c.setAuthor(DATA['company'])
