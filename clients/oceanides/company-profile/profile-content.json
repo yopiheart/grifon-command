@@ -1,0 +1,43 @@
+{
+  "company": "Oceanides Plumbing Siphoning & Pest Management Services OPC",
+  "brand": "OCEANIDES",
+  "phone": "0917 671 6383",
+  "carrier": "Globe",
+  "email": "marketing@oceanidessepticandpest.com",
+  "address": "Tramo Street Corner Dandan, Pasay City, Philippines 1300",
+  "facebook": "Oceanides Malabanan - Siphoning Septic Tank and Plumbing Services",
+  "overview": "Oceanides coordinates property services for homes, condominiums and company facilities. Our service offering covers siphoning, plumbing, renovation and restoration, and pest control.",
+  "delivery": "Oceanides remains your main contact from the initial inquiry to turnover. We coordinate the site assessment, quotation and service delivery, including specialist contractors where the work requires them.",
+  "serviceGroups": [
+    {
+      "title": "Siphoning",
+      "summary": "Septic tank siphoning and cleaning, with the service scope based on site access and tank conditions.",
+      "items": ["Septic tank siphoning", "Septic tank cleaning", "Service coordination and site assessment"]
+    },
+    {
+      "title": "Plumbing",
+      "summary": "Assessment and repair of plumbing problems, including blockages and water leaks.",
+      "items": ["Drain declogging", "Plumbing and pipe leak repairs", "Troubleshooting based on site findings"]
+    },
+    {
+      "title": "Renovation & restoration",
+      "summary": "Repair and improvement work for houses and condominiums, with a quotation tailored to the site and the agreed scope.",
+      "items": ["House and condominium renovation", "Restoration and ceiling repair or replacement", "Roof leak repair and waterproofing", "House cleaning within the agreed scope"]
+    },
+    {
+      "title": "Pest control",
+      "summary": "Pest control services based on an assessment of the property and the pest concerns reported by the client.",
+      "items": ["Assessment of pest activity", "Treatment scope based on site findings", "Service scheduling and contractor coordination"]
+    }
+  ],
+  "process": [
+    {"title": "Site assessment", "detail": "Review the reported problem, work areas, site access and project requirements."},
+    {"title": "Written quotation", "detail": "Define the proposed work and pricing. Confirm the scope with the client before scheduling."},
+    {"title": "Service coordination", "detail": "Arrange the field team or specialist contractor and coordinate access with the client."},
+    {"title": "Turnover", "detail": "Review the agreed work with the client and coordinate any follow-up within the project scope."}
+  ],
+  "procurement": "Share your supplier-accreditation requirements with Oceanides. We can coordinate the company documents and project information required for your review.",
+  "callToAction": "Arrange a site assessment",
+  "callToActionBody": "Tell us the service you need, the site location and your preferred inspection schedule. Oceanides will coordinate the assessment and prepare a quotation based on the findings.",
+  "scopeNote": "Final scope, pricing and scheduling depend on the site assessment and the agreed quotation."
+}

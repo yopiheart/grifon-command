@@ -1,12 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-01, Oceanides logo refresh and company-profile discovery**
+**Stamped: 2026-10-01, Oceanides company profile delivered**
 
 ## Current work
-Branch: `codex/oceanides-latest-logo`, based on `origin/main` (`5d1b583c`).
-Draft PR151: https://github.com/yopiheart/grifon-command/pull/151.
-Implementation `63060f33` pushed; independent verification passed.
-Neil approved replacing the active Oceanides logo with the exact JPG attached in
-this chat and deleting superseded standalone logo files. No deployment requested.
+Branch: `codex/oceanides-company-profile`, based on `codex/oceanides-latest-logo`
+at `7a374c27`. Profile draft PR: pending creation below.
+Logo draft PR151: https://github.com/yopiheart/grifon-command/pull/151.
+Logo implementation `63060f33` pushed; independent verification passed.
+No deployment or merge requested.
 
 ## Logo changes
 - `clients/oceanides/assets/logo.jpg` exactly matches the approved attachment
@@ -31,20 +31,44 @@ this chat and deleting superseded standalone logo files. No deployment requested
 - Logs: `.tmp/oceanides-logo-root-build.log`, `.tmp/oceanides-logo-root-test.log`.
 - No paid/live generation, production data change, merge, or deployment.
 
-## Company profile: references first, interview afterward
-Neil wants an Oceanides company profile but explicitly wants to inspect reference
-brochures first, then use `.agents/skills/grill-me/SKILL.md` one question at a time.
-New services will be added: do not lock the profile to existing pest control,
-siphoning, declogging, and plumbing. Clarify service readiness, audience, purpose,
-evidence, scope, and format in the later interview before creating the profile.
-Neil selected Metro Rod for its branding system and premium presentation;
-wants AAA quality adapted to Oceanides and suited to its target clients.
-Official reference PDFs were shared in chat: Metro Rod Services Explained
-(closest service fit), Rentokil Specialist Hygiene Overview, and Veolia Corporate
-Brochure (older edition, structural inspiration only). No profile drafted yet.
+## Company profile
+Neil completed the grill-me interview and authorized production. Metro Rod is
+the selected reference; the result uses Oceanides navy/amber/paper identity.
+Six A4 portrait pages for an in-person management/procurement meeting.
+Outputs under `clients/oceanides/company-profile/output/`: printable PDF and
+native editable PPTX (`Oceanides-Company-Profile-final.pptx`). JSON content and
+Python/JS builders plus a PowerShell rebuild entrypoint are saved alongside.
+Service groups: siphoning; plumbing/declogging; house/condo renovation and
+restoration (ceiling, pipe/roof leaks, waterproofing, house cleaning); pest control.
+Oceanides is the client contact through turnover, including specialist-contractor
+coordination. CTA: site assessment and quotation; request accreditation requirements.
+Contacts confirmed by Neil and screenshot 1000040025.jpg: 0917 671 6383 (Globe),
+marketing@oceanidessepticandpest.com; Tramo Street Corner Dandan, Pasay City 1300.
+The old phone/Gmail were not used in this profile. Existing funnels unchanged.
+No confirmed provider/specs for future treatment system: excluded. No invented
+registration numbers, licenses, accreditation, equipment ownership or guarantees.
+Approved logo and existing real vehicle/matched before-after photos used.
+Checks: six PDF pages; every layout text line extracts; contacts match; old
+contacts absent. PPTX package, geometry, heading/font policy and final import PASS.
+All twelve PDF/PPTX page renders independently inspected: BRAND_PASS, 43/50,
+zero critical/nits. Native PowerPoint execution unverified. Evidence stays in
+`.tmp/oceanides-profile/`. Artifact-only change; application tests not repeated.
 
 ## Other ongoing work retained
 Recovery tooling draft PR150 targets PR146's `codex/oneshot-recovery` branch;
 its detailed verified state remains in that branch's NOW.md. Neither is merged.
 Motion work PR143 -> PR144 -> PR149 remains on its branches.
 Untracked remote attachments and reference/media directories were not staged.
+
+## Recovery preview follow-up - 2026-10-01
+Neil authorized a PR146 Preview retry only; no production deploy or merge.
+Remote `codex/oneshot-recovery` head is `39a30613` (empty retry commit;
+same tree as `485708c4`, zero changed files). Vercel SUCCESS at 12:24 UTC.
+Preview deployment ID `6784136645`; Vercel inspector:
+https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/4Su52fj6aZnPDfbFViYytqtP9C45
+Preview HTTP redirects to Vercel SSO; authenticated app smoke remains pending.
+Fresh GitHub Actions runs `36861287393` and `36861293642` failed before jobs
+started (`BuildFailed` / `startup_failure`), also seen on unrelated PR151.
+Sept 29 GitHub email reports failed card billing; likely relevant, not proven.
+Next: resolve GitHub account/Actions blocker, obtain fresh CI, then release review.
+PR146's CLEAN merge status omits these startup failures; it is not CI clearance.
