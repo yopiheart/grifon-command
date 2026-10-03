@@ -1,40 +1,38 @@
 # NOW - the resume doc
-**Stamped: 2026-09-17, Grifon Motion Director skill and local demos**
+**Stamped: 2026-10-03, motion stack merge in progress**
 
-## Current state
-Branch: `codex/grifon-motion-director`.
-Draft PR: https://github.com/yopiheart/grifon-command/pull/143
-Implementation committed and pushed as `448654d1`; this handoff update follows it.
-Neil approved the implementation plan and then the exact installation patch
-SHA-256 `2b542b8b135997e33a322856de8bd00d45c5bacf75fa3b37dfdbc046ce462074`.
-The new `.agents/skills/grifon-motion-director/` skill is installed unchanged.
-Existing application code, tuned prompts, other skills and hero-film work are untouched.
-Portrait and landscape demos are ready: 12 seconds, 24 fps, 288 frames,
-1080x1920 and 1920x1080, H.264/AAC with existing music, no voiceover.
-Editable source and reproduction commands: workflows/assets/grifon-motion-director-demo/.
-Offline player: artifacts/grifon-motion-director-review.html.
+## Current authorized work
+Neil approved updating and merging motion PR143 -> PR144 -> PR149 after checks.
+Isolated checkout: C:/Users/ADMIN/.codex/worktrees/motion-merge/grifon-command.
+The shared Oceanides checkout, its branch, local files and processes are untouched.
+PR143 is being updated with current main; its only conflict was this resume doc.
+No application conflict, new tuned instruction edit or approved-media change.
+PR144 and PR149 will inherit the updated parent before their own main-target CI.
+Use merge commits to preserve ancestry across the stack. Never bypass failing gates.
 
-## Remaining review
-CUA rejected the local file URL and expressly prohibited browser workarounds.
-Mobile/desktop review-page screenshots, controls/overflow, full browser playback,
-physical-phone playback and subjective listening are unverified; do not claim done.
-Independent actual-MP4 frame review and 390px samples pass.
-Neil's creative approval and fresh-session automatic skill-trigger testing remain open.
-No publishing, merge, deployment, campaign changes, or paid generation occurred.
+## Motion deliverables
+PR143: approved Motion Director skill and local portrait/landscape demos.
+PR144: Spotlight/Spark showcase and reference study.
+PR149: approved 32.9s Grifon film inspired by the supplied ElevenLabs reference.
+Final V08 includes music/SFX, editable source, comparison and portable HTML.
+V04 picture is locked. V05/V06 rejected sound and V07 auditions remain backed up.
+Final path in PR149: workflows/assets/grifon-reference-full/exports/
+grifon-your-next-ad-v08-1080p.mp4. Raw licensed stock/stems remain local/ignored.
+This is a local authored workflow; product integration is separately scoped.
 
-## Evidence
-Installed check:codex: 32 entrypoints, zero errors, all 26 tests pass.
-Hyperframes lint/runtime/layout checks pass both layouts, including transitions.
-Both exports fully decode; final audio measures -13.82 LUFS and -1.41 dBTP.
-The audio checker reproduces and rejects the original +5.27 dBTP clipping defect.
-Ten browser-frame revision checks pass; unchanged beats are pixel-identical.
-Independent source review resolved the initial logo mismatch; canonical mark used.
-Three skill dry-run cases plus baseline outputs and static evaluation viewer saved.
-Rubric-exposed dry runs are not a skill-superiority benchmark or live trigger test.
-JS syntax and artifact-anchor checks pass; no app build/full suite needed for this scope.
-Git whitespace checks pass after normalizing only vendored/log trailing whitespace.
-The separate verification and smoke records include hashes and browser limitations.
+## Review and verification
+September 27 independent reviews found no blocking code issues across the stack.
+Two P3 verifier fixes are in PR149: fail for broken embeds and honor tool paths.
+Both were independently checked against reproductions of their original defects.
+Prior combined checks passed: build, 1,401 unit tests, 56 browser tests, control
+and artifact gates. Fresh main integration review and CI are pending this turn.
+Do not call historical test results fresh. Approved video must remain unchanged.
 
-## Related work
-Workflow/personal-desktop updates are already merged in PR #141; no repeat needed.
-Prompt-quality A+B+D merged in PR #139; release evidence remains PR #140.
+## Other work retained
+PR146 recovery fixes and PR150 verification tooling are now merged on main.
+The recovery session confirmed payment resolution, successful Vercel preview,
+production access and passing CI. PR149 still has a historical September 27
+account-block failure; assess fresh results after pushing the updated stack.
+Oceanides PR151/152/153 and ongoing company-profile/presentation work are separate.
+The shared checkout's NOW.md contains its current Oceanides handoff; do not edit it.
+No paid operation, account change or manual deployment is part of this merge work.
