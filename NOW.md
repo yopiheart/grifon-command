@@ -2,8 +2,8 @@
 **Stamped: 2026-10-03, local Blender product-reveal study**
 
 ## Current authorized work
-Neil approved a polished six-second product-reveal proof after the Blender /
-Higgsfield workflow evaluation, using no Higgsfield and no paid AI operation.
+Neil approved the local six-second Blender product-reveal proof, then the exact
+one-shot fal motion-transfer test with output changed to 480p to save cost.
 Branch: `codex/blender-product-reveal`, based on main `3da5bc7b` (PR154 merged).
 Implementation commit: `a8f3d9ad`; draft PR157:
 https://github.com/yopiheart/grifon-command/pull/157.
@@ -20,9 +20,12 @@ deployment or production-data changes. No paid API calls or external media uploa
   Builder reads committed source assets; viewer supports timestamp-preserving swaps.
 - Original procedural scene/sound/cut tools support regeneration without AI.
 - `motion-transfer.spec.json` prepares exactly one direct fal Seedance 2.5 test:
-  hashed reference clip + hero image, six seconds, 720p, silent, estimated $3.33,
-  maximum $5 total, no retries or funding. NOT APPROVED / NOT RUN.
-  Account access and current cost bound must pass preflight after exact approval.
+  hashed reference clip + hero image, six seconds, 480p, silent, estimated $1.55,
+  maximum $5 total, no retries or funding. APPROVED / NOT RUN.
+  User messages: "G approved" then "480P lang bro para tipid".
+  Native documented output: 864x496. Both approved input hashes still match.
+  Transport disables automatic retries and fallback; no client POST retries.
+  `motion-transfer-preflight.json` records local/doc PASS, account pending, 0 spends.
 
 ## Verification
 - Blender full Cycles32 CPU denoised render: exit 0, 144 frames, 3065.114 seconds.
@@ -52,13 +55,19 @@ deployment or production-data changes. No paid API calls or external media uploa
 - App build/unit/e2e suites NOT RUN: no app code changed; paid/live switches unused.
 - PR157 implementation revision: reported Vercel / Vercel Preview Comments statuses
   SUCCESS. These automated preview statuses are not evidence of application suites.
+- 480p spec: request diff verified (resolution only), both hashes and formula PASS;
+  independent provider review confirms schema, pricing and transport headers.
+  Authenticated pricing/balance checks and generation are NOT RUN.
 
 ## NEXT ACTION
 Local proof and verification evidence are committed/pushed in draft PR157.
 Offline viewer opening was queued in Codex; no manual deploy or merge was run.
-Neil reviews the film and sound, then approves or rejects the exact motion-transfer
-spec before any paid test. Check funded account access and current bounded cost;
-stop if new funding or extra fees are needed.
+Exact paid-test approval is present. Account access is the blocker: no FAL_KEY or
+FAL_API_KEY in current process, user/machine environment or existing desktop config;
+the available fal browser is signed out. Requested existing account/key connection.
+Fal sign-in tab is kept for handoff. No new Admin key or account funding requested.
+Once connected, check funded access and bounded cost, submit once at 480p, and
+compare motion/product continuity. Stop if funding or extra fees are needed.
 AI motion transfer, human visual/sound approval and Grifon integration remain pending.
 No merge, deployment or publication is authorized.
 
