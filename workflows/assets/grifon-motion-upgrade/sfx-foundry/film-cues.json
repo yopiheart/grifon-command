@@ -1,0 +1,56 @@
+{
+  "status": "local-original-SFX-audition",
+  "duration": 32.9,
+  "sampleRate": 48000,
+  "lockedInputs": {
+    "picture": {"path":"workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-english-vo-1080p.mp4","sha256":"b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067"},
+    "music": {"path":".tmp/grifon-english-vo-v02/music-ducked.wav","sha256":"115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa"},
+    "voice": {"path":".tmp/grifon-english-vo-v02/voice-positioned.wav","sha256":"54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7"},
+    "oldSfx": {"path":".tmp/grifon-english-vo-v02/sfx-preserved.wav","sha256":"545d4a5baa994bf705af8ea047518d75723cc0f77febdc46f87065b71b9cdac0"},
+    "premaster": {"path":".tmp/grifon-english-vo-v02/mix-premaster.wav","sha256":"c75644338a93d8a8515da331f84d1efd47e8a723bf1e02d673273d5ad273f8cc"},
+    "master": {"path":".tmp/grifon-english-vo-v02/mix-master.wav","sha256":"e2b7780084349926c516ad8b0b27e484cf7826cde08b411528452f460716f230"}
+  },
+  "output": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-sfx-pilot-1080p.mp4",
+  "method": "Freeze the approved PCM master. Add only the edited SFX stem difference at the measured existing linear master gain. No new music/VO EQ, timing, level or normalization. AAC re-encoding affects composite samples.",
+  "voiceProtection": {"newLayerDuckDb":-7,"attackSeconds":0.06,"releaseSeconds":0.12},
+  "existingSfxReductions": [
+    {"start":2.63,"end":3.38,"gainDb":-7,"event":"Camera rotation replacement"},
+    {"start":3.79,"end":4.10,"gainDb":-4,"event":"Camera settle/contact"},
+    {"start":5.65,"end":6.40,"gainDb":-7,"event":"Phone rotation replacement"},
+    {"start":6.80,"end":7.01,"gainDb":-5,"event":"Phone settle/contact"},
+    {"start":8.61,"end":9.36,"gainDb":-7,"event":"Laptop rotation replacement"},
+    {"start":9.77,"end":10.11,"gainDb":-4,"event":"Laptop settle/contact"},
+    {"start":12.58,"end":13.16,"gainDb":-5,"event":"Warm pivot"},
+    {"start":14.22,"end":14.94,"gainDb":-5,"event":"Sphere expansion"},
+    {"start":17.63,"end":17.91,"gainDb":-6,"event":"Message arrival one"},
+    {"start":18.84,"end":19.12,"gainDb":-6,"event":"Message arrival two"},
+    {"start":20.78,"end":21.02,"gainDb":-6,"event":"Reply during narration"},
+    {"start":26.14,"end":26.45,"gainDb":-5,"event":"Outline completion"},
+    {"start":29.25,"end":29.93,"gainDb":-6,"event":"Logo contact and resolve"}
+  ],
+  "placements": [
+    {"sound":"hero-sweep","start":2.63,"gainDb":-9,"event":"Camera rotation air body"},
+    {"sound":"product-weight","syncAt":3.82,"gainDb":-4,"event":"Camera hero settle"},
+    {"sound":"hero-sweep","start":5.65,"gainDb":-11,"event":"Phone rotation air body"},
+    {"sound":"product-weight","syncAt":6.84,"gainDb":-7,"event":"Phone hero settle"},
+    {"sound":"hero-sweep","start":8.61,"gainDb":-8,"event":"Laptop rotation air body"},
+    {"sound":"product-weight","syncAt":9.80,"gainDb":-3,"event":"Laptop hero settle"},
+    {"sound":"pivot-suction","syncAt":13.03,"gainDb":-10,"event":"Warm pivot anticipation/contact"},
+    {"sound":"sphere-reveal","syncAt":14.27,"gainDb":-4,"event":"Sphere expansion/reveal"},
+    {"sound":"card-snap","syncAt":17.65,"gainDb":-9,"event":"Message arrival one"},
+    {"sound":"card-snap","syncAt":18.86,"gainDb":-11,"event":"Message arrival two"},
+    {"sound":"card-snap","syncAt":20.80,"gainDb":-12,"event":"Reply during narration"},
+    {"sound":"workflow-punch","syncAt":26.17,"gainDb":-8,"event":"Outline completion"},
+    {"sound":"micro-select","syncAt":26.76,"gainDb":-16,"event":"First workflow contact"},
+    {"sound":"logo-resolve","syncAt":29.28,"gainDb":-4,"event":"Logo formation/contact and tail"}
+  ],
+  "comparisonWindows": [
+    {"id":"camera-rotation","start":2.63,"end":3.38},
+    {"id":"camera-contact","start":3.82,"end":4.10},
+    {"id":"phone-contact","start":6.84,"end":7.01},
+    {"id":"laptop-contact","start":9.80,"end":10.11},
+    {"id":"sphere-reveal","start":14.27,"end":14.90},
+    {"id":"logo-resolve","start":29.28,"end":29.94}
+  ],
+  "acceptance": "Technical gates plus human comparison on headphones and phone speakers. No AAA/equality/listening approval claim until audition. Current approved version is preserved."
+}
