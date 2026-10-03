@@ -1,0 +1,16 @@
+{
+  "duration": 12,
+  "fps": 24,
+  "copy": {
+    "brand": "GRIFON",
+    "describe": "DESCRIBE",
+    "build": "BUILD",
+    "launch": "LAUNCH",
+    "url": "GRIFON.AI"
+  },
+  "colors": { "background": "#09090B", "accent": "#FFCC00", "text": "#F5F5F7" },
+  "formats": {
+    "portrait": { "width": 1080, "height": 1920 },
+    "landscape": { "width": 1920, "height": 1080 }
+  }
+}

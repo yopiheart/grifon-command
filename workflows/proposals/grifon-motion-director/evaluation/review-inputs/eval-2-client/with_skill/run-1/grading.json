@@ -1,0 +1,44 @@
+{
+  "expectations": [
+    {
+      "text": "Uses navy and cream rather than Grifon Gold and identifies the logo/product files as pending.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"#102A43\", \"#FFF7E8\", \"files are pending\", \"Do not substitute Grifon\""
+    },
+    {
+      "text": "Keeps the three approved text lines and does not invent discounts, dates, prices, or product claims.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"HARBOR TOOLS\", \"BUILT FOR THE JOB\", \"EXPLORE THE RANGE\", \"Do not add a price\""
+    },
+    {
+      "text": "Selects the client product/service treatment and explains a coherent reveal-benefit-CTA motion sequence.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"client product/service treatment\", \"frame opens\", \"benefit\", \"CTA\""
+    },
+    {
+      "text": "Uses separate aspect-ratio layouts and calls for a timed preview before an unapproved direction is finalized.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"Portrait layout\", \"Landscape layout\", \"timed preview\", \"before finalizing\""
+    },
+    {
+      "text": "Does not imply dry-run planning proves rendering or client approval.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"rendered nothing\", \"does not establish client approval\""
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1
+  },
+  "user_notes_summary": {
+    "uncertainties": [
+      "Rubric-exposed authored dry runs, not blind benchmarks. With-skill output 1 was corrected after an independent reviewer found a wrong-logo recommendation. Baseline output is preserved as originally authored. Scores describe written rubric coverage only; no skill superiority, automatic activation, live provider, render quality, or user approval is established. Time/token metrics were not captured and are unavailable."
+    ],
+    "needs_review": [
+      "Human review of the written plans and the separate actual demo."
+    ],
+    "workarounds": []
+  }
+}

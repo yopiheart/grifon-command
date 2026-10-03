@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "method": "Author self-check of written dry-run output with deterministic marker presence; not independent grading or media execution.",
+  "expectations": [
+    {
+      "text": "Uses navy and cream rather than Grifon Gold and identifies the logo/product files as pending.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"#102A43\", \"#FFF7E8\", \"files are pending\", \"Do not substitute Grifon\""
+    },
+    {
+      "text": "Keeps the three approved text lines and does not invent discounts, dates, prices, or product claims.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"HARBOR TOOLS\", \"BUILT FOR THE JOB\", \"EXPLORE THE RANGE\", \"Do not add a price\""
+    },
+    {
+      "text": "Selects the client product/service treatment and explains a coherent reveal-benefit-CTA motion sequence.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"client product/service treatment\", \"frame opens\", \"benefit\", \"CTA\""
+    },
+    {
+      "text": "Uses separate aspect-ratio layouts and calls for a timed preview before an unapproved direction is finalized.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"Portrait layout\", \"Landscape layout\", \"timed preview\", \"before finalizing\""
+    },
+    {
+      "text": "Does not imply dry-run planning proves rendering or client approval.",
+      "passed": true,
+      "evidence": "Written-plan markers: \"rendered nothing\", \"does not establish client approval\""
+    }
+  ]
+}

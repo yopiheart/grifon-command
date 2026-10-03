@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-09-17T04:52:57.145Z",
+  "hashes": {
+    "workflows/assets/grifon-motion-director-demo/portrait.mp4": "02183925170c26199c42090166448ab7f8190fc80513048fa3d9acd5d4d2c9a3",
+    "workflows/assets/grifon-motion-director-demo/landscape.mp4": "2b2c750ac965270268d7df3f0d7f8da0fe09fcb74f01a8fde254b401aa29102f",
+    "workflows/assets/grifon-motion-director-demo/demo.json": "aa3dd9d3cfe21f7f51474ed9b442a4157667c39d560ae38ddc0e17886e95b0fa",
+    "workflows/assets/grifon-motion-director-demo/composition.template.html": "cdbd7a639e637629264227376d7805258d20f146b8b03c523fc3179a4d39f65e",
+    "workflows/assets/grifon-motion-director-demo/build.mjs": "e2bca6b3ce9faae6218b83025df02707055d850f142d8d3f80d534910475c93f",
+    "workflows/assets/grifon-motion-director-demo/render.mjs": "0002829f936e873c0dff9f9e1ac57eb1359b7ea8f2c77eaac19f3b0c7ad5efa0",
+    "workflows/assets/grifon-motion-director-demo/source-manifest.json": "99399e2fe894aee070f02b3a838402efe86fce4e8ea558002e03047d6835d97d",
+    "workflows/assets/grifon-motion-director-demo/portrait/index.html": "4886b4dc25ac41c50b7e7342191b18234bb31473f43ccb52aec3b78971bdb59e",
+    "workflows/assets/grifon-motion-director-demo/landscape/index.html": "7516b4d0f8c3372b741dc9b43121394e8ada3bd0553ec2075db09b88a8893bb5",
+    "artifacts/grifon-motion-director-review.html": "363b640322341382228a2f2bec7a716c2268fe4432a331162430ee7a9195843c",
+    "tools/artifacts/build-motion-director-review.mjs": "5fe40aef6ee4f6bcbaacd71b358274b934dbf5eb87b46dd05a1ad5de90691858"
+  },
+  "embedded": {
+    "portrait": {
+      "found": true,
+      "matchesExport": true
+    },
+    "landscape": {
+      "found": true,
+      "matchesExport": true
+    }
+  },
+  "notes": "Non-browser file inspection only. No browser screenshots or playback claim."
+}

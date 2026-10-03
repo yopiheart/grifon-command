@@ -1,68 +1,38 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, recovery release verification**
+**Stamped: 2026-10-03, motion stack merge in progress**
 
-## Current state
-PR146 recovery fixes merged into main on October 1 as `72b2600c637811e36c34bc3f6b057a904900c671`.
-Production deployment 6784795003 and main CI 36864824524 succeeded.
-PR150 remains draft, targets main, and contains verification tooling only:
-https://github.com/yopiheart/grifon-command/pull/150.
-Neil authorized testing and verification, not a PR150 merge.
-No application, tuned prompt/model, engine-default, or billing changes this turn.
+## Current authorized work
+Neil approved updating and merging motion PR143 -> PR144 -> PR149 after checks.
+Isolated checkout: C:/Users/ADMIN/.codex/worktrees/motion-merge/grifon-command.
+The shared Oceanides checkout, its branch, local files and processes are untouched.
+PR143 is being updated with current main; its only conflict was this resume doc.
+No application conflict, new tuned instruction edit or approved-media change.
+PR144 and PR149 will inherit the updated parent before their own main-target CI.
+Use merge commits to preserve ancestry across the stack. Never bypass failing gates.
 
-## Fresh verification - October 3
-- Exact clean PR150 implementation `b611c521`: all 18 recovery browser cases
-  passed at 375px and 1280px; runner and Playwright exit codes 0.
-- Independent smoke assessment PASS; screenshots and evidence inspected.
-- Focused recoveryVerification and viteApiAbort unit tests: 13/13, exit 0.
-- Full GitHub CI 37091478215 succeeded for `5fb925df`, an empty retry commit
-  with the exact same tree as `b611c521`. Verify, e2e and artifacts passed.
-- Prior negative control proved original saved-run error behavior fails both
-  viewport regressions. No application code has changed since that proof.
-- Existing independent diff review remains applicable to the unchanged code.
-- Live grifon.ai initially returned 402 DEPLOYMENT_DISABLED; the first fresh
-  preview retry was blocked. Neil resolved payment during this session.
-- After payment, live homepage/app returned 200 and authenticated dashboard
-  and One-Shot launch rendered in the actual browser.
-- Entered a disposable Recovery QA draft, reloaded, reopened One-Shot, and
-  selected Resume: offer, brand and price were restored in the consumer screen.
-- Closed the app tab and opened a new one: signed-in state and draft survived;
-  Resume restored the same fields at desktop width 1280. Mobile-sized live
-  viewport measured 319px; exact 375px coverage is in the automated suite.
-- No horizontal overflow in the inspected live mobile/desktop views.
-- Fresh Vercel Preview 6822540254 succeeded on `033a8392` after payment.
-  Browser access through Vercel sign-in confirmed homepage and login/access
-  screen render. Production draft reopen produced no captured console errors.
-- No Generate, research, rerender or paid media operation was requested.
-- No saved completed plan existed in this browser; live completed-plan and
-  Producer recorded-job restoration were not exercised against real accounts.
-  Their automated coverage uses simulated auth/provider/persistence responses.
+## Motion deliverables
+PR143: approved Motion Director skill and local portrait/landscape demos.
+PR144: Spotlight/Spark showcase and reference study.
+PR149: approved 32.9s Grifon film inspired by the supplied ElevenLabs reference.
+Final V08 includes music/SFX, editable source, comparison and portable HTML.
+V04 picture is locked. V05/V06 rejected sound and V07 auditions remain backed up.
+Final path in PR149: workflows/assets/grifon-reference-full/exports/
+grifon-your-next-ad-v08-1080p.mp4. Raw licensed stock/stems remain local/ignored.
+This is a local authored workflow; product integration is separately scoped.
 
-## Evidence
-Isolated checkout: C:/Users/ADMIN/.codex/worktrees/recovery-closeout/grifon-command.
-Fresh report: `.tmp/recovery-verification/2026-10-03T02-57-25-082Z-xyNdwN/summary.md`.
-Report links JSON, screenshots and traces for all nine flows at both widths.
-The source checkout remained clean during the independent run.
-Only this resume document changes after those checks.
-Latest preview/CI status and browser findings are recorded in PR150's description.
+## Review and verification
+September 27 independent reviews found no blocking code issues across the stack.
+Two P3 verifier fixes are in PR149: fail for broken embeds and honor tool paths.
+Both were independently checked against reproductions of their original defects.
+Prior combined checks passed: build, 1,401 unit tests, 56 browser tests, control
+and artifact gates. Fresh main integration review and CI are pending this turn.
+Do not call historical test results fresh. Approved video must remain unchanged.
 
-## Recovery boundaries
-Recovery means returning to saved work in the same browser storage context.
-Default-engine partial work does not automatically continue. Producer resumes
-polling recorded jobs after reopening; Storyboard and First Cut remain gates.
-Provider jobs can continue externally while the browser is closed, but the
-complete pipeline and notifications still require separate architecture work.
-Request counts are not proof of live billing, database concurrency or quality.
-Final-render retry may start another final render; scene-job recovery is distinct.
-The disposable text-only Recovery QA draft is left in the test browser.
-No real saved customer work was edited or removed.
-
-## ▶ NEXT ACTION
-No demonstrated recovery defect remains from this verification pass.
-PR150 is not merged; review its latest CI/preview results in the PR description
-before requesting merge. A live paid-provider run is outside this no-spend check.
-No new production deployment or hosting-setting changes were performed.
-
-## Unrelated work retained
-Main shared checkout is used by another session; no branch switch or file edits
-were made there. Oceanides work and untracked media/attachments are untouched.
-Motion PR143 -> PR144 -> PR149 remains on its own branches.
+## Other work retained
+PR146 recovery fixes and PR150 verification tooling are now merged on main.
+The recovery session confirmed payment resolution, successful Vercel preview,
+production access and passing CI. PR149 still has a historical September 27
+account-block failure; assess fresh results after pushing the updated stack.
+Oceanides PR151/152/153 and ongoing company-profile/presentation work are separate.
+The shared checkout's NOW.md contains its current Oceanides handoff; do not edit it.
+No paid operation, account change or manual deployment is part of this merge work.

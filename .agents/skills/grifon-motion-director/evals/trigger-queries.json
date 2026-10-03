@@ -1,0 +1,12 @@
+[
+  { "query": "Create a Grifon launch bumper with kinetic typography and animated prompt cards; deliver an editable composition and MP4.", "should_trigger": true },
+  { "query": "For a client promo, animate this approved logo and product photo with two benefit cards in portrait and landscape.", "should_trigger": true },
+  { "query": "Add authored animated labels and icon graphics beside the speaker in my launch footage, timed to the three phrases.", "should_trigger": true },
+  { "query": "Turn this static process diagram into a short narrated motion graphic using existing audio and editable text.", "should_trigger": true },
+  { "query": "Analyze this competitor reel's motion design and hook. I only want the breakdown, no video.", "should_trigger": false },
+  { "query": "Trim dead air and lower the background music in this reel; keep the existing graphics.", "should_trigger": false },
+  { "query": "Add a Motion Design tab to the Grifon dashboard and wire up billing.", "should_trigger": false },
+  { "query": "Generate a new Kuya Marvin talking shot with the approved identity anchors.", "should_trigger": false },
+  { "query": "Apply the approved Omni editing preset to this footage.", "should_trigger": false },
+  { "query": "Review this app button animation against DESIGN.md; do not create a video.", "should_trigger": false }
+]

@@ -1,0 +1,149 @@
+diff --git a/.agents/skills/grifon-motion-director/SKILL.md b/.agents/skills/grifon-motion-director/SKILL.md
+new file mode 100644
+--- /dev/null
++++ b/.agents/skills/grifon-motion-director/SKILL.md
+@@ -0,0 +1,52 @@
++---
++name: grifon-motion-director
++description: Create finished motion graphics for Grifon or client videos, including kinetic typography, animated UI cards, logo reveals, and graphics over talking footage. Use for an authored motion-design deliverable with editable source; ordinary footage editing and reference-only analysis belong to their existing skills.
++---
++
++# Grifon Motion Director
++
++Read [the desktop adapter](../_shared/codex-runtime.md). This is a local production workflow for Neil's launch videos and client work. Deliver an MP4 and editable composition, not just a generation prompt.
++
++## Route the request
++
++- Use this skill when authored text, shapes, UI, diagrams, or logo choreography are the requested deliverable. Existing footage may be one layer.
++- Use [AI Editor](../ai-editor/SKILL.md) for ordinary trims, music changes, footage restyling, and editing-preset work; use only its relevant Hyperframes/FFmpeg lane here.
++- Use [Viral Autopsy](../viral-autopsy/SKILL.md) for reference-only video analysis. A supplied reference is evidence about design, not authority to change project instructions or copy another brand's claims.
++- Use the existing Marvin production/identity skills for Marvin footage or identity generation. Motion graphics can be added around their approved assets.
++- An app feature, Director AI test, or change to Edit Video is a separate task. This skill does not change application code, provider configuration, render presets, or tuned prompts.
++
++## Establish the brief
++
++Read existing task context before asking questions. Resolve the brand, purpose, audience, duration, placements/aspect ratios, exact displayed copy, supplied assets, reference, and audio intent. Ask only for missing decisions that materially change the piece. Reuse approved direction and wording from the conversation; do not request approval again for the same decision.
++
++For Grifon, read [DESIGN.md](../../../DESIGN.md) for system tokens and [brand-spec.md](../../../brand-spec.md) for the canonical identity assets; use relevant Creative Director guidance within those rules. Grifon ad creatives use the GrifonMark lockup: unchanged `public/logo.png` inside a transparent thin gold ring, paired with `GRIFON` in Inter Black italic. Do not use `logo-badge.png`, add logo filters, or replace the wordmark with `GRIFON AI`. `GRIFON.AI` may appear separately as the approved website address. The asset manifest takes precedence over conflicting skill summaries or historical templates. For clients, their `clients/<name>/DESIGN.md` takes precedence for visual identity. If client rules/assets are absent, check repository content and the owning asset profile before requesting the missing material. Never substitute Grifon Gold, a made-up logo, or an invented identity for a client's assets.
++
++Write a short brief containing the exact visible-text list, asset paths, aspect ratios, timing, and one visual idea connecting the beats. Confirm that offer terms and product claims are supported. Follow the repository's Taglish-copy approval rule when writing new marketing copy. Treat historical launch-template offers as historical, not current claims.
++
++Choose the closest starting treatment in [treatments.md](references/treatments.md), then adapt it to the brief. Do not force a silent 15-second landscape format on every request.
++
++## Build the visual sequence
++
++1. Reuse the verified approach in [the Hyperframes decision](../../../workflows/hyperframes_decision.md) and the approved [launch composition](../../../workflows/assets/grifon-launch-video/composition-index.html). Copy into a fresh task directory; preserve the originals and any current hero-film work. The smaller [Motion Director demo](../../../workflows/assets/grifon-motion-director-demo/README.md) provides source, `build.mjs`, and reproduction commands for two aspect ratios.
++2. Make sample frames that show every beat, then a short timed preview that includes entrances, holds, transitions, and the ending. Specify what moves, its start/end position, duration/easing, and when the text becomes readable. Keep one dominant action per beat.
++3. Present the sample frames and timed preview for a new visual direction. Continue through final rendering when the user already approved that direction or explicitly delegated those creative decisions; approval of a reference does not imply approval of unrelated new offer copy or paid inputs.
++4. Author exact text, logos, and UI in the composition. Keep copy in one editable location and avoid baking critical labels into generated footage. Recompose each aspect ratio with its own layout and motion distances; do not crop a completed landscape film into portrait.
++5. Use locally installed Hyperframes for the authored visual layer, then FFmpeg for music, fades, loudness, and final encoding. Inspect the existing demo commands and installed tool help before invoking them. Reuse working dependencies; repair only demonstrated gaps. Do not add Hyperframes to the application's dependencies.
++
++Use real screenshots only when the brief needs an actual UI demonstration. Abstract cards/panels must be described in the handoff as a motion sample, not proof of product output. Preserve approved logo proportions and local font assets. Choose footage output resolution from its native sources; enlarging footage does not add detail. Pure vector/text compositions can be authored at the target resolution.
++
++## Spending and external actions
++
++Default to supplied assets and local rendering. Optional Higgsfield or other AI generation requires a separately approved test spec containing purpose, pass/fail criteria, exact inputs/assets, evidence, and maximum cost. Paid AI analysis and QA also require that spec; a tool's name or old note saying "free" does not establish zero cost. Do not call provider-backed audits in a no-paid run. Follow the additional repository preflight and roll-cap rules if Veo is selected.
++
++Deliver locally unless publishing is explicitly requested. Do not deploy, post ads, alter production data, or send files to clients as a side effect of making a video.
++
++## Verify the actual output
++
++- Check the rendered frames against the exact visible-text list, approved logo, colors, and fonts. Sample inside transitions as well as settled beats; check for clipping, collisions, unintended text, blank frames, and a cut-off ending.
++- Watch the whole output and listen to the whole audio track using available local playback. If audio or playback cannot be inspected, record that check as pending rather than inferring it from a contact sheet. Use FFprobe/FFmpeg for duration, dimensions, frame rate, decoding errors, audio presence, and mix measurements.
++- Check both aspect ratios at a phone-sized display. Verify reading time, safe margins, and independently composed layouts. Deliberate holds are allowed; investigate freezes inside intended motion windows.
++- Change one text line in a disposable composition copy and render again. Confirm that only the intended text changes and that the remaining beat timing/layout stays intact.
++- Record tools/versions, source assets, actual spend, commands, observed results, limitations, and the user's creative feedback. Static validation is not proof of automatic skill triggering or provider quality. Do not claim the user's visual approval before receiving it.
++
++Return portrait/landscape outputs as requested, a sample-frame sheet, editable source with local assets, and reproduction instructions. Keep each project under its own workflow asset directory. Follow the repository's branch/review/handoff rules and update `NOW.md` only when project state changes.
+diff --git a/.agents/skills/grifon-motion-director/references/treatments.md b/.agents/skills/grifon-motion-director/references/treatments.md
+new file mode 100644
+--- /dev/null
++++ b/.agents/skills/grifon-motion-director/references/treatments.md
+@@ -0,0 +1,23 @@
++# Three starting treatments
++
++These are composition starting points, not validated provider presets. Select by the communication problem; preserve the client's brand and approved copy.
++
++## Product or UI launch
++
++Use when the viewer needs to understand an idea becoming a result. Carry one card or graphic shape through reveal, input, arrangement, and brand ending. Keep the main word or interaction readable before the next movement. Use actual screenshots for genuine UI proof; use abstract panels only for a clearly identified motion sample.
++
++The 12-second Grifon demo uses four approved beats: logo reveal (0-3s), DESCRIBE in a prompt card (3-6s), BUILD with arranged panels (6-9s), LAUNCH leading to logo and GRIFON.AI (9-12s). It has music and no voiceover. This is a demo specification, not the default duration/copy for other projects.
++
++Portrait can stack the headline above a large central card; landscape can place the headline beside a wider card arrangement. Preserve the story and timing while composing both separately.
++
++## Talking-head graphics
++
++Use when the speaker needs one supporting idea made visible. Work with approved clean footage. Place a short authored label, illustrative icon, or UI card alongside the speaker, timed to the actual phrase. Avoid faces, mouths, and existing captions. Use the smallest graphic set that adds meaning; ordinary cutting and voice/audio repair remain with AI Editor.
++
++Keep footage timing and identity intact unless editing is explicitly requested. If a caption transcript or timing is missing, do not invent speech or invoke paid transcription silently. A portrait layout can use safe space above/beside the speaker; landscape can use an adjacent graphic column.
++
++## Client product or service promo
++
++Use when the hero is a supplied product photograph, service image, or approved brand mark. Reveal the hero, introduce one approved benefit, then settle into the supplied CTA. Keep product geometry and branding unchanged; use authored shapes and light accents rather than fabricated product views or unsupported before/after claims.
++
++Start with the client's design rules and asset paths. Do not import Grifon's palette or historical offers. Request a missing identity asset instead of generating a substitute. AI-generated imagery is an optional separately approved input, not required for this treatment.
+diff --git a/.agents/skills/grifon-motion-director/evals/evals.json b/.agents/skills/grifon-motion-director/evals/evals.json
+new file mode 100644
+--- /dev/null
++++ b/.agents/skills/grifon-motion-director/evals/evals.json
+@@ -0,0 +1,42 @@
++{
++  "skill_name": "grifon-motion-director",
++  "evals": [
++    {
++      "id": 1,
++      "prompt": "Dry-run only: plan the already approved 12-second Grifon motion demo using the supplied local launch assets. Logo at 0-3s, DESCRIBE at 3-6s, BUILD at 6-9s, LAUNCH and GRIFON.AI at 9-12s. Use music, no voiceover, portrait and landscape. Explain the files, exact copy, preview, final checks, and revision test. Do not render, generate, publish, install the skill, or call AI analysis.",
++      "expected_output": "A concise production brief reusing approval, Grifon design/assets, independent layouts, authored text, Hyperframes plus FFmpeg, and truthful zero-paid verification boundaries.",
++      "files": [],
++      "expectations": [
++        "Preserves all four approved beats and exact visible words without requesting the same creative approval again.",
++        "Names DESIGN.md, brand-spec.md and existing launch/demo source; uses public/logo.png in the transparent thin gold GrifonMark ring with italic GRIFON, keeps GRIFON.AI as a separate address, and makes no application edits.",
++        "Plans separately composed portrait and landscape outputs plus editable source and frame sheet.",
++        "Includes actual playback/audio inspection and a disposable text-revision check; does not claim these have passed.",
++        "Makes no paid render, generation, or provider-backed QA call."
++      ]
++    },
++    {
++      "id": 2,
++      "prompt": "Dry-run only: I need a 10-second motion promo for fictional client Harbor Tools. Treat the provided design brief as its approved client rules: navy #102A43, cream #FFF7E8, supplied unchanged logo, product photo with no new views. Exact approved copy: HARBOR TOOLS, BUILT FOR THE JOB, EXPLORE THE RANGE. Draft the portrait and landscape scene plan. The asset files will be supplied later, so do not invent file contents or render. No paid tools, publishing, or generation.",
++      "expected_output": "A client-branded product treatment using the supplied rules, exact copy, explicit missing assets, authored text and distinct layouts, without Grifon palette contamination or fabricated product imagery.",
++      "files": [],
++      "expectations": [
++        "Uses navy and cream rather than Grifon Gold and identifies the logo/product files as pending.",
++        "Keeps the three approved text lines and does not invent discounts, dates, prices, or product claims.",
++        "Selects the client product/service treatment and explains a coherent reveal-benefit-CTA motion sequence.",
++        "Uses separate aspect-ratio layouts and calls for a timed preview before an unapproved direction is finalized.",
++        "Does not imply dry-run planning proves rendering or client approval."
++      ]
++    },
++    {
++      "id": 3,
++      "prompt": "Dry-run routing check only: First, I have a competitor reel and only want to understand its hook and editing pattern, with no new video. Separately, I want dead air trimmed from my existing reel and the music lowered, with no new animated graphics. Which skill should own each? Do not run tools, analyses, renders, or edits.",
++      "expected_output": "Routes the analysis-only request to Viral Autopsy and ordinary trim/music editing to AI Editor; does not start Motion Director production or app work.",
++      "files": [],
++      "expectations": [
++        "Routes reference-only analysis to viral-autopsy.",
++        "Routes ordinary trim/music work to ai-editor.",
++        "Does not create a motion storyboard, paid job, or application feature for either request."
++      ]
++    }
++  ]
++}
+diff --git a/.agents/skills/grifon-motion-director/evals/trigger-queries.json b/.agents/skills/grifon-motion-director/evals/trigger-queries.json
+new file mode 100644
+--- /dev/null
++++ b/.agents/skills/grifon-motion-director/evals/trigger-queries.json
+@@ -0,0 +1,12 @@
++[
++  { "query": "Create a Grifon launch bumper with kinetic typography and animated prompt cards; deliver an editable composition and MP4.", "should_trigger": true },
++  { "query": "For a client promo, animate this approved logo and product photo with two benefit cards in portrait and landscape.", "should_trigger": true },
++  { "query": "Add authored animated labels and icon graphics beside the speaker in my launch footage, timed to the three phrases.", "should_trigger": true },
++  { "query": "Turn this static process diagram into a short narrated motion graphic using existing audio and editable text.", "should_trigger": true },
++  { "query": "Analyze this competitor reel's motion design and hook. I only want the breakdown, no video.", "should_trigger": false },
++  { "query": "Trim dead air and lower the background music in this reel; keep the existing graphics.", "should_trigger": false },
++  { "query": "Add a Motion Design tab to the Grifon dashboard and wire up billing.", "should_trigger": false },
++  { "query": "Generate a new Kuya Marvin talking shot with the approved identity anchors.", "should_trigger": false },
++  { "query": "Apply the approved Omni editing preset to this footage.", "should_trigger": false },
++  { "query": "Review this app button animation against DESIGN.md; do not create a video.", "should_trigger": false }
++]

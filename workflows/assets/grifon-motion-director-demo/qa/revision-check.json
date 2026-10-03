@@ -1,0 +1,59 @@
+{
+  "change": "DESCRIBE -> CREATE in disposable spec",
+  "actualBrowserFrames": true,
+  "passed": true,
+  "results": [
+    {
+      "format": "portrait",
+      "time": 1.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 4.8,
+      "changedPixelsInsidePrompt": 19527,
+      "changedPixelsOutsidePrompt": 0
+    },
+    {
+      "format": "portrait",
+      "time": 7.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 9.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 11.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 1.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 4.8,
+      "changedPixelsInsidePrompt": 31717,
+      "changedPixelsOutsidePrompt": 0
+    },
+    {
+      "format": "landscape",
+      "time": 7.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 9.5,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 11.5,
+      "pixelIdentical": true
+    }
+  ]
+}

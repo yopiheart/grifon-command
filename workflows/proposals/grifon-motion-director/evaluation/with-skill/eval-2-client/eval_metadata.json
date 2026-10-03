@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "eval-2-client",
+  "prompt": "Dry-run only: I need a 10-second motion promo for fictional client Harbor Tools. Treat the provided design brief as its approved client rules: navy #102A43, cream #FFF7E8, supplied unchanged logo, product photo with no new views. Exact approved copy: HARBOR TOOLS, BUILT FOR THE JOB, EXPLORE THE RANGE. Draft the portrait and landscape scene plan. The asset files will be supplied later, so do not invent file contents or render. No paid tools, publishing, or generation.",
+  "assertions": [
+    "Uses navy and cream rather than Grifon Gold and identifies the logo/product files as pending.",
+    "Keeps the three approved text lines and does not invent discounts, dates, prices, or product claims.",
+    "Selects the client product/service treatment and explains a coherent reveal-benefit-CTA motion sequence.",
+    "Uses separate aspect-ratio layouts and calls for a timed preview before an unapproved direction is finalized.",
+    "Does not imply dry-run planning proves rendering or client approval."
+  ]
+}
