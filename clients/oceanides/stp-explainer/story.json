@@ -1,5 +1,5 @@
 {
-  "title": "How wastewater treatment works",
+  "title": "How an on-site sewage treatment plant works",
   "brand": "Oceanides",
   "format": {
     "width": 1920,
@@ -7,7 +7,7 @@
     "fps": 30
   },
   "status": "Narration wording pending user approval; visual draft uses no paid generation",
-  "scope": "Generic domestic wastewater STP concept, not a supplier design or an Oceanides-owned facility. Septage intake is explained separately.",
+  "scope": "Neil confirmed on 2026-10-03 that Sir August's offer is an on-site Sewage Treatment Plant (STP) for building wastewater. This is an illustrative domestic-wastewater process, not an exact supplier design or an Oceanides-owned facility.",
   "sources": [
     {
       "url": "https://www.youtube.com/watch?v=w_60iJEAf4c",
@@ -24,10 +24,6 @@
     {
       "url": "https://r7.emb.gov.ph/wp-content/uploads/2022/05/OPMS-DISCHARGE-PERMIT-Application-Guideline.pdf",
       "use": "Domestic wastewater definition and discharge permit context."
-    },
-    {
-      "url": "https://www.epa.gov/sites/production/files/documents/EnvRegSC_Hndbk.pdf",
-      "use": "Septage is liquid and solids pumped from septic tanks or similar domestic systems."
     }
   ],
   "scenes": [
@@ -41,13 +37,13 @@
       "vo": "Mula sa toilets, sinks at wash areas, may wastewater na lumalabas sa building araw-araw."
     },
     {
-      "id": "difference",
+      "id": "onsite",
       "start": 10,
       "end": 23,
-      "title": "STP or septage facility?",
-      "detail": "Building wastewater / Waste pumped from septic tanks",
-      "caption": "STP para sa wastewater ng building. Septage facility para sa waste na hinigop mula sa septic tanks.",
-      "vo": "Ang STP ay para sa wastewater ng building. Ang septage facility naman, para sa waste na hinigop mula sa septic tanks. Magkaiba ang intake at treatment needs nila."
+      "title": "Wastewater treatment on site",
+      "detail": "Building wastewater / On-site Sewage Treatment Plant (STP)",
+      "caption": "Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements.",
+      "vo": "Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements."
     },
     {
       "id": "overview",
@@ -125,10 +121,10 @@
       "id": "benefits",
       "start": 108,
       "end": 120,
-      "title": "Better wastewater management",
-      "detail": "Lower pollutant load / Managed waste / Planned operation",
-      "caption": "Para sa company, nakakatulong ang tamang system sa mas maayos na wastewater management at pagbawas ng pollutants bago ang discharge.",
-      "vo": "Para sa company, nakakatulong ang tamang system sa mas maayos na wastewater management at pagbawas ng pollutants bago ang discharge. Sa site assessment nagsisimula ang tamang pagpili."
+      "title": "On-site treatment and hauling",
+      "detail": "Liquid wastewater treatment / Continued sludge removal",
+      "caption": "Kung hinahaul ang liquid wastewater, puwedeng mabawasan ang hauling sa tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal.",
+      "vo": "Kung regular na hinahaul ang liquid wastewater, puwedeng mabawasan ang hauling kapag may tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal."
     },
     {
       "id": "contact",

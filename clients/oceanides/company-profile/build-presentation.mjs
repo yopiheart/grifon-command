@@ -21,7 +21,7 @@ const sources = [
  'Phone, email and address: user-supplied Facebook Page screenshot 1000040025.jpg; phone also explicitly confirmed by Neil.',
  'Legal company name: workflows/oceanides_business_model.md, existing company records.',
  'Design references: Apple 2025 Environmental Progress Report https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf and OpenAI public Design Guidelines https://openai.com/brand/ ; profile-specific direction in clients/oceanides/DESIGN.md. No third-party brand marks used.',
- 'Septage treatment facility offer confirmed by Neil on 2026-10-01. Project scope, system details, capacity and maintenance requirements follow specialist assessment and the agreed proposal. No assertion of supplier accreditation, equipment ownership, licenses, project volume or maintenance-free operation.'
+ 'Neil clarified the offer on 2026-10-03: an on-site Sewage Treatment Plant (STP) treating building wastewater. Project scope, system details, capacity and maintenance requirements follow specialist assessment and the agreed proposal. No assertion of supplier accreditation, equipment ownership, licenses, project volume or maintenance-free operation.'
 ];
 let count = 0;
 for (const page of spec.pages) {

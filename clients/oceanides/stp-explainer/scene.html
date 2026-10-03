@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><meta charset="utf-8"><title>Oceanides wastewater treatment explainer</title>
+<html lang="en"><meta charset="utf-8"><title>Oceanides on-site STP explainer</title>
 <style>html,body{margin:0;background:#0A1F45;overflow:hidden}canvas{display:block;width:100vw;height:100vh;object-fit:contain}</style>
 <canvas id="output" width="1920" height="1080"></canvas>
 <script type="module">
@@ -61,6 +61,8 @@ function building(x,z,w,d,h){box(campus,w,.2,d,x,0,z,shell);box(campus,w,h,d,x,h
 building(-4.4,0,3.3,3.1,6);building(.1,-1,3,2.8,4.2);building(4.4,.3,3.6,2.8,3.2);
 const siteLine=pipe(campus,[[-4.4,.1,2.1],[-4.4,-.6,2.9],[.1,-.6,2.9],[4.4,-.6,2.9],[7,-.6,2.9]],0x1c63ad,.15);
 const siteDrops=[];for(let j=0;j<15;j++){const m=new THREE.Mesh(new THREE.SphereGeometry(.15,8,8),mat(0xf5b301));campus.add(m);siteDrops.push(m);}
+const onsiteConnection=pipe(scene,[[-2.16,.09,1.51],[-.8,.09,1.51],[-.8,1.04,-.288],[1.1,1.04,-.288]],0x1c63ad,.10);
+const onsiteDrops=[];for(let j=0;j<6;j++){const m=new THREE.Mesh(new THREE.SphereGeometry(.10,8,8),mat(0xf5b301));scene.add(m);onsiteDrops.push(m);}
 const symbolTank=new THREE.Group();scene.add(symbolTank);box(symbolTank,4,.2,3.2,0,0,0,shell);box(symbolTank,4,1.9,.18,0,1,-1.5,shell);box(symbolTank,.18,1.9,3.2,-1.9,1,0,shell);box(symbolTank,.18,1.9,3.2,1.9,1,0,shell);box(symbolTank,3.6,.75,2.8,0,.53,0,mat(0x86735a));box(symbolTank,3.6,.9,2.8,0,1.33,0,new THREE.MeshStandardMaterial({color:0x9e8870,transparent:true,opacity:.5}));pipe(symbolTank,[[0,.6,0],[0,2.5,0],[2.5,2.5,0],[4,2.5,0]],0x72949f,.13);
 let logo=new Image();logo.src='../company-profile/assets/logo-transparent.png';await logo.decode();
 const ease=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
@@ -73,14 +75,17 @@ function label(t,point,size=35){size=Math.max(35,size);const [x,y]=projected(poi
 window.renderFrame=async t=>{
  const s=story.scenes.find(s=>t>=s.start&&t<s.end)||story.scenes.at(-1),local=t-s.start;
  renderer.shadowMap.needsUpdate=window.currentScene!==s.id;
- const intro=s.id==='building',difference=s.id==='difference',closing=s.id==='contact',benefit=s.id==='benefits';
+ const intro=s.id==='building',onsite=s.id==='onsite',closing=s.id==='contact',benefit=s.id==='benefits';
  const dark=closing;ctx.fillStyle=dark?C.navy:C.paper;ctx.fillRect(0,0,1920,1080);
- plant.visible=!intro&&!difference&&!closing;campus.visible=intro||difference;symbolTank.visible=difference;
- campus.position.set(difference?-4.9:0,0,0);campus.scale.setScalar(difference?.58:.84);symbolTank.position.set(4.7,0,0);
+ plant.visible=!intro&&!closing;campus.visible=intro||onsite;symbolTank.visible=false;
+ campus.position.set(onsite?-5.8:0,0,0);campus.scale.setScalar(onsite?.52:.84);
+ plant.scale.setScalar(onsite?.4:1);plant.position.x=onsite?5.5:0;
+ onsiteConnection.mesh.visible=onsite;
+ onsiteDrops.forEach((m,j)=>{m.visible=onsite;m.position.copy(onsiteConnection.getPointAt((t*.20+j/6)%1));});
  const focus={screen:-7.4,settle:-3.7,biology:0,disinfect:7.4}[s.id];
  const focused=focus!==undefined, focusEase=ease(local/1.6);
  const targetX=focused?mix(0,focus,focusEase):0;
- const zoom=focused?mix(.8,s.id==='biology'?1.08:1.19,focusEase):intro?.87:difference?.9:s.id==='overview'?.8:['clarify','care','benefits'].includes(s.id)?.77:.82;
+ const zoom=focused?mix(.8,s.id==='biology'?1.08:1.19,focusEase):intro?.87:onsite?.9:s.id==='overview'?.8:['clarify','care','benefits'].includes(s.id)?.77:.82;
  camera.left=-12.8/zoom;camera.right=12.8/zoom;camera.top=4.2/zoom;camera.bottom=-4.2/zoom;camera.updateProjectionMatrix();
  camera.position.set(targetX+8.8,12.8,17.2);camera.lookAt(targetX,focused?1.7:2.35,-.6);camera.updateMatrixWorld();
  plant.position.y=.2;campus.position.y=.4;
@@ -92,7 +97,7 @@ window.renderFrame=async t=>{
  particleGroups.forEach((g,i)=>g.children.forEach((m,j)=>{const seed=j*1.732; m.position.x=i===0?-1.35+Math.min((t*.12+j*.11)%1,.5):Math.sin(seed)*1.25;m.position.z=Math.cos(seed*.71)*1.23;
   m.position.y=i===2?.43+((t*.55+j*.093)%1.4):.35+((1-(t*.085+j*.097)%1)*1.42);m.visible=!focused||centers[i]===focus;
  }));
- dots.forEach(({m,p,seed,stage})=>{m.position.copy(p.getPointAt((t*.29+seed)%1));m.visible=!closing&&!difference&&(focused?stage===centers.indexOf(focus)||stage===centers.indexOf(focus)+1:true);});
+ dots.forEach(({m,p,seed,stage})=>{m.position.copy(p.getPointAt((t*.29+seed)%1));m.visible=!closing&&(focused?stage===centers.indexOf(focus)||stage===centers.indexOf(focus)+1:true);});
  returnDots.forEach(({m,p,seed})=>{m.position.copy(p.getPointAt((t*.075+seed)%1));m.visible=['clarify','care','benefits'].includes(s.id);});
  arrows.forEach(({m,p,seed,stage})=>{m.position.copy(p.getPointAt((t*.35+seed)%1));m.visible=!focused||stage===centers.indexOf(focus);});
  siteDrops.forEach((m,j)=>m.position.copy(siteLine.getPointAt((t*.12+j/15)%1)));
@@ -102,12 +107,12 @@ window.renderFrame=async t=>{
  else{ctx.fillStyle=C.paper;ctx.fillRect(0,0,1920,310);txt('Oceanides',112,80,31,C.navy,600,'Segoe UI');ctx.strokeStyle='#D9DDD9';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(112,108);ctx.lineTo(1808,108);ctx.stroke();wrap(s.title,112,210,1700,72,C.blue,400,85,'Segoe UI');txt(s.detail,114,280,35,C.gray);}
  waves(dark);
  if(intro)label('Domestic wastewater', [0,-.3,3.1],28);
- if(difference){txt('STP: building wastewater',278,368,35,C.ink,700,'Segoe UI');txt('Septage: pumped septic-tank waste',1065,368,35,C.ink,700,'Segoe UI');}
- if(!focused&&!intro&&!difference&&!closing){centers.forEach((x,i)=>label(tankNames[i],[x,3.1,0],23));}
+ if(onsite){txt('Building wastewater',235,368,35,C.blue,700,'Segoe UI');txt('Sewage treatment plant',1080,368,35,C.blue,700,'Segoe UI');}
+ if(!focused&&!intro&&!onsite&&!closing){centers.forEach((x,i)=>label(tankNames[i],[x,3.1,0],23));}
  if(focused){label(tankNames[centers.indexOf(focus)],[focus,3.25,0],30);if(s.id==='biology')label('Air supply',[ -1.7,.9,3.1],26);}
  if(['clarify','care'].includes(s.id)){label('Return sludge',[1.6,.45,3.7],24);label('Excess sludge',[10.3,1.4,1.7],24);}
- if(s.id==='outlet'){label('Treated water',[10.4,2.6,-.72],28);txt('Not drinking water',112,849,28,C.ink,600);}
- if(benefit){const items=['Reduce pollutants','Manage wastewater','Plan for your site'];items.forEach((q,i)=>txt(q,112+i*558,343,36,C.ink,700,'Segoe UI'));}
+ if(s.id==='outlet'){label('Treated water',[10.4,2.6,-.72],28);txt('Not drinking water',112,849,35,C.ink,700,'Segoe UI');}
+ if(benefit){const items=['Treat wastewater on site','Reduce pollutant load','Manage sludge removal'];items.forEach((q,i)=>txt(q,112+i*558,343,36,C.blue,700,'Segoe UI'));}
  // The draft contains the exact proposed narration as captions, with a reserved bottom rail.
  ctx.fillStyle=dark?C.navy:C.paper;ctx.fillRect(0,905,1920,175);
  const capColor=dark?C.paper:C.ink;wrap(s.caption,112,951,1696,36,capColor,400,46);

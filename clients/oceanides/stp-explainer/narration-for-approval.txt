@@ -1,8 +1,8 @@
 1. Wastewater starts here
 Mula sa toilets, sinks at wash areas, may wastewater na lumalabas sa building araw-araw.
 
-2. STP or septage facility?
-Ang STP ay para sa wastewater ng building. Ang septage facility naman, para sa waste na hinigop mula sa septic tanks. Magkaiba ang intake at treatment needs nila.
+2. Wastewater treatment on site
+Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements.
 
 3. Inside the treatment process
 Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater.
@@ -28,8 +28,8 @@ Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable require
 10. Keep treatment working
 Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment.
 
-11. Better wastewater management
-Para sa company, nakakatulong ang tamang system sa mas maayos na wastewater management at pagbawas ng pollutants bago ang discharge. Sa site assessment nagsisimula ang tamang pagpili.
+11. On-site treatment and hauling
+Kung regular na hinahaul ang liquid wastewater, puwedeng mabawasan ang hauling kapag may tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal.
 
 12. Start with your site
 Oceanides ang main contact mo para sa site assessment, proposal at coordination sa specialist provider.

@@ -1,13 +1,18 @@
 {
-  "status": "PENDING_EXACT_SPEC_APPROVAL",
-  "directionAuthorized": "Neil selected the v4 sample direction, then requested Aira and Megan instead of Marvin. Exact library variants and two-sample credit budget are proposed below, pending confirmation.",
+  "status": "COMPLETED_PENDING_LISTENING_REVIEW",
+  "directionAuthorized": "Neil confirmed the exact Aira/Megan pair, revised on-site STP sample and 600-credit total cap on 2026-10-03. Full narration remains a separate approval.",
+  "approval": {
+    "receivedAt": "2026-10-03T05:22:25Z",
+    "humanResponse": "Approve exact test, max 600 credits",
+    "covers": "The unchanged 34-word / 224-character sample, exact two voice variants and request hashes below; one take each, 300 credits each / 600 total, no retries or purchases."
+  },
   "purpose": "Compare Aira and Megan reading the same brief Taglish technical script before selecting the full STP narration voice.",
   "input": {
     "file": "v4-sample-script.txt",
     "normalization": "Trim trailing whitespace only; otherwise speak the exact reviewed line.",
-    "characters": 225,
-    "words": 33,
-    "sha256": "1e7dec86d38370a526dd4d9245da182a95197a135496c2453d54dba61631aeab"
+    "characters": 224,
+    "words": 34,
+    "sha256": "8574d06d2e08f92191af6e13b7b6d5802fb4e1d49dcf8d5a078342df7ca38d2f"
   },
   "request": {
     "endpoint": "https://api.elevenlabs.io/v1/text-to-dialogue?output_format=mp3_44100_128",
@@ -23,7 +28,7 @@
       "voiceName": "Aira - Confident News Reporter",
       "libraryLanguage": "fil",
       "libraryRate": 1,
-      "bodySha256": "d888ddefeb3673439b48554e4982cd20d8e61197c773a2c6124c818249d804f3",
+      "bodySha256": "c3d9367dcdbc2ff633cc1b282ece7082f15fba2d459e0e847efd45b8af8d9d9e",
       "output": "output/Oceanides-STP-v4-Aira-Sample.mp3"
     },
     {
@@ -32,7 +37,7 @@
       "voiceName": "Megan - Crisp, Clean Educator",
       "libraryLanguage": "en",
       "libraryRate": 1,
-      "bodySha256": "2a3a534e1ecbebd1abbf340a5e6258e2db3d2bc0ab33286ac76a6e4a4f70e4b1",
+      "bodySha256": "846e85c430a56be46cfe174b7c9328cf97168e9c75e2ff863ef526c052ca6187",
       "output": "output/Oceanides-STP-v4-Megan-Sample.mp3"
     }
   ],
@@ -41,12 +46,12 @@
     "maxPaidCallsPerVoice": 1,
     "maxCredits": 600,
     "maxCreditsPerVoice": 300,
-    "estimatedCredits": 450,
+    "estimatedCredits": 448,
     "automaticRetries": 0,
     "newPurchasesOrSubscriptions": false,
     "fullNarrationGeneration": false,
     "otherPaidGenerationOrAnalysis": false,
-    "costBasis": "Read-only v4 metadata reports character multiplier 1 and discount multiplier 1; both proposed library voices report rate 1. Recheck before generation; estimated 225 credits per take, maximum approved total 600 existing ElevenLabs credits, with no cash purchase."
+    "costBasis": "Read-only v4 metadata reports character multiplier 1 and discount multiplier 1; both proposed library voices report rate 1. Recheck before generation; estimated 224 credits per take, proposed total cap 600 existing ElevenLabs credits, with no cash purchase."
   },
   "output": {
     "format": "MP3, 44100Hz, 128kbps",
@@ -58,7 +63,7 @@
   },
   "pass": [
     "All approved words are present; no additional dialogue, truncation, laughter or music.",
-    "Calm, intelligible Taglish; key-term pronunciation is understandable for STP, septage, microorganisms, sludge and Oceanides.",
+    "Calm, intelligible Taglish; key-term pronunciation is understandable for STP, wastewater, microorganisms, sludge and Oceanides.",
     "Each take uses its exact approved Aira or Megan library voice, with no conspicuous glitches or unintended speaker switch.",
     "MP3 decodes fully, has a nonempty speech stream and no persistent sample clipping.",
     "Neil hears the complete sample and accepts pronunciation/delivery before full narration."
@@ -79,11 +84,11 @@
     "modelsHttp": 200,
     "librarySearchHttp": 200,
     "accountVoiceLookupHttp": {
-      "aira": 400,
-      "megan": 400
+      "aira": 200,
+      "megan": 200
     },
-    "voiceAvailability": "Both exact variants are in the public library but absent from the account collection. Generation is blocked until exact IDs are accessible in the account. No account voice was added during preparation.",
-    "selectionNote": "Aira's Filipino variant is proposed; Megan has multiple library variants, so the educator variant needs direct confirmation. Megan Taglish pronunciation has not been tested.",
+    "voiceAvailability": "Both approved public-library variants were added to the account collection using their unchanged voice IDs; both account lookups and exact rate checks passed before generation.",
+    "selectionNote": "Neil approved the exact revised STP sample, two voice variants and 600-credit cap on 2026-10-03. Two takes were generated without changing the approved inputs.",
     "targetLanguages": [
       "en",
       "fil"
@@ -91,7 +96,7 @@
     "requiresAlphaAccess": false,
     "subscriptionReadHttp": 401,
     "remainingAllowance": "Unavailable to this API key; no account permissions changed.",
-    "successfulGeneration": "Not yet tested."
+    "successfulGeneration": "One successful HTTP 200 generation per voice; no retries."
   },
   "sources": [
     "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert",
@@ -100,5 +105,40 @@
     "https://elevenlabs.io/docs/api-reference/voices/voice-library/get-shared"
   ],
   "runner": "voice-v4-sample.mjs --dry-run; paid --generate mode requires status APPROVED after direct human approval.",
-  "delivery": "Local sample and draft PR review only; full video voiceover is a separate approved spec."
+  "delivery": "Local sample and draft PR review only; full video voiceover is a separate approved spec.",
+  "execution": {
+    "paidCalls": 2,
+    "automaticRetries": 0,
+    "estimatedTotalCredits": 448,
+    "providerCharacterCostHeaders": [
+      {
+        "voiceId": "CkDT8SVS21XIVk5BcuDe",
+        "value": "14"
+      },
+      {
+        "voiceId": "5MxhuJFpo9hpzbxa88y6",
+        "value": "14"
+      }
+    ],
+    "billingNote": "The provider returned character-cost headers of 14 per take. Account billing was not independently read; do not reinterpret these headers as verified subscription credit debits.",
+    "results": [
+      {
+        "voice": "Aira",
+        "durationSeconds": 15.76,
+        "audioSha256": "5a7421c8e819a1bf9db9e2c9355fee33556ae3ec6eb7c35b6f0b5a168c5b77ba",
+        "fullDecodePass": true,
+        "peakDbfs": -3.6,
+        "clippedSampleFraction": 0
+      },
+      {
+        "voice": "Megan",
+        "durationSeconds": 15.6,
+        "audioSha256": "0150409b880294529fcc0ade5ed33af7857b5fbc7b04b32d5fb6387992d090c3",
+        "fullDecodePass": true,
+        "peakDbfs": -5.36,
+        "clippedSampleFraction": 0
+      }
+    ],
+    "humanReview": "Exact words, pronunciation and delivery require Neil to listen and select the full-narration voice."
+  }
 }

@@ -20,7 +20,7 @@ def build_layout(data, page, text, image, rect, assets, art):
           alt='Oceanides full logo with transparent outer background')
     text(p, 'Company profile', 72, 174, 560, 22, 'Body', 'gray')
     text(p, 'Property services\nOne point of contact', 72, 223, 592, 60, 'Display', 'blue', 70)
-    text(p, 'Siphoning. Plumbing.\nRenovation & restoration.\nPest control.\nSeptage treatment facility.', 72, 438, 550, 26, 'Body', 'ink', 38)
+    text(p, 'Siphoning. Plumbing.\nRenovation & restoration.\nPest control.\nSewage treatment plants (STP).', 72, 438, 550, 26, 'Body', 'ink', 38)
     image(p, art+'cover-property-minimal.png', 674, 183, 534, 356, 'contain',
           'AI-generated conceptual property cutaway; not a completed Oceanides project')
     text(p, 'AI-generated property-services concept', 674, 563, 534, 16, 'Body', 'gray', 22)
@@ -36,7 +36,7 @@ def build_layout(data, page, text, image, rect, assets, art):
         ('Plumbing', 'Drain declogging and pipe leak repairs.'),
         ('Renovation & restoration', 'House and condominium repairs and improvements.'),
         ('Pest control', 'Site assessment, treatment scope and coordination.'),
-        ('Septage treatment facility', 'Facility project assessment and coordination.'),
+        ('Sewage treatment plant (STP)', 'Treatment of building wastewater on site.'),
     ]
     for idx, (title, detail) in enumerate(rows):
         y = 324 + idx*67
@@ -77,18 +77,18 @@ def build_layout(data, page, text, image, rect, assets, art):
     p = page()
     header(p)
     facility = data['serviceGroups'][4]
-    text(p, 'Septage treatment\nfacility', 72, 110, 1136, 56, 'Display', 'blue', 65)
+    text(p, 'Sewage treatment\nplant (STP)', 72, 110, 1136, 56, 'Display', 'blue', 65)
     text(p, facility['summary'], 72, 280, 1136, 25, 'Body', 'gray', 36)
     divider(p, 385)
     for y, title, detail in [
-        (419, 'Site assessment', 'Review the site requirements and project scope.'),
-        (499, 'Scope & quotation', 'Define the proposed facility and installation needs.'),
+        (419, 'Site assessment', 'Review wastewater flow, space and the proposed outlet.'),
+        (499, 'Scope & quotation', 'Define the proposed system and installation needs.'),
         (579, 'Specialist coordination', 'Coordinate specialist delivery through turnover.'),
     ]:
         text(p, title, 72, y, 400, 28, 'Strong', 'ink', 36)
         text(p, detail, 500, y+4, 708, 24, 'Body', 'gray', 33)
     text(p, facility['qualification'], 72, 635, 1136, 23, 'Body', 'gray', 30)
-    p['notes'] = ('Septage treatment facility offer confirmed by Neil on 2026-10-01. '
+    p['notes'] = ('Neil clarified the offer on 2026-10-03: an on-site Sewage Treatment Plant (STP) for building wastewater. '
                   + data['delivery'] + '\n' + facility['qualification']
                   + '\nNo supplier, model, capacity, cost, performance or maintenance guarantee supplied.')
     footer(p, 5)
