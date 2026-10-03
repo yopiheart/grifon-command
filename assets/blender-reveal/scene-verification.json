@@ -1,0 +1,2132 @@
+{
+  "blender": "5.2.2 LTS",
+  "duration_seconds": 6.0,
+  "fps": 24,
+  "integer_frames_checked": 144,
+  "single_camera": "NOIR_Reveal_Camera",
+  "product_stationary": true,
+  "product_mesh_count": 75,
+  "external_unpacked_dependency_count": 0,
+  "saved_scene_render": {
+    "engine": "CYCLES",
+    "samples": 32,
+    "cycles_device": "CPU",
+    "denoising": true,
+    "resolution": [
+      1280,
+      720
+    ],
+    "animation_output_path": "//frames\\frame-"
+  },
+  "hero_interval_frames": [
+    109,
+    144
+  ],
+  "hero_product_directed_rays_first_hit_product": true,
+  "minimum_camera_to_stage_surface_m": 1.9200046062469482,
+  "selected_frames": [
+    {
+      "frame": 1,
+      "projection": {
+        "xmin": 0.38633468747138977,
+        "xmax": 0.5993841886520386,
+        "ymin": 0.08238294720649719,
+        "ymax": 0.885277509689331,
+        "depth_min": 5.2389421463012695
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0999999046325684,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 48,
+      "projection": {
+        "xmin": 0.38739103078842163,
+        "xmax": 0.6027456521987915,
+        "ymin": 0.055402711033821106,
+        "ymax": 0.9181005358695984,
+        "depth_min": 4.877717018127441
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0281243324279785,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 72,
+      "projection": {
+        "xmin": 0.38837799429893494,
+        "xmax": 0.5962209701538086,
+        "ymin": 0.05371403694152832,
+        "ymax": 0.9286760091781616,
+        "depth_min": 4.833568572998047
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.969907283782959,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 109,
+      "projection": {
+        "xmin": 0.3799659311771393,
+        "xmax": 0.5884056687355042,
+        "ymin": 0.053271759301424026,
+        "ymax": 0.9260845184326172,
+        "depth_min": 4.849635601043701
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9200209379196167,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 120,
+      "projection": {
+        "xmin": 0.3803882300853729,
+        "xmax": 0.5881971716880798,
+        "ymin": 0.05505191907286644,
+        "ymax": 0.9243402481079102,
+        "depth_min": 4.869460105895996
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9239038228988647,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 144,
+      "projection": {
+        "xmin": 0.38189998269081116,
+        "xmax": 0.5874314308166504,
+        "ymin": 0.06136886775493622,
+        "ymax": 0.9181548953056335,
+        "depth_min": 4.941161155700684
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.937999963760376,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    }
+  ],
+  "all_frames": [
+    {
+      "frame": 1,
+      "projection": {
+        "xmin": 0.38633468747138977,
+        "xmax": 0.5993841886520386,
+        "ymin": 0.08238294720649719,
+        "ymax": 0.885277509689331,
+        "depth_min": 5.2389421463012695
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0999999046325684,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 2,
+      "projection": {
+        "xmin": 0.3863316774368286,
+        "xmax": 0.5993891954421997,
+        "ymin": 0.08235925436019897,
+        "ymax": 0.8853024840354919,
+        "depth_min": 5.238616943359375
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.099954605102539,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 3,
+      "projection": {
+        "xmin": 0.386322945356369,
+        "xmax": 0.5994039177894592,
+        "ymin": 0.08228965103626251,
+        "ymax": 0.8853769302368164,
+        "depth_min": 5.237654685974121
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0998191833496094,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 4,
+      "projection": {
+        "xmin": 0.38630855083465576,
+        "xmax": 0.5994284152984619,
+        "ymin": 0.08217448741197586,
+        "ymax": 0.8855000138282776,
+        "depth_min": 5.2360639572143555
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0995960235595703,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 5,
+      "projection": {
+        "xmin": 0.38628873229026794,
+        "xmax": 0.5994621515274048,
+        "ymin": 0.08201541006565094,
+        "ymax": 0.8856707811355591,
+        "depth_min": 5.2338643074035645
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0992863178253174,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 6,
+      "projection": {
+        "xmin": 0.38626381754875183,
+        "xmax": 0.5995050072669983,
+        "ymin": 0.08181333541870117,
+        "ymax": 0.8858879208564758,
+        "depth_min": 5.231071472167969
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0988919734954834,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 7,
+      "projection": {
+        "xmin": 0.38623401522636414,
+        "xmax": 0.5995566248893738,
+        "ymin": 0.08156916499137878,
+        "ymax": 0.8861504793167114,
+        "depth_min": 5.227700233459473
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.098414421081543,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 8,
+      "projection": {
+        "xmin": 0.38619962334632874,
+        "xmax": 0.599616527557373,
+        "ymin": 0.08128413558006287,
+        "ymax": 0.8864571452140808,
+        "depth_min": 5.2237701416015625
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.097855806350708,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 9,
+      "projection": {
+        "xmin": 0.38616108894348145,
+        "xmax": 0.5996845364570618,
+        "ymin": 0.08095962554216385,
+        "ymax": 0.8868067264556885,
+        "depth_min": 5.219301223754883
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.097217559814453,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 10,
+      "projection": {
+        "xmin": 0.3861187994480133,
+        "xmax": 0.5997601747512817,
+        "ymin": 0.08059713244438171,
+        "ymax": 0.8871983885765076,
+        "depth_min": 5.214312553405762
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.096501111984253,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 11,
+      "projection": {
+        "xmin": 0.38607320189476013,
+        "xmax": 0.5998431444168091,
+        "ymin": 0.08019760251045227,
+        "ymax": 0.88763028383255,
+        "depth_min": 5.208826065063477
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0957083702087402,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 12,
+      "projection": {
+        "xmin": 0.3860246241092682,
+        "xmax": 0.599932849407196,
+        "ymin": 0.07976261526346207,
+        "ymax": 0.8881015777587891,
+        "depth_min": 5.2028608322143555
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.094841241836548,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 13,
+      "projection": {
+        "xmin": 0.38597360253334045,
+        "xmax": 0.600028932094574,
+        "ymin": 0.07929413765668869,
+        "ymax": 0.8886110782623291,
+        "depth_min": 5.196441173553467
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0939009189605713,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 14,
+      "projection": {
+        "xmin": 0.3859207332134247,
+        "xmax": 0.6001309752464294,
+        "ymin": 0.07879254221916199,
+        "ymax": 0.8891568183898926,
+        "depth_min": 5.189589023590088
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0928895473480225,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 15,
+      "projection": {
+        "xmin": 0.3858664631843567,
+        "xmax": 0.6002383828163147,
+        "ymin": 0.07826118916273117,
+        "ymax": 0.8897385597229004,
+        "depth_min": 5.182328701019287
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.091808557510376,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 16,
+      "projection": {
+        "xmin": 0.3858112096786499,
+        "xmax": 0.6003506183624268,
+        "ymin": 0.07769991457462311,
+        "ymax": 0.8903537392616272,
+        "depth_min": 5.174683094024658
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0906598567962646,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 17,
+      "projection": {
+        "xmin": 0.38575562834739685,
+        "xmax": 0.6004670858383179,
+        "ymin": 0.07711043953895569,
+        "ymax": 0.8910008072853088,
+        "depth_min": 5.166678428649902
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.089444637298584,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 18,
+      "projection": {
+        "xmin": 0.3857004642486572,
+        "xmax": 0.6005875468254089,
+        "ymin": 0.0764956921339035,
+        "ymax": 0.8916793465614319,
+        "depth_min": 5.158337116241455
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.088165044784546,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 19,
+      "projection": {
+        "xmin": 0.38564616441726685,
+        "xmax": 0.6007111072540283,
+        "ymin": 0.07585703581571579,
+        "ymax": 0.8923877477645874,
+        "depth_min": 5.149684906005859
+      },
+      "product_directed_rays_first_hit_product": 7,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.086822509765625,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 20,
+      "projection": {
+        "xmin": 0.3855934143066406,
+        "xmax": 0.6008374094963074,
+        "ymin": 0.07519595324993134,
+        "ymax": 0.8931241035461426,
+        "depth_min": 5.140748023986816
+      },
+      "product_directed_rays_first_hit_product": 8,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.085418939590454,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 21,
+      "projection": {
+        "xmin": 0.38554272055625916,
+        "xmax": 0.600965678691864,
+        "ymin": 0.07451386004686356,
+        "ymax": 0.8938864469528198,
+        "depth_min": 5.1315507888793945
+      },
+      "product_directed_rays_first_hit_product": 8,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.083956003189087,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 22,
+      "projection": {
+        "xmin": 0.3854948878288269,
+        "xmax": 0.6010953783988953,
+        "ymin": 0.07381300628185272,
+        "ymax": 0.8946736454963684,
+        "depth_min": 5.1221208572387695
+      },
+      "product_directed_rays_first_hit_product": 8,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.082435131072998,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 23,
+      "projection": {
+        "xmin": 0.3854506015777588,
+        "xmax": 0.6012259721755981,
+        "ymin": 0.07309568673372269,
+        "ymax": 0.8954843282699585,
+        "depth_min": 5.112483501434326
+      },
+      "product_directed_rays_first_hit_product": 8,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0808582305908203,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 24,
+      "projection": {
+        "xmin": 0.38541048765182495,
+        "xmax": 0.6013566851615906,
+        "ymin": 0.07236292958259583,
+        "ymax": 0.8963163495063782,
+        "depth_min": 5.102664470672607
+      },
+      "product_directed_rays_first_hit_product": 8,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0792269706726074,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 25,
+      "projection": {
+        "xmin": 0.3853750228881836,
+        "xmax": 0.6014868021011353,
+        "ymin": 0.07161665707826614,
+        "ymax": 0.8971679210662842,
+        "depth_min": 5.092690467834473
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.077542781829834,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 26,
+      "projection": {
+        "xmin": 0.3853452801704407,
+        "xmax": 0.601615846157074,
+        "ymin": 0.07085958123207092,
+        "ymax": 0.8980376124382019,
+        "depth_min": 5.0825886726379395
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.075807571411133,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 27,
+      "projection": {
+        "xmin": 0.38532155752182007,
+        "xmax": 0.6017428636550903,
+        "ymin": 0.07009340822696686,
+        "ymax": 0.8989238739013672,
+        "depth_min": 5.072383880615234
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0740232467651367,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 28,
+      "projection": {
+        "xmin": 0.3853047490119934,
+        "xmax": 0.6018673777580261,
+        "ymin": 0.06931976974010468,
+        "ymax": 0.8998247981071472,
+        "depth_min": 5.062101364135742
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.072190999984741,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 29,
+      "projection": {
+        "xmin": 0.3852955400943756,
+        "xmax": 0.6019887328147888,
+        "ymin": 0.06854148954153061,
+        "ymax": 0.9007388353347778,
+        "depth_min": 5.051769733428955
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.070312738418579,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 30,
+      "projection": {
+        "xmin": 0.38529473543167114,
+        "xmax": 0.6021060943603516,
+        "ymin": 0.06775979697704315,
+        "ymax": 0.9016638398170471,
+        "depth_min": 5.041413307189941
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.068390369415283,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 31,
+      "projection": {
+        "xmin": 0.38530269265174866,
+        "xmax": 0.602218747138977,
+        "ymin": 0.06697701662778854,
+        "ymax": 0.9025980830192566,
+        "depth_min": 5.031055927276611
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.066425085067749,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 32,
+      "projection": {
+        "xmin": 0.38532039523124695,
+        "xmax": 0.6023260951042175,
+        "ymin": 0.06619507074356079,
+        "ymax": 0.9035395979881287,
+        "depth_min": 5.020726680755615
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0644190311431885,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 33,
+      "projection": {
+        "xmin": 0.3853483200073242,
+        "xmax": 0.6024272441864014,
+        "ymin": 0.0654158741235733,
+        "ymax": 0.9044864773750305,
+        "depth_min": 5.010447025299072
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.062373638153076,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 34,
+      "projection": {
+        "xmin": 0.3853871822357178,
+        "xmax": 0.6025215983390808,
+        "ymin": 0.06464185565710068,
+        "ymax": 0.9054374694824219,
+        "depth_min": 5.000242710113525
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.060290813446045,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 35,
+      "projection": {
+        "xmin": 0.38543760776519775,
+        "xmax": 0.6026082634925842,
+        "ymin": 0.06387452036142349,
+        "ymax": 0.9063897132873535,
+        "depth_min": 4.990139961242676
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0581717491149902,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 36,
+      "projection": {
+        "xmin": 0.3855002522468567,
+        "xmax": 0.602686882019043,
+        "ymin": 0.06311621516942978,
+        "ymax": 0.907342255115509,
+        "depth_min": 4.98015832901001
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.056018829345703,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 37,
+      "projection": {
+        "xmin": 0.3855755925178528,
+        "xmax": 0.6027563214302063,
+        "ymin": 0.062368761748075485,
+        "ymax": 0.9082925319671631,
+        "depth_min": 4.9703240394592285
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0538330078125,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 38,
+      "projection": {
+        "xmin": 0.3856644630432129,
+        "xmax": 0.6028163433074951,
+        "ymin": 0.061635032296180725,
+        "ymax": 0.9092397689819336,
+        "depth_min": 4.960658550262451
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0516164302825928,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 39,
+      "projection": {
+        "xmin": 0.3857671916484833,
+        "xmax": 0.6028659343719482,
+        "ymin": 0.06091562658548355,
+        "ymax": 0.9101807475090027,
+        "depth_min": 4.951182842254639
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.049370765686035,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 40,
+      "projection": {
+        "xmin": 0.3858843445777893,
+        "xmax": 0.6029046177864075,
+        "ymin": 0.060212574899196625,
+        "ymax": 0.9111142158508301,
+        "depth_min": 4.941919326782227
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.047097682952881,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 41,
+      "projection": {
+        "xmin": 0.3860163986682892,
+        "xmax": 0.602931559085846,
+        "ymin": 0.05952857807278633,
+        "ymax": 0.9120386242866516,
+        "depth_min": 4.932888984680176
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0447986125946045,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 42,
+      "projection": {
+        "xmin": 0.38616377115249634,
+        "xmax": 0.6029462218284607,
+        "ymin": 0.05886473506689072,
+        "ymax": 0.9129515290260315,
+        "depth_min": 4.92410945892334
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.042475461959839,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 43,
+      "projection": {
+        "xmin": 0.38632702827453613,
+        "xmax": 0.6029481291770935,
+        "ymin": 0.05822272226214409,
+        "ymax": 0.9138514995574951,
+        "depth_min": 4.91560173034668
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0401298999786377,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 44,
+      "projection": {
+        "xmin": 0.3865063786506653,
+        "xmax": 0.6029365658760071,
+        "ymin": 0.05760508030653,
+        "ymax": 0.914737343788147,
+        "depth_min": 4.907381534576416
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0377635955810547,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 45,
+      "projection": {
+        "xmin": 0.38670220971107483,
+        "xmax": 0.6029110550880432,
+        "ymin": 0.057013243436813354,
+        "ymax": 0.915607213973999,
+        "depth_min": 4.899467945098877
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0353782176971436,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 46,
+      "projection": {
+        "xmin": 0.38691478967666626,
+        "xmax": 0.6028710603713989,
+        "ymin": 0.056447554379701614,
+        "ymax": 0.9164583683013916,
+        "depth_min": 4.891875743865967
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.032975196838379,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 47,
+      "projection": {
+        "xmin": 0.3871443271636963,
+        "xmax": 0.6028160452842712,
+        "ymin": 0.05591009557247162,
+        "ymax": 0.9172897934913635,
+        "depth_min": 4.8846211433410645
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0305566787719727,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 48,
+      "projection": {
+        "xmin": 0.38739103078842163,
+        "xmax": 0.6027456521987915,
+        "ymin": 0.055402711033821106,
+        "ymax": 0.9181005358695984,
+        "depth_min": 4.877717018127441
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0281243324279785,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 49,
+      "projection": {
+        "xmin": 0.3876551389694214,
+        "xmax": 0.6026594638824463,
+        "ymin": 0.05492618680000305,
+        "ymax": 0.9188883304595947,
+        "depth_min": 4.871177673339844
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.025679349899292,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 50,
+      "projection": {
+        "xmin": 0.3879365026950836,
+        "xmax": 0.6025572419166565,
+        "ymin": 0.05448209494352341,
+        "ymax": 0.9196525812149048,
+        "depth_min": 4.865013599395752
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.023223638534546,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 51,
+      "projection": {
+        "xmin": 0.3882353901863098,
+        "xmax": 0.6024385690689087,
+        "ymin": 0.05407135933637619,
+        "ymax": 0.9203916192054749,
+        "depth_min": 4.859236240386963
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.020759105682373,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 52,
+      "projection": {
+        "xmin": 0.3885515034198761,
+        "xmax": 0.6023030877113342,
+        "ymin": 0.05369366332888603,
+        "ymax": 0.9211028814315796,
+        "depth_min": 4.853856563568115
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.018287181854248,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 53,
+      "projection": {
+        "xmin": 0.3888850808143616,
+        "xmax": 0.6021508574485779,
+        "ymin": 0.053352367132902145,
+        "ymax": 0.921787679195404,
+        "depth_min": 4.84888219833374
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0158097743988037,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 54,
+      "projection": {
+        "xmin": 0.3892356753349304,
+        "xmax": 0.6019815802574158,
+        "ymin": 0.05304601043462753,
+        "ymax": 0.9224429726600647,
+        "depth_min": 4.844318866729736
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0133283138275146,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 55,
+      "projection": {
+        "xmin": 0.38960325717926025,
+        "xmax": 0.6017952561378479,
+        "ymin": 0.05277634039521217,
+        "ymax": 0.923068642616272,
+        "depth_min": 4.840174198150635
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0108444690704346,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 56,
+      "projection": {
+        "xmin": 0.38998740911483765,
+        "xmax": 0.6015917062759399,
+        "ymin": 0.05254339426755905,
+        "ymax": 0.9236632585525513,
+        "depth_min": 4.836453914642334
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0083603858947754,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 57,
+      "projection": {
+        "xmin": 0.39038798213005066,
+        "xmax": 0.6013711094856262,
+        "ymin": 0.05234718322753906,
+        "ymax": 0.9242261648178101,
+        "depth_min": 4.833160400390625
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0058772563934326,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 58,
+      "projection": {
+        "xmin": 0.3908044397830963,
+        "xmax": 0.6011334657669067,
+        "ymin": 0.052188947796821594,
+        "ymax": 0.9247572422027588,
+        "depth_min": 4.830295562744141
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.00339674949646,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 59,
+      "projection": {
+        "xmin": 0.39123642444610596,
+        "xmax": 0.6008790135383606,
+        "ymin": 0.05206776037812233,
+        "ymax": 0.9252550601959229,
+        "depth_min": 4.827861309051514
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 2.0009210109710693,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 60,
+      "projection": {
+        "xmin": 0.3916833996772766,
+        "xmax": 0.6006079912185669,
+        "ymin": 0.0519845224916935,
+        "ymax": 0.9257199168205261,
+        "depth_min": 4.825856685638428
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9984512329101562,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 61,
+      "projection": {
+        "xmin": 0.3921448290348053,
+        "xmax": 0.60032057762146,
+        "ymin": 0.05193770304322243,
+        "ymax": 0.9261506199836731,
+        "depth_min": 4.824280261993408
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9959893226623535,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 62,
+      "projection": {
+        "xmin": 0.3926200568675995,
+        "xmax": 0.6000170707702637,
+        "ymin": 0.0519283227622509,
+        "ymax": 0.926547646522522,
+        "depth_min": 4.823129653930664
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9935369491577148,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 63,
+      "projection": {
+        "xmin": 0.3931084871292114,
+        "xmax": 0.599698007106781,
+        "ymin": 0.05195535346865654,
+        "ymax": 0.9269102811813354,
+        "depth_min": 4.822401523590088
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.991095781326294,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 64,
+      "projection": {
+        "xmin": 0.3935301899909973,
+        "xmax": 0.5993639230728149,
+        "ymin": 0.052018433809280396,
+        "ymax": 0.9272390007972717,
+        "depth_min": 4.822089195251465
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9886674880981445,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 65,
+      "projection": {
+        "xmin": 0.3928135633468628,
+        "xmax": 0.5990151762962341,
+        "ymin": 0.052117183804512024,
+        "ymax": 0.9275339841842651,
+        "depth_min": 4.822187900543213
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9862539768218994,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 66,
+      "projection": {
+        "xmin": 0.3921167850494385,
+        "xmax": 0.5986523032188416,
+        "ymin": 0.05224950984120369,
+        "ymax": 0.9277943968772888,
+        "depth_min": 4.822688579559326
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.983856439590454,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 67,
+      "projection": {
+        "xmin": 0.3914404809474945,
+        "xmax": 0.5982761979103088,
+        "ymin": 0.052416425198316574,
+        "ymax": 0.9280221462249756,
+        "depth_min": 4.823582649230957
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.981476902961731,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 68,
+      "projection": {
+        "xmin": 0.39078497886657715,
+        "xmax": 0.5978873372077942,
+        "ymin": 0.05261547863483429,
+        "ymax": 0.9282165169715881,
+        "depth_min": 4.824859619140625
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9791171550750732,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 69,
+      "projection": {
+        "xmin": 0.3901507258415222,
+        "xmax": 0.5974865555763245,
+        "ymin": 0.052845705300569534,
+        "ymax": 0.9283781051635742,
+        "depth_min": 4.826509952545166
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.976778507232666,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 70,
+      "projection": {
+        "xmin": 0.3895379900932312,
+        "xmax": 0.5970746874809265,
+        "ymin": 0.05310727283358574,
+        "ymax": 0.9285086393356323,
+        "depth_min": 4.828519821166992
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9744629859924316,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 71,
+      "projection": {
+        "xmin": 0.3889470398426056,
+        "xmax": 0.5966525077819824,
+        "ymin": 0.05339670926332474,
+        "ymax": 0.9286072850227356,
+        "depth_min": 4.830878734588623
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9721719026565552,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 72,
+      "projection": {
+        "xmin": 0.38837799429893494,
+        "xmax": 0.5962209701538086,
+        "ymin": 0.05371403694152832,
+        "ymax": 0.9286760091781616,
+        "depth_min": 4.833568572998047
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.969907283782959,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 73,
+      "projection": {
+        "xmin": 0.3878309726715088,
+        "xmax": 0.5957809686660767,
+        "ymin": 0.05405716225504875,
+        "ymax": 0.9287154078483582,
+        "depth_min": 4.836575508117676
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9676707983016968,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 74,
+      "projection": {
+        "xmin": 0.3873060345649719,
+        "xmax": 0.5953335165977478,
+        "ymin": 0.0544247031211853,
+        "ymax": 0.9287266731262207,
+        "depth_min": 4.839883327484131
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9654638767242432,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 75,
+      "projection": {
+        "xmin": 0.3868030607700348,
+        "xmax": 0.5948795676231384,
+        "ymin": 0.05481494590640068,
+        "ymax": 0.9287105798721313,
+        "depth_min": 4.84347677230835
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9632885456085205,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 76,
+      "projection": {
+        "xmin": 0.3863220810890198,
+        "xmax": 0.5944201946258545,
+        "ymin": 0.055225905030965805,
+        "ymax": 0.9286686182022095,
+        "depth_min": 4.847334861755371
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.961146354675293,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 77,
+      "projection": {
+        "xmin": 0.3858628571033478,
+        "xmax": 0.5939565300941467,
+        "ymin": 0.05565614253282547,
+        "ymax": 0.9286019206047058,
+        "depth_min": 4.851441383361816
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9590387344360352,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 78,
+      "projection": {
+        "xmin": 0.3854251503944397,
+        "xmax": 0.5934895873069763,
+        "ymin": 0.05610349029302597,
+        "ymax": 0.9285120964050293,
+        "depth_min": 4.85577392578125
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9569674730300903,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 79,
+      "projection": {
+        "xmin": 0.3850088119506836,
+        "xmax": 0.5930204391479492,
+        "ymin": 0.056001316756010056,
+        "ymax": 0.9285149574279785,
+        "depth_min": 4.855396747589111
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9549345970153809,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 80,
+      "projection": {
+        "xmin": 0.38461342453956604,
+        "xmax": 0.5925502777099609,
+        "ymin": 0.05563799664378166,
+        "ymax": 0.9285544753074646,
+        "depth_min": 4.852798938751221
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9529412984848022,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 81,
+      "projection": {
+        "xmin": 0.3842386305332184,
+        "xmax": 0.592080295085907,
+        "ymin": 0.05530565604567528,
+        "ymax": 0.9285720586776733,
+        "depth_min": 4.850519180297852
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9509896039962769,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 82,
+      "projection": {
+        "xmin": 0.38388410210609436,
+        "xmax": 0.5916115641593933,
+        "ymin": 0.05500413104891777,
+        "ymax": 0.9285690784454346,
+        "depth_min": 4.848544597625732
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9490811824798584,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 83,
+      "projection": {
+        "xmin": 0.383549302816391,
+        "xmax": 0.5911452770233154,
+        "ymin": 0.054731205105781555,
+        "ymax": 0.9285468459129333,
+        "depth_min": 4.846860408782959
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9472174644470215,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 84,
+      "projection": {
+        "xmin": 0.38323378562927246,
+        "xmax": 0.5906825661659241,
+        "ymin": 0.05448656156659126,
+        "ymax": 0.9285073280334473,
+        "depth_min": 4.845448017120361
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9454004764556885,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 85,
+      "projection": {
+        "xmin": 0.38293707370758057,
+        "xmax": 0.5902246236801147,
+        "ymin": 0.054268527776002884,
+        "ymax": 0.9284514784812927,
+        "depth_min": 4.84429407119751
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9436315298080444,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 86,
+      "projection": {
+        "xmin": 0.38265857100486755,
+        "xmax": 0.5897725820541382,
+        "ymin": 0.054075200110673904,
+        "ymax": 0.9283803701400757,
+        "depth_min": 4.843380451202393
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9419125318527222,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 87,
+      "projection": {
+        "xmin": 0.38239774107933044,
+        "xmax": 0.5893276929855347,
+        "ymin": 0.05390596389770508,
+        "ymax": 0.9282963871955872,
+        "depth_min": 4.842689514160156
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9402450323104858,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 88,
+      "projection": {
+        "xmin": 0.3821539878845215,
+        "xmax": 0.5888909697532654,
+        "ymin": 0.05375855043530464,
+        "ymax": 0.9282003045082092,
+        "depth_min": 4.842203617095947
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9386310577392578,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 89,
+      "projection": {
+        "xmin": 0.38192668557167053,
+        "xmax": 0.5884636044502258,
+        "ymin": 0.05363258346915245,
+        "ymax": 0.9280945658683777,
+        "depth_min": 4.8419060707092285
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9370719194412231,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 90,
+      "projection": {
+        "xmin": 0.381715327501297,
+        "xmax": 0.5880467295646667,
+        "ymin": 0.053525734692811966,
+        "ymax": 0.9279798269271851,
+        "depth_min": 4.8417792320251465
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9355692863464355,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 91,
+      "projection": {
+        "xmin": 0.3815191686153412,
+        "xmax": 0.5876414179801941,
+        "ymin": 0.05343616381287575,
+        "ymax": 0.9278578162193298,
+        "depth_min": 4.841805458068848
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9341251850128174,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 92,
+      "projection": {
+        "xmin": 0.38133761286735535,
+        "xmax": 0.5872488617897034,
+        "ymin": 0.05336396023631096,
+        "ymax": 0.9277312755584717,
+        "depth_min": 4.841963768005371
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9327409267425537,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 93,
+      "projection": {
+        "xmin": 0.3811701238155365,
+        "xmax": 0.586870014667511,
+        "ymin": 0.053305357694625854,
+        "ymax": 0.9275996685028076,
+        "depth_min": 4.842240810394287
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9314184188842773,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 94,
+      "projection": {
+        "xmin": 0.3810160458087921,
+        "xmax": 0.5865060687065125,
+        "ymin": 0.05326050892472267,
+        "ymax": 0.9274661540985107,
+        "depth_min": 4.842615604400635
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.930159330368042,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 95,
+      "projection": {
+        "xmin": 0.38087475299835205,
+        "xmax": 0.586583137512207,
+        "ymin": 0.05322752892971039,
+        "ymax": 0.9273316264152527,
+        "depth_min": 4.843074798583984
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9289652109146118,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 96,
+      "projection": {
+        "xmin": 0.3807457387447357,
+        "xmax": 0.5868222117424011,
+        "ymin": 0.05320466682314873,
+        "ymax": 0.9271976947784424,
+        "depth_min": 4.843597412109375
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.92783784866333,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 97,
+      "projection": {
+        "xmin": 0.3806283175945282,
+        "xmax": 0.587044358253479,
+        "ymin": 0.0531906858086586,
+        "ymax": 0.9270656704902649,
+        "depth_min": 4.844168663024902
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.92677903175354,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 98,
+      "projection": {
+        "xmin": 0.3805220127105713,
+        "xmax": 0.5872496366500854,
+        "ymin": 0.0531841516494751,
+        "ymax": 0.9269370436668396,
+        "depth_min": 4.844771385192871
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9257900714874268,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 99,
+      "projection": {
+        "xmin": 0.380426287651062,
+        "xmax": 0.58743816614151,
+        "ymin": 0.05318382754921913,
+        "ymax": 0.9268132448196411,
+        "depth_min": 4.845390796661377
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9248731136322021,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 100,
+      "projection": {
+        "xmin": 0.38034072518348694,
+        "xmax": 0.5876100063323975,
+        "ymin": 0.053188059478998184,
+        "ymax": 0.9266951680183411,
+        "depth_min": 4.846012592315674
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9240294694900513,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 101,
+      "projection": {
+        "xmin": 0.3802648186683655,
+        "xmax": 0.5877652168273926,
+        "ymin": 0.053196463733911514,
+        "ymax": 0.9265848398208618,
+        "depth_min": 4.846621990203857
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.923261046409607,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 102,
+      "projection": {
+        "xmin": 0.3801981508731842,
+        "xmax": 0.5879037976264954,
+        "ymin": 0.05320671945810318,
+        "ymax": 0.9264824986457825,
+        "depth_min": 4.847204685211182
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9225695133209229,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 103,
+      "projection": {
+        "xmin": 0.3801403343677521,
+        "xmax": 0.5880258083343506,
+        "ymin": 0.05321849510073662,
+        "ymax": 0.926389753818512,
+        "depth_min": 4.847748756408691
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9219564199447632,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 104,
+      "projection": {
+        "xmin": 0.3800910711288452,
+        "xmax": 0.5881311893463135,
+        "ymin": 0.05323103442788124,
+        "ymax": 0.9263079166412354,
+        "depth_min": 4.848242282867432
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9214236736297607,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 105,
+      "projection": {
+        "xmin": 0.3800501227378845,
+        "xmax": 0.5882198810577393,
+        "ymin": 0.05324287340044975,
+        "ymax": 0.926237165927887,
+        "depth_min": 4.848675727844238
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9209725856781006,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 106,
+      "projection": {
+        "xmin": 0.3800172805786133,
+        "xmax": 0.5882918238639832,
+        "ymin": 0.05325343832373619,
+        "ymax": 0.9261786937713623,
+        "depth_min": 4.849039554595947
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9206050634384155,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 107,
+      "projection": {
+        "xmin": 0.3799923360347748,
+        "xmax": 0.5883468985557556,
+        "ymin": 0.053261999040842056,
+        "ymax": 0.9261332750320435,
+        "depth_min": 4.849324703216553
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9203228950500488,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 108,
+      "projection": {
+        "xmin": 0.37997519969940186,
+        "xmax": 0.5883848667144775,
+        "ymin": 0.05326877906918526,
+        "ymax": 0.9261022210121155,
+        "depth_min": 4.849524974822998
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9201276302337646,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 109,
+      "projection": {
+        "xmin": 0.3799659311771393,
+        "xmax": 0.5884056687355042,
+        "ymin": 0.053271759301424026,
+        "ymax": 0.9260845184326172,
+        "depth_min": 4.849635601043701
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9200209379196167,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 110,
+      "projection": {
+        "xmin": 0.3799646496772766,
+        "xmax": 0.5884094834327698,
+        "ymin": 0.05327420309185982,
+        "ymax": 0.9260783791542053,
+        "depth_min": 4.849681854248047
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9200046062469482,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 111,
+      "projection": {
+        "xmin": 0.37997257709503174,
+        "xmax": 0.588405430316925,
+        "ymin": 0.053308188915252686,
+        "ymax": 0.9260461926460266,
+        "depth_min": 4.850052833557129
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9200778007507324,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 112,
+      "projection": {
+        "xmin": 0.37998977303504944,
+        "xmax": 0.5883969068527222,
+        "ymin": 0.05338004231452942,
+        "ymax": 0.9259753227233887,
+        "depth_min": 4.8508524894714355
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9202356338500977,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 113,
+      "projection": {
+        "xmin": 0.3800155818462372,
+        "xmax": 0.5883839726448059,
+        "ymin": 0.053489021956920624,
+        "ymax": 0.9258696436882019,
+        "depth_min": 4.852054595947266
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9204727411270142,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 114,
+      "projection": {
+        "xmin": 0.380049467086792,
+        "xmax": 0.5883670449256897,
+        "ymin": 0.053630758076906204,
+        "ymax": 0.9257301688194275,
+        "depth_min": 4.85363245010376
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9207837581634521,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 115,
+      "projection": {
+        "xmin": 0.38009077310562134,
+        "xmax": 0.5883463621139526,
+        "ymin": 0.05380389094352722,
+        "ymax": 0.9255605936050415,
+        "depth_min": 4.855557441711426
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9211634397506714,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 116,
+      "projection": {
+        "xmin": 0.38013890385627747,
+        "xmax": 0.5883222222328186,
+        "ymin": 0.054006170481443405,
+        "ymax": 0.9253630042076111,
+        "depth_min": 4.857802867889404
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9216063022613525,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 117,
+      "projection": {
+        "xmin": 0.3801933825016022,
+        "xmax": 0.5882949829101562,
+        "ymin": 0.05423404648900032,
+        "ymax": 0.9251392483711243,
+        "depth_min": 4.860343933105469
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.922107219696045,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 118,
+      "projection": {
+        "xmin": 0.3802534341812134,
+        "xmax": 0.5882648825645447,
+        "ymin": 0.0544864721596241,
+        "ymax": 0.9248930811882019,
+        "depth_min": 4.8631510734558105
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9226605892181396,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 119,
+      "projection": {
+        "xmin": 0.38031861186027527,
+        "xmax": 0.588232159614563,
+        "ymin": 0.054759763181209564,
+        "ymax": 0.9246256351470947,
+        "depth_min": 4.866199493408203
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.923261284828186,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 120,
+      "projection": {
+        "xmin": 0.3803882300853729,
+        "xmax": 0.5881971716880798,
+        "ymin": 0.05505191907286644,
+        "ymax": 0.9243402481079102,
+        "depth_min": 4.869460105895996
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9239038228988647,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 121,
+      "projection": {
+        "xmin": 0.38046184182167053,
+        "xmax": 0.5881602168083191,
+        "ymin": 0.05535935238003731,
+        "ymax": 0.9240378141403198,
+        "depth_min": 4.872908115386963
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9245829582214355,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 122,
+      "projection": {
+        "xmin": 0.38053861260414124,
+        "xmax": 0.5881215333938599,
+        "ymin": 0.05568142235279083,
+        "ymax": 0.9237231612205505,
+        "depth_min": 4.876513957977295
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.925293207168579,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 123,
+      "projection": {
+        "xmin": 0.380618155002594,
+        "xmax": 0.5880815386772156,
+        "ymin": 0.05601468309760094,
+        "ymax": 0.9233972430229187,
+        "depth_min": 4.880250930786133
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9260294437408447,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 124,
+      "projection": {
+        "xmin": 0.38069987297058105,
+        "xmax": 0.5880404114723206,
+        "ymin": 0.056356873363256454,
+        "ymax": 0.9230625629425049,
+        "depth_min": 4.884096145629883
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9267860651016235,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 125,
+      "projection": {
+        "xmin": 0.3807830810546875,
+        "xmax": 0.5879984498023987,
+        "ymin": 0.05670515447854996,
+        "ymax": 0.9227216243743896,
+        "depth_min": 4.888016700744629
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9275579452514648,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 126,
+      "projection": {
+        "xmin": 0.38086727261543274,
+        "xmax": 0.587955892086029,
+        "ymin": 0.057057298719882965,
+        "ymax": 0.9223763346672058,
+        "depth_min": 4.891990661621094
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9283396005630493,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 127,
+      "projection": {
+        "xmin": 0.380951851606369,
+        "xmax": 0.5879131555557251,
+        "ymin": 0.057411111891269684,
+        "ymax": 0.9220301508903503,
+        "depth_min": 4.895987033843994
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9291257858276367,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 128,
+      "projection": {
+        "xmin": 0.38103628158569336,
+        "xmax": 0.5878704786300659,
+        "ymin": 0.05776384472846985,
+        "ymax": 0.9216845631599426,
+        "depth_min": 4.899980068206787
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9299111366271973,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 129,
+      "projection": {
+        "xmin": 0.38111987709999084,
+        "xmax": 0.5878282189369202,
+        "ymin": 0.05811365693807602,
+        "ymax": 0.9213425517082214,
+        "depth_min": 4.9039411544799805
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9306902885437012,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 130,
+      "projection": {
+        "xmin": 0.38120219111442566,
+        "xmax": 0.5877864956855774,
+        "ymin": 0.05845734477043152,
+        "ymax": 0.9210056662559509,
+        "depth_min": 4.907845497131348
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9314578771591187,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 131,
+      "projection": {
+        "xmin": 0.3812825679779053,
+        "xmax": 0.5877456665039062,
+        "ymin": 0.058793723583221436,
+        "ymax": 0.9206770658493042,
+        "depth_min": 4.911666393280029
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.93220853805542,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 132,
+      "projection": {
+        "xmin": 0.3813605010509491,
+        "xmax": 0.5877061486244202,
+        "ymin": 0.05911892279982567,
+        "ymax": 0.9203582406044006,
+        "depth_min": 4.9153733253479
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9329370260238647,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 133,
+      "projection": {
+        "xmin": 0.38143545389175415,
+        "xmax": 0.5876680612564087,
+        "ymin": 0.05943197384476662,
+        "ymax": 0.9200522899627686,
+        "depth_min": 4.918941020965576
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9336379766464233,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 134,
+      "projection": {
+        "xmin": 0.3815067708492279,
+        "xmax": 0.5876318216323853,
+        "ymin": 0.05972926691174507,
+        "ymax": 0.9197603464126587,
+        "depth_min": 4.922342300415039
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9343059062957764,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 135,
+      "projection": {
+        "xmin": 0.38157394528388977,
+        "xmax": 0.587597668170929,
+        "ymin": 0.06000964716076851,
+        "ymax": 0.9194861650466919,
+        "depth_min": 4.925548076629639
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9349356889724731,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 136,
+      "projection": {
+        "xmin": 0.3816364109516144,
+        "xmax": 0.5875658988952637,
+        "ymin": 0.060270294547080994,
+        "ymax": 0.9192310571670532,
+        "depth_min": 4.928533554077148
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9355218410491943,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 137,
+      "projection": {
+        "xmin": 0.38169363141059875,
+        "xmax": 0.5875366926193237,
+        "ymin": 0.06050866097211838,
+        "ymax": 0.9189971089363098,
+        "depth_min": 4.931270599365234
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9360589981079102,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 138,
+      "projection": {
+        "xmin": 0.38174501061439514,
+        "xmax": 0.5875105261802673,
+        "ymin": 0.060723211616277695,
+        "ymax": 0.9187875390052795,
+        "depth_min": 4.933730602264404
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9365419149398804,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 139,
+      "projection": {
+        "xmin": 0.38179004192352295,
+        "xmax": 0.5874875783920288,
+        "ymin": 0.06091083586215973,
+        "ymax": 0.9186036586761475,
+        "depth_min": 4.935887336730957
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9369651079177856,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 140,
+      "projection": {
+        "xmin": 0.38182806968688965,
+        "xmax": 0.5874680876731873,
+        "ymin": 0.061069827526807785,
+        "ymax": 0.9184483885765076,
+        "depth_min": 4.937713146209717
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9373234510421753,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 141,
+      "projection": {
+        "xmin": 0.3818586766719818,
+        "xmax": 0.5874525308609009,
+        "ymin": 0.06119774281978607,
+        "ymax": 0.9183242321014404,
+        "depth_min": 4.93917989730835
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9376113414764404,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 142,
+      "projection": {
+        "xmin": 0.3818812370300293,
+        "xmax": 0.5874409675598145,
+        "ymin": 0.06129121407866478,
+        "ymax": 0.9182316064834595,
+        "depth_min": 4.9402618408203125
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9378236532211304,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 143,
+      "projection": {
+        "xmin": 0.38189518451690674,
+        "xmax": 0.5874338150024414,
+        "ymin": 0.06134939193725586,
+        "ymax": 0.9181745648384094,
+        "depth_min": 4.940931797027588
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.9379550218582153,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    },
+    {
+      "frame": 144,
+      "projection": {
+        "xmin": 0.38189998269081116,
+        "xmax": 0.5874314308166504,
+        "ymin": 0.06136886775493622,
+        "ymax": 0.9181548953056335,
+        "depth_min": 4.941161155700684
+      },
+      "product_directed_rays_first_hit_product": 9,
+      "product_directed_ray_count": 9,
+      "camera_to_stage_surface_m": 1.937999963760376,
+      "full_bbox_in_frame_with_3_5_percent_margin": true
+    }
+  ],
+  "scope": "Every integer-frame camera-to-stage nearest-surface distance, evaluated product bounding-box projection and nine product-directed first-hit rays. Each ray count means its first hit is product geometry; it does not prove visibility of the exact target surface or account for transparency. Opening architectural occlusion is intentional. Establishes sampled geometry only; does not prove subframe swept clearance, all-surface visibility, motion aesthetics, shading or text readability."
+}

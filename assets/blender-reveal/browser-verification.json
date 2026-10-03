@@ -1,0 +1,282 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T08:13:33.587Z",
+  "independentTester": "reveal_smoke",
+  "scope": "Local standalone artifact functional and viewport smoke; no paid requests, account checks, uploads, or deployment",
+  "artifact": {
+    "path": "artifacts/blender-reveal.html",
+    "bytes": 12015138,
+    "sha256": "267991950c6a9af076e821274a63913e41f6846763f60fb1ebace001bc510a7a"
+  },
+  "browser": {
+    "provider": "configured Playwright MCP",
+    "package": "@playwright/mcp@0.0.80",
+    "serverVersion": "1.63.0-alpha-2026-08-31",
+    "isolated": true,
+    "headless": true,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36"
+  },
+  "checks": {
+    "filmMetadata": {
+      "status": "PASS",
+      "width": 1280,
+      "height": 720,
+      "duration": 6,
+      "readyState": 4,
+      "paused": true,
+      "currentTime": 0,
+      "muted": false,
+      "volume": 1,
+      "error": null
+    },
+    "imageLoad": {
+      "status": "PASS",
+      "images": [
+        {
+          "complete": true,
+          "width": 1280,
+          "height": 720,
+          "dataUri": true
+        },
+        {
+          "complete": true,
+          "width": 1280,
+          "height": 720,
+          "dataUri": true
+        },
+        {
+          "complete": true,
+          "width": 1280,
+          "height": 720,
+          "dataUri": true
+        }
+      ]
+    },
+    "mobileOverflow": {
+      "status": "PASS",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "desktopOverflow": {
+      "status": "PASS",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "playPause": {
+      "status": "PASS",
+      "playing": {
+        "paused": false,
+        "currentTime": 0.383496,
+        "label": "Pause"
+      },
+      "paused": {
+        "paused": true,
+        "currentTime": 0.943406,
+        "label": "Play film"
+      }
+    },
+    "scrub": {
+      "status": "PASS",
+      "paused": true,
+      "currentTime": 2.37,
+      "scrub": "2.37",
+      "timeLabel": "2.4 / 6.0"
+    },
+    "pausedSourceSwitch": {
+      "status": "PASS",
+      "reference": {
+        "paused": true,
+        "currentTime": 2.37,
+        "duration": 6,
+        "readyState": 4,
+        "width": 1280,
+        "height": 720,
+        "sound": {
+          "label": "Silent reference",
+          "disabled": true,
+          "pressed": "false"
+        },
+        "selected": "true",
+        "audioTracks": null,
+        "webkitAudioDecodedByteCount": 0
+      },
+      "finished": {
+        "paused": true,
+        "currentTime": 2.37,
+        "sound": {
+          "label": "Sound on",
+          "disabled": false,
+          "pressed": "true"
+        }
+      }
+    },
+    "playingSourceSwitch": {
+      "status": "PASS",
+      "observations": [
+        {
+          "paused": false,
+          "currentTime": 1.155772
+        },
+        {
+          "paused": false,
+          "currentTime": 2.151475,
+          "soundLabel": "Silent reference",
+          "soundDisabled": true
+        },
+        {
+          "paused": false,
+          "currentTime": 3.009925
+        }
+      ],
+      "interpretation": "Both switches preserve playing state and continue from the existing timeline; elapsed time advances during each action."
+    },
+    "silentReference": {
+      "status": "PASS",
+      "soundButtonDisabled": true,
+      "browserDecodedAudioBytes": 0,
+      "sourceReview": "Reference builder uses -an."
+    },
+    "nativeZeroVolume": {
+      "status": "PASS",
+      "action": "Native video keyboard ArrowDown reached zero; custom button restored audible state in one click.",
+      "zero": {
+        "volume": 0,
+        "muted": false,
+        "soundLabel": "Sound off",
+        "pressed": "false"
+      },
+      "restored": {
+        "volume": 1,
+        "muted": false,
+        "soundLabel": "Sound on",
+        "pressed": "true"
+      }
+    },
+    "nativeMute": {
+      "status": "PASS",
+      "action": "Tab navigation to native video mute control and Space; observe after queued volumechange settles.",
+      "muted": {
+        "muted": true,
+        "soundLabel": "Sound off",
+        "pressed": "false",
+        "paused": true
+      },
+      "restoredInOneCustomClick": {
+        "muted": false,
+        "volume": 1,
+        "soundLabel": "Sound on",
+        "pressed": "true"
+      }
+    },
+    "customMute": {
+      "status": "PASS",
+      "volume": 1,
+      "muted": true,
+      "soundLabel": "Sound off"
+    },
+    "completePlayback": {
+      "status": "PASS",
+      "ended": true,
+      "currentTime": 6,
+      "paused": true,
+      "error": null,
+      "decodedFrames": 522,
+      "decodedAudioBytes": 526888,
+      "playLabel": "Play film",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+      "decodedFrameCounterScope": "Cumulative across seeking and source switches, not a count for one playback."
+    },
+    "downloads": {
+      "status": "PASS",
+      "files": [
+        {
+          "filename": "noir-01-reveal.mp4",
+          "status": "PASS",
+          "sha256": "d24c2d78db69fa43a62758f6979ce4a004c8f58944305ff69637af43ec3ac2fb",
+          "matchesOriginal": true
+        },
+        {
+          "filename": "noir-01.blend",
+          "status": "PASS",
+          "sha256": "0e881554f44cf5e81bdd88a71bce1cc46e6650fbedf8d3ca6da93ae39dffed4d",
+          "matchesOriginal": true
+        }
+      ]
+    },
+    "browserErrors": {
+      "status": "PASS",
+      "capturedErrors": 0,
+      "cspErrors": 0
+    },
+    "requestTelemetry": {
+      "status": "PASS",
+      "externalHttpOrWebSocketRequests": 0,
+      "observedRequests": [
+        "GET loopback artifact: 200"
+      ],
+      "scope": "Page requests captured by Playwright MCP during this run."
+    }
+  },
+  "screenshots": [
+    {
+      "path": "assets/blender-reveal/qa/mobile-390x844.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "videoTime": "initial hero poster",
+      "fullPage": true,
+      "sha256": "6e8646fd0f21e7c0f4fb4801517dafadb1e934de3cfbcca61147594f2e772c2e",
+      "visualLayout": "PASS"
+    },
+    {
+      "path": "assets/blender-reveal/qa/desktop.jpg",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "videoTime": 5.5,
+      "fullPage": true,
+      "sha256": "4715943842b56d6bc5cc42dd2c8724dd9d4cb925bde9d37565f596772d83aa7b",
+      "visualLayout": "PASS"
+    }
+  ],
+  "limitations": [
+    "Viewport checks use desktop Chromium; they do not prove painting on a real Android WebView.",
+    "The browser completed real playback. Visual inspection used screenshots and sampled frames; full continuous-motion visual approval and subjective audio listening remain pending.",
+    "No provider generation or AI motion transfer was tested."
+  ],
+  "harnessNotes": [
+    "The first complete-playback text wait used the MCP 5-second action timeout for a 6-second film and timed out at currentTime 5.465579. A subsequent end-state observation passed at ended=true/currentTime=6; this was a wait-configuration issue, not a media failure."
+  ],
+  "sourceReview": {
+    "status": "PASS",
+    "cutBuilder": "Reviewed native frame sequence, decode continuity, silent reference, and encoded audio-headroom checks.",
+    "cspBuilder": "Reviewed newline normalization before hashing and hashes after data-URI substitution.",
+    "motionTransferSpec": "Explicit data-URI bindings, documented request settings, and token estimate reviewed read-only; account and actual billing remain unverified.",
+    "pricingFormulaEstimateUsd": 3.328128,
+    "documentation": [
+      "https://fal.ai/models/bytedance/seedance-2.5/reference-to-video/api",
+      "https://fal.ai/models/bytedance/seedance-2.5/reference-to-video"
+    ],
+    "distinction": "These are source/documentation checks, separate from final browser runtime proof."
+  },
+  "cleanup": {
+    "ownedTabClosedViaMcp": true,
+    "driverPid": 20916,
+    "driverRunning": false,
+    "mcpPid": 16360,
+    "mcpRunning": false,
+    "helperPid": 13392,
+    "helperRunning": false,
+    "sharedProcessesTouched": false
+  }
+}

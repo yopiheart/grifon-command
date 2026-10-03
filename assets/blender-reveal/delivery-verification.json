@@ -1,0 +1,133 @@
+{
+  "study": "NOIR / 01",
+  "scope": "Local Blender camera and product study; AI motion transfer not tested",
+  "paidCalls": 0,
+  "film": {
+    "frames": 144,
+    "fps": 24,
+    "durationSeconds": 6,
+    "width": 1280,
+    "height": 720,
+    "uniqueDecodedFrames": 144,
+    "decode": "passed"
+  },
+  "cameraReference": {
+    "frames": 144,
+    "fps": 24,
+    "durationSeconds": 6,
+    "width": 1280,
+    "height": 720,
+    "uniqueDecodedFrames": 144,
+    "decode": "passed"
+  },
+  "audio": {
+    "source": "original deterministic synthesis",
+    "encodedPeakDbfs": -2.542114,
+    "clippingCheck": "passed",
+    "subjectiveListening": "pending"
+  },
+  "sha256": {
+    "scene.blend": "0e881554f44cf5e81bdd88a71bce1cc46e6650fbedf8d3ca6da93ae39dffed4d",
+    "start.png": "919c7155fed6715417fc676321c78267508aa16e9e565126d6c85d0d9181e334",
+    "mid.png": "8a57d41a16d5623fcaeebf37a3e08988e554cf2227baf4683f962681e2e8d8f4",
+    "hero.png": "2ffeaff10fb960afc0cb92c4759df7e0e2f6be4f3d596522d9c708396cc678fd",
+    "sound.wav": "9e4b150f2115474b0212abe1fffa7fbce4e844ac33f7cc583ee495967b424189",
+    "noir-01-reveal.mp4": "d24c2d78db69fa43a62758f6979ce4a004c8f58944305ff69637af43ec3ac2fb",
+    "camera-reference.mp4": "014860ecb8abef5ec097dd33f4961775ac833fff4dfbf89117e88648791f9eab"
+  },
+  "recipe": {
+    "executable": "FFmpeg (supplied locally)",
+    "commands": [
+      [
+        "-y",
+        "-framerate",
+        "24",
+        "-start_number",
+        "1",
+        "-i",
+        "<workspace>\\.tmp\\blender-reveal-frames\\frame-%04d.png",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\sound.wav",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0",
+        "-frames:v",
+        "144",
+        "-t",
+        "6",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "slow",
+        "-crf",
+        "16",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "<workspace>\\assets\\blender-reveal\\noir-01-reveal.mp4"
+      ],
+      [
+        "-y",
+        "-framerate",
+        "24",
+        "-start_number",
+        "1",
+        "-i",
+        "<workspace>\\.tmp\\blender-reveal-preview\\frame-%04d.png",
+        "-frames:v",
+        "144",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "slow",
+        "-crf",
+        "16",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        "-an",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4"
+      ],
+      [
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\noir-01-reveal.mp4",
+        "-map",
+        "0:v:0",
+        "-f",
+        "framemd5",
+        "-"
+      ],
+      [
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-map",
+        "0:v:0",
+        "-f",
+        "framemd5",
+        "-"
+      ],
+      [
+        "-hide_banner",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\noir-01-reveal.mp4",
+        "-vn",
+        "-af",
+        "astats=metadata=0:reset=0",
+        "-f",
+        "null",
+        "-"
+      ]
+    ]
+  }
+}

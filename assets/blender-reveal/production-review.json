@@ -1,0 +1,60 @@
+{
+  "study": "NOIR / 01",
+  "scope": "Local original Blender product study; fictional brand; AI motion transfer not run",
+  "render": {
+    "engine": "Cycles",
+    "device": "CPU",
+    "samples": 32,
+    "denoising": true,
+    "frames": 144,
+    "native_resolution": [1280, 720],
+    "fps": 24,
+    "sequence_render_seconds": 3065.114,
+    "blender_process_exit_code": 0,
+    "neutral_sequence_render_seconds": 43.65
+  },
+  "independent_still_review": {
+    "rounds": 2,
+    "maximum_rounds": 3,
+    "criterion": "Product clarity, physical depth and clean amber glass against the supplied product workflow reference",
+    "round_1": "Dense EEVEE glass stippling was the single material gap; held the sequence",
+    "round_2": "Cycles denoised hero materially closed the glass gap; label remained clear; no remaining still blocker",
+    "limit": "Still review does not establish video or audio quality"
+  },
+  "source_review": {
+    "findings_resolved": [
+      "Native mute and zero-volume controls synchronize the custom sound button",
+      "Saved Blender output path follows the moved scene",
+      "Geometric ray evidence claims only first product hits along product-directed rays",
+      "Render-sample evidence selects the saved scene's active renderer",
+      "Paid draft request explicitly maps both hashed input assets into reference arrays",
+      "Inline CSP hashes normalize HTML newlines before hashing"
+    ],
+    "limit": "Independent source review is separate from browser runtime checks"
+  },
+  "independent_sampled_motion_review": {
+    "samples": "12-frame contact sheet and full frames 1, 49, 73, 109 and 144",
+    "result": "No sampled continuity blocker: opening occlusion clears progressively; bottle shape, label and stage remain consistent; late views fit the intended settle",
+    "limit": "Not full playback. Cannot establish smooth motion, brief inter-frame flicker, audio quality or synchronization."
+  },
+  "finishing": {
+    "incomplete_sequence_negative_check": "Finishing script rejected 13 of 144 frames before invoking the encoder",
+    "complete_sequence_check": "Both 144-frame PNG sequences passed exact filenames and native dimensions; both MP4s decoded completely",
+    "distinct_decoded_frames": {"film": 144, "reference": 144},
+    "encoded_audio_peak_dbfs": -2.542114,
+    "audio_subjective_listening": "Pending human listening; no automated taste/quality claim",
+    "black_and_low_motion_probe": {
+      "command": "ffmpeg -i assets/blender-reveal/noir-01-reveal.mp4 -vf blackdetect=d=0.1:pix_th=0.10,freezedetect=n=-50dB:d=0.5 -an -f null -",
+      "exit_code": 0,
+      "black_intervals_reported": [],
+      "low_motion_interval_seconds": [4.375, 4.91667],
+      "interpretation": "Overlaps the intentionally slow transition into the 4.5-second hero settle. All decoded frames are distinct. This advisory does not establish perceptual continuity; inspect playback."
+    }
+  },
+  "remaining": [
+    "Human visual and sound approval before using this fictional study as a client sample",
+    "Exact-spec approval and account/cost preflight before the one proposed paid AI motion-transfer test",
+    "No Grifon wizard integration, deployment or production change in this slice"
+  ],
+  "paid_ai_calls": 0
+}
