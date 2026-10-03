@@ -29,6 +29,9 @@ No application, tuned prompt/model, engine-default, or billing changes this turn
   Resume restored the same fields at desktop width 1280. Mobile-sized live
   viewport measured 319px; exact 375px coverage is in the automated suite.
 - No horizontal overflow in the inspected live mobile/desktop views.
+- Fresh Vercel Preview 6822540254 succeeded on `033a8392` after payment.
+  Browser access through Vercel sign-in confirmed homepage and login/access
+  screen render. Production draft reopen produced no captured console errors.
 - No Generate, research, rerender or paid media operation was requested.
 - No saved completed plan existed in this browser; live completed-plan and
   Producer recorded-job restoration were not exercised against real accounts.
@@ -54,9 +57,9 @@ The disposable text-only Recovery QA draft is left in the test browser.
 No real saved customer work was edited or removed.
 
 ## ▶ NEXT ACTION
-Fresh PR150 preview retry after payment is next; do not rely on earlier blocked
-statuses or successful build metadata as proof of current live availability.
-PR150 is not merged. A live paid-provider run is outside this no-spend check.
+No demonstrated recovery defect remains from this verification pass.
+PR150 is not merged; review its latest CI/preview results in the PR description
+before requesting merge. A live paid-provider run is outside this no-spend check.
 No new production deployment or hosting-setting changes were performed.
 
 ## Unrelated work retained
