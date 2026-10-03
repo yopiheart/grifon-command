@@ -1,11 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, combined Oceanides meeting deck pending Neil review**
+**Stamped: 2026-10-03, verified Oceanides Gmail review draft created; sending held**
 
 ## Current work
 Branch codex/oceanides-stp-explainer, based on profile head d3d08102.
 Draft PR153 https://github.com/yopiheart/grifon-command/pull/153 stacked on PR152.
 No merge, deployment or public publication requested.
-Email ON HOLD by Neil. No email/draft/upload created; resume only if he asks.
+Email sending ON HOLD. Neil explicitly requested an unsent Gmail review draft.
+Created and read back one draft with combinedPPTX only; no recipient, no email sent.
+Private receipt .tmp/oceanides-email/draft-receipt.json holds draft/message IDs.
+Neil withdrew the permit request; existing deck is for an introductory employee presentation.
 
 ## Current review deliverables
 clients/oceanides/company-profile/output/: PPTX/HTML/PDF named

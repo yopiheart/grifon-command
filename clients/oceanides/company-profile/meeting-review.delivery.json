@@ -1,7 +1,8 @@
 {
   "createdOn": "2026-10-03",
   "status": "PENDING_NEIL_REVIEW",
-  "emailDelivery": "ON_HOLD_NO_EMAIL_OR_DRAFT_CREATED",
+  "emailDelivery": "VERIFIED_UNSENT_REVIEW_DRAFT_SEND_ON_HOLD",
+  "privateDraftReceipt": ".tmp/oceanides-email/draft-receipt.json",
   "slideCount": 9,
   "aspectRatio": "16:9",
   "slideOrder": ["Company introduction", "Services", "Siphoning and plumbing", "Actual siphoning work", "Renovation and restoration", "Pest control", "On-site STP", "STP film", "Site assessment and quotation"],
