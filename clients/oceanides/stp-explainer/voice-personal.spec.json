@@ -1,8 +1,12 @@
 {
-  "status": "PENDING_APPROVAL",
+  "status": "FAILED_NO_RETRY",
   "purpose": "One full Taglish narration take using Neil's existing personal cloned voice, synchronized to the Oceanides building STP explainer and mixed locally with his accepted original Flow score.",
   "selectionCorrection": "Neil clarified on 2026-10-03 that Aira and Megan meant the single saved personal voice named airaandmeagan. The earlier two public-library samples are historical and will not be used in this video.",
-  "approval": null,
+  "approval": {
+    "recordedAt": "2026-10-03T06:50:40Z",
+    "humanResponse": "Approve full narration, max 1,600 credits",
+    "scope": "One full twelve-scene Taglish narration using the unchanged exact script, saved personal clone airaandmeagan and ElevenLabs v4; maximum 1600 existing credits, no retries or purchases. Synchronize scenes locally and duck the accepted Flow score."
+  },
   "voice": {
     "voice_id": "mPEHjC4AussYOrtIPSUB",
     "name": "airaandmeagan",
@@ -200,5 +204,20 @@
     "https://elevenlabs.io/eleven-music-model-specific-terms"
   ],
   "runner": "node clients/oceanides/stp-explainer/voice-personal.mjs --dry-run; --generate requires direct human approval recorded in this exact spec.",
-  "delivery": "Local review and existing draft PR only. No deployment or public publication."
+  "delivery": "Local review and existing draft PR only. No deployment or public publication.",
+  "execution": {
+    "at": "2026-10-03T06:51:22.714Z",
+    "status": "FAILED_OR_INCOMPLETE_NO_RETRY",
+    "voiceId": "mPEHjC4AussYOrtIPSUB",
+    "voiceName": "airaandmeagan",
+    "model": "eleven_v4",
+    "characters": 1455,
+    "bodySha256": "4828fc92c4803e4b540db59ba81d5e2bc1c9dcdc323c3d4432df43eb7d147dab",
+    "estimatedCredits": 1455,
+    "maxCredits": 1600,
+    "maxPaidCalls": 1,
+    "automaticRetries": 0,
+    "httpStatus": 401,
+    "error": "Personal-voice generation failed: HTTP 401; no automatic retry."
+  }
 }

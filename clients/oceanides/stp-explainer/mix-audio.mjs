@@ -6,18 +6,23 @@ import {spawn} from 'node:child_process';
 import ffmpeg from 'ffmpeg-static';
 
 const dir=dirname(fileURLToPath(import.meta.url));
-const spec=JSON.parse(await readFile(join(dir,'voice-personal.spec.json'),'utf8'));
+const aira=process.argv.includes('--aira');
+const spec=JSON.parse(await readFile(join(dir,aira?'voice-aira.spec.json':'voice-personal.spec.json'),'utf8'));
 const musicSpec=JSON.parse(await readFile(join(dir,'music-original.spec.json'),'utf8'));
 if(musicSpec.execution?.status!=='AUDIO_RECEIVED_PENDING_LISTENING')
   throw Error('Fresh original Flow score is required; the rejected saved-music preview cannot be used as fallback.');
 const voiced=process.argv.includes('--voice');
-const story=JSON.parse(await readFile(join(dir,voiced?'story-narrated.json':'story.json'),'utf8'));
+if(aira&&!voiced)throw Error('Aira mixing requires --voice.');
+if(voiced&&(spec.execution?.status!=='AUDIO_AND_ALIGNMENT_RECEIVED_PENDING_LISTENING'||
+  spec.localMix.music.sha256!==musicSpec.execution.audioSha256||spec.localMix.music.file!==musicSpec.output.file))
+  throw Error('Complete approved narration and its exact accepted score are required.');
+const story=JSON.parse(await readFile(join(dir,voiced?(aira?'story-aira.json':'story-narrated.json'):'story.json'),'utf8'));
 const duration=story.scenes.at(-1).end;
 if(!(duration>0&&duration<=150))throw Error('Review the original score length for a video outside 0-150 seconds.');
 const music=join(dir,musicSpec.output.file);
 if(createHash('sha256').update(await readFile(music)).digest('hex')!==musicSpec.execution.audioSha256)
   throw Error('Original score differs from its paid-generation receipt.');
-const evidence=resolve('.tmp/oceanides-stp/audio-cost');await mkdir(evidence,{recursive:true});
+const evidence=resolve('.tmp/oceanides-stp/'+(aira?'audio-aira':'audio-cost'));await mkdir(evidence,{recursive:true});
 const run=args=>new Promise((ok,bad)=>{
   const p=spawn(ffmpeg,['-hide_banner','-nostdin',...args],{stdio:['ignore','ignore','pipe']});
   let log='';p.stderr.on('data',d=>log+=d.toString());p.on('error',bad);
@@ -33,7 +38,7 @@ await run(['-y','-i',music,'-af',
 const preview='Oceanides-STP-Original-Score-Preview-1080p.mp4';
 let output,mixEvidence;
 if(voiced){
-  const voice=join(dir,'output/Oceanides-STP-Personal-Voice-Synced.wav');
+  const voice=join(dir,aira?'output/Oceanides-STP-Aira-Voice-Synced.wav':'output/Oceanides-STP-Personal-Voice-Synced.wav');
   const log=await run(['-i',voice,'-af','loudnorm=I=-16:TP=-1.5:LRA=7:print_format=json','-f','null','-']);
   const match=log.match(/\{\s*"input_i"[\s\S]*?\}/);
   if(!match)throw Error('Voice loudness analysis did not return measurements.');
@@ -42,8 +47,8 @@ if(voiced){
   const norm='loudnorm=I=-16:TP=-1.5:LRA=7:measured_I='+levels.input_i+
     ':measured_TP='+levels.input_tp+':measured_LRA='+levels.input_lra+
     ':measured_thresh='+levels.input_thresh+':offset='+levels.target_offset+':linear=true,aresample=48000';
-  const video=join(dir,'output/Oceanides-STP-Personal-Voice-Visual-1080p.mp4');
-  output=join(dir,'output/Oceanides-STP-Personal-Voice-Music-1080p.mp4');
+  const video=join(dir,aira?'output/Oceanides-STP-Aira-Voice-Visual-1080p.mp4':'output/Oceanides-STP-Personal-Voice-Visual-1080p.mp4');
+  output=join(dir,aira?'output/Oceanides-STP-Aira-Voice-Music-1080p.mp4':'output/Oceanides-STP-Personal-Voice-Music-1080p.mp4');
   await run(['-y','-i',video,'-i',voice,'-i',bed,'-filter_complex',
     '[1:a]'+norm+',asplit=2[sc][v];[2:a][sc]sidechaincompress=threshold=0.05:ratio=3:attack=25:release=400[duck];'+
     '[v][duck]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.84:level=false:latency=true[mix]',

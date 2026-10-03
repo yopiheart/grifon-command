@@ -67,7 +67,14 @@ try{
   const response=await fetch(endpoint,{method:'POST',headers:{...headers,'Content-Type':'application/json'},
     body:JSON.stringify(body),signal:AbortSignal.timeout(180000)});
   receipt.httpStatus=response.status;
-  if(!response.ok)throw Error('Personal-voice generation failed: HTTP '+response.status+'; no automatic retry.');
+  if(!response.ok){
+    const failure=await response.json().catch(()=>null);
+    const safe=value=>typeof value==='string'?value.replaceAll(key,'[redacted]').replace(/sk_[A-Za-z0-9_-]+/g,'[redacted]').slice(0,800):null;
+    receipt.providerErrorStatus=safe(failure?.detail?.status);
+    receipt.providerErrorMessage=safe(failure?.detail?.message);
+    receipt.requestId=safe(response.headers.get('request-id'));
+    throw Error('Personal-voice generation failed: HTTP '+response.status+'; no automatic retry.');
+  }
   const result=await response.json();
   if(typeof result.audio_base64!=='string'||result.audio_base64.length<1000)
     throw Error('No usable speech received; no automatic retry.');
@@ -109,6 +116,6 @@ try{
 }catch(error){receipt.error=error.message;receipt.status='FAILED_OR_INCOMPLETE_NO_RETRY';throw error;}
 finally{
   await writeFile(receiptPath,JSON.stringify(receipt,null,2));
-  spec.status='COMPLETED_PENDING_REVIEW';spec.execution=receipt;
+  spec.status=receipt.status==='FAILED_OR_INCOMPLETE_NO_RETRY'?'FAILED_NO_RETRY':'COMPLETED_PENDING_REVIEW';spec.execution=receipt;
   await writeFile(specPath,JSON.stringify(spec,null,2)+'\n');
 }
