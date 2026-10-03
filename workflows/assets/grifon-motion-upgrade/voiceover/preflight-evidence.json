@@ -1,0 +1,16 @@
+{
+  "status": "PROPOSED_INPUTS_VERIFIED_NO_SYNTHESIS",
+  "recordedAt": "2026-10-03",
+  "specSha256": "6c4c89c7574294e0ad94bbc066c4d08a6283dd79075daa34a2a8d1438edcf1e8",
+  "defaultPath": "PASS - offline input hashes, exact text/offsets, eleven timing windows and budget; no network calls",
+  "invalidApprovalControl": "PASS - --generate --approved-spec invalid refused before credential access or network",
+  "independentSmoke": "PASS - exact script/windows/assets; independent invalid-approval import observed zero credential reads and network calls. Its evidence-contract note was resolved by declaring actual debit unknown instead of promising unused header evidence.",
+  "syntax": "generate.mjs and prepare-spec.mjs PASS",
+  "artifactAnchors": "PASS after unchanged local child-process permission retry; initial sandbox falsely reported an existing tracked artifact as untracked",
+  "voiceCatalog": "Read-only stock catalog/model succeeded; no custom/client voices retained",
+  "subscription": "HTTP401 - unknown remaining credits and billing status",
+  "providerSynthesisRequests": 0,
+  "generationSpendCredits": 0,
+  "humanExactSpecApproval": "pending",
+  "humanDeliveryAndPronunciationAudition": "pending"
+}

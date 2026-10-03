@@ -1,9 +1,11 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, full Grifon motion upgrade completed locally**
+**Stamped: 2026-10-03, full motion film approved; English voice pass prepared**
 
 Neil requested the full upgraded movie after the eight-second prototype.
 The 32.9-second / 1920 x 1080 / 30 fps film and synchronized before/after MP4
-are complete and independently verified. The approved V08 AAC is unchanged.
+are complete and independently verified. Neil downloaded and enthusiastically
+approved the full visuals/music/SFX, then requested ElevenLabs-style narration.
+He selected English. The approved no-VO V08 AAC remains unchanged.
 
 ## Location and scope
 
@@ -55,8 +57,24 @@ Canonical unchanged logo, transparent gold ring and Inter Black italic closing.
 
 ## Remaining decision and practical limits
 
-Neil's playback/creative feedback is pending. No production work remains for
-this requested preview; future revisions should stay on this isolated branch.
+Neil's full-film creative approval is received. A separate English VO pass is
+prepared in workflows/assets/grifon-motion-upgrade/voiceover/: exact timed
+46-word /252-character script, stock George, eleven_v3 Natural, one request,
+estimated252 credits at observed1x model rate, hard cap500 credits, no retries.
+The exact test-spec approval is pending. No voice generation or spend occurred.
+Offline input validation and independent smoke passed, including an invalid-SHA
+control with zero credential reads and zero network calls. Runner syntax and
+artifact-anchor check passed (the latter needed the unchanged local process
+permission retry). The original full-film approval is separate from VO audition.
+Read-only catalog/model requests succeeded; subscription request returned401,
+so the existing key cannot establish remaining credits or billing status.
+Original approved mix/SFX stems are available in the primary project's ignored
+audio-v08/work folder for local music-only ducking. They are exact inputs with
+SHA256s in the proposed spec; no Oceanides/custom voice or unrelated asset is used.
+Next: receive exact paid-spec approval, generate once with character timestamps,
+align phrases locally, preserve H264 picture via stream copy, mix/measure/verify,
+deliver a new full MP4 for human listening and a pinned mobile GitHub link.
+All revisions should stay on this isolated branch.
 The lens remains pale/matte, some decorative collage props extend beyond frame
 edges, and fine speaker/detail/URL copy is small at375px. Main copy, titles and
 wordmark are legible. The composition uses depth blur, not asserted temporal
