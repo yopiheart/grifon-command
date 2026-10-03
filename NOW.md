@@ -1,64 +1,68 @@
 # NOW - the resume doc
-**Stamped: 2026-09-19, One-Shot recovery implementation**
+**Stamped: 2026-10-03, recovery release verification**
 
 ## Current state
-Branch: `codex/oneshot-recovery`, based on main `5d1b583c`.
-Draft PR #146: https://github.com/yopiheart/grifon-command/pull/146.
-Implementation commit: `c08d6039`, pushed to GitHub.
-Neil approved the recovery-on-return implementation and draft PR delivery.
-No deployment or merge is authorized.
+PR146 recovery fixes merged into main on October 1 as `72b2600c637811e36c34bc3f6b057a904900c671`.
+Production deployment 6784795003 and main CI 36864824524 succeeded.
+PR150 remains draft, targets main, and contains verification tooling only:
+https://github.com/yopiheart/grifon-command/pull/150.
+Neil authorized testing and verification, not a PR150 merge.
+No application, tuned prompt/model, engine-default, or billing changes this turn.
 
-## Changes
-- App restoration preserves a saved script formula before the formula-change
-  effect runs, preventing restored scripts and storyboard assets from being wiped.
-- Producer saved-run fetch failures retain the active run reference and show
-  Retry/Back. Retry loads the same run; a genuine missing run still returns to launch.
-- Local Vite API middleware handles aborted request bodies. The real page-close
-  test exposed an unhandled ECONNRESET that killed the development server.
-- Added 18 real-app browser recovery cases across 375px and 1280px viewports:
-  draft/upload persistence, interrupted default-engine work, dashboard plan
-  recovery, Producer approval gates, recorded-job polling, retry and stale runs.
-  Stateful network fixtures preserve checkpoint/job state across browser reloads.
-- Stabilized an existing landing test by polling painted canvas bounds. Its race
-  reproduced on unchanged main (1 failed / 2 passed); product landing is untouched.
+## Fresh verification - October 3
+- Exact clean PR150 implementation `b611c521`: all 18 recovery browser cases
+  passed at 375px and 1280px; runner and Playwright exit codes 0.
+- Independent smoke assessment PASS; screenshots and evidence inspected.
+- Focused recoveryVerification and viteApiAbort unit tests: 13/13, exit 0.
+- Full GitHub CI 37091478215 succeeded for `5fb925df`, an empty retry commit
+  with the exact same tree as `b611c521`. Verify, e2e and artifacts passed.
+- Prior negative control proved original saved-run error behavior fails both
+  viewport regressions. No application code has changed since that proof.
+- Existing independent diff review remains applicable to the unchanged code.
+- Live grifon.ai initially returned 402 DEPLOYMENT_DISABLED; the first fresh
+  preview retry was blocked. Neil resolved payment during this session.
+- After payment, live homepage/app returned 200 and authenticated dashboard
+  and One-Shot launch rendered in the actual browser.
+- Entered a disposable Recovery QA draft, reloaded, reopened One-Shot, and
+  selected Resume: offer, brand and price were restored in the consumer screen.
+- Closed the app tab and opened a new one: signed-in state and draft survived;
+  Resume restored the same fields at desktop width 1280. Mobile-sized live
+  viewport measured 319px; exact 375px coverage is in the automated suite.
+- No horizontal overflow in the inspected live mobile/desktop views.
+- Fresh Vercel Preview 6822540254 succeeded on `033a8392` after payment.
+  Browser access through Vercel sign-in confirmed homepage and login/access
+  screen render. Production draft reopen produced no captured console errors.
+- No Generate, research, rerender or paid media operation was requested.
+- No saved completed plan existed in this browser; live completed-plan and
+  Producer recorded-job restoration were not exercised against real accounts.
+  Their automated coverage uses simulated auth/provider/persistence responses.
 
 ## Evidence
-- Producer recovery regression failed on original launch-screen fallback, then passed.
-- Saved Testimonial plan regression failed with missing script/scenes on original
-  restoration, then passed. Default-engine interruption closes the actual page
-  after script persistence while the next image request remains pending.
-- Request-abort unit tests: original 2 failed / 1 passed; fixed 3 passed.
-- Focused browser suites: Producer 12/12, default engine 6/6 passed.
-- Independent 390px browser smoke passed; Retry/Back are reachable, saved work
-  restores without submissions, no overflow or page errors.
-- Independent correctness review: no remaining actionable findings. Independent
-  visual brand review: 44/50, zero critical issues or nits at both target sizes.
-- Final build passed, including PowerShell ASCII. Existing bundle-size and
-  Browserslist warnings remain.
-- Full unit suite: 114 files / 1,404 tests passed; 9 files / 32 opt-in tests skipped.
-- Bundle-leak, voice-sync, domain-language, artifact-anchor, design lint and
-  check:codex (26 tests) passed. Paid/live switches stayed unset.
-- Final combined browser suite: 74/74 passed (2 workers, 2.8 minutes).
-  Initial run was 73/74; the baseline landing race is fixed and independently
-  reviewed. Focused landing repetitions passed 6/6 across both viewports.
-- Local logs/screenshots: `.tmp/oneshot-recovery/` (ignored).
+Isolated checkout: C:/Users/ADMIN/.codex/worktrees/recovery-closeout/grifon-command.
+Fresh report: `.tmp/recovery-verification/2026-10-03T02-57-25-082Z-xyNdwN/summary.md`.
+Report links JSON, screenshots and traces for all nine flows at both widths.
+The source checkout remained clean during the independent run.
+Only this resume document changes after those checks.
+Latest preview/CI status and browser findings are recorded in PR150's description.
 
 ## Recovery boundaries
-This proves recovery when the customer returns, not an always-running workflow.
-Already submitted provider jobs may continue outside the browser; the browser
-must reopen for Producer to reload, poll recorded handles and advance its stages.
-Storyboard approval and First Cut remain customer gates.
-The default engine preserves partial results without automatic continuation:
-partial work opens through One-Shot Resume; completed plans open from Dashboard.
-Some late Producer checkpoints and completed plans are seeded and explicitly
-labeled; job submit/record/reload/poll and default interruption execute real app
-paths against simulated responses. Request counts do not certify live provider
-billing, database concurrency, media quality or a fully closed-browser pipeline.
-No real generation, production writes, tuned prompt/model/default changes,
-billing changes, engine-selection changes, deployment or merge occurred.
+Recovery means returning to saved work in the same browser storage context.
+Default-engine partial work does not automatically continue. Producer resumes
+polling recorded jobs after reopening; Storyboard and First Cut remain gates.
+Provider jobs can continue externally while the browser is closed, but the
+complete pipeline and notifications still require separate architecture work.
+Request counts are not proof of live billing, database concurrency or quality.
+Final-render retry may start another final render; scene-job recovery is distinct.
+The disposable text-only Recovery QA draft is left in the test browser.
+No real saved customer work was edited or removed.
 
-## Next action
-Implementation and local verification are complete; draft PR is open. GitHub CI
-is queued at handoff. The automatic Vercel status reports "Account is blocked."
-No hosting settings were changed or deployment explicitly requested. Review CI
-and the hosting account status before a separately authorized merge/deployment.
+## ▶ NEXT ACTION
+No demonstrated recovery defect remains from this verification pass.
+PR150 is not merged; review its latest CI/preview results in the PR description
+before requesting merge. A live paid-provider run is outside this no-spend check.
+No new production deployment or hosting-setting changes were performed.
+
+## Unrelated work retained
+Main shared checkout is used by another session; no branch switch or file edits
+were made there. Oceanides work and untracked media/attachments are untouched.
+Motion PR143 -> PR144 -> PR149 remains on its own branches.

@@ -17,6 +17,7 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
       expect(await page.evaluate(() => localStorage.getItem('osa_producer_active_run'))).toBe(RUN_ID);
       await assertConsumerOnly(page);
       await page.screenshot({ path: testInfo.outputPath('saved-run-error.png'), fullPage: true });
+      await testInfo.attach('saved-run-error', { path: testInfo.outputPath('saved-run-error.png'), contentType: 'image/png' });
       await page.getByRole('button', { name: 'Back', exact: true }).click();
       await expect(page.getByText('What are we selling today?')).toBeVisible();
       await openOneShot(page);
@@ -47,6 +48,7 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
         else await expect(page.locator('video')).toHaveJSProperty('readyState', 4);
         await assertConsumerOnly(page);
         await page.screenshot({ path: testInfo.outputPath(`${gate}-restored.png`), fullPage: true });
+        await testInfo.attach(`${gate}-restored`, { path: testInfo.outputPath(`${gate}-restored.png`), contentType: 'image/png' });
         expect(backend.submissions).toHaveLength(0);
         expect(backend.finalStarts).toHaveLength(0);
         expect(backend.checkpoints).toHaveLength(0);
