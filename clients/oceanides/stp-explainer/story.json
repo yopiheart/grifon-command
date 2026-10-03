@@ -1,0 +1,143 @@
+{
+  "title": "How wastewater treatment works",
+  "brand": "Oceanides",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "status": "Narration wording pending user approval; visual draft uses no paid generation",
+  "scope": "Generic domestic wastewater STP concept, not a supplier design or an Oceanides-owned facility. Septage intake is explained separately.",
+  "sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=w_60iJEAf4c",
+      "use": "Visual reference only: model-specific tank cutaway, component focus and animated treatment. No footage, audio, geometry or product claims reused."
+    },
+    {
+      "url": "https://www.epa.gov/npdes/peak-flows-sewage-treatment-plants",
+      "use": "Screening, primary clarification, biological treatment and disinfection."
+    },
+    {
+      "url": "https://www.fujicleanusa.com/homeowners-faq",
+      "use": "Reference product still requires service and periodic sludge removal. Not specifications for Oceanides."
+    },
+    {
+      "url": "https://r7.emb.gov.ph/wp-content/uploads/2022/05/OPMS-DISCHARGE-PERMIT-Application-Guideline.pdf",
+      "use": "Domestic wastewater definition and discharge permit context."
+    },
+    {
+      "url": "https://www.epa.gov/sites/production/files/documents/EnvRegSC_Hndbk.pdf",
+      "use": "Septage is liquid and solids pumped from septic tanks or similar domestic systems."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "building",
+      "start": 0,
+      "end": 10,
+      "title": "Wastewater starts here",
+      "detail": "Toilets, sinks and wash areas",
+      "caption": "Mula sa toilets, sinks at wash areas, may wastewater na lumalabas sa building araw-araw.",
+      "vo": "Mula sa toilets, sinks at wash areas, may wastewater na lumalabas sa building araw-araw."
+    },
+    {
+      "id": "difference",
+      "start": 10,
+      "end": 23,
+      "title": "STP or septage facility?",
+      "detail": "Building wastewater / Waste pumped from septic tanks",
+      "caption": "STP para sa wastewater ng building. Septage facility para sa waste na hinigop mula sa septic tanks.",
+      "vo": "Ang STP ay para sa wastewater ng building. Ang septage facility naman, para sa waste na hinigop mula sa septic tanks. Magkaiba ang intake at treatment needs nila."
+    },
+    {
+      "id": "overview",
+      "start": 23,
+      "end": 31,
+      "title": "Inside the treatment process",
+      "detail": "An illustrative domestic-wastewater STP",
+      "caption": "Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater.",
+      "vo": "Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater."
+    },
+    {
+      "id": "screen",
+      "start": 31,
+      "end": 41,
+      "title": "First, remove large debris",
+      "detail": "Screening",
+      "caption": "Sa screening, nahihiwalay ang malalaking debris bago pumasok sa treatment.",
+      "vo": "Sa screening, nahihiwalay ang malalaking debris bago pumasok sa treatment."
+    },
+    {
+      "id": "settle",
+      "start": 41,
+      "end": 51,
+      "title": "Let the solids settle",
+      "detail": "Primary settling",
+      "caption": "Sa settling tank, lumulubog ang mas mabibigat na solids. Tuloy ang liquid sa susunod na stage.",
+      "vo": "Sa settling tank, lumulubog ang mas mabibigat na solids. Tuloy ang liquid sa susunod na stage."
+    },
+    {
+      "id": "biology",
+      "start": 51,
+      "end": 65,
+      "title": "Treatment with air and biology",
+      "detail": "Air + microorganisms",
+      "caption": "Sa biological treatment, tumutulong ang microorganisms na i-break down ang organic waste. Sa aerobic system, may air supply para suportahan sila.",
+      "vo": "Sa biological treatment, tumutulong ang microorganisms na i-break down ang organic waste. Sa aerobic system na ito, may air supply para suportahan sila."
+    },
+    {
+      "id": "clarify",
+      "start": 65,
+      "end": 75,
+      "title": "Separate the remaining solids",
+      "detail": "Final clarification",
+      "caption": "Nahihiwalay ang natitirang solids. May sludge na ibinabalik sa process, at may excess na kailangang alisin.",
+      "vo": "Pagkatapos, nahihiwalay ang natitirang solids. May sludge na ibinabalik sa process, at may excess na kailangang alisin."
+    },
+    {
+      "id": "disinfect",
+      "start": 75,
+      "end": 85,
+      "title": "Finish the treatment",
+      "detail": "Disinfection and other treatment, as designed",
+      "caption": "Kung kailangan sa design, may disinfection o dagdag na treatment bago ang outlet.",
+      "vo": "Kung kailangan sa design, may disinfection o dagdag na treatment bago ang outlet."
+    },
+    {
+      "id": "outlet",
+      "start": 85,
+      "end": 96,
+      "title": "Test before discharge",
+      "detail": "Water quality determines the next step",
+      "caption": "Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable requirements ang basehan ng discharge o reuse.",
+      "vo": "Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable requirements ang basehan ng discharge o reuse."
+    },
+    {
+      "id": "care",
+      "start": 96,
+      "end": 108,
+      "title": "Keep treatment working",
+      "detail": "Inspection, equipment care and sludge removal",
+      "caption": "Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment.",
+      "vo": "Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment."
+    },
+    {
+      "id": "benefits",
+      "start": 108,
+      "end": 120,
+      "title": "Better wastewater management",
+      "detail": "Lower pollutant load / Managed waste / Planned operation",
+      "caption": "Para sa company, nakakatulong ang tamang system sa mas maayos na wastewater management at pagbawas ng pollutants bago ang discharge.",
+      "vo": "Para sa company, nakakatulong ang tamang system sa mas maayos na wastewater management at pagbawas ng pollutants bago ang discharge. Sa site assessment nagsisimula ang tamang pagpili."
+    },
+    {
+      "id": "contact",
+      "start": 120,
+      "end": 129,
+      "title": "Start with your site",
+      "detail": "Site assessment. Technical scope. Written quotation.",
+      "caption": "Oceanides ang main contact mo para sa site assessment, proposal at coordination sa specialist provider.",
+      "vo": "Oceanides ang main contact mo para sa site assessment, proposal at coordination sa specialist provider."
+    }
+  ]
+}

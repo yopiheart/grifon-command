@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Oceanides wastewater treatment explainer</title>
+<style>html,body{margin:0;background:#0A1F45;overflow:hidden}canvas{display:block;width:100vw;height:100vh;object-fit:contain}</style>
+<canvas id="output" width="1920" height="1080"></canvas>
+<script type="module">
+import * as THREE from './vendor/three.module.js';
+const story=await (await fetch('./story.json')).json();
+const out=document.querySelector('#output'), ctx=out.getContext('2d');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+renderer.setSize(1920,630); renderer.setPixelRatio(1); renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.shadowMap.autoUpdate=false;
+renderer.setClearColor(0x000000,0);
+const scene=new THREE.Scene();
+const camera=new THREE.OrthographicCamera(-12.8,12.8,7.2,-7.2,.1,100);
+scene.add(new THREE.HemisphereLight(0xf7f7f2,0x577492,2.4));
+const light=new THREE.DirectionalLight(0xffffff,3.4);light.position.set(-5,16,10);light.castShadow=true;light.shadow.mapSize.set(2048,2048);
+Object.assign(light.shadow.camera,{left:-18,right:18,top:14,bottom:-14,near:.1,far:50});light.shadow.bias=-.0005;scene.add(light);
+const fill=new THREE.DirectionalLight(0x5aa6e6,1.5);fill.position.set(15,6,-10);scene.add(fill);
+const C={navy:'#0A1F45',paper:'#F7F7F2',ink:'#17212B',blue:'#1C63AD',gray:'#63707D',sky:'#5AA6E6',amber:'#F5B301'};
+const mat=(color,roughness=.7)=>new THREE.MeshStandardMaterial({color,roughness,metalness:.08});
+const shell=mat(0xe7ebe8), rim=mat(0xbac8cc), steel=mat(0x72949f,.4), blue=mat(0x1c63ad,.38), amber=mat(0xf5b301);
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(90,90),new THREE.ShadowMaterial({opacity:.13}));ground.rotation.x=-Math.PI/2;ground.position.y=-.22;ground.receiveShadow=true;scene.add(ground);
+function box(g,w,h,d,x,y,z,m){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;g.add(mesh);return mesh;}
+function cylinder(g,r,h,x,y,z,m){const q=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,32),m);q.position.set(x,y,z);q.castShadow=true;q.receiveShadow=true;g.add(q);return q;}
+function pipe(g,points,color=0x72949f,r=.07){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)),false,'centripetal');const q=new THREE.Mesh(new THREE.TubeGeometry(curve,60,r,10,false),mat(color,.42));q.castShadow=true;g.add(q);curve.mesh=q;return curve;}
+const plant=new THREE.Group();scene.add(plant);
+const centers=[-7.4,-3.7,0,3.7,7.4], liquids=[],sludges=[],lids=[],particleGroups=[], paths=[];
+const liquidColors=[0x9e8870,0x8b9c90,0x5999aa,0x68afc9,0x86c3d6];
+const tankNames=['Screening','Primary settling','Biological treatment','Clarification','Finishing treatment'];
+centers.forEach((x,i)=>{
+ const g=new THREE.Group();g.position.x=x;plant.add(g);
+ box(g,3.45,.24,3.55,0,0,0,shell);box(g,3.45,2.8,.17,0,1.45,-1.7,shell);
+ box(g,.17,2.8,3.55,-1.64,1.45,0,shell);box(g,.17,2.8,3.55,1.64,1.45,0,shell);
+ // The front wall is intentionally cut away; narrow lower edge shows the tank envelope.
+ box(g,3.45,.26,.17,0,.12,1.7,rim);
+ const waterMat=new THREE.MeshStandardMaterial({color:liquidColors[i],transparent:true,opacity:.48,roughness:.3,metalness:0,depthWrite:false});
+ const liquid=box(g,3.08,1.85,3.16,0,1.04,0,waterMat);liquid.castShadow=false;liquids.push(liquid);
+ const sludge=box(g,3.1,.18,3.1,0,.22,0,mat(i===4?0xb7cace:0x74644e));sludges.push(sludge);
+ const lid=new THREE.Group();box(lid,3.5,.14,3.6,0,0,0,shell);cylinder(lid,.57,.16,0,.1,0,blue);lid.position.set(x,3.08,0);plant.add(lid);lids.push(lid);
+ const particles=new THREE.Group();g.add(particles);particleGroups.push(particles);
+ for(let j=0;j<[8,14,22,10,0][i];j++){const mesh=new THREE.Mesh(new THREE.SphereGeometry(i===3?.035:.05+(j%3)*.017,6,6),mat(i===2?0xddeef2:0x76634d));mesh.castShadow=false;mesh.userData.seed=j;particles.add(mesh);}
+ if(i===0){for(let j=0;j<8;j++)box(g,.055,1.75,.045,-.7,1.4,-.95+j*.27,steel);box(g,.09,.08,2.1,-.7,2.3,0,steel);box(g,.14,.75,3.1,.8,1.75,0,rim);}
+ if(i===1){box(g,.1,1.5,3.15,-.86,1.95,0,rim);box(g,.1,1,3.15,.88,2.2,0,rim);}
+ if(i===2){for(let j=0;j<3;j++)cylinder(g,.09,2.25,-.8+j*.8,.38,0,steel).rotation.x=Math.PI/2;for(let j=0;j<5;j++)box(g,.15,1.2,.25,-.8+j*.4,1,-1.35,blue);}
+ if(i===3){const hopper=new THREE.Mesh(new THREE.ConeGeometry(1.12,1.2,40,1,true),steel);hopper.rotation.z=Math.PI;hopper.position.set(0,.9,0);g.add(hopper);pipe(g,[[0,.34,0],[0,.34,1.2],[0,.34,2.5]],0x72949f,.07);}
+ if(i===4){for(let j=0;j<4;j++){const uv=cylinder(g,.05,1.25,-.66+j*.42,1.12,0,mat(0xf0e5bd,.25));uv.rotation.x=Math.PI/2;}box(g,2.5,.12,.12,0,2.04,0,steel);}
+});
+for(let i=0;i<4;i++)paths.push(pipe(plant,[[centers[i]+1.7,2.1,-.72],[centers[i]+1.86,2.1,-.72],[centers[i+1]-1.86,2.1,-.72],[centers[i+1]-1.7,2.1,-.72]],0x72949f,.11));
+paths.unshift(pipe(plant,[[-11,2.1,-.72],[-9.25,2.1,-.72],[-9.1,2.1,-.72]],0x72949f,.11));
+paths.push(pipe(plant,[[9.1,2.1,-.72],[10.3,2.1,-.72],[11,1.6,-.72]],0x1c63ad,.11));
+const returnPath=pipe(plant,[[3.7,.4,2.5],[3.7,.4,3.7],[0,.4,3.7],[0,.75,1.7]],0x1c63ad,.07);
+const wastePath=pipe(plant,[[3.7,.4,2.5],[5.5,.4,2.5],[8.9,.4,2.5],[10.3,.55,1.7]],0x72949f,.07);
+const sludgeBox=new THREE.Group();sludgeBox.position.set(10.3,0,1.7);plant.add(sludgeBox);box(sludgeBox,1.45,.2,1.7,0,.05,0,shell);box(sludgeBox,1.45,.95,.14,0,.55,-.8,shell);box(sludgeBox,.14,.95,1.7,-.67,.55,0,shell);box(sludgeBox,.14,.95,1.7,.67,.55,0,shell);box(sludgeBox,1.2,.58,1.3,0,.36,0,mat(0x74644e));
+const blower=new THREE.Group();plant.add(blower);box(blower,1.1,.7,.75,-1.7,.4,3.1,blue);pipe(plant,[[-1.7,.65,2.9],[-1.7,.65,2.2],[0,.65,2.2],[0,.35,0]],0x72949f,.065);
+const dots=[];paths.forEach((p,stage)=>{for(let j=0;j<5;j++){const m=new THREE.Mesh(new THREE.SphereGeometry(.11,8,8),new THREE.MeshBasicMaterial({color:stage<3?0xf5b301:0x5aa6e6}));plant.add(m);dots.push({m,p,seed:j/5,stage});}});
+const returnDots=[];for(const p of [returnPath,wastePath])for(let j=0;j<8;j++){const m=new THREE.Mesh(new THREE.SphereGeometry(.065,6,6),mat(0xf5b301));plant.add(m);returnDots.push({m,p,seed:j/8});}
+const arrows=[];centers.forEach((x,i)=>{const p=new THREE.LineCurve3(new THREE.Vector3(x-1.25,1.8,1.25),new THREE.Vector3(x+1.25,1.8,1.25));for(let j=0;j<3;j++){const m=new THREE.Mesh(new THREE.ConeGeometry(.11,.32,10),new THREE.MeshBasicMaterial({color:i<2?0xf5b301:0x1c63ad}));m.rotation.z=-Math.PI/2;plant.add(m);arrows.push({m,p,seed:j/3,stage:i});}});
+const campus=new THREE.Group();scene.add(campus);
+function building(x,z,w,d,h){box(campus,w,.2,d,x,0,z,shell);box(campus,w,h,d,x,h/2,z,shell);box(campus,w+.15,.2,d+.15,x,h+.05,z,rim);for(let y=.9;y<h-.1;y+=.75)for(let xx=x-w/2+.32;xx<x+w/2-.1;xx+=.58)box(campus,.34,.42,.02,xx,y,z+d/2+.02,blue);}
+building(-4.4,0,3.3,3.1,6);building(.1,-1,3,2.8,4.2);building(4.4,.3,3.6,2.8,3.2);
+const siteLine=pipe(campus,[[-4.4,.1,2.1],[-4.4,-.6,2.9],[.1,-.6,2.9],[4.4,-.6,2.9],[7,-.6,2.9]],0x1c63ad,.15);
+const siteDrops=[];for(let j=0;j<15;j++){const m=new THREE.Mesh(new THREE.SphereGeometry(.15,8,8),mat(0xf5b301));campus.add(m);siteDrops.push(m);}
+const symbolTank=new THREE.Group();scene.add(symbolTank);box(symbolTank,4,.2,3.2,0,0,0,shell);box(symbolTank,4,1.9,.18,0,1,-1.5,shell);box(symbolTank,.18,1.9,3.2,-1.9,1,0,shell);box(symbolTank,.18,1.9,3.2,1.9,1,0,shell);box(symbolTank,3.6,.75,2.8,0,.53,0,mat(0x86735a));box(symbolTank,3.6,.9,2.8,0,1.33,0,new THREE.MeshStandardMaterial({color:0x9e8870,transparent:true,opacity:.5}));pipe(symbolTank,[[0,.6,0],[0,2.5,0],[2.5,2.5,0],[4,2.5,0]],0x72949f,.13);
+let logo=new Image();logo.src='../company-profile/assets/logo-transparent.png';await logo.decode();
+const ease=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
+const mix=(a,b,t)=>a+(b-a)*t;
+function txt(t,x,y,size=34,color=C.ink,weight=400,face='Arial'){ctx.fillStyle=color;ctx.font=`${weight} ${size}px "${face}",Arial`;ctx.fillText(t,x,y);}
+function wrap(t,x,y,width,size=34,color=C.ink,weight=400,line=size*1.35,face='Arial'){ctx.font=`${weight} ${size}px "${face}",Arial`;let row='',yy=y;for(const word of t.split(' ')){if(ctx.measureText(row+word).width>width&&row){txt(row.trim(),x,yy,size,color,weight,face);row='';yy+=line;}row+=word+' ';}if(row)txt(row.trim(),x,yy,size,color,weight,face);return yy;}
+function projected(point){const p=new THREE.Vector3(...point);p.project(camera);return [(p.x*.5+.5)*1920,260+(-p.y*.5+.5)*630];}
+function waves(dark){ctx.save();ctx.strokeStyle=dark?'#5AA6E6':C.blue;ctx.globalAlpha=dark?.3:.18;ctx.lineWidth=1.6;for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(1515,60+i*12);ctx.bezierCurveTo(1625,20+i*12,1700,105+i*12,1808,62+i*12);ctx.stroke();}ctx.restore();}
+function label(t,point,size=35){size=Math.max(35,size);const [x,y]=projected(point);ctx.font=`700 ${size}px "Segoe UI",Arial`;const w=ctx.measureText(t).width;ctx.fillStyle=C.paper;ctx.globalAlpha=.95;ctx.fillRect(x-w/2-12,y-size-8,w+24,size+16);ctx.globalAlpha=1;txt(t,x-w/2,y,size,C.ink,700,'Segoe UI');}
+window.renderFrame=async t=>{
+ const s=story.scenes.find(s=>t>=s.start&&t<s.end)||story.scenes.at(-1),local=t-s.start;
+ renderer.shadowMap.needsUpdate=window.currentScene!==s.id;
+ const intro=s.id==='building',difference=s.id==='difference',closing=s.id==='contact',benefit=s.id==='benefits';
+ const dark=closing;ctx.fillStyle=dark?C.navy:C.paper;ctx.fillRect(0,0,1920,1080);
+ plant.visible=!intro&&!difference&&!closing;campus.visible=intro||difference;symbolTank.visible=difference;
+ campus.position.set(difference?-4.9:0,0,0);campus.scale.setScalar(difference?.58:.84);symbolTank.position.set(4.7,0,0);
+ const focus={screen:-7.4,settle:-3.7,biology:0,disinfect:7.4}[s.id];
+ const focused=focus!==undefined, focusEase=ease(local/1.6);
+ const targetX=focused?mix(0,focus,focusEase):0;
+ const zoom=focused?mix(.8,s.id==='biology'?1.08:1.19,focusEase):intro?.87:difference?.9:s.id==='overview'?.8:['clarify','care','benefits'].includes(s.id)?.77:.82;
+ camera.left=-12.8/zoom;camera.right=12.8/zoom;camera.top=4.2/zoom;camera.bottom=-4.2/zoom;camera.updateProjectionMatrix();
+ camera.position.set(targetX+8.8,12.8,17.2);camera.lookAt(targetX,focused?1.7:2.35,-.6);camera.updateMatrixWorld();
+ plant.position.y=.2;campus.position.y=.4;
+ sludgeBox.visible=['clarify','care','benefits'].includes(s.id);
+ wastePath.mesh.visible=sludgeBox.visible;
+ const exploded=s.id==='overview'?ease(local/3):s.id==='building'?0:1;
+ lids.forEach((q,i)=>{q.position.y=3.08+exploded*1.4;q.visible=s.id==='overview'&&local<5.5;});
+ liquids.forEach((q,i)=>{q.material.opacity=focused&&centers[i]!==focus?.24:.46;});
+ particleGroups.forEach((g,i)=>g.children.forEach((m,j)=>{const seed=j*1.732; m.position.x=i===0?-1.35+Math.min((t*.12+j*.11)%1,.5):Math.sin(seed)*1.25;m.position.z=Math.cos(seed*.71)*1.23;
+  m.position.y=i===2?.43+((t*.55+j*.093)%1.4):.35+((1-(t*.085+j*.097)%1)*1.42);m.visible=!focused||centers[i]===focus;
+ }));
+ dots.forEach(({m,p,seed,stage})=>{m.position.copy(p.getPointAt((t*.29+seed)%1));m.visible=!closing&&!difference&&(focused?stage===centers.indexOf(focus)||stage===centers.indexOf(focus)+1:true);});
+ returnDots.forEach(({m,p,seed})=>{m.position.copy(p.getPointAt((t*.075+seed)%1));m.visible=['clarify','care','benefits'].includes(s.id);});
+ arrows.forEach(({m,p,seed,stage})=>{m.position.copy(p.getPointAt((t*.35+seed)%1));m.visible=!focused||stage===centers.indexOf(focus);});
+ siteDrops.forEach((m,j)=>m.position.copy(siteLine.getPointAt((t*.12+j/15)%1)));
+ if(!closing){renderer.render(scene,camera);ctx.drawImage(renderer.domElement,0,260,1920,630);}
+ // Fixed title rail and clear model field. All labels are native pixels, never generated lettering.
+ if(closing){ctx.drawImage(logo,112,90,122,122);txt('Start with your site',112,363,84,C.paper,400,'Segoe UI');wrap('Site assessment. Technical scope.\nWritten quotation.'.replace('\n',' '),112,455,1400,40,'#D8DFE9');txt('0917 671 6383',112,684,66,C.paper,600,'Segoe UI');txt('marketing@oceanidessepticandpest.com',112,765,38,'#D8DFE9');txt('Oceanides coordinates specialist delivery through turnover.',112,857,42,C.paper);}
+ else{ctx.fillStyle=C.paper;ctx.fillRect(0,0,1920,310);txt('Oceanides',112,80,31,C.navy,600,'Segoe UI');ctx.strokeStyle='#D9DDD9';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(112,108);ctx.lineTo(1808,108);ctx.stroke();wrap(s.title,112,210,1700,72,C.blue,400,85,'Segoe UI');txt(s.detail,114,280,35,C.gray);}
+ waves(dark);
+ if(intro)label('Domestic wastewater', [0,-.3,3.1],28);
+ if(difference){txt('STP: building wastewater',278,368,35,C.ink,700,'Segoe UI');txt('Septage: pumped septic-tank waste',1065,368,35,C.ink,700,'Segoe UI');}
+ if(!focused&&!intro&&!difference&&!closing){centers.forEach((x,i)=>label(tankNames[i],[x,3.1,0],23));}
+ if(focused){label(tankNames[centers.indexOf(focus)],[focus,3.25,0],30);if(s.id==='biology')label('Air supply',[ -1.7,.9,3.1],26);}
+ if(['clarify','care'].includes(s.id)){label('Return sludge',[1.6,.45,3.7],24);label('Excess sludge',[10.3,1.4,1.7],24);}
+ if(s.id==='outlet'){label('Treated water',[10.4,2.6,-.72],28);txt('Not drinking water',112,849,28,C.ink,600);}
+ if(benefit){const items=['Reduce pollutants','Manage wastewater','Plan for your site'];items.forEach((q,i)=>txt(q,112+i*558,343,36,C.ink,700,'Segoe UI'));}
+ // The draft contains the exact proposed narration as captions, with a reserved bottom rail.
+ ctx.fillStyle=dark?C.navy:C.paper;ctx.fillRect(0,905,1920,175);
+ const capColor=dark?C.paper:C.ink;wrap(s.caption,112,951,1696,36,capColor,400,46);
+ txt('Illustrative process. Actual design follows site assessment.',112,1051,20,dark?'#D8DFE9':C.gray);
+ txt('Visual draft / narration pending',1435,1051,20,dark?'#D8DFE9':C.gray);
+ window.currentScene=s.id;
+ return out.toDataURL('image/jpeg',.94).split(',')[1];
+};
+await window.renderFrame(0);window.ready=true;
+</script></html>

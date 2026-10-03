@@ -1,69 +1,80 @@
 # NOW - the resume doc
-**Stamped: 2026-10-01, Oceanides septage offer added to both profile formats**
+**Stamped: 2026-10-03, Oceanides STP visual draft ready; voice approval pending**
 
 ## Current work
-Branch: `codex/oceanides-company-profile`, based on logo branch at `7a374c27`.
-Draft PR152: https://github.com/yopiheart/grifon-command/pull/152 (stacked on PR151).
-No merge or deployment requested. User review of the septage versions is next.
+Branch: `codex/oceanides-stp-explainer`, based on profile head `d3d08102`.
+Draft PR to be created against `codex/oceanides-company-profile` after push.
+No merge, deployment or public publication requested.
 
-## Company profile
-Neil confirmed the Septage Treatment Facility offer. It is added to cover,
-overview and a dedicated service page in the eight-slide widescreen presentation
-and seven-page A4 profile. Oceanides coordinates specialist delivery through
-turnover. System details, capacity and maintenance follow the technical proposal.
-Current files in clients/oceanides/company-profile/output/:
+## STP meeting explainer
+Neil requested a video inspired by https://www.youtube.com/watch?v=w_60iJEAf4c
+and selected Taglish narration. Reference inspected as cutaway/component-focus
+inspiration; no borrowed footage/audio/geometry or FujiClean product claims.
+Source: clients/oceanides/stp-explainer/{scene.html,story.json,render.mjs}.
+Output: output/Oceanides-STP-Explainer-Visual-Draft-1080p.mp4.
+Free local Three.js/Playwright/FFmpeg production: 1920x1080, 16:9, 30fps,
+129 seconds, 12 scenes. Visual draft is SILENT; no paid provider calls.
+Rebuild: node clients/oceanides/stp-explainer/render.mjs; --frames-only for QA.
+Official three@0.180.0 is vendored with its MIT license; one upstream whitespace
+indent normalized to pass diff-check. Root manifests/dependencies unchanged.
+
+Generic domestic-wastewater STP: screening, settling, aerobic biology,
+clarification/return and excess sludge, finishing treatment, testing and care.
+Septage intake is distinguished from building wastewater. No Oceanides-owned
+facility/equipment, supplier/model/capacity, potable-water, universal industrial
+waste capability, guaranteed compliance or maintenance-free promise.
+Oceanides is the main contact and coordinates specialists through turnover.
+Primary EPA, FujiClean and EMB evidence URLs are recorded in story.json.
+Client DESIGN.md scoped minimal profile direction extends to this companion.
+
+Verification: all 12 individual story frames inspected; independent final brand
+review PASS_WITH_NITS, 44/50, zero critical. Two optional nits remain for final
+polish: blue editorial topics in comparison/benefits and larger outlet caution.
+Full MP4 decode passed: 3,870 frames, H.264/yuv420p, 1920x1080/30fps, 129s,
+8,440,596 bytes, no audio. Export motion sampled: camera, aeration and sludge
+changed 457,896 / 5,651 / 702 pixels respectively; exported frames inspected.
+Render has no page errors. Node syntax, exact narration hash/timeline and
+artifact-anchor check PASS. git diff-check PASS. App code untouched; app suites
+not repeated. Private evidence: .tmp/oceanides-stp/{frames,motion}/.
+Final video SHA256: 0af94d651dbc93eddd425c2c44eebd4728edeb4900325438168d453a28ba9185.
+Native projector hardware and narrated playback have not been tested.
+
+## Required next step: voice approval
+Exact text: stp-explainer/narration-for-approval.txt (213 words / 1,398 chars).
+Input hash and settings: stp-explainer/voice.spec.json, status PENDING_USER_APPROVAL.
+Async question sent: approve exact script + one existing Kuya Marvin clone TTS
+generation, max 1,500 existing ElevenLabs credits, no retries or purchases.
+Do not generate until Neil explicitly approves this spec. Existing runner:
+clients/oceanides/kuya-marvin/test-rigs/audio-post.mjs tts; multilingual_v2,
+voice jL41fXY8JXGEarmJ5g3f, stability .75, similarity .85. No runner edits.
+After approval: hash-check exact story VO joined with two LF newlines; one call;
+listen to complete take, locally align scenes, polish noted typography, render
+final H.264/AAC, decode/levels/motion/sync QA. Changed paid input needs fresh approval.
+
+## Company profile retained
+Draft PR152: https://github.com/yopiheart/grifon-command/pull/152, stacked on PR151.
+Eight-slide 16:9 and seven-page A4 versions include Septage Treatment Facility.
+Current output under clients/oceanides/company-profile/output/:
 - pptx/Oceanides-Company-Profile-Widescreen-Septage-Final.pptx
 - pdf/Oceanides-Company-Profile-Widescreen-Septage-Final.pdf
 - pdf/Oceanides-Company-Profile-Print-Septage-Final.pdf
 - pptx/Oceanides-Company-Profile-Print-Septage-Final.pptx
-Older versions are superseded and retained as version history.
-Rebuild: build-profile.ps1 -Revision <new-name> -Format Widescreen; default A4.
-Shared export path; widescreen layout in widescreen_layout.py. Private previews
-and receipts: .tmp/oceanides-widescreen/. A4 evidence: .tmp/oceanides-profile/.
-
-Approved minimal direction: warm white, ink/navy, ocean-blue light headings,
-warm-white closing headings and muted-white supporting text. Segoe UI display
-and bold topics, Arial body. Subtle corner waves; one transparent logo on cover/
-closing. Client DESIGN.md profile exception governs. Apple report/OpenAI public
-reference extraction recorded in workflows/design_swipe_file.md D18.
-Four generated illustration disclosures remain visible. Real same-site siphoning
-photos are separate and the complete tank opening remains visible in square frames.
-Existing assets reused; no generation calls this turn. Provenance: assets/generated-sources.json.
-
-Services: siphoning, plumbing/declogging, pipe leaks, house/condo renovation and
-restoration, ceiling repairs/replacement, roof leak repair/waterproofing, house
-cleaning, pest control and septage treatment facility projects. Oceanides
-coordinates through turnover, including specialists. No supplier/model/capacity,
-owned facility/equipment, project count, license/accreditation or maintenance-free
-guarantee claim. Expanded process/scope/coordination
-information remains in speaker notes; A4 profile preserves its complete layout.
+Minimal direction: paper/ink/navy/ocean blue, Segoe display/topics + Arial body,
+subtle waves and a single transparent logo. D18 in workflows/design_swipe_file.md.
+Four generated illustration disclosures retained; actual siphoning proof separate.
+Native text/export/content/geometry checks PASS; independent review zero must-fix.
+PowerPoint/projector hardware untested. No merge/deployment.
 Contacts: 0917 671 6383 (Globe), marketing@oceanidessepticandpest.com;
 Tramo Street Corner Dandan, Pasay City, Philippines 1300.
-CTA: site assessment and written quotation; receive procurement requirements.
+CTA: site assessment, written quotation and procurement requirements.
 
-Verification: widescreen eight slides/121 native text runs; A4 seven pages/120
-runs. Native text exactly matches layouts and PDF extraction. Facility offer on
-cover/index/service page, dimensions/contacts/disclosures/transparency, package,
-geometry/font policy/import/final hash PASS. Other service/closing page text is
-unchanged apart from page numbers. Changed PDF/PPTX pages inspected in both formats.
-Independent final review PASS: zero must-fix, two optional line-balance nits.
-Prior widescreen review had a minor caption/footer spacing preference. Native PowerPoint and
-projector hardware have not been tested. Artifact-only work; application suites
-were not repeated. No merge, deployment or production-data mutation.
-
-## Logo PR retained
-PR151: https://github.com/yopiheart/grifon-command/pull/151.
-Canonical assets/logo.jpg exactly matches Neil's latest attachment; both funnel
-logo derivatives updated and superseded standalone PNG removed. Full square
-artwork retained in funnels. Profile-only transparent derivative is authorized.
-Logo builds/tests PASS: 1,401 tests, both funnel builds, bundle/voice/domain/
-ASCII/artifact checks and desktop/mobile browser verification. No deployment.
-
-## Other ongoing work retained
-Recovery tooling draft PR150 targets PR146's codex/oneshot-recovery branch.
-PR146 head 39a30613: user-authorized preview retry succeeded (Vercel inspector
-4Su52fj6aZnPDfbFViYytqtP9C45); preview access redirects to SSO, app smoke pending.
-Fresh CI 36863242626 SUCCESS after confirmed GitHub payment. No production deploy
-or merge. Next: release review for PR146; PR150 needs main-target CI after it lands.
+## Logo and other ongoing work retained
+PR151: https://github.com/yopiheart/grifon-command/pull/151. Canonical logo.jpg
+matches Neil's attachment; derivatives updated, superseded PNG removed.
+Logo builds/tests PASS: 1,401 tests and both funnels; no deployment.
+Recovery tooling PR150 targets PR146's codex/oneshot-recovery branch.
+PR146 head 39a30613: preview retry succeeded; SSO blocks app smoke.
+CI 36863242626 SUCCESS after confirmed GitHub payment. No production deploy/merge.
+Next: PR146 release review; PR150 needs main-target CI after it lands.
 Motion PR143 -> PR144 -> PR149 remains on its branches.
 Untracked remote attachments and reference/media directories were not staged.

@@ -78,7 +78,8 @@ that source. The superseded standalone `Oceanides New logo.png` was removed.
 
 Neil rejected the signage-heavy brochure and explicitly requested Apple/OpenAI
 inspired simplicity, including changes to fonts and palette combinations.
-For the company profile and its editable presentation only, this overrides the
+For the company profile, its editable presentation and the companion STP meeting
+explainer (Neil's video request, 2026-10-03), this overrides the
 uppercase display and amber-panel defaults below. Other client surfaces retain
 their existing rules.
 
