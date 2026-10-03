@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, corrected personal voice; STP music preview ready**
+**Stamped: 2026-10-03, original STP score and personal voice awaiting approval**
 
 ## Current work
 Branch: `codex/oceanides-stp-explainer`, based on profile head `d3d08102`.
@@ -28,14 +28,18 @@ with installation, power, service, testing and residual-solids handling costs.
 ## Current video preview and preparation
 Folder: clients/oceanides/stp-explainer/.
 Source: story.json, scene.html, render.mjs; 12 scenes, 139-second draft timeline.
-Current output: output/Oceanides-STP-Cost-Explainer-Music-Preview-1080p.mp4.
-1920x1080, 16:9, 30fps, H.264/yuv420p + AAC stereo. MUSIC ONLY; narration pending.
-New silent visual export also retained; previous 129-second exports preserved.
-Licensed existing music: api/_lib/assets/music/testimonial.mp3, Inspirational
-Piano / Pixabay Content License; source/hash in voice-personal.spec.json.
-No added SFX. Four-second loop crossfade; two-second in/three-second out fades.
-Measured preview bed -34.1 LUFS, true peak -15.4dBFS. No paid music generation.
-mix-audio.mjs prepares ducking against normalized voice when it exists.
+Latest visuals: output/Oceanides-STP-Cost-Explainer-Visual-Draft-1080p.mp4.
+The Music-Preview-1080p.mp4 using saved piano was REJECTED by Neil; retain only
+as historical evidence. Do not send it as current or use its bed as fallback.
+New direction: original Flow score, glass synth / warm bass / airy pads / pulse.
+music-original.spec.json is PENDING_APPROVAL: one Music v2.5 instrumental call,
+150 seconds, exact music-for-approval.txt. Published API rate $0.15/minute:
+estimate $0.375 usage before tax, proposed cap $0.50; no retries/purchases.
+Music API entitlement/account billing debit not verified; models list has no
+music entries. No music has been generated yet and no paid call was sent.
+music-original.mjs --dry-run is free; --generate requires its own exact approval.
+mix-audio.mjs now requires the successful original-score receipt and forbids
+stock fallback. Music preview target -24 LUFS; voice bed -28 then sidechain-duck.
 
 Pending voice-personal.spec.json: exact 224-word / 1,455-character Taglish script,
 one v4 call with twelve inputs using the SAME personal clone and timestamps.
@@ -53,12 +57,13 @@ flags. Changed exported close inspected. Full preview decode PASS: 4,170 frames,
 fbeb771c2dc3042f83ee3a96577541c8f5d6faa5309a6f26f8f27a05a6a781be.
 Node syntax, exact spec/dry run, contiguous timeline and five negative spend
 guards PASS (pending, wrong voice, changed budget/text, completed; zero network).
-Artifact anchors/diff-check PASS. Actual voice alignment/ducking not exercised
+Artifact anchors/diff-check PASS. Original-score dry run and negative guards
+also verified. Actual voice alignment/ducking not exercised
 yet; projector hardware untested. Client artifacts only; app suites not repeated.
 Private evidence: .tmp/oceanides-stp/{frames-cost,export-cost,audio-cost,
 prep-negative-tests,personal-voice-preflight.json,personal-voice-model.json}.
-Next required step: exact full-narration paid-spec approval; then generate once,
-align, mix, decode/measure and listen before client use.
+Next: approve exact personal narration AND original music specs, generate each
+once, align/mix, decode/measure and listen before client use. Old piano rejected.
 
 ## Company profile and logo retained
 Draft PR152: https://github.com/yopiheart/grifon-command/pull/152, stacked on PR151.

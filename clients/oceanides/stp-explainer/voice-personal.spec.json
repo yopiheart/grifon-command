@@ -166,17 +166,15 @@
   },
   "localMix": {
     "music": {
-      "file": "api/_lib/assets/music/testimonial.mp3",
-      "sha256": "18ecbbb1301d98919be3e832f1ffb184c53aeb4d6e9889021a5aab738d83c33f",
-      "track": "Inspirational Piano",
-      "source": "https://pixabay.com/music/solo-piano-inspirational-piano-500180/",
-      "license": "Pixabay Content License; existing licensed local asset, incorporated into video",
-      "provenance": "api/_lib/assets/PROVENANCE.md"
+      "file": "output/Oceanides-STP-Flow-Original-150s.mp3",
+      "spec": "music-original.spec.json",
+      "identity": "Fresh original Flow score, pending separate paid approval; prior stock piano rejected by Neil",
+      "sha256": "Use the successful original-music receipt, never the stock asset"
     },
-    "musicDuringSpeech": "Normalize bed to -30 LUFS, reduce a further 5dB, then sidechain-duck against voice. No extra sound effects.",
+    "musicDuringSpeech": "Original score normalized locally to a restrained bed, then sidechain-ducked against voice. No saved-music fallback.",
     "voice": "Normalize to -16 LUFS with true peak <= -1.5dBTP; final limiter. Measure intelligibility and clipping; full listening still required.",
     "timing": "Use provider character alignment and dialogue_input_index segments. Reject missing/inconsistent alignment; never distribute words evenly or guess scene boundaries.",
-    "paidMusic": false
+    "paidMusic": "Separate music-original.spec.json; not covered by the voice approval"
   },
   "pass": [
     "One exact personal cloned voice, with all approved words and no extra speakers or music in the raw take.",

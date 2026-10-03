@@ -113,6 +113,10 @@ their existing rules.
   The canonical source JPG and existing funnel assets remain unchanged.
 - Reference: D18 in `workflows/design_swipe_file.md`; Apple's 2025 Environmental
   Progress Report and OpenAI's public Design Guidelines. No borrowed brand marks.
+- STP meeting soundtrack (Neil, 2026-10-03): create a fresh original instrumental
+  score for this film. Neil rejected the saved stock piano bed. Use a restrained
+  glass-synth motif, warm bass and subtle pulse with room for narration; no saved
+  music fallback. Paid generation follows its exact approved spec.
 
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at
