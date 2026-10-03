@@ -3,7 +3,7 @@
 
 ## Current work
 Branch: `codex/oceanides-stp-explainer`, based on profile head `d3d08102`.
-Draft PR to be created against `codex/oceanides-company-profile` after push.
+Draft PR153: https://github.com/yopiheart/grifon-command/pull/153, stacked on PR152.
 No merge, deployment or public publication requested.
 
 ## STP meeting explainer
@@ -38,6 +38,10 @@ artifact-anchor check PASS. git diff-check PASS. App code untouched; app suites
 not repeated. Private evidence: .tmp/oceanides-stp/{frames,motion}/.
 Final video SHA256: 0af94d651dbc93eddd425c2c44eebd4728edeb4900325438168d453a28ba9185.
 Native projector hardware and narrated playback have not been tested.
+Neil asks whether the video conveys reduced siphoning and whether Blender is
+needed. Current model is real procedural 3D in Three.js. Current benefits are
+general; no pump-out reduction is promised. Clarify onsite liquid treatment vs
+continued sludge removal, with any reduction dependent on actual site/system.
 
 ## Required next step: voice approval
 Exact text: stp-explainer/narration-for-approval.txt (213 words / 1,398 chars).
