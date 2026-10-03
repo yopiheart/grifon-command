@@ -1,0 +1,15 @@
+{
+  "command": "node workflows/assets/grifon-motion-upgrade/voiceover/finish.mjs --preserve-release",
+  "exitCode": 0,
+  "candidateMediaGates": "All phrase, level, loudness, metadata, strict decode, payload, tail and faststart gates passed before promotion.",
+  "releaseSha256Before": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067",
+  "releaseSha256After": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067",
+  "releaseMtimeMsBefore": 1791026812817.5476,
+  "releaseMtimeMsAfter": 1791026812817.5476,
+  "releaseFileUnchanged": true,
+  "reportOutput": "grifon-full-upgrade-english-vo-1080p.mp4",
+  "encodedLufs": -16.02,
+  "encodedTruePeakDbtp": -2.74,
+  "providerCalls": 0,
+  "humanAudition": "PENDING"
+}

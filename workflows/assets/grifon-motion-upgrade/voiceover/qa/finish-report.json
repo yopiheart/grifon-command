@@ -1,0 +1,1297 @@
+{
+  "specSha256": "4d5b7d40849026e8d3eb21cf4706c460f17857179be1ccf9bb40785eb0ec28c9",
+  "output": "grifon-full-upgrade-english-vo-1080p.mp4",
+  "outputSha256": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067",
+  "bytes": 5179901,
+  "sourceHashes": {
+    "take": "5dafa023580cad2c0f77eac96317344586d21914f9586c62af9c5b287d845a4a",
+    "alignment": "f61a3b87c98143fc9967886d467f6b1e8a824b377467be69f59b20576fdac5a3",
+    "picture": "978d8e1d29bfbd40c89788a898377c5acca5d3ea7efcdfab1a50e71d4fbbff27",
+    "approvedPremaster": "bd18d6cecfa3cfcb60f39c6badb914b864c9f37b5d250333fd1e7b95fb527ba0",
+    "approvedSfxStem": "276a8269af16b26e63ebe5be6cc5f32fb047e1b3e77ac144cff760e577e29306"
+  },
+  "requestEvidence": {
+    "synthesisRequests": 1,
+    "estimatedCredits": 306,
+    "actualCredits": null,
+    "providerUsageVerified": false,
+    "additionalProviderCalls": 0
+  },
+  "alignment": [
+    {
+      "label": "raw",
+      "exactInputMatch": true,
+      "arrayLength": 306,
+      "endSeconds": 19.76
+    },
+    {
+      "label": "normalized",
+      "exactInputMatch": true,
+      "arrayLength": 306,
+      "endSeconds": 19.76
+    }
+  ],
+  "rawDecodedSeconds": 19.68,
+  "duration": 32.9,
+  "sampleRate": 48000,
+  "channels": 2,
+  "phrases": [
+    {
+      "id": "opening",
+      "text": "Your next ad.",
+      "sourceStart": 0.12,
+      "sourceEnd": 1.19,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.07,
+      "pitchPreservingTempo": 1.12,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 10.365337,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 0.12,
+      "latestEnd": 1.09,
+      "actualStart": 0.12,
+      "actualEnd": 1.089958,
+      "actualOutputSeconds": 0.969958,
+      "estimatedWords": [
+        {
+          "word": "Your",
+          "estimatedSourceStart": 0.16,
+          "estimatedSourceEnd": 0.32
+        },
+        {
+          "word": "next",
+          "estimatedSourceStart": 0.48,
+          "estimatedSourceEnd": 0.64
+        },
+        {
+          "word": "ad",
+          "estimatedSourceStart": 0.72,
+          "estimatedSourceEnd": 1.04
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -64.557465,
+          "rmsDbfs": -74.269057,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -47.627793,
+          "rmsDbfs": -54.604469,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "launch",
+      "text": "To launch a product.",
+      "sourceStart": 1.46,
+      "sourceEnd": 2.705,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.245,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 10.425792,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 1.22,
+      "latestEnd": 2.61,
+      "actualStart": 1.22,
+      "actualEnd": 2.465,
+      "actualOutputSeconds": 1.245,
+      "estimatedWords": [
+        {
+          "word": "To",
+          "estimatedSourceStart": 1.507,
+          "estimatedSourceEnd": 1.52
+        },
+        {
+          "word": "launch",
+          "estimatedSourceStart": 1.68,
+          "estimatedSourceEnd": 1.92
+        },
+        {
+          "word": "a",
+          "estimatedSourceStart": 1.96,
+          "estimatedSourceEnd": 2
+        },
+        {
+          "word": "product",
+          "estimatedSourceStart": 2.08,
+          "estimatedSourceEnd": 2.56
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -65.290731,
+          "rmsDbfs": -72.059924,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -62.383842,
+          "rmsDbfs": -69.241319,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "story",
+      "text": "To tell your story.",
+      "sourceStart": 2.83,
+      "sourceEnd": 4.075,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.245,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 11.380666,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 4.15,
+      "latestEnd": 5.62,
+      "actualStart": 4.15,
+      "actualEnd": 5.395,
+      "actualOutputSeconds": 1.245,
+      "estimatedWords": [
+        {
+          "word": "To",
+          "estimatedSourceStart": 2.88,
+          "estimatedSourceEnd": 2.96
+        },
+        {
+          "word": "tell",
+          "estimatedSourceStart": 3.04,
+          "estimatedSourceEnd": 3.2
+        },
+        {
+          "word": "your",
+          "estimatedSourceStart": 3.28,
+          "estimatedSourceEnd": 3.44
+        },
+        {
+          "word": "story",
+          "estimatedSourceStart": 3.52,
+          "estimatedSourceEnd": 3.92
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -63.824146,
+          "rmsDbfs": -70.964871,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -61.501512,
+          "rmsDbfs": -69.814391,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "grow",
+      "text": "To grow your business.",
+      "sourceStart": 4.235,
+      "sourceEnd": 5.865,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.63,
+      "pitchPreservingTempo": 1.115,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 11.288097,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 7.12,
+      "latestEnd": 8.59,
+      "actualStart": 7.12,
+      "actualEnd": 8.589146,
+      "actualOutputSeconds": 1.469146,
+      "estimatedWords": [
+        {
+          "word": "To",
+          "estimatedSourceStart": 4.32,
+          "estimatedSourceEnd": 4.4
+        },
+        {
+          "word": "grow",
+          "estimatedSourceStart": 4.48,
+          "estimatedSourceEnd": 4.8
+        },
+        {
+          "word": "your",
+          "estimatedSourceStart": 4.88,
+          "estimatedSourceEnd": 5.04
+        },
+        {
+          "word": "business",
+          "estimatedSourceStart": 5.12,
+          "estimatedSourceEnd": 5.68
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -63.046692,
+          "rmsDbfs": -67.13032,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -64.044,
+          "rmsDbfs": -69.880664,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "problem",
+      "text": "But there's never time to make it.",
+      "sourceStart": 6.105,
+      "sourceEnd": 8.06,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.955,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 13.549772,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 10.12,
+      "latestEnd": 12.87,
+      "actualStart": 10.12,
+      "actualEnd": 12.075,
+      "actualOutputSeconds": 1.955,
+      "estimatedWords": [
+        {
+          "word": "But",
+          "estimatedSourceStart": 6.208,
+          "estimatedSourceEnd": 6.24
+        },
+        {
+          "word": "there's",
+          "estimatedSourceStart": 6.28,
+          "estimatedSourceEnd": 6.56
+        },
+        {
+          "word": "never",
+          "estimatedSourceStart": 6.64,
+          "estimatedSourceEnd": 6.88
+        },
+        {
+          "word": "time",
+          "estimatedSourceStart": 7,
+          "estimatedSourceEnd": 7.12
+        },
+        {
+          "word": "to",
+          "estimatedSourceStart": 7.2,
+          "estimatedSourceEnd": 7.28
+        },
+        {
+          "word": "make",
+          "estimatedSourceStart": 7.36,
+          "estimatedSourceEnd": 7.52
+        },
+        {
+          "word": "it",
+          "estimatedSourceStart": 7.6,
+          "estimatedSourceEnd": 7.84
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -55.500255,
+          "rmsDbfs": -61.19105,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -69.160024,
+          "rmsDbfs": -76.602951,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "pivot",
+      "text": "Until now.",
+      "sourceStart": 8.16,
+      "sourceEnd": 9.198,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.038,
+      "pitchPreservingTempo": 1.12,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 8.651787,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 13.18,
+      "latestEnd": 14.12,
+      "actualStart": 13.18,
+      "actualEnd": 14.117313,
+      "actualOutputSeconds": 0.937312,
+      "estimatedWords": [
+        {
+          "word": "Until",
+          "estimatedSourceStart": 8.493,
+          "estimatedSourceEnd": 8.56
+        },
+        {
+          "word": "now",
+          "estimatedSourceStart": 8.72,
+          "estimatedSourceEnd": 9.04
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -78.853719,
+          "rmsDbfs": -87.770836,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -75.495899,
+          "rmsDbfs": -84.951214,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "introduce",
+      "text": "Meet Grifon.",
+      "sourceStart": 9.375,
+      "sourceEnd": 10.575,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.2,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 12.282759,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 15.05,
+      "latestEnd": 16.42,
+      "actualStart": 15.05,
+      "actualEnd": 16.25,
+      "actualOutputSeconds": 1.2,
+      "estimatedWords": [
+        {
+          "word": "Meet",
+          "estimatedSourceStart": 9.64,
+          "estimatedSourceEnd": 9.68
+        },
+        {
+          "word": "Grifon",
+          "estimatedSourceStart": 9.84,
+          "estimatedSourceEnd": 10.32
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -74.251279,
+          "rmsDbfs": -80.921691,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -62.983834,
+          "rmsDbfs": -69.157064,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "conversation",
+      "text": "Find the angle. Build the story.",
+      "sourceStart": 10.58,
+      "sourceEnd": 13.11,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 2.53,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 11.597672,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 19.65,
+      "latestEnd": 22.35,
+      "actualStart": 19.65,
+      "actualEnd": 22.18,
+      "actualOutputSeconds": 2.53,
+      "estimatedWords": [
+        {
+          "word": "Find",
+          "estimatedSourceStart": 10.72,
+          "estimatedSourceEnd": 10.96
+        },
+        {
+          "word": "the",
+          "estimatedSourceStart": 11,
+          "estimatedSourceEnd": 11.04
+        },
+        {
+          "word": "angle",
+          "estimatedSourceStart": 11.12,
+          "estimatedSourceEnd": 11.52
+        },
+        {
+          "word": "Build",
+          "estimatedSourceStart": 11.96,
+          "estimatedSourceEnd": 12.08
+        },
+        {
+          "word": "the",
+          "estimatedSourceStart": 12.12,
+          "estimatedSourceEnd": 12.16
+        },
+        {
+          "word": "story",
+          "estimatedSourceStart": 12.24,
+          "estimatedSourceEnd": 12.72
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -63.998819,
+          "rmsDbfs": -68.046615,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -64.153776,
+          "rmsDbfs": -70.482788,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "direction",
+      "text": "Give your next ad a clear direction.",
+      "sourceStart": 13.105,
+      "sourceEnd": 15.62,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 2.515,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 12.125725,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 22.84,
+      "latestEnd": 25.55,
+      "actualStart": 22.84,
+      "actualEnd": 25.355,
+      "actualOutputSeconds": 2.515,
+      "estimatedWords": [
+        {
+          "word": "Give",
+          "estimatedSourceStart": 13.2,
+          "estimatedSourceEnd": 13.36
+        },
+        {
+          "word": "your",
+          "estimatedSourceStart": 13.44,
+          "estimatedSourceEnd": 13.52
+        },
+        {
+          "word": "next",
+          "estimatedSourceStart": 13.6,
+          "estimatedSourceEnd": 13.84
+        },
+        {
+          "word": "ad",
+          "estimatedSourceStart": 13.96,
+          "estimatedSourceEnd": 14.08
+        },
+        {
+          "word": "a",
+          "estimatedSourceStart": 14.16,
+          "estimatedSourceEnd": 14.24
+        },
+        {
+          "word": "clear",
+          "estimatedSourceStart": 14.32,
+          "estimatedSourceEnd": 14.56
+        },
+        {
+          "word": "direction",
+          "estimatedSourceStart": 14.64,
+          "estimatedSourceEnd": 15.2
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -64.153776,
+          "rmsDbfs": -70.482788,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -61.480262,
+          "rmsDbfs": -67.887258,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "workflow",
+      "text": "Research. Script. Storyboard.",
+      "sourceStart": 15.645,
+      "sourceEnd": 17.98,
+      "removedInternalPauseSeconds": 0.06,
+      "removals": [
+        {
+          "sourceStart": 16.35,
+          "sourceEnd": 16.39,
+          "seconds": 0.04,
+          "peakDbfs": -63.048206,
+          "rmsDbfs": -71.351627,
+          "sampleValues": 3840
+        },
+        {
+          "sourceStart": 17.01,
+          "sourceEnd": 17.03,
+          "seconds": 0.02,
+          "peakDbfs": -64.052732,
+          "rmsDbfs": -73.168729,
+          "sampleValues": 1920
+        }
+      ],
+      "retainedSourceSeconds": 2.275,
+      "pitchPreservingTempo": 1.12,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 13.517164,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 26.8,
+      "latestEnd": 28.86,
+      "actualStart": 26.8,
+      "actualEnd": 28.841958,
+      "actualOutputSeconds": 2.041958,
+      "estimatedWords": [
+        {
+          "word": "Research",
+          "estimatedSourceStart": 15.68,
+          "estimatedSourceEnd": 16.24
+        },
+        {
+          "word": "Script",
+          "estimatedSourceStart": 16.72,
+          "estimatedSourceEnd": 16.96
+        },
+        {
+          "word": "Storyboard",
+          "estimatedSourceStart": 17.52,
+          "estimatedSourceEnd": 17.84
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -67.524227,
+          "rmsDbfs": -76.063029,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -57.231925,
+          "rmsDbfs": -61.982411,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    },
+    {
+      "id": "brand",
+      "text": "Grifon dot A I.",
+      "sourceStart": 18.225,
+      "sourceEnd": 19.63,
+      "removedInternalPauseSeconds": 0,
+      "removals": [],
+      "retainedSourceSeconds": 1.405,
+      "pitchPreservingTempo": 1,
+      "voiceOnlyLevelMatching": {
+        "targetRmsDbfs": -19,
+        "appliedGainDb": 11.218032,
+        "compressor": {
+          "threshold": 0.05,
+          "ratio": 2.5,
+          "attackMs": 5,
+          "releaseMs": 80
+        },
+        "method": "Light voice-only compression then phrase gain matching; music/SFX excluded"
+      },
+      "targetStart": 30.04,
+      "latestEnd": 31.73,
+      "actualStart": 30.04,
+      "actualEnd": 31.445,
+      "actualOutputSeconds": 1.405,
+      "estimatedWords": [
+        {
+          "word": "Grifon",
+          "estimatedSourceStart": 18.28,
+          "estimatedSourceEnd": 18.72
+        },
+        {
+          "word": "dot",
+          "estimatedSourceStart": 18.8,
+          "estimatedSourceEnd": 18.88
+        },
+        {
+          "word": "A",
+          "estimatedSourceStart": 19.04,
+          "estimatedSourceEnd": 19.2
+        },
+        {
+          "word": "I",
+          "estimatedSourceStart": 19.28,
+          "estimatedSourceEnd": 19.44
+        }
+      ],
+      "sourceEdgeLevels": {
+        "first5ms": {
+          "peakDbfs": -64.064369,
+          "rmsDbfs": -72.577184,
+          "sampleValues": 480
+        },
+        "last5ms": {
+          "peakDbfs": -68.302089,
+          "rmsDbfs": -76.651023,
+          "sampleValues": 480
+        }
+      },
+      "timingPass": true,
+      "wordIntegrity": "Low-energy trim handles retained; semantic completeness and pronunciation require human audition."
+    }
+  ],
+  "loudness": {
+    "input_i": "-16.02",
+    "input_tp": "-2.74",
+    "input_lra": "3.50",
+    "input_thresh": "-26.58",
+    "output_i": "-15.83",
+    "output_tp": "-2.42",
+    "output_lra": "2.90",
+    "output_thresh": "-26.27",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.17"
+  },
+  "premasterLoudness": {
+    "input_i": "-16.63",
+    "input_tp": "-3.37",
+    "input_lra": "3.50",
+    "input_thresh": "-27.19",
+    "output_i": "-15.82",
+    "output_tp": "-2.41",
+    "output_lra": "3.00",
+    "output_thresh": "-26.26",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.18"
+  },
+  "mastering": {
+    "input_i": "-16.64",
+    "input_tp": "-3.42",
+    "input_lra": "3.10",
+    "input_thresh": "-27.12",
+    "output_i": "-16.02",
+    "output_tp": "-2.79",
+    "output_lra": "3.10",
+    "output_thresh": "-26.51",
+    "normalization_type": "linear",
+    "target_offset": "0.02"
+  },
+  "musicDuck": {
+    "db": -6,
+    "attackSeconds": 0.1,
+    "releaseSeconds": 0.24,
+    "curve": "Cosine ramp; full -6dB from phrase start through phrase end; smallest overlapping gain used",
+    "minimumGain": 0.5011872053146362,
+    "maxReconstructionError": 0,
+    "maxSfxDifference": 0,
+    "sfxBeforeMasterSha256": "cb57fbc51377566a3a03ed018750d1a1652531e4d356c995c4eca7df96965498",
+    "originalSfxWithApprovedFadeSha256": "cb57fbc51377566a3a03ed018750d1a1652531e4d356c995c4eca7df96965498"
+  },
+  "phraseLevels": [
+    {
+      "id": "opening",
+      "voice": {
+        "peakDbfs": -5.028547,
+        "rmsDbfs": -19,
+        "sampleValues": 93116
+      },
+      "recoveredMusic": {
+        "peakDbfs": -6.712794,
+        "rmsDbfs": -23.782531,
+        "sampleValues": 93116
+      },
+      "duckedMusic": {
+        "peakDbfs": -12.712795,
+        "rmsDbfs": -29.782531,
+        "sampleValues": 93116
+      },
+      "voiceOverDuckedMusicMarginDb": 10.782531,
+      "sfx": {
+        "peakDbfs": -19.375678,
+        "rmsDbfs": -45.638753,
+        "sampleValues": 93116
+      },
+      "mix": {
+        "peakDbfs": -4.090132,
+        "rmsDbfs": -18.044587,
+        "sampleValues": 93116
+      }
+    },
+    {
+      "id": "launch",
+      "voice": {
+        "peakDbfs": -4.777739,
+        "rmsDbfs": -19,
+        "sampleValues": 119520
+      },
+      "recoveredMusic": {
+        "peakDbfs": -6.591359,
+        "rmsDbfs": -21.633797,
+        "sampleValues": 119520
+      },
+      "duckedMusic": {
+        "peakDbfs": -12.591359,
+        "rmsDbfs": -27.633797,
+        "sampleValues": 119520
+      },
+      "voiceOverDuckedMusicMarginDb": 8.633797,
+      "sfx": {
+        "peakDbfs": -20.518266,
+        "rmsDbfs": -41.214502,
+        "sampleValues": 119520
+      },
+      "mix": {
+        "peakDbfs": -3.440017,
+        "rmsDbfs": -17.800596,
+        "sampleValues": 119520
+      }
+    },
+    {
+      "id": "story",
+      "voice": {
+        "peakDbfs": -6.421579,
+        "rmsDbfs": -19,
+        "sampleValues": 119520
+      },
+      "recoveredMusic": {
+        "peakDbfs": -6.970928,
+        "rmsDbfs": -23.36857,
+        "sampleValues": 119520
+      },
+      "duckedMusic": {
+        "peakDbfs": -12.970928,
+        "rmsDbfs": -29.36857,
+        "sampleValues": 119520
+      },
+      "voiceOverDuckedMusicMarginDb": 10.36857,
+      "sfx": {
+        "peakDbfs": -20.518266,
+        "rmsDbfs": -41.176606,
+        "sampleValues": 119520
+      },
+      "mix": {
+        "peakDbfs": -4.516013,
+        "rmsDbfs": -17.955882,
+        "sampleValues": 119520
+      }
+    },
+    {
+      "id": "grow",
+      "voice": {
+        "peakDbfs": -4.7177,
+        "rmsDbfs": -19,
+        "sampleValues": 141038
+      },
+      "recoveredMusic": {
+        "peakDbfs": -7.501352,
+        "rmsDbfs": -23.144137,
+        "sampleValues": 141038
+      },
+      "duckedMusic": {
+        "peakDbfs": -13.501352,
+        "rmsDbfs": -29.144137,
+        "sampleValues": 141038
+      },
+      "voiceOverDuckedMusicMarginDb": 10.144137,
+      "sfx": {
+        "peakDbfs": -20.518266,
+        "rmsDbfs": -41.895354,
+        "sampleValues": 141038
+      },
+      "mix": {
+        "peakDbfs": -3.432161,
+        "rmsDbfs": -17.973215,
+        "sampleValues": 141038
+      }
+    },
+    {
+      "id": "problem",
+      "voice": {
+        "peakDbfs": -5.443264,
+        "rmsDbfs": -19,
+        "sampleValues": 187680
+      },
+      "recoveredMusic": {
+        "peakDbfs": -10.613953,
+        "rmsDbfs": -25.669042,
+        "sampleValues": 187680
+      },
+      "duckedMusic": {
+        "peakDbfs": -16.613953,
+        "rmsDbfs": -31.669042,
+        "sampleValues": 187680
+      },
+      "voiceOverDuckedMusicMarginDb": 12.669042,
+      "sfx": {
+        "peakDbfs": -22.18842,
+        "rmsDbfs": -55.202711,
+        "sampleValues": 187680
+      },
+      "mix": {
+        "peakDbfs": -3.973917,
+        "rmsDbfs": -18.212772,
+        "sampleValues": 187680
+      }
+    },
+    {
+      "id": "pivot",
+      "voice": {
+        "peakDbfs": -7.384206,
+        "rmsDbfs": -19,
+        "sampleValues": 89982
+      },
+      "recoveredMusic": {
+        "peakDbfs": -6.533803,
+        "rmsDbfs": -26.572386,
+        "sampleValues": 89982
+      },
+      "duckedMusic": {
+        "peakDbfs": -12.533803,
+        "rmsDbfs": -32.572386,
+        "sampleValues": 89982
+      },
+      "voiceOverDuckedMusicMarginDb": 13.572386,
+      "sfx": {
+        "peakDbfs": -23.033,
+        "rmsDbfs": -44.047705,
+        "sampleValues": 89982
+      },
+      "mix": {
+        "peakDbfs": -6.243691,
+        "rmsDbfs": -18.206462,
+        "sampleValues": 89982
+      }
+    },
+    {
+      "id": "introduce",
+      "voice": {
+        "peakDbfs": -4.404847,
+        "rmsDbfs": -19,
+        "sampleValues": 115200
+      },
+      "recoveredMusic": {
+        "peakDbfs": -4.63122,
+        "rmsDbfs": -22.282792,
+        "sampleValues": 115200
+      },
+      "duckedMusic": {
+        "peakDbfs": -10.63122,
+        "rmsDbfs": -28.282792,
+        "sampleValues": 115200
+      },
+      "voiceOverDuckedMusicMarginDb": 9.282792,
+      "sfx": {
+        "peakDbfs": -240,
+        "rmsDbfs": -240,
+        "sampleValues": 115200
+      },
+      "mix": {
+        "peakDbfs": -2.833498,
+        "rmsDbfs": -17.916449,
+        "sampleValues": 115200
+      }
+    },
+    {
+      "id": "conversation",
+      "voice": {
+        "peakDbfs": -4.123818,
+        "rmsDbfs": -19,
+        "sampleValues": 242880
+      },
+      "recoveredMusic": {
+        "peakDbfs": -8.721032,
+        "rmsDbfs": -25.173393,
+        "sampleValues": 242880
+      },
+      "duckedMusic": {
+        "peakDbfs": -14.721032,
+        "rmsDbfs": -31.173393,
+        "sampleValues": 242880
+      },
+      "voiceOverDuckedMusicMarginDb": 12.173393,
+      "sfx": {
+        "peakDbfs": -18.572753,
+        "rmsDbfs": -57.626347,
+        "sampleValues": 242880
+      },
+      "mix": {
+        "peakDbfs": -3.050034,
+        "rmsDbfs": -18.11521,
+        "sampleValues": 242880
+      }
+    },
+    {
+      "id": "direction",
+      "voice": {
+        "peakDbfs": -2.968648,
+        "rmsDbfs": -19,
+        "sampleValues": 241440
+      },
+      "recoveredMusic": {
+        "peakDbfs": -6.159543,
+        "rmsDbfs": -18.213875,
+        "sampleValues": 241440
+      },
+      "duckedMusic": {
+        "peakDbfs": -12.159543,
+        "rmsDbfs": -24.213875,
+        "sampleValues": 241440
+      },
+      "voiceOverDuckedMusicMarginDb": 5.213875,
+      "sfx": {
+        "peakDbfs": -20.781062,
+        "rmsDbfs": -57.605811,
+        "sampleValues": 241440
+      },
+      "mix": {
+        "peakDbfs": -2.828221,
+        "rmsDbfs": -17.241716,
+        "sampleValues": 241440
+      }
+    },
+    {
+      "id": "workflow",
+      "voice": {
+        "peakDbfs": -4.507644,
+        "rmsDbfs": -19,
+        "sampleValues": 196028
+      },
+      "recoveredMusic": {
+        "peakDbfs": -5.579765,
+        "rmsDbfs": -18.27796,
+        "sampleValues": 196028
+      },
+      "duckedMusic": {
+        "peakDbfs": -11.579766,
+        "rmsDbfs": -24.27796,
+        "sampleValues": 196028
+      },
+      "voiceOverDuckedMusicMarginDb": 5.27796,
+      "sfx": {
+        "peakDbfs": -21.860485,
+        "rmsDbfs": -48.183167,
+        "sampleValues": 196028
+      },
+      "mix": {
+        "peakDbfs": -3.13441,
+        "rmsDbfs": -17.250647,
+        "sampleValues": 196028
+      }
+    },
+    {
+      "id": "brand",
+      "voice": {
+        "peakDbfs": -5.257219,
+        "rmsDbfs": -19,
+        "sampleValues": 134880
+      },
+      "recoveredMusic": {
+        "peakDbfs": -7.948336,
+        "rmsDbfs": -22.729971,
+        "sampleValues": 134880
+      },
+      "duckedMusic": {
+        "peakDbfs": -13.948336,
+        "rmsDbfs": -28.729971,
+        "sampleValues": 134880
+      },
+      "voiceOverDuckedMusicMarginDb": 9.729971,
+      "sfx": {
+        "peakDbfs": -240,
+        "rmsDbfs": -240,
+        "sampleValues": 134880
+      },
+      "mix": {
+        "peakDbfs": -4.435981,
+        "rmsDbfs": -17.958703,
+        "sampleValues": 134880
+      }
+    }
+  ],
+  "videoPayload": {
+    "original": "SHA256=e05e4f73702b5fb971df390db3a811b9d13b1e2737c0a02f2e34099ce19b2697",
+    "exported": "SHA256=e05e4f73702b5fb971df390db3a811b9d13b1e2737c0a02f2e34099ce19b2697",
+    "equal": true
+  },
+  "metadata": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_time_base": "1/60",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1088,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 40,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
+        "chroma_location": "center",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "time_base": "1/15360",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 505344,
+        "duration": "32.900000",
+        "bit_rate": "979032",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "987",
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "encoder": "Lavc60.3.100 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_time_base": "1/48000",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 1579200,
+        "duration": "32.900000",
+        "bit_rate": "271436",
+        "max_bit_rate": "271436",
+        "nb_frames": "1544",
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler"
+        }
+      }
+    ],
+    "format": {
+      "filename": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\grifon-full-upgrade-english-vo-1080p.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "32.900000",
+      "size": "5179901",
+      "bit_rate": "1259550",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf60.3.100"
+      }
+    }
+  },
+  "mp4Boxes": [
+    {
+      "kind": "ftyp",
+      "offset": 0,
+      "size": 32
+    },
+    {
+      "kind": "moov",
+      "offset": 32,
+      "size": 36575
+    },
+    {
+      "kind": "free",
+      "offset": 36607,
+      "size": 8
+    },
+    {
+      "kind": "mdat",
+      "offset": 36615,
+      "size": 5143286
+    }
+  ],
+  "blackTail": {
+    "start": 32.7,
+    "frames": 6,
+    "exactlyBlack": true,
+    "peakDbfs": -240,
+    "rmsDbfs": -240,
+    "sampleValues": 19200
+  },
+  "checks": {
+    "immutableSpec": true,
+    "exactInputAndArrays": true,
+    "oneConsumedTake": true,
+    "phraseWindows": true,
+    "tempoCap": true,
+    "musicOnlyDucking": true,
+    "voiceRmsAtLeast5DbAboveMusic": true,
+    "commonMasterLinearGain": true,
+    "sfxSamplesTimingsAndEnvelopePreservedBeforeCommonMaster": true,
+    "fullStrictDecode": true,
+    "picturePayloadIdentical": true,
+    "formatAndTiming": true,
+    "encodedLoudness": true,
+    "silentBlackTail": true,
+    "faststart": true
+  },
+  "status": "TECHNICAL_PASS_HUMAN_AUDITION_PENDING",
+  "limitations": [
+    "Waveform energy and alignment cannot establish semantic completeness, delivery quality, unspoken emotion tags, GRIFF-on pronunciation, or separate A/I. Human audition is required.",
+    "SFX sample/envelope preservation is verified before common mastering and AAC encoding. Common mastering/codec processing necessarily changes final encoded samples.",
+    "Character timestamps include tagged input and estimated punctuation beyond decoded duration; measured energy boundaries were used for local cuts.",
+    "Actual credit debit and remaining account balance are unknown; no additional provider calls were made."
+  ]
+}

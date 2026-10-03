@@ -1,0 +1,21 @@
+{
+  "specSha256": "4d5b7d40849026e8d3eb21cf4706c460f17857179be1ccf9bb40785eb0ec28c9",
+  "state": "AUDIO_RETURNED_LOCAL_EDIT_READY",
+  "synthesisRequests": 1,
+  "exactCharacters": 306,
+  "estimatedCredits": 306,
+  "actualCredits": null,
+  "providerUsageVerified": false,
+  "audioSha256": "5dafa023580cad2c0f77eac96317344586d21914f9586c62af9c5b287d845a4a",
+  "alignmentValidation": {
+    "mode": "raw-tagged",
+    "characters": 306,
+    "finalTimestamp": 19.76,
+    "checks": "Returned transcript equals exact approved raw text; nonempty equal-length arrays; finite nonnegative ordered timestamps. Local audio trimming still needs measured energy handles because provider character times are approximate."
+  },
+  "voiceId": "CkDT8SVS21XIVk5BcuDe",
+  "model": "eleven_v4",
+  "completedAt": "2026-10-03T11:08:37.093Z",
+  "retries": 0,
+  "note": "No provider usage header or account balance is asserted. Local raw take and attempt ledger are ignored, not committed."
+}
