@@ -1,0 +1,106 @@
+{
+  "duration": 10.0,
+  "sample_rate": 48000,
+  "results": [
+    {
+      "option": "A",
+      "music": "Close Up",
+      "composer": "Michael Ramir C.",
+      "source_section": [
+        8,
+        18
+      ],
+      "file": "grifon-sound-option-a-10s.mp4",
+      "bytes": 9494193,
+      "loudness": {
+        "input_i": "-16.26",
+        "input_tp": "-1.69",
+        "input_lra": "1.10",
+        "input_thresh": "-26.26",
+        "output_i": "-16.19",
+        "output_tp": "-1.77",
+        "output_lra": "0.50",
+        "output_thresh": "-26.19",
+        "normalization_type": "dynamic",
+        "target_offset": "0.19"
+      },
+      "metadata": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "duration": "10.000000",
+            "nb_frames": "300"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "duration": "10.000000",
+            "nb_frames": "470"
+          }
+        ],
+        "format": {
+          "duration": "10.000000",
+          "size": "9494193"
+        }
+      },
+      "video_stream_hash": "SHA256=1c45e4a21ad4facf6d435347bc7caaa9e4dcd091c38882202ffff65dc70563ba"
+    },
+    {
+      "option": "B",
+      "music": "Digital Clouds",
+      "composer": "Alejandro Magana (A. M.)",
+      "source_section": [
+        8,
+        18
+      ],
+      "file": "grifon-sound-option-b-10s.mp4",
+      "bytes": 9498641,
+      "loudness": {
+        "input_i": "-16.10",
+        "input_tp": "-1.54",
+        "input_lra": "0.70",
+        "input_thresh": "-26.10",
+        "output_i": "-16.03",
+        "output_tp": "-1.70",
+        "output_lra": "0.80",
+        "output_thresh": "-26.03",
+        "normalization_type": "dynamic",
+        "target_offset": "0.03"
+      },
+      "metadata": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "duration": "10.000000",
+            "nb_frames": "300"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "duration": "10.000000",
+            "nb_frames": "470"
+          }
+        ],
+        "format": {
+          "duration": "10.000000",
+          "size": "9498641"
+        }
+      },
+      "video_stream_hash": "SHA256=1c45e4a21ad4facf6d435347bc7caaa9e4dcd091c38882202ffff65dc70563ba"
+    }
+  ],
+  "approval": "Pending Neil listening",
+  "scope": "10-second listening experiments; not a completed soundtrack"
+}

@@ -1,0 +1,1049 @@
+{
+  "version": 6,
+  "duration": 32.9,
+  "sampleRate": 48000,
+  "tempo": 105,
+  "tempoNote": "Original 105 BPM composition; reference onset analysis suggests a ~104.5 BPM pulse, not an auditory identification.",
+  "seed": 9270626,
+  "provenance": "Original local synthesis; no audio samples from reference or other projects.",
+  "files": [
+    {
+      "name": "music-stem.wav",
+      "peakDBFS": -8.559011514037383,
+      "rmsDBFS": -29.5919694538706
+    },
+    {
+      "name": "detail-stem.wav",
+      "peakDBFS": -12.549363654195213,
+      "rmsDBFS": -40.32047835304097
+    },
+    {
+      "name": "motion-stem.wav",
+      "peakDBFS": -7.883137342571303,
+      "rmsDBFS": -34.26805187694476
+    },
+    {
+      "name": "sfx-stem.wav",
+      "peakDBFS": -7.886842763628485,
+      "rmsDBFS": -33.306332717710305
+    },
+    {
+      "name": "mix-premaster.wav",
+      "peakDBFS": -7.2370006511391,
+      "rmsDBFS": -28.034951013644225
+    }
+  ],
+  "cues": [
+    {
+      "at": 0,
+      "duration": 4.550000000000001,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        53,
+        57,
+        60,
+        64
+      ]
+    },
+    {
+      "at": 0.08,
+      "duration": 0.1,
+      "label": "opening character: Y",
+      "bus": "detail",
+      "visualAt": 0.08
+    },
+    {
+      "at": 0.14833333333333332,
+      "duration": 0.1,
+      "label": "opening character: o",
+      "bus": "detail",
+      "visualAt": 0.14833333333333332
+    },
+    {
+      "at": 0.21666666666666667,
+      "duration": 0.1,
+      "label": "opening character: u",
+      "bus": "detail",
+      "visualAt": 0.21666666666666667
+    },
+    {
+      "at": 0.285,
+      "duration": 0.1,
+      "label": "opening character: r",
+      "bus": "detail",
+      "visualAt": 0.285
+    },
+    {
+      "at": 0.4216666666666667,
+      "duration": 0.1,
+      "label": "opening character: n",
+      "bus": "detail",
+      "visualAt": 0.4216666666666667
+    },
+    {
+      "at": 0.49,
+      "duration": 0.1,
+      "label": "opening character: e",
+      "bus": "detail",
+      "visualAt": 0.49
+    },
+    {
+      "at": 0.5583333333333333,
+      "duration": 0.1,
+      "label": "opening character: x",
+      "bus": "detail",
+      "visualAt": 0.5583333333333333
+    },
+    {
+      "at": 0.6266666666666666,
+      "duration": 0.1,
+      "label": "opening character: t",
+      "bus": "detail",
+      "visualAt": 0.6266666666666666
+    },
+    {
+      "at": 0.7633333333333333,
+      "duration": 0.1,
+      "label": "opening character: a",
+      "bus": "detail",
+      "visualAt": 0.7633333333333333
+    },
+    {
+      "at": 0.8316666666666666,
+      "duration": 0.1,
+      "label": "opening character: d",
+      "bus": "detail",
+      "visualAt": 0.8316666666666666
+    },
+    {
+      "at": 0.8999999999999999,
+      "duration": 0.1,
+      "label": "opening character: .",
+      "bus": "detail",
+      "visualAt": 0.8999999999999999
+    },
+    {
+      "at": 1.13,
+      "duration": 0.43,
+      "label": "product collage enters",
+      "bus": "motion",
+      "visualAt": 1.13
+    },
+    {
+      "at": 1.1549999999999998,
+      "duration": 0.1,
+      "label": "launch: To",
+      "bus": "detail",
+      "visualAt": 1.13
+    },
+    {
+      "at": 1.275,
+      "duration": 0.1,
+      "label": "launch: launch",
+      "bus": "detail",
+      "visualAt": 1.25
+    },
+    {
+      "at": 1.4149999999999998,
+      "duration": 0.1,
+      "label": "launch: a",
+      "bus": "detail",
+      "visualAt": 1.39
+    },
+    {
+      "at": 1.6049999999999998,
+      "duration": 0.1,
+      "label": "launch: product.",
+      "bus": "detail",
+      "visualAt": 1.5799999999999998
+    },
+    {
+      "at": 2.16,
+      "duration": 0.69,
+      "label": "product collage swipes left",
+      "bus": "motion",
+      "visualAt": 2.16
+    },
+    {
+      "at": 2.36,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 2.4414285714285713,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 2.5228571428571427,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 2.604285714285714,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 2.63,
+      "duration": 1.19,
+      "label": "camera: rotational sweep",
+      "bus": "motion",
+      "visualAt": 2.63
+    },
+    {
+      "at": 2.685714285714286,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 2.7671428571428573,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 2.8485714285714288,
+      "duration": 0.1,
+      "label": "camera tiles",
+      "bus": "detail",
+      "visualAt": 2.36
+    },
+    {
+      "at": 3.36,
+      "duration": 0.46,
+      "label": "camera: slide settles",
+      "bus": "motion",
+      "visualAt": 3.36
+    },
+    {
+      "at": 3.7849999999999997,
+      "duration": 0.1,
+      "label": "shutter first curtain",
+      "bus": "detail",
+      "visualAt": 3.82
+    },
+    {
+      "at": 3.82,
+      "duration": 0.18,
+      "label": "shutter spring",
+      "bus": "detail",
+      "visualAt": 3.82
+    },
+    {
+      "at": 3.836,
+      "duration": 0.1,
+      "label": "shutter second curtain",
+      "bus": "detail",
+      "visualAt": 3.82
+    },
+    {
+      "at": 4.15,
+      "duration": 3.4,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        50,
+        57,
+        60,
+        64
+      ]
+    },
+    {
+      "at": 4.24,
+      "duration": 0.43,
+      "label": "story collage enters",
+      "bus": "motion",
+      "visualAt": 4.24
+    },
+    {
+      "at": 4.265000000000001,
+      "duration": 0.1,
+      "label": "story: To",
+      "bus": "detail",
+      "visualAt": 4.24
+    },
+    {
+      "at": 4.385000000000001,
+      "duration": 0.1,
+      "label": "story: tell",
+      "bus": "detail",
+      "visualAt": 4.36
+    },
+    {
+      "at": 4.525,
+      "duration": 0.1,
+      "label": "story: your",
+      "bus": "detail",
+      "visualAt": 4.5
+    },
+    {
+      "at": 4.715000000000001,
+      "duration": 0.1,
+      "label": "story: story.",
+      "bus": "detail",
+      "visualAt": 4.69
+    },
+    {
+      "at": 5.03,
+      "duration": 0.69,
+      "label": "story collage swipes left",
+      "bus": "motion",
+      "visualAt": 5.03
+    },
+    {
+      "at": 5.36,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 5.448571428571429,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 5.537142857142857,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 5.625714285714286,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 5.65,
+      "duration": 1.19,
+      "label": "phone: rotational sweep",
+      "bus": "motion",
+      "visualAt": 5.65
+    },
+    {
+      "at": 5.714285714285714,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 5.802857142857143,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 5.8914285714285715,
+      "duration": 0.1,
+      "label": "phone tiles",
+      "bus": "detail",
+      "visualAt": 5.36
+    },
+    {
+      "at": 6.380000000000001,
+      "duration": 0.46,
+      "label": "phone: slide settles",
+      "bus": "motion",
+      "visualAt": 6.380000000000001
+    },
+    {
+      "at": 6.84,
+      "duration": 0.1,
+      "label": "phone glass contact",
+      "bus": "detail",
+      "visualAt": 6.84
+    },
+    {
+      "at": 6.88,
+      "duration": 0.9,
+      "label": "phone confirmation",
+      "bus": "detail",
+      "visualAt": 6.84
+    },
+    {
+      "at": 7.15,
+      "duration": 3.3299999999999996,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        48,
+        55,
+        60,
+        62
+      ]
+    },
+    {
+      "at": 7.23,
+      "duration": 0.43,
+      "label": "business collage enters",
+      "bus": "motion",
+      "visualAt": 7.23
+    },
+    {
+      "at": 7.255000000000001,
+      "duration": 0.1,
+      "label": "grow: To",
+      "bus": "detail",
+      "visualAt": 7.23
+    },
+    {
+      "at": 7.375000000000001,
+      "duration": 0.1,
+      "label": "grow: grow",
+      "bus": "detail",
+      "visualAt": 7.3500000000000005
+    },
+    {
+      "at": 7.515000000000001,
+      "duration": 0.1,
+      "label": "grow: your",
+      "bus": "detail",
+      "visualAt": 7.49
+    },
+    {
+      "at": 7.705000000000001,
+      "duration": 0.1,
+      "label": "grow: business.",
+      "bus": "detail",
+      "visualAt": 7.680000000000001
+    },
+    {
+      "at": 8.08,
+      "duration": 0.69,
+      "label": "business collage swipes left",
+      "bus": "motion",
+      "visualAt": 8.08
+    },
+    {
+      "at": 8.33,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 8.394285714285715,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 8.458571428571428,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 8.522857142857143,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 8.587142857142856,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 8.61,
+      "duration": 1.19,
+      "label": "laptop: rotational sweep",
+      "bus": "motion",
+      "visualAt": 8.61
+    },
+    {
+      "at": 8.651428571428571,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 8.715714285714284,
+      "duration": 0.1,
+      "label": "laptop tiles",
+      "bus": "detail",
+      "visualAt": 8.33
+    },
+    {
+      "at": 9.34,
+      "duration": 0.46,
+      "label": "laptop: slide settles",
+      "bus": "motion",
+      "visualAt": 9.34
+    },
+    {
+      "at": 9.799999999999999,
+      "duration": 0.1,
+      "label": "laptop hinge lock",
+      "bus": "detail",
+      "visualAt": 9.799999999999999
+    },
+    {
+      "at": 9.844999999999999,
+      "duration": 0.1,
+      "label": "hinge release",
+      "bus": "detail",
+      "visualAt": 9.799999999999999
+    },
+    {
+      "at": 10.08,
+      "duration": 3.3700000000000006,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        46,
+        53,
+        57,
+        60
+      ]
+    },
+    {
+      "at": 10.2,
+      "duration": 0.1,
+      "label": "problem: But",
+      "bus": "detail",
+      "visualAt": 10.2
+    },
+    {
+      "at": 10.41,
+      "duration": 0.1,
+      "label": "problem: there’s never",
+      "bus": "detail",
+      "visualAt": 10.41
+    },
+    {
+      "at": 10.62,
+      "duration": 0.1,
+      "label": "problem: time",
+      "bus": "detail",
+      "visualAt": 10.62
+    },
+    {
+      "at": 10.83,
+      "duration": 0.1,
+      "label": "problem: to",
+      "bus": "detail",
+      "visualAt": 10.83
+    },
+    {
+      "at": 11.04,
+      "duration": 0.1,
+      "label": "problem: make it.",
+      "bus": "detail",
+      "visualAt": 11.04
+    },
+    {
+      "at": 12.64,
+      "duration": 0.39,
+      "label": "anticipation into warm reveal",
+      "bus": "motion",
+      "visualAt": 13.03
+    },
+    {
+      "at": 12.83,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 12.881428571428572,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 12.932857142857143,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 12.984285714285715,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 13.03,
+      "duration": 0.46,
+      "label": "warm reveal opens",
+      "bus": "motion",
+      "visualAt": 13.03
+    },
+    {
+      "at": 13.035714285714285,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 13.05,
+      "duration": 4.770000000000001,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        48,
+        55,
+        60,
+        64
+      ]
+    },
+    {
+      "at": 13.087142857142856,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 13.138571428571428,
+      "duration": 0.1,
+      "label": "warm tiles",
+      "bus": "detail",
+      "visualAt": 12.83
+    },
+    {
+      "at": 13.2,
+      "duration": 0.1,
+      "label": "Until now character: U",
+      "bus": "detail",
+      "visualAt": 13.2
+    },
+    {
+      "at": 13.257777777777777,
+      "duration": 0.1,
+      "label": "Until now character: n",
+      "bus": "detail",
+      "visualAt": 13.257777777777777
+    },
+    {
+      "at": 13.315555555555555,
+      "duration": 0.1,
+      "label": "Until now character: t",
+      "bus": "detail",
+      "visualAt": 13.315555555555555
+    },
+    {
+      "at": 13.373333333333333,
+      "duration": 0.1,
+      "label": "Until now character: i",
+      "bus": "detail",
+      "visualAt": 13.373333333333333
+    },
+    {
+      "at": 13.431111111111111,
+      "duration": 0.1,
+      "label": "Until now character: l",
+      "bus": "detail",
+      "visualAt": 13.431111111111111
+    },
+    {
+      "at": 13.546666666666667,
+      "duration": 0.1,
+      "label": "Until now character: n",
+      "bus": "detail",
+      "visualAt": 13.546666666666667
+    },
+    {
+      "at": 13.604444444444443,
+      "duration": 0.1,
+      "label": "Until now character: o",
+      "bus": "detail",
+      "visualAt": 13.604444444444443
+    },
+    {
+      "at": 13.662222222222221,
+      "duration": 0.1,
+      "label": "Until now character: w",
+      "bus": "detail",
+      "visualAt": 13.662222222222221
+    },
+    {
+      "at": 13.719999999999999,
+      "duration": 0.1,
+      "label": "Until now character: .",
+      "bus": "detail",
+      "visualAt": 13.719999999999999
+    },
+    {
+      "at": 13.87,
+      "duration": 0.39,
+      "label": "sphere suction",
+      "bus": "motion",
+      "visualAt": 14.27
+    },
+    {
+      "at": 14.27,
+      "duration": 0.46,
+      "label": "sphere bloom",
+      "bus": "motion",
+      "visualAt": 14.27
+    },
+    {
+      "at": 14.27,
+      "duration": 0.9,
+      "label": "sphere overtone bloom",
+      "bus": "detail",
+      "visualAt": 14.27
+    },
+    {
+      "at": 14.27,
+      "duration": 1.28,
+      "label": "orb expands and settles",
+      "bus": "motion",
+      "visualAt": 14.27
+    },
+    {
+      "at": 17.42,
+      "duration": 5.459999999999999,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        53,
+        57,
+        60,
+        64
+      ]
+    },
+    {
+      "at": 17.65,
+      "duration": 0.1,
+      "label": "message card arrival",
+      "bus": "detail",
+      "visualAt": 17.65
+    },
+    {
+      "at": 17.674999999999997,
+      "duration": 0.9,
+      "label": "message glass accent",
+      "bus": "detail",
+      "visualAt": 17.65
+    },
+    {
+      "at": 17.759999999999998,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 17.759999999999998
+    },
+    {
+      "at": 17.9,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 17.9
+    },
+    {
+      "at": 18.04,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 18.04
+    },
+    {
+      "at": 18.18,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 18.18
+    },
+    {
+      "at": 18.319999999999997,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 18.319999999999997
+    },
+    {
+      "at": 18.86,
+      "duration": 0.1,
+      "label": "message card arrival",
+      "bus": "detail",
+      "visualAt": 18.86
+    },
+    {
+      "at": 18.884999999999998,
+      "duration": 0.9,
+      "label": "message glass accent",
+      "bus": "detail",
+      "visualAt": 18.86
+    },
+    {
+      "at": 18.97,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 18.97
+    },
+    {
+      "at": 19.214,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 19.214
+    },
+    {
+      "at": 19.458,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 19.458
+    },
+    {
+      "at": 19.701999999999998,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 19.701999999999998
+    },
+    {
+      "at": 19.945999999999998,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 19.945999999999998
+    },
+    {
+      "at": 20.8,
+      "duration": 0.1,
+      "label": "message card arrival",
+      "bus": "detail",
+      "visualAt": 20.8
+    },
+    {
+      "at": 20.825,
+      "duration": 0.9,
+      "label": "message glass accent",
+      "bus": "detail",
+      "visualAt": 20.8
+    },
+    {
+      "at": 20.91,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 20.91
+    },
+    {
+      "at": 21.15,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 21.15
+    },
+    {
+      "at": 21.39,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 21.39
+    },
+    {
+      "at": 21.63,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 21.63
+    },
+    {
+      "at": 21.87,
+      "duration": 0.1,
+      "label": "text reveal relay",
+      "bus": "detail",
+      "visualAt": 21.87
+    },
+    {
+      "at": 22.19,
+      "duration": 0.28,
+      "label": "dialogue to statement breath",
+      "bus": "motion",
+      "visualAt": 22.48
+    },
+    {
+      "at": 22.48,
+      "duration": 4.74,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        50,
+        57,
+        60,
+        64
+      ]
+    },
+    {
+      "at": 22.8,
+      "duration": 0.1,
+      "label": "closing: Give",
+      "bus": "detail",
+      "visualAt": 22.8
+    },
+    {
+      "at": 23.03,
+      "duration": 0.1,
+      "label": "closing: your next",
+      "bus": "detail",
+      "visualAt": 23.03
+    },
+    {
+      "at": 23.33,
+      "duration": 0.1,
+      "label": "closing: ad",
+      "bus": "detail",
+      "visualAt": 23.33
+    },
+    {
+      "at": 23.74,
+      "duration": 0.1,
+      "label": "closing: a clear",
+      "bus": "detail",
+      "visualAt": 23.74
+    },
+    {
+      "at": 24.08,
+      "duration": 0.1,
+      "label": "closing: direction.",
+      "bus": "detail",
+      "visualAt": 24.08
+    },
+    {
+      "at": 25.3,
+      "duration": 0.9,
+      "label": "outline trace",
+      "bus": "motion",
+      "visualAt": 25.3
+    },
+    {
+      "at": 26.76,
+      "duration": 0.36,
+      "label": "workflow card travel",
+      "bus": "motion",
+      "visualAt": 26.82
+    },
+    {
+      "at": 26.82,
+      "duration": 2.8600000000000008,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        55,
+        60,
+        62,
+        65
+      ]
+    },
+    {
+      "at": 26.990000000000002,
+      "duration": 0.36,
+      "label": "workflow card travel",
+      "bus": "motion",
+      "visualAt": 27.05
+    },
+    {
+      "at": 27.02,
+      "duration": 0.1,
+      "label": "workflow card contact",
+      "bus": "detail",
+      "visualAt": 27.02
+    },
+    {
+      "at": 27.040000000000003,
+      "duration": 0.36,
+      "label": "workflow card travel",
+      "bus": "motion",
+      "visualAt": 27.1
+    },
+    {
+      "at": 27.25,
+      "duration": 0.1,
+      "label": "workflow card contact",
+      "bus": "detail",
+      "visualAt": 27.25
+    },
+    {
+      "at": 27.3,
+      "duration": 0.1,
+      "label": "workflow card contact",
+      "bus": "detail",
+      "visualAt": 27.3
+    },
+    {
+      "at": 28.87,
+      "duration": 0.4,
+      "label": "strip compresses into logo",
+      "bus": "motion",
+      "visualAt": 29.28
+    },
+    {
+      "at": 29.28,
+      "duration": 4.019999999999998,
+      "label": "suspended harmonic colour",
+      "bus": "music",
+      "midi": [
+        48,
+        55,
+        60,
+        64
+      ]
+    },
+    {
+      "at": 29.28,
+      "duration": 0.46,
+      "label": "logo resolves",
+      "bus": "motion",
+      "visualAt": 29.28
+    },
+    {
+      "at": 29.28,
+      "duration": 2.7,
+      "label": "Grifon resolution",
+      "bus": "detail",
+      "visualAt": 29.28
+    },
+    {
+      "at": 29.355,
+      "duration": 2.7,
+      "label": "Grifon resolution",
+      "bus": "detail",
+      "visualAt": 29.28
+    },
+    {
+      "at": 29.43,
+      "duration": 2.7,
+      "label": "Grifon resolution",
+      "bus": "detail",
+      "visualAt": 29.28
+    }
+  ]
+}

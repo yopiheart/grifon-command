@@ -1,0 +1,1041 @@
+{
+  "duration": 32.9,
+  "cues": [
+    {
+      "source": "key",
+      "start": 0.08,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 0: Y"
+    },
+    {
+      "source": "key",
+      "start": 0.14833333333333332,
+      "duration": 0.0556875,
+      "gain_db": -16.2,
+      "rate": 1.1700000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 1: o"
+    },
+    {
+      "source": "key",
+      "start": 0.21666666666666667,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 2: u"
+    },
+    {
+      "source": "key",
+      "start": 0.285,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 3: r"
+    },
+    {
+      "source": "key",
+      "start": 0.42166666666666663,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 5: n"
+    },
+    {
+      "source": "key",
+      "start": 0.49,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 6: e"
+    },
+    {
+      "source": "key",
+      "start": 0.5583333333333332,
+      "duration": 0.0556875,
+      "gain_db": -16.2,
+      "rate": 1.1700000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 7: x"
+    },
+    {
+      "source": "key",
+      "start": 0.6266666666666666,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 8: t"
+    },
+    {
+      "source": "key",
+      "start": 0.7633333333333332,
+      "duration": 0.0556875,
+      "gain_db": -16.2,
+      "rate": 1.1700000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 10: a"
+    },
+    {
+      "source": "key",
+      "start": 0.8316666666666666,
+      "duration": 0.05254166666666667,
+      "gain_db": -16.9,
+      "rate": 1.2400000000000002,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 11: d"
+    },
+    {
+      "source": "key",
+      "start": 0.8999999999999999,
+      "duration": 0.059229166666666666,
+      "gain_db": -15.5,
+      "rate": 1.1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Opening character 12: ."
+    },
+    {
+      "source": "bubble",
+      "start": 1.13,
+      "duration": 0.0228125,
+      "gain_db": -22.0,
+      "rate": 1.15,
+      "pan_from": -0.25,
+      "pan_to": -0.25,
+      "event": "Launch collage word 1"
+    },
+    {
+      "source": "bubble",
+      "start": 1.25,
+      "duration": 0.021333333333333333,
+      "gain_db": -22.4,
+      "rate": 1.23,
+      "pan_from": -0.08333333333333334,
+      "pan_to": -0.08333333333333334,
+      "event": "Launch collage word 2"
+    },
+    {
+      "source": "bubble",
+      "start": 1.39,
+      "duration": 0.020041666666666666,
+      "gain_db": -22.8,
+      "rate": 1.3099999999999998,
+      "pan_from": 0.08333333333333331,
+      "pan_to": 0.08333333333333331,
+      "event": "Launch collage word 3"
+    },
+    {
+      "source": "bubble",
+      "start": 1.5799999999999998,
+      "duration": 0.018875,
+      "gain_db": -23.2,
+      "rate": 1.39,
+      "pan_from": 0.25,
+      "pan_to": 0.25,
+      "event": "Launch collage word 4"
+    },
+    {
+      "source": "bubble",
+      "start": 4.24,
+      "duration": 0.0228125,
+      "gain_db": -22.0,
+      "rate": 1.15,
+      "pan_from": -0.25,
+      "pan_to": -0.25,
+      "event": "Story collage word 1"
+    },
+    {
+      "source": "bubble",
+      "start": 4.36,
+      "duration": 0.021333333333333333,
+      "gain_db": -22.4,
+      "rate": 1.23,
+      "pan_from": -0.08333333333333334,
+      "pan_to": -0.08333333333333334,
+      "event": "Story collage word 2"
+    },
+    {
+      "source": "bubble",
+      "start": 4.5,
+      "duration": 0.020041666666666666,
+      "gain_db": -22.8,
+      "rate": 1.3099999999999998,
+      "pan_from": 0.08333333333333331,
+      "pan_to": 0.08333333333333331,
+      "event": "Story collage word 3"
+    },
+    {
+      "source": "bubble",
+      "start": 4.69,
+      "duration": 0.018875,
+      "gain_db": -23.2,
+      "rate": 1.39,
+      "pan_from": 0.25,
+      "pan_to": 0.25,
+      "event": "Story collage word 4"
+    },
+    {
+      "source": "bubble",
+      "start": 7.23,
+      "duration": 0.0228125,
+      "gain_db": -22.0,
+      "rate": 1.15,
+      "pan_from": -0.25,
+      "pan_to": -0.25,
+      "event": "Grow collage word 1"
+    },
+    {
+      "source": "bubble",
+      "start": 7.3500000000000005,
+      "duration": 0.021333333333333333,
+      "gain_db": -22.4,
+      "rate": 1.23,
+      "pan_from": -0.08333333333333334,
+      "pan_to": -0.08333333333333334,
+      "event": "Grow collage word 2"
+    },
+    {
+      "source": "bubble",
+      "start": 7.49,
+      "duration": 0.020041666666666666,
+      "gain_db": -22.8,
+      "rate": 1.3099999999999998,
+      "pan_from": 0.08333333333333331,
+      "pan_to": 0.08333333333333331,
+      "event": "Grow collage word 3"
+    },
+    {
+      "source": "bubble",
+      "start": 7.680000000000001,
+      "duration": 0.018875,
+      "gain_db": -23.2,
+      "rate": 1.39,
+      "pan_from": 0.25,
+      "pan_to": 0.25,
+      "event": "Grow collage word 4"
+    },
+    {
+      "source": "sweep",
+      "start": 2.16,
+      "duration": 0.39945833333333336,
+      "gain_db": -13.5,
+      "rate": 1.55,
+      "pan_from": 0.65,
+      "pan_to": -0.65,
+      "event": "Collage swipe left"
+    },
+    {
+      "source": "sweep",
+      "start": 5.03,
+      "duration": 0.39945833333333336,
+      "gain_db": -13.5,
+      "rate": 1.55,
+      "pan_from": 0.65,
+      "pan_to": -0.65,
+      "event": "Collage swipe left"
+    },
+    {
+      "source": "sweep",
+      "start": 8.08,
+      "duration": 0.39945833333333336,
+      "gain_db": -13.5,
+      "rate": 1.55,
+      "pan_from": 0.65,
+      "pan_to": -0.65,
+      "event": "Collage swipe left"
+    },
+    {
+      "source": "air-zoom",
+      "start": 2.63,
+      "duration": 0.34852083333333334,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": -0.5,
+      "pan_to": 0.5,
+      "event": "Camera rotation"
+    },
+    {
+      "source": "lens",
+      "start": 3.52,
+      "duration": 0.3,
+      "gain_db": -21,
+      "rate": 1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Lens settles into camera reveal"
+    },
+    {
+      "source": "shutter",
+      "start": 3.82,
+      "duration": 0.16077083333333334,
+      "gain_db": -12,
+      "rate": 1,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Camera turn ends"
+    },
+    {
+      "source": "air-zoom",
+      "start": 5.65,
+      "duration": 0.34852083333333334,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": -0.5,
+      "pan_to": 0.5,
+      "event": "Phone rotation"
+    },
+    {
+      "source": "tech-select",
+      "start": 6.84,
+      "duration": 0.033041666666666664,
+      "gain_db": -17,
+      "rate": 1.15,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Phone turn ends / screen detail"
+    },
+    {
+      "source": "air-zoom",
+      "start": 8.61,
+      "duration": 0.34852083333333334,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": -0.5,
+      "pan_to": 0.5,
+      "event": "Laptop rotation"
+    },
+    {
+      "source": "gear",
+      "start": 9.8,
+      "duration": 0.16,
+      "gain_db": -16,
+      "rate": 1.2,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Laptop turn ends / hinge detail"
+    },
+    {
+      "source": "key",
+      "start": 10.2,
+      "duration": 0.0620625,
+      "gain_db": -18.5,
+      "rate": 1.05,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Problem phrase 1"
+    },
+    {
+      "source": "key",
+      "start": 10.41,
+      "duration": 0.06547916666666667,
+      "gain_db": -19.7,
+      "rate": 0.995,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Problem phrase 2"
+    },
+    {
+      "source": "key",
+      "start": 10.62,
+      "duration": 0.0693125,
+      "gain_db": -20.9,
+      "rate": 0.9400000000000001,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Problem phrase 3"
+    },
+    {
+      "source": "key",
+      "start": 10.83,
+      "duration": 0.07,
+      "gain_db": -22.1,
+      "rate": 0.885,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Problem phrase 4"
+    },
+    {
+      "source": "key",
+      "start": 11.04,
+      "duration": 0.07,
+      "gain_db": -23.3,
+      "rate": 0.8300000000000001,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Problem phrase 5"
+    },
+    {
+      "source": "suction",
+      "start": 12.62,
+      "duration": 0.3217083333333333,
+      "gain_db": -18,
+      "rate": 1.3,
+      "pan_from": -0.25,
+      "pan_to": 0,
+      "event": "Intake into warm reveal"
+    },
+    {
+      "source": "bubble",
+      "start": 13.03,
+      "duration": 0.03747916666666667,
+      "gain_db": -14,
+      "rate": 0.7,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Warm reveal contact"
+    },
+    {
+      "source": "key",
+      "start": 13.2,
+      "duration": 0.052125,
+      "gain_db": -21.5,
+      "rate": 1.25,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 0: U"
+    },
+    {
+      "source": "key",
+      "start": 13.257777777777777,
+      "duration": 0.050520833333333334,
+      "gain_db": -22.5,
+      "rate": 1.29,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 1: n"
+    },
+    {
+      "source": "key",
+      "start": 13.315555555555555,
+      "duration": 0.049,
+      "gain_db": -23.5,
+      "rate": 1.33,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 2: t"
+    },
+    {
+      "source": "key",
+      "start": 13.373333333333333,
+      "duration": 0.052125,
+      "gain_db": -21.5,
+      "rate": 1.25,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 3: i"
+    },
+    {
+      "source": "key",
+      "start": 13.431111111111111,
+      "duration": 0.050520833333333334,
+      "gain_db": -22.5,
+      "rate": 1.29,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 4: l"
+    },
+    {
+      "source": "key",
+      "start": 13.546666666666667,
+      "duration": 0.052125,
+      "gain_db": -21.5,
+      "rate": 1.25,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 6: n"
+    },
+    {
+      "source": "key",
+      "start": 13.604444444444443,
+      "duration": 0.050520833333333334,
+      "gain_db": -22.5,
+      "rate": 1.29,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 7: o"
+    },
+    {
+      "source": "key",
+      "start": 13.662222222222221,
+      "duration": 0.049,
+      "gain_db": -23.5,
+      "rate": 1.33,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 8: w"
+    },
+    {
+      "source": "key",
+      "start": 13.719999999999999,
+      "duration": 0.052125,
+      "gain_db": -21.5,
+      "rate": 1.25,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Until now character 9: ."
+    },
+    {
+      "source": "suction",
+      "start": 13.82,
+      "duration": 0.3097916666666667,
+      "gain_db": -20,
+      "rate": 1.35,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Sphere anticipation"
+    },
+    {
+      "source": "air-zoom",
+      "start": 14.27,
+      "duration": 0.503875,
+      "gain_db": -14.5,
+      "rate": 0.83,
+      "pan_from": -0.2,
+      "pan_to": 0.25,
+      "event": "Sphere expands"
+    },
+    {
+      "source": "gear",
+      "start": 14.29,
+      "duration": 0.18,
+      "gain_db": -23,
+      "rate": 0.62,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Soft body under sphere reveal"
+    },
+    {
+      "source": "bubble",
+      "start": 17.65,
+      "duration": 0.025,
+      "gain_db": -16.5,
+      "rate": 1.05,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message card arrives"
+    },
+    {
+      "source": "key",
+      "start": 17.759999999999998,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 0"
+    },
+    {
+      "source": "key",
+      "start": 17.865,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 3"
+    },
+    {
+      "source": "key",
+      "start": 17.97,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 6"
+    },
+    {
+      "source": "key",
+      "start": 18.075,
+      "duration": 0.035979166666666666,
+      "gain_db": -28.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 9"
+    },
+    {
+      "source": "key",
+      "start": 18.18,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 12"
+    },
+    {
+      "source": "key",
+      "start": 18.284999999999997,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 15"
+    },
+    {
+      "source": "key",
+      "start": 18.389999999999997,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 18"
+    },
+    {
+      "source": "bubble",
+      "start": 18.86,
+      "duration": 0.029145833333333333,
+      "gain_db": -16.5,
+      "rate": 0.9,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message card arrives"
+    },
+    {
+      "source": "key",
+      "start": 18.97,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 0"
+    },
+    {
+      "source": "key",
+      "start": 19.084374999999998,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 3"
+    },
+    {
+      "source": "key",
+      "start": 19.19875,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 6"
+    },
+    {
+      "source": "key",
+      "start": 19.541874999999997,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 15"
+    },
+    {
+      "source": "key",
+      "start": 19.65625,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 18"
+    },
+    {
+      "source": "key",
+      "start": 19.770625,
+      "duration": 0.035979166666666666,
+      "gain_db": -28.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 21"
+    },
+    {
+      "source": "key",
+      "start": 19.884999999999998,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 24"
+    },
+    {
+      "source": "key",
+      "start": 19.999375,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 27"
+    },
+    {
+      "source": "key",
+      "start": 20.11375,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": 0.22,
+      "pan_to": 0.22,
+      "event": "Message character 30"
+    },
+    {
+      "source": "bubble",
+      "start": 20.8,
+      "duration": 0.025,
+      "gain_db": -16.5,
+      "rate": 1.05,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message card arrives"
+    },
+    {
+      "source": "key",
+      "start": 20.91,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 0"
+    },
+    {
+      "source": "key",
+      "start": 20.995714285714286,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 3"
+    },
+    {
+      "source": "key",
+      "start": 21.08142857142857,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 6"
+    },
+    {
+      "source": "key",
+      "start": 21.167142857142856,
+      "duration": 0.035979166666666666,
+      "gain_db": -28.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 9"
+    },
+    {
+      "source": "key",
+      "start": 21.252857142857142,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 12"
+    },
+    {
+      "source": "key",
+      "start": 21.338571428571427,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 15"
+    },
+    {
+      "source": "key",
+      "start": 21.424285714285716,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 18"
+    },
+    {
+      "source": "key",
+      "start": 21.595714285714287,
+      "duration": 0.035979166666666666,
+      "gain_db": -27.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 24"
+    },
+    {
+      "source": "key",
+      "start": 21.681428571428572,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 27"
+    },
+    {
+      "source": "key",
+      "start": 21.767142857142858,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 30"
+    },
+    {
+      "source": "key",
+      "start": 21.852857142857143,
+      "duration": 0.035979166666666666,
+      "gain_db": -28.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 33"
+    },
+    {
+      "source": "key",
+      "start": 22.024285714285714,
+      "duration": 0.035979166666666666,
+      "gain_db": -30.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 39"
+    },
+    {
+      "source": "key",
+      "start": 22.11,
+      "duration": 0.035979166666666666,
+      "gain_db": -29.5,
+      "rate": 1.25,
+      "pan_from": -0.22,
+      "pan_to": -0.22,
+      "event": "Message character 42"
+    },
+    {
+      "source": "sweep",
+      "start": 22.48,
+      "duration": 0.3,
+      "gain_db": -21,
+      "rate": 1.9,
+      "pan_from": 0.35,
+      "pan_to": -0.35,
+      "event": "Dialogue exits"
+    },
+    {
+      "source": "bubble",
+      "start": 22.8,
+      "duration": 0.029145833333333333,
+      "gain_db": -18.0,
+      "rate": 0.9,
+      "pan_from": -0.2,
+      "pan_to": -0.2,
+      "event": "Closing phrase 1"
+    },
+    {
+      "source": "bubble",
+      "start": 23.03,
+      "duration": 0.026229166666666668,
+      "gain_db": -18.4,
+      "rate": 1.0,
+      "pan_from": -0.1,
+      "pan_to": -0.1,
+      "event": "Closing phrase 2"
+    },
+    {
+      "source": "bubble",
+      "start": 23.33,
+      "duration": 0.023854166666666666,
+      "gain_db": -18.8,
+      "rate": 1.1,
+      "pan_from": 0.0,
+      "pan_to": 0.0,
+      "event": "Closing phrase 3"
+    },
+    {
+      "source": "bubble",
+      "start": 23.74,
+      "duration": 0.021875,
+      "gain_db": -19.2,
+      "rate": 1.2000000000000002,
+      "pan_from": 0.10000000000000003,
+      "pan_to": 0.10000000000000003,
+      "event": "Closing phrase 4"
+    },
+    {
+      "source": "bubble",
+      "start": 24.08,
+      "duration": 0.0201875,
+      "gain_db": -19.6,
+      "rate": 1.3,
+      "pan_from": 0.2,
+      "pan_to": 0.2,
+      "event": "Closing phrase 5"
+    },
+    {
+      "source": "air-zoom",
+      "start": 25.3,
+      "duration": 0.33458333333333334,
+      "gain_db": -23,
+      "rate": 1.25,
+      "pan_from": -0.35,
+      "pan_to": 0.35,
+      "event": "Outline traces"
+    },
+    {
+      "source": "gear",
+      "start": 26.17,
+      "duration": 0.12,
+      "gain_db": -25,
+      "rate": 1.45,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "First outline edge completes"
+    },
+    {
+      "source": "sweep",
+      "start": 26.76,
+      "duration": 0.37,
+      "gain_db": -19,
+      "rate": 1.4,
+      "pan_from": -0.4,
+      "pan_to": 0.4,
+      "event": "Workflow cards fan out"
+    },
+    {
+      "source": "bubble",
+      "start": 27.02,
+      "duration": 0.029145833333333333,
+      "gain_db": -20.5,
+      "rate": 0.9,
+      "pan_from": -0.4,
+      "pan_to": -0.4,
+      "event": "Workflow card 1 arrives"
+    },
+    {
+      "source": "bubble",
+      "start": 27.25,
+      "duration": 0.025479166666666667,
+      "gain_db": -21.5,
+      "rate": 1.03,
+      "pan_from": 0.0,
+      "pan_to": 0.0,
+      "event": "Workflow card 2 arrives"
+    },
+    {
+      "source": "bubble",
+      "start": 27.3,
+      "duration": 0.022625,
+      "gain_db": -22.5,
+      "rate": 1.1600000000000001,
+      "pan_from": 0.4,
+      "pan_to": 0.4,
+      "event": "Workflow card 3 arrives"
+    },
+    {
+      "source": "suction",
+      "start": 28.87,
+      "duration": 0.2698125,
+      "gain_db": -16.5,
+      "rate": 1.55,
+      "pan_from": 0.25,
+      "pan_to": 0,
+      "event": "Workflow strip compresses to logo"
+    },
+    {
+      "source": "gear",
+      "start": 29.28,
+      "duration": 0.22,
+      "gain_db": -18,
+      "rate": 0.8,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Logo lands"
+    },
+    {
+      "source": "tech-select",
+      "start": 29.31,
+      "duration": 0.043166666666666666,
+      "gain_db": -20,
+      "rate": 0.88,
+      "pan_from": 0,
+      "pan_to": 0,
+      "event": "Logo confirmation tail"
+    }
+  ],
+  "sample_preparation": {
+    "sweep": {
+      "trim_start": 0.07310416666666666,
+      "trim_end": 0.69225,
+      "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3"
+    },
+    "air-zoom": {
+      "trim_start": 0.13983333333333334,
+      "trim_end": 0.5580416666666667,
+      "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa"
+    },
+    "shutter": {
+      "trim_start": 0.1020625,
+      "trim_end": 0.2628333333333333,
+      "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824"
+    },
+    "lens": {
+      "trim_start": 0.0060625,
+      "trim_end": 0.5121875,
+      "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3"
+    },
+    "tech-select": {
+      "trim_start": 0.0,
+      "trim_end": 0.03797916666666667,
+      "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed"
+    },
+    "key": {
+      "trim_start": 0.09864583333333334,
+      "trim_end": 0.16379166666666667,
+      "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205"
+    },
+    "bubble": {
+      "trim_start": 0.10616666666666667,
+      "trim_end": 0.13239583333333332,
+      "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f"
+    },
+    "gear": {
+      "trim_start": 0.0023125,
+      "trim_end": 0.20102083333333334,
+      "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af"
+    },
+    "suction": {
+      "derived_from": "air-zoom",
+      "operation": "reverse first 0.65s"
+    }
+  }
+}

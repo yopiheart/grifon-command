@@ -1,0 +1,35 @@
+{
+  "folder": "export-v05",
+  "checks": [
+    {
+      "name": "Typing adds foreground letters across the opening",
+      "counts": [
+        1222,
+        2299,
+        3483
+      ],
+      "pass": true
+    },
+    {
+      "name": "Collage travels left during its readable beat",
+      "deltaX": -57.73726584659107,
+      "pass": true
+    },
+    {
+      "name": "camera keeps turning after its entrance",
+      "changedForegroundPixels": 13042,
+      "pass": true
+    },
+    {
+      "name": "phone keeps turning after its entrance",
+      "changedForegroundPixels": 9393,
+      "pass": true
+    },
+    {
+      "name": "laptop keeps turning after its entrance",
+      "changedForegroundPixels": 50176,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

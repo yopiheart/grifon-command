@@ -1,0 +1,652 @@
+{
+  "title": "Your Next Ad - original sound pass",
+  "version": 1,
+  "duration": 32.9,
+  "sampleRate": 48000,
+  "channels": 2,
+  "tempo": 80,
+  "seed": 27192026,
+  "source": "Local deterministic synthesis; no external samples, no AI provider calls.",
+  "pictureSha256": "1cb32367d0aeff59cc4d6aacefa9fbabda12a070a669cb1be833414d244a2bd2",
+  "files": [
+    {
+      "file": "music-stem.wav",
+      "peakDb": -13.781890927021397,
+      "rmsDb": -28.453918326426702,
+      "frames": 1579200
+    },
+    {
+      "file": "sfx-stem.wav",
+      "peakDb": -16.262141946304347,
+      "rmsDb": -39.132879439752074,
+      "frames": 1579200
+    },
+    {
+      "file": "mix-premaster.wav",
+      "peakDb": -11.501925102550338,
+      "rmsDb": -28.097534442413433,
+      "frames": 1579200
+    }
+  ],
+  "cues": [
+    {
+      "time": 0,
+      "duration": 5.9,
+      "label": "harmonic bed",
+      "midi": [
+        52,
+        59,
+        62,
+        66
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 0.08,
+      "duration": 0.07,
+      "level": 0.046,
+      "pan": -0.1375,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.15454545454545454,
+      "duration": 0.07,
+      "level": 0.052,
+      "pan": -0.1125,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.22909090909090907,
+      "duration": 0.07,
+      "level": 0.057999999999999996,
+      "pan": -0.08750000000000001,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.30363636363636365,
+      "duration": 0.07,
+      "level": 0.046,
+      "pan": -0.0625,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.3781818181818182,
+      "duration": 0.07,
+      "level": 0.052,
+      "pan": -0.037500000000000006,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.4527272727272727,
+      "duration": 0.07,
+      "level": 0.057999999999999996,
+      "pan": -0.0125,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.5272727272727272,
+      "duration": 0.07,
+      "level": 0.046,
+      "pan": 0.0125,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.6018181818181817,
+      "duration": 0.07,
+      "level": 0.052,
+      "pan": 0.037500000000000006,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.6763636363636363,
+      "duration": 0.07,
+      "level": 0.057999999999999996,
+      "pan": 0.0625,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.7509090909090909,
+      "duration": 0.07,
+      "level": 0.046,
+      "pan": 0.08750000000000001,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.8254545454545453,
+      "duration": 0.07,
+      "level": 0.052,
+      "pan": 0.1125,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 0.8999999999999999,
+      "duration": 0.07,
+      "level": 0.057999999999999996,
+      "pan": 0.1375,
+      "label": "opening keystroke",
+      "bus": "sfx"
+    },
+    {
+      "time": 1.0699999999999998,
+      "duration": 0.36,
+      "level": 0.15,
+      "pan": -0.22,
+      "label": "product collage: paper glide",
+      "bus": "sfx"
+    },
+    {
+      "time": 1.13,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": -0.255,
+      "label": "product collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 1.25,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": -0.085,
+      "label": "product collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 1.39,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": 0.085,
+      "label": "product collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 1.5799999999999998,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": 0.255,
+      "label": "product collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 2.3499999999999996,
+      "duration": 0.79,
+      "level": 0.22,
+      "pan": 0.3,
+      "label": "camera: approaching turn",
+      "bus": "sfx"
+    },
+    {
+      "time": 2.87,
+      "duration": 0.34,
+      "level": 0.12,
+      "pan": -0.05,
+      "label": "camera: weight",
+      "bus": "sfx"
+    },
+    {
+      "time": 3.01,
+      "duration": 0.62,
+      "level": 0.069,
+      "pan": -0.3,
+      "label": "camera: turn tail",
+      "bus": "sfx"
+    },
+    {
+      "time": 4.180000000000001,
+      "duration": 0.36,
+      "level": 0.15,
+      "pan": -0.22,
+      "label": "story collage: paper glide",
+      "bus": "sfx"
+    },
+    {
+      "time": 4.24,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": -0.255,
+      "label": "story collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 4.36,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": -0.085,
+      "label": "story collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 4.5,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": 0.085,
+      "label": "story collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 4.69,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": 0.255,
+      "label": "story collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 5.35,
+      "duration": 3.65,
+      "label": "harmonic bed",
+      "midi": [
+        48,
+        55,
+        59,
+        62
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 5.37,
+      "duration": 0.79,
+      "level": 0.22,
+      "pan": 0.3,
+      "label": "phone: approaching turn",
+      "bus": "sfx"
+    },
+    {
+      "time": 5.890000000000001,
+      "duration": 0.34,
+      "level": 0.12,
+      "pan": -0.05,
+      "label": "phone: weight",
+      "bus": "sfx"
+    },
+    {
+      "time": 6.03,
+      "duration": 0.62,
+      "level": 0.069,
+      "pan": -0.3,
+      "label": "phone: turn tail",
+      "bus": "sfx"
+    },
+    {
+      "time": 7.170000000000001,
+      "duration": 0.36,
+      "level": 0.15,
+      "pan": -0.22,
+      "label": "business collage: paper glide",
+      "bus": "sfx"
+    },
+    {
+      "time": 7.23,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": -0.255,
+      "label": "business collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 7.3500000000000005,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": -0.085,
+      "label": "business collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 7.49,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": 0.085,
+      "label": "business collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 7.680000000000001,
+      "duration": 0.07,
+      "level": 0.042,
+      "pan": 0.255,
+      "label": "business collage: word",
+      "bus": "sfx"
+    },
+    {
+      "time": 8.33,
+      "duration": 0.79,
+      "level": 0.22,
+      "pan": 0.3,
+      "label": "laptop: approaching turn",
+      "bus": "sfx"
+    },
+    {
+      "time": 8.35,
+      "duration": 5.2,
+      "label": "harmonic bed",
+      "midi": [
+        55,
+        62,
+        66,
+        69
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 8.85,
+      "duration": 0.34,
+      "level": 0.12,
+      "pan": -0.05,
+      "label": "laptop: weight",
+      "bus": "sfx"
+    },
+    {
+      "time": 8.99,
+      "duration": 0.62,
+      "level": 0.069,
+      "pan": -0.3,
+      "label": "laptop: turn tail",
+      "bus": "sfx"
+    },
+    {
+      "time": 10.2,
+      "duration": 0.07,
+      "level": 0.038,
+      "pan": -0.18,
+      "label": "problem phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 10.41,
+      "duration": 0.07,
+      "level": 0.038,
+      "pan": -0.18,
+      "label": "problem phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 10.62,
+      "duration": 0.07,
+      "level": 0.038,
+      "pan": -0.18,
+      "label": "problem phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 10.83,
+      "duration": 0.07,
+      "level": 0.038,
+      "pan": -0.18,
+      "label": "problem phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 11.04,
+      "duration": 0.07,
+      "level": 0.038,
+      "pan": -0.18,
+      "label": "problem phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 12.62,
+      "duration": 0.64,
+      "level": 0.19,
+      "pan": -0.15,
+      "label": "warm reveal inhale",
+      "bus": "sfx"
+    },
+    {
+      "time": 12.7,
+      "duration": 5.5,
+      "label": "harmonic bed",
+      "midi": [
+        50,
+        57,
+        62,
+        64
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 13.12,
+      "duration": 0.34,
+      "level": 0.12,
+      "pan": 0,
+      "label": "warm reveal release",
+      "bus": "sfx"
+    },
+    {
+      "time": 13.55,
+      "duration": 0.8,
+      "level": 0.105,
+      "pan": 0.1,
+      "label": "sphere contraction",
+      "bus": "sfx"
+    },
+    {
+      "time": 14.27,
+      "duration": 0.34,
+      "level": 0.16,
+      "pan": 0,
+      "label": "sphere bloom",
+      "bus": "sfx"
+    },
+    {
+      "time": 17.1,
+      "duration": 5.9,
+      "label": "harmonic bed",
+      "midi": [
+        48,
+        55,
+        59,
+        62
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 17.65,
+      "duration": 0.07,
+      "level": 0.04,
+      "pan": -0.3,
+      "label": "message arrival",
+      "bus": "sfx"
+    },
+    {
+      "time": 17.65,
+      "duration": 0.8,
+      "label": "glass message accent",
+      "bus": "sfx"
+    },
+    {
+      "time": 18.86,
+      "duration": 0.07,
+      "level": 0.04,
+      "pan": 0.3,
+      "label": "message arrival",
+      "bus": "sfx"
+    },
+    {
+      "time": 18.86,
+      "duration": 0.8,
+      "label": "glass message accent",
+      "bus": "sfx"
+    },
+    {
+      "time": 20.8,
+      "duration": 0.07,
+      "level": 0.04,
+      "pan": -0.25,
+      "label": "message arrival",
+      "bus": "sfx"
+    },
+    {
+      "time": 20.8,
+      "duration": 0.8,
+      "label": "glass message accent",
+      "bus": "sfx"
+    },
+    {
+      "time": 22.5,
+      "duration": 4.9,
+      "label": "harmonic bed",
+      "midi": [
+        52,
+        59,
+        62,
+        66
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 22.8,
+      "duration": 0.07,
+      "level": 0.033,
+      "pan": 0,
+      "label": "closing phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 23.03,
+      "duration": 0.07,
+      "level": 0.033,
+      "pan": 0,
+      "label": "closing phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 23.33,
+      "duration": 0.07,
+      "level": 0.033,
+      "pan": 0,
+      "label": "closing phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 23.74,
+      "duration": 0.07,
+      "level": 0.033,
+      "pan": 0,
+      "label": "closing phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 24.08,
+      "duration": 0.07,
+      "level": 0.033,
+      "pan": 0,
+      "label": "closing phrase",
+      "bus": "sfx"
+    },
+    {
+      "time": 25.3,
+      "duration": 0.88,
+      "level": 0.105,
+      "pan": -0.35,
+      "label": "outline trace",
+      "bus": "sfx"
+    },
+    {
+      "time": 26.55,
+      "duration": 6.35,
+      "label": "harmonic bed",
+      "midi": [
+        55,
+        59,
+        62,
+        69
+      ],
+      "bus": "music"
+    },
+    {
+      "time": 26.7,
+      "duration": 0.4,
+      "level": 0.1,
+      "pan": 0,
+      "label": "workflow card glide",
+      "bus": "sfx"
+    },
+    {
+      "time": 26.89,
+      "duration": 0.34,
+      "level": 0.075,
+      "pan": 0,
+      "label": "workflow card landing",
+      "bus": "sfx"
+    },
+    {
+      "time": 26.93,
+      "duration": 0.4,
+      "level": 0.1,
+      "pan": -0.6,
+      "label": "workflow card glide",
+      "bus": "sfx"
+    },
+    {
+      "time": 26.98,
+      "duration": 0.4,
+      "level": 0.1,
+      "pan": 0.6,
+      "label": "workflow card glide",
+      "bus": "sfx"
+    },
+    {
+      "time": 27.12,
+      "duration": 0.34,
+      "level": 0.075,
+      "pan": -0.6,
+      "label": "workflow card landing",
+      "bus": "sfx"
+    },
+    {
+      "time": 27.17,
+      "duration": 0.34,
+      "level": 0.075,
+      "pan": 0.6,
+      "label": "workflow card landing",
+      "bus": "sfx"
+    },
+    {
+      "time": 28.87,
+      "duration": 0.47,
+      "level": 0.22,
+      "pan": -0.1,
+      "label": "strip to brand",
+      "bus": "sfx"
+    },
+    {
+      "time": 29.28,
+      "duration": 0.34,
+      "level": 0.13,
+      "pan": 0,
+      "label": "brand landing",
+      "bus": "sfx"
+    },
+    {
+      "time": 29.28,
+      "duration": 2.85,
+      "label": "Grifon three-note signature",
+      "midi": 74,
+      "bus": "sfx"
+    },
+    {
+      "time": 29.4,
+      "duration": 2.85,
+      "label": "Grifon three-note signature",
+      "midi": 79,
+      "bus": "sfx"
+    },
+    {
+      "time": 29.59,
+      "duration": 2.85,
+      "label": "Grifon three-note signature",
+      "midi": 83,
+      "bus": "sfx"
+    }
+  ]
+}

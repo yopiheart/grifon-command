@@ -1,0 +1,24 @@
+{
+  "scope": "Reveal energy direction and spectral balance only; not proof of excitement, musical quality, instrument identity or reference fidelity.",
+  "results": {
+    "reference": {
+      "revealLiftDB": 6.4,
+      "energyAbove700HzPercent": 19.77,
+      "revealBuilds": true,
+      "midHighPresence": true
+    },
+    "v05": {
+      "revealLiftDB": -2.4,
+      "energyAbove700HzPercent": 6.38,
+      "revealBuilds": false,
+      "midHighPresence": false
+    },
+    "v06": {
+      "revealLiftDB": 5.4,
+      "energyAbove700HzPercent": 21.52,
+      "revealBuilds": true,
+      "midHighPresence": true
+    }
+  },
+  "regressionProved": true
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "exports/grifon-your-next-ad-1080p.mp4",
+    "bytes": 16552470,
+    "sha256": "DFE493E0E6CA8F62DEBE6487C683A9965D14005D933F07953533FCBDE6FE093F"
+  },
+  {
+    "file": "assets/audio/music-stem.wav",
+    "bytes": 6316844,
+    "sha256": "BEF028F1758F090B85AE3665730E74E0976B72AD5F44555697D547ABA65DC79B"
+  },
+  {
+    "file": "assets/audio/sfx-stem.wav",
+    "bytes": 6316844,
+    "sha256": "58B28B8AE08B8738B44370A3B706608585A8DC21BEFE0249BE952BA6A22C41D9"
+  },
+  {
+    "file": "assets/audio/score-master.wav",
+    "bytes": 9475302,
+    "sha256": "8C2DE39C1B8FA3FA3E97CD31F7654C701A42BFF5FF961F806CA014AFAB7F64CC"
+  },
+  {
+    "file": "assets/audio/score-master.m4a",
+    "bytes": 1056883,
+    "sha256": "16310678E6F968E0CAD4AE1AC4D9A014C8C2398965FBE6803897E2B4114D98B0"
+  },
+  {
+    "file": "index.html",
+    "bytes": 31639,
+    "sha256": "1CB32367D0AEFF59CC4D6AACEFA9FBABDA12A070A669CB1BE833414D244A2BD2"
+  }
+]

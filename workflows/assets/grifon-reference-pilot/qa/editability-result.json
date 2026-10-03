@@ -1,0 +1,14 @@
+{
+  "rawChangedPixels": 3869,
+  "tolerancePerChannel": 0,
+  "changedPixels": 3869,
+  "differenceBounds": {
+    "minX": 859,
+    "minY": 583,
+    "maxX": 1063,
+    "maxY": 611
+  },
+  "pixelsOutsideEditedLine": 0,
+  "outsideMaxDelta": 0,
+  "pass": true
+}

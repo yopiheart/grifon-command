@@ -1,0 +1,11 @@
+import {createRequire} from 'node:module';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const require=createRequire(import.meta.url),sharp=require(process.argv[2]||'sharp');
+const root=path.dirname(fileURLToPath(import.meta.url));
+const files=['motion-final/frame-03-at-1.85s.png','motion-final/frame-06-at-3.75s.png','motion-final/frame-08-at-6.7s.png','motion-final/frame-10-at-9.35s.png','preservation-v04/frame-03-at-28.5s.png','preservation-v04/frame-04-at-30.6s.png'];
+const inputs=[];
+for(let i=0;i<files.length;i++)inputs.push({input:await sharp(path.join(root,files[i])).resize(640,360).png().toBuffer(),left:(i%3)*640,top:74+Math.floor(i/3)*360});
+inputs.push({input:Buffer.from('<svg width="1920" height="74"><rect width="1920" height="74" fill="#111113"/><text x="30" y="47" fill="#ffcc00" font-family="Arial" font-size="25">GRIFON / YOUR NEXT AD</text><text x="1380" y="47" fill="#e6e6df" font-family="Arial" font-size="22">FULL SEQUENCE / SILENT PREVIEW</text></svg>'),left:0,top:0});
+await sharp({create:{width:1920,height:794,channels:3,background:'#111113'}}).composite(inputs).jpeg({quality:92}).toFile(path.join(root,'full-preview.jpg'));
+console.log('Saved qa/full-preview.jpg');

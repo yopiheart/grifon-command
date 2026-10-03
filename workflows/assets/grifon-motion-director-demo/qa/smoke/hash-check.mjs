@@ -9,3 +9,4 @@ const embedded={};
 for(const format of ['portrait','landscape']){const m=html.match(new RegExp(`<video id="${format}"[^>]+src="data:video/mp4;base64,([^"]+)"`));embedded[format]={found:!!m,matchesExport:!!m&&hash(Buffer.from(m[1],'base64'))===hashes[base+format+'.mp4']};}
 const result={capturedAt:new Date().toISOString(),hashes,embedded,notes:'Non-browser file inspection only. No browser screenshots or playback claim.'};
 fs.writeFileSync(base+'qa/smoke/reviewed-hashes.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+if(Object.values(embedded).some(video=>!video.matchesExport))process.exitCode=1;

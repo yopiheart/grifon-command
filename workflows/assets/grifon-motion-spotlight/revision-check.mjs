@@ -9,14 +9,18 @@ import sharp from 'sharp';
 const here=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(here,'../../..');
 const scratch=path.join(root,'.tmp/grifon-motion-spotlight/revision');mkdirSync(scratch,{recursive:true});
 const cache=process.env.MOTION_NPM_CACHE || path.join(process.env.LOCALAPPDATA || path.join(os.homedir(),'AppData/Local'),'npm-cache/_npx');
-const modules=readdirSync(cache).map(d=>path.join(cache,d,'node_modules'));
+const modules=existsSync(cache)?readdirSync(cache).map(d=>path.join(cache,d,'node_modules')):[];
 const installed=modules.find(d=>existsSync(path.join(d,'hyperframes/package.json'))&&JSON.parse(readFileSync(path.join(d,'hyperframes/package.json'),'utf8')).version==='0.7.68');
 const cli=process.env.HYPERFRAMES_CLI || (installed&&path.join(installed,'hyperframes/bin/hyperframes.mjs'));
 const normal=chromium.executablePath(),shell=normal.replace(/chromium-(\d+)/,'chromium_headless_shell-$1').replace('chrome-win64','chrome-headless-shell-win64').replace(/chrome\.exe$/,'chrome-headless-shell.exe');
 const browser=process.env.HYPERFRAMES_BROWSER_PATH || (existsSync(shell)?shell:normal);
-if(!cli||!existsSync(cli)||!existsSync(browser))throw Error('Missing local Hyperframes/browser; see README.');
-const probeFolder=modules.find(d=>existsSync(path.join(d,'ffprobe-static/bin/win32/x64/ffprobe.exe')));
-const env={...process.env,HYPERFRAMES_NO_TELEMETRY:'1',HYPERFRAMES_BROWSER_PATH:browser,HYPERFRAMES_FFMPEG_PATH:path.join(root,'node_modules/ffmpeg-static/ffmpeg.exe'),HYPERFRAMES_FFPROBE_PATH:path.join(probeFolder,'ffprobe-static/bin/win32/x64/ffprobe.exe')};
+const ffmpeg=process.env.HYPERFRAMES_FFMPEG_PATH || path.join(root,'node_modules/ffmpeg-static',process.platform==='win32'?'ffmpeg.exe':'ffmpeg');
+const probeFolder=modules.find(d=>existsSync(path.join(d,'ffprobe-static/bin',process.platform,process.arch,process.platform==='win32'?'ffprobe.exe':'ffprobe')));
+const ffprobe=process.env.HYPERFRAMES_FFPROBE_PATH || (probeFolder&&path.join(probeFolder,'ffprobe-static/bin',process.platform,process.arch,process.platform==='win32'?'ffprobe.exe':'ffprobe'));
+for(const [name,value] of Object.entries({cli,ffmpeg,ffprobe,browser})){
+ if(!value||!existsSync(value))throw Error(`Missing ${name}; see README setup. No automatic install or cloud fallback.`);
+}
+const env={...process.env,HYPERFRAMES_NO_TELEMETRY:'1',HYPERFRAMES_BROWSER_PATH:browser,HYPERFRAMES_FFMPEG_PATH:ffmpeg,HYPERFRAMES_FFPROBE_PATH:ffprobe};
 function run(args){const p=spawnSync(process.execPath,args,{env,encoding:'utf8',windowsHide:true,maxBuffer:20e6});if(p.status!==0)throw Error(p.stderr||p.stdout);}
 const spec=JSON.parse(readFileSync(path.join(here,'demo.json'),'utf8'));spec.copy.opening='YOUR IDEA.';
 writeFileSync(path.join(scratch,'revision.json'),JSON.stringify(spec));

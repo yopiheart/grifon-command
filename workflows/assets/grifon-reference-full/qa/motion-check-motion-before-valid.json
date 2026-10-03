@@ -1,0 +1,35 @@
+{
+  "folder": "motion-before-valid",
+  "checks": [
+    {
+      "name": "Typing adds foreground letters across the opening",
+      "counts": [
+        3476,
+        3476,
+        3476
+      ],
+      "pass": false
+    },
+    {
+      "name": "Collage travels left during its readable beat",
+      "deltaX": 0,
+      "pass": false
+    },
+    {
+      "name": "camera keeps turning after its entrance",
+      "changedForegroundPixels": 6,
+      "pass": false
+    },
+    {
+      "name": "phone keeps turning after its entrance",
+      "changedForegroundPixels": 31,
+      "pass": false
+    },
+    {
+      "name": "laptop keeps turning after its entrance",
+      "changedForegroundPixels": 13,
+      "pass": false
+    }
+  ],
+  "pass": false
+}

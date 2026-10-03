@@ -1,0 +1,13 @@
+.hyperframes/
+qa/editability/
+qa/motion-control/
+qa/motion-before/
+qa/motion-v04/
+qa/export-v05/
+assets/audio/mix-premaster.wav
+exports/grifon-picture-v04.mp4
+assets/audio-v06/mix-premaster.wav
+qa/sound-v06/*-features.npz
+assets/audio-v07/sources/
+assets/audio-v07/work/
+assets/audio-v08/work/
