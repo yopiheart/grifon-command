@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, Vivo X80 storyboard delivered / prior Seedance proof retained**
+**Stamped: 2026-10-04, Vivo X80 V2 delivered / prior Seedance proof retained**
 
 ## Current work and scope
 Branch: `codex/blender-product-reveal`; draft PR157:
@@ -10,33 +10,37 @@ same hashed camera clip/hero image/prompt, nominal six seconds, silent 480p,
 maximum $5, no retry/reroll/funding/substitution. Completed exactly once.
 Local tools/assets only; no app/tuned changes, deployment or merge.
 
-## New Vivo X80 directing sample
-Neil rejected the bottle study as too visually similar and requested 3D as a guide
-for creator UGC, minimum15s/multiple angles. Supplied Apple reference ByAi9BGHMRQ
-is a30s Face ID family-reaction ad, manually inspected at10timestamps with captions.
-New MY TURN adaptation uses documented X80 in-display fingerprint, adult gray
-owner/friend proxies, placement/pickup/reaction/offer/unlock/in-hand hero.
-- assets/vivo-x80-previz: preview.mp4, silent camera-guide.mp4, nine-shot storyboard,
-  portable scene.blend, actual decode/geometry/review evidence and source observations.
-- Both videos fully decoded:360distinct contiguous frames,24fps,15.000s,480x854.
-  Nine animated cameras; original local tick bed; zero new AI/provider calls.
-- Independent sampled creative review accepts gray storyboard; source review clear.
-  Actual local Chromium playback ended at15s without media error;390px DOM fit.
-  Native mobile/full-motion taste and finished human UGC remain untested.
-- Continuous handoff is elided on a cut, with33cm pose shift explicitly documented.
-- Mobile preview1026959bytes:
+## Vivo X80 MY TURN V2 - current review copy
+Neil requested 3D as camera/story guide for creator UGC after rejecting the bottle
+study's similar appearance. Apple reference ByAi9BGHMRQ is a30s Face ID family ad,
+sampled at10timestamps; observations remain under assets/vivo-x80-previz.
+Neil approved the stronger15s V2 story: thumb fails, smug raised-index retry fails,
+owner unlocks, friend visibly deflates, then a short in-hand X80 hero.
+- assets/vivo-x80-previz-v2: ten-shot storyboard, preview, clean silent guide,
+  portable scene, baked face/body acting, actual contact and encoded-frame evidence.
+- One full local EEVEE32 render:6m36.641s. Both final MP4s independently decoded:
+  360distinct contiguous frames,24fps,15.000s,480x854; matching manifest hashes.
+- Independent source and14encoded-action/20boundary sample reviews PASS for guide
+  scope. Actual Chromium plays and ends15s without error;390x844 DOM fit PASS.
+  Natural human acting, continuous-motion taste and Apple finished-film parity unproven.
+- Retry approach obstruction fixed in prep112-120; contact132/result remain visible.
+  Contact distances check three authored fingertips; not full collision simulation.
+- Standard X80 fingerprint is an illustrated story, not Face ID/security equivalence.
+  Offer then cut elides transfer; documented holder shift22cm at216/217.
+- Mobile preview1143466bytes:
+  https://drive.google.com/file/d/1T-FpUB58rKrsnIJXS5RrFlIMzRtF-3zY/view?usp=drivesdk
+- Storyboard623541bytes:
+  https://drive.google.com/file/d/1xmC1bQG-CwhyMAYsEXZ5i5B0cejQK-dY/view?usp=drivesdk
+  Both Drive readbacks: matching bytes/MIME,owner-only,sharedfalse.
+- All40 V1 files preserved; earlier preview and storyboard links remain valid:
   https://drive.google.com/file/d/1SbHUAKyA89f1NtFEB51HtEThTWCTSP3W/view?usp=drivesdk
-- Storyboard509880bytes:
   https://drive.google.com/file/d/19jhGKQWdDGcs-1l6fM65pvhMf_ouEx7y/view?usp=drivesdk
-  Both Drive metadata readbacks: matching bytes/MIME, owner only,sharedfalse.
-- Local render410s; syntax/whitespace/FFmpeg pass; build/Vitest setup-blocked below.
-- Future AI finish needs its own exact changed-input paid spec approval; preview only
-  was authorized here. Do not reuse exhausted bottle runner/ledger.
+- Zero new paid/provider calls. Changed-input human AI finish needs an exact paid
+  spec approval. Do not reuse exhausted bottle runner/ledger.
 
 ## Previous bottle result retained
 - Original NOIR / 01 Blender finish: six seconds, 1280x720 / 24fps with sound.
-- Same-scene neutral camera reference, portable editable scene and style frames.
-  Original approved film/reference/hero/scene bytes remain unchanged.
+- Neutral reference, portable scene/style frames; original approved bytes unchanged.
 - Actual direct BytePlus output: `assets/blender-reveal/byteplus-motion-transfer.mp4`.
   960352 bytes; SHA771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc.
   Native864x496, 24fps, 145 distinct contiguous frames, silent; fully decoded.
@@ -60,11 +64,9 @@ owner/friend proxies, placement/pickup/reaction/offer/unlock/in-hand hero.
   Do not call the $5 local guard a provider dollar hardcap or verified total bill.
 - Exact task-returned CDN allowed for GET-only recovery; two GETs, zero paid
   POST/upload, no signed URLs saved. Recovery and sanitized evidence retained.
-- Sanitized run/preflight/download recovery/media evidence are under assets/blender-reveal.
-  Actual ledger remains ignored at .tmp/byteplus-motion-transfer/attempt.json.
+- Evidence: assets/blender-reveal; ignored ledger: .tmp/byteplus-motion-transfer/attempt.json.
   NEVER --execute again for this study. Existing task recovery uses --resume only.
-- Old fal2.5/direct2.5 proposals retained as superseded / NOT RUN.
-- User requested Kling4 only, explicitly rejected Omni, then chose Seedance-only.
+- Old fal2.5/direct2.5 NOT RUN; user rejected Omni and chose Seedance-only.
   Official developer page showed Kling4 API Coming Soon; zero Kling calls.
 
 ## Verification and quality limits
@@ -74,17 +76,15 @@ owner/friend proxies, placement/pickup/reaction/offer/unlock/in-hand hero.
   Reproducible: node tools/tests/byteplus-motion-transfer-guards.mjs. No real env/network.
 - Prior independent decode/extraction:26commands exit0.12samples broadly match
   motion; NOIR/01/COLD BREW readable. Identity PARTIAL (cap/label/fine text).
-  Full continuous-motion taste and client approval remain pending.
-- Prior viewer mobile390x844/desktop gate PASS: playback, aligned swaps, controls,
-  exact downloads, no page/CSP errors. QA retained; native Android untested.
+  Full motion taste/client approval pending.
+- Prior viewer390x844/desktop PASS: playback, swaps, controls, exact downloads,
+  no page/CSP errors. QA retained; native Android untested.
 - Prior syntax/domain/ASCII/anchor/whitespace PASS; original geometry gates retained.
-- Root build attempted: SETUP BLOCKED (tsc absent). Offline Vitest attempt:
-  SETUP BLOCKED (not installed in this worktree). No dependency installation.
+- Build/Vitest: SETUP BLOCKED (tsc absent, Vitest not cached); no installation.
   Application code unchanged; app E2E/paid regression switches not enabled.
 
 ## Remaining decision
-User reviews Vivo 3D sample first; no new human UGC generation submitted.
-Keep gray guide separate from appearance references in a later approved AI test.
+Review V2 first; future approved human AI test separates guide from appearance refs.
 Grifon integration remains separate; Seedance UI is locked. No publish/deploy/merge.
 
 Studio-pilot, hero-genjutsu, recovery/motion history and Oceanides untouched.

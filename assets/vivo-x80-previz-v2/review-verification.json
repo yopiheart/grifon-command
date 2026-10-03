@@ -1,0 +1,122 @@
+{
+  "study": "MY TURN V2 / Vivo X80",
+  "approvalScope": "Local gray storyboard revision only; maximum paid cost0, no provider calls.",
+  "sourceReview": {
+    "reviewer": "independent cli_portability_review agent",
+    "status": "passed",
+    "binariesRunByReviewer": false,
+    "previzSourceSha256": "e677f0993926c211c7d6f9175c9b21d3227ea8e877dc978a16754ba071cfe31d",
+    "encoderSourceSha256": "780d31c65bf4b0db16c61afbea18eb60e933174b325cd338cc45a4ffe33ee5ad",
+    "checks": [
+      "contiguous ten-shot frame range",
+      "V2-only paths",
+      "portable saved scene reopened without rebuild",
+      "actual EEVEE32",
+      "baked facial/body/index transforms",
+      "three factual saved tip contacts",
+      "complete encoded decoding and ordered performance extraction"
+    ],
+    "retryApproach": "Lowering112-120; hover121; contact129-139 including zero withdrawal easing at139; withdrawal begins140; authored contact132/failure137 unchanged.",
+    "v1Preservation": {
+      "files": 40,
+      "result": "byte-identical to captured SHA256 baseline"
+    },
+    "openFindings": 0
+  },
+  "creativeReview": {
+    "reviewer": "independent byteplus_test_runner agent",
+    "status": "passed for sampled storyboard scope",
+    "rawPerformanceSamples": 14,
+    "rawBoundarySamples": 20,
+    "encodedPerformanceSamples": 14,
+    "encodedBoundarySamples": 20,
+    "substantiveStoryboardPasses": 2,
+    "verified": [
+      "distinct thumb and index failures",
+      "smug index preparation",
+      "corrected121 entry",
+      "owner success before visible friend deflation",
+      "readable ownership/offer/hero"
+    ],
+    "limitation": "Informed sampled inspection, not blind audience testing or continuous motion taste. Natural human acting, comic timing and Apple finished-film parity remain unproven."
+  },
+  "mediaSmoke": {
+    "reviewer": "independent byteplus_guard_smoke agent",
+    "status": "passed",
+    "readOnly": true,
+    "preview": {
+      "fullDecodeExitCode": 0,
+      "frameCheckExitCode": 0,
+      "frames": 360,
+      "uniqueFrames": 360,
+      "fps": 24,
+      "durationSeconds": 15,
+      "width": 480,
+      "height": 854,
+      "manifestShaMatches": true
+    },
+    "cameraGuide": {
+      "fullDecodeExitCode": 0,
+      "frameCheckExitCode": 0,
+      "frames": 360,
+      "uniqueFrames": 360,
+      "fps": 24,
+      "durationSeconds": 15,
+      "width": 480,
+      "height": 854,
+      "manifestShaMatches": true
+    }
+  },
+  "browser": {
+    "kind": "actual local Chromium native MP4 playback",
+    "activePlayback": {
+      "currentTimeSeconds": 0.090937,
+      "paused": false,
+      "ended": false,
+      "readyState": 4,
+      "error": null
+    },
+    "completedPlayback": {
+      "currentTimeSeconds": 15,
+      "durationSeconds": 15,
+      "ended": true,
+      "error": null
+    },
+    "mobileViewport": {
+      "width": 390,
+      "height": 844,
+      "videoBox": {
+        "x": 0,
+        "y": 75.0625,
+        "width": 390,
+        "height": 693.875
+      },
+      "fit": "passed"
+    },
+    "nativePhone": "untested"
+  },
+  "render": {
+    "singleFullAnimation": true,
+    "blenderExitCode": 0,
+    "elapsedSeconds": 396.641,
+    "contiguousSourcePngs": 360
+  },
+  "localEncode": {
+    "firstAttempt": {
+      "exitCode": 1,
+      "reason": "Node copyFileSync UNKNOWN while replacing raw QA frame25; cause unconfirmed"
+    },
+    "unchangedRerun": {
+      "exitCode": 0,
+      "result": "all encoding, full decoding and evidence extraction completed"
+    },
+    "providerCalls": 0
+  },
+  "limits": [
+    "Gray directing guide, not finished human UGC",
+    "Offer-to-owner transfer is elided on cut",
+    "Projection checks do not prove occlusion",
+    "Tip distance checks do not prove complete collision simulation",
+    "Original synthesized audio has measured headroom; subjective listening not graded"
+  ]
+}
