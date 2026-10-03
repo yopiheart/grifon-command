@@ -165,6 +165,10 @@ Review the combined diff, including new files. Run relevant checks, commit only
 intended work, push the branch and create/update its draft PR. No merge or
 production deployment occurs without a separate explicit instruction.
 
+Use the [PR handoff and recurring-finding workflow](pr_review_loop.md#pr-handoff)
+to summarize change, evidence, risk and the next decision, including for PRs
+created through a connector or CLI. Keep improvements tied to observed failures.
+
 Update `NOW.md` (the only resume document, maximum 90 lines) with the branch/PR,
 checks, known limitations and next action. Verify the commit exists on GitHub;
 a claim that work is backed up requires the remote commit to exist. Local drafts

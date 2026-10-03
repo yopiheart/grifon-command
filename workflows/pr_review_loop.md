@@ -11,6 +11,55 @@ Keep findings local or in the authorized draft PR description unless the user
 explicitly requests a posted comment. Merge and deployment require explicit requests.
 The legacy Claude CI reviewer remains opt-in via ENABLE_LEGACY_CLAUDE_REVIEW.
 
+### PR handoff
+
+Use the [PR template](../.github/pull_request_template.md) for the handoff,
+including when creating a PR with a connector or `gh --body-file` (those paths
+can bypass GitHub's template). Scale the detail to the change; a small docs fix
+can be three short paragraphs. This is author/reviewer guidance, not an automated
+gate or merge approval. It does not replace any required checks.
+
+- **Change:** explain the observable before/after and why it matters. Use a
+  small diagram only when it reduces explanation; do not create a separate
+  dashboard for every PR.
+- **Proof:** identify the tested revision and any uncommitted changes. Link
+  commands/results, CI and relevant screenshots/traces; label local-only files.
+  Distinguish PASS, FAIL and NOT RUN, fixture-backed and live checks. Record the
+  independent review's revision, verdict and unresolved findings. For each new
+  defect regression, include evidence that it failed the original behavior.
+  After changes, refresh affected checks/review; justify reuse of earlier evidence
+  by identifying unchanged code, never silently call an earlier run current.
+- **Risk and decision:** name affected flows, plausible failure, rollback and
+  effects a revert cannot undo (charges, messages, lost data, migrations). State
+  blockers and the next decision. Treat unknown risk as unknown. Test counts,
+  small diffs and green CI cannot establish reversibility or authorize release.
+
+Lead the chat handoff with the outcome, remaining blocker and next action in
+Neil's language register; keep the repository PR body in English. The evidence
+belongs in the PR, so Neil does not need to reconstruct the chat to assess it.
+
+### Learn from a recurring finding
+
+At closeout, consider whether a review finding or user correction exposes a
+repeatable failure. If none does, stop; do not manufacture a lesson or a new gate.
+Use the existing PR and `agent_lessons.md`, not a second resume document.
+
+1. Identify the observed failure and its evidence. Prefer a code boundary that
+   prevents it, then a targeted deterministic check, then narrowly scoped review
+   guidance when it requires judgment. Search for an existing owner/check first.
+2. Propose at most one prevention change per closeout. Implement it only within
+   the authorized task and approval boundaries; otherwise record a concrete
+   follow-up in the PR with the owning file and acceptance criterion. A proposal
+   is not a shipped safeguard. Tuned content and paid tests keep their approvals.
+3. If adding a check, prove it fails the original defect and passes the fix.
+   Exercise the actual behavior, not a copied constant, source-text ordering or
+   mocks that remove the failure. Static checks remain appropriate for static
+   contracts such as import boundaries. Keep them scoped to avoid false alarms.
+4. Link the prevention change and proof in the PR. Add/update `agent_lessons.md`
+   only for reusable guidance that is not already recorded, pointing to the
+   implementation/check when present. Keep the independent critic report-only;
+   the builder fixes and the critic rechecks relevant changes.
+
 The remaining procedure preserves the legacy Claude workflow. Its tool names,
 reviewer allocation, CI assumptions, and posting steps do not configure Codex.
 
