@@ -6,7 +6,7 @@
   "email": "marketing@oceanidessepticandpest.com",
   "address": "Tramo Street Corner Dandan, Pasay City, Philippines 1300",
   "facebook": "Oceanides Malabanan - Siphoning Septic Tank and Plumbing Services",
-  "overview": "Oceanides coordinates property services for homes, condominiums and company facilities. Our offering covers siphoning, plumbing, renovation and restoration, pest control and septage treatment facility projects.",
+  "overview": "Oceanides coordinates property services for homes, condominiums and company facilities. Our offering covers siphoning, plumbing, renovation and restoration, pest control and sewage treatment plant (STP) projects.",
   "delivery": "Oceanides remains your main contact from the initial inquiry to turnover. We coordinate the site assessment, quotation and service delivery, including specialist contractors where the work requires them.",
   "serviceGroups": [
     {
@@ -30,8 +30,8 @@
       "items": ["Assessment of pest activity", "Treatment scope based on site findings", "Service scheduling and contractor coordination"]
     },
     {
-      "title": "Septage treatment facility",
-      "summary": "Oceanides offers septage treatment facility projects, coordinating site assessment, the proposed scope and specialist delivery.",
+      "title": "Sewage treatment plant (STP)",
+      "summary": "Oceanides coordinates STP projects for treating building wastewater on site, with the system and installation scope defined by specialist assessment.",
       "items": ["Site requirements assessment", "Technical scope and quotation", "Specialist coordination through turnover"],
       "qualification": "System details, capacity and maintenance requirements follow the agreed technical proposal."
     }

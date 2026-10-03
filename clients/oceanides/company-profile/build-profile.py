@@ -120,7 +120,7 @@ else:
     text(p, 'Property services\nOne point of contact', 64, 206, 666, 61, 'Display', 'blue', 68)
     image(p, ART+'cover-property-minimal.png', 0, 382, W, W*2/3, 'contain', 'AI-generated conceptual architecture, not a completed Oceanides project or engineering plan')
     text(p, 'AI-generated property-services concept', 64, 922, 666, 10, 'Body', 'gray')
-    text(p, 'Siphoning. Plumbing. Renovation & restoration. Pest control. Septage treatment facility.', 64, 963, 666, 17, 'Body', 'ink')
+    text(p, 'Siphoning. Plumbing. Renovation & restoration. Pest control.\nSewage treatment plants (STP).', 64, 963, 666, 17, 'Body', 'ink')
     text(p, DATA['company'], 64, 1023, 666, 12, 'Body', 'gray')
     footer(p,1)
 
@@ -128,13 +128,13 @@ else:
     p=page()
     header(p)
     text(p, 'Services for the places\nyou live and work', 64, 135, 666, 46, 'Strong', 'ink', 53)
-    text(p, DATA['overview'].replace('and septage treatment facility projects.', '\nand septage treatment facility projects.'), 64, 278, 666, 21, 'Body', 'gray', 31)
+    text(p, DATA['overview'].replace('and sewage treatment plant (STP) projects.', '\nand sewage treatment plant (STP) projects.'), 64, 278, 666, 21, 'Body', 'gray', 31)
     rows=[
         ('Siphoning', 'Septic tank siphoning and cleaning.'),
         ('Plumbing', 'Drain declogging and pipe leak repairs.'),
         ('Renovation &\nrestoration', 'House and condominium repairs and improvements.'),
         ('Pest control', 'Site assessment, treatment scope and service coordination.'),
-        ('Septage treatment\nfacility', 'Facility project assessment and coordination.'),
+        ('Sewage treatment\nplant (STP)', 'Treatment of building wastewater on site.'),
     ]
     for idx,(title,detail) in enumerate(rows):
         y=449+idx*91
@@ -169,11 +169,11 @@ else:
     p=page()
     header(p)
     facility=DATA['serviceGroups'][4]
-    text(p,'Septage treatment\nfacility',64,130,666,53,'Display','blue',64)
+    text(p,'Sewage treatment\nplant (STP)',64,130,666,53,'Display','blue',64)
     text(p,facility['summary'],64,304,666,21,'Body','gray',31)
     for y,title,detail in [
-        (478,'Site assessment','Review the site requirements and project scope.'),
-        (635,'Scope & quotation','Define the proposed facility and installation needs with the specialist provider.'),
+        (478,'Site assessment','Review wastewater flow, available space and the proposed outlet.'),
+        (635,'Scope & quotation','Define the proposed system and installation needs with the specialist provider.'),
         (792,'Specialist coordination','Oceanides coordinates client communication and\nspecialist delivery through turnover.'),
     ]:
         rule(p,y-20)
@@ -181,7 +181,7 @@ else:
         text(p,detail,64,y+47,666,19,'Body','gray',29)
     rule(p,954)
     text(p,facility['qualification'].replace('maintenance requirements', '\nmaintenance requirements'),64,978,666,17,'Body','gray',25)
-    p['notes']='Septage treatment facility offer confirmed by Neil on 2026-10-01. '+DATA['delivery']+'\n'+facility['qualification']
+    p['notes']='Neil clarified the offer on 2026-10-03: an on-site Sewage Treatment Plant (STP) for building wastewater. '+DATA['delivery']+'\n'+facility['qualification']
     footer(p,4)
 
     # Renovation: full source aspect preserves the ceiling tool and worker posture.
@@ -248,7 +248,7 @@ pdfpath = OUT/PDF_NAME
 c = canvas.Canvas(str(pdfpath), pagesize=(W*.75,H*.75), pageCompression=1)
 c.setTitle('Oceanides Company Profile')
 c.setAuthor(DATA['company'])
-c.setSubject('Siphoning, plumbing, renovation and restoration, pest control and septage treatment facility projects')
+c.setSubject('Siphoning, plumbing, renovation and restoration, pest control and sewage treatment plant (STP) projects')
 for p in pages:
     c.saveState()
     c.scale(.75,.75)

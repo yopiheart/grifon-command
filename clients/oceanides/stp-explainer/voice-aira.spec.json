@@ -1,0 +1,310 @@
+{
+  "status": "COMPLETED_ACCEPTED",
+  "purpose": "One full Taglish narration take using Neil's selected public Aira - Confident News Reporter voice, synchronized to the Oceanides building STP explainer and mixed locally with his accepted original Flow score.",
+  "selectionCorrection": "Neil selected the earlier public Aira news-reporter voice on 2026-10-03 after the personal clone generation failed. This is a separate request; the failed personal-voice spec and receipt remain unchanged, with no retry.",
+  "approval": {
+    "recordedAt": "2026-10-03T07:08:56Z",
+    "humanResponse": "Approve Aira, max 1,600 credits",
+    "scope": "One new full twelve-scene narration using the unchanged exact Taglish script, Aira - Confident News Reporter and ElevenLabs v4; maximum 1600 existing credits, no retries or purchases. Synchronize scenes locally and duck the accepted Flow score. The failed personal clone request is not repeated."
+  },
+  "voice": {
+    "voice_id": "CkDT8SVS21XIVk5BcuDe",
+    "name": "Aira - Confident News Reporter",
+    "category": "professional",
+    "language": "fil"
+  },
+  "input": {
+    "normalization": "Review-text hashes use LF newlines (CRLF converted to LF); spoken scene text is unchanged.",
+    "file": "narration-for-approval.txt",
+    "sha256": "ac5a21cee9d1fe207a8ca3651488613699d7d1003a5016a0d2d1d07c3df88921",
+    "characters": 1455,
+    "words": 224,
+    "scenes": [
+      {
+        "id": "building",
+        "inputIndex": 0,
+        "textSha256": "0726279389f466840923368f86d64b717bdee508600f2575d0e62aeb351cd783"
+      },
+      {
+        "id": "onsite",
+        "inputIndex": 1,
+        "textSha256": "423fe7c95cd35f7c84f8bc9a9218d2c4e3f7e7c2e653ba3902697a122f024abf"
+      },
+      {
+        "id": "overview",
+        "inputIndex": 2,
+        "textSha256": "360e7339d7c88a09262647959aac86644b053bba66e11e273b34fe55bea26a9b"
+      },
+      {
+        "id": "screen",
+        "inputIndex": 3,
+        "textSha256": "2e6f53fee575454dcceb6643249adba6616ce60b5b9f69803f7ecd29703bc057"
+      },
+      {
+        "id": "settle",
+        "inputIndex": 4,
+        "textSha256": "e9e383c3d04150db45b18c3b3a854682d8a691f4eaf2366b3fab1fbe3c34fb2f"
+      },
+      {
+        "id": "biology",
+        "inputIndex": 5,
+        "textSha256": "c7ab784074d0462558b7fb9c77d410e76d66e21bb4ae47a56ba37b2bcde41069"
+      },
+      {
+        "id": "clarify",
+        "inputIndex": 6,
+        "textSha256": "9c9403b7ec26f8eb512fc1b0737082386aa0155e598b81fd00f1769a6ee0d4d1"
+      },
+      {
+        "id": "disinfect",
+        "inputIndex": 7,
+        "textSha256": "5a2de1294d1af9296150e901ca39e102355760896defeddeb270c56141bf2a30"
+      },
+      {
+        "id": "outlet",
+        "inputIndex": 8,
+        "textSha256": "780aa8eec0ed8f6d9b171fd564c01174b24a02027a9731c52b321e1027a408f8"
+      },
+      {
+        "id": "care",
+        "inputIndex": 9,
+        "textSha256": "75c05888458cacd6a1d4e9ed53cd4f39ec7627a4b1f6831533eedf2a06d2c657"
+      },
+      {
+        "id": "benefits",
+        "inputIndex": 10,
+        "textSha256": "0071348c0e14f76a812a62c2feaa7b77183cfb873cd6f2e8724b4e69cf10a624"
+      },
+      {
+        "id": "contact",
+        "inputIndex": 11,
+        "textSha256": "da2b4d3cc38c57539f490151f96f1dc13736bec81660adab99a992e7bf35aed6"
+      }
+    ]
+  },
+  "request": {
+    "endpoint": "https://api.elevenlabs.io/v1/text-to-dialogue/with-timestamps?output_format=mp3_44100_128",
+    "body": {
+      "inputs": [
+        {
+          "text": "Malaki ba ang quarterly siphoning bill ng building mo? Araw-araw, may wastewater mula sa toilets, sinks at wash areas.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Sa screening, nahihiwalay ang malalaking debris bago pumasok sa treatment.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Sa settling tank, lumulubog ang mas mabibigat na solids. Tuloy ang liquid sa susunod na stage.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Sa biological treatment, tumutulong ang microorganisms na i-break down ang organic waste. Sa aerobic system na ito, may air supply para suportahan sila.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Pagkatapos, nahihiwalay ang natitirang solids. May sludge na ibinabalik sa process, at may excess na kailangang alisin.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Kung kailangan sa design, may disinfection o dagdag na treatment bago ang outlet.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable requirements ang basehan ng discharge o reuse.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Kung liquid wastewater ang regular na hinahaul, puwedeng mabawasan ito sa tamang STP at pinapayagang outlet. May sludge at screened solids pa ring aalisin. Hindi automatic na mawawala ang siphoning.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Ikumpara muna ang quarterly bill sa installation, power, maintenance at sludge removal. Oceanides ang main contact mo para sa site assessment at proposal.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        }
+      ],
+      "model_id": "eleven_v4",
+      "seed": 20261003
+    },
+    "bodySha256": "1ec92d0fcdf22fbcc572c09002335e2ab638e9422bc098bef57216ad43d60f36",
+    "settings": "Provider defaults. No new voice, remix, tags, respelling, speed setting or pronunciation dictionary. One unchanged voice for all twelve inputs."
+  },
+  "limits": {
+    "maxPaidCalls": 1,
+    "maxCredits": 1600,
+    "estimatedCredits": 1455,
+    "automaticRetries": 0,
+    "newPurchasesOrSubscriptions": false,
+    "otherPaidGenerationOrAnalysis": false,
+    "costBasis": "Read-only v4 metadata reports character multiplier 1 and discount 1; selected professional Aira voice reports sharing rate 1. Estimate 1455 existing credits; recheck exact voice, model and rates before the one call. Remaining account allowance is unavailable; no permissions, purchases or subscriptions changed."
+  },
+  "preflight": {
+    "checkedAt": "2026-10-03T07:04:21.722Z",
+    "voiceLookupHttp": 200,
+    "modelHttp": 200,
+    "model": "eleven_v4",
+    "voiceCategory": "professional",
+    "voiceRate": 1,
+    "languageSupport": [
+      "en",
+      "fil"
+    ],
+    "publicV4ShortSamplePreviouslySucceeded": true,
+    "fullTimestampSpeechTested": false,
+    "paidCallsThisPreparation": 0
+  },
+  "output": {
+    "audio": "output/Oceanides-STP-Aira-Voice-Raw.mp3",
+    "alignment": "output/Oceanides-STP-Aira-Voice-Alignment.json",
+    "format": "mp3_44100_128",
+    "deliveryTarget": "Calm, clear technical Taglish, approximately two minutes. Actual scene timing follows returned alignment; no speed-up to force a fixed length."
+  },
+  "localMix": {
+    "music": {
+      "file": "output/Oceanides-STP-Flow-Original-150s.mp3",
+      "spec": "music-original.spec.json",
+      "identity": "Fresh original Flow score, generated once and accepted by Neil on 2026-10-03; prior stock piano rejected",
+      "sha256": "712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8"
+    },
+    "musicDuringSpeech": "Original score normalized locally to a restrained bed, then sidechain-ducked against voice. No saved-music fallback.",
+    "voice": "Normalize to -16 LUFS with true peak <= -1.5dBTP; final limiter. Measure intelligibility and clipping; full listening still required.",
+    "timing": "Use provider character alignment and dialogue_input_index segments. Reject missing/inconsistent alignment; never distribute words evenly or guess scene boundaries.",
+    "paidMusic": "Separate music-original.spec.json; not covered by the voice approval"
+  },
+  "pass": [
+    "One exact selected public Aira voice, with all approved words and no extra speakers or music in the raw take.",
+    "STP, wastewater, microorganisms, sludge and Oceanides are intelligible; Neil accepts pronunciation and delivery.",
+    "Audio fully decodes; no truncated ending or persistent clipping.",
+    "Returned alignment covers all twelve scene inputs, with monotonic times and valid character ranges.",
+    "Each scene contains its narration with visual breathing room; music remains subordinate while speaking.",
+    "No guaranteed savings or complete elimination of siphoning. Site design, outlet and continued solids removal are explained."
+  ],
+  "fail": [
+    "Voice/model/endpoint/input/hash/pricing differs, permission error, or estimated charge exceeds 1600 credits: stop.",
+    "Any paid timeout/error/unknown outcome: save receipt and stop without retry.",
+    "Wrong voice, missing words, unintelligible pronunciation or defective alignment: retain take for review; no automatic regeneration."
+  ],
+  "evidence": [
+    "Exact script/request/voice/music hashes; pending guard stops before credentials/network.",
+    "Whitelisted read-only preflight and exclusive one-attempt receipt.",
+    "Raw MP3 and returned alignment, full decode/level metrics, synchronized video and final human listening review."
+  ],
+  "sources": [
+    "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert-with-timestamps",
+    "https://www.fujicleanusa.com/homeowners-faq",
+    "https://elevenlabs.io/eleven-music-model-specific-terms"
+  ],
+  "runner": "node clients/oceanides/stp-explainer/voice-aira.mjs --dry-run; --generate requires direct human approval recorded in this exact spec.",
+  "delivery": "Local review and existing draft PR only. No deployment or public publication.",
+  "execution": {
+    "at": "2026-10-03T07:09:47.780Z",
+    "status": "AUDIO_AND_ALIGNMENT_RECEIVED_PENDING_LISTENING",
+    "voiceId": "CkDT8SVS21XIVk5BcuDe",
+    "voiceName": "Aira - Confident News Reporter",
+    "model": "eleven_v4",
+    "characters": 1455,
+    "bodySha256": "1ec92d0fcdf22fbcc572c09002335e2ab638e9422bc098bef57216ad43d60f36",
+    "estimatedCredits": 1455,
+    "maxCredits": 1600,
+    "maxPaidCalls": 1,
+    "automaticRetries": 0,
+    "httpStatus": 200,
+    "bytes": 1612530,
+    "audioSha256": "31437ba8e9497dcd7729501d2d58741c34a3f454a912037664b3d6e2fc99a137",
+    "reportedCharacterCost": "88",
+    "requestId": "ZDVi8YGpfVfowcQL3OSj"
+  },
+  "verification": {
+    "recordedAt": "2026-10-03T07:29:09.042Z",
+    "status": "TECHNICAL_PASS_HUMAN_ACCEPTED",
+    "raw": {
+      "sha256": "31437ba8e9497dcd7729501d2d58741c34a3f454a912037664b3d6e2fc99a137",
+      "bytes": 1612530,
+      "durationSeconds": 100.72,
+      "sampleRate": 44100,
+      "channels": 1,
+      "integratedLufs": -23.41,
+      "truePeakDbtp": -2.6,
+      "clippedSamples": 0,
+      "allTwelveApprovedInputsCovered": true
+    },
+    "final": {
+      "file": "output/Oceanides-STP-Aira-Voice-Music-1080p.mp4",
+      "sha256": "9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d",
+      "bytes": 12679698,
+      "durationSeconds": 139.3,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 4179,
+      "audio": "AAC stereo 48kHz",
+      "integratedLufs": -16.73,
+      "truePeakDbtp": -1.43,
+      "clippedSamples": 0,
+      "encodedVideoSha256": "82a86570de24303caa72dd8ab293b0e74a5a3fb63953c57ba6062027091798dd",
+      "encodedVideoUnchanged": true,
+      "speechEndSeconds": 136.35,
+      "closingMarginSeconds": 2.95
+    },
+    "timing": {
+      "providerAlignment": true,
+      "noTimeStretch": true,
+      "allSpeechInsideMatchingSceneWindows": true
+    },
+    "visual": {
+      "independentBrandScore": 43,
+      "maximum": 50,
+      "criticalFindings": 0,
+      "nits": 0,
+      "actualExportedContactFrameSeconds": 138,
+      "contactDetailsCorrect": true
+    },
+    "music": {
+      "acceptedOriginalHash": "712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8",
+      "targetLufs": -28,
+      "sidechainDucking": true,
+      "looped": false,
+      "extraSoundEffects": false,
+      "fadeInSeconds": 1.2,
+      "fadeOutSeconds": 3
+    },
+    "evidence": [
+      ".tmp/oceanides-stp/aira-voice-qa/verification.json",
+      ".tmp/oceanides-stp/aira-final-qa/verification.json",
+      ".tmp/oceanides-stp/aira-sync/timing-receipt.json",
+      ".tmp/oceanides-stp/frames-aira/validation.json",
+      ".tmp/oceanides-stp/audio-aira/narrated-mix.json",
+      ".tmp/oceanides-stp/aira-lock-qa/verification.json"
+    ],
+    "codeReview": {
+      "independent": true,
+      "status": "PASS",
+      "remainingActionableFindings": 0,
+      "stableReceiptLockRegression": "Original runner permits alternate-directory mock POST after an interrupted attempt; fixed module-relative receipt blocks both working directories with zero POSTs. Completed spec blocks before credentials/network. No real network or paid call in regression."
+    },
+    "humanReview": {
+      "status": "ACCEPTED_BY_NEIL",
+      "recordedAt": "2026-10-03T07:59:12Z",
+      "humanResponse": "Bro, goods na sa'kin 'to. Ayos na, ayos 'to.",
+      "scope": "Neil accepted the final narrated video. No new generation or change to the approved script, voice, music or export.",
+      "criteria": [
+        "Actual audible word completeness and pronunciation",
+        "Narration intelligibility against music",
+        "Final listening acceptance before client presentation"
+      ]
+    },
+    "billing": "One approved Aira request succeeded. Estimated 1455 existing credits within the approved 1600-credit cap; provider character-cost header is 88, but actual account debit is not independently verified. No retry or purchase."
+  }
+}

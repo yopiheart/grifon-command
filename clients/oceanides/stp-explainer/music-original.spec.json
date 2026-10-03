@@ -1,0 +1,134 @@
+{
+  "status": "COMPLETED_ACCEPTED",
+  "approval": {
+    "recordedAt": "2026-10-03T06:34:25Z",
+    "humanResponse": "Sige try mo. Or diba last time sa motion design may inapply na music, di ko langg alam pano mo ungg nakuha..",
+    "scope": "One original Flow music take using the unchanged reviewed prompt and request hashes; maximum $0.50 usage before tax, no retries or purchases. Separate full personal narration remains pending."
+  },
+  "purpose": "Replace Neil-rejected stock piano with one freshly generated, original Oceanides STP score. Full score rather than a short repeated stock loop; narration remains the primary explanation.",
+  "direction": {
+    "name": "Flow",
+    "durationSeconds": 150,
+    "tempoBpm": 86,
+    "tonalCentre": "D major / suspended and add9 voicings",
+    "palette": "Glass synth motif, warm bass, airy pads, organic clicks, restrained pulse",
+    "voiceSpace": "Sparse midrange and steady dynamics; duck against the single personal voice airaandmeagan"
+  },
+  "input": {
+    "file": "music-for-approval.txt",
+    "normalization": "Trim final newline only for the provider prompt; normalize CRLF to LF for hashing.",
+    "sha256": "a6cd0865c37cb944b6c5dbe93a1504ba93d5d402816be11f809059fe7ad3d77f",
+    "characters": 2080,
+    "referenceAssets": []
+  },
+  "request": {
+    "endpoint": "https://api.elevenlabs.io/v1/music?output_format=mp3_48000_192",
+    "body": {
+      "prompt": "Compose a fresh original instrumental score called Flow for a premium, minimal, scientifically clear 3D building-wastewater explainer presented to management and procurement. The feeling is calm precision, clean engineering and forward movement. It must have a distinctive small musical identity while remaining subordinate to a Filipino-English spoken narrator.\n\n150 seconds, approximately 86 BPM, 4/4, D-major tonal centre with suspended and add9 voicings. A spare ascending three-note glass-synth motif is the signature; repeat it only at meaningful moments, not continuously. Sound palette: rounded warm bass, airy analog pads, delicate tuned glass plucks, soft organic clicks and a restrained dry electronic pulse. Subtle liquid-like timbres should suggest flow musically, without literal running-water noise.\n\n0-10 seconds: immediate spacious opening with a soft glass motif and warm harmonic bed, no loud logo sting. 10-31: introduce a precise low pulse as the building connects to on-site treatment. 31-65: gentle movement, carefully evolving tiny rhythmic details through screening, settling and biological treatment. 65-96: open the harmony and clear the texture as solids separate and treated water leaves the system. 96-125: grounded, confident and sparse for maintenance and cost discussion. 125-138: return the glass motif, resolve calmly around 134 seconds. 138-150: soft sustained instrumental tail that can be faded to fit the final video.\n\nProduce an intimate, polished stereo mix with a stable centre and soft width. Leave the speech midrange uncluttered: sparse energy around 1-4 kHz, controlled low mids and no piercing high percussion. Maintain consistent restrained dynamics, natural transitions and intentional silence between details. No stock corporate piano, ukulele, motivational jingle, trap hi-hats, trailer drums, EDM drop, dramatic riser or bombastic climax. No vocals, spoken words, choir, humming, vocal pads or vocal samples anywhere. Do not imitate a named artist or reuse any existing recording. Instrumental from the first second to the last.",
+      "music_length_ms": 150000,
+      "model_id": "music_v2_5",
+      "force_instrumental": true
+    },
+    "bodySha256": "e9ca19f5bb9204bc1e2f4f69da4f40cdb55f77e3b4cd1068a42b381cd18f79f1",
+    "settings": "Prompt mode with force_instrumental true. No seed (incompatible with prompt), reference upload, finetune, plan-generation call, inpainting or stems."
+  },
+  "limits": {
+    "maxPaidCalls": 1,
+    "automaticRetries": 0,
+    "maximumUsageUsdBeforeTax": 0.5,
+    "estimatedUsageUsdBeforeTax": 0.375,
+    "publishedApiUsdPerMinute": 0.15,
+    "maximumDurationSeconds": 150,
+    "newPurchasesOrSubscriptions": false,
+    "otherPaidOperations": false,
+    "remainingQuota": "Unavailable to this key. Do not change account permissions, billing settings or subscriptions.",
+    "costBasis": "Published ElevenAPI music rate $0.15/minute, checked 2026-10-03; 2.5 minutes = $0.375 usage equivalent before tax. This USD approval is separate from the pending narration credit cap. Do not treat a credits figure inferred from a different plan as verified music pricing."
+  },
+  "output": {
+    "file": "output/Oceanides-STP-Flow-Original-150s.mp3",
+    "format": "MP3 48000Hz 192kbps stereo",
+    "provenance": "Fresh ElevenLabs Music generation for Oceanides; no saved track or audio reference supplied. Raw score retained; trim/fade/duck locally for the final narration timeline."
+  },
+  "pass": [
+    "Instrumental throughout with no singing, humming, speech or vocal samples.",
+    "Distinct restrained glass/pulse identity; coherent opening, treatment progression, clarity lift and calm ending.",
+    "Narration remains easy to hear after mixing; no busy lead melody, aggressive drums or loud surprises.",
+    "Full audio decode succeeds; approximately 150 seconds with a usable ending and no persistent clipping.",
+    "Neil listens and accepts musical fit before client use."
+  ],
+  "fail": [
+    "Voice-like sounds, generic corporate piano, abrupt transitions, harsh transients, muddy speech range or unusable ending.",
+    "Permission, model, billing or generation error: stop without retry; preserve any received result.",
+    "Prompt/model/length/output format or cost above the approved cap changes: fresh approval required."
+  ],
+  "evidence": [
+    "Exact prompt/request hashes, one-attempt receipt with whitelisted status/cost headers and song ID.",
+    "Raw original score, complete decode/loudness/peak measurements, locally ducked mix and final human listening.",
+    "Pending spec guard stops before credentials/network; no stock fallback."
+  ],
+  "sources": [
+    "https://elevenlabs.io/docs/api-reference/music/compose",
+    "https://elevenlabs.io/docs/eleven-creative/products/music",
+    "https://elevenlabs.io/pricing/api",
+    "https://elevenlabs.io/eleven-music-model-specific-terms"
+  ],
+  "runner": "music-original.mjs --dry-run; --generate requires direct human approval of this exact prompt, one-call test and $0.50 usage cap.",
+  "delivery": "Local review and draft PR only. No public release or streaming distribution.",
+  "execution": {
+    "at": "2026-10-03T06:34:53.845Z",
+    "status": "AUDIO_RECEIVED_PENDING_LISTENING",
+    "bodySha256": "e9ca19f5bb9204bc1e2f4f69da4f40cdb55f77e3b4cd1068a42b381cd18f79f1",
+    "model": "music_v2_5",
+    "durationSeconds": 150,
+    "estimatedUsageUsdBeforeTax": 0.375,
+    "maximumUsageUsdBeforeTax": 0.5,
+    "maxPaidCalls": 1,
+    "automaticRetries": 0,
+    "httpStatus": 200,
+    "bytes": 3600621,
+    "audioSha256": "712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8",
+    "songId": "FLJ1pRhvHdOD91Vmuql5",
+    "reportedCharacterCost": null,
+    "billingNote": "Usage estimate is based on published API rate. Header values are not independently verified account debits."
+  },
+  "verification": {
+    "status": "TECHNICAL_PASS_MUSICAL_FIT_ACCEPTED",
+    "rawScore": {
+      "fullDecodePass": true,
+      "durationSeconds": 150.024,
+      "sampleRate": 48000,
+      "channels": 2,
+      "integratedLufs": -18.21,
+      "truePeakDbtp": -1.03,
+      "clippedSamples": 0,
+      "receiptHashMatches": true
+    },
+    "preview": {
+      "file": "output/Oceanides-STP-Original-Score-Preview-1080p.mp4",
+      "fullDecodePass": true,
+      "durationSeconds": 139,
+      "frames": 4170,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "audio": "AAC 48000Hz stereo, music only",
+      "integratedLufs": -23.5,
+      "truePeakDbfs": -6.2,
+      "encodedVideoUnchanged": true,
+      "bytes": 12717366,
+      "sha256": "be0d50605cac1738492d70903a3ce4aace9e094def6d1692a0418d609cdd3b87"
+    },
+    "evidence": [
+      ".tmp/oceanides-stp/original-music-qa/verification.json",
+      ".tmp/oceanides-stp/original-preview-qa/verification.json",
+      ".tmp/oceanides-stp/audio-cost/preview-levels.txt"
+    ],
+    "humanReview": {
+      "recordedAt": "2026-10-03T06:47:03Z",
+      "humanResponse": "Oo bro goods saken ung music niceeeeeeee!",
+      "acceptedFile": "output/Oceanides-STP-Original-Score-Preview-1080p.mp4",
+      "scope": "Neil accepts the original Flow score as the music choice. Keep this take for the narrated video; no further music generation."
+    },
+    "pending": "Separate personal narration and its ducked mix are not generated yet; speech pronunciation and audibility require review after mixing."
+  }
+}

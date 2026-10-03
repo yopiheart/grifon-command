@@ -78,7 +78,8 @@ that source. The superseded standalone `Oceanides New logo.png` was removed.
 
 Neil rejected the signage-heavy brochure and explicitly requested Apple/OpenAI
 inspired simplicity, including changes to fonts and palette combinations.
-For the company profile and its editable presentation only, this overrides the
+For the company profile, its editable presentation and the companion STP meeting
+explainer (Neil's video request, 2026-10-03), this overrides the
 uppercase display and amber-panel defaults below. Other client surfaces retain
 their existing rules.
 
@@ -96,8 +97,8 @@ their existing rules.
   These are local substitutes, not claims to use SF Pro or OpenAI Sans.
 - Printed profile: A4 portrait, 64px margins on a 794x1123 design canvas.
   Laptop/projector presentation (Neil, 2026-10-01): 16:9 landscape, 1280x720
-  design canvas and 72px margins; eight slides after the confirmed septage
-  treatment facility offer was added, with actual before/after proof
+  design canvas and 72px margins; eight slides after the treatment offer was
+  added (clarified as on-site STP on 2026-10-03), with actual before/after proof
   on its own slide. Display titles 48-60px, principal body text 23-27px;
   smaller text is reserved for image disclosures and footer metadata.
   Both use generous section gaps,
@@ -112,6 +113,10 @@ their existing rules.
   The canonical source JPG and existing funnel assets remain unchanged.
 - Reference: D18 in `workflows/design_swipe_file.md`; Apple's 2025 Environmental
   Progress Report and OpenAI's public Design Guidelines. No borrowed brand marks.
+- STP meeting soundtrack (Neil, 2026-10-03): create a fresh original instrumental
+  score for this film. Neil rejected the saved stock piano bed. Use a restrained
+  glass-synth motif, warm bass and subtle pulse with room for narration; no saved
+  music fallback. Paid generation follows its exact approved spec.
 
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at

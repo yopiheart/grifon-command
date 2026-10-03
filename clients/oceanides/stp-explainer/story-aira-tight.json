@@ -1,0 +1,140 @@
+{
+  "title": "How an on-site sewage treatment plant works",
+  "brand": "Oceanides",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "status": "Tight continuous Aira timing; approved speech unchanged, final listening review pending",
+  "scope": "Neil confirmed on 2026-10-03 that Sir August's offer is an on-site Sewage Treatment Plant (STP) for building wastewater. This is an illustrative domestic-wastewater process, not an exact supplier design or an Oceanides-owned facility.",
+  "sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=w_60iJEAf4c",
+      "use": "Visual reference only: model-specific tank cutaway, component focus and animated treatment. No footage, audio, geometry or product claims reused."
+    },
+    {
+      "url": "https://www.epa.gov/npdes/peak-flows-sewage-treatment-plants",
+      "use": "Screening, primary clarification, biological treatment and disinfection."
+    },
+    {
+      "url": "https://www.fujicleanusa.com/homeowners-faq",
+      "use": "Reference product still requires service and periodic sludge removal. Not specifications for Oceanides."
+    },
+    {
+      "url": "https://r7.emb.gov.ph/wp-content/uploads/2022/05/OPMS-DISCHARGE-PERMIT-Application-Guideline.pdf",
+      "use": "Domestic wastewater definition and discharge permit context."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "building",
+      "start": 0,
+      "end": 8.633333333333333,
+      "title": "Rethink your quarterly hauling bill",
+      "detail": "Toilets, sinks and wash areas",
+      "caption": "Malaki ba ang quarterly siphoning bill ng building mo? Araw-araw, may wastewater mula sa toilets, sinks at wash areas.",
+      "vo": "Malaki ba ang quarterly siphoning bill ng building mo? Araw-araw, may wastewater mula sa toilets, sinks at wash areas."
+    },
+    {
+      "id": "onsite",
+      "start": 8.633333333333333,
+      "end": 18.466666666666665,
+      "title": "Wastewater treatment on site",
+      "detail": "Building wastewater / On-site Sewage Treatment Plant (STP)",
+      "caption": "Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements.",
+      "vo": "Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements."
+    },
+    {
+      "id": "overview",
+      "start": 18.466666666666665,
+      "end": 25.2,
+      "title": "Inside the treatment process",
+      "detail": "An illustrative domestic-wastewater STP",
+      "caption": "Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater.",
+      "vo": "Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater."
+    },
+    {
+      "id": "screen",
+      "start": 25.2,
+      "end": 30,
+      "title": "First, remove large debris",
+      "detail": "Screening",
+      "caption": "Sa screening, nahihiwalay ang malalaking debris bago pumasok sa treatment.",
+      "vo": "Sa screening, nahihiwalay ang malalaking debris bago pumasok sa treatment."
+    },
+    {
+      "id": "settle",
+      "start": 30,
+      "end": 36.666666666666664,
+      "title": "Let the solids settle",
+      "detail": "Primary settling",
+      "caption": "Sa settling tank, lumulubog ang mas mabibigat na solids. Tuloy ang liquid sa susunod na stage.",
+      "vo": "Sa settling tank, lumulubog ang mas mabibigat na solids. Tuloy ang liquid sa susunod na stage."
+    },
+    {
+      "id": "biology",
+      "start": 36.666666666666664,
+      "end": 46.733333333333334,
+      "title": "Treatment with air and biology",
+      "detail": "Air + microorganisms",
+      "caption": "Sa biological treatment, tumutulong ang microorganisms na i-break down ang organic waste. Sa aerobic system, may air supply para suportahan sila.",
+      "vo": "Sa biological treatment, tumutulong ang microorganisms na i-break down ang organic waste. Sa aerobic system na ito, may air supply para suportahan sila."
+    },
+    {
+      "id": "clarify",
+      "start": 46.733333333333334,
+      "end": 55,
+      "title": "Separate the remaining solids",
+      "detail": "Final clarification",
+      "caption": "Nahihiwalay ang natitirang solids. May sludge na ibinabalik sa process, at may excess na kailangang alisin.",
+      "vo": "Pagkatapos, nahihiwalay ang natitirang solids. May sludge na ibinabalik sa process, at may excess na kailangang alisin."
+    },
+    {
+      "id": "disinfect",
+      "start": 55,
+      "end": 60.13333333333333,
+      "title": "Finish the treatment",
+      "detail": "Disinfection and other treatment, as designed",
+      "caption": "Kung kailangan sa design, may disinfection o dagdag na treatment bago ang outlet.",
+      "vo": "Kung kailangan sa design, may disinfection o dagdag na treatment bago ang outlet."
+    },
+    {
+      "id": "outlet",
+      "start": 60.13333333333333,
+      "end": 68.13333333333334,
+      "title": "Test before discharge",
+      "detail": "Water quality determines the next step",
+      "caption": "Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable requirements ang basehan ng discharge o reuse.",
+      "vo": "Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable requirements ang basehan ng discharge o reuse."
+    },
+    {
+      "id": "care",
+      "start": 68.13333333333334,
+      "end": 75.53333333333333,
+      "title": "Keep treatment working",
+      "detail": "Inspection, equipment care and sludge removal",
+      "caption": "Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment.",
+      "vo": "Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment."
+    },
+    {
+      "id": "benefits",
+      "start": 75.53333333333333,
+      "end": 88.7,
+      "title": "Less hauling, if the site is suitable",
+      "detail": "On-site liquid treatment / Sludge removal continues",
+      "caption": "Puwedeng mabawasan ang liquid hauling sa tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal.",
+      "vo": "Kung liquid wastewater ang regular na hinahaul, puwedeng mabawasan ito sa tamang STP at pinapayagang outlet. May sludge at screened solids pa ring aalisin. Hindi automatic na mawawala ang siphoning."
+    },
+    {
+      "id": "contact",
+      "start": 88.7,
+      "end": 99.73333333333333,
+      "title": "Assess your site. Compare the cost.",
+      "detail": "Site assessment. Cost review. Written quotation.",
+      "caption": "Ikumpara muna ang quarterly bill sa installation, power, maintenance at sludge removal. Oceanides ang main contact mo para sa site assessment at proposal.",
+      "vo": "Ikumpara muna ang quarterly bill sa installation, power, maintenance at sludge removal. Oceanides ang main contact mo para sa site assessment at proposal."
+    }
+  ],
+  "narrationAttached": true
+}

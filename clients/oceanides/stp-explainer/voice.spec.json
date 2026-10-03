@@ -1,0 +1,57 @@
+{
+  "status": "SUPERSEDED_BY_V4_SAMPLE_PLAN",
+  "supersededBy": "voice-v4-sample.spec.json",
+  "purpose": "Add calm Taglish narration to the Oceanides 16:9 wastewater-treatment meeting explainer after the user reviews the visual draft and exact wording.",
+  "input": {
+    "source": "story.json",
+    "selection": "Each scenes[].vo in order, joined with two LF newlines; headings are not spoken.",
+    "reviewCopy": "narration-for-approval.txt",
+    "characters": 1398,
+    "words": 213,
+    "sha256": "b3396aaa031d4463c488e46c98069d9b153a9d7dda67151cc7e40c634727b8d0"
+  },
+  "provider": {
+    "name": "ElevenLabs",
+    "operation": "text-to-speech",
+    "model": "eleven_multilingual_v2",
+    "voice": "Existing Oceanides Kuya Marvin clone",
+    "voiceId": "jL41fXY8JXGEarmJ5g3f",
+    "voiceSettings": {
+      "stability": 0.75,
+      "similarity_boost": 0.85
+    },
+    "runner": "../kuya-marvin/test-rigs/audio-post.mjs tts"
+  },
+  "limits": {
+    "maxCalls": 1,
+    "maxCredits": 1500,
+    "estimatedCredits": 1398,
+    "automaticRetries": 0,
+    "newPurchasesOrSubscriptions": false,
+    "paidImageOrVideoGeneration": false,
+    "localVideoRenderCost": 0,
+    "costBasis": "Multilingual v2 bills one ElevenLabs credit per input character. Credit value depends on the existing account plan; this spec does not authorize cash purchases."
+  },
+  "pass": [
+    "Spoken wording exactly matches approved source; no missing or added sentences.",
+    "Taglish is intelligible and calm; inspect STP, septage, microorganisms, sludge and Oceanides pronunciation by listening to the complete take.",
+    "No truncation, broken audio, prominent artifacts or sample clipping.",
+    "Narration is aligned with the corresponding process scenes; adjust local scene durations to the approved take without changing wording.",
+    "Final H.264/AAC MP4 remains 1920x1080, 16:9, 30fps with legible labels and retained scope/maintenance disclosures."
+  ],
+  "fail": [
+    "Any provider error, wording omission, unintelligible key term, clipped take or voice artifact.",
+    "More than one TTS request, more than 1500 credits, or any changed text, voice, model or settings without fresh approval."
+  ],
+  "evidence": [
+    "Input hash and character count checked before the call.",
+    "Provider request count and returned media metadata; no credentials in logs.",
+    "Full-take listening notes and measured audio levels.",
+    "Final MP4 decode, duration and streams; visual samples across every scene and transitions."
+  ],
+  "pricingSources": [
+    "https://elevenlabs.io/pricing",
+    "https://help.elevenlabs.io/hc/en-us/articles/27562116787345-Have-characters-changed"
+  ],
+  "delivery": "Local review files and a draft PR only. No public publication, deployment or merge."
+}
