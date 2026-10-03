@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-04",
+  "artifact": "Exact proposed Vivo X80 15s paid test for review",
+  "local_path": "assets/vivo-x80-ugc/paid-test-review.txt",
+  "drive_id": "1RdGnxktRcRR-DqpN5xXOQFRR00F5oLvr",
+  "watch_or_review_url": "https://drive.google.com/file/d/1RdGnxktRcRR-DqpN5xXOQFRR00F5oLvr/view",
+  "verified_bytes": 6717,
+  "verified_mime_type": "text/plain",
+  "shared": false,
+  "permissions": "owner-only",
+  "provider_uploads": 0,
+  "paid_vivo_submissions": 0,
+  "immutable_proposal_sha256": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78",
+  "runtime_presence_check": {
+    "current_process_ark_key_present": false,
+    "current_process_supabase_service_key_present": false,
+    "current_process_supabase_url_present": false,
+    "workspace_env_file_present": false,
+    "existing_primary_env_file_present": true,
+    "secret_values_read_or_printed": false,
+    "required_before_execution": "Receive credentials through the existing local secret workflow; do not read or expose file contents."
+  },
+  "audit_scope": "Raw generated proof only, no downstream propagation. Full decode and visual comparison planned; human sound/acting judgment remains necessary. No additional paid Gemini audit is authorized by this one-submission spec."
+}

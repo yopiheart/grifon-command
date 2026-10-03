@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-04",
+  "study": "Vivo X80 V2 human finish",
+  "liveCalls": 0,
+  "paidSubmission": "NOT RUN; pending exact paid spec approval",
+  "model": "dreamina-seedance-2-0-260128",
+  "requestSchema": {
+    "durationSeconds": 15,
+    "resolution": "480p",
+    "ratio": "9:16",
+    "generateAudio": true,
+    "generatedAudio": "native mono",
+    "referenceVideoRole": "reference_video",
+    "referenceImageRole": "reference_image",
+    "firstFrameRole": "omitted; incompatible with the chosen omni references"
+  },
+  "guide": {
+    "path": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+    "sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+    "bytes": 1162011,
+    "width": 480,
+    "height": 854,
+    "pixels": 409920,
+    "durationSeconds": 15,
+    "fps": 24,
+    "audio": "none",
+    "slates": "none",
+    "sourceVerification": "Unchanged bytes match approved V2 full-decode evidence; no upscaling or substitute guide."
+  },
+  "documentedVideoLimits": {
+    "maximumTotalInputSeconds": 15,
+    "minimumPixels": 407696,
+    "minimumDimension": 300,
+    "maximumDimension": 6000,
+    "fpsRange": [
+      24,
+      60
+    ],
+    "maximumInputBytes": 200000000
+  },
+  "product": {
+    "path": "assets/vivo-x80-ugc/vivo-x80-product.png",
+    "sha256": "3d816b4f09566fc1499619a603be55e908eb50b04ebdcc1ce4413e562c7abf8b",
+    "bytes": 365082,
+    "width": 640,
+    "height": 640,
+    "visuallyInspected": true,
+    "appearance": "Official Urban Blue X80 front/back product-only image; two views of one model, not two physical phones."
+  },
+  "portraitInput": {
+    "guide": "Clearly stylized non-real procedural gray proxies with faces; not faceless.",
+    "realPortraitUploads": 0,
+    "outputCast": "Two original adult creators generated from text",
+    "moderationAcceptance": "unverified; stop on rejection, no silent asset substitution"
+  },
+  "pricing": {
+    "publicRateUsdPerMillionTokens": 4.3,
+    "nativeOutputDimensions": [
+      496,
+      864
+    ],
+    "outputFps": 24,
+    "formula": "(15+15)*496*864*24/1024",
+    "formulaTokens": 301320,
+    "minimumFloorTokens": 251100,
+    "estimatedGenerationUsd": 1.295676,
+    "estimatedWithStagingReserveUsd": 1.305676,
+    "maximumProposedUsd": 5,
+    "floorEvidence": "Root visually inspected official Seedance2.0 480p table: grouped16:9/9:16, duration15 row251100, long864/short496. This is observed, not inferred.",
+    "actualBill": "unverified; usage.completion_tokens governs reported-token estimate",
+    "accountBalance": "unverified"
+  },
+  "sources": [
+    "https://docs.byteplus.com/en/docs/modelark/create-video-generation-task-api",
+    "https://docs.byteplus.com/en/docs/modelark/model-pricing",
+    "https://bytedance.larkoffice.com/wiki/H0fUwHPxtiHayOk6CVpcZzKqnHJ?table=tblnV1KjhYJO12Zh&view=vew6vtiOtK",
+    "https://docs.byteplus.com/en/docs/modelark/seedance-portrait-asset-guide",
+    "https://docs.byteplus.com/en/docs/modelark/seedance-2-0-prompt-guide"
+  ]
+}
