@@ -6,6 +6,7 @@ Branch: `codex/blender-product-reveal`; draft PR157:
 https://github.com/yopiheart/grifon-command/pull/157.
 Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
 Previous commits: a8f3d9ad local film, 80ab3036 handoff, e517a9c1 480p spec.
+Tested live-proof implementation: 9e3808ab; remote branch/PR head verified on GitHub.
 Neil approved the original local proof, then one direct Seedance 2.0 attempt:
 same hashed camera clip/hero image/prompt, nominal six seconds, silent 480p,
 maximum $5, no retry/reroll/funding/substitution. Completed exactly once.
