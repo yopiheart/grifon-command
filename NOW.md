@@ -5,7 +5,7 @@
 Persist the planning agreement discussed with Neil: short requests are valid;
 the agent investigates context and develops the goal, plan and verification.
 Branch: `codex/short-task-planning`, based on main `3da5bc7b`.
-Draft PR155: https://github.com/yopiheart/grifon-command/pull/155.
+PR155: https://github.com/yopiheart/grifon-command/pull/155.
 Instruction change committed and pushed as `3b20b7eb`.
 Checkout: C:/Users/ADMIN/.codex/worktrees/6596/grifon-command.
 Scope: one working-preference addition in AGENTS.md and this resume update.
@@ -27,12 +27,14 @@ This is project guidance, not a new automated enforcement gate or global memory.
 - `git diff --check` and strict resume-document check: PASS, exit 0.
 - Wording reviewed for short tasks, material ambiguity and gated actions.
 - Runtime build/unit/browser suites not run: no runtime changes.
-- Independent review and future-session behavior measurement: NOT RUN.
+- Independent Codex review of `3da5bc7b..5dcea6ca`: no actionable findings;
+  verified instruction consistency and preserved approval boundaries.
+- Future-session behavior measurement: NOT RUN.
 
 ## ▶ NEXT ACTION
-Review draft PR155 and its CI. The closeout commit updates this handoff only.
-No merge or deployment is authorized. New sessions on main inherit the explicit
-rule only after it lands there; other projects do not inherit this repo rule.
+Neil authorized merging PR155. Check its live status: if still open, merge after
+CI passes; if merged, use the rule in updated main-based Grifon sessions.
+Deployment is not authorized; other projects do not inherit this repo rule.
 Assess the next real short request for useful planning without unnecessary questions.
 
 ## Other work retained
