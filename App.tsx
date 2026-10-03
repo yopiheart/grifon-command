@@ -994,6 +994,8 @@ const App: React.FC = () => {
     const stepLabel = String(pendingSession.currentStep).padStart(2, '0');
     setCurrentStep(pendingSession.currentStep);
     setClientDetails(pendingSession.clientDetails);
+    // Restoring a saved formula is not an edit that invalidates its saved assets.
+    prevScriptTypeRef.current = pendingSession.businessInfo.scriptType;
     setBusinessInfo(pendingSession.businessInfo);
     setScript(pendingSession.script);
     setLanguage(pendingSession.language);

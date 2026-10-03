@@ -118,7 +118,12 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 667 
     await goToProgress(0.45);
     await expect.poll(opacity).toBeGreaterThan(0.5);
     await expect(copy).toHaveCSS('opacity', '0');
-    const middle = await lightBounds();
+    // Wrapper opacity can update one frame before the canvas paints.
+    let middle: number[] = [];
+    await expect.poll(async () => {
+      middle = await lightBounds();
+      return middle[0] < 0.5 && middle[1] > 0.5;
+    }).toBe(true);
     expect(middle[0]).toBeLessThan(0.5);
     expect(middle[1]).toBeGreaterThan(0.5);
     await page.screenshot({ path: `test-results/hero-gold-${viewport.width}-opening.png` });

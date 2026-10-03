@@ -44,7 +44,19 @@ function vercelApiDevPlugin(): Plugin {
         if (typeof handler !== 'function') return next()
 
         const chunks: Buffer[] = []
-        for await (const chunk of req) chunks.push(chunk as Buffer)
+        try {
+          for await (const chunk of req) chunks.push(chunk as Buffer)
+        } catch {
+          // Closing a tab can abort the body while the handler module loads.
+          // The disconnected request must not reject the middleware and kill Vite.
+          if (!req.aborted && !res.destroyed) {
+            res.statusCode = 400
+            res.setHeader('content-type', 'application/json')
+            res.end(JSON.stringify({ error: 'invalid_body' }))
+          }
+          return
+        }
+        if (req.aborted || res.destroyed) return
         const raw = Buffer.concat(chunks).toString('utf8')
         let body: any = undefined
         if (raw) {
