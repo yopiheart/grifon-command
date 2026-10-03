@@ -1,0 +1,44 @@
+{
+  "portrait": {
+    "sha256": "6e5aee895edf6aaf484a19137345f503afb29df93ed5e7345556f03cbf0f6e3c",
+    "integratedLufs": -13.83,
+    "truePeakDbtp": -1.41,
+    "audioPass": true,
+    "fullDecodePass": true,
+    "nearBlackIntervals": 0,
+    "actualEncodedFrameTimes": [
+      0.8,
+      1.5,
+      3.8,
+      4.4,
+      5.5,
+      8.8,
+      9.6,
+      10.5,
+      11.8,
+      12.8,
+      14.9
+    ]
+  },
+  "landscape": {
+    "sha256": "d590c1e031ad7f4d22fb85de03f06f67bf4e1183c6b2ca18223870e64cb7f6e1",
+    "integratedLufs": -13.83,
+    "truePeakDbtp": -1.41,
+    "audioPass": true,
+    "fullDecodePass": true,
+    "nearBlackIntervals": 0,
+    "actualEncodedFrameTimes": [
+      0.8,
+      1.5,
+      3.8,
+      4.4,
+      5.5,
+      8.8,
+      9.6,
+      10.5,
+      11.8,
+      12.8,
+      14.9
+    ]
+  }
+}

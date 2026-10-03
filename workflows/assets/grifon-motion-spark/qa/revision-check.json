@@ -1,0 +1,109 @@
+{
+  "pass": true,
+  "edit": "DESCRIBE -> CREATE",
+  "method": "Hyperframes snapshots; bounded RGB comparison, not pixel-identical claim",
+  "unchangedLimits": {
+    "maxChannelDifference": 1,
+    "meanAbsoluteChannelDifference": 0.02
+  },
+  "results": [
+    {
+      "format": "portrait",
+      "time": 1.5,
+      "expectedTextChange": true,
+      "maxChannelDifference": 247,
+      "meanAbsoluteChannelDifference": 1.7848668981481481,
+      "changedChannels": 86083,
+      "pixelIdentical": false
+    },
+    {
+      "format": "portrait",
+      "time": 5.5,
+      "expectedTextChange": false,
+      "maxChannelDifference": 1,
+      "meanAbsoluteChannelDifference": 0.009732992541152263,
+      "changedChannels": 60547,
+      "pixelIdentical": false
+    },
+    {
+      "format": "portrait",
+      "time": 10,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 12.8,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 14.9,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 1.5,
+      "expectedTextChange": true,
+      "maxChannelDifference": 247,
+      "meanAbsoluteChannelDifference": 3.2934354102366257,
+      "changedChannels": 139229,
+      "pixelIdentical": false
+    },
+    {
+      "format": "landscape",
+      "time": 5.5,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 10,
+      "expectedTextChange": false,
+      "maxChannelDifference": 1,
+      "meanAbsoluteChannelDifference": 0.0000014467592592592592,
+      "changedChannels": 9,
+      "pixelIdentical": false
+    },
+    {
+      "format": "landscape",
+      "time": 12.8,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 14.9,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    }
+  ],
+  "negativeControl": {
+    "edit": "BUILD -> BROKEN",
+    "rejected": true,
+    "maxChannelDifference": 235,
+    "meanAbsoluteChannelDifference": 2.6890690907921813,
+    "changedChannels": 143582,
+    "pixelIdentical": false
+  }
+}

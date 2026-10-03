@@ -12,6 +12,11 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
+- [ ] **2026-09-17 Apple reference adaptation:** secure one matching Grifon
+  project capture and review its shipped output excerpt before the replacement
+  motion preview. Detailed scene map: `assets/grifon-motion-spark/reference-analysis.md`.
+  One-off visual study; no performance evidence or pattern/preset promotion.
+
 - [x] **P9 reached 3 corroborations (2026-06-26).** E6 (authority/gastro VSL) did
   NOT corroborate (→ new candidate P10); **E7 (IM8 GLP-1 kinetic VSL) did** — Neil
   accepted it as #3 (kernel match). The `vsl` preset is now a **Gated Proposal**
@@ -309,6 +314,50 @@ lip-sync drift, impossible lighting, plastic over-clean texture).*
   accumulate. Footage realism is what carried it — never pair TTS with synthetic-looking b-roll.
 
 ## Entries
+
+### 2026-09-17 — Apple-supplied product-film reference (YouTube DDnNc60onT4, consumer technology)
+
+**Why autopsied:** Neil selected the motion style for a Grifon adaptation;
+performance is unknown. **Source:** https://www.youtube.com/watch?v=DDnNc60onT4
+(separate supplied Facebook ad id `1675348771268565`, not verified identical).
+**File:** full local `.tmp/apple-reference/DDnNc60onT4.mp4` is disposable;
+durable analysis and measured evidence are in
+`assets/grifon-motion-spark/reference-analysis.md` and `reference-evidence.json`.
+**Format:** cinematic product-feature film, measured 54.821s; approximately
+49.6s creative body followed by a black/silent tail. Exact shot count unclaimed.
+
+| Hook | Pace driver | Text | Camera | Proof | Ending |
+| --- | --- | --- | --- | --- | --- |
+| Tiny light -> aperture -> recognizable product, 0-7.8s | Macro/whole-object scale changes and feature chapters | Centered short benefit lines with traveling bright emphasis, first clear explanation around 12.5s | Axial pushes, oblique macro, grazing low views, withdrawals to full device | Camera controls -> action at 34.4-37.4s; assistant indicator -> generated note at 41-43s | Device hero then isolated brand mark around 46.8-49.6s |
+
+**Evidence:** 110 inspected frames at 0.5s intervals across the full timeline;
+FFmpeg audio decode, silence scan and 0.1s level scan; uploader effect captions.
+Not continuous viewing/listening, not a Gemini analysis, not `render_audit`.
+Visual intervals are approximate. Seven thresholded scene-change candidates
+are not an exact cut inventory. Semantic sound design remains LOW_CONFIDENCE;
+measured silence is 49.5195-54.821 at -45 dB with a 0.3s minimum.
+
+**Believability:** cinematic studio/product visuals plus human-use inserts;
+production provenance and human authenticity unverified. Performance/voice/
+lip-sync analysis not established. No believability corroboration credit.
+
+**Interpretation:** physical detail precedes a short benefit statement
+(9.8-13.8s); controls lead into a camera-view demonstration (34.4-37.4s); an AI
+indicator leads to a depicted generated note (41-43s), not independently verified
+generation. These mechanics make a product story readable;
+they do not establish conversion performance. The long pre-explanation opening
+and dim text are poor defaults for unfamiliar Grifon viewers and phone screens.
+
+**So What for Grifon:** replace the generic Spark cards with one real project:
+finished-ad glimpse -> actual input/Script/Storyboard -> matching finished clip
+-> canonical GrifonMark. Motion Director owns local composition; Viral Autopsy
+owns reference evidence. Full camera/b-roll routing and exact component/asset
+paths are in the scene map. Matching project capture and excerpt QA remain
+pending. Earlier Spark BRAND_PASS did not prove reference fidelity.
+
+**Patterns:** ONE_OFF. No Pattern Index count changes or gated proposals.
+The text-free opening differs from P7, but this performance-unverified example
+does not establish that abandoning P7 improves Grifon's ads.
 
 ### 2026-06-10 — E0 BASELINE: CURRENT EDIT.mp4 (our renderer, skincare PH)
 **Why autopsied:** own-output baseline to measure references against.

@@ -1,0 +1,109 @@
+{
+  "pass": true,
+  "edit": "YOUR PRODUCT. -> YOUR IDEA.",
+  "method": "Hyperframes snapshots; bounded RGB comparison, not pixel-identical claim",
+  "unchangedLimits": {
+    "maxChannelDifference": 1,
+    "meanAbsoluteChannelDifference": 0.02
+  },
+  "results": [
+    {
+      "format": "portrait",
+      "time": 1.5,
+      "expectedTextChange": true,
+      "maxChannelDifference": 237,
+      "meanAbsoluteChannelDifference": 6.36793643904321,
+      "changedChannels": 296434,
+      "pixelIdentical": false
+    },
+    {
+      "format": "portrait",
+      "time": 10,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 19,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 22,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "portrait",
+      "time": 24.9,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 1.5,
+      "expectedTextChange": true,
+      "maxChannelDifference": 236,
+      "meanAbsoluteChannelDifference": 7.534230163323045,
+      "changedChannels": 370064,
+      "pixelIdentical": false
+    },
+    {
+      "format": "landscape",
+      "time": 10,
+      "expectedTextChange": false,
+      "maxChannelDifference": 0,
+      "meanAbsoluteChannelDifference": 0,
+      "changedChannels": 0,
+      "pixelIdentical": true
+    },
+    {
+      "format": "landscape",
+      "time": 19,
+      "expectedTextChange": false,
+      "maxChannelDifference": 1,
+      "meanAbsoluteChannelDifference": 0.000001768261316872428,
+      "changedChannels": 11,
+      "pixelIdentical": false
+    },
+    {
+      "format": "landscape",
+      "time": 22,
+      "expectedTextChange": false,
+      "maxChannelDifference": 1,
+      "meanAbsoluteChannelDifference": 4.822530864197531e-7,
+      "changedChannels": 3,
+      "pixelIdentical": false
+    },
+    {
+      "format": "landscape",
+      "time": 24.9,
+      "expectedTextChange": false,
+      "maxChannelDifference": 1,
+      "meanAbsoluteChannelDifference": 4.822530864197531e-7,
+      "changedChannels": 3,
+      "pixelIdentical": false
+    }
+  ],
+  "negativeControl": {
+    "edit": "THE SPOTLIGHT. -> BROKEN",
+    "rejected": true,
+    "maxChannelDifference": 237,
+    "meanAbsoluteChannelDifference": 3.5931359310699587,
+    "changedChannels": 139726,
+    "pixelIdentical": false
+  }
+}

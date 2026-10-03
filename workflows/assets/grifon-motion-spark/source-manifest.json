@@ -1,0 +1,40 @@
+{
+  "spec": {
+    "duration": 15,
+    "fps": 24,
+    "copy": {
+      "describe": "DESCRIBE",
+      "build": "BUILD",
+      "launch": "LAUNCH",
+      "brand": "GRIFON",
+      "url": "GRIFON.AI"
+    },
+    "colors": {
+      "background": "#09090B",
+      "accent": "#FFCC00",
+      "text": "#F5F5F7"
+    },
+    "formats": {
+      "portrait": {
+        "width": 1080,
+        "height": 1920
+      },
+      "landscape": {
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  },
+  "assets": {
+    "public/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "workflows/assets/grifon-promo-canvas/fonts/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "workflows/assets/grifon-promo-canvas/fonts/jbmono-600.ttf": "df54dbfafba61d4911eb3dab9bba2d20531fb009f01d64dd42fa96ab862584d8"
+  },
+  "gsap": {
+    "version": "3.14.2",
+    "sha256": "19e3ad578c9c583ddf9bdca2ad87bb55c3d70b331058e28abacab898f799b2ee",
+    "source": "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
+  },
+  "renderer": "hyperframes@0.7.68",
+  "generationSpendUsd": 0
+}

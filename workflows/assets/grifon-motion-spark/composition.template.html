@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width={{WIDTH}},initial-scale=1">
+<title>Grifon Spark — {{FORMAT}}</title>
+<style>
+@font-face{font-family:Inter;src:url('{{INTER}}') format('truetype');font-weight:900;font-display:block}
+@font-face{font-family:Mono;src:url('{{MONO}}') format('truetype');font-weight:600;font-display:block}
+*{box-sizing:border-box}html,body{margin:0;width:{{WIDTH}}px;height:{{HEIGHT}}px;overflow:hidden;background:{{BG}}}
+body{font-family:Inter,sans-serif;color:{{TEXT}}}#film{position:relative;width:100%;height:100%;overflow:hidden;background:{{BG}}}
+.atmosphere{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,#28231a 0%,#141314 31%,#09090B 69%)}
+#particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.scene{position:absolute;inset:0;opacity:0;perspective:1800px}
+.anchor{position:absolute;left:50%;top:50%}
+.plate{width:900px;height:410px;border-radius:46px;background:linear-gradient(145deg,#363639 0%,#18181b 20%,#111113 72%,#252527 100%);border:2px solid #ffffff33;box-shadow:0 25px 85px #00000066,inset 0 2px 1px #ffffff30;transform-style:preserve-3d;overflow:hidden}
+.plate:before{content:'';position:absolute;inset:14px;border:1px solid #ffffff12;border-radius:34px}
+.plate:after{content:'';position:absolute;left:14%;right:14%;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#FFCC00,transparent)}
+.sheen{position:absolute;top:-160%;left:-100%;width:55%;height:400%;background:linear-gradient(90deg,transparent,#ffffff16,transparent);transform:rotate(25deg);pointer-events:none}
+.inputline{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:24px;z-index:2}
+.prompt-title{font-size:97px;line-height:1;letter-spacing:-5px}.cursor{height:91px;width:7px;background:{{GOLD}};box-shadow:0 0 20px #ffcc0066}
+.guides{position:absolute;inset:0;opacity:.4;background:linear-gradient(90deg,transparent 49.9%,#ffffff15 50%,transparent 50.1%);pointer-events:none}
+.ground{position:absolute;left:15%;width:70%;top:68%;height:3px;background:linear-gradient(90deg,transparent,#ffcc0080,transparent)}
+.build-title{position:absolute;top:23%;left:0;right:0;text-align:center;font-size:140px;letter-spacing:-8px;line-height:1;margin:0}
+.cards{position:absolute;left:50%;top:51%;width:0;height:0;transform-style:preserve-3d}
+.panel{position:absolute;width:740px;height:235px;padding:44px 48px;display:flex;align-items:center;gap:44px;border-radius:28px;border:1px solid #ffffff30;background:linear-gradient(132deg,#303033,#1a1a1d 35%,#111113);box-shadow:0 22px 65px #00000060,inset 0 1px 1px #ffffff20;transform-style:preserve-3d}
+.panel:after{content:'';position:absolute;bottom:0;left:14%;right:14%;height:2px;background:linear-gradient(90deg,transparent,#ffcc0077,transparent)}
+.panel-icon{width:112px;height:112px;flex:none;color:{{GOLD}}}
+.strokes{display:flex;flex-direction:column;gap:21px;width:100%}.stroke{height:10px;border-radius:4px;background:#f5f5f735}.stroke:first-child{width:90%;background:#f5f5f7b0}.stroke:nth-child(2){width:70%}.stroke:nth-child(3){width:47%;background:#ffcc0090}
+.launch-word{position:absolute;left:0;right:0;top:43%;font-size:154px;letter-spacing:-9px;text-align:center;line-height:1}
+.wordline{position:absolute;left:25%;right:25%;height:3px;top:55%;background:linear-gradient(90deg,transparent,{{GOLD}},transparent)}
+.closing{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:42px}
+.mark{display:flex;align-items:center;flex-direction:column;gap:36px}
+.badge{width:300px;height:300px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid {{GOLD}};background:transparent}
+.badge img{height:74%;width:auto;object-fit:contain}.brand{margin:0;font-size:120px;letter-spacing:-6px;line-height:1;font-style:italic}
+.separator{height:3px;width:110px;background:{{GOLD}}}.url{font-family:Mono,monospace;font-size:43px;letter-spacing:6px;margin:0;color:#d4d4d8;line-height:1.2}
+.landscape .plate{width:1190px;height:450px}.landscape .prompt-title{font-size:130px}.landscape .cursor{height:118px}
+.landscape .ground{top:77%;left:22%;width:56%}.landscape .build-title{font-size:137px;top:17%}
+.landscape .cards{top:55%}.landscape .panel{width:410px;height:350px;padding:42px;flex-direction:column;align-items:flex-start;gap:36px}
+.landscape .panel-icon{width:96px;height:96px}.landscape .launch-word{font-size:195px;top:38%}.landscape .wordline{top:62%;left:32%;right:32%}
+.landscape .closing{gap:35px}.landscape .mark{flex-direction:row;gap:45px}.landscape .badge{width:245px;height:245px}.landscape .brand{font-size:151px;letter-spacing:-8px}.landscape .url{font-size:64px}.landscape .separator{width:140px}
+</style></head><body>
+<main id="film" class="{{FORMAT}}" data-composition-id="main" data-width="{{WIDTH}}" data-height="{{HEIGHT}}" data-start="0" data-duration="15" data-fps="24">
+<div class="atmosphere"></div><canvas id="particles" width="{{WIDTH}}" height="{{HEIGHT}}"></canvas>
+<div id="s1" class="scene"><div class="ground"></div><div class="plate anchor"><div class="guides"></div><div class="sheen"></div><div class="inputline"><span class="prompt-title" data-copy="describe">{{DESCRIBE}}</span><i class="cursor"></i></div></div></div>
+<div id="s2" class="scene"><h1 class="build-title" data-copy="build">{{BUILD}}</h1><div class="cards">
+<div class="panel">{{SCRIPTICON}}<div class="strokes"><i class="stroke"></i><i class="stroke"></i><i class="stroke"></i></div></div>
+<div class="panel">{{IMAGEICON}}<div class="strokes"><i class="stroke"></i><i class="stroke"></i><i class="stroke"></i></div></div>
+<div class="panel">{{VIDEOICON}}<div class="strokes"><i class="stroke"></i><i class="stroke"></i><i class="stroke"></i></div></div>
+</div></div>
+<div id="s3" class="scene"><div class="launch-word" data-copy="launch">{{LAUNCH}}</div><div class="wordline"></div></div>
+<div id="s4" class="scene"><div class="closing"><div class="mark"><span class="badge"><img class="clip" id="closing-logo" src="{{LOGO}}" alt="" data-start="11.5" data-duration="3.5" data-track-index="1"></span><p class="brand">{{BRAND}}</p></div><div class="separator"></div><p class="url">{{URL}}</p></div></div>
+</main><script src="vendor/gsap.min.js"></script><script>
+window.__timelines={};
+const wide=document.querySelector('#film').classList.contains('landscape');
+const W={{WIDTH}},H={{HEIGHT}},canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+const clock={t:0};
+const fract=x=>x-Math.floor(x),seed=i=>fract(Math.sin(i*127.1+311.7)*43758.5453);
+const smooth=(a,b,t)=>{const x=Math.max(0,Math.min(1,(t-a)/(b-a)));return x*x*(3-2*x);};
+// Pure time sampling makes particles identical on seeks and parallel render workers.
+function draw(t){
+ ctx.clearRect(0,0,W,H);const cx=W/2,cy=H*.51;
+ const rise=smooth(0,1.5,t),gather=smooth(3,5,t),launch=smooth(8.6,10.5,t),settle=smooth(11.2,13,t);
+ const intensity=(.38+.45*gather)*(1-.74*settle);
+ for(let i=0;i<160;i++){
+  const a=seed(i+4)*Math.PI*2,r=110+seed(i+22)*Math.min(W,H)*.70;
+  const orbit=a+t*(.035+seed(i+30)*.025);
+  const stream=launch*(1-settle),depth=.3+seed(i+800)*.7;
+  const x=cx+Math.cos(orbit)*r*(1+.35*stream)+Math.sin(t*.3+i)*18;
+  const y=cy+Math.sin(orbit)*r*(wide?.54:1.35)-stream*H*.18*depth;
+  const alpha=(.15+seed(i+55)*.6)*intensity*rise;
+  ctx.fillStyle=`rgba(255,204,0,${alpha})`;ctx.beginPath();ctx.arc(x,y,(.7+seed(i+120)*1.5)*depth,0,Math.PI*2);ctx.fill();
+ }
+ // An authored elliptical light path carries the eye through the arrangement.
+ const arcIn=smooth(3.6,4.8,t)*(1-smooth(11.2,12.5,t));
+ if(arcIn>0){
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(-.23+launch*.5);ctx.scale(1,wide?.48:1.3);
+  for(let j=0;j<3;j++){ctx.beginPath();ctx.strokeStyle=`rgba(255,204,0,${arcIn*(.20-j*.055)})`;ctx.lineWidth=j===0?2:1;ctx.ellipse(0,0,Math.min(W,H)*(.40+j*.05)*(1+launch*.7),Math.min(W,H)*(.40+j*.05)*(1+launch*.7),0,-2.6+t*.3,-.2+t*.3);ctx.stroke();}
+  ctx.restore();
+ }
+ const glow=ctx.createRadialGradient(cx,cy,5,cx,cy,Math.min(W,H)*.63);
+ glow.addColorStop(0,`rgba(255,204,0,${.05*rise+.075*launch*(1-settle)})`);glow.addColorStop(1,'rgba(255,204,0,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+}
+const tl=gsap.timeline({paused:true});
+tl.to(clock,{t:15,duration:15,ease:'none',onUpdate:()=>draw(clock.t)},0);
+tl.set('.scene',{opacity:0},0).set('#s1',{opacity:1},0);
+tl.set('.anchor',{xPercent:-50,yPercent:-50},0);
+tl.fromTo('.plate',{rotationX:52,rotationY:-18,rotationZ:-12,scale:1.26,opacity:.12},{rotationX:8,rotationY:-4,rotationZ:-3,scale:1,opacity:1,duration:1.8,ease:'power3.out'},0);
+tl.fromTo('.inputline',{opacity:0,y:35},{opacity:1,y:0,duration:.75,ease:'power3.out'},.25);
+tl.fromTo('.prompt-title',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.65,ease:'power2.out'},.32);
+tl.fromTo('.ground',{scaleX:0,opacity:0},{scaleX:1,opacity:.5,duration:1.1,ease:'power2.out'},.35);
+tl.fromTo('.sheen',{x:0},{x:wide?2900:2200,duration:2,ease:'power2.inOut'},.15);
+tl.to('.cursor',{opacity:0,duration:.18,repeat:3,yoyo:true},2.1);
+tl.to('.plate',{rotationX:30,rotationY:0,rotationZ:0,scale:.56,y:-70,opacity:0,duration:.9,ease:'power3.inOut'},3.2);
+tl.to('.ground',{opacity:0,duration:.4},3.5).set('#s1',{opacity:0},4.1);
+tl.set('#s2',{opacity:1},3.15);
+tl.fromTo('.build-title',{y:40,opacity:0},{y:0,opacity:1,duration:.65,ease:'power3.out'},3.8);
+document.querySelectorAll('.panel').forEach((p,i)=>{
+ const x=wide?(i-1)*460:0,y=wide?0:(i-1)*270;
+ tl.set(p,{xPercent:-50,yPercent:-50},0);
+ tl.fromTo(p,{x:0,y:0,z:-500,rotationX:wide?35:45,rotationY:(i-1)*15,rotationZ:(i-1)*-8,scale:.42,opacity:0},{x,y,z:0,rotationX:0,rotationY:0,rotationZ:0,scale:1,opacity:1,duration:1.2,ease:'power3.out'},3.15+i*.10);
+ tl.fromTo(p.querySelectorAll('.stroke'),{scaleX:0,transformOrigin:'left'},{scaleX:1,duration:.7,stagger:.1,ease:'power3.out'},4.65+i*.15);
+ tl.to(p,{x:x*(wide?2.7:1)+(wide?0:(i-1)*650),y:y*2-150,z:300,rotationX:-20,rotationY:(i-1)*-25,scale:1.2,opacity:0,duration:.95,ease:'power3.in'},8.3+i*.10);
+});
+tl.to('.build-title',{opacity:0,y:-40,duration:.45},8.4).set('#s2',{opacity:0},9.55);
+tl.set('#s3',{opacity:1},9.05);
+tl.fromTo('.launch-word',{scale:.65,opacity:0,y:55},{scale:1,opacity:1,y:0,duration:.75,ease:'power3.out'},9.05);
+tl.fromTo('.wordline',{scaleX:0},{scaleX:1,duration:.85,ease:'power3.inOut'},9.25);
+tl.to('.launch-word',{scale:1.15,opacity:0,y:-40,duration:.55,ease:'power2.in'},11.0);
+tl.to('.wordline',{scaleX:0,opacity:0,duration:.5},11.15).set('#s3',{opacity:0},11.65);
+tl.set('#s4',{opacity:1},11.5);
+tl.fromTo('.closing',{opacity:0,scale:.89,y:35},{opacity:1,scale:1,y:0,duration:.85,ease:'power3.out'},11.5);
+tl.fromTo('.separator',{scaleX:0},{scaleX:1,duration:.55,ease:'power3.out'},12);
+tl.fromTo('.url',{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:'power3.out'},12.1);
+tl.set('#film',{opacity:1},15);window.__timelines.main=tl;draw(0);
+</script></body></html>

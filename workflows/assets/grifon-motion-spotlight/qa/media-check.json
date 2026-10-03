@@ -1,0 +1,118 @@
+{
+  "portrait": {
+    "sha256": "f914f7f8b5c764ab205775218fb9b02e9da0f084556e389ad578a66f58c01e0b",
+    "integratedLufs": -13.97,
+    "truePeakDbtp": -2.97,
+    "audioPass": true,
+    "fullDecodePass": true,
+    "nearBlackIntervals": 0,
+    "actualEncodedFrameTimes": [
+      0.8,
+      1.5,
+      3.5,
+      6.7,
+      7.8,
+      10,
+      14,
+      16.4,
+      17.3,
+      19,
+      20.7,
+      22,
+      24.9
+    ],
+    "boundaryFrameIndices": [
+      396,
+      397,
+      398,
+      402,
+      408,
+      415,
+      598,
+      599
+    ],
+    "sourceFrameMatches": [
+      {
+        "sourceTime": 1,
+        "exportTime": 8.5,
+        "bestOffset": -0.033,
+        "meanAbsoluteChannelDifference": 2.4024479166666666
+      },
+      {
+        "sourceTime": 4,
+        "exportTime": 11.5,
+        "bestOffset": -0.033,
+        "meanAbsoluteChannelDifference": 2.3487425595238096
+      },
+      {
+        "sourceTime": 8,
+        "exportTime": 15.5,
+        "bestOffset": -0.033,
+        "meanAbsoluteChannelDifference": 1.5955357142857143
+      }
+    ],
+    "sourceMatchLimit": 4,
+    "frozenNegativeControl": {
+      "rejected": true,
+      "meanAbsoluteChannelDifference": 62.48638392857143
+    }
+  },
+  "landscape": {
+    "sha256": "074429a4d1421d46e510ae13e407cce4b6260f9cba879661c5db7421aa20a46c",
+    "integratedLufs": -13.97,
+    "truePeakDbtp": -2.97,
+    "audioPass": true,
+    "fullDecodePass": true,
+    "nearBlackIntervals": 0,
+    "actualEncodedFrameTimes": [
+      0.8,
+      1.5,
+      3.5,
+      6.7,
+      7.8,
+      10,
+      14,
+      16.4,
+      17.3,
+      19,
+      20.7,
+      22,
+      24.9
+    ],
+    "boundaryFrameIndices": [
+      396,
+      397,
+      398,
+      402,
+      408,
+      415,
+      598,
+      599
+    ],
+    "sourceFrameMatches": [
+      {
+        "sourceTime": 1,
+        "exportTime": 8.5,
+        "bestOffset": -0.033,
+        "meanAbsoluteChannelDifference": 3.3579910714285712
+      },
+      {
+        "sourceTime": 4,
+        "exportTime": 11.5,
+        "bestOffset": -0.033,
+        "meanAbsoluteChannelDifference": 3.27046875
+      },
+      {
+        "sourceTime": 8,
+        "exportTime": 15.5,
+        "bestOffset": -0.067,
+        "meanAbsoluteChannelDifference": 2.0943005952380953
+      }
+    ],
+    "sourceMatchLimit": 4,
+    "frozenNegativeControl": {
+      "rejected": true,
+      "meanAbsoluteChannelDifference": 62.48638392857143
+    }
+  }
+}
