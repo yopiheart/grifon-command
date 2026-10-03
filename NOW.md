@@ -81,7 +81,9 @@ Kling4 API previously Coming Soon; Omni rejected; zero Kling/Higgsfield calls.
 Final syntax/default dry, domain, voice-sync, PowerShell ASCII, artifact anchors,
 whitespace and check:codex26tests PASS. Build/Vitest SETUP BLOCKED (root tsc
 absent / Vitest uncached); no reinstall, application/E2E/paid regression untouched.
-Next: Neil watches/listens and judges polish; no reroll or new input authorized.
-Recurring creators may need approved supported character references in a future
-separate exact test. Current15s sample cast is consistent without a sheet.
-Grifon integration remains separate; Seedance UI locked. Other project work untouched.
+Neil rated current proof9/10 and accepts the baseline; SFX/music polish is lacking.
+Feedback/priorities: assets/vivo-x80-ugc/user-review.json; no new paid/audio work.
+Future: reusable shot plans, cast/voice refs, provider-specific comparisons and sound
+finishing. Blender ran headless; universal prompt/ref-to-3D Grifon UI is not built.
+Integration must preserve native audio that renderFfmpeg currently discards.
+Seedance UI remains locked. Other project work untouched.
