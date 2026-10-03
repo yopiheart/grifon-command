@@ -29,6 +29,9 @@ or tuned production prompt/model changes; no manual deployment or merge.
   existing MP4 to their connected Google Drive (no new generation).
   https://drive.google.com/file/d/1jAlMSPdox9jTQnXV9U8uMyml6Eve5-Tt/view?usp=drivesdk
   Connector readback: video/mp4,960352bytes,sharedfalse,owner-only permission.
+- Mobile comparison copies (existing files, no new generation), readback owner-only:
+  Blender720p1414616bytes: https://drive.google.com/file/d/1GLEWRq1dYLRNK6U5B57z-YQxhogJe4m5/view?usp=drivesdk
+  Neutral guide882241bytes: https://drive.google.com/file/d/1K5rT7tLl5Bg6bZf5MMY-uRpw7u9-KicG/view?usp=drivesdk
 
 ## Live operation and cost evidence
 - Model: dreamina-seedance-2-0-260128; task cgt-20261003202712-nlxv7 succeeded.
