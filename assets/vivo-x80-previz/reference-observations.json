@@ -1,0 +1,47 @@
+{
+  "source": {
+    "url": "https://www.youtube.com/watch?v=ByAi9BGHMRQ",
+    "observedTitle": "iPhone 15 Plus Face ID | Nice Try! | Apple Malaysia Advertisement",
+    "uploader": "wan",
+    "inspectionDate": "2026-10-03",
+    "playerDurationSeconds": 30,
+    "method": "Manual browser player screenshots at 0,3,6,9,12,15,18,21,24,27 seconds, plus exported auto captions.",
+    "limits": "Third-party repost. Sampled visual inspection; exact cut boundaries, lens values and full audio have not been measured. No paid analyzer. No performance inference from views."
+  },
+  "captions": {
+    "type": "YouTube auto-generated English",
+    "observations": [{"seconds":4,"text":"[Music]"},{"seconds":10,"text":"[Laughter]"},{"seconds":12,"text":"[Music]"}],
+    "ignored": "The 28-second fragment is an unreliable automatic transcription; it is not used as dialogue."
+  },
+  "cameraAngleMap": [
+    {"sampleSeconds":0,"framing":"Family at dining table, medium group","height":"Seated eye level","lensFeel":"Normal perspective, shallow background","motion":"Not established by this still","job":"Establish social setting and attention."},
+    {"sampleSeconds":3,"framing":"Phone unattended on table, blurred foreground person","height":"Near table","lensFeel":"Close insert with shallow depth","motion":"Not established by this still","job":"Introduce the prop and opportunity; angle switches attention from people to phone."},
+    {"sampleSeconds":6,"framing":"Relative face close-up, glancing sideways","height":"Eye level","lensFeel":"Compressed close-up","motion":"Not established by this still","job":"Make intent legible before the attempt."},
+    {"sampleSeconds":9,"framing":"Relative chest-up holding phone toward face","height":"Eye level","lensFeel":"Normal to portrait","motion":"Phone pose differs from insert; exact path unmeasured","job":"Show the attempted recognition action."},
+    {"sampleSeconds":12,"framing":"Two people at table, one still holding phone","height":"Eye level","lensFeel":"Normal perspective","motion":"Not established by this still","job":"Reaction provides comic punctuation."},
+    {"sampleSeconds":15,"framing":"Several relatives gathering around the phone","height":"Eye level","lensFeel":"Wider group coverage","motion":"Not established by this still","job":"Escalate the social attempt rather than repeat a product orbit."},
+    {"sampleSeconds":18,"framing":"Tight two-person close-up, another relative near phone","height":"Eye level","lensFeel":"Close reaction coverage","motion":"Not established by this still","job":"Vary expression and keep the phone action in context."},
+    {"sampleSeconds":21,"framing":"Young owner seated across table, foreground shoulder","height":"Seated eye level","lensFeel":"Over-shoulder portrait perspective","motion":"Not established by this still","job":"Reveal the person who resolves the situation."},
+    {"sampleSeconds":24,"framing":"Owner holds phone with Face ID text over picture","height":"Eye level","lensFeel":"Portrait perspective","motion":"Not established by this still","job":"Feature payoff follows the character story."},
+    {"sampleSeconds":27,"framing":"Family table wide with final tagline","height":"Above seated eye level","lensFeel":"Wide establishing perspective","motion":"Not established by this still","job":"Resolve group story and brand message together."}
+  ],
+  "insertInventory": [{"sampleSeconds":3,"item":"Unattended phone on table","purpose":"Attention and motivation cue"}],
+  "adaptation": {
+    "workingTitle":"MY TURN",
+    "format":"15-second portrait creator-led commercial previz",
+    "borrow":"Character intent, prop insert, attempt, reaction coverage, escalation, owner payoff, product held in scene.",
+    "change":"Two adult gray proxies at a contemporary cafe/table; fingerprint attempt and registered-owner touch instead of Apple's Face ID story. Original shot timings and camera motion.",
+    "claimBoundary":"Vivo X80 supports in-display fingerprint scanning. This is an illustrative storyboard, not measured authentication latency or spoof resistance. Do not claim TrueDepth or Face ID equivalence."
+  },
+  "product": {
+    "name":"vivo X80, standard global glass model",
+    "dimensionsMm":[164.95,75.23,8.30],
+    "rearCameraCount":3,
+    "layoutObservation":"Official render: rectangular Cloud Window upper back, large circular camera area to its left; large primary lens upper-left within circle, two smaller lenses lower-left and lower-right, flash outside circle at rectangle right; centered front punch-hole. Proxy details approximate.",
+    "specSource":"https://www.vivo.com/ph/products/param/x80",
+    "visualSource":"https://asia-exstatic-vivofs.vivo.com/PSee2l50xoirPK7y/1653640186117/ff99d920ac12abe286fd4dc0ed7078d3.png",
+    "finishBoundary":"Clay model supplies scale, silhouette and blocking only. Real phone appearance must come from a separate product reference in a later approved AI test."
+  },
+  "paidCalls":0,
+  "patternPromotion":false
+}

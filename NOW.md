@@ -1,19 +1,39 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, Blender-first directing / completed Seedance 2.0 proof**
+**Stamped: 2026-10-04, Vivo X80 storyboard delivered / prior Seedance proof retained**
 
 ## Current work and scope
 Branch: `codex/blender-product-reveal`; draft PR157:
 https://github.com/yopiheart/grifon-command/pull/157.
 Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
-Previous commits: a8f3d9ad local film, 80ab3036 handoff, e517a9c1 480p spec.
-Tested live-proof implementation: 9e3808ab; remote branch/PR head verified on GitHub.
 Neil approved the original local proof, then one direct Seedance 2.0 attempt:
 same hashed camera clip/hero image/prompt, nominal six seconds, silent 480p,
 maximum $5, no retry/reroll/funding/substitution. Completed exactly once.
-Local production tools/assets/viewer only. No application/wizard/provider-handler
-or tuned production prompt/model changes; no manual deployment or merge.
+Local tools/assets only; no app/tuned changes, deployment or merge.
 
-## Delivered result
+## New Vivo X80 directing sample
+Neil rejected the bottle study as too visually similar and requested 3D as a guide
+for creator UGC, minimum15s/multiple angles. Supplied Apple reference ByAi9BGHMRQ
+is a30s Face ID family-reaction ad, manually inspected at10timestamps with captions.
+New MY TURN adaptation uses documented X80 in-display fingerprint, adult gray
+owner/friend proxies, placement/pickup/reaction/offer/unlock/in-hand hero.
+- assets/vivo-x80-previz: preview.mp4, silent camera-guide.mp4, nine-shot storyboard,
+  portable scene.blend, actual decode/geometry/review evidence and source observations.
+- Both videos fully decoded:360distinct contiguous frames,24fps,15.000s,480x854.
+  Nine animated cameras; original local tick bed; zero new AI/provider calls.
+- Independent sampled creative review accepts gray storyboard; source review clear.
+  Actual local Chromium playback ended at15s without media error;390px DOM fit.
+  Native mobile/full-motion taste and finished human UGC remain untested.
+- Continuous handoff is elided on a cut, with33cm pose shift explicitly documented.
+- Mobile preview1026959bytes:
+  https://drive.google.com/file/d/1SbHUAKyA89f1NtFEB51HtEThTWCTSP3W/view?usp=drivesdk
+- Storyboard509880bytes:
+  https://drive.google.com/file/d/19jhGKQWdDGcs-1l6fM65pvhMf_ouEx7y/view?usp=drivesdk
+  Both Drive metadata readbacks: matching bytes/MIME, owner only,sharedfalse.
+- Local render410s; syntax/whitespace/FFmpeg pass; build/Vitest setup-blocked below.
+- Future AI finish needs its own exact changed-input paid spec approval; preview only
+  was authorized here. Do not reuse exhausted bottle runner/ledger.
+
+## Previous bottle result retained
 - Original NOIR / 01 Blender finish: six seconds, 1280x720 / 24fps with sound.
 - Same-scene neutral camera reference, portable editable scene and style frames.
   Original approved film/reference/hero/scene bytes remain unchanged.
@@ -22,9 +42,7 @@ or tuned production prompt/model changes; no manual deployment or merge.
   Native864x496, 24fps, 145 distinct contiguous frames, silent; fully decoded.
   Measured6.041667s (+one frame); nominal six-second tolerance accepted,
   strict6.000s not achieved. No trimming or replacement asset.
-- `artifacts/blender-reveal.html`: offline three-way timestamp-preserving viewer,
-  AI default, Blender finish/guide, actual MP4 downloads and editable scene.
-  About12.8MB; generated only from committed source assets and QA evidence.
+- `artifacts/blender-reveal.html`:12.8MB offline three-way viewer and exact downloads.
 - Mobile delivery: user requested a downloadable/watchable link; uploaded the
   existing MP4 to their connected Google Drive (no new generation).
   https://drive.google.com/file/d/1jAlMSPdox9jTQnXV9U8uMyml6Eve5-Tt/view?usp=drivesdk
@@ -40,9 +58,8 @@ or tuned production prompt/model changes; no manual deployment or merge.
 - 120946 completion tokens; public $4.30/M rate gives $0.5200678 generation
   estimate. Actual invoice, staging charge and balance remain unverified.
   Do not call the $5 local guard a provider dollar hardcap or verified total bill.
-- Download initially rejected the returned CDN by exact-host guard. Added only
-  authenticated task-returned ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com.
-  GET-only resume: two GETs, zero new paid POST/upload; no signed URLs saved.
+- Exact task-returned CDN allowed for GET-only recovery; two GETs, zero paid
+  POST/upload, no signed URLs saved. Recovery and sanitized evidence retained.
 - Sanitized run/preflight/download recovery/media evidence are under assets/blender-reveal.
   Actual ledger remains ignored at .tmp/byteplus-motion-transfer/attempt.json.
   NEVER --execute again for this study. Existing task recovery uses --resume only.
@@ -55,27 +72,19 @@ or tuned production prompt/model changes; no manual deployment or merge.
   Independent24/24 fake-only guards PASS, including exact CDN GET-only recovery,
   hostile host/userinfo rejection, auth/capability withholding and one-attempt ledger.
   Reproducible: node tools/tests/byteplus-motion-transfer-guards.mjs. No real env/network.
-- Independent full decode/extraction/contact sheet:26 local commands exit0.
-  Sampled occlusion, blade clearance, parallax and hero framing broadly match.
-  One coherent bottle in12samples; NOIR/01/COLD BREW readable in native hero stills.
-  Exact identity PARTIAL: cap/label proportions vary; fine volume text not preserved
-  confidently. Full continuous-motion taste and client approval remain pending.
-- Three-way viewer mobile390x844/desktop browser gate PASS: layout, playback,
-  aligned source swaps, silent controls, mute/volume restore, exact-byte downloads,
-  no page/CSP errors or external page requests. Evidence appended to output QA.
-  Screenshots in assets/blender-reveal/qa; real Android WebView remains untested.
-- Builder/finalize, Node syntax, domain292/0drift, PowerShell ASCII, artifact-anchor
-  and diff whitespace checks PASS. Original Blender geometry/render gates retained.
+- Prior independent decode/extraction:26commands exit0.12samples broadly match
+  motion; NOIR/01/COLD BREW readable. Identity PARTIAL (cap/label/fine text).
+  Full continuous-motion taste and client approval remain pending.
+- Prior viewer mobile390x844/desktop gate PASS: playback, aligned swaps, controls,
+  exact downloads, no page/CSP errors. QA retained; native Android untested.
+- Prior syntax/domain/ASCII/anchor/whitespace PASS; original geometry gates retained.
 - Root build attempted: SETUP BLOCKED (tsc absent). Offline Vitest attempt:
   SETUP BLOCKED (not installed in this worktree). No dependency installation.
   Application code unchanged; app E2E/paid regression switches not enabled.
 
 ## Remaining decision
-This proves a direct Blender camera-guide + Seedance finish path without Higgsfield.
-For client work, protect exact product label/geometry with Blender/compositing.
-Grifon UI integration remains separate; Seedance UI is still locked in this checkout.
-No further generation, reroll, model replacement, funding, publish or merge authorized.
+User reviews Vivo 3D sample first; no new human UGC generation submitted.
+Keep gray guide separate from appearance references in a later approved AI test.
+Grifon integration remains separate; Seedance UI is locked. No publish/deploy/merge.
 
-## Other work retained
-Original hero-film studio-pilot and separate hero-genjutsu checkout untouched.
-Recovery/motion PR history remains in base. Oceanides assets/work remain separate.
+Studio-pilot, hero-genjutsu, recovery/motion history and Oceanides untouched.

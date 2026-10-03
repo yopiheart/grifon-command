@@ -1,0 +1,32 @@
+{
+  "scope": "First local 3D storyboard preview. Finished human UGC remains untested.",
+  "paidCalls": 0,
+  "independentCreativeReview": {
+    "agent": "/root/byteplus_test_runner",
+    "verdict": "Ready for requested gray storyboard preview",
+    "evidence": "All nine settled midpoint stills and actual encoded boundary frames, including ownership1/42, lock115/144, offer228, owner229, success270 and final hero.",
+    "limits": "Sampled visual inspection, simplified acting and illustrative screen UI. Transfer is elided on the cut; continuous handoff is not demonstrated."
+  },
+  "independentSourceReview": {
+    "agent": "/root/blender_reveal/scene_script_review/cli_portability_review",
+    "verdict": "No remaining substantive source/evidence-path issue",
+    "evidence": "Saved scene-relative child render path, actual EEVEE sample property, verify opens saved scene, valid frame CLI limits, actual decoded counts/timebase/dimensions/contiguous PTS.",
+    "limits": "Reviewer inspected source; root and builder ran binaries."
+  },
+  "rootFullDecode": {"previewExitCode": 0, "cameraGuideExitCode": 0, "commandClass": "Existing FFmpeg -v error -i <local MP4> -f null -"},
+  "browserPlayback": {
+    "source": "Actual local preview.mp4 in in-app Chromium",
+    "width": 480, "height": 854, "durationSeconds": 15,
+    "playingObservedAtSeconds": 6.40871,
+    "endedObservedAtSeconds": 15,
+    "mediaError": null,
+    "mobileViewport": {"width":390,"height":844,"videoCssWidth":390,"videoCssHeight":693.875},
+    "limits": "Functional playback and DOM fit confirmed. Native Android/iOS playback and full continuous-motion taste remain untested."
+  },
+  "mobileDelivery": [
+    {"kind":"preview","fileId":"1SbHUAKyA89f1NtFEB51HtEThTWCTSP3W","url":"https://drive.google.com/file/d/1SbHUAKyA89f1NtFEB51HtEThTWCTSP3W/view?usp=drivesdk","mimeType":"video/mp4","bytes":1026959,"metadataReadback":"passed","shared":false,"permissions":"owner only"},
+    {"kind":"storyboard","fileId":"19jhGKQWdDGcs-1l6fM65pvhMf_ouEx7y","url":"https://drive.google.com/file/d/19jhGKQWdDGcs-1l6fM65pvhMf_ouEx7y/view?usp=drivesdk","mimeType":"image/png","bytes":509880,"metadataReadback":"passed","shared":false,"permissions":"owner only"}
+  ],
+  "applicationChanges": false,
+  "originalBottleFilesChanged": false
+}
