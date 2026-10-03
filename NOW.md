@@ -5,6 +5,8 @@
 Neil approved a polished six-second product-reveal proof after the Blender /
 Higgsfield workflow evaluation, using no Higgsfield and no paid AI operation.
 Branch: `codex/blender-product-reveal`, based on main `3da5bc7b` (PR154 merged).
+Implementation commit: `a8f3d9ad`; draft PR157:
+https://github.com/yopiheart/grifon-command/pull/157.
 Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
 Scope: local production tools, fictional NOIR / 01 assets and an offline viewer.
 No application, wizard, provider handler, tuned production prompt, billing,
@@ -40,6 +42,7 @@ deployment or production-data changes. No paid API calls or external media uploa
 - Domain-language and PowerShell ASCII checks: PASS, exit 0.
 - Artifact-anchor check: PASS outside sandbox; initial child Git EPERM was setup,
   not missing tracked evidence. Existing anchored twin is unchanged.
+- Staged `git diff --cached --check`: PASS, exit 0; only this 21-file slice committed.
 - Final browser/mobile gate: PASS via configured Playwright MCP 0.0.80, isolated
   headless Chrome. 390x844 / desktop screenshots, decode, transport, source swaps,
   native mute/zero-volume restore and exact-byte downloads passed. No page/CSP
@@ -47,12 +50,15 @@ deployment or production-data changes. No paid API calls or external media uploa
   Evidence/screenshots: `assets/blender-reveal/browser-verification.json`, `qa/`.
   This proves player behavior; continuous-motion taste and audio listening are human.
 - App build/unit/e2e suites NOT RUN: no app code changed; paid/live switches unused.
+- PR157 implementation revision: reported Vercel / Vercel Preview Comments statuses
+  SUCCESS. These automated preview statuses are not evidence of application suites.
 
 ## NEXT ACTION
-Review/stage only this slice, commit/push a draft PR, and show the local film/viewer
-to Neil. Browser and visual gates passed; final evidence is being archived.
-Then obtain exact-spec approval before any paid motion-transfer test. Check funded
-account access and current bounded cost; stop if new funding or extra fees are needed.
+Local proof and verification evidence are committed/pushed in draft PR157.
+Offline viewer opening was queued in Codex; no manual deploy or merge was run.
+Neil reviews the film and sound, then approves or rejects the exact motion-transfer
+spec before any paid test. Check funded account access and current bounded cost;
+stop if new funding or extra fees are needed.
 AI motion transfer, human visual/sound approval and Grifon integration remain pending.
 No merge, deployment or publication is authorized.
 
