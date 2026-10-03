@@ -6,6 +6,10 @@ This adds a 24-design production catalog, eight original procedural pilot
 effects and a separate film audition. The original approved export is retained.
 No paid synthesis, new stock downloads or FilmCrux samples are used.
 
+**Creative verdict, 2026-10-04: Neil rejected this SFX pilot after audition.**
+Retain it as an experiment. Music, narration and visuals remain approved;
+Neil will generate and manually choose replacement effects in ElevenLabs.
+
 The target is convincing weight, material, timing and space. A claim of AAA or
 FilmCrux-equivalent quality requires listening evidence; it is not established
 by waveform measurements. The assistant has not auditioned FilmCrux demos or

@@ -1,10 +1,11 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, original SFX pilot independently verified**
+**Stamped: 2026-10-04, rejected SFX pilot; manual sound selection next**
 
 Neil approved the upgraded film's music and Aira voiceover. He requested
 stronger SFX and a reusable library for commercial ads, UGC and cinematic
 edits, citing FilmCrux without buying its bundle. We read its product page;
 no reference-demo listening or proprietary sample copying is claimed.
+Neil rejected the original SFX pilot and chose manual ElevenLabs sound selection.
 
 ## Location and protected work
 
@@ -65,8 +66,8 @@ late decode, rollback, missing/empty gates, changed inputs/candidate and
 differing release preserve prior files. Original weak gate fails the control.
 Final independent actual-file smoke PASS; no actionable findings remain.
 No fresh broad app build/test:
-no application code changed. Human headphones/phone audition remains required
-before premium/AAA claims or accepting the new SFX.
+No application code changed. Neil rejected this SFX pilot after audition.
+The next sound inputs should be the files he manually selects in ElevenLabs.
 
 ## Consumed voice approval
 
@@ -81,8 +82,8 @@ SFX pass. Existing positioned voice/music/master stems are frozen inputs.
 
 ## Next action
 
-User SFX audition remains the next creative decision; approved files are retained.
-The new film and original pilot/source ZIP are the draftPR156 handoff.
+Provide scene-timed English SFX prompts; Neil generates/selects sounds himself.
+Music/VO/visual approval stands. Future mix should use his selected SFX files.
 No merge/deploy authorized. Earlier prototype HTML origin4186 was blocked by
 automatic review pending explicit permission; do not bypass it. Native media
 is the delivery route, not an asserted browser or physical-phone playback pass.
