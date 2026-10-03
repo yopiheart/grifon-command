@@ -5,7 +5,8 @@
 Branch: codex/oceanides-stp-explainer, based on profile head d3d08102.
 Draft PR153: https://github.com/yopiheart/grifon-command/pull/153, stacked on PR152.
 No merge, deployment or public publication requested.
-Email delivery requested; exact recipient address pending. No email sent.
+Email delivery ON HOLD by Neil's explicit request. No email or draft sent/created.
+Latest profile PDF/video prepared locally; resume sending only if Neil requests it.
 
 ## Current narrated video
 Current deliverable under clients/oceanides/stp-explainer/output/:
