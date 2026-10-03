@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "output": "grifon-full-before-after-1080p.mp4",
+  "bytes": 3824847,
+  "sha256": "695f7684a3f4710df6d7cf1ae6bf71ee98caa3c185c4018c26344df47401112d",
+  "width": 1920,
+  "height": 1080,
+  "fps": "30/1",
+  "frames": 987,
+  "duration": 32.9,
+  "audioPayloadSha256": "095701ccc7fe7292c70f888a1145c15736fa64648f98c71ef24f1f195d536998",
+  "audioPreserved": true,
+  "fullDecode": true,
+  "framing": "Both exact exports scaled to 944x531, without cropping or time changes; labels belong to comparison only"
+}

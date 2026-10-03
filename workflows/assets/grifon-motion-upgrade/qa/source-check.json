@@ -1,0 +1,452 @@
+{
+  "status": "PASS",
+  "samples": [
+    {
+      "time": 0.6,
+      "sha256": "39580c1b4fd2038ee4c38f619f658810a9f6dad67c78f8baf8c54fe04ab88518",
+      "brightFraction": 0.9964819637345679,
+      "state": {
+        "time": 0.6,
+        "phase": "opening",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "Your nex"
+        ]
+      }
+    },
+    {
+      "time": 1.7,
+      "sha256": "74191ec680b089f947e96881197cb845e6645d6c4a3bb19d623be5037ca2d367",
+      "brightFraction": 0.9745920138888889,
+      "state": {
+        "time": 1.7,
+        "phase": "launch-collage",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "To",
+          "launch",
+          "a",
+          "product."
+        ]
+      }
+    },
+    {
+      "time": 3.7,
+      "sha256": "1f4737d52276f61d57eed8ad2e962f3bac44c79b7af8f69117db9f1dbcfd7bd9",
+      "brightFraction": 0.8802941743827161,
+      "state": {
+        "time": 3.7,
+        "phase": "camera-hero",
+        "camera": [
+          0.19906516833129684,
+          0.3245528760194142,
+          7.262804963804602
+        ],
+        "heroKind": "camera",
+        "heroAngle": 27.989452796866228,
+        "heroContact": 3.82,
+        "copyVisible": [
+          "A NEW ANGLE"
+        ]
+      }
+    },
+    {
+      "time": 4.7,
+      "sha256": "49243eb4ee187645e26d597e5deeef815277c5c09781227ca7cd97e4441e726f",
+      "brightFraction": 0.945089699074074,
+      "state": {
+        "time": 4.7,
+        "phase": "story-collage",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "To",
+          "tell",
+          "your",
+          "story."
+        ]
+      }
+    },
+    {
+      "time": 6.6,
+      "sha256": "42951b9134ec1302c07ce8b2b133d1dde05c31fa40972110e66037c077bb2a3c",
+      "brightFraction": 0.9838107638888889,
+      "state": {
+        "time": 6.6,
+        "phase": "phone-hero",
+        "camera": [
+          0.2507644085810302,
+          0.3368989632432311,
+          7.297528334121587
+        ],
+        "heroKind": "phone",
+        "heroAngle": 23.83786260280624,
+        "heroContact": 6.84,
+        "copyVisible": [
+          "YOUR STORY"
+        ]
+      }
+    },
+    {
+      "time": 7.8,
+      "sha256": "2f06338e45db8dbcbac84ad575b83744ac957877630493cabf9592440dac3310",
+      "brightFraction": 0.9745635609567901,
+      "state": {
+        "time": 7.8,
+        "phase": "grow-collage",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "To",
+          "grow",
+          "your",
+          "business."
+        ]
+      }
+    },
+    {
+      "time": 9.7,
+      "sha256": "1b8071f83b305289ec994a2c2168888c65d00d9392da43f050819938a103870b",
+      "brightFraction": 0.9683695023148148,
+      "state": {
+        "time": 9.7,
+        "phase": "laptop-hero",
+        "camera": [
+          0.1933987356682667,
+          1.5059994338813134,
+          7.25899915082197
+        ],
+        "heroKind": "laptop",
+        "heroAngle": 23.995113046236213,
+        "heroContact": 9.8,
+        "copyVisible": [
+          "THE BIG PICTURE"
+        ]
+      }
+    },
+    {
+      "time": 11.4,
+      "sha256": "6ea8d1ee4557f3c8be7193a254d7d59b6965d38875950d6d30736c05a5304fbb",
+      "brightFraction": 0.9215755208333334,
+      "state": {
+        "time": 11.4,
+        "phase": "problem",
+        "camera": [
+          0,
+          0.18,
+          9.601113522738867
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "But",
+          "there’s never",
+          "time",
+          "to",
+          "make it."
+        ]
+      }
+    },
+    {
+      "time": 13.5,
+      "sha256": "e7856ea67587da9342b382ad776321e6daac8e8d2eb700f37311751cdc37964d",
+      "brightFraction": 1,
+      "state": {
+        "time": 13.5,
+        "phase": "turning-point",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "Until "
+        ]
+      }
+    },
+    {
+      "time": 15.4,
+      "sha256": "d4f0da0e35c09077029c2ebb29e9ee448516aa82b6597aafb704c4ee5d886379",
+      "brightFraction": 0.1485474537037037,
+      "state": {
+        "time": 15.4,
+        "phase": "orb",
+        "camera": [
+          0.01585434181543143,
+          0.17,
+          9.2
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": []
+      }
+    },
+    {
+      "time": 19.4,
+      "sha256": "1391f34768b6817d6eed692629abc5d87fcbb28165807857b863ec41c11dd475",
+      "brightFraction": 1,
+      "state": {
+        "time": 19.4,
+        "phase": "conversation",
+        "camera": [
+          -0.09881259520000035,
+          0.23152503808000016,
+          9.4788125952
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "Grifon",
+          "What are we creating?",
+          "You",
+          "An ad for my"
+        ]
+      }
+    },
+    {
+      "time": 21.8,
+      "sha256": "b69f620bdf9d9361fe9234f6498dd15fd6ffaa135f993059ef6fb85e723fed7c",
+      "brightFraction": 1,
+      "state": {
+        "time": 21.8,
+        "phase": "conversation",
+        "camera": [
+          0.11518983679999992,
+          0.14592406528000004,
+          9.2648101632
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "Grifon",
+          "What are we creating?",
+          "You",
+          "An ad for my next product launch.",
+          "Grifon",
+          "Let’s find the angle. Then build"
+        ]
+      }
+    },
+    {
+      "time": 24.4,
+      "sha256": "0cf966631118acc916f5c764ed3feacdfa03d821d709bda8b93b94bdb5df31c4",
+      "brightFraction": 0.01660590277777778,
+      "state": {
+        "time": 24.4,
+        "phase": "statement",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "Give",
+          "your next",
+          "ad",
+          "a clear",
+          "direction."
+        ]
+      }
+    },
+    {
+      "time": 27.8,
+      "sha256": "1824cd0bc254a0b36f0a3380cd878f1c4317304228b66946c198856ce0f96dad",
+      "brightFraction": 0.2354668209876543,
+      "state": {
+        "time": 27.8,
+        "phase": "cards",
+        "camera": [
+          0.00023679999999998147,
+          0.15,
+          9.2
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "Research",
+          "Know your audience.",
+          "Script",
+          "Shape your message.",
+          "Storyboard",
+          "Plan every scene."
+        ]
+      }
+    },
+    {
+      "time": 30.6,
+      "sha256": "1072015fd5cefd6349ba91c11a90790b89103d21ab4b78af506dc43f522c5d88",
+      "brightFraction": 0.023702256944444444,
+      "state": {
+        "time": 30.6,
+        "phase": "brand",
+        "camera": [
+          0,
+          0.18,
+          9.6
+        ],
+        "heroKind": null,
+        "heroAngle": null,
+        "heroContact": null,
+        "copyVisible": [
+          "GRIFON",
+          "grifon.ai"
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "start": 0.2,
+      "end": 0.8,
+      "changedPixelFraction": 0.004451195987654321,
+      "minimumFraction": 0.0025
+    },
+    {
+      "start": 1.2,
+      "end": 2.1,
+      "changedPixelFraction": 0.0936154513888889,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 2.7,
+      "end": 3.7,
+      "changedPixelFraction": 0.6906843171296296,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 5.8,
+      "end": 6.6,
+      "changedPixelFraction": 0.33861882716049385,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 8.8,
+      "end": 9.7,
+      "changedPixelFraction": 0.5847873263888889,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 10.2,
+      "end": 11.4,
+      "changedPixelFraction": 0.2203790509259259,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 14.3,
+      "end": 15.4,
+      "changedPixelFraction": 0.9892283950617284,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 18.9,
+      "end": 21.8,
+      "changedPixelFraction": 0.11886574074074074,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 22.85,
+      "end": 24.4,
+      "changedPixelFraction": 0.01921826774691358,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 26.8,
+      "end": 28,
+      "changedPixelFraction": 0.23968653549382715,
+      "minimumFraction": 0.01
+    },
+    {
+      "start": 29.3,
+      "end": 30.6,
+      "changedPixelFraction": 0.05172743055555556,
+      "minimumFraction": 0.01
+    }
+  ],
+  "heroContacts": [
+    {
+      "time": 3.82,
+      "heroKind": "camera",
+      "settledAngle": 28
+    },
+    {
+      "time": 6.84,
+      "heroKind": "phone",
+      "settledAngle": 24
+    },
+    {
+      "time": 9.8,
+      "heroKind": "laptop",
+      "settledAngle": 24
+    }
+  ],
+  "nonlinearSeekPixelIdentity": true,
+  "copyRevision": [
+    {
+      "time": 0.9,
+      "changedPixelFraction": 0.010280671296296296,
+      "expectedChange": true
+    },
+    {
+      "time": 3.7,
+      "changedPixelFraction": 0,
+      "expectedChange": false
+    },
+    {
+      "time": 15.4,
+      "changedPixelFraction": 0,
+      "expectedChange": false
+    },
+    {
+      "time": 30.6,
+      "changedPixelFraction": 0,
+      "expectedChange": false
+    }
+  ],
+  "copyLayers": [],
+  "negativeControls": {
+    "blankRejected": true,
+    "frozenRejected": true
+  },
+  "limitations": [
+    "Offline production renderer, not a user browser-origin permission or denied preview-page check",
+    "No direct subjective listening",
+    "Abstract concept visuals, not product UI/output proof"
+  ]
+}

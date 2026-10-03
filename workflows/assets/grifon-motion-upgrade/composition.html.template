@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1920,initial-scale=1"><title>Grifon — Your next ad</title>
+<style>
+@font-face{font-family:Inter;src:url('{{INTER}}') format('truetype');font-weight:100 900;font-display:block}
+@font-face{font-family:InterBlack;src:url('{{INTERBLACK}}') format('truetype');font-weight:900;font-display:block}
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#09090B}
+#film{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:Inter,sans-serif;background:#09090B}
+#field,#cream-sheet,#world,.layer{position:absolute;inset:0;width:1920px;height:1080px}#world{pointer-events:none}.layer{visibility:hidden;pointer-events:none}#cream-sheet{background:#F2F1EC;visibility:hidden}
+#field{background:#F2F1EC}.paper{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 44%,#ffffff22,transparent 75%);pointer-events:none}
+.typed{position:absolute;left:0;top:449px;width:1920px;height:170px;text-align:center;font-size:110px;line-height:1.2;font-weight:400;letter-spacing:-5px;white-space:pre;color:#171b19}
+.typed-line{display:inline-block;position:relative}.typed-letter{opacity:0}.cursor{display:inline-block;width:3px;height:.83em;background:currentColor;vertical-align:-.03em;margin-left:9px}
+.collage-track{position:absolute;inset:0;transform-origin:center}.collage-word{position:absolute;font-size:112px;line-height:1.12;letter-spacing:-5.5px;font-weight:400;color:#171b19;white-space:nowrap}
+.collage-word:last-child{font-weight:600;letter-spacing:-6px}.spark{position:absolute;left:918px;top:487px;width:77px;height:77px;fill:#171b19}
+.hero-tag{position:absolute;left:1310px;top:110px;max-width:510px;padding:22px 28px;border:1.4px solid #f3f8eb88;border-radius:22px;background:linear-gradient(145deg,#213e51e8,#325767d9);font-size:43px;line-height:1.2;letter-spacing:-1px;font-weight:400;color:#fffef3;box-shadow:inset 0 1px #ffffff30}
+.hero-tag:before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#edf6db;margin:0 13px 5px 0}
+#problem .collage-word{font-size:106px;letter-spacing:-5px}#problem .collage-word:last-child{font-weight:600}
+#turn .typed{font-size:117px;color:#fff9e6;letter-spacing:-5px}
+.message{position:absolute;width:740px;min-height:154px;padding:28px 35px;color:#f8faed;font-size:38px;line-height:1.38;letter-spacing:-1px;transform-origin:center;opacity:0}
+.speaker{position:absolute;left:5px;top:-33px;font-size:24px;line-height:1;letter-spacing:-.5px;color:#17291e;white-space:nowrap}
+.message-letter{opacity:0}.message-text{display:block}
+#statement-line{position:absolute;left:50%;top:442px;height:190px;display:flex;align-items:center;gap:18px;font-size:102px;line-height:1.12;letter-spacing:-5px;font-weight:400;color:#f4f3e9;white-space:nowrap}
+.statement-word{display:inline-block;opacity:0;transform-origin:center}
+#outline-shell{position:absolute;left:170px;top:118px;width:1580px;height:832px;transform-origin:center;opacity:0}
+#outline-shell svg{width:100%;height:100%;overflow:visible}#outline-shell path{fill:none;stroke:#e9efe2a6;stroke-width:2.2;stroke-dasharray:1;stroke-dashoffset:1}
+.card-copy{position:absolute;width:475px;height:292px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#f9fbf0;opacity:0;transform-origin:center}
+.card-copy svg{width:50px;height:50px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:21px}
+.card-title{font-size:40px;line-height:1.16;letter-spacing:-1.4px;font-weight:600;margin:0 0 12px}.card-detail{font-size:30px;line-height:1.3;letter-spacing:-.7px;font-weight:400;margin:0}
+#compression-line{position:absolute;left:160px;top:536px;width:1600px;height:3px;opacity:0;background:linear-gradient(90deg,transparent,#b8d5ce,#d9e5a7,#8dad71,transparent);transform-origin:center}
+#lockup{position:absolute;left:0;top:408px;width:1920px;height:325px;opacity:0;text-align:center;transform-origin:center}
+.mark{display:flex;align-items:center;justify-content:center;gap:33px;height:194px}.mark-ring{width:170px;height:170px;border:2px solid #FFCC00;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;background:transparent}
+.mark-ring img{height:74%;width:auto;object-fit:contain}.brand{font:italic 900 154px/1 InterBlack,Inter,sans-serif;letter-spacing:-8px;color:#f8f7ec;margin:0}.brand-url{font-size:36px;line-height:1.2;letter-spacing:-.9px;color:#dedfd3;margin-top:19px;opacity:0}
+#film-grain{position:absolute;inset:0;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");mix-blend-mode:soft-light}
+</style></head><body>
+<main id="film" data-composition-id="main" data-width="1920" data-height="1080" data-start="0" data-duration="32.9" data-fps="30">
+<div id="field"></div><div id="cream-sheet"></div><canvas id="world" width="1920" height="1080"></canvas>
+<section id="intro" class="layer"><div class="typed"><span class="typed-line"></span></div></section>
+<section id="launch" class="layer"><div class="collage-track"></div></section>
+<section id="story" class="layer"><div class="collage-track"></div></section>
+<section id="grow" class="layer"><div class="collage-track"></div></section>
+<section id="hero-labels" class="layer"></section>
+<section id="problem" class="layer"><div class="collage-track"></div></section>
+<section id="turn" class="layer"><div class="typed"><span class="typed-line"></span></div></section>
+<section id="dialogue" class="layer"></section>
+<section id="statement" class="layer"><div id="statement-line"></div></section>
+<div id="outline-shell"><svg viewBox="0 0 1580 832"><path id="outline-edge" pathLength="1" d="M790 2H1492Q1578 2 1578 88V744Q1578 830 1492 830H88Q2 830 2 744V88Q2 2 88 2H790"/></svg></div>
+<section id="cards" class="layer"></section><div id="compression-line"></div>
+<div id="lockup"><div class="mark"><span class="mark-ring"><img id="brand-logo" src="{{LOGO}}" alt=""></span><h1 class="brand"></h1></div><div class="brand-url"></div></div>
+<div id="film-grain"></div>
+</main>
+<script src="vendor/gsap.min.js"></script><script src="vendor/three.global.js"></script>
+<script>window.MOTION_SPEC={{CONFIG}};window.INTER_OUTLINES={{OUTLINES}};</script>
+<script id="composition-source">
+const THREE = window.THREE;
+const spec = window.MOTION_SPEC;
+const copy = spec.copy;
+const cue = spec.cueAnchors;
+const palette = spec.palette;
+const $ = selector => document.querySelector(selector);
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const mix = (a, b, p) => a + (b - a) * p;
+const out = p => 1 - Math.pow(1 - clamp(p), 4);
+const smooth = p => { p = clamp(p); return p * p * (3 - 2 * p); };
+const sine = p => .5 - Math.cos(Math.PI * clamp(p)) * .5;
+const rad = degrees => degrees * Math.PI / 180;
+const element = (tag, className, parent, text) => { const node = document.createElement(tag); node.className = className; if (text !== undefined) node.textContent = text; parent.append(node); return node; };
+const letters = (parent, text, className) => [...text].map(letter => element('span', className, parent, letter));
+const layers = [...document.querySelectorAll('.layer')];
+const typed = {
+  opening: letters($('#intro .typed-line'), copy.opening, 'typed-letter'),
+  turn: letters($('#turn .typed-line'), copy.turningPoint, 'typed-letter'),
+};
+const wordLayout = [[230, 648], [407, 312], [1080, 229], [1120, 674]];
+const collages = ['launch', 'story', 'grow'].map((id, index) => {
+  const track = $(`#${id} .collage-track`);
+  const words = copy[id].map((text, i) => {
+    const node = element('span', 'collage-word', track, text);
+    node.style.left = `${wordLayout[i][0]}px`; node.style.top = `${wordLayout[i][1]}px`;
+    return node;
+  });
+  const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  star.setAttribute('viewBox', '0 0 80 80'); star.setAttribute('class', 'spark');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M40 4C43 28 52 37 76 40C52 43 43 52 40 76C37 52 28 43 4 40C28 37 37 28 40 4Z'); star.append(path); track.append(star);
+  return { id, section: $(`#${id}`), track, words, star, index };
+});
+const problemLayout = [[192, 474], [420, 315], [1150, 290], [1108, 462], [1145, 620]];
+const problemWords = copy.problem.map((text, i) => {
+  const node = element('span', 'collage-word', $('#problem .collage-track'), text);
+  node.style.left = `${problemLayout[i][0]}px`; node.style.top = `${problemLayout[i][1]}px`;
+  return node;
+});
+const heroLabels = copy.heroTags.map(text => element('div', 'hero-tag', $('#hero-labels'), text));
+const messageNodes = copy.conversation.map(message => {
+  const node = element('div', 'message', $('#dialogue'));
+  element('span', 'speaker', node, message.speaker);
+  const text = element('span', 'message-text', node);
+  return { node, letters: letters(text, message.text, 'message-letter'), text: message.text };
+});
+const statementWords = copy.statement.map(text => element('span', 'statement-word', $('#statement-line'), text));
+const iconPaths = [
+  '<path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>',
+  '<path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5M10 9H8M16 13H8M16 17H8"/>',
+  '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/>',
+];
+const cardNodes = copy.cards.map((card, i) => {
+  const node = element('div', 'card-copy', $('#cards'));
+  const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); icon.setAttribute('viewBox', '0 0 24 24'); icon.innerHTML = iconPaths[i]; node.append(icon);
+  element('h2', 'card-title', node, card.title); element('p', 'card-detail', node, card.detail); return node;
+});
+$('#lockup .brand').textContent = copy.brand; $('#lockup .brand-url').textContent = copy.url;
+
+async function init() {
+await Promise.all([document.fonts.load('400 110px Inter'), document.fonts.load('600 112px Inter'), document.fonts.load('900 154px InterBlack'), $('#brand-logo').decode()]);
+const canvas = $('#world');
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true, premultipliedAlpha: true });
+renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false); renderer.setClearColor(palette.dark, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(42, 16 / 9, .1, 80);
+const look = new THREE.Vector3();
+const envScene = new THREE.Scene(); envScene.background = new THREE.Color('#3b4140');
+for (const [x, y, z, w, h, energy] of [[-4, 5, 3, 3, 10, 4.3], [5, 2, -3, 1.8, 8, 2.5], [1, 7, -1, 7, 2, 2]]) {
+  const panel = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: '#FFFFFF', side: THREE.DoubleSide }));
+  panel.material.color.multiplyScalar(energy); panel.position.set(x, y, z); panel.lookAt(0, 0, 0); envScene.add(panel);
+}
+const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(envScene, .06).texture; pmrem.dispose();
+const ambient = new THREE.AmbientLight('#FFFFFF', .85); scene.add(ambient);
+const key = new THREE.DirectionalLight('#FFFFFF', 3.1); key.position.set(-4, 6, 5); key.castShadow = true;
+key.shadow.mapSize.set(1024, 1024); key.shadow.camera.left = -10; key.shadow.camera.right = 10; key.shadow.camera.top = 7; key.shadow.camera.bottom = -7; key.shadow.normalBias = .025; scene.add(key);
+const rim = new THREE.DirectionalLight('#E7F0E9', 2.4); rim.position.set(4, 2, -5); scene.add(rim);
+const fill = new THREE.DirectionalLight('#FFFFFF', .65); fill.position.set(5, 1, 5); scene.add(fill);
+const dark = new THREE.MeshPhysicalMaterial({ color: '#20282a', roughness: .35, metalness: .6, clearcoat: .35 });
+const rubber = new THREE.MeshStandardMaterial({ color: '#111718', roughness: .72, metalness: .12 });
+const metal = new THREE.MeshPhysicalMaterial({ color: '#b5c2c5', roughness: .23, metalness: .95, clearcoat: .28 });
+const glass = new THREE.MeshPhysicalMaterial({ color: '#b6d5d8', roughness: .045, metalness: .1, transmission: .65, thickness: .28, ior: 1.48, clearcoat: 1, transparent: true });
+const gold = new THREE.MeshPhysicalMaterial({ color: palette.gold, roughness: .2, metalness: 1 });
+const registry = [];
+function group(parent = scene) { const value = new THREE.Group(); parent.add(value); return value; }
+function shapeRect(w, h, radius) {
+  const x = -w / 2, y = -h / 2, r = Math.min(radius, w / 2, h / 2), s = new THREE.Shape();
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+  return s;
+}
+function box(parent, w, h, d, radius, material, x = 0, y = 0, z = 0) {
+  const geometry = new THREE.ExtrudeGeometry(shapeRect(w, h, radius), { depth: d, bevelEnabled: true, bevelSize: Math.min(.025, d / 3), bevelThickness: Math.min(.025, d / 3), bevelSegments: 3, curveSegments: 8, steps: 1 });
+  geometry.translate(0, 0, -d / 2);
+  const mesh = new THREE.Mesh(geometry, material); mesh.position.set(x, y, z); mesh.castShadow = true; parent.add(mesh); return mesh;
+}
+function cylinder(parent, radius, depth, material, x = 0, y = 0, z = 0, segments = 48) {
+  const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, depth, segments), material); mesh.rotation.x = Math.PI / 2; mesh.position.set(x, y, z); mesh.castShadow = true; parent.add(mesh); return mesh;
+}
+function torus(parent, radius, thickness, material, x = 0, y = 0, z = 0) {
+  const mesh = new THREE.Mesh(new THREE.TorusGeometry(radius, thickness, 10, 64), material); mesh.position.set(x, y, z); parent.add(mesh); return mesh;
+}
+function screenGeometry(width, height, radius, segments) {
+  const geometry = new THREE.ShapeGeometry(shapeRect(width, height, radius), segments); geometry.computeBoundingBox();
+  const position = geometry.attributes.position, uv = geometry.attributes.uv, { min, max } = geometry.boundingBox;
+  for (let i = 0; i < position.count; i++) uv.setXY(i, (position.getX(i) - min.x) / (max.x - min.x), (position.getY(i) - min.y) / (max.y - min.y));
+  return geometry;
+}
+function abstractScreen(kind) {
+  const c = document.createElement('canvas'); c.width = 768; c.height = kind === 'phone' ? 1536 : 512;
+  const ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const gradient = ctx.createLinearGradient(0, 0, w, h); gradient.addColorStop(0, '#dce6d7'); gradient.addColorStop(.45, '#789b9d'); gradient.addColorStop(1, '#243f50'); ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h);
+  ctx.save(); ctx.translate(w * .58, h * .35); ctx.rotate(-.38); ctx.fillStyle = '#d3cfaa'; ctx.beginPath(); ctx.ellipse(0, 0, w * .48, h * .3, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  if (kind === 'phone') {
+    ctx.fillStyle = '#ecedde'; ctx.beginPath(); ctx.roundRect(38, h * .57, w - 76, h * .38, 38); ctx.fill();
+    for (let i = 0; i < 4; i++) { ctx.fillStyle = i === 0 ? '#809689' : '#315145'; ctx.beginPath(); ctx.roundRect(94, h * .63 + i * 63, (i % 2 ? 380 : 510), i === 0 ? 14 : 22, 7); ctx.fill(); }
+    ctx.fillStyle = '#486b50'; ctx.beginPath(); ctx.roundRect(94, h * .84, 275, 74, 37); ctx.fill();
+  } else {
+    ctx.fillStyle = '#182727'; ctx.fillRect(0, 0, w, h);
+    const tones = [['#b2c9be', '#729693'], ['#d8cea7', '#938e63'], ['#bfd8db', '#597c8c']];
+    for (let i = 0; i < 3; i++) {
+      const g = ctx.createLinearGradient(0, 0, 0, h); g.addColorStop(0, tones[i][0]); g.addColorStop(1, tones[i][1]); ctx.fillStyle = g;
+      ctx.beginPath(); ctx.roundRect(45 + i * 233, 57, 212, 280, 15); ctx.fill();
+      ctx.fillStyle = '#456563'; ctx.fillRect(45 + i * 233, 369, 170, 10); ctx.fillRect(45 + i * 233, 401, 118, 10);
+    }
+  }
+  const texture = new THREE.CanvasTexture(c); texture.colorSpace = THREE.SRGBColorSpace; texture.anisotropy = 4; return texture;
+}
+const phoneScreen = new THREE.MeshPhysicalMaterial({ map: abstractScreen('phone'), roughness: .30, metalness: 0, clearcoat: .25, clearcoatRoughness: .18, envMapIntensity: .25 });
+const laptopScreen = new THREE.MeshPhysicalMaterial({ map: abstractScreen('laptop'), roughness: .34, metalness: 0, clearcoat: .20, clearcoatRoughness: .20, envMapIntensity: .20 });
+function cameraModel() {
+  const model = group();
+  box(model, 1.85, 1.13, .62, .15, dark); box(model, .38, .91, .7, .1, rubber, -.70, -.045, .11);
+  box(model, .80, .23, .43, .08, dark, .05, .68, -.04);
+  const dial = cylinder(model, .21, .10, rubber, -.52, .63, -.06); dial.rotation.x = 0;
+  const button = cylinder(model, .12, .09, metal, .61, .65, .12); button.rotation.x = 0;
+  cylinder(model, .59, .57, rubber, .16, -.025, .52);
+  torus(model, .58, .024, metal, .16, -.025, .825);
+  torus(model, .51, .027, rubber, .16, -.025, .844);
+  cylinder(model, .477, .028, new THREE.MeshPhysicalMaterial({ color: '#152733', roughness: .065, metalness: .75, clearcoat: 1 }), .16, -.025, .83);
+  const lens = new THREE.Mesh(new THREE.SphereGeometry(.467, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2), glass); lens.rotation.x = Math.PI / 2; lens.scale.y = .13; lens.position.set(.16, -.025, .854); model.add(lens);
+  for (let i = 0; i < 5; i++) torus(model, .61, .011, dark, .16, -.025, .30 + i * .092);
+  cylinder(model, .053, .02, new THREE.MeshStandardMaterial({ color: '#e7ead5', emissive: '#b4c3a4', emissiveIntensity: .12 }), .68, .35, .326, 16);
+  box(model, 1.28, .75, .025, .055, rubber, .06, -.01, -.331);
+  model.userData.kind = 'camera'; model.userData.lens = lens; registry.push(model); return model;
+}
+function phoneModel() {
+  const model = group();
+  box(model, 1.18, 2.45, .13, .17, metal);
+  box(model, 1.105, 2.36, .029, .145, rubber, 0, 0, .082);
+  const screen = new THREE.Mesh(screenGeometry(1.01, 2.23, .12, 10), phoneScreen); screen.position.z = .125; model.add(screen);
+  box(model, .37, .063, .015, .03, rubber, 0, 1.043, .123);
+  box(model, .065, .28, .06, .015, metal, -.627, .52, 0);
+  box(model, .065, .13, .06, .015, metal, .628, .38, 0);
+  const back = new THREE.MeshPhysicalMaterial({ color: '#8caaa6', roughness: .27, metalness: .62, clearcoat: .9 });
+  box(model, 1.105, 2.36, .018, .145, back, 0, 0, -.083);
+  box(model, .59, .57, .07, .14, back, -.24, .83, -.137);
+  for (const [x, y] of [[-.37, .98], [-.13, .98], [-.37, .74]]) {
+    cylinder(model, .105, .07, dark, x, y, -.19, 32); torus(model, .087, .012, metal, x, y, -.23);
+  }
+  model.userData.kind = 'phone'; registry.push(model); return model;
+}
+function laptopModel() {
+  const model = group();
+  const base = box(model, 2.67, 1.69, .105, .12, metal); base.rotation.x = -Math.PI / 2;
+  for (let row = 0; row < 5; row++) for (let column = 0; column < 13; column++) {
+    const keycap = box(model, .145, .11, .037, .022, rubber, -1.11 + column * .185, .087, -.48 + row * .155); keycap.rotation.x = -Math.PI / 2;
+  }
+  const pad = box(model, .80, .44, .012, .04, new THREE.MeshStandardMaterial({ color: '#91a4a8', roughness: .35, metalness: .8 }), 0, .067, .48); pad.rotation.x = -Math.PI / 2;
+  const screenRoot = group(model); screenRoot.position.set(0, .09, -.72); screenRoot.rotation.x = rad(-12);
+  box(screenRoot, 2.65, 1.68, .075, .09, metal, 0, .84, 0); box(screenRoot, 2.49, 1.51, .02, .05, rubber, 0, .84, .047);
+  const display = new THREE.Mesh(screenGeometry(2.37, 1.37, .028, 8), laptopScreen); display.position.set(0, .85, .079); screenRoot.add(display);
+  cylinder(screenRoot, .016, .01, rubber, 0, 1.597, .062, 12);
+  model.userData.kind = 'laptop'; registry.push(model); return model;
+}
+function propModel(kind) {
+  if (kind === 'camera') return cameraModel(); if (kind === 'phone') return phoneModel(); if (kind === 'laptop') return laptopModel();
+  const model = group();
+  if (kind === 'bag') {
+    const cloth = new THREE.MeshStandardMaterial({ color: '#e3e2ca', roughness: .86 });
+    box(model, 1.13, 1.12, .33, .13, cloth, 0, -.14, 0);
+    const handle = torus(model, .35, .054, cloth, 0, .51, .03); handle.scale.y = 1.35;
+    cylinder(model, .10, .008, new THREE.MeshStandardMaterial({ color: '#bac49d', roughness: .8 }), 0, -.14, .181, 32);
+  } else if (kind === 'bottle') {
+    const bottle = new THREE.MeshPhysicalMaterial({ color: '#b0bcc4', roughness: .17, metalness: .25, transmission: .12, thickness: .15, clearcoat: 1 });
+    box(model, .55, 1.48, .48, .15, bottle, 0, -.14, 0); box(model, .31, .30, .29, .04, metal, 0, .75, 0);
+    box(model, .31, .55, .014, .01, new THREE.MeshStandardMaterial({ color: '#eee9db', roughness: .75 }), 0, -.05, .259);
+  } else if (kind === 'pencil') {
+    const shaft = cylinder(model, .075, 1.7, new THREE.MeshStandardMaterial({ color: '#c8b98c', roughness: .65 })); shaft.rotation.x = 0;
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(.075, .30, 12), new THREE.MeshStandardMaterial({ color: '#a69773', roughness: .7 })); tip.position.y = .99; model.add(tip);
+    const graphite = new THREE.Mesh(new THREE.ConeGeometry(.022, .10, 10), rubber); graphite.position.y = 1.15; model.add(graphite);
+  } else if (kind === 'clapper') {
+    box(model, 1.45, .99, .10, .025, rubber, 0, -.12, 0);
+    const bar = box(model, 1.46, .24, .15, .02, metal, 0, .50, 0); bar.rotation.z = .16;
+    for (let i = 0; i < 5; i++) { const stripe = box(model, .16, .22, .007, 0, rubber, -.53 + i * .28, .50, .084); stripe.rotation.z = -.32; }
+    for (let i = 0; i < 3; i++) box(model, .93 - i * .19, .018, .008, 0, metal, -.09, .11 - i * .24, .06);
+  } else if (kind === 'reel') {
+    cylinder(model, .69, .16, metal);
+    for (let i = 0; i < 5; i++) { const angle = i * Math.PI * 2 / 5; cylinder(model, .17, .014, rubber, Math.cos(angle) * .40, Math.sin(angle) * .40, .093, 24); }
+    cylinder(model, .14, .21, rubber); torus(model, .68, .035, dark);
+  } else if (kind === 'board') {
+    box(model, 1.45, 1.08, .08, .055, metal); box(model, 1.29, .92, .009, .025, laptopScreen, 0, 0, .059);
+  } else if (kind === 'keyboard') {
+    box(model, 1.81, .67, .13, .06, metal);
+    for (let row = 0; row < 3; row++) for (let column = 0; column < 10; column++) box(model, .125, .14, .035, .02, rubber, -.76 + column * .167, -.20 + row * .20, .084);
+  }
+  model.userData.kind = kind; registry.push(model); return model;
+}
+const heroKinds = ['camera', 'phone', 'laptop'];
+const heroes = [cameraModel(), phoneModel(), laptopModel()];
+const propLayouts = [
+  [['bag', -2.3, -2.2, .2, 1.3, -.12], ['bottle', 2.65, 2.18, -.5, 1.26, .16], ['pencil', -5.75, -1.32, .6, .75, -.12], ['camera', 5.9, -2.42, 1.0, 1.0, -.15]],
+  [['clapper', 2.48, -2.78, .3, 1.16, .12], ['reel', -.84, -2.15, -.2, 1.04, -.18], ['camera', 3.7, 2.55, .55, 1.0, .18], ['pencil', -4.4, -2.15, .8, .8, -.15]],
+  [['laptop', -.62, 1.4, -.1, .85, -.08], ['board', 4.77, 1.76, .4, 1.15, -.1], ['keyboard', 2.17, -2.53, .6, 1.2, .07], ['pencil', -5.5, -1.74, 1.1, .84, -.2]],
+];
+const collageGroups = propLayouts.map(layout => {
+  const root = group(); const objects = layout.map(([kind, x, y, z, scale, rotation]) => {
+    const model = propModel(kind); root.add(model); model.userData.layout = { x, y, z, scale, rotation }; return model;
+  }); return { root, objects };
+});
+const problemProps = group();
+const problemModels = [
+  ['camera', -4.1, 2.54, .3, 1.05, -.15], ['bottle', -.88, 2.23, -.3, .90, 0], ['board', 2.85, 2.40, .35, 1.14, -.12], ['bag', 5.08, 2.26, .8, 1.05, .16],
+  ['reel', -4.32, -1.64, .4, 1.09, -.12], ['clapper', 2.62, -2.37, -.2, 1.22, .1], ['keyboard', -1.04, -2.15, .4, 1.3, -.1], ['pencil', -2.8, -1.75, .9, .88, -.19], ['phone', 5.33, -.65, .55, .74, .08],
+].map(([kind, x, y, z, scale, rotation]) => { const model = propModel(kind); problemProps.add(model); model.userData.layout = { x, y, z, scale, rotation }; return model; });
+const orbRoot = group();
+const orbGeometry = new THREE.SphereGeometry(1.35, 64, 48);
+const orbInterior = new THREE.ShaderMaterial({ uniforms: { time: { value: 0 } },
+  vertexShader: 'varying vec3 localPosition;varying vec3 localNormal;void main(){localPosition=position;localNormal=normal;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+  fragmentShader: `uniform float time;varying vec3 localPosition,localNormal;void main(){
+    vec3 p=normalize(localPosition);float flow=sin(p.x*2.5+p.y*1.4+time*.63)+cos(p.z*2.2-p.y*1.7-time*.42);
+    float heat=smoothstep(-1.15,1.2,flow);vec3 sage=vec3(.30,.48,.20),coral=vec3(.94,.26,.08),cool=vec3(.055,.30,.36);
+    vec3 color=mix(sage,coral,heat);color=mix(color,cool,smoothstep(-.15,.92,p.x+p.z*.25)*.78);
+    float light=pow(max(0.,dot(normalize(localNormal),normalize(vec3(-.55,.64,.5)))),5.);color+=vec3(1.,.85,.58)*light*.28;
+    gl_FragColor=vec4(color*1.15,1.);}`,
+});
+const orbInner = new THREE.Mesh(new THREE.SphereGeometry(1.22, 64, 48), orbInterior); orbRoot.add(orbInner);
+const orbOuter = new THREE.Mesh(orbGeometry, new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .055, transmission: .92, thickness: .12, ior: 1.40, metalness: 0, clearcoat: 1, clearcoatRoughness: .04, envMapIntensity: .65, transparent: true, opacity: .24, depthWrite: false })); orbRoot.add(orbOuter);
+const orbRings = [1.52, 2.31, 3.60].map((radius, i) => {
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, .006, 10, 256), new THREE.MeshBasicMaterial({ color: '#d9e5d1', transparent: true, opacity: .18 - i * .035 })); orbRoot.add(ring);
+  ring.userData.index = i; return ring;
+});
+const haloCanvas = document.createElement('canvas'); haloCanvas.width = 256; haloCanvas.height = 256;
+const haloContext = haloCanvas.getContext('2d'), haloGradient = haloContext.createRadialGradient(128, 128, 30, 128, 128, 128);
+haloGradient.addColorStop(0, 'rgba(255,232,183,.32)'); haloGradient.addColorStop(.52, 'rgba(249,197,124,.11)'); haloGradient.addColorStop(1, 'rgba(226,218,177,0)'); haloContext.fillStyle = haloGradient; haloContext.fillRect(0, 0, 256, 256);
+const halo = new THREE.Mesh(new THREE.PlaneGeometry(5.6, 5.6), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(haloCanvas), transparent: true, opacity: .5, depthWrite: false })); halo.position.z = -.4; orbRoot.add(halo);
+const orbLight = new THREE.PointLight('#ffd5a4', 0, 7); scene.add(orbLight);
+function colorPlate(stops, rotation = 0) {
+  const c = document.createElement('canvas'); c.width = 768; c.height = 384; const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0, 0, 768 * Math.cos(rotation), 384 + 384 * Math.sin(rotation));
+  stops.forEach(([position, color]) => g.addColorStop(position, color)); ctx.fillStyle = g; ctx.fillRect(0, 0, 768, 384);
+  const light = ctx.createRadialGradient(170, 40, 0, 170, 40, 600); light.addColorStop(0, '#ffffff30'); light.addColorStop(1, '#ffffff00'); ctx.fillStyle = light; ctx.fillRect(0, 0, 768, 384);
+  const texture = new THREE.CanvasTexture(c); texture.colorSpace = THREE.SRGBColorSpace; return texture;
+}
+const conversationRoot = group();
+const messagePlaces = [new THREE.Vector3(-.76, 1.31, 0), new THREE.Vector3(.56, -.16, .18), new THREE.Vector3(-.76, -1.65, .05)];
+const messageMeshes = messagePlaces.map((place, index) => {
+  const root = group(conversationRoot); root.position.copy(place);
+  const face = new THREE.MeshPhysicalMaterial({ color: '#31533e', roughness: .24, metalness: .04, transmission: .18, thickness: .15, ior: 1.32, clearcoat: .55, envMapIntensity: .35, transparent: true, opacity: .76 });
+  box(root, 5.12, 1.19, .10, .16, face);
+  const backing = new THREE.Mesh(new THREE.ShapeGeometry(shapeRect(5.02, 1.09, .14), 8), new THREE.MeshBasicMaterial({ map: colorPlate([[0, '#25432e'], [.55, '#173929'], [1, '#31544a']], .3), transparent: true, opacity: .92 })); backing.position.z = -.075; root.add(backing);
+  if (index !== 1) {
+    const avatar = group(root); const inner = new THREE.Mesh(new THREE.SphereGeometry(.19, 24, 16), orbInterior); avatar.add(inner);
+    const shell = new THREE.Mesh(new THREE.SphereGeometry(.205, 24, 16), orbOuter.material); avatar.add(shell); avatar.position.set(-2.97, .04, .18);
+  }
+  root.userData.face = face; root.userData.place = place; return root;
+});
+const cardsRoot = group();
+const cardColors = [
+  [[0, '#294c51'], [.42, '#305338'], [1, '#495a2b']],
+  [[0, '#495936'], [.45, '#345432'], [1, '#1f4630']],
+  [[0, '#254732'], [.48, '#42552e'], [1, '#59562a']],
+];
+const cardMeshes = cardColors.map(stops => {
+  const root = group(cardsRoot), front = new THREE.MeshPhysicalMaterial({ map: colorPlate(stops), roughness: .38, metalness: .04, clearcoat: .55, clearcoatRoughness: .15, envMapIntensity: .25 });
+  box(root, 3.36, 1.92, .17, .21, front);
+  const rim = box(root, 3.41, 1.97, .14, .22, new THREE.MeshPhysicalMaterial({ color: '#c7d9c8', roughness: .22, metalness: .48, transparent: true, opacity: .28 }), 0, 0, -.11);
+  root.userData.front = front; root.userData.rim = rim; return root;
+});
+const cardPositions = [-3.78, 0, 3.78];
+const cardContacts = [cue.cards[1], cue.cards[0], cue.cards[2]];
+const stripRoot = group();
+box(stripRoot, 11.1, 1.92, .13, .20, new THREE.MeshPhysicalMaterial({ map: colorPlate([[0, '#b0d5da'], [.25, '#dce6d4'], [.50, '#a5b67e'], [.76, '#5f813e'], [1, '#a8ae7a']]), roughness: .24, metalness: .10, clearcoat: 1 }));
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: .22 })); floor.rotation.x = -Math.PI / 2; floor.position.y = -2.45; floor.receiveShadow = true; scene.add(floor);
+const dotCount = 1377, dotsPosition = new Float32Array(dotCount * 3);
+const dotsGeometry = new THREE.BufferGeometry(); dotsGeometry.setAttribute('position', new THREE.BufferAttribute(dotsPosition, 3));
+const dots = new THREE.Points(dotsGeometry, new THREE.PointsMaterial({ color: '#e2efdf', size: .016, transparent: true, opacity: .29, depthWrite: false })); scene.add(dots);
+
+const target = new THREE.WebGLRenderTarget(1920, 1080, { type: THREE.HalfFloatType, samples: 4, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter }); target.depthTexture = new THREE.DepthTexture(1920, 1080);
+const finishScene = new THREE.Scene(), finishCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const finish = new THREE.ShaderMaterial({ uniforms: { image: { value: target.texture }, depth: { value: target.depthTexture }, resolution: { value: new THREE.Vector2(1920, 1080) }, focus: { value: 9.6 }, blurAmount: { value: .25 }, time: { value: 0 } },
+  vertexShader: 'varying vec2 uvOut;void main(){uvOut=uv;gl_Position=vec4(position.xy,0.,1.);}',
+  fragmentShader: `uniform sampler2D image,depth;uniform vec2 resolution;uniform float focus,blurAmount,time;varying vec2 uvOut;
+    void main(){float z=texture2D(depth,uvOut).x;float d=.1*80./(80.-z*79.9);float coc=clamp(abs(d-focus)/max(focus,.1)*2.,0.,1.)*blurAmount;vec2 r=vec2(5.)/resolution*coc;
+    vec4 sampleColor=texture2D(image,uvOut)*.36;for(int i=0;i<8;i++){float a=float(i)*.78539816;sampleColor+=texture2D(image,uvOut+vec2(cos(a),sin(a))*r)*.08;}
+    float alpha=sampleColor.a;vec3 color=sampleColor.rgb/max(alpha,.0001);float n=fract(sin(dot(floor(uvOut*resolution),vec2(12.9898,78.233))+floor(time*30.)*31.1)*43758.5453)-.5;color+=n*.003;
+    gl_FragColor=vec4(color,alpha);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
+    gl_FragColor.rgb*=alpha;}`,
+  depthWrite: false, depthTest: false,
+}); finishScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), finish));
+const statementWidths = statementWords.map(node => node.offsetWidth);
+const baseRoots = [...heroes, ...collageGroups.map(item => item.root), problemProps, orbRoot, conversationRoot, cardsRoot, stripRoot];
+const projected = new THREE.Vector3();
+function projectCard(model, node, width, height, textScale = 1) {
+  model.updateWorldMatrix(true, false);
+  projected.set(0, 0, .10).applyMatrix4(model.matrixWorld).project(camera);
+  const centerX = (projected.x * .5 + .5) * 1920, centerY = (-projected.y * .5 + .5) * 1080;
+  const left = new THREE.Vector3(-width / 2, 0, .10).applyMatrix4(model.matrixWorld).project(camera);
+  const right = new THREE.Vector3(width / 2, 0, .10).applyMatrix4(model.matrixWorld).project(camera);
+  const pixels = Math.abs(right.x - left.x) * 960;
+  const scale = pixels / (node.classList.contains('message') ? 740 : 475) * textScale;
+  node.style.left = `${centerX}px`; node.style.top = `${centerY}px`;
+  node.style.transform = `translate(-50%,-50%) scale(${scale})`;
+}
+function show(node, visible = true) { node.style.visibility = visible ? 'visible' : 'hidden'; }
+function revealCharacters(nodes, text, t, start, end) {
+  const count = t < start ? 0 : Math.min(nodes.length, 1 + Math.floor(clamp((t - start) / (end - start)) * Math.max(1, nodes.length - 1)));
+  nodes.forEach((node, index) => { node.style.opacity = index < count ? '1' : '0'; }); return text.slice(0, count);
+}
+function paintDots(t) {
+  let i = 0;
+  for (let row = 0; row < 27; row++) for (let column = 0; column < 51; column++) {
+    const x = (column - 25) * .38, y = (row - 13) * .32;
+    dotsPosition[i++] = x; dotsPosition[i++] = y + Math.sin(x * .65 + y * .38 + t * .25) * .23;
+    dotsPosition[i++] = -2.8 + Math.sin(x * .3 - y * .6 + t * .18) * .55;
+  } dotsGeometry.attributes.position.needsUpdate = true;
+}
+function placeProps(models, t, start, shift, scale = 1) {
+  models.forEach((model, index) => {
+    const data = model.userData.layout, p = out((t - start - .10 - index * .105) / .31);
+    model.visible = t >= start + .10 + index * .105;
+    model.position.set((data.x + shift + (1 - p) * .34) * scale, (data.y + (1 - p) * .12) * scale, data.z);
+    model.scale.setScalar(data.scale * mix(.68, 1, p) * scale);
+    model.rotation.set(rad(-10) + Math.sin((t - start) * .38 + index) * .008, .25 + Math.sin((t - start) * .5 + index) * .027, data.rotation);
+  });
+}
+function reset() {
+  layers.forEach(node => { show(node, false); node.style.opacity = '1'; node.style.transform = 'none'; node.style.filter = 'none'; });
+  baseRoots.forEach(root => { root.visible = false; root.position.set(0, 0, 0); root.rotation.set(0, 0, 0); root.scale.setScalar(1); });
+  heroLabels.forEach(node => { node.style.opacity = '0'; node.style.transform = 'none'; });
+  floor.visible = false; dots.visible = false; show($('#cream-sheet'), false); $('#cream-sheet').style.transform = 'none'; $('#outline-shell').style.opacity = '0'; $('#outline-shell').style.transform = 'none'; $('#compression-line').style.opacity = '0'; $('#lockup').style.opacity = '0'; $('#lockup').style.transform = 'none'; $('#lockup .brand-url').style.opacity = '0';
+  camera.position.set(0, .18, 9.6); look.set(0, 0, 0); key.intensity = 3.1; rim.intensity = 2.4; ambient.intensity = .85;
+  key.color.set('#FFFFFF'); rim.color.set('#E7F0E9'); orbLight.intensity = 0; heroes[0].userData.lens.scale.set(1, .13, 1);
+  finish.uniforms.blurAmount.value = .22; finish.uniforms.focus.value = 9.6; $('#film-grain').style.opacity = '.018'; $('#field').style.filter = 'none';
+}
+function renderAt(value) {
+  const t = clamp(Number(value) || 0, 0, spec.duration); reset();
+  let phase = 'opening', heroKind = null, heroAngle = null, heroContact = null;
+  const visibleCopy = [];
+  $('#field').style.background = palette.cream;
+  if (t < cue.collages[0]) {
+    show($('#intro')); visibleCopy.push(revealCharacters(typed.opening, copy.opening, t, cue.typing.start, cue.typing.end));
+  }
+  for (let index = 0; index < collages.length; index++) {
+    const start = cue.collages[index], swipe = cue.swipes[index], heroStart = cue.heroes[index];
+    const sceneStart = index === 0 ? start : [0, 4.04, 6.94][index];
+    const end = heroStart + .18;
+    if (t < sceneStart || t >= end) continue;
+    const item = collages[index], p = out((t - start) / .40), exit = Math.pow(clamp((t - swipe) / .65), 2.3);
+    const shiftPx = mix(185, 0, p) - clamp((t - start - .4) / Math.max(.1, swipe - start - .4)) * 95 - exit * 2200;
+    show(item.section); item.track.style.transform = `translate(${shiftPx}px,${mix(44, 0, p) - exit * 20}px)`;
+    item.words.forEach((node, word) => {
+      const reveal = out((t - start - [0, .12, .26, .45][word]) / .2); node.style.opacity = String(reveal); node.style.transform = `translateX(${(1 - reveal) * 44}px)`;
+      if (reveal > 0) visibleCopy.push(copy[item.id][word]);
+    }); item.star.style.opacity = t >= start + .2 ? '1' : '0';
+    collageGroups[index].root.visible = true; placeProps(collageGroups[index].objects, t, start, shiftPx / 145);
+    camera.position.set(-.20 + p * .20, .18, 9.6); phase = `${item.id}-collage`;
+  }
+  for (let index = 0; index < heroes.length; index++) {
+    const swipe = cue.swipes[index], start = cue.heroes[index], contact = cue.heroContacts[index], end = [4.04, 6.94, 9.94][index];
+    if (t < swipe || t >= end) continue;
+    $('#field').style.background = 'radial-gradient(ellipse at 16% 18%,#87b8c9 0%,transparent 57%),radial-gradient(ellipse at 83% 92%,#a9b6a1 0%,transparent 55%),linear-gradient(130deg,#497d97,#355e72 57%,#658d95)';
+    if (t < start + .18) { show($('#cream-sheet')); $('#cream-sheet').style.transform = `translateX(${-Math.pow(clamp((t - swipe) / .65), 2.3) * 2200}px)`; }
+    dots.visible = true; paintDots(t); phase = `${heroKinds[index]}-hero`;
+    if (t >= start) {
+      const p = out((t - start) / (contact - start)), move = out((t - start) / .73), model = heroes[index]; model.visible = true;
+      const scale = [2.20, 1.55, 1.78][index], pitch = [-12, -5, 8][index], endYaw = [28, 24, 24][index];
+      model.scale.setScalar(scale); model.position.set((1 - move) * 8.5 - .48, index === 2 ? -.72 : -.02, 0);
+      model.rotation.set(rad(pitch), rad(mix(-74, endYaw, p)), rad(mix(-8, index === 1 ? 6 : -2, p)));
+      const cameraProgress = smooth((t - start) / (contact - start)); camera.position.set(mix(.85, .18, cameraProgress), mix(index === 2 ? 1.8 : .48, index === 2 ? 1.5 : .32, cameraProgress), mix(7.7, 7.25, cameraProgress)); look.set(-.32, index === 2 ? .18 : .05, 0);
+      floor.visible = true; floor.position.y = index === 2 ? -.91 : -2.45;
+      const tag = heroLabels[index], tagP = out((t - start - .13) / .60); show($('#hero-labels')); tag.style.opacity = String(tagP); tag.style.transform = `translateX(${(1 - tagP) * 420}px)`;
+      if (tagP > 0) visibleCopy.push(copy.heroTags[index]);
+      heroKind = heroKinds[index]; heroAngle = THREE.MathUtils.radToDeg(model.rotation.y); heroContact = contact;
+      finish.uniforms.focus.value = camera.position.distanceTo(model.position); finish.uniforms.blurAmount.value = .43;
+      if (index === 0) { const focusP = out((t - cue.lens) / .14); heroes[0].userData.lens.scale.y = mix(.13, .145, focusP); }
+    }
+  }
+  if (t >= 9.94 && t < cue.warmCut) {
+    phase = 'problem'; $('#field').style.background = palette.cream; show($('#problem'));
+    const p = out((t - 10.10) / 1.65), drift = smooth((t - 11.75) / 1.28), track = $('#problem .collage-track');
+    track.style.transform = `translate(${mix(110, 0, p) - drift * 24}px,${mix(40, 0, p) - drift * 10}px) scale(${mix(.92, 1, p) + drift * .025})`;
+    problemWords.forEach((node, i) => { const q = out((t - cue.problem[i]) / .18); node.style.opacity = String(q); node.style.transform = `translateX(${(1 - q) * 40}px)`; if (q > 0) visibleCopy.push(copy.problem[i]); });
+    problemProps.visible = true; placeProps(problemModels, t, 10.04, mix(.72, 0, p), mix(.92, 1, p) + drift * .025);
+    camera.position.set(0, .18, mix(10.15, 9.6, p) - drift * .10);
+  }
+  if (t >= cue.warmCut && t < cue.orb) {
+    phase = 'turning-point'; $('#field').style.background = 'radial-gradient(ellipse at 77% 87%,#ffc06944,transparent 54%),linear-gradient(130deg,#8e2036,#e6562c 50%,#efac56)';
+    show($('#turn')); visibleCopy.push(revealCharacters(typed.turn, copy.turningPoint, t, cue.untilTyping.start, cue.untilTyping.end));
+    $('#turn').style.opacity = String(1 - smooth((t - 14.12) / .15));
+  }
+  if (t >= cue.orb && t < 17.42) {
+    phase = 'orb'; $('#field').style.background = 'radial-gradient(ellipse at 4% 91%,#28452a70,transparent 58%),radial-gradient(ellipse at 98% 76%,#91725538,transparent 55%),#09090B';
+    const p = smooth((t - cue.orb) / .56), settled = Math.max(0, t - 14.83);
+    orbRoot.visible = true; orbRoot.scale.setScalar(mix(6.5, 1.42, p) + .022 * Math.sin(settled * 1.6));
+    orbRoot.position.set(.045 * Math.sin(settled * .6), .025 * Math.cos(settled * .8), 0); orbRoot.rotation.set(.025 * Math.sin(settled * .4), settled * .13, -.025);
+    orbInterior.uniforms.time.value = t;
+    orbRings.forEach((ring, i) => { ring.visible = p > .65; ring.rotation.set(rad(16 + i * 21), rad(-12 + i * 16 + settled * 3), rad(-8 + i * 18)); });
+    camera.position.set(.08 * Math.sin(settled * .35), .17, mix(12, 9.2, p)); look.set(0, 0, 0);
+    halo.lookAt(camera.position); halo.material.opacity = mix(.17, .43, p);
+    orbLight.position.copy(orbRoot.position); orbLight.intensity = 2.2; rim.color.set('#ffe4b6'); rim.intensity = 1.8; ambient.intensity = .65;
+    finish.uniforms.focus.value = camera.position.distanceTo(orbRoot.position); finish.uniforms.blurAmount.value = .28;
+  }
+  if (t >= 17.42 && t < 22.8) {
+    phase = 'conversation'; const k = t - 17.42, exit = smooth((t - cue.dialogueExit) / .32);
+    const gx = 14 + Math.sin(k * .3) * 6, gy = 83 + Math.cos(k * .28) * 5;
+    $('#field').style.background = `radial-gradient(ellipse at ${gx}% 9%,#e3bfa17d,transparent 49%),radial-gradient(ellipse at 93% 29%,#c0dce1b3,transparent 62%),radial-gradient(ellipse at 14% ${gy}%,#a7ccc3ad,transparent 53%),radial-gradient(ellipse at 49% 43%,#27462e,transparent 63%),#708b63`;
+    show($('#dialogue')); $('#dialogue').style.opacity = String(1 - exit); conversationRoot.visible = true;
+    camera.position.set(mix(-.22, .13, smooth(k / 5.0)), mix(.28, .14, smooth(k / 5.0)), mix(9.6, 9.25, smooth(k / 5.0))); look.set(-.10, -.1, 0);
+    orbInterior.uniforms.time.value = t; rim.intensity = 1.5; ambient.intensity = .65;
+    messageMeshes.forEach((model, index) => {
+      const at = cue.messages[index], p = out((t - at) / .42); model.visible = t >= at;
+      model.position.copy(model.userData.place); model.position.y -= (1 - p) * .26 + exit * .15; model.position.z += (1 - p) * -.30;
+      model.scale.setScalar(mix(.94, 1, p)); model.rotation.set(0, mix(index === 1 ? -.085 : .075, 0, p), 0); model.userData.face.opacity = .76 * (1 - exit);
+      const node = messageNodes[index].node; node.style.opacity = String(p * (1 - exit));
+      const text = revealCharacters(messageNodes[index].letters, messageNodes[index].text, t, at + .11, at + .11 + [.7, 1.22, 1.2][index]);
+      if (model.visible && text) { visibleCopy.push(copy.conversation[index].speaker, text); }
+    });
+    finish.uniforms.focus.value = 9.25; finish.uniforms.blurAmount.value = .20;
+    if (exit > 0) $('#field').style.filter = `brightness(${1 - exit})`; else $('#field').style.filter = 'none';
+  }
+  if (t >= 22.8) {
+    $('#field').style.background = palette.dark; $('#field').style.filter = 'none'; phase = 'statement';
+    show($('#statement')); let prefix = 0, count = 0;
+    statementWords.forEach((node, index) => {
+      const p = out((t - cue.closingWords[index]) / .24), vanish = smooth((t - (25.93 + (4 - index) * .095)) / .4);
+      node.style.opacity = String(p * (1 - vanish)); node.style.transform = `translateY(${(1 - p) * 24 - vanish * 14}px)`; node.style.filter = `blur(${(1 - p) * 4 + vanish * 7}px)`;
+      if (t >= cue.closingWords[index]) { prefix += statementWidths[index] + (index ? 18 : 0); count++; if (vanish < 1) visibleCopy.push(copy.statement[index]); }
+    });
+    let translate = prefix / 2;
+    if (count > 1) {
+      const last = count - 1, p = out((t - cue.closingWords[last]) / .24), previous = prefix - statementWidths[last] - 18;
+      translate = mix(previous / 2, prefix / 2, p);
+    }
+    $('#statement-line').style.transform = `translateX(${-translate}px)`;
+    if (t >= cue.outline && t < 27.14) {
+      phase = 'outline'; const reveal = smooth((t - cue.outline) / .88), shrink = smooth((t - 26.15) / .87);
+      const shell = $('#outline-shell'); shell.style.opacity = String(1 - smooth((t - 27.02) / .12));
+      shell.style.transform = `translateY(${mix(0, -1, shrink)}px) scale(${mix(1, .32, shrink)},${mix(1, .37, shrink)})`;
+      $('#outline-edge').style.strokeDashoffset = String(1 - reveal);
+    }
+    if (t >= 26.82 && t < cue.compression + .12) {
+      phase = 'cards'; cardsRoot.visible = true; show($('#cards')); camera.position.set(mix(.20, 0, smooth((t - 26.82) / 1.0)), .15, 9.2); look.set(0, 0, 0);
+      cardMeshes.forEach((model, index) => {
+        const contact = cardContacts[index], start = contact - .20, p = out((t - start) / .20), compress = smooth((t - cue.compression) / .12);
+        model.visible = t >= start; model.position.set(cardPositions[index] + (index === 0 ? -6.8 : index === 2 ? 6.8 : 0) * (1 - p), (1 - p) * -.15, index === 1 ? (1 - p) * 1.5 : (1 - p) * -.35);
+        model.rotation.set((1 - p) * -.08, (index === 0 ? .55 : index === 2 ? -.55 : .09) * (1 - p), (index - 1) * .035 * (1 - p));
+        model.scale.setScalar(mix(index === 1 ? 1.20 : .90, 1, p)); model.userData.front.opacity = 1 - compress; model.userData.front.transparent = compress > 0;
+        cardNodes[index].style.opacity = String(p * (1 - compress));
+        if (model.visible && p > 0 && compress < 1) visibleCopy.push(copy.cards[index].title, copy.cards[index].detail);
+      });
+      ambient.intensity = .62; key.intensity = 2.3; rim.intensity = 1.4; finish.uniforms.focus.value = 9.2; finish.uniforms.blurAmount.value = .20;
+    }
+    if (t >= cue.compression && t < 29.39) {
+      phase = 'compression'; const wide = smooth((t - 28.96) / .26), line = smooth((t - 29.22) / .17);
+      stripRoot.visible = true; stripRoot.scale.set(mix(1, 1.20, wide), mix(1, .035, wide) * mix(1, .02, line), 1); stripRoot.position.set(0, mix(0, -.45, line), 0);
+      const stroke = $('#compression-line'); stroke.style.opacity = String(smooth((t - 29.22) / .08) * (1 - smooth((t - 29.33) / .12)));
+      stroke.style.transform = `translateY(${mix(0, 54, line)}px) scaleX(${mix(.83, 1, wide)})`;
+      camera.position.set(0, .15, 9.2); look.set(0, 0, 0);
+    }
+    if (t >= cue.logo) {
+      phase = 'brand'; const p = out((t - cue.logo) / (cue.logoSettled - cue.logo)), fade = smooth((t - cue.fade[0]) / (cue.fade[1] - cue.fade[0]));
+      $('#lockup').style.opacity = String(out((t - cue.logo) / .5) * (1 - fade)); $('#lockup').style.transform = `translateY(${(1 - p) * 42}px) scale(${mix(1.13, 1, p)})`; $('#lockup').style.filter = `blur(${(1 - p) * 7}px)`;
+      $('#lockup .brand-url').style.opacity = String(out((t - cue.url) / .34));
+      if (fade < 1) { visibleCopy.push(copy.brand); if (t >= cue.url) visibleCopy.push(copy.url); }
+      if (t >= cue.fade[0]) { $('#field').style.background = `rgb(${Math.round(9 * (1 - fade))},${Math.round(9 * (1 - fade))},${Math.round(11 * (1 - fade))})`; $('#film-grain').style.opacity = String(.018 * (1 - fade)); }
+      if (t >= cue.fade[1]) phase = 'black-tail';
+    }
+  }
+  camera.lookAt(look); camera.updateMatrixWorld();
+  if (phase === 'conversation') messageMeshes.forEach((model, index) => projectCard(model, messageNodes[index].node, 5.12, 1.19));
+  if (cardsRoot.visible) cardMeshes.forEach((model, index) => projectCard(model, cardNodes[index], 3.36, 1.92));
+  finish.uniforms.time.value = t;
+  renderer.setRenderTarget(target); renderer.render(scene, camera); renderer.setRenderTarget(null); renderer.render(finishScene, finishCamera);
+  window.__motionState = { time: t, phase, camera: camera.position.toArray(), heroKind, heroAngle, heroContact, copyVisible: visibleCopy.filter(Boolean) };
+}
+const proxy = { time: 0 };
+const timeline = window.gsap.timeline({ paused: true, onUpdate: () => renderAt(proxy.time) }); timeline.to(proxy, { time: spec.duration, duration: spec.duration, ease: 'none' }, 0);
+window.__timelines = { main: timeline }; window.seekComposition = seconds => { const t = clamp(Number(seconds) || 0, 0, spec.duration); timeline.seek(t, false); renderAt(t); }; window.__motionRender = renderAt;
+renderAt(0); window.__motionReady = true;
+}
+init().catch(error => { window.__motionError = String(error.stack || error); console.error(error); });
+</script></body></html>

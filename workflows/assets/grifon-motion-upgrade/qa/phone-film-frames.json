@@ -1,0 +1,17 @@
+{
+  "width": 375,
+  "sampleTimes": [
+    6.84,
+    21.8,
+    27.8,
+    30.6
+  ],
+  "source": "Actual decoded final MP4",
+  "purpose": "Native film pixel readability at a small portrait-width display",
+  "notEstablished": [
+    "Browser playback",
+    "Physical Android behavior",
+    "HTML preview page checks",
+    "Listening"
+  ]
+}

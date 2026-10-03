@@ -1,67 +1,70 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, Grifon motion depth study**
+**Stamped: 2026-10-03, full Grifon motion upgrade completed locally**
 
-## Current authorized work
-Neil approved improving motion design after studying two Higgsfield demos.
-Branch: codex/grifon-motion-depth, based on main 3da5bc7b.
-Production commit: 52257ff6. Draft PR156:
-https://github.com/yopiheart/grifon-command/pull/156.
-Branch is pushed; isolated working tree was clean after the production commit.
+Neil requested the full upgraded movie after the eight-second prototype.
+The 32.9-second / 1920 x 1080 / 30 fps film and synchronized before/after MP4
+are complete and independently verified. The approved V08 AAC is unchanged.
+
+## Location and scope
+
 Isolated checkout:
 C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
-The primary Oceanides checkout, its working edits and approved earlier motion
-film are untouched. This is an original eight-second local brand-motion sample,
-not an application feature, prompt change or production rollout.
+Branch: codex/grifon-motion-depth. Existing draft review/backup PR156:
+https://github.com/yopiheart/grifon-command/pull/156.
+New project: workflows/assets/grifon-motion-upgrade/.
+Earlier eight-second study remains in workflows/assets/grifon-motion-depth/.
+The primary Oceanides checkout and its working edits were not touched.
+No application, tuned prompt, hook, package, deployment or merge changes.
 
 ## Result
-workflows/assets/grifon-motion-depth/ contains editable copy/cue specs,
-Three/GSAP composition source, local assets, original deterministic audio,
-build/render/verification helpers, final 1080p MP4 and encoded frame sheet.
-The final MP4 includes music and SFX; SHA-256:
-6de26c71a88073682c2a2532cc2fadde16f14ebc8863085f8bea54d68ef1bd55.
-artifacts/grifon-motion-depth-review.html embeds that exact film, its poster
-and font; tools/artifacts/build-motion-depth-review.mjs reproduces the page.
-No paid provider, After Effects, deploy or merge was used.
-A local ZIP backup is saved at
-.tmp/grifon-motion-depth-52257ff6-backup.zip (source, assets, film and review).
+
+Full film: grifon-full-upgrade-1080p.mp4, 5,190,198 bytes, SHA256:
+978d8e1d29bfbd40c89788a898377c5acca5d3ea7efcdfab1a50e71d4fbbff27.
+Comparison: grifon-full-before-after-1080p.mp4, 3,824,847 bytes, SHA256:
+695f7684a3f4710df6d7cf1ae6bf71ee98caa3c185c4018c26344df47401112d.
+Editable template/spec, local fonts/logo/Three/GSAP, build/render/QA helpers,
+actual encoded frame sheets and reproduction README are included.
+ZIP backup exists at .tmp/grifon-full-upgrade-backup.zip in this checkout.
+No paid providers, downloads, new stock stems or new soundtrack were used.
+
+Supplied copy, palette progression and audio anchors remain unchanged.
+Genuine 3D products, camera perspective, materials, shadows, orb, conversation
+plates and workflow cards replace the earlier flat product implementations.
+Canonical unchanged logo, transparent gold ring and Inter Black italic closing.
 
 ## Actual verification
-- Offline build and Hyperframes gate: PASS; zero errors/warnings.
-- Source pixels: PASS; 15 nonblank samples, four motion windows, exact material
-  cuts, safe closing lockup, deterministic seeking, scoped copy revision.
-- Type: PASS; native Inter versus normalized Three silhouettes above 0.999
-  overlap. Original malformed A fails the same 0.985 threshold.
-- Word/audio contacts: PASS at 4.75 / 5 / 5.25 seconds; zero position offsets
-  and fully visible 240 ms pre-roll. Blank/frozen negative controls rejected.
-- Final media: PASS; full decode, 240 frames / 8 seconds / 1920 x 1080 /
-  30 fps / stereo AAC48k. Encoded -15.78 LUFS, -2.00 dBTP.
-- Exact standalone embedded MP4 bytes, inline poster/font, charset and static
-  playback/download wiring: PASS. These do not establish browser behavior.
-- Independent source and actual encoded-frame review: no remaining actionable
-  finding. Overall review-page visual approval awaits the mobile screenshot.
-- Application baseline: build exit 0; 1,414 tests passed / 32 default skips.
-  Production agent used process-spawn escalation to resolve initial EPERM.
-- Existing artifact anchors, domain language and PowerShell ASCII: PASS.
 
-## Pending and next decision
-Actual 390 x 844 review-page screenshot, runtime playback/Restart/download
-checks are BLOCKED: automatic approval review rejected browser-origin access
-to localhost without explicit human permission. An async question asks Neil
-to allow preview checks at http://127.0.0.1:4186/. Do not use another browser
-surface or indirect execution to bypass that denial. After an explicit yes,
-resume the smoke agent and independent page review, then record actual results.
-The server serves only this review page and binds to desktop loopback.
+- Hyperframes: zero errors, two nonblocking warnings (main-file length and
+  static pre-timeline type-width measurement). Runtime/layout pass.
+- Source: 15 visible story beats, 11 intended motion windows, three hero
+  settles at 3.82/6.84/9.80, nonlinear seeking, isolated opening-copy edit,
+  and rejected blank/frozen controls.
+- Encoded film: 15 samples match inspected source, maximum mean error 7.313
+  under tolerance12; final black tail at32.70 is exactly RGB0.
+- BOTH films: strict full decode, 987 frames, 32.900 seconds, 1920x1080,
+  nominal/average30fps, H264yuv420p, zero start, single stereo AAC48k.
+- Exact accepted AAC payload095701ccc7fe7292c70f888a1145c15736fa64648f98c71ef24f1f195d536998
+  matches in both exports; -16.03LUFS/-1.35dBTP/7.90LU. Cue audit checks93/99
+  authored placements directly; byte identity preserves every placement.
+- Independent native media smoke: PASS. Independent decoded visual review:
+  PASS WITH NITS, zero critical findings; actual375px film pixels inspected.
+- Domain, PowerShell ASCII and artifact anchors: PASS. Sandbox child-spawn
+  EPERM resolved by retrying unchanged commands with local process permission.
+  No gate bypass. Prior app baseline build and1414 tests passed; no app edits
+  in this asset-only revision, so broad application suites were not rerun.
 
-Direct subjective listening and creative approval remain pending Neil's
-playback. Temporal motion blur is not implemented; source uses depth blur.
-Phone-sized Chromium is not proof of physical Android WebView behavior.
-No merge or production deployment is authorized. GitHub draft review and
-backup are the handoff; future revisions stay on this isolated branch.
-At draft creation, GitHub CI was pending; the automatic Vercel preview status
-was pending and Preview Comments succeeded. No deployment command was issued.
+## Remaining decision and practical limits
 
-## Other work
-Earlier motion PR143/144/149 and workflow PR154 are already in base main.
-Oceanides work continues separately; do not switch or stage its checkout.
-Current production details and reproduction live in the project README;
-this remains the only resume document.
+Neil's playback/creative feedback is pending. No production work remains for
+this requested preview; future revisions should stay on this isolated branch.
+The lens remains pale/matte, some decorative collage props extend beyond frame
+edges, and fine speaker/detail/URL copy is small at375px. Main copy, titles and
+wordmark are legible. The composition uses depth blur, not asserted temporal
+motion blur. Device/chat art is conceptual, not shipped-product evidence.
+
+The assistant cannot directly hear audio; native technical tests are not a
+subjective listening or physical Android playback pass. The earlier prototype
+HTML browser-origin smoke remains blocked by automatic review pending explicit
+permission for localhost4186. Do not bypass it via another browser or indirect
+preview. Current delivery is native MP4 without browser connector access.
+No merge or deployment is authorized; draft GitHub review/backup is the handoff.

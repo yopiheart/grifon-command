@@ -1,0 +1,129 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-10-03T09:38:31.113Z",
+  "scope": "Native media only: accepted V08 AAC preservation and independent final/comparison metadata/decode checks",
+  "film": {
+    "path": "grifon-full-upgrade-1080p.mp4",
+    "status": "PASS",
+    "bytes": 5190198,
+    "sha256": "978d8e1d29bfbd40c89788a898377c5acca5d3ea7efcdfab1a50e71d4fbbff27",
+    "video": {
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "pixelFormat": "yuv420p",
+      "nominalFps": "30/1",
+      "averageFps": "30/1",
+      "decodedFrames": 987,
+      "startTime": 0,
+      "durationSeconds": 32.9
+    },
+    "audio": {
+      "codec": "aac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "channelLayout": "stereo",
+      "startTime": 0,
+      "durationSeconds": 32.9,
+      "payloadSha256": "095701ccc7fe7292c70f888a1145c15736fa64648f98c71ef24f1f195d536998"
+    },
+    "checks": {
+      "oneVideoAndAudio": true,
+      "h264": true,
+      "dimensions": true,
+      "frameRate": true,
+      "frames": true,
+      "pixelFormat": true,
+      "duration": true,
+      "zeroStart": true,
+      "aacStereo48k": true
+    },
+    "fullDecode": {
+      "exitCode": 0,
+      "errorOutput": "",
+      "strictXerror": true
+    }
+  },
+  "comparison": {
+    "path": "grifon-full-before-after-1080p.mp4",
+    "status": "PASS",
+    "bytes": 3824847,
+    "sha256": "695f7684a3f4710df6d7cf1ae6bf71ee98caa3c185c4018c26344df47401112d",
+    "video": {
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "pixelFormat": "yuv420p",
+      "nominalFps": "30/1",
+      "averageFps": "30/1",
+      "decodedFrames": 987,
+      "startTime": 0,
+      "durationSeconds": 32.9
+    },
+    "audio": {
+      "codec": "aac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "channelLayout": "stereo",
+      "startTime": 0,
+      "durationSeconds": 32.9,
+      "payloadSha256": "095701ccc7fe7292c70f888a1145c15736fa64648f98c71ef24f1f195d536998"
+    },
+    "checks": {
+      "oneVideoAndAudio": true,
+      "h264": true,
+      "dimensions": true,
+      "frameRate": true,
+      "frames": true,
+      "pixelFormat": true,
+      "duration": true,
+      "zeroStart": true,
+      "aacStereo48k": true
+    },
+    "fullDecode": {
+      "exitCode": 0,
+      "errorOutput": "",
+      "strictXerror": true
+    }
+  },
+  "acceptedAudio": {
+    "status": "PASS",
+    "command": "node workflows/assets/grifon-motion-upgrade/qa/audio-preservation.mjs",
+    "exitCode": 0,
+    "baselineStatus": "PASS",
+    "upgradeStatus": "PASS",
+    "comparisonPayloadIdentity": "PASS",
+    "cueAnchorAudit": {
+      "status": "PASS",
+      "directTimingCoverage": 93,
+      "originalCueCount": 99,
+      "limitation": "Declared cue anchors only; actual rendered contact synchronization is reviewed separately"
+    },
+    "measurement": {
+      "baselineAndUpgradeIntegratedLufs": -16.03,
+      "baselineAndUpgradeTruePeakDbtp": -1.35,
+      "baselineAndUpgradeLoudnessRangeLu": 7.9,
+      "method": "FFmpeg loudnorm input measurement; no audio normalization or media rewriting"
+    }
+  },
+  "environment": {
+    "initialDefaultAttempt": {
+      "exitCode": 1,
+      "error": "Node spawnSync ffprobe EPERM",
+      "classification": "Sandbox setup restriction; no product defect"
+    },
+    "sameCommandEscalatedRetry": {
+      "exitCode": 0,
+      "status": "PASS"
+    },
+    "helperProcessesStarted": 0
+  },
+  "limitations": [
+    "No browser, connector, localhost preview, or offline HTML access was part of this test",
+    "The prior HTML browser check remains blocked",
+    "No direct listening, subjective music quality, or physical mobile-device playback claim",
+    "Root separately inspects authored and encoded visual frames",
+    "Exact AAC identity and declared cue anchors do not prove perceived picture synchronization"
+  ],
+  "errors": []
+}
