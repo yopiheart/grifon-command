@@ -1,47 +1,60 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, PR evidence handoff and targeted retrospective**
+**Stamped: 2026-10-03, Grifon motion depth study**
 
 ## Current authorized work
-Neil approved applying useful Lauren Tan / Matt Pocock workflow improvements.
-Branch: `codex/pr-proof-workflow`, based on main `54e13335`.
-Draft PR154: https://github.com/yopiheart/grifon-command/pull/154.
-Isolated checkout: C:/Users/ADMIN/.codex/worktrees/pr-proof-workflow/grifon-command.
-The shared Oceanides checkout and recovery-closeout evidence are untouched.
-Scope is documentation only: PR template, existing review workflow, desktop pointer.
-No application, CI configuration, tuned prompt, provider, billing or hook edits.
+Neil approved improving motion design after studying two Higgsfield demos.
+Branch: codex/grifon-motion-depth, based on main 3da5bc7b.
+Isolated checkout:
+C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
+The primary Oceanides checkout, its working edits and approved earlier motion
+film are untouched. This is an original eight-second local brand-motion sample,
+not an application feature, prompt change or production rollout.
 
 ## Result
-PR handoffs explain observable change, proof with revision and limits, risk,
-rollback limits and next decision. CLI/connector PR creation follows the same
-content because those paths can bypass GitHub's template.
-Recurring findings route to an existing code boundary/check before new prose;
-at most one prevention change is proposed at closeout, within authorized scope.
-New defect checks must fail the original behavior and pass the fix.
-Independent critics stay report-only. Merge/deploy/paid/tuned approvals remain.
-This is workflow guidance, not a new automated enforcement gate.
+workflows/assets/grifon-motion-depth/ contains editable copy/cue specs,
+Three/GSAP composition source, local assets, original deterministic audio,
+build/render/verification helpers, final 1080p MP4 and encoded frame sheet.
+The final MP4 includes music and SFX; SHA-256:
+6de26c71a88073682c2a2532cc2fadde16f14ebc8863085f8bea54d68ef1bd55.
+artifacts/grifon-motion-depth-review.html embeds that exact film, its poster
+and font; tools/artifacts/build-motion-depth-review.mjs reproduces the page.
+No paid provider, After Effects, deploy or merge was used.
 
-## Verification
-- `npm.cmd run check:codex`: PASS, 32 skill entrypoints, 26 tests, exit 0.
-- `node tools/check-domain-language.mjs`: PASS, exit 0.
-- New local references and PR handoff anchor resolve: 3/3, exit 0.
-- `git diff --check`: PASS on workflow/template changes.
-- Independent diff review: no actionable findings on the three changed documents.
-  Reviewed implementation is committed as `09e1c669`; closeout changes NOW.md only.
-- Independent five-scenario assessment: sufficient for docs-only, fixture/live,
-  stale evidence, irreversible side effects and existing regression ownership.
-- Runtime build/unit/browser suites not rerun locally: no runtime changes.
-- Strict resume-document check passed; GitHub CI pending at PR creation.
-PR150's completed recovery evidence was inspected as a real handoff reference;
-its results are historical evidence, not tests of this documentation diff.
+## Actual verification
+- Offline build and Hyperframes gate: PASS; zero errors/warnings.
+- Source pixels: PASS; 15 nonblank samples, four motion windows, exact material
+  cuts, safe closing lockup, deterministic seeking, scoped copy revision.
+- Type: PASS; native Inter versus normalized Three silhouettes above 0.999
+  overlap. Original malformed A fails the same 0.985 threshold.
+- Word/audio contacts: PASS at 4.75 / 5 / 5.25 seconds; zero position offsets
+  and fully visible 240 ms pre-roll. Blank/frozen negative controls rejected.
+- Final media: PASS; full decode, 240 frames / 8 seconds / 1920 x 1080 /
+  30 fps / stereo AAC48k. Encoded -15.78 LUFS, -2.00 dBTP.
+- Exact standalone embedded MP4 bytes, inline poster/font, charset and static
+  playback/download wiring: PASS. These do not establish browser behavior.
+- Independent source and actual encoded-frame review: no remaining actionable
+  finding. Overall review-page visual approval awaits the mobile screenshot.
+- Application baseline: build exit 0; 1,414 tests passed / 32 default skips.
+  Production agent used process-spawn escalation to resolve initial EPERM.
+- Existing artifact anchors, domain language and PowerShell ASCII: PASS.
 
-## ▶ NEXT ACTION
-Review PR154 after CI. The PR uses the new handoff and records current check status.
-No merge or production deployment is authorized for this slice.
-After adoption, assess whether the next PR needs less clarification; no claim
-of measured review-time savings follows from a documentation walkthrough.
+## Pending and next decision
+Actual 390 x 844 review-page screenshot, runtime playback/Restart/download
+checks are BLOCKED: automatic approval review rejected browser-origin access
+to localhost without explicit human permission. An async question asks Neil
+to allow preview checks at http://127.0.0.1:4186/. Do not use another browser
+surface or indirect execution to bypass that denial. After an explicit yes,
+resume the smoke agent and independent page review, then record actual results.
+The server serves only this review page and binds to desktop loopback.
 
-## Other work retained
-Recovery PR146 and PR150 are merged; recovery remains on return, not complete
-closed-browser production. Existing no-spend and fixture/live limits still apply.
-Motion PR143/144/149 are present in base main history; their release checks belong
-to the motion session. Oceanides PR151/152/153 and local edits are separate.
+Direct subjective listening and creative approval remain pending Neil's
+playback. Temporal motion blur is not implemented; source uses depth blur.
+Phone-sized Chromium is not proof of physical Android WebView behavior.
+No merge or production deployment is authorized. GitHub draft review and
+backup are the handoff; future revisions stay on this isolated branch.
+
+## Other work
+Earlier motion PR143/144/149 and workflow PR154 are already in base main.
+Oceanides work continues separately; do not switch or stage its checkout.
+Current production details and reproduction live in the project README;
+this remains the only resume document.

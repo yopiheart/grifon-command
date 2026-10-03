@@ -1,0 +1,7 @@
+{
+  "node": "v24.21.0",
+  "hyperframes": "0.7.68",
+  "three": "0.180.0",
+  "browser": "chrome-headless-shell-win64",
+  "localGenerationSpendUsd": 0
+}

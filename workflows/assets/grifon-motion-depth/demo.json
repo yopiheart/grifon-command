@@ -1,0 +1,20 @@
+{
+  "id": "grifon-motion-depth",
+  "duration": 8,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "copy": { "headline": "YOUR NEXT AD", "brand": "GRIFON", "url": "GRIFON.AI" },
+  "colors": { "background": "#09090B", "surface": "#18181B", "accent": "#FFCC00", "text": "#FFFFFF" },
+  "materialCuts": [
+    { "at": 2.5, "material": "gold" },
+    { "at": 3, "material": "ceramic" },
+    { "at": 3.5, "material": "glass" },
+    { "at": 4, "material": "wireframe" }
+  ],
+  "wordArrivals": [4.75, 5.0, 5.25],
+  "titleSettlesAt": 5.5,
+  "logoAt": 6,
+  "logoSettlesAt": 6.4
+}

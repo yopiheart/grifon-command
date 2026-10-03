@@ -1,0 +1,3 @@
+audio/*.wav
+qa/frames/
+qa/*-debug.log

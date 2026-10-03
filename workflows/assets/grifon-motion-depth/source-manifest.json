@@ -1,0 +1,94 @@
+{
+  "spec": {
+    "id": "grifon-motion-depth",
+    "duration": 8,
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "bpm": 120,
+    "copy": {
+      "headline": "YOUR NEXT AD",
+      "brand": "GRIFON",
+      "url": "GRIFON.AI"
+    },
+    "colors": {
+      "background": "#09090B",
+      "surface": "#18181B",
+      "accent": "#FFCC00",
+      "text": "#FFFFFF"
+    },
+    "materialCuts": [
+      {
+        "at": 2.5,
+        "material": "gold"
+      },
+      {
+        "at": 3,
+        "material": "ceramic"
+      },
+      {
+        "at": 3.5,
+        "material": "glass"
+      },
+      {
+        "at": 4,
+        "material": "wireframe"
+      }
+    ],
+    "wordArrivals": [
+      4.75,
+      5,
+      5.25
+    ],
+    "titleSettlesAt": 5.5,
+    "logoAt": 6,
+    "logoSettlesAt": 6.4
+  },
+  "assets": {
+    "public/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "workflows/assets/grifon-promo-canvas/fonts/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "composition.html.template": "fe2886e43db52ee5b7bf4d1beb6f66232d2673b6f5c4ce673f54b3afed87a085",
+    "assets/inter-outlines.json": "325c56fb80f01601ecfcc25ce8550b05ad0f7561b022d3f35465c3f7d44e503c",
+    "assets/OFL-Inter.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
+    "vendor/clipper.cjs": "a650c6946682edc1a64016f6553eeb5c32ce45eb7ca0ad5d8221961af011d97c",
+    "vendor/LICENSE-Clipper.txt": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+    "vendor/three.module.min.js": "e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6",
+    "vendor/three.core.min.js": "61ba0df005b05991361d040d8ff670e1aadfd0ce7aeebd1fdb0725957a8957de",
+    "vendor/LICENSE": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601",
+    "demo.json": "5ae0fdb3775c0befc1d37c8c176dbb2ab5635d799444bc11a0442c7fe61aebbb",
+    "gsap.min.js": "8f41acd30db5898fd367e848d5640f814aac2fcdd54738e4b3650ebe0e941f74",
+    "vendor/three.global.js": "7d3cfc1f4eb2117c54c726ad37170ed4b57afb8f8af8421989b528e0decf3249",
+    "assets/inter-normalized-outlines.json": "a9c14eea59cf40a779136891e1fdb5a99ae7fd9bd520352ecee979d1b51fa42a"
+  },
+  "three": {
+    "version": "0.180.0",
+    "license": "MIT",
+    "source": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js"
+  },
+  "clipper": {
+    "version": "6.4.2",
+    "license": "BSL-1.0",
+    "notice": "vendor/LICENSE-Clipper.txt",
+    "source": "https://cdn.jsdelivr.net/npm/clipper-lib@6.4.2/clipper.js",
+    "buildTimeOnly": true
+  },
+  "inter": {
+    "license": "OFL-1.1",
+    "notice": "assets/OFL-Inter.txt",
+    "source": "https://github.com/rsms/inter/blob/master/LICENSE.txt"
+  },
+  "gsap": {
+    "version": "3.14.2",
+    "source": "workflows/assets/grifon-motion-spark/vendor/gsap.min.js"
+  },
+  "output": {
+    "file": "index.html",
+    "sha256": "d80a3cc27cb8dfc39e1bfe3bddbc30c1448b29c92e8546e8411ca8ce8b2d6104",
+    "selfContained": false,
+    "offlineDependencies": [
+      "vendor/three.global.js",
+      "vendor/gsap.min.js"
+    ]
+  },
+  "generationSpendUsd": 0
+}

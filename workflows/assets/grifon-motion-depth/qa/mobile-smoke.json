@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-10-03T07:17:16.468Z",
+  "staticStatus": "PASS",
+  "paths": {
+    "html": "artifacts\\grifon-motion-depth-review.html",
+    "film": "workflows\\assets\\grifon-motion-depth\\grifon-motion-depth-1080p.mp4"
+  },
+  "film": {
+    "bytes": 10396397,
+    "sha256": "6de26c71a88073682c2a2532cc2fadde16f14ebc8863085f8bea54d68ef1bd55",
+    "embeddedSha256": "6de26c71a88073682c2a2532cc2fadde16f14ebc8863085f8bea54d68ef1bd55"
+  },
+  "html": {
+    "bytes": 14517135,
+    "sha256": "0c308f3a73142915a166b5c3e87feb534364c627fbf6e0552b445153423180e0"
+  },
+  "checks": {
+    "exactEmbeddedFilm": true,
+    "embeddedPoster": true,
+    "inlineFont": true,
+    "charset": true,
+    "fixedGround": true,
+    "solidUppercaseHeading": true,
+    "noExternalAssetURLs": true,
+    "userGestureUnmutedHandler": true,
+    "restartZeroHandler": true,
+    "downloadUsesSameEmbeddedBytes": true
+  },
+  "browserStatus": "BLOCKED",
+  "browserEvidence": {
+    "mobileScreenshot390x844": null,
+    "mobileScreenshot375x667": null,
+    "desktopScreenshot1280x900": null,
+    "runtimePlayback": "NOT RUN",
+    "runtimeRestart": "NOT RUN",
+    "runtimeDownloadHash": "NOT RUN",
+    "errorsAndMissingAssets": "NOT RUN",
+    "fileProtocol": "DENIED: CUA permits HTTP/HTTPS only",
+    "loopbackAccess": "AUTO-REVIEW DENIED: browser-origin access to localhost was not explicitly authorized by the human user",
+    "helper": { "pid": 17028, "port": 50639, "status": "STOPPED by exact PID" },
+    "temporaryViewport": "RESET"
+  },
+  "limitations": [
+    "Codex CUA permits HTTP/HTTPS only; offline file-URL browser playback is blocked.",
+    "Browser-origin loopback access requires human authorization; no browser gate has passed.",
+    "Static handlers do not prove playback, restart, successful download, or browser pixel layout.",
+    "Audio-track metadata and measurements do not establish subjective sound quality."
+  ]
+}
