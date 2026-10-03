@@ -140,5 +140,6 @@
       }
     ],
     "humanReview": "Exact words, pronunciation and delivery require Neil to listen and select the full-narration voice."
-  }
+  },
+  "selectionCorrection": "Neil clarified the intended voice is his single personal clone airaandmeagan, not these two public voices. Preserve this completed paid-test record; do not use these samples for final narration. See voice-personal.spec.json for the pending corrected full take."
 }

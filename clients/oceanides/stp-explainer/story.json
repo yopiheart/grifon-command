@@ -6,7 +6,7 @@
     "height": 1080,
     "fps": 30
   },
-  "status": "Narration wording pending user approval; visual draft uses no paid generation",
+  "status": "Personal-voice narration pending exact paid-spec approval; local music preview prepared separately",
   "scope": "Neil confirmed on 2026-10-03 that Sir August's offer is an on-site Sewage Treatment Plant (STP) for building wastewater. This is an illustrative domestic-wastewater process, not an exact supplier design or an Oceanides-owned facility.",
   "sources": [
     {
@@ -31,10 +31,10 @@
       "id": "building",
       "start": 0,
       "end": 10,
-      "title": "Wastewater starts here",
+      "title": "Rethink your quarterly hauling bill",
       "detail": "Toilets, sinks and wash areas",
-      "caption": "Mula sa toilets, sinks at wash areas, may wastewater na lumalabas sa building araw-araw.",
-      "vo": "Mula sa toilets, sinks at wash areas, may wastewater na lumalabas sa building araw-araw."
+      "caption": "Malaki ba ang quarterly siphoning bill ng building mo? Araw-araw, may wastewater mula sa toilets, sinks at wash areas.",
+      "vo": "Malaki ba ang quarterly siphoning bill ng building mo? Araw-araw, may wastewater mula sa toilets, sinks at wash areas."
     },
     {
       "id": "onsite",
@@ -120,20 +120,20 @@
     {
       "id": "benefits",
       "start": 108,
-      "end": 120,
-      "title": "On-site treatment and hauling",
-      "detail": "Liquid wastewater treatment / Continued sludge removal",
-      "caption": "Kung hinahaul ang liquid wastewater, puwedeng mabawasan ang hauling sa tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal.",
-      "vo": "Kung regular na hinahaul ang liquid wastewater, puwedeng mabawasan ang hauling kapag may tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal."
+      "end": 125,
+      "title": "Less hauling, if the site is suitable",
+      "detail": "On-site liquid treatment / Sludge removal continues",
+      "caption": "Puwedeng mabawasan ang liquid hauling sa tamang STP at pinapayagang outlet. Kailangan pa rin ng sludge removal.",
+      "vo": "Kung liquid wastewater ang regular na hinahaul, puwedeng mabawasan ito sa tamang STP at pinapayagang outlet. May sludge at screened solids pa ring aalisin. Hindi automatic na mawawala ang siphoning."
     },
     {
       "id": "contact",
-      "start": 120,
-      "end": 129,
-      "title": "Start with your site",
-      "detail": "Site assessment. Technical scope. Written quotation.",
-      "caption": "Oceanides ang main contact mo para sa site assessment, proposal at coordination sa specialist provider.",
-      "vo": "Oceanides ang main contact mo para sa site assessment, proposal at coordination sa specialist provider."
+      "start": 125,
+      "end": 139,
+      "title": "Assess your site. Compare the cost.",
+      "detail": "Site assessment. Cost review. Written quotation.",
+      "caption": "Ikumpara muna ang quarterly bill sa installation, power, maintenance at sludge removal. Oceanides ang main contact mo para sa site assessment at proposal.",
+      "vo": "Ikumpara muna ang quarterly bill sa installation, power, maintenance at sludge removal. Oceanides ang main contact mo para sa site assessment at proposal."
     }
   ]
 }

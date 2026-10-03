@@ -1,0 +1,206 @@
+{
+  "status": "PENDING_APPROVAL",
+  "purpose": "One full Taglish narration take using Neil's existing personal cloned voice, synchronized to the Oceanides building STP explainer and mixed locally with restrained piano music.",
+  "selectionCorrection": "Neil clarified on 2026-10-03 that Aira and Megan meant the single saved personal voice named airaandmeagan. The earlier two public-library samples are historical and will not be used in this video.",
+  "approval": null,
+  "voice": {
+    "voice_id": "mPEHjC4AussYOrtIPSUB",
+    "name": "airaandmeagan",
+    "category": "cloned",
+    "language": "fil"
+  },
+  "input": {
+    "normalization": "Review-text hashes use LF newlines (CRLF converted to LF); spoken scene text is unchanged.",
+    "file": "narration-for-approval.txt",
+    "sha256": "ac5a21cee9d1fe207a8ca3651488613699d7d1003a5016a0d2d1d07c3df88921",
+    "characters": 1455,
+    "words": 224,
+    "scenes": [
+      {
+        "id": "building",
+        "inputIndex": 0,
+        "textSha256": "0726279389f466840923368f86d64b717bdee508600f2575d0e62aeb351cd783"
+      },
+      {
+        "id": "onsite",
+        "inputIndex": 1,
+        "textSha256": "423fe7c95cd35f7c84f8bc9a9218d2c4e3f7e7c2e653ba3902697a122f024abf"
+      },
+      {
+        "id": "overview",
+        "inputIndex": 2,
+        "textSha256": "360e7339d7c88a09262647959aac86644b053bba66e11e273b34fe55bea26a9b"
+      },
+      {
+        "id": "screen",
+        "inputIndex": 3,
+        "textSha256": "2e6f53fee575454dcceb6643249adba6616ce60b5b9f69803f7ecd29703bc057"
+      },
+      {
+        "id": "settle",
+        "inputIndex": 4,
+        "textSha256": "e9e383c3d04150db45b18c3b3a854682d8a691f4eaf2366b3fab1fbe3c34fb2f"
+      },
+      {
+        "id": "biology",
+        "inputIndex": 5,
+        "textSha256": "c7ab784074d0462558b7fb9c77d410e76d66e21bb4ae47a56ba37b2bcde41069"
+      },
+      {
+        "id": "clarify",
+        "inputIndex": 6,
+        "textSha256": "9c9403b7ec26f8eb512fc1b0737082386aa0155e598b81fd00f1769a6ee0d4d1"
+      },
+      {
+        "id": "disinfect",
+        "inputIndex": 7,
+        "textSha256": "5a2de1294d1af9296150e901ca39e102355760896defeddeb270c56141bf2a30"
+      },
+      {
+        "id": "outlet",
+        "inputIndex": 8,
+        "textSha256": "780aa8eec0ed8f6d9b171fd564c01174b24a02027a9731c52b321e1027a408f8"
+      },
+      {
+        "id": "care",
+        "inputIndex": 9,
+        "textSha256": "75c05888458cacd6a1d4e9ed53cd4f39ec7627a4b1f6831533eedf2a06d2c657"
+      },
+      {
+        "id": "benefits",
+        "inputIndex": 10,
+        "textSha256": "0071348c0e14f76a812a62c2feaa7b77183cfb873cd6f2e8724b4e69cf10a624"
+      },
+      {
+        "id": "contact",
+        "inputIndex": 11,
+        "textSha256": "da2b4d3cc38c57539f490151f96f1dc13736bec81660adab99a992e7bf35aed6"
+      }
+    ]
+  },
+  "request": {
+    "endpoint": "https://api.elevenlabs.io/v1/text-to-dialogue/with-timestamps?output_format=mp3_44100_128",
+    "body": {
+      "inputs": [
+        {
+          "text": "Malaki ba ang quarterly siphoning bill ng building mo? Araw-araw, may wastewater mula sa toilets, sinks at wash areas.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Ang STP, o Sewage Treatment Plant, ay nagti-treat ng wastewater sa mismong site ng building bago ito dumaan sa testing at discharge requirements.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Ito ang isang simpleng STP flow. Nag-iiba ang actual setup depende sa site at wastewater.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Sa screening, nahihiwalay ang malalaking debris bago pumasok sa treatment.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Sa settling tank, lumulubog ang mas mabibigat na solids. Tuloy ang liquid sa susunod na stage.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Sa biological treatment, tumutulong ang microorganisms na i-break down ang organic waste. Sa aerobic system na ito, may air supply para suportahan sila.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Pagkatapos, nahihiwalay ang natitirang solids. May sludge na ibinabalik sa process, at may excess na kailangang alisin.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Kung kailangan sa design, may disinfection o dagdag na treatment bago ang outlet.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Mas malinaw na tubig ay hindi agad drinking water. Testing at applicable requirements ang basehan ng discharge o reuse.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Kailangan pa rin ng inspection, equipment care at sludge removal. Dito nakasalalay ang tuloy-tuloy na treatment.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Kung liquid wastewater ang regular na hinahaul, puwedeng mabawasan ito sa tamang STP at pinapayagang outlet. May sludge at screened solids pa ring aalisin. Hindi automatic na mawawala ang siphoning.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        },
+        {
+          "text": "Ikumpara muna ang quarterly bill sa installation, power, maintenance at sludge removal. Oceanides ang main contact mo para sa site assessment at proposal.",
+          "voice_id": "mPEHjC4AussYOrtIPSUB"
+        }
+      ],
+      "model_id": "eleven_v4",
+      "seed": 20261003
+    },
+    "bodySha256": "4828fc92c4803e4b540db59ba81d5e2bc1c9dcdc323c3d4432df43eb7d147dab",
+    "settings": "Provider defaults. No new voice, remix, tags, respelling, speed setting or pronunciation dictionary. One unchanged voice for all twelve inputs."
+  },
+  "limits": {
+    "maxPaidCalls": 1,
+    "maxCredits": 1600,
+    "estimatedCredits": 1455,
+    "automaticRetries": 0,
+    "newPurchasesOrSubscriptions": false,
+    "otherPaidGenerationOrAnalysis": false,
+    "costBasis": "Read-only v4 metadata: character multiplier 1, discount 1. Exact personal clone is accessible. Recheck voice/model and estimated cost before the one call. Remaining account allowance is unavailable; no permissions or subscriptions changed."
+  },
+  "preflight": {
+    "checkedAt": "2026-10-03T05:45:10.120Z",
+    "voiceLookupHttp": 200,
+    "modelHttp": 200,
+    "model": "eleven_v4",
+    "languageSupport": [
+      "en",
+      "fil"
+    ],
+    "cloneV4SpeechTested": false,
+    "paidCallsThisPreparation": 0
+  },
+  "output": {
+    "audio": "output/Oceanides-STP-Personal-Voice-Raw.mp3",
+    "alignment": "output/Oceanides-STP-Personal-Voice-Alignment.json",
+    "format": "mp3_44100_128",
+    "deliveryTarget": "Calm, clear technical Taglish, approximately two minutes. Actual scene timing follows returned alignment; no speed-up to force a fixed length."
+  },
+  "localMix": {
+    "music": {
+      "file": "api/_lib/assets/music/testimonial.mp3",
+      "sha256": "18ecbbb1301d98919be3e832f1ffb184c53aeb4d6e9889021a5aab738d83c33f",
+      "track": "Inspirational Piano",
+      "source": "https://pixabay.com/music/solo-piano-inspirational-piano-500180/",
+      "license": "Pixabay Content License; existing licensed local asset, incorporated into video",
+      "provenance": "api/_lib/assets/PROVENANCE.md"
+    },
+    "musicDuringSpeech": "Normalize bed to -30 LUFS, reduce a further 5dB, then sidechain-duck against voice. No extra sound effects.",
+    "voice": "Normalize to -16 LUFS with true peak <= -1.5dBTP; final limiter. Measure intelligibility and clipping; full listening still required.",
+    "timing": "Use provider character alignment and dialogue_input_index segments. Reject missing/inconsistent alignment; never distribute words evenly or guess scene boundaries.",
+    "paidMusic": false
+  },
+  "pass": [
+    "One exact personal cloned voice, with all approved words and no extra speakers or music in the raw take.",
+    "STP, wastewater, microorganisms, sludge and Oceanides are intelligible; Neil accepts pronunciation and delivery.",
+    "Audio fully decodes; no truncated ending or persistent clipping.",
+    "Returned alignment covers all twelve scene inputs, with monotonic times and valid character ranges.",
+    "Each scene contains its narration with visual breathing room; music remains subordinate while speaking.",
+    "No guaranteed savings or complete elimination of siphoning. Site design, outlet and continued solids removal are explained."
+  ],
+  "fail": [
+    "Voice/model/endpoint/input/hash/pricing differs, permission error, or estimated charge exceeds 1600 credits: stop.",
+    "Any paid timeout/error/unknown outcome: save receipt and stop without retry.",
+    "Wrong voice, missing words, unintelligible pronunciation or defective alignment: retain take for review; no automatic regeneration."
+  ],
+  "evidence": [
+    "Exact script/request/voice/music hashes; pending guard stops before credentials/network.",
+    "Whitelisted read-only preflight and exclusive one-attempt receipt.",
+    "Raw MP3 and returned alignment, full decode/level metrics, synchronized video and final human listening review."
+  ],
+  "sources": [
+    "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert-with-timestamps",
+    "https://www.fujicleanusa.com/homeowners-faq",
+    "https://pixabay.com/service/license-summary/"
+  ],
+  "runner": "node clients/oceanides/stp-explainer/voice-personal.mjs --dry-run; --generate requires direct human approval recorded in this exact spec.",
+  "delivery": "Local review and existing draft PR only. No deployment or public publication."
+}

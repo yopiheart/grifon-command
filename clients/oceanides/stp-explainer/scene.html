@@ -4,7 +4,7 @@
 <canvas id="output" width="1920" height="1080"></canvas>
 <script type="module">
 import * as THREE from './vendor/three.module.js';
-const story=await (await fetch('./story.json')).json();
+const story=await (await fetch(new URLSearchParams(location.search).has('narrated')?'./story-narrated.json':'./story.json')).json();
 const out=document.querySelector('#output'), ctx=out.getContext('2d');
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
 renderer.setSize(1920,630); renderer.setPixelRatio(1); renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -103,7 +103,7 @@ window.renderFrame=async t=>{
  siteDrops.forEach((m,j)=>m.position.copy(siteLine.getPointAt((t*.12+j/15)%1)));
  if(!closing){renderer.render(scene,camera);ctx.drawImage(renderer.domElement,0,260,1920,630);}
  // Fixed title rail and clear model field. All labels are native pixels, never generated lettering.
- if(closing){ctx.drawImage(logo,112,90,122,122);txt('Start with your site',112,363,84,C.paper,400,'Segoe UI');wrap('Site assessment. Technical scope.\nWritten quotation.'.replace('\n',' '),112,455,1400,40,'#D8DFE9');txt('0917 671 6383',112,684,66,C.paper,600,'Segoe UI');txt('marketing@oceanidessepticandpest.com',112,765,38,'#D8DFE9');txt('Oceanides coordinates specialist delivery through turnover.',112,857,42,C.paper);}
+ if(closing){ctx.drawImage(logo,112,90,122,122);txt(s.title,112,363,78,C.paper,400,'Segoe UI');wrap(s.detail,112,455,1400,40,'#D8DFE9');txt('0917 671 6383',112,684,66,C.paper,600,'Segoe UI');txt('marketing@oceanidessepticandpest.com',112,765,38,'#D8DFE9');txt('Oceanides coordinates specialist delivery through turnover.',112,857,42,C.paper);}
  else{ctx.fillStyle=C.paper;ctx.fillRect(0,0,1920,310);txt('Oceanides',112,80,31,C.navy,600,'Segoe UI');ctx.strokeStyle='#D9DDD9';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(112,108);ctx.lineTo(1808,108);ctx.stroke();wrap(s.title,112,210,1700,72,C.blue,400,85,'Segoe UI');txt(s.detail,114,280,35,C.gray);}
  waves(dark);
  if(intro)label('Domestic wastewater', [0,-.3,3.1],28);
@@ -112,12 +112,12 @@ window.renderFrame=async t=>{
  if(focused){label(tankNames[centers.indexOf(focus)],[focus,3.25,0],30);if(s.id==='biology')label('Air supply',[ -1.7,.9,3.1],26);}
  if(['clarify','care'].includes(s.id)){label('Return sludge',[1.6,.45,3.7],24);label('Excess sludge',[10.3,1.4,1.7],24);}
  if(s.id==='outlet'){label('Treated water',[10.4,2.6,-.72],28);txt('Not drinking water',112,849,35,C.ink,700,'Segoe UI');}
- if(benefit){const items=['Treat wastewater on site','Reduce pollutant load','Manage sludge removal'];items.forEach((q,i)=>txt(q,112+i*558,343,36,C.blue,700,'Segoe UI'));}
- // The draft contains the exact proposed narration as captions, with a reserved bottom rail.
+ if(benefit){const items=['On-site liquid treatment','Less hauling, if suitable','Sludge removal continues'];items.forEach((q,i)=>txt(q,112+i*558,343,36,C.blue,700,'Segoe UI'));}
+ // Scene summaries remain in the bottom rail; full narration is approved separately.
  ctx.fillStyle=dark?C.navy:C.paper;ctx.fillRect(0,905,1920,175);
  const capColor=dark?C.paper:C.ink;wrap(s.caption,112,951,1696,36,capColor,400,46);
  txt('Illustrative process. Actual design follows site assessment.',112,1051,20,dark?'#D8DFE9':C.gray);
- txt('Visual draft / narration pending',1435,1051,20,dark?'#D8DFE9':C.gray);
+ txt(story.narrationAttached?'':'Visual draft / narration pending',1435,1051,20,dark?'#D8DFE9':C.gray);
  window.currentScene=s.id;
  return out.toDataURL('image/jpeg',.94).split(',')[1];
 };
