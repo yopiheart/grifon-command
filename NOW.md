@@ -5,9 +5,9 @@
 Neil approved updating and merging motion PR143 -> PR144 -> PR149 after checks.
 Isolated checkout: C:/Users/ADMIN/.codex/worktrees/motion-merge/grifon-command.
 The shared Oceanides checkout, its branch, local files and processes are untouched.
-All three branches now include current main; conflicts were only in this resume doc.
+PR143 merged as 3681449f after fresh CI37095306784 and Vercel passed.
 No application conflict, new tuned instruction edit or approved-media change.
-PR143 fresh CI is running; PR144/149 need main-target CI after their parent merges.
+PR144 and PR149 now target main. Fresh CI is required for each before merge.
 Use merge commits to preserve ancestry across the stack. Never bypass failing gates.
 
 ## Motion deliverables
@@ -24,16 +24,15 @@ This is a local authored workflow; product integration is separately scoped.
 September 27 independent reviews found no blocking code issues across the stack.
 Two P3 verifier fixes are in PR149: fail for broken embeds and honor tool paths.
 Both were independently checked against reproductions of their original defects.
-Fresh PR143 integration review and 26 control tests pass; later heads need review.
+Independent integration review passed on3acb5f9e/f15af07f/9ac93d7d; media intact.
 Prior combined checks passed: build, 1,401 unit tests, 56 browser tests, control
-and artifact gates. Fresh main integration review and CI are pending this turn.
+and artifact gates. PR144/149 CI is pending this turn.
 Do not call historical test results fresh. Approved video must remain unchanged.
 
 ## Other work retained
 PR146 recovery fixes and PR150 verification tooling are now merged on main.
 The recovery session confirmed payment resolution, successful Vercel preview,
-production access and passing CI. PR149 still has a historical September 27
-account-block failure; assess fresh results after pushing the updated stack.
+production access and passing CI. Fresh October 3 previews for all three motion heads passed.
 Oceanides PR151/152/153 and ongoing company-profile/presentation work are separate.
 The shared checkout's NOW.md contains its current Oceanides handoff; do not edit it.
 No paid operation, account change or manual deployment is part of this merge work.

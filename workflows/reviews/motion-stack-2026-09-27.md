@@ -81,3 +81,24 @@ and fresh CI assessed before its merge. Preserve ancestry when choosing merge
 strategy. Resolve the Vercel account/check failure before calling the stack
 fully green. User authorization for this turn covered readiness review/fixes;
 no GitHub merge was executed.
+
+## October 3 authorized release update
+
+Neil authorized conflict resolution, verification and ordered merging of the stack.
+Main had advanced to0427297a through recovery PR146/150. All integration conflicts
+were confined to NOW.md; application/tuned/config files were preserved from main.
+Fresh independent Codex integration review passed exact heads3acb5f9e (143),
+f15af07f (144), and9ac93d7d (149). All other motion/media/skill files and the two
+previously reviewed verifier fixes remain byte-identical to the September27 heads.
+Local check:codex26tests and changed-script syntax/whitespace passed.
+Fresh Vercel previews succeeded for all three integration heads; the historical
+account-block status is superseded by these successful checks.
+
+PR143 merged as3681449f onOctober3 after CI37095306784 verify/e2e/artifacts and
+Vercel passed. PR144/149 now target main. Parent merge propagation after review
+changes only ancestry and session/review notes; it does not alter creative or
+application files. Fresh checks on the final heads remain required before merge.
+No new paid generation, stock-library integration, or media rendering occurred.
+The shared Oceanides checkout remains untouched. Final merge/check receipts are
+recorded in the individual PR descriptions; this dated report records integration
+review evidence rather than replacing NOW.md as the session resume document.
