@@ -1,0 +1,97 @@
+{
+  "status": "PASS_SAMPLED_VISUAL_PROOF_PENDING_CONTINUOUS_MOTION_AND_AUDIO_REVIEW",
+  "reviewer": "/root/provider_check",
+  "reviewed_at_utc": "2026-10-03T18:28:21Z",
+  "verdict": {
+    "visual_proof_passed": true,
+    "failed_proof": false,
+    "client_quality_signoff": "pending",
+    "summary": "The sampled result convincingly transforms the gray V2 proxies into live-action adults and preserves the readable fingerprint-comedy story and recognizable Vivo X80 hero. This is a successful visual motion/story-transfer proof. Continuous motion, audio listening and final commercial polish are not independently signed off."
+  },
+  "provenance": {
+    "raw": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+    "raw_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+    "guide": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+    "guide_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+    "product_reference": "assets/vivo-x80-ugc/vivo-x80-product.png",
+    "product_sha256": "3d816b4f09566fc1499619a603be55e908eb50b04ebdcc1ce4413e562c7abf8b",
+    "approved_spec": "assets/vivo-x80-ugc/seedance20.spec.json",
+    "immutable_proposal_digest": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78",
+    "raw_guide_and_product_hashes_independently_rechecked": true
+  },
+  "inspection": {
+    "timestamp_aligned_sample_pairs": 44,
+    "unique_output_timestamps": 40,
+    "contact_sheets_viewed": [
+      "assets/vivo-x80-ugc/qa/actions-comparison.png",
+      "assets/vivo-x80-ugc/qa/boundaries-shots-01-05.png",
+      "assets/vivo-x80-ugc/qa/boundaries-shots-06-10.png",
+      "assets/vivo-x80-ugc/qa/performance-first-attempts.png",
+      "assets/vivo-x80-ugc/qa/performance-owner-reaction.png"
+    ],
+    "native_frames_inspected_for_detail": [
+      "assets/vivo-x80-ugc/qa/action-05-output.png",
+      "assets/vivo-x80-ugc/qa/action-07-output.png",
+      "assets/vivo-x80-ugc/qa/action-10-output.png"
+    ],
+    "full_video_watched_by_this_reviewer": false,
+    "audio_listened_by_this_reviewer": false,
+    "basis": "Visual comparison of sampled stills and exact timestamp map. Technical decode facts are attributed to the independent local media-verification report; they are not listening or complete motion evidence."
+  },
+  "visual_assessment": {
+    "human_transformation": "PASS: adult-appearing people with believable skin, hair, clothing and expressions replace the gray figures; a bright apartment, wood table and daylight replace the gray environment.",
+    "identity_and_wardrobe_continuity": "PASS in sampled frames: the same man and woman remain recognizable across views. Woman's ivory top/olive trousers and man's beige trousers follow the proposed styling. His T-shirt reads dark teal/navy rather than the requested charcoal, a minor surface-detail drift.",
+    "story_order": "PASS in sampled frames: pickup, casual thumb failure, confident index flourish, second failure, owner's amused look, offer, owner success, friend's deflation and closing hero appear in the intended order.",
+    "shot_and_camera_viewpoints": "PASS for broad sampled correspondence: two-shot, high-angle pickup, screen macros, friend/owner performance close-ups, offer view and product hero follow the guide's planned views. Exact camera trajectory and smooth focus changes require continuous playback.",
+    "frame_exact_cut_timing": "PARTIAL: some intended last-frame samples already show the next shot. At 9.000s the output still shows the handoff while the guide has entered the owner's screen macro. Actual cut offsets were not exhaustively measured; do not claim frame-perfect timing or a uniform one-frame offset.",
+    "one_device": "PASS in sampled frames: no second physical phone is visible; front and back presentations remain visually compatible with one Urban Blue device.",
+    "x80_hardware_and_branding": "PASS for visible major features: cyan/Urban Blue back, rectangular dark Cloud Window, three rear lenses, centered front punch-hole and readable vivo/ZEISS marks. Tiny hardware text and every edge/port detail are not certified.",
+    "hands_and_grips": "PASS at viewed contacts/hero: the thumb and index reach the lower display target, offer grip looks plausible, and the native hero frame has a plausible five-finger grip. Intervening temporal hand deformation is unassessed.",
+    "screen_story": "PASS: both failures show a red cross/locked illustration; the owner sequence progresses from a locked graphic at 9.625s through a check indicator to an Android home screen at 10.667s. Large symbolic graphics are a stylized demonstration of the story.",
+    "advertising_text_overlays": "No captions or advertising overlays observed in sampled raw frames. Phone-interface graphics and device markings are present."
+  },
+  "observed_story_evidence": [
+    {"seconds": 0.458333, "fact": "Both people are seated; phone is on the table and the owner's hand is above it."},
+    {"seconds": 1.458333, "fact": "Friend holds the lifted phone in the pickup view."},
+    {"seconds": 2.583333, "fact": "Thumb contacts the lower display target; red failure cross is visible."},
+    {"seconds": 3.125, "fact": "Thumb has withdrawn and the failure display remains."},
+    {"seconds": 3.708333, "fact": "Friend holds the phone and raises a free index finger with an overconfident expression."},
+    {"seconds": 4.916667, "fact": "His attention and index have lowered toward the phone before the second try."},
+    {"seconds": 5.458333, "fact": "Free index touches the lower display target; red failure cross appears."},
+    {"seconds": 5.958333, "fact": "The second failure display is held after contact."},
+    {"seconds": 6.833333, "fact": "Owner gives an amused sideways look toward the friend."},
+    {"seconds": 8.708333, "fact": "Owner's open palm and friend's phone-offer grip are visible together."},
+    {"seconds": 9.625, "fact": "Owner-thumb contact is visible while the display still shows the locked graphic."},
+    {"seconds": 9.958333, "fact": "A check indicator replaces the failure/locked state."},
+    {"seconds": 10.666667, "fact": "A colorful Android home screen is clearly displayed after the owner's touch."},
+    {"seconds": 11, "fact": "Friend initially looks toward the owner with a remaining smile."},
+    {"seconds": 11.833333, "fact": "His expression changes to deflation/discomfort."},
+    {"seconds": 12.708333, "fact": "His head is bowed and shoulders look lowered."},
+    {"seconds": 13.958333, "fact": "Owner presents one Urban Blue rear-facing X80 with three lenses and readable vivo/ZEISS markings."}
+  ],
+  "technical_context_from_independent_media_verification": {
+    "evidence": "assets/vivo-x80-ugc/media-verification.json",
+    "status": "PASS_LOCAL_MEDIA_PENDING_CREATIVE_AND_LISTENING",
+    "dimensions": [496, 864],
+    "fps": 24,
+    "decoded_video_frames": 361,
+    "decoded_video_seconds": 15.041667,
+    "duration_note": "One native frame longer than 15 seconds; within the approved maximum two-frame tolerance.",
+    "audio_stream_present": true,
+    "audio_stream": "AAC, 32000 Hz, two-channel stream",
+    "audio_listening_originality_dialogue_absence_and_sync_certified": false
+  },
+  "remaining_limits": [
+    "This reviewer inspected still samples, not uninterrupted video or audio. Camera-path fidelity, temporal skin/hand stability, focus behavior and pacing are not fully assessed.",
+    "Native room tone, music, handling sounds, failure pulses, unlock chime, comic exhale, dialogue absence and synchronization require listening.",
+    "The shot-order proof is strong, but exact cuts drift at some sampled boundaries and cannot be described as frame-perfect transfer.",
+    "Final client use requires continuous playback/listening and a polish decision; this report does not authorize a reroll, prompt change, paid audit or publication."
+  ],
+  "review_actions": {
+    "network_provider_or_paid_calls": 0,
+    "credentials_read": false,
+    "media_reextracted_or_changed": false,
+    "spec_prompt_runner_or_other_work_changed": false,
+    "only_written_file": "assets/vivo-x80-ugc/creative-review.json"
+  }
+}

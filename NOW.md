@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, Vivo human finish prepared / exact paid approval pending**
+**Stamped: 2026-10-04, Vivo human finish generated once / mobile delivery verified**
 
 ## Current scope
 Branch: `codex/blender-product-reveal`; attached draft PR157:
@@ -8,10 +8,10 @@ Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
 Local Blender/FFmpeg studies plus a fixed direct provider runner; no app/tuned
 production changes, deployment, merge, campaign or account funding.
 
-## Vivo X80 human finish - prepared, NOT submitted
-Neil approved V2 and asked for the real video. Storyboard approval is preserved.
-New15s prompt/product/audio tuple still needs the exact paid-spec approval
-required by AGENTS.md; do not execute while seedance20.spec.json is pending.
+## Vivo X80 human finish - completed ONCE, raw proof delivered
+Neil replied Approved to the exact15s480p9:16 spec and saved-ENV runtime use.
+Only approval metadata changed; immutable tuple remains identical.
+Task cgt-20261004021141-cgh8r succeeded; NEVER execute again, recovery GET-only.
 - Fixed entrypoint: tools/run_vivo_x80_ugc.mjs; default/--dry-run local only.
   Uses only Vivo paths; NEVER substitute the exhausted bottle CLI/spec/ledger.
 - assets/vivo-x80-ugc: exact spec, full proposed prompt, official Urban Blue
@@ -25,22 +25,30 @@ required by AGENTS.md; do not execute while seedance20.spec.json is pending.
 - Cost:301320 formula tokens exceeds251100 floor; $4.30/M gives $1.295676,
   plus $0.01 storage reserve; proposed maximum$5, ONE POST, no retry/reroll.
   Local estimate/submission guard is not a provider hardcap; invoice unknown.
-- Native output documented496x864/24fps. Existing guide480x854 qualifies
-  (409920pixels >=407696), so no upscale/substitute. Stylized-face moderation,
-  actual entitlement/balance, realism, hand/phone/story fidelity are unverified.
+- Raw2636695bytes, SHAbea75a9f...;361unique contiguous24fps frames,496x864,
+  decoded15.041667s (+oneframe, approved tolerance), stereo audio15.072s.
+  Sampled visual/story transfer PASS: stable cast/clothes, two failures, unlock,
+  deflation, accurate three-lens vivo hero. Cut timing drifts; full motion/audio
+  taste and client readiness unverified. This exact stylized guide was accepted.
 - Final independent fake suite29/29 PASS; unchanged bottle suite24/24 PASS.
   An exported IO error wrapping defect was reproduced and fixed before final run.
   Final runner SHA c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109.
   Seven attestations gate execute/resume before env/network; actual authenticated
   private-bucket GET gates writes. Exclusive durable ledger prevents a second POST.
-- Current process credentials absent (presence only); primary saved ENV file
-  exists, workspace ENV absent. Never open/print secret contents. Runtime must
-  receive credentials via the existing local secret workflow before execution.
+- Node received existing primary ENV via its native loader, explicitly approved.
+  Required variables present; zero secret values printed/read into agent context.
+  Auth and fresh authenticated private bucket preflight passed before writes.
 - Mobile exact prompt/assets/cost/pass/fail review,6717bytes,text/plain,owner-only:
   https://drive.google.com/file/d/1RdGnxktRcRR-DqpN5xXOQFRR00F5oLvr/view
-- Zero new paid calls/provider uploads. Raw proof planned: full decode, action
-  comparison, usage evidence, exact owned-key cleanup and owner-only Drive link.
-  Human sound/acting judgment required; no client-ready cut or paid audit claim.
+- ONE paid POST / ONE private guide upload; exact owned-key cleanup confirmed.
+  301738completion tokens gives generation estimate$1.2974734; invoice unknown.
+  Independent full decode/44sample pairs/5sheets PASS; raw bytes untouched.
+  Corrected comparison360frames24fps15.000s: first local305frame export failed
+  and was rejected before delivery; no new AI call. Chromium both clips render,
+  play and end without error. Human listening/native phone remain unverified.
+- Owner-only raw2636695bytes: https://drive.google.com/file/d/1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT/view
+- Owner-only comparison2635444bytes: https://drive.google.com/file/d/15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx/view
+  Both connector readbacks match exact bytes/video MIME/owner-only permissions.
 
 ## Approved Vivo MY TURN V2 - preserved
 Thumb fails, smug raised-index retry fails, owner unlocks, friend visibly deflates,
@@ -73,6 +81,7 @@ Kling4 API previously Coming Soon; Omni rejected; zero Kling/Higgsfield calls.
 Final syntax/default dry, domain, voice-sync, PowerShell ASCII, artifact anchors,
 whitespace and check:codex26tests PASS. Build/Vitest SETUP BLOCKED (root tsc
 absent / Vitest uncached); no reinstall, application/E2E/paid regression untouched.
-Next: exact changed-input paid approval + runtime credential injection, then
-single Vivo submission or stop on rejection; inspect raw output before judging it.
+Next: Neil watches/listens and judges polish; no reroll or new input authorized.
+Recurring creators may need approved supported character references in a future
+separate exact test. Current15s sample cast is consistent without a sheet.
 Grifon integration remains separate; Seedance UI locked. Other project work untouched.

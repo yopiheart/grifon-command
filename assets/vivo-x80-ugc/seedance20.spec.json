@@ -1,5 +1,5 @@
 {
-  "status": "pending_exact_paid_approval",
+  "status": "approved_for_single_byteplus_test",
   "study": "MY TURN V2 / Vivo X80 / human finish",
   "purpose": "Test whether the approved 3D camera/acting guide becomes a clearly different realistic creator commercial while retaining its story and phone appearance.",
   "module": "Separate fixed direct BytePlus CLI; no Grifon application changes.",
@@ -145,13 +145,13 @@
     "prompt_guide": "https://docs.byteplus.com/en/docs/modelark/seedance-2-0-prompt-guide"
   },
   "approval": {
-    "approved": false,
-    "request_sha256": null,
+    "approved": true,
+    "request_sha256": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78",
     "account_access_check": "single_approved_submission_no_funding",
     "pricing_verified": true,
-    "staging_approved": false,
+    "staging_approved": true,
     "user_storyboard_approval": "G approved na to bro! Excited na me sa para sa real video",
-    "exact_paid_tuple_approval": "pending; storyboard approval is preserved separately",
+    "exact_paid_tuple_approval": "Approved - explicit response to exact 15s480p9:16 Seedance2.0 V2 guide + official X80 image + proposed prompt/native audio, estimate1.30USD maximum5USD, one run/no reroll, with saved ENV received only inside Node process.",
     "account_balance": "unverified",
     "portrait_input_acceptance": "unverified; non-real stylized guide, product-only image and original adults generated in output"
   }

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-04",
+  "browser": "Codex in-app Chromium",
+  "scope": "Observed localhost native video-player rendering/state; no script-driven play/seek, public publication or provider calls.",
+  "raw": {
+    "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+    "observed_active_time_seconds": 10.622589,
+    "active_paused": false,
+    "width": 496,
+    "height": 864,
+    "reported_container_duration_seconds": 15.072,
+    "observed_end_time_seconds": 15.072,
+    "ended": true,
+    "media_error": null,
+    "visuals": "Owner unlocked screen rendered during playback; closing Urban Blue three-lens vivo hero rendered at end."
+  },
+  "comparison": {
+    "path": "assets/vivo-x80-ugc/guide-comparison.mp4",
+    "observed_active_time_seconds": 5.995666,
+    "active_paused": false,
+    "width": 960,
+    "height": 900,
+    "reported_container_duration_seconds": 15.008,
+    "observed_end_time_seconds": 15.008,
+    "ended": true,
+    "media_error": null,
+    "visuals": "Matching failed-index pose and failure screen observed in side-by-side view; both closing hero shots rendered at end."
+  },
+  "duration_note": "Browser container duration includes audio/mux padding. Independent media report records raw video361/24s and comparison video360/24s; no raw trimming.",
+  "audio_listened_to": false,
+  "continuous_motion_taste_certified": false,
+  "native_mobile_and_drive_player_observed": false,
+  "viewport_override": "none; browser default retained",
+  "cleanup": "Temporary QA tab closed; stdin stop unavailable in piped session, so exact owned Node process was identity-checked and stopped; existing provider tab preserved; no viewport override applied."
+}
