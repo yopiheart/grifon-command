@@ -4,6 +4,9 @@
 ## Current authorized work
 Neil approved improving motion design after studying two Higgsfield demos.
 Branch: codex/grifon-motion-depth, based on main 3da5bc7b.
+Production commit: 52257ff6. Draft PR156:
+https://github.com/yopiheart/grifon-command/pull/156.
+Branch is pushed; isolated working tree was clean after the production commit.
 Isolated checkout:
 C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
 The primary Oceanides checkout, its working edits and approved earlier motion
@@ -19,6 +22,8 @@ The final MP4 includes music and SFX; SHA-256:
 artifacts/grifon-motion-depth-review.html embeds that exact film, its poster
 and font; tools/artifacts/build-motion-depth-review.mjs reproduces the page.
 No paid provider, After Effects, deploy or merge was used.
+A local ZIP backup is saved at
+.tmp/grifon-motion-depth-52257ff6-backup.zip (source, assets, film and review).
 
 ## Actual verification
 - Offline build and Hyperframes gate: PASS; zero errors/warnings.
@@ -52,6 +57,8 @@ playback. Temporal motion blur is not implemented; source uses depth blur.
 Phone-sized Chromium is not proof of physical Android WebView behavior.
 No merge or production deployment is authorized. GitHub draft review and
 backup are the handoff; future revisions stay on this isolated branch.
+At draft creation, GitHub CI was pending; the automatic Vercel preview status
+was pending and Preview Comments succeeded. No deployment command was issued.
 
 ## Other work
 Earlier motion PR143/144/149 and workflow PR154 are already in base main.
