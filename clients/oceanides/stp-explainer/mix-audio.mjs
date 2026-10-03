@@ -28,7 +28,7 @@ const bed=join(evidence,voiced?'music-bed-narrated.wav':'music-bed-preview.wav')
 const musicLufs=voiced?-28:-24;
 await run(['-y','-i',music,'-af',
   'atrim=duration='+duration+',loudnorm=I='+musicLufs+':TP=-6:LRA=7,'+
-  'afade=t=in:st=0:d=1.2,afade=t=out:st='+(duration-3)+':d=3,aresample=48000',
+  'afade=t=in:st=0:d=1.2,afade=t=out:st='+(duration-3)+':d=3,aresample=48000:out_chlayout=stereo',
   '-c:a','pcm_s16le',bed]);
 const preview='Oceanides-STP-Original-Score-Preview-1080p.mp4';
 let output,mixEvidence;

@@ -1,6 +1,10 @@
 {
-  "status": "PENDING_APPROVAL",
-  "approval": null,
+  "status": "COMPLETED_PENDING_REVIEW",
+  "approval": {
+    "recordedAt": "2026-10-03T06:34:25Z",
+    "humanResponse": "Sige try mo. Or diba last time sa motion design may inapply na music, di ko langg alam pano mo ungg nakuha..",
+    "scope": "One original Flow music take using the unchanged reviewed prompt and request hashes; maximum $0.50 usage before tax, no retries or purchases. Separate full personal narration remains pending."
+  },
   "purpose": "Replace Neil-rejected stock piano with one freshly generated, original Oceanides STP score. Full score rather than a short repeated stock loop; narration remains the primary explanation.",
   "direction": {
     "name": "Flow",
@@ -69,5 +73,56 @@
     "https://elevenlabs.io/eleven-music-model-specific-terms"
   ],
   "runner": "music-original.mjs --dry-run; --generate requires direct human approval of this exact prompt, one-call test and $0.50 usage cap.",
-  "delivery": "Local review and draft PR only. No public release or streaming distribution."
+  "delivery": "Local review and draft PR only. No public release or streaming distribution.",
+  "execution": {
+    "at": "2026-10-03T06:34:53.845Z",
+    "status": "AUDIO_RECEIVED_PENDING_LISTENING",
+    "bodySha256": "e9ca19f5bb9204bc1e2f4f69da4f40cdb55f77e3b4cd1068a42b381cd18f79f1",
+    "model": "music_v2_5",
+    "durationSeconds": 150,
+    "estimatedUsageUsdBeforeTax": 0.375,
+    "maximumUsageUsdBeforeTax": 0.5,
+    "maxPaidCalls": 1,
+    "automaticRetries": 0,
+    "httpStatus": 200,
+    "bytes": 3600621,
+    "audioSha256": "712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8",
+    "songId": "FLJ1pRhvHdOD91Vmuql5",
+    "reportedCharacterCost": null,
+    "billingNote": "Usage estimate is based on published API rate. Header values are not independently verified account debits."
+  },
+  "verification": {
+    "status": "TECHNICAL_PASS_HUMAN_LISTENING_PENDING",
+    "rawScore": {
+      "fullDecodePass": true,
+      "durationSeconds": 150.024,
+      "sampleRate": 48000,
+      "channels": 2,
+      "integratedLufs": -18.21,
+      "truePeakDbtp": -1.03,
+      "clippedSamples": 0,
+      "receiptHashMatches": true
+    },
+    "preview": {
+      "file": "output/Oceanides-STP-Original-Score-Preview-1080p.mp4",
+      "fullDecodePass": true,
+      "durationSeconds": 139,
+      "frames": 4170,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "audio": "AAC 48000Hz stereo, music only",
+      "integratedLufs": -23.5,
+      "truePeakDbfs": -6.2,
+      "encodedVideoUnchanged": true,
+      "bytes": 12717366,
+      "sha256": "be0d50605cac1738492d70903a3ce4aace9e094def6d1692a0418d609cdd3b87"
+    },
+    "evidence": [
+      ".tmp/oceanides-stp/original-music-qa/verification.json",
+      ".tmp/oceanides-stp/original-preview-qa/verification.json",
+      ".tmp/oceanides-stp/audio-cost/preview-levels.txt"
+    ],
+    "pending": "Neil listening for musical fit, transitions and vocal absence; personal narration and its ducked mix are not generated yet. Numerical checks do not establish subjective quality."
+  }
 }
