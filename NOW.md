@@ -25,6 +25,10 @@ or tuned production prompt/model changes; no manual deployment or merge.
 - `artifacts/blender-reveal.html`: offline three-way timestamp-preserving viewer,
   AI default, Blender finish/guide, actual MP4 downloads and editable scene.
   About12.8MB; generated only from committed source assets and QA evidence.
+- Mobile delivery: user requested a downloadable/watchable link; uploaded the
+  existing MP4 to their connected Google Drive (no new generation).
+  https://drive.google.com/file/d/1jAlMSPdox9jTQnXV9U8uMyml6Eve5-Tt/view?usp=drivesdk
+  Connector readback: video/mp4,960352bytes,sharedfalse,owner-only permission.
 
 ## Live operation and cost evidence
 - Model: dreamina-seedance-2-0-260128; task cgt-20261003202712-nlxv7 succeeded.
