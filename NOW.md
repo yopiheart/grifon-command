@@ -1,88 +1,86 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, Neil accepted the final Aira narration and Flow mix**
+**Stamped: 2026-10-03, combined Oceanides meeting deck pending Neil review**
 
 ## Current work
-Branch: codex/oceanides-stp-explainer, based on profile head d3d08102.
-Draft PR153: https://github.com/yopiheart/grifon-command/pull/153, stacked on PR152.
+Branch codex/oceanides-stp-explainer, based on profile head d3d08102.
+Draft PR153 https://github.com/yopiheart/grifon-command/pull/153 stacked on PR152.
 No merge, deployment or public publication requested.
-Email delivery ON HOLD by Neil's explicit request. No email or draft sent/created.
-Latest profile PDF/video prepared locally; resume sending only if Neil requests it.
+Email ON HOLD by Neil. No email/draft/upload created; resume only if he asks.
 
-## Current narrated video
-Current deliverable under clients/oceanides/stp-explainer/output/:
-Oceanides-STP-Aira-Voice-Music-1080p.mp4 (12,679,698 bytes).
-SHA: 9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d.
-139.3s, 1920x1080/30fps/16:9, 4,179 H.264 frames, AAC 48kHz stereo.
-Independent full decode PASS, -16.73 LUFS, -1.43dBTP, zero clipped/invalid samples.
-Encoded video identical to Aira visual source. All speech fits matching scenes;
-0.65s leading padding, no time stretch; final line ends136.35s, 2.95s close.
-Music bed -28LUFS plus sidechain ducking, 1.2s in/3s out; no loop or extra SFX.
-Raw Aira: 100.72s, 44.1kHz mono, -23.41LUFS/-2.60dBTP, zero clipped samples.
-All twelve approved inputs match alignment text; spoken final letter ends100.48s.
-Raw SHA: 31437ba8e9497dcd7729501d2d58741c34a3f454a912037664b3d6e2fc99a137.
-Fresh twelve source frames: independent BRAND_PASS43/50, zero findings.
-Root inspected actual encoded contact frame138s: correct contacts, transparent
-logo, no duplication or pending-voice label, navy/white type.
-Evidence: .tmp/oceanides-stp/{aira-voice-qa,aira-final-qa,aira-sync,frames-aira,audio-aira}.
-Neil accepted final video: "Bro, goods na sa'kin 'to. Ayos na, ayos 'to."
-Metrics alone do not establish subjective quality. Projector untested.
+## Current review deliverables
+clients/oceanides/company-profile/output/: PPTX/HTML/PDF named
+Oceanides-Company-Profile-STP-Meeting-Review (9 widescreen16:9 slides).
+Company intro/services/proof, renovation, pest, STP intro, embedded video, close.
+PPTX:15,733,022bytes, SHA56680e301d1ea8f21213c0dcdb4950b1c6cc5977aa44c19678ec7ffb02a075f8.
+HTML:21,303,502bytes, SHA c242b21beae1fed3e043fc0709ec9a9527f25e2edc7d4ccd5644044a0abc429d.
+PDF:7,785,748bytes, SHA74cf6b554bdcd0e862aa9eb659cb9ca8fe179c5ae89d18094b2fa2cd648faa40.
+PDF uses static movie poster. PPTX company text remains editable; MP4 internal.
+HTML is self-contained: manual start, pause on exit, next steps after movie end.
+Production provenance/status: company-profile/meeting-review.delivery.json.
+Generated review HTML keeps exact bytes in Git; scoped -text attribute avoids CRLF conversion.
+Original8slide source unchanged;50 package members preserved,3 footers renumbered.
+Local preview http://127.0.0.1:51307/ queued in Codex right browser panel.
+Owned preview server PID26336 / exec session51109; leave for Neil review.
 
-## Approved Aira request
-Neil selected public Aira - Confident News Reporter after clone failed.
-Exact professional voice CkDT8SVS21XIVk5BcuDe, ElevenLabs v4; same224-word/
-1455-character Taglish script, twelve inputs, defaults/seed20261003 unchanged.
-Neil approved: "Approve Aira, max 1,600 credits". One POST at07:09UTC HTTP200.
-Estimated1455 existing credits; max1600, zero retries/purchases. Provider header
-character-cost88 is retained; actual account debit is not independently verified.
-voice-aira.spec.json COMPLETED_ACCEPTED; historical receipt locks paid call.
-voice-aira.mjs dry-run only now; sync-aira.mjs uses provider timestamps, writes
-story-aira.json/WAV; render --narrated --aira then mix --voice --aira are local.
-Independent review PASS after fixing cwd-relative receipt-lock edge. Offline
-regression: original permits alternate-cwd mock POST; fixed blocks both paths.
-Completed guard blocks before key/network. Evidence: aira-lock-qa/verification.json.
+## Tight STP film, pending review
+stp-explainer/output/Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4.
+9,925,374bytes, SHA40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea.
+99.733333s,1920x1080/30fps,2992 H.264 frames,AAC48kHz stereo.
+Same approved224words/12inputs and Flow score; no new paid generation.
+No time stretch; retained raw float samples bit-exact;10 quiet cuts total1.74018s.
+Removed old per-scene padding. Boundary speech gaps <=0.36s; natural pauses kept.
+Tight-only sample clocks fix measured normalization/limiter EOF PTS discontinuity.
+Strict independent full decode/packet clocks PASS; audio/video lengths match.
+-16.25LUFS/-1.45dBTP,zero clipped/invalid samples; encoded visuals unchanged.
+Helpers: sync-aira-tight.mjs; render --narrated --aira --tight;
+mix --voice --aira --tight. Own distinct story/WAV/visual/mix outputs.
+Evidence .tmp/oceanides-stp/{aira-tight-sync,tight-independent-qa,frames-aira-tight}.
+Prior139.3s video unchanged and historically accepted by Neil (not this revision).
+Prior SHA9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d.
 
-## Approved original score retained
-Neil approved exact Flow one-take music, cap$0.50 usage before tax, no retries.
-Music v2.5 HTTP200:150.024s/48kHz stereo, estimated$0.375; actual debit unverified.
-Oceanides-STP-Flow-Original-150s.mp3, SHA:
-712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8.
-Independent raw full decode/-18.21LUFS/-1.03dBTP/zero clipping PASS.
-Neil accepted: "Oo bro goods saken ung music niceeeeeeee!" Keep exact take.
-Prior Original-Score-Preview-1080p.mp4 is music-only; saved-piano Music-Preview
-was REJECTED, historical only. No stock fallback. Stereo-layout mix fix retained.
+## Verification
+Native PowerPoint16 hidden/read-only open,9 PNG exports and embedded movie PASS.
+Package/layout/reference-font/import gates PASS. Live projector playback untested.
+HTML actual playback/pause/ended,next/back/Home/Right controls PASS.
+Desktop1280x900/mobile375x667 no overflow,44px controls; QA tab/server cleaned.
+Independent BRAND_PASS44/50,zero flags; helper code review PASS after atomic staging.
+Original failed rebuilds lose good files; fixed private failure/replacement proofs PASS.
+Subjective new pacing still needs Neil review; actual deliverable hashes unchanged.
+Root build PASS; full Vitest1401passed/32skipped,113files passed/9skipped.
+Prior unchanged checkAnchors5s timeouts did not recur in current full run.
+Bundle-leak/voice-sync/domain/PowerShell ASCII/artifact-anchor gates PASS.
+Scoped HTML byte-preservation attribute: check:codex PASS26/26,staged blob hash exact.
+Node syntax/diff checks PASS; no application or manifest changes this revision.
+Evidence .tmp/oceanides-meeting{,-qa}, root-qa build/test logs under meeting.
 
-## Failed personal clone retained
-Saved airaandmeagan (mPEHjC4AussYOrtIPSUB) approved full take returnedHTTP401
-at06:51UTC; no raw audio/alignment, no retry/purchase; FAILED_NO_RETRY.
-Original runner discarded provider detail; exact server cause remains unknown.
-Neil reports no paid plan and selected public Aira instead. Voice GET metadata
-alone did not establish cause. Structural error logger now retains sanitized
-provider status/message/requestID; offline original-defect/redaction tests PASS.
-Evidence: .tmp/oceanides-stp/voice-error-qa/verification.json.
-Historical public Aira/Megan short samples retained; not the current full take.
+## Paid source locks retained
+Public Aira - Confident News Reporter CkDT8SVS21XIVk5BcuDe,ElevenLabs v4.
+One approved full request max1600existing credits,estimated1455;HTTP20007:09UTC.
+Actual debit unverified; no retry/purchase. voice-aira.spec COMPLETED_ACCEPTED.
+Raw100.72s SHA31437ba8e9497dcd7729501d2d58741c34a3f454a912037664b3d6e2fc99a137.
+Historical execution AUDIO_AND_ALIGNMENT_RECEIVED_PENDING_LISTENING kept for guard.
+Flow Musicv2.5 one150.024s take; approved max$0.50,estimated$0.375,debit unverified.
+Score SHA712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8.
+Music spec COMPLETED_ACCEPTED; execution AUDIO_RECEIVED_PENDING_LISTENING kept.
+Exact accepted score retained; -28LUFS bed,sidechain duck,1.2s in/3s out,no SFX.
+Personal airaandmeagan mPEHjC4AussYOrtIPSUB failedHTTP401;FAILED_NO_RETRY.
+No clone retry/purchase. Neil reported no plan and selected public Aira.
+Error logger retains sanitized errors; module-relative Aira receipt blocks repeat
+paid attempts across cwd. Prior offline original-defect/redaction/lock tests PASS.
 
-## Scope and verification
-Client quarterly service removes wastewater AND solids, includes manual cleaning.
-Bill/volume/STP supplier unknown. On-site STP may reduce liquid hauling with
-suitable design/permitted outlet; screenings/sludge removal and care continue.
-No guaranteed savings, total siphoning elimination, potable-water or owned-plant
-claim. Compare installation/power/service/testing/residual-solids costs.
-August introduces live, plays narrated video without talking over it, then Q&A.
-Node syntax, exact hashes/guards, media QA, Git diff and artifact anchors PASS.
-Build PASS. Broad Vitest:1394pass/32skip/7timeouts in unchanged checkAnchors file.
-Isolated rerun:1pass/8timeouts at unchanged5s limit, no assertion failure;
-child-process profiling ~1s/startup supports fixture overhead, not proven sole cause.
-Evidence: voice-error-qa/{anchor-isolation,anchor-process-timing}.json. No bypass.
-Application code/manifests unchanged; no remaining code-review findings.
+## Client scope and contacts
+On-site STP treats domestic building wastewater; supplier/model/capacity unknown.
+Quarterly service removes wastewater AND solids; bill/volume unknown.
+May reduce liquid hauling with suitable design/permitted outlet. Sludge removal,
+inspection/equipment care continue; no total-elimination or guaranteed-savings claim.
+Oceanides coordinates specialists through turnover; illustrations disclosed.
+August introduces, plays narrated film, then assessment/quotation/Q&A.
+0917 6716383(Globe); marketing@oceanidessepticandpest.com.
+Tramo Street Corner Dandan,Pasay City,Philippines1300.
 
-## Profile and release context retained
-PR152 https://github.com/yopiheart/grifon-command/pull/152 stacked on PR151.
-company-profile/output/ has Widescreen-STP-Confirmed PDF/PPTX (8slides),
-Print-STP-Confirmed PDF/PPTX (7A4pages); minimal type, transparent logo,
-verified proof/disclosures/contacts. Prior brand47/50/import/contact checks PASS.
-0917 671 6383(Globe), marketing@oceanidessepticandpest.com; Tramo Street
-Corner Dandan, Pasay City, Philippines1300. PR151 logo retained.
-Recovery PR150 targets PR146; PR146 CI/preview passed after payment, SSO blocks
-app smoke. Release review and PR150 main-target CI remain; no production deploy.
-Motion PR143 -> PR144 -> PR149 retained. Untracked attachments/reference
-assets unrelated; not staged. NOW.md is the only resume document.
+## Release context
+PR152 profile stacked on PR151 logo; original Widescreen-STP-Confirmed8slides and
+Print-STP-Confirmed7A4pages retained. Recovery PR150->PR146/CI review remains.
+PR146 preview/CI passed after payment; SSO blocks app smoke. No production deploy.
+Motion PR143->PR144->PR149 retained. Unrelated attachments/reference assets unstaged.
+NOW.md is the only resume document.

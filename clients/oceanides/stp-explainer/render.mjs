@@ -9,10 +9,12 @@ import ffmpeg from 'ffmpeg-static';
 const dir=fileURLToPath(new URL('.',import.meta.url)),root=resolve(dir,'..');
 const narrated=process.argv.includes('--narrated');
 const aira=process.argv.includes('--aira');
+const tight=process.argv.includes('--tight');
 if(aira&&!narrated)throw Error('Aira rendering requires --narrated.');
-const story=JSON.parse(await readFile(join(dir,narrated?(aira?'story-aira.json':'story-narrated.json'):'story.json'),'utf8'));
-const evidence=resolve('.tmp/oceanides-stp/'+(narrated?(aira?'frames-aira':'frames-personal'):'frames-cost'));await mkdir(evidence,{recursive:true});await mkdir(join(dir,'output'),{recursive:true});
-const server=createServer(async(req,res)=>{try{const urlPath=decodeURIComponent(req.url.split('?')[0]),storyPath=aira&&urlPath==='/stp-explainer/story-narrated.json'?'/stp-explainer/story-aira.json':urlPath;const p=resolve(root,'.'+storyPath);if(!p.startsWith(root+'\\')&&!p.startsWith(root+'/'))throw Error('Path outside client');const data=await readFile(p);res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.json':'application/json','.png':'image/png'})[extname(p)]||'application/octet-stream');res.end(data);}catch{res.writeHead(404);res.end();}});
+if(tight&&(!aira||!narrated))throw Error('Tight rendering requires --narrated --aira.');
+const story=JSON.parse(await readFile(join(dir,narrated?(aira?(tight?'story-aira-tight.json':'story-aira.json'):'story-narrated.json'):'story.json'),'utf8'));
+const evidence=resolve('.tmp/oceanides-stp/'+(narrated?(aira?(tight?'frames-aira-tight':'frames-aira'):'frames-personal'):'frames-cost'));await mkdir(evidence,{recursive:true});await mkdir(join(dir,'output'),{recursive:true});
+const server=createServer(async(req,res)=>{try{const urlPath=decodeURIComponent(req.url.split('?')[0]),storyPath=aira&&urlPath==='/stp-explainer/story-narrated.json'?(tight?'/stp-explainer/story-aira-tight.json':'/stp-explainer/story-aira.json'):urlPath;const p=resolve(root,'.'+storyPath);if(!p.startsWith(root+'\\')&&!p.startsWith(root+'/'))throw Error('Path outside client');const data=await readFile(p);res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.json':'application/json','.png':'image/png'})[extname(p)]||'application/octet-stream');res.end(data);}catch{res.writeHead(404);res.end();}});
 await new Promise(ok=>server.listen(0,'127.0.0.1',ok));
 const browser=await chromium.launch({headless:true,args:process.argv.includes('--software')?['--use-angle=swiftshader','--enable-unsafe-swiftshader']:[]});
 const page=await browser.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -23,11 +25,11 @@ try{
  if(errors.length)throw Error(errors.join('\n'));
  if(framesOnly){console.log('12 story frames ready.');}
  else{
-  const fps=30,duration=story.scenes.at(-1).end,filename=narrated?(aira?'Oceanides-STP-Aira-Voice-Visual-1080p.mp4':'Oceanides-STP-Personal-Voice-Visual-1080p.mp4'):'Oceanides-STP-Cost-Explainer-Visual-Draft-1080p.mp4';
+  const fps=30,duration=story.scenes.at(-1).end,filename=narrated?(aira?(tight?'Oceanides-STP-Aira-Tight-Voice-Visual-1080p.mp4':'Oceanides-STP-Aira-Voice-Visual-1080p.mp4'):'Oceanides-STP-Personal-Voice-Visual-1080p.mp4'):'Oceanides-STP-Cost-Explainer-Visual-Draft-1080p.mp4';
   const output=join(dir,'output',filename);const enc=spawn(ffmpeg,['-hide_banner','-loglevel','warning','-y','-f','image2pipe','-framerate',String(fps),'-vcodec','mjpeg','-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',output],{stdio:['pipe','ignore','pipe']});
   let logs='';enc.stderr.on('data',d=>logs+=d.toString());enc.stdin.on('error',()=>{});let failed;enc.on('error',e=>failed=e);const done=once(enc,'close');
   for(let i=0;i<duration*fps;i++){const data=await page.evaluate(t=>window.renderFrame(t),i/fps);if(!enc.stdin.write(Buffer.from(data,'base64')))await once(enc.stdin,'drain');if(i%(fps*10)===0)console.log(`Rendered ${i/fps}/${duration}s`);if(failed)throw failed;}
   enc.stdin.end();const [code]=await done;if(code!==0)throw Error('Encoder failed: '+logs);if(errors.length)throw Error(errors.join('\n'));
-  await writeFile(join(evidence,'validation.json'),JSON.stringify({width:1920,height:1080,fps,duration,frames:Math.ceil(duration*fps),scenes:story.scenes.length,errors,paidGeneration:false,narration:narrated?(aira?'Timing follows approved Aira voice take':'Timing follows approved personal-voice take'):'Pending user approval',filename},null,2));console.log(output);
+  await writeFile(join(evidence,'validation.json'),JSON.stringify({width:1920,height:1080,fps,duration,frames:Math.ceil(duration*fps),scenes:story.scenes.length,errors,paidGeneration:false,narration:narrated?(aira?(tight?'Continuous approved Aira take; only verified boundary silence shortened':'Timing follows approved Aira voice take'):'Timing follows approved personal-voice take'):'Pending user approval',filename},null,2));console.log(output);
  }
 }finally{await browser.close();await new Promise(ok=>server.close(ok));}
