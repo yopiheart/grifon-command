@@ -74,6 +74,16 @@ in server handlers; browser code calls the `api/*` proxies.
 - Use Node 24 and npm 11. Install the root with `npm ci`; each project under
   `funnels/` has a separate manifest and installation.
 - Before a non-trivial edit, state success, failure, and verification criteria.
+- Accept short, informal requests; Neil does not need to supply a complete brief.
+  Read the available conversation and relevant code first. For non-trivial work,
+  turn the request into a concise goal, scoped plan, and verification criteria;
+  make important assumptions visible so Neil can correct them. Ask only about
+  missing intent or preferences that materially change the work and cannot be
+  resolved from available evidence. Use sensible, stated defaults for minor
+  choices and proceed within authorized scope; inferred intent never grants
+  approval for gated actions. Do not force a template, interview, or extra
+  approval step for routine tasks. Reuse the existing verification contract and
+  planning skills when needed rather than adding a separate planning framework.
 - Make surgical changes. Do not bundle cleanup, speculative abstractions,
   compatibility shims, or unrelated dependency upgrades.
 - Do not delete pre-existing work without explicit approval.
