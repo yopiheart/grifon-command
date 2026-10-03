@@ -1,0 +1,20 @@
+{
+  "checked_at_utc": "2026-10-03T11:21:11.193Z",
+  "provider": "BytePlus ModelArk",
+  "configured_key_name": "ARK_API_KEY",
+  "key_present": true,
+  "request": {
+    "method": "GET",
+    "endpoint": "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks",
+    "page_num": 1,
+    "page_size": 1
+  },
+  "purpose": "Read-only authentication and task-list access check; no model generation or media transmission",
+  "paid_submissions": 0,
+  "provider_media_uploads": 0,
+  "http_status": 200,
+  "authenticated_task_list_access": true,
+  "error_code": null,
+  "returned_item_count": 0,
+  "limit": "Successful list access does not prove Seedance 2.5 entitlement, account balance, generation readiness, or Grifon UI integration. No task IDs, prompts, media URLs or credential values are saved."
+}

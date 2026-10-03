@@ -1,0 +1,871 @@
+{
+  "asset": "assets/blender-reveal/byteplus-motion-transfer.mp4",
+  "model": "dreamina-seedance-2-0-260128",
+  "scope": "Independent local media verification only; no environment, network, upload, paid or cloud operation performed by this verifier",
+  "checked_at_utc": "2026-10-03T12:39:32.291Z",
+  "status": "PASS_MEDIA_CONTRACT_WITH_VISUAL_LIMITATIONS",
+  "checks": {
+    "recorded_size_and_sha256": {
+      "pass": true,
+      "bytes": 960352,
+      "sha256": "771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc"
+    },
+    "full_decode": {
+      "pass": true,
+      "exit_code": 0,
+      "mapped_all_streams": true
+    },
+    "native_dimensions": {
+      "pass": true,
+      "width": 864,
+      "height": 496,
+      "expected": [
+        864,
+        496
+      ]
+    },
+    "six_second_duration": {
+      "pass": true,
+      "decoded_seconds": 6.041666666666666,
+      "container_seconds": 6.04,
+      "tolerance_seconds": 0.041666666666666664
+    },
+    "frame_timing": {
+      "pass": true,
+      "frames": 145,
+      "fps": 24,
+      "timebase": "1/24",
+      "contiguous_timestamps": true,
+      "unique_decoded_frames": 145,
+      "nominal_six_second_frames": 144,
+      "difference_from_nominal_frames": 1,
+      "timing_tolerance_seconds": 0.041666666666666664,
+      "strict_6_000_seconds_achieved": false,
+      "disposition": "Nominal six-second provider output accepted within one 24fps frame per parent clarification; measured 145 frames/6.041667 seconds remain explicit. File unchanged; exact 6.000s is not achieved."
+    },
+    "no_audio": {
+      "pass": true,
+      "input_audio_streams": 0,
+      "decoded_media_types": [
+        {
+          "stream": 0,
+          "type": "video"
+        }
+      ]
+    }
+  },
+  "timestamp_alignment": {
+    "samples_seconds": [
+      0,
+      0.5,
+      1,
+      1.5,
+      2,
+      2.5,
+      3,
+      3.5,
+      4,
+      4.5,
+      5,
+      5.5
+    ],
+    "extraction": "Output seek after input for decoded timestamp sampling, one frame at each half-second for both saved videos",
+    "contact_sheet": "assets/blender-reveal/qa/byteplus-motion-transfer-contact-sheet.png",
+    "contact_sheet_sha256": "492fdf25cb8a0b59ce0f7fdf5e4ce833ac08d8caa14f819da51fb3422851668e"
+  },
+  "sampled_visual_review": {
+    "status": "PASS_SAMPLED_CAMERA_TRANSFER_WITH_IDENTITY_LIMITATIONS",
+    "inspected_samples_seconds": [
+      0,
+      0.5,
+      1,
+      1.5,
+      2,
+      2.5,
+      3,
+      3.5,
+      4,
+      4.5,
+      5,
+      5.5
+    ],
+    "additional_native_stills_seconds": [
+      4.5,
+      5.5
+    ],
+    "appearance_reference": "assets/blender-reveal/hero.png",
+    "camera_direction": {
+      "status": "PASS_SAMPLED",
+      "finding": "The generated frames broadly follow opening blade occlusion, gradual blade clearance and lateral parallax, then a clear label-facing hero composition. Framing is similar, but exact geometric camera coordinates were not measured."
+    },
+    "product_continuity": {
+      "status": "PASS_SAMPLED",
+      "finding": "One coherent amber bottle remains on the stage across the twelve samples. No sampled cut, added/disappearing bottle or obvious label drift was observed. Samples cannot rule out defects between them."
+    },
+    "main_label_readability": {
+      "status": "PASS_AT_INSPECTED_HERO_STILLS",
+      "words": [
+        "NOIR",
+        "01",
+        "COLD BREW"
+      ],
+      "finding": "These main label words are readable in native output frames at 4.5 and 5.5 seconds and look consistent across the sampled hero interval."
+    },
+    "exact_product_identity": {
+      "status": "PARTIAL",
+      "finding": "Amber glass, cream label, metallic cap and warm stone setting follow the look reference, but cap/label proportions are slightly reinterpreted. The small volume line is not reliably preserved as the source 250 ML; the low-resolution generated digits appear different and cannot be confidently read as the approved value. Exact client label copy should not be treated as verified."
+    },
+    "full_continuous_motion": "Not inspected by this verifier; only timestamp samples and native hero stills examined. Browser full-playback transport testing is separate from a subjective continuous-motion verdict.",
+    "client_readiness": "Not approved. Fine label fidelity and continuous playback still require review; no reroll, enhancement or replacement asset created."
+  },
+  "commands": [
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "info",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-map",
+        "0",
+        "-f",
+        "framemd5",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\all-streams.framemd5"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "0.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-0.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "0.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-0.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "0.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-0.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "0.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-0.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "1.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-1.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "1.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-1.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "1.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-1.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "1.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-1.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "2.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-2.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "2.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-2.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "2.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-2.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "2.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-2.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "3.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-3.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "3.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-3.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "3.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-3.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "3.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-3.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "4.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-4.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "4.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-4.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "4.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-4.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "4.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-4.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "5.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-5.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "5.0",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-5.0.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\camera-reference.mp4",
+        "-ss",
+        "5.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\reference-5.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing FFmpeg-static",
+      "arguments": [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "<workspace>\\assets\\blender-reveal\\byteplus-motion-transfer.mp4",
+        "-ss",
+        "5.5",
+        "-frames:v",
+        "1",
+        "-update",
+        "1",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\output-5.5.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "existing bundled Python",
+      "arguments": [
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961\\contact.py",
+        "<workspace>\\.tmp\\byteplus-guard-smoke\\output-1791031165961",
+        "<workspace>\\assets\\blender-reveal\\qa\\byteplus-motion-transfer-contact-sheet.png"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "Node + configured Playwright MCP",
+      "arguments": [
+        "node",
+        ".tmp/byteplus-guard-smoke/browser-smoke.mjs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "executable": "Node + configured Playwright MCP",
+      "arguments": [
+        "node",
+        ".tmp/byteplus-guard-smoke/browser-extension.mjs"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "Frame sampling cannot establish continuous motion or every transient defect.",
+    "Successful decode and container checks do not establish client readiness or camera fidelity.",
+    "Account billing and provider-side spend were not independently inspected."
+  ],
+  "initial_verifier_disposition": {
+    "exit_code": 1,
+    "status": "FAIL_MEDIA_CONTRACT",
+    "reason": "Verifier initially imposed exactly 144 frames while its duration check allowed one 24fps frame; this extra exact-frame assumption was not part of the requested measurement contract.",
+    "corrected_criterion": "24fps, contiguous frames and nominal six-second duration within one frame; root explicitly confirmed this criterion after observed 145-frame output. Strict exactness remains separately false.",
+    "media_unchanged": true
+  },
+  "finalized_at_utc": "2026-10-03T12:43:05.379Z",
+  "browser_smoke": {
+    "status": "PASS",
+    "checked_at_utc": "2026-10-03T12:50:03.911Z",
+    "artifact": {
+      "path": "artifacts/blender-reveal.html",
+      "bytes": 12783273,
+      "sha256": "5a3ca0c6871a2889789f2397eaabec6f7843c01e1d0cd6ab92b5127fe7ab5c1e"
+    },
+    "provider": "configured Playwright MCP @playwright/mcp@0.0.80",
+    "server": {
+      "name": "Playwright",
+      "version": "1.63.0-alpha-2026-08-31"
+    },
+    "isolated": true,
+    "headless": true,
+    "observations": {
+      "mobile": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "overflow": {
+          "scroll": 390,
+          "client": 390
+        },
+        "defaultAi": "true",
+        "media": {
+          "width": 864,
+          "height": 496,
+          "duration": 6.041667,
+          "error": null,
+          "sha256": "771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc",
+          "decodedAudioBytes": 0
+        },
+        "sound": {
+          "disabled": true,
+          "label": "Silent AI"
+        },
+        "images": [
+          {
+            "complete": true,
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "complete": true,
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "complete": true,
+            "width": 1280,
+            "height": 720
+          }
+        ],
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36"
+      },
+      "pausedSwitch": [
+        {
+          "time": 2.37,
+          "paused": true,
+          "width": 1280,
+          "height": 720,
+          "duration": 6,
+          "soundDisabled": true,
+          "soundLabel": "Silent guide",
+          "error": null
+        },
+        {
+          "time": 2.37,
+          "paused": true,
+          "width": 1280,
+          "height": 720,
+          "duration": 6,
+          "soundDisabled": false,
+          "soundLabel": "Sound on",
+          "error": null
+        },
+        {
+          "time": 2.37,
+          "paused": true,
+          "width": 864,
+          "height": 496,
+          "duration": 6.041667,
+          "soundDisabled": true,
+          "soundLabel": "Silent AI",
+          "error": null
+        }
+      ],
+      "playback": {
+        "pausedCheck": {
+          "time": 0.149193,
+          "paused": true
+        },
+        "ended": true,
+        "currentTime": 6.041667,
+        "duration": 6.041667,
+        "error": null,
+        "decodedAudioBytes": 0
+      },
+      "download": {
+        "filename": "byteplus-motion-transfer.mp4",
+        "sha256": "771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc"
+      },
+      "console": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "network": {
+        "external_http_requests": 0,
+        "helper_requests": [
+          {
+            "method": "GET",
+            "route": "/artifact",
+            "status": 200
+          }
+        ]
+      }
+    },
+    "screenshot": {
+      "path": "assets/blender-reveal/qa/byteplus-mobile-390x844.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "video_time_seconds": 5.5,
+      "sha256": "fd962310d0fe448316676536afc2b936f76a8655ae8b5225ab536c85293f9f72",
+      "visual_layout": {
+        "status": "PASS",
+        "inspection": "Screenshot personally inspected: continuous dark ground, visible player/glass surfaces, bright near-white display title and gold accents; tabs and footer fit with no horizontal overflow."
+      }
+    },
+    "cleanup": {
+      "driver_pid": 22264,
+      "loopback_helper_pid": 22264,
+      "mcp_pid": 27888,
+      "loopback_port": 51676,
+      "started_utc": "2026-10-03T12:49:50.551Z",
+      "browser_close_requested": true,
+      "mcp_only_owned_pid_terminated": true,
+      "helper_closed": true,
+      "owned_driver_and_mcp_running": false,
+      "process_absence_verified": true
+    },
+    "failure": null,
+    "limitations": [
+      "Chromium viewport check does not prove rendering on an actual Android WebView.",
+      "Full playback completed technically; subjective continuous-motion quality remains outside this functional smoke."
+    ],
+    "summary": "Mobile 390x844 layout and default actual AI, all three paused source clocks, play/pause and complete AI playback, silent controls, exact AI download, zero console/CSP errors/warnings and zero external HTTP requests passed."
+  },
+  "browser_smoke_extension": {
+    "status": "PASS",
+    "checked_at_utc": "2026-10-03T12:53:20.579Z",
+    "artifact": {
+      "path": "artifacts/blender-reveal.html",
+      "bytes": 12783273,
+      "sha256": "5a3ca0c6871a2889789f2397eaabec6f7843c01e1d0cd6ab92b5127fe7ab5c1e"
+    },
+    "provider": "configured Playwright MCP @playwright/mcp@0.0.80",
+    "server": {
+      "name": "Playwright",
+      "version": "1.63.0-alpha-2026-08-31"
+    },
+    "isolated": true,
+    "headless": true,
+    "observations": {
+      "desktop": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "defaultAi": "true"
+      },
+      "playingSwitch": [
+        {
+          "time": 0.801331,
+          "paused": false,
+          "error": null,
+          "soundDisabled": false,
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "time": 0.822765,
+          "paused": false,
+          "error": null,
+          "soundDisabled": true,
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "time": 0.868211,
+          "paused": false,
+          "error": null,
+          "soundDisabled": true,
+          "width": 864,
+          "height": 496
+        }
+      ],
+      "soundRestore": {
+        "restored": {
+          "volume": 1,
+          "muted": false,
+          "label": "Sound on"
+        },
+        "nativeRestored": {
+          "volume": 1,
+          "muted": false,
+          "label": "Sound on"
+        }
+      },
+      "console": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "network": {
+        "external_http_requests": 0,
+        "helper_requests": [
+          {
+            "method": "GET",
+            "route": "/artifact",
+            "status": 200
+          }
+        ]
+      }
+    },
+    "screenshot": {
+      "path": "assets/blender-reveal/qa/byteplus-desktop.jpg",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "video_time_seconds": 5.5,
+      "sha256": "071b7f74b5c293e10b8dec6dd3e82b9af1990fdb74991f8e3b65b1ec1c515dc2",
+      "visual_layout": {
+        "status": "PASS",
+        "inspection": "Screenshot personally inspected: continuous dark ground, visible player/glass surfaces, bright near-white display title and gold accents; tabs and footer fit with no horizontal overflow."
+      }
+    },
+    "cleanup": {
+      "driver_pid": 24248,
+      "loopback_helper_pid": 24248,
+      "mcp_pid": 30504,
+      "loopback_port": 58318,
+      "started_utc": "2026-10-03T12:53:15.453Z",
+      "browser_close_requested": true,
+      "mcp_only_owned_pid_terminated": true,
+      "helper_closed": true,
+      "owned_driver_and_mcp_running": false,
+      "process_absence_verified": true
+    },
+    "failure": null,
+    "limitations": [
+      "Chromium viewport check does not prove rendering on an actual Android WebView.",
+      "Full playback completed technically; subjective continuous-motion quality remains outside this functional smoke."
+    ],
+    "summary": "Desktop 1440x1000 layout, all three playing source clocks/play state, zero-volume and native mute restoration passed; zero console/CSP errors/warnings and zero external HTTP requests."
+  },
+  "browser_finalized_at_utc": "2026-10-03T12:54:32.496Z"
+}

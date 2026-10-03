@@ -1,78 +1,73 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, local Blender product-reveal study**
+**Stamped: 2026-10-03, Blender-first directing / completed Seedance 2.0 proof**
 
-## Current authorized work
-Neil approved the local six-second Blender product-reveal proof, then the exact
-one-shot fal motion-transfer test with output changed to 480p to save cost.
-Branch: `codex/blender-product-reveal`, based on main `3da5bc7b` (PR154 merged).
-Implementation commit: `a8f3d9ad`; draft PR157:
+## Current work and scope
+Branch: `codex/blender-product-reveal`; draft PR157:
 https://github.com/yopiheart/grifon-command/pull/157.
 Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
-Scope: local production tools, fictional NOIR / 01 assets and an offline viewer.
-No application, wizard, provider handler, tuned production prompt, billing,
-deployment or production-data changes. No paid API calls or external media upload.
+Previous commits: a8f3d9ad local film, 80ab3036 handoff, e517a9c1 480p spec.
+Neil approved the original local proof, then one direct Seedance 2.0 attempt:
+same hashed camera clip/hero image/prompt, nominal six seconds, silent 480p,
+maximum $5, no retry/reroll/funding/substitution. Completed exactly once.
+Local production tools/assets/viewer only. No application/wizard/provider-handler
+or tuned production prompt/model changes; no manual deployment or merge.
 
-## Result
-- Original six-second 1280x720 / 24fps shaded Blender film with synthesized sound.
-- Matching neutral reference: same stationary geometry, camera, framing and timing.
-- Portable editable `assets/blender-reveal/scene.blend`; text is mesh geometry.
-- `artifacts/blender-reveal.html` embeds both clips, stills and downloadable scene.
-  Builder reads committed source assets; viewer supports timestamp-preserving swaps.
-- Original procedural scene/sound/cut tools support regeneration without AI.
-- `motion-transfer.spec.json` prepares exactly one direct fal Seedance 2.5 test:
-  hashed reference clip + hero image, six seconds, 480p, silent, estimated $1.55,
-  maximum $5 total, no retries or funding. APPROVED / NOT RUN.
-  User messages: "G approved" then "480P lang bro para tipid".
-  Native documented output: 864x496. Both approved input hashes still match.
-  Transport disables automatic retries and fallback; no client POST retries.
-  `motion-transfer-preflight.json` records local/doc PASS, account pending, 0 spends.
+## Delivered result
+- Original NOIR / 01 Blender finish: six seconds, 1280x720 / 24fps with sound.
+- Same-scene neutral camera reference, portable editable scene and style frames.
+  Original approved film/reference/hero/scene bytes remain unchanged.
+- Actual direct BytePlus output: `assets/blender-reveal/byteplus-motion-transfer.mp4`.
+  960352 bytes; SHA771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc.
+  Native864x496, 24fps, 145 distinct contiguous frames, silent; fully decoded.
+  Measured6.041667s (+one frame); nominal six-second tolerance accepted,
+  strict6.000s not achieved. No trimming or replacement asset.
+- `artifacts/blender-reveal.html`: offline three-way timestamp-preserving viewer,
+  AI default, Blender finish/guide, actual MP4 downloads and editable scene.
+  About12.8MB; generated only from committed source assets and QA evidence.
 
-## Verification
-- Blender full Cycles32 CPU denoised render: exit 0, 144 frames, 3065.114 seconds.
-- Both PNG sequences: exact frame names, PNG headers and native dimensions PASS.
-- Saved-scene geometry: all 144 integer frames PASS; packed/mesh dependencies,
-  stationary product, camera clearance and hero projection. Ray claims are limited
-  to first product hits along sampled directions; no swept-clearance claim.
-- Independent still review: round 1 held grainy EEVEE glass; round 2 cleared
-  Cycles glass and readable label. Source findings addressed and reviewed.
-- Independent sampled motion review: no continuity blocker in 12 samples plus
-  frames 1/49/73/109/144. Not a full-playback or inter-frame flicker verdict.
-- Cut builder: both MP4s decode 144 distinct frames, exactly six seconds / 24fps;
-  encoded audio peak -2.542114 dBFS. Incomplete 13-frame sequence was rejected.
-- FFmpeg black/low-motion probe: no black interval; 4.375-4.91667 low-motion flag
-  overlaps the intended hero settle. Audio taste/listening remains human review.
-- Artifact builder/finalize + Node syntax + Blender Python AST: PASS, exit 0.
-- Domain-language and PowerShell ASCII checks: PASS, exit 0.
-- Artifact-anchor check: PASS outside sandbox; initial child Git EPERM was setup,
-  not missing tracked evidence. Existing anchored twin is unchanged.
-- Staged `git diff --cached --check`: PASS, exit 0; only this 21-file slice committed.
-- Final browser/mobile gate: PASS via configured Playwright MCP 0.0.80, isolated
-  headless Chrome. 390x844 / desktop screenshots, decode, transport, source swaps,
-  native mute/zero-volume restore and exact-byte downloads passed. No page/CSP
-  errors; request telemetry only local artifact GET. CUA was unavailable.
-  Evidence/screenshots: `assets/blender-reveal/browser-verification.json`, `qa/`.
-  This proves player behavior; continuous-motion taste and audio listening are human.
-- App build/unit/e2e suites NOT RUN: no app code changed; paid/live switches unused.
-- PR157 implementation revision: reported Vercel / Vercel Preview Comments statuses
-  SUCCESS. These automated preview statuses are not evidence of application suites.
-- 480p spec: request diff verified (resolution only), both hashes and formula PASS;
-  independent provider review confirms schema, pricing and transport headers.
-  Authenticated pricing/balance checks and generation are NOT RUN.
+## Live operation and cost evidence
+- Model: dreamina-seedance-2-0-260128; task cgt-20261003202712-nlxv7 succeeded.
+- Existing ARK key worked. One private camera upload and one generation POST;
+  zero client retries. Exact owned temporary storage object deletion confirmed.
+- 120946 completion tokens; public $4.30/M rate gives $0.5200678 generation
+  estimate. Actual invoice, staging charge and balance remain unverified.
+  Do not call the $5 local guard a provider dollar hardcap or verified total bill.
+- Download initially rejected the returned CDN by exact-host guard. Added only
+  authenticated task-returned ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com.
+  GET-only resume: two GETs, zero new paid POST/upload; no signed URLs saved.
+- Sanitized run/preflight/download recovery/media evidence are under assets/blender-reveal.
+  Actual ledger remains ignored at .tmp/byteplus-motion-transfer/attempt.json.
+  NEVER --execute again for this study. Existing task recovery uses --resume only.
+- Old fal2.5/direct2.5 proposals retained as superseded / NOT RUN.
+- User requested Kling4 only, explicitly rejected Omni, then chose Seedance-only.
+  Official developer page showed Kling4 API Coming Soon; zero Kling calls.
 
-## NEXT ACTION
-Local proof and verification evidence are committed/pushed in draft PR157.
-Offline viewer opening was queued in Codex; no manual deploy or merge was run.
-Exact paid-test approval is present. Account access is the blocker: no FAL_KEY or
-FAL_API_KEY in current process, user/machine environment or existing desktop config;
-the available fal browser is signed out. Requested existing account/key connection.
-Fal sign-in tab is kept for handoff. No new Admin key or account funding requested.
-Once connected, check funded access and bounded cost, submit once at 480p, and
-compare motion/product continuity. Stop if funding or extra fees are needed.
-AI motion transfer, human visual/sound approval and Grifon integration remain pending.
-No merge, deployment or publication is authorized.
+## Verification and quality limits
+- Final runner source SHA c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1.
+  Independent24/24 fake-only guards PASS, including exact CDN GET-only recovery,
+  hostile host/userinfo rejection, auth/capability withholding and one-attempt ledger.
+  Reproducible: node tools/tests/byteplus-motion-transfer-guards.mjs. No real env/network.
+- Independent full decode/extraction/contact sheet:26 local commands exit0.
+  Sampled occlusion, blade clearance, parallax and hero framing broadly match.
+  One coherent bottle in12samples; NOIR/01/COLD BREW readable in native hero stills.
+  Exact identity PARTIAL: cap/label proportions vary; fine volume text not preserved
+  confidently. Full continuous-motion taste and client approval remain pending.
+- Three-way viewer mobile390x844/desktop browser gate PASS: layout, playback,
+  aligned source swaps, silent controls, mute/volume restore, exact-byte downloads,
+  no page/CSP errors or external page requests. Evidence appended to output QA.
+  Screenshots in assets/blender-reveal/qa; real Android WebView remains untested.
+- Builder/finalize, Node syntax, domain292/0drift, PowerShell ASCII, artifact-anchor
+  and diff whitespace checks PASS. Original Blender geometry/render gates retained.
+- Root build attempted: SETUP BLOCKED (tsc absent). Offline Vitest attempt:
+  SETUP BLOCKED (not installed in this worktree). No dependency installation.
+  Application code unchanged; app E2E/paid regression switches not enabled.
+
+## Remaining decision
+This proves a direct Blender camera-guide + Seedance finish path without Higgsfield.
+For client work, protect exact product label/geometry with Blender/compositing.
+Grifon UI integration remains separate; Seedance UI is still locked in this checkout.
+No further generation, reroll, model replacement, funding, publish or merge authorized.
 
 ## Other work retained
-Original hero-film studio-pilot source and separate hero-genjutsu checkout untouched.
-Recovery PR146/150 and motion PR143/144/149 remain in base history; their runtime
-release limits belong to those sessions. Oceanides work and assets remain separate.
-The source videos and failed render experiments remain in ignored .tmp directories.
+Original hero-film studio-pilot and separate hero-genjutsu checkout untouched.
+Recovery/motion PR history remains in base. Oceanides assets/work remain separate.

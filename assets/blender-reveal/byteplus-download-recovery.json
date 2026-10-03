@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "task_id": "cgt-20261003202712-nlxv7",
+  "original_transport_error": "Remote host is not allowlisted",
+  "verified_output_hostname": "ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com",
+  "hostname_provenance": "content.video_url from HTTPS authenticated GET of this exact successful task; query/capability was never saved",
+  "contract_source": "https://docs.byteplus.com/en/docs/modelark/get-video-generation-task-api",
+  "fix_scope": "Exact additional output hostname only; HTTPS, no userinfo/port/hash, no redirects and empty media headers retained",
+  "resume_exit_code": 0,
+  "resume_network_requests": 2,
+  "resume_methods": [
+    "GET task",
+    "GET existing output"
+  ],
+  "additional_paid_submissions": 0,
+  "additional_uploads": 0,
+  "staging_cleanup_already_confirmed": true,
+  "final_runner_sha256": "c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1",
+  "independent_guards": {
+    "pass": 24,
+    "fail": 0
+  },
+  "output": {
+    "bytes": 960352,
+    "sha256": "771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc"
+  },
+  "secrets_or_signed_urls_saved": false
+}
