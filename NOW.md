@@ -1,10 +1,11 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, Aira narration and Flow mix delivered for listening review**
+**Stamped: 2026-10-03, Neil accepted the final Aira narration and Flow mix**
 
 ## Current work
 Branch: codex/oceanides-stp-explainer, based on profile head d3d08102.
 Draft PR153: https://github.com/yopiheart/grifon-command/pull/153, stacked on PR152.
 No merge, deployment or public publication requested.
+Email delivery requested; exact recipient address pending. No email sent.
 
 ## Current narrated video
 Current deliverable under clients/oceanides/stp-explainer/output/:
@@ -22,8 +23,8 @@ Fresh twelve source frames: independent BRAND_PASS43/50, zero findings.
 Root inspected actual encoded contact frame138s: correct contacts, transparent
 logo, no duplication or pending-voice label, navy/white type.
 Evidence: .tmp/oceanides-stp/{aira-voice-qa,aira-final-qa,aira-sync,frames-aira,audio-aira}.
-Pronunciation, audible words/music balance and Neil's final listening remain
-pending; metrics do not establish subjective quality. Projector untested.
+Neil accepted final video: "Bro, goods na sa'kin 'to. Ayos na, ayos 'to."
+Metrics alone do not establish subjective quality. Projector untested.
 
 ## Approved Aira request
 Neil selected public Aira - Confident News Reporter after clone failed.
@@ -32,7 +33,7 @@ Exact professional voice CkDT8SVS21XIVk5BcuDe, ElevenLabs v4; same224-word/
 Neil approved: "Approve Aira, max 1,600 credits". One POST at07:09UTC HTTP200.
 Estimated1455 existing credits; max1600, zero retries/purchases. Provider header
 character-cost88 is retained; actual account debit is not independently verified.
-voice-aira.spec.json COMPLETED_PENDING_REVIEW; execution receipt locks paid call.
+voice-aira.spec.json COMPLETED_ACCEPTED; historical receipt locks paid call.
 voice-aira.mjs dry-run only now; sync-aira.mjs uses provider timestamps, writes
 story-aira.json/WAV; render --narrated --aira then mix --voice --aira are local.
 Independent review PASS after fixing cwd-relative receipt-lock edge. Offline

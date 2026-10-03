@@ -1,5 +1,5 @@
 {
-  "status": "COMPLETED_PENDING_REVIEW",
+  "status": "COMPLETED_ACCEPTED",
   "purpose": "One full Taglish narration take using Neil's selected public Aira - Confident News Reporter voice, synchronized to the Oceanides building STP explainer and mixed locally with his accepted original Flow score.",
   "selectionCorrection": "Neil selected the earlier public Aira news-reporter voice on 2026-10-03 after the personal clone generation failed. This is a separate request; the failed personal-voice spec and receipt remain unchanged, with no retry.",
   "approval": {
@@ -228,7 +228,7 @@
   },
   "verification": {
     "recordedAt": "2026-10-03T07:29:09.042Z",
-    "status": "TECHNICAL_PASS_HUMAN_LISTENING_PENDING",
+    "status": "TECHNICAL_PASS_HUMAN_ACCEPTED",
     "raw": {
       "sha256": "31437ba8e9497dcd7729501d2d58741c34a3f454a912037664b3d6e2fc99a137",
       "bytes": 1612530,
@@ -295,7 +295,10 @@
       "stableReceiptLockRegression": "Original runner permits alternate-directory mock POST after an interrupted attempt; fixed module-relative receipt blocks both working directories with zero POSTs. Completed spec blocks before credentials/network. No real network or paid call in regression."
     },
     "humanReview": {
-      "status": "PENDING",
+      "status": "ACCEPTED_BY_NEIL",
+      "recordedAt": "2026-10-03T07:59:12Z",
+      "humanResponse": "Bro, goods na sa'kin 'to. Ayos na, ayos 'to.",
+      "scope": "Neil accepted the final narrated video. No new generation or change to the approved script, voice, music or export.",
       "criteria": [
         "Actual audible word completeness and pronunciation",
         "Narration intelligibility against music",
