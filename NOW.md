@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, Oceanides STP visual draft ready; voice approval pending**
+**Stamped: 2026-10-03, Oceanides STP draft ready; Aira/Megan sample spec pending**
 
 ## Current work
 Branch: `codex/oceanides-stp-explainer`, based on profile head `d3d08102`.
@@ -44,16 +44,22 @@ general; no pump-out reduction is promised. Clarify onsite liquid treatment vs
 continued sludge removal, with any reduction dependent on actual site/system.
 
 ## Required next step: voice approval
-Exact text: stp-explainer/narration-for-approval.txt (213 words / 1,398 chars).
-Input hash and settings: stp-explainer/voice.spec.json, status PENDING_USER_APPROVAL.
-Async question sent: approve exact script + one existing Kuya Marvin clone TTS
-generation, max 1,500 existing ElevenLabs credits, no retries or purchases.
-Do not generate until Neil explicitly approves this spec. Existing runner:
-clients/oceanides/kuya-marvin/test-rigs/audio-post.mjs tts; multilingual_v2,
-voice jL41fXY8JXGEarmJ5g3f, stability .75, similarity .85. No runner edits.
-After approval: hash-check exact story VO joined with two LF newlines; one call;
-listen to complete take, locally align scenes, polish noted typography, render
-final H.264/AAC, decode/levels/motion/sync QA. Changed paid input needs fresh approval.
+Neil chose v4 samples, then requested Aira and Megan instead of Marvin.
+Proposed exact library pair: Aira - Confident News Reporter (Filipino,
+CkDT8SVS21XIVk5BcuDe), Megan - Crisp, Clean Educator (English,
+5MxhuJFpo9hpzbxa88y6). Multiple Megan variants exist; educator needs confirmation.
+Exact 33-word / 225-char line: stp-explainer/v4-sample-script.txt.
+Pending spec: voice-v4-sample.spec.json; two takes, one per voice; estimated
+450 existing ElevenLabs credits, hard approved cap proposed 600; no retries,
+purchases or full narration. Full v2 spec marked superseded; no Marvin calls.
+Read-only v4/model + library search 200; language en/fil supported, rates 1.
+Both exact account voice lookups 400; add confirmed library voices before TTS.
+Subscription read 401: remaining quota unavailable, no permissions changed.
+Runner voice-v4-sample.mjs: free syntax/dry-run/pending-network-guard checks PASS;
+artifact anchors/diff-check PASS. Both voices/rates checked before spending.
+Exact pair/script/600-credit approval asked; zero paid calls. Private preflight in .tmp/.
+After exact spec approval: resolve collection access, generate once per voice,
+full MP3 decode/levels and Neil listens; then approve separate full VO spec.
 
 ## Company profile retained
 Draft PR152: https://github.com/yopiheart/grifon-command/pull/152, stacked on PR151.

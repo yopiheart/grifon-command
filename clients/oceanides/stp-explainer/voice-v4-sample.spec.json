@@ -1,0 +1,104 @@
+{
+  "status": "PENDING_EXACT_SPEC_APPROVAL",
+  "directionAuthorized": "Neil selected the v4 sample direction, then requested Aira and Megan instead of Marvin. Exact library variants and two-sample credit budget are proposed below, pending confirmation.",
+  "purpose": "Compare Aira and Megan reading the same brief Taglish technical script before selecting the full STP narration voice.",
+  "input": {
+    "file": "v4-sample-script.txt",
+    "normalization": "Trim trailing whitespace only; otherwise speak the exact reviewed line.",
+    "characters": 225,
+    "words": 33,
+    "sha256": "1e7dec86d38370a526dd4d9245da182a95197a135496c2453d54dba61631aeab"
+  },
+  "request": {
+    "endpoint": "https://api.elevenlabs.io/v1/text-to-dialogue?output_format=mp3_44100_128",
+    "model_id": "eleven_v4",
+    "seed": 20261003,
+    "bodyConstruction": "{inputs:[{text:exact_input,voice_id}],model_id,seed} in this key order",
+    "settings": "Provider defaults; no voice settings override, language enforcement, audio tags, voice remix or new clone."
+  },
+  "takes": [
+    {
+      "key": "aira",
+      "voice_id": "CkDT8SVS21XIVk5BcuDe",
+      "voiceName": "Aira - Confident News Reporter",
+      "libraryLanguage": "fil",
+      "libraryRate": 1,
+      "bodySha256": "d888ddefeb3673439b48554e4982cd20d8e61197c773a2c6124c818249d804f3",
+      "output": "output/Oceanides-STP-v4-Aira-Sample.mp3"
+    },
+    {
+      "key": "megan",
+      "voice_id": "5MxhuJFpo9hpzbxa88y6",
+      "voiceName": "Megan - Crisp, Clean Educator",
+      "libraryLanguage": "en",
+      "libraryRate": 1,
+      "bodySha256": "2a3a534e1ecbebd1abbf340a5e6258e2db3d2bc0ab33286ac76a6e4a4f70e4b1",
+      "output": "output/Oceanides-STP-v4-Megan-Sample.mp3"
+    }
+  ],
+  "limits": {
+    "maxPaidCalls": 2,
+    "maxPaidCallsPerVoice": 1,
+    "maxCredits": 600,
+    "maxCreditsPerVoice": 300,
+    "estimatedCredits": 450,
+    "automaticRetries": 0,
+    "newPurchasesOrSubscriptions": false,
+    "fullNarrationGeneration": false,
+    "otherPaidGenerationOrAnalysis": false,
+    "costBasis": "Read-only v4 metadata reports character multiplier 1 and discount multiplier 1; both proposed library voices report rate 1. Recheck before generation; estimated 225 credits per take, maximum approved total 600 existing ElevenLabs credits, with no cash purchase."
+  },
+  "output": {
+    "format": "MP3, 44100Hz, 128kbps",
+    "durationTargetSeconds": [
+      15,
+      20
+    ],
+    "durationNote": "A delivery target, not a guaranteed model duration. Keep the raw take for voice evaluation; do not stretch it to manufacture timing compliance."
+  },
+  "pass": [
+    "All approved words are present; no additional dialogue, truncation, laughter or music.",
+    "Calm, intelligible Taglish; key-term pronunciation is understandable for STP, septage, microorganisms, sludge and Oceanides.",
+    "Each take uses its exact approved Aira or Megan library voice, with no conspicuous glitches or unintended speaker switch.",
+    "MP3 decodes fully, has a nonempty speech stream and no persistent sample clipping.",
+    "Neil hears the complete sample and accepts pronunciation/delivery before full narration."
+  ],
+  "fail": [
+    "Provider error or unavailable voice/model/permission; stop without automatic retry.",
+    "Missing words, distorted or unintelligible speech, incorrect key-term pronunciation, unexpected speaker or clipped ending.",
+    "Changed input, voice, model, request parameters or cost above 300 credits per take / 600 total without fresh approval."
+  ],
+  "evidence": [
+    "Read-only model and exact library voice checks; model and voice rates rechecked before paid requests.",
+    "Exact text/request hashes and exclusive one-attempt receipts per voice with whitelisted metadata only.",
+    "Raw MP3, full decode, duration and audio-level measurement; user pronunciation review.",
+    "No paid calls during preparation; pending spec blocks generation before credentials/network."
+  ],
+  "preflight": {
+    "checkedAt": "2026-10-03T04:16:59.339Z",
+    "modelsHttp": 200,
+    "librarySearchHttp": 200,
+    "accountVoiceLookupHttp": {
+      "aira": 400,
+      "megan": 400
+    },
+    "voiceAvailability": "Both exact variants are in the public library but absent from the account collection. Generation is blocked until exact IDs are accessible in the account. No account voice was added during preparation.",
+    "selectionNote": "Aira's Filipino variant is proposed; Megan has multiple library variants, so the educator variant needs direct confirmation. Megan Taglish pronunciation has not been tested.",
+    "targetLanguages": [
+      "en",
+      "fil"
+    ],
+    "requiresAlphaAccess": false,
+    "subscriptionReadHttp": 401,
+    "remainingAllowance": "Unavailable to this API key; no account permissions changed.",
+    "successfulGeneration": "Not yet tested."
+  },
+  "sources": [
+    "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert",
+    "https://elevenlabs.io/docs/overview/models",
+    "https://elevenlabs.io/docs/overview/capabilities/text-to-dialogue",
+    "https://elevenlabs.io/docs/api-reference/voices/voice-library/get-shared"
+  ],
+  "runner": "voice-v4-sample.mjs --dry-run; paid --generate mode requires status APPROVED after direct human approval.",
+  "delivery": "Local sample and draft PR review only; full video voiceover is a separate approved spec."
+}

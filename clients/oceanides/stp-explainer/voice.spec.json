@@ -1,5 +1,6 @@
 {
-  "status": "PENDING_USER_APPROVAL",
+  "status": "SUPERSEDED_BY_V4_SAMPLE_PLAN",
+  "supersededBy": "voice-v4-sample.spec.json",
   "purpose": "Add calm Taglish narration to the Oceanides 16:9 wastewater-treatment meeting explainer after the user reviews the visual draft and exact wording.",
   "input": {
     "source": "story.json",
