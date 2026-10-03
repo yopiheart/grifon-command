@@ -1,6 +1,6 @@
 {
   "status": "PENDING_APPROVAL",
-  "purpose": "One full Taglish narration take using Neil's existing personal cloned voice, synchronized to the Oceanides building STP explainer and mixed locally with restrained piano music.",
+  "purpose": "One full Taglish narration take using Neil's existing personal cloned voice, synchronized to the Oceanides building STP explainer and mixed locally with his accepted original Flow score.",
   "selectionCorrection": "Neil clarified on 2026-10-03 that Aira and Megan meant the single saved personal voice named airaandmeagan. The earlier two public-library samples are historical and will not be used in this video.",
   "approval": null,
   "voice": {
@@ -168,8 +168,8 @@
     "music": {
       "file": "output/Oceanides-STP-Flow-Original-150s.mp3",
       "spec": "music-original.spec.json",
-      "identity": "Fresh original Flow score, pending separate paid approval; prior stock piano rejected by Neil",
-      "sha256": "Use the successful original-music receipt, never the stock asset"
+      "identity": "Fresh original Flow score, generated once and accepted by Neil on 2026-10-03; prior stock piano rejected",
+      "sha256": "712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8"
     },
     "musicDuringSpeech": "Original score normalized locally to a restrained bed, then sidechain-ducked against voice. No saved-music fallback.",
     "voice": "Normalize to -16 LUFS with true peak <= -1.5dBTP; final limiter. Measure intelligibility and clipping; full listening still required.",
@@ -197,7 +197,7 @@
   "sources": [
     "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert-with-timestamps",
     "https://www.fujicleanusa.com/homeowners-faq",
-    "https://pixabay.com/service/license-summary/"
+    "https://elevenlabs.io/eleven-music-model-specific-terms"
   ],
   "runner": "node clients/oceanides/stp-explainer/voice-personal.mjs --dry-run; --generate requires direct human approval recorded in this exact spec.",
   "delivery": "Local review and existing draft PR only. No deployment or public publication."

@@ -1,5 +1,5 @@
 {
-  "status": "COMPLETED_PENDING_REVIEW",
+  "status": "COMPLETED_ACCEPTED",
   "approval": {
     "recordedAt": "2026-10-03T06:34:25Z",
     "humanResponse": "Sige try mo. Or diba last time sa motion design may inapply na music, di ko langg alam pano mo ungg nakuha..",
@@ -92,7 +92,7 @@
     "billingNote": "Usage estimate is based on published API rate. Header values are not independently verified account debits."
   },
   "verification": {
-    "status": "TECHNICAL_PASS_HUMAN_LISTENING_PENDING",
+    "status": "TECHNICAL_PASS_MUSICAL_FIT_ACCEPTED",
     "rawScore": {
       "fullDecodePass": true,
       "durationSeconds": 150.024,
@@ -123,6 +123,12 @@
       ".tmp/oceanides-stp/original-preview-qa/verification.json",
       ".tmp/oceanides-stp/audio-cost/preview-levels.txt"
     ],
-    "pending": "Neil listening for musical fit, transitions and vocal absence; personal narration and its ducked mix are not generated yet. Numerical checks do not establish subjective quality."
+    "humanReview": {
+      "recordedAt": "2026-10-03T06:47:03Z",
+      "humanResponse": "Oo bro goods saken ung music niceeeeeeee!",
+      "acceptedFile": "output/Oceanides-STP-Original-Score-Preview-1080p.mp4",
+      "scope": "Neil accepts the original Flow score as the music choice. Keep this take for the narrated video; no further music generation."
+    },
+    "pending": "Separate personal narration and its ducked mix are not generated yet; speech pronunciation and audibility require review after mixing."
   }
 }
