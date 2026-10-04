@@ -5,7 +5,7 @@
 Neil authorized one proven improvement for a recurring correction, using the
 existing PR review workflow. Branch: `codex/eval-prompt-parity`, based on
 main `8deaee9b`. Implementation: `7c776d7b`, committed and pushed.
-Draft PR158: https://github.com/yopiheart/grifon-command/pull/158.
+PR158: https://github.com/yopiheart/grifon-command/pull/158.
 Checkout: C:/Users/ADMIN/.codex/worktrees/6596/grifon-command.
 
 ## Result
@@ -42,9 +42,9 @@ It detects drift; it does not authorize automatically syncing tuned content.
 Output impact of the historical typo remains unmeasured.
 
 ## ▶ NEXT ACTION
-Inspect PR158 CI (running at handoff). All listed local checks passed.
-Merge and deployment require an explicit request. Keep user image attachments
-untracked. Future work should reuse this evidence-first correction loop.
+Neil authorized merging PR158. Check its live status: if open, merge once CI
+passes; if merged, use the parity guard on main. Deployment was not requested.
+Keep user image attachments untracked. Reuse this correction loop for future work.
 
 ## Other work retained
 PR154's evidence-handoff workflow and PR155's short-request planning agreement
