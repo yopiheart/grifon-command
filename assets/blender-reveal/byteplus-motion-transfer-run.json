@@ -1,0 +1,82 @@
+{
+  "study": "NOIR / 01",
+  "approval_digest": "dfc174b145891786c702a47721139014ba212b1134aeb11ca66b0d73be9d919f",
+  "request": {
+    "model": "dreamina-seedance-2-0-260128",
+    "content": [
+      {
+        "type": "text",
+        "text": "Create one continuous six-second cinematic product shot. Use @Video1 to guide camera path, timing, framing, foreground occlusion and parallax. Use @Image1 for product appearance, amber glass, cream paper label, dark typography, gold hardware, warm light and graphite stone. The NOIR / 01 cold brew bottle remains stationary throughout. Begin with the foreground architectural blade partially covering the bottle. The camera glides past the blade, reveals the bottle, then settles into a clear label-facing hero composition for the final 1.5 seconds. Preserve the bottle silhouette, cap, label layout and the words NOIR, 01 and COLD BREW. Keep highlights coherent and motion smooth. The scene contains one bottle and the existing stage objects throughout. Generate a silent shot."
+      },
+      {
+        "type": "video_url",
+        "video_url": {
+          "url": "{{SIGNED_CAMERA_REFERENCE_URL}}"
+        },
+        "role": "reference_video"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "{{HERO_PNG_DATA_URI}}"
+        },
+        "role": "reference_image"
+      }
+    ],
+    "resolution": "480p",
+    "ratio": "16:9",
+    "duration": 6,
+    "generate_audio": false,
+    "watermark": false,
+    "execution_expires_after": 3600
+  },
+  "assets": [
+    {
+      "path": "assets/blender-reveal/camera-reference.mp4",
+      "sha256": "014860ecb8abef5ec097dd33f4961775ac833fff4dfbf89117e88648791f9eab",
+      "role": "reference_video"
+    },
+    {
+      "path": "assets/blender-reveal/hero.png",
+      "sha256": "2ffeaff10fb960afc0cb92c4759df7e0e2f6be4f3d596522d9c708396cc678fd",
+      "role": "reference_image"
+    }
+  ],
+  "model": "dreamina-seedance-2-0-260128",
+  "staging": {
+    "bucket": "gemini-videos",
+    "object_key": "motion-tests/noir-01/418cbb7d-2921-4bbe-8524-f6012734ad43/camera-reference.mp4",
+    "private_bucket_verified": true,
+    "cleanup": "confirmed",
+    "upload_confirmed": true
+  },
+  "status": "succeeded",
+  "created_at_utc": "2026-10-03T12:27:08.290Z",
+  "paid_post_attempts": 1,
+  "client_retries": 0,
+  "upload_attempts": 1,
+  "maximum_cost_usd": 5,
+  "account_status": "Entitlement and balance unverified; user authorized this single access trial without funding",
+  "updated_at_utc": "2026-10-03T12:38:58.001Z",
+  "task_id": "cgt-20261003202712-nlxv7",
+  "usage": {
+    "completion_tokens": 120946,
+    "total_tokens": 120946
+  },
+  "cost": {
+    "currency": "USD",
+    "generation_from_reported_tokens": 0.5200678,
+    "successful_generation_with_documented_floor": 0.5200678,
+    "usage_basis": "documented completion_tokens",
+    "rate_usd_per_million_tokens": 4.3,
+    "actual_total_bill": null,
+    "status": "Account bill and staging charges require separate verification"
+  },
+  "output": {
+    "path": "assets/blender-reveal/byteplus-motion-transfer.mp4",
+    "bytes": 960352,
+    "sha256": "771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc",
+    "decode_verification": "PASS_MEDIA_CONTRACT_WITH_VISUAL_LIMITATIONS",
+    "verification_evidence": "assets/blender-reveal/byteplus-output-verification.json"
+  }
+}

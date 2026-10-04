@@ -1,0 +1,76 @@
+{
+  "expectations": [
+    {
+      "text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.",
+      "passed": true,
+      "evidence": "The three scene rows cover 0-4, 4-10 and 10-15 seconds, totaling 15 with no gaps. Functions progress from invitation and raising the already-held phone, to a rear/side close look, to a two-person CTA and final hold. The same-axis two-shot/insert/two-shot coverage is coherent at plan level."
+    },
+    {
+      "text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.",
+      "passed": true,
+      "evidence": "The binding table separately defines CAST-A/WARDROBE-A/VOICE-A and CAST-B/WARDROBE-B/VOICE-B. Each voice requires exact provider/ID and explicit cast mapping; both sheets and voice mappings are unavailable. The text explicitly says the wardrobe rule is fixed but the wardrobe itself cannot be declared visually locked yet."
+    },
+    {
+      "text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.",
+      "passed": true,
+      "evidence": "PHONE-01 is the sole handset/case binding. A retains it left-handed: rear-facing chest hold at 3.5s, side turn at 5-7s, return by 8s, matched rear-facing pose in S03. No screen UI is invented. Reference requirements ask for clear face/body and needed views, and distinguish sheets as identity evidence from later reviewable per-person crops/conversions into provider-supported appearance references. No actual crops or assets are claimed."
+    },
+    {
+      "text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.",
+      "passed": true,
+      "evidence": "Explicit speech windows are B 0.4-2.8s, A 4.5-7.2s off-camera and B 10.6-13.0s, each with a short draft line and room for pauses. The plan states timing is unmeasured, identifies S01/S03 as visible-mouth synchronization work, and requires compatible selected-voice speech plus lip sync or reviewed timing-preserving conversion. It warns that laying new TTS over existing mouths does not establish sync. Provider/model support remains unverified and identity fidelity is not guaranteed."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "evidence_limits": "Read this run's plan.md and execution-notes.json. No character sheets, phone references or voice IDs were supplied, so identity, wardrobe, handset fidelity, speech duration and provider support cannot be validated. Execution notes are self-reported; full tool transcripts are unavailable. No metrics.json or timing.json was present; no token metrics are inferred.",
+  "claims": [
+    {
+      "claim": "The plan has exactly three scenes spanning 15 seconds.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The three scene rows cover 0-4, 4-10 and 10-15 seconds, totaling 15 with no gaps. Functions progress from invitation and raising the already-held phone, to a rear/side close look, to a two-person CTA and final hold. The same-axis two-shot/insert/two-shot coverage is coherent at plan level."
+    },
+    {
+      "claim": "The written plan preserves distinct creator/wardrobe/voice bindings.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The binding table separately defines CAST-A/WARDROBE-A/VOICE-A and CAST-B/WARDROBE-B/VOICE-B. Each voice requires exact provider/ID and explicit cast mapping; both sheets and voice mappings are unavailable. The text explicitly says the wardrobe rule is fixed but the wardrobe itself cannot be declared visually locked yet."
+    },
+    {
+      "claim": "Identity, wardrobe, phone and voice fidelity are implemented or visually locked.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "No actual source assets or rendered/audio evidence exist. Both plans correctly frame locks as proposed rules with pending inputs rather than implemented identity or audio systems."
+    },
+    {
+      "claim": "No speech generation, network or provider operation occurred.",
+      "type": "process",
+      "verified": false,
+      "evidence": "The run's notes self-report these limits, but full tool transcripts are unavailable; actual execution history was not independently verified."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.",
+        "reason": "This combines phone continuity with multi-view identity preparation. Split it into independent assertions and define whether identifying sheet views suffices or a provider-specific crop strategy is required. Both plans identify views, but only one explicitly discusses reviewable per-person appearance conversion."
+      },
+      {
+        "assertion": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.",
+        "reason": "This assertion discriminates here: baseline provides timing targets but omits lip-sync compatibility. Preserve this distinction; do not mistake separate voice labels or word counts for a viable visible-mouth workflow."
+      },
+      {
+        "reason": "No assertion checks whether exact dialogue and a specific demonstration are necessary to make the requested preview plan reviewable. Here the skill plan chooses a claim-free phone reveal while baseline defers the demo to a missing product brief; both choices should be evaluated against explicitly declared assumptions."
+      },
+      {
+        "reason": "Execution compliance cannot be independently scored from execution-notes.json alone. Full tool transcripts are needed to confirm no speech generation or provider calls; neither a written plan nor self-reported notes establish implementation."
+      }
+    ],
+    "overall": "Three basic planning assertions pass both runs, while the explicit lip-sync requirement distinguishes a real baseline omission. Results describe written planning quality, not an implemented identity or audio system."
+  }
+}

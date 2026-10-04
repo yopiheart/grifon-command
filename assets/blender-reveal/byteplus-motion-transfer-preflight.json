@@ -1,0 +1,81 @@
+{
+  "checked_at_utc": "2026-10-03T11:59:33.702Z",
+  "status": "SUPERSEDED_BY_USER_SELECTED_SEEDANCE20",
+  "scope": "Read-only direct BytePlus preflight; no cloud writes or paid generation",
+  "auth_evidence": "assets/blender-reveal/seedance-access-check.json",
+  "staging_evidence": "assets/blender-reveal/byteplus-staging-preflight.json",
+  "official_price_record": {
+    "source": "https://bytedance.larkoffice.com/wiki/H0fUwHPxtiHayOk6CVpcZzKqnHJ?table=tblTUnmKaxBSqpU7&view=vewpCgsiHf",
+    "model_series": "Dreamina Seedance2.5",
+    "view": "480p",
+    "output_duration_seconds": 6,
+    "aspect_ratio_group": [
+      "16:9",
+      "9:16"
+    ],
+    "long_edge_pixels": 854,
+    "short_edge_pixels": 480,
+    "minimum_token_usage": 96075,
+    "semantic_record_fields_observed": true,
+    "screenshots": [
+      {
+        "path": "assets/blender-reveal/qa/byteplus-480p-price-table.jpg",
+        "bytes": 86203,
+        "sha256": "e1520fd75912c4737c456252d4d3f30a8b8cd4719c3de8be89d1d60d032ed287"
+      },
+      {
+        "path": "assets/blender-reveal/qa/byteplus-six-second-floor.jpg",
+        "bytes": 22315,
+        "sha256": "6cfe4303c08fa08e542f57166ce443ebc3e61e1b255e4de905dd4a021fc79d94"
+      }
+    ]
+  },
+  "calculation": {
+    "input_duration_seconds": 6,
+    "output_duration_seconds": 6,
+    "output_pixels": [
+      854,
+      480
+    ],
+    "fps": 24,
+    "formula_tokens": 115290,
+    "minimum_token_floor": 96075,
+    "estimated_billable_tokens": 115290,
+    "usd_per_million_tokens": 6.4,
+    "estimated_generation_usd": 0.737856,
+    "provider_dollar_hardcap": false,
+    "maximum_total_approved_budget_usd": 5,
+    "current_account_price_and_fees": "NOT VERIFIED: console sign-in required"
+  },
+  "independent_provider_review": {
+    "request_schema": "PASS",
+    "unchanged_prompt_and_asset_hashes": "PASS",
+    "formula_and_floor": "PASS",
+    "execution_expiry3600": "PASS",
+    "account_activation_and_balance": "NOT VERIFIED"
+  },
+  "remaining": [
+    "Seedance2.5 is not the selected model; preserve this unexecuted proposal as research evidence only"
+  ],
+  "operations": {
+    "media_uploads": 0,
+    "paid_submissions": 0,
+    "model_activation_changes": 0,
+    "new_funding": 0
+  },
+  "model_choice_review": {
+    "seedance_2_5_required": false,
+    "seedance_2_0_supports_reference_video": true,
+    "seedance_2_0_supports_combined_image_video_reference": true,
+    "seedance_2_0_supports_480p_and_six_seconds": true,
+    "standard_model_id": "dreamina-seedance-2-0-260128",
+    "recommendation": "Use an already-enabled suitable Seedance2.0 model for the first proof if available; upgrade only if the comparison exposes a limitation.",
+    "sources": [
+      "https://docs.byteplus.com/en/docs/modelark/seedance-2-0",
+      "https://docs.byteplus.com/en/docs/modelark/create-video-generation-task-api"
+    ],
+    "candidate_scope": "The committed runner and proposal remain fixed to2.5 and unapproved. A2.0 request/pricing proposal must omit2.5-only fields and be reviewed before execution.",
+    "actual_camera_adherence": "UNVERIFIED: model support does not guarantee exact camera transfer"
+  },
+  "active_preflight": "assets/blender-reveal/byteplus-seedance20-preflight.json"
+}

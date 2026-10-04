@@ -1,0 +1,144 @@
+{
+  "status": "PASS_LOCAL_DIAGNOSTIC_COMPARISON",
+  "checked_at_utc": "2026-10-03T18:27:23.283Z",
+  "scope": "Read-only verification of newly encoded side-by-side diagnostic only; no network, environment, provider, paid call or source modification.",
+  "comparison": {
+    "path": "assets/vivo-x80-ugc/guide-comparison.mp4",
+    "bytes": 2635444,
+    "sha256": "41415e48d6377935dcccb5ffde90824ecc002e16dc58668f657516ced4f36bb7",
+    "width": 960,
+    "height": 900,
+    "fps": 24,
+    "frames": 360,
+    "unique_decoded_frame_hashes": 360,
+    "timebase": "1/24",
+    "duration_seconds": 15,
+    "exact_decoded_duration_rational_seconds": "360/24",
+    "first_pts_seconds": 0,
+    "end_pts_seconds": 15,
+    "audio_present": true,
+    "audio_stream_description": "Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 32000 Hz, stereo, fltp, 129 kb/s (default)",
+    "decoded_frame_sequence_sha256": "93a46b7bb89139e162dd7e664172a1678053c73e707e39f1c2f86ad9a8ac794b"
+  },
+  "source_hashes": [
+    {
+      "path": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+      "expected_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+      "actual_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+      "expected_bytes": 1162011,
+      "actual_bytes": 1162011
+    },
+    {
+      "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+      "expected_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+      "actual_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+      "expected_bytes": 2636695,
+      "actual_bytes": 2636695
+    }
+  ],
+  "assertions": {
+    "entire_comparison_decodes_all_streams": true,
+    "comparison_width_two_480px_columns": true,
+    "comparison_24fps": true,
+    "comparison_contiguous_pts": true,
+    "comparison_nominal15s": true,
+    "comparison_audio_present_and_decoded": true,
+    "both_source_bytes_and_hashes_still_match": true,
+    "comparison_unchanged_during_verification": true
+  },
+  "commands": [
+    {
+      "label": "Full comparison decode all streams",
+      "executable": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "args": [
+        "-xerror",
+        "-i",
+        "assets/vivo-x80-ugc/guide-comparison.mp4",
+        "-map",
+        "0",
+        "-f",
+        "null",
+        "-"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "process_error": null
+    },
+    {
+      "label": "Comparison decoded video frame hashes/PTS",
+      "executable": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "args": [
+        "-v",
+        "error",
+        "-i",
+        "assets/vivo-x80-ugc/guide-comparison.mp4",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "framemd5",
+        "-"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "process_error": null
+    }
+  ],
+  "failure_history": [
+    {
+      "status": "FAIL_LOCAL_DIAGNOSTIC_COMPARISON",
+      "checked_at_utc": "2026-10-03T18:25:03.411Z",
+      "comparison": {
+        "path": "assets/vivo-x80-ugc/guide-comparison.mp4",
+        "bytes": 2358791,
+        "sha256": "a67bfe6808c52c156d7482a4e65d6afec4ac8b80a364a0e66a88459638ea9e1e",
+        "width": 960,
+        "height": 900,
+        "fps": 24,
+        "frames": 305,
+        "unique_decoded_frame_hashes": 305,
+        "timebase": "1/24",
+        "duration_seconds": 12.708333333333332,
+        "exact_decoded_duration_rational_seconds": "305/24",
+        "first_pts_seconds": 0,
+        "end_pts_seconds": 12.708333333333332,
+        "audio_present": true,
+        "audio_stream_description": "Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 32000 Hz, stereo, fltp, 129 kb/s (default)",
+        "decoded_frame_sequence_sha256": "c70379dd7068ede87900be80da1dc325c4fba47b7dfeed33a4c9bd92232f14ff"
+      },
+      "assertions": {
+        "entire_comparison_decodes_all_streams": true,
+        "comparison_width_two_480px_columns": true,
+        "comparison_24fps": true,
+        "comparison_contiguous_pts": true,
+        "comparison_nominal15s": false,
+        "comparison_audio_present_and_decoded": true,
+        "both_source_bytes_and_hashes_still_match": true,
+        "comparison_unchanged_during_verification": true
+      },
+      "command_exit_codes": [
+        {
+          "label": "Full comparison decode all streams",
+          "exit_code": 0
+        },
+        {
+          "label": "Comparison decoded video frame hashes/PTS",
+          "exit_code": 0
+        }
+      ],
+      "verifier_exit_code": 1,
+      "reproduced_defect": "Comparison had 305 contiguous frames / 12.708333s, omitting the closing13-15s hero even though full decode exited0."
+    }
+  ],
+  "reported_local_correction": "Root removed mux -shortest, bounded new derivative to -t15/-frames:v360 and retained hstack shortest1 and copied raw audio; both source files unchanged.",
+  "verifier_command": {
+    "command": "node .tmp/vivo-x80-ugc-guards/verify-comparison.mjs",
+    "exit_code": 0
+  },
+  "limitations": [
+    "Diagnostic scaling does not alter original guide or raw files.",
+    "Full media decode does not certify creative quality, copied-audio bit identity, speech absence or synchronization; independent creative/audio review remains separate."
+  ]
+}

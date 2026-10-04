@@ -1,0 +1,139 @@
+{
+  "offline_only": true,
+  "real_environment_loaded": false,
+  "cloud_calls": 0,
+  "paid_calls": 0,
+  "source_sha256_start": "c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1",
+  "source_sha256_end": "c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1",
+  "records": [
+    {
+      "name": "CLI default and explicit dry run cannot use network or real credentials",
+      "status": "PASS",
+      "detail": "Default/--dry-run CLI exit 0; proposed --execute exit 1 before denied networking."
+    },
+    {
+      "name": "Imported dry run returns before any environment read or network call",
+      "status": "PASS",
+      "detail": "Host environment and fetch remained inaccessible."
+    },
+    {
+      "name": "Proposal blocks execute before environment or network",
+      "status": "PASS",
+      "detail": "Approval gate precedes credentials and fetch."
+    },
+    {
+      "name": "Changed asset definition and actual bytes are rejected",
+      "status": "PASS",
+      "detail": "One-byte copied PNG mutation fails the real SHA gate."
+    },
+    {
+      "name": "Changed prompt/model/settings and approval digest reject before network",
+      "status": "PASS",
+      "detail": "Exact request and changed staging key need matching approval."
+    },
+    {
+      "name": "Budget changes reject unsafe cap/funding/retry or stale approval",
+      "status": "PASS",
+      "detail": "Also rejects lower cap with stale exact approval digest."
+    },
+    {
+      "name": "Public bucket stops before any media upload or ledger reservation",
+      "status": "PASS",
+      "detail": "Two fake read-only preflight calls; no writes."
+    },
+    {
+      "name": "Successful fake flow separates auth, withholds capabilities and cleans exact owned key",
+      "status": "PASS",
+      "detail": "Mock flow only; output is fake MP4 container, decode/actual bill remain pending."
+    },
+    {
+      "name": "Ambiguous paid POST spends one attempt and cannot resubmit or resume without task ID",
+      "status": "PASS",
+      "detail": "Ambiguous attempt retained; duplicate execute and missing-ID resume make zero network calls."
+    },
+    {
+      "name": "Recorded-ID resume only polls/downloads and deletes exact key; no submission or upload POST",
+      "status": "PASS",
+      "detail": "Fake recorded task resumed using GET plus exact-key DELETE, no POST."
+    },
+    {
+      "name": "Concurrent execute uses exclusive ledger to allow at most one upload and paid POST",
+      "status": "PASS",
+      "detail": "Concurrent contenders passed GET preflight; exclusive file create blocked the second before write."
+    },
+    {
+      "name": "Unknown output host rejected before download and still terminal owned-key cleanup",
+      "status": "PASS",
+      "detail": "Unallowlisted URL never fetched."
+    },
+    {
+      "name": "Fetch error resembling a safe HTTP message cannot emit signed URL or auth",
+      "status": "PASS",
+      "detail": "Arbitrary fetch failure content is withheld even if it mimics internal HTTP errors."
+    },
+    {
+      "name": "HTTP error bodies and malformed JSON are withheld, one attempt remains reserved",
+      "status": "PASS",
+      "detail": "429 and invalid JSON expose stage/status only, never provider body and never retry."
+    },
+    {
+      "name": "Reported model mismatch fails and low usage retains documented billing floor",
+      "status": "PASS",
+      "detail": "Fixture math preserves token floor; account bill stays explicitly unknown."
+    },
+    {
+      "name": "Failed signed probe before paid submission cleans only confirmed owned object",
+      "status": "PASS",
+      "detail": "Confirmed input deleted exactly, no paid task could have been created."
+    },
+    {
+      "name": "Unknown upload result stops without retry or unsafe cleanup of unconfirmed key",
+      "status": "PASS",
+      "detail": "No paid POST, unconfirmed upload retained for exact-key investigation; no auto retry."
+    },
+    {
+      "name": "Untracked, partial and mutated existing output rejects before any network",
+      "status": "PASS",
+      "detail": "All four collision/corruption variants stop before fetch, retain evidence and bytes."
+    },
+    {
+      "name": "Exact existing output passes recorded resume without re-downloading",
+      "status": "PASS",
+      "detail": "Verified length+SHA retained; only task GET and exact-key cleanup performed."
+    },
+    {
+      "name": "Known model/access/account rejection consumes exactly one attempt and cleans confirmed object",
+      "status": "PASS",
+      "detail": "404 ModelNotOpen and two 403 overdue codes stop, exact-key clean, no retries or funding."
+    },
+    {
+      "name": "Malicious provider error code and message withheld; uncertain rejection retains cleanup pending",
+      "status": "PASS",
+      "detail": "Unallowlisted error code is never echoed or treated as proven safe terminal rejection."
+    },
+    {
+      "name": "2.0 account-access approval is explicit without invented account verification",
+      "status": "PASS",
+      "detail": "Model access tested by single request only; old 2.5-only fields rejected."
+    },
+    {
+      "name": "Authenticated-task actual CDN works through GET-only resume without media auth",
+      "status": "PASS",
+      "detail": "Exact production CDN accepted in fake GET-only recovery; no auth/media POST and stale download error cleared."
+    },
+    {
+      "name": "Hostile suffix and URL userinfo rejected before any media fetch",
+      "status": "PASS",
+      "detail": "Exact hostname matching and no URL credentials enforced before media fetch."
+    }
+  ],
+  "totals": {
+    "pass": 24,
+    "fail": 0
+  },
+  "limitations": [
+    "Fake fetch fixtures verify local guard behavior only.",
+    "No live provider entitlement, billing, storage or playable output proved.",
+    "No real secret values read or loaded."
+  ]
+}

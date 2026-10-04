@@ -1,0 +1,79 @@
+{
+  "checked_at_utc": "2026-10-03T08:57:36.491Z",
+  "status": "SUPERSEDED_BY_USER_SELECTED_SEEDANCE20_NOT_RUN",
+  "user_approval": [
+    "G approved",
+    "480P lang bro para tipid"
+  ],
+  "approved_baseline_commit": "a8f3d9ad",
+  "local_checks": {
+    "exact_prompt_and_other_request_fields_unchanged": true,
+    "only_request_change": {
+      "resolution": {
+        "from": "720p",
+        "to": "480p"
+      }
+    },
+    "model_unchanged": true,
+    "assets": [
+      {
+        "path": "assets/blender-reveal/camera-reference.mp4",
+        "sha256": "014860ecb8abef5ec097dd33f4961775ac833fff4dfbf89117e88648791f9eab",
+        "bytes": 882241,
+        "hash_matches": true
+      },
+      {
+        "path": "assets/blender-reveal/hero.png",
+        "sha256": "2ffeaff10fb960afc0cb92c4759df7e0e2f6be4f3d596522d9c708396cc678fd",
+        "bytes": 891221,
+        "hash_matches": true
+      }
+    ],
+    "maximum_paid_submissions": 1,
+    "automatic_retries": 0,
+    "automatic_fallback_disabled": true,
+    "maximum_total_cost_usd": 5
+  },
+  "documentation_checks": {
+    "resolution_enum_480p_supported": true,
+    "documented_native_output": [
+      864,
+      496
+    ],
+    "reference_video_within_documented_limits": true,
+    "inline_data_uris_documented": true,
+    "input_and_output_seconds": 12,
+    "estimated_tokens": 120528,
+    "estimated_generation_cost_usd": 1.54757952,
+    "rough_table_estimate_usd": 1.5876,
+    "provider_dollar_cap_available": false,
+    "price_estimate_is_not_billed_cost": true,
+    "sources": [
+      "https://fal.ai/models/bytedance/seedance-2.5/reference-to-video/api",
+      "https://fal.ai/models/bytedance/seedance-2.5/reference-to-video",
+      "https://fal.ai/learn/tools/seedance-2-5-workflows",
+      "https://fal.ai/docs/documentation/model-apis/inference/queue",
+      "https://fal.ai/docs/documentation/model-apis/common-parameters",
+      "https://fal.ai/docs/platform-apis/v1/models/pricing",
+      "https://fal.ai/docs/platform-apis/v1/account/billing"
+    ]
+  },
+  "account_checks": {
+    "current_process_fal_key_present": false,
+    "user_or_machine_fal_key_present": false,
+    "existing_desktop_config_fal_key_present": false,
+    "available_browser_fal_signed_in": false,
+    "billing_balance": "NOT CHECKED: no authenticated account",
+    "current_authenticated_price": "NOT CHECKED: no API key",
+    "no_new_admin_key_requested": true
+  },
+  "operations": {
+    "paid_submissions": 0,
+    "provider_media_uploads": 0,
+    "authenticated_provider_requests": 0,
+    "actual_billed_cost_usd": 0
+  },
+  "next_action": "Connect existing funded fal account or configure its existing inference FAL_KEY locally; never put keys in chat. Recheck account access, funding and total cost before the single approved 480p submission. No new funding, subscription, retries, fallback models or changed inputs are authorized.",
+  "superseded_by": "assets/blender-reveal/motion-transfer.byteplus-seedance20.spec.json",
+  "current_run_evidence": "assets/blender-reveal/byteplus-motion-transfer-run.json"
+}

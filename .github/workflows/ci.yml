@@ -77,6 +77,9 @@ jobs:
       - name: Funnel voice-lint sync
         run: npm run check:voice-sync
 
+      - name: Evaluation prompt copy sync (static, no provider calls)
+        run: npm run check:eval-prompts
+
       # Guard on the guards. The PreToolUse gates (env-warden, tuned-file-gate)
       # are invisible when they work and equally invisible when a regex quietly
       # stops matching. On its first run this harness caught two dead gates: a

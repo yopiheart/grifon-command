@@ -4,3 +4,6 @@
 # Shell scripts must stay LF — they run under bash (incl. the build-gate Stop hook
 # in .claude/hooks/). CRLF breaks bash with $'\r' errors after a Windows re-clone.
 *.sh text eol=lf
+
+# Vitest's transform of this imported shebang entrypoint rejects CRLF on Windows.
+tools/check-eval-prompt-sync.mjs text eol=lf

@@ -1,0 +1,76 @@
+{
+  "expectations": [
+    {
+      "text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.",
+      "passed": true,
+      "evidence": "The eight intervals are 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-10, 10-12.5, 12.5-15 and 15-18 seconds. Listed 24fps boundaries 0/48/84/132/180/240/300/360/432 agree. A/B conduct/imitate the music across wide, insert, low-angle, reaction and over-shoulder coverage; S08 is a three-second speaker hero."
+    },
+    {
+      "text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.",
+      "passed": true,
+      "evidence": "Separate Apple observations, Existing Vivo adaptation and New shot plan sections match the fixtures. All ten Apple sample times and events correspond to cameraAngleMap. Vivo's ten authored shots, 15-second length, failed attempts, owner payoff and in-hand hero match the manifest. The conductor/shoulder story and optional closing line are explicitly new proposals."
+    },
+    {
+      "text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.",
+      "passed": true,
+      "evidence": "The text denies measurement of exact cuts, focal lengths, movement, full audio or effectiveness and says the Vivo rendered footage was not inspected. Face ID and fingerprint references are attributed to source/adaptation context, with no speaker authentication claim. It explicitly excludes bass, loudness, latency, battery, waterproofing, range, stereo pairing and gesture control; music is editorial rather than a measured output demonstration."
+    },
+    {
+      "text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.",
+      "passed": true,
+      "evidence": "Blocking fixes A left/B right, keeps the speaker on one table mark, preserves the interaction axis, and keeps hands above/beside rather than over the product. No transfer or control operation is required. The product silhouette, finish, dimensions, controls, cast likeness and set-dependent lenses are provisional, with no claimed rendered validation."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "evidence_limits": "Read both supplied source fixtures directly, plus this run's plan.md and execution-notes.json. Reference assertions were verified against the saved records, not the original video. Execution notes are self-reported; full tool transcripts are unavailable. Actual reads, no-network/no-paid behavior and visual execution were not independently verified. No metrics.json or timing.json was present; no token metrics are inferred.",
+  "claims": [
+    {
+      "claim": "Apple sample events and Vivo adaptation are distinct evidence classes.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Separate Apple observations, Existing Vivo adaptation and New shot plan sections match the fixtures. All ten Apple sample times and events correspond to cameraAngleMap. Vivo's ten authored shots, 15-second length, failed attempts, owner payoff and in-hand hero match the manifest. The conductor/shoulder story and optional closing line are explicitly new proposals."
+    },
+    {
+      "claim": "The planned sequence totals exactly 18 seconds.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The eight intervals are 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-10, 10-12.5, 12.5-15 and 15-18 seconds. Listed 24fps boundaries 0/48/84/132/180/240/300/360/432 agree. A/B conduct/imitate the music across wide, insert, low-angle, reaction and over-shoulder coverage; S08 is a three-second speaker hero."
+    },
+    {
+      "claim": "No browsing, paid analysis or rendering occurred.",
+      "type": "process",
+      "verified": false,
+      "evidence": "Execution-notes.json self-reports these limits; no full tool transcript is available to independently verify operational history."
+    },
+    {
+      "claim": "Proposed gestures and continuity will read in a finished preview.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "Only a written plan exists. Both runs explicitly leave motion, framing, contact, audio and fidelity validation for a future preview; assertion 4 is a planning-level judgment."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.",
+        "reason": "This broad readability assertion passes both plausible plans but cannot establish that acting or blocking actually reads within 18 seconds. A stronger planning check could require explicit cause/reaction holds and accounting for every prop and body-state change; later visual readability needs a separate preview evaluation."
+      },
+      {
+        "assertion": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.",
+        "reason": "Clarify that faithful discussion of Face ID/fingerprint in the source context is allowed, while assigning those capabilities to the speaker or treating the adaptation as observed source fact is not. Literal keyword checks would misgrade both good outputs."
+      },
+      {
+        "reason": "Operational restrictions such as no browsing/paid analysis cannot be independently checked without full tool transcripts. Written disclaimers and execution notes are not tool-history evidence."
+      },
+      {
+        "reason": "Both runs satisfy all four assertions. A comparative measure of staging complexity versus story payoff would capture the meaningful difference between the phone tap plus standing transition and the simpler seated imitation."
+      }
+    ],
+    "overall": "These assertions successfully check timing, provenance, claim discipline and proposed continuity, but do not discriminate the two competent outputs or establish a skill benefit."
+  }
+}

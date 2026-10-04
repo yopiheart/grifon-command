@@ -1,0 +1,95 @@
+{
+  "study": "MY TURN V2 / Vivo X80 / human finish",
+  "approval_digest": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78",
+  "request": {
+    "model": "dreamina-seedance-2-0-260128",
+    "content": [
+      {
+        "type": "text",
+        "text": "Create a 15-second vertical photoreal live-action creator commercial for one Urban Blue Vivo X80 smartphone.\n@Video1 is a directing-only gray animatic. Follow its shot order, camera viewpoints and movement, framing, hand blocking, timings and reaction arc. Rebuild the scene as original live action with believable adult people, natural skin, clothing, hair, wood, glass and daylight. The animatic supplies motion and story only.\n@Image1 supplies the phone's appearance only. It shows front and back views of the same model. Keep just one physical phone in the scene. Preserve the slim curved-screen silhouette, centered front punch-hole, Urban Blue back, rectangular dark Cloud Window, three rear lenses with the large main lens upper-left, ZEISS detail and vivo mark.\nCast two original Filipino adults around age 25-30: a woman owner with shoulder-length black hair, an ivory casual top and muted olive trousers; a male friend with short black hair, a charcoal T-shirt and light beige trousers. Keep their identities and clothing consistent. Set them at a small wooden table in a bright contemporary apartment dining nook, with soft window light and restrained background depth.\n0-1s: owner sets her phone down; friend notices.\n1-2s: friend lifts it into his right hand.\n2-3.25s: clear screen close-up; his casual thumb touch fails and the phone stays locked.\n3.25-5s: he squares his shoulders, lifts his chin, smirks and raises his free index finger like an expert. He lowers it toward the phone before the cut.\n5-6s: wider screen close-up; index hovers, deliberately touches the fingerprint area, then withdraws. The phone stays locked and briefly indicates failure.\n6-7.25s: owner gives him an amused side-eye and a knowing smile.\n7.25-9s: she extends an open palm; he offers the phone. Cut naturally to her holding it.\n9-11s: one relaxed owner-thumb touch unlocks it. Hold the successful screen response long enough to read.\n11-13s: friend looks toward her, then his smirk fades, shoulders slump and head drops in quiet embarrassment.\n13-15s: owner holds the phone's back toward camera for a steady, clean X80 hero; the camera makes the small finishing slide from the guide.\nUse realistic hands and physical contact, expressive but restrained performance, smooth focus changes and coherent light. Screen states illustrate the fingerprint story; this is not a Face ID or security-proof claim.\nGenerate original synchronized room tone, subtle phone-handling sounds, two soft failure pulses, a light unlock chime and a restrained comic exhale, over a quiet original rhythmic bed. No spoken dialogue, narration, captions or advertising text overlays."
+      },
+      {
+        "type": "video_url",
+        "video_url": {
+          "url": "{{SIGNED_CAMERA_REFERENCE_URL}}"
+        },
+        "role": "reference_video"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "{{HERO_PNG_DATA_URI}}"
+        },
+        "role": "reference_image"
+      }
+    ],
+    "resolution": "480p",
+    "ratio": "9:16",
+    "duration": 15,
+    "generate_audio": true,
+    "watermark": false,
+    "execution_expires_after": 3600
+  },
+  "assets": [
+    {
+      "path": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+      "sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+      "bytes": 1162011,
+      "role": "reference_video",
+      "mime_type": "video/mp4",
+      "duration_seconds": 15,
+      "fps": 24,
+      "width": 480,
+      "height": 854,
+      "meaning": "Camera/acting/cut guide only; non-real gray procedural proxies; silent and no slates."
+    },
+    {
+      "path": "assets/vivo-x80-ugc/vivo-x80-product.png",
+      "sha256": "3d816b4f09566fc1499619a603be55e908eb50b04ebdcc1ce4413e562c7abf8b",
+      "bytes": 365082,
+      "role": "reference_image",
+      "mime_type": "image/png",
+      "width": 640,
+      "height": 640,
+      "meaning": "Official product-only Urban Blue Vivo X80 front/back appearance reference, one physical phone in scene.",
+      "source_url": "https://asia-exstatic-vivofs.vivo.com/PSee2l50xoirPK7y/1653640186117/ff99d920ac12abe286fd4dc0ed7078d3.png"
+    }
+  ],
+  "model": "dreamina-seedance-2-0-260128",
+  "staging": {
+    "bucket": "gemini-videos",
+    "object_key": "motion-tests/vivo-x80-v2/f82d46a1-e8b5-47ca-bc9f-b1f36445a69b/camera-guide.mp4",
+    "private_bucket_verified": true,
+    "cleanup": "confirmed",
+    "upload_confirmed": true
+  },
+  "status": "succeeded",
+  "created_at_utc": "2026-10-03T18:11:36.343Z",
+  "paid_post_attempts": 1,
+  "client_retries": 0,
+  "upload_attempts": 1,
+  "maximum_cost_usd": 5,
+  "account_status": "Entitlement and balance unverified; user authorized this single access trial without funding",
+  "updated_at_utc": "2026-10-03T18:18:08.166Z",
+  "task_id": "cgt-20261004021141-cgh8r",
+  "usage": {
+    "completion_tokens": 301738,
+    "total_tokens": 301738
+  },
+  "cost": {
+    "currency": "USD",
+    "generation_from_reported_tokens": 1.2974733999999999,
+    "successful_generation_with_documented_floor": 1.2974733999999999,
+    "usage_basis": "documented completion_tokens",
+    "rate_usd_per_million_tokens": 4.3,
+    "actual_total_bill": null,
+    "status": "Account bill and staging charges require separate verification",
+    "within_approved_estimate": true
+  },
+  "output": {
+    "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+    "bytes": 2636695,
+    "sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+    "decode_verification": "pending; MP4 container alone does not prove 15s duration, dimensions, synchronized audio or story transfer"
+  }
+}

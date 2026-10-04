@@ -1,0 +1,42 @@
+{
+  "eval_id": 2,
+  "eval_name": "reference",
+  "result": "Tie on assertions; no clear overall winner or demonstrated skill uplift.",
+  "with_skill": {
+    "passed": 4,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "without_skill": {
+    "passed": 4,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "practical_differences": [
+    "Both faithfully distinguish sampled Apple facts, the authored Vivo study, and an original music-imitation story; both preserve an 18-second timeline and clear speaker hero.",
+    "Without-skill uses a simpler seated exchange with untouched speaker and music already playing. It reduces prop-contact and body-state continuity work while retaining a readable large-versus-small gesture joke.",
+    "With-skill makes the music source causally explicit through a phone tap and expands the payoff with a seated-to-standing action. It accounts for incoming hand, withdrawal, the visible rise and later standing state, but this adds execution complexity.",
+    "With-skill records more explicit cast slots, wardrobe continuity and future appearance/provider boundaries. Without-skill provides frame boundaries and a concise optional original line. These are practical tradeoffs, not reasons to reward greater length."
+  ],
+  "unresolved": "Proposed gesture timing, axis/framing readability and final speaker appearance require later visual evidence. Saved JSON supports provenance checks only, not the underlying video's continuous motion.",
+  "evidence_limits": "Execution notes are self-reported; full tool transcripts and token metrics are unavailable. No independent verification of actual reads, browsing, paid calls or rendering history.",
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.",
+        "reason": "This broad readability assertion passes both plausible plans but cannot establish that acting or blocking actually reads within 18 seconds. A stronger planning check could require explicit cause/reaction holds and accounting for every prop and body-state change; later visual readability needs a separate preview evaluation."
+      },
+      {
+        "assertion": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.",
+        "reason": "Clarify that faithful discussion of Face ID/fingerprint in the source context is allowed, while assigning those capabilities to the speaker or treating the adaptation as observed source fact is not. Literal keyword checks would misgrade both good outputs."
+      },
+      {
+        "reason": "Operational restrictions such as no browsing/paid analysis cannot be independently checked without full tool transcripts. Written disclaimers and execution notes are not tool-history evidence."
+      },
+      {
+        "reason": "Both runs satisfy all four assertions. A comparative measure of staging complexity versus story payoff would capture the meaningful difference between the phone tap plus standing transition and the simpler seated imitation."
+      }
+    ],
+    "overall": "These assertions successfully check timing, provenance, claim discipline and proposed continuity, but do not discriminate the two competent outputs or establish a skill benefit."
+  }
+}

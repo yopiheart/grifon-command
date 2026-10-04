@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-04",
+  "scope": "Approved planning-only comparison following installation; no creative render benchmark",
+  "cases": 3,
+  "runs_per_case_per_condition": 1,
+  "total_executor_runs": 6,
+  "contexts": "Six separate fork_turns=none agents; same task and source fixtures within each pair; with-skill agents explicitly read the installed skill, baselines explicitly excluded it.",
+  "scheduling": "Matched pairs dispatched within the same parent turn, bounded by available agent slots.",
+  "grading": "One independent grader reused across cases; non-blind conditions; assertions saved before output review; outputs and self-reported execution notes available, full tool transcripts unavailable.",
+  "automatic_trigger_tested": false,
+  "rendering_tested": false,
+  "provider_calls_requested": 0,
+  "installed_skill_sha256": "0c3baf8cd07a363139b218c1317ff873dfa67ef1a36f404acd401f6436972bf6",
+  "approved_install_patch_sha256": "ec4beb8e708fd301751b9d58af89c8e2e9de1941515af36d05fa43e383e577c7",
+  "fixtures": [
+    {
+      "path": "assets/vivo-x80-previz/reference-observations.json",
+      "sha256": "e934c63b1b6cf475a763d13b2dc0381609bda2e78a4e6dd3d2b103025897cbbe"
+    },
+    {
+      "path": "assets/vivo-x80-previz-v2/shot-manifest.json",
+      "sha256": "4456ebd52f305c6e24cd71ee2e3ed2fd432100f9f720cf52488f5bbed5c7245e"
+    }
+  ],
+  "limitations": [
+    "One run per case/condition; no statistical claim or guarantee of repeated performance.",
+    "Planning adherence does not establish camera-transfer quality, character continuity, speech quality or cost savings in generated media.",
+    "Timing/token data are unavailable for valid performance comparisons and will be omitted instead of inferred from text length.",
+    "The reference video was not newly watched during these evaluations; the provided observations carry their own coverage limits."
+  ]
+}

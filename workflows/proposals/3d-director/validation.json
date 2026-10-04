@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-04",
+  "scope": "Inactive 3d-director draft package. Structural validation only; no proof of creative quality or generic scene generation.",
+  "status": "PASS",
+  "commands": [
+    {
+      "command": "node -e 'const fs=require(\"node:fs\");const path=require(\"node:path\");const crypto=require(\"node:crypto\");const root=process.cwd();const pkg=\"workflows/proposals/3d-director/3d-director\";const skill=pkg+\"/SKILL.md\";const src=fs.readFileSync(skill,\"utf8\");const fm=src.match(/^---\\r?\\n([\\s\\S]*?)\\r?\\n---(?:\\r?\\n|$)/)?.[1]||\"\";const name=fm.match(/^name:\\s*([a-z0-9-]+)\\s*$/m)?.[1];const description=fm.match(/^description:\\s*(\\S.*)$/m)?.[1];const links=[...src.matchAll(/\\]\\(([^)\\s]+)\\)/g)].map(m=>({source:skill,target:m[1],resolved:path.relative(root,path.resolve(path.dirname(skill),decodeURIComponent(m[1].split(\"#\")[0]))).replaceAll(\"\\\\\",\"/\")})).filter(x=>!/^https?:/.test(x.target)).map(x=>({...x,exists:fs.existsSync(x.resolved)}));const evalPath=pkg+\"/evals/evals.json\";const evals=JSON.parse(fs.readFileSync(evalPath,\"utf8\"));const fixtures=evals.evals.flatMap(e=>e.files.map(f=>({eval_id:e.id,path:f,exists:fs.existsSync(f)})));const review=JSON.parse(fs.readFileSync(\"assets/vivo-x80-ugc/user-review.json\",\"utf8\"));const sha=f=>crypto.createHash(\"sha256\").update(fs.readFileSync(f)).digest(\"hex\");const baseline=[{kind:\"raw\",path:review.current_baseline.raw_path,expected_sha256:review.current_baseline.raw_sha256},{kind:\"clean_guide\",path:review.current_baseline.direction_path,expected_sha256:review.current_baseline.direction_sha256}].map(x=>({...x,actual_sha256:sha(x.path),matches:sha(x.path)===x.expected_sha256}));const checks=[{name:\"required_scalar_frontmatter\",pass:!!name&&!!description,name_value:name,description_present:!!description},{name:\"name_matches_directory\",pass:name===path.basename(pkg)},{name:\"linked_support_files_exist\",pass:links.length>0&&links.every(x=>x.exists),count:links.length},{name:\"eval_json_valid_and_skill_name_matches\",pass:Array.isArray(evals.evals)&&evals.skill_name===name,count:evals.evals.length},{name:\"eval_fixture_paths_exist\",pass:fixtures.every(x=>x.exists),count:fixtures.length},{name:\"draft_not_installed\",pass:!fs.existsSync(\".agents/skills/3d-director\"),path:\".agents/skills/3d-director\"},{name:\"accepted_baseline_hashes_unchanged\",pass:baseline.every(x=>x.matches),count:baseline.length}];const files=[skill,evalPath,...links.map(x=>x.resolved)].map(f=>({path:f,sha256:sha(f)}));const result={kind:\"structural_draft_validation\",status:checks.every(x=>x.pass)?\"PASS\":\"FAIL\",checks,links,fixtures,baseline,validated_files:files};console.log(JSON.stringify(result,null,2));process.exitCode=checks.every(x=>x.pass)?0:1;'",
+      "exit_code": 0,
+      "purpose": "Read-only metadata, support links, eval fixtures, installation state, package hashes and accepted media SHA verification."
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "exit_code": 0,
+      "evidence": {
+        "entrypoints": 32,
+        "files": 61,
+        "errors": 0,
+        "sparse_references": 0,
+        "tests": 26,
+        "passed": 26,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope_note": "Existing active repository controls; this check does not discover or exercise the inactive proposal."
+    }
+  ],
+  "structural_evidence": {
+    "kind": "structural_draft_validation",
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "required_scalar_frontmatter",
+        "pass": true,
+        "name_value": "3d-director",
+        "description_present": true
+      },
+      {
+        "name": "name_matches_directory",
+        "pass": true
+      },
+      {
+        "name": "linked_support_files_exist",
+        "pass": true,
+        "count": 2
+      },
+      {
+        "name": "eval_json_valid_and_skill_name_matches",
+        "pass": true,
+        "count": 3
+      },
+      {
+        "name": "eval_fixture_paths_exist",
+        "pass": true,
+        "count": 2
+      },
+      {
+        "name": "draft_not_installed",
+        "pass": true,
+        "path": ".agents/skills/3d-director"
+      },
+      {
+        "name": "accepted_baseline_hashes_unchanged",
+        "pass": true,
+        "count": 2
+      }
+    ],
+    "links": [
+      {
+        "source": "workflows/proposals/3d-director/3d-director/SKILL.md",
+        "target": "references/proven-pilot.md",
+        "resolved": "workflows/proposals/3d-director/3d-director/references/proven-pilot.md",
+        "exists": true
+      },
+      {
+        "source": "workflows/proposals/3d-director/3d-director/SKILL.md",
+        "target": "references/integration-slices.md",
+        "resolved": "workflows/proposals/3d-director/3d-director/references/integration-slices.md",
+        "exists": true
+      }
+    ],
+    "fixtures": [
+      {
+        "eval_id": 2,
+        "path": "assets/vivo-x80-previz/reference-observations.json",
+        "exists": true
+      },
+      {
+        "eval_id": 2,
+        "path": "assets/vivo-x80-previz-v2/shot-manifest.json",
+        "exists": true
+      }
+    ],
+    "baseline": [
+      {
+        "kind": "raw",
+        "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+        "expected_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+        "actual_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+        "matches": true
+      },
+      {
+        "kind": "clean_guide",
+        "path": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+        "expected_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+        "actual_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+        "matches": true
+      }
+    ],
+    "validated_files": [
+      {
+        "path": "workflows/proposals/3d-director/3d-director/SKILL.md",
+        "sha256": "142b5d41e90a2dc23ecd4500f36835be1929ba614b5a8cbe7b168fe9ee1fab21"
+      },
+      {
+        "path": "workflows/proposals/3d-director/3d-director/evals/evals.json",
+        "sha256": "a0fb436735773c9d2e42135d6d8a75ab771dfa5d9fc89645c5db4c10f76a3290"
+      },
+      {
+        "path": "workflows/proposals/3d-director/3d-director/references/proven-pilot.md",
+        "sha256": "cd8a6d3984305d5f5248537d824dd2a73e62e8a12ea0bbfefbce86cff905d33a"
+      },
+      {
+        "path": "workflows/proposals/3d-director/3d-director/references/integration-slices.md",
+        "sha256": "fdcf81d2759bee0bc1cf567e2e6618c60f14d9c4aa417e8c40eceeea0354a9ae"
+      }
+    ]
+  },
+  "install_patch_validation": {
+    "status": "PASS",
+    "commands": [
+      {
+        "command": "node -e 'const fs=require(\"node:fs\");const crypto=require(\"node:crypto\");const path=require(\"node:path\");const patchPath=\"workflows/proposals/3d-director/install.patch\";const normalize=s=>s.replaceAll(\"\\r\\n\",\"\\n\");const patchRaw=fs.readFileSync(patchPath);const patch=normalize(patchRaw.toString(\"utf8\"));const blocks=patch.split(/^diff --git /m).slice(1);const paths=[\".agents/skills/3d-director/SKILL.md\",\".agents/skills/3d-director/references/proven-pilot.md\",\".agents/skills/3d-director/references/integration-slices.md\",\".agents/skills/3d-director/evals/evals.json\"];const oldHeader=\"Proposal for the Grifon team. This file is not installed in ` .agents/skills/ `.\";const originalIntro=[\"Proposal for the Grifon team. This file is not installed in `.agents/skills/`.\",\"Moving it there requires review of these exact instructions. The initial skill\",\"orchestrates agent-authored scenes; a universal scene generator does not exist.\",\"\",\"When installed, read `../_shared/codex-runtime.md` for desktop execution. During\",\"proposal review use the existing `.agents/skills/_shared/codex-runtime.md`.\"].join(\"\\n\");const installedIntro=[\"Read [the desktop adapter](../_shared/codex-runtime.md) before execution.\",\"The initial skill orchestrates agent-authored scenes; a universal scene generator\",\"does not exist.\"].join(\"\\n\");const entries=blocks.map(block=>{const header=block.match(/^a\\/(\\S+) b\\/(\\S+)\\n/);const dest=header?.[2];const hunk=block.match(/^@@ -0,0 \\+1,(\\d+) @@\\n/m);const body=hunk?block.slice(block.indexOf(hunk[0])+hunk[0].length):\"\";const lines=body.endsWith(\"\\n\")?body.slice(0,-1).split(\"\\n\"):body.split(\"\\n\");const content=lines.map(l=>l.startsWith(\"+\")?l.slice(1):l).join(\"\\n\")+\"\\n\";const rel=dest?.replace(\".agents/skills/3d-director/\",\"\");const draftPath=\"workflows/proposals/3d-director/3d-director/\"+rel;let expected=dest&&paths.includes(dest)?normalize(fs.readFileSync(draftPath,\"utf8\")):\"\";let expectedIntroFound=true;if(rel===\"SKILL.md\"){expectedIntroFound=expected.includes(originalIntro);expected=expected.replace(originalIntro,installedIntro);}return {path:dest,source_draft:draftPath,only_new_file:!!header&&header[1]===dest&&/^new file mode 100644$/m.test(block)&&/^--- \\/dev\\/null$/m.test(block),hunk_line_count_valid:!!hunk&&Number(hunk[1])===lines.length,only_added_lines:lines.every(l=>l.startsWith(\"+\")),expected_intro_found:expectedIntroFound,content_matches_reviewed_draft_with_install_intro_only:content===expected};});const exactPaths=blocks.length===4&&entries.length===4&&new Set(entries.map(e=>e.path)).size===4&&paths.every(p=>entries.some(e=>e.path===p));const installedAbsent=!fs.existsSync(\".agents/skills/3d-director\");const adapterExists=fs.existsSync(\".agents/skills/_shared/codex-runtime.md\");const pass=exactPaths&&installedAbsent&&adapterExists&&entries.every(e=>e.only_new_file&&e.hunk_line_count_valid&&e.only_added_lines&&e.expected_intro_found&&e.content_matches_reviewed_draft_with_install_intro_only);const result={status:pass?\"PASS\":\"FAIL\",patch_path:patchPath,patch_sha256:crypto.createHash(\"sha256\").update(patchRaw).digest(\"hex\"),exact_four_paths:exactPaths,not_installed:installedAbsent,installed_adapter_link_exists:adapterExists,entries};console.log(JSON.stringify(result,null,2));process.exitCode=pass?0:1;'",
+        "exit_code": 0,
+        "purpose": "Read-only inspection of four installation paths, hunk counts, exact reviewed content and installed adapter link."
+      },
+      {
+        "command": "git apply --check workflows/proposals/3d-director/install.patch",
+        "exit_code": 0,
+        "output": "",
+        "applied": false
+      }
+    ],
+    "evidence": {
+      "status": "PASS",
+      "patch_path": "workflows/proposals/3d-director/install.patch",
+      "patch_sha256": "ec4beb8e708fd301751b9d58af89c8e2e9de1941515af36d05fa43e383e577c7",
+      "exact_four_paths": true,
+      "not_installed": true,
+      "installed_adapter_link_exists": true,
+      "entries": [
+        {
+          "path": ".agents/skills/3d-director/SKILL.md",
+          "source_draft": "workflows/proposals/3d-director/3d-director/SKILL.md",
+          "only_new_file": true,
+          "hunk_line_count_valid": true,
+          "only_added_lines": true,
+          "expected_intro_found": true,
+          "content_matches_reviewed_draft_with_install_intro_only": true
+        },
+        {
+          "path": ".agents/skills/3d-director/references/proven-pilot.md",
+          "source_draft": "workflows/proposals/3d-director/3d-director/references/proven-pilot.md",
+          "only_new_file": true,
+          "hunk_line_count_valid": true,
+          "only_added_lines": true,
+          "expected_intro_found": true,
+          "content_matches_reviewed_draft_with_install_intro_only": true
+        },
+        {
+          "path": ".agents/skills/3d-director/references/integration-slices.md",
+          "source_draft": "workflows/proposals/3d-director/3d-director/references/integration-slices.md",
+          "only_new_file": true,
+          "hunk_line_count_valid": true,
+          "only_added_lines": true,
+          "expected_intro_found": true,
+          "content_matches_reviewed_draft_with_install_intro_only": true
+        },
+        {
+          "path": ".agents/skills/3d-director/evals/evals.json",
+          "source_draft": "workflows/proposals/3d-director/3d-director/evals/evals.json",
+          "only_new_file": true,
+          "hunk_line_count_valid": true,
+          "only_added_lines": true,
+          "expected_intro_found": true,
+          "content_matches_reviewed_draft_with_install_intro_only": true
+        }
+      ]
+    },
+    "repeat_checks": "Existing check:codex and accepted-media hashes were not rerun; their earlier recorded results remain above.",
+    "limitations": "Applicability and content checks do not prove automatic triggering, skill behavior or local rendering."
+  },
+  "not_run": [
+    {
+      "check": "Behavioral evaluations with versus without the draft skill",
+      "status": "NOT RUN",
+      "reason": "The three eval cases are proposed planning comparisons only."
+    },
+    {
+      "check": "Local preview generation and full visual/motion review",
+      "status": "NOT RUN",
+      "reason": "No Blender builder or generator was executed."
+    },
+    {
+      "check": "Automatic skill triggering",
+      "status": "NOT RUN",
+      "reason": "The draft is not installed in .agents/skills."
+    },
+    {
+      "check": "Application build and application tests",
+      "status": "NOT RUN",
+      "reason": "No application source changes; repository control tests were run separately."
+    }
+  ],
+  "actions": {
+    "network_or_provider_calls": 0,
+    "paid_runner_executions": 0,
+    "blender_builder_executions": 0,
+    "environment_or_secret_reads": 0,
+    "helper_processes_started": 0,
+    "files_owned": [
+      "workflows/proposals/3d-director/validation.json"
+    ]
+  },
+  "limitations": [
+    "Required plain scalar YAML frontmatter fields and directory match were checked using the repository-style frontmatter contract; no general YAML parser was invoked.",
+    "Hash matches prove preservation of the accepted assets, not their creative quality.",
+    "Support-link existence and proposed fixture validity do not establish end-to-end workflow behavior."
+  ]
+}

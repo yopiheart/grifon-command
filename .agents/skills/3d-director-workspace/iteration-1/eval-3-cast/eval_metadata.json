@@ -1,0 +1,14 @@
+{
+  "eval_id": 3,
+  "eval_name": "cast",
+  "prompt": "Plan a 15-second Taglish UGC ad with two adult creators, supplied character sheets and separate selected voices. Lock the wardrobe and keep the phone consistent across three scenes. I only want the preview plan and reference requirements now; no invented identities, speech generation or provider calls.",
+  "files": [],
+  "fixture_path_base": "repository_root",
+  "assertions": [
+    "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.",
+    "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.",
+    "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.",
+    "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified."
+  ],
+  "scope": "Planning only; no rendering or paid/provider operations"
+}

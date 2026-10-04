@@ -1,0 +1,46 @@
+{
+  "purpose": "PR157 merge regression verification; offline fake fixtures only",
+  "paid_calls": 0,
+  "bottle_before": {
+    "totals": {
+      "pass": 24,
+      "fail": 1
+    },
+    "regression": [
+      {
+        "name": "Committed evidence blocks execute when ignored ledger and output are absent",
+        "status": "FAIL",
+        "error": "The input did not match the regular expression /Existing evidence/. Input:\n\n'Error: Credential access forbidden'\n"
+      }
+    ]
+  },
+  "bottle_after": {
+    "totals": {
+      "pass": 25,
+      "fail": 0
+    },
+    "source_sha256": "42abe2da5e0a0ea877e3d228af124583b4e978daffbfd2dbf39a5686d675100d",
+    "regression": {
+      "name": "Committed evidence blocks execute when ignored ledger and output are absent",
+      "status": "PASS",
+      "detail": "Restored evidence alone prevents a second attempt before credentials or network; evidence unchanged."
+    }
+  },
+  "vivo_unchanged_runner": {
+    "totals": {
+      "pass": 29,
+      "fail": 0
+    },
+    "source": {
+      "path": "tools/run_vivo_x80_ugc.mjs",
+      "sha256_start": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+      "sha256_end": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+      "proposal_digest": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78"
+    }
+  },
+  "windows_integration": {
+    "before": "CRLF checkout of imported shebang tools/check-eval-prompt-sync.mjs causes Vitest SyntaxError before collecting evalPromptSync suite",
+    "after": "LF copy: 18/18 tests pass; source content unchanged",
+    "prevention": ".gitattributes pins only this entrypoint to LF"
+  }
+}

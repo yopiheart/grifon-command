@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-04",
+  "reviewer": "Neil",
+  "rating_out_of_ten": 9,
+  "accepted_as_current_baseline": true,
+  "feedback": "Successful 3D directing preview before video generation; current result is good. Main remaining gap is SFX/background music finishing.",
+  "current_baseline": {
+    "provider": "Seedance 2.0 direct BytePlus",
+    "paid_attempts": 1,
+    "raw_path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+    "raw_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+    "direction_path": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+    "direction_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8"
+  },
+  "scope_now": "Preserve accepted result. No new generation, model trial or sound edit requested by this feedback.",
+  "blender_clarification": "Blender background Python generated the authored 3D scene and guide; Seedance received the rendered MP4 and product image, not scene.blend. Current scripts are a fixed Vivo proof. A future Grifon render worker could hide Blender from users; universal prompt/reference-video to 3D creation is not implemented.",
+  "future_priorities": [
+    "Authored timed SFX and music finishing on the accepted clip; preserve deliberate dialogue/ambience choices.",
+    "Reusable approved cast references with separate character IDs, wardrobe and voice assignments; provider-compatible portrait input and identity QA remain necessary.",
+    "Validated shot-plan input and reusable 3D assets/rigs, with preview approval between storyboarding and paid generation.",
+    "Reference-video analysis into shot/camera/action structure, followed by an editable original directing guide.",
+    "Provider-specific comparisons for Seedance 2.5, Kling 4.0 and Gemini Omni Flash under new exact duration/input/cost specs.",
+    "Multi-speaker/emotion voice options; exact speech needs compatible audio-reference generation or lip synchronization, not arbitrary post-generation TTS replacement."
+  ],
+  "integration_conflict": {
+    "file": "api/_lib/renderFfmpeg.ts",
+    "finding": "Current final renderer selects the separate voice track or silence, rather than preserving scene-native audio. New-provider dialogue/ambience could be discarded. Existing SFX/music/ducking can be reused after defining preserve/replace behavior."
+  },
+  "official_docs_checked": {
+    "seedance_2_5": "https://docs.byteplus.com/en/docs/modelark/seedance-2-5",
+    "kling_4_release": "https://kling.ai/dev/model-release/kling-4",
+    "kling_api_map": "https://kling.ai/document-api/guides/capability-map/video",
+    "gemini_omni": "https://ai.google.dev/gemini-api/docs/omni",
+    "eleven_v4": "https://elevenlabs.io/blog/eleven-v4",
+    "eleven_models_languages": "https://elevenlabs.io/docs/overview/models",
+    "eleven_dialogue_api": "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert"
+  },
+  "future_test_constraints": [
+    "Seedance 2.5 API is documented; this account's entitlement is unverified and listed speech languages do not include Filipino.",
+    "Kling 4 is announced with white-model/depth guidance, but callable API/account access remains unverified. Announced minimum output resolution is720p, so current480p cost assumption does not carry over.",
+    "Gemini Omni Flash API is documented; output3-10s, editing source at most10s, reference clips at most3s each. Full15s V2 cannot be reused unchanged; uploaded audio references/voice editing are unsupported in the documented path. Non-English speech quality remains unevaluated.",
+    "Eleven v4 API documents Filipino, expressive tags and multi-speaker dialogue; select v4 explicitly because dialogue endpoint defaults to v3. Listening and exact-line timing still require validation.",
+    "Character sheets improve identity control but do not guarantee continuity; preview approval reduces avoidable story/camera rerolls without eliminating generative defects."
+  ],
+  "actions_this_feedback_turn": {"new_paid_calls": 0, "account_access_probes": 0, "new_generation_or_audio_edits": 0, "monitoring_automation_created": false}
+}

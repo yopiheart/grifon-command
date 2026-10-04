@@ -1,0 +1,158 @@
+{
+  "status": "approved_for_single_byteplus_test",
+  "study": "MY TURN V2 / Vivo X80 / human finish",
+  "purpose": "Test whether the approved 3D camera/acting guide becomes a clearly different realistic creator commercial while retaining its story and phone appearance.",
+  "module": "Separate fixed direct BytePlus CLI; no Grifon application changes.",
+  "provider": "BytePlus ModelArk",
+  "endpoint": "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks",
+  "method": "POST",
+  "request": {
+    "model": "dreamina-seedance-2-0-260128",
+    "content": [
+      {
+        "type": "text",
+        "text": "Create a 15-second vertical photoreal live-action creator commercial for one Urban Blue Vivo X80 smartphone.\n@Video1 is a directing-only gray animatic. Follow its shot order, camera viewpoints and movement, framing, hand blocking, timings and reaction arc. Rebuild the scene as original live action with believable adult people, natural skin, clothing, hair, wood, glass and daylight. The animatic supplies motion and story only.\n@Image1 supplies the phone's appearance only. It shows front and back views of the same model. Keep just one physical phone in the scene. Preserve the slim curved-screen silhouette, centered front punch-hole, Urban Blue back, rectangular dark Cloud Window, three rear lenses with the large main lens upper-left, ZEISS detail and vivo mark.\nCast two original Filipino adults around age 25-30: a woman owner with shoulder-length black hair, an ivory casual top and muted olive trousers; a male friend with short black hair, a charcoal T-shirt and light beige trousers. Keep their identities and clothing consistent. Set them at a small wooden table in a bright contemporary apartment dining nook, with soft window light and restrained background depth.\n0-1s: owner sets her phone down; friend notices.\n1-2s: friend lifts it into his right hand.\n2-3.25s: clear screen close-up; his casual thumb touch fails and the phone stays locked.\n3.25-5s: he squares his shoulders, lifts his chin, smirks and raises his free index finger like an expert. He lowers it toward the phone before the cut.\n5-6s: wider screen close-up; index hovers, deliberately touches the fingerprint area, then withdraws. The phone stays locked and briefly indicates failure.\n6-7.25s: owner gives him an amused side-eye and a knowing smile.\n7.25-9s: she extends an open palm; he offers the phone. Cut naturally to her holding it.\n9-11s: one relaxed owner-thumb touch unlocks it. Hold the successful screen response long enough to read.\n11-13s: friend looks toward her, then his smirk fades, shoulders slump and head drops in quiet embarrassment.\n13-15s: owner holds the phone's back toward camera for a steady, clean X80 hero; the camera makes the small finishing slide from the guide.\nUse realistic hands and physical contact, expressive but restrained performance, smooth focus changes and coherent light. Screen states illustrate the fingerprint story; this is not a Face ID or security-proof claim.\nGenerate original synchronized room tone, subtle phone-handling sounds, two soft failure pulses, a light unlock chime and a restrained comic exhale, over a quiet original rhythmic bed. No spoken dialogue, narration, captions or advertising text overlays."
+      },
+      {
+        "type": "video_url",
+        "video_url": {
+          "url": "{{SIGNED_CAMERA_REFERENCE_URL}}"
+        },
+        "role": "reference_video"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "{{HERO_PNG_DATA_URI}}"
+        },
+        "role": "reference_image"
+      }
+    ],
+    "resolution": "480p",
+    "ratio": "9:16",
+    "duration": 15,
+    "generate_audio": true,
+    "watermark": false,
+    "execution_expires_after": 3600
+  },
+  "assets": [
+    {
+      "path": "assets/vivo-x80-previz-v2/camera-guide.mp4",
+      "sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+      "bytes": 1162011,
+      "role": "reference_video",
+      "mime_type": "video/mp4",
+      "duration_seconds": 15,
+      "fps": 24,
+      "width": 480,
+      "height": 854,
+      "meaning": "Camera/acting/cut guide only; non-real gray procedural proxies; silent and no slates."
+    },
+    {
+      "path": "assets/vivo-x80-ugc/vivo-x80-product.png",
+      "sha256": "3d816b4f09566fc1499619a603be55e908eb50b04ebdcc1ce4413e562c7abf8b",
+      "bytes": 365082,
+      "role": "reference_image",
+      "mime_type": "image/png",
+      "width": 640,
+      "height": 640,
+      "meaning": "Official product-only Urban Blue Vivo X80 front/back appearance reference, one physical phone in scene.",
+      "source_url": "https://asia-exstatic-vivofs.vivo.com/PSee2l50xoirPK7y/1653640186117/ff99d920ac12abe286fd4dc0ed7078d3.png"
+    }
+  ],
+  "intake": {
+    "brand": "Vivo",
+    "product": "standard global glass X80, Urban Blue",
+    "format": "creator-style commercial with two generated adult characters",
+    "aspect_ratio": "9:16",
+    "offer_or_price": "none",
+    "dialogue": "none",
+    "presenter": "text-generated original adults; no real-person portrait upload",
+    "duration_seconds": 15,
+    "resolution": "480p"
+  },
+  "staging": {
+    "backend": "Existing Supabase Storage",
+    "bucket": "gemini-videos",
+    "object_key": "motion-tests/vivo-x80-v2/f82d46a1-e8b5-47ca-bc9f-b1f36445a69b/camera-guide.mp4",
+    "input_bytes": 1162011,
+    "upload_requests_maximum": 1,
+    "overwrite": false,
+    "signed_url_ttl_seconds": 7200,
+    "public_publication": false,
+    "privacy_verified": false,
+    "cleanup": "Delete only this exact confirmed owned object after a terminal task or proven pre-submission failure. Unknown upload/task state retains ledger and requires GET-only investigation; no repeated POST or blanket deletion."
+  },
+  "budget": {
+    "currency": "USD",
+    "maximum_total_cost": 5,
+    "maximum_paid_submissions": 1,
+    "automatic_client_retries": 0,
+    "rerolls": 0,
+    "model_substitutions": 0,
+    "activation_purchases_allowed": false,
+    "top_ups_allowed": false,
+    "new_subscriptions_allowed": false,
+    "documented_output_size": [
+      496,
+      864
+    ],
+    "input_video_seconds": 15,
+    "output_seconds": 15,
+    "fps": 24,
+    "minimum_tokens_for_fifteen_second_480p_9_16_with_video": 251100,
+    "formula_tokens": 301320,
+    "estimated_billed_tokens": 301320,
+    "rate_usd_per_million_tokens": 4.3,
+    "estimated_generation_cost": 1.295676,
+    "staging_fee_reserve_usd": 0.01,
+    "enforcement": "Local estimate and one-attempt submission guard, not a provider dollar hardcap. Account invoice, balance and staging fees unverified; no funding or fallback."
+  },
+  "bindings": {
+    "{{SIGNED_CAMERA_REFERENCE_URL}}": "Two-hour in-memory signed GET capability for the exact private guide object; never logged/committed.",
+    "{{HERO_PNG_DATA_URI}}": "Base64 PNG built only from the exact checked product-reference bytes."
+  },
+  "artifacts": {
+    "ledger": ".tmp/vivo-x80-ugc/attempt.json",
+    "evidence": "assets/vivo-x80-ugc/seedance20-run.json",
+    "output": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+    "bottle_study": "All prior bottle scripts/specs/ledger/output remain unchanged and cannot be resumed by this CLI."
+  },
+  "pass_criteria": [
+    "Playable portrait 480p video, nominal15s; actual duration at least15s and no more than15s plus two frames at measured fps. Preserve raw output and document any one-frame provider deviation.",
+    "Adult human live-action appearance replaces the gray proxies and gray room.",
+    "Two distinct attempts, owner success, friend's deflation and hero remain in the approved order; camera viewpoints and moves visibly follow the guide.",
+    "One consistent Urban Blue Vivo X80; three-lens hardware, hands and grips remain plausible and product branding is readable in the closing hero.",
+    "Native synchronized audio exists without spoken dialogue; no clipped/missing beats or borrowed music.",
+    "Exactly one generation POST and one private guide upload; reported usage-based estimate within5USD. Actual account bill is a separate verification."
+  ],
+  "failure_action": "Stop and show the result or rejection. No automatic retry, reroll, asset change, model substitution, activation, funding or top-up. Moderation acceptance of stylized proxy faces is not guaranteed.",
+  "evidence": [
+    "Sanitized exact request and approval digest",
+    "Exclusive durable one-attempt ledger before upload/POST; actual task identity and status",
+    "Raw output download and hash; full decode/duration/dimensions/fps/audio checks",
+    "Timestamp-aligned guide/output samples at all scene/action boundaries",
+    "Observed browser playback and user's own realism/acting judgment",
+    "Reported completion_tokens and public-rate estimate; do not call it an invoice",
+    "Private staging and exact-key cleanup result; no keys or signed URLs retained",
+    "Owner-only Drive video and comparison delivery after verification"
+  ],
+  "documentation": {
+    "schema": "https://docs.byteplus.com/en/docs/modelark/create-video-generation-task-api",
+    "pricing": "https://docs.byteplus.com/en/docs/modelark/model-pricing",
+    "floor": "https://bytedance.larkoffice.com/wiki/H0fUwHPxtiHayOk6CVpcZzKqnHJ?table=tblnV1KjhYJO12Zh&view=vew6vtiOtK",
+    "portrait_rules": "https://docs.byteplus.com/en/docs/modelark/seedance-portrait-asset-guide",
+    "prompt_guide": "https://docs.byteplus.com/en/docs/modelark/seedance-2-0-prompt-guide"
+  },
+  "approval": {
+    "approved": true,
+    "request_sha256": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78",
+    "account_access_check": "single_approved_submission_no_funding",
+    "pricing_verified": true,
+    "staging_approved": true,
+    "user_storyboard_approval": "G approved na to bro! Excited na me sa para sa real video",
+    "exact_paid_tuple_approval": "Approved - explicit response to exact 15s480p9:16 Seedance2.0 V2 guide + official X80 image + proposed prompt/native audio, estimate1.30USD maximum5USD, one run/no reroll, with saved ENV received only inside Node process.",
+    "account_balance": "unverified",
+    "portrait_input_acceptance": "unverified; non-real stylized guide, product-only image and original adults generated in output"
+  }
+}

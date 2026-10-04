@@ -1,0 +1,8 @@
+{
+  "recorded_start": "2026-10-04T07:09:19Z",
+  "recorded_end": "2026-10-04T07:11:17Z",
+  "source": "executor execution-notes.json",
+  "scope": "Self-recorded interval; exact full-run elapsed time and token usage unavailable. Excluded from benchmark performance metrics.",
+  "exact_full_duration_available": false,
+  "total_tokens_available": false
+}

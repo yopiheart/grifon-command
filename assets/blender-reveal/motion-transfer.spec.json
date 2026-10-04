@@ -1,0 +1,99 @@
+{
+  "status": "approved_480p_preflight_pending_account",
+  "approval": {
+    "user_messages": ["G approved", "480P lang bro para tipid"],
+    "approved_baseline_commit": "a8f3d9ad",
+    "authorized_change": "Output resolution changed from 720p to 480p at the user's request. Exact prompt, model, input bytes, duration, silence, one submission, $5 maximum, no retries and no funding remain approved.",
+    "paid_requests_made": 0
+  },
+  "purpose": "Test whether a direct video provider can follow the authored six-second Blender camera reference while retaining the NOIR / 01 product appearance, without Higgsfield.",
+  "scope": "One product-only reference-generation task. This spec is not a Grifon application integration or proof that motion transfer works.",
+  "provider": "fal.ai (candidate; account access unverified)",
+  "model": "bytedance/seedance-2.5/reference-to-video",
+  "assets": [
+    {
+      "path": "assets/blender-reveal/camera-reference.mp4",
+      "sha256": "014860ecb8abef5ec097dd33f4961775ac833fff4dfbf89117e88648791f9eab",
+      "role": "reference_video",
+      "staging": "Inline MP4 Base64 data URI for these exact bytes in the approved provider request; no separate public upload."
+    },
+    {
+      "path": "assets/blender-reveal/hero.png",
+      "sha256": "2ffeaff10fb960afc0cb92c4759df7e0e2f6be4f3d596522d9c708396cc678fd",
+      "role": "reference_image",
+      "staging": "Inline PNG Base64 for these exact bytes in the approved provider request."
+    }
+  ],
+  "request_bindings": {
+    "{{CAMERA_REFERENCE_DATA_URI}}": "Base64 data:video/mp4 URI made from assets[0] after its SHA-256 check passes",
+    "{{HERO_DATA_URI}}": "Base64 data:image/png URI made from assets[1] after its SHA-256 check passes"
+  },
+  "request": {
+    "prompt": "Create one continuous six-second cinematic product shot. Use @Video1 to guide camera path, timing, framing, foreground occlusion and parallax. Use @Image1 for product appearance, amber glass, cream paper label, dark typography, gold hardware, warm light and graphite stone. The NOIR / 01 cold brew bottle remains stationary throughout. Begin with the foreground architectural blade partially covering the bottle. The camera glides past the blade, reveals the bottle, then settles into a clear label-facing hero composition for the final 1.5 seconds. Preserve the bottle silhouette, cap, label layout and the words NOIR, 01 and COLD BREW. Keep highlights coherent and motion smooth. The scene contains one bottle and the existing stage objects throughout. Generate a silent shot.",
+    "task": "reference",
+    "video_urls": ["{{CAMERA_REFERENCE_DATA_URI}}"],
+    "image_urls": ["{{HERO_DATA_URI}}"],
+    "duration": "6",
+    "resolution": "480p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "draft": false,
+    "codec": "H264",
+    "bitrate_mode": "high",
+    "end_user_id": "grifon-noir01-internal-study"
+  },
+  "queue_submission_headers": {
+    "X-Fal-No-Retry": "1",
+    "x-app-fal-disable-fallback": "true"
+  },
+  "budget": {
+    "currency": "USD",
+    "maximum_total_cost": 5,
+    "maximum_paid_submissions": 1,
+    "automatic_retries": 0,
+    "estimated_generation_cost": 1.54757952,
+    "estimate_basis": "(6 input seconds + 6 output seconds) * 864 * 496 * 24 / 1024 = 120528 tokens; the documented 480p 16:9 native output size is 864 x 496. Rate is $0.0214 per thousand tokens, multiplied by 0.6 when video references are supplied. The formula uses output dimensions for both input and output seconds; the original 1280 x 720 reference bytes stay unchanged. The rough per-second table gives approximately $1.59. Audio off does not change the price. No separate hosted asset upload is planned.",
+    "enforcement": "Local pre-submission guard, not a provider task-level dollar-cap parameter. Recheck the authoritative pricing formula, fixed input duration and fixed output settings before submitting; stop if the total upper bound cannot be kept within $5. No retries or model substitutions.",
+    "activation_purchases_allowed": false,
+    "top_ups_allowed": false
+  },
+  "preflight_required_before_upload_or_submission": [
+    "User explicitly approves this exact prompt, model, inputs, evidence plan and maximum cost.",
+    "Account access and funded credits are already valid; no activation purchase, top-up or new subscription is required.",
+    "Recheck authoritative current pricing and any applicable additional charges against these fixed inputs and output settings; stop if the $5 total bound cannot be established before submission.",
+    "Verify current primary documentation still accepts the exact reference-generation request and these media formats.",
+    "Verify both local asset hashes match this spec and the request carries only these exact media bytes as inline data URIs.",
+    "Do not substitute assets, prompt, model, resolution or task type; any change requires a new approval."
+  ],
+  "pass_criteria": [
+    "Output is a playable six-second product-only clip at the selected 480p tier with no generated audio; the provider documents a native 864 x 496 size for 16:9.",
+    "One continuous camera move follows the authored opening occlusion, blade clearance, parallax and final hero settle without cuts or a new camera move.",
+    "Bottle shape, cap, label and stationary placement remain consistent; no visible warping, drifting label, added or disappearing product.",
+    "NOIR, 01 and COLD BREW remain readable in the final 1.5-second hero interval.",
+    "Measured total cost stays within the approved maximum and only one paid submission occurs."
+  ],
+  "failure_action": "Record failure and stop. No automatic reroll, model substitution or extra paid judge call.",
+  "evidence": [
+    "Store the sanitized request, asset hashes, provider task ID, actual usage and billed or measured cost; never store credentials or signed URLs in the committed evidence.",
+    "Download the successful output before the provider URL expires and decode-check its duration, dimensions and audio state.",
+    "Build a timestamp-aligned comparison with the neutral reference at 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0 and 5.5 seconds.",
+    "Inspect full playback and the comparison for camera fidelity, physical continuity and label readability. Record any inspection limitations and obtain human approval before client use."
+  ],
+  "documentation": [
+    "https://fal.ai/models/bytedance/seedance-2.5/reference-to-video/api",
+    "https://fal.ai/models/bytedance/seedance-2.5/reference-to-video",
+    "https://fal.ai/learn/tools/seedance-2-5-workflows",
+    "https://fal.ai/docs/documentation/model-apis/inference/queue",
+    "https://fal.ai/docs/documentation/model-apis/common-parameters",
+    "https://fal.ai/docs/platform-apis/v1/models/pricing",
+    "https://fal.ai/docs/platform-apis/v1/account/billing"
+  ],
+  "readiness": {
+    "local_inputs": "prepared",
+    "user_approval": "approved; user changed only output resolution to 480p",
+    "account": "pending: no FAL_KEY or FAL_API_KEY in the current process, user/machine environment or existing desktop config; the available fal browser is signed out",
+    "media_transport": "inline data URIs documented; not account-tested",
+    "strict_budget_bound": "documented formula places this fixed request below $5; live pricing and account charges require preflight",
+    "paid_requests_made": 0
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-04",
+  "purpose": "New V2 mobile review copies in the user's connected Drive",
+  "sharing": "Existing owner-only defaults; no permission changes",
+  "files": [
+    {
+      "kind": "preview",
+      "id": "1T-FpUB58rKrsnIJXS5RrFlIMzRtF-3zY",
+      "url": "https://drive.google.com/file/d/1T-FpUB58rKrsnIJXS5RrFlIMzRtF-3zY/view?usp=drivesdk",
+      "mimeType": "video/mp4",
+      "sizeBytes": 1143466,
+      "shared": false,
+      "permissions": [
+        {
+          "type": "user",
+          "role": "owner"
+        }
+      ],
+      "metadataReadback": "passed"
+    },
+    {
+      "kind": "storyboard",
+      "id": "1xmC1bQG-CwhyMAYsEXZ5i5B0cejQK-dY",
+      "url": "https://drive.google.com/file/d/1xmC1bQG-CwhyMAYsEXZ5i5B0cejQK-dY/view?usp=drivesdk",
+      "mimeType": "image/png",
+      "sizeBytes": 623541,
+      "shared": false,
+      "permissions": [
+        {
+          "type": "user",
+          "role": "owner"
+        }
+      ],
+      "metadataReadback": "passed"
+    }
+  ]
+}

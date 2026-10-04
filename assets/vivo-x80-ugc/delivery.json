@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-04",
+  "task_id": "cgt-20261004021141-cgh8r",
+  "raw": {
+    "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+    "bytes": 2636695,
+    "sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+    "drive_id": "1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT",
+    "watch_download_url": "https://drive.google.com/file/d/1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT/view",
+    "readback": {"bytes": 2636695, "mime_type": "video/mp4", "shared": false, "permissions": "owner-only"}
+  },
+  "comparison": {
+    "path": "assets/vivo-x80-ugc/guide-comparison.mp4",
+    "bytes": 2635444,
+    "sha256": "41415e48d6377935dcccb5ffde90824ecc002e16dc58668f657516ced4f36bb7",
+    "drive_id": "15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx",
+    "watch_download_url": "https://drive.google.com/file/d/15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx/view",
+    "layout": "Exact approved 3D guide left; actual raw Seedance result right; original raw audio copied. Local diagnostic derivative, no new AI generation.",
+    "readback": {"bytes": 2635444, "mime_type": "video/mp4", "shared": false, "permissions": "owner-only"}
+  },
+  "paid_submissions": 1,
+  "guide_uploads": 1,
+  "temporary_owned_guide_cleanup": "confirmed",
+  "completion_tokens": 301738,
+  "usage_estimated_generation_usd": 1.2974734,
+  "actual_invoice_and_staging_fees": "unverified",
+  "paid_retries_rerolls_funding_or_model_substitutions": 0,
+  "native_phone_or_drive_player_playback": "not observed; actual local Chromium playback and connector metadata readbacks recorded separately"
+}

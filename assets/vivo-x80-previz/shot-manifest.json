@@ -1,0 +1,320 @@
+{
+  "study": "MY TURN / Vivo X80",
+  "scope": "Local gray clay storyboard and camera/blocking guide; no AI finish.",
+  "paidCalls": 0,
+  "width": 480,
+  "height": 854,
+  "fps": 24,
+  "frames": 360,
+  "durationSeconds": 15,
+  "renderer": {
+    "engine": "BLENDER_EEVEE",
+    "samples": 32
+  },
+  "productDimensionsMm": {
+    "width": 75.23,
+    "depth": 8.3,
+    "height": 164.95
+  },
+  "design": "X80 three-lens circle inside upper rectangular Cloud Window; single centered front punch hole.",
+  "featureStory": "An unregistered thumb stays locked; the owner uses their registered thumb. Authored dramatization, no Face ID claim.",
+  "referenceUrl": "https://www.youtube.com/watch?v=ByAi9BGHMRQ",
+  "referenceTiming": "Sampled reference observations only. All shot timing below is newly authored.",
+  "handoff": "Offer, then cut to owner's registered-thumb shot; continuous transfer elided. Parent-stable grip, holder pose shifts 33cm at 228/229 cut.",
+  "geometry": {
+    "objects": 163,
+    "phoneParent": "Phone hand contact controller",
+    "externalTextures": 0,
+    "externalCreatorImages": 0
+  },
+  "shots": [
+    {
+      "number": 1,
+      "title": "THE OPPORTUNITY",
+      "firstFrame": 1,
+      "lastFrame": 42,
+      "startSeconds": 0.0,
+      "endSeconds": 1.75,
+      "sampleFrame": 21,
+      "lensMm": 28,
+      "cameraStart": [
+        -0.4,
+        -1.9,
+        1.61
+      ],
+      "cameraEnd": [
+        -0.31,
+        -1.8,
+        1.56
+      ],
+      "targetStart": [
+        0,
+        -0.12,
+        1.2
+      ],
+      "targetEnd": [
+        0,
+        -0.12,
+        1.2
+      ],
+      "movement": "Lateral push",
+      "action": "Owner sets their phone down; friend notices it at the cafe table."
+    },
+    {
+      "number": 2,
+      "title": "THE PICKUP",
+      "firstFrame": 43,
+      "lastFrame": 78,
+      "startSeconds": 1.75,
+      "endSeconds": 3.25,
+      "sampleFrame": 60,
+      "lensMm": 35,
+      "cameraStart": [
+        -0.17,
+        -0.73,
+        1.53
+      ],
+      "cameraEnd": [
+        -0.26,
+        -0.64,
+        1.61
+      ],
+      "targetStart": [
+        -0.14,
+        -0.33,
+        0.83
+      ],
+      "targetEnd": [
+        -0.45,
+        -0.145,
+        1.215
+      ],
+      "movement": "High-angle tilt / push",
+      "action": "Friend lifts the phone into their right hand."
+    },
+    {
+      "number": 3,
+      "title": "NICE TRY",
+      "firstFrame": 79,
+      "lastFrame": 114,
+      "startSeconds": 3.25,
+      "endSeconds": 4.75,
+      "sampleFrame": 96,
+      "lensMm": 50,
+      "cameraStart": [
+        -0.87,
+        -1.57,
+        1.66
+      ],
+      "cameraEnd": [
+        -0.72,
+        -1.43,
+        1.64
+      ],
+      "targetStart": [
+        -0.51,
+        0.015,
+        1.47
+      ],
+      "targetEnd": [
+        -0.49,
+        -0.025,
+        1.45
+      ],
+      "movement": "Close-up creep",
+      "action": "Friend glances at the owner, then looks down at the phone."
+    },
+    {
+      "number": 4,
+      "title": "STILL LOCKED",
+      "firstFrame": 115,
+      "lastFrame": 144,
+      "startSeconds": 4.75,
+      "endSeconds": 6.0,
+      "sampleFrame": 129,
+      "lensMm": 60,
+      "cameraStart": [
+        -0.23,
+        0.02,
+        1.39
+      ],
+      "cameraEnd": [
+        -0.25,
+        0.0,
+        1.375
+      ],
+      "targetStart": [
+        -0.45,
+        -0.145,
+        1.215
+      ],
+      "targetEnd": [
+        -0.45,
+        -0.145,
+        1.215
+      ],
+      "movement": "Screen macro push",
+      "action": "Unregistered thumb touches the in-display fingerprint area; a locked icon remains."
+    },
+    {
+      "number": 5,
+      "title": "MY TURN",
+      "firstFrame": 145,
+      "lastFrame": 180,
+      "startSeconds": 6.0,
+      "endSeconds": 7.5,
+      "sampleFrame": 162,
+      "lensMm": 85,
+      "cameraStart": [
+        0.88,
+        -1.65,
+        1.58
+      ],
+      "cameraEnd": [
+        0.75,
+        -1.55,
+        1.58
+      ],
+      "targetStart": [
+        0.51,
+        0.08,
+        1.53
+      ],
+      "targetEnd": [
+        0.51,
+        0.07,
+        1.53
+      ],
+      "movement": "Reaction close-up",
+      "action": "Owner tilts their head and looks toward their friend."
+    },
+    {
+      "number": 6,
+      "title": "THE HANDOFF",
+      "firstFrame": 181,
+      "lastFrame": 228,
+      "startSeconds": 7.5,
+      "endSeconds": 9.5,
+      "sampleFrame": 204,
+      "lensMm": 35,
+      "cameraStart": [
+        -0.15,
+        -1.18,
+        1.54
+      ],
+      "cameraEnd": [
+        0.15,
+        -1.12,
+        1.54
+      ],
+      "targetStart": [
+        -0.17,
+        -0.145,
+        1.2
+      ],
+      "targetEnd": [
+        0.2,
+        -0.145,
+        1.2
+      ],
+      "movement": "Handoff tracking insert",
+      "action": "Friend offers the phone; owner reaches toward its free edge. Holder switches on the following cut."
+    },
+    {
+      "number": 7,
+      "title": "ONE TOUCH",
+      "firstFrame": 229,
+      "lastFrame": 270,
+      "startSeconds": 9.5,
+      "endSeconds": 11.25,
+      "sampleFrame": 249,
+      "lensMm": 60,
+      "cameraStart": [
+        0.67,
+        0.02,
+        1.39
+      ],
+      "cameraEnd": [
+        0.65,
+        0.0,
+        1.375
+      ],
+      "targetStart": [
+        0.45,
+        -0.145,
+        1.215
+      ],
+      "targetEnd": [
+        0.45,
+        -0.145,
+        1.215
+      ],
+      "movement": "Matched screen macro",
+      "action": "Owner's registered thumb touches the same area; the simple guide changes to an unlocked icon."
+    },
+    {
+      "number": 8,
+      "title": "BACK IN MY HAND",
+      "firstFrame": 271,
+      "lastFrame": 318,
+      "startSeconds": 11.25,
+      "endSeconds": 13.25,
+      "sampleFrame": 294,
+      "lensMm": 45,
+      "cameraStart": [
+        0.75,
+        -1.05,
+        1.5
+      ],
+      "cameraEnd": [
+        0.68,
+        -0.96,
+        1.48
+      ],
+      "targetStart": [
+        0.49,
+        -0.15,
+        1.39
+      ],
+      "targetEnd": [
+        0.49,
+        -0.15,
+        1.39
+      ],
+      "movement": "Creator / product push",
+      "action": "Owner presents the phone back toward camera; distinct X80 three-lens Cloud Window shape."
+    },
+    {
+      "number": 9,
+      "title": "X80 HERO",
+      "firstFrame": 319,
+      "lastFrame": 360,
+      "startSeconds": 13.25,
+      "endSeconds": 15.0,
+      "sampleFrame": 339,
+      "lensMm": 85,
+      "cameraStart": [
+        0.52,
+        -0.89,
+        1.3
+      ],
+      "cameraEnd": [
+        0.56,
+        -0.78,
+        1.31
+      ],
+      "targetStart": [
+        0.47,
+        -0.17,
+        1.259
+      ],
+      "targetEnd": [
+        0.47,
+        -0.17,
+        1.262
+      ],
+      "movement": "In-hand camera-bump slide",
+      "action": "Short lateral finish on the phone's upper back; owner and cafe fall behind it."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "checked_at_utc": "2026-10-03T11:30:06.052Z",
+  "purpose": "Read-only private staging readiness for a proposed direct BytePlus camera-reference test",
+  "variable_presence": {
+    "SUPABASE_URL": false,
+    "VITE_SUPABASE_URL": true,
+    "SUPABASE_SERVICE_ROLE_KEY": true,
+    "R2_ACCOUNT_ID": true,
+    "R2_ACCESS_KEY_ID": true,
+    "R2_SECRET_ACCESS_KEY": true,
+    "R2_BUCKET": true,
+    "BYTEPLUS_ACCESS_KEY": false,
+    "BYTEPLUS_SECRET_KEY": false,
+    "VOLC_ACCESS_KEY": false,
+    "VOLC_SECRET_KEY": false
+  },
+  "cloud_writes": 0,
+  "media_uploads": 0,
+  "bucket_metadata_http_status": 200,
+  "bucket_exists": true,
+  "bucket_private": true,
+  "public_flag": false,
+  "bucket_name": "gemini-videos",
+  "limit": "This checks existing bucket privacy only. No object upload, signed URL, model activation, balance verification or generation occurred. A revised exact provider/staging/test spec is required before cloud writes or paid submission."
+}

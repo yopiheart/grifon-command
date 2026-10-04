@@ -1,0 +1,99 @@
+{
+  "status": "PASS_INDEPENDENT_PREP_REVIEW_PENDING_EXACT_PAID_APPROVAL",
+  "reviewer": "/root/provider_check",
+  "reviewed_at_utc": "2026-10-03T17:56:45Z",
+  "scope": [
+    "tools/run_vivo_x80_ugc.mjs",
+    "tools/tests/vivo-x80-ugc-guards.mjs",
+    "assets/vivo-x80-ugc/seedance20.spec.json",
+    "assets/vivo-x80-ugc/prompt-proposed.txt",
+    "assets/vivo-x80-ugc/vivo-x80-product.png",
+    "assets/vivo-x80-ugc/offline-verification.json"
+  ],
+  "source": {
+    "path": "tools/run_vivo_x80_ugc.mjs",
+    "sha256": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+    "test_path": "tools/tests/vivo-x80-ugc-guards.mjs",
+    "test_sha256": "1308b046098d2d8903906b76937f4619a02ab55a1059f4f9ba4660d5e8f4d8b4",
+    "spec_sha256_at_review": "8a397b081088805ecb6b6602233d3e26caa307c0f5119022b4a33eae5fe785e1",
+    "immutable_proposal_digest": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78",
+    "digest_excludes": ["status", "approval", "staging.privacy_verified"]
+  },
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "Repeated local persistence failure could let an untrusted IO error escape the exported runner when catch attempted to persist again.",
+      "failed_source_sha256": "1dd5f532a5a1f297c08959bf70f2e12589204d23684b5cf7bfff4b3d97e2ab59",
+      "regression_case": "Malicious persistent local IO diagnostics do not escape the exported runner",
+      "fix": "The persistence helper now converts every local IO or clock failure into a fixed StudyError without raw diagnostics.",
+      "verification": "The independent suite recorded 28/29 before the fix and 29/29 on the reviewed final source."
+    }
+  ],
+  "tests": {
+    "evidence": "assets/vivo-x80-ugc/offline-verification.json",
+    "command": "node tools/tests/vivo-x80-ugc-guards.mjs",
+    "status": "PASS_OFFLINE_GUARDS_PENDING_PAID_APPROVAL",
+    "exit_code_reported_by_independent_smoke_agent": 0,
+    "pass": 29,
+    "fail": 0,
+    "reviewer_verified_all_cases_pass": true,
+    "source_start_end_and_current_sha_match": true,
+    "controlled_guard_mutants_detected": true,
+    "real_environment_loaded": false,
+    "real_network_calls": 0,
+    "paid_calls": 0,
+    "cloud_uploads": 0,
+    "actual_study_ledger_accessed": false,
+    "fake_mp4_is_not_playability_evidence": true
+  },
+  "checks": {
+    "exact_tuple": "PASS: full immutable proposal pinned; prompt text matches the proposed file after newline normalization; both exact input hashes and sizes independently matched.",
+    "approval_before_credentials": "PASS: seven approval attestations, tuple, assets and fixed paths gate execute/resume before environment reads or networking; default/dry mode uses local files only.",
+    "fresh_private_staging": "PASS: authenticated bucket GET requires exact bucket identity and public:false before reservation/upload; the ignored privacy_verified flag cannot substitute for the runtime check.",
+    "single_attempt": "PASS: exclusive durable reservation prevents concurrent contenders from uploading/submitting twice; paid-attempt marker persists before the one generation POST; no SDK retry, reroll, fallback or funding path.",
+    "ambiguity": "PASS: uncertain upload or POST results retain ownership/task uncertainty and consume the attempt; no repeat POST, guessed task identity or unconfirmed deletion.",
+    "study_isolation": "PASS: fixed Vivo spec/ledger/evidence/output paths reject bottle substitutions and injected alternates; every path component from volume root through workspace/target is checked for symlinks or junctions; copied CLI canaries remain unread and unchanged.",
+    "resume": "PASS: exact Vivo ledger/request/assets/digest/task bindings required; provider recovery uses GET only, without upload, signing or generation POST. Exact owned-key Storage DELETE may occur after a known terminal task.",
+    "cleanup": "PASS: create-only upload must confirm the exact owned key; deletion targets only that key after a terminal task or proven pre-submission failure. Ambiguous states retain it for investigation.",
+    "capabilities_and_errors": "PASS: separate provider/storage credentials, anonymous media GETs, exact HTTPS host/path guards and redirect rejection; sanitized placeholder evidence withholds auth, signed capabilities, output URLs and untrusted network/callback/IO diagnostics.",
+    "reported_cost": "PASS: 251100-token floor, 301320-token formula, 4.3 USD/M rate and 0.01 USD staging reserve pinned. Reported overruns flag failure without making a second submission; actual_total_bill remains unverified.",
+    "creative_contract": "PASS: non-real gray guide supplies motion/story only; the front/back product reference depicts one X80 model and the prompt requests one physical device; generated output people are original adults."
+  },
+  "proposed_request": {
+    "model": "dreamina-seedance-2-0-260128",
+    "duration_seconds": 15,
+    "resolution": "480p",
+    "ratio": "9:16",
+    "generate_audio": true,
+    "watermark": false,
+    "execution_expires_after": 3600,
+    "signed_reference_ttl_seconds": 7200,
+    "output_size_basis": [496, 864],
+    "minimum_tokens": 251100,
+    "formula_tokens": 301320,
+    "estimated_generation_usd": 1.295676,
+    "estimated_with_staging_reserve_usd": 1.305676,
+    "maximum_usd": 5,
+    "maximum_paid_submissions": 1,
+    "provider_dollar_hardcap": false
+  },
+  "approval_at_review": {
+    "spec_status": "pending_exact_paid_approval",
+    "paid_tuple_approved": false,
+    "staging_approved": false,
+    "live_execution_authorized_by_this_review": false
+  },
+  "open_live_uncertainties": [
+    "Model entitlement, account balance/invoice and actual staging fees remain unverified. Local estimates and one-attempt guards are not a provider-enforced dollar ceiling.",
+    "The V2 guide has stylized gray 3D faces. Changed-input moderation acceptance and output moderation for generated original adults are unverified; it is not a faceless guide.",
+    "Realistic skin, acting, camera/shot transfer, fingerprint-story timing, one-device continuity, accurate X80 hardware/branding and native-audio taste require inspection of the actual output.",
+    "MP4 container/hash checks do not prove full decode, nominal 15-second duration, portrait dimensions, frame rate, synchronized audio or observed playback.",
+    "This is preparation for one raw generated proof, not a verified client-ready cut or authority for downstream paid audits, generation or propagation."
+  ],
+  "review_actions": {
+    "credentials_read": false,
+    "network_or_provider_calls": 0,
+    "source_spec_prompt_or_media_edited": false,
+    "only_written_file": "assets/vivo-x80-ugc/runner-review.json"
+  }
+}
