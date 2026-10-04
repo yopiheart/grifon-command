@@ -12,6 +12,10 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
+- [ ] **2026-10-04 3D vendor study:** review the candidate next pilot below:
+  one original product-handling scene, complete cast/style references, one hard
+  motion beat and planned sound. Research only; no skill/prompt edits approved.
+
 - [ ] **2026-09-17 Apple reference adaptation:** secure one matching Grifon
   project capture and review its shipped output excerpt before the replacement
   motion preview. Detailed scene map: `assets/grifon-motion-spark/reference-analysis.md`.
@@ -624,3 +628,92 @@ Vivo X80's in-display fingerprint is documented by its official PH specification
 Apple Face ID/TrueDepth-equivalent security is not asserted. 3D supplies blocking,
 camera paths and cuts; a future approved AI test supplies human/phone appearance.
 No tuned prompt or preset edits. **ONE_OFF; no Pattern Index counts changed.**
+
+### 2026-10-04 - ONE_OFF Higgsfield 3D workflow reference collection
+
+**Why studied:** Neil supplied thirteen posts to improve the merged 3D Director
+workflow. Primary interest: controllable ads and UGC without requiring Higgsfield.
+**Method:** all thirteen post descriptions read in the browser. Sampled browser
+video frames from the house, Babylon and Passport Rush breakdowns; the matched
+taxi comparison was inspected near 0.5, 3 and 5 seconds. These are sparse visual
+observations, not continuous playback/audio review or an encoded cut audit.
+No paid analyzer, model request, upload, generation or provider access test.
+
+**Source inventory (vendor descriptions, not independently certified capability):**
+
+| Source | Demonstrated/claimed subject | Relevance |
+| --- | --- | --- |
+| [2096101502045835527](https://x.com/higgsfield_ai/status/2096101502045835527) | Babylon environment geometry followed by Seedance appearance pass | Environment directing; not historical reconstruction proof |
+| [2102499166635352354](https://x.com/higgsfield_ai/status/2102499166635352354) | House photo/floor plans, construction stages, browser viewer | Editable spatial review |
+| [2102507018372436264](https://x.com/higgsfield_ai/status/2102507018372436264) | Detailed train with interior seats | Asset-authoring showcase; detail count does not establish ad value |
+| [2102510590468239373](https://x.com/higgsfield_ai/status/2102510590468239373) | Furniture arrangement simulator | Layout variants before rendering |
+| [2102519226099761608](https://x.com/higgsfield_ai/status/2102519226099761608) | Charcoal drawing translated into a textured 3D scene | Preserve an intentional art style across viewpoints |
+| [2102526940859232433](https://x.com/higgsfield_ai/status/2102526940859232433) | Animated octopus model | Specialized rig/asset work; game-readiness unverified |
+| [2102536138884092185](https://x.com/higgsfield_ai/status/2102536138884092185) | Interactive eye anatomy | Separate explanatory/interactive artifact lane |
+| [2102547743319429290](https://x.com/higgsfield_ai/status/2102547743319429290) | Prosthetic hand, CAD and assembly site | Separate engineering lane; no functional validation inferred |
+| [2102556426174656862](https://x.com/higgsfield_ai/status/2102556426174656862) | Editable rooftop bar with layout/material/light variants | Reuse one scene for client revisions |
+| [2102859140871893364](https://x.com/higgsfield_ai/status/2102859140871893364) | General agentic-modeling promotion | Caption insufficient to establish a distinct technique |
+| [2103513371614335179](https://x.com/higgsfield_ai/status/2103513371614335179) | Editable car-impact/destruction scene | Optional action/simulation scene family |
+| [2103594269806350438](https://x.com/higgsfield_ai/status/2103594269806350438) | Stacked previs/blockout/final taxi action | Spatial blocking transfers beyond camera motion |
+| [2103613236272885984](https://x.com/higgsfield_ai/status/2103613236272885984) | Storyboard, cast, image fixes, Blender, prompts, video stages | Production responsibilities are separated |
+
+**Observed comparison:** the taxi clip shows a proxy and finished character in
+the same rear-seat setting. Near 3s both kneel toward the left window; near 5s
+both lie across the bench. The roughest previs uses simpler geometry. This
+supports action/pose guidance, not an exact trajectory or identity guarantee.
+Framing is a rear-seat view; exact lens, cut count and continuous motion unknown.
+No trustworthy audio/SFX, lip-sync, performance or ad-conversion assessment.
+
+**Primary production disclosure:** [Passport Rush, View full project](https://higgsfield.ai/original-series/passport-rush/full-film)
+was read beyond the promotional posts. The team reports mostly hand-authored
+Blender animation; a character turnaround reference including expressions/voice;
+early motion tests; unwanted passengers when cast references were incomplete;
+simplified moving-prop textures; stable scene lighting; and manual grading,
+music and sound finishing. It also describes replacing individual scenes after
+assembly. These are creator-reported lessons from one production, not controlled
+benchmarks. Displayed generation/asset counters are not a verified invoice or
+per-shot retry count. Public availability alone does not establish reuse rights.
+
+**So What for Grifon (ranked candidates, not adopted rules):**
+
+1. **Lock appearance as well as direction.** Propose a small per-job cast/product/
+   environment/style pack before generation, including required occupants for
+   every shot. Existing `.agents/skills/3d-director/SKILL.md` already separates
+   guide and appearance and binds cast IDs; extend its concrete deliverables
+   only after a reviewed diff. Future app seams: `types.ts`,
+   `components/Step4Avatar.tsx`, `components/Step5Storyboard.tsx`. Turnaround video
+   is optional and provider-dependent, not a universal replacement for stills.
+2. **Validate one difficult motion beat before scaling.** Choose the highest-risk
+   contact, occlusion or fast move in a new original job; examine texture stability,
+   cast occupancy and product shape as well as camera adherence. First local
+   preview is free of provider calls; any video-model test needs its own exact
+   approved spend spec. Compare with the accepted Vivo baseline, not marketing
+   claims. Do not rerun exhausted study tools or overwrite approved assets.
+3. **Define what the guide controls.** Explicitly separate camera-only intent
+   from action/blocking intent in the proposed job brief; list required poses,
+   contact, timing and allowed appearance changes. Existing skill covers much
+   of this in prose. Reuse helpers from `tools/build_vivo_x80_previz_v2.py` as
+   examples, not as an arbitrary-job CLI. The distinction is a planning contract,
+   not a claim that providers expose those control modes.
+4. **Finish sound as a planned deliverable.** Shot sound cues already exist in
+   the skill; implementing preservation of native dialogue/ambience before
+   mixing remains the real gap. `api/_lib/renderFfmpeg.ts:827` uses external
+   voice or silence; its existing SFX/music facilities should be reused after
+   an explicit preserve/replace policy. No automatic TTS-over-mouth replacement.
+5. **Make scene revisions reusable.** Later add per-shot versions and a small
+   review viewer for camera/layout variants. This reduces authoring rework;
+   actual generation savings need measurement. Browser 3D artifacts fit the
+   existing `img2threejs-lab` internal lane; that skill is not a hosted app API.
+
+Do not adopt a universal golden-hour/watercolor prompt: it belongs to this film's
+art direction and can conflict with believable UGC or a client's brand. Do not
+require complex 3D for simple talking heads, chase high object counts, promise
+engineering-ready models, or infer public API access from vendor showcase names.
+The installed skill remains unchanged. Recommended next evidence: one original
+15-second product-handling preview with a reusable cast/style pack and sound cue
+sheet, followed only on exact approval by a narrowly scoped motion test.
+
+**Classification:** ONE_OFF vendor workflow research. The two Passport Rush
+posts and its project brief describe the same film, not three independent
+corroborations. No Pattern Index increment, belief/preset promotion, tuned edit,
+or model-quality ranking. Full source-video and audio autopsy remains NOT RUN.

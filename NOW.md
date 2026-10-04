@@ -1,13 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, PR157 merge authorized / local checks and review passed**
+**Stamped: 2026-10-04, Higgsfield reference research recorded**
 
 ## Current scope
-Branch: `codex/blender-product-reveal`; attached draft PR157:
-https://github.com/yopiheart/grifon-command/pull/157.
-Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
-Local Blender/FFmpeg studies, fixed provider runner and installed 3D Director skill.
-Neil authorized merging PR157 after checks/review; no new paid run or deployment.
-Merged origin/main f915b431 locally; only NOW.md needed conflict reconciliation.
+Branch: `codex/3d-reference-learnings`; documentation-only reference study.
+PR157 merged as162fde8d after independent review and all CI checks passed.
+Thirteen vendor posts and Passport Rush production disclosure inspected.
+Findings: workflows/viral_swipe_file.md, 2026-10-04 ONE_OFF collection.
+No skill/prompt/model/code change or paid call; research is not an adopted rule.
 
 ## Vivo X80 human finish - completed ONCE, raw proof delivered
 Neil replied Approved to the exact15s480p9:16 spec and saved-ENV runtime use.
@@ -78,7 +77,7 @@ Kling4 API previously Coming Soon; Omni rejected; zero Kling/Higgsfield calls.
 ## Checks / remaining
 Installed 3D Director exact approved patch; planning skill12/12 vs baseline11/12.
 Review: .agents/skills/3d-director-workspace/iteration-1/review.html; no new spend.
-Build,1432 unit tests,26 control tests,29 Vivo/25 bottle fake guards PASS.
+Prior merged PR157: build,1432 unit tests,26 control tests,29 Vivo/25 bottle guards PASS.
 Domain/voice/ASCII/anchors/bundle/parity/design PASS; existing deps reused.
 Fresh independent review clear after bottle evidence guard and scoped LF fix.
 Regression failed original then passed fix; assets/blender-reveal/merge-guard-verification.json.
@@ -86,5 +85,6 @@ Main PR158 is merged: six-pair static check:eval-prompts guard with18 tests;
 it detects copied prompt drift but never authorizes syncing tuned content.
 Neil accepts proof9/10; sound priorities: assets/vivo-x80-ugc/user-review.json.
 Automatic trigger/local-preview tests NOT RUN; generic engine/Grifon UI unbuilt.
-Next: merge PR157 when CI passes (authorized), then local preview pilot; preserve
-native scene audio on integration. Seedance UI locked; no new model trial.
+Next: review the cast/style pack + hard-motion pilot proposal in the Swipe File.
+Current docs: whitespace/local path checks PASS; runtime tests not repeated.
+Native-audio integration remains pending. Seedance UI locked; no new model trial.
