@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, Vivo human finish generated once / mobile delivery verified**
+**Stamped: 2026-10-04, Vivo accepted baseline / 3D Director skill proposed**
 
 ## Current scope
 Branch: `codex/blender-product-reveal`; attached draft PR157:
@@ -81,9 +81,9 @@ Kling4 API previously Coming Soon; Omni rejected; zero Kling/Higgsfield calls.
 Final syntax/default dry, domain, voice-sync, PowerShell ASCII, artifact anchors,
 whitespace and check:codex26tests PASS. Build/Vitest SETUP BLOCKED (root tsc
 absent / Vitest uncached); no reinstall, application/E2E/paid regression untouched.
-Neil rated current proof9/10 and accepts the baseline; SFX/music polish is lacking.
-Feedback/priorities: assets/vivo-x80-ugc/user-review.json; no new paid/audio work.
-Future: reusable shot plans, cast/voice refs, provider-specific comparisons and sound
-finishing. Blender ran headless; universal prompt/ref-to-3D Grifon UI is not built.
-Integration must preserve native audio that renderFfmpeg currently discards.
-Seedance UI remains locked. Other project work untouched.
+Neil accepts proof9/10; sound gap/priorities: assets/vivo-x80-ugc/user-review.json.
+Draft: workflows/proposals/3d-director/3d-director/SKILL.md; NOT installed.
+Structural checks and check:codex26tests PASS; proposal validation.json has scope.
+Behavioral/trigger/local-preview evals NOT RUN; zero new paid/audio operations.
+Next: review exact skill, then validate prompt/reference-inspired local previews.
+Generic engine/UI unbuilt; native-audio policy needed; Seedance UI still locked.
