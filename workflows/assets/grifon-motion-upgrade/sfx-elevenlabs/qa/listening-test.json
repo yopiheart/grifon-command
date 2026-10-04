@@ -1,0 +1,210 @@
+{
+  "status": "LISTENING_TEST_ONLY_NOT_FINAL_SELECTION",
+  "providerCalls": 0,
+  "newCredits": 0,
+  "start": 2.5,
+  "end": 7.1,
+  "labels": "A/B/C/D follow native candidates 1/2/3/4; no quality ranking",
+  "timing": "Each variant: 1s labeled hold, then identical 4.6s approved film excerpt",
+  "rights": "Older free-plan sources: private review only",
+  "nativeAnchors": "Signal anchors require listening verification",
+  "musicVoiceGain": 1.0752266011723428,
+  "commonSfxHeadroomScale": 0.75549102745861,
+  "variants": [
+    {
+      "label": "A",
+      "nativeCandidate": 1,
+      "cues": [
+        {
+          "assetId": "rotation-air-1",
+          "sha256": "7ed9db07a3d50b4cd5c3b0b9f9b03bd1483376c3e5ca6602dc14ce76e2f119de",
+          "sourceIn": 0,
+          "sourceOut": 0.87,
+          "nativeAnchor": 0.39,
+          "timelineAnchor": 3.22,
+          "target20msRmsDbfs": -24,
+          "gainDb": -15.77614737645424
+        },
+        {
+          "assetId": "camera-contact-1",
+          "sha256": "4456c911d73032614e870ecc1f763702c8264aa1c24a6f6d1c97e6870471750b",
+          "sourceIn": 0.031,
+          "sourceOut": 0.316,
+          "nativeAnchor": 0.066,
+          "timelineAnchor": 3.82,
+          "target20msRmsDbfs": -19,
+          "gainDb": -5.232926623396226
+        },
+        {
+          "assetId": "rotation-air-1",
+          "sha256": "7ed9db07a3d50b4cd5c3b0b9f9b03bd1483376c3e5ca6602dc14ce76e2f119de",
+          "sourceIn": 0,
+          "sourceOut": 0.87,
+          "nativeAnchor": 0.39,
+          "timelineAnchor": 6.24,
+          "target20msRmsDbfs": -24,
+          "gainDb": -15.77614737645424
+        },
+        {
+          "assetId": "phone-contact-1",
+          "sha256": "ccc11fb39e476dc8b1ecee47a0344f4e465a52ee47392d49d0bd64841259f527",
+          "sourceIn": 0.121,
+          "sourceOut": 0.396,
+          "nativeAnchor": 0.156,
+          "timelineAnchor": 6.84,
+          "target20msRmsDbfs": -19,
+          "gainDb": 12.497129600601236
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "nativeCandidate": 2,
+      "cues": [
+        {
+          "assetId": "rotation-air-2",
+          "sha256": "182d04dc1289b346ed882cd05819c581b8aa584f59d9b3708f9057a514443199",
+          "sourceIn": 0.014,
+          "sourceOut": 1.044,
+          "nativeAnchor": 0.564,
+          "timelineAnchor": 3.22,
+          "target20msRmsDbfs": -24,
+          "gainDb": -11.755588419592446
+        },
+        {
+          "assetId": "camera-contact-2",
+          "sha256": "9de3ee1f004d3633c4bdfa5dac00a7238d68446e4f9dc8139be0646bb37ec4cd",
+          "sourceIn": 0.101,
+          "sourceOut": 0.386,
+          "nativeAnchor": 0.136,
+          "timelineAnchor": 3.82,
+          "target20msRmsDbfs": -19,
+          "gainDb": 1.0496794067179411
+        },
+        {
+          "assetId": "rotation-air-2",
+          "sha256": "182d04dc1289b346ed882cd05819c581b8aa584f59d9b3708f9057a514443199",
+          "sourceIn": 0.014,
+          "sourceOut": 1.044,
+          "nativeAnchor": 0.564,
+          "timelineAnchor": 6.24,
+          "target20msRmsDbfs": -24,
+          "gainDb": -11.755588419592446
+        },
+        {
+          "assetId": "phone-contact-2",
+          "sha256": "0fa98d4669deea51b9605a9c599463ea4e966cd052b2e9718ecabb73f38c374b",
+          "sourceIn": 0.145,
+          "sourceOut": 0.42,
+          "nativeAnchor": 0.18,
+          "timelineAnchor": 6.84,
+          "target20msRmsDbfs": -19,
+          "gainDb": 7.976491966902426
+        }
+      ]
+    },
+    {
+      "label": "C",
+      "nativeCandidate": 3,
+      "cues": [
+        {
+          "assetId": "rotation-air-3",
+          "sha256": "a601b8c5155095a4b820d9c4a374b90a58e14587117b176f4b6606a890b35b47",
+          "sourceIn": 0.126,
+          "sourceOut": 1.156,
+          "nativeAnchor": 0.676,
+          "timelineAnchor": 3.22,
+          "target20msRmsDbfs": -24,
+          "gainDb": -15.868959734417114
+        },
+        {
+          "assetId": "camera-contact-3",
+          "sha256": "549957c6f4f603c4756c9be098324d7423e342bcf2602412cf350c913576caff",
+          "sourceIn": 0.391,
+          "sourceOut": 0.676,
+          "nativeAnchor": 0.426,
+          "timelineAnchor": 3.82,
+          "target20msRmsDbfs": -19,
+          "gainDb": -1.231846702253144
+        },
+        {
+          "assetId": "rotation-air-3",
+          "sha256": "a601b8c5155095a4b820d9c4a374b90a58e14587117b176f4b6606a890b35b47",
+          "sourceIn": 0.126,
+          "sourceOut": 1.156,
+          "nativeAnchor": 0.676,
+          "timelineAnchor": 6.24,
+          "target20msRmsDbfs": -24,
+          "gainDb": -15.868959734417114
+        },
+        {
+          "assetId": "phone-contact-3",
+          "sha256": "99a5f3b613ced6359ec3e25b6a69bcd307402b49c3504a855f7e5764fa38a09b",
+          "sourceIn": 0.543,
+          "sourceOut": 0.818,
+          "nativeAnchor": 0.578,
+          "timelineAnchor": 6.84,
+          "target20msRmsDbfs": -19,
+          "gainDb": 12.695253131640445
+        }
+      ]
+    },
+    {
+      "label": "D",
+      "nativeCandidate": 4,
+      "cues": [
+        {
+          "assetId": "rotation-air-4",
+          "sha256": "255f8cf3bffddfc0977610156c0bad11b085d0b83efa8f20d9c56544eccb04fb",
+          "sourceIn": 0,
+          "sourceOut": 1,
+          "nativeAnchor": 0.52,
+          "timelineAnchor": 3.22,
+          "target20msRmsDbfs": -24,
+          "gainDb": -14.134062992107577
+        },
+        {
+          "assetId": "camera-contact-4",
+          "sha256": "5d3cff2c3c961b32110b96a0565214713070b4c4ee1155a3b10dfb6efeb4358f",
+          "sourceIn": 0.151,
+          "sourceOut": 0.436,
+          "nativeAnchor": 0.186,
+          "timelineAnchor": 3.82,
+          "target20msRmsDbfs": -19,
+          "gainDb": -0.5010056664734296
+        },
+        {
+          "assetId": "rotation-air-4",
+          "sha256": "255f8cf3bffddfc0977610156c0bad11b085d0b83efa8f20d9c56544eccb04fb",
+          "sourceIn": 0,
+          "sourceOut": 1,
+          "nativeAnchor": 0.52,
+          "timelineAnchor": 6.24,
+          "target20msRmsDbfs": -24,
+          "gainDb": -14.134062992107577
+        },
+        {
+          "assetId": "phone-contact-4",
+          "sha256": "a131408eca2b61d2656158108f708672fa61bd63a66fb8c0a81acb3b37347f99",
+          "sourceIn": 0.053,
+          "sourceOut": 0.328,
+          "nativeAnchor": 0.088,
+          "timelineAnchor": 6.84,
+          "target20msRmsDbfs": -19,
+          "gainDb": 14.893342235907216
+        }
+      ]
+    }
+  ],
+  "output": {
+    "path": "workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/grifon-sfx-listening-test-abcd.mp4",
+    "sha256": "5f81f4c9f6cb58dd8c2413c61088a3af93345fdd7f399ef5f4aef6d5fc5dd81c",
+    "bytes": 5126526,
+    "frames": "672",
+    "duration": "22.422000",
+    "audioCodec": "aac",
+    "sampleRate": "48000"
+  },
+  "loudness": "Summary:\r\n\r\n  Integrated loudness:\r\n    I:         -18.4 LUFS\r\n    Threshold: -28.6 LUFS\r\n\r\n  Loudness range:\r\n    LRA:         6.9 LU\r\n    Threshold: -38.9 LUFS\r\n    LRA low:   -23.9 LUFS\r\n    LRA high:  -17.0 LUFS\r\n\r\n  True peak:\r\n    Peak:       -1.6 dBFS\r\n",
+  "auditoryReview": "Pending user listening; no machine or human verdict claimed"
+}

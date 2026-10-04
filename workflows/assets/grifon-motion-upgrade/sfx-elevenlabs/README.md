@@ -131,4 +131,26 @@ Browser playback is
 not audible to the root agent; technical measurements cannot establish taste.
 Recorded Gemini native-audio assessment can inform choices after approval,
 with mono/downsampling limitations; human listening and creative approval of
-the new mix remain necessary. No new replacement MP4 has been exported yet.
+the new mix remain necessary. No full replacement MP4 has been exported yet.
+
+## Private listening worksheet
+
+`grifon-sfx-listening-test-abcd.mp4` is a 22.4-second A/B/C/D audition, not a
+final selection or a commercial deliverable. Each take has a one-second labeled
+hold followed by the same approved 2.5-7.1s camera/phone excerpt. A-D use native
+candidates1-4 respectively for rotation-air, camera-contact and phone-contact.
+There is no implied ranking. Sources remain unselected in the original catalog.
+
+`audition.mjs` assembles this locally without providers. It locks the existing
+music, VO, picture and timing hashes; excludes the old mixed audio entirely;
+applies the same per-family 20ms RMS target and a common SFX headroom factor to
+all variants; preserves the approved stem gain; and ducks only new SFX under VO.
+Native waveform anchors are provisional contact aids, not hearing evidence.
+The private review sources predate Starter and remain unsuitable for commercial
+release under the recorded licensing evidence.
+
+`qa/listening-test.json` records source cuts, gains, hashes and actual export
+checks: 672 frames, 1920x1080, stereo AAC48k, strict decode, -18.4LUFS and
+-1.6dBTP. A rendered label/frame was inspected. Listening/taste remains pending.
+The test deliberately contains only two device scenes; it does not approve the
+other families or replace the required full-film listening review.
