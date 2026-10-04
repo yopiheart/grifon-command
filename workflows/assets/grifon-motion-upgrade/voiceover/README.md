@@ -17,14 +17,17 @@ because a changed spec requires new approval.
 The spec bytes retain their proposal label to preserve the exact approved hash;
 received human approval is recorded separately in preflight-evidence.json.
 
-Paid synthesis uses `generate.mjs --generate --approved-spec <exact SHA256>`
-only after Neil approves that exact spec. The existing desktop credential must
+This completed case's `generate.mjs --generate` path is now permanently refused
+before credentials, asset validation or network access, including in restored
+worktrees without a local ledger. Its one-take approval has been consumed.
+A new take requires a separately approved workflow. Historically, the exact-spec
+generation path required the existing desktop credential to
 arrive through the process environment, never through a copied secret file,
 printed variable, CLI value or committed account state. Do not call the
 application's standalone voice diagnostic, which generates additional takes.
 
-The generator rechecks exact Aira library casting and voice/model1x rates before
-POST. It consumes the single attempt in an exclusive ignored ledger before
+The original generation rechecked exact Aira library casting and voice/model1x rates before
+POST. It consumed the single attempt in an exclusive ignored ledger before
 sending; HTTP failure or uncertain timeout does not authorize another request.
 The subscription read is unavailable (401), so the estimate is not a verified
 account debit, remaining balance or dollar cost. No automatic regeneration.

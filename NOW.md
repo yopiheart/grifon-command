@@ -4,8 +4,9 @@
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
 Branch codex/grifon-motion-depth; https://github.com/yopiheart/grifon-command/pull/156.
-Accepted baseline backed up at ead3abe9. Reconciling current main; only NOW.md
-conflicted. Independent Codex review and current CI required before merge.
+Accepted baseline backed up at ead3abe9. Main reconciled at29feca9c; only NOW.md
+conflicted. Independent Codex review clear after completed-VO replay fix;
+qa/merge-review.md has original-fail/fix-pass evidence. Final CI still required.
 No paid work, application feature or commercial publication in this scope.
 
 Neil accepted the 32.9s film and delegated sound choices; do not ask him to pick
@@ -28,6 +29,7 @@ voice-positioned.wav SHA
 54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7.
 Fixed stem gain1.0752266011723428. Old masters/pilot forbidden as mix inputs.
 One Aira/v4 generation approval consumed; never regenerate from that approval.
+Historical generator now refuses --generate before credential/network access.
 
 ## Recovery and future audio plan
 workflows/grifon_motion_production.md preserves exact recipe and reuse method.

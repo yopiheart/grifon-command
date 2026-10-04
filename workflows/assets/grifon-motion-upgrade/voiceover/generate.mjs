@@ -1,5 +1,5 @@
-// Default is an offline input check. --generate requires exact human-approved spec.
-// Never run --generate until Neil approves the exact request and credit cap.
+// Completed historical case: default is an offline input check; generation is frozen.
+// Its one-take approval is consumed, including in restored or alternate worktrees.
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
@@ -45,6 +45,7 @@ function validate() {
   }
 }
 async function main() {
+  if (generation) fail('Generation denied: this completed case has consumed its one-take approval. Preserve the approved recording; a new take needs a new approved workflow.');
   validate();
   if (!generation) {
     const takeAlignment = existsSync(path.join(work, 'alignment.json')) ? validateAlignment(JSON.parse(readFileSync(path.join(work, 'alignment.json'), 'utf8'))) : null;
