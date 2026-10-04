@@ -19,6 +19,7 @@
     "verify:recovery": "node tools/verify-recovery.mjs",
     "check:bundle-leak": "node tools/check-bundle-leak.mjs",
     "check:voice-sync": "node tools/check-voice-lint-sync.mjs",
+    "check:eval-prompts": "node tools/check-eval-prompt-sync.mjs",
     "check:domain": "node tools/check-domain-language.mjs",
     "cost:estimate": "node tools/render_cost_estimate.mjs",
     "creative:batch": "node tools/batch-creative-codex.mjs",
