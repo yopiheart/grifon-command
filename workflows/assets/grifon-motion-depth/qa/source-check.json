@@ -1,0 +1,186 @@
+{
+  "status": "PASS",
+  "samples": {
+    "5": {
+      "sha256": "0f91c7341628157b4b101275029b770920401b69f6da54013fbb868776701278",
+      "brightFraction": 0.29389178240740743
+    },
+    "0.2": {
+      "sha256": "870269f9fded5470ef2ff2dc38d474fedb0b6b5760881a12d0641348d887db6c",
+      "brightFraction": 0.3976538387345679
+    },
+    "0.8": {
+      "sha256": "bf8e6e1953afd7d84e5d8d381aa06aeb67701dbb6fb53aded4bb159489f5637f",
+      "brightFraction": 0.38784770447530864
+    },
+    "1.5": {
+      "sha256": "e3d066964386fc324cfb3ed1e98c04b7a97a5ec7b9137d85b3a08189a8b817d4",
+      "brightFraction": 0.3554484953703704
+    },
+    "2.4": {
+      "sha256": "a7ddff065858b277a3d3ec060fbe5e7f8ed5d09481dffc6791eab8457e3fa7b3",
+      "brightFraction": 0.3198910108024691
+    },
+    "2.6": {
+      "sha256": "f7d7bc9011720535e9b475f72e8eb5fe3891eaf28d3a35c8e7098941a22b0a28",
+      "brightFraction": 0.2871117862654321
+    },
+    "3.1": {
+      "sha256": "a8f057bbd54296398b49062438a7c1ab07b64bea80b93503b44f40250a441a3e",
+      "brightFraction": 0.33934124228395063
+    },
+    "3.6": {
+      "sha256": "f688186c991a9044a9e79a17c0da967c41e2ab2129f5f9b1c20babc8c4d46572",
+      "brightFraction": 0.28218315972222224
+    },
+    "4.1": {
+      "sha256": "ec23f862ef7eb7622508104e060388fefd720a0354e798050990ae4f5aae8dd1",
+      "brightFraction": 0.29521315586419755
+    },
+    "4.75": {
+      "sha256": "bf219a48b2948f530f82597aea474511834883a07d423ef37e0299a30b9126c7",
+      "brightFraction": 0.24683304398148148
+    },
+    "5.3": {
+      "sha256": "c1480bdfa89faadf0a26ef096de49a2b4ebb52e928a6b74a55569c60d3d74c9d",
+      "brightFraction": 0.33393904320987655
+    },
+    "5.5": {
+      "sha256": "408641aff62627ac1a8bb6037cba3ff877fa6d38c3ef6c7cc3aad98e2b68e58d",
+      "brightFraction": 0.3320235339506173
+    },
+    "6.04": {
+      "sha256": "707ee88f7aa5dad14a9af3d5c977a78e178c4af4b413d729120e939728077b69",
+      "brightFraction": 0.24464554398148147
+    },
+    "6.35": {
+      "sha256": "8706c601bcab5bdac4d4eb36aeda345f349cf94d28af9479736272892e7deb14",
+      "brightFraction": 0.25669608410493827
+    },
+    "7.8": {
+      "sha256": "6e8dc6b2e58b14e690fb219e64c8bffb5bb60a1956c80cbca5b11530266cb3d5",
+      "brightFraction": 0.25645399305555555
+    }
+  },
+  "motion": [
+    {
+      "start": 0.2,
+      "end": 0.8,
+      "changedPixelFraction": 0.5251273148148148
+    },
+    {
+      "start": 1.5,
+      "end": 2.4,
+      "changedPixelFraction": 0.4978076774691358
+    },
+    {
+      "start": 4.65,
+      "end": 5.3,
+      "changedPixelFraction": 0.5059611304012346
+    },
+    {
+      "start": 6.04,
+      "end": 6.35,
+      "changedPixelFraction": 0.2261332947530864
+    }
+  ],
+  "materialCuts": [
+    {
+      "time": 2.5,
+      "material": "gold",
+      "camera": [
+        0.48,
+        0.68,
+        6.8
+      ]
+    },
+    {
+      "time": 3,
+      "material": "ceramic",
+      "camera": [
+        0.48,
+        0.68,
+        6.8
+      ]
+    },
+    {
+      "time": 3.5,
+      "material": "glass",
+      "camera": [
+        0.48,
+        0.68,
+        6.8
+      ]
+    },
+    {
+      "time": 4,
+      "material": "wireframe",
+      "camera": [
+        0.48,
+        0.68,
+        6.8
+      ]
+    }
+  ],
+  "wordContacts": [
+    {
+      "word": "YOUR",
+      "time": 4.75,
+      "preRollStart": 4.51,
+      "homeOffset": 0
+    },
+    {
+      "word": "NEXT",
+      "time": 5,
+      "preRollStart": 4.76,
+      "homeOffset": 0
+    },
+    {
+      "word": "AD",
+      "time": 5.25,
+      "preRollStart": 5.01,
+      "homeOffset": 0
+    }
+  ],
+  "safeArea": {
+    "x": 155,
+    "y": 405,
+    "width": 789.765625,
+    "height": 280
+  },
+  "nonlinearSeekPixelIdentity": true,
+  "negativeControls": {
+    "blankRejected": true,
+    "freezeRejected": true
+  },
+  "copyRevision": {
+    "disposableHeadline": "YOUR NEXT IDEA",
+    "samples": [
+      {
+        "time": 0.8,
+        "changedPixelFraction": 0.006597222222222222,
+        "expectedChange": true
+      },
+      {
+        "time": 3.2,
+        "changedPixelFraction": 0,
+        "expectedChange": false
+      },
+      {
+        "time": 5.6,
+        "changedPixelFraction": 0.0653563850308642,
+        "expectedChange": true
+      },
+      {
+        "time": 7.2,
+        "changedPixelFraction": 0,
+        "expectedChange": false
+      }
+    ]
+  },
+  "limitations": [
+    "Software Chromium pixels; not physical-phone GPU behavior",
+    "No direct subjective listening",
+    "Abstract graphics, not product UI/output proof"
+  ]
+}

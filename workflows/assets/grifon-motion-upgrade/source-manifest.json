@@ -1,0 +1,193 @@
+{
+  "spec": {
+    "id": "grifon-motion-upgrade",
+    "duration": 32.9,
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "copy": {
+      "opening": "Your next ad.",
+      "launch": [
+        "To",
+        "launch",
+        "a",
+        "product."
+      ],
+      "story": [
+        "To",
+        "tell",
+        "your",
+        "story."
+      ],
+      "grow": [
+        "To",
+        "grow",
+        "your",
+        "business."
+      ],
+      "problem": [
+        "But",
+        "there’s never",
+        "time",
+        "to",
+        "make it."
+      ],
+      "turningPoint": "Until now.",
+      "heroTags": [
+        "A NEW ANGLE",
+        "YOUR STORY",
+        "THE BIG PICTURE"
+      ],
+      "conversation": [
+        {
+          "speaker": "Grifon",
+          "text": "What are we creating?"
+        },
+        {
+          "speaker": "You",
+          "text": "An ad for my next product launch."
+        },
+        {
+          "speaker": "Grifon",
+          "text": "Let’s find the angle. Then build the story."
+        }
+      ],
+      "statement": [
+        "Give",
+        "your next",
+        "ad",
+        "a clear",
+        "direction."
+      ],
+      "cards": [
+        {
+          "title": "Research",
+          "detail": "Know your audience."
+        },
+        {
+          "title": "Script",
+          "detail": "Shape your message."
+        },
+        {
+          "title": "Storyboard",
+          "detail": "Plan every scene."
+        }
+      ],
+      "brand": "GRIFON",
+      "url": "grifon.ai"
+    },
+    "palette": {
+      "cream": "#F2F1EC",
+      "dark": "#09090B",
+      "surface": "#18181B",
+      "gold": "#FFCC00",
+      "blue": "#517C96",
+      "sage": "#708B63"
+    },
+    "cueAnchors": {
+      "typing": {
+        "start": 0.08,
+        "end": 0.9
+      },
+      "collages": [
+        1.13,
+        4.24,
+        7.23
+      ],
+      "swipes": [
+        2.16,
+        5.03,
+        8.08
+      ],
+      "heroes": [
+        2.63,
+        5.65,
+        8.61
+      ],
+      "heroContacts": [
+        3.82,
+        6.84,
+        9.8
+      ],
+      "lens": 3.52,
+      "problem": [
+        10.2,
+        10.41,
+        10.62,
+        10.83,
+        11.04
+      ],
+      "warmCut": 13.03,
+      "untilTyping": {
+        "start": 13.2,
+        "end": 13.72
+      },
+      "orb": 14.27,
+      "messages": [
+        17.65,
+        18.86,
+        20.8
+      ],
+      "dialogueExit": 22.48,
+      "closingWords": [
+        22.8,
+        23.03,
+        23.33,
+        23.74,
+        24.08
+      ],
+      "outline": 25.3,
+      "cards": [
+        27.02,
+        27.25,
+        27.3
+      ],
+      "compression": 28.87,
+      "logo": 29.28,
+      "logoSettled": 29.93,
+      "url": 30,
+      "fade": [
+        31.96,
+        32.61
+      ]
+    },
+    "baseline": "workflows/assets/grifon-reference-full/exports/grifon-your-next-ad-v08-1080p.mp4",
+    "acceptedAudioPayloadSha256": "095701ccc7fe7292c70f888a1145c15736fa64648f98c71ef24f1f195d536998"
+  },
+  "sources": {
+    "composition.html.template": "5c55cdd65e2f0e2e5688612865b56407f2000d1df021699c7de389f99becfcf6",
+    "assets/inter-variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "assets/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/inter-normalized-outlines.json": "a9c14eea59cf40a779136891e1fdb5a99ae7fd9bd520352ecee979d1b51fa42a",
+    "assets/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/OFL-Inter.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
+    "vendor/LICENSE": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601",
+    "vendor/gsap.min.js": "8f41acd30db5898fd367e848d5640f814aac2fcdd54738e4b3650ebe0e941f74",
+    "vendor/three.global.js": "7d3cfc1f4eb2117c54c726ad37170ed4b57afb8f8af8421989b528e0decf3249",
+    "demo.json": "39f7398c036ae07911f062cffc662cc0c340b44c2f38ec5a8fd0c14e43c3196e"
+  },
+  "output": {
+    "path": "index.html",
+    "sha256": "ee9caae5030969988b272c9ca8f78245fdbdf24b05cfaed6ad9bb693e6795e2d",
+    "localDependencies": [
+      "vendor/gsap.min.js",
+      "vendor/three.global.js"
+    ]
+  },
+  "brand": "Canonical unchanged public/logo.png; transparent gold ring and Inter Black italic GRIFON lockup",
+  "audio": {
+    "source": "workflows/assets/grifon-reference-full/exports/grifon-your-next-ad-v08-1080p.mp4",
+    "treatment": "Preserve the accepted V08 AAC payload and timing",
+    "payloadSha256": "095701ccc7fe7292c70f888a1145c15736fa64648f98c71ef24f1f195d536998"
+  },
+  "three": {
+    "version": "0.180.0",
+    "license": "MIT",
+    "notice": "vendor/LICENSE"
+  },
+  "fonts": {
+    "license": "OFL-1.1",
+    "notice": "assets/OFL-Inter.txt"
+  },
+  "generationSpendUsd": 0
+}

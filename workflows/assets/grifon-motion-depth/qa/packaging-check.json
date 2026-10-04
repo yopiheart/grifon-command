@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "purpose": "Emit GLSL as escaped JavaScript strings so generated source passes the whitespace gate without altering runtime shader bytes",
+  "oldBundleSha256": "ff8258e812e337107c23ae6212423377611f5e3aa772a5e5fbadde8f6f7c597c",
+  "newBundleSha256": "7d3cfc1f4eb2117c54c726ad37170ed4b57afb8f8af8421989b528e0decf3249",
+  "method": "Node VM evaluation of preserved Git-staged old IIFE versus rebuilt working IIFE",
+  "shaderChunks": { "count": 141, "identical": true, "sha256": "304e4fa6400c4699204d3d5fbc4f4f5a4c203fcd56632cecbf7fd60ee44a7e52" },
+  "shaderLibPairs": { "count": 18, "identical": true, "sha256": "76eff947bd959261ce077e9c427b36a9351852595466b3da5fab85e73bb8a651" },
+  "exportedApiKeys": { "count": 422, "identical": true, "sha256": "23ff58802d041f1acb881e55f50a799f497584677d244ae61f9692d13f01a35b" },
+  "generatedTrailingWhitespaceLines": 0,
+  "originalWhitespaceGate": "FAIL: 5 generated GLSL template-literal lines",
+  "buildAndVmExitCode": 0,
+  "filmChanged": false,
+  "upstreamVendorChanged": false,
+  "limitations": ["Source/browser and film checks preceded this compiler-escaping-only change", "No repeat film render was needed for identical runtime shader strings"]
+}

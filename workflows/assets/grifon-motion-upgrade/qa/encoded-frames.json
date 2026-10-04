@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "film": "grifon-full-upgrade-1080p.mp4",
+  "sha256": "978d8e1d29bfbd40c89788a898377c5acca5d3ea7efcdfab1a50e71d4fbbff27",
+  "bytes": 5190198,
+  "sampleTimes": [
+    0.6,
+    1.7,
+    3.7,
+    4.7,
+    6.6,
+    7.8,
+    9.7,
+    11.4,
+    13.5,
+    15.4,
+    19.4,
+    21.8,
+    24.4,
+    27.8,
+    30.6
+  ],
+  "detailTimes": [
+    3.82,
+    6.84,
+    9.8,
+    14.27,
+    22.48,
+    25.3,
+    28.87,
+    32.7
+  ],
+  "sourcePixelComparisons": [
+    {
+      "seconds": 0.6,
+      "meanAbsoluteChannelError": 1.0119725758744855,
+      "tolerance": 12
+    },
+    {
+      "seconds": 1.7,
+      "meanAbsoluteChannelError": 1.1462363361625514,
+      "tolerance": 12
+    },
+    {
+      "seconds": 3.7,
+      "meanAbsoluteChannelError": 3.1480693801440327,
+      "tolerance": 12
+    },
+    {
+      "seconds": 4.7,
+      "meanAbsoluteChannelError": 1.1883492476851851,
+      "tolerance": 12
+    },
+    {
+      "seconds": 6.6,
+      "meanAbsoluteChannelError": 3.281826935442387,
+      "tolerance": 12
+    },
+    {
+      "seconds": 7.8,
+      "meanAbsoluteChannelError": 1.2214753729423868,
+      "tolerance": 12
+    },
+    {
+      "seconds": 9.7,
+      "meanAbsoluteChannelError": 2.969459715792181,
+      "tolerance": 12
+    },
+    {
+      "seconds": 11.4,
+      "meanAbsoluteChannelError": 1.3588691165123457,
+      "tolerance": 12
+    },
+    {
+      "seconds": 13.5,
+      "meanAbsoluteChannelError": 7.3125170396090535,
+      "tolerance": 12
+    },
+    {
+      "seconds": 15.4,
+      "meanAbsoluteChannelError": 1.4831351273148148,
+      "tolerance": 12
+    },
+    {
+      "seconds": 19.4,
+      "meanAbsoluteChannelError": 3.3627123521090536,
+      "tolerance": 12
+    },
+    {
+      "seconds": 21.8,
+      "meanAbsoluteChannelError": 3.43183320473251,
+      "tolerance": 12
+    },
+    {
+      "seconds": 24.4,
+      "meanAbsoluteChannelError": 0.40308963477366255,
+      "tolerance": 12
+    },
+    {
+      "seconds": 27.8,
+      "meanAbsoluteChannelError": 1.3254607124485596,
+      "tolerance": 12
+    },
+    {
+      "seconds": 30.6,
+      "meanAbsoluteChannelError": 0.4316063850308642,
+      "tolerance": 12
+    }
+  ],
+  "blackTail": {
+    "time": 32.7,
+    "maxChannel": 0,
+    "threshold": 5
+  },
+  "limitations": [
+    "Samples do not measure every possible visual collision",
+    "No subjective listening claim",
+    "Offline encoded video inspection; no browser-origin preview check"
+  ]
+}

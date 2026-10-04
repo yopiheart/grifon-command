@@ -1,0 +1,216 @@
+{
+  "id": "grifon-full-upgrade-english-vo-v02",
+  "approvalStatus": "PROPOSED_NOT_AUTHORIZED_FOR_GENERATION",
+  "purpose": "Add a restrained, natural English launch-film narrator to the human-approved 32.9-second Grifon film. Curious opening, confident pivot and closing. Preserve approved picture and action SFX.",
+  "provider": "ElevenLabs direct API, existing desktop account",
+  "endpoint": "/v1/text-to-speech/CkDT8SVS21XIVk5BcuDe/with-timestamps?output_format=mp3_44100_128",
+  "casting": {
+    "voiceId": "CkDT8SVS21XIVk5BcuDe",
+    "voiceName": "Aira - Confident News Reporter",
+    "category": "professional",
+    "accent": "standard",
+    "gender": "female",
+    "voiceTrainingLanguage": "Filipino",
+    "scriptLanguage": "English",
+    "observedLibraryCreditRate": 1
+  },
+  "request": {
+    "text": "[curious] Your next ad.\n[confident] To launch a product.\nTo tell your story.\nTo grow your business.\n[serious] But there's never time to make it.\n[excited] Until now.\n[confident] Meet Grifon.\nFind the angle. Build the story.\nGive your next ad a clear direction.\nResearch. Script. Storyboard.\nGrifon dot A I.",
+    "model_id": "eleven_v4",
+    "language_code": "en",
+    "voice_settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75
+    }
+  },
+  "spokenText": "Your next ad.\nTo launch a product.\nTo tell your story.\nTo grow your business.\nBut there's never time to make it.\nUntil now.\nMeet Grifon.\nFind the angle. Build the story.\nGive your next ad a clear direction.\nResearch. Script. Storyboard.\nGrifon dot A I.",
+  "delivery": {
+    "arc": "Curious opening, confident possibilities, restrained seriousness at the problem, brief excitement at Until now, confident warm finish.",
+    "tags": [
+      "[curious]",
+      "[confident]",
+      "[serious]",
+      "[excited]"
+    ],
+    "limitation": "Tags direct delivery, but effect/strength is voice-dependent and needs audition. Aira is trained on Filipino; v4 cross-language English handling does not guarantee a Filipino English accent. Do not add style/speed/SSML or native SFX tags."
+  },
+  "pronunciation": {
+    "target": "GRIFF-on for Grifon; A and I spoken as separate letter names.",
+    "exactSubmittedBrandSpellings": [
+      "Grifon",
+      "Grifon dot A I."
+    ],
+    "limitation": "Target is an audition criterion, not a guaranteed API pronunciation. No identity cloning, dictionary or phonetic respelling is submitted."
+  },
+  "assets": {
+    "picture": {
+      "path": "../grifon-full-upgrade-1080p.mp4",
+      "sha256": "978d8e1d29bfbd40c89788a898377c5acca5d3ea7efcdfab1a50e71d4fbbff27"
+    },
+    "approvedPremaster": {
+      "path": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v08/work/mix-v08.wav",
+      "sha256": "bd18d6cecfa3cfcb60f39c6badb914b864c9f37b5d250333fd1e7b95fb527ba0"
+    },
+    "approvedSfxStem": {
+      "path": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v08/work/sfx-premaster.wav",
+      "sha256": "276a8269af16b26e63ebe5be6cc5f32fb047e1b3e77ac144cff760e577e29306"
+    }
+  },
+  "budget": {
+    "maxSynthesisRequests": 1,
+    "exactCharacters": 306,
+    "exactWords": 46,
+    "maxCredits": 500,
+    "observedModelCreditMultiplier": 1,
+    "estimatedCreditsForExactRequest": 306,
+    "observedVoiceCreditMultiplier": 1,
+    "creditEvidence": "Read-only exact Aira public-library metadata rate=1 and v4 model tokenCostFactor=1, character_cost_multiplier=1, cost_discount_multiplier=1 on 2026-10-03. Conservative estimate counts every raw character, including emotion tags.",
+    "accountBalance": "Unknown: the existing API key received HTTP 401 for read-only subscription data. No dollar conversion or remaining balance is asserted.",
+    "retryPolicy": "No automatic retries or paid alignment calls. Mark the single attempt consumed before POST; timeout/unknown outcome also consumes it. New input, casting, model or second request needs a new approved spec."
+  },
+  "editing": {
+    "duration": 32.9,
+    "sampleRate": 48000,
+    "channels": 2,
+    "segments": [
+      {
+        "id": "opening",
+        "text": "Your next ad.",
+        "inputText": "[curious] Your next ad.",
+        "directionTag": "[curious]",
+        "targetStart": 0.12,
+        "latestEnd": 1.09,
+        "characterStart": 10,
+        "characterEndExclusive": 23
+      },
+      {
+        "id": "launch",
+        "text": "To launch a product.",
+        "inputText": "[confident] To launch a product.",
+        "directionTag": "[confident]",
+        "targetStart": 1.22,
+        "latestEnd": 2.61,
+        "characterStart": 36,
+        "characterEndExclusive": 56
+      },
+      {
+        "id": "story",
+        "text": "To tell your story.",
+        "inputText": "To tell your story.",
+        "directionTag": "",
+        "targetStart": 4.15,
+        "latestEnd": 5.62,
+        "characterStart": 57,
+        "characterEndExclusive": 76
+      },
+      {
+        "id": "grow",
+        "text": "To grow your business.",
+        "inputText": "To grow your business.",
+        "directionTag": "",
+        "targetStart": 7.12,
+        "latestEnd": 8.59,
+        "characterStart": 77,
+        "characterEndExclusive": 99
+      },
+      {
+        "id": "problem",
+        "text": "But there's never time to make it.",
+        "inputText": "[serious] But there's never time to make it.",
+        "directionTag": "[serious]",
+        "targetStart": 10.12,
+        "latestEnd": 12.87,
+        "characterStart": 110,
+        "characterEndExclusive": 144
+      },
+      {
+        "id": "pivot",
+        "text": "Until now.",
+        "inputText": "[excited] Until now.",
+        "directionTag": "[excited]",
+        "targetStart": 13.18,
+        "latestEnd": 14.12,
+        "characterStart": 155,
+        "characterEndExclusive": 165
+      },
+      {
+        "id": "introduce",
+        "text": "Meet Grifon.",
+        "inputText": "[confident] Meet Grifon.",
+        "directionTag": "[confident]",
+        "targetStart": 15.05,
+        "latestEnd": 16.42,
+        "characterStart": 178,
+        "characterEndExclusive": 190
+      },
+      {
+        "id": "conversation",
+        "text": "Find the angle. Build the story.",
+        "inputText": "Find the angle. Build the story.",
+        "directionTag": "",
+        "targetStart": 19.65,
+        "latestEnd": 22.35,
+        "characterStart": 191,
+        "characterEndExclusive": 223
+      },
+      {
+        "id": "direction",
+        "text": "Give your next ad a clear direction.",
+        "inputText": "Give your next ad a clear direction.",
+        "directionTag": "",
+        "targetStart": 22.84,
+        "latestEnd": 25.55,
+        "characterStart": 224,
+        "characterEndExclusive": 260
+      },
+      {
+        "id": "workflow",
+        "text": "Research. Script. Storyboard.",
+        "inputText": "Research. Script. Storyboard.",
+        "directionTag": "",
+        "targetStart": 26.8,
+        "latestEnd": 28.86,
+        "characterStart": 261,
+        "characterEndExclusive": 290
+      },
+      {
+        "id": "brand",
+        "text": "Grifon dot A I.",
+        "inputText": "Grifon dot A I.",
+        "directionTag": "",
+        "targetStart": 30.04,
+        "latestEnd": 31.73,
+        "characterStart": 291,
+        "characterEndExclusive": 306
+      }
+    ],
+    "maxPitchPreservingTempo": 1.12,
+    "timingPolicy": "Use returned character timestamps to place whole phrases in these windows, including breath/consonant handles. Keep natural duration where possible; stop for a timing failure instead of clipping words or exceeding tempo cap.",
+    "musicDuckDb": -6,
+    "duckAttackSeconds": 0.1,
+    "duckReleaseSeconds": 0.24,
+    "bedReconstruction": "Subtract the approved SFX stem, including its existing tail fade, from the approved mix premaster. This retains the authored music filtering and envelopes. Duck only recovered music; SFX contacts are not shifted.",
+    "export": "New grifon-full-upgrade-english-vo-1080p.mp4; copy the accepted H264 video stream. Re-encode the new full mix as stereo AAC48k with faststart. Keep approved no-VO exports untouched."
+  },
+  "passFail": [
+    "Exactly one provider synthesis request, exact approved body, credit estimate no higher than 500; no rerolls.",
+    "All eleven spoken phrases present with usable timestamps, emotion tags not spoken aloud, no clipped speech, no phrase outside its window and no tempo greater than 1.12.",
+    "Speech remains audible above the music; music-only ducking leaves original SFX samples and contacts unchanged.",
+    "Voice finishes before the 31.96-second visual fade. Final black tail remains silent.",
+    "Output is 1920x1080, 30fps, 987 frames, 32.900 seconds, H264yuv420p, stereo AAC48k, fully decodable with identical H264 payload to the approved film.",
+    "Encoded mix measures -16 LUFS +/-1 and true peak no higher than -1 dBTP.",
+    "Human audition required for premium delivery, clear wording, GRIFF-on and separate A/I pronunciation. Technical measurements cannot substitute for listening."
+  ],
+  "evidence": [
+    "Spec SHA256 and safe single-attempt ledger in ignored local work folder",
+    "Provider character alignment, conservative credit estimate and explicit actual-debit-unknown status; no raw auth headers retained",
+    "Phrase timing/tempo report, voice/music/SFX levels, strict decode and video payload identity",
+    "Native full-film review MP4 and mobile download link after commit",
+    "Human listening approval remains separate from technical PASS"
+  ],
+  "sources": [
+    "https://elevenlabs.io/docs/api-reference/text-to-speech/convert-with-timestamps/",
+    "https://elevenlabs.io/docs/eleven-creative/playground/text-to-speech",
+    "https://elevenlabs.io/docs/overview/capabilities/text-to-speech/best-practices#prompting-eleven-v4"
+  ]
+}

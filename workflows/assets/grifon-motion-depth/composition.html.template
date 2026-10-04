@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1920,initial-scale=1">
+<title>Grifon — Motion Depth Study</title>
+<style>
+@font-face{font-family:Inter;src:url('{{INTER}}') format('truetype');font-weight:900;font-display:block}
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:{{BG}}}
+#film{position:relative;width:1920px;height:1080px;overflow:hidden;background:{{BG}};font-family:Inter,sans-serif;color:{{TEXT}}}
+#world{position:absolute;inset:0;width:100%;height:100%}
+#lockup{position:absolute;left:155px;top:405px;height:280px;opacity:0;transform-origin:15% 50%;will-change:transform,opacity}
+.mark{display:flex;align-items:center;gap:37px}.ring{display:flex;align-items:center;justify-content:center;width:192px;height:192px;flex:none;border:2px solid {{GOLD}};border-radius:50%;background:transparent}
+.ring img{height:74%;width:auto;object-fit:contain}.brand{font-size:160px;line-height:.95;letter-spacing:-9px;font-style:italic;font-weight:900;margin:0}
+.url{position:absolute;top:242px;left:229px;font-size:38px;letter-spacing:8px;line-height:1;color:{{TEXT}};white-space:nowrap}
+</style></head><body>
+<main id="film" data-composition-id="main" data-width="1920" data-height="1080" data-start="0" data-duration="8" data-fps="30">
+<canvas id="world" width="1920" height="1080"></canvas>
+<div id="lockup"><div class="mark"><span class="ring"><img id="brand-logo" src="{{LOGO}}" alt=""></span><h1 class="brand" data-copy="brand">{{BRAND}}</h1></div><div class="url" data-copy="url">{{URL}}</div></div>
+</main>
+<script src="{{GSAP}}"></script><script src="{{THREE}}"></script><script>window.MOTION_SPEC={{CONFIG}};window.INTER_OUTLINES={{OUTLINES}};</script>
+<script id="composition-source">
+const THREE = window.THREE;
+
+const spec = window.MOTION_SPEC;
+const outlines = window.INTER_OUTLINES;
+const canvas = document.getElementById('world');
+const lockup = document.getElementById('lockup');
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const mix = (a, b, t) => a + (b - a) * t;
+const out = t => 1 - Math.pow(1 - clamp(t), 4);
+const smooth = t => { const p = clamp(t); return p * p * (3 - 2 * p); };
+const radians = degrees => degrees * Math.PI / 180;
+const readiness = [document.fonts.load('900 160px Inter'), document.getElementById('brand-logo').decode()];
+
+async function init() {
+await Promise.all(readiness);
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(spec.width, spec.height, false);
+renderer.setClearColor(spec.colors.background);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.16;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(spec.colors.background);
+scene.fog = new THREE.FogExp2(spec.colors.background, .027);
+const camera = new THREE.PerspectiveCamera(43, 16 / 9, .1, 80);
+const target = new THREE.Vector3();
+
+const environment = new THREE.Scene();
+environment.background = new THREE.Color('#18181B');
+const addEnvPanel = (color, intensity, x, y, z, width, height) => {
+  const panel = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }));
+  panel.material.color.multiplyScalar(intensity);
+  panel.position.set(x, y, z); panel.lookAt(0, 0, 0); environment.add(panel);
+};
+addEnvPanel('#FFFFFF', 5.5, -4, 5, 3, 3.5, 10);
+addEnvPanel('#FFFFFF', 3.3, 4, 3, -4, 2.4, 9);
+addEnvPanel(spec.colors.accent, 2.5, -4, -.8, -2, 2, 8);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(environment, .04).texture;
+pmrem.dispose();
+scene.add(new THREE.AmbientLight('#FFFFFF', .45));
+const key = new THREE.DirectionalLight('#FFFFFF', 4);
+key.position.set(-3, 7, 5); key.castShadow = true;
+key.shadow.mapSize.set(1024, 1024); key.shadow.camera.left = -10; key.shadow.camera.right = 10;
+key.shadow.camera.top = 8; key.shadow.camera.bottom = -8; key.shadow.normalBias = .025;
+scene.add(key);
+const rim = new THREE.DirectionalLight(spec.colors.accent, 4.2);
+rim.position.set(4, 2, -4); scene.add(rim);
+const fill = new THREE.DirectionalLight('#FFFFFF', .9);
+fill.position.set(6, -1, 5); scene.add(fill);
+
+const groundY = -1.58;
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.MeshPhysicalMaterial({
+  color: spec.colors.background, roughness: .48, metalness: .28, envMapIntensity: .45, transparent: true, opacity: .87, depthWrite: false,
+}));
+floor.rotation.x = -Math.PI / 2; floor.position.y = groundY; floor.receiveShadow = true; scene.add(floor);
+const contactCanvas = document.createElement('canvas'); contactCanvas.width = 256; contactCanvas.height = 256;
+const contactContext = contactCanvas.getContext('2d');
+const radial = contactContext.createRadialGradient(128, 128, 8, 128, 128, 123);
+radial.addColorStop(0, 'rgba(0,0,0,.65)'); radial.addColorStop(.45, 'rgba(0,0,0,.26)'); radial.addColorStop(1, 'rgba(0,0,0,0)');
+contactContext.fillStyle = radial; contactContext.fillRect(0, 0, 256, 256);
+const contact = new THREE.Mesh(new THREE.PlaneGeometry(4.5, 4.5), new THREE.MeshBasicMaterial({
+  map: new THREE.CanvasTexture(contactCanvas), transparent: true, depthWrite: false,
+}));
+contact.rotation.x = -Math.PI / 2; contact.position.y = groundY + .012; scene.add(contact);
+
+const architecture = new THREE.Group(); scene.add(architecture);
+const slate = new THREE.MeshPhysicalMaterial({ color: spec.colors.surface, roughness: .27, metalness: .75 });
+for (let i = 0; i < 10; i++) {
+  const slat = new THREE.Mesh(new THREE.BoxGeometry(.16, 6.2, .55), slate);
+  slat.position.set(-5.3 + i * 1.05, 1.35, i % 2 ? -1.6 : -2.7);
+  slat.rotation.y = .25; slat.castShadow = true; architecture.add(slat);
+}
+for (const [x, z, angle] of [[-4.9, 4.3, -.28], [5.8, 3.7, .2]]) {
+  const beam = new THREE.Mesh(new THREE.BoxGeometry(.9, 7.5, .7), slate);
+  beam.position.set(x, .8, z); beam.rotation.z = angle; beam.castShadow = true; architecture.add(beam);
+  const strip = new THREE.Mesh(new THREE.BoxGeometry(.018, 6.1, .025), new THREE.MeshBasicMaterial({ color: spec.colors.accent }));
+  strip.position.set(.47, 0, .365); beam.add(strip);
+}
+
+const promptCanvas = document.createElement('canvas'); promptCanvas.width = 1536; promptCanvas.height = 1024;
+const pc = promptCanvas.getContext('2d');
+pc.fillStyle = spec.colors.surface; pc.fillRect(0, 0, 1536, 1024);
+pc.strokeStyle = '#FFFFFF30'; pc.lineWidth = 3; pc.strokeRect(20, 20, 1496, 984);
+pc.fillStyle = spec.colors.text; pc.font = '900 258px Inter'; pc.textBaseline = 'middle';
+const titleWords = spec.copy.headline.trim().split(/\s+/);
+for (let i = 0; i < titleWords.length; i++) {
+  pc.fillStyle = i === 2 ? spec.colors.accent : spec.colors.text;
+  pc.fillText(titleWords[i], 117, 212 + i * 296);
+}
+const promptTexture = new THREE.CanvasTexture(promptCanvas); promptTexture.colorSpace = THREE.SRGBColorSpace;
+const prompt = new THREE.Mesh(new THREE.PlaneGeometry(4.1, 2.73), new THREE.MeshBasicMaterial({ map: promptTexture }));
+prompt.position.set(-2.15, .15, -.25); prompt.rotation.set(-.045, .13, -.035); scene.add(prompt);
+
+const sphere = new THREE.SphereGeometry(1.29, 96, 64);
+const wireSphere = new THREE.SphereGeometry(1.29, 24, 14);
+const materials = {
+  gold: new THREE.MeshPhysicalMaterial({ color: spec.colors.accent, metalness: 1, roughness: .2, clearcoat: .9, clearcoatRoughness: .16 }),
+  ceramic: new THREE.MeshPhysicalMaterial({ color: '#FFFFFF', roughness: .62, metalness: 0, clearcoat: .24 }),
+  glass: new THREE.MeshPhysicalMaterial({ color: '#FFFFFF', metalness: 0, roughness: .06, transmission: 1, thickness: 2.4, ior: 1.5, attenuationColor: new THREE.Color(spec.colors.accent), attenuationDistance: 4, transparent: true }),
+  wireframe: new THREE.MeshBasicMaterial({ color: spec.colors.accent, wireframe: true, transparent: true, opacity: .7 }),
+};
+const orb = new THREE.Mesh(sphere, materials.gold); orb.castShadow = true; scene.add(orb);
+const sphereReflection = new THREE.Mesh(sphere, materials.gold.clone());
+sphereReflection.material.transparent = true; sphereReflection.material.opacity = .14; sphereReflection.material.depthWrite = false;
+sphereReflection.scale.set(1, -1, 1); scene.add(sphereReflection);
+const orbit = new THREE.Group(); scene.add(orbit);
+const torus = new THREE.Mesh(new THREE.TorusGeometry(1.76, .012, 8, 128), new THREE.MeshBasicMaterial({ color: spec.colors.accent, transparent: true, opacity: .28 }));
+torus.rotation.x = radians(74); torus.rotation.y = radians(18); orbit.add(torus);
+const glassCore = new THREE.Mesh(new THREE.SphereGeometry(.21, 24, 16), new THREE.MeshBasicMaterial({ color: spec.colors.accent }));
+orb.add(glassCore); glassCore.visible = false;
+const coreLight = new THREE.PointLight(spec.colors.accent, 0, 5); scene.add(coreLight);
+
+function glyphPath(glyph, size, offset) {
+  const scale = size / outlines.unitsPerEm;
+  const points = contour => contour.map(([x, y]) => new THREE.Vector2(x * scale + offset, y * scale));
+  return glyph.shapes.map(polygon => {
+    const shape = new THREE.Shape(points(polygon.outer));
+    shape.holes = polygon.holes.map(hole => new THREE.Path(points(hole)));
+    return shape;
+  });
+}
+function makeWord(word, size, frontColor) {
+  const group = new THREE.Group();
+  const face = new THREE.MeshPhysicalMaterial({ color: frontColor, roughness: .23, metalness: .28, clearcoat: .65 });
+  const edge = new THREE.MeshStandardMaterial({ color: spec.colors.surface, roughness: .18, metalness: .85 });
+  let x = 0;
+  for (const character of word) {
+    const glyph = outlines.glyphs[character];
+    if (!glyph) throw new Error(`Missing editable glyph: ${character}`);
+    if (glyph.shapes.length) {
+      const geometry = new THREE.ExtrudeGeometry(glyphPath(glyph, size, x), { depth: .25, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: .015, bevelThickness: .025, curveSegments: 10 });
+      const mesh = new THREE.Mesh(geometry, [face, edge]); mesh.castShadow = true; group.add(mesh);
+    }
+    x += glyph.advance * size / outlines.unitsPerEm - size * .028;
+  }
+  group.userData.width = x; return group;
+}
+const title = new THREE.Group(); scene.add(title);
+const titleRows = [];
+const titleReflections = [];
+for (let i = 0; i < titleWords.length; i++) {
+  const word = makeWord(titleWords[i], 1.64, i === 2 ? spec.colors.accent : spec.colors.text);
+  word.userData.home = new THREE.Vector3(-word.userData.width / 2, 1.68 - i * 1.36, .08);
+  title.add(word); titleRows.push(word);
+  const reflection = word.clone(true);
+  reflection.traverse(node => {
+    if (node.isMesh) node.material = node.material.map(material => { const m = material.clone(); m.transparent = true; m.opacity = .08; m.depthWrite = false; return m; });
+  });
+  scene.add(reflection); titleReflections.push(reflection);
+}
+
+const renderTarget = new THREE.WebGLRenderTarget(spec.width, spec.height, { type: THREE.HalfFloatType, samples: 4, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter });
+renderTarget.depthTexture = new THREE.DepthTexture(spec.width, spec.height);
+const screen = new THREE.Scene();
+const screenCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const finish = new THREE.ShaderMaterial({
+  uniforms: {
+    image: { value: renderTarget.texture }, depth: { value: renderTarget.depthTexture }, resolution: { value: new THREE.Vector2(spec.width, spec.height) },
+    focus: { value: 7 }, blurAmount: { value: 1 }, time: { value: 0 }, near: { value: .1 }, far: { value: 80 },
+  },
+  vertexShader: 'varying vec2 uvOut;void main(){uvOut=uv;gl_Position=vec4(position.xy,0.,1.);}',
+  fragmentShader: `
+    uniform sampler2D image;uniform sampler2D depth;uniform vec2 resolution;uniform float focus,blurAmount,time,near,far;varying vec2 uvOut;
+    float distanceAt(vec2 p){float z=texture2D(depth,p).x;return near*far/(far-z*(far-near));}
+    void main(){
+      float distance=distanceAt(uvOut);float coc=clamp(abs(distance-focus)/max(focus,.1)*2.8,0.,1.)*blurAmount;
+      vec2 radius=vec2(6.5)/resolution*coc;vec3 color=texture2D(image,uvOut).rgb*.24;
+      for(int i=0;i<8;i++){float a=float(i)*.78539816;vec2 off=vec2(cos(a),sin(a))*radius;color+=texture2D(image,uvOut+off).rgb*.095;}
+      vec2 q=uvOut-.5;float vignette=1.-dot(q,q)*.56;color*=vignette;
+      float noise=fract(sin(dot(floor(uvOut*resolution),vec2(12.9898,78.233))+floor(time*30.)*31.1)*43758.5453)-.5;
+      color+=noise*.008;gl_FragColor=vec4(color,1.);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+    }`,
+  depthTest: false, depthWrite: false,
+});
+screen.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), finish));
+
+function renderAt(value) {
+  const t = clamp(Number(value) || 0, 0, spec.duration);
+  const opening = t < spec.materialCuts[0].at;
+  const materialPass = t >= spec.materialCuts[0].at && t < 4.5;
+  const titlePass = t >= 4.5 && t < spec.logoAt;
+  const closing = t >= spec.logoAt;
+  architecture.visible = opening;
+  prompt.visible = opening;
+  title.visible = titlePass;
+  orb.visible = !titlePass;
+  sphereReflection.visible = orb.visible;
+  orbit.visible = opening || materialPass;
+  for (const reflection of titleReflections) reflection.visible = titlePass;
+  glassCore.visible = false; coreLight.intensity = 0;
+  const openingProgress = smooth(t / 2.5);
+  if (opening) {
+    orb.position.set(1.72, .13 + .035 * Math.sin(t * 1.2), -.3);
+    camera.position.set(mix(-4.5, -.4, openingProgress), mix(1.8, 1.0, openingProgress), mix(10.7, 7.6, openingProgress));
+    target.set(mix(.2, .28, openingProgress), .3, -.35);
+    camera.rotation.z = mix(-.026, 0, openingProgress);
+    orb.material = materials.gold;
+    prompt.position.y = .12 + .018 * Math.sin(t);
+  } else if (materialPass) {
+    // These are match cuts: pose, camera and scale remain identical at each material boundary.
+    orb.position.set(0, .06, 0);
+    camera.position.set(.48, .68, 6.8); target.set(0, .06, 0);
+    camera.rotation.z = 0;
+    const cut = [...spec.materialCuts].reverse().find(item => t + 1e-7 >= item.at);
+    orb.material = materials[cut.material];
+    glassCore.visible = cut.material === 'glass'; coreLight.intensity = glassCore.visible ? 5 : 0;
+  } else if (titlePass) {
+    const p = smooth((t - 4.5) / 1.25);
+    camera.position.set(mix(2.0, .12, p), mix(.8, .43, p), mix(8.0, 8.7, p));
+    target.set(0, .2, 0); camera.rotation.z = mix(.035, 0, p);
+    for (let i = 0; i < titleRows.length; i++) {
+      const word = titleRows[i];
+      const contact = spec.wordArrivals[i];
+      const start = contact - .24;
+      const p = out((t - start) / .24);
+      const rebound = Math.sin(clamp((t - contact) / Math.min(.24, spec.titleSettlesAt - contact)) * Math.PI);
+      word.visible = t >= start;
+      word.position.copy(word.userData.home);
+      word.position.x += (i % 2 ? 1 : -1) * (8 * (1 - p) - .1 * rebound);
+      word.position.y += .35 * (1 - p);
+      word.position.z += 3.2 * (1 - p);
+      word.rotation.set(mix(.1, 0, p), mix(i % 2 ? -.9 : .9, 0, p), mix(i % 2 ? -.14 : .12, 0, p));
+      word.scale.setScalar(1 + .016 * rebound);
+      const reflection = titleReflections[i];
+      reflection.visible = word.visible;
+      reflection.position.copy(word.position); reflection.position.y = 2 * groundY - word.position.y;
+      reflection.rotation.copy(word.rotation); reflection.scale.copy(word.scale); reflection.scale.y *= -1;
+    }
+  } else {
+    const p = out((t - spec.logoAt) / (spec.logoSettlesAt - spec.logoAt));
+    camera.position.set(mix(.45, .12, p), .7, mix(8.1, 7.7, p)); target.set(0, .2, 0); camera.rotation.z = 0;
+    orb.position.set(2.55, .12 + .025 * Math.sin((t - 6) * 1.5), .05);
+    orb.material = materials.gold;
+  }
+  orb.scale.setScalar(closing ? 1.03 : 1);
+  orb.geometry = orb.material === materials.wireframe ? wireSphere : sphere;
+  sphereReflection.geometry = orb.geometry;
+  orb.rotation.set(.08, materialPass ? .5 : t * .2, -.04);
+  orbit.position.copy(orb.position); orbit.rotation.y = opening ? t * .15 : 0;
+  contact.position.x = orb.position.x; contact.position.z = orb.position.z;
+  contact.visible = !titlePass;
+  coreLight.position.copy(orb.position);
+  sphereReflection.position.copy(orb.position); sphereReflection.position.y = 2 * groundY - orb.position.y;
+  sphereReflection.rotation.copy(orb.rotation); sphereReflection.scale.set(orb.scale.x, -orb.scale.y, orb.scale.z);
+  if (sphereReflection.material.userData.name !== orb.material.uuid) {
+    sphereReflection.material.dispose(); sphereReflection.material = orb.material.clone();
+    sphereReflection.material.transmission = 0; sphereReflection.material.transparent = true;
+    sphereReflection.material.opacity = .11; sphereReflection.material.depthWrite = false;
+    sphereReflection.material.userData.name = orb.material.uuid;
+  }
+  camera.lookAt(target); camera.updateMatrixWorld();
+  lockup.style.opacity = closing ? String(out((t - spec.logoAt) / .32)) : '0';
+  const logoProgress = out((t - spec.logoAt) / (spec.logoSettlesAt - spec.logoAt));
+  lockup.style.transform = `translateY(${closing ? (1 - logoProgress) * 28 : 28}px) scale(${mix(.94, 1, logoProgress)})`;
+  finish.uniforms.focus.value = camera.position.distanceTo(titlePass ? new THREE.Vector3(0, .4, 0) : orb.position);
+  finish.uniforms.blurAmount.value = opening ? 1 : titlePass ? .35 : .5;
+  finish.uniforms.time.value = t;
+  renderer.setRenderTarget(renderTarget); renderer.render(scene, camera);
+  renderer.setRenderTarget(null); renderer.render(screen, screenCamera);
+  window.__motionState = { time: t, phase: opening ? 'camera' : materialPass ? 'materials' : titlePass ? 'titles' : 'brand', material: Object.entries(materials).find(([, material]) => material === orb.material)?.[0], camera: camera.position.toArray(), wordOffsets: titleRows.map(word => word.position.distanceTo(word.userData.home)), words: titleRows.map((word, index) => ({ word: titleWords[index], position: word.position.toArray(), rotation: [word.rotation.x, word.rotation.y, word.rotation.z], home: word.userData.home.toArray() })) };
+}
+const proxy = { time: 0 };
+const timeline = window.gsap.timeline({ paused: true, onUpdate: () => renderAt(proxy.time) });
+timeline.to(proxy, { time: spec.duration, duration: spec.duration, ease: 'none' }, 0);
+window.__timelines = { main: timeline };
+window.seekComposition = seconds => { timeline.seek(clamp(Number(seconds) || 0, 0, spec.duration), false); renderAt(clamp(Number(seconds) || 0, 0, spec.duration)); };
+window.__motionRender = renderAt;
+renderAt(0); window.__motionReady = true;
+}
+init().catch(error => { window.__motionError = String(error.stack || error); console.error(error); });
+</script></body></html>

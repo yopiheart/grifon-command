@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "reference": "Independent browser-native Inter rasterization at 400px",
+  "originalDefectRejected": true,
+  "threshold": 0.985,
+  "rows": [
+    {
+      "character": "N",
+      "rawContourDice": 0.9998678363152764,
+      "normalizedContourDice": 0.9997521480502314
+    },
+    {
+      "character": "A",
+      "rawContourDice": 0.9805232021604189,
+      "normalizedContourDice": 0.9997820573783484
+    },
+    {
+      "character": "O",
+      "rawContourDice": 0.9989768696034652,
+      "normalizedContourDice": 0.9990439222135112
+    }
+  ]
+}

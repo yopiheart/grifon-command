@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "status": "prototype-library-and-production-blueprint",
+  "purpose": "Build original reusable Grifon effects for commercial ads, UGC, motion graphics and cinematic edits; assess stronger SFX in the current approved film.",
+  "qualityTarget": "Convincing material/weight, precise action sync, controlled tails, intelligibility under narration, phone-speaker and mono translation. FilmCrux-equivalent quality is a target requiring listening, not an established result.",
+  "reference": {
+    "url": "https://www.filmcrux.com/store/p/audio-bundle",
+    "observed": "The public page separates cinematic sound design from practical Foley/diegetic effects and music.",
+    "inspection": "Product-page text only. No demo audition or proprietary sample analysis/copying is claimed."
+  },
+  "budget": { "additionalCash": 0, "providerCalls": 0, "externalSampleDownloads": 0 },
+  "provenance": "Pilot files are original local procedural synthesis, with reproducible source and seeds. The existing film retains its already licensed stock contribution; none of those stock samples are included in this standalone pilot library.",
+  "production": {
+    "layerRoles": ["anticipation when needed", "precise transient/contact", "audible body/material", "controlled space/tail"],
+    "masters": "Stereo 48kHz/24-bit PCM WAV, headroom, clean edges, centered body and mono-compatible upper space.",
+    "futureVariants": ["dry contact", "controlled wet tail", "light UGC", "heavier cinematic"],
+    "sceneRules": {
+      "ugc": "Sparse practical Foley and quiet dry punctuation; avoid trailer-scale hits on ordinary actions.",
+      "commercial": "Movement plus believable contact, selective weight on hero reveals and brand ending.",
+      "cinematic": "Anticipation, textured weight, deliberate decay and rests; reserve the largest impact for the story peak.",
+      "motion-ui": "Short tactile feedback and movement; do not sonify every visible animation."
+    },
+    "humanAcceptance": ["At matched listening volume, blind A/B prefers the redesigned film for impact and action fit", "Every word remains clear", "Phone speakers retain body without the sub layer", "Headphones have no harsh/noisy transient or excessive stereo distraction", "Mono retains the core sound", "No generic click repetition or continuous impact spam"],
+    "limits": "Signal checks do not establish premium quality. Real packaging/cloth/latch/product material detail requires original recordings or separately vetted sources. No asset has been integrated into the production app."
+  },
+  "sounds": [
+    {"id":"micro-swish","family":"movement","seconds":[0.10,0.25],"use":"Small text/card entrance","method":"procedural","state":"planned"},
+    {"id":"snap-whoosh","family":"movement","seconds":[0.20,0.50],"use":"Fast cut or whip","method":"procedural","state":"planned"},
+    {"id":"hero-sweep","family":"movement","seconds":[0.60,1.20],"use":"Product rotation and camera travel","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/hero-sweep.wav"},
+    {"id":"pivot-suction","family":"movement","seconds":[0.40,0.90],"use":"Anticipation into a reveal","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/pivot-suction.wav"},
+    {"id":"product-weight","family":"impact","seconds":[0.30,0.80],"use":"Compact hero-product contact with low-mid weight","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/product-weight.wav"},
+    {"id":"workflow-punch","family":"impact","seconds":[0.35,0.80],"use":"Completion/reveal contact with dry attack","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/workflow-punch.wav"},
+    {"id":"textured-slam","family":"impact","seconds":[0.60,1.80],"use":"Large cinematic material impact","method":"procedural-and-future-original-recording","state":"planned"},
+    {"id":"sub-boom","family":"impact","seconds":[0.80,2.50],"use":"Rare cinematic peak; include upper harmonics for phones","method":"procedural","state":"planned"},
+    {"id":"short-riser","family":"tension","seconds":[0.40,1.20],"use":"Brief expectation build","method":"procedural","state":"planned"},
+    {"id":"long-crescendo","family":"tension","seconds":[1.50,4.00],"use":"Trailer or emotional build","method":"procedural","state":"planned"},
+    {"id":"descending-brake","family":"tension","seconds":[0.40,1.20],"use":"Energy release and change of pace","method":"procedural","state":"planned"},
+    {"id":"synthetic-horn","family":"tension","seconds":[0.70,2.50],"use":"Restrained cinematic scale, key-aware if used with music","method":"procedural","state":"planned"},
+    {"id":"warm-pluck","family":"tonal","seconds":[0.12,0.50],"use":"Benefit punctuation","method":"procedural","state":"planned"},
+    {"id":"glass-sparkle","family":"tonal","seconds":[0.20,0.90],"use":"Polished product detail","method":"procedural","state":"planned"},
+    {"id":"sphere-reveal","family":"tonal","seconds":[0.70,1.50],"use":"Soft low-mid bloom and airy reveal tail","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/sphere-reveal.wav"},
+    {"id":"logo-resolve","family":"tonal","seconds":[0.60,1.80],"use":"Brand contact and short signature decay","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/logo-resolve.wav"},
+    {"id":"cloth-swipe","family":"practical-foley","seconds":[0.15,0.80],"use":"Clothing or hand/object movement","method":"original-recording-required","state":"not-recorded"},
+    {"id":"package-tear","family":"practical-foley","seconds":[0.30,1.20],"use":"UGC unboxing","method":"original-recording-required","state":"not-recorded"},
+    {"id":"product-placement","family":"practical-foley","seconds":[0.10,0.70],"use":"Correct product material meeting the actual surface","method":"original-recording-required","state":"not-recorded"},
+    {"id":"latch-click","family":"practical-foley","seconds":[0.05,0.40],"use":"Actual lid/closure mechanism","method":"original-recording-required","state":"not-recorded"},
+    {"id":"micro-select","family":"motion-ui","seconds":[0.08,0.20],"use":"Small confirmation with body","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/micro-select.wav"},
+    {"id":"card-snap","family":"motion-ui","seconds":[0.12,0.40],"use":"Tactile message/card arrival","method":"procedural","state":"pilot-awaiting-listening","file":"pilot/card-snap.wav"},
+    {"id":"restrained-error","family":"motion-ui","seconds":[0.10,0.35],"use":"Gentle negative feedback","method":"procedural","state":"planned"},
+    {"id":"counter-tick","family":"motion-ui","seconds":[0.03,0.10],"use":"Sparse count milestone, not every number","method":"procedural","state":"planned"}
+  ],
+  "research": [
+    {"url":"https://elevenlabs.io/docs/overview/capabilities/sound-effects","finding":"Optional future text-to-SFX generation supports cinematic/Foley effects and controlled duration. This prototype makes no provider calls."},
+    {"url":"https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform","finding":"AI output commercial terms depend on plan and service; a free account is not automatically a commercial license. No such output is in this pilot."},
+    {"url":"https://freesound.org/help/faq/","finding":"External recordings have individual licenses. Verify each file's provenance and reuse terms before any future library inclusion."}
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "ok": true,
+  "strict": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 4,
+    "findings": [
+      {
+        "code": "pointer_events_none",
+        "severity": "info",
+        "message": "`#world` sets `pointer-events: none`. Elements matching this selector are harder to select in the Studio preview.",
+        "selector": "#world",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "If these elements should be selectable in the Studio, remove `pointer-events: none` or move it to a wrapper that doesn't contain editable content."
+      },
+      {
+        "code": "pointer_events_none",
+        "severity": "info",
+        "message": "`.layer` sets `pointer-events: none`. Elements matching this selector are harder to select in the Studio preview.",
+        "selector": ".layer",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "If these elements should be selectable in the Studio, remove `pointer-events: none` or move it to a wrapper that doesn't contain editable content."
+      },
+      {
+        "code": "pointer_events_none",
+        "severity": "info",
+        "message": "`.paper` sets `pointer-events: none`. Elements matching this selector are harder to select in the Studio preview.",
+        "selector": ".paper",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "If these elements should be selectable in the Studio, remove `pointer-events: none` or move it to a wrapper that doesn't contain editable content."
+      },
+      {
+        "code": "pointer_events_none",
+        "severity": "info",
+        "message": "`#film-grain` sets `pointer-events: none`. Elements matching this selector are harder to select in the Studio preview.",
+        "selector": "#film-grain",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "If these elements should be selectable in the Studio, remove `pointer-events: none` or move it to a wrapper that doesn't contain editable content."
+      },
+      {
+        "code": "gsap_callback_dom_measurement",
+        "severity": "warning",
+        "message": "Timeline callback reaches DOM measurement (getBoundingClientRect/getTotalLength/getComputedStyle/...). The renderer seeks with suppressEvents=false, so callbacks re-fire on every seek — and a cold render worker runs them against whatever DOM state its own non-linear seek order produced. Measured geometry is seek-order-dependent, and values measured at build time (before the callback ran) are stale or zero.",
+        "selector": "onUpdate: () => renderAt(proxy.time)",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Do all measurement and DOM setup synchronously at build time, before registering the timeline — or derive geometry from fixed composition coordinates instead of measuring."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 520 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tmp\\worktrees\\grifon-motion-depth\\workflows\\assets\\grifon-motion-upgrade\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "console_warning",
+        "severity": "warning",
+        "message": "sigmaRadians, 0.06, is too large and will clip, as it requested 30 samples when the maximum is set to 20",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-start": "0",
+          "data-duration": "32.9",
+          "data-fps": "30"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:62055/",
+        "line": 11986
+      },
+      {
+        "code": "console_warning",
+        "severity": "warning",
+        "message": "sigmaRadians, 0.06, is too large and will clip, as it requested 30 samples when the maximum is set to 20",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-start": "0",
+          "data-duration": "32.9",
+          "data-fps": "30"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:62055/",
+        "line": 11986
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 32.9,
+    "samples": [
+      0,
+      0.5,
+      1.7,
+      3.7,
+      4.7,
+      6.6,
+      7.8,
+      9.7,
+      11.4,
+      13.5,
+      15.4,
+      16.45,
+      19.4,
+      21.8,
+      24.4,
+      27.8,
+      30.6,
+      32.7,
+      32.9
+    ],
+    "transitionSamples": [
+      0,
+      16.45,
+      32.9
+    ],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.71:1; WCAG AA requires 3:1.",
+        "text": "Grifon",
+        "fg": "rgb(244,247,232)",
+        "bg": "rgb(149,153,123)",
+        "ratio": 2.71,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(73,74,69)",
+        "large": true,
+        "selector": "main > section:nth-of-type(8) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 470.5877380371094,
+          "y": 206.80320739746094,
+          "width": 67.26309204101562,
+          "height": 25.4849853515625
+        },
+        "time": 21.8
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.82:1; WCAG AA requires 3:1.",
+        "text": "Grifon",
+        "fg": "rgb(244,247,232)",
+        "bg": "rgb(127,154,130)",
+        "ratio": 2.82,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(71,72,67)",
+        "large": true,
+        "selector": "main > section:nth-of-type(8) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 471.9335021972656,
+          "y": 661.6038818359375,
+          "width": 67.05392456054688,
+          "height": 25.40576171875
+        },
+        "time": 21.8
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      0,
+      4.7,
+      13.5,
+      21.8,
+      32.9
+    ],
+    "checked": 75,
+    "passed": 73
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  },
+  "_meta": {
+    "version": "0.7.68",
+    "latestVersion": "0.8.114",
+    "updateAvailable": true
+  }
+}

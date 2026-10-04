@@ -1,0 +1,225 @@
+{
+  "status": "PRIVATE_LOCAL_RECOVERY",
+  "date": "2026-10-04",
+  "acceptedVideoSha256": "9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c",
+  "archive": {
+    "path": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tools\\grifon-motion-archives\\approved-2026-10-04-9529b122.zip",
+    "bytes": 41677659,
+    "sha256": "2856871be0da0fc93574c9e9c4fb3479a18c662dc7e363cea729d27f79d88031"
+  },
+  "entries": [
+    {
+      "entry": "repo/.tmp/grifon-english-vo-v02/music-ducked.wav",
+      "bytes": 12633644,
+      "sha256": "115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa"
+    },
+    {
+      "entry": "repo/.tmp/grifon-english-vo-v02/voice-positioned.wav",
+      "bytes": 12633644,
+      "sha256": "54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/README.md",
+      "bytes": 7333,
+      "sha256": "518338043734013ad20af8d67e38ee8ce2286455796382b4c1293e55bbb9c6d4"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/approval.json",
+      "bytes": 1515,
+      "sha256": "b1d8404700a106e870731db3de4543b0d004029dc28364ed8957b9a8febd9972"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/archive-approved.mjs",
+      "bytes": 5574,
+      "sha256": "f25b68e84437fff39f26a448387620ec54535c2e1cc149505c43b256a29b0d3c"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/assets/OFL-Inter.txt",
+      "bytes": 4380,
+      "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/assets/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/assets/inter-normalized-outlines.json",
+      "bytes": 406145,
+      "sha256": "a9c14eea59cf40a779136891e1fdb5a99ae7fd9bd520352ecee979d1b51fa42a"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/assets/inter-variable.ttf",
+      "bytes": 876576,
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/assets/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/build.mjs",
+      "bytes": 3845,
+      "sha256": "f56b299afaee0b4b482f0b0153822a8080472acb2c0c17d90f2bc6d8be955b1d"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/checkpoint.mjs",
+      "bytes": 2338,
+      "sha256": "9ff4935e4aa5d94de8526c754c2fe7e121cbae8569fb98472cf7ae04da23398d"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/composition.html.template",
+      "bytes": 48862,
+      "sha256": "5c55cdd65e2f0e2e5688612865b56407f2000d1df021699c7de389f99becfcf6"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/demo.json",
+      "bytes": 2054,
+      "sha256": "39f7398c036ae07911f062cffc662cc0c340b44c2f38ec5a8fd0c14e43c3196e"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4",
+      "bytes": 5171107,
+      "sha256": "9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-english-vo-1080p.mp4",
+      "bytes": 5179901,
+      "sha256": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/index.html",
+      "bytes": 2086335,
+      "sha256": "ee9caae5030969988b272c9ca8f78245fdbdf24b05cfaed6ad9bb693e6795e2d"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/render.mjs",
+      "bytes": 7725,
+      "sha256": "da96611b091c306902be2dc779d8fb7073abf4bac2797d2c4f10fdc810a132c0"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/README.md",
+      "bytes": 10067,
+      "sha256": "b798f902045a2af71e2a1d575c2192ee4f6a6c74ebb590e053dc98ba19fcbe53"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/cue-plan.json",
+      "bytes": 9439,
+      "sha256": "5e27af2b916188d10a3cbe2179cc270ccfaee6f148e73990ad2bc3763ca8ddd0"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/history-candidates.json",
+      "bytes": 28818,
+      "sha256": "9a074cb1957d0beaff469a1dff6575e49c7a7c6cbaa4d884eab5b3fe8eb5366a"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/camera-contact-candidate-2.wav",
+      "bytes": 192078,
+      "sha256": "9de3ee1f004d3633c4bdfa5dac00a7238d68446e4f9dc8139be0646bb37ec4cd"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/card-pop-candidate-2.wav",
+      "bytes": 384078,
+      "sha256": "6c2123f4908a256f5324c74d6fc1d50a31255741eba8029dc56dfda9ed8f99f7"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/laptop-contact-candidate-1.wav",
+      "bytes": 576078,
+      "sha256": "2922ebc87c2ed31759ee33c1f1c2190a2c7c0c5935a85511d6c10b730b69badd"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/orb-inward-candidate-1.wav",
+      "bytes": 192078,
+      "sha256": "2d6eba0d507ace2579fd41e7952213ddb512d2821adb5af91740427b9e3759ab"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/paper-swipe-candidate-2.wav",
+      "bytes": 384078,
+      "sha256": "398a01aee9b2f7b1de01de2d0852ca3708107a29120ae734f0ecc86217b4afd5"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/pencil-candidate-4.wav",
+      "bytes": 384078,
+      "sha256": "b410f0789fb80ab2946a4c40ba0954cd8fcf4d03a7935642e32c9ac23dfce4bc"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/phone-contact-candidate-2.wav",
+      "bytes": 192078,
+      "sha256": "0fa98d4669deea51b9605a9c599463ea4e966cd052b2e9718ecabb73f38c374b"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/reverse-air-candidate-1.wav",
+      "bytes": 384078,
+      "sha256": "90531a66e2239f7a4cbd0533a592d72982771778e7dd7bb2370f069ab1054baa"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/rotation-air-candidate-2.wav",
+      "bytes": 384078,
+      "sha256": "182d04dc1289b346ed882cd05819c581b8aa584f59d9b3708f9057a514443199"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/qa/replacement-report.json",
+      "bytes": 48370,
+      "sha256": "7ebe0cde7f36614f57f6bfb64e71eead0019c312ad6fd8792acab7c7bc3b99b5"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/replace.mjs",
+      "bytes": 35383,
+      "sha256": "202d1f3aeb7c4547f82cdb6037069850060c0de8277d8be1434c201c8ff32b62"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/select-review.mjs",
+      "bytes": 7315,
+      "sha256": "ff3a05471d127f5b92913e1456b4e34d044fca536f12f54168fb7590dd1a6bfe"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/selected-review-manifest.json",
+      "bytes": 23318,
+      "sha256": "f12a6a61c52a794b7ea55a7aa37599b1bcc4d9d7dce68153705c82c8da495cf6"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/source-manifest.json",
+      "bytes": 4766,
+      "sha256": "9bdd38bf2baaeb448123a6eded9f75c45121253287ab3714b0f3a01d8ad48b7a"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/vendor/LICENSE",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/vendor/gsap.min.js",
+      "bytes": 72787,
+      "sha256": "8f41acd30db5898fd367e848d5640f814aac2fcdd54738e4b3650ebe0e941f74"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/vendor/three.global.js",
+      "bytes": 701909,
+      "sha256": "7d3cfc1f4eb2117c54c726ad37170ed4b57afb8f8af8421989b528e0decf3249"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/verify-source.mjs",
+      "bytes": 7832,
+      "sha256": "a3391948a3d1d818f66ee2aff5ffb064ece570c64ada37d2cc71e146eb41d97e"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-motion-upgrade/voiceover/qa/phrase-timing.json",
+      "bytes": 20330,
+      "sha256": "dbad94bae8cdd0af5503e3bc74d3add4cfb9e7cc3189048f989919eefe62b816"
+    },
+    {
+      "entry": "repo/workflows/assets/grifon-reference-full/exports/grifon-your-next-ad-v08-1080p.mp4",
+      "bytes": 16629844,
+      "sha256": "8cfcf8fd1647b256462415e361d792b1de585b581ed648d06d2d3a57351be605"
+    },
+    {
+      "entry": "repo/workflows/grifon_motion_production.md",
+      "bytes": 8510,
+      "sha256": "6277b49772a4f55d0ea95b96723cf07ca86fba29aac4ccb2957b3cb7a877fb11"
+    }
+  ],
+  "scope": "This film only. Source, accepted media, selected native SFX and exact local stems. No credentials, account sessions or paid approval ledgers.",
+  "restore": "Verify archive, then restore repo/ entries to matching paths in an isolated checkout; never overwrite conflicting files. Existing Node/FFmpeg runtimes are external prerequisites.",
+  "rights": "Private recovery, not licensed asset redistribution or off-device cloud backup."
+}

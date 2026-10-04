@@ -1,0 +1,963 @@
+{
+  "status": "TECHNICAL_PASS_SFX_AUDITION_PENDING",
+  "output": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-sfx-pilot-1080p.mp4",
+  "outputSha256": "1928f4f158f84f9c94de754bb814686a4404e35bff369109307f92c20180c522",
+  "bytes": 5177231,
+  "specSha256": "11bf38d19e647a7ff6bc7e93308945473bad06f347e468944fee1ff7c0cf0960",
+  "phraseTimingSha256": "dbad94bae8cdd0af5503e3bc74d3add4cfb9e7cc3189048f989919eefe62b816",
+  "pilotManifestSha256": "5f387db62052a77fa20a6a94eaa6b82bc23e1802702be0ecdc8944c02da8827b",
+  "duration": 32.9,
+  "sampleRate": 48000,
+  "channels": 2,
+  "method": "Untouched approved master plus (reduced original SFX + ducked layered originals − original SFX) × fitted original master gain × SFX-only headroom factor. No full-mix loudness normalization, compression, EQ or VO synthesis.",
+  "originalMasterFit": {
+    "method": "Least-squares zero-intercept master = gain × premaster over every decoded sample",
+    "gain": 1.0752266011723428,
+    "gainDb": 0.630000006,
+    "residualRms": 6.792185268560306e-8,
+    "residualRmsDbfs": -143.359809529,
+    "maximumAbsoluteResidual": 1.193008054567457e-7,
+    "residualMean": -5.818866475456803e-8,
+    "correlation": 0.9999999999975288,
+    "allowedPeakResidual": 2.384185791015625e-7,
+    "suitableConstantGainFit": true
+  },
+  "sfxDeltaScale": 1,
+  "sfxDeltaScaleDb": 0,
+  "headroom": {
+    "reservedSamplePeakDbfs": -1.8,
+    "encodingAttempts": [
+      {
+        "attempt": 1,
+        "sfxDeltaScale": 1,
+        "integratedLufs": -15.99,
+        "truePeakDbtp": -2.75,
+        "rangeLu": 3.5,
+        "method": "FFmpeg loudnorm input meter only; no normalization applied"
+      }
+    ]
+  },
+  "preservedInputs": {
+    "picture": {
+      "path": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-english-vo-1080p.mp4",
+      "sha256": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067",
+      "unchanged": true
+    },
+    "music": {
+      "path": ".tmp/grifon-english-vo-v02/music-ducked.wav",
+      "sha256": "115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa",
+      "unchanged": true
+    },
+    "voice": {
+      "path": ".tmp/grifon-english-vo-v02/voice-positioned.wav",
+      "sha256": "54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7",
+      "unchanged": true
+    },
+    "oldSfx": {
+      "path": ".tmp/grifon-english-vo-v02/sfx-preserved.wav",
+      "sha256": "545d4a5baa994bf705af8ea047518d75723cc0f77febdc46f87065b71b9cdac0",
+      "unchanged": true
+    },
+    "premaster": {
+      "path": ".tmp/grifon-english-vo-v02/mix-premaster.wav",
+      "sha256": "c75644338a93d8a8515da331f84d1efd47e8a723bf1e02d673273d5ad273f8cc",
+      "unchanged": true
+    },
+    "master": {
+      "path": ".tmp/grifon-english-vo-v02/mix-master.wav",
+      "sha256": "e2b7780084349926c516ad8b0b27e484cf7826cde08b411528452f460716f230",
+      "unchanged": true
+    }
+  },
+  "preservedReleases": [
+    {
+      "path": "workflows/assets/grifon-motion-upgrade/grifon-full-before-after-1080p.mp4",
+      "sha256": "695f7684a3f4710df6d7cf1ae6bf71ee98caa3c185c4018c26344df47401112d",
+      "unchanged": true
+    },
+    {
+      "path": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-1080p.mp4",
+      "sha256": "978d8e1d29bfbd40c89788a898377c5acca5d3ea7efcdfab1a50e71d4fbbff27",
+      "unchanged": true
+    },
+    {
+      "path": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-english-vo-1080p.mp4",
+      "sha256": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067",
+      "unchanged": true
+    }
+  ],
+  "preservationMeasurement": {
+    "musicAndVoiceFilesUntouched": true,
+    "originalMasterSamplesOutsideDeltaUnchanged": true,
+    "changedSamplesOutsideSfxDelta": 0,
+    "maximumFloat32SumRounding": 2.9799408163277974e-8,
+    "noSeparateVoiceOrMusicGainOrTimingChange": true
+  },
+  "newLayerDuck": {
+    "newLayerDuckDb": -7,
+    "attackSeconds": 0.06,
+    "releaseSeconds": 0.12,
+    "source": "../voiceover/qa/phrase-timing.json",
+    "timing": "Exact actualStart/actualEnd; full −7dB during each existing phrase, cosine attack/release, minimum overlapping gain",
+    "appliesTo": "new original layers only"
+  },
+  "oldSfxReductions": {
+    "placements": [
+      {
+        "start": 2.63,
+        "end": 3.38,
+        "gainDb": -7,
+        "event": "Camera rotation replacement"
+      },
+      {
+        "start": 3.79,
+        "end": 4.1,
+        "gainDb": -4,
+        "event": "Camera settle/contact"
+      },
+      {
+        "start": 5.65,
+        "end": 6.4,
+        "gainDb": -7,
+        "event": "Phone rotation replacement"
+      },
+      {
+        "start": 6.8,
+        "end": 7.01,
+        "gainDb": -5,
+        "event": "Phone settle/contact"
+      },
+      {
+        "start": 8.61,
+        "end": 9.36,
+        "gainDb": -7,
+        "event": "Laptop rotation replacement"
+      },
+      {
+        "start": 9.77,
+        "end": 10.11,
+        "gainDb": -4,
+        "event": "Laptop settle/contact"
+      },
+      {
+        "start": 12.58,
+        "end": 13.16,
+        "gainDb": -5,
+        "event": "Warm pivot"
+      },
+      {
+        "start": 14.22,
+        "end": 14.94,
+        "gainDb": -5,
+        "event": "Sphere expansion"
+      },
+      {
+        "start": 17.63,
+        "end": 17.91,
+        "gainDb": -6,
+        "event": "Message arrival one"
+      },
+      {
+        "start": 18.84,
+        "end": 19.12,
+        "gainDb": -6,
+        "event": "Message arrival two"
+      },
+      {
+        "start": 20.78,
+        "end": 21.02,
+        "gainDb": -6,
+        "event": "Reply during narration"
+      },
+      {
+        "start": 26.14,
+        "end": 26.45,
+        "gainDb": -5,
+        "event": "Outline completion"
+      },
+      {
+        "start": 29.25,
+        "end": 29.93,
+        "gainDb": -6,
+        "event": "Logo contact and resolve"
+      }
+    ],
+    "ramp": "20ms cosine edge ramps inside each reduction, capped at one quarter of short windows; minimum overlapping gain"
+  },
+  "placements": [
+    {
+      "sound": "hero-sweep",
+      "start": 2.63,
+      "gainDb": -9,
+      "event": "Camera rotation air body",
+      "sourceSha256": "295b837e9ad91ca2cd388794f89e3fb7e05b4798fbf2713d2eb186656863f502",
+      "fileStart": 2.63,
+      "fileEnd": 3.38,
+      "anchorAt": 3.1
+    },
+    {
+      "sound": "product-weight",
+      "syncAt": 3.82,
+      "gainDb": -4,
+      "event": "Camera hero settle",
+      "sourceSha256": "3170fe702ead4db67b9f09e4a7e8bf3fe584b7f97df494c4fb50cd8fb422e949",
+      "fileStart": 3.8,
+      "fileEnd": 4.45,
+      "anchorAt": 3.82
+    },
+    {
+      "sound": "hero-sweep",
+      "start": 5.65,
+      "gainDb": -11,
+      "event": "Phone rotation air body",
+      "sourceSha256": "295b837e9ad91ca2cd388794f89e3fb7e05b4798fbf2713d2eb186656863f502",
+      "fileStart": 5.65,
+      "fileEnd": 6.4,
+      "anchorAt": 6.12
+    },
+    {
+      "sound": "product-weight",
+      "syncAt": 6.84,
+      "gainDb": -7,
+      "event": "Phone hero settle",
+      "sourceSha256": "3170fe702ead4db67b9f09e4a7e8bf3fe584b7f97df494c4fb50cd8fb422e949",
+      "fileStart": 6.82,
+      "fileEnd": 7.47,
+      "anchorAt": 6.84
+    },
+    {
+      "sound": "hero-sweep",
+      "start": 8.61,
+      "gainDb": -8,
+      "event": "Laptop rotation air body",
+      "sourceSha256": "295b837e9ad91ca2cd388794f89e3fb7e05b4798fbf2713d2eb186656863f502",
+      "fileStart": 8.61,
+      "fileEnd": 9.36,
+      "anchorAt": 9.08
+    },
+    {
+      "sound": "product-weight",
+      "syncAt": 9.8,
+      "gainDb": -3,
+      "event": "Laptop hero settle",
+      "sourceSha256": "3170fe702ead4db67b9f09e4a7e8bf3fe584b7f97df494c4fb50cd8fb422e949",
+      "fileStart": 9.78,
+      "fileEnd": 10.43,
+      "anchorAt": 9.8
+    },
+    {
+      "sound": "pivot-suction",
+      "syncAt": 13.03,
+      "gainDb": -10,
+      "event": "Warm pivot anticipation/contact",
+      "sourceSha256": "5ce676b73431a253a059bf3ea866bd48f1026654426804615d4a4fbc86a3da9a",
+      "fileStart": 12.47,
+      "fileEnd": 13.17,
+      "anchorAt": 13.03
+    },
+    {
+      "sound": "sphere-reveal",
+      "syncAt": 14.27,
+      "gainDb": -4,
+      "event": "Sphere expansion/reveal",
+      "sourceSha256": "61693fd9d434bd2d49cbc87f1211e6e42554e107b82ff9fdcede7e2d1d467617",
+      "fileStart": 14.25,
+      "fileEnd": 15.45,
+      "anchorAt": 14.27
+    },
+    {
+      "sound": "card-snap",
+      "syncAt": 17.65,
+      "gainDb": -9,
+      "event": "Message arrival one",
+      "sourceSha256": "103f6e89b72eeed4506e8954b68cac2307d51b82b099e2a37acf4cbe8b540fcd",
+      "fileStart": 17.63,
+      "fileEnd": 17.98,
+      "anchorAt": 17.65
+    },
+    {
+      "sound": "card-snap",
+      "syncAt": 18.86,
+      "gainDb": -11,
+      "event": "Message arrival two",
+      "sourceSha256": "103f6e89b72eeed4506e8954b68cac2307d51b82b099e2a37acf4cbe8b540fcd",
+      "fileStart": 18.84,
+      "fileEnd": 19.19,
+      "anchorAt": 18.86
+    },
+    {
+      "sound": "card-snap",
+      "syncAt": 20.8,
+      "gainDb": -12,
+      "event": "Reply during narration",
+      "sourceSha256": "103f6e89b72eeed4506e8954b68cac2307d51b82b099e2a37acf4cbe8b540fcd",
+      "fileStart": 20.78,
+      "fileEnd": 21.13,
+      "anchorAt": 20.8
+    },
+    {
+      "sound": "workflow-punch",
+      "syncAt": 26.17,
+      "gainDb": -8,
+      "event": "Outline completion",
+      "sourceSha256": "a6918aee5b2acb1e580485993b085f18a3a908ae089d5b4f4ea0e8497a8a70dc",
+      "fileStart": 26.15,
+      "fileEnd": 26.85,
+      "anchorAt": 26.17
+    },
+    {
+      "sound": "micro-select",
+      "syncAt": 26.76,
+      "gainDb": -16,
+      "event": "First workflow contact",
+      "sourceSha256": "25b1df09cdd7a50de33b6024c03f4daaf6e051c29cb703cb14dc7507f8429bad",
+      "fileStart": 26.745,
+      "fileEnd": 26.905,
+      "anchorAt": 26.76
+    },
+    {
+      "sound": "logo-resolve",
+      "syncAt": 29.28,
+      "gainDb": -4,
+      "event": "Logo formation/contact and tail",
+      "sourceSha256": "f1101bbf6a2fe2d34d9736b55c4b7594b2de5f8e3325da45952812cbdd4a0af8",
+      "fileStart": 29.26,
+      "fileEnd": 30.91,
+      "anchorAt": 29.28
+    }
+  ],
+  "pilotSources": [
+    {
+      "id": "hero-sweep",
+      "sha256": "295b837e9ad91ca2cd388794f89e3fb7e05b4798fbf2713d2eb186656863f502",
+      "durationSeconds": 0.75,
+      "syncSeconds": 0.47
+    },
+    {
+      "id": "product-weight",
+      "sha256": "3170fe702ead4db67b9f09e4a7e8bf3fe584b7f97df494c4fb50cd8fb422e949",
+      "durationSeconds": 0.65,
+      "syncSeconds": 0.02
+    },
+    {
+      "id": "pivot-suction",
+      "sha256": "5ce676b73431a253a059bf3ea866bd48f1026654426804615d4a4fbc86a3da9a",
+      "durationSeconds": 0.7,
+      "syncSeconds": 0.56
+    },
+    {
+      "id": "sphere-reveal",
+      "sha256": "61693fd9d434bd2d49cbc87f1211e6e42554e107b82ff9fdcede7e2d1d467617",
+      "durationSeconds": 1.2,
+      "syncSeconds": 0.02
+    },
+    {
+      "id": "card-snap",
+      "sha256": "103f6e89b72eeed4506e8954b68cac2307d51b82b099e2a37acf4cbe8b540fcd",
+      "durationSeconds": 0.35,
+      "syncSeconds": 0.02
+    },
+    {
+      "id": "workflow-punch",
+      "sha256": "a6918aee5b2acb1e580485993b085f18a3a908ae089d5b4f4ea0e8497a8a70dc",
+      "durationSeconds": 0.7,
+      "syncSeconds": 0.02
+    },
+    {
+      "id": "logo-resolve",
+      "sha256": "f1101bbf6a2fe2d34d9736b55c4b7594b2de5f8e3325da45952812cbdd4a0af8",
+      "durationSeconds": 1.65,
+      "syncSeconds": 0.02
+    },
+    {
+      "id": "micro-select",
+      "sha256": "25b1df09cdd7a50de33b6024c03f4daaf6e051c29cb703cb14dc7507f8429bad",
+      "durationSeconds": 0.16,
+      "syncSeconds": 0.015
+    }
+  ],
+  "phraseLevels": [
+    {
+      "id": "opening",
+      "start": 0.12,
+      "end": 1.089958,
+      "voice": {
+        "peakDbfs": -4.398547295,
+        "rmsDbfs": -18.36999981,
+        "sampleValues": 93116
+      },
+      "revisedSfx": {
+        "peakDbfs": -18.745678191,
+        "rmsDbfs": -45.008752783,
+        "sampleValues": 93116
+      },
+      "voiceOverSfxRmsMarginDb": 26.638752973,
+      "approvedMusic": {
+        "peakDbfs": -12.082794501,
+        "rmsDbfs": -29.152530943,
+        "sampleValues": 93116
+      }
+    },
+    {
+      "id": "launch",
+      "start": 1.22,
+      "end": 2.465,
+      "voice": {
+        "peakDbfs": -4.147738759,
+        "rmsDbfs": -18.369999975,
+        "sampleValues": 119520
+      },
+      "revisedSfx": {
+        "peakDbfs": -19.888266103,
+        "rmsDbfs": -40.58450194,
+        "sampleValues": 119520
+      },
+      "voiceOverSfxRmsMarginDb": 22.214501965,
+      "approvedMusic": {
+        "peakDbfs": -11.961359331,
+        "rmsDbfs": -27.00379688,
+        "sampleValues": 119520
+      }
+    },
+    {
+      "id": "story",
+      "start": 4.15,
+      "end": 5.395,
+      "voice": {
+        "peakDbfs": -5.791578971,
+        "rmsDbfs": -18.370000477,
+        "sampleValues": 119520
+      },
+      "revisedSfx": {
+        "peakDbfs": -19.888266103,
+        "rmsDbfs": -40.398395926,
+        "sampleValues": 119520
+      },
+      "voiceOverSfxRmsMarginDb": 22.028395449,
+      "approvedMusic": {
+        "peakDbfs": -12.340928412,
+        "rmsDbfs": -28.73856953,
+        "sampleValues": 119520
+      }
+    },
+    {
+      "id": "grow",
+      "start": 7.12,
+      "end": 8.589146,
+      "voice": {
+        "peakDbfs": -4.08770044,
+        "rmsDbfs": -18.369999679,
+        "sampleValues": 141038
+      },
+      "revisedSfx": {
+        "peakDbfs": -19.888266103,
+        "rmsDbfs": -41.104914843,
+        "sampleValues": 141038
+      },
+      "voiceOverSfxRmsMarginDb": 22.734915164,
+      "approvedMusic": {
+        "peakDbfs": -12.871352186,
+        "rmsDbfs": -28.514136825,
+        "sampleValues": 141038
+      }
+    },
+    {
+      "id": "problem",
+      "start": 10.12,
+      "end": 12.075,
+      "voice": {
+        "peakDbfs": -4.813264145,
+        "rmsDbfs": -18.370000311,
+        "sampleValues": 187680
+      },
+      "revisedSfx": {
+        "peakDbfs": -21.713220687,
+        "rmsDbfs": -51.983609397,
+        "sampleValues": 187680
+      },
+      "voiceOverSfxRmsMarginDb": 33.613609086,
+      "approvedMusic": {
+        "peakDbfs": -15.983952861,
+        "rmsDbfs": -31.039041523,
+        "sampleValues": 187680
+      }
+    },
+    {
+      "id": "pivot",
+      "start": 13.18,
+      "end": 14.117313,
+      "voice": {
+        "peakDbfs": -6.754206206,
+        "rmsDbfs": -18.369999839,
+        "sampleValues": 89982
+      },
+      "revisedSfx": {
+        "peakDbfs": -22.402999783,
+        "rmsDbfs": -43.417705032,
+        "sampleValues": 89982
+      },
+      "voiceOverSfxRmsMarginDb": 25.047705193,
+      "approvedMusic": {
+        "peakDbfs": -11.903803044,
+        "rmsDbfs": -31.942386184,
+        "sampleValues": 89982
+      }
+    },
+    {
+      "id": "introduce",
+      "start": 15.05,
+      "end": 16.25,
+      "voice": {
+        "peakDbfs": -3.774846658,
+        "rmsDbfs": -18.37000046,
+        "sampleValues": 115200
+      },
+      "revisedSfx": {
+        "peakDbfs": -46.439692349,
+        "rmsDbfs": -61.646623031,
+        "sampleValues": 115200
+      },
+      "voiceOverSfxRmsMarginDb": 43.276622571,
+      "approvedMusic": {
+        "peakDbfs": -10.001219556,
+        "rmsDbfs": -27.65279244,
+        "sampleValues": 115200
+      }
+    },
+    {
+      "id": "conversation",
+      "start": 19.65,
+      "end": 22.18,
+      "voice": {
+        "peakDbfs": -3.493818045,
+        "rmsDbfs": -18.370000363,
+        "sampleValues": 242880
+      },
+      "revisedSfx": {
+        "peakDbfs": -21.288819467,
+        "rmsDbfs": -49.205418346,
+        "sampleValues": 242880
+      },
+      "voiceOverSfxRmsMarginDb": 30.835417983,
+      "approvedMusic": {
+        "peakDbfs": -14.091031942,
+        "rmsDbfs": -30.543393314,
+        "sampleValues": 242880
+      }
+    },
+    {
+      "id": "direction",
+      "start": 22.84,
+      "end": 25.355,
+      "voice": {
+        "peakDbfs": -2.338647645,
+        "rmsDbfs": -18.370000457,
+        "sampleValues": 241440
+      },
+      "revisedSfx": {
+        "peakDbfs": -20.151062158,
+        "rmsDbfs": -56.97581125,
+        "sampleValues": 241440
+      },
+      "voiceOverSfxRmsMarginDb": 38.605810793,
+      "approvedMusic": {
+        "peakDbfs": -11.529542784,
+        "rmsDbfs": -23.583874848,
+        "sampleValues": 241440
+      }
+    },
+    {
+      "id": "workflow",
+      "start": 26.8,
+      "end": 28.841958,
+      "voice": {
+        "peakDbfs": -3.877643565,
+        "rmsDbfs": -18.370000175,
+        "sampleValues": 196028
+      },
+      "revisedSfx": {
+        "peakDbfs": -21.230485165,
+        "rmsDbfs": -47.540027306,
+        "sampleValues": 196028
+      },
+      "voiceOverSfxRmsMarginDb": 29.170027131,
+      "approvedMusic": {
+        "peakDbfs": -10.949765542,
+        "rmsDbfs": -23.647959949,
+        "sampleValues": 196028
+      }
+    },
+    {
+      "id": "brand",
+      "start": 30.04,
+      "end": 31.445,
+      "voice": {
+        "peakDbfs": -4.627218615,
+        "rmsDbfs": -18.369999941,
+        "sampleValues": 134880
+      },
+      "revisedSfx": {
+        "peakDbfs": -35.770364838,
+        "rmsDbfs": -51.508745322,
+        "sampleValues": 134880
+      },
+      "voiceOverSfxRmsMarginDb": 33.138745381,
+      "approvedMusic": {
+        "peakDbfs": -13.318336101,
+        "rmsDbfs": -28.099970862,
+        "sampleValues": 134880
+      }
+    }
+  ],
+  "comparisonWindows": [
+    {
+      "id": "camera-rotation",
+      "start": 2.63,
+      "end": 3.38,
+      "old": {
+        "peakDbfs": -17.71413486,
+        "rmsDbfs": -38.630347485,
+        "sampleValues": 72000,
+        "bodyDurationSeconds": 0.15
+      },
+      "revised": {
+        "peakDbfs": -14.529646013,
+        "rmsDbfs": -31.357869074,
+        "sampleValues": 72000,
+        "bodyDurationSeconds": 0.5
+      },
+      "bodyMeasurement": {
+        "binSeconds": 0.005,
+        "sharedRmsThresholdDbfs": -42.604737889,
+        "definition": "Total 5ms-bin duration exceeding 24dB below the higher old/revised peak bin RMS; signal-energy proxy only"
+      }
+    },
+    {
+      "id": "camera-contact",
+      "start": 3.82,
+      "end": 4.1,
+      "old": {
+        "peakDbfs": -15.626941866,
+        "rmsDbfs": -39.689250617,
+        "sampleValues": 26880,
+        "bodyDurationSeconds": 0.025
+      },
+      "revised": {
+        "peakDbfs": -9.51923389,
+        "rmsDbfs": -20.252500044,
+        "sampleValues": 26880,
+        "bodyDurationSeconds": 0.28
+      },
+      "bodyMeasurement": {
+        "binSeconds": 0.005,
+        "sharedRmsThresholdDbfs": -37.021110493,
+        "definition": "Total 5ms-bin duration exceeding 24dB below the higher old/revised peak bin RMS; signal-energy proxy only"
+      }
+    },
+    {
+      "id": "phone-contact",
+      "start": 6.84,
+      "end": 7.01,
+      "old": {
+        "peakDbfs": -19.619537512,
+        "rmsDbfs": -39.359524154,
+        "sampleValues": 16320,
+        "bodyDurationSeconds": 0.01
+      },
+      "revised": {
+        "peakDbfs": -10.964751068,
+        "rmsDbfs": -21.400693401,
+        "sampleValues": 16320,
+        "bodyDurationSeconds": 0.17
+      },
+      "bodyMeasurement": {
+        "binSeconds": 0.005,
+        "sharedRmsThresholdDbfs": -40.015378219,
+        "definition": "Total 5ms-bin duration exceeding 24dB below the higher old/revised peak bin RMS; signal-energy proxy only"
+      }
+    },
+    {
+      "id": "laptop-contact",
+      "start": 9.8,
+      "end": 10.11,
+      "old": {
+        "peakDbfs": -18.483259329,
+        "rmsDbfs": -43.019881678,
+        "sampleValues": 29760,
+        "bodyDurationSeconds": 0.015
+      },
+      "revised": {
+        "peakDbfs": -8.329532549,
+        "rmsDbfs": -19.700861864,
+        "sampleValues": 29760,
+        "bodyDurationSeconds": 0.295
+      },
+      "bodyMeasurement": {
+        "binSeconds": 0.005,
+        "sharedRmsThresholdDbfs": -36.012142763,
+        "definition": "Total 5ms-bin duration exceeding 24dB below the higher old/revised peak bin RMS; signal-energy proxy only"
+      }
+    },
+    {
+      "id": "sphere-reveal",
+      "start": 14.27,
+      "end": 14.9,
+      "old": {
+        "peakDbfs": -16.408749285,
+        "rmsDbfs": -34.662491209,
+        "sampleValues": 60480,
+        "bodyDurationSeconds": 0.205
+      },
+      "revised": {
+        "peakDbfs": -9.52593677,
+        "rmsDbfs": -23.59415856,
+        "sampleValues": 60480,
+        "bodyDurationSeconds": 0.615
+      },
+      "bodyMeasurement": {
+        "binSeconds": 0.005,
+        "sharedRmsThresholdDbfs": -39.515500267,
+        "definition": "Total 5ms-bin duration exceeding 24dB below the higher old/revised peak bin RMS; signal-energy proxy only"
+      }
+    },
+    {
+      "id": "logo-resolve",
+      "start": 29.28,
+      "end": 29.94,
+      "old": {
+        "peakDbfs": -20.485119163,
+        "rmsDbfs": -43.76508359,
+        "sampleValues": 63360,
+        "bodyDurationSeconds": 0.045
+      },
+      "revised": {
+        "peakDbfs": -9.46547055,
+        "rmsDbfs": -21.906514112,
+        "sampleValues": 63360,
+        "bodyDurationSeconds": 0.66
+      },
+      "bodyMeasurement": {
+        "binSeconds": 0.005,
+        "sharedRmsThresholdDbfs": -39.279666628,
+        "definition": "Total 5ms-bin duration exceeding 24dB below the higher old/revised peak bin RMS; signal-energy proxy only"
+      }
+    }
+  ],
+  "loudness": {
+    "integratedLufs": -15.99,
+    "truePeakDbtp": -2.75,
+    "rangeLu": 3.5,
+    "method": "FFmpeg loudnorm input meter only; no normalization applied"
+  },
+  "originalPcmMaster": {
+    "peakDbfs": -2.790286585,
+    "rmsDbfs": -19.13638518,
+    "sampleValues": 3158400
+  },
+  "revisedPcmMaster": {
+    "peakDbfs": -2.774211225,
+    "rmsDbfs": -18.94845475,
+    "sampleValues": 3158400
+  },
+  "videoPayload": {
+    "original": "SHA256=e05e4f73702b5fb971df390db3a811b9d13b1e2737c0a02f2e34099ce19b2697",
+    "exported": "SHA256=e05e4f73702b5fb971df390db3a811b9d13b1e2737c0a02f2e34099ce19b2697",
+    "equal": true
+  },
+  "metadata": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_time_base": "1/60",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1088,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 40,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
+        "chroma_location": "center",
+        "refs": 4,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "time_base": "1/15360",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 505344,
+        "duration": "32.900000",
+        "bit_rate": "979032",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "987",
+        "nb_read_frames": "987",
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "encoder": "Lavc60.3.100 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_time_base": "1/48000",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 1579200,
+        "duration": "32.900000",
+        "bit_rate": "270787",
+        "max_bit_rate": "270787",
+        "nb_frames": "1544",
+        "nb_read_frames": "1543",
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler"
+        }
+      }
+    ],
+    "format": {
+      "filename": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-sfx-pilot-1080p.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "32.900000",
+      "size": "5177231",
+      "bit_rate": "1258901",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf60.3.100"
+      }
+    }
+  },
+  "mp4Boxes": [
+    {
+      "kind": "ftyp",
+      "offset": 0,
+      "size": 32
+    },
+    {
+      "kind": "moov",
+      "offset": 32,
+      "size": 36575
+    },
+    {
+      "kind": "free",
+      "offset": 36607,
+      "size": 8
+    },
+    {
+      "kind": "mdat",
+      "offset": 36615,
+      "size": 5140616
+    }
+  ],
+  "blackTail": {
+    "start": 32.7,
+    "exactlyBlack": true,
+    "frames": 6,
+    "peakDbfs": -240,
+    "rmsDbfs": -240,
+    "sampleValues": 19200
+  },
+  "guardTests": {
+    "changedInputRejected": true,
+    "changedCandidateRejected": true,
+    "failedGateRejected": true,
+    "missingGateRejected": true,
+    "emptyGatesRejected": true,
+    "existingReleasePreserved": true,
+    "fixture": ".tmp\\grifon-sfx-pilot\\guard-fixture-vDJrDX"
+  },
+  "checks": {
+    "lockedSpecAndInputsUnchanged": true,
+    "pilotSourcesUnchanged": true,
+    "oldReleasesUnchanged": true,
+    "originalMasterConstantGainFit": true,
+    "finiteSampleSafeSums": true,
+    "onlySfxDeltaAdded": true,
+    "voiceRmsAboveSfxInEveryPhrase": true,
+    "newLayersDuckedAtExactPhraseWindows": true,
+    "fullStrictDecode": true,
+    "picturePayloadIdentical": true,
+    "counted987Frames": true,
+    "formatAndTiming": true,
+    "encodedLoudness": true,
+    "silentBlackTail": true,
+    "faststart": true
+  },
+  "humanAcceptance": {
+    "approvedMusic": "USER_APPROVED_QUALITY_FROZEN",
+    "approvedVoice": "USER_APPROVED_QUALITY_FROZEN",
+    "redesignedSfx": "PENDING_HEADPHONES_AND_PHYSICAL_PHONE_SPEAKER_AUDITION"
+  },
+  "limits": [
+    "File hashes, PCM algebra and phrase RMS margins establish structural preservation and energy balance; they cannot establish exact separated VO samples inside a newly encoded composite AAC track.",
+    "No listening-quality or premium/AAA/equivalence claim is made. New SFX action fit, clarity, material weight, mono and physical phone translation require human audition.",
+    "The eight original pilot effects do not complete the proposed 24-sound library."
+  ],
+  "operations": {
+    "providerCalls": 0,
+    "downloads": 0,
+    "paidCalls": 0,
+    "voiceSynthesisCalls": 0,
+    "networkCalls": 0
+  }
+}

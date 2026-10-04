@@ -1,0 +1,1004 @@
+{
+  "schemaVersion": 1,
+  "status": "eight-sound-original-DSP-pilot",
+  "soundCount": 8,
+  "proposedFullLibraryCount": 24,
+  "completeFullLibrary": false,
+  "format": {
+    "container": "WAV",
+    "encoding": "PCM signed 24-bit little-endian",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "bitsPerSample": 24
+  },
+  "source": {
+    "file": "../build-pilot.mjs",
+    "sha256": "c97bc95629149ac6119e72ad122cea6f7da796aa587f053379d847b10a9ebf59",
+    "version": "1.1.0",
+    "runtime": "Node.js built-ins only for synthesis; existing local FFmpeg for strict decode"
+  },
+  "provenance": {
+    "method": "Original procedural DSP",
+    "inputSamples": [],
+    "downloads": false,
+    "networkCalls": 0,
+    "paidAiCalls": 0,
+    "credentialReads": 0,
+    "speech": false,
+    "score": false,
+    "seeds": "Distinct per sound, with deterministic per-layer PRNG and 24-bit TPDF dither."
+  },
+  "mastering": {
+    "samplePeakCeilingDbfs": -6,
+    "reconstructionMethod": "4x Lanczos-8 local QC estimate; not certified ITU true peak",
+    "centeredBody": true,
+    "stereoTail": "Mild upper-only feed-forward early reflections; positive polarity, no sub widening",
+    "fades": {
+      "fileStartMs": 3,
+      "fileEndMs": 9
+    },
+    "dcHighPassHz": 24
+  },
+  "phoneProxy": {
+    "method": "Entire mono PCM, rectangular FFT zero-padded to next power of two; one-sided power, double non-DC/Nyquist bins; inclusive300-3400Hz / all bins.",
+    "revisedSoundIds": [
+      "product-weight",
+      "sphere-reveal",
+      "logo-resolve"
+    ],
+    "revisedMinimumEnergyRatio": 0.15,
+    "limitation": "Frequency-energy proxy only; no hearing, premium-quality or physical-speaker claim."
+  },
+  "promotion": {
+    "method": "Stage all eight WAVs and manifest; validate PCM, SHA and strict decode for every candidate; then replace the directory with rollback on promotion failure.",
+    "preservesPriorPackOnFailedValidation": true
+  },
+  "limitations": [
+    "Peak, RMS, band energy, strict decode and mono checks do not establish subjective premium sound quality.",
+    "Audition in context with approved VO/music and on physical phone speakers; this pilot is not a listening pass.",
+    "Phone-body filtered and FFT energy ratios are signal proxies, not physical speaker or perceptual tests.",
+    "These eight originals do not complete the proposed 24-sound library."
+  ],
+  "sounds": [
+    {
+      "id": "hero-sweep",
+      "file": "hero-sweep.wav",
+      "character": "Accelerating silk/air arrival with a compact warm landing.",
+      "seed": 2049229697,
+      "seedHex": "0x7a24c381",
+      "durationSeconds": 0.75,
+      "syncSeconds": 0.47,
+      "syncSample": 22560,
+      "syncMeaning": "Arrival/catch onset after the pre-roll sweep.",
+      "sha256": "295b837e9ad91ca2cd388794f89e3fb7e05b4798fbf2713d2eb186656863f502",
+      "bytes": 216044,
+      "measurements": {
+        "frames": 36000,
+        "durationSeconds": 0.75,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.159645,
+        "reconstructed4xPeakEstimateDbfs": -6.149999,
+        "stereoRmsDbfs": -23.120687,
+        "monoRmsDbfs": -23.121235,
+        "monoFoldDownLossDb": -0.000548,
+        "stereoCorrelation": 0.999749,
+        "monoSamplePeakDbfs": -6.200968,
+        "maximumAbsoluteDc": 0.000001,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -71.934328,
+        "maximumAdjacentSampleStep": 0.117703,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.467725,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.187714,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "hero-sweep",
+        "duration": 0.75,
+        "sync": 0.47,
+        "seed": 2049229697,
+        "character": "Accelerating silk/air arrival with a compact warm landing.",
+        "layers": [
+          {
+            "type": "sweep",
+            "start": 0.008,
+            "length": 0.66,
+            "rise": 0.462,
+            "decay": 0.058,
+            "gain": 0.48,
+            "low": [
+              140,
+              330
+            ],
+            "high": [
+              1250,
+              4300
+            ],
+            "grain": 0.14
+          },
+          {
+            "type": "chirp",
+            "start": 0.075,
+            "length": 0.46,
+            "attack": 0.1,
+            "decay": 0.5,
+            "gain": 0.095,
+            "frequencies": [
+              148,
+              284
+            ],
+            "mode": "rise"
+          },
+          {
+            "type": "chirp",
+            "start": 0.47,
+            "length": 0.275,
+            "attack": 0.0025,
+            "decay": 0.069,
+            "gain": 0.48,
+            "frequencies": [
+              132,
+              70
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.47,
+            "length": 0.28,
+            "attack": 0.0015,
+            "decay": 0.086,
+            "gain": 0.59,
+            "frequencies": [
+              188,
+              296,
+              437
+            ],
+            "weights": [
+              1,
+              0.53,
+              0.26
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.47,
+            "length": 0.037,
+            "attack": 0.0015,
+            "decay": 0.011,
+            "gain": 0.15,
+            "low": 820,
+            "high": 3850
+          }
+        ],
+        "space": 0.105
+      }
+    },
+    {
+      "id": "product-weight",
+      "file": "product-weight.wav",
+      "character": "Dense object seating: chest/body, rounded sub, tactile surface.",
+      "seed": 1490555759,
+      "seedHex": "0x58d8136f",
+      "durationSeconds": 0.65,
+      "syncSeconds": 0.02,
+      "syncSample": 960,
+      "syncMeaning": "Primary object/action onset; envelope peak follows by a few milliseconds.",
+      "sha256": "3170fe702ead4db67b9f09e4a7e8bf3fe584b7f97df494c4fb50cd8fb422e949",
+      "bytes": 187244,
+      "measurements": {
+        "frames": 31200,
+        "durationSeconds": 0.65,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.151385,
+        "reconstructed4xPeakEstimateDbfs": -6.15,
+        "stereoRmsDbfs": -20.496559,
+        "monoRmsDbfs": -20.496599,
+        "monoFoldDownLossDb": -0.00004,
+        "stereoCorrelation": 0.999982,
+        "monoSamplePeakDbfs": -6.151385,
+        "maximumAbsoluteDc": 0,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -300,
+        "maximumAdjacentSampleStep": 0.043494,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.599337,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.185239,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "product-weight",
+        "duration": 0.65,
+        "sync": 0.02,
+        "seed": 1490555759,
+        "character": "Dense object seating: chest/body, rounded sub, tactile surface.",
+        "layers": [
+          {
+            "type": "chirp",
+            "start": 0.02,
+            "length": 0.48,
+            "attack": 0.002,
+            "decay": 0.112,
+            "gain": 0.42,
+            "frequencies": [
+              145,
+              66
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.02,
+            "length": 0.54,
+            "attack": 0.0015,
+            "decay": 0.145,
+            "gain": 0.72,
+            "frequencies": [
+              192,
+              283,
+              419
+            ],
+            "weights": [
+              1,
+              0.58,
+              0.26
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.021,
+            "length": 0.31,
+            "attack": 0.0018,
+            "decay": 0.09,
+            "gain": 0.48,
+            "frequencies": [
+              386,
+              653,
+              1019
+            ],
+            "weights": [
+              1,
+              0.54,
+              0.2
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.02,
+            "length": 0.09,
+            "attack": 0.0013,
+            "decay": 0.023,
+            "gain": 0.22,
+            "low": 580,
+            "high": 2780
+          },
+          {
+            "type": "modal",
+            "start": 0.027,
+            "length": 0.185,
+            "attack": 0.003,
+            "decay": 0.037,
+            "gain": 0.058,
+            "frequencies": [
+              697,
+              1149,
+              1811
+            ],
+            "weights": [
+              1,
+              0.41,
+              0.16
+            ]
+          }
+        ],
+        "space": 0.082
+      }
+    },
+    {
+      "id": "pivot-suction",
+      "file": "pivot-suction.wav",
+      "character": "Descending pressure draw that closes into a tight warm catch.",
+      "seed": 2446200103,
+      "seedHex": "0x91ce0d27",
+      "durationSeconds": 0.7,
+      "syncSeconds": 0.56,
+      "syncSample": 26880,
+      "syncMeaning": "Arrival/catch onset after the pre-roll sweep.",
+      "sha256": "5ce676b73431a253a059bf3ea866bd48f1026654426804615d4a4fbc86a3da9a",
+      "bytes": 201644,
+      "measurements": {
+        "frames": 33600,
+        "durationSeconds": 0.7,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.154668,
+        "reconstructed4xPeakEstimateDbfs": -6.150001,
+        "stereoRmsDbfs": -24.332084,
+        "monoRmsDbfs": -24.332267,
+        "monoFoldDownLossDb": -0.000182,
+        "stereoCorrelation": 0.999916,
+        "monoSamplePeakDbfs": -6.159546,
+        "maximumAbsoluteDc": 0.000003,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -66.713961,
+        "maximumAdjacentSampleStep": 0.042039,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.638575,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.154477,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "pivot-suction",
+        "duration": 0.7,
+        "sync": 0.56,
+        "seed": 2446200103,
+        "character": "Descending pressure draw that closes into a tight warm catch.",
+        "layers": [
+          {
+            "type": "sweep",
+            "start": 0.012,
+            "length": 0.63,
+            "rise": 0.548,
+            "decay": 0.025,
+            "gain": 0.42,
+            "low": [
+              150,
+              285
+            ],
+            "high": [
+              3300,
+              970
+            ],
+            "grain": 0.2
+          },
+          {
+            "type": "chirp",
+            "start": 0.05,
+            "length": 0.51,
+            "attack": 0.16,
+            "decay": 0.7,
+            "gain": 0.21,
+            "frequencies": [
+              316,
+              151
+            ],
+            "mode": "rise"
+          },
+          {
+            "type": "chirp",
+            "start": 0.56,
+            "length": 0.14,
+            "attack": 0.0015,
+            "decay": 0.042,
+            "gain": 0.36,
+            "frequencies": [
+              176,
+              91
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.56,
+            "length": 0.14,
+            "attack": 0.001,
+            "decay": 0.037,
+            "gain": 0.65,
+            "frequencies": [
+              207,
+              329,
+              446
+            ],
+            "weights": [
+              1,
+              0.48,
+              0.21
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.56,
+            "length": 0.032,
+            "attack": 0.001,
+            "decay": 0.009,
+            "gain": 0.19,
+            "low": 940,
+            "high": 3400
+          }
+        ],
+        "space": 0.092
+      }
+    },
+    {
+      "id": "sphere-reveal",
+      "file": "sphere-reveal.wav",
+      "character": "Soft luminous pressure bloom with brief inharmonic glass texture.",
+      "seed": 3290998457,
+      "seedHex": "0xc428a6b9",
+      "durationSeconds": 1.2,
+      "syncSeconds": 0.02,
+      "syncSample": 960,
+      "syncMeaning": "Primary object/action onset; envelope peak follows by a few milliseconds.",
+      "sha256": "61693fd9d434bd2d49cbc87f1211e6e42554e107b82ff9fdcede7e2d1d467617",
+      "bytes": 345644,
+      "measurements": {
+        "frames": 57600,
+        "durationSeconds": 1.2,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.15017,
+        "reconstructed4xPeakEstimateDbfs": -6.15,
+        "stereoRmsDbfs": -23.076205,
+        "monoRmsDbfs": -23.076437,
+        "monoFoldDownLossDb": -0.000232,
+        "stereoCorrelation": 0.999903,
+        "monoSamplePeakDbfs": -6.150175,
+        "maximumAbsoluteDc": 0,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -300,
+        "maximumAdjacentSampleStep": 0.039019,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.58774,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.250455,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "sphere-reveal",
+        "duration": 1.2,
+        "sync": 0.02,
+        "seed": 3290998457,
+        "character": "Soft luminous pressure bloom with brief inharmonic glass texture.",
+        "layers": [
+          {
+            "type": "chirp",
+            "start": 0.02,
+            "length": 0.6,
+            "attack": 0.006,
+            "decay": 0.17,
+            "gain": 0.31,
+            "frequencies": [
+              109,
+              67
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.02,
+            "length": 0.97,
+            "attack": 0.009,
+            "decay": 0.27,
+            "gain": 0.62,
+            "frequencies": [
+              173,
+              267,
+              431
+            ],
+            "weights": [
+              1,
+              0.51,
+              0.25
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.022,
+            "length": 0.67,
+            "attack": 0.006,
+            "decay": 0.17,
+            "gain": 0.47,
+            "frequencies": [
+              376,
+              593,
+              947
+            ],
+            "weights": [
+              1,
+              0.47,
+              0.19
+            ]
+          },
+          {
+            "type": "sweep",
+            "start": 0.02,
+            "length": 0.77,
+            "rise": 0.053,
+            "decay": 0.19,
+            "gain": 0.16,
+            "low": [
+              350,
+              520
+            ],
+            "high": [
+              2100,
+              3450
+            ],
+            "grain": 0.08
+          },
+          {
+            "type": "modal",
+            "start": 0.032,
+            "length": 0.78,
+            "attack": 0.01,
+            "decay": 0.16,
+            "gain": 0.07,
+            "frequencies": [
+              685,
+              1118,
+              1777
+            ],
+            "weights": [
+              1,
+              0.4,
+              0.17
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.022,
+            "length": 0.046,
+            "attack": 0.003,
+            "decay": 0.014,
+            "gain": 0.07,
+            "low": 930,
+            "high": 4100
+          }
+        ],
+        "space": 0.14
+      }
+    },
+    {
+      "id": "card-snap",
+      "file": "card-snap.wav",
+      "character": "Dry paper/polymer snap with a short solid midrange seat.",
+      "seed": 921802661,
+      "seedHex": "0x36f197a5",
+      "durationSeconds": 0.35,
+      "syncSeconds": 0.02,
+      "syncSample": 960,
+      "syncMeaning": "Primary object/action onset; envelope peak follows by a few milliseconds.",
+      "sha256": "103f6e89b72eeed4506e8954b68cac2307d51b82b099e2a37acf4cbe8b540fcd",
+      "bytes": 100844,
+      "measurements": {
+        "frames": 16800,
+        "durationSeconds": 0.35,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.15,
+        "reconstructed4xPeakEstimateDbfs": -6.15,
+        "stereoRmsDbfs": -22.700956,
+        "monoRmsDbfs": -22.700975,
+        "monoFoldDownLossDb": -0.000019,
+        "stereoCorrelation": 0.999991,
+        "monoSamplePeakDbfs": -6.15,
+        "maximumAbsoluteDc": 0,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -300,
+        "maximumAdjacentSampleStep": 0.067197,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.769245,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.189328,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "card-snap",
+        "duration": 0.35,
+        "sync": 0.02,
+        "seed": 921802661,
+        "character": "Dry paper/polymer snap with a short solid midrange seat.",
+        "layers": [
+          {
+            "type": "burst",
+            "start": 0.02,
+            "length": 0.037,
+            "attack": 0.001,
+            "decay": 0.0085,
+            "gain": 0.38,
+            "low": 850,
+            "high": 4800
+          },
+          {
+            "type": "modal",
+            "start": 0.02,
+            "length": 0.215,
+            "attack": 0.0012,
+            "decay": 0.041,
+            "gain": 0.74,
+            "frequencies": [
+              228,
+              354,
+              489
+            ],
+            "weights": [
+              1,
+              0.52,
+              0.19
+            ]
+          },
+          {
+            "type": "chirp",
+            "start": 0.021,
+            "length": 0.16,
+            "attack": 0.0015,
+            "decay": 0.029,
+            "gain": 0.2,
+            "frequencies": [
+              155,
+              109
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.038,
+            "length": 0.022,
+            "attack": 0.001,
+            "decay": 0.006,
+            "gain": 0.065,
+            "low": 640,
+            "high": 2200
+          }
+        ],
+        "space": 0.058
+      }
+    },
+    {
+      "id": "workflow-punch",
+      "file": "workflow-punch.wav",
+      "character": "Firm system lock with denser mid body and a restrained mechanical tail.",
+      "seed": 3880329683,
+      "seedHex": "0xe74921d3",
+      "durationSeconds": 0.7,
+      "syncSeconds": 0.02,
+      "syncSample": 960,
+      "syncMeaning": "Primary object/action onset; envelope peak follows by a few milliseconds.",
+      "sha256": "a6918aee5b2acb1e580485993b085f18a3a908ae089d5b4f4ea0e8497a8a70dc",
+      "bytes": 201644,
+      "measurements": {
+        "frames": 33600,
+        "durationSeconds": 0.7,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.163297,
+        "reconstructed4xPeakEstimateDbfs": -6.15,
+        "stereoRmsDbfs": -21.277223,
+        "monoRmsDbfs": -21.277287,
+        "monoFoldDownLossDb": -0.000063,
+        "stereoCorrelation": 0.999971,
+        "monoSamplePeakDbfs": -6.163297,
+        "maximumAbsoluteDc": 0,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -300,
+        "maximumAdjacentSampleStep": 0.042089,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.549625,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.144909,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "workflow-punch",
+        "duration": 0.7,
+        "sync": 0.02,
+        "seed": 3880329683,
+        "character": "Firm system lock with denser mid body and a restrained mechanical tail.",
+        "layers": [
+          {
+            "type": "chirp",
+            "start": 0.02,
+            "length": 0.48,
+            "attack": 0.0018,
+            "decay": 0.12,
+            "gain": 0.41,
+            "frequencies": [
+              127,
+              72
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.02,
+            "length": 0.56,
+            "attack": 0.0015,
+            "decay": 0.13,
+            "gain": 0.69,
+            "frequencies": [
+              183,
+              317,
+              447
+            ],
+            "weights": [
+              1,
+              0.58,
+              0.22
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.02,
+            "length": 0.066,
+            "attack": 0.0012,
+            "decay": 0.018,
+            "gain": 0.23,
+            "low": 450,
+            "high": 2600
+          },
+          {
+            "type": "burst",
+            "start": 0.034,
+            "length": 0.035,
+            "attack": 0.0015,
+            "decay": 0.009,
+            "gain": 0.07,
+            "low": 1200,
+            "high": 4300
+          },
+          {
+            "type": "modal",
+            "start": 0.026,
+            "length": 0.37,
+            "attack": 0.004,
+            "decay": 0.069,
+            "gain": 0.065,
+            "frequencies": [
+              631,
+              961,
+              1517
+            ],
+            "weights": [
+              1,
+              0.37,
+              0.14
+            ]
+          }
+        ],
+        "space": 0.095
+      }
+    },
+    {
+      "id": "logo-resolve",
+      "file": "logo-resolve.wav",
+      "character": "Warm brand settle with weight and a short airy glint, without a musical chord.",
+      "seed": 1649137895,
+      "seedHex": "0x624bd8e7",
+      "durationSeconds": 1.65,
+      "syncSeconds": 0.02,
+      "syncSample": 960,
+      "syncMeaning": "Primary object/action onset; envelope peak follows by a few milliseconds.",
+      "sha256": "f1101bbf6a2fe2d34d9736b55c4b7594b2de5f8e3325da45952812cbdd4a0af8",
+      "bytes": 475244,
+      "measurements": {
+        "frames": 79200,
+        "durationSeconds": 1.65,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.152512,
+        "reconstructed4xPeakEstimateDbfs": -6.15,
+        "stereoRmsDbfs": -22.433398,
+        "monoRmsDbfs": -22.433663,
+        "monoFoldDownLossDb": -0.000265,
+        "stereoCorrelation": 0.999883,
+        "monoSamplePeakDbfs": -6.156031,
+        "maximumAbsoluteDc": 0,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -300,
+        "maximumAdjacentSampleStep": 0.033631,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.555416,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.2364,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "logo-resolve",
+        "duration": 1.65,
+        "sync": 0.02,
+        "seed": 1649137895,
+        "character": "Warm brand settle with weight and a short airy glint, without a musical chord.",
+        "layers": [
+          {
+            "type": "chirp",
+            "start": 0.02,
+            "length": 0.77,
+            "attack": 0.003,
+            "decay": 0.235,
+            "gain": 0.28,
+            "frequencies": [
+              79,
+              47
+            ]
+          },
+          {
+            "type": "chirp",
+            "start": 0.02,
+            "length": 1.1,
+            "attack": 0.004,
+            "decay": 0.3,
+            "gain": 0.19,
+            "frequencies": [
+              218,
+              164
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.02,
+            "length": 1.43,
+            "attack": 0.004,
+            "decay": 0.37,
+            "gain": 0.62,
+            "frequencies": [
+              155,
+              261,
+              407
+            ],
+            "weights": [
+              1,
+              0.46,
+              0.2
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.022,
+            "length": 0.9,
+            "attack": 0.006,
+            "decay": 0.19,
+            "gain": 0.52,
+            "frequencies": [
+              371,
+              587,
+              923
+            ],
+            "weights": [
+              1,
+              0.5,
+              0.18
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.025,
+            "length": 0.15,
+            "attack": 0.003,
+            "decay": 0.039,
+            "gain": 0.11,
+            "low": 350,
+            "high": 1900
+          },
+          {
+            "type": "burst",
+            "start": 0.02,
+            "length": 0.11,
+            "attack": 0.003,
+            "decay": 0.026,
+            "gain": 0.12,
+            "low": 530,
+            "high": 2600
+          },
+          {
+            "type": "modal",
+            "start": 0.027,
+            "length": 0.95,
+            "attack": 0.009,
+            "decay": 0.19,
+            "gain": 0.045,
+            "frequencies": [
+              822,
+              1321
+            ],
+            "weights": [
+              1,
+              0.32
+            ]
+          },
+          {
+            "type": "modal",
+            "start": 0.092,
+            "length": 0.72,
+            "attack": 0.018,
+            "decay": 0.125,
+            "gain": 0.025,
+            "frequencies": [
+              1147,
+              1819
+            ],
+            "weights": [
+              1,
+              0.27
+            ]
+          },
+          {
+            "type": "sweep",
+            "start": 0.02,
+            "length": 0.73,
+            "rise": 0.055,
+            "decay": 0.15,
+            "gain": 0.065,
+            "low": [
+              430,
+              650
+            ],
+            "high": [
+              2600,
+              3600
+            ],
+            "grain": 0.04
+          }
+        ],
+        "space": 0.155
+      }
+    },
+    {
+      "id": "micro-select",
+      "file": "micro-select.wav",
+      "character": "Tiny tactile selection tick with a warm core and a clean textured edge.",
+      "seed": 2914007405,
+      "seedHex": "0xadb0396d",
+      "durationSeconds": 0.16,
+      "syncSeconds": 0.015,
+      "syncSample": 720,
+      "syncMeaning": "Primary object/action onset; envelope peak follows by a few milliseconds.",
+      "sha256": "25b1df09cdd7a50de33b6024c03f4daaf6e051c29cb703cb14dc7507f8429bad",
+      "bytes": 46124,
+      "measurements": {
+        "frames": 7680,
+        "durationSeconds": 0.16,
+        "finiteSamples": true,
+        "samplePeakDbfs": -6.153805,
+        "reconstructed4xPeakEstimateDbfs": -6.149998,
+        "stereoRmsDbfs": -22.720092,
+        "monoRmsDbfs": -22.72011,
+        "monoFoldDownLossDb": -0.000018,
+        "stereoCorrelation": 0.999992,
+        "monoSamplePeakDbfs": -6.153806,
+        "maximumAbsoluteDc": 0,
+        "edgesExactlyZero": true,
+        "final5msRmsDbfs": -117.453142,
+        "maximumAdjacentSampleStep": 0.046331,
+        "phoneBody140to450HzFilteredEnergyRatio": 0.771394,
+        "phoneAuditionProxy300to3400HzFftEnergyRatio": 0.158521,
+        "qcPass": true,
+        "ffmpegStrictDecode": true
+      },
+      "sourceRecipe": {
+        "id": "micro-select",
+        "duration": 0.16,
+        "sync": 0.015,
+        "seed": 2914007405,
+        "character": "Tiny tactile selection tick with a warm core and a clean textured edge.",
+        "layers": [
+          {
+            "type": "modal",
+            "start": 0.015,
+            "length": 0.115,
+            "attack": 0.001,
+            "decay": 0.022,
+            "gain": 0.64,
+            "frequencies": [
+              256,
+              398,
+              627
+            ],
+            "weights": [
+              1,
+              0.43,
+              0.12
+            ]
+          },
+          {
+            "type": "chirp",
+            "start": 0.015,
+            "length": 0.08,
+            "attack": 0.001,
+            "decay": 0.017,
+            "gain": 0.16,
+            "frequencies": [
+              216,
+              151
+            ]
+          },
+          {
+            "type": "burst",
+            "start": 0.015,
+            "length": 0.029,
+            "attack": 0.0007,
+            "decay": 0.006,
+            "gain": 0.22,
+            "low": 890,
+            "high": 4050
+          }
+        ],
+        "space": 0.048
+      }
+    }
+  ]
+}

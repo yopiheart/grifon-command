@@ -1,0 +1,11 @@
+{
+  "scope": "Narrow static/execution harness using the actual promotion function and disposable ignored byte fixtures; does not claim media quality for fixtures.",
+  "originalDirectOverwriteDefectDetected": true,
+  "currentCandidatePathsAndGateOrderPass": true,
+  "failedMediaGateKeepsPriorReleaseAndEvidence": true,
+  "candidateChangedAfterVerificationRejected": true,
+  "verifiedFixtureAtomicallyPromoted": true,
+  "identicalRerunLeavesReleaseUntouched": true,
+  "actualReleaseTouched": false,
+  "providerCalls": 0
+}

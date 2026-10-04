@@ -1,0 +1,146 @@
+{
+  "mode": "READ_ONLY_NO_GENERATION",
+  "recordedAt": "2026-10-03T11:04:38.458Z",
+  "models": [
+    {
+      "id": "eleven_v4",
+      "canDoTextToSpeech": true,
+      "tokenCostFactor": 1,
+      "modelRates": {
+        "character_cost_multiplier": 1,
+        "cost_discount_multiplier": 1
+      },
+      "maxCharactersPerRequest": 10000,
+      "languages": [
+        {
+          "code": "en",
+          "name": "English"
+        },
+        {
+          "code": "fil",
+          "name": "Filipino"
+        }
+      ]
+    }
+  ],
+  "voices": [
+    {
+      "voiceId": "CkDT8SVS21XIVk5BcuDe",
+      "name": "Aira - Confident News Reporter",
+      "source": "account",
+      "category": "professional",
+      "labels": {
+        "gender": "female",
+        "use_case": "entertainment_tv",
+        "age": "middle_aged",
+        "accent": "standard",
+        "language": "fil"
+      },
+      "description": "AIRA is a professional, confident, and articulate female AI news reporter voice, designed for clarity, intelligence, and warmth. Her tone captures the perfect balance between authority and approachability—ideal for delivering complex AI and tech news in a way that’s engaging and easy to understand.",
+      "language": null,
+      "accent": null,
+      "gender": null,
+      "useCase": null,
+      "rate": null,
+      "verifiedLanguages": [
+        {
+          "language": "fil",
+          "modelId": "eleven_multilingual_v2",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_turbo_v2_5",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_v2_5_flash",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_flash_v2_5",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_multilingual_sts_v2",
+          "accent": "standard",
+          "locale": "fil-PH"
+        }
+      ],
+      "publicOwnerId": null,
+      "freeUsersAllowed": null
+    },
+    {
+      "voiceId": "CkDT8SVS21XIVk5BcuDe",
+      "name": "Aira - Confident News Reporter",
+      "source": "public-library",
+      "category": "professional",
+      "labels": {},
+      "description": "AIRA is a professional, confident, and articulate female AI news reporter voice, designed for clarity, intelligence, and warmth. Her tone captures the perfect balance between authority and approachability—ideal for delivering complex AI and tech news in a way that’s engaging and easy to understand.",
+      "language": "fil",
+      "accent": "standard",
+      "gender": "female",
+      "useCase": "entertainment_tv",
+      "rate": 1,
+      "verifiedLanguages": [
+        {
+          "language": "fil",
+          "modelId": "eleven_multilingual_v2",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_turbo_v2_5",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_v2_5_flash",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_flash_v2_5",
+          "accent": "standard",
+          "locale": "fil-PH"
+        },
+        {
+          "language": "fil",
+          "modelId": "eleven_multilingual_sts_v2",
+          "accent": "standard",
+          "locale": "fil-PH"
+        }
+      ],
+      "publicOwnerId": "18b6f038186ba974fe33d7f281cb40fd9146c95a452425bd6a582689ad9c585e",
+      "freeUsersAllowed": false
+    }
+  ],
+  "selectedVoiceSharing": {
+    "status": "copied",
+    "rate": 1,
+    "financialRewardsEnabled": false,
+    "enabledInLibrary": false,
+    "disableAtUnix": null,
+    "category": "professional"
+  },
+  "fineTuningStates": {
+    "eleven_multilingual_sts_v2": "fine_tuned",
+    "eleven_turbo_v2_5": "fine_tuned",
+    "eleven_v2_5_flash": "fine_tuned",
+    "eleven_flash_v2_5": "fine_tuned",
+    "eleven_multilingual_v2": "fine_tuned"
+  },
+  "libraryHasMore": false,
+  "errors": [],
+  "generationRequests": 0
+}

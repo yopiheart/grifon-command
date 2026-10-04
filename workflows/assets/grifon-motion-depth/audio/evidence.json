@@ -1,0 +1,1149 @@
+{
+  "source": "Original deterministic additive synthesis. No downloaded audio, prior soundtrack, provider calls, or copyrighted recording.",
+  "command": "node workflows/assets/grifon-motion-depth/audio.mjs",
+  "durationSeconds": 8,
+  "sampleRate": 48000,
+  "channels": 2,
+  "pcmBits": 16,
+  "frameCountAt30Fps": 240,
+  "seed": 241003,
+  "sha256": "88b2fd2f74fbfd4299a45d9f6e5067e566ab1b6454278039f96bfd1931a43c60",
+  "bytes": 1536044,
+  "masterGainDb": 6.549113546707627,
+  "samplePeakDbfs": -3.000097173025577,
+  "rmsDbfs": -18.94823467783982,
+  "clippedSamples": 0,
+  "stereoDifferenceRmsDbfs": -28.540516828916623,
+  "eventCount": 84,
+  "sfxEventCount": 13,
+  "halfSecondWindows": [
+    {
+      "at": 0,
+      "rmsDbfs": -17.896985022341397
+    },
+    {
+      "at": 0.5,
+      "rmsDbfs": -23.07209190295969
+    },
+    {
+      "at": 1,
+      "rmsDbfs": -18.062353732134508
+    },
+    {
+      "at": 1.5,
+      "rmsDbfs": -24.72378428068904
+    },
+    {
+      "at": 2,
+      "rmsDbfs": -17.98445321107828
+    },
+    {
+      "at": 2.5,
+      "rmsDbfs": -18.256812126986162
+    },
+    {
+      "at": 3,
+      "rmsDbfs": -18.570733224159063
+    },
+    {
+      "at": 3.5,
+      "rmsDbfs": -18.647070464023884
+    },
+    {
+      "at": 4,
+      "rmsDbfs": -20.182029464492675
+    },
+    {
+      "at": 4.5,
+      "rmsDbfs": -16.72633208727366
+    },
+    {
+      "at": 5,
+      "rmsDbfs": -17.372037488079222
+    },
+    {
+      "at": 5.5,
+      "rmsDbfs": -18.68904924979517
+    },
+    {
+      "at": 6,
+      "rmsDbfs": -16.10064561524497
+    },
+    {
+      "at": 6.5,
+      "rmsDbfs": -19.569569511046197
+    },
+    {
+      "at": 7,
+      "rmsDbfs": -22.180565575622133
+    },
+    {
+      "at": 7.5,
+      "rmsDbfs": -30.09356985629184
+    }
+  ],
+  "events": [
+    {
+      "at": 0,
+      "duration": 0.26,
+      "gain": 0.29,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 0,
+      "beat": 0,
+      "measuredPreMasterPeakDbfs": -11.190625757940623,
+      "measuredPreMasterRmsDbfs": -23.08066976388966
+    },
+    {
+      "at": 0,
+      "midi": 38,
+      "duration": 0.42,
+      "gain": 0.27,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 0,
+      "beat": 0,
+      "measuredPreMasterPeakDbfs": -13.016320382873374,
+      "measuredPreMasterRmsDbfs": -21.594959817711775
+    },
+    {
+      "at": 0,
+      "duration": 2.45,
+      "midis": [
+        50,
+        57,
+        64
+      ],
+      "gain": 0.025,
+      "pan": -0.55,
+      "kind": "music-pad",
+      "startFrame": 0,
+      "beat": 0,
+      "measuredPreMasterPeakDbfs": -30.005639188689187,
+      "measuredPreMasterRmsDbfs": -37.76549987985787
+    },
+    {
+      "at": 0,
+      "duration": 2.45,
+      "midis": [
+        50,
+        57,
+        64
+      ],
+      "gain": 0.025,
+      "pan": 0,
+      "kind": "music-pad",
+      "startFrame": 0,
+      "beat": 0,
+      "measuredPreMasterPeakDbfs": -29.21729905445877,
+      "measuredPreMasterRmsDbfs": -37.66322104747565
+    },
+    {
+      "at": 0,
+      "duration": 2.45,
+      "midis": [
+        50,
+        57,
+        64
+      ],
+      "gain": 0.025,
+      "pan": 0.55,
+      "kind": "music-pad",
+      "startFrame": 0,
+      "beat": 0,
+      "measuredPreMasterPeakDbfs": -29.68782244251998,
+      "measuredPreMasterRmsDbfs": -37.65390308548649
+    },
+    {
+      "at": 0.12,
+      "kind": "camera-air",
+      "duration": 0.62,
+      "gain": 0.17,
+      "pan": -0.65,
+      "endPan": 0.4,
+      "action": "Near foreground architectural pass; lateral space rather than an impact",
+      "startFrame": 4,
+      "beat": 0.24,
+      "measuredPreMasterPeakDbfs": -22.813817944336144,
+      "measuredPreMasterRmsDbfs": -36.58677602825476
+    },
+    {
+      "at": 0.25,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 8,
+      "beat": 0.5,
+      "measuredPreMasterPeakDbfs": -31.473332259410437,
+      "measuredPreMasterRmsDbfs": -48.424359521156426
+    },
+    {
+      "at": 0.25,
+      "midi": 62,
+      "duration": 0.78,
+      "gain": 0.14,
+      "pan": -0.35,
+      "kind": "music-mallet",
+      "startFrame": 8,
+      "beat": 0.5,
+      "measuredPreMasterPeakDbfs": -14.854081680960594,
+      "measuredPreMasterRmsDbfs": -27.108805649682573
+    },
+    {
+      "at": 0.75,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 23,
+      "beat": 1.5,
+      "measuredPreMasterPeakDbfs": -35.72939869160659,
+      "measuredPreMasterRmsDbfs": -50.7708581815847
+    },
+    {
+      "at": 0.75,
+      "midi": 69,
+      "duration": 0.72,
+      "gain": 0.12,
+      "pan": 0.3,
+      "kind": "music-mallet",
+      "startFrame": 23,
+      "beat": 1.5,
+      "measuredPreMasterPeakDbfs": -16.391344708879615,
+      "measuredPreMasterRmsDbfs": -28.084859538100282
+    },
+    {
+      "at": 1,
+      "duration": 0.26,
+      "gain": 0.29,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 30,
+      "beat": 2,
+      "measuredPreMasterPeakDbfs": -11.190625757940623,
+      "measuredPreMasterRmsDbfs": -23.08066976388966
+    },
+    {
+      "at": 1,
+      "duration": 0.14,
+      "gain": 0.085,
+      "pan": -0.08,
+      "kind": "music-soft-clap",
+      "startFrame": 30,
+      "beat": 2,
+      "measuredPreMasterPeakDbfs": -25.29907052330719,
+      "measuredPreMasterRmsDbfs": -42.45371932553552
+    },
+    {
+      "at": 1,
+      "midi": 45,
+      "duration": 0.4,
+      "gain": 0.21,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 30,
+      "beat": 2,
+      "measuredPreMasterPeakDbfs": -15.167089742176351,
+      "measuredPreMasterRmsDbfs": -23.583128782904478
+    },
+    {
+      "at": 1,
+      "kind": "camera-air",
+      "duration": 0.72,
+      "gain": 0.19,
+      "pan": 0.7,
+      "endPan": -0.35,
+      "action": "Second close architectural pass as camera threads toward orb",
+      "startFrame": 30,
+      "beat": 2,
+      "measuredPreMasterPeakDbfs": -21.635986460534586,
+      "measuredPreMasterRmsDbfs": -35.79043429025606
+    },
+    {
+      "at": 1.25,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 38,
+      "beat": 2.5,
+      "measuredPreMasterPeakDbfs": -31.858273021358173,
+      "measuredPreMasterRmsDbfs": -48.35296637281875
+    },
+    {
+      "at": 1.25,
+      "midi": 65,
+      "duration": 0.76,
+      "gain": 0.13,
+      "pan": -0.15,
+      "kind": "music-mallet",
+      "startFrame": 38,
+      "beat": 2.5,
+      "measuredPreMasterPeakDbfs": -15.574450798599306,
+      "measuredPreMasterRmsDbfs": -27.62247133308501
+    },
+    {
+      "at": 1.75,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 53,
+      "beat": 3.5,
+      "measuredPreMasterPeakDbfs": -34.52279777756264,
+      "measuredPreMasterRmsDbfs": -50.753383981503674
+    },
+    {
+      "at": 1.75,
+      "midi": 76,
+      "duration": 0.68,
+      "gain": 0.1,
+      "pan": 0.35,
+      "kind": "music-mallet",
+      "startFrame": 53,
+      "beat": 3.5,
+      "measuredPreMasterPeakDbfs": -17.680283611247404,
+      "measuredPreMasterRmsDbfs": -29.805649508120787
+    },
+    {
+      "at": 1.85,
+      "kind": "riser",
+      "duration": 0.65,
+      "gain": 0.2,
+      "pan": -0.12,
+      "endPan": 0.12,
+      "action": "Tension approaches the first material reveal at 2.5s",
+      "startFrame": 56,
+      "beat": 3.7,
+      "measuredPreMasterPeakDbfs": -21.467998943630707,
+      "measuredPreMasterRmsDbfs": -35.397256686338686
+    },
+    {
+      "at": 2,
+      "duration": 0.26,
+      "gain": 0.29,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 60,
+      "beat": 4,
+      "measuredPreMasterPeakDbfs": -11.190625757940623,
+      "measuredPreMasterRmsDbfs": -23.08066976388966
+    },
+    {
+      "at": 2,
+      "midi": 38,
+      "duration": 0.4,
+      "gain": 0.24,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 60,
+      "beat": 4,
+      "measuredPreMasterPeakDbfs": -14.039370831821003,
+      "measuredPreMasterRmsDbfs": -22.42404292292507
+    },
+    {
+      "at": 2.25,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 68,
+      "beat": 4.5,
+      "measuredPreMasterPeakDbfs": -32.26529294795257,
+      "measuredPreMasterRmsDbfs": -48.076297161128956
+    },
+    {
+      "at": 2.25,
+      "midi": 69,
+      "duration": 0.65,
+      "gain": 0.13,
+      "pan": -0.3,
+      "kind": "music-mallet",
+      "startFrame": 68,
+      "beat": 4.5,
+      "measuredPreMasterPeakDbfs": -15.702758443158963,
+      "measuredPreMasterRmsDbfs": -27.036433584258166
+    },
+    {
+      "at": 2.5,
+      "duration": 0.26,
+      "gain": 0.32,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -10.335586149521625,
+      "measuredPreMasterRmsDbfs": -22.225630155470725
+    },
+    {
+      "at": 2.5,
+      "midi": 41,
+      "duration": 0.35,
+      "gain": 0.22,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -14.768631799203057,
+      "measuredPreMasterRmsDbfs": -22.666367384308227
+    },
+    {
+      "at": 2.5,
+      "duration": 1.9,
+      "midis": [
+        53,
+        57,
+        60,
+        64
+      ],
+      "gain": 0.032,
+      "pan": -0.55,
+      "kind": "music-pad",
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -28.40356608122025,
+      "measuredPreMasterRmsDbfs": -35.93356474721053
+    },
+    {
+      "at": 2.5,
+      "duration": 1.9,
+      "midis": [
+        53,
+        57,
+        60,
+        64
+      ],
+      "gain": 0.032,
+      "pan": -0.18333333333333338,
+      "kind": "music-pad",
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -27.23636690726333,
+      "measuredPreMasterRmsDbfs": -35.34564718750676
+    },
+    {
+      "at": 2.5,
+      "duration": 1.9,
+      "midis": [
+        53,
+        57,
+        60,
+        64
+      ],
+      "gain": 0.032,
+      "pan": 0.18333333333333332,
+      "kind": "music-pad",
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -27.072074217492897,
+      "measuredPreMasterRmsDbfs": -35.45147418429758
+    },
+    {
+      "at": 2.5,
+      "duration": 1.9,
+      "midis": [
+        53,
+        57,
+        60,
+        64
+      ],
+      "gain": 0.032,
+      "pan": 0.55,
+      "kind": "music-pad",
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -27.342494751632145,
+      "measuredPreMasterRmsDbfs": -35.50138315743036
+    },
+    {
+      "at": 2.5,
+      "kind": "metal",
+      "duration": 0.46,
+      "gain": 0.24,
+      "pan": -0.24,
+      "action": "Gold metal match cut: struck, decaying inharmonic body",
+      "startFrame": 75,
+      "beat": 5,
+      "measuredPreMasterPeakDbfs": -11.711182955392985,
+      "measuredPreMasterRmsDbfs": -29.25258733646335
+    },
+    {
+      "at": 2.75,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 83,
+      "beat": 5.5,
+      "measuredPreMasterPeakDbfs": -34.75977178742637,
+      "measuredPreMasterRmsDbfs": -50.87098678583367
+    },
+    {
+      "at": 2.75,
+      "midi": 65,
+      "duration": 0.55,
+      "gain": 0.15,
+      "pan": 0.25,
+      "kind": "music-mallet",
+      "startFrame": 83,
+      "beat": 5.5,
+      "measuredPreMasterPeakDbfs": -14.342229413544521,
+      "measuredPreMasterRmsDbfs": -24.97115700317709
+    },
+    {
+      "at": 3,
+      "duration": 0.14,
+      "gain": 0.085,
+      "pan": -0.08,
+      "kind": "music-soft-clap",
+      "startFrame": 90,
+      "beat": 6,
+      "measuredPreMasterPeakDbfs": -25.159862792967544,
+      "measuredPreMasterRmsDbfs": -42.54915032788357
+    },
+    {
+      "at": 3,
+      "midi": 45,
+      "duration": 0.32,
+      "gain": 0.21,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 90,
+      "beat": 6,
+      "measuredPreMasterPeakDbfs": -15.167089742176351,
+      "measuredPreMasterRmsDbfs": -22.74270540872938
+    },
+    {
+      "at": 3,
+      "midi": 69,
+      "duration": 0.54,
+      "gain": 0.12,
+      "pan": -0.1,
+      "kind": "music-mallet",
+      "startFrame": 90,
+      "beat": 6,
+      "measuredPreMasterPeakDbfs": -16.411729128256365,
+      "measuredPreMasterRmsDbfs": -27.18971959667745
+    },
+    {
+      "at": 3,
+      "kind": "ceramic",
+      "duration": 0.22,
+      "gain": 0.25,
+      "pan": 0.2,
+      "action": "Matte ceramic match cut: short hollow soft knock",
+      "startFrame": 90,
+      "beat": 6,
+      "measuredPreMasterPeakDbfs": -14.080603842605488,
+      "measuredPreMasterRmsDbfs": -30.51504591218808
+    },
+    {
+      "at": 3.25,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 98,
+      "beat": 6.5,
+      "measuredPreMasterPeakDbfs": -33.00819838945148,
+      "measuredPreMasterRmsDbfs": -48.380566607767825
+    },
+    {
+      "at": 3.25,
+      "midi": 72,
+      "duration": 0.55,
+      "gain": 0.14,
+      "pan": 0.35,
+      "kind": "music-mallet",
+      "startFrame": 98,
+      "beat": 6.5,
+      "measuredPreMasterPeakDbfs": -14.987487721512709,
+      "measuredPreMasterRmsDbfs": -25.580136851070606
+    },
+    {
+      "at": 3.5,
+      "duration": 0.26,
+      "gain": 0.32,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 105,
+      "beat": 7,
+      "measuredPreMasterPeakDbfs": -10.335586149521625,
+      "measuredPreMasterRmsDbfs": -22.225630155470725
+    },
+    {
+      "at": 3.5,
+      "midi": 48,
+      "duration": 0.35,
+      "gain": 0.2,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 105,
+      "beat": 7,
+      "measuredPreMasterPeakDbfs": -15.595821476088735,
+      "measuredPreMasterRmsDbfs": -23.493750384830953
+    },
+    {
+      "at": 3.5,
+      "kind": "glass",
+      "duration": 0.56,
+      "gain": 0.22,
+      "pan": -0.1,
+      "action": "Optical glass match cut: two-part crystal resonance",
+      "startFrame": 105,
+      "beat": 7,
+      "measuredPreMasterPeakDbfs": -14.407138178705544,
+      "measuredPreMasterRmsDbfs": -32.1539240621967
+    },
+    {
+      "at": 3.75,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 113,
+      "beat": 7.5,
+      "measuredPreMasterPeakDbfs": -35.76572453106445,
+      "measuredPreMasterRmsDbfs": -50.9793719756263
+    },
+    {
+      "at": 3.75,
+      "midi": 76,
+      "duration": 0.62,
+      "gain": 0.14,
+      "pan": -0.2,
+      "kind": "music-mallet",
+      "startFrame": 113,
+      "beat": 7.5,
+      "measuredPreMasterPeakDbfs": -14.744910113270402,
+      "measuredPreMasterRmsDbfs": -26.124791615305945
+    },
+    {
+      "at": 4,
+      "midi": 45,
+      "duration": 0.35,
+      "gain": 0.21,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 120,
+      "beat": 8,
+      "measuredPreMasterPeakDbfs": -15.167089742176351,
+      "measuredPreMasterRmsDbfs": -23.07004921127398
+    },
+    {
+      "at": 4,
+      "kind": "wire",
+      "duration": 0.18,
+      "gain": 0.2,
+      "pan": 0.3,
+      "action": "Wireframe match cut: short fine ratchet and damped pluck",
+      "startFrame": 120,
+      "beat": 8,
+      "measuredPreMasterPeakDbfs": -22.54456510693943,
+      "measuredPreMasterRmsDbfs": -38.676182375171535
+    },
+    {
+      "at": 4.25,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 128,
+      "beat": 8.5,
+      "measuredPreMasterPeakDbfs": -32.314583044509305,
+      "measuredPreMasterRmsDbfs": -48.108033578084374
+    },
+    {
+      "at": 4.25,
+      "midi": 74,
+      "duration": 0.58,
+      "gain": 0.16,
+      "pan": 0.3,
+      "kind": "music-mallet",
+      "startFrame": 128,
+      "beat": 8.5,
+      "measuredPreMasterPeakDbfs": -13.703182401397298,
+      "measuredPreMasterRmsDbfs": -25.30529817548121
+    },
+    {
+      "at": 4.36,
+      "kind": "assembly-air",
+      "duration": 0.22,
+      "gain": 0.2,
+      "pan": -0.5,
+      "endPan": 0.15,
+      "action": "Camera changes emphasis toward the type assembly",
+      "startFrame": 131,
+      "beat": 8.72,
+      "measuredPreMasterPeakDbfs": -22.210884623348058,
+      "measuredPreMasterRmsDbfs": -35.35305892284552
+    },
+    {
+      "at": 4.5,
+      "duration": 0.26,
+      "gain": 0.32,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -10.335586149521625,
+      "measuredPreMasterRmsDbfs": -22.225630155470725
+    },
+    {
+      "at": 4.5,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -35.677517790972615,
+      "measuredPreMasterRmsDbfs": -50.6849183281705
+    },
+    {
+      "at": 4.5,
+      "midi": 41,
+      "duration": 0.36,
+      "gain": 0.23,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -14.38252869529532,
+      "measuredPreMasterRmsDbfs": -22.38609133093306
+    },
+    {
+      "at": 4.5,
+      "midi": 65,
+      "duration": 0.6,
+      "gain": 0.15,
+      "pan": -0.3,
+      "kind": "music-mallet",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -14.369146191226088,
+      "measuredPreMasterRmsDbfs": -25.591841371065303
+    },
+    {
+      "at": 4.5,
+      "duration": 1.45,
+      "midis": [
+        53,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.036,
+      "pan": -0.55,
+      "kind": "music-pad",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -30.186562825679417,
+      "measuredPreMasterRmsDbfs": -36.12325561826499
+    },
+    {
+      "at": 4.5,
+      "duration": 1.45,
+      "midis": [
+        53,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.036,
+      "pan": -0.18333333333333338,
+      "kind": "music-pad",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -27.696683184947165,
+      "measuredPreMasterRmsDbfs": -35.090615254535365
+    },
+    {
+      "at": 4.5,
+      "duration": 1.45,
+      "midis": [
+        53,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.036,
+      "pan": 0.18333333333333332,
+      "kind": "music-pad",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -26.169397082110155,
+      "measuredPreMasterRmsDbfs": -34.31753463120458
+    },
+    {
+      "at": 4.5,
+      "duration": 1.45,
+      "midis": [
+        53,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.036,
+      "pan": 0.55,
+      "kind": "music-pad",
+      "startFrame": 135,
+      "beat": 9,
+      "measuredPreMasterPeakDbfs": -26.044966614747796,
+      "measuredPreMasterRmsDbfs": -34.44752864525598
+    },
+    {
+      "at": 4.75,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 143,
+      "beat": 9.5,
+      "measuredPreMasterPeakDbfs": -32.449881733558726,
+      "measuredPreMasterRmsDbfs": -48.20220752118952
+    },
+    {
+      "at": 4.75,
+      "midi": 69,
+      "duration": 0.55,
+      "gain": 0.13,
+      "pan": 0.25,
+      "kind": "music-mallet",
+      "startFrame": 143,
+      "beat": 9.5,
+      "measuredPreMasterPeakDbfs": -15.665921221551645,
+      "measuredPreMasterRmsDbfs": -26.593998664600825
+    },
+    {
+      "at": 4.75,
+      "kind": "type-land",
+      "duration": 0.2,
+      "gain": 0.29,
+      "pan": -0.42,
+      "frequency": 174.61,
+      "action": "YOUR lands after visible pre-roll: bass body and a concise mechanical contact",
+      "startFrame": 143,
+      "beat": 9.5,
+      "measuredPreMasterPeakDbfs": -14.086152043528548,
+      "measuredPreMasterRmsDbfs": -27.411142766310622
+    },
+    {
+      "at": 5,
+      "duration": 0.26,
+      "gain": 0.32,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 150,
+      "beat": 10,
+      "measuredPreMasterPeakDbfs": -10.335586149521625,
+      "measuredPreMasterRmsDbfs": -22.225630155470725
+    },
+    {
+      "at": 5,
+      "duration": 0.14,
+      "gain": 0.085,
+      "pan": -0.08,
+      "kind": "music-soft-clap",
+      "startFrame": 150,
+      "beat": 10,
+      "measuredPreMasterPeakDbfs": -26.16860248963117,
+      "measuredPreMasterRmsDbfs": -42.639747102230004
+    },
+    {
+      "at": 5,
+      "midi": 45,
+      "duration": 0.38,
+      "gain": 0.21,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 150,
+      "beat": 10,
+      "measuredPreMasterPeakDbfs": -15.167089742176351,
+      "measuredPreMasterRmsDbfs": -23.38297275890877
+    },
+    {
+      "at": 5,
+      "midi": 72,
+      "duration": 0.58,
+      "gain": 0.15,
+      "pan": -0.15,
+      "kind": "music-mallet",
+      "startFrame": 150,
+      "beat": 10,
+      "measuredPreMasterPeakDbfs": -14.390936653928945,
+      "measuredPreMasterRmsDbfs": -25.68988528628404
+    },
+    {
+      "at": 5,
+      "kind": "type-land",
+      "duration": 0.2,
+      "gain": 0.29,
+      "pan": 0,
+      "frequency": 220,
+      "action": "NEXT lands: distinct pitch and center contact",
+      "startFrame": 150,
+      "beat": 10,
+      "measuredPreMasterPeakDbfs": -13.984128319911392,
+      "measuredPreMasterRmsDbfs": -27.412893126317698
+    },
+    {
+      "at": 5.25,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 158,
+      "beat": 10.5,
+      "measuredPreMasterPeakDbfs": -34.68942789024049,
+      "measuredPreMasterRmsDbfs": -51.07922888017602
+    },
+    {
+      "at": 5.25,
+      "midi": 76,
+      "duration": 0.58,
+      "gain": 0.13,
+      "pan": 0.3,
+      "kind": "music-mallet",
+      "startFrame": 158,
+      "beat": 10.5,
+      "measuredPreMasterPeakDbfs": -15.391188758399771,
+      "measuredPreMasterRmsDbfs": -27.02833229773013
+    },
+    {
+      "at": 5.25,
+      "kind": "type-land",
+      "duration": 0.22,
+      "gain": 0.29,
+      "pan": 0.42,
+      "frequency": 293.66,
+      "action": "AD lands: higher contact and rightward placement",
+      "startFrame": 158,
+      "beat": 10.5,
+      "measuredPreMasterPeakDbfs": -14.157445853299945,
+      "measuredPreMasterRmsDbfs": -27.849392327579487
+    },
+    {
+      "at": 5.5,
+      "duration": 0.26,
+      "gain": 0.32,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 165,
+      "beat": 11,
+      "measuredPreMasterPeakDbfs": -10.335586149521625,
+      "measuredPreMasterRmsDbfs": -22.225630155470725
+    },
+    {
+      "at": 5.5,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 165,
+      "beat": 11,
+      "measuredPreMasterPeakDbfs": -32.81699745039754,
+      "measuredPreMasterRmsDbfs": -48.33884773358931
+    },
+    {
+      "at": 5.5,
+      "midi": 38,
+      "duration": 0.38,
+      "gain": 0.23,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 165,
+      "beat": 11,
+      "measuredPreMasterPeakDbfs": -14.409038945701266,
+      "measuredPreMasterRmsDbfs": -22.593569673152835
+    },
+    {
+      "at": 5.5,
+      "midi": 74,
+      "duration": 0.65,
+      "gain": 0.16,
+      "pan": -0.2,
+      "kind": "music-mallet",
+      "startFrame": 165,
+      "beat": 11,
+      "measuredPreMasterPeakDbfs": -13.693201595878065,
+      "measuredPreMasterRmsDbfs": -25.129458930496675
+    },
+    {
+      "at": 5.5,
+      "kind": "settle",
+      "duration": 0.3,
+      "gain": 0.17,
+      "pan": 0,
+      "action": "Assembly settles; quiet precision click, no extra boom",
+      "startFrame": 165,
+      "beat": 11,
+      "measuredPreMasterPeakDbfs": -21.546407967345633,
+      "measuredPreMasterRmsDbfs": -37.56132732600908
+    },
+    {
+      "at": 5.75,
+      "duration": 0.075,
+      "gain": 0.04,
+      "pan": 0.35,
+      "kind": "music-shaker",
+      "startFrame": 173,
+      "beat": 11.5,
+      "measuredPreMasterPeakDbfs": -35.68930797105833,
+      "measuredPreMasterRmsDbfs": -50.96054623592279
+    },
+    {
+      "at": 6,
+      "duration": 0.26,
+      "gain": 0.32,
+      "pan": 0,
+      "kind": "music-kick",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -10.335586149521625,
+      "measuredPreMasterRmsDbfs": -22.225630155470725
+    },
+    {
+      "at": 6,
+      "midi": 38,
+      "duration": 1.45,
+      "gain": 0.19,
+      "kind": "music-bass",
+      "pan": 0,
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -14.779941237605666,
+      "measuredPreMasterRmsDbfs": -24.25602846694529
+    },
+    {
+      "at": 6,
+      "midi": 62,
+      "duration": 1.5,
+      "gain": 0.13,
+      "pan": -0.2,
+      "kind": "music-mallet",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -15.487907184049217,
+      "measuredPreMasterRmsDbfs": -30.53778881849486
+    },
+    {
+      "at": 6,
+      "midi": 69,
+      "duration": 1.6,
+      "gain": 0.09,
+      "pan": 0.2,
+      "kind": "music-mallet",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -18.897544402101577,
+      "measuredPreMasterRmsDbfs": -34.14771077476232
+    },
+    {
+      "at": 6,
+      "duration": 1.95,
+      "midis": [
+        50,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.045,
+      "pan": -0.55,
+      "kind": "music-pad",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -26.798738215469612,
+      "measuredPreMasterRmsDbfs": -33.68155491412392
+    },
+    {
+      "at": 6,
+      "duration": 1.95,
+      "midis": [
+        50,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.045,
+      "pan": -0.18333333333333338,
+      "kind": "music-pad",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -24.21459689502802,
+      "measuredPreMasterRmsDbfs": -32.378850549124785
+    },
+    {
+      "at": 6,
+      "duration": 1.95,
+      "midis": [
+        50,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.045,
+      "pan": 0.18333333333333332,
+      "kind": "music-pad",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -24.18061413147882,
+      "measuredPreMasterRmsDbfs": -32.57061235660126
+    },
+    {
+      "at": 6,
+      "duration": 1.95,
+      "midis": [
+        50,
+        57,
+        62,
+        65
+      ],
+      "gain": 0.045,
+      "pan": 0.55,
+      "kind": "music-pad",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -24.66439079563351,
+      "measuredPreMasterRmsDbfs": -32.514223135144825
+    },
+    {
+      "at": 6,
+      "kind": "logo",
+      "duration": 1.9,
+      "gain": 0.2,
+      "pan": 0,
+      "action": "GRIFON lockup reveals: low body plus sustained harmonic bloom",
+      "startFrame": 180,
+      "beat": 12,
+      "measuredPreMasterPeakDbfs": -19.582225997157508,
+      "measuredPreMasterRmsDbfs": -36.416519641605674
+    },
+    {
+      "at": 6.25,
+      "duration": 0.075,
+      "gain": 0.055,
+      "pan": -0.35,
+      "kind": "music-shaker",
+      "startFrame": 188,
+      "beat": 12.5,
+      "measuredPreMasterPeakDbfs": -32.75941108147544,
+      "measuredPreMasterRmsDbfs": -48.07335483857042
+    },
+    {
+      "at": 6.5,
+      "midi": 77,
+      "duration": 1.35,
+      "gain": 0.07,
+      "pan": 0.35,
+      "kind": "music-mallet",
+      "startFrame": 195,
+      "beat": 13,
+      "measuredPreMasterPeakDbfs": -20.707990816154556,
+      "measuredPreMasterRmsDbfs": -35.45934078946051
+    }
+  ],
+  "listeningStatus": "PENDING: objective measurements do not establish subjective sound quality",
+  "limitation": "Peak/RMS/event checks are objective only. Integrated LUFS/true peak require independent FFmpeg measurement; perceived timbre, musical quality, and synchronization to the rendered picture require listening."
+}

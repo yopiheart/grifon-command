@@ -1,0 +1,275 @@
+{
+  "mode": "READ_ONLY_NO_GENERATION",
+  "recordedAt": "2026-10-03T10:32:49.862Z",
+  "voices": [
+    {
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "name": "Bella - Professional, Bright, Warm",
+      "category": "premade",
+      "labels": {
+        "use_case": "informative_educational",
+        "accent": "american",
+        "gender": "female",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "CwhRBWXzGAHq8TQ4Fs17",
+      "name": "Roger - Laid-Back, Casual, Resonant",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "EXAVITQu4vr4xnSDxMaL",
+      "name": "Sarah - Mature, Reassuring, Confident",
+      "category": "premade",
+      "labels": {
+        "use_case": "entertainment_tv",
+        "accent": "american",
+        "gender": "female",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "FGY2WhTYpPnrIDTdsKH5",
+      "name": "Laura - Enthusiast, Quirky Attitude",
+      "category": "premade",
+      "labels": {
+        "use_case": "social_media",
+        "accent": "american",
+        "gender": "female",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "IKne3meq5aSn9XLyUdCD",
+      "name": "Charlie - Deep, Confident, Energetic",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "australian",
+        "gender": "male",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "JBFqnCBsd6RMkjVDRZzb",
+      "name": "George - Warm, Captivating Storyteller",
+      "category": "premade",
+      "labels": {
+        "use_case": "narrative_story",
+        "accent": "british",
+        "gender": "male",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "name": "Callum - Husky Trickster",
+      "category": "premade",
+      "labels": {
+        "use_case": "characters_animation",
+        "gender": "male",
+        "accent": "american",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "SAz9YHcvj6GT2YYXdXww",
+      "name": "River - Relaxed, Neutral, Informative",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "american",
+        "gender": "neutral",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "SOYHLrjzK2X1ezoPC6cr",
+      "name": "Harry - Fierce Warrior",
+      "category": "premade",
+      "labels": {
+        "use_case": "characters_animation",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+      "name": "Liam - Energetic, Social Media Creator",
+      "category": "premade",
+      "labels": {
+        "use_case": "social_media",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "Xb7hH8MSUJpSbSDYk0k2",
+      "name": "Alice - Clear, Engaging Educator",
+      "category": "premade",
+      "labels": {
+        "use_case": "informative_educational",
+        "accent": "british",
+        "gender": "female",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "XrExE9yKIg1WjnnlVkGX",
+      "name": "Matilda - Knowledgable, Professional",
+      "category": "premade",
+      "labels": {
+        "use_case": "informative_educational",
+        "accent": "american",
+        "gender": "female",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "bIHbv24MWmeRgasZH58o",
+      "name": "Will - Relaxed Optimist",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "cgSgspJ2msm6clMCkdW9",
+      "name": "Jessica - Playful, Bright, Warm",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "american",
+        "gender": "female",
+        "language": "en",
+        "age": "young"
+      }
+    },
+    {
+      "voiceId": "cjVigY5qzO86Huf0OWal",
+      "name": "Eric - Smooth, Trustworthy",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "iP95p4xoKVk53GoZ742B",
+      "name": "Chris - Charming, Down-to-Earth",
+      "category": "premade",
+      "labels": {
+        "use_case": "conversational",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "nPczCjzI2devNBz1zQrb",
+      "name": "Brian - Deep, Resonant and Comforting",
+      "category": "premade",
+      "labels": {
+        "use_case": "social_media",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "onwK4e9ZLuTAKqWW03F9",
+      "name": "Daniel - Steady Broadcaster",
+      "category": "premade",
+      "labels": {
+        "use_case": "informative_educational",
+        "accent": "british",
+        "gender": "male",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+      "name": "Lily - Velvety Actress",
+      "category": "premade",
+      "labels": {
+        "use_case": "informative_educational",
+        "accent": "british",
+        "gender": "female",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "pNInz6obpgDQGcFmaJgB",
+      "name": "Adam - Dominant, Firm",
+      "category": "premade",
+      "labels": {
+        "use_case": "social_media",
+        "gender": "male",
+        "accent": "american",
+        "language": "en",
+        "age": "middle_aged"
+      }
+    },
+    {
+      "voiceId": "pqHfZKP75CvOlQylNhV4",
+      "name": "Bill - Wise, Mature, Balanced",
+      "category": "premade",
+      "labels": {
+        "use_case": "advertisement",
+        "accent": "american",
+        "gender": "male",
+        "language": "en",
+        "age": "old"
+      }
+    }
+  ],
+  "hasMore": false,
+  "model": {
+    "id": "eleven_v3",
+    "canDoTextToSpeech": true,
+    "tokenCostFactor": 1,
+    "modelRates": {
+      "character_cost_multiplier": 1,
+      "cost_discount_multiplier": 1
+    },
+    "maxCharactersPerRequest": 5000
+  },
+  "subscription": null,
+  "errors": [
+    "Read-only /v1/user/subscription returned HTTP 401; body omitted."
+  ],
+  "secretValuesSaved": false,
+  "customVoicesSaved": false
+}
