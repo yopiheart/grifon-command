@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, return the feedback to your Codex task.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Codex task and say you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "3d-director", "runs": [{"id": "eval-1-bottle-with_skill-run-1", "prompt": "Plan a 12-second vertical commercial for a reusable water bottle from this text brief only. I want a push-in, an orbit and a side slide before the hero shot. Show me the 3D directing plan first; do not generate the finished video or invent product claims.", "eval_id": 1, "outputs": [{"name": "plan.md", "type": "text", "content": "# Reusable water bottle \u2014 directing brief v1\n\nA 12-second vertical studio commercial: move closer, travel around the bottle, slide across it, then settle into a still hero portrait. The bottle stays upright and stationary, making each requested camera move easy to judge.\n\nThis is the 3D directing plan only. No scene, preview, appearance reference or finished video has been generated.\n\n## Target and assumptions\n\n- Required: reusable water bottle; exactly 12 seconds; vertical framing; push-in, orbit and side slide before the hero shot; no invented product claims.\n- Proposed format: 9:16, with a 24 fps planning timeline (288 frames). Final resolution is not selected; 1080 \u00d7 1920 is a proposed delivery target, not a generated asset.\n- Proposed final look: restrained photographic studio lighting on a quiet seamless background. The gray geometry used for a future directing preview would describe staging, not dictate the finished bottle's material or color.\n- Audience and placement are unspecified. Assume a general product introduction suited to a vertical feed; no demographic or sales offer is inferred.\n- No people, wardrobe, dialogue, handling or drinking. No claim copy, logo, CTA, liquid effects or demonstrations of insulation, leak resistance, durability or environmental benefit.\n\n## Asset inventory and continuity\n\nThe only supplied source is the text brief. No product photo, dimensions, brand, character identity, location reference, music or reference video was supplied or inspected.\n\nFor a future preview, use an explicitly provisional bottle proxy: a simple body and closed-cap silhouette. Its proportions and cap geometry are placeholders, not assertions about the actual product. Define bottle height as H, base at the world origin, upright on Z, with +Y as the provisional front and +X as screen-right from the initial camera. A flat ground plane provides visible base contact; a seamless background avoids distracting scenery. There are no cast bindings.\n\nKeep the bottle's pose, scale, orientation, closed-cap state and lighting fixed throughout. Move the camera rather than spinning the bottle. Actual shape, finish, color, branding and cap details remain unknown and must come from an approved appearance reference before a faithful product render or generation handoff.\n\n## Shot plan\n\nTimes are contiguous; frame ranges are zero-based and inclusive. The lens starts with a consistent 50 mm perspective as a staging choice, adjusted only during preview review if necessary to preserve the intended framing.\n\n| Shot | Time / frames | Purpose and visible action | Framing and camera direction | Cut, continuity and sound intent |\n|---|---|---|---|---|\n| S01 \u2014 Push-in | 0.00\u20133.00 s / 0\u201371 | Introduce the complete bottle, then bring attention to its silhouette. The bottle remains still. | Front view, centered, camera aimed near mid-height. Dolly straight toward the bottle on the front axis; do not simulate this with a zoom. Begin with bottle occupying about 50% of picture height, finish near 70%, keeping cap and base visible. Ease into and out of the move. | Start directly on the product. Soft ambient music may begin here; no VO. Hard cut at 3.00 s. Ground contact and closed cap remain unchanged. |\n| S02 \u2014 Orbit | 3.00\u20136.00 s / 72\u2013143 | Reveal the bottle's volume through a clearly changing viewpoint. | Start at the preceding front-view scale. Move on a 60\u00b0 arc from front toward the bottle's right side, at constant radius and camera height. Track the bottle center, keeping the full silhouette near 70% of frame height. The camera travels; the bottle does not rotate. | Match the previous shot's size at the cut. No lid action or new feature reveal is implied. Maintain the same world lighting so highlights change because of viewpoint. A restrained musical pulse can carry the motion. Hard cut at 6.00 s. |\n| S03 \u2014 Side slide | 6.00\u20139.00 s / 144\u2013215 | Create a clean lateral parallax beat before the final reveal. | Return by editorial cut to a frontal setup. Translate the camera left to right on a straight path parallel to the front plane, roughly from X = \u22120.6H to +0.6H at a fixed distance and height. Gently track the center to keep the bottle readable. Use the ground shadow/background falloff to reveal lateral travel. Keep cap and base inside frame. This is a linear slide, not another orbit. | The viewpoint reset is an intentional cut, not an implied physical camera move connecting shots. Bottle pose and lighting stay fixed. No contact, handoff or hidden product action occurs. Let the music lead into a resolving beat at 9.00 s. |\n| S04 \u2014 Hero hold | 9.00\u201312.00 s / 216\u2013287 | Resolve into a clear, memorable full-product portrait. | Cut to a balanced front three-quarter view, approximately 20\u00b0 off the provisional front. Bottle centered, about 65\u201370% of frame height, with breathing room above and below. Lock the camera for all three seconds. No float, spin or continuing push. | Same bottle, closed cap and ground contact. No text or logo is invented. Music resolves softly and tails out by 12.00 s; no unmotivated cap, pouring or drinking SFX. |\n\n**Timing check:** 3 + 3 + 3 + 3 = 12 seconds. All three requested moves precede the held hero shot. The visual story progresses from recognition to volume to lateral perspective, then resolves with time to inspect the product. \u201cReusable water bottle\u201d comes from the brief; the sequence makes no additional performance claim.\n\n## What to judge in the first 3D preview\n\nThe next review stage, if requested, would be a custom-authored local scene with editable camera paths, a labeled review preview, storyboard frames and a separate clean camera guide. Existing product pilots provide patterns for authoring and checking a scene; their fixed builders and exhausted paid runners are not reusable commands for this bottle job.\n\nSuccess means a 12-second 9:16 sequence in the stated order, three visibly distinct camera moves, readable full-product framing and a genuinely still three-second hero hold. The proxy must stay planted on the ground with stable shape and pose. There should be no added branding, claims or product actions.\n\nFailure would include a zoom replacing the push-in, a turntable replacing camera travel, a curved slide path, cropped cap/base, changing geometry, unintended floating, or drift during the hero hold. These are future preview checks, not tests already passed. Full-motion viewing plus duration, aspect, cut-boundary and decode checks would verify the eventual guide; still frames alone cannot establish smooth movement.\n\n## Open decisions\n\nThe plan can be reviewed from the text brief now. A faithful appearance stage needs the actual bottle reference and dimensions or confirmed proportions. Finish, palette and any brand text can then be selected without changing the movement concept.\n\nNo generation provider is proposed yet because this request stops at planning. Provider compatibility, reference roles, pricing and output limits are unverified. Any later paid generation would need its own exact reviewed assets and test specification, including pass/fail criteria, evidence, maximum cost and attempt cap. No paid request is prepared or submitted here.\n"}], "grading": {"expectations": [{"text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.", "passed": true, "evidence": "Target and assumptions specifies 9:16 and 24 fps (288 frames). Shot rows cover 0-3 / 0-71, 3-6 / 72-143, 6-9 / 144-215, and 9-12 / 216-287; the inclusive frame ranges cover all 288 frames exactly once."}, {"text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.", "passed": true, "evidence": "S01 specifies a physical dolly with 50%-70% full-bottle framing; S02 specifies a 60-degree constant-radius, constant-height camera arc; S03 specifies a straight X=-0.6H to +0.6H slide with center tracking and an explicit editorial reset; S04 locks a full-bottle 65%-70% hero for 9-12 seconds. These are coherent proposed camera moves; visual framing and smoothness remain untested."}, {"text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.", "passed": true, "evidence": "Asset inventory says only text was supplied and shape, finish, color, branding and cap details remain unknown. The body/cap proxy is explicitly provisional. The plan excludes insulation, leak resistance, durability, environmental benefit, branding and claim copy."}, {"text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.", "passed": true, "evidence": "The opening explicitly states 'No scene, preview, appearance reference or finished video has been generated.' Future preview and provider checks are conditional, and no working Vivo command is supplied. This verifies the deliverable's scope and absence of false completion claims, not actual tool history."}], "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1}, "evidence_limits": "Read plan.md and execution-notes.json in this run. Execution notes are self-reported; full tool transcripts are not available. Tool history, claimed reads, absence of network/paid calls, and rendered camera behavior were not independently verified. No metrics.json or timing.json was present; no token metrics are inferred.", "claims": [{"claim": "The proposed timeline is exactly 12 seconds.", "type": "factual", "verified": true, "evidence": "Target and assumptions specifies 9:16 and 24 fps (288 frames). Shot rows cover 0-3 / 0-71, 3-6 / 72-143, 6-9 / 144-215, and 9-12 / 216-287; the inclusive frame ranges cover all 288 frames exactly once."}, {"claim": "No rendering, network or paid/provider operation occurred.", "type": "process", "verified": false, "evidence": "Execution-notes.json reports this, but no full tool transcript is available; absence of those actions cannot be independently established."}, {"claim": "All camera moves will be visually readable in a completed preview.", "type": "quality", "verified": false, "evidence": "Both the text and execution notes label framing and smoothness as future preview work. There is no rendered evidence; assertion 2 passes at the requested planning feasibility level only."}], "eval_feedback": {"suggestions": [{"assertion": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.", "reason": "Both reasonable plans pass this broad assertion. It does not distinguish a reproducible path with specified camera constraints from general move descriptions. Consider checking coordinate/path coherence and how a rotationally symmetric proxy makes the orbit visually observable, while retaining a planning-only standard."}, {"assertion": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.", "reason": "This is a useful honesty check on the written deliverable, but absence of prohibited execution cannot be verified from self-reported execution notes. Capture full tool transcripts if operational compliance is to be scored."}, {"reason": "No assertion assesses concise reviewability, continuity across cuts, editable handoff structure, or the separation of camera-guide appearance from product appearance. Those are concrete differences here that the equal pass rates miss."}], "overall": "All four assertions are valid basic planning checks, but they do not discriminate these two capable outputs. Equal pass rates do not establish incremental skill value."}}}, {"id": "eval-1-bottle-without_skill-run-1", "prompt": "Plan a 12-second vertical commercial for a reusable water bottle from this text brief only. I want a push-in, an orbit and a side slide before the hero shot. Show me the 3D directing plan first; do not generate the finished video or invent product claims.", "eval_id": 1, "outputs": [{"name": "plan.md", "type": "text", "content": "# 12-second vertical bottle commercial: 3D directing plan\n\nThe sequence is **push-in -> orbit -> side slide -> held hero shot**. The bottle stays upright and stationary; the camera performs the three requested moves. This is a proposed 3D blocking plan, not a rendered preview or a finished video.\n\n## Inputs and assumptions\n\nThe only established product fact is that this is a reusable water bottle. No product photograph, geometry, dimensions, material, color, logo, label or brand identity was supplied.\n\nUse a clearly provisional, unbranded gray bottle proxy: a simple cylinder with a rounded shoulder and plain cap. Its shape is a blocking stand-in, not a proposed product design or an accurate likeness. Do not infer features such as insulation, leak resistance, capacity, durability, recycled materials or environmental benefits. No voiceover, benefit copy, logo, liquid demonstration or performance claim is planned.\n\nProposed presentation: 9:16, 1080 x 1920, 30 fps, exactly 360 frames. A quiet light-gray studio floor and background keep the camera choreography readable. A large soft key at front-left, gentle fill at front-right and a narrow rear rim reveal the proxy silhouette. Use a subtle floor shadow; no condensation, ice, steam or other cues suggesting performance.\n\n## Shot timeline\n\nFrame ranges below are inclusive; each section occupies 90 frames.\n\n| Time / frames | Direction | Composition and intent |\n|---|---|---|\n| 0.00-3.00 s / 0-89 | **Push-in.** Physically move the camera toward the stationary bottle with a fixed focal length. Ease into the move and settle at its end. | Start with breathing room around the entire bottle and finish with a larger full-bottle view. Keep the cap and base visible. The floor shadow makes the approach legible. |\n| 3.00-6.00 s / 90-179 | **Orbit.** Travel through a 45-degree arc around the bottle at constant radius and height, always looking at its center. The bottle does not spin. | Maintain a full silhouette. Surface lighting and the relationship to the floor establish the changing viewpoint. Keep the arc modest for a three-second move. |\n| 6.00-9.00 s / 180-269 | **Side slide.** Translate along the camera's local horizontal axis. Keep the camera orientation fixed during this segment, with no compensating pan, so the product visibly shifts across the frame. | Start at the orbit endpoint. Let the bottle drift slightly left in frame while keeping the whole silhouette visible. The movement should feel like a lateral pass, not another orbit. |\n| 9.00-12.00 s / 270-359 | **Hero hold.** Cut to a centered frontal composition and hold the camera completely still. | Full bottle, cap and base visible, with generous clean space. No invented logo or slogan. The three-second still hold supplies the visual payoff. |\n\nUse matching endpoints between push-in, orbit and slide; each move eases to rest before the next begins. The cut at 9 seconds is deliberate: it cleanly separates motion from the final hold. No additional camera movement follows the side slide.\n\n## Editable 3D blocking specification\n\nUse bottle height **H = 1 scene unit** as a temporary scale. Place its base at world origin; Z is up, its provisional front faces -Y. The look-at point is **T = (0, 0, 0.50H)**. All coordinates below are multiplied by H.\n\nCreate separate editable objects for the bottle proxy, floor, camera, camera target and lights. Put each camera segment on named timeline markers so its duration and path can be revised independently. A smooth cylinder provides a silhouette only; any temporary side seam used to judge orbit direction must be identified as a preview guide and excluded from a final product representation.\n\n| Segment | Camera geometry |\n|---|---|\n| Push-in | Position moves from **(0, -3.50, 0.60)** to **(0, -2.40, 0.60)**; aim at T throughout. |\n| Orbit | At constant Z = 0.60 and radius 2.40 around the vertical axis through the bottle, animate angle theta from 0 to 45 degrees: **C(theta) = (2.40 sin theta, -2.40 cos theta, 0.60)**. Aim at T. Endpoint is approximately **(1.697, -1.697, 0.60)**. |\n| Side slide | From the orbit endpoint, move **0.55H** in direction **(0.707, 0.707, 0)**, ending near **(2.086, -1.308, 0.60)**. Freeze camera rotation at the orbit endpoint. Disable the look-at constraint during this move. |\n| Hero hold | Separate static camera at **(0, -2.80, 0.65)**, aimed at T. Cut to it at frame 270. |\n\nStart with a fixed 50 mm lens and set the camera's sensor fit explicitly for the portrait frame. These distances are initial blocking values, not verified framing. In a future preview, adjust sensor fit or all relevant distances together to keep the bottle fully visible and give the hero approximately 60% of frame height. Do not animate focal length to substitute for the push-in. Leave focus deep enough that the cap and base remain readable; avoid a focus pull competing with the requested camera moves.\n\nThe animation should use gentle acceleration and deceleration without overshoot. Verify curve handles at the segment boundaries so the camera does not swing beyond the orbit or slide limits. Keep the bottle transform locked across all four segments.\n\n## Review criteria before further production\n\nThis plan passes its text-level timing check: 3 + 3 + 3 + 3 = 12 seconds, with the push-in, orbit and slide all preceding the hero. No generated media or visual verification has occurred.\n\nA future 3D preview should be reviewed for:\n\n- An unmistakable physical push-in, constant-radius orbit and straight lateral slide, in that order.\n- A fully visible bottle with no cap/base clipping, floor penetration or distracting camera easing.\n- A clear distinction between the orbit and slide; the slide must not secretly pan back toward the bottle.\n- A stable hero from 9 to 12 seconds, in a readable portrait composition.\n- No product claims or branding beyond what is actually supplied.\n\nThe current deliverable is this directing plan. Real product assets are needed to establish product fidelity before a branded final commercial; they are not needed to review this camera choreography. The next reviewable visual deliverable would be a labeled proxy 3D animatic using this timeline, with its assumptions still visible. Finished-video generation is outside this step.\n"}], "grading": {"expectations": [{"text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.", "passed": true, "evidence": "Inputs specifies 9:16, 1080 x 1920, 30 fps and 360 frames. Shot rows cover 0-3 / 0-89, 3-6 / 90-179, 6-9 / 180-269 and 9-12 / 270-359 with inclusive ranges; all 360 frames are covered exactly once."}, {"text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.", "passed": true, "evidence": "Push-in travels from (0,-3.50,0.60) to (0,-2.40,0.60); orbit uses a constant-radius 45-degree arc ending at (1.697,-1.697,0.60); straight slide adds 0.55H along (0.707,0.707,0) with rotation frozen and look-at disabled. The final cut is to a static full-bottle hero for three seconds. Proposed geometry is internally consistent; sensor fit and framing are explicitly pending preview."}, {"text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.", "passed": true, "evidence": "Inputs says no photograph, geometry, dimensions, material, color, logo, label or brand was supplied. The gray cylinder/shoulder/cap is called a blocking stand-in. The plan explicitly avoids insulation, leak resistance, capacity, durability, recycled materials and environmental benefits, including suggestive condensation/ice/steam cues."}, {"text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.", "passed": true, "evidence": "The opening calls this 'a proposed 3D blocking plan, not a rendered preview or a finished video.' Review criteria states no generated media or visual verification occurred, and the next animatic is conditional. No Vivo command appears. This verifies the written scope, not independently observed execution."}], "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1}, "evidence_limits": "Read plan.md and execution-notes.json in this run. Execution notes are self-reported; full tool transcripts are not available. Tool history, claimed reads, absence of network/paid calls, and rendered camera behavior were not independently verified. No metrics.json or timing.json was present; no token metrics are inferred.", "claims": [{"claim": "The proposed timeline is exactly 12 seconds.", "type": "factual", "verified": true, "evidence": "Inputs specifies 9:16, 1080 x 1920, 30 fps and 360 frames. Shot rows cover 0-3 / 0-89, 3-6 / 90-179, 6-9 / 180-269 and 9-12 / 270-359 with inclusive ranges; all 360 frames are covered exactly once."}, {"claim": "No rendering, network or paid/provider operation occurred.", "type": "process", "verified": false, "evidence": "Execution-notes.json reports this, but no full tool transcript is available; absence of those actions cannot be independently established."}, {"claim": "All camera moves will be visually readable in a completed preview.", "type": "quality", "verified": false, "evidence": "Both the text and execution notes label framing and smoothness as future preview work. There is no rendered evidence; assertion 2 passes at the requested planning feasibility level only."}], "eval_feedback": {"suggestions": [{"assertion": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.", "reason": "Both reasonable plans pass this broad assertion. It does not distinguish a reproducible path with specified camera constraints from general move descriptions. Consider checking coordinate/path coherence and how a rotationally symmetric proxy makes the orbit visually observable, while retaining a planning-only standard."}, {"assertion": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.", "reason": "This is a useful honesty check on the written deliverable, but absence of prohibited execution cannot be verified from self-reported execution notes. Capture full tool transcripts if operational compliance is to be scored."}, {"reason": "No assertion assesses concise reviewability, continuity across cuts, editable handoff structure, or the separation of camera-guide appearance from product appearance. Those are concrete differences here that the equal pass rates miss."}], "overall": "All four assertions are valid basic planning checks, but they do not discriminate these two capable outputs. Equal pass rates do not establish incremental skill value."}}}, {"id": "eval-2-reference-with_skill-run-1", "prompt": "Use the saved Vivo/Apple reference observations as inspiration for an 18-second Bluetooth speaker ad: playful two-person interaction, varied angles and a closing hero. Make an original directing plan, with clear separation between observed reference facts and new shots. No browsing or paid video analysis.", "eval_id": 2, "outputs": [{"name": "plan.md", "type": "text", "content": "# PASS IT ON \u2014 Bluetooth speaker directing plan, v1\n\nAn 18-second, two-person dance challenge: one friend starts a tiny shoulder move, the other exaggerates it, and they end laughing in sync. The speaker remains the visual anchor and gets a clear closing hero. This is an original treatment inspired by the saved reference observations, ready for directing review.\n\n## Evidence and its limits\n\nI read only the supplied written reference evidence; I did not watch either video, inspect frames, browse, or commission analysis.\n\n| Evidence | What the saved record supports | What it does not establish |\n|---|---|---|\n| `assets/vivo-x80-previz/reference-observations.json` | The record identifies a third-party Apple \u201cNice Try!\u201d repost. Its sampled observations describe a table group at 0s, a phone insert at 3s, a sideways-glance close-up at 6s, phone-held action at 9s, two-person reaction coverage at 12s, group escalation at 15s, an owner angle at 21s, a feature payoff at 24s, and a closing group wide at 27s. | I have not independently verified those observations. Samples do not establish exact cut boundaries or continuous camera/hand movement. Lens descriptions are impressions. Auto-caption tags for music and laughter are not a full sound analysis; the unreliable final caption is not dialogue evidence. |\n| `assets/vivo-x80-previz-v2/shot-manifest.json` | This is the authored **Vivo adaptation**, not another record of the Apple source. It specifies a 15-second gray-clay study: attempts, expert flourish, owner reaction, an offer with the transfer elided by a cut, owner success, friend deflation, and an in-hand phone hero. It specifies varied framing, authored camera movement, and performance holds. | Written scene specifications do not prove that the rendered acting or contact reads convincingly. Its exact timings, lens values, camera paths, fingerprint story, and final hero are not observed Apple facts. No actual Vivo preview was reviewed here. |\n\n**Transferred inspiration:** reveal the prop early, let one person's intention motivate the next shot, alternate action and reaction, escalate the social joke, then resolve with the product present. The dance challenge, music treatment, set, cast, timings, camera paths, and closing speaker composition below are all new decisions. There is no authentication joke or copied failure/success feature claim.\n\n## Brief and assets\n\n- **Hard requirements:** 18 seconds; Bluetooth speaker; playful interaction between two people; varied angles; closing hero; original shots; no browsing or paid analysis.\n- **Reversible assumptions:** 9:16 portrait social ad; warm, naturalistic live-action commercial finish; two adult friends in a simple indoor lounge; no spoken dialogue. Audience assumption: people who enjoy music with friends. The directing guide, if later requested, may use simple geometry; the finished ad is not intended to look like gray clay.\n- **Product P1:** unspecified Bluetooth speaker. No brand, model, photograph, dimensions, finish, control layout, grille direction, or performance specifications were supplied. Reserve a neutral tabletop footprint for blocking only. Do not invent branding, glowing LEDs, moving drivers, waterproofing, bass power, battery life, or multipoint capability. Real geometry and hero orientation must be bound to a later supplied product reference.\n- **Cast A:** adult friend who starts the challenge, screen-left; provisional plain warm-toned shirt and dark trousers. Identity reference: not supplied. Voice: none selected.\n- **Cast B:** adult friend who escalates it, screen-right; provisional plain cool-toned shirt and dark trousers. Identity reference: not supplied. Voice: none selected. A and B are distinct cast slots, not identity-matched generated people.\n- **Set L1:** original uncluttered lounge, low table between the friends, plain background. No supplied location reference. Speaker stays front-center on the table, unobstructed. A neutral phone sits nearer A; its interface remains unreadable and it has no visible brand.\n- **Audio:** one newly chosen/licensed instrumental groove, a quiet room bed, restrained clothing/foot movement, and a natural shared laugh. No recognizable source soundtrack is presumed. No voiceover, dialogue, tagline, or custom voice is required.\n- **Provider:** unselected; current capabilities, reference-role support, clip limits, audio support, access and pricing are unverified. No generation request or paid-test specification is being submitted.\n\nThe speaker is already connected before the story starts. This is a music-sharing situation, not a pairing-speed demonstration. Only the category-level role of a Bluetooth speaker is used; no additional feature claim is made.\n\n## Original 18-second shot plan\n\nAll times, movements and performances in this table are newly authored. Wardrobe and cast bindings above stay unchanged throughout. Lens language indicates framing intent rather than measured source lenses.\n\n| Shot / time | Purpose and visible action | Camera, placement and continuity | Sound and finish |\n|---|---|---|---|\n| S01 \u00b7 0.0\u20132.0 \u00b7 2.0s | Establish the invitation. A and B sit at opposite sides of the table. A glances from the speaker to B, smiles and reaches toward the phone. B notices. | Medium-wide two-shot, seated eye level, modest slow push. A left, B right, P1 front-center. Both hands remain clear of P1; A's right hand approaches the phone. Warm window light, readable expressions. | Quiet room bed; no dialogue. Anticipation comes from the exchange of looks. |\n| S02 \u00b7 2.0\u20133.5 \u00b7 1.5s | Connect the product to the music. A's right fingertip makes one ordinary playback tap on the phone, then withdraws. The speaker dominates the foreground. | Locked high three-quarter tabletop insert. Match A's incoming hand from S01; phone stays flat, screen detail unreadable. P1 does not move. This is an editorial cue, not measured device response time. | Groove enters across the cut and settles in. No invented pairing voice, notification, or speaker light animation. |\n| S03 \u00b7 3.5\u20135.5 \u00b7 2.0s | Set the game. A performs one very small double shoulder bounce, then gives B a \u201cyour turn\u201d look. | B-shoulder view of A, medium close-up from the established audience side of the A\u2013B axis. B's shoulder is frame-right; a soft P1 edge anchors the bottom. Slow, slight push, then let the gaze land. A's hands rest away from the phone. | Two shoulder accents match two musical beats. Small playful grin; avoid oversized mugging. |\n| S04 \u00b7 5.5\u20137.5 \u00b7 2.0s | Escalate once. B copies the bounce much too grandly, adding an elaborate seated wrist flourish, then freezes proudly. | Low three-quarter medium of B, still on the same side of the axis. A remains offscreen left; P1 is visible low in the foreground. Camera locked so the physical joke is legible. B's arms stay clear of table and speaker. | Groove continues; the proud freeze receives a short musical space. No fake bass impact or object vibration. |\n| S05 \u00b7 7.5\u20139.5 \u00b7 2.0s | Give the joke room. A holds a mock-serious look for roughly half a second, glances at B, then breaks into a smile and answers with the same wrist flourish. | Held eye-level reaction close-up of A. Maintain gaze to screen-right toward B. P1 remains in its established offscreen tabletop position. The still camera and initial pause deliberately contrast with B's movement. | Quiet amused breath or small laugh, subject to later sound finishing. Preserve a beat before A responds. |\n| S06 \u00b7 9.5\u201312.0 \u00b7 2.5s | Turn competition into shared play. B starts the shoulder move again; A joins one beat later. Both rise from their seats while keeping the same left/right positions. | Wider side-oblique two-shot from the same axis side, gentle lateral slide. Show seats and both upper bodies sufficiently to make the rise continuous. No cross-over, product pickup, or hand-to-hand transfer. P1 remains foreground-center. | Music adds a modest rhythmic lift. Feet and chair sounds subtle; no claim about loudness or room-filling sound. |\n| S07 \u00b7 12.0\u201315.0 \u00b7 3.0s | Resolve the human story. Both finish one synchronized shoulder-and-wrist move, catch each other's eyes, and laugh. | Frontal medium-wide from slightly above table height; static frame. A left and B right behind the table, standing as established. Leave negative space around P1. Gesture ends by about 14s so their shared laugh has time to register. | Groove continues, shared laugh briefly foregrounded. Lighting and clothing match all preceding coverage. |\n| S08 \u00b7 15.0\u201318.0 \u00b7 3.0s | Closing hero: the speaker is the center of this shared moment. It sits in sharp focus; the two friends soften into the background, relaxed and still gently moving. | Cut to tabletop-level three-quarter product close-up, preserving table position and background left/right order. Short, slow lateral slide for the first 1s; stop and hold the final 2s. Final hero face/orientation and reflections remain pending actual product imagery. No invented logo or controls. | Continue the same groove, with a resolved musical button at 18s. Friends' laughter recedes naturally. No end copy or price is fabricated; keep the product unobscured. |\n\n**Duration check:** 2.0 + 1.5 + 2.0 + 2.0 + 2.0 + 2.5 + 3.0 + 3.0 = **18.0 seconds**, with contiguous shot boundaries and a three-second closing hero.\n\n## Review criteria and remaining limits\n\nPlanning success means the viewer can follow invitation \u2192 playful one-upmanship \u2192 shared movement \u2192 product hero; both cast roles remain distinct; the speaker's music role is legible; and every source claim stays separate from authored direction. Failures to catch later include gestures too fast to read, a camera angle that swaps the friends, a disappearing phone or drifting speaker, unconvincing rising action, and a hero that invents the real product's design.\n\nThe written timeline and continuity were checked against this plan. No visual motion, contact, audio mix, render quality, identity fidelity, or provider compatibility has been validated. The only deliberate temporal ellipsis is ordinary editorial coverage across the playful gestures; the rise is visible in S06, and no hidden product handoff is required.\n\nIf a preview is requested later, simple 3D blocking would help assess the two-person staging, camera axis, gesture readability and final product framing. Product images and dimensions, separate cast references, confirmed wardrobe/location, and approved music would be needed before an appearance-bound generation handoff. They are not necessary to review this provisional story. This deliverable stops at planning; no media was generated and no paid operation was performed.\n"}], "grading": {"expectations": [{"text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.", "passed": true, "evidence": "S01-S08 use contiguous intervals 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-9.5, 9.5-12, 12-15 and 15-18 seconds. A/B exchange and imitate shoulder/wrist gestures, framing varies across two-shot/insert/over-shoulder/low medium/close-up, and S08 is a three-second speaker hero with a two-second final hold."}, {"text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.", "passed": true, "evidence": "The evidence table separately labels the written Apple record, the authored Vivo adaptation, and transferred inspiration. Its cited 0/3/6/9/12/15/21/24/27-second Apple events match cameraAngleMap; omission of the 18-second sample is not a conflicting claim. The 15-second Vivo summary and cut-elided offer match shot-manifest.json. 'All times, movements and performances in this table are newly authored' clearly separates the dance challenge."}, {"text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.", "passed": true, "evidence": "The plan explicitly disclaims video watching, exact cut/motion reconstruction and source lens measurement, treats captions as limited evidence, and describes the Vivo fingerprint story as adaptation rather than an Apple fact or speaker feature. It excludes bass power, battery life, waterproofing and multipoint claims. Playback tapping is described as an editorial cue, not measured response time."}, {"text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.", "passed": true, "evidence": "A left/B right and a fixed front-center speaker establish continuity. S01 reaching matches S02 tapping; hands withdraw; later shots retain the axis; the seated-to-standing change is shown in S06 and standing is preserved in S07. Product, cast, location and control geometry are explicitly unknown; rendering and motion/contact validation remain pending."}], "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1}, "evidence_limits": "Read both supplied source fixtures directly, plus this run's plan.md and execution-notes.json. Reference assertions were verified against the saved records, not the original video. Execution notes are self-reported; full tool transcripts are unavailable. Actual reads, no-network/no-paid behavior and visual execution were not independently verified. No metrics.json or timing.json was present; no token metrics are inferred.", "claims": [{"claim": "Apple sample events and Vivo adaptation are distinct evidence classes.", "type": "factual", "verified": true, "evidence": "The evidence table separately labels the written Apple record, the authored Vivo adaptation, and transferred inspiration. Its cited 0/3/6/9/12/15/21/24/27-second Apple events match cameraAngleMap; omission of the 18-second sample is not a conflicting claim. The 15-second Vivo summary and cut-elided offer match shot-manifest.json. 'All times, movements and performances in this table are newly authored' clearly separates the dance challenge."}, {"claim": "The planned sequence totals exactly 18 seconds.", "type": "factual", "verified": true, "evidence": "S01-S08 use contiguous intervals 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-9.5, 9.5-12, 12-15 and 15-18 seconds. A/B exchange and imitate shoulder/wrist gestures, framing varies across two-shot/insert/over-shoulder/low medium/close-up, and S08 is a three-second speaker hero with a two-second final hold."}, {"claim": "No browsing, paid analysis or rendering occurred.", "type": "process", "verified": false, "evidence": "Execution-notes.json self-reports these limits; no full tool transcript is available to independently verify operational history."}, {"claim": "Proposed gestures and continuity will read in a finished preview.", "type": "quality", "verified": false, "evidence": "Only a written plan exists. Both runs explicitly leave motion, framing, contact, audio and fidelity validation for a future preview; assertion 4 is a planning-level judgment."}], "eval_feedback": {"suggestions": [{"assertion": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.", "reason": "This broad readability assertion passes both plausible plans but cannot establish that acting or blocking actually reads within 18 seconds. A stronger planning check could require explicit cause/reaction holds and accounting for every prop and body-state change; later visual readability needs a separate preview evaluation."}, {"assertion": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.", "reason": "Clarify that faithful discussion of Face ID/fingerprint in the source context is allowed, while assigning those capabilities to the speaker or treating the adaptation as observed source fact is not. Literal keyword checks would misgrade both good outputs."}, {"reason": "Operational restrictions such as no browsing/paid analysis cannot be independently checked without full tool transcripts. Written disclaimers and execution notes are not tool-history evidence."}, {"reason": "Both runs satisfy all four assertions. A comparative measure of staging complexity versus story payoff would capture the meaningful difference between the phone tap plus standing transition and the simpler seated imitation."}], "overall": "These assertions successfully check timing, provenance, claim discipline and proposed continuity, but do not discriminate the two competent outputs or establish a skill benefit."}}}, {"id": "eval-2-reference-without_skill-run-1", "prompt": "Use the saved Vivo/Apple reference observations as inspiration for an 18-second Bluetooth speaker ad: playful two-person interaction, varied angles and a closing hero. Make an original directing plan, with clear separation between observed reference facts and new shots. No browsing or paid video analysis.", "eval_id": 2, "outputs": [{"name": "plan.md", "type": "text", "content": "# PASS THE GROOVE \u2014 original 18-second Bluetooth speaker directing plan\n\nTwo adult friends compete to conduct the same song. One makes a grand, theatrical gesture; the other answers with a tiny shoulder bounce. The first tries the smaller move, and they fall into sync. The speaker remains the center of their shared moment, then closes the ad as the hero.\n\nPlanning assumptions: portrait 9:16, a simple indoor table setting, two adult performers identified only as A and B. No cast likeness, brand, speaker shape, finish, dimensions or controls have been supplied. Treat the speaker as a clearly labelled generic stand-in until actual product references are supplied. Every timing, action and camera choice below is newly proposed.\n\n## What the saved evidence actually establishes\n\n**Apple reference observations:** `assets/vivo-x80-previz/reference-observations.json` records manual screenshots sampled every three seconds from a 30-second third-party repost titled *iPhone 15 Plus Face ID | Nice Try! | Apple Malaysia Advertisement*. It records a family-table group at 0s, unattended-phone insert at 3s, sideways-glance close-up at 6s, phone recognition attempt at 9s, two-person reaction at 12s, larger group at 15s, tight two-person coverage at 18s, owner across the table at 21s, owner with Face ID text at 24s, and family-wide ending with a tagline at 27s. These support a useful sequence of attention, intent, action, reaction and resolution. They do not establish exact cuts, focal lengths, camera movement, full audio, or advertising effectiveness. The file's later Vivo adaptation and product description are separate from those Apple observations.\n\n**Existing Vivo adaptation:** `assets/vivo-x80-previz-v2/shot-manifest.json` describes a 15-second gray-clay study with ten authored shots: opportunity, pickup, failed thumb attempt, confident index-finger flourish, second failure, owner's side-eye, offered phone, owner's successful touch, deflated friend, and in-hand product hero. Its precise lenses, camera moves and timing are proposed Vivo-study choices, not measured facts about the Apple ad. The manifest documents intended staging; I have not inspected its rendered footage.\n\n**Inspiration carried forward:** let a prop focus attention, show character intent before a gesture, use contrasting reactions to make a joke legible, and finish on a readable product. The new story below replaces the authentication challenge with friendly musical imitation. It does not reuse the failed-unlock plot or imply any authentication feature for a speaker.\n\n## New shot plan\n\n| Shot | Time | Camera and composition | Performance and product action | Edit / sound purpose |\n|---|---|---|---|---|\n| 1 \u2014 The invitation | 0.0\u20132.0s | Seated-eye-level medium two-shot, approximate 35mm full-frame equivalent; a restrained forward move. A screen-left, B screen-right; speaker centered on table. | Music is already playing. A catches B's eye, straightens up and lifts both hands like a conductor. B pauses mid-shoulder-bounce to watch. | Establish people, product and challenge together. No pairing or startup sequence is implied. |\n| 2 \u2014 The shared source | 2.0\u20133.5s | Locked high-angle close insert, approximate 50mm equivalent. Speaker remains fully readable; A's gesturing hands enter at the edges without obscuring it. | Hands draw an exaggerated circle above the table; speaker stays stationary and untouched. | Cut on the lifting gesture. Confirm the object around which the exchange happens. |\n| 3 \u2014 Too much conductor | 3.5\u20135.5s | Slightly low three-quarter medium close-up of A, approximate 50mm equivalent. Small lateral move, B's shoulder just at frame edge. | A delivers a solemn, oversized downbeat and holds a proud expression for a beat. | The joke is A's seriousness. The soundtrack continues normally; gesture does not trigger a product response. |\n| 4 \u2014 Tiny answer | 5.5\u20137.5s | Eye-level reaction close-up of B, approximate 75mm equivalent; locked camera from the same side of the interaction axis. | B raises one eyebrow, then answers with one compact shoulder bounce and a little chin nod. | Hold long enough to read the eyebrow before the movement. Musical accent lands on B's bounce. |\n| 5 \u2014 Your move | 7.5\u201310.0s | Over B's shoulder toward A, approximate 50mm equivalent; speaker visible in the lower foreground. | A looks from B's shoulder back to B's face, lowers the conductor hands, then tries the same tiny bounce with comic concentration. | Match eyelines. The emotional change is from showing off to joining in. |\n| 6 \u2014 Found it | 10.0\u201312.5s | Medium two-shot from a higher three-quarter angle, approximate 35mm equivalent; locked off. | B repeats the bounce. A catches the rhythm on the next beat. They exchange a grin, keeping their hands clear of the speaker. | Two complete matching movements make the payoff readable. No dialogue needed. |\n| 7 \u2014 Shared groove | 12.5\u201315.0s | Lower, wider table-edge two-shot, approximate 35mm equivalent, with a gentle sideways slide that keeps the speaker between the pair. | Both now move together; A adds a tiny conductor finger and B laughs. Their shoulders relax. | Release the tension with warmth. Continue the same track without a volume jump or sonic transformation. |\n| 8 \u2014 Closing hero | 15.0\u201318.0s | Cut to speaker-height close hero, approximate 70mm equivalent. A short push over the first second settles into a two-second hold. Friends remain soft in the background. | Speaker is stationary, unobstructed and large enough to read. A and B continue their small synchronized movement behind it. | Music resolves at 18s. Optional original line: \u201cFind your shared rhythm.\u201d Brand/product text stays a placeholder until supplied. |\n\nTotal: 18.0 seconds. Suggested 24fps edit: 432 frames, with boundaries at frames 0, 48, 84, 132, 180, 240, 300, 360 and 432 (zero-based, end-exclusive). These are editorial proposals, not reference measurements.\n\n## Blocking and continuity\n\nKeep A left and B right throughout. Place the speaker on one fixed table mark between them. Draw the interaction axis through the two performers; shoot the close-ups and over-shoulder from one side so their glances remain consistent. The high-angle insert can be neutral, but return to the established side afterward. Frame the conductor hands above and beside the product, never across its main face. Neither performer transfers or operates the speaker, avoiding unsupported control placement and complicated hand contact.\n\nUse one soft daylight direction across every angle, with a restrained background and enough separation for the final product silhouette. Product-specific materials, logos, ports, lights, grille design and exact hero orientation must follow later supplied references. The approximate lenses describe desired perspective and can change to fit the real set and product size.\n\n## Audio, copy and claim boundaries\n\nPropose a light instrumental groove with clear beats and space for a natural chuckle. The music is an editorial soundtrack representing listening; its mix is not a measured demonstration of speaker output. No claim is made about bass strength, loudness, latency, battery life, waterproofing, wireless range, stereo pairing or gesture control. Do not add reactive LEDs, vibration effects or volume changes without verified product information. \u201cBluetooth speaker\u201d comes from the brief; no pairing interface is invented.\n\nThe closing line is an original optional copy proposal, not observed reference copy. There is no approved brand lockup or final cast identity at this stage.\n\n## What would make this plan work\n\nThe first two seconds establish two people and their shared object. A's large gesture and B's small reply must read without dialogue; A's imitation then resolves the joke. Distinct wide, insert, low-angle, reaction, over-shoulder and hero views each serve that story. The last three seconds provide an unobscured product finish.\n\nCheck the eventual rough cut for readable eye direction, at least one held reaction, a clear synchronized payoff, constant speaker position and an exact 18-second duration. A cut where the joke needs explanatory text, where the product disappears behind hands, or where the movements suggest gesture-controlled audio would need revision. No rendered motion, camera clearance, likeness, product fidelity or finished audio has been verified by this text-only planning pass.\n"}], "grading": {"expectations": [{"text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.", "passed": true, "evidence": "The eight intervals are 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-10, 10-12.5, 12.5-15 and 15-18 seconds. Listed 24fps boundaries 0/48/84/132/180/240/300/360/432 agree. A/B conduct/imitate the music across wide, insert, low-angle, reaction and over-shoulder coverage; S08 is a three-second speaker hero."}, {"text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.", "passed": true, "evidence": "Separate Apple observations, Existing Vivo adaptation and New shot plan sections match the fixtures. All ten Apple sample times and events correspond to cameraAngleMap. Vivo's ten authored shots, 15-second length, failed attempts, owner payoff and in-hand hero match the manifest. The conductor/shoulder story and optional closing line are explicitly new proposals."}, {"text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.", "passed": true, "evidence": "The text denies measurement of exact cuts, focal lengths, movement, full audio or effectiveness and says the Vivo rendered footage was not inspected. Face ID and fingerprint references are attributed to source/adaptation context, with no speaker authentication claim. It explicitly excludes bass, loudness, latency, battery, waterproofing, range, stereo pairing and gesture control; music is editorial rather than a measured output demonstration."}, {"text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.", "passed": true, "evidence": "Blocking fixes A left/B right, keeps the speaker on one table mark, preserves the interaction axis, and keeps hands above/beside rather than over the product. No transfer or control operation is required. The product silhouette, finish, dimensions, controls, cast likeness and set-dependent lenses are provisional, with no claimed rendered validation."}], "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1}, "evidence_limits": "Read both supplied source fixtures directly, plus this run's plan.md and execution-notes.json. Reference assertions were verified against the saved records, not the original video. Execution notes are self-reported; full tool transcripts are unavailable. Actual reads, no-network/no-paid behavior and visual execution were not independently verified. No metrics.json or timing.json was present; no token metrics are inferred.", "claims": [{"claim": "Apple sample events and Vivo adaptation are distinct evidence classes.", "type": "factual", "verified": true, "evidence": "Separate Apple observations, Existing Vivo adaptation and New shot plan sections match the fixtures. All ten Apple sample times and events correspond to cameraAngleMap. Vivo's ten authored shots, 15-second length, failed attempts, owner payoff and in-hand hero match the manifest. The conductor/shoulder story and optional closing line are explicitly new proposals."}, {"claim": "The planned sequence totals exactly 18 seconds.", "type": "factual", "verified": true, "evidence": "The eight intervals are 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-10, 10-12.5, 12.5-15 and 15-18 seconds. Listed 24fps boundaries 0/48/84/132/180/240/300/360/432 agree. A/B conduct/imitate the music across wide, insert, low-angle, reaction and over-shoulder coverage; S08 is a three-second speaker hero."}, {"claim": "No browsing, paid analysis or rendering occurred.", "type": "process", "verified": false, "evidence": "Execution-notes.json self-reports these limits; no full tool transcript is available to independently verify operational history."}, {"claim": "Proposed gestures and continuity will read in a finished preview.", "type": "quality", "verified": false, "evidence": "Only a written plan exists. Both runs explicitly leave motion, framing, contact, audio and fidelity validation for a future preview; assertion 4 is a planning-level judgment."}], "eval_feedback": {"suggestions": [{"assertion": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.", "reason": "This broad readability assertion passes both plausible plans but cannot establish that acting or blocking actually reads within 18 seconds. A stronger planning check could require explicit cause/reaction holds and accounting for every prop and body-state change; later visual readability needs a separate preview evaluation."}, {"assertion": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.", "reason": "Clarify that faithful discussion of Face ID/fingerprint in the source context is allowed, while assigning those capabilities to the speaker or treating the adaptation as observed source fact is not. Literal keyword checks would misgrade both good outputs."}, {"reason": "Operational restrictions such as no browsing/paid analysis cannot be independently checked without full tool transcripts. Written disclaimers and execution notes are not tool-history evidence."}, {"reason": "Both runs satisfy all four assertions. A comparative measure of staging complexity versus story payoff would capture the meaningful difference between the phone tap plus standing transition and the simpler seated imitation."}], "overall": "These assertions successfully check timing, provenance, claim discipline and proposed continuity, but do not discriminate the two competent outputs or establish a skill benefit."}}}, {"id": "eval-3-cast-with_skill-run-1", "prompt": "Plan a 15-second Taglish UGC ad with two adult creators, supplied character sheets and separate selected voices. Lock the wardrobe and keep the phone consistent across three scenes. I only want the preview plan and reference requirements now; no invented identities, speech generation or provider calls.", "eval_id": 3, "outputs": [{"name": "plan.md", "type": "text", "content": "# Preview plan v1: two-creator phone UGC\n\nThe 15-second plan below fixes the staging and continuity rules. The character sheets, phone images and selected voice IDs are not attached here, so their appearance and voice assignments remain unverified. I have not inspected or invented them. No scene, speech or video has been generated.\n\nPlanning assumptions: vertical 9:16, natural live-action UGC, one simple indoor setting, and the phone as the advertised product. These are reversible choices. Audience, brand, approved benefit and CTA destination are still unspecified, so this treatment uses a claim-free phone reveal. A benefit-led ad needs that product brief before its copy can be finalized. A later 3D preview would help inspect two-person composition, phone orientation and hand contact; its simple proxies would not determine the final visual style.\n\nSuccess at this stage means three shots totaling exactly 15 seconds, separately bound adult cast members and voices, explicit wardrobe/phone continuity, and an honest reference checklist. Failure would be inventing either person's appearance, substituting a voice, inventing a phone feature, or presenting a plan as a verified render.\n\n## Cast and asset bindings\n\nThese labels are bookkeeping placeholders, not identities, filenames or actual provider IDs.\n\n| Binding | Required source | Lock rule | Current status |\n| --- | --- | --- | --- |\n| CAST-A | User's first designated adult character sheet | Same face, hair, body proportions and distinguishing details in all scenes | Sheet and assignment unavailable |\n| WARDROBE-A | Approved outfit view from CAST-A's sheet, or separately supplied wardrobe reference | One outfit across S01-S03, including accessories and footwear where visible | Exact garment details unresolved; no invented colors or clothes |\n| VOICE-A | User's selected voice explicitly assigned to CAST-A, with provider and exact voice ID | CAST-A speaks only with this selection | ID, provider and mapping unavailable |\n| CAST-B | User's second designated adult character sheet | Separate identity from CAST-A; same appearance in all scenes | Sheet and assignment unavailable |\n| WARDROBE-B | Approved outfit view from CAST-B's sheet, or separately supplied wardrobe reference | One outfit across S01-S03, including accessories and footwear where visible | Exact garment details unresolved |\n| VOICE-B | User's distinct selected voice explicitly assigned to CAST-B, with provider and exact voice ID | CAST-B speaks only with this selection; no voice blending or reassignment | ID, provider and mapping unavailable |\n| PHONE-01 | Approved images of the exact handset and case, if used | One model, finish, dimensions, camera layout, buttons and case throughout | Images and exact model unavailable |\n| SET-01 | Supplied location reference if matching a real place is required | Same background, lighting direction and positions throughout | Neutral indoor staging is a proposal only |\n\nThe wardrobe rule is fixed now; the wardrobe itself cannot be honestly declared visually locked until its references identify one outfit per creator. Never choose between multiple outfits in a sheet silently.\n\n## Three-scene directing plan\n\nUse one side of the interaction axis throughout. CAST-A stays screen-left and CAST-B screen-right. CAST-A retains PHONE-01 in the left hand throughout; CAST-B never takes it. This proposed grip must be checked against the actual handset and any supplied pose constraints. There is no hidden handoff or action jump between scenes.\n\n| Shot and time | Purpose, action and result | Framing and camera | Cast, wardrobe and phone continuity | Dialogue and sound intent |\n| --- | --- | --- | --- | --- |\n| S01, 0.0-4.0s (4s) | Establish the two creators and invite a closer look. B looks at the phone, then at A. A raises the already-held phone from mid-torso to chest level. By 3.5s, its rear faces the camera and it is held still for the cut. | Eye-level medium two-shot. A left, B right, phone between them. Almost static camera with a restrained handheld feel proposed for the final look. No zoom. | Both CAST-A and CAST-B visible in their own unchanged wardrobe bindings. PHONE-01 upright in A's left hand. A's fingers support the lower edges without covering the camera cluster. | B, approximately 0.4-2.8s: \u201cTeka, patingin nga ng phone.\u201d A listens with mouth at rest. Proposed quiet room tone only. |\n| S02, 4.0-10.0s (6s) | Give a clear look at the actual phone. Match the prior hold at the cut. A makes one small wrist turn during 5.0-7.0s to reveal the side thickness, then returns to the same rear-facing orientation by 8.0s. Hold through 10.0s so the shape is readable. No unverified feature demo. | Tight phone insert from the same camera side, with the same lighting. A's sleeve and grip remain visible; B may remain a soft edge of frame. Camera is deliberately locked during the final two-second hold. | Same PHONE-01, left hand, case and rear camera layout. WARDROBE-A's visible sleeve must match S01 exactly. No screen content is exposed. Cast membership remains A and B even though faces are out of the close frame. | A, approximately 4.5-7.2s, off-camera: \u201cEto, tingnan mo nang malapitan.\u201d B stays silent. Room tone continues across the cut. No synthetic whoosh is needed. |\n| S03, 10.0-15.0s (5s) | Return to the pair and finish with an invitation to check details. A holds the phone at the same height and angle as the end of S02. B turns to the lens and delivers the CTA. Both settle into a natural final hold from 13.5-15.0s. | Return to the S01 medium two-shot and positions. Static finish; phone remains large enough to recognize, with neither face obscured. No additional product or creator enters. | Both original identities and wardrobe bindings intact. A still holds PHONE-01 left-handed, rear toward lens. No mirror flip at the cut. | B, approximately 10.6-13.0s: \u201cI-check mo rin yung details.\u201d A remains silent. Same room tone; music is optional and unselected. |\n\nThe cut times are 4.0s and 10.0s; 4 + 6 + 5 = 15 seconds. Proposed speech windows leave room for gestures and pauses, but speech duration and lip sync have not been measured. The current story resolves from curiosity to a closer look to an invitation. It does not yet communicate a product benefit because none was supplied.\n\n## Exact proposed Taglish lines for review\n\n1. CAST-B / VOICE-B: \u201cTeka, patingin nga ng phone.\u201d\n2. CAST-A / VOICE-A: \u201cEto, tingnan mo nang malapitan.\u201d\n3. CAST-B / VOICE-B: \u201cI-check mo rin yung details.\u201d\n\nThese are draft lines shown for approval, not approved generation text. The repository's AGENTS.md requires the exact user-facing Taglish line to be shown for approval. They stay a text proposal here; no speech approval or generation is needed to complete this planning deliverable.\n\n## References needed before building the preview\n\n- The two actual character sheets, clearly mapped to CAST-A and CAST-B. Use the supplied adults; do not create replacement identities. Face and body views should be clear enough to recognize each separately. If a sheet lacks a needed angle, identify that gap instead of fabricating it.\n- One selected wardrobe reference for each creator. Record garment type, color, pattern, sleeve length, jewelry, glasses, shoes and any visible marks from those references, then freeze those details across all shots. If the selected outfit is already clear in the sheet, a second asset is unnecessary.\n- The exact phone's rear and three-quarter/side views, plus case details if applicable. Include model/finish and physical dimensions where known, and a front view if a later revision shows the screen. The current plan deliberately avoids inventing screen UI. Approved screenshots are needed before introducing a screen demonstration.\n- The separate selected voice IDs and their providers, explicitly mapped to the two cast IDs. An existing approved sample can help review delivery; producing a new sample is outside this request. No IDs, accents, genders or voice characteristics are inferred from appearance.\n- Brand/product brief, audience, one supported benefit if wanted, and the intended CTA destination. The current generic CTA does not assume an offer, URL, price or availability.\n- A location reference only if the setting must match a particular place. Otherwise, the neutral set proposal is sufficient for a later blocking preview.\n\nCharacter sheets serve as identity evidence. Any later crop or conversion into per-person appearance references must preserve the supplied person, be reviewable, and fit the chosen provider's supported inputs. No such crops have been made now. When assets arrive, record their real paths and versions; hash the exact approved assets for a later generation handoff.\n\n## Preview review and later audio requirements\n\nA later local preview should expose cast labels, shot/time labels, wardrobe binding labels and PHONE-01 for review, with a separate clean camera guide if a generation handoff is requested. Check phone geometry and grip at every cut, fingers against the handset rather than through it, stable identity/outfit assignment, the camera axis, and the two intentional holds. Full motion review is needed to judge action; still frames alone cannot establish timing or contact continuity. No visual check has passed yet because no preview exists.\n\nProvider/model selection is pending. No capability, account access, price or support for two character references and separate voices has been verified. Preserve the separate voice bindings in the future job brief. A future workflow needs either compatible selected-voice speech plus lip sync, or reviewed timing-preserving voice conversion. Simply laying new TTS over existing mouth movements would not establish sync. S02's off-camera speech reduces visible mouth work; S01 and S03 still require visible-speaker synchronization.\n\nIf a later generated scene contains useful native dialogue or ambience, decide what to retain before finishing. Inspect the final-render audio path: the skill warns it can discard scene-native audio. Preserve the raw scene audio and explicitly mix retained dialogue/ambience rather than assume the renderer carries it through.\n\nThis deliverable stops at the preview plan and reference requirements. No provider request, speech, Blender scene, generated media, paid operation or publication was performed. Missing supplied assets are the next production dependency, not a reason to fabricate identities or call a provider.\n"}], "grading": {"expectations": [{"text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.", "passed": true, "evidence": "The three scene rows cover 0-4, 4-10 and 10-15 seconds, totaling 15 with no gaps. Functions progress from invitation and raising the already-held phone, to a rear/side close look, to a two-person CTA and final hold. The same-axis two-shot/insert/two-shot coverage is coherent at plan level."}, {"text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.", "passed": true, "evidence": "The binding table separately defines CAST-A/WARDROBE-A/VOICE-A and CAST-B/WARDROBE-B/VOICE-B. Each voice requires exact provider/ID and explicit cast mapping; both sheets and voice mappings are unavailable. The text explicitly says the wardrobe rule is fixed but the wardrobe itself cannot be declared visually locked yet."}, {"text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.", "passed": true, "evidence": "PHONE-01 is the sole handset/case binding. A retains it left-handed: rear-facing chest hold at 3.5s, side turn at 5-7s, return by 8s, matched rear-facing pose in S03. No screen UI is invented. Reference requirements ask for clear face/body and needed views, and distinguish sheets as identity evidence from later reviewable per-person crops/conversions into provider-supported appearance references. No actual crops or assets are claimed."}, {"text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.", "passed": true, "evidence": "Explicit speech windows are B 0.4-2.8s, A 4.5-7.2s off-camera and B 10.6-13.0s, each with a short draft line and room for pauses. The plan states timing is unmeasured, identifies S01/S03 as visible-mouth synchronization work, and requires compatible selected-voice speech plus lip sync or reviewed timing-preserving conversion. It warns that laying new TTS over existing mouths does not establish sync. Provider/model support remains unverified and identity fidelity is not guaranteed."}], "summary": {"passed": 4, "failed": 0, "total": 4, "pass_rate": 1}, "evidence_limits": "Read this run's plan.md and execution-notes.json. No character sheets, phone references or voice IDs were supplied, so identity, wardrobe, handset fidelity, speech duration and provider support cannot be validated. Execution notes are self-reported; full tool transcripts are unavailable. No metrics.json or timing.json was present; no token metrics are inferred.", "claims": [{"claim": "The plan has exactly three scenes spanning 15 seconds.", "type": "factual", "verified": true, "evidence": "The three scene rows cover 0-4, 4-10 and 10-15 seconds, totaling 15 with no gaps. Functions progress from invitation and raising the already-held phone, to a rear/side close look, to a two-person CTA and final hold. The same-axis two-shot/insert/two-shot coverage is coherent at plan level."}, {"claim": "The written plan preserves distinct creator/wardrobe/voice bindings.", "type": "factual", "verified": true, "evidence": "The binding table separately defines CAST-A/WARDROBE-A/VOICE-A and CAST-B/WARDROBE-B/VOICE-B. Each voice requires exact provider/ID and explicit cast mapping; both sheets and voice mappings are unavailable. The text explicitly says the wardrobe rule is fixed but the wardrobe itself cannot be declared visually locked yet."}, {"claim": "Identity, wardrobe, phone and voice fidelity are implemented or visually locked.", "type": "quality", "verified": false, "evidence": "No actual source assets or rendered/audio evidence exist. Both plans correctly frame locks as proposed rules with pending inputs rather than implemented identity or audio systems."}, {"claim": "No speech generation, network or provider operation occurred.", "type": "process", "verified": false, "evidence": "The run's notes self-report these limits, but full tool transcripts are unavailable; actual execution history was not independently verified."}], "eval_feedback": {"suggestions": [{"assertion": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.", "reason": "This combines phone continuity with multi-view identity preparation. Split it into independent assertions and define whether identifying sheet views suffices or a provider-specific crop strategy is required. Both plans identify views, but only one explicitly discusses reviewable per-person appearance conversion."}, {"assertion": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.", "reason": "This assertion discriminates here: baseline provides timing targets but omits lip-sync compatibility. Preserve this distinction; do not mistake separate voice labels or word counts for a viable visible-mouth workflow."}, {"reason": "No assertion checks whether exact dialogue and a specific demonstration are necessary to make the requested preview plan reviewable. Here the skill plan chooses a claim-free phone reveal while baseline defers the demo to a missing product brief; both choices should be evaluated against explicitly declared assumptions."}, {"reason": "Execution compliance cannot be independently scored from execution-notes.json alone. Full tool transcripts are needed to confirm no speech generation or provider calls; neither a written plan nor self-reported notes establish implementation."}], "overall": "Three basic planning assertions pass both runs, while the explicit lip-sync requirement distinguishes a real baseline omission. Results describe written planning quality, not an implemented identity or audio system."}}}, {"id": "eval-3-cast-without_skill-run-1", "prompt": "Plan a 15-second Taglish UGC ad with two adult creators, supplied character sheets and separate selected voices. Lock the wardrobe and keep the phone consistent across three scenes. I only want the preview plan and reference requirements now; no invented identities, speech generation or provider calls.", "eval_id": 3, "outputs": [{"name": "plan.md", "type": "text", "content": "# 15-second, two-creator UGC preview plan\n\nThis is a planning draft only. The brief mentions supplied character sheets and separately selected voices, but none are attached here. I can define the scene structure and continuity rules now; I cannot truthfully mark the identities, wardrobe, phone, or voices as locked until their actual references are available. Creator A and Creator B below are role labels, not invented people.\n\n## Three scenes, exactly 15 seconds\n\nProposed format: vertical 9:16, eye-level casual UGC framing. Keep both creators in one approved location under consistent lighting. Establish A on screen-left and B on screen-right; preserve that orientation across cuts. B holds the same phone throughout, with no handoff. Format and location remain proposed until confirmed.\n\n| Time | Preview blocking and camera | Speech assignment | Continuity anchor |\n| --- | --- | --- | --- |\n| 0.0-4.0 s | Medium two-shot. A addresses the camera with a relatable problem or question. B listens, with the phone already visible at chest height. | A uses A's selected voice. Reserve roughly 6-8 Taglish words; B stays silent. | Establish both approved outfits, screen positions, and the phone's case/back before the cut. |\n| 4.0-10.0 s | Cut closer to B and the phone. B performs one simple, approved demonstration and briefly turns the screen toward camera. Keep A's edge-of-frame position consistent if visible. | B uses B's selected voice. Reserve roughly 10-12 Taglish words; A stays silent. | Same phone, same holding hand, same case, same approved screen state. No unsupported app result or invented interface. |\n| 10.0-15.0 s | Return to the opening two-shot. A delivers one clear next step while B holds the phone visibly and reacts naturally. End with a short readable hold. | A uses A's selected voice. Reserve roughly 7-9 Taglish words; B stays silent. | Match opening wardrobe, hair, accessories, positions, and phone orientation. |\n\nThe word ranges are drafting targets, not measured speech durations. Leave small pauses at speaker changes and about half a second for the ending hold. Exact Taglish lines depend on the real product, supported benefit, and call to action; no claims or personal testimonials are invented here. Final wording and timing remain pending text approval and a later timing check. No speech is generated for this plan.\n\n## Reference requirements\n\nPlease attach or identify the existing approved inputs; no replacement identities or newly fabricated reference sheets are needed.\n\n| Input | What is needed to make the preview specific |\n| --- | --- |\n| Creator A character sheet | Actual file or accessible asset reference, with clear face and full-body views sufficient to preserve appearance and proportions. Confirm this is the intended adult creator and the authorized reference. |\n| Creator B character sheet | Separate actual file or asset reference with the same coverage. Keep it distinct from A; never blend their faces, body features, or styling. |\n| A's locked wardrobe | Identify the exact outfit on A's sheet, or supply the approved outfit reference if the sheet has alternatives or incomplete coverage. Record garment shapes, colors, layers, footwear, jewelry, and any visible marks. |\n| B's locked wardrobe | The equivalent explicit outfit selection for B. Do not borrow A's outfit or fill unseen details with a new design. |\n| The single phone | Front and back/case references, plus a side view if its thickness or edge details matter. Identify the approved model, color, camera arrangement, and case. Include the intended screen image or UI state if a readable screen is required. The phone may be a demonstration prop; it is not assumed to be the advertised product. |\n| A's selected voice | Existing voice name plus its exact provider/library identifier, explicitly mapped to Creator A. Supply a non-secret identifier, not account credentials. |\n| B's selected voice | Separate selected voice name and identifier, explicitly mapped to Creator B. A face reference does not establish a voice, and neither selected voice is inferred from appearance. |\n| Ad brief | Advertised product/service, target viewer, one supported benefit or approved demonstration, and the exact desired CTA. This is needed before drafting meaningful Taglish dialogue. |\n| Location and framing | Existing approved location reference if a particular setting matters; otherwise approve a simple shared setting for the later preview. Confirm vertical format or supply the intended aspect ratio. |\n\nIf the character sheets already contain the selected outfits and all required views, identify those views instead of making duplicate assets. Missing angles can remain hidden by the planned camera framing; request an additional reference only where the intended shot requires it.\n\n## Lock rules for the later preview\n\n- Maintain one cast entry per creator with its own reference, chosen wardrobe, and selected voice. Scene instructions reference those same entries every time.\n- Keep each creator's face, proportions, hair, wardrobe, accessories, and visible distinguishing details consistent across all three scenes. Do not mirror references in a way that moves asymmetrical marks or accessories.\n- Maintain one phone entry reused across the three scenes. B retains it in the same hand; the screen turn in scene two must be a continuous feasible movement, with its end pose matching scene three.\n- Mark unavailable appearance details and voice identifiers as pending. If a later blocking preview uses neutral stand-ins, label them as stand-ins; they cannot demonstrate identity, clothing, voice, or phone fidelity.\n- Keep dialogue turns discrete: A, then B, then A. Do not substitute voices, combine them into one narrator, or attribute B's line to A.\n\n## What approval would cover next\n\nReview the 4/6/5-second scene structure, role allocation, B's continuous phone ownership, and proposed framing now. Once the existing references and ad brief are supplied, resolve the pending entries and show the exact Taglish lines for approval before treating them as final.\n\nThe later preview should be accepted only if it totals 15 seconds, contains exactly three scenes and two intended adult creators, preserves both wardrobes and the single phone, and uses the explicit A/B voice mapping in its plan. Any substituted identity, guessed voice, outfit change, inconsistent phone, unsupported product claim, or unavailable reference presented as verified is a failure. This written plan does not establish those visual or audio checks as passed.\n\nNo provider calls, speech generation, media generation, or rendered preview are part of this deliverable.\n"}], "grading": {"expectations": [{"text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.", "passed": true, "evidence": "Exactly three rows cover 0-4, 4-10 and 10-15 seconds. They serve hook/question, close demonstration and CTA, with opening/closing two-shots and closer B/phone coverage. The particular demonstration and wording are explicitly pending the absent brief; this is a coherent provisional structure rather than a finished creative."}, {"text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.", "passed": true, "evidence": "Creator A and Creator B function as distinct cast IDs even though they are not spelled CAST-A/B. The reference table separately requests each sheet, locked outfit and selected voice identifier; lock rules require one cast entry per creator and A/B/A speech assignment. The opening states none of the actual references are attached and cannot yet be truthfully marked locked."}, {"text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.", "passed": true, "evidence": "One phone entry is reused, with B retaining the same hand throughout and a continuous S02 screen turn ending in the S03 pose. Model/case/front/back/screen references remain pending rather than invented. The plan identifies face/full-body views and says to identify selected views already in sheets instead of duplicating assets, distinguishing useful views from the containing sheet. This is adequate at requirements level but less explicit about provider-specific per-person image preparation."}, {"text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.", "passed": false, "evidence": "The plan gives provisional 6-8, 10-12 and 7-9 word targets, pauses and a later timing check, but does not mention lip sync, visible-mouth synchronization, selected-voice compatibility with the video workflow, or a strategy to preserve/re-time mouth motion. Separate voice assignment alone does not address lip-sync compatibility. Honest no-generation and no-fidelity claims do not satisfy this missing required component."}], "summary": {"passed": 3, "failed": 1, "total": 4, "pass_rate": 0.75}, "evidence_limits": "Read this run's plan.md and execution-notes.json. No character sheets, phone references or voice IDs were supplied, so identity, wardrobe, handset fidelity, speech duration and provider support cannot be validated. Execution notes are self-reported; full tool transcripts are unavailable. No metrics.json or timing.json was present; no token metrics are inferred.", "claims": [{"claim": "The plan has exactly three scenes spanning 15 seconds.", "type": "factual", "verified": true, "evidence": "Exactly three rows cover 0-4, 4-10 and 10-15 seconds. They serve hook/question, close demonstration and CTA, with opening/closing two-shots and closer B/phone coverage. The particular demonstration and wording are explicitly pending the absent brief; this is a coherent provisional structure rather than a finished creative."}, {"claim": "The written plan preserves distinct creator/wardrobe/voice bindings.", "type": "factual", "verified": true, "evidence": "Creator A and Creator B function as distinct cast IDs even though they are not spelled CAST-A/B. The reference table separately requests each sheet, locked outfit and selected voice identifier; lock rules require one cast entry per creator and A/B/A speech assignment. The opening states none of the actual references are attached and cannot yet be truthfully marked locked."}, {"claim": "Identity, wardrobe, phone and voice fidelity are implemented or visually locked.", "type": "quality", "verified": false, "evidence": "No actual source assets or rendered/audio evidence exist. Both plans correctly frame locks as proposed rules with pending inputs rather than implemented identity or audio systems."}, {"claim": "No speech generation, network or provider operation occurred.", "type": "process", "verified": false, "evidence": "The run's notes self-report these limits, but full tool transcripts are unavailable; actual execution history was not independently verified."}], "eval_feedback": {"suggestions": [{"assertion": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.", "reason": "This combines phone continuity with multi-view identity preparation. Split it into independent assertions and define whether identifying sheet views suffices or a provider-specific crop strategy is required. Both plans identify views, but only one explicitly discusses reviewable per-person appearance conversion."}, {"assertion": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.", "reason": "This assertion discriminates here: baseline provides timing targets but omits lip-sync compatibility. Preserve this distinction; do not mistake separate voice labels or word counts for a viable visible-mouth workflow."}, {"reason": "No assertion checks whether exact dialogue and a specific demonstration are necessary to make the requested preview plan reviewable. Here the skill plan chooses a claim-free phone reveal while baseline defers the demo to a missing product brief; both choices should be evaluated against explicitly declared assumptions."}, {"reason": "Execution compliance cannot be independently scored from execution-notes.json alone. Full tool transcripts are needed to confirm no speech generation or provider calls; neither a written plan nor self-reported notes establish implementation."}], "overall": "Three basic planning assertions pass both runs, while the explicit lip-sync requirement distinguishes a real baseline omission. Results describe written planning quality, not an implemented identity or audio system."}}}], "previous_feedback": {}, "previous_outputs": {}, "benchmark": {"metadata": {"skill_name": "3d-director", "skill_path": ".agents/skills/3d-director", "executor_model": "Inherited Codex session model; exact identifier not recorded", "analyzer_model": "Independent Codex grader; exact identifier not recorded", "timestamp": "2026-10-04T07:19:05Z", "evals_run": [1, 2, 3], "runs_per_configuration": 1, "total_executor_runs": 6, "scope": "Planning adherence only; one run per case and configuration; non-blind independent grading"}, "runs": [{"eval_id": 1, "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1, "passed": 4, "failed": 0, "total": 4}, "expectations": [{"text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.", "passed": true, "evidence": "Target and assumptions specifies 9:16 and 24 fps (288 frames). Shot rows cover 0-3 / 0-71, 3-6 / 72-143, 6-9 / 144-215, and 9-12 / 216-287; the inclusive frame ranges cover all 288 frames exactly once."}, {"text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.", "passed": true, "evidence": "S01 specifies a physical dolly with 50%-70% full-bottle framing; S02 specifies a 60-degree constant-radius, constant-height camera arc; S03 specifies a straight X=-0.6H to +0.6H slide with center tracking and an explicit editorial reset; S04 locks a full-bottle 65%-70% hero for 9-12 seconds. These are coherent proposed camera moves; visual framing and smoothness remain untested."}, {"text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.", "passed": true, "evidence": "Asset inventory says only text was supplied and shape, finish, color, branding and cap details remain unknown. The body/cap proxy is explicitly provisional. The plan excludes insulation, leak resistance, durability, environmental benefit, branding and claim copy."}, {"text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.", "passed": true, "evidence": "The opening explicitly states 'No scene, preview, appearance reference or finished video has been generated.' Future preview and provider checks are conditional, and no working Vivo command is supplied. This verifies the deliverable's scope and absence of false completion claims, not actual tool history."}], "notes": []}, {"eval_id": 2, "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1, "passed": 4, "failed": 0, "total": 4}, "expectations": [{"text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.", "passed": true, "evidence": "S01-S08 use contiguous intervals 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-9.5, 9.5-12, 12-15 and 15-18 seconds. A/B exchange and imitate shoulder/wrist gestures, framing varies across two-shot/insert/over-shoulder/low medium/close-up, and S08 is a three-second speaker hero with a two-second final hold."}, {"text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.", "passed": true, "evidence": "The evidence table separately labels the written Apple record, the authored Vivo adaptation, and transferred inspiration. Its cited 0/3/6/9/12/15/21/24/27-second Apple events match cameraAngleMap; omission of the 18-second sample is not a conflicting claim. The 15-second Vivo summary and cut-elided offer match shot-manifest.json. 'All times, movements and performances in this table are newly authored' clearly separates the dance challenge."}, {"text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.", "passed": true, "evidence": "The plan explicitly disclaims video watching, exact cut/motion reconstruction and source lens measurement, treats captions as limited evidence, and describes the Vivo fingerprint story as adaptation rather than an Apple fact or speaker feature. It excludes bass power, battery life, waterproofing and multipoint claims. Playback tapping is described as an editorial cue, not measured response time."}, {"text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.", "passed": true, "evidence": "A left/B right and a fixed front-center speaker establish continuity. S01 reaching matches S02 tapping; hands withdraw; later shots retain the axis; the seated-to-standing change is shown in S06 and standing is preserved in S07. Product, cast, location and control geometry are explicitly unknown; rendering and motion/contact validation remain pending."}], "notes": []}, {"eval_id": 3, "configuration": "with_skill", "run_number": 1, "result": {"pass_rate": 1, "passed": 4, "failed": 0, "total": 4}, "expectations": [{"text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.", "passed": true, "evidence": "The three scene rows cover 0-4, 4-10 and 10-15 seconds, totaling 15 with no gaps. Functions progress from invitation and raising the already-held phone, to a rear/side close look, to a two-person CTA and final hold. The same-axis two-shot/insert/two-shot coverage is coherent at plan level."}, {"text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.", "passed": true, "evidence": "The binding table separately defines CAST-A/WARDROBE-A/VOICE-A and CAST-B/WARDROBE-B/VOICE-B. Each voice requires exact provider/ID and explicit cast mapping; both sheets and voice mappings are unavailable. The text explicitly says the wardrobe rule is fixed but the wardrobe itself cannot be declared visually locked yet."}, {"text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.", "passed": true, "evidence": "PHONE-01 is the sole handset/case binding. A retains it left-handed: rear-facing chest hold at 3.5s, side turn at 5-7s, return by 8s, matched rear-facing pose in S03. No screen UI is invented. Reference requirements ask for clear face/body and needed views, and distinguish sheets as identity evidence from later reviewable per-person crops/conversions into provider-supported appearance references. No actual crops or assets are claimed."}, {"text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.", "passed": true, "evidence": "Explicit speech windows are B 0.4-2.8s, A 4.5-7.2s off-camera and B 10.6-13.0s, each with a short draft line and room for pauses. The plan states timing is unmeasured, identifies S01/S03 as visible-mouth synchronization work, and requires compatible selected-voice speech plus lip sync or reviewed timing-preserving conversion. It warns that laying new TTS over existing mouths does not establish sync. Provider/model support remains unverified and identity fidelity is not guaranteed."}], "notes": []}, {"eval_id": 1, "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1, "passed": 4, "failed": 0, "total": 4}, "expectations": [{"text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.", "passed": true, "evidence": "Inputs specifies 9:16, 1080 x 1920, 30 fps and 360 frames. Shot rows cover 0-3 / 0-89, 3-6 / 90-179, 6-9 / 180-269 and 9-12 / 270-359 with inclusive ranges; all 360 frames are covered exactly once."}, {"text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.", "passed": true, "evidence": "Push-in travels from (0,-3.50,0.60) to (0,-2.40,0.60); orbit uses a constant-radius 45-degree arc ending at (1.697,-1.697,0.60); straight slide adds 0.55H along (0.707,0.707,0) with rotation frozen and look-at disabled. The final cut is to a static full-bottle hero for three seconds. Proposed geometry is internally consistent; sensor fit and framing are explicitly pending preview."}, {"text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.", "passed": true, "evidence": "Inputs says no photograph, geometry, dimensions, material, color, logo, label or brand was supplied. The gray cylinder/shoulder/cap is called a blocking stand-in. The plan explicitly avoids insulation, leak resistance, capacity, durability, recycled materials and environmental benefits, including suggestive condensation/ice/steam cues."}, {"text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.", "passed": true, "evidence": "The opening calls this 'a proposed 3D blocking plan, not a rendered preview or a finished video.' Review criteria states no generated media or visual verification occurred, and the next animatic is conditional. No Vivo command appears. This verifies the written scope, not independently observed execution."}], "notes": []}, {"eval_id": 2, "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 1, "passed": 4, "failed": 0, "total": 4}, "expectations": [{"text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.", "passed": true, "evidence": "The eight intervals are 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-10, 10-12.5, 12.5-15 and 15-18 seconds. Listed 24fps boundaries 0/48/84/132/180/240/300/360/432 agree. A/B conduct/imitate the music across wide, insert, low-angle, reaction and over-shoulder coverage; S08 is a three-second speaker hero."}, {"text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.", "passed": true, "evidence": "Separate Apple observations, Existing Vivo adaptation and New shot plan sections match the fixtures. All ten Apple sample times and events correspond to cameraAngleMap. Vivo's ten authored shots, 15-second length, failed attempts, owner payoff and in-hand hero match the manifest. The conductor/shoulder story and optional closing line are explicitly new proposals."}, {"text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.", "passed": true, "evidence": "The text denies measurement of exact cuts, focal lengths, movement, full audio or effectiveness and says the Vivo rendered footage was not inspected. Face ID and fingerprint references are attributed to source/adaptation context, with no speaker authentication claim. It explicitly excludes bass, loudness, latency, battery, waterproofing, range, stereo pairing and gesture control; music is editorial rather than a measured output demonstration."}, {"text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.", "passed": true, "evidence": "Blocking fixes A left/B right, keeps the speaker on one table mark, preserves the interaction axis, and keeps hands above/beside rather than over the product. No transfer or control operation is required. The product silhouette, finish, dimensions, controls, cast likeness and set-dependent lenses are provisional, with no claimed rendered validation."}], "notes": []}, {"eval_id": 3, "configuration": "without_skill", "run_number": 1, "result": {"pass_rate": 0.75, "passed": 3, "failed": 1, "total": 4}, "expectations": [{"text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.", "passed": true, "evidence": "Exactly three rows cover 0-4, 4-10 and 10-15 seconds. They serve hook/question, close demonstration and CTA, with opening/closing two-shots and closer B/phone coverage. The particular demonstration and wording are explicitly pending the absent brief; this is a coherent provisional structure rather than a finished creative."}, {"text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.", "passed": true, "evidence": "Creator A and Creator B function as distinct cast IDs even though they are not spelled CAST-A/B. The reference table separately requests each sheet, locked outfit and selected voice identifier; lock rules require one cast entry per creator and A/B/A speech assignment. The opening states none of the actual references are attached and cannot yet be truthfully marked locked."}, {"text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.", "passed": true, "evidence": "One phone entry is reused, with B retaining the same hand throughout and a continuous S02 screen turn ending in the S03 pose. Model/case/front/back/screen references remain pending rather than invented. The plan identifies face/full-body views and says to identify selected views already in sheets instead of duplicating assets, distinguishing useful views from the containing sheet. This is adequate at requirements level but less explicit about provider-specific per-person image preparation."}, {"text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.", "passed": false, "evidence": "The plan gives provisional 6-8, 10-12 and 7-9 word targets, pauses and a later timing check, but does not mention lip sync, visible-mouth synchronization, selected-voice compatibility with the video workflow, or a strategy to preserve/re-time mouth motion. Separate voice assignment alone does not address lip-sync compatibility. Honest no-generation and no-fidelity claims do not satisfy this missing required component."}], "notes": []}], "run_summary": {"with_skill": {"pass_rate": {"mean": 1, "stddev": 0, "min": 1, "max": 1}}, "without_skill": {"pass_rate": {"mean": 0.9167, "stddev": 0.1443, "min": 0.75, "max": 1}}, "delta": {"pass_rate": "+0.08"}}, "notes": ["Three cases and one run per case/condition; results are descriptive, not statistical evidence of a general quality improvement.", "With skill passed 12/12 assertions; baseline passed 11/12. The only discriminating assertion was selected-voice compatibility and visible-mouth lip synchronization in the UGC plan.", "Bottle: baseline supplied more reproducible camera coordinates; skill gave stronger continuity, sound intent and preview handoff. Reference: baseline had simpler staging; skill added an interaction with explicit continuity safeguards.", "No new renders, media generation, speech listening or automatic trigger test. Plans do not establish real character consistency or provider performance.", "Full executor tool transcripts and valid token/full-run timing metrics were unavailable. Zero-default/proxy performance fields from the aggregate helper were removed; self-recorded timestamps remain in execution notes."]}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

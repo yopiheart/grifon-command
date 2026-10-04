@@ -1,0 +1,17 @@
+{
+  "eval_id": 2,
+  "eval_name": "reference",
+  "prompt": "Use the saved Vivo/Apple reference observations as inspiration for an 18-second Bluetooth speaker ad: playful two-person interaction, varied angles and a closing hero. Make an original directing plan, with clear separation between observed reference facts and new shots. No browsing or paid video analysis.",
+  "files": [
+    "assets/vivo-x80-previz/reference-observations.json",
+    "assets/vivo-x80-previz-v2/shot-manifest.json"
+  ],
+  "fixture_path_base": "repository_root",
+  "assertions": [
+    "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.",
+    "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.",
+    "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.",
+    "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering."
+  ],
+  "scope": "Planning only; no rendering or paid/provider operations"
+}

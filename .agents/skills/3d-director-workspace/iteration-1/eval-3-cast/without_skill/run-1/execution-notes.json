@@ -1,0 +1,30 @@
+{
+  "task": "No-spend baseline planning evaluation; no 3d-director skill invocation",
+  "started_at_utc": "2026-10-04 07:13:11 UTC",
+  "ended_at_utc": "2026-10-04 07:15:18 UTC",
+  "files_read": [
+    "workflows/codex_desktop.md",
+    ".agents/skills/surgical-edit/SKILL.md",
+    ".agents/skills/_shared/codex-runtime.md",
+    ".agents/skills/3d-director-workspace/iteration-1/eval-3-cast/without_skill/run-1/outputs/plan.md"
+  ],
+  "actions": [
+    "Read desktop entry-point and mandatory surgical-edit instructions and adapter.",
+    "Drafted a complete written 15-second, three-scene plan with distinct cast roles and voice assignments, wardrobe and phone continuity rules, missing reference requirements, and later acceptance criteria.",
+    "Saved outputs/plan.md within the assigned output directory.",
+    "Read the saved plan and checked that all three intended timing ranges occur in it; confirmed file presence.",
+    "Saved this execution record."
+  ],
+  "limitations": [
+    "No character sheets, phone references, selected voice identifiers, product brief, or approved location were attached.",
+    "Actual appearance, wardrobe, phone fidelity, voice identity, and spoken duration could not be verified.",
+    "No exact Taglish dialogue drafted because product, benefit and CTA inputs were absent; speech slots and drafting word targets are explicitly provisional.",
+    "No new 3d-director skill or proposal/evaluation files, other agents' outputs, NOW.md, repository history, or parent evaluation metadata were read.",
+    "No network, provider calls, secret/environment reads, media generation, Blender execution, ledger writes, source changes, or commits.",
+    "No rendered visual or audio test was run; the saved plan does not claim fidelity checks passed."
+  ],
+  "files_written": [
+    ".agents/skills/3d-director-workspace/iteration-1/eval-3-cast/without_skill/run-1/outputs/plan.md",
+    ".agents/skills/3d-director-workspace/iteration-1/eval-3-cast/without_skill/run-1/execution-notes.json"
+  ]
+}

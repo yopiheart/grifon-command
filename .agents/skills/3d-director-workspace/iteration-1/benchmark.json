@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "skill_name": "3d-director",
+    "skill_path": ".agents/skills/3d-director",
+    "executor_model": "Inherited Codex session model; exact identifier not recorded",
+    "analyzer_model": "Independent Codex grader; exact identifier not recorded",
+    "timestamp": "2026-10-04T07:19:05Z",
+    "evals_run": [
+      1,
+      2,
+      3
+    ],
+    "runs_per_configuration": 1,
+    "total_executor_runs": 6,
+    "scope": "Planning adherence only; one run per case and configuration; non-blind independent grading"
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.",
+          "passed": true,
+          "evidence": "Target and assumptions specifies 9:16 and 24 fps (288 frames). Shot rows cover 0-3 / 0-71, 3-6 / 72-143, 6-9 / 144-215, and 9-12 / 216-287; the inclusive frame ranges cover all 288 frames exactly once."
+        },
+        {
+          "text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.",
+          "passed": true,
+          "evidence": "S01 specifies a physical dolly with 50%-70% full-bottle framing; S02 specifies a 60-degree constant-radius, constant-height camera arc; S03 specifies a straight X=-0.6H to +0.6H slide with center tracking and an explicit editorial reset; S04 locks a full-bottle 65%-70% hero for 9-12 seconds. These are coherent proposed camera moves; visual framing and smoothness remain untested."
+        },
+        {
+          "text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.",
+          "passed": true,
+          "evidence": "Asset inventory says only text was supplied and shape, finish, color, branding and cap details remain unknown. The body/cap proxy is explicitly provisional. The plan excludes insulation, leak resistance, durability, environmental benefit, branding and claim copy."
+        },
+        {
+          "text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.",
+          "passed": true,
+          "evidence": "The opening explicitly states 'No scene, preview, appearance reference or finished video has been generated.' Future preview and provider checks are conditional, and no working Vivo command is supplied. This verifies the deliverable's scope and absence of false completion claims, not actual tool history."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.",
+          "passed": true,
+          "evidence": "S01-S08 use contiguous intervals 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-9.5, 9.5-12, 12-15 and 15-18 seconds. A/B exchange and imitate shoulder/wrist gestures, framing varies across two-shot/insert/over-shoulder/low medium/close-up, and S08 is a three-second speaker hero with a two-second final hold."
+        },
+        {
+          "text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.",
+          "passed": true,
+          "evidence": "The evidence table separately labels the written Apple record, the authored Vivo adaptation, and transferred inspiration. Its cited 0/3/6/9/12/15/21/24/27-second Apple events match cameraAngleMap; omission of the 18-second sample is not a conflicting claim. The 15-second Vivo summary and cut-elided offer match shot-manifest.json. 'All times, movements and performances in this table are newly authored' clearly separates the dance challenge."
+        },
+        {
+          "text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.",
+          "passed": true,
+          "evidence": "The plan explicitly disclaims video watching, exact cut/motion reconstruction and source lens measurement, treats captions as limited evidence, and describes the Vivo fingerprint story as adaptation rather than an Apple fact or speaker feature. It excludes bass power, battery life, waterproofing and multipoint claims. Playback tapping is described as an editorial cue, not measured response time."
+        },
+        {
+          "text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.",
+          "passed": true,
+          "evidence": "A left/B right and a fixed front-center speaker establish continuity. S01 reaching matches S02 tapping; hands withdraw; later shots retain the axis; the seated-to-standing change is shown in S06 and standing is preserved in S07. Product, cast, location and control geometry are explicitly unknown; rendering and motion/contact validation remain pending."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.",
+          "passed": true,
+          "evidence": "The three scene rows cover 0-4, 4-10 and 10-15 seconds, totaling 15 with no gaps. Functions progress from invitation and raising the already-held phone, to a rear/side close look, to a two-person CTA and final hold. The same-axis two-shot/insert/two-shot coverage is coherent at plan level."
+        },
+        {
+          "text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.",
+          "passed": true,
+          "evidence": "The binding table separately defines CAST-A/WARDROBE-A/VOICE-A and CAST-B/WARDROBE-B/VOICE-B. Each voice requires exact provider/ID and explicit cast mapping; both sheets and voice mappings are unavailable. The text explicitly says the wardrobe rule is fixed but the wardrobe itself cannot be declared visually locked yet."
+        },
+        {
+          "text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.",
+          "passed": true,
+          "evidence": "PHONE-01 is the sole handset/case binding. A retains it left-handed: rear-facing chest hold at 3.5s, side turn at 5-7s, return by 8s, matched rear-facing pose in S03. No screen UI is invented. Reference requirements ask for clear face/body and needed views, and distinguish sheets as identity evidence from later reviewable per-person crops/conversions into provider-supported appearance references. No actual crops or assets are claimed."
+        },
+        {
+          "text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.",
+          "passed": true,
+          "evidence": "Explicit speech windows are B 0.4-2.8s, A 4.5-7.2s off-camera and B 10.6-13.0s, each with a short draft line and room for pauses. The plan states timing is unmeasured, identifies S01/S03 as visible-mouth synchronization work, and requires compatible selected-voice speech plus lip sync or reviewed timing-preserving conversion. It warns that laying new TTS over existing mouths does not establish sync. Provider/model support remains unverified and identity fidelity is not guaranteed."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.",
+          "passed": true,
+          "evidence": "Inputs specifies 9:16, 1080 x 1920, 30 fps and 360 frames. Shot rows cover 0-3 / 0-89, 3-6 / 90-179, 6-9 / 180-269 and 9-12 / 270-359 with inclusive ranges; all 360 frames are covered exactly once."
+        },
+        {
+          "text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.",
+          "passed": true,
+          "evidence": "Push-in travels from (0,-3.50,0.60) to (0,-2.40,0.60); orbit uses a constant-radius 45-degree arc ending at (1.697,-1.697,0.60); straight slide adds 0.55H along (0.707,0.707,0) with rotation frozen and look-at disabled. The final cut is to a static full-bottle hero for three seconds. Proposed geometry is internally consistent; sensor fit and framing are explicitly pending preview."
+        },
+        {
+          "text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.",
+          "passed": true,
+          "evidence": "Inputs says no photograph, geometry, dimensions, material, color, logo, label or brand was supplied. The gray cylinder/shoulder/cap is called a blocking stand-in. The plan explicitly avoids insulation, leak resistance, capacity, durability, recycled materials and environmental benefits, including suggestive condensation/ice/steam cues."
+        },
+        {
+          "text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.",
+          "passed": true,
+          "evidence": "The opening calls this 'a proposed 3D blocking plan, not a rendered preview or a finished video.' Review criteria states no generated media or visual verification occurred, and the next animatic is conditional. No Vivo command appears. This verifies the written scope, not independently observed execution."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1,
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "The shot timeline covers exactly 18 seconds with two-person interaction, varied framing and a closing speaker hero.",
+          "passed": true,
+          "evidence": "The eight intervals are 0-2, 2-3.5, 3.5-5.5, 5.5-7.5, 7.5-10, 10-12.5, 12.5-15 and 15-18 seconds. Listed 24fps boundaries 0/48/84/132/180/240/300/360/432 agree. A/B conduct/imitate the music across wide, insert, low-angle, reaction and over-shoulder coverage; S08 is a three-second speaker hero."
+        },
+        {
+          "text": "Observed Apple reference events and newly authored speaker-ad events are explicitly distinguishable and consistent with the supplied observations.",
+          "passed": true,
+          "evidence": "Separate Apple observations, Existing Vivo adaptation and New shot plan sections match the fixtures. All ten Apple sample times and events correspond to cameraAngleMap. Vivo's ten authored shots, 15-second length, failed attempts, owner payoff and in-hand hero match the manifest. The conductor/shoulder story and optional closing line are explicitly new proposals."
+        },
+        {
+          "text": "The plan does not claim full playback, exact camera reconstruction, Face ID/fingerprint capability or unsupported speaker performance.",
+          "passed": true,
+          "evidence": "The text denies measurement of exact cuts, focal lengths, movement, full audio or effectiveness and says the Vivo rendered footage was not inspected. Face ID and fingerprint references are attributed to source/adaptation context, with no speaker authentication claim. It explicitly excludes bass, loudness, latency, battery, waterproofing, range, stereo pairing and gesture control; music is editorial rather than a measured output demonstration."
+        },
+        {
+          "text": "The plan makes the interaction and product state readable across cuts and identifies any staging/asset uncertainty before rendering.",
+          "passed": true,
+          "evidence": "Blocking fixes A left/B right, keeps the speaker on one table mark, preserves the interaction axis, and keeps hands above/beside rather than over the product. No transfer or control operation is required. The product silhouette, finish, dimensions, controls, cast likeness and set-dependent lenses are provisional, with no claimed rendered validation."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4
+      },
+      "expectations": [
+        {
+          "text": "Exactly three scenes cover 15 seconds, with distinct story or demonstration functions and a coherent shot plan.",
+          "passed": true,
+          "evidence": "Exactly three rows cover 0-4, 4-10 and 10-15 seconds. They serve hook/question, close demonstration and CTA, with opening/closing two-shots and closer B/phone coverage. The particular demonstration and wording are explicitly pending the absent brief; this is a coherent provisional structure rather than a finished creative."
+        },
+        {
+          "text": "Two separate cast IDs bind identity, wardrobe and selected voices while missing sheet/voice assets remain explicitly unresolved.",
+          "passed": true,
+          "evidence": "Creator A and Creator B function as distinct cast IDs even though they are not spelled CAST-A/B. The reference table separately requests each sheet, locked outfit and selected voice identifier; lock rules require one cast entry per creator and A/B/A speech assignment. The opening states none of the actual references are attached and cannot yet be truthfully marked locked."
+        },
+        {
+          "text": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.",
+          "passed": true,
+          "evidence": "One phone entry is reused, with B retaining the same hand throughout and a continuous S02 screen turn ending in the S03 pose. Model/case/front/back/screen references remain pending rather than invented. The plan identifies face/full-body views and says to identify selected views already in sheets instead of duplicating assets, distinguishing useful views from the containing sheet. This is adequate at requirements level but less explicit about provider-specific per-person image preparation."
+        },
+        {
+          "text": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.",
+          "passed": false,
+          "evidence": "The plan gives provisional 6-8, 10-12 and 7-9 word targets, pauses and a later timing check, but does not mention lip sync, visible-mouth synchronization, selected-voice compatibility with the video workflow, or a strategy to preserve/re-time mouth motion. Separate voice assignment alone does not address lip-sync compatibility. Honest no-generation and no-fidelity claims do not satisfy this missing required component."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1,
+        "stddev": 0,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.9167,
+        "stddev": 0.1443,
+        "min": 0.75,
+        "max": 1
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.08"
+    }
+  },
+  "notes": [
+    "Three cases and one run per case/condition; results are descriptive, not statistical evidence of a general quality improvement.",
+    "With skill passed 12/12 assertions; baseline passed 11/12. The only discriminating assertion was selected-voice compatibility and visible-mouth lip synchronization in the UGC plan.",
+    "Bottle: baseline supplied more reproducible camera coordinates; skill gave stronger continuity, sound intent and preview handoff. Reference: baseline had simpler staging; skill added an interaction with explicit continuity safeguards.",
+    "No new renders, media generation, speech listening or automatic trigger test. Plans do not establish real character consistency or provider performance.",
+    "Full executor tool transcripts and valid token/full-run timing metrics were unavailable. Zero-default/proxy performance fields from the aggregate helper were removed; self-recorded timestamps remain in execution notes."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "eval_id": 3,
+  "eval_name": "cast",
+  "result": "With-skill is stronger on the specific lip-sync planning requirement; this is a written-planning difference, not implemented identity/audio capability.",
+  "with_skill": {
+    "passed": 4,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "without_skill": {
+    "passed": 3,
+    "total": 4,
+    "pass_rate": 0.75
+  },
+  "practical_differences": [
+    "Both define three contiguous 4/6/5-second scenes, separate cast/wardrobe/voice mappings, one continuously held phone, and honestly unresolved missing source assets.",
+    "With-skill supplies per-line windows, off-camera speech for S02, explicit visible-mouth sync needs for S01/S03, selected-voice compatibility options and an explanation of why replacing audio alone is insufficient. Without-skill has word targets and speaker turns but no lip-sync workflow or compatibility requirement.",
+    "With-skill gives concrete rear/side phone poses and a timed return to the cut-matching state. Baseline's unspecified approved screen demonstration adds unresolved UI and end-pose decisions, although its continuity rules acknowledge them.",
+    "Without-skill avoids assuming the phone is the advertised product and defers claim-bearing copy until the ad brief is available. With-skill declares phone-as-product as reversible and offers a claim-free reveal with draft Taglish lines; this is a useful concrete option, not evidence that the missing brief was supplied.",
+    "Both identify useful views within character sheets. With-skill goes further by separating sheets from later reviewable per-person appearance crops/conversions and requiring chosen-provider input compatibility.",
+    "The with-skill plan warns about possible scene-audio loss in a future render path. That implementation-specific warning was not independently verified in this scoped grading pass and earns no extra credit."
+  ],
+  "unresolved": "No identity, wardrobe, phone or selected voice assets exist in this eval. Proposed speech rates are plausible drafting windows only; actual duration, lip sync, contact and appearance remain untested.",
+  "evidence_limits": "Execution notes are self-reported; full tool transcripts and token metrics are unavailable. No implementation, generation or provider-support claims were independently validated.",
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "A single phone reference/state is maintained across scenes and multi-view identity inputs are distinguished from the whole character sheet.",
+        "reason": "This combines phone continuity with multi-view identity preparation. Split it into independent assertions and define whether identifying sheet views suffices or a provider-specific crop strategy is required. Both plans identify views, but only one explicitly discusses reviewable per-person appearance conversion."
+      },
+      {
+        "assertion": "The speech plan addresses timing and lip-sync compatibility without promising guaranteed identity, generating speech, or claiming provider support was verified.",
+        "reason": "This assertion discriminates here: baseline provides timing targets but omits lip-sync compatibility. Preserve this distinction; do not mistake separate voice labels or word counts for a viable visible-mouth workflow."
+      },
+      {
+        "reason": "No assertion checks whether exact dialogue and a specific demonstration are necessary to make the requested preview plan reviewable. Here the skill plan chooses a claim-free phone reveal while baseline defers the demo to a missing product brief; both choices should be evaluated against explicitly declared assumptions."
+      },
+      {
+        "reason": "Execution compliance cannot be independently scored from execution-notes.json alone. Full tool transcripts are needed to confirm no speech generation or provider calls; neither a written plan nor self-reported notes establish implementation."
+      }
+    ],
+    "overall": "Three basic planning assertions pass both runs, while the explicit lip-sync requirement distinguishes a real baseline omission. Results describe written planning quality, not an implemented identity or audio system."
+  }
+}

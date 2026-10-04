@@ -1,12 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, Vivo accepted baseline / 3D Director skill proposed**
+**Stamped: 2026-10-04, Vivo accepted / 3D Director installed and planning-tested**
 
 ## Current scope
 Branch: `codex/blender-product-reveal`; attached draft PR157:
 https://github.com/yopiheart/grifon-command/pull/157.
 Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
-Local Blender/FFmpeg studies plus a fixed direct provider runner; no app/tuned
-production changes, deployment, merge, campaign or account funding.
+Local Blender/FFmpeg studies, fixed provider runner and installed 3D Director skill.
+No app/tuned production changes, deployment, merge, campaign or account funding.
 
 ## Vivo X80 human finish - completed ONCE, raw proof delivered
 Neil replied Approved to the exact15s480p9:16 spec and saved-ENV runtime use.
@@ -82,8 +82,8 @@ Final syntax/default dry, domain, voice-sync, PowerShell ASCII, artifact anchors
 whitespace and check:codex26tests PASS. Build/Vitest SETUP BLOCKED (root tsc
 absent / Vitest uncached); no reinstall, application/E2E/paid regression untouched.
 Neil accepts proof9/10; sound gap/priorities: assets/vivo-x80-ugc/user-review.json.
-Draft: workflows/proposals/3d-director/3d-director/SKILL.md; NOT installed.
-Structural checks and check:codex26tests PASS; proposal validation.json has scope.
-Behavioral/trigger/local-preview evals NOT RUN; zero new paid/audio operations.
-Next: review exact skill, then validate prompt/reference-inspired local previews.
-Generic engine/UI unbuilt; native-audio policy needed; Seedance UI still locked.
+Installed: .agents/skills/3d-director/SKILL.md; exact patch approved by Neil.
+Six fresh planning runs: skill12/12 vs baseline11/12; only lip-sync check differed.
+Review: .agents/skills/3d-director-workspace/iteration-1/review.html; no new spend.
+Automatic trigger/local-preview tests NOT RUN; generic engine/Grifon UI unbuilt.
+Next: local preview pilot; preserve native audio on integration; Seedance UI locked.

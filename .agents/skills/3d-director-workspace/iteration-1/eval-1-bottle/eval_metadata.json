@@ -1,0 +1,14 @@
+{
+  "eval_id": 1,
+  "eval_name": "bottle",
+  "prompt": "Plan a 12-second vertical commercial for a reusable water bottle from this text brief only. I want a push-in, an orbit and a side slide before the hero shot. Show me the 3D directing plan first; do not generate the finished video or invent product claims.",
+  "files": [],
+  "fixture_path_base": "repository_root",
+  "assertions": [
+    "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.",
+    "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.",
+    "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.",
+    "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command."
+  ],
+  "scope": "Planning only; no rendering or paid/provider operations"
+}
