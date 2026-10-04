@@ -1,0 +1,73 @@
+VIVO X80 / MY TURN V2 - EXACT PAID TEST FOR APPROVAL
+Status: prepared only. No paid Vivo submission or provider upload has occurred.
+
+Purpose: Turn the approved gray Blender camera/story guide into a realistic creator commercial.
+ONE Seedance 2.0 attempt: 15 seconds, 480p, vertical 9:16, native generated sound.
+Expected generation cost: USD 1.295676; with storage reserve: USD 1.305676.
+Proposed maximum: USD 5 total. No automatic retry, reroll, funding, model or asset substitution.
+This is a local estimate/submission guard, not a provider dollar hardcap. Invoice/balance remain unverified.
+
+EXACT INPUTS
+1. Approved V2 clean silent guide (camera, shot order, acting and timing only):
+   assets/vivo-x80-previz-v2/camera-guide.mp4
+   SHA256: b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8
+   Same V2 shots as your reviewed preview:
+   https://drive.google.com/file/d/1T-FpUB58rKrsnIJXS5RrFlIMzRtF-3zY/view
+2. Official Urban Blue Vivo X80 product-only front/back PNG (appearance only):
+   https://asia-exstatic-vivofs.vivo.com/PSee2l50xoirPK7y/1653640186117/ff99d920ac12abe286fd4dc0ed7078d3.png
+   SHA256: 3d816b4f09566fc1499619a603be55e908eb50b04ebdcc1ce4413e562c7abf8b
+3. Exact prompt below. Two original adult Filipino creators generated from text.
+
+Story: friend thumb fails -> smug index retry fails -> owner unlocks -> friend deflates -> in-hand X80 hero.
+Look: natural skin/clothing, bright apartment, daylight. One physical phone throughout.
+Sound: original room tone, handling, failure/unlock effects and quiet rhythm. No dialogue/narration/ad text.
+
+PASS / FAIL
+1. Playable portrait 480p video, nominal15s; actual duration at least15s and no more than15s plus two frames at measured fps. Preserve raw output and document any one-frame provider deviation.
+2. Adult human live-action appearance replaces the gray proxies and gray room.
+3. Two distinct attempts, owner success, friend's deflation and hero remain in the approved order; camera viewpoints and moves visibly follow the guide.
+4. One consistent Urban Blue Vivo X80; three-lens hardware, hands and grips remain plausible and product branding is readable in the closing hero.
+5. Native synchronized audio exists without spoken dialogue; no clipped/missing beats or borrowed music.
+6. Exactly one generation POST and one private guide upload; reported usage-based estimate within5USD. Actual account bill is a separate verification.
+Stop and show the output/rejection if quality fails; no paid retry. Stylized-face input moderation is unverified.
+Audio stream presence is technically verifiable; sound quality/music originality still needs listening and human judgment.
+
+EVIDENCE / DELIVERY
+Preserve raw video; fully decode; check duration/resolution/fps/audio; compare timestamped guide/output frames.
+Record sanitized task/usage evidence and exact private temporary guide cleanup.
+Deliver owner-only Drive watch/download link. This first raw proof is not a client-ready delivery certification.
+
+STAGING
+One create-only upload of the exact guide into the existing private gemini-videos bucket.
+Confirm bucket public:false before writes; use an in-memory two-hour signed URL.
+Delete only the exact owned temporary object after a confirmed terminal task. No public sharing.
+
+MODEL / PINNED REQUEST
+dreamina-seedance-2-0-260128; duration=15; resolution=480p; ratio=9:16; generate_audio=true; watermark=false
+Immutable request/input/settings/cost digest:
+da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78
+
+EXACT PROMPT
+Create a 15-second vertical photoreal live-action creator commercial for one Urban Blue Vivo X80 smartphone.
+@Video1 is a directing-only gray animatic. Follow its shot order, camera viewpoints and movement, framing, hand blocking, timings and reaction arc. Rebuild the scene as original live action with believable adult people, natural skin, clothing, hair, wood, glass and daylight. The animatic supplies motion and story only.
+@Image1 supplies the phone's appearance only. It shows front and back views of the same model. Keep just one physical phone in the scene. Preserve the slim curved-screen silhouette, centered front punch-hole, Urban Blue back, rectangular dark Cloud Window, three rear lenses with the large main lens upper-left, ZEISS detail and vivo mark.
+Cast two original Filipino adults around age 25-30: a woman owner with shoulder-length black hair, an ivory casual top and muted olive trousers; a male friend with short black hair, a charcoal T-shirt and light beige trousers. Keep their identities and clothing consistent. Set them at a small wooden table in a bright contemporary apartment dining nook, with soft window light and restrained background depth.
+0-1s: owner sets her phone down; friend notices.
+1-2s: friend lifts it into his right hand.
+2-3.25s: clear screen close-up; his casual thumb touch fails and the phone stays locked.
+3.25-5s: he squares his shoulders, lifts his chin, smirks and raises his free index finger like an expert. He lowers it toward the phone before the cut.
+5-6s: wider screen close-up; index hovers, deliberately touches the fingerprint area, then withdraws. The phone stays locked and briefly indicates failure.
+6-7.25s: owner gives him an amused side-eye and a knowing smile.
+7.25-9s: she extends an open palm; he offers the phone. Cut naturally to her holding it.
+9-11s: one relaxed owner-thumb touch unlocks it. Hold the successful screen response long enough to read.
+11-13s: friend looks toward her, then his smirk fades, shoulders slump and head drops in quiet embarrassment.
+13-15s: owner holds the phone's back toward camera for a steady, clean X80 hero; the camera makes the small finishing slide from the guide.
+Use realistic hands and physical contact, expressive but restrained performance, smooth focus changes and coherent light. Screen states illustrate the fingerprint story; this is not a Face ID or security-proof claim.
+Generate original synchronized room tone, subtle phone-handling sounds, two soft failure pulses, a light unlock chime and a restrained comic exhale, over a quiet original rhythmic bed. No spoken dialogue, narration, captions or advertising text overlays.
+
+APPROVAL REQUIRED BY AGENTS.md
+Any paid AI/render operation requires a user-approved test spec covering purpose, pass/fail criteria, exact inputs/assets, evidence, and maximum cost. Any changed input is a new approval request.
+Your V2 storyboard approval is preserved. This approval covers the new 15s request/product reference/prompt/native sound and maximum USD 5.
+
+Official pricing: https://docs.byteplus.com/en/docs/modelark/model-pricing
+Official request schema: https://docs.byteplus.com/en/docs/modelark/create-video-generation-task-api

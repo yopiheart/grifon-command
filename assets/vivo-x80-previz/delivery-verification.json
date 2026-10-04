@@ -1,0 +1,282 @@
+{
+  "study": "MY TURN / Vivo X80",
+  "paidCalls": 0,
+  "scope": "Local clay story/camera blocking, not an AI-generated finished commercial.",
+  "renderer": {
+    "engine": "BLENDER_EEVEE",
+    "samples": 32
+  },
+  "cameraGuide": {
+    "frames": 360,
+    "fps": 24,
+    "durationSeconds": 15,
+    "width": 480,
+    "height": 854,
+    "uniqueDecodedFrames": 360,
+    "fullDecode": "passed",
+    "authoredCuts": [
+      {
+        "firstFrame": 43,
+        "timeSeconds": 1.75,
+        "previousDecodedMd5": "cf65105795da6e71d70ac7aa6b8fb03f",
+        "currentDecodedMd5": "30852c74128379d88f5c7722f670f662"
+      },
+      {
+        "firstFrame": 79,
+        "timeSeconds": 3.25,
+        "previousDecodedMd5": "c73487b50cc10ea9b19c10a569ddd6b3",
+        "currentDecodedMd5": "e2dca2d0cd64f82445f9bb33babfe3a1"
+      },
+      {
+        "firstFrame": 115,
+        "timeSeconds": 4.75,
+        "previousDecodedMd5": "f9d1912fb681006e865e3e8b88a2b92d",
+        "currentDecodedMd5": "bb83947f65935a4cb9247063388befef"
+      },
+      {
+        "firstFrame": 145,
+        "timeSeconds": 6,
+        "previousDecodedMd5": "837f3329a9b8dd02732d2dd5fcd40836",
+        "currentDecodedMd5": "de9bfdd81b34a9439580fb6d30ab147c"
+      },
+      {
+        "firstFrame": 181,
+        "timeSeconds": 7.5,
+        "previousDecodedMd5": "0cf9d1a0887620deb73fa2f318f0bdea",
+        "currentDecodedMd5": "32c246b2b2eb6d2a66dd9b09d44ec1b0"
+      },
+      {
+        "firstFrame": 229,
+        "timeSeconds": 9.5,
+        "previousDecodedMd5": "b379d597751209ff999d771b088595e7",
+        "currentDecodedMd5": "b08989b2eca323661d6534b05996fcee"
+      },
+      {
+        "firstFrame": 271,
+        "timeSeconds": 11.25,
+        "previousDecodedMd5": "5f0f49482d5749a7d32a40159b04303d",
+        "currentDecodedMd5": "e43411a96e6ef8bb5a657c851141f0ad"
+      },
+      {
+        "firstFrame": 319,
+        "timeSeconds": 13.25,
+        "previousDecodedMd5": "af8f1056f3581df39405c24a744c883e",
+        "currentDecodedMd5": "f12c8c640e48f114ce36907062f8b08f"
+      }
+    ],
+    "audio": "none",
+    "burnedText": "none"
+  },
+  "preview": {
+    "frames": 360,
+    "fps": 24,
+    "durationSeconds": 15,
+    "width": 480,
+    "height": 854,
+    "uniqueDecodedFrames": 360,
+    "fullDecode": "passed",
+    "authoredCuts": [
+      {
+        "firstFrame": 43,
+        "timeSeconds": 1.75,
+        "previousDecodedMd5": "46f3b545dceaaf518d020a4e5dbdd082",
+        "currentDecodedMd5": "8608d7f07967a18485dd83e447ae01b7"
+      },
+      {
+        "firstFrame": 79,
+        "timeSeconds": 3.25,
+        "previousDecodedMd5": "5c263ed4f3875e43cc3aed9b6cafa247",
+        "currentDecodedMd5": "f4218602128f0b7d5378e21a463407a5"
+      },
+      {
+        "firstFrame": 115,
+        "timeSeconds": 4.75,
+        "previousDecodedMd5": "ca62c92535ce6d062d29c7a4d2196ebc",
+        "currentDecodedMd5": "c2807b7c7d4e6cce5d22673b4a02690a"
+      },
+      {
+        "firstFrame": 145,
+        "timeSeconds": 6,
+        "previousDecodedMd5": "f66f9265d4d2d0b7794c526384263b71",
+        "currentDecodedMd5": "befec05262375484c1e5a2dcb415c70a"
+      },
+      {
+        "firstFrame": 181,
+        "timeSeconds": 7.5,
+        "previousDecodedMd5": "66915e986c23ab99c84827870949b445",
+        "currentDecodedMd5": "a5d9cb41a6193e697c52bded8ebd6885"
+      },
+      {
+        "firstFrame": 229,
+        "timeSeconds": 9.5,
+        "previousDecodedMd5": "c0f9383a9d164ef6ec47324756d8f1c5",
+        "currentDecodedMd5": "c45e36891e5928f81055737733cc9a4e"
+      },
+      {
+        "firstFrame": 271,
+        "timeSeconds": 11.25,
+        "previousDecodedMd5": "37807fc623f2550925c5243cf33c0da8",
+        "currentDecodedMd5": "0e5d35c4f8d795385e93345994bd0965"
+      },
+      {
+        "firstFrame": 319,
+        "timeSeconds": 13.25,
+        "previousDecodedMd5": "ca2c9e5096c1a5fae76987576bb8119b",
+        "currentDecodedMd5": "b976cd6a6c581bde53f75c171118ffa8"
+      }
+    ],
+    "slates": "shot title, lens and movement"
+  },
+  "audio": {
+    "source": "original deterministic pulse and touch accents",
+    "encodedPeakDbfs": -18.440281,
+    "clipping": "passed",
+    "subjectiveListening": "pending"
+  },
+  "cutEvidence": "Actual decoded before/after hashes plus an encoded first/last frame contact sheet; authored timing is not claimed as source-ad timing.",
+  "sha256": {
+    "scene.blend": "5d937c1882f597036491c2c1681821439a347d8deadd2c7b16c9c1ccdd2fb50b",
+    "shot-manifest.json": "359ed6a941feaffff369d1baab9d9ba9d41a4129aef679c76e4c22a5585c54ac",
+    "camera-guide.mp4": "d53cad42fdec3d24a24f95be9a3f44db9d4ed6570ab52d58724ffdaaea79adb3",
+    "preview.mp4": "65f884e26355152747a732d454e217685d94ba58b061b76d90668eb156672790",
+    "storyboard.png": "cd5c2dc614e7b143dc52d21983936e172aa83f343929c2bb6aaa93e63f5bcb00",
+    "preview-sound.wav": "9f39187837b3041dc7cf72af53ec0f38fc213c73e6a09c422f6771faf9b0cd53",
+    "shot-01.png": "34be0549ceeebde5e0b682e063b94b62b055e1cef3caa292cb96340fe148c39f",
+    "shot-02.png": "07dc4f6ee7940f7f9b3293a9e312a30dbd827c7fded9bff03d350f009d15a0d8",
+    "shot-03.png": "d0dd3d25cab838daf9a6e5550e6a51ab10a890e56f12c98c438785f5e3f6c352",
+    "shot-04.png": "1681d12d6671a0fccb070ff067e99a647c1f0d14093385631397a76b52533080",
+    "shot-05.png": "b355035f4629e4abc83cf3cf29fcdf2a385191e9b72a4b7148c8a0099aa0daad",
+    "shot-06.png": "aba9011cbac1dd86e0d7646c4aabf46a903afe0faac96514984d1b3b9fbcc39f",
+    "shot-07.png": "5f3ee51feaf003df95f8fdfc0462feebe391584158b2b39de5164454b93192ee",
+    "shot-08.png": "e52c4d5867ea58801781afba365616fb3cfadaf5b18acffe2f191a613bb62ead",
+    "shot-09.png": "66e0818e9f6a96437e861140567fe24aa6dc9047921f08f8978b9ed2cda715c6"
+  },
+  "recipes": [
+    [
+      "-y",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-01.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-02.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-03.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-04.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-05.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-06.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-07.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-08.png",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\shot-09.png",
+      "-filter_complex",
+      "[0:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='1  THE OPPORTUNITY':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='0.00 - 1.75s / 28mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='LATERAL PUSH':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='OWNER SETS PHONE DOWN':x=10:y=513:fontsize=11:fontcolor=white[s0];[1:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='2  THE PICKUP':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='1.75 - 3.25s / 35mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='HIGH-ANGLE TILT / PUSH':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='FRIEND PICKS IT UP':x=10:y=513:fontsize=11:fontcolor=white[s1];[2:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='3  NICE TRY':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='3.25 - 4.75s / 50mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='CLOSE-UP CREEP':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='A CURIOUS GLANCE':x=10:y=513:fontsize=11:fontcolor=white[s2];[3:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='4  STILL LOCKED':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='4.75 - 6.00s / 60mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='SCREEN MACRO PUSH':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='UNREGISTERED THUMB':x=10:y=513:fontsize=11:fontcolor=white[s3];[4:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='5  MY TURN':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='6.00 - 7.50s / 85mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='REACTION CLOSE-UP':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='OWNER GLANCES BACK':x=10:y=513:fontsize=11:fontcolor=white[s4];[5:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='6  THE HANDOFF':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='7.50 - 9.50s / 35mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='HANDOFF TRACKING INSERT':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='OFFER / TRANSFER ELIDED':x=10:y=513:fontsize=11:fontcolor=white[s5];[6:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='7  ONE TOUCH':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='9.50 - 11.25s / 60mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='MATCHED SCREEN MACRO':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='REGISTERED THUMB':x=10:y=513:fontsize=11:fontcolor=white[s6];[7:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='8  BACK IN MY HAND':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='11.25 - 13.25s / 45mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='CREATOR / PRODUCT PUSH':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='OWNER PRESENTS BACK':x=10:y=513:fontsize=11:fontcolor=white[s7];[8:v]scale=240:427,pad=260:547:10:10:color=0x16181a,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='9  X80 HERO':x=10:y=447:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='13.25 - 15.00s / 85mm':x=10:y=469:fontsize=13:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='IN-HAND CAMERA-BUMP SLIDE':x=10:y=491:fontsize=11:fontcolor=white,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='CLOUD WINDOW DETAIL':x=10:y=513:fontsize=11:fontcolor=white[s8];[s0][s1][s2][s3][s4][s5][s6][s7][s8]xstack=inputs=9:layout=0_0|260_0|520_0|0_547|260_547|520_547|0_1094|260_1094|520_1094[sheet]",
+      "-map",
+      "[sheet]",
+      "-frames:v",
+      "1",
+      "<workspace>\\assets\\vivo-x80-previz\\storyboard.png"
+    ],
+    [
+      "-y",
+      "-framerate",
+      "24",
+      "-start_number",
+      "1",
+      "-i",
+      "<workspace>\\.tmp\\vivo-x80-previz-frames\\frame-%04d.png",
+      "-frames:v",
+      "360",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-crf",
+      "18",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      "-an",
+      "<workspace>\\assets\\vivo-x80-previz\\camera-guide.mp4"
+    ],
+    [
+      "-y",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\camera-guide.mp4",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\preview-sound.wav",
+      "-vf",
+      "drawbox=x=0:y=0:w=480:h=36:color=0x16181a@0.85:t=fill,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='VIVO X80 / MY TURN / 3D STORYBOARD':x=18:y=12:fontsize=12:fontcolor=white,drawbox=x=0:y=782:w=480:h=72:color=0x16181a@0.93:t=fill,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='01 / THE OPPORTUNITY':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,0)*lte(n,41)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='28mm - LATERAL PUSH':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,0)*lte(n,41)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='02 / THE PICKUP':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,42)*lte(n,77)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='35mm - HIGH-ANGLE TILT / PUSH':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,42)*lte(n,77)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='03 / NICE TRY':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,78)*lte(n,113)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='50mm - CLOSE-UP CREEP':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,78)*lte(n,113)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='04 / STILL LOCKED':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,114)*lte(n,143)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='60mm - SCREEN MACRO PUSH':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,114)*lte(n,143)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='05 / MY TURN':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,144)*lte(n,179)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='85mm - REACTION CLOSE-UP':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,144)*lte(n,179)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='06 / THE HANDOFF':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,180)*lte(n,227)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='35mm - HANDOFF TRACKING INSERT':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,180)*lte(n,227)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='07 / ONE TOUCH':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,228)*lte(n,269)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='60mm - MATCHED SCREEN MACRO':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,228)*lte(n,269)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='08 / BACK IN MY HAND':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,270)*lte(n,317)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='45mm - CREATOR / PRODUCT PUSH':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,270)*lte(n,317)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='09 / X80 HERO':x=18:y=796:fontsize=18:fontcolor=white:enable='gte(n,318)*lte(n,359)',drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='85mm - IN-HAND CAMERA-BUMP SLIDE':x=18:y=825:fontsize=12:fontcolor=white:enable='gte(n,318)*lte(n,359)'",
+      "-map",
+      "0:v:0",
+      "-map",
+      "1:a:0",
+      "-frames:v",
+      "360",
+      "-t",
+      "15",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-crf",
+      "18",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "128k",
+      "<workspace>\\assets\\vivo-x80-previz\\preview.mp4"
+    ],
+    [
+      "-v",
+      "error",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\camera-guide.mp4",
+      "-map",
+      "0:v:0",
+      "-f",
+      "framemd5",
+      "-"
+    ],
+    [
+      "-v",
+      "error",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\preview.mp4",
+      "-map",
+      "0:v:0",
+      "-f",
+      "framemd5",
+      "-"
+    ],
+    [
+      "-hide_banner",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\preview.mp4",
+      "-vn",
+      "-af",
+      "astats=metadata=0:reset=0",
+      "-f",
+      "null",
+      "-"
+    ],
+    [
+      "-y",
+      "-i",
+      "<workspace>\\assets\\vivo-x80-previz\\camera-guide.mp4",
+      "-vf",
+      "select='eq(n,0)+eq(n,41)+eq(n,42)+eq(n,77)+eq(n,78)+eq(n,113)+eq(n,114)+eq(n,143)+eq(n,144)+eq(n,179)+eq(n,180)+eq(n,227)+eq(n,228)+eq(n,269)+eq(n,270)+eq(n,317)+eq(n,318)+eq(n,359)',scale=160:285,tile=2x9",
+      "-frames:v",
+      "1",
+      "<workspace>\\assets\\vivo-x80-previz\\qa\\encoded-boundaries.png"
+    ]
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "status": "PASS_OFFLINE_GUARDS_PENDING_PAID_APPROVAL",
+  "checked_at_utc": "2026-10-03T17:55:48.944Z",
+  "command": "node tools/tests/vivo-x80-ugc-guards.mjs",
+  "source": {
+    "path": "tools/run_vivo_x80_ugc.mjs",
+    "sha256_start": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+    "sha256_end": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+    "proposal_digest": "da471418a3c56e161eafaac58f298fe097ab2e5212d72d7c64fb4df582eefa78"
+  },
+  "isolated_fixture_root": "<workspace>\\.tmp\\vivo-x80-ugc-guards\\run-1791050145891",
+  "real_environment_loaded": false,
+  "real_network_calls": 0,
+  "paid_calls": 0,
+  "cloud_uploads": 0,
+  "actual_study_ledger_accessed": false,
+  "cases": [
+    {
+      "name": "Pending execute and resume fail before environment reads or network",
+      "status": "PASS",
+      "detail": "Both modes blocked without touching credentials, attempt ledger or old-study canaries."
+    },
+    {
+      "name": "Default and explicit dry CLI are network-free and pending paid modes fail safely",
+      "status": "PASS",
+      "detail": [
+        {
+          "flags": [],
+          "exit_code": 0
+        },
+        {
+          "flags": [
+            "--dry-run"
+          ],
+          "exit_code": 0
+        },
+        {
+          "flags": [
+            "--execute"
+          ],
+          "exit_code": 1
+        },
+        {
+          "flags": [
+            "--resume"
+          ],
+          "exit_code": 1
+        }
+      ]
+    },
+    {
+      "name": "Dry readiness names every attestation and never implies an account balance check",
+      "status": "PASS",
+      "detail": "Seven independent attestations each block execute and resume before credentials or networking; fresh bucket privacy still needs runtime GET."
+    },
+    {
+      "name": "Copied-source actual approved CLI uses only Vivo defaults through execute and resume",
+      "status": "PASS",
+      "detail": [
+        {
+          "flags": [],
+          "exit_code": 0
+        },
+        {
+          "flags": [
+            "--execute"
+          ],
+          "exit_code": 0
+        },
+        {
+          "flags": [
+            "--resume"
+          ],
+          "exit_code": 0
+        },
+        {
+          "flags": [
+            "--execute"
+          ],
+          "exit_code": 1
+        }
+      ]
+    },
+    {
+      "name": "Media bytes, source metadata and exact 15s portrait/audio settings reject drift",
+      "status": "PASS",
+      "detail": "Fresh synthetic approval digests cannot authorize changed fixed proposal; each real copied media hash was exercised."
+    },
+    {
+      "name": "Cost, staging and proposal prose drift cannot be smuggled through fresh digests",
+      "status": "PASS",
+      "detail": "Generation cost and full proposal are pinned; stale approval digest rejected."
+    },
+    {
+      "name": "Injected runtime and CLI spec escapes reject before environment or networking",
+      "status": "PASS",
+      "detail": "All three injected outputs and wrong CLI --spec rejected; no old canary parsed."
+    },
+    {
+      "name": "Runtime ancestor junction cannot redirect a fixed study path",
+      "status": "PASS",
+      "detail": "Junction parent blocked before any redirected ledger creation."
+    },
+    {
+      "name": "Injected workspace root junction is rejected instead of silently following it",
+      "status": "PASS",
+      "detail": "The workspace root itself is a path component, not an unchecked trust boundary."
+    },
+    {
+      "name": "Public bucket metadata prevents any upload or ledger reservation",
+      "status": "PASS",
+      "detail": "Public, missing, wrong-identity, mistyped and null bucket metadata all stop before local reservation or cloud write."
+    },
+    {
+      "name": "Reported usage honors the 251100 floor and flags cap overruns without hiding billing uncertainty",
+      "status": "PASS",
+      "detail": "Successful billing floor and reported-token overrun are distinct from invoice proof; overrun makes copied CLI exit 1 without another submission."
+    },
+    {
+      "name": "Exact private create-only flow separates credentials and withholds capabilities",
+      "status": "PASS",
+      "detail": "One upload/POST, exact cleanup, placeholder evidence and mock container integrity verified; no real media/provider output inferred."
+    },
+    {
+      "name": "Duplicate execute never makes another request or alters the completed attempt",
+      "status": "PASS",
+      "detail": "Second execution stopped before any authenticated request."
+    },
+    {
+      "name": "Concurrent contenders reserve exactly one upload and POST without overwriting winner",
+      "status": "PASS",
+      "detail": "Exclusive reservation survives loser rejection while winner POST is deliberately held in flight."
+    },
+    {
+      "name": "Unknown upload result never retries or deletes an unconfirmed object",
+      "status": "PASS",
+      "detail": "Upload ambiguity consumes its one try, no generation or unsafe deletion follows."
+    },
+    {
+      "name": "Unknown paid POST consumes the attempt and blocks execute/resume without task ID",
+      "status": "PASS",
+      "detail": "No transport message leakage, no second POST and no invented recovery task."
+    },
+    {
+      "name": "Failed signed probe before submission cleans exactly the confirmed owned key",
+      "status": "PASS",
+      "detail": "No task could have been created; only its confirmed newly uploaded key is removed."
+    },
+    {
+      "name": "Known 404/403 model/account rejection stops and cleans without funding or fallback",
+      "status": "PASS",
+      "detail": "Exact whitelisted codes recorded; provider messages withheld and one attempt remains consumed."
+    },
+    {
+      "name": "Malicious error bodies/codes and invalid JSON never leak or trigger another submission",
+      "status": "PASS",
+      "detail": "Untrusted transport/body text is not mistaken for a safe terminal code."
+    },
+    {
+      "name": "Malicious sleep callback diagnostics are withheld and leave an unresolved attempt pending",
+      "status": "PASS",
+      "detail": "Untrusted callback message never becomes evidence or triggers deletion/retry while task is running."
+    },
+    {
+      "name": "Malicious persistent local IO diagnostics do not escape the exported runner",
+      "status": "PASS",
+      "detail": "Repeated atomic-write failure surfaces a fixed diagnostic without raw IO values or simulated uploads/submissions."
+    },
+    {
+      "name": "GET-only resume accepts exact CDN without media auth and keeps one attempt",
+      "status": "PASS",
+      "detail": "Recorded Vivo task recovered using authenticated task GET, credential-free media GET and exact-key cleanup only."
+    },
+    {
+      "name": "Hostile CDN suffix, userinfo, HTTP and provider-origin output are refused before media fetch",
+      "status": "PASS",
+      "detail": "Download host allowlist is separate from authenticated control-plane/storage hosts."
+    },
+    {
+      "name": "Corrupt, partial and unrecorded output reject resume before network without overwriting media",
+      "status": "PASS",
+      "detail": "Existing bytes cannot stand in for an unverified download or permit a new paid attempt."
+    },
+    {
+      "name": "Exact existing output resumes without another download",
+      "status": "PASS",
+      "detail": "Stored output checked against its ledger length/SHA, retained unchanged."
+    },
+    {
+      "name": "Mismatched prior-study ledger or altered task request cannot be resumed",
+      "status": "PASS",
+      "detail": "Study/request/assets/cost/privacy identity validated before credentials or rewriting the recorded task."
+    },
+    {
+      "name": "Controlled immutable-proposal mutant is detected by the drift verifier",
+      "status": "PASS",
+      "detail": "The same rejection assertion fails against an isolated pin-disabled mutant; original source remained untouched."
+    },
+    {
+      "name": "Controlled injected-path mutant is detected by the isolation verifier",
+      "status": "PASS",
+      "detail": "Isolation assertion fails against an isolated injection-check-disabled mutant, with dry-run/no networking only."
+    },
+    {
+      "name": "Runner source remained stable during independent verification",
+      "status": "PASS",
+      "detail": {
+        "before": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+        "after": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109"
+      }
+    }
+  ],
+  "totals": {
+    "pass": 29,
+    "fail": 0
+  },
+  "limitations": [
+    "Fake responses prove local guards only; no live entitlement, billing, generation, moderation, synchronized audio or story fidelity established.",
+    "No real workspace --execute/--resume, environment credentials or prior bottle attempt ledger were loaded.",
+    "Fake MP4 container is not decoded or claimed to be a playable provider result."
+  ],
+  "commands": [
+    {
+      "command": "node --check tools/tests/vivo-x80-ugc-guards.mjs",
+      "exit_code": 0
+    },
+    {
+      "command": "node --check tools/run_vivo_x80_ugc.mjs",
+      "exit_code": 0
+    },
+    {
+      "command": "node tools/tests/vivo-x80-ugc-guards.mjs",
+      "exit_code": 0,
+      "pass": 29,
+      "fail": 0,
+      "source_sha256": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109"
+    },
+    {
+      "command": "node tools/tests/byteplus-motion-transfer-guards.mjs",
+      "exit_code": 0,
+      "pass": 24,
+      "fail": 0,
+      "source_sha256": "c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1",
+      "report": ".tmp/byteplus-guard-smoke/run-1791050101195/report.json"
+    }
+  ],
+  "harness": {
+    "path": "tools/tests/vivo-x80-ugc-guards.mjs",
+    "sha256": "1308b046098d2d8903906b76937f4619a02ab55a1059f4f9ba4660d5e8f4d8b4"
+  },
+  "regression_evidence": {
+    "command": "node tools/tests/vivo-x80-ugc-guards.mjs",
+    "original_source_sha256": "1dd5f532a5a1f297c08959bf70f2e12589204d23684b5cf7bfff4b3d97e2ab59",
+    "original_exit_code": 1,
+    "original_pass": 28,
+    "original_fail": 1,
+    "failed_case": "Malicious persistent local IO diagnostics do not escape the exported runner",
+    "cause": "Atomic rename failed repeatedly; persistence inside catch allowed the untrusted diagnostic to escape from the exported runner.",
+    "fixed_source_sha256": "c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109",
+    "fixed_exit_code": 0
+  },
+  "preserved_bottle_current_checksums": [
+    {
+      "path": "tools/tests/byteplus-motion-transfer-guards.mjs",
+      "sha256": "f6f7e59a6a71482d26e36179decc4a3fdebe310231dee97a019ddad45cc5bbae"
+    },
+    {
+      "path": "tools/run_byteplus_motion_transfer.mjs",
+      "sha256": "c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1"
+    },
+    {
+      "path": "assets/blender-reveal/motion-transfer.byteplus-seedance20.spec.json",
+      "sha256": "46bf23976000b8d23591af4cb6079ee7b06ff2bed9595f5e25bb84398563be57"
+    },
+    {
+      "path": ".tmp/byteplus-motion-transfer/attempt.json",
+      "sha256": "40d1e40bbf17b5b6abaf70f34db26dd809274df459c1713b839ec727fc96ea18"
+    },
+    {
+      "path": "assets/blender-reveal/byteplus-motion-transfer.mp4",
+      "sha256": "771322c51aa72faed611984f196e2b9142b7151185c1af26bf445cc7adb76afc"
+    }
+  ],
+  "preserved_bottle_scope": "Old runner/spec/ledger/output were never executed, resumed, uploaded, rewritten or parsed by this Vivo suite. Final read-only ledger checksum requested by root; no ledger contents were output or consumed. Existing old guard harness was rerun once using its separate fake fixtures."
+}

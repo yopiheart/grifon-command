@@ -1,0 +1,115 @@
+{
+  "checked_at_utc": "2026-10-03T12:19:40.588Z",
+  "status": "COMPLETED_SINGLE_ATTEMPT_WITH_VISUAL_AND_BILLING_LIMITATIONS",
+  "runner_verification": {
+    "source_sha256": "c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1",
+    "syntax_exit_code": 0,
+    "actual_spec_dry_run_exit_code": 0,
+    "builder_offline_pass": 22,
+    "independent_offline_pass": 24,
+    "independent_command": "node tools/tests/byteplus-motion-transfer-guards.mjs",
+    "independent_exit_code": 0,
+    "evidence": "assets/blender-reveal/byteplus-runner-offline-verification.json",
+    "actual_live_output": "PASS_MEDIA_CONTRACT_WITH_VISUAL_LIMITATIONS",
+    "output_evidence": "assets/blender-reveal/byteplus-output-verification.json"
+  },
+  "active_spec": "assets/blender-reveal/motion-transfer.byteplus-seedance20.spec.json",
+  "user_selected_model": "dreamina-seedance-2-0-260128",
+  "prior_2_5_proposal": "assets/blender-reveal/motion-transfer.byteplus.spec.json",
+  "auth_evidence": "assets/blender-reveal/seedance-access-check.json",
+  "staging_evidence": "assets/blender-reveal/byteplus-staging-preflight.json",
+  "exact_request_fields": [
+    "model",
+    "content",
+    "resolution",
+    "ratio",
+    "duration",
+    "generate_audio",
+    "watermark",
+    "execution_expires_after"
+  ],
+  "omitted_2_5_only_fields": [
+    "omni_reference_task_type",
+    "draft",
+    "output_format"
+  ],
+  "assets": [
+    {
+      "path": "assets/blender-reveal/camera-reference.mp4",
+      "sha256": "014860ecb8abef5ec097dd33f4961775ac833fff4dfbf89117e88648791f9eab",
+      "role": "reference_video",
+      "actual_hash_matches": true
+    },
+    {
+      "path": "assets/blender-reveal/hero.png",
+      "sha256": "2ffeaff10fb960afc0cb92c4759df7e0e2f6be4f3d596522d9c708396cc678fd",
+      "role": "reference_image",
+      "actual_hash_matches": true
+    }
+  ],
+  "public_pricing": {
+    "rate_source": "https://docs.byteplus.com/en/docs/modelark/model-pricing",
+    "floor_source": "https://bytedance.larkoffice.com/wiki/H0fUwHPxtiHayOk6CVpcZzKqnHJ?table=tblnV1KjhYJO12Zh&view=vew6vtiOtK",
+    "documented_native_pixels": [
+      864,
+      496
+    ],
+    "input_seconds": 6,
+    "output_seconds": 6,
+    "fps": 24,
+    "formula_tokens": 120528,
+    "minimum_tokens": 100440,
+    "rate_usd_per_million_tokens": 4.3,
+    "estimated_generation_usd": 0.5182704,
+    "staging_reserve_usd": 0.01,
+    "maximum_user_budget_usd": 5,
+    "provider_dollar_hardcap": false,
+    "actual_account_bill_and_balance": "UNVERIFIED",
+    "screenshot": {
+      "path": "assets/blender-reveal/qa/byteplus-seedance20-480p-floor.png",
+      "bytes": 86965,
+      "sha256": "45796d95fc7b18c38c1668a32b280a23393b04d5c9f85de8b824f62b49070794"
+    }
+  },
+  "independent_contract_review": {
+    "schema": "PASS",
+    "arithmetic_and_floor_comparison": "PASS",
+    "model_access_method": "One user-approved real generation submission can test access without console activation or funding; accepted taskID alone is not terminal success",
+    "safe_rejection_codes": [
+      "ModelNotOpen",
+      "AccountOverdueError",
+      "OperationDenied.ServiceOverdue"
+    ],
+    "error_source": "https://docs.byteplus.com/en/docs/modelark/error-codes"
+  },
+  "authorization": {
+    "model_and_one_attempt": "User explicitly selected Seedance2.0 and repeated go after same assets/six-second480p/oneattempt/$5 disclosure",
+    "temporary_private_camera_delivery": "Previously disclosed BytePlus private signed URL and exact-key cleanup; unchanged camera asset and staging destination",
+    "no_new_funding_activation_retry_or_substitution": true,
+    "approval_digest": "dfc174b145891786c702a47721139014ba212b1134aeb11ca66b0d73be9d919f"
+  },
+  "operations_at_preflight": {
+    "real_attempt_ledger_exists": false,
+    "media_uploads": 0,
+    "paid_submissions": 0,
+    "activation_changes": 0,
+    "funding": 0
+  },
+  "limits": "Successful model access and local output decode are proved. Nominal six-second output measures 6.041667 seconds (+one 24fps frame); file unchanged. Sampled camera transfer is promising, but cap/label proportions and fine print are not exact. Full continuous-motion taste, client approval and actual total invoice remain unverified. No further generation, reroll, substitution or funding authorized.",
+  "completed_at_utc": "2026-10-03T12:49:03.470Z",
+  "completed_run": {
+    "evidence": "assets/blender-reveal/byteplus-motion-transfer-run.json",
+    "task_id": "cgt-20261003202712-nlxv7",
+    "paid_submissions": 1,
+    "uploads": 1,
+    "client_retries": 0,
+    "staging_cleanup": "confirmed",
+    "generation_estimate_from_reported_tokens_usd": 0.5200678,
+    "actual_account_invoice": "UNVERIFIED",
+    "decoded_seconds": 6.041666666666666,
+    "exact_6_000_seconds_achieved": false,
+    "sampled_camera_direction": "PASS_SAMPLED",
+    "exact_product_identity": "PARTIAL",
+    "client_readiness": "Not approved. Fine label fidelity and continuous playback still require review; no reroll, enhancement or replacement asset created."
+  }
+}

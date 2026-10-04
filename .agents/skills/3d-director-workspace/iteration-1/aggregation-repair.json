@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-04",
+  "scope": "Evaluation report generation only; no installed skill instructions, evaluation prompts, grades or media changed.",
+  "initial_attempt": {
+    "command": "& 'C:/Users/ADMIN/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -X utf8 .agents/skills/skill-creator/scripts/aggregate_benchmark.py .agents/skills/3d-director-workspace/iteration-1 --skill-name 3d-director --skill-path .agents/skills/3d-director",
+    "exit_code": 1,
+    "error": "TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'",
+    "location": "aggregate_benchmark.py calculate_stats: mean = sum(values) / n",
+    "cause": "Run timing.json files explicitly used null for unavailable full-run duration. The existing helper attempted numeric aggregation of those values."
+  },
+  "metadata_fix": {
+    "execution": "Root ran a local Node script over the six run timing.json records.",
+    "exit_code": 0,
+    "changes": [
+      "Omitted unavailable total_duration_seconds and total_tokens numeric fields.",
+      "Added exact_full_duration_available=false and total_tokens_available=false.",
+      "Kept original self-recorded start/end timestamps and their evidence limits."
+    ]
+  },
+  "retry": {
+    "command": "Same aggregate_benchmark.py command as initial_attempt",
+    "exit_code": 0,
+    "observed_summary": "With skill 100.0%; without skill 91.7%; six graded runs."
+  },
+  "delivery_normalization": {
+    "exit_code": 0,
+    "changes": [
+      "Removed helper-default time, token, tool-call and error counts that were not actually measured.",
+      "Corrected hardcoded runs_per_configuration from 3 to one run per case and configuration; six executor runs total.",
+      "Replaced unknown model-ID placeholders with explicit unavailability notes.",
+      "Saved benchmark.md and benchmark.json with planning-only conclusions and limitations."
+    ]
+  },
+  "viewer_generation": {
+    "command": "& 'C:/Users/ADMIN/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -X utf8 .agents/skills/skill-creator/eval-viewer/generate_review.py .agents/skills/3d-director-workspace/iteration-1 --skill-name 3d-director --benchmark .agents/skills/3d-director-workspace/iteration-1/benchmark.json --static .agents/skills/3d-director-workspace/iteration-1/review.html",
+    "exit_code": 0
+  }
+}

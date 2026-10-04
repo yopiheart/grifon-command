@@ -1,0 +1,67 @@
+{
+  "expectations": [
+    {
+      "text": "The shot timeline covers exactly 12 seconds without gaps or overlaps and specifies vertical framing.",
+      "passed": true,
+      "evidence": "Inputs specifies 9:16, 1080 x 1920, 30 fps and 360 frames. Shot rows cover 0-3 / 0-89, 3-6 / 90-179, 6-9 / 180-269 and 9-12 / 270-359 with inclusive ranges; all 360 frames are covered exactly once."
+    },
+    {
+      "text": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.",
+      "passed": true,
+      "evidence": "Push-in travels from (0,-3.50,0.60) to (0,-2.40,0.60); orbit uses a constant-radius 45-degree arc ending at (1.697,-1.697,0.60); straight slide adds 0.55H along (0.707,0.707,0) with rotation frozen and look-at disabled. The final cut is to a static full-bottle hero for three seconds. Proposed geometry is internally consistent; sensor fit and framing are explicitly pending preview."
+    },
+    {
+      "text": "The plan avoids invented product performance claims and identifies missing appearance inputs or proxy assumptions.",
+      "passed": true,
+      "evidence": "Inputs says no photograph, geometry, dimensions, material, color, logo, label or brand was supplied. The gray cylinder/shoulder/cap is called a blocking stand-in. The plan explicitly avoids insulation, leak resistance, capacity, durability, recycled materials and environmental benefits, including suggestive condensation/ice/steam cues."
+    },
+    {
+      "text": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.",
+      "passed": true,
+      "evidence": "The opening calls this 'a proposed 3D blocking plan, not a rendered preview or a finished video.' Review criteria states no generated media or visual verification occurred, and the next animatic is conditional. No Vivo command appears. This verifies the written scope, not independently observed execution."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "evidence_limits": "Read plan.md and execution-notes.json in this run. Execution notes are self-reported; full tool transcripts are not available. Tool history, claimed reads, absence of network/paid calls, and rendered camera behavior were not independently verified. No metrics.json or timing.json was present; no token metrics are inferred.",
+  "claims": [
+    {
+      "claim": "The proposed timeline is exactly 12 seconds.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Inputs specifies 9:16, 1080 x 1920, 30 fps and 360 frames. Shot rows cover 0-3 / 0-89, 3-6 / 90-179, 6-9 / 180-269 and 9-12 / 270-359 with inclusive ranges; all 360 frames are covered exactly once."
+    },
+    {
+      "claim": "No rendering, network or paid/provider operation occurred.",
+      "type": "process",
+      "verified": false,
+      "evidence": "Execution-notes.json reports this, but no full tool transcript is available; absence of those actions cannot be independently established."
+    },
+    {
+      "claim": "All camera moves will be visually readable in a completed preview.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "Both the text and execution notes label framing and smoothness as future preview work. There is no rendered evidence; assertion 2 passes at the requested planning feasibility level only."
+    }
+  ],
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.",
+        "reason": "Both reasonable plans pass this broad assertion. It does not distinguish a reproducible path with specified camera constraints from general move descriptions. Consider checking coordinate/path coherence and how a rotationally symmetric proxy makes the orbit visually observable, while retaining a planning-only standard."
+      },
+      {
+        "assertion": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.",
+        "reason": "This is a useful honesty check on the written deliverable, but absence of prohibited execution cannot be verified from self-reported execution notes. Capture full tool transcripts if operational compliance is to be scored."
+      },
+      {
+        "reason": "No assertion assesses concise reviewability, continuity across cuts, editable handoff structure, or the separation of camera-guide appearance from product appearance. Those are concrete differences here that the equal pass rates miss."
+      }
+    ],
+    "overall": "All four assertions are valid basic planning checks, but they do not discriminate these two capable outputs. Equal pass rates do not establish incremental skill value."
+  }
+}

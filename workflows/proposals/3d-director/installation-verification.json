@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-04",
+  "status": "PASS",
+  "scope": "Independent installed-package and planning-report verification; no creative render certification.",
+  "approved_installation": {
+    "source": "User-approved installation and three no-spend planning comparisons, conveyed in the parent task.",
+    "patch": "workflows/proposals/3d-director/install.patch",
+    "patch_sha256": "ec4beb8e708fd301751b9d58af89c8e2e9de1941515af36d05fa43e383e577c7",
+    "installed_skill": ".agents/skills/3d-director/SKILL.md",
+    "installed_skill_sha256": "0c3baf8cd07a363139b218c1317ff873dfa67ef1a36f404acd401f6436972bf6",
+    "result": "SKILL and both references match approved patch text; eval prompts, expected outputs and fixtures unchanged.",
+    "eval_metadata_only_changes": [
+      "status=planning_evaluation_completed",
+      "repository-relative results link",
+      "path_base=repository_root"
+    ]
+  },
+  "commands": [
+    {
+      "command": "node -e",
+      "execution": "Read-only inline installed-package, grading, benchmark, embedded-review and preservation checks.",
+      "exit_code": 0,
+      "checks": 12,
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "exit_code": 0,
+      "entrypoints": 33,
+      "files": 105,
+      "errors": 0,
+      "sparse_references": 0,
+      "tests": 26,
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "note": "NOW.md line-ending conversion warning only."
+    }
+  ],
+  "checks": [
+    {
+      "name": "approved_install_patch_content",
+      "status": "PASS"
+    },
+    {
+      "name": "approved_install_provenance",
+      "status": "PASS"
+    },
+    {
+      "name": "eval_result_metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "support_links_and_fixtures",
+      "status": "PASS"
+    },
+    {
+      "name": "six_complete_planning_runs",
+      "status": "PASS"
+    },
+    {
+      "name": "grades_and_benchmark_rows",
+      "status": "PASS"
+    },
+    {
+      "name": "benchmark_math_and_one_run_metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "unknown_performance_metrics_omitted",
+      "status": "PASS"
+    },
+    {
+      "name": "review_embeds_six_real_plans_and_benchmark",
+      "status": "PASS"
+    },
+    {
+      "name": "now_line_limit",
+      "status": "PASS"
+    },
+    {
+      "name": "accepted_media_preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "recorded_aggregation_repair",
+      "status": "PASS"
+    }
+  ],
+  "planning_evidence": {
+    "cases": 3,
+    "runs_per_case_per_condition": 1,
+    "total_runs": 6,
+    "with_skill": {
+      "passed": 12,
+      "total": 12,
+      "mean_pass_rate": 1
+    },
+    "without_skill": {
+      "passed": 11,
+      "total": 12,
+      "mean_pass_rate": 0.9166666666666666,
+      "sample_stddev": 0.14433756729740646
+    },
+    "finding": "Only the UGC selected-voice/visible-mouth lip-sync assertion differed; no general creative-quality claim.",
+    "six_outputs_present_and_complete": true,
+    "run_metadata_and_fixture_paths_verified": true,
+    "benchmark_matches_grades_and_comparisons": true,
+    "unknown_token_time_tool_call_metrics_omitted": true,
+    "review": ".agents/skills/3d-director-workspace/iteration-1/review.html",
+    "review_sha256": "d1b11bfaf2f0bc7431598aa5033727a5cac33c2fb67922189e8ebbd9285ae972",
+    "embedded_real_plans": 6,
+    "embedded_benchmark_matches_file": true
+  },
+  "observed_repairs": [
+    {
+      "component": "Benchmark aggregation",
+      "initial": "FAIL: recorded helper exit 1, TypeError from null duration fields.",
+      "fix": "Metadata-only omission of unknown duration/token numbers; retained original timestamps and availability flags. Helper default performance counts and hardcoded run count removed/corrected.",
+      "retry": "Recorded helper exit 0; fresh verification confirms omitted metrics and correct math.",
+      "source": ".agents/skills/3d-director-workspace/iteration-1/aggregation-repair.json",
+      "provenance": "Root's saved command/exit/error history inspected; helper not rerun by this smoke agent."
+    },
+    {
+      "component": "Static review embedding",
+      "initial": "FAIL: six records but only four embedded plans; both bottle outputs were empty.",
+      "initial_inspection_exit_code": 0,
+      "fix": "Parent removed only two checked-empty superseded bottle outputs directories and regenerated viewer; canonical run-1 plans untouched.",
+      "final": "PASS: all six embedded texts match actual plan files after line-ending normalization, and benchmark matches exactly.",
+      "final_independent_checker_exit_code": 0
+    }
+  ],
+  "preservation": {
+    "now_lines": 89,
+    "now_maximum_lines": 90,
+    "raw_and_clean_guide_sha256_unchanged": true,
+    "raw_sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+    "clean_guide_sha256": "b0a5742b5fbc811db122574f387855a69f30a249585328800106075eedab28e8",
+    "historical_validation": "workflows/proposals/3d-director/validation.json",
+    "historical_validation_sha256": "7fe9c946ea684ae562bb0d4b3a4beb770a59aa29308f2303ef467ab3c6785223"
+  },
+  "limitations": [
+    "Non-blind independent grading, one executor run per case and condition; descriptive planning comparison only.",
+    "Executor notes are self-reported; complete tool transcripts and valid token/full-run elapsed metrics unavailable.",
+    "No automatic-trigger test, local Blender render, generated-media comparison, application build/tests or visual browser review.",
+    "HTML embedded-data validation establishes content integrity, not browser layout or interaction behavior.",
+    "Approval/patch equality and plan adherence do not prove universal directing fidelity, character consistency, speech quality or cost savings."
+  ],
+  "smoke_agent_actions": {
+    "provider_or_network_calls": 0,
+    "media_generations": 0,
+    "environment_or_secret_reads": 0,
+    "dependency_installations": 0,
+    "helper_processes_started": 0,
+    "files_written": [
+      "workflows/proposals/3d-director/installation-verification.json"
+    ]
+  }
+}

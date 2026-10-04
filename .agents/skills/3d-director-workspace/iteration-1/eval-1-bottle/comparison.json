@@ -1,0 +1,39 @@
+{
+  "eval_id": 1,
+  "eval_name": "bottle",
+  "result": "Tie on the four assertions; no demonstrated overall usefulness winner.",
+  "with_skill": {
+    "passed": 4,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "without_skill": {
+    "passed": 4,
+    "total": 4,
+    "pass_rate": 1
+  },
+  "practical_differences": [
+    "Without-skill supplies explicit camera coordinates, an orbit equation, matching segment endpoints, and look-at disabling for a fixed-orientation slide. This is more directly reproducible for scene construction.",
+    "With-skill provides stronger shot-by-shot continuity and sound intent, explicit editorial resets, a labeled review preview versus clean camera guide, and full-motion/duration/aspect/decode verification criteria.",
+    "Without-skill explicitly addresses the symmetric proxy's orbit visibility with an optional temporary seam and prevents performance implications from condensation, ice or steam.",
+    "With-skill is broader about later production boundaries; without-skill is more concrete about immediate blocking. Extra length or more policy language is not itself a quality advantage."
+  ],
+  "unresolved": "Actual camera readability, portrait framing and smoothness require a later preview. No scene was reviewed.",
+  "evidence_limits": "Execution notes are self-reported and full tool transcripts are unavailable; actual tool history and no-paid/no-network claims are not independently verified. No token metrics are available.",
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Push-in, orbit and side-slide are distinct, feasible camera moves followed by a readable hero shot.",
+        "reason": "Both reasonable plans pass this broad assertion. It does not distinguish a reproducible path with specified camera constraints from general move descriptions. Consider checking coordinate/path coherence and how a rotationally symmetric proxy makes the orbit visually observable, while retaining a planning-only standard."
+      },
+      {
+        "assertion": "The deliverable is a planning/local-preview proposal and does not falsely claim completed rendering or a generic working Vivo command.",
+        "reason": "This is a useful honesty check on the written deliverable, but absence of prohibited execution cannot be verified from self-reported execution notes. Capture full tool transcripts if operational compliance is to be scored."
+      },
+      {
+        "reason": "No assertion assesses concise reviewability, continuity across cuts, editable handoff structure, or the separation of camera-guide appearance from product appearance. Those are concrete differences here that the equal pass rates miss."
+      }
+    ],
+    "overall": "All four assertions are valid basic planning checks, but they do not discriminate these two capable outputs. Equal pass rates do not establish incremental skill value."
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "status": "approved_for_single_byteplus_test",
+  "purpose": "Use one authorized Seedance2.0 generation attempt to check existing model access and test camera-reference transfer while retaining the NOIR / 01 product. No model activation or funding.",
+  "scope": "One six-second 480p silent study through the existing BytePlus ARK key. Same approved camera clip, hero image and prompt. No Grifon UI unlock or deployment.",
+  "approved_fal_spec": "assets/blender-reveal/motion-transfer.spec.json",
+  "provider": "BytePlus ModelArk",
+  "endpoint": "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks",
+  "method": "POST",
+  "authentication": "Existing ARK_API_KEY injected only into the authorized runtime Bearer header; never printed, copied into files or committed.",
+  "exact_diff_from_approved_fal": {
+    "model_route": {
+      "from": "bytedance/seedance-2.5/reference-to-video",
+      "to": "dreamina-seedance-2-0-260128"
+    },
+    "prompt": "Exact approved text unchanged",
+    "input_bytes": "Both approved input hashes unchanged",
+    "resolution": "480p unchanged",
+    "duration": "Same six seconds; API type changes from string to number",
+    "reference_delivery": "Camera MP4 changes from inline data URI to a two-hour signed URL for one new object in verified-private existing Supabase gemini-videos; hero PNG stays inline Base64",
+    "request_fields": "Direct content/role schema and numeric duration/ratio replace the fal transport. Seedance2.0 does not receive2.5-only task-type, draft or output-format parameters. It uses standard MP4 output, silent generation, no watermark, and one-hour execution expiry.",
+    "retry_control": "One raw HTTP POST, no client retries or rerolls. Fal retry/fallback headers do not apply; vendor-internal behavior is not established."
+  },
+  "assets": [
+    {
+      "path": "assets/blender-reveal/camera-reference.mp4",
+      "sha256": "014860ecb8abef5ec097dd33f4961775ac833fff4dfbf89117e88648791f9eab",
+      "role": "reference_video"
+    },
+    {
+      "path": "assets/blender-reveal/hero.png",
+      "sha256": "2ffeaff10fb960afc0cb92c4759df7e0e2f6be4f3d596522d9c708396cc678fd",
+      "role": "reference_image"
+    }
+  ],
+  "request_bindings": {
+    "{{SIGNED_CAMERA_REFERENCE_URL}}": "In-memory signed GET URL for the exact camera-reference bytes at the one approved staging key; never logged/committed",
+    "{{HERO_PNG_DATA_URI}}": "Base64 data:image/png URI from exact approved hero.png after SHA check"
+  },
+  "request": {
+    "model": "dreamina-seedance-2-0-260128",
+    "content": [
+      {
+        "type": "text",
+        "text": "Create one continuous six-second cinematic product shot. Use @Video1 to guide camera path, timing, framing, foreground occlusion and parallax. Use @Image1 for product appearance, amber glass, cream paper label, dark typography, gold hardware, warm light and graphite stone. The NOIR / 01 cold brew bottle remains stationary throughout. Begin with the foreground architectural blade partially covering the bottle. The camera glides past the blade, reveals the bottle, then settles into a clear label-facing hero composition for the final 1.5 seconds. Preserve the bottle silhouette, cap, label layout and the words NOIR, 01 and COLD BREW. Keep highlights coherent and motion smooth. The scene contains one bottle and the existing stage objects throughout. Generate a silent shot."
+      },
+      {
+        "type": "video_url",
+        "video_url": {
+          "url": "{{SIGNED_CAMERA_REFERENCE_URL}}"
+        },
+        "role": "reference_video"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "{{HERO_PNG_DATA_URI}}"
+        },
+        "role": "reference_image"
+      }
+    ],
+    "resolution": "480p",
+    "ratio": "16:9",
+    "duration": 6,
+    "generate_audio": false,
+    "watermark": false,
+    "execution_expires_after": 3600
+  },
+  "staging": {
+    "backend": "Existing Supabase Storage",
+    "bucket": "gemini-videos",
+    "object_key": "motion-tests/noir-01/418cbb7d-2921-4bbe-8524-f6012734ad43/camera-reference.mp4",
+    "input_bytes": 882241,
+    "upload_requests_maximum": 1,
+    "overwrite": false,
+    "signed_url_ttl_seconds": 7200,
+    "public_publication": false,
+    "authorization_needed": "Approved as the necessary temporary delivery of the unchanged camera-reference clip to BytePlus for the user-selected one-shot test; exact-key cleanup only.",
+    "preflight": [
+      "Recheck bucket public flag is false and input SHA matches before any write",
+      "Use create-only upload; stop on conflict/uncertain response rather than overwrite or retry",
+      "Probe the in-memory signed URL with one-byte ranged GET without extra auth headers before submission"
+    ],
+    "cleanup": "Delete only this exact confirmed new object after a terminal provider task or a proven pre-submission failure with zero paid POST attempts. If upload or task state is unknown, record cleanup pending and investigate only this key; signed capability expiry does not delete the stored object. No other files, objects, buckets or policies may be changed.",
+    "public_flag": false,
+    "privacy_verified": true
+  },
+  "budget": {
+    "currency": "USD",
+    "maximum_total_cost": 5,
+    "maximum_paid_submissions": 1,
+    "automatic_client_retries": 0,
+    "rerolls": 0,
+    "model_substitutions": 0,
+    "activation_purchases_allowed": false,
+    "top_ups_allowed": false,
+    "new_subscriptions_allowed": false,
+    "documented_output_size": [
+      864,
+      496
+    ],
+    "input_video_seconds": 6,
+    "output_seconds": 6,
+    "minimum_tokens_for_six_second_480p_16_9_with_video": 100440,
+    "formula_tokens": 120528,
+    "estimated_billed_tokens": 120528,
+    "rate_usd_per_million_tokens": 4.3,
+    "estimated_generation_cost": 0.5182704,
+    "staging_fee_reserve_usd": 0.01,
+    "enforcement": "One fixed request with a documented public generation estimate of$0.5182704 plus$0.01 staging reserve under the user-approved$5 maximum. This is a local submission guard, not a provider dollar hardcap or an actual bill. No activation, funding, subscriptions, retries or substitutions. The existing account can reject access/balance; record and stop."
+  },
+  "preflight_before_staging_or_submission": [
+    "Record the explicit user-selected Seedance2.0 one-shot approval with the unchanged assets/prompt, six-second480p silent output and$5 maximum",
+    "ExistingARK read-only auth and private bucket checks pass immediately before upload",
+    "Official2.0 schema, public rate, native dimensions and six-second token floor verified; no2.5-only fields sent",
+    "Both approved media hashes match;create-only private upload/sign/probe for the one approved key",
+    "Persist a durable exclusive local ledger before writes/submission; ambiguity consumes the one permitted attempt and never permits resubmission",
+    "Use only the one approved generation attempt to test model access; rejected entitlement/balance never triggers activation, funding, fallback or retry"
+  ],
+  "pass_criteria": [
+    "Output is a playable six-second product-only MP4 in the480p tier with no generated audio; direct Seedance2.0 native size is864x496.",
+    "One continuous camera move follows the authored opening occlusion, blade clearance, parallax and final hero settle without cuts or a new camera move.",
+    "Bottle shape, cap, label and stationary placement remain consistent; no visible warping, drifting label, added or disappearing product.",
+    "NOIR, 01 and COLD BREW remain readable in the final 1.5-second hero interval.",
+    "Measured total cost stays within the approved maximum and only one paid submission occurs."
+  ],
+  "failure_action": "Record failure and stop, including synchronous account/model rejection. Never activate a model, top up, substitute a model or reroll. An ambiguous paid POST cannot be repeated.",
+  "evidence": [
+    "Store the sanitized request, asset hashes, provider task ID, actual usage and billed or measured cost; never store credentials or signed URLs in the committed evidence.",
+    "Download the successful output before the provider URL expires and decode-check its duration, dimensions and audio state.",
+    "Build a timestamp-aligned comparison with the neutral reference at 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0 and 5.5 seconds.",
+    "Inspect full playback and the comparison for camera fidelity, physical continuity and label readability. Record any inspection limitations and obtain human approval before client use.",
+    "Save sanitized direct request with media placeholders, task/model/status, reported usage and actual cost; signed URLs and credentials stay out of evidence",
+    "Record private staging verification and exact-key cleanup result"
+  ],
+  "documentation": [
+    "https://docs.byteplus.com/en/docs/modelark/seedance-2-0",
+    "https://docs.byteplus.com/en/docs/modelark/create-video-generation-task-api",
+    "https://docs.byteplus.com/en/docs/modelark/model-pricing",
+    "https://bytedance.larkoffice.com/wiki/H0fUwHPxtiHayOk6CVpcZzKqnHJ?table=tblnV1KjhYJO12Zh&view=vew6vtiOtK",
+    "https://docs.byteplus.com/en/docs/modelark/get-video-generation-task-api"
+  ],
+  "readiness": {
+    "existing_ark_auth": "PASS: read-only task-listHTTP200;fresh runtime preflight required",
+    "private_staging_bucket": "PASS: read-only metadataHTTP200/publicfalse;fresh runtime recheck required",
+    "official_minimum_floor": "PASS: official2.0 table480p six-second16:9 row100440;qa/byteplus-seedance20-480p-floor.png",
+    "schema": "PASS: independent provider review;2.5-only fields omitted",
+    "model_entitlement": "PASS for this exact model/request: one task completed successfully; no activation performed",
+    "account_balance": "UNVERIFIED: no console/control-plane access;no funding authorized",
+    "exact_provider_diff_approval": "User selected2.0 and repeated go after sameassets/6s480p/oneattempt/$5 disclosure;priorBytePlus proposal disclosed private signed delivery and exactcleanup",
+    "offline_runner": "PASS: 24 independent fake-only guard cases on final source; syntax/dry run PASS. Local output decode PASS with nominal-duration deviation and visual limitations.",
+    "paid_submissions": 1,
+    "media_uploads": 1,
+    "task_id": "cgt-20261003202712-nlxv7",
+    "output_evidence": "assets/blender-reveal/byteplus-output-verification.json",
+    "staging_cleanup": "confirmed",
+    "actual_generation_cost": "Reported-token estimate USD 0.5200678 at the official public rate; account invoice and staging charges remain unverified"
+  },
+  "approval": {
+    "approved": true,
+    "account_access_check": "single_approved_submission_no_funding",
+    "account_verified": false,
+    "pricing_verified": true,
+    "pricing_verification_scope": "Official public schema/rate/floor;account-specific bill and balance remain unknown",
+    "staging_approved": true,
+    "request_sha256": "dfc174b145891786c702a47721139014ba212b1134aeb11ca66b0d73be9d919f",
+    "user_direction": [
+      "G approved",
+      "480P lang bro para tipid",
+      "Siguro buo alam mo. Param mo, ikaw bro, ano bang the best na move? Doon tayo",
+      "Okay bro, sige, go",
+      "Sige, try nga natin Seedance 2.0 nalang",
+      "Okay bro, go, go, go"
+    ],
+    "approved_inputs": "Same camera-reference.mp4, hero.png and exact approved prompt;one6s480p silent2.0 attempt under$5, private temporary delivery/exactcleanup, no retries/newfunding"
+  },
+  "exact_diff_from_byteplus25_proposal": {
+    "model": "User explicitly selected Seedance2.0 instead of2.5",
+    "unsupported_fields_omitted": [
+      "omni_reference_task_type",
+      "draft",
+      "output_format"
+    ],
+    "unchanged": "Exact prompt and both asset hashes;6s480p16:9silent;same private create-only staging key;one paid POST;no retries/funding;max$5",
+    "native_output": "864x496 instead of854x480 within the480p tier",
+    "documented_rate": "4.30 instead of6.40 USD/M tokens with reference video",
+    "account_readiness": "Existing entitlement/balance remain unverified. The user-authorized single generation attempt checks access by success or rejection; no activation or funding is permitted."
+  }
+}

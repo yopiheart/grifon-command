@@ -1,0 +1,30 @@
+{
+  "status": "complete",
+  "evaluation_mode": "baseline_without_3d_director_skill",
+  "start_timestamp_utc": "2026-10-04T07:06:32Z",
+  "end_timestamp_utc": "2026-10-04T07:08:50Z",
+  "files_read": [
+    "workflows/codex_desktop.md",
+    ".agents/skills/surgical-edit/SKILL.md",
+    ".agents/skills/_shared/codex-runtime.md",
+    ".agents/skills/3d-director-workspace/iteration-1/eval-1-bottle/without_skill/run-1/execution-notes.json (own output, for layout correction)"
+  ],
+  "actions_taken": [
+    "Read required desktop entrypoint and surgical-edit guidance plus its runtime adapter.",
+    "Authored a complete text-only 12-second vertical 3D directing plan using the supplied brief.",
+    "Specified shot timing, provisional scene geometry, camera coordinates and review criteria.",
+    "Checked timeline arithmetic and required move order in the written plan.",
+    "Created only the requested output directory, plan.md and this execution-notes.json.",
+    "Moved own output files into without_skill/run-1 as requested by the evaluation coordinator; preserved all other files."
+  ],
+  "outputs": [
+    "outputs/plan.md",
+    "execution-notes.json"
+  ],
+  "limitations": [
+    "No supplied product identity, reference image, dimensions or brand assets.",
+    "No rendered 3D preview or visual framing validation; camera values are proposed blocking.",
+    "No network access, provider calls, environment or secret reads, media generation, Blender execution, ledger writes, application/source changes or commits.",
+    "Did not read the 3d-director skill, proposal/evaluation files, NOW.md or other agents outputs."
+  ]
+}

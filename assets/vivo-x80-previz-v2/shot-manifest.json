@@ -1,0 +1,442 @@
+{
+  "study": "MY TURN V2 / Vivo X80",
+  "scope": "Local gray clay comic escalation and camera/blocking guide; no AI finish.",
+  "paidCalls": 0,
+  "width": 480,
+  "height": 854,
+  "fps": 24,
+  "frames": 360,
+  "durationSeconds": 15,
+  "renderer": {
+    "engine": "BLENDER_EEVEE",
+    "samples": 32
+  },
+  "productDimensionsMm": {
+    "width": 75.23,
+    "depth": 8.3,
+    "height": 164.95
+  },
+  "design": "X80 three-lens circle inside upper rectangular Cloud Window; single centered front punch hole.",
+  "featureStory": "Casual wrong-thumb attempt fails; a smug expert index flourish and second wrong-finger touch also fail. Owner unlocks with a registered thumb; friend visibly deflates. Illustrated dramatization, no Face ID or spoof-resistance claim.",
+  "referenceUrl": "https://www.youtube.com/watch?v=ByAi9BGHMRQ",
+  "referenceTiming": "Sampled reference observations only. All shot timing below is newly authored.",
+  "handoff": "Offer, then cut to owner's registered-thumb shot; continuous transfer elided. Parent-stable grip, holder shifts 22cm at 216/217 cut.",
+  "performance": "Baked brows, two-segment mouth, chin, gaze, torso pitch and shoulder/neck/head heights. Free index hand is authored geometry; no slate/audio is required to identify the gesture.",
+  "contactFrames": [
+    {
+      "frame": 63,
+      "tip": "Thumb rounded tip",
+      "result": "locked"
+    },
+    {
+      "frame": 132,
+      "tip": "Friend index tip",
+      "result": "locked"
+    },
+    {
+      "frame": 232,
+      "tip": "Thumb rounded tip",
+      "result": "unlock at235"
+    }
+  ],
+  "performanceSamples": [
+    {
+      "label": "first-thumb-contact",
+      "frame": 63,
+      "shot": 3
+    },
+    {
+      "label": "first-failure-held",
+      "frame": 76,
+      "shot": 3
+    },
+    {
+      "label": "expert-raise",
+      "frame": 90,
+      "shot": 4
+    },
+    {
+      "label": "expert-confident-hold",
+      "frame": 104,
+      "shot": 4
+    },
+    {
+      "label": "expert-ready",
+      "frame": 119,
+      "shot": 4
+    },
+    {
+      "label": "second-index-contact",
+      "frame": 132,
+      "shot": 5
+    },
+    {
+      "label": "second-failure-held",
+      "frame": 144,
+      "shot": 5
+    },
+    {
+      "label": "owner-side-eye",
+      "frame": 165,
+      "shot": 6
+    },
+    {
+      "label": "offer-held",
+      "frame": 210,
+      "shot": 7
+    },
+    {
+      "label": "owner-contact",
+      "frame": 232,
+      "shot": 8
+    },
+    {
+      "label": "owner-unlocked-held",
+      "frame": 257,
+      "shot": 8
+    },
+    {
+      "label": "friend-before-collapse",
+      "frame": 265,
+      "shot": 9
+    },
+    {
+      "label": "friend-collapse",
+      "frame": 285,
+      "shot": 9
+    },
+    {
+      "label": "friend-deflated-held",
+      "frame": 306,
+      "shot": 9
+    }
+  ],
+  "geometry": {
+    "objects": 213,
+    "phoneParent": "Phone hand contact controller",
+    "externalTextures": 0,
+    "externalCreatorImages": 0
+  },
+  "shots": [
+    {
+      "number": 1,
+      "title": "THE OPPORTUNITY",
+      "firstFrame": 1,
+      "lastFrame": 24,
+      "startSeconds": 0.0,
+      "endSeconds": 1.0,
+      "sampleFrame": 12,
+      "lensMm": 30,
+      "cameraStart": [
+        -0.25,
+        -1.68,
+        1.6
+      ],
+      "cameraEnd": [
+        -0.18,
+        -1.59,
+        1.56
+      ],
+      "targetStart": [
+        0,
+        -0.12,
+        1.2
+      ],
+      "targetEnd": [
+        0,
+        -0.12,
+        1.2
+      ],
+      "movement": "Tight two-shot push",
+      "action": "Owner sets their phone down; friend notices it and glances toward the owner."
+    },
+    {
+      "number": 2,
+      "title": "THE PICKUP",
+      "firstFrame": 25,
+      "lastFrame": 48,
+      "startSeconds": 1.0,
+      "endSeconds": 2.0,
+      "sampleFrame": 36,
+      "lensMm": 35,
+      "cameraStart": [
+        -0.12,
+        -0.73,
+        1.53
+      ],
+      "cameraEnd": [
+        -0.13,
+        -0.64,
+        1.61
+      ],
+      "targetStart": [
+        -0.06,
+        -0.33,
+        0.83
+      ],
+      "targetEnd": [
+        -0.32,
+        -0.145,
+        1.215
+      ],
+      "movement": "High-angle follow",
+      "action": "Friend lifts the phone into their right hand."
+    },
+    {
+      "number": 3,
+      "title": "CASUAL TRY",
+      "firstFrame": 49,
+      "lastFrame": 78,
+      "startSeconds": 2.0,
+      "endSeconds": 3.25,
+      "sampleFrame": 63,
+      "lensMm": 60,
+      "cameraStart": [
+        -0.1,
+        0.02,
+        1.39
+      ],
+      "cameraEnd": [
+        -0.12,
+        0.0,
+        1.375
+      ],
+      "targetStart": [
+        -0.32,
+        -0.145,
+        1.215
+      ],
+      "targetEnd": [
+        -0.32,
+        -0.145,
+        1.215
+      ],
+      "movement": "Screen macro push",
+      "action": "One casual thumb touch fails; lock and a simple failure cross remain visible."
+    },
+    {
+      "number": 4,
+      "title": "THE EXPERT",
+      "firstFrame": 79,
+      "lastFrame": 120,
+      "startSeconds": 3.25,
+      "endSeconds": 5.0,
+      "sampleFrame": 99,
+      "lensMm": 50,
+      "cameraStart": [
+        -0.57,
+        -1.37,
+        1.64
+      ],
+      "cameraEnd": [
+        -0.51,
+        -1.27,
+        1.62
+      ],
+      "targetStart": [
+        -0.32,
+        -0.06,
+        1.43
+      ],
+      "targetEnd": [
+        -0.32,
+        -0.08,
+        1.43
+      ],
+      "movement": "Performance close-up creep",
+      "action": "Friend squares shoulders, lifts chin, smirks and raises a free index finger as an overconfident solution."
+    },
+    {
+      "number": 5,
+      "title": "STILL NO",
+      "firstFrame": 121,
+      "lastFrame": 144,
+      "startSeconds": 5.0,
+      "endSeconds": 6.0,
+      "sampleFrame": 132,
+      "lensMm": 55,
+      "cameraStart": [
+        -0.04,
+        0.015,
+        1.45
+      ],
+      "cameraEnd": [
+        -0.06,
+        0.0,
+        1.43
+      ],
+      "targetStart": [
+        -0.32,
+        -0.145,
+        1.215
+      ],
+      "targetEnd": [
+        -0.32,
+        -0.145,
+        1.215
+      ],
+      "movement": "Retry hand / screen macro",
+      "action": "The free index finger deliberately touches the same area; the lock remains and a failure cross returns."
+    },
+    {
+      "number": 6,
+      "title": "SHE NOTICED",
+      "firstFrame": 145,
+      "lastFrame": 174,
+      "startSeconds": 6.0,
+      "endSeconds": 7.25,
+      "sampleFrame": 159,
+      "lensMm": 85,
+      "cameraStart": [
+        0.67,
+        -1.55,
+        1.59
+      ],
+      "cameraEnd": [
+        0.6,
+        -1.48,
+        1.58
+      ],
+      "targetStart": [
+        0.38,
+        0.07,
+        1.53
+      ],
+      "targetEnd": [
+        0.38,
+        0.07,
+        1.53
+      ],
+      "movement": "Amused side-eye close-up",
+      "action": "Owner turns toward the friend, raises one brow and smiles knowingly."
+    },
+    {
+      "number": 7,
+      "title": "GIVE IT HERE",
+      "firstFrame": 175,
+      "lastFrame": 216,
+      "startSeconds": 7.25,
+      "endSeconds": 9.0,
+      "sampleFrame": 195,
+      "lensMm": 35,
+      "cameraStart": [
+        -0.12,
+        -1.14,
+        1.54
+      ],
+      "cameraEnd": [
+        0.11,
+        -1.1,
+        1.54
+      ],
+      "targetStart": [
+        -0.1,
+        -0.145,
+        1.2
+      ],
+      "targetEnd": [
+        0.16,
+        -0.145,
+        1.2
+      ],
+      "movement": "Offer tracking insert",
+      "action": "Owner extends an open palm; friend offers the phone, then the edit elides the transfer."
+    },
+    {
+      "number": 8,
+      "title": "ONE TOUCH",
+      "firstFrame": 217,
+      "lastFrame": 264,
+      "startSeconds": 9.0,
+      "endSeconds": 11.0,
+      "sampleFrame": 240,
+      "lensMm": 60,
+      "cameraStart": [
+        0.54,
+        0.02,
+        1.39
+      ],
+      "cameraEnd": [
+        0.52,
+        0.0,
+        1.375
+      ],
+      "targetStart": [
+        0.32,
+        -0.145,
+        1.215
+      ],
+      "targetEnd": [
+        0.32,
+        -0.145,
+        1.215
+      ],
+      "movement": "Owner screen macro",
+      "action": "Owner gives one relaxed registered-thumb touch; lock changes to a check and stays unlocked."
+    },
+    {
+      "number": 9,
+      "title": "CAUGHT",
+      "firstFrame": 265,
+      "lastFrame": 312,
+      "startSeconds": 11.0,
+      "endSeconds": 13.0,
+      "sampleFrame": 288,
+      "lensMm": 65,
+      "cameraStart": [
+        -0.55,
+        -1.25,
+        1.59
+      ],
+      "cameraEnd": [
+        -0.49,
+        -1.16,
+        1.56
+      ],
+      "targetStart": [
+        -0.38,
+        0.04,
+        1.46
+      ],
+      "targetEnd": [
+        -0.38,
+        -0.015,
+        1.41
+      ],
+      "movement": "Reaction hold / small push",
+      "action": "Friend looks toward owner, then shoulders drop, head and eyes lower, and the smirk becomes a small frown."
+    },
+    {
+      "number": 10,
+      "title": "X80 HERO",
+      "firstFrame": 313,
+      "lastFrame": 360,
+      "startSeconds": 13.0,
+      "endSeconds": 15.0,
+      "sampleFrame": 336,
+      "lensMm": 85,
+      "cameraStart": [
+        0.39,
+        -0.89,
+        1.3
+      ],
+      "cameraEnd": [
+        0.43,
+        -0.78,
+        1.31
+      ],
+      "targetStart": [
+        0.34,
+        -0.17,
+        1.259
+      ],
+      "targetEnd": [
+        0.34,
+        -0.17,
+        1.262
+      ],
+      "movement": "In-hand camera-bump slide",
+      "action": "Readable upper-left main lens and two lower lenses in the X80 Cloud Window, held by owner."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "purpose": "Strengthen the local Vivo X80 gray storyboard before any human AI finish.",
+  "approvalDate": "2026-10-04",
+  "userApproval": "Ah okay sige approved. G! Amaze me!",
+  "approvedRevision": "Shorter setup; two distinct failed attempts with the second visibly overconfident; owner effortlessly unlocks; friend's caught/deflated reaction earns the punchline; short in-hand X80 hero.",
+  "durationSeconds": 15,
+  "resolution": {"width":480,"height":854},
+  "fps": 24,
+  "timeline": [
+    {"start":0,"end":2,"beat":"Opportunity and pickup"},
+    {"start":2,"end":6,"beat":"Two failed attempts, escalating confidence"},
+    {"start":6,"end":9,"beat":"Owner notices and phone is offered back"},
+    {"start":9,"end":11,"beat":"Owner one-touch unlock"},
+    {"start":11,"end":13,"beat":"Friend caught/deflated reaction"},
+    {"start":13,"end":15,"beat":"Readable Vivo X80 held hero"}
+  ],
+  "success": "An independent viewer can distinguish both attempts and explain the visual punchline without reading the shot slates. Screen lock/success and the final product remain unobstructed; actual clips decode to360frames/24fps/15.000s.",
+  "failure": "Same gesture repeated twice with no escalation, generic reaction, unclear owner/phone identity, hidden screen proof, frozen shots or broken geometry.",
+  "evidence": "Authored shot/action manifest; key performance stills plus boundary frames; independent sampled storyboard critique; actual encoded contact sheet; complete FFmpeg decode and local browser playback. Full motion taste must be distinguished from sampled inspection.",
+  "localRenderOnly": true,
+  "maximumPaidCost": 0,
+  "paidProviderCallsAuthorized": false,
+  "unchangedPreviousStudy": "assets/vivo-x80-previz remains preserved",
+  "benchmarkLimit": "Apple source was sampled at ten timestamps. Neither a readable storyboard nor still-image critique proves equal finished-video quality."
+}

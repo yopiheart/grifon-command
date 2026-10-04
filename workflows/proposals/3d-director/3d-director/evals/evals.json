@@ -1,0 +1,25 @@
+{
+  "skill_name": "3d-director",
+  "status": "proposed_not_run",
+  "scope": "Initial planning comparisons only; no network, paid analysis, Blender render or provider submission. Later local-preview acceptance runs need their own recorded inputs and visual evidence.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Plan a 12-second vertical commercial for a reusable water bottle from this text brief only. I want a push-in, an orbit and a side slide before the hero shot. Show me the 3D directing plan first; do not generate the finished video or invent product claims.",
+      "expected_output": "A feasible timed shot plan with product framing, final-look intent and assumptions; describes isolated local preview assets and honest available tools. No claim that existing Vivo scripts accept this job or that a render was completed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Use the saved Vivo/Apple reference observations as inspiration for an 18-second Bluetooth speaker ad: playful two-person interaction, varied angles and a closing hero. Make an original directing plan, with clear separation between observed reference facts and new shots. No browsing or paid video analysis.",
+      "expected_output": "An original adaptation with an 18-second timeline, source-evidence limits and clearly authored additions. It does not invent watched footage, reconstruct exact camera tracks or assume a speaker has fingerprint/Face ID features.",
+      "files": ["assets/vivo-x80-previz/reference-observations.json", "assets/vivo-x80-previz-v2/shot-manifest.json"]
+    },
+    {
+      "id": 3,
+      "prompt": "Plan a 15-second Taglish UGC ad with two adult creators, supplied character sheets and separate selected voices. Lock the wardrobe and keep the phone consistent across three scenes. I only want the preview plan and reference requirements now; no invented identities, speech generation or provider calls.",
+      "expected_output": "Separate cast IDs and proposed identity/wardrobe/voice bindings, timed story/camera beats, unresolved asset requirements and a compatible speech/lip-sync plan. It distinguishes a sheet from provider inputs and does not guarantee identity or reset a consumed paid ledger.",
+      "files": []
+    }
+  ]
+}

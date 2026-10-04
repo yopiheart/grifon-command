@@ -596,3 +596,31 @@ comment-reply card @0.5 is reused as a physical prop @38.5 ("comment grab");
 **11 SFX hits in 51s — one per transition** (P13's strongest single datapoint);
 lowercase small captions @25% height (P2 outlier); 0 silences.
 **Patterns:** P3 (whip-pan masking), P5, P7, P13; P1 partial.
+
+### 2026-10-03 - ONE_OFF Apple "Nice Try" -> Vivo X80 character previz
+
+**Source:** https://www.youtube.com/watch?v=ByAi9BGHMRQ (third-party repost,
+observed title: "iPhone 15 Plus Face ID | Nice Try! | Apple Malaysia Advertisement").
+Player shows 30s. Manual browser screenshots at 0/3/6/9/12/15/18/21/24/27s;
+exported auto captions indicate music and laughter, with an unreliable final
+fragment. No paid analyzer or encoded-source cut audit. Times below are sampled
+observations, not measured shot boundaries. No ad-performance claims.
+
+**Visible grammar:** dining-table group at0s -> unattended-phone shallow-focus
+insert at3s -> intent close-up at6s -> relative holding phone at9s -> reaction
+two-shot at12s -> group gathers at15s -> tighter reaction at18s -> owner
+over-shoulder reveal at21s -> owner holds phone and feature label at24s ->
+family wide/tagline at27s. Emotional escalation supplies pace; the product stays
+inside the character story. Exact camera motion/lenses are unmeasured.
+
+**Camera/insert evidence:** `assets/vivo-x80-previz/reference-observations.json`
+records framing, height, lens feel, motion uncertainty, angle-change job and the
+unattended-phone insert. This evidence supports an authored remake, not a
+frame-accurate reconstruction.
+
+**Application:** original 15s "MY TURN" clay storyboard, adult creator and friend,
+pickup -> attempted fingerprint -> reaction -> owner touch -> phone-in-hand hero.
+Vivo X80's in-display fingerprint is documented by its official PH specifications;
+Apple Face ID/TrueDepth-equivalent security is not asserted. 3D supplies blocking,
+camera paths and cuts; a future approved AI test supplies human/phone appearance.
+No tuned prompt or preset edits. **ONE_OFF; no Pattern Index counts changed.**
