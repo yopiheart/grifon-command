@@ -1,10 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, full agent-selected SFX review exported**
+**Stamped: 2026-10-04, user accepted film; recovery and reuse workflow saved**
 
 ## Location and protected work
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
 Branch codex/grifon-motion-depth. Draft https://github.com/yopiheart/grifon-command/pull/156.
-Previous backup08141153. Primary Oceanides work untouched. No merge/deploy.
+Previous backup5854c6f6. Primary Oceanides work untouched. No merge/deploy.
 Approved32.9s picture, music and Aira VO remain unchanged. Full private SFX
 replacement exported. User rejected old/procedural SFX and delegated choices.
 Positive-only prompts. Final export authorized; no new voice generation.
@@ -19,7 +19,7 @@ voice-positioned.wav SHA
 Fixed stem gain1.0752266011723428. Old masters/SFX/pilot are forbidden inputs.
 The one approved Aira/v4 take consumed its approval; never regenerate it.
 
-## Current review output
+## Accepted creative baseline
 Neil: "Bro ikaw nalng pumili, okay na yan. Nakakapagod kung pipili pa ko".
 Do not ask him to choose A-D or individual sounds again. Root made choices.
 Full file: workflows/assets/grifon-motion-upgrade/
@@ -33,7 +33,8 @@ music/VO gain/timing; old SFX excluded; old releases preserved; silent black tai
 Task selected-review-manifest.json + select-review.mjs; qa/replacement-report.json.
 Native signal anchors and brief-based choices are not direct hearing evidence.
 Pencil4 has prior machine verdict; other sources and whole mix have no completed
-auditory assessment. Status TECHNICAL_PASS_AUDITORY_QA_PENDING, private review.
+auditory assessment. Historical report: TECHNICAL_PASS_AUDITORY_QA_PENDING.
+User subsequently accepted the creative result; approval.json binds exact bytes.
 Prior22s A-D worksheet preserved at08141153; original catalog untouched.
 
 ## Sources, licensing and existing tools
@@ -70,9 +71,16 @@ by auto-review; user mentioned Google billing trouble, which is not a verified
 cause. Explicit project-access question remains unanswered. Do not bypass it.
 Google troubleshooting does not block a local private listening worksheet.
 
-## Next action
-Deliver one full private review download, with no candidate-choice task for Neil.
-Do not claim auditory QA or final creative approval; account for existing source
-rights before commercial use. New paid providers/models/inputs require exact
-approval. Preserve unknown Gemini outcome; do not use blocked origin4186.
-Keep PR draft and preserve prior releases. No merge, deploy or public release.
+## Saved recovery and future direction
+workflows/grifon_motion_production.md preserves the exact recipe and reuse method.
+workflows/grifon_motion_audio_api.md records the future API proposal: one SFX
+candidate first, agent-owned selection/sync, dedicated music, bounded approved
+retries. Official fast v4 is eleven_v4_turbo; saved user preference, not app change.
+Existing Motion Director skill/provider prompts remain unchanged.
+PRIMARY/.tools/grifon-motion-archives/approved-2026-10-04-9529b122.zip preserves
+42 checkpoint files including exact local stems; 41,677,659 bytes. Receipt at
+task qa/approved-archive.json. Archive and each entry verified; missing receipt
+failed before creation. Later API design is in Git, outside immutable ZIP.
+Local recovery is not off-device backup. No new paid calls. Source rights still
+need resolution before commercial use. Future customer feature is not built.
+Keep PR draft and prior releases. No merge/deploy/public release requested.

@@ -1,5 +1,16 @@
 # Grifon full motion upgrade
 
+## Current accepted baseline
+
+Neil accepted `grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4` on2026-10-04
+and asked to preserve the method for future Grifon marketing and product work.
+[approval.json](approval.json) records the exact user message and video hash.
+The [reuse guide](../../grifon_motion_production.md) connects editable picture,
+audio cues, finishing commands, private recovery and future product boundaries.
+The selected SFX still have a private-review-only rights limitation; creative
+acceptance is separate from commercial clearance and independent listening QA.
+The older visual/audio outputs below remain preserved as historical versions.
+
 Full 32.9-second, 1920 x 1080 / 30 fps revision of the approved
 "Your next ad" film. This is an editable local film, not a product launch or
 a new paid generation pipeline. The earlier eight-second depth prototype and

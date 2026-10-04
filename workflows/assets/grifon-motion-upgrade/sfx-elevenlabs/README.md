@@ -1,5 +1,10 @@
 # Local full SFX replacement mechanics
 
+Neil accepted the completed creative result on 2026-10-04; see the exact
+[acceptance record](../approval.json) and [reuse guide](../../../grifon_motion_production.md).
+This acceptance is separate from the historical technical report's auditory-QA
+status and does not change the source rights described below.
+
 ## Agent-selected full review export
 
 Neil explicitly delegated the remaining choices: "Bro ikaw nalng pumili, okay na
