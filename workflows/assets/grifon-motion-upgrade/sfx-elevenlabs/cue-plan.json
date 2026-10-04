@@ -1,0 +1,73 @@
+{
+  "status": "prepared-selection-pending-native-audio",
+  "purpose": "Replace every legacy SFX contribution with selected ElevenLabs sounds matched to the approved Grifon film's actual motion.",
+  "durationSeconds": 32.9,
+  "timingEvidence": "Current grifon-motion-upgrade/index.html choreography, independently inspected on 2026-10-04. These are source-derived anchors; final transients must be checked against rendered frames.",
+  "lockedInputs": {
+    "picture": {"path": "workflows/assets/grifon-motion-upgrade/grifon-full-upgrade-english-vo-1080p.mp4", "sha256": "b11bb7c7f572c249b20cb2e767c57b737c947145876f5b3df569be45e944f067"},
+    "music": {"path": ".tmp/grifon-english-vo-v02/music-ducked.wav", "sha256": "115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa"},
+    "voice": {"path": ".tmp/grifon-english-vo-v02/voice-positioned.wav", "sha256": "54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7"},
+    "masterContributionGain": 1.0752266011723428,
+    "h264PayloadSha256": "7921bbb1e9782266d3d02a7b8bed6020c729e3dfbcb632bac8c54dcd56d0d75c"
+  },
+  "selection": {
+    "route": "ElevenLabs Sound Effects History: retain and compare the four existing candidates for each relevant positive-only tested prompt before generating more.",
+    "generationCallsMadeThisPass": 0,
+    "generationCreditSpendThisPass": 0,
+    "newPaidSpecApproved": false,
+    "promptRule": "Describe the desired sound positively. New generation prompts contain no negative/exclusion clauses.",
+    "auditoryEvidence": "Pending. Browser preview playback is not audible to the root agent. Waveforms alone do not establish sound quality or a preferred candidate.",
+    "nativeDownloads": "36 native stereo48k WAVs from nine tested positive-only four-candidate History batches imported with exact hashes. Browser download-event reporting timed out; actual Downloads files verified the downloads succeeded.",
+    "requiredEvidence": ["Exact History prompt and candidate number", "Native audio SHA256 and format", "Four-candidate comparison grounded in audio", "Chosen transient/source trim and rendered visual contact", "Final whole-film auditory review"]
+  },
+  "families": [
+    {"id": "keyboard", "promptDraft": "One close, soft laptop keyboard key press, a rounded tactile plastic click with a tiny finger-release detail, a precise attack and a short natural decay."},
+    {"id": "screen-sweep", "promptDraft": "One swift lateral screen-transition pass, smooth air carrying a fine paper texture, quick acceleration, a crisp focal finish and a brief controlled decay."},
+    {"id": "rotation", "promptDraft": "One smooth object-turning air sweep, a rounded detailed movement flowing from the right toward the center, easing into a soft focused finish."},
+    {"id": "product-settle", "promptDraft": "One compact object-settle contact, a close tactile metal-and-hard-plastic tap with rounded low-mid weight, a tiny crisp top click and a short natural decay."},
+    {"id": "lens-focus", "promptDraft": "One tiny camera lens focus adjustment, a precise mechanical glide ending in a soft detent click, close rubber-and-metal detail and a quick contained decay."},
+    {"id": "inward-reverse", "promptDraft": "One smooth inward air pull gathering into a neat warm contact, a clear focal endpoint and a short gentle tail."},
+    {"id": "orb-focus", "promptDraft": "One silky spherical focusing gesture, broad airy motion drawing inward into a rounded warm pulse, fine glass detail and a short luminous decay."},
+    {"id": "card-arrival", "promptDraft": "One tactile translucent card arrival, a soft rounded pop with a tiny glass-and-paper click, a close detailed attack and a brief warm decay."},
+    {"id": "pencil-outline", "promptDraft": "One continuous pencil line across smooth paper, delicate close graphite friction beginning cleanly, traveling steadily and easing into a precise quiet finish."},
+    {"id": "completion-tick", "promptDraft": "One delicate confirmation tick, a tiny rounded wood-and-glass tap, a precise attack and a very short warm finish."},
+    {"id": "logo-resolve", "promptDraft": "One compact warm brand punctuation, a focused tactile contact with a rounded low-mid body, a delicate bright detail and a short smooth resolving tail."}
+  ],
+  "motionCues": [
+    {"id": "opening-type", "action": "Your next ad letter reveals", "start": 0.08, "end": 0.90, "family": "keyboard", "edit": "Short individual key accents on revealed letters; fit under opening VO."},
+    {"id": "launch-copy", "contacts": [1.13, 1.25, 1.39, 1.58], "family": "completion-tick", "edit": "Optional sparse, low-level text contacts; shared scene rhythm."},
+    {"id": "story-copy", "contacts": [4.24, 4.36, 4.50, 4.69], "family": "completion-tick", "edit": "Optional sparse, low-level text contacts."},
+    {"id": "grow-copy", "contacts": [7.23, 7.35, 7.49, 7.68], "family": "completion-tick", "edit": "Optional sparse, low-level text contacts."},
+    {"id": "collage-exits", "starts": [2.16, 5.03, 8.08], "duration": 0.65, "family": "screen-sweep", "edit": "Follow lateral screen travel, easing the tail as the next hero arrives."},
+    {"id": "hero-turns", "starts": [2.63, 5.65, 8.61], "contacts": [3.82, 6.84, 9.80], "families": ["rotation", "product-settle"], "edit": "Three rotation sweeps with different camera, glass/plastic-phone, and laptop material contacts. Screens and laptop hinge are static; the sounds describe whole-device settles."},
+    {"id": "lens-focus", "start": 3.52, "contact": 3.66, "family": "lens-focus", "edit": "Small focus detent, subordinate to main camera settle."},
+    {"id": "problem-copy", "contacts": [10.20, 10.41, 10.62, 10.83, 11.04], "family": "completion-tick", "edit": "Sparse accents getting lighter; leave the later hold quiet."},
+    {"id": "warm-pivot", "start": 12.62, "contact": 13.03, "family": "inward-reverse", "edit": "Anticipation ends on the existing color cut; preserve the visual cut."},
+    {"id": "until-now-type", "start": 13.20, "end": 13.72, "family": "keyboard", "edit": "Short individual key accents; VO remains readable."},
+    {"id": "orb-contracts", "start": 14.27, "contact": 14.83, "family": "orb-focus", "edit": "Broad-to-focused inward motion, matching scale 6.5 to 1.42. Short tail completes before Meet Grifon VO."},
+    {"id": "message-cards", "contacts": [17.65, 18.86, 20.80], "family": "card-arrival", "edit": "One purposeful arrival pop per card, softened during conversation VO."},
+    {"id": "dialogue-exit", "start": 22.48, "end": 22.80, "family": "screen-sweep", "edit": "Short collective exit sweep."},
+    {"id": "direction-copy", "contacts": [22.80, 23.03, 23.33, 23.74, 24.08], "family": "completion-tick", "edit": "Optional sparse accents; keep direction narration foremost."},
+    {"id": "outline-draw", "start": 25.30, "contact": 26.18, "families": ["pencil-outline", "completion-tick"], "edit": "Continuous fine friction, trimmed to the .88s line draw, with one completion contact."},
+    {"id": "workflow-fan", "start": 26.82, "end": 27.30, "family": "screen-sweep", "edit": "One shared fan-out sweep; the old 26.76 anchor is anticipation."},
+    {"id": "workflow-contacts", "contacts": [{"label": "Script", "time": 27.02}, {"label": "Research", "time": 27.25}, {"label": "Storyboard", "time": 27.30}], "family": "card-arrival", "edit": "Very short contacts at actual center-left-right settle order; prevent overlapping long tails."},
+    {"id": "cards-gather", "start": 28.87, "contact": 29.28, "family": "inward-reverse", "edit": "Gathering motion follows card compression and line collapse."},
+    {"id": "brand-resolve", "start": 29.28, "contact": 29.28, "settle": 29.93, "family": "logo-resolve", "edit": "Contact on reveal onset, resolving tail follows settle and ends before brand VO at30.04."}
+  ],
+  "intentionalSpace": [
+    "Peripheral props, stars, tags, background dots and subtle camera drift share their scene's principal sound.",
+    "Phone and laptop UI are static textures; screen selection sounds would misrepresent visible actions.",
+    "Problem hold after11.04 breathes until pivot anticipation.",
+    "Settled orb and Meet Grifon phrase at15.05-16.25 remain clear.",
+    "Conversation letters receive at most sparse accents; prioritize three card arrivals.",
+    "URL appearance, brand VO30.04-31.445, final fade and final .2s black tail remain clear."
+  ],
+  "acceptance": {
+    "audioTaste": "A grounded four-candidate audio comparison and whole-film audition are required; source labels, waveforms, spectral measurements and successful decoding cannot establish perceived quality.",
+    "synchronization": "Chosen transients align to actual rendered movement/contact within one30fps frame; sound tails respect easing and dialogue space.",
+    "mixContributors": "Exactly frozen music + frozen positioned voice + selected new SFX. OldSFX, oldmaster, premaster and procedural pilots contribute zero samples.",
+    "protectedInputs": "Input hashes/timelines/gain fixed; exact H264 payload copied; prior exports and backups preserved.",
+    "delivery": "New named32.9s1080p30 stereoAAC48k MP4, strictdecode/faststart, -16LUFS +/-1 and truepeak<=-1dBTP, final .2s black/digitallysilent; local backup and mobile-download handoff.",
+    "spend": "Download/reuse existing results first. Before any new generation or provider-backed audio assessment, obtain the exact input/model/settings/evidence/maxcost spec approval."
+  }
+}
