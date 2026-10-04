@@ -1,16 +1,16 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, Vivo accepted / 3D Director installed and planning-tested**
+**Stamped: 2026-10-04, PR157 merge authorized / local checks and review passed**
 
 ## Current scope
 Branch: `codex/blender-product-reveal`; attached draft PR157:
 https://github.com/yopiheart/grifon-command/pull/157.
 Checkout: C:/Users/ADMIN/.codex/worktrees/976d/grifon-command.
 Local Blender/FFmpeg studies, fixed provider runner and installed 3D Director skill.
-No app/tuned production changes, deployment, merge, campaign or account funding.
+Neil authorized merging PR157 after checks/review; no new paid run or deployment.
+Merged origin/main f915b431 locally; only NOW.md needed conflict reconciliation.
 
 ## Vivo X80 human finish - completed ONCE, raw proof delivered
 Neil replied Approved to the exact15s480p9:16 spec and saved-ENV runtime use.
-Only approval metadata changed; immutable tuple remains identical.
 Task cgt-20261004021141-cgh8r succeeded; NEVER execute again, recovery GET-only.
 - Fixed entrypoint: tools/run_vivo_x80_ugc.mjs; default/--dry-run local only.
   Uses only Vivo paths; NEVER substitute the exhausted bottle CLI/spec/ledger.
@@ -48,7 +48,6 @@ Task cgt-20261004021141-cgh8r succeeded; NEVER execute again, recovery GET-only.
   play and end without error. Human listening/native phone remain unverified.
 - Owner-only raw2636695bytes: https://drive.google.com/file/d/1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT/view
 - Owner-only comparison2635444bytes: https://drive.google.com/file/d/15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx/view
-  Both connector readbacks match exact bytes/video MIME/owner-only permissions.
 
 ## Approved Vivo MY TURN V2 - preserved
 Thumb fails, smug raised-index retry fails, owner unlocks, friend visibly deflates,
@@ -74,16 +73,18 @@ Actual invoice/balance unknown. Output960352bytes,864x496,24fps,145frames,
 6.041667s (+one frame). Identity PARTIAL; cap/fine label drift and taste limits.
 Old ledger: .tmp/byteplus-motion-transfer/attempt.json. NEVER --execute again.
 GET-only recovery only; old runner SHA c306e41f72548d12a0a03621f236c775ec413a452de38785c70a73d3307c2ea1.
-Offline viewer/artifacts and owner-only mobile links remain in bottle evidence.
 Kling4 API previously Coming Soon; Omni rejected; zero Kling/Higgsfield calls.
 
 ## Checks / remaining
-Final syntax/default dry, domain, voice-sync, PowerShell ASCII, artifact anchors,
-whitespace and check:codex26tests PASS. Build/Vitest SETUP BLOCKED (root tsc
-absent / Vitest uncached); no reinstall, application/E2E/paid regression untouched.
-Neil accepts proof9/10; sound gap/priorities: assets/vivo-x80-ugc/user-review.json.
-Installed: .agents/skills/3d-director/SKILL.md; exact patch approved by Neil.
-Six fresh planning runs: skill12/12 vs baseline11/12; only lip-sync check differed.
+Installed 3D Director exact approved patch; planning skill12/12 vs baseline11/12.
 Review: .agents/skills/3d-director-workspace/iteration-1/review.html; no new spend.
+Build,1432 unit tests,26 control tests,29 Vivo/25 bottle fake guards PASS.
+Domain/voice/ASCII/anchors/bundle/parity/design PASS; existing deps reused.
+Fresh independent review clear after bottle evidence guard and scoped LF fix.
+Regression failed original then passed fix; assets/blender-reveal/merge-guard-verification.json.
+Main PR158 is merged: six-pair static check:eval-prompts guard with18 tests;
+it detects copied prompt drift but never authorizes syncing tuned content.
+Neil accepts proof9/10; sound priorities: assets/vivo-x80-ugc/user-review.json.
 Automatic trigger/local-preview tests NOT RUN; generic engine/Grifon UI unbuilt.
-Next: local preview pilot; preserve native audio on integration; Seedance UI locked.
+Next: merge PR157 when CI passes (authorized), then local preview pilot; preserve
+native scene audio on integration. Seedance UI locked; no new model trial.

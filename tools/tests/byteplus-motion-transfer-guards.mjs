@@ -207,6 +207,19 @@ await test('Hostile suffix and URL userinfo rejected before any media fetch', as
   } return 'Exact hostname matching and no URL credentials enforced before media fetch.';
 });
 
+await test('Committed evidence blocks execute when ignored ledger and output are absent', async () => {
+  const options = optionsFor('committed-evidence-only');
+  const evidence = JSON.stringify({ paid_post_attempts: 1, task_id: taskId, status: 'succeeded' });
+  writeFileSync(options.evidencePath, evidence);
+  let credentialReads = 0; let networkCalls = 0;
+  const env = new Proxy({}, { get() { credentialReads++; throw new Error('Credential access forbidden'); } });
+  await assert.rejects(runStudy(approved, { ...options, env, fetchImpl: async () => { networkCalls++; throw new Error('Network forbidden'); } }), /Existing evidence/);
+  assert.equal(credentialReads, 0); assert.equal(networkCalls, 0);
+  assert.equal(readFileSync(options.evidencePath, 'utf8'), evidence);
+  assert.equal(existsSync(options.ledgerPath), false); assert.equal(existsSync(options.outputPath), false);
+  return 'Restored evidence alone prevents a second attempt before credentials or network; evidence unchanged.';
+});
+
 const sourceHashAtEnd = await import('node:crypto').then(({ createHash }) => createHash('sha256').update(readFileSync('tools/run_byteplus_motion_transfer.mjs')).digest('hex'));
 const report = { offline_only: true, real_environment_loaded: false, cloud_calls: 0, paid_calls: 0, source_sha256_start: sourceHashAtStart, source_sha256_end: sourceHashAtEnd, records, totals: { pass: records.filter(record => record.status === 'PASS').length, fail: records.filter(record => record.status === 'FAIL').length }, limitations: ['Fake fetch fixtures verify local guard behavior only.', 'No live provider entitlement, billing, storage or playable output proved.', 'No real secret values read or loaded.'] };
 writeFileSync(join(fixtureRoot, 'report.json'), JSON.stringify(report, null, 2) + '\n');

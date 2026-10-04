@@ -126,6 +126,7 @@ export async function runStudy(spec, options = {}) {
   const evidencePath = options.evidencePath ?? resolve(workspace, 'assets/blender-reveal/byteplus-motion-transfer-run.json');
   const outputPath = options.outputPath ?? resolve(workspace, 'assets/blender-reveal/byteplus-motion-transfer.mp4');
   requireValue(mode !== 'execute' || !existsSync(ledgerPath), 'Attempt ledger exists: never resubmit; use --resume only with a recorded task');
+  requireValue(mode !== 'execute' || !existsSync(evidencePath), 'Existing evidence: never resubmit an already recorded attempt');
   const env = options.env ?? process.env;
   requireValue(Boolean(env.ARK_API_KEY && env.SUPABASE_SERVICE_ROLE_KEY && (env.SUPABASE_URL || env.VITE_SUPABASE_URL)), 'Required injected credentials are missing');
   const project = safeUrl(env.SUPABASE_URL || env.VITE_SUPABASE_URL, new URL(env.SUPABASE_URL || env.VITE_SUPABASE_URL).hostname);
