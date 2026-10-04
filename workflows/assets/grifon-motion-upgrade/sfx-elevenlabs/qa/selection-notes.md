@@ -1,4 +1,12 @@
-# New ElevenLabs SFX selection — pending
+# New ElevenLabs SFX selection history
+
+Update 2026-10-04: Neil delegated the remaining choices and asked not to choose
+candidates himself. `../selected-review-manifest.json` now records nine sources
+and51 cues for a full private review, exported and technically verified in
+`replacement-report.json`. No further Gemini comparison or ElevenLabs generation
+ran. Except for the existing pencil verdict, choices are editorial and based on
+source briefs/technical timing, not a new audible four-way comparison. The
+historical pending notes below describe the earlier provider-assessment stage.
 
 Checked 2026-10-04. Root reported Neil's exact paid-spec approval:
 `26eb8ef67ced35afc04f958705859da04f8f6b96c3eba24b5cd47ca00bfe4807`.

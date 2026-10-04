@@ -1,5 +1,29 @@
 # Local full SFX replacement mechanics
 
+## Agent-selected full review export
+
+Neil explicitly delegated the remaining choices: "Bro ikaw nalng pumili, okay na
+yan. Nakakapagod kung pipili pa ko". The completed private review is
+`../grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4` (32.9s, 1080p30).
+`selected-review-manifest.json` records nine native sources and 51 precisely
+placed cues, including individual type accents. `select-review.mjs` reproduces
+the editorial plan without any provider calls; it never overwrites a selection.
+Old SFX contribute no samples. Protected music/VO gain and video payload remain.
+
+`qa/replacement-report.json` records all15 actual technical gates passing:
+987 frames, stereo AAC48k, faststart, strict decode, exact H264 payload, unchanged
+protected inputs/releases, new-SFX-only VO ducking, -16.02LUFS/-1.36dBTP and
+the silent black tail. No new provider generation or credits were used.
+
+This is an agent-selected review, not an independent auditory-quality pass.
+Pencil4 retains its recorded machine verdict; other choices use the creative
+brief, source descriptions and measured timing. The root cannot hear browser
+playback. User delegation removes candidate-choice handoffs, but does not turn
+technical measurements into listening evidence. Existing free-plan source rights
+still limit this file to private review; it is not a commercial release.
+
+## Mixer
+
 `replace.mjs` makes no provider calls, downloads or new generations. Selection,
 provenance and auditory approval of ElevenLabs History files are separate work.
 Native selected WAV, MP3 and Opus bytes remain unchanged and are locked by SHA256.
@@ -131,7 +155,8 @@ Browser playback is
 not audible to the root agent; technical measurements cannot establish taste.
 Recorded Gemini native-audio assessment can inform choices after approval,
 with mono/downsampling limitations; human listening and creative approval of
-the new mix remain necessary. No full replacement MP4 has been exported yet.
+the new mix remain necessary for creative sign-off. The agent-selected full
+private review above is exported; independent listening remains unverified.
 
 ## Private listening worksheet
 
