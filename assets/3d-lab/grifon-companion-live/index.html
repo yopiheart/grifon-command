@@ -16,8 +16,8 @@
     </header>
     <section class="companion" aria-labelledby="title">
       <div class="introduction">
-        <h1 id="title">A little more alive.</h1>
-        <p>Move your cursor, or touch and drag to catch his eye.</p>
+        <h1 id="title">A little more expressive.</h1>
+        <p>Pick a reaction. Move your cursor, or touch and drag to catch his eye.</p>
       </div>
       <div id="stage" class="stage" aria-label="Interactive Grifon companion. Use the Look controls below to change his gaze.">
         <div class="contact-shadow" aria-hidden="true"></div>
@@ -26,23 +26,32 @@
         <div class="stage-status"><span id="status" role="status">Preparing your companion…</span></div>
       </div>
       <div class="controls" aria-label="Companion controls">
-        <div class="look-controls" role="group" aria-label="Look here">
-          <span class="control-label">Look here</span>
-          <div class="directions">
+        <span class="control-label">Reaction preview</span>
+        <div class="reaction-picker" role="group" aria-label="Reaction preview">
+          <button type="button" data-state="idle" aria-pressed="true" disabled>Idle</button>
+          <button type="button" data-state="listening" aria-pressed="false" disabled>Listening</button>
+          <button type="button" data-state="reading" aria-pressed="false" disabled>Reading</button>
+          <button type="button" data-state="working" aria-pressed="false" disabled>Working</button>
+          <button type="button" data-state="ready" aria-pressed="false" disabled>Ready</button>
+        </div>
+        <div class="actions">
+          <button id="preview-all" type="button" aria-pressed="false" disabled>Preview all</button>
+          <button id="reset" type="button" disabled>Center</button>
+          <button id="pause" type="button" aria-pressed="false" disabled>Pause</button>
+          <button id="retry" type="button" hidden>Try again</button>
+        </div>
+        <details class="look-controls">
+          <summary>Gaze and blink controls</summary>
+          <div class="directions" role="group" aria-label="Look here">
             <button type="button" data-look="-1,0" disabled>Left</button>
             <button type="button" data-look="0,1" disabled>Up</button>
             <button type="button" data-look="0,-1" disabled>Down</button>
             <button type="button" data-look="1,0" disabled>Right</button>
           </div>
-        </div>
-        <div class="actions">
-          <button id="blink" class="gold-button" type="button" disabled>Blink</button>
-          <button id="reset" type="button" disabled>Center</button>
-          <button id="pause" type="button" aria-pressed="false" disabled>Pause</button>
-          <button id="retry" type="button" hidden>Try again</button>
-        </div>
+          <button id="blink" type="button" disabled>Blink</button>
+        </details>
       </div>
-      <p class="motion-note" id="motion-note">Eyes lead. Head follows. A quiet breath in between.</p>
+      <p class="motion-note" id="motion-note">Reaction previews only. No microphone or agent tasks are running.</p>
       <details class="diagnostics">
         <summary>Prototype details</summary>
         <p>Live geometry with a fixed camera and baked lighting. This is an interaction study, before chat integration.</p>

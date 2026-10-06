@@ -25,10 +25,17 @@ p { color: #a1a1aa; font-size: 14px; line-height: 1.6; margin: 0; }
 .stage-status { position: absolute; bottom: 5px; left: 8px; right: 8px; pointer-events: none; color: #a1a1aa; font-size: 12px; line-height: 1.5; }
 .controls { width: min(100%, 480px); margin: 20px auto 0; padding: 20px; background: #18181bf0; border: 1px solid #ffffff1a; border-radius: 16px; }
 .control-label { display: block; color: #a1a1aa; font-family: "JetBrains Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 12px; }
+.reaction-picker { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.reaction-picker button { flex: 1 1 76px; padding: 0 10px; }
+.reaction-picker button[aria-pressed="true"], .reaction-picker button[aria-pressed="true"]:hover { background: #ffcc00; color: #09090b; border-color: #ffcc00; }
+.look-controls { margin-top: 8px; }
+.look-controls summary { cursor: pointer; min-height: 44px; padding: 14px 0; color: #a1a1aa; font-size: 12px; }
+.look-controls #blink { margin-top: 8px; width: 100%; }
 .directions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .directions button { padding: 0 8px; }
 .actions { display: flex; justify-content: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-.actions button { flex: 1; }
+.actions button { flex: 1; padding: 0 8px; }
+.actions #preview-all { flex: 1.6; white-space: nowrap; padding: 0 10px; }
 button.gold-button { background: #ffcc00; color: #09090b; border-color: #ffcc00; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; }
 button.gold-button:hover:not(:disabled) { color: #09090b; box-shadow: 0 0 20px #ffcc0066; }
 .motion-note { margin: 20px 8px; font-size: 12px; }

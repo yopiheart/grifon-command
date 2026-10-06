@@ -1,0 +1,25 @@
+{
+  "scene.json": {
+    "matchesBaseline": false,
+    "sha256": "1a199b50faf7be25b38b78b56bff2c81cc9ba75d34b13882e6ba668486ce62cd",
+    "normalizedTextMatchesBaseline": true,
+    "semanticMatchesBaseline": true,
+    "note": "Git LF versus working-tree CRLF; git diff reports no content changes."
+  },
+  "scene.bin": {
+    "matchesBaseline": true,
+    "sha256": "607ba0c913859739f2a908758d55c34eea8126dc4b7427468887bf7afdd3cca5"
+  },
+  "baked-skin.png": {
+    "matchesBaseline": true,
+    "sha256": "4b73fa1280927a4157bb0de9371643fbfc03e23a61d8cc4ad4b462015cb3f5d0"
+  },
+  "baked-hero.png": {
+    "matchesBaseline": true,
+    "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+  },
+  "neutral.png": {
+    "matchesBaseline": true,
+    "sha256": "e3d14aec0b8e435136493b8a19ee4f7652ebc5f526a77aafa2adc4dd6bcb694e"
+  }
+}

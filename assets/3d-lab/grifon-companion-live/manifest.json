@@ -1,7 +1,7 @@
 {
   "subject": "Grifon live companion prototype",
   "date": "2026-10-06",
-  "stage": "Standalone live browser interaction study; chat integration remains a separate stage",
+  "stage": "Standalone live browser interaction and five-reaction study; chat integration remains a separate stage",
   "approved_reference": "../grifon-companion-rig/owner-approval.json",
   "appearance": "Real 3D geometry with camera-projected Cycles lighting textures from the approved master. Fixed camera; limited gaze/head deformation. Not free-view, dynamic relighting, GLB or Gaussian splatting.",
   "geometry": {"objects": 22, "native_hair_strands_sampled": 50500, "original_hair_strands": 404000, "binary_bytes": 11950492},
@@ -10,28 +10,42 @@
   "vendor_patch": "Removed one space before a tab in three.core.js SkinnedMesh material assignment indentation to pass the repository whitespace check. No semantic changes.",
   "interaction": ["Pointer and touch tracking", "Eyes respond before the head", "Independent blink and breathing", "Direction buttons, center and Escape", "Pause/resume", "Reduced-motion preference", "Visibility render pause", "Honest still fallback and retry on load, context or render failure"],
   "blink": {"close_ms": 100, "fully_closed_ms": 40, "open_ms": 100, "reason": "The closed hold preserves the approved fully closed pose under normal browser frame sampling."},
+  "reactions": {
+    "states": {"idle": "Approved neutral breathing and tracking", "listening": "Attentive head tilt and raised wing beside cheek", "reading": "Downward gaze scans a page", "working": "Alternating wing tips contact separate illuminated keys on a tilted gold control pad", "ready": "Raised wings and a brief perk/blink"},
+    "api": "window.grifonCompanion.setState('idle' | 'listening' | 'reading' | 'working' | 'ready')",
+    "transitions": "400ms smooth crossfade from the current blended pose; shared wing, inner-wing and fiber transforms",
+    "tour": "Preview all runs about three seconds per state and ends Idle; manual selection cancels; pause freezes progress; disabled with reduced motion",
+    "truthfulness": "Manual previews only. Listening does not activate a microphone; Working does not run an agent task.",
+    "reference": "reaction-reference.webp preserves the original approved Listening/Working reference",
+    "body_bake": "baked-body-clean.png removes stationary wing texture ghosts while wings move; idle retains original baked-skin.png",
+    "body_bake_sha256": "da6d0f17f903692c2e63ffe621f7a2c76ea44e53886b8fa3b8952d49f3b37900"
+  },
   "preview": {
     "local_url": "http://127.0.0.1:8765/",
     "serve": "python -m http.server 8765 --bind 127.0.0.1 --directory assets/3d-lab/grifon-companion-live",
     "note": "Open on the host computer or its remote desktop. This localhost URL is not a public phone URL; the server must remain running.",
-    "mobile_recording": "qa/mobile-interaction-preview.mp4",
-    "mobile_gif": "qa/mobile-interaction-preview.gif"
+    "mobile_recording": "qa/reactions/five-reactions-preview.mp4",
+    "mobile_gif": "qa/reactions/five-reactions-preview.gif",
+    "original_interaction_recording": "qa/mobile-interaction-preview.mp4"
   },
   "replay": {
     "export": "blender --background --python-exit-code 1 --python export-browser.py -- RIG_BLEND FRESH_OUTPUT_DIRECTORY",
     "assets": "Copy baked-hero.png from the frozen skill's griffin-master-v05-hero.png and neutral.png from the accepted rig. Include this directory's runtime and vendor files alongside the newly exported scene.json, scene.bin and baked-skin.png.",
     "source_safety": "Export opens the accepted rig but never saves over it. Refuses an output directory containing scene.bin.",
-    "browser_smoke": "Start the local server, then run node assets/3d-lab/grifon-companion-live/qa/smoke.cjs using the installed Playwright and Edge. Check the script's server and output paths when moving workspaces."
+    "browser_smoke": "Start the local server, then run node assets/3d-lab/grifon-companion-live/qa/reactions/reactions-smoke.cjs using installed Playwright and Edge. final-capture.cjs records all states and independently checks static reduced-motion poses. Check harness paths when moving workspaces.",
+    "reaction_body_bake": "blender --background --python-exit-code 1 --python bake-reaction-body.py -- RIG_BLEND FRESH_OUTPUT_PNG; opens source read-only in practice, never saves it, refuses existing output and verifies source hash unchanged"
   },
   "verification": {
-    "browser": "PASS: qa/smoke-report.json; final source hashes unchanged during the run. Actual pointer/click/touch actions and render-fault mutation regression.",
-    "viewports": ["1024x900", "390x844", "320x740", "375x667", "1280x900"],
-    "performance": "Warm 180-frame samples: median 16.7 ms, p95 17.0-17.1 ms on desktop AMD Radeon via ANGLE/D3D11. Mobile viewport emulation uses the same desktop GPU; not phone FPS.",
-    "visual_review": "Independent source and screenshot review: no actionable findings; BRAND_PASS. Fully closed eye creases and preserved silhouette/face inspected. Owner review of this live implementation remains pending.",
+    "browser": "PASS: qa/reactions/reactions-report.json, all 35 checks; final source hashes unchanged. qa/reactions/final-captures.json independently rechecks reduced-motion static poses and records all five states.",
+    "baseline_regression": "qa/reactions/baseline-regression.json: route-only original e94959f1 renders without page errors but fails the new five-state contract (missing API and buttons).",
+    "historical_baseline": "qa/smoke-report.json and original qa media describe the earlier e94959f1 interaction runtime; their old source hashes do not describe the reaction implementation.",
+    "viewports": ["390x844", "320x740", "375x667", "1280x900"],
+    "performance": "Warm samples: median 16.7 ms, p95 16.9-17.0 ms on desktop AMD Radeon via ANGLE/D3D11. Mobile viewport emulation uses the same desktop GPU; not phone FPS.",
+    "visual_review": "Independent source and sampled-pose review: no actionable findings; BRAND_PASS (0 critical/major/minor). Working left/right key contact, distinct poses and preserved identity inspected. Continuous aesthetic motion and real-phone performance not independently certified; owner desktop review pending.",
     "build": "PASS: npm.cmd run build",
     "binary": "PASS: 22 objects, 315329 vertices, 780320 indices; all attribute ranges/values finite and every index in bounds",
     "unit": "PASS: 116 files, 1432 tests; 9 files and 32 tests skipped by existing suite configuration",
-    "additional": "PASS: node syntax, bundle-leak, artifact-anchor checks. Final standalone fixes verified by browser smoke.",
+    "additional": "PASS: node syntax; final reactions verified by browser smoke. Prior baseline bundle-leak and artifact-anchor checks retained as historical evidence; app code and root dependencies remain unchanged.",
     "application_scope": "No production app, API, prompt, root dependency or credential changes"
   },
   "remaining": ["Owner desktop review", "Actual phone/browser/device performance", "Production transfer size and loading budget", "Chat integration and true agent-state bindings", "Production deployment"],

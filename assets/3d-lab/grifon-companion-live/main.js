@@ -1,3 +1,5 @@
+import { REACTION_STATES, createReactionController, reactionPose, createReactionProps } from './reactions.js';
+
 const stage = document.querySelector('#stage');
 const host = document.querySelector('#canvas-host');
 const fallback = document.querySelector('#fallback');
@@ -7,7 +9,12 @@ const retryButton = document.querySelector('#retry');
 const motionNote = document.querySelector('#motion-note');
 const diagnosticOutput = document.querySelector('#diagnostics');
 const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const pose = { gazeX: 0, gazeY: 0, headYaw: 0, headPitch: 0, blink: 0, breath: 0 };
+const tourButton = document.querySelector('#preview-all');
+const reactionController = createReactionController();
+let reaction = reactionController.snapshot();
+let reactionMotion = reactionPose(reaction, reducedQuery.matches);
+let reactionProps, touring = false, tourStart = 0, tourIndex = 0;
+const pose = { gazeX: 0, gazeY: 0, headYaw: 0, headPitch: 0, headRoll: 0, blink: 0, breath: 0 };
 const target = { x: 0, y: 0 };
 const frameTimes = [];
 const targetHistory = [];
@@ -23,9 +30,22 @@ Object.defineProperty(window, 'grifonDebug', { value: Object.freeze({
     ready, renderer: renderer ? 'WebGL2 / Three.js' : null, failed, pause: paused,
     reducedMotion, visible, frameCount, activeTime,
     controls: Object.freeze({ ...pose }), target: Object.freeze({ ...target }),
+    reaction: Object.freeze({
+      state: reaction.state, stateAge: reaction.age, blend: reaction.blend,
+      weights: Object.freeze([...reaction.weights]),
+      wingLeft: Object.freeze([...reactionMotion.leftWing]), wingRight: Object.freeze([...reactionMotion.rightWing]),
+      tapLeft: reactionMotion.leftTap, tapRight: reactionMotion.rightTap,
+      propReading: reactionMotion.readingPanel, propWorking: reactionMotion.workingPanel,
+      cleanBody: reactionMotion.cleanBody, cursorScale: reactionMotion.cursorScale,
+      readyBlink: reactionMotion.readyBlink, touring,
+    }),
     rollingFrameTimes: Object.freeze([...frameTimes]),
     viewport: Object.freeze({ width: stage.clientWidth, height: stage.clientHeight, pixelRatio: renderer?.getPixelRatio() ?? 0 }),
   }),
+}), writable: false, configurable: false });
+
+Object.defineProperty(window, 'grifonCompanion', { value: Object.freeze({
+  setState: state => selectState(state),
 }), writable: false, configurable: false });
 
 const vertexShader = `
@@ -33,12 +53,16 @@ const vertexShader = `
   varying vec2 vUv;
   uniform vec2 gaze;
   uniform vec2 head;
+  uniform float headRoll;
+  uniform vec3 wingAngles;
+  uniform float wingSide;
   uniform float blink;
   uniform float breath;
   uniform float kind;
   uniform vec3 eyeCenter;
   uniform float eyeBaseZ;
   vec3 rotateX(vec3 p, float a) { float c=cos(a), s=sin(a); return vec3(p.x,c*p.y-s*p.z,s*p.y+c*p.z); }
+  vec3 rotateY(vec3 p, float a) { float c=cos(a), s=sin(a); return vec3(c*p.x+s*p.z,p.y,-s*p.x+c*p.z); }
   vec3 rotateZ(vec3 p, float a) { float c=cos(a), s=sin(a); return vec3(c*p.x-s*p.y,s*p.x+c*p.y,p.z); }
   void main() {
     vUv = uv;
@@ -56,32 +80,54 @@ const vertexShader = `
       p += vec3(gaze.x*.010, kind < 1.5 ? .040*pow(blink,4.0) : 0.0, gaze.y*.008);
     }
     vec3 pivot = vec3(0.0,0.0,1.32);
-    p = pivot + rotateZ(rotateX(p-pivot,head.y*weight.x),head.x*weight.x);
+    p = pivot + rotateZ(rotateY(rotateX(p-pivot,head.y*weight.x),headRoll*weight.x),head.x*weight.x);
     p += vec3(original.x*.012, original.y*.022, .004)*weight.y*breath;
+    if (abs(wingSide) > .5) {
+      vec3 wingPivot = vec3(wingSide*.88,-.10,1.16);
+      p = wingPivot + rotateZ(rotateY(rotateX(p-wingPivot,wingAngles.x),wingAngles.y),wingAngles.z);
+    }
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0);
   }
 `;
 const fragmentShader = `
   uniform sampler2D baked;
+  uniform sampler2D cleanBody;
+  uniform float cleanBlend;
   uniform float opacity;
   uniform float kind;
   uniform vec3 creaseColor;
   varying vec2 vUv;
   void main() {
-    vec4 texel = texture2D(baked, vUv);
+    vec4 texel = mix(texture2D(baked, vUv),texture2D(cleanBody,vUv),cleanBlend);
     gl_FragColor = vec4(kind > 1.5 ? creaseColor : texel.rgb, opacity);
     #include <colorspace_fragment>
   }
 `;
 
 function syncButtons() {
-  document.querySelectorAll('[data-look], #blink, #reset').forEach(button => { button.disabled = !ready || paused || failed; });
+  document.querySelectorAll('[data-look], [data-state], #blink, #reset').forEach(button => { button.disabled = !ready || paused || failed; });
+  document.querySelectorAll('[data-state]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.state === reaction.state)));
+  tourButton.disabled = !ready || paused || failed || reducedMotion;
+  tourButton.textContent = touring ? 'Stop preview' : 'Preview all';
+  tourButton.setAttribute('aria-pressed', String(touring));
   pauseButton.disabled = !ready || failed;
   pauseButton.textContent = paused ? 'Resume' : 'Pause';
   pauseButton.setAttribute('aria-pressed', String(paused));
   motionNote.textContent = reducedMotion
-    ? 'Reduced motion is on. Idle motion is off; controls still work.'
-    : 'Eyes lead. Head follows. A quiet breath in between.';
+    ? 'Reduced motion is on. Static reactions; automatic previews are off.'
+    : 'Reaction previews only. No microphone or agent tasks are running.';
+}
+
+function selectState(next, fromTour = false) {
+  if (!REACTION_STATES.includes(next)) throw new TypeError(`Unknown companion state: ${String(next)}`);
+  if (!ready || paused || failed) return false;
+  if (!fromTour) touring = false;
+  const changed = reactionController.setState(next, reducedMotion);
+  reaction = reactionController.snapshot();
+  blinkStart = -10; nextBlink = activeTime+3.4;
+  target.x = 0; target.y = 0; targetHistory.length = 0; relaxAt = Infinity;
+  syncButtons(); updateStatus();
+  return changed;
 }
 
 function setTarget(x, y, relax = false) {
@@ -125,6 +171,13 @@ document.querySelectorAll('[data-look]').forEach(button => button.addEventListen
 }));
 document.querySelector('#reset').addEventListener('click', center);
 document.querySelector('#blink').addEventListener('click', () => { if (ready && !paused && !failed) blinkStart = activeTime; });
+document.querySelectorAll('[data-state]').forEach(button => button.addEventListener('click', () => selectState(button.dataset.state)));
+tourButton.addEventListener('click', () => {
+  if (!ready || paused || failed || reducedMotion) return;
+  if (touring) { touring = false; selectState('idle'); return; }
+  selectState('idle'); touring = true; tourStart = activeTime; tourIndex = 0;
+  syncButtons(); updateStatus();
+});
 document.addEventListener('keydown', event => { if (event.key === 'Escape') center(); });
 pauseButton.addEventListener('click', () => {
   paused = !paused; lastFrame = 0; syncButtons(); updateStatus();
@@ -132,6 +185,7 @@ pauseButton.addEventListener('click', () => {
 retryButton.addEventListener('click', () => location.reload());
 reducedQuery.addEventListener('change', event => {
   reducedMotion = event.matches;
+  if (reducedMotion) touring = false;
   if (reducedMotion && !paused) { pose.breath = 0; pose.blink = 0; blinkStart = -10; }
   syncButtons(); updateStatus();
 });
@@ -140,7 +194,8 @@ new IntersectionObserver(entries => { visible = entries[0].isIntersecting; lastF
 
 function updateStatus() {
   if (failed) return;
-  status.textContent = paused ? 'Paused' : reducedMotion ? 'Ready · reduced motion' : 'Ready · follows your touch or cursor';
+  const labels = { idle: 'Idle preview', listening: 'Listening preview · microphone off', reading: 'Reading preview · sample page', working: 'Working preview · no task running', ready: 'Ready preview' };
+  status.textContent = `${paused ? 'Paused · ' : touring ? 'Preview all · ' : ''}${labels[reaction.state]}${reducedMotion ? ' · reduced motion' : ''}`;
 }
 
 function showFailure(error) {
@@ -172,17 +227,28 @@ function animate(timestamp) {
   const dt = lastFrame ? Math.min((timestamp-lastFrame)/1000, .05) : 1/60;
   if (lastFrame) { frameTimes.push(timestamp-lastFrame); if (frameTimes.length > 180) frameTimes.shift(); }
   lastFrame = timestamp; activeTime += dt;
+  if (touring) {
+    const index = Math.floor((activeTime-tourStart)/3);
+    if (index !== tourIndex) {
+      tourIndex = index;
+      selectState(REACTION_STATES[index] || 'idle', true);
+      if (index >= REACTION_STATES.length) { touring = false; syncButtons(); updateStatus(); }
+    }
+  }
+  reaction = reactionController.tick(dt, reducedMotion);
+  reactionMotion = reactionPose(reaction, reducedMotion);
   if (activeTime > relaxAt) { setTarget(0, 0); relaxAt = Infinity; }
   let delayed = { x: 0, y: 0 };
   while (targetHistory.length > 1 && targetHistory[1].time <= activeTime-.08) targetHistory.shift();
   if (targetHistory.length && targetHistory[0].time <= activeTime-.08) delayed = targetHistory[0];
   const gazeEase = reducedMotion ? 1 : 1-Math.exp(-dt/.08);
   const headEase = reducedMotion ? 1 : 1-Math.exp(-dt/.3);
-  pose.gazeX += (target.x-pose.gazeX)*gazeEase;
-  pose.gazeY += (target.y-pose.gazeY)*gazeEase;
-  pose.headYaw += ((reducedMotion ? target.x : delayed.x)*.13-pose.headYaw)*headEase;
-  pose.headPitch += ((reducedMotion ? target.y : delayed.y)*-.045-pose.headPitch)*headEase;
-  pose.breath = reducedMotion ? 0 : Math.sin(activeTime*Math.PI/3);
+  pose.gazeX += (clamp(target.x*reactionMotion.cursorScale+reactionMotion.gazeX,-1,1)-pose.gazeX)*gazeEase;
+  pose.gazeY += (clamp(target.y*reactionMotion.cursorScale+reactionMotion.gazeY,-1,1)-pose.gazeY)*gazeEase;
+  pose.headYaw += (clamp((reducedMotion ? target.x : delayed.x)*.13*reactionMotion.cursorScale+reactionMotion.headYaw,-.13,.13)-pose.headYaw)*headEase;
+  pose.headPitch += (clamp((reducedMotion ? target.y : delayed.y)*-.045*reactionMotion.cursorScale+reactionMotion.headPitch,-.055,.08)-pose.headPitch)*headEase;
+  pose.headRoll += (reactionMotion.headRoll-pose.headRoll)*headEase;
+  pose.breath = reducedMotion ? 0 : Math.sin(activeTime*Math.PI/3)*reactionMotion.breathGain;
   if (!reducedMotion && activeTime >= nextBlink) {
     blinkStart = activeTime; nextBlink = activeTime + 3.5 + Math.random()*2;
   }
@@ -191,13 +257,18 @@ function animate(timestamp) {
   pose.blink = blinkAge < 0 || blinkAge >= .24 ? 0
     : blinkAge < .10 ? Math.sin(Math.PI*.5*blinkAge/.10) ** 2
     : blinkAge < .14 ? 1 : Math.cos(Math.PI*.5*(blinkAge-.14)/.10) ** 2;
+  pose.blink = Math.max(pose.blink,reactionMotion.readyBlink,reactionMotion.focusBlink);
   for (const object of objects) {
     const u = object.material.uniforms;
     u.gaze.value.set(pose.gazeX, pose.gazeY);
     u.head.value.set(pose.headYaw, pose.headPitch);
+    u.headRoll.value = pose.headRoll;
+    u.wingAngles.value.fromArray(object.userData.wingSide < 0 ? reactionMotion.leftWing : reactionMotion.rightWing);
+    u.cleanBlend.value = object.userData.cleanBody ? reactionMotion.cleanBody : 0;
     u.blink.value = pose.blink; u.breath.value = pose.breath;
     object.visible = object.userData.deform !== 'eye' || pose.blink <= .995;
   }
+  reactionProps.update(reactionMotion);
   if (!renderFrame()) return;
   frameCount++;
   if (timestamp-lastDiagnostics > 500) {
@@ -215,8 +286,8 @@ async function start() {
       fetch('./scene.bin').then(response => { if (!response.ok) throw new Error('Scene geometry could not load.'); return response.arrayBuffer(); }),
     ]);
     const loader = new THREE.TextureLoader();
-    const [skin, hero] = await Promise.all([loader.loadAsync('./baked-skin.png'), loader.loadAsync('./baked-hero.png')]);
-    for (const texture of [skin, hero]) { texture.colorSpace = THREE.SRGBColorSpace; texture.generateMipmaps = true; }
+    const [skin, hero, cleanBody] = await Promise.all([loader.loadAsync('./baked-skin.png'), loader.loadAsync('./baked-hero.png'), loader.loadAsync('./baked-body-clean.png')]);
+    for (const texture of [skin, hero, cleanBody]) { texture.colorSpace = THREE.SRGBColorSpace; texture.generateMipmaps = true; }
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
     renderer.debug.onShaderError = () => { throw new Error('The companion shader could not compile on this device.'); };
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -242,12 +313,17 @@ async function start() {
       if (item.index) geometry.setIndex(new THREE.BufferAttribute(new Uint32Array(binary, item.index.offset, item.index.count), 1));
       geometry.computeBoundingSphere();
       const isHair = item.kind === 'hair';
+      const wingSide = /^(Left folded wing|Left gold inner wing|Folded wing fine feathers 0)$/.test(item.name) ? -1
+        : /^(Right folded wing|Right gold inner wing|Folded wing fine feathers 1)$/.test(item.name) ? 1 : 0;
+      const usesCleanBody = item.name === 'Continuous griffin silhouette' || item.name === 'Graphite short feather coat';
       const material = new THREE.ShaderMaterial({
         vertexShader, fragmentShader, transparent: isHair, depthWrite: !isHair,
         side: THREE.DoubleSide,
         uniforms: {
           baked: { value: item.texture === 'skin' ? skin : hero }, opacity: { value: isHair ? .42 : 1 },
+          cleanBody: { value: cleanBody }, cleanBlend: { value: 0 },
           gaze: { value: new THREE.Vector2() }, head: { value: new THREE.Vector2() },
+          headRoll: { value: 0 }, wingAngles: { value: new THREE.Vector3() }, wingSide: { value: wingSide },
           blink: { value: 0 }, breath: { value: 0 },
           kind: { value: item.deform === 'eye' ? 1 : item.deform === 'crease' ? 2 : 0 },
           creaseColor: { value: new THREE.Color('#29251f') },
@@ -257,9 +333,11 @@ async function start() {
       });
       const object = isHair ? new THREE.LineSegments(geometry, material) : new THREE.Mesh(geometry, material);
       object.name = item.name; object.userData.deform = item.deform;
+      object.userData.wingSide = wingSide; object.userData.cleanBody = usesCleanBody;
       object.frustumCulled = false;
       scene.add(object); objects.push(object);
     }
+    reactionProps = createReactionProps(THREE,scene);
     const resize = () => {
       if (failed) return;
       const width = stage.clientWidth, height = stage.clientHeight;
