@@ -28,6 +28,13 @@ principles, not copied artwork or claimed reference fonts/colors. The supplied
 23-slide Oceanides.pptx adds a supported 2021 founding year; its stale contacts,
 credentials, fleet and client wall are excluded.
 
+Neil's follow-up rejected the first application as too similar to the original.
+Correction: use the blue corporate reference's actual composition mechanisms,
+including asymmetrical color fields, overlapping image/panel placement and
+alternating dark/light sections. Replace the model-home cover and Segoe/Arial
+hierarchy. Do not equate typographic polish or passing layout gates with a
+complete redesign; compare cover, service map and proof spread side by side.
+
 ### D18 — Apple report + OpenAI design guidelines — 2026-10-01
 
 Sources: https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf

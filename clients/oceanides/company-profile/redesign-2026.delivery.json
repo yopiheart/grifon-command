@@ -1,0 +1,131 @@
+{
+  "createdOn": "2026-10-06",
+  "status": "PENDING_NEIL_DESIGN_REVIEW",
+  "supersedes": "premium-2026.delivery.json",
+  "files": [
+    {
+      "path": "output/pptx/Oceanides-Company-Profile-Redesign-2026.pptx",
+      "bytes": 18439683,
+      "sha256": "e41f0358e5a15851e2eab38d8a4ef5eca5bced3019b3bd4d0918429df699d19e"
+    },
+    {
+      "path": "output/pdf/Oceanides-Company-Brochure-Redesign-A5-2026.pdf",
+      "bytes": 10251058,
+      "sha256": "be69d27d45c70f4e93aba30818352bb22df6643557594fe5a6cca9057e358628"
+    },
+    {
+      "path": "output/pdf/Oceanides-Company-Brochure-Redesign-A4-Print-2026.pdf",
+      "bytes": 10268223,
+      "sha256": "7b86f9e4c33605da5606ff032a813952eef4210320d636a73d09eabfe3875520"
+    }
+  ],
+  "designSystem": {
+    "direction": "Blue corporate editorial, based on D19 Magnific composition analysis",
+    "displayFont": "Century Gothic",
+    "bodyFont": "Corbel",
+    "palette": {
+      "navy": "#0A1F45",
+      "blue": "#1C63AD",
+      "paper": "#F4F6FA",
+      "white": "#FFFFFF",
+      "ink": "#0B1B33"
+    },
+    "substantiveChanges": [
+      "navy photographic cover",
+      "Century Gothic and Corbel typography",
+      "two-column editorial service map",
+      "original unmodified job proof",
+      "distinct service layouts",
+      "blue technical split",
+      "blue contact rail"
+    ],
+    "coverSource": "assets/redesign/facade-pexels-14765373.jpg",
+    "previousModelHomeCoverUsed": false,
+    "previousProofRecreationsUsed": false
+  },
+  "presentation": {
+    "slideCount": 10,
+    "aspectRatio": "16:9",
+    "nativeTextEditable": true,
+    "fontsEmbedded": true,
+    "embeddedFontStyles": 8,
+    "videoSlide": 9,
+    "videoEmbeddedInternally": true,
+    "videoStart": "Explicit click",
+    "filmSha256": "40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea",
+    "filmDurationSeconds": 99.73333333333333,
+    "filmResolution": [
+      1920,
+      1080
+    ],
+    "approvedFilmUnchanged": true
+  },
+  "brochure": {
+    "pages": 8,
+    "readerPageSizeMm": [
+      148.5,
+      210
+    ],
+    "printSurfaces": 4,
+    "printPageSizeMm": [
+      297,
+      210
+    ],
+    "safeMarginMm": 13,
+    "printOrder": [
+      [
+        8,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "printSettings": {
+      "paper": "A4",
+      "orientation": "Landscape",
+      "scale": "Actual size (100%)",
+      "sides": "Duplex",
+      "flip": "Short edge",
+      "sheets": 2,
+      "finish": "Nest both sheets and fold at center"
+    },
+    "usedFontsEmbedded": true,
+    "minimumEffectiveImageDpi": 292.4
+  },
+  "content": {
+    "source": "premium-content.json",
+    "serviceGroups": 5,
+    "historySource": "User-provided Oceanides.pptx slide1 supports established2021; optional direct confirmation pending",
+    "proofSource": "Original before-1.jpg and after-1.jpg; tb2-variants.json declares these real",
+    "priorProofLabelCorrection": "The rejected draft called AI-recreated tb2-ba2 images actual; the redesign uses the verified originals",
+    "noUnsupportedFleetClientAccreditationOrSavingsClaims": true
+  },
+  "assetProvenance": "assets/redesign/sources.json",
+  "verification": {
+    "packageLayoutFontPolicyAndImport": "PASS_ZERO_FINDINGS",
+    "nativeSlideExports": 10,
+    "pdfPagesAndSurfacesInspected": 12,
+    "textOutOfPage": 0,
+    "textOutOfSafeArea": 0,
+    "imposition": "PASS_EXACT_LEFT_RIGHT_MATCH",
+    "independentVisualReview": "PASS_SUBSTANTIVE_REDESIGN_ALL_SLIDES_PAGES_AND_SURFACES",
+    "independentCodeReview": "PASS_NO_ACTIONABLE_FINDINGS",
+    "nativePlayback": "PASS_IDLE_PLAY_PAUSE_RESUME_VIA_READ_ONLY_POWERPOINT_COM",
+    "syntaxDomainAndArtifactAnchorChecks": "PASS",
+    "applicationCodeChanged": false,
+    "newPaidCalls": 0,
+    "actualProjectorHardwareTested": false
+  },
+  "emailDelivery": "ON_HOLD_NO_SEND",
+  "privateEvidence": ".tmp/oceanides-redesign/"
+}

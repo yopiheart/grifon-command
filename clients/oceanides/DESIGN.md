@@ -144,6 +144,36 @@ new premium deck and matching brochure; older deliverables remain unchanged.
 - The supplied reference supports establishment in 2021. Exclude its stale
   contacts, client logo wall, fleet, accreditation and leadership claims.
 
+### Complete profile redesign: corporate editorial system (2026-10-06)
+
+Neil rejected the preceding profile revision because it looked too similar to
+the original. This direction supersedes the two profile layout sections above
+for the new Redesign outputs. D19 supplies the inspected blue corporate layout
+mechanisms; retaining only its colors and rules did not satisfy the brief.
+
+- Cover: deep navy, an asymmetrical blue field, one compact transparent emblem,
+  large white property-services title and a new illustrative building-facade photo.
+  The previous model-home cover image is excluded from these outputs.
+- Typography: Century Gothic Regular/Bold for display and topic titles; Corbel
+  Regular/Bold for body. These installed static fonts replace Segoe UI/Arial in
+  the new profile. Sentence case; embed used PDF fonts. Preserve native editable
+  company text in PowerPoint.
+- Palette: navy `#0A1F45`, blue `#1C63AD`, cool paper `#F4F6FA`, white `#FFFFFF`,
+  ink `#0B1B33`. Use substantial navy/blue compositions on at least four company
+  slides, including background and STP. White headings on dark grounds; ink or
+  blue on paper. Alternate photo placement, chapter rails and editorial columns.
+  No universal top-blue-title frame or repeated image-left/list-right sequence.
+- Service index: two-column editorial map rather than five long table rows.
+  Proof: use original `assets/before-1.jpg` and `assets/after-1.jpg`, declared
+  real in `tb2-variants.json`. Its `tb2-ba2-*` and `tb2-ba3-*` variants are AI
+  recreations and must not be labeled actual work. Keep complete tank evidence.
+- Brochure shares the same navy/blue rhythm, fonts and chapter treatment. Eight
+  A5 pages and four A4 imposed surfaces retain the established print geometry.
+  Keep safe margins and contained photos/panels; no edge bleed requirement.
+- Clarity and factual rules remain: all five service groups, accurate contacts,
+  disclosed stock/generated imagery and conditional STP scope. Embed the exact
+  approved film with manual playback; the film itself remains unchanged.
+
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at
 pintura**: matte navy panels, amber signage, dashed work-order rules, totoong
