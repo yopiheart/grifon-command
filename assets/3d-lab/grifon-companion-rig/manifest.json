@@ -1,0 +1,55 @@
+{
+  "subject": "Grifon companion",
+  "stage": "Editable Blender control rig and rendered motion prototype",
+  "base": "Owner-accepted griffin master v05; original source in .agents/skills/blender-studio/assets/griffin-v05",
+  "candidate": "rig-v09",
+  "blender_version": "5.2.2 LTS",
+  "master_sha256": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7",
+  "rig_sha256": "94fb26540d6f8f2f600416b39bf891d573cec5a2f923d3bd591275e699904446",
+  "local_editable_rig": "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/rig-v09/griffin-rig-v01.blend",
+  "storage": "Binary master and rig remain local. Versioned Python rebuilds the rig; the frozen skill contains the master builder. Local files are not off-device backups.",
+  "controls_object": "COMPANION CONTROLS",
+  "controls": {
+    "head_yaw": {"units": "radians", "range": [-0.28, 0.28]},
+    "head_pitch": {"units": "radians", "range": [-0.16, 0.16]},
+    "gaze_x": {"units": "normalized", "range": [-1, 1]},
+    "gaze_y": {"units": "normalized", "range": [-1, 1]},
+    "blink": {"units": "open to closed", "range": [0, 1]},
+    "breath": {"units": "normalized", "range": [-1, 1]}
+  },
+  "motion": {
+    "frames": 144,
+    "fps": 24,
+    "seconds": 6,
+    "resolution": [512, 512],
+    "engine": "Cycles CPU",
+    "samples": 24,
+    "adaptive_threshold": 0.05,
+    "choreography": "Eyes lead the head left then right; two blinks; one subtle breathing cycle. Keyframed demonstration, not live mouse input.",
+    "demonstrated_head_range": {"yaw_radians": [-0.13, 0.13], "pitch_radians": [-0.045, 0]},
+    "blink_method": "Stylized corrective eye deformation and retraction, with a surface-conforming crease. This is not an anatomical eyelid rig."
+  },
+  "replay": {
+    "master": "Copy frozen skill scripts to a fresh output directory and follow the skill's production-recipe.md. Never run the master builder inside the frozen skill directory or an unsaved user scene.",
+    "rig_arguments": "blender --background --python-exit-code 1 --python rig-griffin.py -- MASTER_BLEND FRESH_RIG_DIRECTORY",
+    "verify_arguments": "blender --background --python-exit-code 1 --python verify-griffin-rig.py -- MASTER_BLEND RIG_BLEND REPORT_JSON [REJECTED_OLD_RIG]",
+    "render_arguments": "blender --background --python-exit-code 1 --python render-griffin-motion.py -- RIG_BLEND FRESH_FRAME_DIRECTORY 512 24 all",
+    "encode_arguments": "ffmpeg -framerate 24 -start_number 1 -i FRAMES/%04d.png -frames:v 144 -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart -an griffin-motion-preview.mp4",
+    "notes": "Use fresh output paths. Rig builder refuses an existing output blend. Native nodes and simple drivers require no Python auto-run handler. Blender binary hashes can differ on rebuild; verify evaluated geometry and controls."
+  },
+  "verification": {
+    "rig_checks": "PASS: all 10 checks in rig-verification.json; original master and rig hashes unchanged",
+    "source_replay": "PASS: versioned builder rebuilt in a fresh folder, exit 0; all 10 checks pass in source-replay-verification.json",
+    "regression": "PASS: preserved v03 rejects integer animation properties and missing fractional/head motion; old candidate is local evidence, not required for ordinary verification",
+    "visual": "Independent inspection cleared raised eyelid geometry in partial and closed v09 poses. This does not establish temporal smoothness.",
+    "owner_acceptance": "Base v05 look accepted. New motion preview awaits owner review.",
+    "overwrite_guard": "PASS: existing output refused with exit 1 before master load/write"
+  },
+  "limits": [
+    "No browser/chat integration or live cursor input",
+    "No GLB, Gaussian splat or mobile performance validation",
+    "No anatomical eyelid rig or viewport-specific closed-eye validation",
+    "Preview is 512px; high-resolution still quality is preserved in the source master",
+    "No paid APIs or remote rendering used"
+  ]
+}

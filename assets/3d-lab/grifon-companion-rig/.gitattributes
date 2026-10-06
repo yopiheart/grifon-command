@@ -1,0 +1,2 @@
+# Preserve reproducible Blender source bytes on Windows.
+*.py -text
