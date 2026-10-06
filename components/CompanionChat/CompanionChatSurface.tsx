@@ -1,0 +1,220 @@
+import { useEffect, useRef, useState } from 'react';
+import { AlertTriangle, ArrowLeft, ArrowUp, Check, ImagePlus, Loader2, Paperclip, X } from 'lucide-react';
+import type { ProducerSurfaceController } from '../OneShotAd/ProducerFlow';
+import type { LockablePresetId } from '../../types';
+import Button from '../ui/Button';
+import { GlassPanel } from '../ui/GlassPanel';
+import { MAT_PLATE } from '../ui/materialTokens';
+import { CompanionAvatar, type CompanionReaction } from './CompanionAvatar';
+import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
+import { compressImageForUpload } from '../../utils/imageCompression';
+import {
+  acceptCompanionAnswer, buildCompanionInput, clearCompanionDraft, companionMessage,
+  createCompanionDraft, loadCompanionDraft, nextCompanionField, parseCompanionRevision, saveCompanionDraft,
+  type CompanionDraft,
+} from '../../services/companionIntake';
+
+export interface CompanionChatSurfaceProps {
+  controller: ProducerSurfaceController;
+  userId: string;
+  onBack: () => void;
+  onUpgrade: () => void;
+  presetUnlocked: boolean;
+  quotaBlocked?: boolean;
+  quotaReady?: boolean;
+  allowanceLoading?: boolean;
+  onRetryAllowance?: () => void;
+  videoAllowed?: boolean | null;
+  fixtureLabel?: string;
+}
+
+const control = 'min-h-11 !rounded-xl !font-sans !text-sm !font-semibold !normal-case !tracking-normal';
+const inputStyle = 'min-h-11 w-full rounded-xl border border-white/10 bg-zinc-950 px-3 py-2 text-sm text-white outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]';
+const styles: { label: string; value: LockablePresetId | null; locked: boolean }[] = [
+  { label: 'Raw', value: 'none', locked: false }, { label: 'Auto', value: null, locked: false },
+  { label: 'Impact', value: 'impact', locked: true }, { label: 'Clean', value: 'clean', locked: true },
+  { label: 'Punch', value: 'punch', locked: true }, { label: 'Bars', value: 'bars', locked: true },
+  { label: 'Spotlight', value: 'spotlight', locked: true },
+];
+const time = (at: number) => new Date(at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+
+export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, presetUnlocked, quotaBlocked = false, quotaReady = true, allowanceLoading = false, onRetryAllowance, videoAllowed = true, fixtureLabel }: CompanionChatSurfaceProps) {
+  const [draft, setDraft] = useState<CompanionDraft>(() => loadCompanionDraft(userId) ?? createCompanionDraft());
+  const [text, setText] = useState('');
+  const [localError, setLocalError] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [saved, setSaved] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [armedScene, setArmedScene] = useState<number | null>(null);
+  const [armedPreset, setArmedPreset] = useState<{ value: LockablePresetId | null; label: string } | null>(null);
+  const [desktop, setDesktop] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
+  const composer = useRef<HTMLTextAreaElement>(null);
+  const scroller = useRef<HTMLDivElement>(null);
+  const upload = useRef<HTMLInputElement>(null);
+  const uploadEpoch = useRef(0);
+  const owner = useRef(userId);
+  const nearBottom = useRef(true);
+  const actionLock = useRef(false);
+  const actionEpoch = useRef(0);
+  const [actionPending, setActionPending] = useState(false);
+  const { run } = controller;
+  const failed = !!controller.error || controller.phase === 'error' || controller.phase === 'resume-error' || run?.status === 'error';
+  const loadingRun = controller.phase === 'resuming';
+  const busy = controller.busy || actionPending;
+  const disabled = busy || loadingRun || uploading;
+  const field = nextCompanionField(draft);
+  const atStoryboard = run?.gate === 'storyboard';
+  const atResult = run?.gate === 'first_cut';
+  const readyToApprove = !!run?.scenes.length && run.scenes.every(scene => scene.imageUrl && scene.status !== 'flagged');
+  const activeStage = run?.stages.find(stage => stage.status === 'running');
+  const avatarState: CompanionReaction = failed ? 'idle' : busy || loadingRun ? 'working'
+    : uploading || (!run && !!text.trim()) ? 'reading' : atStoryboard || (atResult && !!run?.finalVideoUrl) ? 'ready' : 'idle';
+  const stateLabel = failed ? 'Ready when you are' : loadingRun ? 'Opening your saved ad'
+    : busy ? controller.phase === 'researching' ? 'Researching your product' : activeStage?.label ?? 'Updating your ad'
+      : uploading ? 'Preparing your photo' : atStoryboard ? 'Your storyboard is ready' : atResult ? 'Your first cut is ready' : 'Let’s make something good';
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)');
+    const update = () => setDesktop(query.matches);
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (owner.current !== userId) {
+      owner.current = userId; uploadEpoch.current++;
+      actionEpoch.current++; actionLock.current = false; setActionPending(false);
+      setDraft(loadCompanionDraft(userId) ?? createCompanionDraft());
+      setText(''); setLocalError(''); setUploading(false); setEditing(false); setArmedScene(null); setArmedPreset(null);
+      return;
+    }
+    setSaved(saveCompanionDraft(userId, draft));
+  }, [draft, userId]);
+  useEffect(() => () => { uploadEpoch.current++; actionEpoch.current++; }, []);
+  useEffect(() => {
+    if (nearBottom.current && scroller.current) scroller.current.scrollTop = scroller.current.scrollHeight;
+  }, [draft.messages.length, run?.gate, activeStage?.id, controller.error, editing]);
+  useEffect(() => { setArmedScene(null); setArmedPreset(null); }, [run?.runId, run?.gate]);
+
+  const call = async (action: () => Promise<void>) => {
+    if (actionLock.current || busy || loadingRun) return;
+    actionLock.current = true; setActionPending(true); setLocalError('');
+    const currentOwner = userId;
+    const epoch = ++actionEpoch.current;
+    try { await action(); }
+    catch (error) { if (owner.current === currentOwner && epoch === actionEpoch.current) setLocalError(error instanceof Error ? error.message : 'Please try again.'); }
+    finally { if (owner.current === currentOwner && epoch === actionEpoch.current) { actionLock.current = false; setActionPending(false); } }
+  };
+
+  const send = () => {
+    if (!text.trim() || disabled) return;
+    try {
+      if (!run && field) setDraft(acceptCompanionAnswer(draft, text));
+      else {
+        const revision = atResult ? parseCompanionRevision(text) : null;
+        let reply = !run ? 'Your brief is ready. Use Edit brief to change details, then Generate storyboard when everything looks right.'
+          : 'I can regenerate a storyboard image, reshoot a scene, or apply an edit style using the controls below.';
+        if (revision?.kind === 'reshoot') {
+          if (run?.scenes.some(scene => scene.sceneIdx === revision.sceneIndex)) {
+            setArmedScene(revision.sceneIndex); reply = `Scene ${revision.sceneIndex+1} is selected. Review its take allowance below, then confirm the reshoot.`;
+          } else reply = 'That scene is not in this ad. Choose one of the scene numbers below.';
+        } else if (revision?.kind === 'preset') {
+          const preset = styles.find(style => style.value === revision.preset)!;
+          if (preset.locked && !presetUnlocked) reply = `${preset.label} requires Pro. You can choose Raw or Auto, or upgrade below.`;
+          else { setArmedPreset(preset); reply = `${preset.label} is selected. Confirm Apply style below to update this cut.`; }
+        }
+        setDraft(previous => ({ ...previous, messages: [...previous.messages, companionMessage('user', text.trim()), companionMessage('assistant', reply)].slice(-120) }));
+      }
+      setText(''); setLocalError(''); nearBottom.current = true; composer.current?.focus();
+    } catch (error) { setLocalError(error instanceof Error ? error.message : 'Please check your message.'); }
+  };
+
+  const attach = async (file: File | undefined) => {
+    if (!file || disabled || run) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 20*1024*1024) {
+      setLocalError('Choose a JPG, PNG or WebP image smaller than 20 MB.'); return;
+    }
+    const epoch = ++uploadEpoch.current; setUploading(true); setLocalError('');
+    try {
+      const image = await compressImageForUpload(file);
+      if (epoch !== uploadEpoch.current) return;
+      setDraft(previous => ({ ...previous, heroImageBase64: image.dataUrl, imageName: file.name }));
+    } catch { if (epoch === uploadEpoch.current) setLocalError('That image could not be opened. Please try another.'); }
+    finally { if (epoch === uploadEpoch.current) setUploading(false); }
+  };
+
+  const generate = () => {
+    if (!quotaReady || quotaBlocked || disabled || field || run) return;
+    try { const input = buildCompanionInput(draft); setEditing(false); void call(() => controller.start(input)); }
+    catch (error) { setLocalError(error instanceof Error ? error.message : 'Please check your brief.'); }
+  };
+  const reset = () => {
+    if (busy) return;
+    controller.reset(); uploadEpoch.current++; clearCompanionDraft(userId);
+    setDraft(createCompanionDraft()); setText(''); setLocalError(''); setEditing(false); setArmedScene(null); setArmedPreset(null);
+    nearBottom.current = true; composer.current?.focus();
+  };
+  const cancel = () => { actionEpoch.current++; controller.cancel(); actionLock.current = false; setActionPending(false); };
+  const exit = () => { if (controller.busy || actionPending) cancel(); onBack(); };
+  const preferences = (
+    <div className="mt-4 grid gap-3 sm:grid-cols-3">
+      <label className="text-xs text-zinc-400">Language<select aria-label="Ad language" disabled={disabled || !!run} value={draft.language} onChange={event => setDraft({ ...draft, language: event.target.value as CompanionDraft['language'] })} className={`${inputStyle} mt-1`}><option>English</option><option>Taglish</option></select></label>
+      <label className="text-xs text-zinc-400">Format<select aria-label="Ad format" disabled={disabled || !!run} value={draft.aspectRatio} onChange={event => setDraft({ ...draft, aspectRatio: event.target.value as CompanionDraft['aspectRatio'] })} className={`${inputStyle} mt-1`}><option value="9:16">Vertical · 9:16</option><option value="16:9">Landscape · 16:9</option><option value="1:1">Square · 1:1</option></select></label>
+      <label className="text-xs text-zinc-400">Voice<select aria-label="Ad voice" disabled={disabled || !!run} value={draft.voiceId} onChange={event => setDraft({ ...draft, voiceId: event.target.value })} className={`${inputStyle} mt-1`}>{RECOMMENDED_VOICES.map(voice => <option key={voice.id} value={voice.id}>{voice.name} · {voice.vibe}</option>)}</select></label>
+    </div>
+  );
+
+  return <div className="flex h-dvh min-h-0 flex-col overflow-hidden bg-zinc-950 text-white" data-testid="companion-chat" data-companion-state={avatarState}>
+    <header className="flex min-h-16 shrink-0 items-center justify-between gap-3 border-b border-white/10 px-4 sm:px-8">
+      <div className="flex min-w-0 items-center gap-3"><Button variant="ghost" className={`${control} !p-3`} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-5 w-5" /></Button><div><p className="text-sm font-bold tracking-[.14em]">GRIFON</p><p className="text-xs text-zinc-400">Your ad, from a conversation.</p></div></div>
+      <Button variant="secondary" className={`${control} !px-3`} disabled={disabled || (!run && !draft.brief)} onClick={reset}>New ad</Button>
+    </header>
+    {fixtureLabel && <p role="note" className="shrink-0 border-b border-[#FFCC00]/20 bg-[#FFCC00]/10 px-4 py-2 text-center text-xs text-[#FFCC00]">{fixtureLabel}</p>}
+    <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1">
+      {desktop && <aside className="hidden w-[340px] shrink-0 flex-col justify-center border-r border-white/5 px-6 lg:flex">
+        <CompanionAvatar state={avatarState} className="aspect-square w-full" />
+        <p className="mt-3 text-center text-sm text-zinc-300">{stateLabel}</p>
+        <p className="mx-auto mt-3 max-w-[240px] text-center text-xs leading-relaxed text-zinc-400">Product ad creation, one step at a time. You approve the storyboard before video production.</p>
+        {(run?.input.brandName || draft.brandName) && <div className="mt-8 border-t border-white/10 pt-5 text-sm"><p className="text-xs text-zinc-400">Current brief</p><p className="mt-2 font-semibold">{run?.input.brandName ?? draft.brandName}</p><p className="mt-1 text-zinc-400">{run?.input.productName ?? draft.productName}</p><p className="mt-3 text-xs text-zinc-400">{run?.input.language ?? draft.language} · {run?.input.aspectRatio ?? draft.aspectRatio}</p></div>}
+      </aside>}
+      <section className="flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
+        {!desktop && <div className="flex h-[136px] shrink-0 items-center justify-center gap-2 border-b border-white/5 px-4 lg:hidden"><CompanionAvatar state={avatarState} className="h-[136px] w-[136px] shrink-0" /><p className="max-w-[190px] text-sm leading-relaxed text-zinc-300">{stateLabel}</p></div>}
+        <div ref={scroller} onScroll={event => { const node = event.currentTarget; nearBottom.current = node.scrollHeight-node.scrollTop-node.clientHeight < 100; }} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6 sm:px-8" data-testid="conversation-scroll">
+          <div className="mx-auto max-w-2xl space-y-6">
+            <div className="mb-8"><h1 className="!text-2xl !font-semibold !normal-case !tracking-tight sm:!text-3xl">Let’s make your next ad.</h1><p className="mt-2 text-sm leading-relaxed text-zinc-400">Start with the product. We’ll build the brief together.</p></div>
+            {draft.messages.map(message => <article key={message.id} className={message.role === 'user' ? 'ml-auto max-w-[88%]' : 'max-w-[92%]'}>
+              <p className={message.role === 'user' ? 'whitespace-pre-wrap break-words rounded-2xl rounded-br-sm bg-white/10 px-4 py-3 text-sm leading-relaxed' : 'whitespace-pre-wrap break-words text-sm leading-relaxed text-zinc-200'}>{message.text}</p>
+              <p className={`mt-1.5 text-[11px] text-on-surface-sublabel ${message.role === 'user' ? 'text-right' : ''}`}><time dateTime={new Date(message.at).toISOString()}>{time(message.at)}</time>{message.role === 'user' && ' · Received'}</p>
+            </article>)}
+            {!run && (!field || editing) && <GlassPanel className="p-4 sm:p-5" aria-label="Review your brief">
+              <div className="flex items-center justify-between gap-3"><h2 className="!text-base !font-semibold !normal-case !tracking-normal">Your product ad</h2><Button variant="ghost" className={`${control} !px-3`} disabled={disabled} onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit brief'}</Button></div>
+              {editing ? <div className="mt-3 space-y-3">{(['brief','brandName','productName','offer','price'] as const).map(key => <label key={key} className="block text-xs text-zinc-400">{({ brief: 'Original brief', brandName: 'Brand name', productName: 'Product name', offer: 'Offer', price: 'Price' })[key]}<textarea className={`${inputStyle} mt-1 resize-y`} value={draft[key]} maxLength={key === 'brief' ? 4000 : key === 'offer' ? 2000 : 200} onChange={event => setDraft({ ...draft, [key]: event.target.value })} /></label>)}</div> : <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm"><dt className="text-zinc-400">Brand</dt><dd className="break-words">{draft.brandName}</dd><dt className="text-zinc-400">Product</dt><dd className="break-words">{draft.productName}</dd><dt className="text-zinc-400">Offer</dt><dd className="break-words">{draft.offer}</dd><dt className="text-zinc-400">Price</dt><dd className="break-words">{draft.price}</dd></dl>}
+              {preferences}
+              <p className="mt-3 text-xs leading-relaxed text-zinc-400">Testimonial ad · presenter cast automatically to match the selected voice. Stock voices use an American English accent; Taglish pronunciation may vary.</p>
+              {!draft.heroImageBase64 && <Button variant="secondary" className={`${control} mt-4 flex w-full items-center justify-center gap-2`} disabled={disabled} onClick={() => upload.current?.click()}><ImagePlus className="h-4 w-4 shrink-0" /> Add product photo</Button>}
+              <p className="mt-4 text-xs leading-relaxed text-zinc-400">Generating uses your plan allowances for research and images. Review and approve the storyboard before video production begins.</p>
+              {!quotaReady ? <div className="mt-4"><p className="text-xs text-zinc-400">{allowanceLoading ? 'Checking your generation allowance…' : 'Your allowance could not be confirmed. Retry before generating.'}</p><Button className={`${control} mt-3 w-full`} disabled={allowanceLoading} onClick={onRetryAllowance}>{allowanceLoading ? 'Checking allowance…' : 'Retry allowance'}</Button></div> : quotaBlocked ? <Button className={`${control} mt-4 w-full`} onClick={onUpgrade}>View plan options</Button> : <Button className={`${control} mt-4 w-full`} disabled={disabled || !draft.heroImageBase64 || !!field} onClick={generate}>Generate storyboard</Button>}
+            </GlassPanel>}
+            {loadingRun && <p role="status" className="flex items-center gap-2 text-sm text-zinc-400"><Loader2 className="h-4 w-4 animate-spin" /> Opening your saved ad…</p>}
+            {(busy || (!!run && !atStoryboard && !atResult && !failed)) && <GlassPanel className="p-4" aria-label="Production progress"><div role="status" className="flex items-center gap-2 text-sm"><Loader2 className="h-4 w-4 animate-spin text-[#FFCC00]" />{stateLabel}</div>{run && <ol className="mt-3 space-y-2">{run.stages.filter(stage => stage.status !== 'pending').map(stage => <li key={stage.id} className="flex items-start gap-2 text-xs text-zinc-400">{stage.status === 'done' ? <Check className="h-4 w-4 shrink-0 text-[#FFCC00]" /> : <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#FFCC00]" />}<span>{stage.label}{stage.error ? ` — ${stage.error}` : ''}</span></li>)}</ol>}<Button variant="ghost" className={`${control} mt-3 !px-2`} onClick={cancel}>Stop waiting</Button></GlassPanel>}
+            {(failed || localError) && <GlassPanel className="p-4" role="alert"><p className="text-sm leading-relaxed text-zinc-200">{localError || controller.error || 'This step could not finish.'}</p><div className="mt-3 flex flex-wrap gap-2">{controller.phase === 'resume-error' ? <Button className={control} onClick={controller.retryResume}>Retry saved ad</Button> : run?.status === 'error' ? <Button className={control} disabled={busy} onClick={() => void call(controller.retry)}>Resume saved progress</Button> : null}<Button variant="secondary" className={control} disabled={busy} onClick={() => { if (localError) setLocalError(''); else controller.reset(); }}>Back to brief</Button></div></GlassPanel>}
+            {atStoryboard && !failed && <GlassPanel className="p-4 sm:p-5" aria-label="Storyboard review"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your scenes, before we film.</h2><p className="mt-2 text-sm leading-relaxed text-zinc-400">Check the product, presenter and script. You can regenerate an image before approving.</p><div className="mt-4 grid grid-cols-2 gap-3">{run!.scenes.map(scene => <div key={scene.sceneIdx} className="min-w-0 overflow-hidden rounded-xl border border-white/10"><div className="aspect-[3/4] bg-zinc-900">{scene.imageUrl ? <a href={scene.imageUrl} target="_blank" rel="noreferrer" aria-label={`Open scene ${scene.sceneIdx+1} image`}><img src={scene.imageUrl} alt={`Scene ${scene.sceneIdx+1}`} className="h-full w-full object-contain" /></a> : <p className="p-3 text-xs text-zinc-400">Image not ready</p>}</div><div className="p-3"><p className="text-xs font-semibold">Scene {scene.sceneIdx+1}</p><p className="mt-2 text-xs leading-relaxed text-zinc-400">{run!.storyboard?.[scene.sceneIdx]?.scriptLine}</p>{run!.storyboard?.[scene.sceneIdx]?.endFrameImageUrl && <a href={run!.storyboard![scene.sceneIdx].endFrameImageUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex min-h-11 items-center text-xs text-[#FFCC00]">View end frame</a>}{scene.flaggedReason && <p className="mt-2 flex items-start gap-2 text-xs text-amber-500"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{scene.flaggedReason}</p>}<Button variant="secondary" className={`${control} mt-3 !w-full !px-2 !text-xs`} disabled={busy} onClick={() => void call(() => controller.regenScene(scene.sceneIdx))}>{controller.reshooting === scene.sceneIdx ? 'Updating…' : `Regenerate scene ${scene.sceneIdx+1}`}</Button></div></div>)}</div><p className="mt-4 text-xs leading-relaxed text-zinc-400">Approval starts video production and uses your video allowance or credits. Regenerated images also use your plan allowances.</p><Button className={`${control} mt-4 w-full`} disabled={busy || !readyToApprove || videoAllowed === null} onClick={() => videoAllowed === false ? onUpgrade() : void call(controller.approve)}>{videoAllowed === null ? allowanceLoading ? 'Checking video allowance…' : 'Video allowance unavailable' : videoAllowed === false ? 'Unlock video production' : 'Approve storyboard'}</Button>{videoAllowed === null && !allowanceLoading && <Button variant="secondary" className={`${control} mt-2 w-full`} onClick={onRetryAllowance}>Retry allowance</Button>}</GlassPanel>}
+            {atResult && <GlassPanel className="p-4 sm:p-5" aria-label="Your first cut"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your first cut.</h2>{run!.finalVideoUrl ? <video controls playsInline preload="metadata" src={run!.finalVideoUrl} poster={run!.thumbnailUrl} className="mt-4 max-h-[440px] w-full rounded-xl bg-zinc-950" aria-label="Generated ad video" /> : <p className="mt-4 text-sm text-zinc-400">The final video is not available yet.</p>}{run!.finalDownloadUrl && <a href={run!.finalDownloadUrl} download target="_blank" rel="noreferrer" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Download video</a>}<p className="mt-4 text-sm leading-relaxed text-zinc-400">Keep the cut, reshoot a scene, or apply an edit style. Custom free-form edits are not supported here yet.</p><div className="mt-3 flex flex-wrap gap-2">{run!.scenes.map(scene => <Button key={scene.sceneIdx} variant="secondary" className={`${control} !px-3`} disabled={busy} onClick={() => { setArmedScene(scene.sceneIdx); setArmedPreset(null); }}>Reshoot scene {scene.sceneIdx+1}</Button>)}</div>{armedScene !== null && <div className="mt-3 rounded-xl border border-white/10 p-3"><p className="text-xs leading-relaxed text-zinc-300">Scene {armedScene+1}: {run!.scenes.find(scene => scene.sceneIdx === armedScene)?.status === 'flagged' ? 'this regenerates the flagged scene. Plan limits still apply.' : 'additional generation may use your plan allowance or credits.'}</p><Button className={`${control} mt-3`} disabled={busy} onClick={() => { const index = armedScene; setArmedScene(null); void call(() => controller.reshoot(index)); }}>Confirm reshoot</Button></div>}<label className="mt-5 block text-xs text-zinc-400">Edit style<select aria-label="Edit style" className={`${inputStyle} mt-1`} disabled={busy} value={armedPreset ? armedPreset.value ?? 'auto' : run!.presetId ?? 'auto'} onChange={event => { const selected = styles.find(style => (style.value ?? 'auto') === event.target.value)!; if (selected.locked && !presetUnlocked) onUpgrade(); else { setArmedPreset(selected); setArmedScene(null); } }}>{styles.map(style => <option key={style.label} value={style.value ?? 'auto'}>{style.label}{style.locked && !presetUnlocked ? ' · Pro' : ''}</option>)}</select></label>{armedPreset && <Button className={`${control} mt-3`} disabled={busy} onClick={() => { const preset = armedPreset.value; setArmedPreset(null); void call(() => controller.choosePreset(preset)); }}>Apply style</Button>}</GlassPanel>}
+          </div>
+        </div>
+        <footer className="shrink-0 border-t border-white/10 bg-zinc-950 px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-3 sm:px-8">
+          <div className="mx-auto max-w-2xl">
+            {draft.heroImageBase64 && !run && <div className="mb-2 flex items-center gap-3 rounded-xl border border-white/10 p-2"><img src={draft.heroImageBase64} alt="Attached product" className="h-12 w-12 shrink-0 rounded-lg object-cover" /><p className="min-w-0 flex-1 truncate text-xs text-zinc-300">{draft.imageName || 'Product photo'}</p><Button variant="ghost" className={`${control} !p-3`} disabled={disabled} aria-label="Remove product photo" onClick={() => { uploadEpoch.current++; setDraft({ ...draft, heroImageBase64: '', imageName: '' }); }}><X className="h-4 w-4" /></Button></div>}
+            <div className={`${MAT_PLATE} flex items-end gap-2 rounded-2xl border border-white/10 p-2 focus-within:border-[#FFCC00]/60`}>
+              <input ref={upload} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Product photo" className="hidden" disabled={disabled || !!run} onChange={event => { void attach(event.target.files?.[0]); event.target.value = ''; }} />
+              {!run && <Button variant="ghost" className={`${control} !p-3`} aria-label="Attach product photo" disabled={disabled} onClick={() => upload.current?.click()}>{uploading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Paperclip className="h-5 w-5" />}</Button>}
+              <textarea ref={composer} aria-label="Message Grifon" placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'} value={text} onChange={event => setText(event.target.value)} disabled={disabled} maxLength={4000} rows={2} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && event.keyCode !== 229) { event.preventDefault(); send(); } }} className="min-h-11 max-h-32 min-w-0 flex-1 resize-none bg-transparent px-1 py-2 text-sm leading-relaxed text-white outline-none placeholder:text-zinc-400 disabled:opacity-50" />
+              <Button className={`${control} !p-3`} aria-label="Send" disabled={disabled || !text.trim()} onClick={send}><ArrowUp className="h-5 w-5" /></Button>
+            </div>
+            <p className="mt-2 text-center text-[11px] text-on-surface-sublabel">{saved ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} No generation starts until you confirm.</p>
+          </div>
+        </footer>
+      </section>
+    </div>
+  </div>;
+}

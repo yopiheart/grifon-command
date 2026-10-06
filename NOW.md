@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, owner approved held-card Reading; prior work preserved**
+**Stamped: 2026-10-06, companion chat ready for local review; prior work preserved**
 
 ## ▶ NEXT ACTION
-Next: text-chat integration with real state events; actual phone performance pending.
-Branch codex/griffin-live-prototype, draft PR163 stacked on PR162.
-assets/3d-lab/grifon-companion-live: Reading holds a card and traces its text with a wing.
-Fixed-camera baked appearance; local http://127.0.0.1:8765/ needs host server running.
-qa/reading-held/owner-approval.json binds acceptance to exact preview/source hashes.
-Blink continuity preserved; prior QA/AMD timing retained, not current phone FPS.
-Independent source/pose review clear; build/1432 tests PASS; no real tasks/mic.
-Approved v05/rig-v09 preserved in repo/personal Blender skill; no paid/deploy/merge.
+Next: owner review of chat/reactions, then an explicitly cost-capped paid ad test.
+Branch codex/companion-chat; draft PR to be opened against PR163's branch.
+Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked outputs).
+Real /app?experience=companion reuses ProducerFlow; guided product-ad intake only.
+Inline brief/storyboard/First Cut, account drafts, recovery and allowance guards.
+Approved griffin/Reading/blinks preserved byte-for-byte; idle/reading/working/ready.
+Build/1451 unit tests and18 focused browser cases PASS; chat QA under assets/3d-lab/.
+No paid/deploy/merge; real provider end-to-end, voice and physical phone FPS pending.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

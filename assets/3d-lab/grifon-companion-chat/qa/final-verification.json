@@ -1,0 +1,185 @@
+{
+  "verdict": "PASS",
+  "sourceUnchangedSinceRecording": false,
+  "postRecordingFormatting": [
+    {
+      "file": "components/CompanionChat/CompanionChatSurface.tsx",
+      "recordedSha256": "f94f447a8052b62db082c85842ad02f2f166d1326d56294051ad755f73ff44ca",
+      "currentSha256": "db20354298ecf493938a754a7b32c08594996897a01b3a636d404c7f1902ca17",
+      "change": "Removed exactly three extra CRLF blank lines at EOF. Runtime code is byte-identical; earlier build, unit, browser and media evidence reused."
+    }
+  ],
+  "unit": {
+    "command": "npm.cmd run test -- tests/unit/companionIntake.test.ts",
+    "exitCode": 0,
+    "passed": 19,
+    "durationSeconds": 0.566
+  },
+  "browser": {
+    "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts",
+    "exitCode": 0,
+    "passed": 18,
+    "durationSeconds": 29.7,
+    "engine": "Installed Microsoft Edge, isolated contexts",
+    "viewports": [
+      {
+        "width": 320,
+        "height": 844
+      },
+      {
+        "width": 375,
+        "height": 667
+      },
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 1280,
+        "height": 900
+      }
+    ]
+  },
+  "originalFailure": {
+    "report": "baseline-report.json",
+    "sourceCommit": "70506cf20b57ef5c1db3577d9176b394c1123914",
+    "exitCode": 1,
+    "reason": "Actual authenticated app route had no companion chat composer."
+  },
+  "allowanceRegression": {
+    "report": "allowance-regression.json",
+    "oldWrapperExitCode": 1,
+    "oldWrapperFailure": "Generate exposed before billing allowance was known",
+    "fixedPass": true
+  },
+  "verified": [
+    "Guided brief and image; zero starts until explicit Generate; duplicate click starts once",
+    "Truthful progress from callbacks; storyboard approval before video; result and confirmed supported revisions",
+    "IME composition Enter does not send; invalid file rejected; focus retained",
+    "Account-isolated draft reload and late attachment completion discarded on account change",
+    "Actual App and ProducerFlow saved-run restoration/retry use same run without resubmission",
+    "Actual ProducerFlow ignores delayed research and stale orchestrator callbacks after cancellation",
+    "Actual route blocks generation while allowance pending/failed, recovers on retry, preserves brief through pricing and Back",
+    "Plan/preset gates and explicit revision confirmations",
+    "All four viewport layouts: no horizontal overflow and visible button targets at least44px",
+    "Real single avatar iframe ready; state bridge, pointer gaze, pause pose/frames/props freeze and resume",
+    "Reduced-motion static pose; context loss and asset load fallback keep chat usable; asset retry restores motion"
+  ],
+  "media": {
+    "video": "mobile-demo.webm",
+    "videoSeconds": 24.4,
+    "gif": "mobile-preview.gif",
+    "gifSeconds": 15.5,
+    "gifSourceIntervalSeconds": [
+      2.5,
+      18
+    ],
+    "gifFps": 12,
+    "playbackSpeed": 1,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "normalConsoleErrors": [],
+    "blockedOrUnexpectedRequests": [],
+    "metrics": {
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "frameCount": 1373,
+      "state": "ready",
+      "warmMedianMs": 16.700000000000728,
+      "warmP95Ms": 17,
+      "samples": 180
+    }
+  },
+  "visualReview": {
+    "inspected": [
+      "initial-375.png",
+      "initial-1280.png",
+      "mobile-reading.png",
+      "mobile-summary.png",
+      "mobile-working.png",
+      "mobile-storyboard.png",
+      "mobile-result.png",
+      "gif-reviewed-frame.png"
+    ],
+    "findings": "Approved griffin appearance recognizable; mobile card/tapping poses visible; composer and actions readable; no gross clipping or horizontal overflow. Mocked generation and existing sample-media badge remains visible. GIF was decoded and a frame inspected.",
+    "limits": "Selected actual frames inspected; this is not an exhaustive perceptual review of every frame."
+  },
+  "boundaries": [
+    "No paid provider calls or production writes. HTTP seams are mocked fail-closed; only local static assets and read-only Google Fonts are allowed.",
+    "The dev fixture uses the real UI and real avatar with a mock controller. Its image/video results are pre-existing sample media, not generated from the brief.",
+    "Separate actual App/ProducerFlow tests cover wiring, cancellation, saved-run and allowance behavior through mocked public service/API boundaries. They do not prove provider output quality or live paid generation.",
+    "Timing uses desktop AMD hardware and mobile viewport/touch emulation, not an actual phone benchmark.",
+    "Full build and all-repository tests were run separately by parent."
+  ],
+  "sourceHashes": {
+    "App.tsx": "8ee4793e898298aeab23501e2074d6c21c01d60269cec3f07cf977884f0a76b8",
+    "components/CompanionChat/CompanionAvatar.tsx": "4a01e31309e94328eb890f519ef62c28241f029a50994a13d4339c9704392348",
+    "components/CompanionChat/CompanionChatSurface.tsx": "f94f447a8052b62db082c85842ad02f2f166d1326d56294051ad755f73ff44ca",
+    "components/CompanionChat/index.tsx": "d9cbcd26a493a8cb7cedbc4927f4745010c18455a7274bf59f67a08e634f942c",
+    "components/OneShotAd/ProducerFlow.tsx": "d5ed72f5d66d3a2bb6f3503eb2fa207b39a0c8a24b60bbd6516576d7bfc7d515",
+    "services/companionIntake.ts": "760106ff3e3d30885a33ce6261dbb43faf88a9036c12ef0c3593082384ac8113",
+    "public/companion/bridge.js": "66e575f98d041aec786c4e7b9d47dc1bc25016cee6154e44dd71096d5775e64c",
+    "public/companion/main.js": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+    "public/companion/reactions.js": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce",
+    "dev/companionChatPreview.tsx": "4542625bf452acfdd20f93db348ba4a7b1aca8fb9b5c980ef358eac390032f91",
+    "companion-chat-preview.html": "ffbadc85bc71585b15554d3094681ae0b027623d0c3021d948f5a6f488c934dc"
+  },
+  "testHashes": {
+    "tests/unit/companionIntake.test.ts": "71ef9bf3fd23514a45dbfa45fd2091b96959c7d97d843cbe0c1b634727870e36",
+    "tests/e2e/companion-chat.spec.ts": "f4d8eda46c37bc617476aaf76a4f56d49f9c3ef2fb336e9fafc6312872bfb6c0",
+    "tests/e2e/companion.config.ts": "5b5b9f3b84a5eb12f9e646d0bc07ff1ac454261387d63e088b9150848afa079f"
+  },
+  "artifacts": {
+    "initial-320.png": {
+      "bytes": 55334,
+      "sha256": "09d8465b34d519f860fcdc299983d88c150aaf0b9e5524209016ade303b6ecf1"
+    },
+    "initial-375.png": {
+      "bytes": 53592,
+      "sha256": "fda6ffab84b461d5caf26994800d4bc03723326a190cccbaa7e689614d5c405a"
+    },
+    "initial-390.png": {
+      "bytes": 54673,
+      "sha256": "7a8b350d519df30308d5570fe30ff64b7c14f367cd5cbe778df08b35cfc4555b"
+    },
+    "initial-1280.png": {
+      "bytes": 101947,
+      "sha256": "0e73ea2890ff41baf33dfc9fb479925a1acbee4ea0ff4e03503b09e041e1c3be"
+    },
+    "mobile-reading.png": {
+      "bytes": 59279,
+      "sha256": "f42935283cfda4149d66c2569d0b50423388ce163fe0789bcb43f2fa8ff6e22b"
+    },
+    "mobile-summary.png": {
+      "bytes": 85109,
+      "sha256": "99b933c1395952f5afdcd075e05334513ed3936d473c45ad75b21733057da230"
+    },
+    "mobile-working.png": {
+      "bytes": 63453,
+      "sha256": "c398d6b8d4cf2704e33d71fd2cc4cd63041d60f3fec14a3ecdfc76d3c0db5b63"
+    },
+    "mobile-storyboard.png": {
+      "bytes": 85479,
+      "sha256": "a7317233d3c6e384ff22760e24178975a213fbe5676372fa5d611872bb67433d"
+    },
+    "mobile-result.png": {
+      "bytes": 199256,
+      "sha256": "41c6f94f93cceffca2590c95ac265b2647f3a06164aa441c5a4e6636806c0b4d"
+    },
+    "mobile-demo.webm": {
+      "bytes": 1368663,
+      "sha256": "e0b34849fc215fdd240f1eb743f06efe596ef0a18740cef16a2881f760c712cd"
+    },
+    "mobile-preview.gif": {
+      "bytes": 2387780,
+      "sha256": "754c5a94927df0701985614420a1612f4931cc15d2ce3231c64598c94d563751"
+    }
+  },
+  "processHandoff": {
+    "vitePid": 23652,
+    "url": "http://127.0.0.1:5173/companion-chat-preview.html",
+    "owner": "Parent explicitly accepted ownership for manual preview; left running. Logs/PID excluded from git.",
+    "standalone8765": "Untouched"
+  }
+}

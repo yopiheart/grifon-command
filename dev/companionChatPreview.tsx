@@ -1,0 +1,92 @@
+// DEV ONLY: renders the real chat surface with a public mock controller. No provider imports.
+import { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import { CompanionChatSurface } from '../components/CompanionChat/CompanionChatSurface';
+import type { ProducerSurfaceController } from '../components/OneShotAd/ProducerFlow';
+import type { ProductionInput } from '../services/oneShotIntake';
+import type { ProductionRun } from '../services/producerOrchestrator';
+import '../index.css';
+
+const IMAGE = '/tests/fixtures/sample-batch/timpla-hero.jpg';
+const VIDEO = '/tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4';
+const stageIds = ['market_research', 'script', 'storyboard', 'scene_images', 'video_prompts', 'video', 'thumbnail', 'voices', 'edl', 'final_render'] as const;
+type FixtureEvent = 'researching' | 'script' | 'storyboard' | 'video' | 'result' | 'error' | 'resume-error';
+type FixtureCall = { name: string; value?: unknown };
+const calls: FixtureCall[] = [];
+const defaultInput: ProductionInput = { brandName: 'North Coffee', productName: 'Cold brew', productDescription: 'Fresh coffee for busy mornings', offer: 'Two bottles for 199', price: '199', heroImageBase64: IMAGE, avatar: { url: '', description: '', ethnicity: 'Filipino', prompt: '' }, voiceId: '', language: 'English', aspectRatio: '9:16', scriptType: 'Testimonial' };
+
+function makeRun(input: ProductionInput, userId: string): ProductionRun {
+  return { runId: 'companion-fixture-run', userId, createdAt: 1, updatedAt: 1, status: 'running', input,
+    stages: stageIds.map(id => ({ id, label: id === 'script' ? 'Writing your script' : id.replace(/_/g, ' '), status: id === 'market_research' ? 'running' : 'pending', attempts: 0 })), scenes: [] };
+}
+
+function Fixture() {
+  const [userId, setUserId] = useState('fixture-user-a');
+  const checkpointKey = `companion_fixture_checkpoint:${userId}`;
+  const [run, setRun] = useState<ProductionRun | null>(() => {
+    try { return JSON.parse(sessionStorage.getItem('companion_fixture_checkpoint:fixture-user-a') || 'null'); } catch { return null; }
+  });
+  const [phase, setPhase] = useState<ProducerSurfaceController['phase']>('launch');
+  const [error, setError] = useState('');
+  const [quotaBlocked, setQuotaBlocked] = useState(false);
+  const [presetUnlocked, setPresetUnlocked] = useState(true);
+  const [videoAllowed, setVideoAllowed] = useState<boolean | null>(true);
+  const saveRun = (next: ProductionRun | null) => {
+    setRun(next);
+    if (next) sessionStorage.setItem(checkpointKey, JSON.stringify(next));
+    else sessionStorage.removeItem(checkpointKey);
+  };
+  const emit = (event: FixtureEvent) => {
+    calls.push({ name: 'fixture-event', value: event });
+    if (event === 'error' || event === 'resume-error') {
+      setError('Fixture connection interrupted. Nothing new was submitted.');
+      setPhase(event === 'resume-error' ? 'resume-error' : 'error');
+      if (run) saveRun({ ...run, status: 'error', error: 'Fixture connection interrupted.' });
+      return;
+    }
+    setError(''); setPhase(event === 'researching' ? 'researching' : 'launch');
+    const next = structuredClone(run || makeRun(defaultInput, userId));
+    next.status = event === 'storyboard' || event === 'result' ? 'review' : 'running';
+    next.gate = event === 'storyboard' ? 'storyboard' : event === 'result' ? 'first_cut' : undefined;
+    const current = event === 'researching' ? 0 : event === 'script' ? 1 : event === 'storyboard' ? 5 : event === 'video' ? 5 : 10;
+    next.stages = next.stages.map((s, i) => ({ ...s, status: i < current ? 'done' : i === current && event !== 'storyboard' ? 'running' : 'pending' }));
+    if (['storyboard', 'video', 'result'].includes(event)) {
+      next.storyboard = [{ scriptLine: `Start your morning with ${next.input.brandName}.`, sceneDescription: 'Existing local sample product photo, not generated.', imageUrl: IMAGE }];
+      next.scenes = [{ sceneIdx: 0, imageUrl: IMAGE, status: event === 'result' ? 'done' : 'pending', ...(event === 'result' ? { videoUrl: VIDEO } : {}) }];
+    }
+    if (event === 'result') { next.finalVideoUrl = VIDEO; next.finalDownloadUrl = VIDEO; next.storyboardApproved = true; }
+    saveRun(next);
+  };
+  const controller: ProducerSurfaceController = {
+    run, phase, error, busy: phase === 'researching' || run?.status === 'running', reshooting: null, presetBusy: false, approving: false,
+    start: async input => { calls.push({ name: 'start', value: input }); setPhase('researching'); saveRun(makeRun(input, userId)); },
+    approve: async () => { calls.push({ name: 'approve' }); emit('video'); },
+    regenScene: async index => { calls.push({ name: 'regenScene', value: index }); },
+    reshoot: async index => { calls.push({ name: 'reshoot', value: index }); },
+    choosePreset: async id => { calls.push({ name: 'choosePreset', value: id }); },
+    retry: async () => { calls.push({ name: 'retry' }); setError(''); setPhase('launch'); if (run) saveRun({ ...run, status: 'running', error: undefined }); },
+    retryResume: () => { calls.push({ name: 'retryResume' }); setError(''); setPhase('launch'); },
+    reset: () => { calls.push({ name: 'reset' }); saveRun(null); setPhase('launch'); setError(''); },
+    cancel: () => { calls.push({ name: 'cancel' }); saveRun(null); setPhase('launch'); setError(''); },
+  };
+  Object.assign(window, { companionFixture: {
+    snapshot: () => ({ calls: structuredClone(calls), run, phase, userId }),
+    emit,
+    account: (id: string) => { setUserId(id); setRun(null); setPhase('launch'); setError(''); },
+    quota: setQuotaBlocked, presets: setPresetUnlocked, videoAllowed: setVideoAllowed,
+    clearCalls: () => { calls.splice(0); },
+  } });
+  return <div className="companion-fixture" style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}><style>{'.companion-fixture > [data-testid="companion-chat"] { height: auto; flex: 1; min-height: 0; }'}</style><details style={{ flexShrink: 0, background: '#18181b', color: '#fafafa', padding: '0 16px', borderBottom: '1px solid #3f3f46' }}>
+    <summary style={{ minHeight: 44, display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: 13 }}>Local test controls · mocked generation · no provider calls</summary>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, paddingBottom: 12 }}>
+      {(['researching', 'script', 'storyboard', 'video', 'result', 'error', 'resume-error'] as const).map(event => <button type="button" key={event} onClick={() => emit(event)} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: {event}</button>)}
+      <button type="button" onClick={controller.reset} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: reset</button>
+      <span style={{ width: '100%', fontSize: 12 }}>These controls emit test callbacks. They do not create an ad or call a provider. Scene images and the video are existing local samples, not generated from your brief.</span>
+    </div>
+  </details><CompanionChatSurface key={userId} controller={controller} userId={userId}
+    onBack={() => calls.push({ name: 'back' })} onUpgrade={() => calls.push({ name: 'upgrade' })}
+    presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed}
+    fixtureLabel="Local test fixture · mocked generation · existing sample media" /></div>;
+}
+
+if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(<Fixture />);

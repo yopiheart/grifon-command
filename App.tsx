@@ -9,6 +9,7 @@ import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
 import OneShotAd from './components/OneShotAd';
+import CompanionChat from './components/CompanionChat';
 import { ReviewScreen } from './components/OneShotAd/ReviewScreen';
 import ExpertMode from './components/ExpertMode';
 import LockedVideoPreview from './components/LockedVideoPreview';
@@ -60,7 +61,7 @@ import {
   saveBusinessVertical,
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
-import { popIntendedModule } from './services/moduleIntentService';
+import { popIntendedModule, setIntendedModule } from './services/moduleIntentService';
 import { popIntendedVertical } from './services/verticalIntentService';
 import { setReturnToAd, popReturnToAd } from './services/returnToAdService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
@@ -160,7 +161,7 @@ const checkoutReturnHref = (search: string): string => {
 // Landing task-specific CTAs deep-link into these modules via moduleIntentService.
 // Allowlist so a stale/tampered sessionStorage value can never route to an
 // unexpected activeModule. Ids match the strings the activeModule switch uses.
-const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads']);
+const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads', 'companion']);
 
 // The landing one-question segmentation answers in the EXISTING One-Shot vertical
 // vocabulary (LaunchScreen VERTICALS → deriveBusinessType). Allowlisted so neither
@@ -201,7 +202,7 @@ const App: React.FC = () => {
   const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
   // Purchased top-up balances — the video gate below must see a paid ₱499
   // credit, or the buyer hits the paywall for the thing they just bought.
-  const { credits: topupCredits, loading: creditsLoading, refetch: refetchQuota } = useQuota();
+  const { credits: topupCredits, loading: creditsLoading, loaded: creditsLoaded, refetch: refetchQuota } = useQuota();
 
   // The hook fetches once per mount, which goes stale across in-SPA checkout
   // returns and OTP sign-in (critic 2026-07-30: a buyer came back to a
@@ -259,7 +260,15 @@ const App: React.FC = () => {
   // time — see services/launchGate.ts.
   const [hasLaunchPass, setHasLaunchPass] = useState(() => LAUNCH_LOCK_ENABLED && hasValidPass());
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const [activeModule, setActiveModule] = useState<string | null>(null);
+  const [activeModule, setActiveModule] = useState<string | null>(() => new URLSearchParams(window.location.search).get('experience') === 'companion' ? 'companion' : null);
+  const selectDashboardModule = (module: string) => {
+    if (module === 'companion') window.history.pushState({}, '', '/app?experience=companion');
+    setActiveModule(module);
+  };
+  const leaveCompanion = () => {
+    window.history.pushState({}, '', '/app');
+    setActiveModule(null);
+  };
   // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
   // "Clone your own voice" → the Voice Cloning tab).
   const [signalInitialTile, setSignalInitialTile] = useState<'tts' | 'vc' | 'clone' | 'scene-pipeline' | undefined>(undefined);
@@ -495,6 +504,7 @@ const App: React.FC = () => {
     const onPop = () => {
       setCurrentRoute(detectInitialRoute());
       setLegalReturn(window.history.state?.legalReturn ?? null);
+      setActiveModule(previous => new URLSearchParams(window.location.search).get('experience') === 'companion' ? 'companion' : previous === 'companion' ? null : previous);
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
@@ -576,11 +586,14 @@ const App: React.FC = () => {
   // the billing resume so a pending plan checkout always wins: if a plan intent
   // is still queued we bail and let the checkout effect below navigate away.
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || currentRoute !== 'app') return;
     if (peekIntendedPlan()) return;
     const mod = popIntendedModule();
-    if (mod && INTENT_MODULE_IDS.has(mod)) setActiveModule(mod);
-  }, [isAuthenticated]);
+    if (mod && INTENT_MODULE_IDS.has(mod)) {
+      setActiveModule(mod);
+      if (mod === 'companion') window.history.replaceState({}, '', '/app?experience=companion');
+    }
+  }, [isAuthenticated, currentRoute]);
 
   // Return-to-ad intent (stashed by the Step-8 paywall exits). Same shape and
   // ordering as the module deep-link above — a pending plan checkout still wins,
@@ -1682,7 +1695,12 @@ const App: React.FC = () => {
   let moduleElement: React.ReactNode;
 
   if (!activeModule) {
-    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} onResumeFinishedAd={() => { if (!restoreFinishedAd()) setActiveModule('creative_director'); }} />;
+    moduleElement = <Dashboard onSelectModule={selectDashboardModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} onResumeFinishedAd={() => { if (!restoreFinishedAd()) setActiveModule('creative_director'); }} />;
+  } else if (activeModule === 'companion' && userId) {
+    moduleElement = <CompanionChat key={userId} userId={userId} presetUnlocked={devUnlocked || planAtLeast(plan_id, 'pro')} isBusinessTier={plan_id === 'business'}
+      videoAllowed={subLoading || creditsLoading || !creditsLoaded ? null : plan_id !== 'free' || topupCredits.video_ad_credits > 0}
+      videoAllowanceLoading={subLoading || creditsLoading} onRetryVideoAllowance={refetchQuota}
+      onBack={leaveCompanion} onUpgrade={() => { setIntendedModule('companion'); goToLegal('pricing'); }} />;
   } else if (activeModule === 'generate_video') {
     // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
     // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
