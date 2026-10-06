@@ -1,14 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, five live griffin reactions verified; prior work preserved**
+**Stamped: 2026-10-06, griffin blink continuity and Reading refined; prior work preserved**
 
 ## ▶ NEXT ACTION
 Next: owner desktop review tomorrow; actual phone performance and chat integration.
 Branch codex/griffin-live-prototype, draft PR163 stacked on PR162.
-assets/3d-lab/grifon-companion-live: Idle/Listening/Reading/Working/Ready previews.
+assets/3d-lab/grifon-companion-live: natural blink persists; Reading has no page prop.
 Fixed-camera baked appearance; local http://127.0.0.1:8765/ needs host server running.
-qa/reactions: 35 checks PASS, baseline rejected, mobile GIF/MP4, full blink/contact.
-AMD desktop median16.7ms/p95<=17ms; mobile emulation is NOT phone FPS.
-Independent source/pose/brand review clear; build/1432 tests PASS; no real tasks/mic.
+qa/blink-continuity: original fails4; fixed7+preview9 PASS, new mobile GIF/MP4.
+Prior35 reaction checks/AMD timing retained; phone FPS and owner review pending.
+Independent source/pose review clear; build/1432 tests PASS; no real tasks/mic.
 Approved v05/rig-v09 preserved in repo/personal Blender skill; no paid/deploy/merge.
 
 ## Motion film / PR156

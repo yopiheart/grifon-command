@@ -124,7 +124,7 @@ function selectState(next, fromTour = false) {
   if (!fromTour) touring = false;
   const changed = reactionController.setState(next, reducedMotion);
   reaction = reactionController.snapshot();
-  blinkStart = -10; nextBlink = activeTime+3.4;
+  // Natural blinking keeps its own clock across reaction changes.
   target.x = 0; target.y = 0; targetHistory.length = 0; relaxAt = Infinity;
   syncButtons(); updateStatus();
   return changed;
@@ -194,7 +194,7 @@ new IntersectionObserver(entries => { visible = entries[0].isIntersecting; lastF
 
 function updateStatus() {
   if (failed) return;
-  const labels = { idle: 'Idle preview', listening: 'Listening preview · microphone off', reading: 'Reading preview · sample page', working: 'Working preview · no task running', ready: 'Ready preview' };
+  const labels = { idle: 'Idle preview', listening: 'Listening preview · microphone off', reading: 'Reading preview · attentive gaze', working: 'Working preview · no task running', ready: 'Ready preview' };
   status.textContent = `${paused ? 'Paused · ' : touring ? 'Preview all · ' : ''}${labels[reaction.state]}${reducedMotion ? ' · reduced motion' : ''}`;
 }
 
