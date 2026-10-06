@@ -3,7 +3,7 @@
 
 ## ▶ NEXT ACTION
 Next: owner review of chat/reactions, then an explicitly cost-capped paid ad test.
-Branch codex/companion-chat; draft PR to be opened against PR163's branch.
+Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
 Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked outputs).
 Real /app?experience=companion reuses ProducerFlow; guided product-ad intake only.
 Inline brief/storyboard/First Cut, account drafts, recovery and allowance guards.
