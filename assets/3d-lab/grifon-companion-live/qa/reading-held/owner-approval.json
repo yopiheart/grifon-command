@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-06",
+  "owner": "Neil",
+  "statement": "Okaay bro approved na to. So anong next?",
+  "scope": "Owner visual approval of the presented held-card Reading reaction, including the supporting wing, tracing wing and natural blink in the 12-second mobile preview. Preserve this accepted Reading baseline.",
+  "source_commit": "14eb5c4189eda50d5340856e33c28b3e706dc776",
+  "gif_sha256": "7bc3b218332b242b2ea2a3882b575bc5a913e4534e9f5b7f2f987520ed518819",
+  "mp4_sha256": "77706a2fc6387782a7cb0a469145eb21caee0f2c2fe5ff11e3763e4c4ff9a57e",
+  "main_js_sha256": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+  "reactions_js_sha256": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce",
+  "limits": "Visual approval does not establish physical-phone performance or production chat/agent bindings. No merge, deployment or paid operation authorized by this approval."
+}

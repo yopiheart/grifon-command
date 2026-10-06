@@ -1,12 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, visibly held-card Reading verified; prior work preserved**
+**Stamped: 2026-10-06, owner approved held-card Reading; prior work preserved**
 
 ## ▶ NEXT ACTION
-Next: owner review of held-card Reading; actual phone performance and chat integration.
+Next: text-chat integration with real state events; actual phone performance pending.
 Branch codex/griffin-live-prototype, draft PR163 stacked on PR162.
 assets/3d-lab/grifon-companion-live: Reading holds a card and traces its text with a wing.
 Fixed-camera baked appearance; local http://127.0.0.1:8765/ needs host server running.
-qa/reading-held: prior subtle pose rejected; 13 scoped checks PASS, cropped GIF/MP4.
+qa/reading-held/owner-approval.json binds acceptance to exact preview/source hashes.
 Blink continuity preserved; prior QA/AMD timing retained, not current phone FPS.
 Independent source/pose review clear; build/1432 tests PASS; no real tasks/mic.
 Approved v05/rig-v09 preserved in repo/personal Blender skill; no paid/deploy/merge.
