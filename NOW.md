@@ -1,89 +1,78 @@
 # NOW - the resume doc
-**Stamped: 2026-10-03, standalone STP video Gmail draft verified; no assistant send**
+**Stamped: 2026-10-06, premium Oceanides profile and printable brochure ready for review**
 
 ## Current work
-Branch codex/oceanides-stp-explainer, based on profile head d3d08102.
-Draft PR153 https://github.com/yopiheart/grifon-command/pull/153 stacked on PR152.
-No merge, deployment or public publication requested.
-Email sending ON HOLD. New standalone MP4 draft verified DRAFT, no To or SENT.
-CombinedPPTX was created as draft; latest Gmail reconciliation finds it in SENT.
-No assistant send. Private receipts .tmp/oceanides-email/{draft,video-draft}-receipt.json.
-Neil withdrew the permit request; existing deck is for an introductory employee presentation.
+Branch codex/oceanides-premium-profile-brochure, based on STP head 865b9d9b.
+New draft PR creation pending; stack on codex/oceanides-stp-explainer (PR153).
+No merge, deployment, cloud publication or email send requested.
+Neil wants the approved STP video integrated with the company profile for meetings.
+Separate print brochure is the leave-behind for company prospects.
 
-## Current review deliverables
-clients/oceanides/company-profile/output/: PPTX/HTML/PDF named
-Oceanides-Company-Profile-STP-Meeting-Review (9 widescreen16:9 slides).
-Company intro/services/proof, renovation, pest, STP intro, embedded video, close.
-PPTX:15,733,022bytes, SHA56680e301d1ea8f21213c0dcdb4950b1c6cc5977aa44c19678ec7ffb02a075f8.
-HTML:21,303,502bytes, SHA c242b21beae1fed3e043fc0709ec9a9527f25e2edc7d4ccd5644044a0abc429d.
-PDF:7,785,748bytes, SHA74cf6b554bdcd0e862aa9eb659cb9ca8fe179c5ae89d18094b2fa2cd648faa40.
-PDF uses static movie poster. PPTX company text remains editable; MP4 internal.
-HTML is self-contained: manual start, pause on exit, next steps after movie end.
-Production provenance/status: company-profile/meeting-review.delivery.json.
-Generated review HTML keeps exact bytes in Git; scoped -text attribute avoids CRLF conversion.
-Original8slide source unchanged;50 package members preserved,3 footers renumbered.
-Local preview http://127.0.0.1:51307/ queued in Codex right browser panel.
-Owned preview server PID26336 / exec session51109; leave for Neil review.
+## New review deliverables
+clients/oceanides/company-profile/output/pptx/:
+Oceanides-Company-Profile-Premium-2026.pptx, 10 editable 16:9 slides, 16,212,004bytes.
+SHA d2d41eeebc3d32d65aa92381211bd0fe45dc2ec60633ce3982165a1b692dd003.
+Company intro/background, 5 services, actual septic proof, STP intro/film, next steps.
+Film internally embedded on slide9, explicit click start; no external video link.
+output/pdf/Oceanides-Company-Brochure-A5-2026.pdf, 8 pages, 7,419,046bytes.
+SHA 21292da07c6ce60a16d22ba770aeb01b3ee875ab21427fb3268cad5db1a708fd.
+output/pdf/Oceanides-Company-Brochure-A4-Booklet-Print-2026.pdf, 4 surfaces, 7,433,859bytes.
+SHA 92d2c292c9d1eafe166882366317cb4ec020dc2bd9b6fe38045c97c8295928ae.
+Print A4 landscape, actual size100%, duplex, flip short edge; nest2sheets/foldcenter.
+Imposition 8/1,2/7,6/3,4/5 yields148.5x210mm booklet;13mm safe margins.
+Two actual rendered cover previews are under output/preview/.
+Delivery provenance: company-profile/premium-2026.delivery.json.
+Builders: build-premium-presentation.mjs and build-premium-brochure.py.
+PPTX rebuild --replace-premium only replaces this task-owned new deck.
+All older deliverables, source illustrations, logo alpha and approved MP4 unchanged.
 
-## Tight STP film, pending review
-stp-explainer/output/Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4.
-9,925,374bytes, SHA40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea.
-99.733333s,1920x1080/30fps,2992 H.264 frames,AAC48kHz stereo.
-Same approved224words/12inputs and Flow score; no new paid generation.
-No time stretch; retained raw float samples bit-exact;10 quiet cuts total1.74018s.
-Removed old per-scene padding. Boundary speech gaps <=0.36s; natural pauses kept.
-Tight-only sample clocks fix measured normalization/limiter EOF PTS discontinuity.
-Strict independent full decode/packet clocks PASS; audio/video lengths match.
--16.25LUFS/-1.45dBTP,zero clipped/invalid samples; encoded visuals unchanged.
-Helpers: sync-aira-tight.mjs; render --narrated --aira --tight;
-mix --voice --aira --tight. Own distinct story/WAV/visual/mix outputs.
-Evidence .tmp/oceanides-stp/{aira-tight-sync,tight-independent-qa,frames-aira-tight}.
-Prior139.3s video unchanged and historically accepted by Neil (not this revision).
-Prior SHA9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d.
+## Design and factual sources
+D19 workflows/design_swipe_file.md: six Magnific previews visually compared.
+Clean editorial grid + Oceanides blue, warm white and navy; native editable text.
+Segoe UI Bold deck, Semibold/Light brochure, Arial body; PDF used fonts embedded.
+Existing imagery at original resolution; JPEG95 with chroma subsampling off.
+Brochure image resolution292-817effectiveDPI; actual before/after separate from AI scenes.
+New dated scoped rules in clients/oceanides/DESIGN.md extend D18; no other client rebrand.
+User reference Drive1bolz4WutO3283gjf-09fFClW9d818yRD is stored Oceanides.pptx,23slides.
+Slide1 supports established2021; optional direct user history confirmation unanswered.
+Stale reference fleet, client wall, contacts, leadership and accreditation excluded.
+premium-content.json covers background, history, mission/vision/values, services/process.
+No copied reference artwork or new paid generation; film frame copy provenance recorded.
 
 ## Verification
-Native PowerPoint16 hidden/read-only open,9 PNG exports and embedded movie PASS.
-Package/layout/reference-font/import gates PASS. Live projector playback untested.
-HTML actual playback/pause/ended,next/back/Home/Right controls PASS.
-Desktop1280x900/mobile375x667 no overflow,44px controls; QA tab/server cleaned.
-Independent BRAND_PASS44/50,zero flags; helper code review PASS after atomic staging.
-Original failed rebuilds lose good files; fixed private failure/replacement proofs PASS.
-Subjective new pacing still needs Neil review; actual deliverable hashes unchanged.
-Root build PASS; full Vitest1401passed/32skipped,113files passed/9skipped.
-Prior unchanged checkAnchors5s timeouts did not recur in current full run.
-Bundle-leak/voice-sync/domain/PowerShell ASCII/artifact-anchor gates PASS.
-Scoped HTML byte-preservation attribute: check:codex PASS26/26,staged blob hash exact.
-Node syntax/diff checks PASS; no application or manifest changes this revision.
-Evidence .tmp/oceanides-meeting{,-qa}, root-qa build/test logs under meeting.
+All10 final native PowerPoint exports,8PDF pages and4imposed surfaces visually PASS.
+Independent BRAND_PASS,zero critical findings/nits; PDF content/imposition/bounds PASS.
+PPTX package/layout/font policy/first-party import gates PASS,zero findings/warnings.
+Native PowerPoint read-only open; slide9 film99,734ms. Play/pause/resume via COM PASS.
+Idle held0ms; mouse click not exercised, media action/manual timing verified in OOXML.
+Actual projector hardware untested; source file not saved by QA.
+All used PDF text fonts embedded; no text overflow; complete tank rims/hands/tools.
+Node syntax, Python compile and scoped diff checks PASS; no application code changed.
+Atomic sibling staging preserves last-good deck and brochure on validation failure.
+Private evidence .tmp/oceanides-premium/{deck,brochure,independent-review}/.
+Final cover disclosure and navy process headings corrected and independently rechecked.
+Domain-language and artifact-anchor gates PASS; draft PR backup pending this commit.
 
-## Paid source locks retained
-Public Aira - Confident News Reporter CkDT8SVS21XIVk5BcuDe,ElevenLabs v4.
-One approved full request max1600existing credits,estimated1455;HTTP20007:09UTC.
-Actual debit unverified; no retry/purchase. voice-aira.spec COMPLETED_ACCEPTED.
-Raw100.72s SHA31437ba8e9497dcd7729501d2d58741c34a3f454a912037664b3d6e2fc99a137.
-Historical execution AUDIO_AND_ALIGNMENT_RECEIVED_PENDING_LISTENING kept for guard.
-Flow Musicv2.5 one150.024s take; approved max$0.50,estimated$0.375,debit unverified.
-Score SHA712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8.
-Music spec COMPLETED_ACCEPTED; execution AUDIO_RECEIVED_PENDING_LISTENING kept.
-Exact accepted score retained; -28LUFS bed,sidechain duck,1.2s in/3s out,no SFX.
-Personal airaandmeagan mPEHjC4AussYOrtIPSUB failedHTTP401;FAILED_NO_RETRY.
-No clone retry/purchase. Neil reported no plan and selected public Aira.
-Error logger retains sanitized errors; module-relative Aira receipt blocks repeat
-paid attempts across cwd. Prior offline original-defect/redaction/lock tests PASS.
+## Approved film and email continuity
+stp-explainer/output/Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4 unchanged.
+SHA40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea.
+99.733333s,1920x1080/30fps,9,925,374bytes; same approved224words/12inputs/Flow score.
+No time stretch; scene boundary speech gaps<=0.36s; -16.25LUFS/-1.45dBTP.
+Aira v4 source cap1600existingcredits and Flow score cap$0.50 locks remain retained.
+No clone retry/purchase. New revision made0paid calls.
+Older STP-Meeting-Review PPTX/PDF/HTML and accepted139.3s video remain retained.
+Email sending ON HOLD; no new email draft or send during this design task.
+Oct3 standalone MP4 draft verified DRAFT/noTo/noSENT; prior combined deck observed SENT.
+No assistant send. Private mail receipts .tmp/oceanides-email/.
+Neil withdrew permit inclusion; no permit appendix in new profile.
 
-## Client scope and contacts
+## Client scope and release context
 On-site STP treats domestic building wastewater; supplier/model/capacity unknown.
-Quarterly service removes wastewater AND solids; bill/volume unknown.
-May reduce liquid hauling with suitable design/permitted outlet. Sludge removal,
-inspection/equipment care continue; no total-elimination or guaranteed-savings claim.
-Oceanides coordinates specialists through turnover; illustrations disclosed.
-August introduces, plays narrated film, then assessment/quotation/Q&A.
+May reduce liquid hauling with suitable design/outlet; sludge/equipment care continue.
+No exact savings, maintenance-free or total siphoning elimination promises.
+Oceanides coordinates field teams/specialists through turnover; illustrations disclosed.
 0917 6716383(Globe); marketing@oceanidessepticandpest.com.
 Tramo Street Corner Dandan,Pasay City,Philippines1300.
-
-## Release context
-PR152 profile stacked on PR151 logo; original Widescreen-STP-Confirmed8slides and
-Print-STP-Confirmed7A4pages retained. Recovery PR150->PR146/CI review remains.
-PR146 preview/CI passed after payment; SSO blocks app smoke. No production deploy.
-Motion PR143->PR144->PR149 retained. Unrelated attachments/reference assets unstaged.
+Older stack PR153->PR152->PR151 and recoveryPR150->PR146 remain unmerged.
+Unrelated .codex-remote-attachments and workflows/assets/grifon reference dirs unstaged.
 NOW.md is the only resume document.

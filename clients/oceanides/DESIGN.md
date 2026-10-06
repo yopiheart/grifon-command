@@ -118,6 +118,32 @@ their existing rules.
   glass-synth motif, warm bass and subtle pulse with room for narration; no saved
   music fallback. Paid generation follows its exact approved spec.
 
+### Company profile and brochure: reference-led revision (2026-10-06)
+
+Neil requested a stronger branding system using the supplied Oceanides reference
+deck and several Magnific company-profile styles. D19 records the inspected
+references. This revision extends the minimal editorial direction above for the
+new premium deck and matching brochure; older deliverables remain unchanged.
+
+- Use a quiet warm-white grid, substantial photography, blue topic headings and
+  fine rules. Reserve navy for the closing composition. All navy-page titles and
+  process headings use warm white. Avoid patterned plates and repeated logo or
+  title lockups; the full transparent logo appears once on the cover.
+- New presentation: ten editable 16:9 slides, Segoe UI Bold display/topic titles
+  and Arial body text. Principal body copy is 25-28px on a 1280x720 canvas;
+  disclosures and footer metadata are subordinate. The approved 1080p STP film
+  is embedded locally and starts with an explicit click in slideshow mode.
+- Brochure: eight A5 pages (148.5x210mm), 13mm safe margins, Segoe UI Semibold
+  topic titles, Segoe UI Light history year and Arial body text. Embed PDF fonts;
+  keep photos at their original resolution. Provide a separate A4 duplex booklet
+  file imposed as 8/1, 2/7, 6/3, 4/5, printed at actual size and flipped on the
+  short edge. No edge bleed is required by this contained design.
+- Actual septic before/after images remain distinct from visibly disclosed
+  generated service scenes. The STP image is a frame from the approved film,
+  cropped through layout geometry; it is illustrative, not an engineering plan.
+- The supplied reference supports establishment in 2021. Exclude its stale
+  contacts, client logo wall, fleet, accreditation and leadership claims.
+
 **Clipboard sa trak, hindi sci-fi deck.** Kung ang Grifon ay "Unreal Engine
 meets Hollywood" (glass, glow, OLED black), ang Oceanides ay **print at
 pintura**: matte navy panels, amber signage, dashed work-order rules, totoong

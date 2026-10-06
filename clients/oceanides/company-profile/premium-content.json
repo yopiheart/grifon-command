@@ -1,0 +1,121 @@
+{
+  "company": {
+    "legalName": "Oceanides Plumbing Siphoning & Pest Management Services OPC",
+    "brand": "OCEANIDES",
+    "establishedYear": 2021
+  },
+  "contact": {
+    "phone": "0917 671 6383",
+    "phoneDigits": "09176716383",
+    "carrier": "Globe",
+    "email": "marketing@oceanidessepticandpest.com",
+    "address": "Tramo Street Corner Dandan, Pasay City, Philippines 1300"
+  },
+  "title": "Company profile",
+  "subtitle": "Property services for homes and company facilities",
+  "about": {
+    "heading": "Company background",
+    "body": "Oceanides coordinates property services for homes, condominiums and company facilities. We connect site findings with an agreed scope of work, a written quotation and the appropriate field team or specialist contractor.",
+    "support": "From the first inquiry to turnover, Oceanides remains your main contact for scheduling, site access and service coordination."
+  },
+  "history": {
+    "heading": "Established in 2021",
+    "body": "Oceanides began in 2021 with septic tank cleaning and plumbing services. Today, its offering brings together five service groups to support the care and upkeep of homes and facilities.",
+    "stages": [
+      {
+        "label": "2021",
+        "title": "Septic and plumbing services",
+        "detail": "Oceanides Plumbing Services was established."
+      },
+      {
+        "label": "Today",
+        "title": "A broader property service offering",
+        "detail": "Siphoning, plumbing, renovation and restoration, pest control, and STP projects."
+      }
+    ]
+  },
+  "mission": "Provide professional service through clear assessment, practical solutions and cost-conscious planning.",
+  "vision": "Be a trusted service partner for the care and upkeep of homes and facilities.",
+  "values": [
+    { "name": "Quality", "detail": "Care in the agreed work." },
+    { "name": "Integrity", "detail": "Clear scope and honest communication." },
+    { "name": "Respect", "detail": "Consideration for people and property." },
+    { "name": "Teamwork", "detail": "Coordination across teams and specialists." },
+    { "name": "Customer care", "detail": "Attention from inquiry to turnover." }
+  ],
+  "services": [
+    {
+      "name": "Siphoning",
+      "description": "Septic tank servicing based on tank conditions and site access.",
+      "items": ["Septic tank siphoning", "Septic tank cleaning", "Site and service assessment"],
+      "customerBenefit": "Plan the right service for your tank."
+    },
+    {
+      "name": "Plumbing",
+      "description": "Assessment and repair of drainage, pipe and water leak problems.",
+      "items": ["Drain declogging", "Plumbing and pipe leak repairs", "Troubleshooting based on site findings"],
+      "customerBenefit": "Address the problem with a defined repair scope."
+    },
+    {
+      "name": "Renovation & restoration",
+      "description": "Repair and improvement work tailored to the property and agreed scope.",
+      "items": ["House and condominium renovation", "Restoration and ceiling repair or replacement", "Roof leak repair and waterproofing", "House cleaning within the agreed scope"],
+      "customerBenefit": "Coordinate repairs and upkeep through one contact."
+    },
+    {
+      "name": "Pest control",
+      "description": "Service planning based on reported pest concerns and a property assessment.",
+      "items": ["Assessment of pest activity", "Treatment scope based on site findings", "Scheduling and contractor coordination"],
+      "customerBenefit": "Match the service to the pest concern."
+    },
+    {
+      "name": "Sewage treatment plant (STP)",
+      "description": "Coordination of projects that treat building wastewater on site.",
+      "items": ["Site requirements assessment", "Technical scope and quotation", "Specialist coordination through turnover"],
+      "customerBenefit": "Understand the site requirements before committing to a system."
+    }
+  ],
+  "delivery": {
+    "heading": "Service process",
+    "steps": [
+      { "name": "Assess", "detail": "Review the concern, site access and work requirements." },
+      { "name": "Quote", "detail": "Confirm the proposed scope and pricing before scheduling." },
+      { "name": "Coordinate", "detail": "Arrange the field team or specialist contractor and site access." },
+      { "name": "Turn over", "detail": "Review the agreed work and coordinate any follow-up within scope." }
+    ]
+  },
+  "stp": {
+    "heading": "Treat building wastewater on site",
+    "body": "An STP treats sewage from a building before discharge through a suitable outlet. Oceanides coordinates the assessment, technical proposal and specialist delivery.",
+    "qualification": "Suitability depends on wastewater volume, available space, outlet requirements and operating costs. Capacity, treatment performance and maintenance follow the agreed technical proposal. Sludge removal and equipment care continue after installation."
+  },
+  "procurement": "Share your supplier requirements so we can coordinate company documents and project information for your review.",
+  "callToAction": {
+    "heading": "Arrange a site assessment",
+    "body": "Tell us the service you need, the property location and your preferred inspection schedule. We will coordinate the assessment and prepare a quotation based on the findings.",
+    "scopeNote": "Final scope, pricing and scheduling depend on the site assessment and agreed quotation."
+  },
+  "provenance": {
+    "preparedOn": "2026-10-06",
+    "language": "Formal English",
+    "customerCopyWordLimit": 600,
+    "foundingYear": {
+      "value": 2021,
+      "status": "Supported by the user-provided reference; optional user history confirmation pending.",
+      "sourceFile": ".tmp/oceanides-premium/reference.pptx",
+      "driveId": "1bolz4WutO3283gjf-09fFClW9d818yRD",
+      "slide": 1,
+      "sourceText": "Oceanides Plumbing Services was established in 2021"
+    },
+    "currentServiceAndContactSource": "clients/oceanides/company-profile/profile-content.json",
+    "missionVisionValuesSource": "Reference presentation slide 3, rewritten as current aspirations rather than claims of achievement.",
+    "historyScope": "Only the founding year and present service offering are stated. No expansion dates or years of experience were inferred.",
+    "leadership": "Stale CEO and Founder wording from reference slide 6 is excluded. Current MOA audit identifies Agosto L. Cepriano as President.",
+    "visualAssets": {
+      "sourceManifest": "clients/oceanides/company-profile/assets/generated-sources.json",
+      "label": "AI-generated service illustration",
+      "requirement": "Display a visible illustration label beside generated scenes. They do not depict Oceanides personnel, completed projects, owned equipment or engineering plans."
+    },
+    "excludedClaims": ["Unverified DENR, LLDA or DOH accreditation", "Guarantees", "Invented fleet or client claims", "Exact savings", "Eliminated siphoning or ongoing maintenance"]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "createdOn": "2026-10-06",
+  "status": "PENDING_NEIL_REVIEW",
+  "emailDelivery": "ON_HOLD_NO_NEW_EMAIL_DRAFT_OR_SEND",
+  "files": [
+    {
+      "path": "output/pdf/Oceanides-Company-Brochure-A5-2026.pdf",
+      "bytes": 7419046,
+      "sha256": "21292da07c6ce60a16d22ba770aeb01b3ee875ab21427fb3268cad5db1a708fd"
+    },
+    {
+      "path": "output/pdf/Oceanides-Company-Brochure-A4-Booklet-Print-2026.pdf",
+      "bytes": 7433859,
+      "sha256": "92d2c292c9d1eafe166882366317cb4ec020dc2bd9b6fe38045c97c8295928ae"
+    },
+    {
+      "path": "output/pptx/Oceanides-Company-Profile-Premium-2026.pptx",
+      "bytes": 16212004,
+      "sha256": "d2d41eeebc3d32d65aa92381211bd0fe45dc2ec60633ce3982165a1b692dd003"
+    }
+  ],
+  "presentation": {
+    "slideCount": 10,
+    "aspectRatio": "16:9",
+    "designCanvas": [
+      1280,
+      720
+    ],
+    "editableText": true,
+    "videoSlide": 9,
+    "videoEmbeddedInternally": true,
+    "videoStarts": "Explicit click in PowerPoint slideshow",
+    "slideOrder": [
+      "Company introduction",
+      "Company background",
+      "Five service groups",
+      "Siphoning proof",
+      "Plumbing",
+      "Renovation and restoration",
+      "Pest control",
+      "On-site STP",
+      "Approved STP film",
+      "Site assessment and quotation"
+    ]
+  },
+  "brochure": {
+    "readerPageSizeMm": [
+      148.5,
+      210
+    ],
+    "readerPages": 8,
+    "printSurfaces": 4,
+    "printOrder": [
+      [
+        8,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "printSettings": {
+      "paper": "A4",
+      "orientation": "Landscape",
+      "scale": "Actual size (100%)",
+      "sides": "Duplex",
+      "flip": "Short edge",
+      "sheets": 2,
+      "finish": "Nest sheets and fold at the center"
+    },
+    "fontsEmbedded": true,
+    "minimumEffectiveImageDpi": 292.4
+  },
+  "film": {
+    "path": "../stp-explainer/output/Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4",
+    "sha256": "40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea",
+    "durationSeconds": 99.73333333333333,
+    "resolution": [
+      1920,
+      1080
+    ],
+    "unchangedApprovedTake": true
+  },
+  "sourceContent": "premium-content.json",
+  "references": {
+    "suppliedPresentation": "https://docs.google.com/presentation/d/1bolz4WutO3283gjf-09fFClW9d818yRD/edit",
+    "suppliedGallery": "https://www.magnific.com/vectors/company-profile",
+    "visualAnalysis": "workflows/design_swipe_file.md, D19",
+    "styleSelection": "Clean editorial grid with restrained Oceanides blue and navy",
+    "history": "2021 founding year supported by supplied presentation slide 1; optional user confirmation remains pending",
+    "borrowedReferenceArtworkUsed": false
+  },
+  "assets": {
+    "unchangedOriginalArtwork": true,
+    "generatedSceneDisclosure": true,
+    "stpProcessSource": {
+      "path": "assets/premium/stp-process-source.png",
+      "sha256": "77bc0de8a0a1d647fd0d89413f38cba5aa14a1bb1242d40faceca8cb9b279df7",
+      "origin": ".tmp/oceanides-stp/frames-aira-tight/overview.png",
+      "method": "Byte-exact frame copy; only native layout cropping is applied",
+      "qualification": "Illustrative treatment process, not an engineering plan"
+    }
+  },
+  "verification": {
+    "presentationPackageLayoutFontAndImport": "PASS",
+    "nativeSlideExports": 10,
+    "independentVisualReview": "BRAND_PASS_ZERO_CRITICAL_FINDINGS_ZERO_NITS",
+    "nativePowerPointPlayback": "PASS_PLAY_PAUSE_RESUME_VIA_COM",
+    "mouseClickPlayback": "Media action and manual timing verified in OOXML; pointer click not tested",
+    "projectorHardwareTested": false,
+    "pdfPagesAndImposition": "PASS",
+    "pdfUsedFontChecks": [
+      {
+        "file": "output\\pdf\\Oceanides-Company-Brochure-A5-2026.pdf",
+        "usedFontsEmbedded": {
+          "/AAAAAA+SegoeUI-Semibold": true,
+          "/AAAAAA+ArialMT": true,
+          "/AAAAAA+SegoeUI-Light": true
+        }
+      },
+      {
+        "file": "output\\pdf\\Oceanides-Company-Brochure-A4-Booklet-Print-2026.pdf",
+        "usedFontsEmbedded": {
+          "/AAAAAA+ArialMT": true,
+          "/AAAAAA+SegoeUI-Semibold": true,
+          "/AAAAAA+SegoeUI-Light": true
+        }
+      }
+    ],
+    "newPaidCalls": 0,
+    "applicationCodeChanged": false
+  },
+  "privateEvidence": ".tmp/oceanides-premium/"
+}
