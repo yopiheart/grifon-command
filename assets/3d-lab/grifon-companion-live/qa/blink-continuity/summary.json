@@ -1,0 +1,69 @@
+{
+  "pass": true,
+  "originalExit": 1,
+  "fixedExit": 0,
+  "previewExit": 0,
+  "originalFailures": [
+    "tourNaturalFullClosureOutsideReady",
+    "sameStateDoesNotPostponeNaturalBlink",
+    "changedStatesDoesNotPostponeNaturalBlink",
+    "stateChangePreservesOngoingBlink"
+  ],
+  "fixedChecks": {
+    "tourNaturalFullClosureOutsideReady": true,
+    "sameStateDoesNotPostponeNaturalBlink": true,
+    "changedStatesDoesNotPostponeNaturalBlink": true,
+    "stateChangePreservesOngoingBlink": true,
+    "heldWorkingNaturallyBlinks": true,
+    "pausePreserved": true,
+    "reducedNoAutomaticFullBlink": true
+  },
+  "readingChecks": {
+    "readingHasNoPageProp": true,
+    "readingMostlyDownward": true,
+    "readingScanRestrained": true,
+    "readingGlancesUp": true,
+    "readingNaturalBlink": true,
+    "workingNaturalBlink": true,
+    "noNormalErrors": true,
+    "naturalClosedStill": true,
+    "readingReducedStatic": true
+  },
+  "sourceHashes": {
+    "main.js": "7668af0ae429470e79bf4cd3c091103eb7a9d540429f1f8f9bf1d9b94a47abd3",
+    "reactions.js": "4646c68d98334480512d056f57a09cb9a5ca9617635dd7848eff19b98536de4c"
+  },
+  "sourceUnchanged": true,
+  "naturalBlinkEvents": {
+    "idle": 0,
+    "listening": 1,
+    "reading": 2,
+    "working": 1,
+    "ready": 0
+  },
+  "video": {
+    "file": "reading-working-natural-blinks.webm",
+    "durationSeconds": 27.2,
+    "width": 390,
+    "height": 844,
+    "encodingFps": 25,
+    "note": "Continuous actual browser interaction; no Blink button invoked. Reading held11s and Working7s. Separate still waits for a natural blink then pauses."
+  },
+  "visualInspection": {
+    "files": [
+      "natural-reading-stage.png",
+      "working-natural-blink-closed-stage.png",
+      "video-working-frame.png"
+    ],
+    "finding": "Reading has no floating page and preserves the face/body silhouette. Its eye and head changes are deliberately subtle; continuous recording is the appropriate motion evidence. Natural full closure shows clean creases with no glossy eye remnants. Working pad and wing contact remain visible."
+  },
+  "limits": [
+    "Desktop Edge/mobile emulation, not a real phone performance test.",
+    "Old baseline qa and reaction-phase reports preserved."
+  ],
+  "artifactHashes": {
+    "regression.cjs": "d726dff989e04a1c68c56a90ef8ba821502aab287ed3e81355405e76b9e04ac0",
+    "fixed-report.json": "4cecf2e1f9b1423747a38a77ccf953f9377a6cab197be0ef909d98bb73ac3722",
+    "reading-working-natural-blinks.webm": "7a341a6926e53fad899672ab27766b667ee635e06cb39eca3c1dbbb1213efd2a"
+  }
+}

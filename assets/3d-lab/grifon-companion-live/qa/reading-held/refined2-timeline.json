@@ -1,0 +1,333 @@
+{
+  "hashes": {
+    "main.js": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+    "reactions.js": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce"
+  },
+  "poses": {
+    "top": {
+      "reached": true,
+      "snapshot": {
+        "controls": {
+          "gazeX": -0.12853074450682145,
+          "gazeY": -0.4775655235753782,
+          "headYaw": -0.0008393520741632788,
+          "headPitch": 0.06936569646411697,
+          "headRoll": 0,
+          "blink": 0.18,
+          "breath": 0.25831106212960986
+        },
+        "reaction": {
+          "state": "reading",
+          "stateAge": 0.40019999999999994,
+          "blend": 1,
+          "weights": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "wingLeft": [
+            -0.9984307634482725,
+            0,
+            0.5452171692609142
+          ],
+          "wingRight": [
+            -1.1637218975870398,
+            0,
+            -0.6749354190181025
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 1,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.38240406709601904,
+            -0.7392932192770827,
+            1.01730063041088
+          ],
+          "readingRow": 0.11460775468431499,
+          "readingWingExtension": 1.1,
+          "cleanBody": 1,
+          "cursorScale": 0.2,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "frameCount": 26,
+        "activeTime": 0.4668666666666666,
+        "pause": true,
+        "ready": true,
+        "failed": false
+      },
+      "capture": {
+        "full": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-top.png",
+        "crop": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-top-stage.png",
+        "viewportStageBounds": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 358
+        },
+        "viewportCharacterCrop": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 328
+        },
+        "documentScroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "bottom": {
+      "reached": true,
+      "snapshot": {
+        "controls": {
+          "gazeX": 0.044462131415159103,
+          "gazeY": -0.6499999555557711,
+          "headYaw": -0.00017709656472320913,
+          "headPitch": 0.14499676366023995,
+          "headRoll": 0,
+          "blink": 0.9335353505822391,
+          "breath": -0.26729991207251563
+        },
+        "reaction": {
+          "state": "reading",
+          "stateAge": 3.4179666666666635,
+          "blend": 1,
+          "weights": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "wingLeft": [
+            -0.9984307634482725,
+            0,
+            0.5452171692609142
+          ],
+          "wingRight": [
+            -0.9473704410646411,
+            0,
+            -0.4860316248402572
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 1,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.5344345367655452,
+            -0.777577341872522,
+            0.8467363743779123
+          ],
+          "readingRow": -0.06020025279526916,
+          "readingWingExtension": 1.1,
+          "cleanBody": 1,
+          "cursorScale": 0.2,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "frameCount": 207,
+        "activeTime": 3.48463333333333,
+        "pause": true,
+        "ready": true,
+        "failed": false
+      },
+      "capture": {
+        "full": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-bottom.png",
+        "crop": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-bottom-stage.png",
+        "viewportStageBounds": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 358
+        },
+        "viewportCharacterCrop": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 328
+        },
+        "documentScroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "deep-dip": {
+      "reached": true,
+      "snapshot": {
+        "controls": {
+          "gazeX": -0.19532101461269008,
+          "gazeY": -0.7446338157006291,
+          "headYaw": -0.00021886707745406636,
+          "headPitch": 0.14499996788544428,
+          "headRoll": 0,
+          "blink": 0.18,
+          "breath": -0.5095546242815346
+        },
+        "reaction": {
+          "state": "reading",
+          "stateAge": 4.801833333333338,
+          "blend": 1,
+          "weights": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "wingLeft": [
+            -0.9984307634482725,
+            0,
+            0.5452171692609142
+          ],
+          "wingRight": [
+            -1.1621908508249423,
+            0,
+            -0.674030988593098
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 1,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.3831194211363468,
+            -0.7395715563139955,
+            1.0160605771875335
+          ],
+          "readingRow": 0.11333684811699803,
+          "readingWingExtension": 1.1,
+          "cleanBody": 1,
+          "cursorScale": 0.2,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "frameCount": 290,
+        "activeTime": 4.868500000000006,
+        "pause": true,
+        "ready": true,
+        "failed": false
+      },
+      "capture": {
+        "full": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-deep-dip.png",
+        "crop": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-deep-dip-stage.png",
+        "viewportStageBounds": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 358
+        },
+        "viewportCharacterCrop": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 328
+        },
+        "documentScroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "glance": {
+      "reached": true,
+      "snapshot": {
+        "controls": {
+          "gazeX": 0.004788231512296453,
+          "gazeY": -0.055124935625565086,
+          "headYaw": 0.0007576863516127769,
+          "headPitch": 0.07863317754789799,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0.5282311039214436
+        },
+        "reaction": {
+          "state": "reading",
+          "stateAge": 7.702900000000034,
+          "blend": 1,
+          "weights": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "wingLeft": [
+            -0.9984307634482725,
+            0,
+            0.5452171692609142
+          ],
+          "wingRight": [
+            -0.9412047305740148,
+            0,
+            -0.4779250033698941
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 1,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.5408337039762858,
+            -0.7786285186067142,
+            0.8420531489185932
+          ],
+          "readingRow": -0.065,
+          "readingWingExtension": 1.1,
+          "cleanBody": 1,
+          "cursorScale": 0.2,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "frameCount": 464,
+        "activeTime": 7.7695666666667025,
+        "pause": true,
+        "ready": true,
+        "failed": false
+      },
+      "capture": {
+        "full": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-glance.png",
+        "crop": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\refined2-glance-stage.png",
+        "viewportStageBounds": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 358
+        },
+        "viewportCharacterCrop": {
+          "x": 16,
+          "y": 190.671875,
+          "width": 358,
+          "height": 328
+        },
+        "documentScroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    }
+  },
+  "sourceUnchanged": true
+}

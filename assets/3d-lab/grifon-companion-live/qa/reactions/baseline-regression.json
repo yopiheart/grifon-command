@@ -1,0 +1,21 @@
+{
+  "revision": "e94959f1",
+  "method": "Route-only original index/main/style; no runtime files modified",
+  "fixtureHashes": {
+    "index.html": "8b8ef0d67e1b6dd061b294fe27da182ff087daafdbaaa0712b9bf6e103503b5e",
+    "main.js": "5a2b22476d95bd3126282c911d5c87d41763401dbe7d249b4bde66a01ffa952b",
+    "style.css": "3b59b64ad32ae24912c855987d59863b9939c52cd313d0c42b128efa3f5d2e26"
+  },
+  "stateApi": false,
+  "stateButtons": {
+    "Idle": 0,
+    "Listening": 0,
+    "Reading": 0,
+    "Working": 0,
+    "Ready": 0
+  },
+  "contractPass": false,
+  "pageerrors": [],
+  "screenshot": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reactions\\baseline-contract-failure.png",
+  "expectedBaselineRejection": true
+}
