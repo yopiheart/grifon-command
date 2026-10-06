@@ -42,7 +42,7 @@
     "source_replay": "PASS: versioned builder rebuilt in a fresh folder, exit 0; all 10 checks pass in source-replay-verification.json",
     "regression": "PASS: preserved v03 rejects integer animation properties and missing fractional/head motion; old candidate is local evidence, not required for ordinary verification",
     "visual": "Independent inspection cleared raised eyelid geometry in partial and closed v09 poses. This does not establish temporal smoothness.",
-    "owner_acceptance": "Base v05 look accepted. New motion preview awaits owner review.",
+    "owner_acceptance": "Base v05 look and rig-v09 motion preview accepted by Neil on 2026-10-06; see owner-approval.json. Preserve the approved design and motion baseline.",
     "overwrite_guard": "PASS: existing output refused with exit 1 before master load/write"
   },
   "limits": [

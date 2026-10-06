@@ -2,9 +2,9 @@
 **Stamped: 2026-10-06, griffin rig/motion prototype saved; prior work preserved**
 
 ## ▶ NEXT ACTION
-Review motion, then implement live cursor/browser delivery with measured fidelity/FPS.
+Next: live cursor/browser prototype with measured fidelity/FPS; preserve approved look.
 Branch codex/blender-studio; draft PR162; no merge/deploy requested or paid calls.
-Blender Studio saved in repo/personal skills; v05 accepted, motion awaits review.
+Blender Studio saved in repo/personal skills; v05 and rig-v09 motion owner-approved.
 assets/3d-lab/grifon-companion-rig: source, manifest, 6s/24fps/512px MP4, evidence.
 Rig-v09: blink, breathing, separate eyes/head. 10 checks and fresh replay PASS.
 Earlier integer-controller defect rejected; independent source/pose review clear.
