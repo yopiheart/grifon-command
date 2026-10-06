@@ -1,5 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, PR156 merge preparation; accepted motion workflow saved**
+**Stamped: 2026-10-06, Blender Studio skill saved; prior work preserved below**
+
+## Blender Studio skill
+Branch codex/blender-studio; draft PR tracked by branch; no merge requested.
+.agents/skills/blender-studio covers characters, products, architecture, game assets.
+Grifon v05 accepted by Neil; exact scripts, identity and 3 renders hash-preserved.
+Independent review clear; 6 asset hashes PASS; Blender replay/reopen/3 PNGs PASS.
+check:codex PASS (34 skills, 26 tests); optional Python validator lacks PyYAML.
+Personal skill installed at C:/Users/ADMIN/.codex/skills/blender-studio.
+New-subject generation and automatic trigger tests NOT RUN; no paid calls.
+Master is still-only. Rigging, runtime delivery and other-track examples remain.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
