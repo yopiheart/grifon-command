@@ -1,0 +1,44 @@
+:root { color-scheme: dark; font-family: Inter, Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #fff; background: #09090b; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: radial-gradient(ellipse at 50% 36%, #18181b 0, #09090b 65%); }
+button, a, summary { -webkit-tap-highlight-color: transparent; }
+button { min-height: 44px; padding: 0 18px; border: 1px solid #ffffff1a; border-radius: 12px; background: #09090b; color: #d4d4d8; font-size: 14px; font-weight: 600; line-height: 1.2; font-family: inherit; cursor: pointer; transition: border-color 150ms ease-out, color 150ms ease-out; }
+button:hover:not(:disabled) { border-color: #ffcc00; color: #fff; }
+button:disabled { opacity: .45; cursor: default; }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #ffcc00; outline-offset: 4px; }
+button[aria-pressed="true"] { border-color: #ffcc00; color: #ffcc00; }
+[hidden] { display: none !important; }
+.companion-shell { width: min(100% - 64px, 1080px); margin: 0 auto; }
+.header { min-height: 88px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #ffffff0d; }
+.wordmark { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 700; letter-spacing: .12em; text-decoration: none; color: #fff; }
+.wordmark span { color: #a1a1aa; font-weight: 400; letter-spacing: -.01em; }
+.prototype { color: #a1a1aa; font-size: 12px; padding: 7px 10px; border: 1px solid #ffffff1a; border-radius: 8px; }
+.companion { max-width: 720px; margin: 0 auto; text-align: center; }
+.introduction { padding: 36px 8px 0; }
+h1 { font-size: clamp(26px, 3vw, 36px); line-height: 1.15; font-weight: 600; letter-spacing: -.025em; margin: 0 0 12px; }
+p { color: #a1a1aa; font-size: 14px; line-height: 1.6; margin: 0; }
+.stage { position: relative; width: min(100%, 540px); aspect-ratio: 1; margin: 0 auto; touch-action: none; user-select: none; }
+.canvas-host, .fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+.canvas-host canvas { width: 100%; height: 100%; display: block; }
+.fallback { object-fit: contain; }
+.contact-shadow { position: absolute; width: 48%; height: 9%; left: 26%; bottom: 13%; border-radius: 50%; background: radial-gradient(ellipse, #09090bcc 5%, #09090b00 70%); }
+.stage-status { position: absolute; bottom: 5px; left: 8px; right: 8px; pointer-events: none; color: #a1a1aa; font-size: 12px; line-height: 1.5; }
+.controls { width: min(100%, 480px); margin: 20px auto 0; padding: 20px; background: #18181bf0; border: 1px solid #ffffff1a; border-radius: 16px; }
+.control-label { display: block; color: #a1a1aa; font-family: "JetBrains Mono", monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 12px; }
+.directions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.directions button { padding: 0 8px; }
+.actions { display: flex; justify-content: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.actions button { flex: 1; }
+button.gold-button { background: #ffcc00; color: #09090b; border-color: #ffcc00; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; }
+button.gold-button:hover:not(:disabled) { color: #09090b; box-shadow: 0 0 20px #ffcc0066; }
+.motion-note { margin: 20px 8px; font-size: 12px; }
+.diagnostics { margin: 0 auto 32px; max-width: 480px; text-align: left; color: #a1a1aa; }
+.diagnostics summary { cursor: pointer; min-height: 44px; padding: 12px 0; font-size: 12px; text-align: center; }
+.diagnostics p, .diagnostics output { font-size: 12px; line-height: 1.6; }
+.diagnostics output { display: block; white-space: pre-wrap; margin-top: 12px; font-family: "JetBrains Mono", monospace; color: #d4d4d8; }
+footer { padding: 24px 0; border-top: 1px solid #ffffff0d; color: #82828b; font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: .15em; display: flex; justify-content: space-between; gap: 16px; }
+footer span { font-family: Inter, Geist, -apple-system, sans-serif; letter-spacing: 0; font-size: 12px; }
+@media (max-width: 600px) { .companion-shell { width: calc(100% - 32px); } .header { min-height: 72px; } .wordmark { font-size: 13px; } .wordmark span { font-size: 12px; } .introduction { padding-top: 28px; } .introduction p { max-width: 290px; margin: auto; } .controls { padding: 16px; margin-top: 12px; } .stage { margin-top: 4px; } footer { flex-wrap: wrap; } }
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }
+@media (prefers-contrast: more) { button, .controls, .prototype { border-color: #a1a1aa; } p, .control-label, .stage-status, .motion-note, footer { color: #d4d4d8; } }
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) { .controls { background: #18181b; } }

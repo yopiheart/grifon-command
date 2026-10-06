@@ -1,0 +1,39 @@
+{
+  "subject": "Grifon live companion prototype",
+  "date": "2026-10-06",
+  "stage": "Standalone live browser interaction study; chat integration remains a separate stage",
+  "approved_reference": "../grifon-companion-rig/owner-approval.json",
+  "appearance": "Real 3D geometry with camera-projected Cycles lighting textures from the approved master. Fixed camera; limited gaze/head deformation. Not free-view, dynamic relighting, GLB or Gaussian splatting.",
+  "geometry": {"objects": 22, "native_hair_strands_sampled": 50500, "original_hair_strands": 404000, "binary_bytes": 11950492},
+  "rig_source_sha256": "94fb26540d6f8f2f600416b39bf891d573cec5a2f923d3bd591275e699904446",
+  "runtime": {"library": "Three.js 0.180.0", "backend": "WebGL2", "dependency_scope": "Locally vendored in this prototype; no root package changes", "license": "vendor/LICENSE", "source": "https://unpkg.com/three@0.180.0/", "pixel_ratio_cap": 1.5},
+  "vendor_patch": "Removed one space before a tab in three.core.js SkinnedMesh material assignment indentation to pass the repository whitespace check. No semantic changes.",
+  "interaction": ["Pointer and touch tracking", "Eyes respond before the head", "Independent blink and breathing", "Direction buttons, center and Escape", "Pause/resume", "Reduced-motion preference", "Visibility render pause", "Honest still fallback and retry on load, context or render failure"],
+  "blink": {"close_ms": 100, "fully_closed_ms": 40, "open_ms": 100, "reason": "The closed hold preserves the approved fully closed pose under normal browser frame sampling."},
+  "preview": {
+    "local_url": "http://127.0.0.1:8765/",
+    "serve": "python -m http.server 8765 --bind 127.0.0.1 --directory assets/3d-lab/grifon-companion-live",
+    "note": "Open on the host computer or its remote desktop. This localhost URL is not a public phone URL; the server must remain running.",
+    "mobile_recording": "qa/mobile-interaction-preview.mp4",
+    "mobile_gif": "qa/mobile-interaction-preview.gif"
+  },
+  "replay": {
+    "export": "blender --background --python-exit-code 1 --python export-browser.py -- RIG_BLEND FRESH_OUTPUT_DIRECTORY",
+    "assets": "Copy baked-hero.png from the frozen skill's griffin-master-v05-hero.png and neutral.png from the accepted rig. Include this directory's runtime and vendor files alongside the newly exported scene.json, scene.bin and baked-skin.png.",
+    "source_safety": "Export opens the accepted rig but never saves over it. Refuses an output directory containing scene.bin.",
+    "browser_smoke": "Start the local server, then run node assets/3d-lab/grifon-companion-live/qa/smoke.cjs using the installed Playwright and Edge. Check the script's server and output paths when moving workspaces."
+  },
+  "verification": {
+    "browser": "PASS: qa/smoke-report.json; final source hashes unchanged during the run. Actual pointer/click/touch actions and render-fault mutation regression.",
+    "viewports": ["1024x900", "390x844", "320x740", "375x667", "1280x900"],
+    "performance": "Warm 180-frame samples: median 16.7 ms, p95 17.0-17.1 ms on desktop AMD Radeon via ANGLE/D3D11. Mobile viewport emulation uses the same desktop GPU; not phone FPS.",
+    "visual_review": "Independent source and screenshot review: no actionable findings; BRAND_PASS. Fully closed eye creases and preserved silhouette/face inspected. Owner review of this live implementation remains pending.",
+    "build": "PASS: npm.cmd run build",
+    "binary": "PASS: 22 objects, 315329 vertices, 780320 indices; all attribute ranges/values finite and every index in bounds",
+    "unit": "PASS: 116 files, 1432 tests; 9 files and 32 tests skipped by existing suite configuration",
+    "additional": "PASS: node syntax, bundle-leak, artifact-anchor checks. Final standalone fixes verified by browser smoke.",
+    "application_scope": "No production app, API, prompt, root dependency or credential changes"
+  },
+  "remaining": ["Owner desktop review", "Actual phone/browser/device performance", "Production transfer size and loading budget", "Chat integration and true agent-state bindings", "Production deployment"],
+  "paid_or_published": "No paid APIs, public deployment, production data changes or merge"
+}

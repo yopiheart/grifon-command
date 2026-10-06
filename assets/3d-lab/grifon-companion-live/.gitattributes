@@ -1,0 +1,5 @@
+*.py -text
+*.js -text
+*.css -text
+*.html -text
+*.bin binary

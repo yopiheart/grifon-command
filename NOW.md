@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, griffin rig/motion prototype saved; prior work preserved**
+**Stamped: 2026-10-06, live griffin browser prototype verified; prior work preserved**
 
 ## ▶ NEXT ACTION
-Next: live cursor/browser prototype with measured fidelity/FPS; preserve approved look.
-Branch codex/blender-studio; draft PR162; no merge/deploy requested or paid calls.
-Blender Studio saved in repo/personal skills; v05 and rig-v09 motion owner-approved.
-assets/3d-lab/grifon-companion-rig: source, manifest, 6s/24fps/512px MP4, evidence.
-Rig-v09: blink, breathing, separate eyes/head. 10 checks and fresh replay PASS.
-Earlier integer-controller defect rejected; independent source/pose review clear.
-144-frame render/full decode PASS; check:codex PASS (34 skills, 26 tests).
-Binary rig/ZIP local path in manifest; live cursor/chat/GLB/mobile NOT implemented.
+Next: owner desktop review tomorrow; actual phone performance and chat integration.
+Branch codex/griffin-live-prototype, stacked on codex/blender-studio (draft PR162).
+assets/3d-lab/grifon-companion-live: live mesh/fur, pointer/touch, blink/breathing.
+Fixed-camera baked appearance; local http://127.0.0.1:8765/ needs host server running.
+Browser smoke PASS: 5 sizes, full blink, controls, accessibility, failure regression.
+AMD desktop warm median16.7ms/p95<=17.1ms; mobile emulation is NOT phone FPS.
+Independent source/visual/brand review clear; build/1432 tests/bundle/anchor PASS.
+Approved v05/rig-v09 preserved in repo/personal Blender skill; no paid/deploy/merge.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
