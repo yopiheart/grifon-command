@@ -1,14 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, companion chat ready for local review; prior work preserved**
+**Stamped: 2026-10-07, companion chat polish ready for local review; prior work preserved**
 
 ## ▶ NEXT ACTION
 Next: owner review of chat/reactions, then an explicitly cost-capped paid ad test.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
-Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked outputs).
+Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); PC wake scheduled Oct7 08:00PH, idle sleep off.
 Real /app?experience=companion reuses ProducerFlow; guided product-ad intake only.
-Inline brief/storyboard/First Cut, account drafts, recovery and allowance guards.
+Refined16px chat/composer, isolated typing, cancellable scrolling; approval guards preserved.
 Approved griffin/Reading/blinks preserved byte-for-byte; idle/reading/working/ready.
-Build/1451 unit tests and18 focused browser cases PASS; chat QA under assets/3d-lab/.
+Build/1451 units/21 browser cases PASS; local typing p95~13ms; chat QA includes polish/.
 No paid/deploy/merge; real provider end-to-end, voice and physical phone FPS pending.
 
 ## Motion film / PR156

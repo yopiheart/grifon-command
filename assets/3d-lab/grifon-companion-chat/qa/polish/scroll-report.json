@@ -1,0 +1,59 @@
+[
+  {
+    "phase": "baseline",
+    "messageCount": 120,
+    "typingPreservesPosition": true,
+    "before": 7007,
+    "afterTyping": 7007,
+    "at100ms": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "at500ms": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "afterSend": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "followSampleMs": 100,
+    "explicitSendFollowsLatest": false
+  },
+  {
+    "phase": "final",
+    "messageCount": 120,
+    "typingPreservesPosition": true,
+    "before": 8540,
+    "afterTyping": 8540,
+    "at100ms": {
+      "top": 20853,
+      "distance": 0
+    },
+    "at500ms": {
+      "top": 20853,
+      "distance": 0
+    },
+    "afterSend": {
+      "top": 20853,
+      "distance": 0
+    },
+    "followSampleMs": 100,
+    "explicitSendFollowsLatest": true,
+    "surfaceSHA256": "42ef8b56bab51e6638feb98c081047d062e7d43ead8d097a83f99f5d07214db2",
+    "nativeWheelInterruptedFollow": true,
+    "interrupted": {
+      "sampledTop": 20221,
+      "settled": {
+        "top": 20221,
+        "distance": 500
+      }
+    },
+    "reduced": {
+      "motion": true,
+      "transparency": true,
+      "background": "rgb(24, 24, 27)",
+      "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px 1px 0px 0px"
+    }
+  }
+]

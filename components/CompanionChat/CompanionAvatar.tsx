@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Pause, Play, RotateCw } from 'lucide-react';
 import Button from '../ui/Button';
 
@@ -9,7 +9,7 @@ interface CompanionAvatarProps {
 }
 
 /** The accepted 3D runtime stays isolated; only explicit state/motion messages cross the bridge. */
-export function CompanionAvatar({ state, className = '' }: CompanionAvatarProps) {
+export const CompanionAvatar = memo(function CompanionAvatar({ state, className = '' }: CompanionAvatarProps) {
   const host = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   const [ready, setReady] = useState(false);
@@ -48,15 +48,22 @@ export function CompanionAvatar({ state, className = '' }: CompanionAvatarProps)
     let point: { x: number; y: number } | null = null;
     const move = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse' && !(event.target instanceof Node && host.current?.contains(event.target))) return;
-      const bounds = host.current?.getBoundingClientRect();
-      if (!bounds) return;
-      point = {
-        x: Math.max(-1, Math.min(1, (event.clientX - bounds.left - bounds.width / 2) / Math.max(window.innerWidth / 2, 160))),
-        y: Math.max(-1, Math.min(1, (bounds.top + bounds.height / 2 - event.clientY) / Math.max(window.innerHeight / 2, 160))),
-      };
-      if (!raf) raf = window.requestAnimationFrame(() => { raf = 0; if (point) send({ command: 'pointer', ...point }); });
+      point = { x: event.clientX, y: event.clientY };
+      if (!raf) raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        const bounds = host.current?.getBoundingClientRect();
+        if (!bounds || !point) return;
+        send({ command: 'pointer',
+          x: Math.max(-1, Math.min(1, (point.x - bounds.left - bounds.width / 2) / Math.max(window.innerWidth / 2, 160))),
+          y: Math.max(-1, Math.min(1, (bounds.top + bounds.height / 2 - point.y) / Math.max(window.innerHeight / 2, 160))),
+        });
+      });
     };
-    const center = () => send({ command: 'pointer', x: 0, y: 0 });
+    const center = () => {
+      if (raf) window.cancelAnimationFrame(raf);
+      raf = 0; point = null;
+      send({ command: 'pointer', x: 0, y: 0 });
+    };
     window.addEventListener('pointermove', move, { passive: true });
     document.documentElement.addEventListener('pointerleave', center);
     return () => {
@@ -93,4 +100,4 @@ export function CompanionAvatar({ state, className = '' }: CompanionAvatarProps)
       {failed && <span role="status" className="sr-only">Companion shown as a still image. Chat is available.</span>}
     </div>
   );
-}
+});

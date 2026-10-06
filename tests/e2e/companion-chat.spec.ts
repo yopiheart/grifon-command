@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import path from 'node:path';
 import { installRecoveryBackend, seededRun, RUN_ID } from './fixtures/oneshotRecovery.js';
 
-const QA = path.resolve('assets/3d-lab/grifon-companion-chat/qa');
+const QA = path.resolve(process.env.COMPANION_QA_DIR || 'assets/3d-lab/grifon-companion-chat/qa');
 test.use({ serviceWorkers: 'block' });
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9X8AAAAASUVORK5CYII=', 'base64');
 const answers = ['Cold brew for busy parents. Promote our new bottle.', 'North Coffee', 'Morning brew', 'Two bottles for 199', '199'];

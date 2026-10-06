@@ -1,0 +1,26 @@
+{
+  "completedDate": "2026-10-07",
+  "baseCommit": "79c3a0de419e91c3de6570c4ce7ef87a7a033009",
+  "scope": "Companion chat interaction and visual polish; no backend, model, dependency, or approved character asset changes.",
+  "checks": [
+    { "command": "npm.cmd run build", "exitCode": 0, "note": "Rerun after final pending-scroll-intent fix; includes TypeScript and PowerShell ASCII check." },
+    { "command": "npm.cmd run test", "exitCode": 0, "passedTests": 1451, "passedFiles": 117, "existingSkippedTests": 32, "existingSkippedFiles": 9, "durationSeconds": 44.24, "note": "Rerun on final source after pending-scroll-intent fix." },
+    { "command": "npm.cmd run check:bundle-leak", "exitCode": 0, "scannedBundles": 11 },
+    { "command": "npm.cmd run check:voice-sync", "exitCode": 0 },
+    { "command": "npm.cmd run check:domain", "exitCode": 0, "scannedFiles": 297 },
+    { "command": "npm.cmd run check:artifact-anchors", "exitCode": 0 },
+    { "command": "node tools/sync-companion-assets.mjs --check", "exitCode": 0, "matchedAssets": 11 },
+    { "command": "git diff --check", "exitCode": 0 }
+  ],
+  "sourceHashes": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "42ef8b56bab51e6638feb98c081047d062e7d43ead8d097a83f99f5d07214db2",
+    "components/CompanionChat/CompanionAvatar.tsx": "cb70f156ab0a0b27906535fbc97a9cb162a143b377f01c765ed7500da8d21b71",
+    "components/CompanionChat/CompanionComposer.tsx": "11f2ea570b4124ab8cf5d7ec315ddec005d2664a6d0f1221038dd75d12593f6a",
+    "components/CompanionChat/companionChat.css": "a465f702e5416581b59143eabaceab99d53b1dc91312bd0da0c3620b67fccb5c"
+  },
+  "limits": [
+    "Full browser, visual, and performance evidence is in adjacent reports. Measurements use desktop Edge with mobile viewport emulation, not a physical phone or iOS keyboard.",
+    "No paid providers, production writes, deployment or merge. Local interaction timing is not AI generation latency or an app-wide speed guarantee.",
+    "Existing large-bundle and Browserslist-age warnings remain; no unrelated dependency or application-wide bundling changes."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "baseCommit": "79c3a0de419e91c3de6570c4ce7ef87a7a033009",
+  "success": "Typing, focus, IME and scrolling remain responsive while the approved avatar animates. Mobile input uses readable16px sans-serif text and normal tracking. Pointer bursts perform at most one avatar-bounds read per animation frame. Existing generation, allowance, cancellation and recovery behavior remains intact.",
+  "failure": "Changed receipts/gates, lost text/focus/IME composition, scrolling stolen while browsing history, horizontal overflow, controls below44px, regressions in pause/reduced/fallback, or repeated main-thread stalls while interacting.",
+  "checks": "Two observed-defect browser regressions, existing18-case browser suite,375/390/1280 visual captures, and controlled baseline/final long-transcript measurements with the real WebGL avatar.",
+  "baselineRegressions": {
+    "command": "POLISH_PHASE=baseline npm run test:e2e -- --config tests/e2e/companion.config.ts --grep polish:",
+    "exitCode": 1,
+    "failures": ["120pointer events caused120 immediate bounds reads instead of zero before the next frame", "Composer font was14px instead of at least16px; computed JetBrainsMono with1.4px tracking"]
+  },
+  "measurementBounds": {
+    "inputNextAnimationFrameP95PreferredMs": 50,
+    "inputNextAnimationFrameP95CeilingMs": 100,
+    "repeatedSteadyLongTasksOver50ms": 0,
+    "warmAvatarFrameP95LocalTargetMs": 33.4,
+    "scope": "Measured local desktop targets, not a universal FPS promise. Input-event to next rAF measures a rendering opportunity, not hardware input-to-photon latency. Mobile viewports do not test a physical phone or iOS software keyboard."
+  },
+  "baselineFindings": "Composer p95≤13.7ms, brief-edit p95≤30ms and max68.9ms, storage p95≤0.6ms for333KBdrafts. No repeated long tasks. Persistence redesign is not warranted by these measurements.",
+  "baselineIsolation": "Captured Vite-transformed Surface and Avatar modules before builder edits, then served them by route-only overrides with HMR socket blocked. Their source-map sourceContent was checked against the base commit after line-ending normalization. Reports distinguish base git-source SHA256s from served transformed-module SHA256s.",
+  "paidCalls": 0,
+  "historicalEvidence": "Earlier QA reports/captures remain untouched; COMPANION_QA_DIR redirects existing suite screenshots into this polish directory."
+}
