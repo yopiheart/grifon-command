@@ -1,13 +1,13 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, griffin blink continuity and Reading refined; prior work preserved**
+**Stamped: 2026-10-06, visibly held-card Reading verified; prior work preserved**
 
 ## ▶ NEXT ACTION
-Next: owner desktop review tomorrow; actual phone performance and chat integration.
+Next: owner review of held-card Reading; actual phone performance and chat integration.
 Branch codex/griffin-live-prototype, draft PR163 stacked on PR162.
-assets/3d-lab/grifon-companion-live: natural blink persists; Reading has no page prop.
+assets/3d-lab/grifon-companion-live: Reading holds a card and traces its text with a wing.
 Fixed-camera baked appearance; local http://127.0.0.1:8765/ needs host server running.
-qa/blink-continuity: original fails4; fixed7+preview9 PASS, new mobile GIF/MP4.
-Prior35 reaction checks/AMD timing retained; phone FPS and owner review pending.
+qa/reading-held: prior subtle pose rejected; 13 scoped checks PASS, cropped GIF/MP4.
+Blink continuity preserved; prior QA/AMD timing retained, not current phone FPS.
 Independent source/pose review clear; build/1432 tests PASS; no real tasks/mic.
 Approved v05/rig-v09 preserved in repo/personal Blender skill; no paid/deploy/merge.
 

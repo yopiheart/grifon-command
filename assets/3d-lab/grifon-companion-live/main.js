@@ -36,6 +36,9 @@ Object.defineProperty(window, 'grifonDebug', { value: Object.freeze({
       wingLeft: Object.freeze([...reactionMotion.leftWing]), wingRight: Object.freeze([...reactionMotion.rightWing]),
       tapLeft: reactionMotion.leftTap, tapRight: reactionMotion.rightTap,
       propReading: reactionMotion.readingPanel, propWorking: reactionMotion.workingPanel,
+      readingSupport: Object.freeze([...reactionMotion.readingSupport]),
+      readingTrace: Object.freeze([...reactionMotion.readingTrace]), readingRow: reactionMotion.readingRow,
+      readingWingExtension: reactionMotion.readingWingExtension,
       cleanBody: reactionMotion.cleanBody, cursorScale: reactionMotion.cursorScale,
       readyBlink: reactionMotion.readyBlink, touring,
     }),
@@ -56,6 +59,7 @@ const vertexShader = `
   uniform float headRoll;
   uniform vec3 wingAngles;
   uniform float wingSide;
+  uniform float readingWingExtension;
   uniform float blink;
   uniform float breath;
   uniform float kind;
@@ -84,7 +88,9 @@ const vertexShader = `
     p += vec3(original.x*.012, original.y*.022, .004)*weight.y*breath;
     if (abs(wingSide) > .5) {
       vec3 wingPivot = vec3(wingSide*.88,-.10,1.16);
-      p = wingPivot + rotateZ(rotateY(rotateX(p-wingPivot,wingAngles.x),wingAngles.y),wingAngles.z);
+      vec3 wingLocal = p-wingPivot;
+      wingLocal.z *= readingWingExtension;
+      p = wingPivot + rotateZ(rotateY(rotateX(wingLocal,wingAngles.x),wingAngles.y),wingAngles.z);
     }
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0);
   }
@@ -246,7 +252,7 @@ function animate(timestamp) {
   pose.gazeX += (clamp(target.x*reactionMotion.cursorScale+reactionMotion.gazeX,-1,1)-pose.gazeX)*gazeEase;
   pose.gazeY += (clamp(target.y*reactionMotion.cursorScale+reactionMotion.gazeY,-1,1)-pose.gazeY)*gazeEase;
   pose.headYaw += (clamp((reducedMotion ? target.x : delayed.x)*.13*reactionMotion.cursorScale+reactionMotion.headYaw,-.13,.13)-pose.headYaw)*headEase;
-  pose.headPitch += (clamp((reducedMotion ? target.y : delayed.y)*-.045*reactionMotion.cursorScale+reactionMotion.headPitch,-.055,.08)-pose.headPitch)*headEase;
+  pose.headPitch += (clamp((reducedMotion ? target.y : delayed.y)*-.045*reactionMotion.cursorScale+reactionMotion.headPitch,-.055,.08+reaction.weights[2]*.08)-pose.headPitch)*headEase;
   pose.headRoll += (reactionMotion.headRoll-pose.headRoll)*headEase;
   pose.breath = reducedMotion ? 0 : Math.sin(activeTime*Math.PI/3)*reactionMotion.breathGain;
   if (!reducedMotion && activeTime >= nextBlink) {
@@ -264,6 +270,7 @@ function animate(timestamp) {
     u.head.value.set(pose.headYaw, pose.headPitch);
     u.headRoll.value = pose.headRoll;
     u.wingAngles.value.fromArray(object.userData.wingSide < 0 ? reactionMotion.leftWing : reactionMotion.rightWing);
+    u.readingWingExtension.value = reactionMotion.readingWingExtension;
     u.cleanBlend.value = object.userData.cleanBody ? reactionMotion.cleanBody : 0;
     u.blink.value = pose.blink; u.breath.value = pose.breath;
     object.visible = object.userData.deform !== 'eye' || pose.blink <= .995;
@@ -324,6 +331,7 @@ async function start() {
           cleanBody: { value: cleanBody }, cleanBlend: { value: 0 },
           gaze: { value: new THREE.Vector2() }, head: { value: new THREE.Vector2() },
           headRoll: { value: 0 }, wingAngles: { value: new THREE.Vector3() }, wingSide: { value: wingSide },
+          readingWingExtension: { value: 1 },
           blink: { value: 0 }, breath: { value: 0 },
           kind: { value: item.deform === 'eye' ? 1 : item.deform === 'crease' ? 2 : 0 },
           creaseColor: { value: new THREE.Color('#29251f') },
