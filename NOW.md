@@ -3,7 +3,8 @@
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure, based on STP head 865b9d9b.
-New draft PR creation pending; stack on codex/oceanides-stp-explainer (PR153).
+Draft PR161 https://github.com/yopiheart/grifon-command/pull/161 stacked on PR153.
+Implementation ba0946cf pushed; independent review complete, pending Neil visual approval.
 No merge, deployment, cloud publication or email send requested.
 Neil wants the approved STP video integrated with the company profile for meetings.
 Separate print brochure is the leave-behind for company prospects.
@@ -51,7 +52,7 @@ Node syntax, Python compile and scoped diff checks PASS; no application code cha
 Atomic sibling staging preserves last-good deck and brochure on validation failure.
 Private evidence .tmp/oceanides-premium/{deck,brochure,independent-review}/.
 Final cover disclosure and navy process headings corrected and independently rechecked.
-Domain-language and artifact-anchor gates PASS; draft PR backup pending this commit.
+Domain-language and artifact-anchor gates PASS; draft PR backup created and attached.
 
 ## Approved film and email continuity
 stp-explainer/output/Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4 unchanged.
