@@ -38,7 +38,12 @@ Clean Digital Clouds+9 existing SFX and separate stems are in verified private r
 qa/recovery-archive.json records ZIP under PRIMARY/.tools/grifon-motion-archives/.
 SFX predate paid subscription:PRIVATE REVIEW ONLY; commercial clearance pending.
 Provider calls/spend0. No new VO. Hearing and real-phone review pending.
-Git commit/push/draft PR and remote-byte verification remain the final handoff steps.
+Production commit336e5294556d7af45f7a7f46f64c163fdeb23ff3 is pushed. Draft PR166:
+https://github.com/yopiheart/grifon-command/pull/166 (base codex/grifon-shader-study, MERGEABLE).
+Authenticated GitHub blobs for both MP4s/player match exact local bytes; qa/github-backup.json.
+Windows gh raw stdout rejected binary; JSON/base64 blob transport verified original bytes.
+Vercel check FAIL links account-deployment-blocked help; no deployment performed.
+Local checks above pass; this stacked PR has no reported GitHub Actions results.
 Parent prepares actual unsent Gmail draft with portrait attached, then PC sleep only after
 backups and unrelated work checks. This production chat did not email, sleep, merge or deploy.
 
