@@ -1,0 +1,1027 @@
+{
+  "snapshots": [
+    {
+      "action": "initial ready",
+      "sameIframe": true,
+      "sameWindow": true,
+      "sameCanvas": true,
+      "originalIframeConnected": true,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "reading",
+      "frameCount": 92,
+      "hostReaction": "reading",
+      "events": []
+    },
+    {
+      "action": "New chat",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "idle",
+      "frameCount": 9,
+      "hostReaction": "idle",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        }
+      ]
+    },
+    {
+      "action": "Open Coffee saved chat",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "reading",
+      "frameCount": 33,
+      "hostReaction": "reading",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 4460.70000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 4839.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 4840.20000000298,
+          "ready": "true"
+        }
+      ]
+    },
+    {
+      "action": "Open Tea saved chat",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "reading",
+      "frameCount": 34,
+      "hostReaction": "reading",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 4460.70000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 4839.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 4840.20000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 5502.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 5925.5,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 5925.5,
+          "ready": "true"
+        }
+      ]
+    },
+    {
+      "action": "Open Coffee saved chat",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "reading",
+      "frameCount": 10,
+      "hostReaction": "reading",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 4460.70000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 4839.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 4840.20000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 5502.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 5925.5,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 5925.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 6608.800000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 6994.600000008941,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 6994.600000008941,
+          "ready": "true"
+        }
+      ]
+    },
+    {
+      "action": "Open Tea saved chat",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "reading",
+      "frameCount": 9,
+      "hostReaction": "reading",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 4460.70000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 4839.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 4840.20000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 5502.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 5925.5,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 5925.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 6608.800000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 6994.600000008941,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 6994.600000008941,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 7264.4000000059605,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 7264.4000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 7264.4000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 7614.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 7614.9000000059605,
+          "ready": "true"
+        }
+      ]
+    },
+    {
+      "action": "Tea storyboard review",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "ready",
+      "frameCount": 20,
+      "hostReaction": "ready",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 4460.70000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 4839.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 4840.20000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 5502.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 5925.5,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 5925.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 6608.800000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 6994.600000008941,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 6994.600000008941,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 7264.4000000059605,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 7264.4000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 7264.4000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 7614.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 7614.9000000059605,
+          "ready": "true"
+        }
+      ]
+    },
+    {
+      "action": "Return Coffee without Tea production",
+      "sameIframe": false,
+      "sameWindow": false,
+      "sameCanvas": false,
+      "originalIframeConnected": false,
+      "originalCanvasConnected": true,
+      "iframeCount": 1,
+      "fallbackCount": 0,
+      "ready": "true",
+      "reaction": "reading",
+      "frameCount": 34,
+      "hostReaction": "reading",
+      "events": [
+        {
+          "type": "iframe-removed",
+          "at": 2920.300000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 2920.300000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 3307,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 3307,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 4460.70000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 4460.70000000298,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 4839.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 4840.20000000298,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 5502.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 5502.5,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 5925.5,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 5925.5,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 6608.800000011921,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 6608.800000011921,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 6994.600000008941,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 6994.600000008941,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 7264.4000000059605,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 7264.4000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 7264.4000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 7614.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 7614.9000000059605,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-removed",
+          "at": 8048.9000000059605,
+          "ready": "true"
+        },
+        {
+          "type": "iframe-added",
+          "at": 8048.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-added",
+          "at": 8048.9000000059605,
+          "ready": null
+        },
+        {
+          "type": "fallback-removed",
+          "at": 8459.90000000596,
+          "ready": null
+        },
+        {
+          "type": "ready-change",
+          "at": 8459.90000000596,
+          "ready": "true"
+        }
+      ]
+    }
+  ],
+  "final": {
+    "sameIframe": false,
+    "sameWindow": false,
+    "sameCanvas": false,
+    "originalIframeConnected": false,
+    "originalCanvasConnected": true,
+    "iframeCount": 1,
+    "fallbackCount": 0,
+    "ready": "true",
+    "reaction": "reading",
+    "frameCount": 45,
+    "hostReaction": "reading",
+    "events": [
+      {
+        "type": "iframe-removed",
+        "at": 2920.300000011921,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-added",
+        "at": 2920.300000011921,
+        "ready": null
+      },
+      {
+        "type": "fallback-added",
+        "at": 2920.300000011921,
+        "ready": null
+      },
+      {
+        "type": "fallback-removed",
+        "at": 3307,
+        "ready": null
+      },
+      {
+        "type": "ready-change",
+        "at": 3307,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-removed",
+        "at": 4460.70000000298,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-added",
+        "at": 4460.70000000298,
+        "ready": null
+      },
+      {
+        "type": "fallback-added",
+        "at": 4460.70000000298,
+        "ready": null
+      },
+      {
+        "type": "fallback-removed",
+        "at": 4839.9000000059605,
+        "ready": null
+      },
+      {
+        "type": "ready-change",
+        "at": 4840.20000000298,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-removed",
+        "at": 5502.5,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-added",
+        "at": 5502.5,
+        "ready": null
+      },
+      {
+        "type": "fallback-added",
+        "at": 5502.5,
+        "ready": null
+      },
+      {
+        "type": "fallback-removed",
+        "at": 5925.5,
+        "ready": null
+      },
+      {
+        "type": "ready-change",
+        "at": 5925.5,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-removed",
+        "at": 6608.800000011921,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-added",
+        "at": 6608.800000011921,
+        "ready": null
+      },
+      {
+        "type": "fallback-added",
+        "at": 6608.800000011921,
+        "ready": null
+      },
+      {
+        "type": "fallback-removed",
+        "at": 6994.600000008941,
+        "ready": null
+      },
+      {
+        "type": "ready-change",
+        "at": 6994.600000008941,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-removed",
+        "at": 7264.4000000059605,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-added",
+        "at": 7264.4000000059605,
+        "ready": null
+      },
+      {
+        "type": "fallback-added",
+        "at": 7264.4000000059605,
+        "ready": null
+      },
+      {
+        "type": "fallback-removed",
+        "at": 7614.9000000059605,
+        "ready": null
+      },
+      {
+        "type": "ready-change",
+        "at": 7614.9000000059605,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-removed",
+        "at": 8048.9000000059605,
+        "ready": "true"
+      },
+      {
+        "type": "iframe-added",
+        "at": 8048.9000000059605,
+        "ready": null
+      },
+      {
+        "type": "fallback-added",
+        "at": 8048.9000000059605,
+        "ready": null
+      },
+      {
+        "type": "fallback-removed",
+        "at": 8459.90000000596,
+        "ready": null
+      },
+      {
+        "type": "ready-change",
+        "at": 8459.90000000596,
+        "ready": "true"
+      }
+    ]
+  },
+  "warmRequests": [
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/baked-skin.png",
+    "/companion/baked-hero.png",
+    "/companion/baked-body-clean.png",
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/baked-skin.png",
+    "/companion/baked-hero.png",
+    "/companion/baked-body-clean.png",
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/baked-skin.png",
+    "/companion/baked-hero.png",
+    "/companion/baked-body-clean.png",
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/baked-skin.png",
+    "/companion/baked-hero.png",
+    "/companion/baked-body-clean.png",
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/baked-skin.png",
+    "/companion/baked-hero.png",
+    "/companion/baked-body-clean.png",
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/baked-skin.png",
+    "/companion/baked-hero.png",
+    "/companion/baked-body-clean.png"
+  ],
+  "rejected": [],
+  "calls": [
+    {
+      "name": "fixture-event",
+      "value": "storyboard"
+    }
+  ]
+}

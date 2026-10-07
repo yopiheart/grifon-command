@@ -85,7 +85,7 @@ function Fixture({ conversation, userId, setUserId }: { conversation: Conversati
       <button type="button" onClick={controller.reset} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: reset</button>
       <span style={{ width: '100%', fontSize: 12 }}>These controls emit test callbacks. They do not create an ad or call a provider. Scene images and the video are existing local samples, not generated from your brief.</span>
     </div>
-  </details><CompanionChatSurface key={conversation.chat.id} conversation={conversation} controller={controller} userId={userId}
+  </details><CompanionChatSurface key={conversation.chat.id} conversation={conversation} controller={controller} userId={userId} onAvatarPresentation={conversation.presentAvatar}
     onBack={() => calls.push({ name: 'back' })} onUpgrade={() => calls.push({ name: 'upgrade' })}
     presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed} /></div>;
 }

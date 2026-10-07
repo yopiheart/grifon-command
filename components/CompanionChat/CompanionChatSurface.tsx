@@ -6,7 +6,8 @@ import Button from '../ui/Button';
 import { GlassPanel } from '../ui/GlassPanel';
 import { LiquidGlass } from '../ui/LiquidGlass';
 import { DUR, EASE } from '../ui/motionTokens';
-import { CompanionAvatar, type CompanionReaction } from './CompanionAvatar';
+import type { CompanionReaction } from './CompanionAvatar';
+import type { CompanionAvatarPresentation } from './CompanionAvatarLayer';
 import { CompanionComposer, type CompanionComposerHandle } from './CompanionComposer';
 import './companionChat.css';
 import type { ConversationBinding } from './CompanionChatShell';
@@ -32,6 +33,7 @@ export interface CompanionChatSurfaceProps {
   videoAllowed?: boolean | null;
   fixtureLabel?: string;
   conversation?: ConversationBinding;
+  onAvatarPresentation: (chatId: string, presentation: CompanionAvatarPresentation) => void;
 }
 
 const control = 'min-h-11 min-w-11 !rounded-xl !font-sans !text-sm !font-semibold !normal-case !tracking-normal';
@@ -58,7 +60,7 @@ const Transcript = memo(function Transcript({ messages, hiddenMessageId }: { mes
   </article></Fragment>)}</>;
 });
 
-export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, presetUnlocked, quotaBlocked = false, quotaReady = true, allowanceLoading = false, onRetryAllowance, videoAllowed = true, fixtureLabel, conversation }: CompanionChatSurfaceProps) {
+export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, presetUnlocked, quotaBlocked = false, quotaReady = true, allowanceLoading = false, onRetryAllowance, videoAllowed = true, fixtureLabel, conversation, onAvatarPresentation }: CompanionChatSurfaceProps) {
   const [draft, setDraft] = useState<CompanionDraft>(() => conversation?.chat.draft ?? loadCompanionDraft(userId) ?? createCompanionDraft());
   const [hasText, setHasText] = useState(!!conversation?.chat.composer);
   const [viewer, setViewer] = useState(false);
@@ -75,6 +77,8 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const [armedPreset, setArmedPreset] = useState<{ value: LockablePresetId | null; label: string } | null>(null);
   const composer = useRef<CompanionComposerHandle>(null);
   const scroller = useRef<HTMLDivElement>(null);
+  const surface = useRef<HTMLDivElement>(null);
+  const avatarSlot = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLElement>(null);
   const footer = useRef<HTMLElement>(null);
   const upload = useRef<HTMLInputElement>(null);
@@ -155,6 +159,25 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
     observer.observe(header.current); observer.observe(footer.current);
     return () => observer.disconnect();
   }, [measureClearance]);
+  useLayoutEffect(() => {
+    const slot = avatarSlot.current;
+    if (!slot || !surface.current || !header.current || !conversation) return;
+    const publish = () => {
+      if (!slot.isConnected) return;
+      const bounds = slot.getBoundingClientRect();
+      onAvatarPresentation(conversation.chat.id, {
+        state: avatarState, bounds: { left: bounds.left, top: bounds.top, width: bounds.width, height: bounds.height },
+        inert: !!slot.closest('[inert]') || (viewer && window.innerWidth < 768),
+      });
+    };
+    publish();
+    const resize = new ResizeObserver(publish);
+    resize.observe(slot); resize.observe(surface.current); resize.observe(header.current);
+    const attributes = new MutationObserver(publish);
+    for (let node = slot.parentElement; node; node = node.parentElement) attributes.observe(node, { attributes: true, attributeFilter: ['inert'] });
+    window.addEventListener('resize', publish);
+    return () => { resize.disconnect(); attributes.disconnect(); window.removeEventListener('resize', publish); };
+  }, [avatarState, viewer, conversation?.chat.id, onAvatarPresentation]);
   useEffect(() => {
     const node = scroller.current;
     if (!node) return;
@@ -271,7 +294,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
     </div>
   );
 
-  return <div className={`companion-chat relative flex h-full min-h-0 flex-col overflow-hidden bg-zinc-950 font-sans font-normal tracking-normal text-white ${viewer ? "companion-viewer-open" : ""}`} style={motionStyle} data-testid="companion-chat" data-chat-id={conversation?.chat.id} data-companion-state={avatarState}>
+  return <div ref={surface} className={`companion-chat relative flex h-full min-h-0 flex-col overflow-hidden bg-zinc-950 font-sans font-normal tracking-normal text-white ${viewer ? "companion-viewer-open" : ""}`} style={motionStyle} data-testid="companion-chat" data-chat-id={conversation?.chat.id} data-companion-state={avatarState}>
     {fixtureLabel && <p role="note" className="shrink-0 border-b border-[#FFCC00]/20 bg-[#FFCC00]/10 px-4 py-2 text-center text-xs text-[#FFCC00]">{fixtureLabel}</p>}
     <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1">
       <section className="relative flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
@@ -279,7 +302,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           <div className="pointer-events-auto absolute left-4 top-3 sm:left-8">{conversation ? <Button variant="ghost" className={control + ' !p-3 md:!hidden'} aria-label="Open conversations" onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button> : <Button variant="ghost" className={control + ' !p-3'} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4" /></Button>}</div>
           <div className="pointer-events-auto absolute right-4 top-3 sm:right-8"><Button variant="ghost" className={control + ' !p-3 ' + (conversation ? 'md:!hidden' : '')} aria-label={conversation ? 'New chat' : 'New ad'} disabled={!conversation && disabled} onClick={conversation?.newChat ?? reset}><Plus className="h-4 w-4" /></Button></div>
           <div className="companion-identity mx-auto flex w-fit max-w-[calc(100%-88px)] flex-col items-center text-center">
-            <CompanionAvatar state={avatarState} className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
+            <div ref={avatarSlot} aria-hidden="true" data-companion-avatar-slot className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
             <LiquidGlass className="companion-identity-badge rounded-xl px-3 py-1">
               <h1 className="!text-base !font-semibold !normal-case !tracking-tight sm:!text-lg">Grifon</h1>
               {!failed && (busy || loadingRun || uploading || atStoryboard || atResult) && <p className="text-xs leading-relaxed text-zinc-100">{stateLabel}</p>}

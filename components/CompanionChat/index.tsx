@@ -30,7 +30,7 @@ export default function CompanionChat({ userId, presetUnlocked, isBusinessTier, 
   };
   return <CompanionChatShell key={userId} userId={userId} onStudio={onBack}>{conversation => <ProducerFlow key={conversation.chat.id} conversation={conversation.chat} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}
     onBack={onBack} onUpgrade={onUpgrade} onSwitchToSteps={onBack} onCloneVoice={onBack}
-    renderSurface={controller => <CompanionChatSurface key={conversation.chat.id} conversation={conversation} userId={userId}
+    renderSurface={controller => <CompanionChatSurface key={conversation.chat.id} conversation={conversation} userId={userId} onAvatarPresentation={conversation.presentAvatar}
       controller={{ ...controller,
         start: input => !quotaReady ? Promise.resolve() : quotaBlocked ? Promise.resolve(onUpgrade()) : controller.start(input),
         approve: () => !quotaReady ? Promise.resolve() : videoAllowed === true ? controller.approve() : videoAllowed === false ? Promise.resolve(onUpgrade()) : Promise.resolve(),

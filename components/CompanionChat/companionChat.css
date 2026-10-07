@@ -32,8 +32,8 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
 }
 .companion-chat .companion-composer.mat-chrome { background: rgba(9,9,11,.70); }
-.companion-header button { background: rgba(9,9,11,.70); color: #D4D4D8; }
-.companion-header button:hover:not(:disabled) { background: rgba(9,9,11,.80); color: #FFFFFF; }
+:is(.companion-header, .companion-avatar-layer) button { background: rgba(9,9,11,.70); color: #D4D4D8; }
+:is(.companion-header, .companion-avatar-layer) button:hover:not(:disabled) { background: rgba(9,9,11,.80); color: #FFFFFF; }
 .companion-composer .companion-icon-button { color: #D4D4D8; }
 .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::before,
 .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::after { display: none; }
@@ -96,7 +96,7 @@
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .companion-chat .mat-plate, .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome, .companion-message-user, .companion-message-assistant { background: #18181B !important; }
   .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  .companion-header button, .companion-header button:hover:not(:disabled), .companion-footer-note { background: #18181B !important; }
+  :is(.companion-header, .companion-avatar-layer) button, :is(.companion-header, .companion-avatar-layer) button:hover:not(:disabled), .companion-footer-note { background: #18181B !important; }
   .companion-message-user { border: 1px solid #FFCC00; box-shadow: none; }
   .companion-composer { box-shadow: none; border-color: #82828B; }
   .companion-footer::before { display: none; }

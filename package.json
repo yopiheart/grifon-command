@@ -23,7 +23,7 @@
     "check:domain": "node tools/check-domain-language.mjs",
     "cost:estimate": "node tools/render_cost_estimate.mjs",
     "creative:batch": "node tools/batch-creative-codex.mjs",
-    "design:lint": "design.md lint DESIGN.md",
+    "design:lint": "node node_modules/@google/design.md/dist/index.js lint DESIGN.md",
     "design:tailwind": "design.md export --format tailwind DESIGN.md > design.tokens.json",
     "design:spec": "design.md spec",
     "check:ps1-ascii": "node tools/check-ps1-ascii.mjs",

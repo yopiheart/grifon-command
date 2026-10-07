@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { PanelLeft, PanelLeftClose, Plus, Search, X, Clapperboard } from 'lucide-react';
 import Button from '../ui/Button';
+import { CompanionAvatarLayer, type CompanionAvatarPresentation } from './CompanionAvatarLayer';
 import { createConversation, loadConversations, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations } from '../../services/companionConversations';
 import './companionChat.css';
 
@@ -12,6 +13,7 @@ export interface ConversationBinding {
   retrySave: () => void;
   openNavigation: () => void;
   newChat: () => void;
+  presentAvatar: (chatId: string, presentation: CompanionAvatarPresentation) => void;
 }
 interface Props {
   userId: string;
@@ -35,6 +37,15 @@ export function CompanionChatShell({ userId, onStudio, children }: Props) {
   const drawer = useRef<HTMLElement>(null);
   const main = useRef<HTMLDivElement>(null);
   const navigating = useRef(false);
+  const [avatar, setAvatar] = useState<CompanionAvatarPresentation | null>(null);
+  const presentAvatar = useCallback((chatId: string, presentation: CompanionAvatarPresentation) => {
+    if (!mounted.current || current.current?.selectedId !== chatId || !main.current) return;
+    const origin = main.current.getBoundingClientRect();
+    const next = { ...presentation, bounds: { ...presentation.bounds, left: presentation.bounds.left - origin.left, top: presentation.bounds.top - origin.top } };
+    setAvatar(previous => previous && previous.state === next.state && previous.inert === next.inert
+      && previous.bounds.left === next.bounds.left && previous.bounds.top === next.bounds.top
+      && previous.bounds.width === next.bounds.width && previous.bounds.height === next.bounds.height ? previous : next);
+  }, []);
   const persist = useCallback((next: CompanionConversations) => {
     setSaving(true);
     const task = writes.current.catch(() => {}).then(() => saveConversations(next));
@@ -110,6 +121,6 @@ export function CompanionChatShell({ userId, onStudio, children }: Props) {
     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
     {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button></aside>}
     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
-    <div ref={main} className="min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate() })}</div>
+    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar })}<CompanionAvatarLayer presentation={avatar} /></div>
   </div>;
 }

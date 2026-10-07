@@ -1,0 +1,22 @@
+{
+  "retry": {
+    "x": 188,
+    "y": 77,
+    "width": 44,
+    "height": 44
+  },
+  "navigation": [
+    {
+      "x": 16,
+      "y": 57,
+      "width": 44,
+      "height": 44
+    },
+    {
+      "x": 260,
+      "y": 57,
+      "width": 44,
+      "height": 44
+    }
+  ]
+}
