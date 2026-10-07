@@ -1,3 +1,5 @@
+.companion-chat { font-size: 14px; }
+
 /* Chat inputs use the body register, overriding the app's technical-data law. */
 .companion-chat :is(input, textarea, select, label, button) {
   font-family: inherit !important;
@@ -5,7 +7,7 @@
 }
 .companion-chat label { text-transform: none !important; }
 .companion-chat .font-mono { letter-spacing: normal !important; }
-.companion-chat :is(input, textarea, select) { color-scheme: dark; font-size: 16px; }
+.companion-chat :is(input, textarea, select) { color-scheme: dark; font-size: 14px; }
 .companion-chat button {
   transition-property: opacity, transform;
   transition-duration: var(--companion-duration);
@@ -22,7 +24,7 @@
   scrollbar-color: #3F3F46 transparent;
   scroll-padding-block: 24px;
 }
-.companion-message { font-size: 16px; font-weight: 400; line-height: 1.65; letter-spacing: normal; }
+.companion-message { font-size: 14px; font-weight: 400; line-height: 1.65; letter-spacing: normal; }
 .companion-message-assistant { background: rgba(255,255,255,.035); }
 .companion-message-user {
   background: rgba(255,204,0,.16);

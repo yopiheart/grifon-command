@@ -37,12 +37,12 @@ test('polish: pointer burst coalesces avatar bounds reads to one per animation f
   expect(measurement.afterFrame).toBeLessThanOrEqual(1);
 });
 
-test('polish: mobile composer uses readable 16px sans text with normal tracking', async ({ page }) => {
+test('polish: mobile composer uses readable 14px sans text with normal tracking', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   const css = await page.getByRole('textbox', { name: 'Message Grifon' }).evaluate(element => {
     const s = getComputedStyle(element); return { size: parseFloat(s.fontSize), family: s.fontFamily, tracking: s.letterSpacing };
   });
-  expect(css.size).toBeGreaterThanOrEqual(16);
+  expect(css.size).toBe(14);
   expect(css.family.toLowerCase()).not.toMatch(/mono/);
   expect(['normal', '0px']).toContain(css.tracking);
 });

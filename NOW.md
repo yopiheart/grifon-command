@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, branded companion chat and paced intake ready for review; prior work preserved**
+**Stamped: 2026-10-07, 14px companion chat verified; interface alignment interview in progress**
 
 ## ▶ NEXT ACTION
-Next: owner review of chat/reactions, then an explicitly cost-capped paid ad test.
+Next: finish interface grill, then saved project chats and shared chat/Studio navigation.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
-Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no public deployment.
-Real /app?experience=companion reuses ProducerFlow; guided product-ad intake only.
-Centered88/96px mascot; no side rail/play-pause; tall reviews open at heading. Inter type, gold user bubbles.
-Intake replies show typing for600ms; accepted drafts save immediately. Approved griffin/tracking unchanged.
-Build/1451 units/38 browser cases PASS; evidence in chat QA typing/ (prior layout evidence centered/).
-No paid/deploy/merge; real provider end-to-end, voice and physical phone FPS pending.
+Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge.
+Current /app?experience=companion: guided ads only,88/96px mascot,14px Inter/gold messages,600ms typing; drafts save immediately.
+Build/1451 units/39 browser cases PASS; evidence chat QA type-14/; prior timing typing/, layout centered/.
+Grill locked targets: one Grifon, separate project chats; chat-first, Studio entry; natural intake asks only missing details.
+Grill locked targets: compact card/viewer;56-64px mascot; cloud sync; expandable progress; approved background jobs with status/Stop.
+Approved 3D/tracking unchanged; no side rail/play-pause; tall reviews open at heading. Live providers/voice/phone FPS pending.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

@@ -128,7 +128,7 @@ test('reduced motion keeps the typing indicator static while preserving the dela
   await expect(page.locator('article .companion-message-assistant')).toHaveCount(2);
 });
 
-for (const [width, height] of [[375, 667], [1280, 900]]) {
+for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
   test(`typing and delivered typography plus golden user bubble at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await openFixture(page);
@@ -150,7 +150,7 @@ for (const [width, height] of [[375, 667], [1280, 900]]) {
     fs.writeFileSync(path.join(QA, `${phase}-typography-${width}.json`), JSON.stringify(metrics, null, 2));
     for (const metric of [metrics.user, metrics.assistant, metrics.input]) {
       expect(metric.font.split(',')[0].replaceAll('"', '').trim()).toBe('Inter');
-      expect(metric.size).toBe('16px');
+      expect(metric.size).toBe('14px');
     }
     expect(metrics.user.weight).toBe('400'); expect(metrics.input.weight).toBe('400');
     expect(metrics.button.font.split(',')[0].replaceAll('"', '').trim()).toBe('Inter');
