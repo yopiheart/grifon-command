@@ -1,13 +1,26 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, PR156 merge preparation; accepted motion workflow saved**
+**Stamped: 2026-10-07, original shader study complete; draft PR backup pending**
+
+## Current: original shader material study
+Checkout C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
+Branch codex/grifon-shader-study; source/exports workflows/assets/grifon-shader-study/.
+Eight seconds,1080p30,240frames; three H264 silent exports strictly decode PASS.
+AFTER grifon-shader-after-1080p.mp4 SHA
+cd8ab6e4b7c5727d36883a4192ce7d7f362103f8d0e1aa1daefaba193191ace5.
+Actual shaders4.0.1 WebGPU on native AMDgcn-5; zero external requests/spend.
+Capture/source hashes and fresh-start/reverse/brand-hold checks PASS in qa/.
+Each mode needs a fresh browser; opening text uses permanent opacity promotion.
+qa/rasterization-fix.json preserves original-fail/fix-pass evidence, not tolerance.
+Offline artifacts/grifon-shader-study.html has synchronized videos and download.
+Independent mobile/player/download/encoded-boundary QA PASS; draft PR pending.
+Original free-component recipe, pinned reproducible build and licenses saved.
+User creative review pending. Customer preset UI/API, deployment and merge unbuilt.
+The approved full film/music/voice below are unchanged; no new provider calls.
 
 ## Motion film / PR156
-Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
-Branch codex/grifon-motion-depth; https://github.com/yopiheart/grifon-command/pull/156.
-Accepted baseline backed up at ead3abe9. Main reconciled at29feca9c; only NOW.md
-conflicted. Independent Codex review clear after completed-VO replay fix;
-qa/merge-review.md has original-fail/fix-pass evidence. Final CI still required.
-No paid work, application feature or commercial publication in this scope.
+https://github.com/yopiheart/grifon-command/pull/156 merged October4 at2e1de015.
+Accepted baseline ead3abe9; independent review clear after completed-VO replay
+fix, documented in qa/merge-review.md. No customer feature/commercial publication.
 
 Neil accepted the 32.9s film and delegated sound choices; do not ask him to pick
 A-D or individual sounds again. Positive-only prompts; preserve existing Aira take.
@@ -58,8 +71,6 @@ User billing concern is not verified cause. Do not bypass project-access gate.
 PR157: https://github.com/yopiheart/grifon-command/pull/157.
 Checkout C:/Users/ADMIN/.codex/worktrees/976d/grifon-command; branch
 codex/blender-product-reveal. Its merge was authorized; check remote status.
-Detailed prior state remains in main's pre-reconciliation NOW.md history and
-assets/vivo-x80-ugc, assets/blender-reveal evidence; no files changed here.
 Vivo task cgt-20261004021141-cgh8r succeeded ONCE; NEVER execute again.
 Fixed tools/run_vivo_x80_ugc.mjs, separate Vivo spec/ledger; recovery GET-only.
 Raw361frames/15.041667s/496x864/native audio; comparison360frames/15s.
@@ -72,8 +83,7 @@ V1/V2 preserved; continuous listening/native phone remain unverified.
 Bottle task cgt-20261003202712-nlxv7 also exhausted; NEVER --execute again.
 Ledger .tmp/byteplus-motion-transfer/attempt.json; GET-only recovery.
 Bottle estimate$0.5200678; invoice unknown; identity PARTIAL. No new model trial.
-Main carried build/1432 unit/26 control/29 Vivo/25 bottle checks and independent
-review; these are historical evidence, not rerun by this motion task.
+Main's prior build/tests/review are historical evidence; Vivo files untouched.
 PR158 prompt-parity guard merged; never authorizes changing tuned content.
 Vivo proof accepted9/10; priorities assets/vivo-x80-ugc/user-review.json.
 Local-preview/automatic-trigger tests unrun; generic engine/Grifon UI unbuilt.

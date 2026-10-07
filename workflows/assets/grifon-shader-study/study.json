@@ -1,0 +1,38 @@
+{
+  "id": "grifon-shader-study",
+  "version": 1,
+  "duration": 8,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "copy": {
+    "opening": "Until now.",
+    "direction": "Give your next ad a clear direction.",
+    "steps": ["Research", "Script", "Storyboard"],
+    "brand": "GRIFON",
+    "website": "grifon.ai"
+  },
+  "assets": {
+    "logo": "./assets/logo.png",
+    "displayFont": "./assets/inter-900.ttf",
+    "bodyFont": "./assets/inter-variable.ttf"
+  },
+  "palette": {
+    "canvas": "#09090B",
+    "gold": "#FFCC00",
+    "white": "#FFFFFF"
+  },
+  "timeline": {
+    "orb": { "start": 0, "end": 2.4 },
+    "glass": { "start": 2.4, "readable": 3.1, "end": 5.2 },
+    "finish": { "start": 5.2, "settled": 6.4, "holdUntil": 7.6, "end": 8 }
+  },
+  "materials": {
+    "before": "Authored CSS gradients and sheen",
+    "after": "shaders 4.0.1 WebGPU material layers",
+    "backgroundCanvas": { "id": "shader-background", "width": 1920, "height": 1080 },
+    "orbCanvas": { "id": "shader-orb", "width": 960, "height": 960 },
+    "glassCanvas": { "id": "shader-glass", "width": 1400, "height": 340 }
+  },
+  "description": "Original abstract motion study. The two modes share copy, layout and choreography; only the material renderer changes."
+}

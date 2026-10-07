@@ -7,3 +7,13 @@
 
 # Vitest's transform of this imported shebang entrypoint rejects CRLF on Windows.
 tools/check-eval-prompt-sync.mjs text eol=lf
+
+# Preserve the shader study's byte-verified bundle, licenses and capture receipts.
+workflows/assets/grifon-shader-study/**/*.js text eol=lf
+workflows/assets/grifon-shader-study/**/*.mjs text eol=lf
+workflows/assets/grifon-shader-study/**/*.html text eol=lf
+workflows/assets/grifon-shader-study/**/*.json text eol=lf
+workflows/assets/grifon-shader-study/**/*.md text eol=lf
+workflows/assets/grifon-shader-study/**/*.txt text eol=lf
+artifacts/grifon-shader-study.html text eol=lf
+tools/artifacts/build-grifon-shader-review.mjs text eol=lf
