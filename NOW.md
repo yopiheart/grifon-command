@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08, corrected shader launch film verified; delivery in progress**
+**Stamped: 2026-10-08, corrected shader launch film and Gmail delivery verified**
 
 ## Current: 31.2-second shader launch film
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
@@ -44,17 +44,27 @@ prompt-parity/Codex checks PASS;26 Codex tests rerun after scoped Git byte-prese
 Git whitespace check passes; a deliberate trailing space still fails. Private inputs ignored.
 No application/provider/tuned/skill/dependency edits. Existing accepted assets preserved.
 Clean Digital Clouds+9 existing SFX and separate stems have preserved original private recovery;
-final corrected archive will be refreshed after remote verification and delivery.
+final corrected archive grifon-shader-launch-2026-10-08-d25ed26b51be-e82504e0.zip
+contains259 entries, each decoded and checked byte-for-byte with CRC/SHA256; receipt
+qa/recovery-archive.json. It is under PRIMARY/.tools/grifon-motion-archives/, with ignored
+raw audio and stems included. Source/media/player are also backed up on private GitHub.
 SFX predate paid subscription:PRIVATE REVIEW ONLY; commercial clearance pending.
 Provider calls/spend0. No new VO. Hearing and real-phone review pending.
-Initial production commits336e5294/f818c495 are preserved; corrected media push next. Draft PR166:
+Initial production commits336e5294/f818c495 are preserved. Corrected film e906a852c0b8b61330bb540f5d83cfaf596ec9d4 pushed. Draft PR166:
 https://github.com/yopiheart/grifon-command/pull/166 (base codex/grifon-shader-study, MERGEABLE).
-Initial authenticated GitHub blob receipt is historical; corrected remote bytes will be verified.
+Authenticated corrected GitHub blobs for both MP4s/player match exact local bytes; qa/github-backup.json.
 Windows gh raw stdout rejected binary; JSON/base64 blob transport verified original bytes.
 Vercel check FAIL links account-deployment-blocked help; no deployment performed.
 Local checks above pass; this stacked PR has no reported GitHub Actions results.
-Parent prepares actual unsent Gmail draft with corrected portrait attached, then PC sleep only
-after backups and unrelated work checks. Email and sleep are still pending; no merge/deploy.
+Actual Gmail draft "Grifon launch film - ready for review" (em dash in Gmail subject) is saved,
+unsent and unaddressed, with grifon-launch-portrait-2026-10-08.mp4 attached. Browser upload
+completion, draft list and full MIME filename/type/8,568,284-byte size are verified.
+Landscape/player links are pinned to e906a852. qa/delivery.json contains no account/draft IDs.
+Private proof screenshot:ignored .tmp/delivery/gmail-launch-draft.jpg. Gmail tab retained.
+No merge/deploy. PC sleep is authorized as the final step after unrelated active work check;
+no shutdown or permanent power setting change. Final sleep handoff uses the own hidden
+one-off .tmp/delivery/sleep-after-delivery.ps1; inspect .tmp/delivery/sleep-result.json
+after waking for the actual return. Other chats and their helpers must not be terminated.
 
 ## Preserved Phase 1 / earlier accepted films
 Original motion checkout PRIMARY/.tmp/worktrees/grifon-motion-depth remains untouched.

@@ -25,6 +25,8 @@ Three manually authored, opaque 1120x1920 text-free [example plates](assets/fixt
 
 `qa/corrections-before/` preserves original failure frames, source hashes and historical metadata from commit `f818c4952c88a5011257944717dbf82c89f2ef8d`. That initial version also remains in Git and its original private 204-entry archive. Its pass reviews and mobile receipts describe the initial media; they do not establish corrected final-mobile or final-recovery status. [Fresh parent CUA smoke](qa/parent-final-smoke.json) and [independent correction review](qa/parent-independent-correction-review.md) pass on the corrected exports. Parent owns final backup metadata, delivery and recovery updates.
 
+[Remote byte verification](qa/github-backup.json) confirms both corrected MP4s and the player at pushed commit `e906a852c0b8b61330bb540f5d83cfaf596ec9d4`. [Delivery receipt](qa/delivery.json) confirms an actual unsent, unaddressed Gmail draft with the portrait MP4 attached and pinned landscape/player links. Upload source SHA256 and saved Gmail MIME filename/type/byte size were checked; Gmail attachment bytes were not separately downloaded. The proof screenshot and account/draft identifiers stay outside Git.
+
 ## Final results
 
 | Export | Dimensions | Bytes | SHA-256 |
