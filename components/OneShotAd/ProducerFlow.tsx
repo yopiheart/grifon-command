@@ -110,7 +110,7 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     updatedAt: Date.parse(row.updated_at) || 0,
     status: row.status,
     mode: row.mode,
-    gate: art.gate ?? undefined,
+    gate: art.gate ?? (row.status === 'done' && art.finalVideoUrl ? 'first_cut' : undefined),
     storyboardApproved: art.storyboardApproved || impliedApproved,
     // C4: restore the applied preset so the switcher highlights it (not AUTO) after reload.
     presetId: art.presetId ?? undefined,
@@ -143,6 +143,8 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
 }
 
 export interface ProducerSurfaceController {
+  readOnly?: boolean;
+  resume?: () => Promise<void>;
   run: ProductionRun | null;
   phase: 'launch' | 'researching' | 'error' | 'resuming' | 'resume-error';
   error: string;
@@ -178,9 +180,10 @@ interface Props {
   onCloneVoice: () => void;
   /** Alternate presentation; the same producer owns all paid work and recovery. */
   renderSurface?: (controller: ProducerSurfaceController) => React.ReactNode;
+  conversation?: { id: string; runId: string | null };
 }
 
-const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, preferredVertical, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice, renderSurface }) => {
+const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, preferredVertical, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice, renderSurface, conversation }) => {
   const [run, setRun] = useState<ProductionRun | null>(null);
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming' | 'resume-error'>('resuming');
   const [resumeAttempt, setResumeAttempt] = useState(0);
@@ -197,6 +200,8 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   const epochRef = useRef(0);
   const operationRef = useRef(false);
   const [operationBusy, setOperationBusy] = useState(false);
+  const [readOnly, setReadOnly] = useState(!!conversation?.runId);
+  const initialConversationRun = useRef(conversation?.runId);
   const activeRunKey = renderSurface ? `osa_producer_companion:${userId ?? ''}` : ACTIVE_RUN_KEY;
 
   useEffect(() => {
@@ -232,14 +237,15 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     setRun(null);
     setErrMsg('');
     if (!userId) { setPhase('launch'); return; }
-    const activeId = readActiveRun(activeRunKey);
+    const activeId = conversation ? initialConversationRun.current : readActiveRun(activeRunKey);
     if (!activeId) { setPhase('launch'); return; }
     setPhase('resuming');
     void loadRun(activeId)
       .then((res) => {
         if (!alive || epoch !== epochRef.current) return;
         // Stale-key fix: a missing or already-finished run must not resume — drop the key.
-        if (!res || res.run.user_id !== userId || res.run.status === 'done') {
+        if (!res || res.run.user_id !== userId || (!conversation && res.run.status === 'done')) {
+          if (conversation) { setPhase('resume-error'); return; }
           rememberActiveRun(activeRunKey, null);
           setPhase('launch');
           return;
@@ -252,7 +258,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         // If the run was interrupted mid-stage (running), continue the loop; a parked
         // 'review' run just shows its gate and waits for a human tap. resumeStarted guards
         // StrictMode's double-mount so we drive the loop exactly once, on a fresh signal.
-        if (resumed.status === 'running' && !resumeStarted.current) {
+        if (!conversation && resumed.status === 'running' && !resumeStarted.current) {
           resumeStarted.current = true;
           abortRef.current = new AbortController();
           operationRef.current = true; setOperationBusy(true);
@@ -276,7 +282,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   }, [resumeAttempt, userId, activeRunKey]);
 
   const start = async (input: IntakeInput) => {
-    if (!userId || operationRef.current || run || phase === 'resuming' || phase === 'resume-error') return;
+    if (!userId || readOnly || operationRef.current || run || phase === 'resuming' || phase === 'resume-error') return;
     operationRef.current = true;
     setOperationBusy(true);
     const epoch = ++epochRef.current;
@@ -359,7 +365,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       //     and drive it. runId is the stable idempotency anchor; remember it for resume.
       const runId = newRunId();
       if (!current()) return;
-      rememberActiveRun(activeRunKey, runId);
+      if (!conversation) rememberActiveRun(activeRunKey, runId);
       const fresh = createProductionRun(
         { ...orchInputBase, avatar },
         userId,
@@ -380,7 +386,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   };
 
   const withRun = async (action: (active: ProductionRun) => Promise<void>) => {
-    if (!run || operationRef.current || run.busy || (run.status === 'running' && !run.gate)) return;
+    if (!run || readOnly || operationRef.current || run.busy || (run.status === 'running' && !run.gate)) return;
     operationRef.current = true;
     setOperationBusy(true);
     setErrMsg('');
@@ -455,6 +461,36 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     });
   };
 
+  const handleResumeConversation = async () => {
+    if (!conversation || !readOnly || !run || operationRef.current) return;
+    operationRef.current = true; setOperationBusy(true); setErrMsg('');
+    abortRef.current = new AbortController();
+    const epoch = ++epochRef.current;
+    const continuationApproved = !run.gate && run.status !== 'done';
+    try {
+      // Submitted work may have checkpointed since history was opened.
+      const latest = await loadRun(run.runId);
+      if (!mountedRef.current || epoch !== epochRef.current) return;
+      if (!latest || latest.run.user_id !== userId) throw new Error('Your saved ad could not be opened. Please retry.');
+      const fresh = fromRow(latest.run, latest.scenes);
+      setRun(fresh);
+      if (fresh.gate || fresh.status === 'done') { setReadOnly(false); return; }
+      // "Resume editing" did not authorize restarting a now-running task.
+      // A newly crossed approval gate also needs the refreshed allowance check.
+      if (!continuationApproved || !!fresh.storyboardApproved !== !!run.storyboardApproved) return;
+      setReadOnly(false);
+      const resumed: ProductionRun = { ...fresh, status: 'running', error: undefined, busy: undefined };
+      setRun(resumed);
+      await runProduction(resumed, cb(resumed), realProducerDeps);
+    }
+    catch (error) {
+      if (mountedRef.current && epoch === epochRef.current) {
+        const message = error instanceof Error ? error.message : 'Could not resume your ad.';
+        setErrMsg(message); setPhase('resume-error'); setReadOnly(true);
+      }
+    } finally { if (mountedRef.current && epoch === epochRef.current) { operationRef.current = false; setOperationBusy(false); } }
+  };
+
   const handleCancel = () => {
     epochRef.current++;
     abortRef.current.abort();
@@ -472,7 +508,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     resumeStarted.current = false;
     operationRef.current = false; approvingRef.current = false;
     setOperationBusy(false); setApproving(false); setReshooting(null); setPresetBusy(false); setErrMsg('');
-    rememberActiveRun(activeRunKey, null);
+    if (!conversation) rememberActiveRun(activeRunKey, null);
     setRun(null);
     setPhase('launch');
   };
@@ -493,8 +529,9 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   }
 
   if (renderSurface) return <>{renderSurface({
+    readOnly, resume: handleResumeConversation,
     run, phase, error: errMsg || run?.error || '',
-    busy: operationBusy || phase === 'researching' || (run?.status === 'running' && !run.gate) || !!run?.busy,
+    busy: operationBusy || (!readOnly && (phase === 'researching' || (run?.status === 'running' && !run.gate) || !!run?.busy)),
     reshooting, presetBusy, approving,
     start, approve: handleApprove, regenScene: handleRegenImage, reshoot: handleReshoot,
     choosePreset: handleChoosePreset, retry: handleRetry,

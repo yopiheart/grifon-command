@@ -27,7 +27,7 @@ test('intake reply waits through 499ms and arrives at 600ms with accessible typi
   await openFixture(page);
   await input(page).fill('Cold brew for busy parents.');
   await page.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(page.getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
   const immediate = { typing: await typing(page).count(), assistantMessages: await page.locator('article .companion-message-assistant').count() };
   fs.mkdirSync(QA, { recursive: true });
   fs.writeFileSync(path.join(QA, `${phase}-timing-baseline.json`), JSON.stringify(immediate, null, 2));
@@ -76,7 +76,7 @@ test('reset cancels the pending reply without reviving the old brief', async ({ 
   await openFixture(page);
   await input(page).fill('Old brief'); await input(page).press('Enter');
   await expect(typing(page)).toBeVisible();
-  await page.getByRole('button', { name: 'New ad', exact: true }).click();
+  await page.getByRole('button', { name: 'New chat', exact: true }).click();
   await page.clock.runFor(1000);
   await expect(typing(page)).toHaveCount(0);
   await expect(page.locator('.companion-message-user')).toHaveCount(0);
@@ -94,7 +94,7 @@ test('account remount isolates the pending reply and restores the accepted answe
   await expect(page.locator('article .companion-message-assistant')).toHaveCount(1);
   await expect(typing(page)).toHaveCount(0);
   await page.evaluate(() => (window as any).companionFixture.account('fixture-user-a'));
-  await expect(page.getByText('Account A accepted answer', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText('Account A accepted answer', { exact: true })).toBeVisible();
   await expect(page.locator('article .companion-message-assistant')).toHaveCount(2);
   await expect(page.locator('article .companion-message-assistant').last()).toContainText('brand name');
 });
@@ -106,7 +106,7 @@ for (const lifecycle of ['reload', 'leave-and-return']) {
     await expect(typing(page)).toBeVisible();
     if (lifecycle === 'reload') await page.reload();
     else { await page.goto('about:blank'); await page.goto('/companion-chat-preview.html'); }
-    await expect(page.getByText('Persist this accepted answer', { exact: true })).toBeVisible();
+    await expect(page.getByTestId('conversation-scroll').getByText('Persist this accepted answer', { exact: true })).toBeVisible();
     await page.clock.runFor(1000);
     await expect(typing(page)).toHaveCount(0);
     await expect(page.locator('.companion-message-user')).toHaveCount(1);
@@ -145,7 +145,7 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
     await expect(page.locator('article .companion-message-assistant').last()).toBeInViewport();
     const metrics = await page.evaluate(() => {
       const css = (selector: string) => { const style = getComputedStyle(document.querySelector(selector)!); return { font: style.fontFamily, size: style.fontSize, weight: style.fontWeight, color: style.color, background: style.backgroundColor, image: style.backgroundImage, border: style.borderColor }; };
-      return { user: css('.companion-message-user'), assistant: css('article .companion-message-assistant'), input: css('.companion-message-input'), button: css('.companion-header button:not([aria-label])'), timestamp: css('article time'), overflow: document.documentElement.scrollWidth - innerWidth };
+      return { user: css('.companion-message-user'), assistant: css('article .companion-message-assistant'), input: css('.companion-message-input'), button: css('.companion-shell button'), timestamp: css('[data-testid="conversation-time-divider"] time'), overflow: document.documentElement.scrollWidth - innerWidth };
     });
     fs.writeFileSync(path.join(QA, `${phase}-typography-${width}.json`), JSON.stringify(metrics, null, 2));
     for (const metric of [metrics.user, metrics.assistant, metrics.input]) {
@@ -198,6 +198,7 @@ test('result revision controls respond immediately without an intake typing dela
   await input(page).fill('style clean'); await input(page).press('Enter');
   expect(await typing(page).count()).toBe(0);
   await expect(page.locator('article .companion-message-assistant').last()).toContainText('Clean is selected.');
+  await page.getByRole('button', { name: 'Open first cut', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Apply style', exact: true })).toBeVisible();
   expect(await page.evaluate(() => (window as any).companionFixture.snapshot().calls.some((call: any) => call.name === 'choosePreset'))).toBe(false);
 });

@@ -1,5 +1,6 @@
 // DEV ONLY: renders the real chat surface with a public mock controller. No provider imports.
 import { useState } from 'react';
+import { CompanionChatShell, type ConversationBinding } from '../components/CompanionChat/CompanionChatShell';
 import ReactDOM from 'react-dom/client';
 import { CompanionChatSurface } from '../components/CompanionChat/CompanionChatSurface';
 import type { ProducerSurfaceController } from '../components/OneShotAd/ProducerFlow';
@@ -16,16 +17,16 @@ const calls: FixtureCall[] = [];
 const defaultInput: ProductionInput = { brandName: 'North Coffee', productName: 'Cold brew', productDescription: 'Fresh coffee for busy mornings', offer: 'Two bottles for 199', price: '199', heroImageBase64: IMAGE, avatar: { url: '', description: '', ethnicity: 'Filipino', prompt: '' }, voiceId: '', language: 'English', aspectRatio: '9:16', scriptType: 'Testimonial' };
 
 function makeRun(input: ProductionInput, userId: string): ProductionRun {
-  return { runId: 'companion-fixture-run', userId, createdAt: 1, updatedAt: 1, status: 'running', input,
+  return { runId: crypto.randomUUID(), userId, createdAt: 1, updatedAt: 1, status: 'running', input,
     stages: stageIds.map(id => ({ id, label: id === 'script' ? 'Writing your script' : id.replace(/_/g, ' '), status: id === 'market_research' ? 'running' : 'pending', attempts: 0 })), scenes: [] };
 }
 
-function Fixture() {
-  const [userId, setUserId] = useState('fixture-user-a');
-  const checkpointKey = `companion_fixture_checkpoint:${userId}`;
+function Fixture({ conversation, userId, setUserId }: { conversation: ConversationBinding; userId: string; setUserId: (id: string) => void }) {
+  const checkpointKey = `companion_fixture_checkpoint:${userId}:${conversation.chat.id}`;
   const [run, setRun] = useState<ProductionRun | null>(() => {
-    try { return JSON.parse(sessionStorage.getItem('companion_fixture_checkpoint:fixture-user-a') || 'null'); } catch { return null; }
+    try { return JSON.parse(sessionStorage.getItem(checkpointKey) || 'null'); } catch { return null; }
   });
+  const [readOnly, setReadOnly] = useState(!!conversation.chat.runId);
   const [phase, setPhase] = useState<ProducerSurfaceController['phase']>('launch');
   const [error, setError] = useState('');
   const [quotaBlocked, setQuotaBlocked] = useState(false);
@@ -58,7 +59,8 @@ function Fixture() {
     saveRun(next);
   };
   const controller: ProducerSurfaceController = {
-    run, phase, error, busy: phase === 'researching' || run?.status === 'running', reshooting: null, presetBusy: false, approving: false,
+    readOnly, resume: async () => { calls.push({ name: 'resume' }); setReadOnly(false); },
+    run, phase, error, busy: !readOnly && (phase === 'researching' || run?.status === 'running'), reshooting: null, presetBusy: false, approving: false,
     start: async input => { calls.push({ name: 'start', value: input }); setPhase('researching'); saveRun(makeRun(input, userId)); },
     approve: async () => { calls.push({ name: 'approve' }); emit('video'); },
     regenScene: async index => { calls.push({ name: 'regenScene', value: index }); },
@@ -70,7 +72,7 @@ function Fixture() {
     cancel: () => { calls.push({ name: 'cancel' }); saveRun(null); setPhase('launch'); setError(''); },
   };
   Object.assign(window, { companionFixture: {
-    snapshot: () => ({ calls: structuredClone(calls), run, phase, userId }),
+    snapshot: () => ({ calls: structuredClone(calls), run, phase, userId, chatId: conversation.chat.id }),
     emit,
     account: (id: string) => { setUserId(id); setRun(null); setPhase('launch'); setError(''); },
     quota: setQuotaBlocked, presets: setPresetUnlocked, videoAllowed: setVideoAllowed,
@@ -83,9 +85,14 @@ function Fixture() {
       <button type="button" onClick={controller.reset} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: reset</button>
       <span style={{ width: '100%', fontSize: 12 }}>These controls emit test callbacks. They do not create an ad or call a provider. Scene images and the video are existing local samples, not generated from your brief.</span>
     </div>
-  </details><CompanionChatSurface key={userId} controller={controller} userId={userId}
+  </details><CompanionChatSurface key={conversation.chat.id} conversation={conversation} controller={controller} userId={userId}
     onBack={() => calls.push({ name: 'back' })} onUpgrade={() => calls.push({ name: 'upgrade' })}
     presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed} /></div>;
 }
 
-if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(<Fixture />);
+function Preview() {
+  const [userId, setUserId] = useState('fixture-user-a');
+  return <CompanionChatShell key={userId} userId={userId} onStudio={() => calls.push({ name: 'back' })}>{conversation => <Fixture key={conversation.chat.id} userId={userId} setUserId={setUserId} conversation={conversation} />}</CompanionChatShell>;
+}
+
+if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(<Preview />);

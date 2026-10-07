@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ProducerFlow from '../OneShotAd/ProducerFlow';
 import { useQuota } from '../../hooks/useQuota';
 import { CompanionChatSurface } from './CompanionChatSurface';
+import { CompanionChatShell } from './CompanionChatShell';
 
 interface Props {
   userId: string;
@@ -27,15 +28,18 @@ export default function CompanionChat({ userId, presetUnlocked, isBusinessTier, 
     catch { /* Keep the unconfirmed allowance closed and offer another retry. */ }
     finally { setRetryingAllowance(false); }
   };
-  return <ProducerFlow key={userId} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}
+  return <CompanionChatShell key={userId} userId={userId} onStudio={onBack}>{conversation => <ProducerFlow key={conversation.chat.id} conversation={conversation.chat} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}
     onBack={onBack} onUpgrade={onUpgrade} onSwitchToSteps={onBack} onCloneVoice={onBack}
-    renderSurface={controller => <CompanionChatSurface key={userId} userId={userId}
+    renderSurface={controller => <CompanionChatSurface key={conversation.chat.id} conversation={conversation} userId={userId}
       controller={{ ...controller,
         start: input => !quotaReady ? Promise.resolve() : quotaBlocked ? Promise.resolve(onUpgrade()) : controller.start(input),
         approve: () => !quotaReady ? Promise.resolve() : videoAllowed === true ? controller.approve() : videoAllowed === false ? Promise.resolve(onUpgrade()) : Promise.resolve(),
+        resume: () => controller.run?.gate ? controller.resume?.() ?? Promise.resolve()
+          : !quotaReady ? Promise.resolve() : quotaBlocked || (controller.run?.storyboardApproved && videoAllowed === false) ? Promise.resolve(onUpgrade())
+            : controller.run?.storyboardApproved && videoAllowed !== true ? Promise.resolve() : controller.resume?.() ?? Promise.resolve(),
       }}
       onBack={onBack} onUpgrade={onUpgrade} presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked}
       quotaReady={quotaReady} allowanceLoading={allowanceLoading} onRetryAllowance={() => void retryAllowance()}
       videoAllowed={quotaReady ? videoAllowed : null} />}
-  />;
+  />}</CompanionChatShell>;
 }

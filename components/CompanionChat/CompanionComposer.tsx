@@ -9,6 +9,8 @@ export interface CompanionComposerHandle {
 }
 
 interface Props {
+  initialText?: string;
+  onTextChange?: (text: string) => void;
   disabled: boolean;
   sendDisabled: boolean;
   uploading: boolean;
@@ -21,14 +23,14 @@ interface Props {
 
 // Keystrokes stay here; the conversation only needs the empty/nonempty reaction edge.
 export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(function CompanionComposer(
-  { disabled, sendDisabled, uploading, allowAttachment, placeholder, onAttach, onSend, onDraftPresence }, ref,
+  { initialText = '', onTextChange, disabled, sendDisabled, uploading, allowAttachment, placeholder, onAttach, onSend, onDraftPresence }, ref,
 ) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(initialText);
   const input = useRef<HTMLTextAreaElement>(null);
-  const present = useRef(false);
+  const present = useRef(!!initialText.trim());
   const composing = useRef(false);
   const update = (value: string) => {
-    setText(value);
+    setText(value); onTextChange?.(value);
     const next = !!value.trim();
     if (present.current !== next) { present.current = next; onDraftPresence(next); }
   };

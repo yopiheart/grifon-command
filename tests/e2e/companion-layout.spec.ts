@@ -45,7 +45,7 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     await input.fill('Cold brew for busy parents.');
     await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'reading');
     await page.getByRole('button', { name: 'Send', exact: true }).click();
-    await expect(page.getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
+    await expect(page.getByTestId('conversation-scroll').getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
     await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
     await expect.poll(() => page.getByTestId('conversation-scroll').evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop)).toBeLessThanOrEqual(24);
     await expect(page.locator('.companion-message-assistant').last()).toBeInViewport({ ratio: 1 });
@@ -55,7 +55,7 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     expect.soft(active.centerOffset).toBeLessThanOrEqual(2);
     expect.soft(active.avatarBottom).toBeLessThanOrEqual(active.transcript.y + 2);
     await expect(page.getByRole('button', { name: /^(Pause|Resume) companion motion$/ })).toHaveCount(0);
-    for (const name of ['Back to dashboard', 'Attach product photo', 'Send']) {
+    for (const name of [width < 768 ? 'Open conversations' : 'Collapse conversations', 'Attach product photo', 'Send']) {
       const control = page.getByRole('button', { name, exact: true });
       await expect(control).toBeVisible();
       const bounds = await control.boundingBox();
@@ -79,12 +79,15 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     await page.waitForTimeout(600);
     await page.screenshot({ path: path.join(QA, `${phase}-working-${width}.png`), fullPage: true });
     await page.evaluate(() => (window as any).companionFixture.emit('storyboard'));
+    await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Approve storyboard', exact: true })).toBeVisible();
     await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'ready');
     await page.waitForTimeout(600);
     await expect(page.getByRole('heading', { name: 'Your scenes, before we film.', exact: true })).toBeInViewport({ ratio: 1 });
     await page.screenshot({ path: path.join(QA, `${phase}-ready-${width}.png`), fullPage: true });
+    await page.getByRole('button', { name: 'Close viewer', exact: true }).click();
     await page.evaluate(() => (window as any).companionFixture.emit('result'));
+    await page.getByRole('button', { name: 'Open first cut', exact: true }).click();
     await expect.poll(() => page.locator('video').evaluate(video => (video as HTMLVideoElement).readyState)).toBeGreaterThanOrEqual(1);
     await page.waitForTimeout(600);
     await expect(page.getByRole('heading', { name: 'Your first cut.', exact: true })).toBeInViewport({ ratio: 1 });
@@ -122,7 +125,7 @@ for (const [width, height] of [[375, 667], [1000, 700]]) {
     expect.soft(bounds!.y, 'new review card heading must not be clipped above the transcript').toBeGreaterThanOrEqual(scrollBounds!.y);
     expect.soft(bounds!.y, 'new tall review card starts near the transcript top').toBeLessThanOrEqual(scrollBounds!.y + 40);
     await scroller.evaluate(element => { element.scrollTop = 0; element.dispatchEvent(new Event('scroll')); });
-    await expect(page.getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
+    await expect(page.getByTestId('conversation-scroll').getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
     await input.fill('A draft while reading history');
     await page.waitForTimeout(250);
     expect(await scroller.evaluate(element => element.scrollTop), 'typing must not hijack the reader scroll position').toBe(0);
@@ -138,7 +141,7 @@ test('320px companion retry does not overlap navigation', async ({ page }) => {
   const retry = page.getByRole('button', { name: 'Retry companion motion', exact: true });
   await expect(retry).toBeVisible();
   const retryBox = (await retry.boundingBox())!;
-  const navigation = await Promise.all(['Back to dashboard', 'New ad'].map(name => page.getByRole('button', { name, exact: true }).boundingBox()));
+  const navigation = await Promise.all(['Open conversations', 'New chat'].map(name => page.getByRole('button', { name, exact: true }).boundingBox()));
   fs.mkdirSync(QA, { recursive: true });
   fs.writeFileSync(path.join(QA, `${phase}-retry-320.json`), JSON.stringify({ retry: retryBox, navigation }, null, 2));
   await page.screenshot({ path: path.join(QA, `${phase}-retry-320.png`), fullPage: true });

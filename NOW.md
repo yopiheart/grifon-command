@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, 14px chat verified; interface alignment and premortem complete**
+**Stamped: 2026-10-07, companion navigation and local conversations verified**
 
 ## ▶ NEXT ACTION
-Next: focused chat/navigation milestone. Premortem risk: confusing UI; New chat/return each1click, details only when needed. Cloud/jobs follow.
+Next: owner review of navigation milestone; cloud sync/background jobs remain separate foundation work.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
 Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge.
-Current /app?experience=companion: guided ads only,88/96px mascot,14px Inter/gold messages,600ms typing; drafts save immediately.
-Build/1451 units/39 browser cases PASS; evidence chat QA type-14/; prior timing typing/, layout centered/.
-Grill targets: one approved griffin, customization later; project chats, chat-first/Studio; natural intake; shared preferences, isolated briefs/files/decisions.
-Grill targets: card + desktop workspace/mobile viewer;56-64px mascot; cloud sync; expandable progress/background status+Stop; time dividers/latest receipt only.
-Approved 3D/tracking unchanged; no side rail/play-pause; tall reviews open at heading. Live providers/voice/phone FPS pending.
+Current /app?experience=companion: New chat/Search/saved chats/Studio; sidebar/mobile drawer;56/64px mascot;14px Inter/gold bubbles/600ms typing.
+Account-scoped IndexedDB preserves chats/photos/unsent text; adopts old draft+run without deleting old keys. Device-local only.
+History is GET-only/read-only; explicit Resume refreshes state with allowance/epoch guards. Output card opens workspace/mobile viewer.
+Build/1453 units/57 browser cases PASS; independent correctness clear, BRAND_PASS43/50; QA navigation/ holds hashes/screenshots.
+Guided intake only; natural intake/cloud sync/durable background jobs unbuilt. Live providers/voice/physical-phone keyboard/FPS pending.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

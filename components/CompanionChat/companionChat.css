@@ -1,4 +1,9 @@
 .companion-chat { font-size: 14px; }
+.companion-shell > div > .companion-chat { height: 100%; }
+@media (min-width: 768px) {
+  .companion-viewer-open > .companion-header,
+  .companion-viewer-open > .mx-auto { width: 55%; margin-left: 0; }
+}
 
 /* Chat inputs use the body register, overriding the app's technical-data law. */
 .companion-chat :is(input, textarea, select, label, button) {

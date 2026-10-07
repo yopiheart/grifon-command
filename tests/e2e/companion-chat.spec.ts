@@ -52,6 +52,7 @@ test('brief, explicit start, truthful callbacks, storyboard approval, video and 
   await expect(page.getByText(/writing your script/i).first()).toBeVisible();
   await expect(page.locator('video')).toHaveCount(0);
   await emit(page, 'storyboard');
+  await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeVisible();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'approve')).toHaveLength(0);
   await page.getByRole('button', { name: /approve storyboard/i }).click();
@@ -98,6 +99,7 @@ test('draft reload/account isolation, error retry and fixture checkpoint restore
   await page.getByRole('button', { name: 'Resume saved progress', exact: true }).click();
   expect((await snapshot(page)).calls).toContainEqual({ name: 'retry' });
   await emit(page, 'storyboard'); await page.reload();
+  await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeVisible();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(0);
 });
@@ -139,15 +141,18 @@ test('reduced motion stays static and companion failure leaves usable chat', asy
   await frame.evaluate(() => { const gl = document.querySelector('canvas')!.getContext('webgl2')!; gl.getExtension('WEBGL_lose_context')!.loseContext(); });
   await expect(page.getByRole('button', { name: 'Retry companion motion' })).toBeVisible();
   await composer(page).fill('Chat still works'); await page.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(page.getByText('Chat still works', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText('Chat still works', { exact: true })).toBeVisible();
 });
 
 test('actual App and ProducerFlow restore the same account run without generation', async ({ page }) => {
   const backend = await installRecoveryBackend(page, seededRun('storyboard'));
   await page.addInitScript(id => localStorage.setItem('osa_producer_companion:recovery-user', id), RUN_ID);
   await page.goto('http://localhost:5173/app?experience=companion');
+  await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeDisabled();
   await page.reload();
+  await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeVisible();
   expect(new Set(backend.reads)).toEqual(new Set([RUN_ID]));
   expect(backend.submissions).toHaveLength(0); expect(backend.finalStarts).toHaveLength(0);
@@ -189,6 +194,7 @@ test('allowance and preset gates dispatch no generation or revision until permit
   await page.getByRole('button', { name: 'View plan options', exact: true }).click();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(0);
   await emit(page, 'storyboard');
+  await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await page.evaluate(() => (window as any).companionFixture.videoAllowed(false));
   await page.getByRole('button', { name: 'Unlock video production', exact: true }).click();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'approve')).toHaveLength(0);
@@ -211,7 +217,16 @@ test('late attachment completion cannot cross an account remount', async ({ page
   await page.waitForTimeout(100);
   await expect(page.getByRole('img', { name: 'Attached product', exact: true })).toHaveCount(0);
   await expect(page.getByText('old-account.png', { exact: true })).toHaveCount(0);
-  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('grifon_companion_draft:fixture-user-b')) || '{}').draft.heroImageBase64).toBe('');
+  await expect.poll(() => page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const request = indexedDB.open('grifon_companion', 1); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    try {
+      return await new Promise<string | undefined>((resolve, reject) => {
+        const request = db.transaction('conversations', 'readonly').objectStore('conversations').get('fixture-user-b');
+        request.onsuccess = () => { const book = request.result; resolve(book?.chats.find((chat: any) => chat.id === book.selectedId)?.draft.heroImageBase64); };
+        request.onerror = () => reject(request.error);
+      });
+    } finally { db.close(); }
+  })).toBe('');
 });
 
 test('actual ProducerFlow rejects stale orchestrator callbacks after Stop waiting', async ({ page }) => {
@@ -225,6 +240,7 @@ test('actual ProducerFlow rejects stale orchestrator callbacks after Stop waitin
     ` });
   });
   await page.goto('http://localhost:5173/app?experience=companion');
+  await page.getByRole('button', { name: 'Resume saved progress', exact: true }).click();
   await page.getByRole('button', { name: 'Stop waiting', exact: true }).click();
   await page.evaluate(() => {
     const driver = (window as any).companionDeferredDriver;
@@ -297,6 +313,7 @@ test('actual saved-run load failure retries the same run without resubmitting', 
   await expect(page.getByRole('button', { name: 'Retry saved ad', exact: true })).toBeVisible();
   backend.loadFails = false;
   await page.getByRole('button', { name: 'Retry saved ad', exact: true }).click();
+  await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Approve storyboard', exact: true })).toBeVisible();
   await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'ready');
   expect(new Set(backend.reads)).toEqual(new Set([RUN_ID]));
@@ -309,7 +326,7 @@ test('avatar asset load failure offers still-image fallback and retry without bl
   await openFixture(page);
   await expect(page.getByRole('button', { name: 'Retry companion motion', exact: true })).toBeVisible();
   await composer(page).fill('My brief is safe'); await page.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(page.getByText('My brief is safe', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText('My brief is safe', { exact: true })).toBeVisible();
   fail = false;
   await page.getByRole('button', { name: 'Retry companion motion', exact: true }).click();
   await expect(page.locator('iframe:visible')).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });

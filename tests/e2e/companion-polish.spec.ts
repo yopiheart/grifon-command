@@ -31,7 +31,7 @@ test('polish: pointer burst coalesces avatar bounds reads to one per animation f
       requestAnimationFrame(() => requestAnimationFrame(() => resolve({ duringBurst, afterFrame: reads })));
     }));
   });
-  const dir = path.resolve('assets/3d-lab/grifon-companion-chat/qa/polish'); fs.mkdirSync(dir, { recursive: true });
+  const dir = path.resolve(process.env.COMPANION_QA_DIR || 'assets/3d-lab/grifon-companion-chat/qa/polish'); fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, `${process.env.POLISH_PHASE || 'current'}-pointer.json`), JSON.stringify({ events: 120, ...measurement }, null, 2));
   expect(measurement.duringBurst).toBe(0);
   expect(measurement.afterFrame).toBeLessThanOrEqual(1);
@@ -49,11 +49,19 @@ test('polish: mobile composer uses readable 14px sans text with normal tracking'
 
 test('polish: capped120 transcript explicitly follows a sent message from far history', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.evaluate(() => {
-    const key = 'grifon_companion_draft:fixture-user-a';
-    const envelope = JSON.parse(localStorage.getItem(key)!);
-    envelope.draft.messages = Array.from({ length: 120 }, (_, i) => ({ id: `capped-${i}`, role: i % 2 ? 'user' : 'assistant', text: `Existing message ${i}. ` + 'More context for this ad. '.repeat(4), at: 1 + i }));
-    localStorage.setItem(key, JSON.stringify(envelope));
+  await page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const request = indexedDB.open('grifon_companion', 1); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('conversations', 'readwrite'); const store = tx.objectStore('conversations');
+      const request = store.get('fixture-user-a');
+      request.onsuccess = () => {
+        const book = request.result; const chat = book.chats.find((item: any) => item.id === book.selectedId);
+        chat.draft.messages = Array.from({ length: 120 }, (_, i) => ({ id: `capped-${i}`, role: i % 2 ? 'user' : 'assistant', text: `Existing message ${i}. ` + 'More context for this ad. '.repeat(4), at: 1 + i }));
+        store.put(book, 'fixture-user-a');
+      };
+      tx.oncomplete = () => resolve(); tx.onerror = () => reject(tx.error);
+    });
+    db.close();
   });
   await page.reload();
   await page.getByRole('textbox', { name: 'Message Grifon' }).waitFor();
@@ -63,5 +71,15 @@ test('polish: capped120 transcript explicitly follows a sent message from far hi
   await page.getByRole('textbox', { name: 'Message Grifon' }).fill('style clean');
   await page.getByRole('button', { name: 'Send', exact: true }).click();
   await expect.poll(() => scroller.evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop), { timeout: 500 }).toBeLessThanOrEqual(24);
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('grifon_companion_draft:fixture-user-a')!).draft.messages.length)).toBe(120);
+  expect(await page.locator('article').count()).toBe(120);
+  await expect.poll(() => page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const request = indexedDB.open('grifon_companion', 1); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    try {
+      return await new Promise<number | undefined>((resolve, reject) => {
+        const request = db.transaction('conversations', 'readonly').objectStore('conversations').get('fixture-user-a');
+        request.onsuccess = () => { const book = request.result; resolve(book?.chats.find((chat: any) => chat.id === book.selectedId)?.draft.messages.length); };
+        request.onerror = () => reject(request.error);
+      });
+    } finally { db.close(); }
+  })).toBe(120);
 });
