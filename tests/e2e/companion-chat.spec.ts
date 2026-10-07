@@ -35,6 +35,7 @@ async function brief(page: Page, expectGenerate = true) {
   for (const answer of answers) {
     await composer(page).fill(answer);
     await page.getByRole('button', { name: 'Send', exact: true }).click();
+    await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
   }
   await page.getByLabel('Product photo', { exact: true }).setInputFiles({ name: 'coffee.png', mimeType: 'image/png', buffer: PNG });
   if (expectGenerate) await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toBeEnabled();

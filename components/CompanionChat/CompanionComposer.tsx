@@ -10,6 +10,7 @@ export interface CompanionComposerHandle {
 
 interface Props {
   disabled: boolean;
+  sendDisabled: boolean;
   uploading: boolean;
   allowAttachment: boolean;
   placeholder: string;
@@ -20,7 +21,7 @@ interface Props {
 
 // Keystrokes stay here; the conversation only needs the empty/nonempty reaction edge.
 export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(function CompanionComposer(
-  { disabled, uploading, allowAttachment, placeholder, onAttach, onSend, onDraftPresence }, ref,
+  { disabled, sendDisabled, uploading, allowAttachment, placeholder, onAttach, onSend, onDraftPresence }, ref,
 ) {
   const [text, setText] = useState('');
   const input = useRef<HTMLTextAreaElement>(null);
@@ -33,7 +34,7 @@ export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(func
   };
   useImperativeHandle(ref, () => ({ clear: () => update(''), focus: () => input.current?.focus() }));
   const send = () => {
-    if (disabled || composing.current || !text.trim()) return;
+    if (disabled || sendDisabled || composing.current || !text.trim()) return;
     if (onSend(text)) { update(''); input.current?.focus(); }
   };
 
@@ -50,7 +51,7 @@ export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(func
         }
       }}
       className="companion-message-input min-h-11 max-h-32 min-w-0 flex-1 resize-none bg-transparent px-1 py-2 leading-relaxed text-white outline-none placeholder:text-zinc-400 disabled:opacity-50" />
-    <Button className="companion-send min-h-11 min-w-11 !rounded-xl !p-3" aria-label="Send" disabled={disabled || !text.trim()} onClick={send}>
+    <Button className="companion-send min-h-11 min-w-11 !rounded-xl !p-3" aria-label="Send" disabled={disabled || sendDisabled || !text.trim()} onClick={send}>
       <ArrowUp className="h-5 w-5" />
     </Button>
   </div>;

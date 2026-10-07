@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState, type CSSProperties } from 'react';
+import { memo, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { AlertTriangle, ArrowLeft, Check, ImagePlus, Loader2, X } from 'lucide-react';
 import type { ProducerSurfaceController } from '../OneShotAd/ProducerFlow';
 import type { LockablePresetId } from '../../types';
@@ -41,12 +41,13 @@ const styles: { label: string; value: LockablePresetId | null; locked: boolean }
 const time = (at: number) => new Date(at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 const motionStyle = {
   '--companion-duration': `${DUR.instant}s`,
+  '--companion-reply-duration': `${DUR.entrance}s`,
   '--companion-ease': `cubic-bezier(${EASE.expressive.join(',')})`,
 } as CSSProperties;
-const Transcript = memo(function Transcript({ messages }: { messages: CompanionDraft['messages'] }) {
-  return <>{messages.map(message => <article key={message.id} className={message.role === 'user' ? 'ml-auto w-fit max-w-[88%]' : 'w-fit max-w-[92%]'}>
+const Transcript = memo(function Transcript({ messages, hiddenMessageId }: { messages: CompanionDraft['messages']; hiddenMessageId: string | null }) {
+  return <>{messages.map(message => message.id === hiddenMessageId ? null : <article key={message.id} className={message.role === 'user' ? 'ml-auto w-fit max-w-[88%]' : 'w-fit max-w-[92%]'}>
     <p className={`companion-message whitespace-pre-wrap break-words rounded-2xl px-4 py-3 ${message.role === 'user' ? 'companion-message-user rounded-br-sm' : 'companion-message-assistant rounded-bl-sm text-zinc-200'}`}>{message.text}</p>
-    <p className={`mt-2 text-[11px] text-on-surface-sublabel ${message.role === 'user' ? 'text-right' : ''}`}><time dateTime={new Date(message.at).toISOString()}>{time(message.at)}</time>{message.role === 'user' && ' · Received'}</p>
+    <p className={`mt-2 font-mono text-[11px] text-on-surface-sublabel ${message.role === 'user' ? 'text-right' : ''}`}><time dateTime={new Date(message.at).toISOString()}>{time(message.at)}</time>{message.role === 'user' && ' · Received'}</p>
   </article>)}</>;
 });
 
@@ -57,6 +58,9 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const [uploading, setUploading] = useState(false);
   const [saved, setSaved] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [pendingReplyId, setPendingReplyId] = useState<string | null>(null);
+  const pendingReply = useRef<string | null>(null);
+  const replyTimer = useRef<number | null>(null);
   const [armedScene, setArmedScene] = useState<number | null>(null);
   const [armedPreset, setArmedPreset] = useState<{ value: LockablePresetId | null; label: string } | null>(null);
   const composer = useRef<CompanionComposerHandle>(null);
@@ -75,23 +79,31 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const { run } = controller;
   const failed = !!controller.error || controller.phase === 'error' || controller.phase === 'resume-error' || run?.status === 'error';
   const loadingRun = controller.phase === 'resuming';
+  const replyPending = pendingReplyId !== null && !run && !loadingRun;
+  const hiddenReplyId = replyPending ? pendingReplyId : null;
+  const visibleLastMessageId = draft.messages[draft.messages.length - (replyPending ? 2 : 1)]?.id;
   const busy = controller.busy || actionPending;
   const disabled = busy || loadingRun || uploading;
   const field = nextCompanionField(draft);
   const atStoryboard = run?.gate === 'storyboard';
   const atResult = run?.gate === 'first_cut';
-  const reviewKey = !run && (!field || editing) ? `brief:${userId}`
+  const reviewKey = !run && !replyPending && (!field || editing) ? `brief:${userId}`
     : atStoryboard && !failed ? `storyboard:${run.runId}` : atResult ? `result:${run.runId}` : null;
   const readyToApprove = !!run?.scenes.length && run.scenes.every(scene => scene.imageUrl && scene.status !== 'flagged');
   const activeStage = run?.stages.find(stage => stage.status === 'running');
-  const avatarState: CompanionReaction = failed ? 'idle' : busy || loadingRun ? 'working'
+  const avatarState: CompanionReaction = failed ? 'idle' : busy || loadingRun || replyPending ? 'working'
     : uploading || (!run && hasText) ? 'reading' : atStoryboard || (atResult && !!run?.finalVideoUrl) ? 'ready' : 'idle';
   const stateLabel = failed ? 'Ready when you are' : loadingRun ? 'Opening your saved ad'
     : busy ? controller.phase === 'researching' ? 'Researching your product' : activeStage?.label ?? 'Updating your ad'
       : uploading ? 'Preparing your photo' : atStoryboard ? 'Your storyboard is ready' : atResult ? 'Your first cut is ready' : 'Let’s make something good';
+  const clearPendingReply = useCallback(() => {
+    if (replyTimer.current !== null) window.clearTimeout(replyTimer.current);
+    replyTimer.current = null; pendingReply.current = null; setPendingReplyId(null);
+  }, []);
 
   useEffect(() => {
     if (owner.current !== userId) {
+      clearPendingReply();
       owner.current = userId; uploadEpoch.current++;
       actionEpoch.current++; actionLock.current = false; setActionPending(false);
       setDraft(loadCompanionDraft(userId) ?? createCompanionDraft());
@@ -100,8 +112,13 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
       return;
     }
     setSaved(saveCompanionDraft(userId, draft));
-  }, [draft, userId]);
-  useEffect(() => () => { uploadEpoch.current++; actionEpoch.current++; }, []);
+  }, [draft, userId, clearPendingReply]);
+  useEffect(() => () => {
+    uploadEpoch.current++; actionEpoch.current++;
+    if (replyTimer.current !== null) window.clearTimeout(replyTimer.current);
+    replyTimer.current = null; pendingReply.current = null;
+  }, []);
+  useEffect(() => { if (run || loadingRun) clearPendingReply(); }, [run?.runId, loadingRun, clearPendingReply]);
   useEffect(() => {
     const node = scroller.current;
     if (!node) return;
@@ -126,7 +143,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
       node.scrollTo({ top: node.scrollHeight, behavior: instant ? 'auto' : 'smooth' });
     });
     return () => { if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current); };
-  }, [draft.messages[draft.messages.length - 1]?.id, run?.gate, activeStage?.id, controller.error, reviewKey]);
+  }, [visibleLastMessageId, run?.gate, activeStage?.id, controller.error, reviewKey]);
   useEffect(() => { setArmedScene(null); setArmedPreset(null); }, [run?.runId, run?.gate]);
 
   const stopFollowing = () => {
@@ -148,9 +165,19 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   };
 
   const send = (text: string) => {
-    if (!text.trim() || disabled) return false;
+    if (!text.trim() || disabled || pendingReply.current) return false;
     try {
-      if (!run && field) setDraft(acceptCompanionAnswer(draft, text));
+      if (!run && field) {
+        const next = acceptCompanionAnswer(draft, text);
+        const replyId = next.messages[next.messages.length - 1].id;
+        const currentOwner = userId;
+        pendingReply.current = replyId; setPendingReplyId(replyId);
+        setDraft(next); setSaved(saveCompanionDraft(userId, next));
+        replyTimer.current = window.setTimeout(() => {
+          if (owner.current !== currentOwner || pendingReply.current !== replyId) return;
+          replyTimer.current = null; pendingReply.current = null; setPendingReplyId(null);
+        }, DUR.entrance * 1000);
+      }
       else {
         const revision = atResult ? parseCompanionRevision(text) : null;
         let reply = !run ? 'Your brief is ready. Use Edit brief to change details, then Generate storyboard when everything looks right.'
@@ -186,18 +213,19 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   };
 
   const generate = () => {
-    if (!quotaReady || quotaBlocked || disabled || field || run) return;
+    if (!quotaReady || quotaBlocked || disabled || pendingReply.current || field || run) return;
     try { const input = buildCompanionInput(draft); setEditing(false); void call(() => controller.start(input)); }
     catch (error) { setLocalError(error instanceof Error ? error.message : 'Please check your brief.'); }
   };
   const reset = () => {
     if (busy) return;
+    clearPendingReply();
     controller.reset(); uploadEpoch.current++; clearCompanionDraft(userId);
     setDraft(createCompanionDraft()); composer.current?.clear(); setLocalError(''); setEditing(false); setArmedScene(null); setArmedPreset(null);
     nearBottom.current = true; composer.current?.focus();
   };
   const cancel = () => { actionEpoch.current++; controller.cancel(); actionLock.current = false; setActionPending(false); };
-  const exit = () => { if (controller.busy || actionPending) cancel(); onBack(); };
+  const exit = () => { clearPendingReply(); if (controller.busy || actionPending) cancel(); onBack(); };
   const preferences = (
     <div className="mt-4 grid gap-3 sm:grid-cols-3">
       <label className="text-xs text-zinc-400">Language<select aria-label="Ad language" disabled={disabled || !!run} value={draft.language} onChange={event => setDraft({ ...draft, language: event.target.value as CompanionDraft['language'] })} className={`${inputStyle} mt-1`}><option>English</option><option>Taglish</option></select></label>
@@ -206,7 +234,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
     </div>
   );
 
-  return <div className="companion-chat flex h-dvh min-h-0 flex-col overflow-hidden bg-zinc-950 text-white" style={motionStyle} data-testid="companion-chat" data-companion-state={avatarState}>
+  return <div className="companion-chat flex h-dvh min-h-0 flex-col overflow-hidden bg-zinc-950 font-sans font-normal tracking-normal text-white" style={motionStyle} data-testid="companion-chat" data-companion-state={avatarState}>
     <header className="companion-header relative shrink-0 px-4 pb-3 pt-1 sm:px-8">
       <div className="absolute left-4 top-3 sm:left-8"><Button variant="ghost" className={`${control} flex min-w-11 items-center gap-2 !p-3`} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4 shrink-0" /><span className="hidden sm:inline">Dashboard</span></Button></div>
       <div className="absolute right-4 top-3 sm:right-8"><Button variant="secondary" className={`${control} !px-3`} disabled={disabled || (!run && !draft.brief)} onClick={reset}>New ad</Button></div>
@@ -231,8 +259,12 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           className="companion-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-8 sm:py-6" data-testid="conversation-scroll">
           <div className="mx-auto flex min-h-full max-w-2xl flex-col justify-end">
             <div className="shrink-0 space-y-5">
-            <Transcript messages={draft.messages} />
-            {!run && (!field || editing) && <GlassPanel className="p-4 sm:p-5" aria-label="Review your brief" data-companion-review="brief">
+            <Transcript messages={draft.messages} hiddenMessageId={hiddenReplyId} />
+            {replyPending && <div role="status" aria-label="Grifon is typing" className="companion-message-assistant flex w-fit items-center gap-1.5 rounded-2xl rounded-bl-sm px-4 py-4">
+              <span className="sr-only">Grifon is typing</span>
+              <span aria-hidden="true" className="companion-typing-dot h-1.5 w-1.5 rounded-full bg-zinc-400" /><span aria-hidden="true" className="companion-typing-dot h-1.5 w-1.5 rounded-full bg-zinc-400" /><span aria-hidden="true" className="companion-typing-dot h-1.5 w-1.5 rounded-full bg-zinc-400" />
+            </div>}
+            {!run && !replyPending && (!field || editing) && <GlassPanel className="p-4 sm:p-5" aria-label="Review your brief" data-companion-review="brief">
               <div className="flex items-center justify-between gap-3"><h2 className="!text-base !font-semibold !normal-case !tracking-normal">Your product ad</h2><Button variant="ghost" className={`${control} !px-3`} disabled={disabled} onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit brief'}</Button></div>
               {editing ? <div className="mt-3 space-y-3">{(['brief','brandName','productName','offer','price'] as const).map(key => <label key={key} className="block text-xs text-zinc-400">{({ brief: 'Original brief', brandName: 'Brand name', productName: 'Product name', offer: 'Offer', price: 'Price' })[key]}<textarea className={`${inputStyle} mt-1 resize-y`} value={draft[key]} maxLength={key === 'brief' ? 4000 : key === 'offer' ? 2000 : 200} onChange={event => setDraft({ ...draft, [key]: event.target.value })} /></label>)}</div> : <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm"><dt className="text-zinc-400">Brand</dt><dd className="break-words">{draft.brandName}</dd><dt className="text-zinc-400">Product</dt><dd className="break-words">{draft.productName}</dd><dt className="text-zinc-400">Offer</dt><dd className="break-words">{draft.offer}</dd><dt className="text-zinc-400">Price</dt><dd className="break-words">{draft.price}</dd></dl>}
               {preferences}
@@ -253,8 +285,8 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           <div className="mx-auto max-w-2xl">
             {draft.heroImageBase64 && !run && <div className="mb-2 flex items-center gap-3 rounded-xl border border-white/10 p-2"><img src={draft.heroImageBase64} alt="Attached product" className="h-12 w-12 shrink-0 rounded-lg object-cover" /><p className="min-w-0 flex-1 truncate text-xs text-zinc-300">{draft.imageName || 'Product photo'}</p><Button variant="ghost" className={`${control} !p-3`} disabled={disabled} aria-label="Remove product photo" onClick={() => { uploadEpoch.current++; setDraft({ ...draft, heroImageBase64: '', imageName: '' }); }}><X className="h-4 w-4" /></Button></div>}
             <input ref={upload} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Product photo" className="hidden" disabled={disabled || !!run} onChange={event => { void attach(event.target.files?.[0]); event.target.value = ''; }} />
-            <CompanionComposer ref={composer} disabled={disabled} uploading={uploading} allowAttachment={!run}
-              placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'}
+            <CompanionComposer ref={composer} disabled={disabled} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
+              placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field || replyPending ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'}
               onAttach={() => upload.current?.click()} onSend={send} onDraftPresence={setHasText} />
             <p id="companion-save-status" className="mt-3 text-center text-[11px] leading-relaxed text-on-surface-sublabel">{saved ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} No generation starts until you confirm.</p>
           </div>

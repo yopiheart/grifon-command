@@ -1,14 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, compact centered companion chat ready for review; prior work preserved**
+**Stamped: 2026-10-07, branded companion chat and paced intake ready for review; prior work preserved**
 
 ## ▶ NEXT ACTION
 Next: owner review of chat/reactions, then an explicitly cost-capped paid ad test.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
 Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no public deployment.
 Real /app?experience=companion reuses ProducerFlow; guided product-ad intake only.
-Centered88/96px mascot canvas; no side rail, repeated intro, or play/pause; tall reviews open at heading.
-Approved griffin/reactions unchanged; reduced motion retained; owner confirmed in-app cursor tracking works.
-Build/1451 units/26 browser cases +320px retry check PASS; evidence in chat QA centered/.
+Centered88/96px mascot; no side rail/play-pause; tall reviews open at heading. Inter type, gold user bubbles.
+Intake replies show typing for600ms; accepted drafts save immediately. Approved griffin/tracking unchanged.
+Build/1451 units/38 browser cases PASS; evidence in chat QA typing/ (prior layout evidence centered/).
 No paid/deploy/merge; real provider end-to-end, voice and physical phone FPS pending.
 
 ## Motion film / PR156

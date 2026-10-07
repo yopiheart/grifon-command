@@ -1,13 +1,10 @@
-.companion-chat {
-  font-family: Inter, Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
 /* Chat inputs use the body register, overriding the app's technical-data law. */
 .companion-chat :is(input, textarea, select, label, button) {
   font-family: inherit !important;
   letter-spacing: normal !important;
 }
 .companion-chat label { text-transform: none !important; }
+.companion-chat .font-mono { letter-spacing: normal !important; }
 .companion-chat :is(input, textarea, select) { color-scheme: dark; font-size: 16px; }
 .companion-chat button {
   transition-property: opacity, transform;
@@ -25,11 +22,18 @@
   scrollbar-color: #3F3F46 transparent;
   scroll-padding-block: 24px;
 }
-.companion-message { font-size: 16px; line-height: 1.65; }
+.companion-message { font-size: 16px; font-weight: 400; line-height: 1.65; letter-spacing: normal; }
 .companion-message-assistant { background: rgba(255,255,255,.035); }
 .companion-message-user {
-  background: linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.055));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  background: rgba(255,204,0,.16);
+  box-shadow: inset 0 0 0 1px rgba(255,204,0,.22);
+}
+.companion-typing-dot { animation: companion-typing var(--companion-reply-duration) var(--companion-ease) infinite; }
+.companion-typing-dot:nth-of-type(3) { animation-delay: var(--companion-duration); }
+.companion-typing-dot:nth-of-type(4) { animation-delay: calc(var(--companion-duration) * 2); }
+@keyframes companion-typing {
+  0%, 100% { opacity: .35; }
+  50% { opacity: 1; }
 }
 
 /* A tonal edge over the resting canvas; no extra backdrop-filter pass. */
@@ -64,9 +68,11 @@
   .companion-chat button, .companion-composer::after { transition: none; }
   .companion-chat button:active, .companion-chat button:hover { transform: none !important; }
   .companion-scroll { scroll-behavior: auto; }
+  .companion-typing-dot { animation: none; opacity: 1; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .companion-chat .mat-plate, .companion-message-user, .companion-message-assistant { background: #18181B; }
+  .companion-message-user { border: 1px solid #FFCC00; box-shadow: none; }
   .companion-composer { box-shadow: none; border-color: #82828B; }
   .companion-footer::before { display: none; }
 }

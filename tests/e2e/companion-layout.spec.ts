@@ -46,6 +46,7 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'reading');
     await page.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(page.getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
+    await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
     await expect.poll(() => page.getByTestId('conversation-scroll').evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop)).toBeLessThanOrEqual(24);
     await expect(page.locator('.companion-message-assistant').last()).toBeInViewport({ ratio: 1 });
     await input.fill('North Coffee');
@@ -67,6 +68,7 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     for (const answer of ['North Coffee', 'Morning brew', 'Two bottles for 199', '199']) {
       await input.fill(answer);
       await page.getByRole('button', { name: 'Send', exact: true }).click();
+      await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
     }
     await page.getByLabel('Product photo', { exact: true }).setInputFiles({
       name: 'coffee.png', mimeType: 'image/png',
@@ -105,6 +107,7 @@ for (const [width, height] of [[375, 667], [1000, 700]]) {
     for (const answer of ['Cold brew for busy parents.', 'North Coffee', 'Morning brew', 'Two bottles for 199', '199']) {
       await input.fill(answer);
       await page.getByRole('button', { name: 'Send', exact: true }).click();
+      await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
     }
     const scroller = page.getByTestId('conversation-scroll');
     const review = page.locator('[aria-label="Review your brief"]');
