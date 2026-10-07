@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, companion navigation and local conversations verified**
+**Stamped: 2026-10-07, UI typography and companion resolution verified**
 
 ## ▶ NEXT ACTION
-Next: owner review of navigation milestone; cloud sync/background jobs remain separate foundation work.
+Next: owner review of typography/sharpness and phone testing; cloud sync/background jobs follow separately.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
-Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge.
-Current /app?experience=companion: New chat/Search/saved chats/Studio; sidebar/mobile drawer;56/64px mascot;14px Inter/gold bubbles/600ms typing.
-Account-scoped IndexedDB preserves chats/photos/unsent text; adopts old draft+run without deleting old keys. Device-local only.
-History is GET-only/read-only; explicit Resume refreshes state with allowance/epoch guards. Output card opens workspace/mobile viewer.
-Build/1453 units/57 browser cases PASS; independent correctness clear, BRAND_PASS43/50; QA navigation/ holds hashes/screenshots.
-Guided intake only; natural intake/cloud sync/durable background jobs unbuilt. Live providers/voice/physical-phone keyboard/FPS pending.
+Preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge. Refresh for new renderer.
+New/Search/saved chats/Studio; account-scoped IndexedDB keeps chats/photos/unsent text and old keys. Device-local; history GET-only until Resume.
+Inter/system14px UI; normal control tracking/case,600 headings/buttons/field labels,400 values. DESIGN/shared primitives updated; art/mono/serif preserved.
+56/64px mascot now min2x backing/current DPR,1024px edge cap; cached-DPR RAF check also works paused. Mesh/textures/reactions unchanged.
+Latest build/1453 units/17 browser cases PASS; original48 resolution assertions fail, fixed0 fail; independent correctness/BRAND_PASS. QA assets/design/typography/qa.
+Navigation82c8f1c3 had57 browser checks; guarded Resume/output viewer retained. Natural intake/cloud/jobs/voice/live providers/phone FPS/native zoom pending.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

@@ -1,0 +1,915 @@
+{
+  "recordedAtUTC": "2026-10-07T02:36:42.656Z",
+  "sourceSHA": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "sourceHashes": {
+    "mainJS": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+    "companionSurface": "34b2ce38fbd38a51a9522779cbd9e01a1cfce1bf3db35236f24619104bd1ae61"
+  },
+  "assets": [
+    {
+      "file": "main.js",
+      "bytes": 18879,
+      "sha256": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+      "matchesApprovedManifest": true
+    },
+    {
+      "file": "scene.json",
+      "bytes": 14783,
+      "sha256": "1a199b50faf7be25b38b78b56bff2c81cc9ba75d34b13882e6ba668486ce62cd",
+      "matchesApprovedManifest": true
+    },
+    {
+      "file": "scene.bin",
+      "bytes": 11950492,
+      "sha256": "607ba0c913859739f2a908758d55c34eea8126dc4b7427468887bf7afdd3cca5",
+      "matchesApprovedManifest": true
+    },
+    {
+      "file": "baked-skin.png",
+      "bytes": 946419,
+      "sha256": "4b73fa1280927a4157bb0de9371643fbfc03e23a61d8cc4ad4b462015cb3f5d0",
+      "matchesApprovedManifest": true,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "baked-hero.png",
+      "bytes": 2427394,
+      "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a",
+      "matchesApprovedManifest": true,
+      "width": 1500,
+      "height": 1500
+    },
+    {
+      "file": "baked-body-clean.png",
+      "bytes": 931653,
+      "sha256": "da6d0f17f903692c2e63ffe621f7a2c76ea44e53886b8fa3b8952d49f3b37900",
+      "matchesApprovedManifest": true,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "neutral.png",
+      "bytes": 240917,
+      "sha256": "e3d14aec0b8e435136493b8a19ee4f7652ebc5f526a77aafa2adc4dd6bcb694e",
+      "matchesApprovedManifest": true,
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "projection": {
+    "ortho": 3.75,
+    "vertices": 315329,
+    "normalizedBounds": {
+      "minX": -0.6059107092249749,
+      "maxX": 0.6845477032939342,
+      "minY": -0.7786644245940917,
+      "maxY": 0.8281763396495895
+    },
+    "widthFraction": 0.6452292062594546,
+    "heightFraction": 0.8034203821218406
+  },
+  "results": [
+    {
+      "name": "normal-56-dpr1",
+      "devicePixelRatio": 1,
+      "stage": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "attributeWidth": 56,
+        "attributeHeight": 56,
+        "cssWidth": 56,
+        "cssHeight": 56
+      },
+      "drawingBuffer": {
+        "width": 56,
+        "height": 56
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 56,
+          "height": 56,
+          "pixelRatio": 1
+        }
+      }
+    },
+    {
+      "name": "normal-64-dpr1",
+      "devicePixelRatio": 1,
+      "stage": {
+        "width": 64,
+        "height": 64
+      },
+      "canvas": {
+        "attributeWidth": 64,
+        "attributeHeight": 64,
+        "cssWidth": 64,
+        "cssHeight": 64
+      },
+      "drawingBuffer": {
+        "width": 64,
+        "height": 64
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 64,
+          "height": 64,
+          "pixelRatio": 1
+        }
+      }
+    },
+    {
+      "name": "normal-56-dpr2",
+      "devicePixelRatio": 2,
+      "stage": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "attributeWidth": 84,
+        "attributeHeight": 84,
+        "cssWidth": 56,
+        "cssHeight": 56
+      },
+      "drawingBuffer": {
+        "width": 84,
+        "height": 84
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 56,
+          "height": 56,
+          "pixelRatio": 1.5
+        }
+      }
+    },
+    {
+      "name": "normal-56-dpr3",
+      "devicePixelRatio": 3,
+      "stage": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "attributeWidth": 84,
+        "attributeHeight": 84,
+        "cssWidth": 56,
+        "cssHeight": 56
+      },
+      "drawingBuffer": {
+        "width": 84,
+        "height": 84
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 56,
+          "height": 56,
+          "pixelRatio": 1.5
+        }
+      }
+    },
+    {
+      "name": "large-256-dpr1",
+      "devicePixelRatio": 1,
+      "stage": {
+        "width": 256,
+        "height": 256
+      },
+      "canvas": {
+        "attributeWidth": 256,
+        "attributeHeight": 256,
+        "cssWidth": 256,
+        "cssHeight": 256
+      },
+      "drawingBuffer": {
+        "width": 256,
+        "height": 256
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 256,
+          "height": 256,
+          "pixelRatio": 1
+        }
+      }
+    },
+    {
+      "name": "large-512-dpr1",
+      "devicePixelRatio": 1,
+      "stage": {
+        "width": 512,
+        "height": 512
+      },
+      "canvas": {
+        "attributeWidth": 512,
+        "attributeHeight": 512,
+        "cssWidth": 512,
+        "cssHeight": 512
+      },
+      "drawingBuffer": {
+        "width": 512,
+        "height": 512
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 512,
+          "height": 512,
+          "pixelRatio": 1
+        }
+      }
+    }
+  ],
+  "dprChangeAfterLoad": {
+    "method": "CDP Emulation.setDeviceMetricsOverride; DPR simulation, not native browser zoom",
+    "before": {
+      "devicePixelRatio": 1,
+      "stage": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "attributeWidth": 56,
+        "attributeHeight": 56,
+        "cssWidth": 56,
+        "cssHeight": 56
+      },
+      "drawingBuffer": {
+        "width": 56,
+        "height": 56
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 2,
+        "activeTime": 0.06666666666666667,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.06666666666666667,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [
+          200
+        ],
+        "viewport": {
+          "width": 56,
+          "height": 56,
+          "pixelRatio": 1
+        }
+      }
+    },
+    "after": {
+      "devicePixelRatio": 3,
+      "stage": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "attributeWidth": 56,
+        "attributeHeight": 56,
+        "cssWidth": 56,
+        "cssHeight": 56
+      },
+      "drawingBuffer": {
+        "width": 56,
+        "height": 56
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 2,
+        "activeTime": 0.06666666666666667,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.06666666666666667,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [
+          200
+        ],
+        "viewport": {
+          "width": 56,
+          "height": 56,
+          "pixelRatio": 1
+        }
+      }
+    },
+    "afterReload": {
+      "devicePixelRatio": 3,
+      "stage": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "attributeWidth": 84,
+        "attributeHeight": 84,
+        "cssWidth": 56,
+        "cssHeight": 56
+      },
+      "drawingBuffer": {
+        "width": 84,
+        "height": 84
+      },
+      "debug": {
+        "ready": true,
+        "renderer": "WebGL2 / Three.js",
+        "failed": false,
+        "pause": false,
+        "reducedMotion": true,
+        "visible": true,
+        "frameCount": 1,
+        "activeTime": 0.016666666666666666,
+        "controls": {
+          "gazeX": 0,
+          "gazeY": 0,
+          "headYaw": 0,
+          "headPitch": 0,
+          "headRoll": 0,
+          "blink": 0,
+          "breath": 0
+        },
+        "target": {
+          "x": 0,
+          "y": 0
+        },
+        "reaction": {
+          "state": "idle",
+          "stateAge": 0.016666666666666666,
+          "blend": 1,
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wingLeft": [
+            0,
+            0,
+            0
+          ],
+          "wingRight": [
+            0,
+            0,
+            0
+          ],
+          "tapLeft": 0,
+          "tapRight": 0,
+          "propReading": 0,
+          "propWorking": 0,
+          "readingSupport": [
+            -0.48718262753774655,
+            -0.7687732176875274,
+            0.8859607000207929
+          ],
+          "readingTrace": [
+            0.44465278241632034,
+            -0.7589179167683405,
+            0.9298682511229925
+          ],
+          "readingRow": 0.025,
+          "readingWingExtension": 1,
+          "cleanBody": 0,
+          "cursorScale": 1,
+          "readyBlink": 0,
+          "touring": false
+        },
+        "rollingFrameTimes": [],
+        "viewport": {
+          "width": 56,
+          "height": 56,
+          "pixelRatio": 1.5
+        }
+      }
+    }
+  },
+  "nativeBrowserZoomTested": false,
+  "observations": [
+    "Current chat sizes are 56px mobile and 64px desktop. At DPR 1, the buffers equal those sizes. Static model projection occupies 64.52% of width and 80.34% of height: approximately 36.1x45.0 rendered pixels mobile or 41.3x51.4 desktop. Fine fur and tiny eye details are compressed even at normal zoom.",
+    "At simulated DPR 2 and 3, a 56px stage uses an 84x84 buffer due the 1.5 startup cap, rather than native-density 112x112 or 168x168. Linear density is 25% and 50% below the display respectively.",
+    "Changing simulated DPR from 1 to 3 after load leaves the buffer at 56x56 and renderer ratio 1. Reloading raises it only to 84x84 and ratio 1.5. This establishes a stale-DPR mechanism independently of the size cap; native browser zoom itself was not tested.",
+    "All runtime geometry, textures and neutral still match the approved manifest SHA. Skin/clean-body textures are 1024x1024, hero 1500x1500 and neutral 512x512. Their source dimensions exceed the tiny chat raster; there is no missing or substituted low-resolution asset.",
+    "Independent original-resolution inspection of live 256px and 512px captures shows the same approved character with visible fur and clean facial features. The approved neutral still has intentionally soft fur edges. The evidence supports small output raster and downsampling as causes, rather than a model-quality defect.",
+    "The local Three Texture defaults are LinearFilter magnification and LinearMipmapLinearFilter minification; main.js keeps mipmaps on. Smooth minification at this scale is expected. No filtering or texture change was attempted."
+  ],
+  "recommendations": [
+    "For the compact chat avatar, try a minimum render ratio 2 at DPR 1, follow current DPR dynamically, and impose a maximum backing-buffer edge of 256px. This keeps the approved assets and visible size. Update ratio together with setSize on resize/DPR change, including a re-armed resolution media-query watcher when CSS size is unchanged.",
+    "At 56px, ratio 2 yields 112x112; DPR 3 yields 168x168. Both have 4 times the buffer pixels of their current DPR 1/DPR 3 baselines. The 256px hard edge bound limits a square buffer to 65,536 pixels. This is a proposed resource bound, not a measured device-performance guarantee.",
+    "Keep the accepted camera, model, textures, reactions and filters during the structural resolution trial. Judge matched idle pixels at normal size and actual browser zoom, then measure frame time on the target phone and desktop. Raising DPR improves raster sampling but cannot recover fur detail below a single display pixel."
+  ],
+  "limits": [
+    "Headless Edge used hardware/software rendering as selected by the local browser. Physical phone frame rate and native browser zoom were not measured.",
+    "Projected bounds include all static mesh vertices and approximate the visible silhouette. Animation can slightly alter the bounds.",
+    "No source, geometry, texture, filtering or paid/provider operation was changed by this diagnostic."
+  ],
+  "followupResolutionPolicy": {
+    "status": "Authorized structural renderer policy under independent verification",
+    "minimumRatio": 2,
+    "followCurrentDpr": true,
+    "maximumBackingEdge": 1024,
+    "reason": "The initial256px suggestion applied only to the compact avatar. A1024px edge preserves the existing large standalone preview while bounding fill.",
+    "smallStageExamples": {
+      "56px_dpr1": "112x112",
+      "64px_dpr1": "128x128",
+      "56px_dpr3": "168x168",
+      "64px_dpr3": "192x192",
+      "56px_dpr8": "448x448",
+      "64px_dpr8": "512x512"
+    },
+    "preserved": "Approved geometry, textures, filtering, camera, rig and reactions",
+    "physicalPerformanceOrNativeZoomGuarantee": false
+  }
+}

@@ -2,7 +2,7 @@
   "source": "assets/3d-lab/grifon-companion-live",
   "approval": "qa/reading-held/owner-approval.json",
   "hashes": {
-    "main.js": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+    "main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
     "reactions.js": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce",
     "scene.json": "1a199b50faf7be25b38b78b56bff2c81cc9ba75d34b13882e6ba668486ce62cd",
     "scene.bin": "607ba0c913859739f2a908758d55c34eea8126dc4b7427468887bf7afdd3cca5",

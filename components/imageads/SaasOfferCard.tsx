@@ -149,7 +149,7 @@ export const SaasOfferCard = forwardRef<HTMLDivElement, SaasOfferCardProps>(
     }
 
     return (
-      <div ref={ref} style={rootStyle}>
+      <div ref={ref} style={rootStyle} data-ad-artwork>
         <Eyebrow />
         {headline}
         {body}

@@ -20,6 +20,7 @@ const frameTimes = [];
 const targetHistory = [];
 let ready = false, paused = false, visible = true, failed = false;
 let reducedMotion = reducedQuery.matches;
+let resolutionRatio = window.devicePixelRatio || 1, watchResolution;
 let renderer, scene, camera, objects = [], raf = 0, lastFrame = 0, frameCount = 0;
 let activeTime = 0, relaxAt = Infinity, blinkStart = -10, nextBlink = 3.4;
 let pointerId = null, lastDiagnostics = 0;
@@ -229,6 +230,7 @@ function renderFrame() {
 function animate(timestamp) {
   if (failed) return;
   raf = requestAnimationFrame(animate);
+  if (watchResolution && (window.devicePixelRatio || 1) !== resolutionRatio) watchResolution();
   if (!ready || failed || paused || document.hidden || !visible) { lastFrame = 0; return; }
   const dt = lastFrame ? Math.min((timestamp-lastFrame)/1000, .05) : 1/60;
   if (lastFrame) { frameTimes.push(timestamp-lastFrame); if (frameTimes.length > 180) frameTimes.shift(); }
@@ -300,7 +302,6 @@ async function start() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NoToneMapping;
     renderer.setClearColor(0x09090b, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.domElement.setAttribute('aria-hidden', 'true');
     renderer.domElement.addEventListener('webglcontextlost', event => {
       event.preventDefault(); showFailure(new Error('Graphics context was interrupted.'));
@@ -346,15 +347,29 @@ async function start() {
       scene.add(object); objects.push(object);
     }
     reactionProps = createReactionProps(THREE,scene);
+    let drawingWidth = 0, drawingHeight = 0, drawingRatio = 0;
     const resize = () => {
       if (failed) return;
       const width = stage.clientWidth, height = stage.clientHeight;
-      renderer.setSize(width, height, false);
+      if (width <= 0 || height <= 0) return;
+      const pixelRatio = Math.min(Math.max(2, window.devicePixelRatio || 1), 1024 / Math.max(width, height));
+      if (width === drawingWidth && height === drawingHeight && pixelRatio === drawingRatio) return;
+      renderer.setDrawingBufferSize(width, height, pixelRatio);
+      drawingWidth = width; drawingHeight = height; drawingRatio = pixelRatio;
       camera.left = -half*width/height; camera.right = half*width/height;
       camera.updateProjectionMatrix();
       if (ready) renderFrame();
     };
-    new ResizeObserver(resize).observe(stage); resize();
+    let resolutionQuery;
+    watchResolution = () => {
+      resolutionQuery?.removeEventListener('change', watchResolution);
+      if (failed) return;
+      resolutionRatio = window.devicePixelRatio || 1;
+      resolutionQuery = window.matchMedia(`(resolution: ${resolutionRatio}dppx)`);
+      resolutionQuery.addEventListener('change', watchResolution);
+      resize();
+    };
+    new ResizeObserver(resize).observe(stage); watchResolution();
     renderer.compile(scene, camera);
     if (!renderFrame()) return;
     ready = true; fallback.hidden = true;

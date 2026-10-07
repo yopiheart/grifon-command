@@ -1,0 +1,1082 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "fonts": [
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "loaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "loaded"
+    }
+  ],
+  "measurements": [
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Pricing",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "letterSpacing": "2.2px",
+      "textTransform": "uppercase",
+      "width": 61.609375,
+      "height": 16.5,
+      "left": 760,
+      "right": 821.609375
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "LOG IN",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "letterSpacing": "2.2px",
+      "textTransform": "uppercase",
+      "width": 52.8125,
+      "height": 16.5,
+      "left": 995.734375,
+      "right": 1048.546875
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 44,
+      "height": 44,
+      "left": 1072.546875,
+      "right": 1116.546875
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Try it free",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "11px",
+      "fontWeight": "900",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase",
+      "width": 107.453125,
+      "height": 34.5,
+      "left": 1140.546875,
+      "right": 1248
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Try it free",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "10px",
+      "fontWeight": "900",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase",
+      "width": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": " For Filipino business owners doing their own marketing",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "letterSpacing": "1.8px",
+      "textTransform": "uppercase",
+      "width": 436.203125,
+      "height": 17,
+      "left": 421.890625,
+      "right": 858.09375
+    },
+    {
+      "tag": "H1",
+      "role": null,
+      "text": "Your next ad.Made to move.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "108.8px",
+      "fontWeight": "400",
+      "letterSpacing": "-7.072px",
+      "textTransform": "none",
+      "width": 623.765625,
+      "height": 234.03125,
+      "left": 328.109375,
+      "right": 951.875
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Running the business and making the ads? Grifon helps turn what you sell into video ads, with AI research, scripts, and scenes in one place.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 470,
+      "height": 86.390625,
+      "left": 405,
+      "right": 875
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Build my free ad plan ",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 241.625,
+      "height": 54,
+      "left": 440.140625,
+      "right": 681.765625
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "01 / From your business to your ad",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "letterSpacing": "1.8px",
+      "textTransform": "uppercase",
+      "width": 1200,
+      "height": 17,
+      "left": 40,
+      "right": 1240
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "You know your business.Start your ad here.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "61.44px",
+      "fontWeight": "600",
+      "letterSpacing": "-2.7648px",
+      "textTransform": "none",
+      "width": 633.03125,
+      "height": 199.03125,
+      "left": 40,
+      "right": 673.03125
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Tell us what you sell.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "22px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.99px",
+      "textTransform": "none",
+      "width": 373.328125,
+      "height": 33,
+      "left": 40,
+      "right": 413.328125
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Review your free ad plan.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "22px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.99px",
+      "textTransform": "none",
+      "width": 373.328125,
+      "height": 33,
+      "left": 453.328125,
+      "right": 826.65625
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Create a video you can post.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "22px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.99px",
+      "textTransform": "none",
+      "width": 373.34375,
+      "height": 33,
+      "left": 866.65625,
+      "right": 1240
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "From owners doing the marketing, too.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "600",
+      "letterSpacing": "-2.16px",
+      "textTransform": "none",
+      "width": 814.703125,
+      "height": 48,
+      "left": 32,
+      "right": 846.703125
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Build my free ad plan",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 336.719970703125,
+      "height": 42.478271484375,
+      "left": 2661.239990234375,
+      "right": 2997.9599609375
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "One studio. Every step.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "48px",
+      "fontWeight": "600",
+      "letterSpacing": "-2.16px",
+      "textTransform": "none",
+      "width": 1216,
+      "height": 49,
+      "left": 32,
+      "right": 1248
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Shape your video, scene by scene.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "600",
+      "letterSpacing": "-1.35px",
+      "textTransform": "none",
+      "width": 551,
+      "height": 36,
+      "left": 73,
+      "right": 624
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Market Research",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.81px",
+      "textTransform": "none",
+      "width": 538,
+      "height": 28,
+      "left": 61,
+      "right": 599
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Research my market→",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 158.328125,
+      "height": 44,
+      "left": 61,
+      "right": 219.328125
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Offer Optimizer",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.81px",
+      "textTransform": "none",
+      "width": 538,
+      "height": 28,
+      "left": 681,
+      "right": 1219
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Fix my offer→",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 99.875,
+      "height": 44,
+      "left": 681,
+      "right": 780.875
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Caption & Headline",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.81px",
+      "textTransform": "none",
+      "width": 538,
+      "height": 28,
+      "left": 61,
+      "right": 599
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Write my captions→",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 142.328125,
+      "height": 44,
+      "left": 61,
+      "right": 203.328125
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "Image Studio",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.81px",
+      "textTransform": "none",
+      "width": 538,
+      "height": 28,
+      "left": 681,
+      "right": 1219
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Make my image ads→",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 153.90625,
+      "height": 44,
+      "left": 681,
+      "right": 834.90625
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Start with a plan. Pay for production.",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "letterSpacing": "1.8px",
+      "textTransform": "uppercase",
+      "width": 550,
+      "height": 17,
+      "left": 105,
+      "right": 655
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Start small.Create more.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "61.44px",
+      "fontWeight": "600",
+      "letterSpacing": "-2.7648px",
+      "textTransform": "none",
+      "width": 550,
+      "height": 133.6875,
+      "left": 105,
+      "right": 655
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Compare the plans ",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 227.46875,
+      "height": 54,
+      "left": 105,
+      "right": 332.46875
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "For owners creating ads regularly",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "letterSpacing": "1.8px",
+      "textTransform": "uppercase",
+      "width": 387,
+      "height": 17,
+      "left": 788,
+      "right": 1175
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Before you get started",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "letterSpacing": "1.8px",
+      "textTransform": "uppercase",
+      "width": 513.625,
+      "height": 17,
+      "left": 40,
+      "right": 553.625
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Good questions.Clear answers.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "61.44px",
+      "fontWeight": "600",
+      "letterSpacing": "-2.7648px",
+      "textTransform": "none",
+      "width": 513.625,
+      "height": 133.6875,
+      "left": 40,
+      "right": 553.625
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "01Is Grifon for my business?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "01Is Grifon for my business?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "02Do I need design or editing experience?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "02Do I need design or editing experience?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "03What can I try for free?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "03What can I try for free?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "04How many video ads can I create?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "04How many video ads can I create?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "05Can I control the creative direction?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "05Can I control the creative direction?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "06Will the ad fit my business?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "06Will the ad fit my business?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "07Does Grifon publish or run my ads?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "07Does Grifon publish or run my ads?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "H3",
+      "role": null,
+      "text": "08What if it is not right for my business?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.675px",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "08What if it is not right for my business?",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 616.375,
+      "height": 74,
+      "left": 623.625,
+      "right": 1240
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Log in",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Your business. In motion.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "76.8px",
+      "fontWeight": "600",
+      "letterSpacing": "-3.456px",
+      "textTransform": "none",
+      "width": 1166,
+      "height": 77.796875,
+      "left": 57,
+      "right": 1223
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Build my free ad plan ",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 239.625,
+      "height": 54,
+      "left": 520.1875,
+      "right": 759.8125
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 44,
+      "height": 44,
+      "left": 1215,
+      "right": 1259
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Privacy Policy",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 133.296875,
+      "height": 44,
+      "left": 897,
+      "right": 1030.296875
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Decline",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 100.34375,
+      "height": 44,
+      "left": 1038.296875,
+      "right": 1138.640625
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Accept",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 100.359375,
+      "height": 44,
+      "left": 1146.640625,
+      "right": 1247
+    }
+  ]
+}

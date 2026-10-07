@@ -13,25 +13,25 @@ colors:
   proof-band: "#F2F1EA"
 typography:
   headline-display:
-    fontFamily: Inter, Geist, SF Pro
+    fontFamily: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
     fontSize: 3rem
-    fontWeight: 700
-    letterSpacing: -0.025em
+    fontWeight: 600
+    letterSpacing: -0.02em
   headline-lg:
-    fontFamily: Inter, Geist, SF Pro
+    fontFamily: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
     fontSize: 2rem
-    fontWeight: 700
+    fontWeight: 600
     letterSpacing: -0.02em
   body-lg:
-    fontFamily: Inter, Geist, SF Pro
+    fontFamily: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
     fontSize: 1.125rem
     fontWeight: 400
   body-md:
-    fontFamily: Inter, Geist, SF Pro
-    fontSize: 1rem
+    fontFamily: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
+    fontSize: 0.875rem
     fontWeight: 400
   label-md:
-    fontFamily: Inter, Geist, SF Pro
+    fontFamily: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif
     fontSize: 0.875rem
     fontWeight: 600
   label-caps:
@@ -151,12 +151,13 @@ Gold means "do this" — it must never be overloaded to mean "watch out." For **
 
 ## Typography
 
-- **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) for the cinematic effect. Vertical (`to-b`) over horizontal (`to-r`) — multi-line headlines fade top-to-bottom like a movie title card; horizontal washes look like a banner gradient and break the cinematic register.
-- **Display tracking is tight, not default.** Headlines use negative letter-spacing (`tracking-tight` ≈ -0.025em on display, -0.02em on h-lg). Inter's default tracking reads loose at display sizes; tightening pulls headlines into the "premium tech" register without abandoning the cinematic dark identity. Body sizes (`body-lg` / `body-md`) keep default tracking — only display sizes get tightened.
-- **Weight ladder is 400 / 600 / 700 — no 500.** Weight 500 reads in-between and undermines hierarchy; if a label needs more presence than body (400), go to 600. Bold is 700. (Aligned with Apple's typographic discipline.)
-- **body-lg / body-md:** Same sans family.
-- **label-caps:** JetBrains Mono, uppercase, wide tracking. Reserved for sub-labels and technical data to reinforce the "control panel" feel.
-- **serif-accent:** Instrument Serif italic 400, **marketing surfaces only** (the pre-auth gateway — sign-in/sign-up screen — counts as a marketing surface; the authed app does not). Used for a maximum of 1–2 accent words per headline (rendered in Grifon Gold) and for kinetic marquee strips. Because the global heading LAW (`index.html`) forces Inter 900 uppercase on `h1`–`h6` with `!important`, serif accents MUST be `<span className="font-serif italic normal-case tracking-normal">` inside the heading — never applied to the heading element itself. Never in-app, never for body text, never a third weight.
+- **Sans family:** Inter is the loaded, portable UI font, followed by `-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, and `sans-serif` when unavailable. This is the actual stack; SF Pro and other proprietary brand fonts are not downloaded.
+- **headline-display / headline-lg:** Sentence case, semibold 600, with restrained `-0.02em` tracking. Existing gradient fills (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) may stay; typography does not require a gradient. No global 900 weight or uppercase heading rule.
+- **Weight ladder:** 400 regular / 500 medium / 600 semibold / 700 bold. Body and entered values use 400; buttons and shared field labels use 600. Use 500 and 700 for deliberate hierarchy rather than forcing every control bold.
+- **body-lg / body-md:** Same sans family with normal tracking. The default app body is `body-md`, 14px (0.875rem) at 400; explicit larger reading and display sizes remain purposeful.
+- **Ordinary controls:** Labels, buttons, inputs, selects, textareas, and navigation use sans, normal case, and normal tracking. Buttons are 14px at 600; shared field labels are 14px at 600; plain labels and entered values inherit regular 400. Human-readable helpers use sans at 12–13px.
+- **label-caps:** JetBrains Mono, uppercase, wide tracking, only for genuine metadata. Preserve explicit code, keyboard hints, technical IDs, timers, and standalone `.font-mono` / `.tech-data` metadata; a label, button, input, select, or textarea's legacy `font-mono` class does not make that control technical — use `.tech-data` deliberately for that exception. Do not override `.uppercase`, `.font-black`, or `.font-mono` utilities globally; approved ad export artwork and wordmarks retain their typography.
+- **serif-accent:** Instrument Serif italic 400, **marketing surfaces only** (the pre-auth gateway — sign-in/sign-up screen — counts as a marketing surface; the authed app does not). Used for a maximum of 1–2 accent words per headline (rendered in Grifon Gold) and for kinetic marquee strips. Use `<span className="font-serif italic normal-case tracking-normal">` for accent words; the approved whole serif hero line is documented below. The `.landing-page` and `.public-purchase` typography stays scoped to those surfaces. Never in-app or for body text.
 
 ## Layout
 
@@ -215,10 +216,10 @@ layer. Grifon had it inverted — 105 `backdrop-filter`s, most of them wrapping 
 
 - **glassPanel:** `MAT_PLATE border border-white/10 rounded-2xl p-6` (or `p-8`). Wraps ALL forms, tool settings, data displays. Tonal, **not** blurred — see Elevation & Depth; pass `tier="chrome"` only when it floats over live content.
 - **liquidGlass:** the CHROME primitive — floating nav, rails, command palette, sticky bars. Radii are the caller's (`rounded-full` on a pill nav, `rounded-3xl` on a card); the rim lens inherits them.
-- **goldButton:** `bg-[#FFCC00] text-black font-black uppercase tracking-widest px-8 py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-105 transition-all`. (In-app primary CTA. Use `rounded-full` instead of `rounded-xl` on marketing surfaces — see Shapes.)
-- **goldButtonGhost:** `bg-transparent border border-[#FFCC00] text-[#FFCC00] font-black uppercase tracking-widest px-5 py-2 rounded-full hover:bg-[#FFCC00]/10 hover:shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:scale-105 transition-all`. Persistent secondary CTA — use in sticky navs or footer when a primary `goldButton` exists elsewhere on the same surface, so the nav doesn't compete with the hero CTA.
+- **goldButton:** `bg-[#FFCC00] text-black font-sans text-sm font-semibold normal-case tracking-normal px-8 py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-105 transition-all`. (In-app primary CTA. Use `rounded-full` instead of `rounded-xl` on marketing surfaces — see Shapes.)
+- **goldButtonGhost:** `bg-transparent border border-[#FFCC00] text-[#FFCC00] font-sans text-sm font-semibold normal-case tracking-normal px-5 py-2 rounded-full hover:bg-[#FFCC00]/10 hover:shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:scale-105 transition-all`. Persistent secondary CTA — use in sticky navs or footer when a primary `goldButton` exists elsewhere on the same surface, so the nav doesn't compete with the hero CTA.
 - **ghostButton:** `bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl`.
-- **input / select:** `w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]`.
+- **input / select:** `w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 font-sans text-sm font-normal normal-case tracking-normal text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]`.
 - **uploadDropzone:** `bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6`. Native `<input type="file">` MUST be hidden.
 - **Icons:** ONLY `lucide-react` SVGs. Never raw text strings like `movie_filter`.
 
@@ -226,9 +227,9 @@ layer. Grifon had it inverted — 105 `backdrop-filter`s, most of them wrapping 
 
 The ad-creation wizard and the One-Shot composer read from ONE token source —
 [components/ui/wizardTokens.ts](components/ui/wizardTokens.ts) — so heights, radii, type, and
-spacing never drift step-to-step. Values were lifted from the One-Shot composer
+spacing never drift step-to-step. Sizing and surfaces were lifted from the One-Shot composer
 ([components/OneShotAd/LaunchScreen.tsx](components/OneShotAd/LaunchScreen.tsx)), the reference
-for "clean." Import the consts (or the primitives below) instead of inlining strings.
+for "clean"; typography follows the current rules above. Import the consts (or the primitives below) instead of inlining strings.
 
 - **Control floor — `h-11` (44px, `CTRL_H`).** Every interactive control — pills, selects,
   inputs, segmented toggles, popover triggers — sits on this tap-target floor. The primary CTA
@@ -236,9 +237,10 @@ for "clean." Import the consts (or the primitives below) instead of inlining str
 - **Three radius tiers.** Controls `rounded-xl` (`R_CTRL`, 12px) · panels/cards `rounded-2xl`
   (`R_PANEL`, 16px) · modals `rounded-3xl` (`R_MODAL`, 24px). (Consistent with Shapes above —
   in-app controls stay rectangular, not pills.)
-- **Type scale.** `T_DISPLAY` (page title) · `T_CTRL` (`text-sm font-semibold`, control labels) ·
-  `T_VALUE` (`text-xs font-mono`, current values) · `T_LABEL` (`text-[10px]` mono caps, the
-  `//` meta-labels). These are the label-caps register applied consistently.
+- **Type scale.** `T_DISPLAY` (sentence-case, semibold page title at `-0.02em`) ·
+  `T_CTRL` (14px sans semibold, buttons and field labels) · `T_VALUE` (14px sans, current values) ·
+  `T_LABEL` (`text-[10px]` mono caps, genuine metadata only). `FieldLabel` uses `T_CTRL`;
+  workflow helpers in `StepShell` and `Card` use regular sans at 12px and 13px.
 - **Progressive disclosure (anti-dumbing rule).** Secondary/optional controls may be tucked into a
   [Popover](components/ui/Popover.tsx) or [Modal](components/ui/Modal.tsx) to cut scroll — BUT
   the control's current value stays visible on the collapsed trigger (`T_VALUE`), nothing used on
@@ -247,7 +249,7 @@ for "clean." Import the consts (or the primitives below) instead of inlining str
 
 **Shared primitives (use them; don't re-style inline):**
 [StepShell](components/ui/StepShell.tsx) (panel + standardized header) ·
-[StepFooter](components/ui/StepFooter.tsx) (sticky BACK/CONFIRM nav) ·
+[StepFooter](components/ui/StepFooter.tsx) (sticky Back/Confirm nav) ·
 [Popover](components/ui/Popover.tsx) · [Modal](components/ui/Modal.tsx) ·
 [FieldLabel](components/ui/FieldLabel.tsx) · [TextField + TextArea](components/ui/TextField.tsx)
 (tokenized successors to ui/Input + ui/Textarea) ·
@@ -300,10 +302,10 @@ are omitted for reduced motion, and motion below the hero stays restrained.
 
 ## Dashboard pilot (Gemini-inspired)
 
-The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot that intentionally deviates from two rules above. The rest of the app still follows them — do not propagate these without sign-off.
+The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot for borderless tonal surfaces. Keep that surface treatment scoped unless approved; calm typography is now the shared app default.
 
 - **Borderless tonal surfaces.** Dashboard cards drop `border border-white/10` and separate by tonal fill alone (`bg-zinc-900/70`, `bg-white/[0.03]`). Elevation is still glass + blur — no drop shadows. The hero card (Director) signals priority with a gold-tinted fill (`bg-[#FFCC00]/[0.06]`) instead of a gold border.
-- **Calm typography.** The dashboard hero is a regular-weight, sentence-case greeting and module card titles are sentence case — rendered as non-heading elements so they bypass the global `h1`–`h6` uppercase rule. The uppercase gradient headline and the mono `//` sub-labels still apply everywhere else.
+- **Calm typography.** The dashboard hero remains a regular-weight, sentence-case greeting and module card titles use sentence case. Shared app headings now use semibold 600 with restrained tracking; the dashboard no longer needs non-heading elements to escape a global uppercase rule. Monospace remains for genuine metadata.
 
 ## Do's and Don'ts
 
