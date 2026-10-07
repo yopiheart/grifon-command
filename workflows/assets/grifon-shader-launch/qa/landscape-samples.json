@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-07T17:11:55.091Z",
+  "date": "2026-10-07T18:43:32.727Z",
   "format": "landscape",
   "resolution": [
     1920,
@@ -13,19 +13,19 @@
     "--disable-dawn-features=use_dxc",
     "--disable-gpu-rasterization"
   ],
-  "specSha256": "8d06647f8d51a587565cc40c26fa4a7dc1269239f79e925d2b80c7a8c6a0de3d",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
   "samples": [
     {
       "scene": "opening",
       "time": 1.45,
       "file": "landscape-sample-00.png",
-      "sha256": "020b54f374e59ee1544d695bde8f971670feed0a1c93cadaa0f829d47c7012ea"
+      "sha256": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b"
     },
     {
       "scene": "product",
       "time": 3.35,
       "file": "landscape-sample-01.png",
-      "sha256": "fff8685db3fc240239085e462db0064c001b85a4d033588d1cde1ffb401204b4"
+      "sha256": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717"
     },
     {
       "scene": "story",
@@ -37,55 +37,55 @@
       "scene": "business",
       "time": 6.95,
       "file": "landscape-sample-03.png",
-      "sha256": "680672be0c81383c675a286b2a0b3e7c57ff88824be28ab0a3653e5a2ecd60a7"
+      "sha256": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd"
     },
     {
       "scene": "research",
       "time": 9.3,
       "file": "landscape-sample-04.png",
-      "sha256": "087f4d8f832b28a3c2b41d44f7d2df1eb2eb2af052fd4c46ef948ab110b46853"
+      "sha256": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3"
     },
     {
       "scene": "script",
       "time": 11.95,
       "file": "landscape-sample-05.png",
-      "sha256": "b6d35e6eb9624dd74fd7c642b14a2b11ec0a0686e68e0ed26e6c50017d194216"
+      "sha256": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4"
     },
     {
       "scene": "storyboard",
       "time": 14.4,
       "file": "landscape-sample-06.png",
-      "sha256": "79ce47f1b3efe387ca058e977474bec2580cca3051b630ad5f77a92f8b12cfc3"
+      "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae"
     },
     {
       "scene": "research-screen",
       "time": 16.8,
       "file": "landscape-sample-07.png",
-      "sha256": "c8dce74edd3d78eb0ecf6bd4a892df985843564e2b3f46d5bd4258da2f467f82"
+      "sha256": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559"
     },
     {
       "scene": "script-screen",
       "time": 19.1,
       "file": "landscape-sample-08.png",
-      "sha256": "237e6c5c6ce5a4987a62dfb482a3be7d7a03b3dceabe8b06359bbd7cb12cf7de"
+      "sha256": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7"
     },
     {
       "scene": "storyboard-screen",
       "time": 21.45,
       "file": "landscape-sample-09.png",
-      "sha256": "88f6dabf537232369806ed960634a2a24b397b0921a8e53be149a884886f86e2"
+      "sha256": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a"
     },
     {
       "scene": "direction",
       "time": 24.5,
       "file": "landscape-sample-10.png",
-      "sha256": "079b0f080a4192b0fd7fe94678545985bf9ca0f1f8c24a1988145d5da76a4876"
+      "sha256": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78"
     },
     {
       "scene": "finish",
       "time": 29.45,
       "file": "landscape-sample-11.png",
-      "sha256": "f0cf8721a04a406b55fb6a36827b73c568ffc620d70e2b8e66249a3b11498bcf"
+      "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
     }
   ],
   "safeCases": [
@@ -207,7 +207,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 1528.171875,
+          "x": 1596.359375,
           "y": 901,
           "width": 143.640625,
           "height": 35
@@ -253,7 +253,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 1528.171875,
+          "x": 1596.359375,
           "y": 901,
           "width": 143.640625,
           "height": 35
@@ -299,7 +299,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 1528.171875,
+          "x": 1596.359375,
           "y": 901,
           "width": 143.640625,
           "height": 35
@@ -446,6 +446,126 @@
       "result": "PASS"
     }
   ],
+  "trackGeometry": {
+    "format": "landscape",
+    "result": "PASS",
+    "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+    "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+    "indexSha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+    "renderSha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+    "cases": [
+      {
+        "time": 13.6,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-13-60.png",
+        "sha256": "d158ed3dc3cda9345a2341f60fc04031cc67952ec84548a143854eba6438fa77",
+        "result": "PASS"
+      },
+      {
+        "time": 13.7,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-13-70.png",
+        "sha256": "2151397f6c50ddb475f45a329304edd5a03b5384fc66a402613f8289b959ec2e",
+        "result": "PASS"
+      },
+      {
+        "time": 14.4,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-14-40.png",
+        "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+        "result": "PASS"
+      },
+      {
+        "time": 15.35,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-15-35.png",
+        "sha256": "2b78a260c722a6b7c83c8dfcac99def465341b2796aa3b9c50b4c954931fea8e",
+        "result": "PASS"
+      }
+    ],
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
   "invalidFixture": {
     "file": "invalid-duplicate-action.json",
     "exitCode": 1,

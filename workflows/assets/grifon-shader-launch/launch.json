@@ -44,9 +44,9 @@
     "displayFont": "./assets/inter-900.ttf",
     "bodyFont": "./assets/inter-variable.ttf",
     "captures": [
-      "./assets/captures/research.png",
-      "./assets/captures/script.png",
-      "./assets/captures/storyboard.png"
+      "./assets/captures/framed-research.png",
+      "./assets/captures/framed-script.png",
+      "./assets/captures/framed-storyboard.png"
     ],
     "portraitCaptures": [
       "./assets/captures/portrait-research.png",
@@ -55,22 +55,22 @@
     ],
     "landscapeFraming": [
       {
-        "left": 140,
-        "top": 500,
-        "width": 600,
-        "height": 256
+        "left": 0,
+        "top": 0,
+        "width": 1800,
+        "height": 768
       },
       {
-        "left": 210,
-        "top": 470,
-        "width": 600,
-        "height": 256
+        "left": 0,
+        "top": 0,
+        "width": 1800,
+        "height": 768
       },
       {
-        "left": 190,
-        "top": 910,
-        "width": 600,
-        "height": 256
+        "left": 0,
+        "top": 0,
+        "width": 1800,
+        "height": 768
       }
     ]
   },

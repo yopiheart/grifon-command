@@ -1,0 +1,863 @@
+{
+  "date": "2026-10-07T17:35:35.394Z",
+  "format": "portrait",
+  "resolution": [
+    1080,
+    1920
+  ],
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "samples": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "file": "portrait-sample-00.png",
+      "sha256": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "file": "portrait-sample-01.png",
+      "sha256": "4ce36dc9a7efc0975e92817527dd97c831b8b4b8966e1990f313c6e340154494"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "file": "portrait-sample-02.png",
+      "sha256": "5f1b08a5a4789bb270d3b1026d894eb04d28064c6175fc343d75aba1d1cd7f0f"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "file": "portrait-sample-03.png",
+      "sha256": "f6e3afb87219cef0db51930beb82673741b675156c6daf91daa74d6d0eec2550"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "file": "portrait-sample-04.png",
+      "sha256": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "file": "portrait-sample-05.png",
+      "sha256": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "file": "portrait-sample-06.png",
+      "sha256": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "file": "portrait-sample-07.png",
+      "sha256": "3c1c35e9d534a056fe23b451516173058eb0aae3a96aceb99e8c4be9416dbca2"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "file": "portrait-sample-08.png",
+      "sha256": "9428aaa52b6ceb67aa7c0aea33605f8f99f7a5bd4e840586956f130416573c86"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "file": "portrait-sample-09.png",
+      "sha256": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "file": "portrait-sample-10.png",
+      "sha256": "fe31b4fb6226d0532986914a40e071cb731a17df3d062161014f3748c5967088"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "file": "portrait-sample-11.png",
+      "sha256": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097"
+    }
+  ],
+  "safeCases": [
+    {
+      "scene": "opening",
+      "boxes": [
+        {
+          "selector": "#opening-copy",
+          "text": "Your next",
+          "x": 90,
+          "y": 655,
+          "width": 749.625,
+          "height": 210
+        },
+        {
+          "selector": "#opening-copy",
+          "text": "ad.",
+          "x": 90,
+          "y": 836.640625,
+          "width": 252.4375,
+          "height": 210
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "product",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To launch",
+          "x": 90,
+          "y": 1136,
+          "width": 388.828125,
+          "height": 121
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "a product.",
+          "x": 90,
+          "y": 1259,
+          "width": 589.828125,
+          "height": 155
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "story",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To tell",
+          "x": 90,
+          "y": 1136,
+          "width": 231.1875,
+          "height": 121
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your story.",
+          "x": 90,
+          "y": 1259,
+          "width": 635.953125,
+          "height": 155
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "business",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To grow",
+          "x": 90,
+          "y": 1136,
+          "width": 324,
+          "height": 121
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your business.",
+          "x": 90,
+          "y": 1259,
+          "width": 866.0625,
+          "height": 155
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Research",
+          "x": 90,
+          "y": 231,
+          "width": 552.921875,
+          "height": 156
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Know your audience.",
+          "x": 90,
+          "y": 415,
+          "width": 477.203125,
+          "height": 69
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 105,
+          "y": 1595,
+          "width": 123.53125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 500.828125,
+          "y": 1595,
+          "width": 78.328125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 778.359375,
+          "y": 1595,
+          "width": 148.265625,
+          "height": 36
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Script",
+          "x": 90,
+          "y": 231,
+          "width": 350.609375,
+          "height": 156
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Shape your message.",
+          "x": 90,
+          "y": 415,
+          "width": 493.265625,
+          "height": 69
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 105,
+          "y": 1595,
+          "width": 123.53125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 500.828125,
+          "y": 1595,
+          "width": 78.328125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 778.359375,
+          "y": 1595,
+          "width": 148.265625,
+          "height": 36
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Storyboard",
+          "x": 90,
+          "y": 231,
+          "width": 664.078125,
+          "height": 156
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Plan every scene.",
+          "x": 90,
+          "y": 415,
+          "width": 397.84375,
+          "height": 69
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 105,
+          "y": 1595,
+          "width": 123.53125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 500.828125,
+          "y": 1595,
+          "width": 78.328125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 778.359375,
+          "y": 1595,
+          "width": 148.265625,
+          "height": 36
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Research",
+          "x": 90,
+          "y": 178,
+          "width": 392.828125,
+          "height": 109
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 116,
+          "y": 333,
+          "width": 241.265625,
+          "height": 40
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 90,
+          "y": 450,
+          "width": 900,
+          "height": 1330
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Script",
+          "x": 90,
+          "y": 178,
+          "width": 249.921875,
+          "height": 109
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 116,
+          "y": 333,
+          "width": 241.265625,
+          "height": 40
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 90,
+          "y": 450,
+          "width": 900,
+          "height": 1330
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Storyboard",
+          "x": 90,
+          "y": 178,
+          "width": 472.140625,
+          "height": 109
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 116,
+          "y": 333,
+          "width": 241.265625,
+          "height": 40
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 90,
+          "y": 450,
+          "width": 900,
+          "height": 1330
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "direction",
+      "boxes": [
+        {
+          "selector": "#direction-copy",
+          "text": "Give your",
+          "x": 90,
+          "y": 605,
+          "width": 584.78125,
+          "height": 164
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "next ad",
+          "x": 90,
+          "y": 750.796875,
+          "width": 450.203125,
+          "height": 164
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "a clear",
+          "x": 90,
+          "y": 896.59375,
+          "width": 402.078125,
+          "height": 164
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "direction.",
+          "x": 90,
+          "y": 1042.390625,
+          "width": 590.96875,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "finish",
+      "boxes": [
+        {
+          "selector": "#mark-ring",
+          "x": 220.140625,
+          "y": 806,
+          "width": 123,
+          "height": 123
+        },
+        {
+          "selector": "#brand-word",
+          "text": "GRIFON",
+          "x": 369.140625,
+          "y": 785,
+          "width": 476.71875,
+          "height": 164
+        },
+        {
+          "selector": "#brand-url",
+          "text": "grifon.ai",
+          "x": 466.625,
+          "y": 999,
+          "width": 146.734375,
+          "height": 51
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID opening-reveal"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "sources": {
+    "index.html": "2193f9f0383ebb103a51e699f315942fca5d54b384e791f1685022b8d6172311",
+    "composition.js": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352",
+    "launch.json": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+    "launch-contract.mjs": "ead7766a98106df20749faf9e0c69f437d9acf8fc17082598a08130ed2f856f1",
+    "contract.test.mjs": "423f898fa9d841c66d4340e202c2d4bdfc9bd37e8ccbf5092e4f5865e1957503",
+    "materials-source.js": "8e2c3f249a28fe56def66593ea6927320f26ee070da84614601bac6f9f29fb79",
+    "shader-materials.js": "e7725b0c66554fe2365d1b3152f8c2cbc5db57e1b3cc306e81ea6d3ddf73e546",
+    "build.mjs": "e6d3b1e9dd9beb9e8b7df68152933f849cc1c60a2faf9fb3941b04cbfed9ac79",
+    "render.mjs": "fd87358c0591063f8ccfc468371623839690768f9de75b52d5a5afdd83b82a05",
+    "../grifon-motion-action-pilot/action-spec.mjs": "1915a827194a80b2f49e91a5101584292c75921805a58325d2ddcc75f9a32491",
+    "./assets/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "./assets/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "./assets/inter-variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "./assets/captures/research.png": "95d9410e9fd43d426fb304f353538dd2501673f11c6f1f0814325244873bc763",
+    "./assets/captures/script.png": "80d6964bf1e22d1059a2d1556915381397076e2b6ee45282d0ca1d43acb0dd69",
+    "./assets/captures/storyboard.png": "274def3f27a41166f5cfd754b477669968e731c7a41845be36a7151838eac23f",
+    "./assets/captures/portrait-research.png": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
+    "./assets/captures/portrait-script-detail.png": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
+    "./assets/captures/portrait-storyboard-detail.png": "37f8c97181627653ad75f7a787fc9985b4e0a59d93c2da35724b18ac82f37bad"
+  },
+  "nonlinear": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "first": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9",
+      "nonlinear": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9",
+      "fresh": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "first": "4ce36dc9a7efc0975e92817527dd97c831b8b4b8966e1990f313c6e340154494",
+      "nonlinear": "4ce36dc9a7efc0975e92817527dd97c831b8b4b8966e1990f313c6e340154494",
+      "fresh": "4ce36dc9a7efc0975e92817527dd97c831b8b4b8966e1990f313c6e340154494",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "first": "5f1b08a5a4789bb270d3b1026d894eb04d28064c6175fc343d75aba1d1cd7f0f",
+      "nonlinear": "5f1b08a5a4789bb270d3b1026d894eb04d28064c6175fc343d75aba1d1cd7f0f",
+      "fresh": "5f1b08a5a4789bb270d3b1026d894eb04d28064c6175fc343d75aba1d1cd7f0f",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "first": "f6e3afb87219cef0db51930beb82673741b675156c6daf91daa74d6d0eec2550",
+      "nonlinear": "f6e3afb87219cef0db51930beb82673741b675156c6daf91daa74d6d0eec2550",
+      "fresh": "f6e3afb87219cef0db51930beb82673741b675156c6daf91daa74d6d0eec2550",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "first": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b",
+      "nonlinear": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b",
+      "fresh": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "first": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74",
+      "nonlinear": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74",
+      "fresh": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "first": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
+      "nonlinear": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
+      "fresh": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "first": "3c1c35e9d534a056fe23b451516173058eb0aae3a96aceb99e8c4be9416dbca2",
+      "nonlinear": "3c1c35e9d534a056fe23b451516173058eb0aae3a96aceb99e8c4be9416dbca2",
+      "fresh": "3c1c35e9d534a056fe23b451516173058eb0aae3a96aceb99e8c4be9416dbca2",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "first": "9428aaa52b6ceb67aa7c0aea33605f8f99f7a5bd4e840586956f130416573c86",
+      "nonlinear": "9428aaa52b6ceb67aa7c0aea33605f8f99f7a5bd4e840586956f130416573c86",
+      "fresh": "9428aaa52b6ceb67aa7c0aea33605f8f99f7a5bd4e840586956f130416573c86",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "first": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9",
+      "nonlinear": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9",
+      "fresh": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "first": "fe31b4fb6226d0532986914a40e071cb731a17df3d062161014f3748c5967088",
+      "nonlinear": "fe31b4fb6226d0532986914a40e071cb731a17df3d062161014f3748c5967088",
+      "fresh": "fe31b4fb6226d0532986914a40e071cb731a17df3d062161014f3748c5967088",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "first": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097",
+      "nonlinear": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097",
+      "fresh": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097",
+      "result": "EXACT_PASS"
+    }
+  ],
+  "motionWindows": [
+    {
+      "actionId": "opening-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "opening-copy",
+      "times": [
+        0.2,
+        0.53
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 14.336)",
+          "opacity": "0.5904",
+          "filter": "blur(2.8672px)"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 0.136719)",
+          "opacity": "0.996094",
+          "filter": "blur(0.0273438px)"
+        }
+      ],
+      "hashes": [
+        "3749d41e4cc96c668a48fe78a9631608f64a35852b2964fea08eecac9d45d4d1",
+        "73dde50e8a6e93f503624cc90dff83b8d5e08e4d5bb60106159c63c6bb11d1b8"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "orb-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "orb-world",
+      "times": [
+        2.4899999999999998,
+        2.7375
+      ],
+      "styles": [
+        {
+          "transform": "matrix(0.913984, 0, 0, 0.913984, 0, 20.48)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(0.99918, 0, 0, 0.99918, 0, 0.195312)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "ee72ac7de1eee78eb37e17ea579ea44dfa88ce9e0fcbd869ce7bbd334ee549f2",
+        "dd3372a36705c947d649a1a73c82955d954ee039b8494f286f02aecf81fef795"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "research-panel",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "workflow-panel",
+      "times": [
+        7.92,
+        8.25
+      ],
+      "styles": [
+        {
+          "transform": "matrix3d(0.967232, 0, 0, 0, 0, 0.964243, 0.0759824, -4.22124e-05, 0, -0.0785565, 0.99691, -0.000553839, 0, 38.912, 0, 1)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix3d(0.999687, 0, 0, 0, 0, 0.999687, 0.000749712, -4.16507e-07, 0, -0.000749946, 1, -0.000555555, 0, 0.371094, 0, 1)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "7f36cb8bd5ab86fdeec1d502c7d83efcf67d107c13f81c115edd04f885d0801c",
+        "30bea093cba3a995ad15be1d251035533db6f04c0e49eee95db153728a669d10"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "script-signal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "workflow-signal",
+      "times": [
+        10.52,
+        10.85
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 47.336, 0)",
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 359.141, 0)",
+          "opacity": "1",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "47a7f951e827a3137a8252cab075054a2a9a0b3d6a473ca571f4e0d599dd62d3",
+        "414f2559628cc93ef4ddbdc708fa92d4acda5a8f73e30dc2a9fbc476b01ede0f"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "research-screen-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "screen-panel",
+      "times": [
+        15.7,
+        15.975000000000001
+      ],
+      "styles": [
+        {
+          "transform": "matrix3d(0.987712, 0, 0, 0, 0, 0.986097, 0.0564574, -2.68845e-05, 0, -0.0571598, 0.998365, -0.000475412, 0, 23.7568, 0, 1)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix3d(0.999883, 0, 0, 0, 0, 0.999883, 0.000545351, -2.59691e-07, 0, -0.000545415, 1, -0.00047619, 0, 0.226562, 0, 1)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "011c72b0631321ca486b711fae98d1a5f76f6c79935c158f646fde50f79f9f68",
+        "3eb19d97089b9737e026ca76877adde21938ea34936abc06465d1bc7b4878738"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "direction-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "direction-copy",
+      "times": [
+        22.63,
+        22.987499999999997
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 26.624)",
+          "opacity": "0.5904",
+          "filter": "blur(3.2768px)"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 0.253906)",
+          "opacity": "0.996094",
+          "filter": "blur(0.03125px)"
+        }
+      ],
+      "hashes": [
+        "213718483c5e1ec6adaeaae6258a396b4fcf17966b9cb871c1b69a477f35207f",
+        "08fd5d7fe539ff87e077cbf6c80ef6aa2e68c36020dfe7155b380e25af9438ce"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "brand-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "brand",
+      "times": [
+        26.56,
+        27
+      ],
+      "styles": [
+        {
+          "transform": "matrix(0.971328, 0, 0, 0.971328, 0, 22.528)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(0.999727, 0, 0, 0.999727, 0, 0.214844)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "428b87962f1050e9f0fa861dd1be04910fc40c925b3f825b7b3709ea0c74c723",
+        "837a590dde45bfaf8e5ec36da5d37ac1f3295dcdacf40ecaa3a9dd8ee2f9eb50"
+      ],
+      "result": "PASS"
+    }
+  ],
+  "stillBrandHold": {
+    "result": "EXACT_PASS",
+    "start": 28.2,
+    "end": 31.1666666667,
+    "sha256": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097"
+  },
+  "contactRevision": {
+    "result": "PASS",
+    "actionId": "research-reveal",
+    "delta": -0.3,
+    "cues": [
+      {
+        "id": "research-contact",
+        "before": 8.39,
+        "after": 8.09
+      }
+    ]
+  },
+  "copyRevision": {
+    "result": "PASS",
+    "changedInside": 7860,
+    "changedOutside": 0
+  },
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1080,
+        1920
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        900,
+        705
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": []
+}

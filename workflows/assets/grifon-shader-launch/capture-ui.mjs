@@ -20,6 +20,11 @@ const read = relative => fs.readFileSync(path.join(ROOT, relative));
 const relative = file => path.relative(ROOT, file).replaceAll('\\', '/');
 const captures = path.join(HERE, 'assets/captures');
 const qa = path.join(HERE, 'qa');
+const landscapeSourceCrops = {
+  research: { left: 420, top: 1500, width: 1800, height: 768 },
+  script: { left: 630, top: 1410, width: 1800, height: 768 },
+  storyboard: { left: 570, top: 2730, width: 1800, height: 768 },
+};
 fs.mkdirSync(captures, { recursive: true });
 fs.mkdirSync(qa, { recursive: true });
 
@@ -29,8 +34,8 @@ const sourcePaths = [
 ];
 const sources = sourcePaths.map(file => ({ path: file, sha256: sha(read(file)) }));
 const fixture = path.join(HERE, 'capture-fixtures.tsx');
-const originalImages = ['after-0.8.png', 'after-4.15.png', 'after-6.8.png']
-  .map(file => `workflows/assets/grifon-shader-study/qa/${file}`);
+const originalImages = ['research-example-7x12.png', 'script-example-7x12.png', 'storyboard-example-7x12.png']
+  .map(file => `workflows/assets/grifon-shader-launch/assets/fixture-plates/${file}`);
 const assets = originalImages.map(file => `data:image/png;base64,${read(file).toString('base64')}`);
 const imageHashes = originalImages.map(file => ({ path: file, sha256: sha(read(file)) }));
 const inter = read('workflows/assets/grifon-shader-study/assets/inter-variable.ttf').toString('base64');
@@ -62,14 +67,14 @@ const server = http.createServer((request, response) => {
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
-const blocked = [], api = [], errors = [], requested = [], results = [];
+const blocked = [], api = [], errors = [], requested = [], results = [], framedDerivatives = [];
 let browser;
 try {
   browser = await chromium.launch({ headless: true, args: ['--disable-gpu-rasterization'] });
   for (const surface of ['research', 'script', 'storyboard']) {
     for (const portrait of [false, true]) {
       const viewport = portrait ? { width: 540, height: 750 } : { width: 1280, height: 900 };
-      const context = await browser.newContext({ viewport, deviceScaleFactor: portrait ? 2 : 1.5, serviceWorkers: 'block' });
+      const context = await browser.newContext({ viewport, deviceScaleFactor: portrait ? 2 : 4.5, serviceWorkers: 'block' });
       await context.route('**/*', route => {
         const url = route.request().url();
         requested.push({ surface, portrait, url: url.replace(origin, 'LOCAL_ORIGIN') });
@@ -108,6 +113,17 @@ try {
       const png = await page.screenshot({ path: output, type: 'png', animations: 'disabled', fullPage: false });
       const metadata = await sharp(png).metadata();
       results.push({ surface, portrait, path: relative(output), dimensions: [metadata.width, metadata.height], bytes: png.length, sha256: sha(png), disclosure, storage, screenshot: 'real unchanged component; manually prepared content' });
+      if (!portrait) {
+        const rectangle = landscapeSourceCrops[surface];
+        const framed = await sharp(png).extract(rectangle).png().toBuffer();
+        const sourcePixels = await sharp(png).extract(rectangle).removeAlpha().raw().toBuffer();
+        const framedPixels = await sharp(framed).removeAlpha().raw().toBuffer();
+        if (!sourcePixels.equals(framedPixels)) throw Error(`Framed derivative changed capture pixels: ${surface}`);
+        const framedPath = path.join(captures, `framed-${surface}.png`);
+        fs.writeFileSync(framedPath, framed);
+        if (!fs.readFileSync(framedPath).equals(framed)) throw Error(`Saved framed derivative differs: ${surface}`);
+        framedDerivatives.push({ surface, path: relative(framedPath), dimensions: [rectangle.width, rectangle.height], bytes: framed.length, sha256: sha(framed), fullSourcePath: relative(output), fullSourceSha256: sha(png), fullSourceDimensions: [metadata.width, metadata.height], sourceRectangle: rectangle, pixelComparison: { result: 'EXACT_PASS', changedPixels: 0, sourceRectangleRawSha256: sha(sourcePixels), derivativeRawSha256: sha(framedPixels), channels: 3 }, treatment: 'Lossless extraction only; no resizing, sharpening or UI changes.' });
+      }
       if (portrait && ['script', 'storyboard'].includes(surface)) {
         const scrollY = surface === 'script' ? 350 : 250;
         await page.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), scrollY);
@@ -126,7 +142,7 @@ try {
   const report = {
     status: 'PASS', purpose: 'Private launch film product-interface evidence', fixtureSha256: sha(fs.readFileSync(fixture)), harnessSha256: sha(fs.readFileSync(fileURLToPath(import.meta.url))),
     productSources: sources, exampleImages: imageHashes, bundleInputCount: Object.keys(metafile.inputs).length,
-    captures: results, requests: requested, apiRequests: api, externalRequests: blocked, pageErrors: errors,
+    captures: results, framedDerivatives, requests: requested, apiRequests: api, externalRequests: blocked, pageErrors: errors,
     noAuthentication: true, freshContextPerCapture: true, providerCalls: 0, newSpend: 0,
     safeguards: ['No Vite server/middleware', 'No environment file read', 'Non-Cinematic Custom Script', 'Preloaded Script', 'Nonempty manual Storyboard', 'avatar:null', 'Fresh isolated browser contexts', 'All API and remote requests blocked', 'CSP connect-src none', 'No analysis/generation button clicks'],
     fonts: 'Local Inter variable; system monospace fallback for JetBrains Mono',

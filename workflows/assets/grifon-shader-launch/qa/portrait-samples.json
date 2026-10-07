@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-07T17:08:00.393Z",
+  "date": "2026-10-07T18:43:46.525Z",
   "format": "portrait",
   "resolution": [
     1080,
@@ -13,19 +13,19 @@
     "--disable-dawn-features=use_dxc",
     "--disable-gpu-rasterization"
   ],
-  "specSha256": "ba41f9a0a83c4772023ebe8a723428aba9f2e677fb1a53b209c8d78ef7fcb907",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
   "samples": [
     {
       "scene": "opening",
       "time": 1.45,
       "file": "portrait-sample-00.png",
-      "sha256": "df7948fbca14d5e7c7a2309b87d54d99d1571074f5030cd248b3b5407e8baba2"
+      "sha256": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9"
     },
     {
       "scene": "product",
       "time": 3.35,
       "file": "portrait-sample-01.png",
-      "sha256": "1a4d750ec7a9644bcfa4af33a01fe2a08bd62575823009d19130f56a2b341281"
+      "sha256": "4ce36dc9a7efc0975e92817527dd97c831b8b4b8966e1990f313c6e340154494"
     },
     {
       "scene": "story",
@@ -43,49 +43,49 @@
       "scene": "research",
       "time": 9.3,
       "file": "portrait-sample-04.png",
-      "sha256": "24844a4b5b793ca04d8552a5cd98c1d15dd3d6d1cb5f0a3015b07a83fee839f2"
+      "sha256": "63a560cdc8cde557ac02791a38998e3279053d123aa7a75ce5b14eccea68e2ee"
     },
     {
       "scene": "script",
       "time": 11.95,
       "file": "portrait-sample-05.png",
-      "sha256": "571634999ad4dbdde10c1c3bb7ad935538e49eabafc7c87eef37a54a1eae74a5"
+      "sha256": "614ef5018319f7dde2c8f72f00ef90f51dd3bfdd56f9f22b8515c3f5db5e9708"
     },
     {
       "scene": "storyboard",
       "time": 14.4,
       "file": "portrait-sample-06.png",
-      "sha256": "9f46e1446f96263777a5bea2e4c25915458fd4727304a98b88bcac90c205094b"
+      "sha256": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54"
     },
     {
       "scene": "research-screen",
       "time": 16.8,
       "file": "portrait-sample-07.png",
-      "sha256": "1d450e5b5082e7ecf7260226cc05126d7be5fb6137542b7dbc53dd0e2a671606"
+      "sha256": "3c1c35e9d534a056fe23b451516173058eb0aae3a96aceb99e8c4be9416dbca2"
     },
     {
       "scene": "script-screen",
       "time": 19.1,
       "file": "portrait-sample-08.png",
-      "sha256": "40e7d6f98120225b79cd9e74bdba35eeb116f9b64758f549a324179791cacab1"
+      "sha256": "9428aaa52b6ceb67aa7c0aea33605f8f99f7a5bd4e840586956f130416573c86"
     },
     {
       "scene": "storyboard-screen",
       "time": 21.45,
       "file": "portrait-sample-09.png",
-      "sha256": "bcc0be009e1aa4aa34d314db1578ef7c0b3acb1be5bd4e1fd92ad6baff2d46d9"
+      "sha256": "e69ce8908c04222219c76b068db702d286c5552c9d314e1e0ac86f6cc6f9cb37"
     },
     {
       "scene": "direction",
       "time": 24.5,
       "file": "portrait-sample-10.png",
-      "sha256": "33091ed7db8cc56dba24ea432f87717dd7ade0e5e7f758a85d1e828713a0b59a"
+      "sha256": "fe31b4fb6226d0532986914a40e071cb731a17df3d062161014f3748c5967088"
     },
     {
       "scene": "finish",
       "time": 29.45,
       "file": "portrait-sample-11.png",
-      "sha256": "e8f2571a792f04dc6eeca0a24a5cf75abe5a80ea05a1db7cafbdd3f368b76083"
+      "sha256": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097"
     }
   ],
   "safeCases": [
@@ -215,7 +215,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 778.359375,
+          "x": 826.734375,
           "y": 1595,
           "width": 148.265625,
           "height": 36
@@ -261,7 +261,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 778.359375,
+          "x": 826.734375,
           "y": 1595,
           "width": 148.265625,
           "height": 36
@@ -307,7 +307,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 778.359375,
+          "x": 826.734375,
           "y": 1595,
           "width": 148.265625,
           "height": 36
@@ -470,6 +470,126 @@
       "result": "PASS"
     }
   ],
+  "trackGeometry": {
+    "format": "portrait",
+    "result": "PASS",
+    "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+    "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+    "indexSha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+    "renderSha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+    "cases": [
+      {
+        "time": 13.6,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-13-60.png",
+        "sha256": "07892eb9ae02f14ebc38f54083155007ff96e9819a41cd00da211520cb20a4d2",
+        "result": "PASS"
+      },
+      {
+        "time": 13.7,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-13-70.png",
+        "sha256": "b72c2ae45b979cebef5f2434631e7e3df55c8b01bae2762009f1f0e2f90e0bfc",
+        "result": "PASS"
+      },
+      {
+        "time": 14.4,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-14-40.png",
+        "sha256": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54",
+        "result": "PASS"
+      },
+      {
+        "time": 15.35,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-15-35.png",
+        "sha256": "9d30d0495ace495db4a724ab851e6e83f9f160f45c6414de2b223c3906214942",
+        "result": "PASS"
+      }
+    ],
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
   "invalidFixture": {
     "file": "invalid-duplicate-action.json",
     "exitCode": 1,

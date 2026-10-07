@@ -1,9 +1,9 @@
 {
-  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
   "output": {
     "file": "portrait.mp4",
-    "bytes": 8567773,
-    "sha256": "0d3de0fe547aed299776c34ac8473dfa888c7e2036c3646c40f2c1574b9933a4",
+    "bytes": 8568284,
+    "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5",
     "frames": 936,
     "duration": 31.2,
     "dimensions": [

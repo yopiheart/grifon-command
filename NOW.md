@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08, full shader launch film completed and reviewed**
+**Stamped: 2026-10-08, corrected shader launch film verified; delivery in progress**
 
 ## Current: 31.2-second shader launch film
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
@@ -7,10 +7,10 @@ Branch: codex/grifon-shader-launch; production began at exact Phase 1 d76f46af56
 Source/exports: workflows/assets/grifon-shader-launch/; player: artifacts/grifon-shader-launch.html.
 Brief: workflows/grifon_shader_launch_brief.md. Chat: Grifon shader launch film,
 01a11748-4bfb-7582-9c06-826e9667b5fd; parent Motion design handles the email/sleep steps.
-Landscape:1920x1080 /7,925,665 bytes /SHA256
-176f6b495914cc3ef101dbffbfe58acb1b03382895826e5f331e43a62bd7f6a1.
-Portrait:1080x1920 /8,567,773 bytes (<12,000,000) /SHA256
-0d3de0fe547aed299776c34ac8473dfa888c7e2036c3646c40f2c1574b9933a4.
+Landscape:1920x1080 /7,952,020 bytes /SHA256
+c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc.
+Portrait:1080x1920 /8,568,284 bytes (<12,000,000) /SHA256
+2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5.
 Both:31.2s /936 frames /30fps /H264 /stereo AAC48k; strict decode PASS;
 actual encoded audio -16.0 LUFS /-1.9 dBTP. Exact file hashes are in qa/encoded-report.json.
 Native AMD gcn-5 WebGPU; three pinned materials; awaited absolute-time capture.
@@ -20,32 +20,41 @@ One launch.json spec binds scene purpose, readable windows, actions, audio, QA a
 Critical English copy/logo remain editable. Canvas decoration/crops fixed browser raster
 history; original failed evidence retained and exact gates intact.936 frame hashes per format.
 Real unchanged Research/Script/Storyboard controls use manual Example project fixtures;
-zero API/remote requests or generation. Final8 screenshots recaptured byte for byte.
+zero API/remote requests or generation. Full landscape sources5760x4050; lossless1800x768
+framed derivatives prove zero changed pixels and reduce unused renderer memory.
+Fresh local text-free7:12 plates fix the portrait thumbnail. No application change.
+Final workflow selector fix passes actual-DOM geometry; original126.5px/109px failures
+are preserved. Corrected settled x0/y-0.5px in both formats at four times each.
+Current specSHA121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c.
+Independent corrected encoded-frame/source/hash review PASS; parent-independent-correction-review.md.
+Music/SFX/premaster/master WAV hashes are byte-identical to the original full-film mix.
 Three bounded reviews complete: readability fixed landscape framing/URL; encoded motion
 review PASS; audio/finish TECHNICAL PASS. Direct hearing PENDING; no reference superiority claim.
 Independent source/receipt review clear; final hashes in qa/independent-code-review.md.
-Independent CUA390x844:full playback both formats, controls>=46px, no overflow,
-all12 chapters, scrubs, switches, restart, audio states and actual exact downloads PASS.
-Genuine390x844 clips verified; initial scaled375x812 extras are correctly labeled.
-Player:24,080,586 bytes /SHA32f8e1c1990a2076ab70f43f7d2aaa29c7101b7d7b4f07d1e3774239025c4f62.
+Final parent CUA390x844:full playback both formats, controls>=46px, no overflow,
+all12 chapters, home/end scrubs, switches, restart, audio states and actual downloads PASS.
+Downloads match corrected final hashes; zero console errors. parent-final-smoke.json.
+Actual390x844 screenshot clips independently metadata-verified; parent-final-mobile*.jpg.
+Player:24,116,406 bytes /SHA1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207.
 Standalone regeneration PASS. Memory-only /review route; other paths/methods404.
-Root preview PID23200 at http://127.0.0.1:55282/review remains available for local review.
+Initial preview23200 and parent final preview24768 stopped after command identity checks.
+Worker capture/render/browser/server helpers closed; no owned preview remains.
 Build PASS;1432 unit tests PASS/32 skipped; artifact/domain/PSASCII/bundle-leak/voice/
 prompt-parity/Codex checks PASS;26 Codex tests rerun after scoped Git byte-preservation rules.
 Git whitespace check passes; a deliberate trailing space still fails. Private inputs ignored.
 No application/provider/tuned/skill/dependency edits. Existing accepted assets preserved.
-Clean Digital Clouds+9 existing SFX and separate stems are in verified private recovery;
-qa/recovery-archive.json records ZIP under PRIMARY/.tools/grifon-motion-archives/.
+Clean Digital Clouds+9 existing SFX and separate stems have preserved original private recovery;
+final corrected archive will be refreshed after remote verification and delivery.
 SFX predate paid subscription:PRIVATE REVIEW ONLY; commercial clearance pending.
 Provider calls/spend0. No new VO. Hearing and real-phone review pending.
-Production commit336e5294556d7af45f7a7f46f64c163fdeb23ff3 is pushed. Draft PR166:
+Initial production commits336e5294/f818c495 are preserved; corrected media push next. Draft PR166:
 https://github.com/yopiheart/grifon-command/pull/166 (base codex/grifon-shader-study, MERGEABLE).
-Authenticated GitHub blobs for both MP4s/player match exact local bytes; qa/github-backup.json.
+Initial authenticated GitHub blob receipt is historical; corrected remote bytes will be verified.
 Windows gh raw stdout rejected binary; JSON/base64 blob transport verified original bytes.
 Vercel check FAIL links account-deployment-blocked help; no deployment performed.
 Local checks above pass; this stacked PR has no reported GitHub Actions results.
-Parent prepares actual unsent Gmail draft with portrait attached, then PC sleep only after
-backups and unrelated work checks. This production chat did not email, sleep, merge or deploy.
+Parent prepares actual unsent Gmail draft with corrected portrait attached, then PC sleep only
+after backups and unrelated work checks. Email and sleep are still pending; no merge/deploy.
 
 ## Preserved Phase 1 / earlier accepted films
 Original motion checkout PRIMARY/.tmp/worktrees/grifon-motion-depth remains untouched.

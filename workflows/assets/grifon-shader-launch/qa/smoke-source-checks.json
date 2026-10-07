@@ -3,8 +3,8 @@
   "fixture": "Independent offline source byte smoke",
   "html": {
     "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\artifacts\\grifon-shader-launch.html",
-    "bytes": 24080586,
-    "sha256": "32f8e1c1990a2076ab70f43f7d2aaa29c7101b7d7b4f07d1e3774239025c4f62"
+    "bytes": 24116406,
+    "sha256": "1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207"
   },
   "checks": [
     "Full document has explicit UTF-8 charset",
@@ -21,8 +21,8 @@
   ],
   "formats": {
     "landscape": {
-      "bytes": 7925665,
-      "sha256": "176f6b495914cc3ef101dbffbfe58acb1b03382895826e5f331e43a62bd7f6a1",
+      "bytes": 7952020,
+      "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc",
       "embeddedExact": true,
       "posterExact": true,
       "dimensions": [
@@ -31,8 +31,8 @@
       ]
     },
     "portrait": {
-      "bytes": 8567773,
-      "sha256": "0d3de0fe547aed299776c34ac8473dfa888c7e2036c3646c40f2c1574b9933a4",
+      "bytes": 8568284,
+      "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5",
       "embeddedExact": true,
       "posterExact": true,
       "dimensions": [

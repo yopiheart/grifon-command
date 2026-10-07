@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-07T17:35:35.394Z",
+  "date": "2026-10-07T18:51:48.542Z",
   "format": "portrait",
   "resolution": [
     1080,
@@ -13,7 +13,7 @@
     "--disable-dawn-features=use_dxc",
     "--disable-gpu-rasterization"
   ],
-  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
   "samples": [
     {
       "scene": "opening",
@@ -43,19 +43,19 @@
       "scene": "research",
       "time": 9.3,
       "file": "portrait-sample-04.png",
-      "sha256": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b"
+      "sha256": "63a560cdc8cde557ac02791a38998e3279053d123aa7a75ce5b14eccea68e2ee"
     },
     {
       "scene": "script",
       "time": 11.95,
       "file": "portrait-sample-05.png",
-      "sha256": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74"
+      "sha256": "614ef5018319f7dde2c8f72f00ef90f51dd3bfdd56f9f22b8515c3f5db5e9708"
     },
     {
       "scene": "storyboard",
       "time": 14.4,
       "file": "portrait-sample-06.png",
-      "sha256": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46"
+      "sha256": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54"
     },
     {
       "scene": "research-screen",
@@ -73,7 +73,7 @@
       "scene": "storyboard-screen",
       "time": 21.45,
       "file": "portrait-sample-09.png",
-      "sha256": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9"
+      "sha256": "e69ce8908c04222219c76b068db702d286c5552c9d314e1e0ac86f6cc6f9cb37"
     },
     {
       "scene": "direction",
@@ -215,7 +215,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 778.359375,
+          "x": 826.734375,
           "y": 1595,
           "width": 148.265625,
           "height": 36
@@ -261,7 +261,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 778.359375,
+          "x": 826.734375,
           "y": 1595,
           "width": 148.265625,
           "height": 36
@@ -307,7 +307,7 @@
         {
           "selector": ".track-label",
           "text": "Storyboard",
-          "x": 778.359375,
+          "x": 826.734375,
           "y": 1595,
           "width": 148.265625,
           "height": 36
@@ -470,6 +470,126 @@
       "result": "PASS"
     }
   ],
+  "trackGeometry": {
+    "format": "portrait",
+    "result": "PASS",
+    "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+    "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+    "indexSha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+    "renderSha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+    "cases": [
+      {
+        "time": 13.6,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-13-60.png",
+        "sha256": "07892eb9ae02f14ebc38f54083155007ff96e9819a41cd00da211520cb20a4d2",
+        "result": "PASS"
+      },
+      {
+        "time": 13.7,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-13-70.png",
+        "sha256": "b72c2ae45b979cebef5f2434631e7e3df55c8b01bae2762009f1f0e2f90e0bfc",
+        "result": "PASS"
+      },
+      {
+        "time": 14.4,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-14-40.png",
+        "sha256": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54",
+        "result": "PASS"
+      },
+      {
+        "time": 15.35,
+        "geometry": {
+          "signal": {
+            "x": 961.5,
+            "y": 1548,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 961.5,
+            "y": 1548.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "portrait-track-15-35.png",
+        "sha256": "9d30d0495ace495db4a724ab851e6e83f9f160f45c6414de2b223c3906214942",
+        "result": "PASS"
+      }
+    ],
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
   "invalidFixture": {
     "file": "invalid-duplicate-action.json",
     "exitCode": 1,
@@ -478,25 +598,25 @@
   "providerCalls": 0,
   "paidSpendUsd": 0,
   "sources": {
-    "index.html": "2193f9f0383ebb103a51e699f315942fca5d54b384e791f1685022b8d6172311",
+    "index.html": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
     "composition.js": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352",
-    "launch.json": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+    "launch.json": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
     "launch-contract.mjs": "ead7766a98106df20749faf9e0c69f437d9acf8fc17082598a08130ed2f856f1",
     "contract.test.mjs": "423f898fa9d841c66d4340e202c2d4bdfc9bd37e8ccbf5092e4f5865e1957503",
     "materials-source.js": "8e2c3f249a28fe56def66593ea6927320f26ee070da84614601bac6f9f29fb79",
     "shader-materials.js": "e7725b0c66554fe2365d1b3152f8c2cbc5db57e1b3cc306e81ea6d3ddf73e546",
     "build.mjs": "e6d3b1e9dd9beb9e8b7df68152933f849cc1c60a2faf9fb3941b04cbfed9ac79",
-    "render.mjs": "fd87358c0591063f8ccfc468371623839690768f9de75b52d5a5afdd83b82a05",
+    "render.mjs": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
     "../grifon-motion-action-pilot/action-spec.mjs": "1915a827194a80b2f49e91a5101584292c75921805a58325d2ddcc75f9a32491",
     "./assets/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
     "./assets/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
     "./assets/inter-variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
-    "./assets/captures/research.png": "95d9410e9fd43d426fb304f353538dd2501673f11c6f1f0814325244873bc763",
-    "./assets/captures/script.png": "80d6964bf1e22d1059a2d1556915381397076e2b6ee45282d0ca1d43acb0dd69",
-    "./assets/captures/storyboard.png": "274def3f27a41166f5cfd754b477669968e731c7a41845be36a7151838eac23f",
+    "./assets/captures/framed-research.png": "8058746ce6a4996369211ba180f808cb94761464e8fc905f2bae5ec32922bec3",
+    "./assets/captures/framed-script.png": "8282c3e1469b45cf552fde0b5f3aa32bd5959fff0f773a4dbb7979b1d482c02c",
+    "./assets/captures/framed-storyboard.png": "86cdbc74c5431504f91b1a1226a0b2ad9a82e3a1901dfae05eafb2b066c3efbc",
     "./assets/captures/portrait-research.png": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
     "./assets/captures/portrait-script-detail.png": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
-    "./assets/captures/portrait-storyboard-detail.png": "37f8c97181627653ad75f7a787fc9985b4e0a59d93c2da35724b18ac82f37bad"
+    "./assets/captures/portrait-storyboard-detail.png": "e79060385aa3a006235ca3cc05f63ed3195ff46d42d62ca3ebd257133e56bbee"
   },
   "nonlinear": [
     {
@@ -534,25 +654,25 @@
     {
       "scene": "research",
       "time": 9.3,
-      "first": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b",
-      "nonlinear": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b",
-      "fresh": "f56457083cc5e49b62285c457d6ed7149a5d0801c02bfb5fd1d412915060869b",
+      "first": "63a560cdc8cde557ac02791a38998e3279053d123aa7a75ce5b14eccea68e2ee",
+      "nonlinear": "63a560cdc8cde557ac02791a38998e3279053d123aa7a75ce5b14eccea68e2ee",
+      "fresh": "63a560cdc8cde557ac02791a38998e3279053d123aa7a75ce5b14eccea68e2ee",
       "result": "EXACT_PASS"
     },
     {
       "scene": "script",
       "time": 11.95,
-      "first": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74",
-      "nonlinear": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74",
-      "fresh": "479d3e03a7fdadbba7c597ba669bffd050283835271c76dc98e7410346db9e74",
+      "first": "614ef5018319f7dde2c8f72f00ef90f51dd3bfdd56f9f22b8515c3f5db5e9708",
+      "nonlinear": "614ef5018319f7dde2c8f72f00ef90f51dd3bfdd56f9f22b8515c3f5db5e9708",
+      "fresh": "614ef5018319f7dde2c8f72f00ef90f51dd3bfdd56f9f22b8515c3f5db5e9708",
       "result": "EXACT_PASS"
     },
     {
       "scene": "storyboard",
       "time": 14.4,
-      "first": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
-      "nonlinear": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
-      "fresh": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
+      "first": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54",
+      "nonlinear": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54",
+      "fresh": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54",
       "result": "EXACT_PASS"
     },
     {
@@ -574,9 +694,9 @@
     {
       "scene": "storyboard-screen",
       "time": 21.45,
-      "first": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9",
-      "nonlinear": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9",
-      "fresh": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9",
+      "first": "e69ce8908c04222219c76b068db702d286c5552c9d314e1e0ac86f6cc6f9cb37",
+      "nonlinear": "e69ce8908c04222219c76b068db702d286c5552c9d314e1e0ac86f6cc6f9cb37",
+      "fresh": "e69ce8908c04222219c76b068db702d286c5552c9d314e1e0ac86f6cc6f9cb37",
       "result": "EXACT_PASS"
     },
     {
@@ -679,8 +799,8 @@
         }
       ],
       "hashes": [
-        "7f36cb8bd5ab86fdeec1d502c7d83efcf67d107c13f81c115edd04f885d0801c",
-        "30bea093cba3a995ad15be1d251035533db6f04c0e49eee95db153728a669d10"
+        "c6fa9776622f753c39ca895430cd81caf745278f9d0c2d10b1ab06690a0d8b37",
+        "7463684dc54ff302d4045eeafcd7c3d676b5b9ff74d28c510f45ed96fdcdaa35"
       ],
       "result": "PASS"
     },
@@ -708,8 +828,8 @@
         }
       ],
       "hashes": [
-        "47a7f951e827a3137a8252cab075054a2a9a0b3d6a473ca571f4e0d599dd62d3",
-        "414f2559628cc93ef4ddbdc708fa92d4acda5a8f73e30dc2a9fbc476b01ede0f"
+        "833bec1aa60c5b56269708653521332562cb402abd410457368ebb3925d07e84",
+        "9333d0d91ed147b373b2a24cd12591a4e8d6ccf792f2bfb04f4aabbcdbb1434b"
       ],
       "result": "PASS"
     },

@@ -15,7 +15,7 @@ const ffmpeg=path.join(PRIMARY,'node_modules/ffmpeg-static/ffmpeg.exe'),ffprobe=
 const specPath=path.join(HERE,'launch.json'),spec=validateLaunchSpec(JSON.parse(fs.readFileSync(specPath,'utf8'))),actions=actionMap(spec);
 const sourceNames=['index.html','composition.js','launch.json','launch-contract.mjs','contract.test.mjs','materials-source.js','shader-materials.js','build.mjs','render.mjs','../grifon-motion-action-pilot/action-spec.mjs',spec.assets.logo,spec.assets.displayFont,spec.assets.bodyFont,...spec.assets.captures,...spec.assets.portraitCaptures];
 const task=process.argv[2]||'check',format=process.argv[3]||'landscape';
-if(!['samples','check','render','encode','verify','verify-cache','cache-test','probe-contour'].includes(task)||!spec.formats[format])throw Error('Use samples|check|render|encode|verify|verify-cache|cache-test|probe-contour landscape|portrait');
+if(!['samples','check','check-track','render','encode','verify','verify-cache','cache-test','probe-contour'].includes(task)||!spec.formats[format])throw Error('Use samples|check|check-track|render|encode|verify|verify-cache|cache-test|probe-contour landscape|portrait');
 const dimensions=spec.formats[format],QA=path.join(HERE,'qa'),SCRATCH=path.join(ROOT,'.tmp/grifon-shader-launch',format),frameDir=path.join(SCRATCH,'frames'),video=path.join(HERE,`${format}.mp4`);
 fs.mkdirSync(QA,{recursive:true});fs.mkdirSync(SCRATCH,{recursive:true});
 const hash=buffer=>crypto.createHash('sha256').update(buffer).digest('hex'),hashFile=file=>hash(fs.readFileSync(file));
@@ -50,7 +50,7 @@ function verify(file){
   return {file:path.basename(file),bytes,sha256:hashFile(file),frames:+v.nb_read_frames,duration:+data.format.duration,dimensions:[v.width,v.height],fps:v.r_frame_rate,audio:{codec:a.codec_name,sampleRate:+a.sample_rate,channels:a.channels,integratedLufs,truePeakDbtp},strictDecode:'PASS'};
 }
 
-if(['samples','check','render','probe-contour'].includes(task)){
+if(['samples','check','check-track','render','probe-contour'].includes(task)){
   const invalid=structuredClone(spec);invalid.actions.push({...invalid.actions[0]});const invalidPath=path.join(QA,'invalid-duplicate-action.json');fs.writeFileSync(invalidPath,JSON.stringify(invalid,null,2)+'\n');
   const rejected=spawnSync(process.execPath,[path.join(HERE,'contract.test.mjs'),'--validate',invalidPath],{encoding:'utf8'});
   if(rejected.status===0||!rejected.stderr.includes('duplicate/missing action ID'))throw Error('Invalid specification was not rejected');
@@ -71,12 +71,34 @@ if(['samples','check','render','probe-contour'].includes(task)){
     const context=await instance.newContext({viewport:{width:dimensions.width,height:dimensions.height},deviceScaleFactor:1});
     await context.route('**/*',route=>{const url=route.request().url();if(url.startsWith(origin+'/'))return route.continue();blocked.push(url);return route.abort();});
     const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));await page.goto(`${origin}/grifon-shader-launch/?format=${format}`);
-    await page.waitForFunction(()=>window.__motionReady||window.__motionError,{}, {timeout:60000});const error=await page.evaluate(()=>window.__motionError);if(error)throw Error(error);return page;
+    await page.waitForFunction(()=>window.__motionReady||window.__motionError,{}, {timeout:60000});const error=await page.evaluate(()=>window.__motionError);if(error){const images=await page.evaluate(()=>[...document.images].map(image=>({src:new URL(image.src).pathname,complete:image.complete,width:image.naturalWidth,height:image.naturalHeight})));throw Error(`${error}: ${JSON.stringify(images)}`);}return page;
   };
   const capture=async(page,time)=>{await page.evaluate(async seconds=>{await window.seekComposition(seconds);},time);return page.screenshot({type:'png',animations:'disabled'});};
+  const checkTrack=async page=>{
+    const scene=spec.scenes.find(scene=>scene.id==='storyboard'),contact=actions['storyboard-signal'].contact;
+    const times=[...new Set([contact,...scene.readable,scene.sample])].sort((a,b)=>a-b),cases=[];
+    for(const time of times){
+      const png=await capture(page,time),geometry=await page.evaluate(()=>{
+        const center=element=>{const b=element.getBoundingClientRect();return {x:b.x+b.width/2,y:b.y+b.height/2,width:b.width,height:b.height};};
+        const signal=document.querySelector('#workflow-signal'),dots=[...document.querySelectorAll('.track-step .track-dot')];
+        if(!signal||dots.length!==3)throw Error('Expected signal and three visible workflow nodes');
+        return {signal:center(signal),thirdNode:center(dots[2]),active:dots[2].parentElement.classList.contains('active'),opacity:Number(getComputedStyle(signal).opacity)};
+      });
+      const delta={x:geometry.signal.x-geometry.thirdNode.x,y:geometry.signal.y-geometry.thirdNode.y};
+      const passed=geometry.active&&geometry.opacity===1&&Math.abs(delta.x)<=1&&Math.abs(delta.y)<=1;
+      const file=`${format}-track-${time.toFixed(2).replace('.','-')}.png`;fs.writeFileSync(path.join(QA,file),png);
+      cases.push({time,geometry,delta,toleranceCssPixels:1,file,sha256:hash(png),result:passed?'PASS':'FAIL'});
+    }
+    const report={format,result:cases.every(item=>item.result==='PASS')?'PASS':'FAIL',expectation:'Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.',specSha256:hashFile(specPath),indexSha256:hashFile(path.join(HERE,'index.html')),renderSha256:hashFile(fileURLToPath(import.meta.url)),cases,providerCalls:0,paidSpendUsd:0};
+    fs.writeFileSync(path.join(QA,`${format}-track-geometry.json`),JSON.stringify(report,null,2)+'\n');
+    if(report.result!=='PASS')throw Error(`Final workflow signal misses third node: ${JSON.stringify(cases.map(({time,delta})=>({time,delta})))}`);
+    return report;
+  };
   try{
     browser=await chromium.launch({headless:true,args:browserArgs});let page=await open(browser);
-    if(task==='probe-contour'){
+    if(task==='check-track'){
+      await checkTrack(page);
+    }else if(task==='probe-contour'){
       const measurements=[];for(const hidden of [false,true]){
         if(hidden)await page.addStyleTag({content:'#contour-field{display:none!important}'});
         await capture(page,spec.scenes.find(scene=>scene.id==='business').sample);
@@ -85,6 +107,7 @@ if(['samples','check','render','probe-contour'].includes(task)){
       }
       fs.writeFileSync(path.join(QA,`${format}-contour-isolation.json`),JSON.stringify({purpose:'Diagnosis only, excluded from final verification.',measurements},null,2)+'\n');console.log(JSON.stringify(measurements));
     }else{
+    const trackGeometry=await checkTrack(page);
     const sampleTimes=spec.scenes.map(scene=>scene.sample),samples=[],tiles=[];
     for(const [index,time]of sampleTimes.entries()){
       const png=await capture(page,time),name=`${format}-sample-${String(index).padStart(2,'0')}.png`;fs.writeFileSync(path.join(QA,name),png);
@@ -105,7 +128,7 @@ if(['samples','check','render','probe-contour'].includes(task)){
       for(const box of boxes)if(box.x<dimensions.safeMargin||box.y<dimensions.safeMargin||box.x+box.width>dimensions.width-dimensions.safeMargin||box.y+box.height>dimensions.height-dimensions.safeMargin)throw Error(`Safe area fails: ${scene.id} ${JSON.stringify(box)}`);
       safeCases.push({scene:scene.id,boxes,result:'PASS'});
     }
-    const base={date:new Date().toISOString(),format,resolution:[dimensions.width,dimensions.height],browser:browser.version(),browserArgs,specSha256:hashFile(specPath),samples,safeCases,invalidFixture:{file:path.basename(invalidPath),exitCode:rejected.status,error:rejected.stderr.match(/Error: (.+)/)?.[1]},providerCalls:0,paidSpendUsd:0};
+    const base={date:new Date().toISOString(),format,resolution:[dimensions.width,dimensions.height],browser:browser.version(),browserArgs,specSha256:hashFile(specPath),samples,safeCases,trackGeometry,invalidFixture:{file:path.basename(invalidPath),exitCode:rejected.status,error:rejected.stderr.match(/Error: (.+)/)?.[1]},providerCalls:0,paidSpendUsd:0};
     if(task==='samples'){const gpu=await page.evaluate(()=>window.__shaderEvidence);if(gpu?.renderer!=='WebGPU'||gpu.failure||gpu.adapter?.isFallbackAdapter)throw Error('Native adapter required');fs.writeFileSync(path.join(QA,`${format}-samples.json`),JSON.stringify({...base,gpu,runtimeErrors:errors,externalRequests:blocked},null,2)+'\n');}
     else{
       const nonlinear=[];for(const scene of spec.scenes){const firstPng=await capture(page,scene.sample),first=hash(firstPng);await capture(page,spec.duration);const replayPng=await capture(page,scene.sample),replay=hash(replayPng);if(first!==replay){fs.writeFileSync(path.join(QA,`${format}-nonlinear-first.png`),firstPng);fs.writeFileSync(path.join(QA,`${format}-nonlinear-replay.png`),replayPng);fs.writeFileSync(path.join(QA,`${format}-nonlinear-failure.json`),JSON.stringify({scene:scene.id,time:scene.sample,first,replay,state:await page.evaluate(()=>window.__motionState)},null,2));throw Error(`Nonlinear seek differs in ${scene.id}`);}nonlinear.push({scene:scene.id,time:scene.sample,first,nonlinear:replay});}
