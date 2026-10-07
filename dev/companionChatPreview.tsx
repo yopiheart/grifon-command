@@ -77,7 +77,7 @@ function Fixture() {
     clearCalls: () => { calls.splice(0); },
   } });
   return <div className="companion-fixture" style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}><style>{'.companion-fixture > [data-testid="companion-chat"] { height: auto; flex: 1; min-height: 0; }'}</style><details style={{ flexShrink: 0, background: '#18181b', color: '#fafafa', padding: '0 16px', borderBottom: '1px solid #3f3f46' }}>
-    <summary style={{ minHeight: 44, display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: 13 }}>Local test controls · mocked generation · no provider calls</summary>
+    <summary style={{ minHeight: 44, display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: 13 }}>Local test fixture · mocked generation · no provider calls</summary>
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, paddingBottom: 12 }}>
       {(['researching', 'script', 'storyboard', 'video', 'result', 'error', 'resume-error'] as const).map(event => <button type="button" key={event} onClick={() => emit(event)} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: {event}</button>)}
       <button type="button" onClick={controller.reset} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: reset</button>
@@ -85,8 +85,7 @@ function Fixture() {
     </div>
   </details><CompanionChatSurface key={userId} controller={controller} userId={userId}
     onBack={() => calls.push({ name: 'back' })} onUpgrade={() => calls.push({ name: 'upgrade' })}
-    presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed}
-    fixtureLabel="Local test fixture · mocked generation · existing sample media" /></div>;
+    presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed} /></div>;
 }
 
 if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(<Fixture />);

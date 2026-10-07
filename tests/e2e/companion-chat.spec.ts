@@ -116,15 +116,13 @@ for (const width of [320, 375, 390, 1280]) {
     await page.getByRole('button', { name: 'Generate storyboard', exact: true }).click();
     const frame = await (await page.locator('iframe:visible').elementHandle())!.contentFrame();
     await expect.poll(() => frame!.evaluate(() => (window as any).grifonDebug.snapshot().reaction.state)).toBe('working');
-    await page.getByRole('button', { name: 'Pause companion motion', exact: true }).click();
-    await expect.poll(() => frame!.evaluate(() => (window as any).grifonDebug.snapshot().pause)).toBe(true);
-    const paused = await frame!.evaluate(() => (window as any).grifonDebug.snapshot());
-    await page.waitForTimeout(250);
-    const still = await frame!.evaluate(() => (window as any).grifonDebug.snapshot());
-    expect(still.frameCount).toBe(paused.frameCount);
-    expect(still.controls).toEqual(paused.controls); expect(still.reaction).toEqual(paused.reaction);
-    await page.getByRole('button', { name: 'Resume companion motion', exact: true }).click();
-    await expect.poll(() => frame!.evaluate(() => (window as any).grifonDebug.snapshot().frameCount)).toBeGreaterThan(paused.frameCount);
+    await expect(page.getByRole('button', { name: /^(Pause|Resume) companion motion$/ })).toHaveCount(0);
+    const animated = await frame!.evaluate(() => (window as any).grifonDebug.snapshot());
+    await expect.poll(() => frame!.evaluate(() => (window as any).grifonDebug.snapshot().frameCount)).toBeGreaterThan(animated.frameCount);
+    const avatarElement = await page.locator('iframe:visible').elementHandle();
+    await page.setViewportSize({ width: width === 1280 ? 390 : 1280, height: 900 });
+    expect(await avatarElement!.evaluate(element => element.isConnected)).toBe(true);
+    await expect.poll(() => frame!.evaluate(() => (window as any).grifonDebug.snapshot().reaction.state)).toBe('working');
     expect(evidence.unexpected).toEqual([]); expect(evidence.errors).toEqual([]);
   });
 }

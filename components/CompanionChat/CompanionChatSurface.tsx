@@ -44,8 +44,8 @@ const motionStyle = {
   '--companion-ease': `cubic-bezier(${EASE.expressive.join(',')})`,
 } as CSSProperties;
 const Transcript = memo(function Transcript({ messages }: { messages: CompanionDraft['messages'] }) {
-  return <>{messages.map(message => <article key={message.id} className={message.role === 'user' ? 'ml-auto max-w-[88%]' : 'max-w-[92%]'}>
-    <p className={`companion-message whitespace-pre-wrap break-words ${message.role === 'user' ? 'companion-message-user rounded-2xl rounded-br-sm px-4 py-3' : 'text-zinc-200'}`}>{message.text}</p>
+  return <>{messages.map(message => <article key={message.id} className={message.role === 'user' ? 'ml-auto w-fit max-w-[88%]' : 'w-fit max-w-[92%]'}>
+    <p className={`companion-message whitespace-pre-wrap break-words rounded-2xl px-4 py-3 ${message.role === 'user' ? 'companion-message-user rounded-br-sm' : 'companion-message-assistant rounded-bl-sm text-zinc-200'}`}>{message.text}</p>
     <p className={`mt-2 text-[11px] text-on-surface-sublabel ${message.role === 'user' ? 'text-right' : ''}`}><time dateTime={new Date(message.at).toISOString()}>{time(message.at)}</time>{message.role === 'user' && ' · Received'}</p>
   </article>)}</>;
 });
@@ -59,7 +59,6 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const [editing, setEditing] = useState(false);
   const [armedScene, setArmedScene] = useState<number | null>(null);
   const [armedPreset, setArmedPreset] = useState<{ value: LockablePresetId | null; label: string } | null>(null);
-  const [desktop, setDesktop] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
   const composer = useRef<CompanionComposerHandle>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const upload = useRef<HTMLInputElement>(null);
@@ -67,6 +66,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const owner = useRef(userId);
   const nearBottom = useRef(true);
   const firstScroll = useRef(true);
+  const shownReview = useRef<string | null>(null);
   const scrollFrame = useRef(0);
   const followingScroll = useRef(false);
   const actionLock = useRef(false);
@@ -80,6 +80,8 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const field = nextCompanionField(draft);
   const atStoryboard = run?.gate === 'storyboard';
   const atResult = run?.gate === 'first_cut';
+  const reviewKey = !run && (!field || editing) ? `brief:${userId}`
+    : atStoryboard && !failed ? `storyboard:${run.runId}` : atResult ? `result:${run.runId}` : null;
   const readyToApprove = !!run?.scenes.length && run.scenes.every(scene => scene.imageUrl && scene.status !== 'flagged');
   const activeStage = run?.stages.find(stage => stage.status === 'running');
   const avatarState: CompanionReaction = failed ? 'idle' : busy || loadingRun ? 'working'
@@ -87,13 +89,6 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const stateLabel = failed ? 'Ready when you are' : loadingRun ? 'Opening your saved ad'
     : busy ? controller.phase === 'researching' ? 'Researching your product' : activeStage?.label ?? 'Updating your ad'
       : uploading ? 'Preparing your photo' : atStoryboard ? 'Your storyboard is ready' : atResult ? 'Your first cut is ready' : 'Let’s make something good';
-
-  useEffect(() => {
-    const query = window.matchMedia('(min-width: 1024px)');
-    const update = () => setDesktop(query.matches);
-    query.addEventListener('change', update);
-    return () => query.removeEventListener('change', update);
-  }, []);
 
   useEffect(() => {
     if (owner.current !== userId) {
@@ -109,11 +104,21 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   useEffect(() => () => { uploadEpoch.current++; actionEpoch.current++; }, []);
   useEffect(() => {
     const node = scroller.current;
-    if (!nearBottom.current || !node) return;
+    if (!node) return;
+    const openingReview = reviewKey !== shownReview.current;
+    if (!nearBottom.current) { shownReview.current = reviewKey; return; }
     followingScroll.current = true;
     scrollFrame.current = window.requestAnimationFrame(() => {
       scrollFrame.current = 0;
       if (!nearBottom.current) return;
+      shownReview.current = reviewKey;
+      const review = openingReview ? node.querySelector<HTMLElement>('[data-companion-review]') : null;
+      if (review && review.offsetHeight > node.clientHeight) {
+        const top = node.scrollTop + review.getBoundingClientRect().top - node.getBoundingClientRect().top - 24;
+        firstScroll.current = false; followingScroll.current = false; nearBottom.current = false;
+        node.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+        return;
+      }
       const instant = firstScroll.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches
         || node.scrollHeight - node.scrollTop - node.clientHeight > node.clientHeight;
       firstScroll.current = false;
@@ -121,12 +126,13 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
       node.scrollTo({ top: node.scrollHeight, behavior: instant ? 'auto' : 'smooth' });
     });
     return () => { if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current); };
-  }, [draft.messages[draft.messages.length - 1]?.id, run?.gate, activeStage?.id, controller.error]);
+  }, [draft.messages[draft.messages.length - 1]?.id, run?.gate, activeStage?.id, controller.error, reviewKey]);
   useEffect(() => { setArmedScene(null); setArmedPreset(null); }, [run?.runId, run?.gate]);
 
   const stopFollowing = () => {
     if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current);
     scrollFrame.current = 0; nearBottom.current = false; followingScroll.current = false;
+    shownReview.current = reviewKey;
     const node = scroller.current;
     if (node) node.scrollTo({ top: node.scrollTop, behavior: 'auto' });
   };
@@ -201,20 +207,18 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   );
 
   return <div className="companion-chat flex h-dvh min-h-0 flex-col overflow-hidden bg-zinc-950 text-white" style={motionStyle} data-testid="companion-chat" data-companion-state={avatarState}>
-    <header className="companion-header flex min-h-16 shrink-0 items-center justify-between gap-3 border-b border-white/10 px-4 sm:px-8">
-      <div className="flex min-w-0 items-center gap-3"><Button variant="ghost" className={`${control} !p-3`} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-5 w-5" /></Button><div><p className="text-sm font-bold tracking-[.14em]">GRIFON</p><p className="text-xs text-zinc-400">Your ad, from a conversation.</p></div></div>
-      <Button variant="secondary" className={`${control} !px-3`} disabled={disabled || (!run && !draft.brief)} onClick={reset}>New ad</Button>
+    <header className="companion-header relative shrink-0 px-4 pb-3 pt-1 sm:px-8">
+      <div className="absolute left-4 top-3 sm:left-8"><Button variant="ghost" className={`${control} flex min-w-11 items-center gap-2 !p-3`} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4 shrink-0" /><span className="hidden sm:inline">Dashboard</span></Button></div>
+      <div className="absolute right-4 top-3 sm:right-8"><Button variant="secondary" className={`${control} !px-3`} disabled={disabled || (!run && !draft.brief)} onClick={reset}>New ad</Button></div>
+      <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+        <CompanionAvatar state={avatarState} className="h-[88px] w-[88px] shrink-0 sm:h-24 sm:w-24" />
+        <h1 className="!text-base !font-semibold !normal-case !tracking-tight sm:!text-lg">Grifon</h1>
+        {!failed && (busy || loadingRun || uploading || atStoryboard || atResult) && <p className="mt-1 text-xs leading-relaxed text-zinc-400">{stateLabel}</p>}
+      </div>
     </header>
     {fixtureLabel && <p role="note" className="shrink-0 border-b border-[#FFCC00]/20 bg-[#FFCC00]/10 px-4 py-2 text-center text-xs text-[#FFCC00]">{fixtureLabel}</p>}
     <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1">
-      {desktop && <aside className="companion-rail hidden w-[340px] shrink-0 flex-col justify-center border-r border-white/5 px-6 lg:flex">
-        <CompanionAvatar state={avatarState} className="aspect-square w-full" />
-        <p className="mt-3 text-center text-sm text-zinc-300">{stateLabel}</p>
-        <p className="mx-auto mt-3 max-w-[240px] text-center text-xs leading-relaxed text-zinc-400">Product ad creation, one step at a time. You approve the storyboard before video production.</p>
-        {(run?.input.brandName || draft.brandName) && <div className="mt-8 border-t border-white/10 pt-5 text-sm"><p className="text-xs text-zinc-400">Current brief</p><p className="mt-2 font-semibold">{run?.input.brandName ?? draft.brandName}</p><p className="mt-1 text-zinc-400">{run?.input.productName ?? draft.productName}</p><p className="mt-3 text-xs text-zinc-400">{run?.input.language ?? draft.language} · {run?.input.aspectRatio ?? draft.aspectRatio}</p></div>}
-      </aside>}
       <section className="flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
-        {!desktop && <div className="flex h-[136px] shrink-0 items-center justify-center gap-2 border-b border-white/5 px-4 lg:hidden"><CompanionAvatar state={avatarState} className="h-[136px] w-[136px] shrink-0" /><p className="max-w-[190px] text-sm leading-relaxed text-zinc-300">{stateLabel}</p></div>}
         <div ref={scroller}
           onScroll={event => {
             const node = event.currentTarget;
@@ -224,11 +228,11 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           onPointerDown={event => { if (event.target === event.currentTarget) stopFollowing(); }}
           onWheel={event => { if (event.deltaY < 0 || followingScroll.current || !nearBottom.current) stopFollowing(); }} onTouchMove={stopFollowing}
           onKeyDown={event => { if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key) && !(event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement)) stopFollowing(); }}
-          className="companion-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-8 sm:py-8" data-testid="conversation-scroll">
-          <div className="mx-auto max-w-2xl space-y-7">
-            <div className="mb-8"><h1 className="!text-2xl !font-semibold !normal-case !tracking-tight sm:!text-3xl">Let’s make your next ad.</h1><p className="mt-2 text-sm leading-relaxed text-zinc-400">Start with the product. We’ll build the brief together.</p></div>
+          className="companion-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-8 sm:py-6" data-testid="conversation-scroll">
+          <div className="mx-auto flex min-h-full max-w-2xl flex-col justify-end">
+            <div className="shrink-0 space-y-5">
             <Transcript messages={draft.messages} />
-            {!run && (!field || editing) && <GlassPanel className="p-4 sm:p-5" aria-label="Review your brief">
+            {!run && (!field || editing) && <GlassPanel className="p-4 sm:p-5" aria-label="Review your brief" data-companion-review="brief">
               <div className="flex items-center justify-between gap-3"><h2 className="!text-base !font-semibold !normal-case !tracking-normal">Your product ad</h2><Button variant="ghost" className={`${control} !px-3`} disabled={disabled} onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit brief'}</Button></div>
               {editing ? <div className="mt-3 space-y-3">{(['brief','brandName','productName','offer','price'] as const).map(key => <label key={key} className="block text-xs text-zinc-400">{({ brief: 'Original brief', brandName: 'Brand name', productName: 'Product name', offer: 'Offer', price: 'Price' })[key]}<textarea className={`${inputStyle} mt-1 resize-y`} value={draft[key]} maxLength={key === 'brief' ? 4000 : key === 'offer' ? 2000 : 200} onChange={event => setDraft({ ...draft, [key]: event.target.value })} /></label>)}</div> : <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm"><dt className="text-zinc-400">Brand</dt><dd className="break-words">{draft.brandName}</dd><dt className="text-zinc-400">Product</dt><dd className="break-words">{draft.productName}</dd><dt className="text-zinc-400">Offer</dt><dd className="break-words">{draft.offer}</dd><dt className="text-zinc-400">Price</dt><dd className="break-words">{draft.price}</dd></dl>}
               {preferences}
@@ -240,8 +244,9 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
             {loadingRun && <p role="status" className="flex items-center gap-2 text-sm text-zinc-400"><Loader2 className="h-4 w-4 animate-spin" /> Opening your saved ad…</p>}
             {(busy || (!!run && !atStoryboard && !atResult && !failed)) && <GlassPanel className="p-4" aria-label="Production progress"><div role="status" className="flex items-center gap-2 text-sm"><Loader2 className="h-4 w-4 animate-spin text-[#FFCC00]" />{stateLabel}</div>{run && <ol className="mt-3 space-y-2">{run.stages.filter(stage => stage.status !== 'pending').map(stage => <li key={stage.id} className="flex items-start gap-2 text-xs text-zinc-400">{stage.status === 'done' ? <Check className="h-4 w-4 shrink-0 text-[#FFCC00]" /> : <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#FFCC00]" />}<span>{stage.label}{stage.error ? ` — ${stage.error}` : ''}</span></li>)}</ol>}<Button variant="ghost" className={`${control} mt-3 !px-2`} onClick={cancel}>Stop waiting</Button></GlassPanel>}
             {(failed || localError) && <GlassPanel className="p-4" role="alert"><p className="text-sm leading-relaxed text-zinc-200">{localError || controller.error || 'This step could not finish.'}</p><div className="mt-3 flex flex-wrap gap-2">{controller.phase === 'resume-error' ? <Button className={control} onClick={controller.retryResume}>Retry saved ad</Button> : run?.status === 'error' ? <Button className={control} disabled={busy} onClick={() => void call(controller.retry)}>Resume saved progress</Button> : null}<Button variant="secondary" className={control} disabled={busy} onClick={() => { if (localError) setLocalError(''); else controller.reset(); }}>Back to brief</Button></div></GlassPanel>}
-            {atStoryboard && !failed && <GlassPanel className="p-4 sm:p-5" aria-label="Storyboard review"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your scenes, before we film.</h2><p className="mt-2 text-sm leading-relaxed text-zinc-400">Check the product, presenter and script. You can regenerate an image before approving.</p><div className="mt-4 grid grid-cols-2 gap-3">{run!.scenes.map(scene => <div key={scene.sceneIdx} className="min-w-0 overflow-hidden rounded-xl border border-white/10"><div className="aspect-[3/4] bg-zinc-900">{scene.imageUrl ? <a href={scene.imageUrl} target="_blank" rel="noreferrer" aria-label={`Open scene ${scene.sceneIdx+1} image`}><img src={scene.imageUrl} alt={`Scene ${scene.sceneIdx+1}`} className="h-full w-full object-contain" /></a> : <p className="p-3 text-xs text-zinc-400">Image not ready</p>}</div><div className="p-3"><p className="text-xs font-semibold">Scene {scene.sceneIdx+1}</p><p className="mt-2 text-xs leading-relaxed text-zinc-400">{run!.storyboard?.[scene.sceneIdx]?.scriptLine}</p>{run!.storyboard?.[scene.sceneIdx]?.endFrameImageUrl && <a href={run!.storyboard![scene.sceneIdx].endFrameImageUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex min-h-11 items-center text-xs text-[#FFCC00]">View end frame</a>}{scene.flaggedReason && <p className="mt-2 flex items-start gap-2 text-xs text-amber-500"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{scene.flaggedReason}</p>}<Button variant="secondary" className={`${control} mt-3 !w-full !px-2 !text-xs`} disabled={busy} onClick={() => void call(() => controller.regenScene(scene.sceneIdx))}>{controller.reshooting === scene.sceneIdx ? 'Updating…' : `Regenerate scene ${scene.sceneIdx+1}`}</Button></div></div>)}</div><p className="mt-4 text-xs leading-relaxed text-zinc-400">Approval starts video production and uses your video allowance or credits. Regenerated images also use your plan allowances.</p><Button className={`${control} mt-4 w-full`} disabled={busy || !readyToApprove || videoAllowed === null} onClick={() => videoAllowed === false ? onUpgrade() : void call(controller.approve)}>{videoAllowed === null ? allowanceLoading ? 'Checking video allowance…' : 'Video allowance unavailable' : videoAllowed === false ? 'Unlock video production' : 'Approve storyboard'}</Button>{videoAllowed === null && !allowanceLoading && <Button variant="secondary" className={`${control} mt-2 w-full`} onClick={onRetryAllowance}>Retry allowance</Button>}</GlassPanel>}
-            {atResult && <GlassPanel className="p-4 sm:p-5" aria-label="Your first cut"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your first cut.</h2>{run!.finalVideoUrl ? <video controls playsInline preload="metadata" src={run!.finalVideoUrl} poster={run!.thumbnailUrl} className="mt-4 max-h-[440px] w-full rounded-xl bg-zinc-950" aria-label="Generated ad video" /> : <p className="mt-4 text-sm text-zinc-400">The final video is not available yet.</p>}{run!.finalDownloadUrl && <a href={run!.finalDownloadUrl} download target="_blank" rel="noreferrer" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Download video</a>}<p className="mt-4 text-sm leading-relaxed text-zinc-400">Keep the cut, reshoot a scene, or apply an edit style. Custom free-form edits are not supported here yet.</p><div className="mt-3 flex flex-wrap gap-2">{run!.scenes.map(scene => <Button key={scene.sceneIdx} variant="secondary" className={`${control} !px-3`} disabled={busy} onClick={() => { setArmedScene(scene.sceneIdx); setArmedPreset(null); }}>Reshoot scene {scene.sceneIdx+1}</Button>)}</div>{armedScene !== null && <div className="mt-3 rounded-xl border border-white/10 p-3"><p className="text-xs leading-relaxed text-zinc-300">Scene {armedScene+1}: {run!.scenes.find(scene => scene.sceneIdx === armedScene)?.status === 'flagged' ? 'this regenerates the flagged scene. Plan limits still apply.' : 'additional generation may use your plan allowance or credits.'}</p><Button className={`${control} mt-3`} disabled={busy} onClick={() => { const index = armedScene; setArmedScene(null); void call(() => controller.reshoot(index)); }}>Confirm reshoot</Button></div>}<label className="mt-5 block text-xs text-zinc-400">Edit style<select aria-label="Edit style" className={`${inputStyle} mt-1`} disabled={busy} value={armedPreset ? armedPreset.value ?? 'auto' : run!.presetId ?? 'auto'} onChange={event => { const selected = styles.find(style => (style.value ?? 'auto') === event.target.value)!; if (selected.locked && !presetUnlocked) onUpgrade(); else { setArmedPreset(selected); setArmedScene(null); } }}>{styles.map(style => <option key={style.label} value={style.value ?? 'auto'}>{style.label}{style.locked && !presetUnlocked ? ' · Pro' : ''}</option>)}</select></label>{armedPreset && <Button className={`${control} mt-3`} disabled={busy} onClick={() => { const preset = armedPreset.value; setArmedPreset(null); void call(() => controller.choosePreset(preset)); }}>Apply style</Button>}</GlassPanel>}
+            {atStoryboard && !failed && <GlassPanel className="p-4 sm:p-5" aria-label="Storyboard review" data-companion-review="storyboard"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your scenes, before we film.</h2><p className="mt-2 text-sm leading-relaxed text-zinc-400">Check the product, presenter and script. You can regenerate an image before approving.</p><div className="mt-4 grid grid-cols-2 gap-3">{run!.scenes.map(scene => <div key={scene.sceneIdx} className="min-w-0 overflow-hidden rounded-xl border border-white/10"><div className="aspect-[3/4] bg-zinc-900">{scene.imageUrl ? <a href={scene.imageUrl} target="_blank" rel="noreferrer" aria-label={`Open scene ${scene.sceneIdx+1} image`}><img src={scene.imageUrl} alt={`Scene ${scene.sceneIdx+1}`} className="h-full w-full object-contain" /></a> : <p className="p-3 text-xs text-zinc-400">Image not ready</p>}</div><div className="p-3"><p className="text-xs font-semibold">Scene {scene.sceneIdx+1}</p><p className="mt-2 text-xs leading-relaxed text-zinc-400">{run!.storyboard?.[scene.sceneIdx]?.scriptLine}</p>{run!.storyboard?.[scene.sceneIdx]?.endFrameImageUrl && <a href={run!.storyboard![scene.sceneIdx].endFrameImageUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex min-h-11 items-center text-xs text-[#FFCC00]">View end frame</a>}{scene.flaggedReason && <p className="mt-2 flex items-start gap-2 text-xs text-amber-500"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{scene.flaggedReason}</p>}<Button variant="secondary" className={`${control} mt-3 !w-full !px-2 !text-xs`} disabled={busy} onClick={() => void call(() => controller.regenScene(scene.sceneIdx))}>{controller.reshooting === scene.sceneIdx ? 'Updating…' : `Regenerate scene ${scene.sceneIdx+1}`}</Button></div></div>)}</div><p className="mt-4 text-xs leading-relaxed text-zinc-400">Approval starts video production and uses your video allowance or credits. Regenerated images also use your plan allowances.</p><Button className={`${control} mt-4 w-full`} disabled={busy || !readyToApprove || videoAllowed === null} onClick={() => videoAllowed === false ? onUpgrade() : void call(controller.approve)}>{videoAllowed === null ? allowanceLoading ? 'Checking video allowance…' : 'Video allowance unavailable' : videoAllowed === false ? 'Unlock video production' : 'Approve storyboard'}</Button>{videoAllowed === null && !allowanceLoading && <Button variant="secondary" className={`${control} mt-2 w-full`} onClick={onRetryAllowance}>Retry allowance</Button>}</GlassPanel>}
+            {atResult && <GlassPanel className="p-4 sm:p-5" aria-label="Your first cut" data-companion-review="result"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your first cut.</h2>{run!.finalVideoUrl ? <video controls playsInline preload="metadata" src={run!.finalVideoUrl} poster={run!.thumbnailUrl} className="mt-4 max-h-[440px] w-full rounded-xl bg-zinc-950" aria-label="Generated ad video" /> : <p className="mt-4 text-sm text-zinc-400">The final video is not available yet.</p>}{run!.finalDownloadUrl && <a href={run!.finalDownloadUrl} download target="_blank" rel="noreferrer" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Download video</a>}<p className="mt-4 text-sm leading-relaxed text-zinc-400">Keep the cut, reshoot a scene, or apply an edit style. Custom free-form edits are not supported here yet.</p><div className="mt-3 flex flex-wrap gap-2">{run!.scenes.map(scene => <Button key={scene.sceneIdx} variant="secondary" className={`${control} !px-3`} disabled={busy} onClick={() => { setArmedScene(scene.sceneIdx); setArmedPreset(null); }}>Reshoot scene {scene.sceneIdx+1}</Button>)}</div>{armedScene !== null && <div className="mt-3 rounded-xl border border-white/10 p-3"><p className="text-xs leading-relaxed text-zinc-300">Scene {armedScene+1}: {run!.scenes.find(scene => scene.sceneIdx === armedScene)?.status === 'flagged' ? 'this regenerates the flagged scene. Plan limits still apply.' : 'additional generation may use your plan allowance or credits.'}</p><Button className={`${control} mt-3`} disabled={busy} onClick={() => { const index = armedScene; setArmedScene(null); void call(() => controller.reshoot(index)); }}>Confirm reshoot</Button></div>}<label className="mt-5 block text-xs text-zinc-400">Edit style<select aria-label="Edit style" className={`${inputStyle} mt-1`} disabled={busy} value={armedPreset ? armedPreset.value ?? 'auto' : run!.presetId ?? 'auto'} onChange={event => { const selected = styles.find(style => (style.value ?? 'auto') === event.target.value)!; if (selected.locked && !presetUnlocked) onUpgrade(); else { setArmedPreset(selected); setArmedScene(null); } }}>{styles.map(style => <option key={style.label} value={style.value ?? 'auto'}>{style.label}{style.locked && !presetUnlocked ? ' · Pro' : ''}</option>)}</select></label>{armedPreset && <Button className={`${control} mt-3`} disabled={busy} onClick={() => { const preset = armedPreset.value; setArmedPreset(null); void call(() => controller.choosePreset(preset)); }}>Apply style</Button>}</GlassPanel>}
+            </div>
           </div>
         </div>
         <footer className="companion-footer relative shrink-0 bg-zinc-950 px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-3 sm:px-8">

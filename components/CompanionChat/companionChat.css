@@ -20,13 +20,13 @@
 }
 
 .companion-header { background: #09090B; }
-.companion-rail { background: linear-gradient(90deg, transparent, rgba(255,255,255,.015)); }
 .companion-scroll {
   scrollbar-width: thin;
   scrollbar-color: #3F3F46 transparent;
   scroll-padding-block: 24px;
 }
 .companion-message { font-size: 16px; line-height: 1.65; }
+.companion-message-assistant { background: rgba(255,255,255,.035); }
 .companion-message-user {
   background: linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.055));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
@@ -66,8 +66,7 @@
   .companion-scroll { scroll-behavior: auto; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .companion-chat .mat-plate, .companion-message-user { background: #18181B; }
+  .companion-chat .mat-plate, .companion-message-user, .companion-message-assistant { background: #18181B; }
   .companion-composer { box-shadow: none; border-color: #82828B; }
   .companion-footer::before { display: none; }
-  .companion-rail { background: #09090B; }
 }

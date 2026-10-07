@@ -1,0 +1,103 @@
+{
+  "reviewedDate": "2026-10-07",
+  "reviewer": "Independent companion_polish_review agent; report-only; did not author or modify runtime or tests",
+  "baseCommit": "491e86092261ea7183b408ec15ea6ec0264cbc84",
+  "scope": "New centered companion redesign and subsequent compact-header/tall-review-card correction. The earlier polish review is not used as approval for this diff.",
+  "verdict": "PASS",
+  "brandVerdict": "BRAND_PASS",
+  "unresolvedFindings": [],
+  "sourceSha256": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "4DBC7AB584DF14E4EAA4363546B05C13480818F28A99A273A0D5E2262998ABC7",
+    "components/CompanionChat/CompanionAvatar.tsx": "91E2DBA357932768044E8755351EFE9E5EB9BB58496104CB9AFA22DBD02182F2",
+    "components/CompanionChat/companionChat.css": "F79B261050DF090AB3F684FD33FA2D83E220231875AEF3DFA8BEDD2FC99C663C",
+    "dev/companionChatPreview.tsx": "18BA81C40F9BBA6C938938B4D2011D4E12359321D98909FBC4354444FF30158E"
+  },
+  "standards": [
+    "Current DESIGN.md and .agents/skills/brand-check/SKILL.md reread for this review.",
+    "User reference hierarchy and explicit removal of visible play/pause supersede conflicting generic styling/accessibility workflow preferences. OS reduced-motion behavior remains required.",
+    "Current DESIGN.md material tiers and contrast ladder take precedence over the checklist's historical blanket blur and zinc500 wording."
+  ],
+  "referencesInspected": [
+    "C:/Users/ADMIN/AppData/Local/Temp/codex-clipboard-7a51c289-4aae-4843-9dca-043043fcaa95.png",
+    "C:/Users/ADMIN/AppData/Local/Temp/codex-clipboard-35a3ca6c-6787-4a3f-bd5d-c5ec9669a4f8.png",
+    "C:/Users/ADMIN/Downloads/HSc_GCjbIAE8MZE.jpg"
+  ],
+  "referenceHierarchyVerdict": {
+    "result": "PASS",
+    "observations": [
+      "A compact centered mascot/name now sits above the same centered conversation/composer column, matching the structural direction in the Dot/Muse references.",
+      "The rejected340px mascot rail, repeated promotional tagline/current-brief rail, and visible play/pause control are absent.",
+      "The88px mobile/96px desktop avatar canvas gives priority back to the conversation. Quiet neutral left/right bubbles establish conversational hierarchy while retaining Grifon gold for actions/focus.",
+      "The intentional empty space above a short transcript follows the Muse reference. Longer conversations use native vertical scrolling; older bubbles may leave the viewport while the latest reply remains visible.",
+      "Tall newly introduced review cards now reveal their headings and opening content rather than skipping directly to their bottom approval actions."
+    ]
+  },
+  "correctnessReview": [
+    "Reviewed the runtime diff against491e8609, including all new reviewKey/shownReview scroll handling, header DOM restructuring, Avatar pause removal, and CSS bubble treatment.",
+    "One persistent CompanionAvatar now occupies a single DOM position. Responsive canvas sizing uses CSS; breakpoint state no longer unmounts/recreates the iframe.",
+    "The iframe origin/source validation, retry lifecycle, pointer coalescing and cleanup are retained. The embedded runtime still owns OS reduced-motion handling; public/companion has no diff against the base.",
+    "Review keys distinguish brief ownership, storyboard run and First Cut run. A new tall card anchors once when the reader is following; intentional history reading marks it observed without stealing position. Native wheel/touch/navigation cancellation remains authoritative.",
+    "The ordinary and capped-message follow path remains intact. Draft editing does not repeatedly reopen the same card, and card anchoring does not move keyboard focus.",
+    "Generation actions, allowance checks, explicit approvals, account draft/reset behavior, asynchronous owner/epoch guards and recovery callbacks are unchanged by this diff. CompanionComposer, CompanionChat/index and companionIntake have no diff against the base.",
+    "The preview change removes only a duplicate fixture banner. Its remaining disclosure still says mocked generation/no provider calls, and expanded controls identify sample media."
+  ],
+  "visualReview": {
+    "method": "Independent inspection of final screenshots at375x667,390x844,1280x900; review-card screenshot at1000x700; failure state at320px; native2x-DPR header and Dashboard button crops. These are discrete observations, not continuous playback.",
+    "inspectedFinalFiles": [
+      "final-initial-375.png", "final-initial-390.png", "final-initial-1280.png",
+      "final-active-375.png", "final-ready-390.png", "final-ready-1280.png",
+      "final-result-375.png", "final-review-375.png", "final-review-1000.png",
+      "final-retry-320.png", "final-header-2x.png", "final-dashboard-button-2x.png"
+    ],
+    "observations": [
+      "Center geometry aligns exactly with the composer at all three primary viewports; reported horizontal overflow is0.",
+      "Final ordinary-send screenshot shows the latest assistant question fully visible. Brief, storyboard and First Cut headings are readable at their entry positions.",
+      "Readable16px sans inputs and message body, normal tracking, neutral text ladder and preserved gold focus/action states.",
+      "Dashboard arrow silhouette, icon/text spacing and vertical alignment are intact in the2x crop. Final source uses16px icon,8px gap and shrink-0.",
+      "Final320px failure Retry target measures44x44 at y109..153; New ad ends at y103, so the suspected overlap is absent.",
+      "No new backdrop-filter or drop-shadow elevation is introduced. Existing PLATE primitives remain in review forms. Assistant bubbles gain the same solid fallback as user bubbles under reduced transparency/high contrast."
+    ]
+  },
+  "brandScore": {
+    "philosophyCoherence": { "score": 9, "reason": "Grifon dark/gold identity retained within the user-requested quiet companion layout." },
+    "visualHierarchy": { "score": 9, "reason": "Compact centered identity, clear bubble conversation and reduced duplicate chrome match the references." },
+    "executionCraft": { "score": 8, "reason": "Clean typography, spacing and2x icon review; the approved mascot remains recognizably rendered at compact size." },
+    "functionality": { "score": 9, "reason": "Tall review headings, ordinary reply visibility, native scroll intent, responsive persistence and44px failure retry are verified within local coverage." },
+    "innovationAndDistinctiveness": { "score": 8, "reason": "Approved animated griffin and restrained gold retain a distinct Grifon identity without copying reference colors." },
+    "total": 43,
+    "critical": 0,
+    "nits": 0,
+    "quickWins": []
+  },
+  "resolvedDuringReview": [
+    {
+      "location": "components/CompanionChat/CompanionChatSurface.tsx:104",
+      "severity": "P2 / functional",
+      "issue": "The initial centered revision still followed the bottom of a new tall review card, clipping its heading; the oversized120/144px avatar compounded the limited reading area.",
+      "resolution": "Compact88/96px canvas and one-time tall-review start anchoring. Baseline regression failed at375 and1000; final review375 starts24.3px below transcript top with its heading visible. Storyboard/First Cut headings also pass after media metadata settles."
+    },
+    {
+      "location": "components/CompanionChat/CompanionChatSurface.tsx:211",
+      "severity": "brand nit",
+      "issue": "Intermediate newly added Dashboard icon/text row lacked shrink-0 and used inconsistent icon rhythm.",
+      "resolution": "Final16px icon,8px gap, shrink-0 and44px minimum target verified in source and native2x button capture."
+    }
+  ],
+  "verificationEvidence": {
+    "reviewerExecution": "Source/diff/rules reads, direct source SHA256 checks, independent reference/final screenshot inspection. Reviewer did not rerun the smoke agent's browser suite or author its tests.",
+    "smokeReport": "final-smoke-report.json",
+    "sourceHashesMatch": true,
+    "mainBrowserSuite": { "passed": 26, "exitCode": 0, "durationSeconds": 52.1 },
+    "supplementalRetry320": { "passed": 1, "exitCode": 0, "durationSeconds": 2.6 },
+    "originalDefectEvidence": ["baseline-result.json", "baseline-geometry-1280.json", "scroll-baseline-result.json"],
+    "geometryEvidence": ["final-geometry-375.json", "final-geometry-390.json", "final-geometry-1280.json", "final-review-375.json", "final-review-1000.json", "final-retry-320.json"],
+    "retainedBrowserCoverage": ["ordinary and120-message follow", "reader history position during typing", "same iframe across resize", "OS reduced motion", "asset/WebGL failure and retry", "mocked quota/preset/approval/start gates", "account isolation and saved-run recovery"],
+    "buildAndUnit": "Parent reports final build and1451 unit tests passed. This reviewer did not execute those checks; parent verification evidence owns their result."
+  },
+  "limits": [
+    "Headless desktop Edge with mobile viewport emulation; no physical phone, iOS software keyboard, continuous motion or input-to-photon measurement claim.",
+    "Local fixture and mocked backend only. Existing sample video metadata verifies review layout, not generated video quality or provider success.",
+    "Removal of manual pause is explicitly requested. No separate settings system or outside-browser pointer capability was added.",
+    "The source/evidence review covers this new diff only. No paid calls, app/test edits, deployment, merge or production writes were performed by this reviewer."
+  ]
+}

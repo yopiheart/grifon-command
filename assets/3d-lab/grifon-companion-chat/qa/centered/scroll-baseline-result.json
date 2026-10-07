@@ -1,0 +1,13 @@
+{
+  "baselineCommit": "491e86092261ea7183b408ec15ea6ec0264cbc84",
+  "scope": "Centered uncommitted redesign with compact header, before review-scroll fix",
+  "surfaceSha256": "63A48713331C6CBBB836E314FD7CCBEABDFD0CB19C87A79B67916DEA9078B9AD",
+  "command": "COMPANION_LAYOUT_PHASE=scroll-baseline npx.cmd playwright test --config tests/e2e/companion.config.ts companion-layout.spec.ts --grep \"new tall brief\"",
+  "exitCode": 1,
+  "testsFailed": 2,
+  "failures": {
+    "mobile375": "Review top -189.6875 below clipped transcript top222",
+    "desktop1000": "Review top21.96875 below clipped transcript top218"
+  },
+  "paidCalls": 0
+}

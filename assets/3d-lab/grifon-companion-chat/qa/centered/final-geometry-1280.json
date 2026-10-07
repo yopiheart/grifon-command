@@ -1,0 +1,23 @@
+{
+  "avatar": {
+    "x": 592,
+    "y": 49,
+    "width": 96,
+    "height": 96
+  },
+  "composer": {
+    "x": 304,
+    "y": 768.125,
+    "width": 672,
+    "height": 86
+  },
+  "transcript": {
+    "x": 64,
+    "y": 185,
+    "width": 1152,
+    "height": 571.125
+  },
+  "centerOffset": 0,
+  "avatarBottom": 145,
+  "overflow": 0
+}
