@@ -184,15 +184,16 @@ test('pending intake and working production reactions cannot leak into a new cha
   expect(warmRequests).toEqual([]); expect(network.rejected).toEqual([]);
 });
 
-test('honest cold-load fallback remains until ready while chat works', async ({ page }) => {
+test('cold load reserves the avatar slot without a still while chat works', async ({ page }) => {
   const network = await configure(page, 375); let release!: () => void;
   const held = new Promise<void>(resolve => { release = resolve; });
   await page.route('**/companion/scene.bin', async route => { await held; await route.continue(); });
   try {
-    await load(page); await expect(page.locator(FALLBACK)).toBeVisible();
+    await load(page); await expect(page.locator(FALLBACK)).not.toBeVisible();
     await expect(page.locator(FRAME)).not.toHaveAttribute('data-ready', 'true');
     await send(page, 'Typing while the companion loads');
     await expect(page.locator('.companion-message-user')).toHaveText('Typing while the companion loads');
+    await expect(page.locator('.companion-avatar [role="status"]')).toBeVisible();
     await capture(page, 'cold-loading', { fallbackCount: await page.locator(FALLBACK).count(), requests: network.requests });
   } finally { release(); }
   await ready(page); await expect(page.locator(FALLBACK)).toHaveCount(0);

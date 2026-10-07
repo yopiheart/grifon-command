@@ -1,0 +1,191 @@
+{
+  "slot": {
+    "x": 159.5,
+    "y": 49,
+    "width": 56,
+    "height": 56
+  },
+  "opacity": 1,
+  "ready": "true",
+  "transition": {
+    "duration": "0s",
+    "property": "none",
+    "ease": "ease"
+  },
+  "loader": null,
+  "retry": null,
+  "image": null,
+  "innerFallbackHidden": true,
+  "paint": {
+    "at": 1791350547631,
+    "count": 3429,
+    "width": 112,
+    "height": 112
+  },
+  "debug": {
+    "ready": true,
+    "renderer": "WebGL2 / Three.js",
+    "failed": false,
+    "pause": false,
+    "reducedMotion": true,
+    "visible": true,
+    "frameCount": 9,
+    "activeTime": 0.1832666666666666,
+    "controls": {
+      "gazeX": 0,
+      "gazeY": 0,
+      "headYaw": 0,
+      "headPitch": 0,
+      "headRoll": 0,
+      "blink": 0,
+      "breath": 0
+    },
+    "target": {
+      "x": 0,
+      "y": 0
+    },
+    "reaction": {
+      "state": "idle",
+      "stateAge": 0.1832666666666666,
+      "blend": 1,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wingLeft": [
+        0,
+        0,
+        0
+      ],
+      "wingRight": [
+        0,
+        0,
+        0
+      ],
+      "tapLeft": 0,
+      "tapRight": 0,
+      "propReading": 0,
+      "propWorking": 0,
+      "readingSupport": [
+        -0.48718262753774655,
+        -0.7687732176875274,
+        0.8859607000207929
+      ],
+      "readingTrace": [
+        0.44465278241632034,
+        -0.7589179167683405,
+        0.9298682511229925
+      ],
+      "readingRow": 0.025,
+      "readingWingExtension": 1,
+      "cleanBody": 0,
+      "cursorScale": 1,
+      "readyBlink": 0,
+      "touring": false
+    },
+    "rollingFrameTimes": [
+      183.5999999999999,
+      16.40000000000009,
+      16.799999999999955,
+      16.59999999999991,
+      16.799999999999955,
+      16.600000000000136,
+      16.700000000000045,
+      16.699999999999818
+    ],
+    "viewport": {
+      "width": 56,
+      "height": 56,
+      "pixelRatio": 2
+    }
+  },
+  "ledger": {
+    "samples": [
+      {
+        "at": 1791350546242,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            0,
+            0,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350546283,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350546485,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 1
+        }
+      },
+      {
+        "at": 1791350547651,
+        "sample": {
+          "opacity": 1,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      }
+    ],
+    "messages": [
+      {
+        "event": "ready",
+        "at": 1791350547647,
+        "paint": {
+          "at": 1791350547631,
+          "count": 3429,
+          "width": 112,
+          "height": 112
+        }
+      }
+    ]
+  },
+  "overflow": 0,
+  "chatCalls": [],
+  "typography": {
+    "font": "Inter, sans-serif",
+    "inputSize": "14px"
+  },
+  "counts": {
+    "iframe": 1,
+    "still": 0
+  }
+}

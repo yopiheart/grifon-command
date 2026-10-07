@@ -1,20 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, companion chat-switch continuity verified**
+**Stamped: 2026-10-07, companion refresh startup verified**
 
 ## ▶ NEXT ACTION
-Next: owner review of smooth saved/New-chat switching; manually verify phone behavior and browser microphone permission/transcription before the next system milestone.
-Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
-Preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge. Typography110d882a/glass5c6d6a07 pushed; verified continuity changes accompany this NOW update.
-New/Search/saved chats/Studio; account-scoped IndexedDB keeps chats/photos/unsent text and old keys. Device-local; history GET-only until Resume.
-Inter/system14px UI; normal control tracking/case,600 headings/buttons/field labels,400 values. DESIGN/shared primitives updated; art/mono/serif preserved.
-56/64px mascot now min2x backing/current DPR,1024px edge cap; cached-DPR RAF check also works paused. Mesh/textures/reactions unchanged.
-Floating transparent header/composer; measured clearances, narrow mascot selection guard, aligned44px Plus/mic/Send, growing1-line input. Voice -> editable draft, no auto-send.
-One Shell-owned companion player stays alive across saved/New-chat switches; keyed producer/surface isolation retained. Surface reports only reaction/slot geometry/inert; old-chat reports rejected. Account/route teardown preserved.
-Latest build/1453 units PASS (32 existing skips). Continuity12 browser cases + fresh independent40 checks PASS; zero findings. Original6 switches caused6 remounts/350-423ms flashes/72 renderer GETs; fixed0 warm flashes/GETs, same iframe/window/canvas. QA assets/design/companion-continuity/qa.
-Windows design:lint now invokes the declared CLI through Node; DESIGN.md had shadowed the old command name. Actual lint errors0/warnings0 and Codex26 control tests PASS.
-Glass31 unique browser cases,10+2 targeted repeats and independent42 behavior/contrast+18 hover checks PASS. QA assets/design/companion-glass/qa.
-Original glass baseline failed4/4; compact controls now pass bright-underlay contrast. Browser speech was mocked; real mic/phone hardware untested. No live call UI/service.
-Typography17 browser checks; original48 resolution assertions fail, fixed0 fail. Navigation82c8f1c3 had57 checks; guarded Resume/viewer retained. Natural intake/cloud/jobs/live voice/providers/phone FPS/native zoom pending.
+Next: owner review of refreshed startup and saved/New-chat switching; manually verify phone behavior and browser microphone permission/transcription before the next system milestone.
+Branch codex/companion-chat; draft PR164 stacked on PR163: https://github.com/yopiheart/grifon-command/pull/164. Mocked preview http://127.0.0.1:5173/companion-chat-preview.html; no paid/deploy/merge. Verified startup changes accompany this NOW update.
+New/Search/saved chats/Studio; account-scoped IndexedDB preserves chats/photos/unsent text/old keys. Device-local, history GET-only until guarded Resume. Natural intake/cloud sync/durable jobs/live voice/provider output remain future milestones.
+Inter/system14px UI,600 headings/buttons/labels,400 values,normal case/tracking; art/mono/serif preserved. Approved56/64px mascot uses min2x/current DPR with1024px edge cap, including paused density changes; meshes/textures/reactions unchanged.
+Floating transparent header/composer with measured clearances, narrow mascot selection guard, aligned44px Plus/mic/Send and growing1-line input. Browser dictation inserts editable draft without auto-send; real mic/phone GPU/native zoom untested.
+Shell-owned player persists through saved/New-chat switches with keyed chat isolation and account/route teardown. Refresh/retry now reserve its slot, show restrained delayed dots and fade real3D after first rendered frame; reduced motion removes fade/dot motion. Genuine failure/30s timeout keeps still+retry; valid late-ready recovery remains.
+Latest build/1453 units PASS (32 existing skips); startup13+continuity6 browser cases and fresh independent8 scenarios/65 assertions PASS, BRAND_PASS45/50,zero findings. Original no-still regression failed onbccbc2dc. Evidence/hashes under assets/design/companion-startup/qa;300ms cue is nativeCSS timing, not a phone/wall-clock benchmark.
+Voice-sync/domain/anchors/11 companion assets/design-lint/bundle-leak PASS. Historical typography110d882a/glass5c6d6a07/continuitybccbc2dc proof remains in respective QA; warm switches keep same iframe/window/canvas and zero rendererGETs/flashes. Windows design:lint uses declared Node CLI; prior Codex26 control checks PASS.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

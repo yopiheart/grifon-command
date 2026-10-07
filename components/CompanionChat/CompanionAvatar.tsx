@@ -1,17 +1,26 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { RotateCw } from 'lucide-react';
 import Button from '../ui/Button';
+import { DUR, EASE } from '../ui/motionTokens';
 
 export type CompanionReaction = 'idle' | 'reading' | 'working' | 'ready';
 interface CompanionAvatarProps {
   state: CompanionReaction;
   className?: string;
 }
+const motionStyle = {
+  '--companion-loading-delay': `${DUR.base}s`,
+  '--companion-ready-duration': `${DUR.fast}s`,
+  '--companion-reply-duration': `${DUR.entrance}s`,
+  '--companion-duration': `${DUR.instant}s`,
+  '--companion-ease': `cubic-bezier(${EASE.expressive.join(',')})`,
+} as CSSProperties;
 
 /** The accepted 3D runtime stays isolated; only state/pointer messages cross the bridge. */
 export const CompanionAvatar = memo(function CompanionAvatar({ state, className = '' }: CompanionAvatarProps) {
   const host = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+  const timeout = useRef<number | null>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -19,22 +28,27 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
   const send = useCallback((command: Record<string, unknown>) => {
     frame.current?.contentWindow?.postMessage({ channel: 'grifon-companion', ...command }, window.location.origin);
   }, []);
+  const clearTimeout = useCallback(() => {
+    if (timeout.current !== null) window.clearTimeout(timeout.current);
+    timeout.current = null;
+  }, []);
+  const fail = useCallback(() => { clearTimeout(); setReady(false); setFailed(true); }, [clearTimeout]);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== window.location.origin || event.source !== frame.current?.contentWindow) return;
       const message = event.data as { channel?: unknown; event?: unknown } | null;
       if (!message || message.channel !== 'grifon-companion') return;
-      if (message.event === 'ready') { setReady(true); setFailed(false); }
-      if (message.event === 'failed') { setReady(false); setFailed(true); }
+      if (message.event === 'ready') { clearTimeout(); setReady(true); setFailed(false); }
+      if (message.event === 'failed') fail();
     };
     window.addEventListener('message', onMessage);
-    const timeout = window.setTimeout(() => {
+    timeout.current = window.setTimeout(() => {
       // Functional chat remains available even when a device cannot render the companion.
-      if (!frame.current?.dataset.ready) setFailed(true);
+      if (!frame.current?.dataset.ready) fail();
     }, 30_000);
-    return () => { window.removeEventListener('message', onMessage); window.clearTimeout(timeout); };
-  }, [attempt]);
+    return () => { window.removeEventListener('message', onMessage); clearTimeout(); };
+  }, [attempt, clearTimeout, fail]);
 
   useEffect(() => {
     send({ command: 'state', state });
@@ -97,8 +111,12 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
 
   const retry = () => { setReady(false); setFailed(false); setAttempt(value => value + 1); };
   return (
-    <div ref={host} className={`companion-avatar relative isolate ${className}`} data-companion-state={state}>
-      {!ready && <img src={`${base}neutral.png`} alt="" aria-hidden="true" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />}
+    <div ref={host} className={`companion-avatar relative isolate ${className}`} style={motionStyle} data-companion-state={state}>
+      {failed && <img src={`${base}neutral.png`} alt="" aria-hidden="true" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />}
+      {!ready && !failed && <div role="status" aria-label="Loading companion" className="companion-avatar-loading pointer-events-none absolute inset-0 flex items-center justify-center gap-1.5">
+        <span className="sr-only">Loading companion</span>
+        <span aria-hidden="true" className="companion-typing-dot h-1 w-1 rounded-full bg-zinc-400" /><span aria-hidden="true" className="companion-typing-dot h-1 w-1 rounded-full bg-zinc-400" /><span aria-hidden="true" className="companion-typing-dot h-1 w-1 rounded-full bg-zinc-400" />
+      </div>}
       <iframe
         key={attempt} ref={frame} src={`${base}frame.html`} title="Grifon animated companion"
         aria-hidden="true" tabIndex={-1} draggable={false} data-ready={ready ? 'true' : undefined}
@@ -106,7 +124,7 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
         style={{ opacity: ready ? 1 : 0 }}
         allow="camera 'none'; microphone 'none'; geolocation 'none'"
         onLoad={() => send({ command: 'state', state })}
-        onError={() => { setReady(false); setFailed(true); }}
+        onError={fail}
       />
       {failed && <div className="pointer-events-auto absolute -bottom-4 -right-11 z-10">
           <Button type="button" variant="ghost" className="min-h-11 min-w-11 !rounded-xl !p-2 text-xs" onClick={retry} aria-label="Retry companion motion" title="Still image. Retry companion motion">

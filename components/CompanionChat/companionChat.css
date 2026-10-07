@@ -25,6 +25,9 @@
 .companion-header { background: transparent; }
 .companion-identity, .companion-avatar { -webkit-user-select: none; user-select: none; }
 .companion-avatar :is(img, iframe) { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+.companion-avatar iframe[data-ready="true"] { transition: opacity var(--companion-ready-duration) var(--companion-ease); }
+.companion-avatar-loading { opacity: 0; animation: companion-loading-reveal 0s linear var(--companion-loading-delay) forwards; }
+@keyframes companion-loading-reveal { to { opacity: 1; } }
 .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome {
   background: rgba(9,9,11,.60);
   -webkit-backdrop-filter: blur(12px) saturate(110%);
@@ -88,6 +91,7 @@
 .companion-chat .companion-send:active:not(:disabled) { transform: scale(.94); }
 
 @media (prefers-reduced-motion: reduce) {
+  .companion-avatar iframe[data-ready="true"] { transition: none; }
   .companion-chat button, .companion-composer { transition: none; }
   .companion-chat button:active, .companion-chat button:hover { transform: none !important; }
   .companion-scroll { scroll-behavior: auto; }

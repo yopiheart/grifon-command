@@ -1,0 +1,83 @@
+{
+  "recordedAt": "2026-10-07 05:28:12 UTC",
+  "baselineCommit": "bccbc2dc6addd60e0e61765400a36ce7210624ac",
+  "sourceSHA256": {
+    "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+    "components/CompanionChat/companionChat.css": "81697a3d2f1b912419aff69e6d30111c3e034d1d4bbab18951ade3ef720d086c"
+  },
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": "voice-sync",
+        "cmd": "npm.cmd run check:voice-sync",
+        "chunk_id": "b5299d",
+        "wall_time_seconds": 2.3053564,
+        "exit_code": 0,
+        "original_token_count": 75,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:voice-sync\n> node tools/check-voice-lint-sync.mjs\n\n  ·  grifon-starter — walang voice gate (dapat ENGLISH ang copy nito, STEP 0a)\n  ✓  oceanides-paolo\n  ✓  oceanides-price-page\nvoice-lint sync ok — 2 funnel katulad ng _template (222b3ede9f9b)\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": "domain",
+        "cmd": "npm.cmd run check:domain",
+        "chunk_id": "6f62c7",
+        "wall_time_seconds": 3.925342,
+        "exit_code": 0,
+        "original_token_count": 39,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:domain\n> node tools/check-domain-language.mjs\n\n[domain-language] OK — scanned 302 file(s), 0 drift hits.\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": "artifact-anchors",
+        "cmd": "npm.cmd run check:artifact-anchors",
+        "chunk_id": "3c8c87",
+        "wall_time_seconds": 2.7515943,
+        "exit_code": 0,
+        "original_token_count": 186,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:artifact-anchors\n> node tools/artifacts/check-anchors.mjs\n\n\nbuild-eli5-image-gate.mjs\n  api/gemini/image.ts:105                     the server 503 when the unprefixed flag is off\n  services/producerDeps.ts:138                the one function that hands out BOTH halves from the client flag\n  services/producerOrchestrator.ts:1825       Half A, the deterministic check\n  services/producerOrchestrator.ts:1846       Half A hard-flagging a scene out of approval\n  services/producerOrchestrator.ts:1868       Half B, the AI gate\n\n> C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\artifacts\\eli5-image-gate.html\n  page 15 KB\n  artifacts/eli5-image-gate.html unchanged\n\ncheck:artifact-anchors ok\n\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": "companion-assets",
+        "cmd": "node tools/sync-companion-assets.mjs --check",
+        "chunk_id": "37336f",
+        "wall_time_seconds": 1.3762653,
+        "exit_code": 0,
+        "original_token_count": 13,
+        "output": "PASS: 11 companion assets match the accepted source\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "name": "design-lint",
+        "cmd": "npm.cmd run design:lint",
+        "chunk_id": "c61078",
+        "wall_time_seconds": 2.5002189,
+        "exit_code": 0,
+        "original_token_count": 94,
+        "output": "\n> creative-director-ai-assistant@1.0.0 design:lint\n> node node_modules/@google/design.md/dist/index.js lint DESIGN.md\n\n{\n  \"findings\": [\n    {\n      \"severity\": \"info\",\n      \"message\": \"Design system defines 8 colors, 7 typography scales, 5 rounding levels, 4 spacing tokens, 6 components.\"\n    }\n  ],\n  \"summary\": {\n    \"errors\": 0,\n    \"warnings\": 0,\n    \"infos\": 1\n  }\n}\n"
+      }
+    }
+  ],
+  "bundleLeak": {
+    "cmd": "npm.cmd run check:bundle-leak",
+    "chunk_id": "24fd07",
+    "wall_time_seconds": 1.7268631,
+    "exit_code": 0,
+    "original_token_count": 43,
+    "output": "\n> creative-director-ai-assistant@1.0.0 check:bundle-leak\n> node tools/check-bundle-leak.mjs\n\n[bundle-leak] OK — scanned 11 bundle file(s), 0 crown-jewel markers found.\n"
+  },
+  "limitations": [
+    "Headless desktop browser CSS viewports do not establish physical-phone performance.",
+    "Loading-delay checks use native CSS animation time, not a promised wall-clock delay.",
+    "No real microphone/provider or paid operations performed."
+  ]
+}
