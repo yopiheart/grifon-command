@@ -29,9 +29,14 @@ artifact-anchor/domain/PSASCII and26Codex checksPASS. Provider calls/spend0.
 Existing accepted film/stems unchanged.
 Raw audio/stems remain ignored; local private recovery ZIP verified byte-for-byte
 by archive.mjs, tracked qa/recovery-archive.json. Git is finished-output/code backup.
-Full31.2s shader launch production is next in the user-requested separate chat;
-brief workflows/grifon_shader_launch_brief.md specifies independentportrait,
+Full31.2s shader launch production dispatched to the user-requested separate chat
+"Grifon shader launch film",01a11748-4bfb-7582-9c06-826e9667b5fd,hostlocal.
+It starts from pushed Phase1 commitd76f46af56ce9ddf0e6dfa7229c08a5bf9c48edb
+and will isolate its own checkout/branch. Parent Motion design waits to verify
+final outputs, email draft/attachment, and PC sleep; no handoff-only completion.
+Brief workflows/grifon_shader_launch_brief.md specifies independentportrait,
 real fixture-labeled UI, sound, offline player, recovery, and zero-new-spend scope.
+Phase1 helpers stopped; source files, ignored audio and verified ZIP persist.
 Installed Motion Director skill is unchanged. Exact wording proposal is saved in
 workflows/grifon_motion_action_skill_proposal.md for later specific-diff approval.
 Email draft/attachment and PC sleep are pending full-film completion. No merge,
