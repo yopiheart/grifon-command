@@ -1,7 +1,6 @@
 .companion-chat { font-size: 14px; }
 .companion-shell > div > .companion-chat { height: 100%; }
 @media (min-width: 768px) {
-  .companion-viewer-open > .companion-header,
   .companion-viewer-open > .mx-auto { width: 55%; margin-left: 0; }
 }
 
@@ -23,11 +22,28 @@
   outline-offset: 3px;
 }
 
-.companion-header { background: #09090B; }
+.companion-header { background: transparent; }
+.companion-identity, .companion-avatar { -webkit-user-select: none; user-select: none; }
+.companion-avatar :is(img, iframe) { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+.companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome {
+  background: rgba(9,9,11,.60);
+  -webkit-backdrop-filter: blur(12px) saturate(110%);
+  backdrop-filter: blur(12px) saturate(110%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+}
+.companion-chat .companion-composer.mat-chrome { background: rgba(9,9,11,.70); }
+.companion-header button { background: rgba(9,9,11,.70); color: #D4D4D8; }
+.companion-header button:hover:not(:disabled) { background: rgba(9,9,11,.80); color: #FFFFFF; }
+.companion-composer .companion-icon-button { color: #D4D4D8; }
+.companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::before,
+.companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::after { display: none; }
 .companion-scroll {
   scrollbar-width: thin;
   scrollbar-color: #3F3F46 transparent;
-  scroll-padding-block: 24px;
+  padding-top: var(--companion-header-offset, 128px);
+  padding-bottom: var(--companion-footer-offset, 132px);
+  scroll-padding-top: var(--companion-header-offset, 128px);
+  scroll-padding-bottom: var(--companion-footer-offset, 132px);
 }
 .companion-message { font-size: 14px; font-weight: 400; line-height: 1.65; letter-spacing: normal; }
 .companion-message-assistant { background: rgba(255,255,255,.035); }
@@ -43,42 +59,44 @@
   50% { opacity: 1; }
 }
 
-/* A tonal edge over the resting canvas; no extra backdrop-filter pass. */
+/* Keep status text legible without covering the conversation with a plate. */
+.companion-footer { isolation: isolate; }
+.companion-footer-note {
+  display: table;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(9,9,11,.85);
+  color: #D4D4D8;
+}
 .companion-footer::before {
   content: '';
   position: absolute;
-  inset: -24px 0 auto;
-  height: 24px;
-  background: linear-gradient(transparent, #09090B);
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(transparent 30%, rgba(9,9,11,.92));
   pointer-events: none;
 }
 .companion-composer {
   position: relative;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.09);
+  transition: border-color var(--companion-duration) var(--companion-ease);
 }
-.companion-composer::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border: 1px solid rgba(255,204,0,.55);
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--companion-duration) var(--companion-ease);
-}
-.companion-composer:focus-within::after { opacity: 1; }
-.companion-message-input { font-weight: 400; }
+.companion-composer:focus-within { border-color: rgba(255,204,0,.55); }
+.companion-message-input { font-weight: 400; line-height: 20px; }
 .companion-chat .companion-send:hover { transform: none; }
 .companion-chat .companion-send:active:not(:disabled) { transform: scale(.94); }
 
 @media (prefers-reduced-motion: reduce) {
-  .companion-chat button, .companion-composer::after { transition: none; }
+  .companion-chat button, .companion-composer { transition: none; }
   .companion-chat button:active, .companion-chat button:hover { transform: none !important; }
   .companion-scroll { scroll-behavior: auto; }
   .companion-typing-dot { animation: none; opacity: 1; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .companion-chat .mat-plate, .companion-message-user, .companion-message-assistant { background: #18181B; }
+  .companion-chat .mat-plate, .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome, .companion-message-user, .companion-message-assistant { background: #18181B !important; }
+  .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .companion-header button, .companion-header button:hover:not(:disabled), .companion-footer-note { background: #18181B !important; }
   .companion-message-user { border: 1px solid #FFCC00; box-shadow: none; }
   .companion-composer { box-shadow: none; border-color: #82828B; }
   .companion-footer::before { display: none; }

@@ -1,0 +1,14 @@
+{
+  "components/CompanionChat/CompanionChatSurface.tsx": "7996f9347a4a3cc52d52f6092abb2f2187909056b5223ee4e3bb014036fac4dd",
+  "components/CompanionChat/CompanionComposer.tsx": "7126b56475b89545970d5de19863f601f3f7ecb30d58dc390f616e1e908b14f4",
+  "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+  "components/CompanionChat/companionChat.css": "232934b059ab2176a360099cf5965010d02114b691bc521a2b9026cec267745b",
+  "components/CompanionChat/useCompanionDictation.ts": "a679206f208f0a4faca858a259dfac00f3992dad73de4851b73e548d77b47acb",
+  "components/CompanionChat/CompanionChatShell.tsx": "59f07a7df0de48ce2fe33dd082cc5d9343d164f608583e16b302e36406774aa4",
+  "components/CompanionChat/CompanionOutputViewer.tsx": "4bf6247ba31101152decb065b2b335af2298ecba7755b869d6858b2d23075423",
+  "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+  "public/companion/frame.html": "e90ac0d1522ffd87b661e7de22736309d60e12cf55be07d38f30a7c7f3d4361d",
+  "tests/e2e/companion-glass.spec.ts": "d2fda74e7b92c2cd494140fcbb55e22417fe37cf6e7d50e611cb514e97fc055f",
+  "tests/e2e/companion-glass.config.ts": "9096b7e2021652a5b8ee2574a88437aa83e8f24db41e8aba4bdb9a53be18d4af",
+  "tests/e2e/companion-layout.spec.ts": "8bd3ded07ae8cdef06c06ec51df77ea87d86adcdef11afddf313571d7f060f7e"
+}

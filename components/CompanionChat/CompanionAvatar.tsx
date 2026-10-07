@@ -41,6 +41,30 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
   }, [state, ready, attempt, send]);
 
   useEffect(() => {
+    let selectingAvatar = false;
+    const pointer = (event: PointerEvent) => {
+      selectingAvatar = false;
+      if (document.hidden || host.current?.closest('[inert]')
+        || (event.target instanceof Element && event.target.closest('button, a, input, textarea, select, [role="button"]'))) return;
+      const bounds = host.current?.getBoundingClientRect();
+      selectingAvatar = !!bounds?.width && !!bounds.height && event.clientX >= bounds.left && event.clientX <= bounds.right
+        && event.clientY >= bounds.top && event.clientY <= bounds.bottom;
+    };
+    const selection = (event: Event) => { if (selectingAvatar) event.preventDefault(); };
+    const release = () => { selectingAvatar = false; };
+    window.addEventListener('pointerdown', pointer, true);
+    document.addEventListener('selectstart', selection, true);
+    window.addEventListener('pointerup', release, true);
+    window.addEventListener('pointercancel', release, true);
+    return () => {
+      window.removeEventListener('pointerdown', pointer, true);
+      document.removeEventListener('selectstart', selection, true);
+      window.removeEventListener('pointerup', release, true);
+      window.removeEventListener('pointercancel', release, true);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!ready) return;
     let raf = 0;
     let point: { x: number; y: number } | null = null;
@@ -73,18 +97,18 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
 
   const retry = () => { setReady(false); setFailed(false); setAttempt(value => value + 1); };
   return (
-    <div ref={host} className={`relative isolate ${className}`} data-companion-state={state}>
-      {!ready && <img src={`${base}neutral.png`} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-contain" />}
+    <div ref={host} className={`companion-avatar relative isolate ${className}`} data-companion-state={state}>
+      {!ready && <img src={`${base}neutral.png`} alt="" aria-hidden="true" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />}
       <iframe
         key={attempt} ref={frame} src={`${base}frame.html`} title="Grifon animated companion"
-        aria-hidden="true" tabIndex={-1} data-ready={ready ? 'true' : undefined}
+        aria-hidden="true" tabIndex={-1} draggable={false} data-ready={ready ? 'true' : undefined}
         className="pointer-events-none absolute inset-0 h-full w-full border-0"
         style={{ opacity: ready ? 1 : 0 }}
         allow="camera 'none'; microphone 'none'; geolocation 'none'"
         onLoad={() => send({ command: 'state', state })}
         onError={() => { setReady(false); setFailed(true); }}
       />
-      {failed && <div className="absolute -bottom-4 -right-11 z-10">
+      {failed && <div className="pointer-events-auto absolute -bottom-4 -right-11 z-10">
           <Button type="button" variant="ghost" className="min-h-11 min-w-11 !rounded-xl !p-2 text-xs" onClick={retry} aria-label="Retry companion motion" title="Still image. Retry companion motion">
             <RotateCw className="h-4 w-4 shrink-0" />
           </Button>

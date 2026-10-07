@@ -1,0 +1,49 @@
+{
+  "input": {
+    "x": 73,
+    "y": 568.125,
+    "width": 181,
+    "height": 44
+  },
+  "controls": [
+    {
+      "label": "Attach product photo",
+      "rect": {
+        "x": 25,
+        "y": 568.125,
+        "width": 44,
+        "height": 44,
+        "top": 568.125,
+        "right": 69,
+        "bottom": 612.125,
+        "left": 25
+      }
+    },
+    {
+      "label": "Start voice input",
+      "rect": {
+        "x": 258,
+        "y": 568.125,
+        "width": 44,
+        "height": 44,
+        "top": 568.125,
+        "right": 302,
+        "bottom": 612.125,
+        "left": 258
+      }
+    },
+    {
+      "label": "Send",
+      "rect": {
+        "x": 306,
+        "y": 568.125,
+        "width": 44,
+        "height": 44,
+        "top": 568.125,
+        "right": 350,
+        "bottom": 612.125,
+        "left": 306
+      }
+    }
+  ]
+}

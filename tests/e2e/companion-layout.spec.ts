@@ -9,8 +9,9 @@ async function geometry(page: Page) {
   const avatar = await page.locator('iframe[title="Grifon animated companion"]:visible').boundingBox();
   const composer = await page.locator('.companion-composer').boundingBox();
   const transcript = await page.getByTestId('conversation-scroll').boundingBox();
-  if (!avatar || !composer || !transcript) throw new Error('Missing visible avatar, composer or transcript');
-  return { avatar, composer, transcript,
+  const header = await page.locator('.companion-header').boundingBox();
+  if (!avatar || !composer || !transcript || !header) throw new Error('Missing visible avatar, composer, header or transcript');
+  return { avatar, composer, transcript, header,
     centerOffset: Math.abs(avatar.x + avatar.width / 2 - composer.x - composer.width / 2),
     avatarBottom: avatar.y + avatar.height,
     overflow: await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
@@ -36,10 +37,11 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     const initial = await geometry(page);
     fs.writeFileSync(path.join(QA, `${phase}-geometry-${width}.json`), JSON.stringify(initial, null, 2));
     await page.screenshot({ path: path.join(QA, `${phase}-initial-${width}.png`), fullPage: true });
-    // Independent reference contract: one centered avatar ABOVE the conversation,
-    // never alongside it. A 2px tolerance allows fractional layout rounding.
+    // Floating chrome shares the composer center line; the scroll area runs below
+    // it while newly opened content clears the header. Allow2px layout rounding.
     expect.soft(initial.centerOffset, 'avatar must share the composer center line').toBeLessThanOrEqual(2);
-    expect.soft(initial.avatarBottom, 'avatar must be above the transcript').toBeLessThanOrEqual(initial.transcript.y + 2);
+    expect.soft(initial.transcript.y, 'transcript extends beneath floating mascot').toBeLessThan(initial.avatarBottom);
+    expect.soft((await page.locator('.companion-message').first().boundingBox())!.y, 'initial content clears floating chrome').toBeGreaterThanOrEqual(initial.header.y + initial.header.height - 2);
     expect(initial.overflow).toBeLessThanOrEqual(0);
     const input = page.getByRole('textbox', { name: 'Message Grifon' });
     await input.fill('Cold brew for busy parents.');
@@ -53,7 +55,7 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     await page.screenshot({ path: path.join(QA, `${phase}-active-${width}.png`), fullPage: true });
     const active = await geometry(page);
     expect.soft(active.centerOffset).toBeLessThanOrEqual(2);
-    expect.soft(active.avatarBottom).toBeLessThanOrEqual(active.transcript.y + 2);
+    expect.soft(active.transcript.y).toBeLessThan(active.avatarBottom);
     await expect(page.getByRole('button', { name: /^(Pause|Resume) companion motion$/ })).toHaveCount(0);
     for (const name of [width < 768 ? 'Open conversations' : 'Collapse conversations', 'Attach product photo', 'Send']) {
       const control = page.getByRole('button', { name, exact: true });
@@ -119,11 +121,13 @@ for (const [width, height] of [[375, 667], [1000, 700]]) {
     await page.waitForTimeout(600);
     const bounds = await review.boundingBox();
     const scrollBounds = await scroller.boundingBox();
+    const headerBounds = (await page.locator('.companion-header').boundingBox())!;
+    const safeTop = Math.max(scrollBounds!.y, headerBounds.y + headerBounds.height);
     fs.mkdirSync(QA, { recursive: true });
-    fs.writeFileSync(path.join(QA, `${phase}-review-${width}.json`), JSON.stringify({ review: bounds, transcript: scrollBounds }, null, 2));
+    fs.writeFileSync(path.join(QA, `${phase}-review-${width}.json`), JSON.stringify({ review: bounds, transcript: scrollBounds, header: headerBounds, safeTop }, null, 2));
     await page.screenshot({ path: path.join(QA, `${phase}-review-${width}.png`), fullPage: true });
-    expect.soft(bounds!.y, 'new review card heading must not be clipped above the transcript').toBeGreaterThanOrEqual(scrollBounds!.y);
-    expect.soft(bounds!.y, 'new tall review card starts near the transcript top').toBeLessThanOrEqual(scrollBounds!.y + 40);
+    expect.soft(bounds!.y, 'new review card heading clears floating header').toBeGreaterThanOrEqual(safeTop - 2);
+    expect.soft(bounds!.y, 'new tall review card starts near the clear content top').toBeLessThanOrEqual(safeTop + 40);
     await scroller.evaluate(element => { element.scrollTop = 0; element.dispatchEvent(new Event('scroll')); });
     await expect(page.getByTestId('conversation-scroll').getByText('Cold brew for busy parents.', { exact: true })).toBeVisible();
     await input.fill('A draft while reading history');

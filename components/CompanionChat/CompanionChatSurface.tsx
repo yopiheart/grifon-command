@@ -1,9 +1,10 @@
-import { Fragment, memo, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
+import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { AlertTriangle, ArrowLeft, Check, ImagePlus, Loader2, PanelLeft, Plus, X } from 'lucide-react';
 import type { ProducerSurfaceController } from '../OneShotAd/ProducerFlow';
 import type { LockablePresetId } from '../../types';
 import Button from '../ui/Button';
 import { GlassPanel } from '../ui/GlassPanel';
+import { LiquidGlass } from '../ui/LiquidGlass';
 import { DUR, EASE } from '../ui/motionTokens';
 import { CompanionAvatar, type CompanionReaction } from './CompanionAvatar';
 import { CompanionComposer, type CompanionComposerHandle } from './CompanionComposer';
@@ -74,6 +75,8 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const [armedPreset, setArmedPreset] = useState<{ value: LockablePresetId | null; label: string } | null>(null);
   const composer = useRef<CompanionComposerHandle>(null);
   const scroller = useRef<HTMLDivElement>(null);
+  const header = useRef<HTMLElement>(null);
+  const footer = useRef<HTMLElement>(null);
   const upload = useRef<HTMLInputElement>(null);
   const uploadEpoch = useRef(0);
   const owner = useRef(userId);
@@ -109,6 +112,15 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
     if (replyTimer.current !== null) window.clearTimeout(replyTimer.current);
     replyTimer.current = null; pendingReply.current = null; setPendingReplyId(null);
   }, []);
+  const measureClearance = useCallback(() => {
+    const node = scroller.current;
+    if (!node || !header.current || !footer.current) return { top: 24, bottom: 24 };
+    const top = Math.ceil(header.current.getBoundingClientRect().height) + 16;
+    const bottom = Math.ceil(footer.current.getBoundingClientRect().height) + 24;
+    node.style.setProperty('--companion-header-offset', `${top}px`);
+    node.style.setProperty('--companion-footer-offset', `${bottom}px`);
+    return { top, bottom };
+  }, []);
 
   useEffect(() => {
     if (owner.current !== userId) {
@@ -131,6 +143,18 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
     replyTimer.current = null; pendingReply.current = null;
   }, []);
   useEffect(() => { if (run || loadingRun) clearPendingReply(); }, [run?.runId, loadingRun, clearPendingReply]);
+  useLayoutEffect(() => {
+    const node = scroller.current;
+    if (!node || !header.current || !footer.current) return;
+    const measure = () => {
+      measureClearance();
+      if (nearBottom.current) node.scrollTo({ top: node.scrollHeight, behavior: 'auto' });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(header.current); observer.observe(footer.current);
+    return () => observer.disconnect();
+  }, [measureClearance]);
   useEffect(() => {
     const node = scroller.current;
     if (!node) return;
@@ -142,8 +166,9 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
       if (!nearBottom.current) return;
       shownReview.current = reviewKey;
       const review = openingReview ? node.querySelector<HTMLElement>('[data-companion-review]') : null;
-      if (review && review.offsetHeight > node.clientHeight) {
-        const top = node.scrollTop + review.getBoundingClientRect().top - node.getBoundingClientRect().top - 24;
+      const { top: topInset, bottom: bottomInset } = measureClearance();
+      if (review && review.offsetHeight > node.clientHeight - topInset - bottomInset) {
+        const top = node.scrollTop + review.getBoundingClientRect().top - node.getBoundingClientRect().top - topInset;
         firstScroll.current = false; followingScroll.current = false; nearBottom.current = false;
         node.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
         return;
@@ -155,7 +180,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
       node.scrollTo({ top: node.scrollHeight, behavior: instant ? 'auto' : 'smooth' });
     });
     return () => { if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current); };
-  }, [visibleLastMessageId, run?.gate, activeStage?.id, controller.error, reviewKey]);
+  }, [visibleLastMessageId, run?.gate, activeStage?.id, controller.error, reviewKey, measureClearance]);
   useEffect(() => { setArmedScene(null); setArmedPreset(null); }, [run?.runId, run?.gate]);
 
   const stopFollowing = () => {
@@ -247,18 +272,20 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   );
 
   return <div className={`companion-chat relative flex h-full min-h-0 flex-col overflow-hidden bg-zinc-950 font-sans font-normal tracking-normal text-white ${viewer ? "companion-viewer-open" : ""}`} style={motionStyle} data-testid="companion-chat" data-chat-id={conversation?.chat.id} data-companion-state={avatarState}>
-    <header className="companion-header relative shrink-0 px-4 pb-3 pt-1 sm:px-8">
-      <div className="absolute left-4 top-3 sm:left-8">{conversation ? <Button variant="ghost" className={control + ' !p-3 md:!hidden'} aria-label="Open conversations" onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button> : <Button variant="ghost" className={control + ' !p-3'} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4" /></Button>}</div>
-      <div className="absolute right-4 top-3 sm:right-8"><Button variant="ghost" className={control + ' !p-3 ' + (conversation ? 'md:!hidden' : '')} aria-label={conversation ? 'New chat' : 'New ad'} disabled={!conversation && disabled} onClick={conversation?.newChat ?? reset}><Plus className="h-4 w-4" /></Button></div>
-      <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
-        <CompanionAvatar state={avatarState} className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
-        <h1 className="!text-base !font-semibold !normal-case !tracking-tight sm:!text-lg">Grifon</h1>
-        {!failed && (busy || loadingRun || uploading || atStoryboard || atResult) && <p className="mt-1 text-xs leading-relaxed text-zinc-400">{stateLabel}</p>}
-      </div>
-    </header>
     {fixtureLabel && <p role="note" className="shrink-0 border-b border-[#FFCC00]/20 bg-[#FFCC00]/10 px-4 py-2 text-center text-xs text-[#FFCC00]">{fixtureLabel}</p>}
     <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1">
-      <section className="flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
+      <section className="relative flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
+        <header ref={header} className="companion-header pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pb-3 pt-1 sm:px-8">
+          <div className="pointer-events-auto absolute left-4 top-3 sm:left-8">{conversation ? <Button variant="ghost" className={control + ' !p-3 md:!hidden'} aria-label="Open conversations" onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button> : <Button variant="ghost" className={control + ' !p-3'} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4" /></Button>}</div>
+          <div className="pointer-events-auto absolute right-4 top-3 sm:right-8"><Button variant="ghost" className={control + ' !p-3 ' + (conversation ? 'md:!hidden' : '')} aria-label={conversation ? 'New chat' : 'New ad'} disabled={!conversation && disabled} onClick={conversation?.newChat ?? reset}><Plus className="h-4 w-4" /></Button></div>
+          <div className="companion-identity mx-auto flex w-fit max-w-[calc(100%-88px)] flex-col items-center text-center">
+            <CompanionAvatar state={avatarState} className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
+            <LiquidGlass className="companion-identity-badge rounded-xl px-3 py-1">
+              <h1 className="!text-base !font-semibold !normal-case !tracking-tight sm:!text-lg">Grifon</h1>
+              {!failed && (busy || loadingRun || uploading || atStoryboard || atResult) && <p className="text-xs leading-relaxed text-zinc-100">{stateLabel}</p>}
+            </LiquidGlass>
+          </div>
+        </header>
         <div ref={scroller}
           onScroll={event => {
             const node = event.currentTarget;
@@ -268,7 +295,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           onPointerDown={event => { if (event.target === event.currentTarget) stopFollowing(); }}
           onWheel={event => { if (event.deltaY < 0 || followingScroll.current || !nearBottom.current) stopFollowing(); }} onTouchMove={stopFollowing}
           onKeyDown={event => { if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key) && !(event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement)) stopFollowing(); }}
-          className="companion-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-8 sm:py-6" data-testid="conversation-scroll">
+          className="companion-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 sm:px-8" data-testid="conversation-scroll">
           <div className="mx-auto flex min-h-full max-w-2xl flex-col justify-end">
             <div className="shrink-0 space-y-5">
             <Transcript messages={draft.messages} hiddenMessageId={hiddenReplyId} />
@@ -299,14 +326,14 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
             </div>
           </div>
         </div>
-        <footer className="companion-footer relative shrink-0 bg-zinc-950 px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-3 sm:px-8">
-          <div className="mx-auto max-w-2xl">
+        <footer ref={footer} className="companion-footer pointer-events-none absolute inset-x-0 bottom-0 z-20 px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-3 sm:px-8">
+          <div className="pointer-events-auto mx-auto max-w-2xl">
             {draft.heroImageBase64 && !run && <div className="mb-2 flex items-center gap-3 rounded-xl border border-white/10 p-2"><img src={draft.heroImageBase64} alt="Attached product" className="h-12 w-12 shrink-0 rounded-lg object-cover" /><p className="min-w-0 flex-1 truncate text-xs text-zinc-300">{draft.imageName || 'Product photo'}</p><Button variant="ghost" className={`${control} !p-3`} disabled={disabled} aria-label="Remove product photo" onClick={() => { uploadEpoch.current++; setDraft({ ...draft, heroImageBase64: '', imageName: '' }); }}><X className="h-4 w-4" /></Button></div>}
             <input ref={upload} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Product photo" className="hidden" disabled={disabled || !!run} onChange={event => { void attach(event.target.files?.[0]); event.target.value = ''; }} />
-            <CompanionComposer ref={composer} initialText={conversation?.chat.composer} onTextChange={text => conversation?.update({ composer: text })} disabled={disabled} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
+            <CompanionComposer ref={composer} initialText={conversation?.chat.composer} onTextChange={text => conversation?.update({ composer: text })} disabled={disabled} voiceDisabled={disabled || viewer} voiceScope={`${userId}:${conversation?.chat.id ?? 'draft'}:${run?.runId ?? 'brief'}`} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
               placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field || replyPending ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'}
               onAttach={() => upload.current?.click()} onSend={send} onDraftPresence={setHasText} />
-            <p id="companion-save-status" className="mt-3 text-center text-[11px] leading-relaxed text-on-surface-sublabel">{conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} No generation starts until you confirm.</p>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.retrySave}>Retry saving</Button>}
+            <p id="companion-save-status" className="companion-footer-note mt-3 text-center text-[11px] leading-relaxed">{conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} No generation starts until you confirm.</p>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.retrySave}>Retry saving</Button>}
           </div>
         </footer>
       </section>

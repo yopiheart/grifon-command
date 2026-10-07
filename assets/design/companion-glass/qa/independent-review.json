@@ -1,0 +1,1085 @@
+{
+  "schemaVersion": 1,
+  "completedAtUtc": "2026-10-07T03:37:41.244Z",
+  "scope": "Companion chat identity/header/composer glass, measured scrolling clearance, decorative selection, and browser voice-to-draft dictation after baseline 110d882a; no renderer asset, provider, or tuned prompt changes.",
+  "reviewMethod": {
+    "agent": "/root/glass_explorer",
+    "independence": "Reused read-only explorer independent of the builder and source edits. Fresh critic/default spawn and prior critic resume were unavailable because the platform agent-thread limit rejected them. This is not a fresh-context critic claim.",
+    "sourceWork": "Read-only diff and scoped source inspection. Only this review report is persistent output; transient scripts/screenshots are in ignored .tmp. No source/test edits, stage, or commit.",
+    "skills": [
+      ".agents/skills/brand-check/SKILL.md",
+      ".agents/skills/verify-changes/SKILL.md",
+      ".agents/skills/surgical-edit/SKILL.md"
+    ],
+    "authority": "Current DESIGN.md typography/material rules, including owner-approved Companion glass scope at lines 197-206, supersede stale typography/material recipes in the brand-check checklist.",
+    "browser": "Installed Playwright headless Microsoft Edge, deviceScaleFactor 2, actual rendered screenshots and computed styles. Responsive CSS viewports, not physical-phone tests.",
+    "noSpend": "SpeechRecognition/webkitSpeechRecognition public API mocks only; microphone and providers were never invoked. Nonlocal/API requests were blocked except public font GETs. Local output-video requests used the existing local fixture."
+  },
+  "verdict": {
+    "correctness": "PASS",
+    "brand": "BRAND_PASS",
+    "critical": 0,
+    "nit": 0,
+    "openFindings": [],
+    "score": {
+      "philosophyCoherence": 9,
+      "visualHierarchy": 9,
+      "executionCraft": 9,
+      "functionality": 9,
+      "innovationAndDistinctiveness": 8,
+      "total": 44,
+      "outOf": 50
+    },
+    "quickWins": []
+  },
+  "contractReview": [
+    {
+      "question": "Floating header and output split",
+      "result": "PASS",
+      "evidence": "Actual persisted history overlaps the transparent header at 320/375/390/1280. Header/scroller occupy the same vertical area, with measured safe padding for initial/latest content and tall-review alignment. Desktop viewer remains 45% and the left chat/header/composer remain 55%; mobile output is a separate modal. Builder fixes shared current-bound measurement before review-follow RAF to avoid stale observer offsets."
+    },
+    {
+      "question": "Glass belongs to functional layers",
+      "result": "PASS",
+      "evidence": "Identity and composer use existing LiquidGlass/MAT_CHROME, scoped to 12px bounded blur with neutral floors and inset highlight only. Rim/specular pseudo-elements are disabled locally. Outer header is transparent; text messages/output plates have no added backdrop filter. The removed outer drop shadow has no remaining local replacement."
+    },
+    {
+      "question": "Mascot selection and readable message text",
+      "result": "PASS",
+      "evidence": "Scoped decorative user-select/image-drag rules plus a coordinate-based native selectstart guard exclude form/button/link targets, hidden documents and inert hosts, and remove listeners on unmount. Independent actual mouse drags selected transcript text at all four widths. Companion smoke additionally exercised double-click protection and wheel/eye tracking."
+    },
+    {
+      "question": "Single-line and growing composer",
+      "result": "PASS",
+      "evidence": "At 320/375/390/1280, Plus/mic/send targets measure 44px, their centers align to the 44px empty/filled input within 1 CSS pixel, no horizontal overflow occurs, and multiline input grows to a 128px cap. Controls bottom-align on multiline drafts. File input stays hidden behind Plus, and existing keyboard/IME/send semantics are preserved."
+    },
+    {
+      "question": "Dictation duplicates, overwrites or autosends",
+      "result": "PASS",
+      "evidence": "Full-result-list replacement with typed base avoids cumulative/interim duplication. One explicit send creates one message; recognition alone sends none and triggers zero generation calls. Manual typing/composition, clear/send and the 4000-character cap invalidate or abort active sessions. Manual stop accepts a pending final result until end."
+    },
+    {
+      "question": "Lifecycle guards through disabled, hidden, chat/account/navigation/viewer",
+      "result": "PASS",
+      "evidence": "Epoch, recognition instance, chat/account scope and latest-disabled guards reject retained callbacks after invalidation. Result/start callbacks synchronously check document.hidden and inert ancestry before MutationObserver delivery, covering the async navigation-save gap. Disabled/viewer/inert/hidden and unmount cleanup detach callbacks before abort. Independent probes exercised retained callbacks across those state changes; the smoke suite also held the IndexedDB navigation save."
+    },
+    {
+      "question": "Unsupported browsers and speech errors",
+      "result": "PASS",
+      "evidence": "Accessible truthful unsupported/permission/error feedback retains drafts, standard and webkit-prefixed constructors work in mocks, and keyboard input remains usable. No live voice call UI or service is represented as implemented."
+    },
+    {
+      "question": "Bright-underlay contrast and accessibility",
+      "result": "PASS",
+      "evidence": "Independent actual-photo and all-white stress content placed in the real scroller beneath functional controls. These stress-only underlays are not a claim that the current transcript renders inline media. Actual pixel ratios clear the current 4.5:1 floor; high contrast and reduced transparency replace compact chrome with solid #18181B, remove local blur, and retain layout. Reduced motion computes transition 0s."
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "id": "bright-underlay-contrast",
+      "priority": "P2",
+      "initial": "The original low-opacity identity floor, dim composer ghost ink and unprotected saved-status text fell below 4.5:1 on actual photo and white content (white identity 1.92:1, ghost 2.25:1, status 1.32:1). Outer conventional drop shadow also conflicted with the scoped material rule.",
+      "fix": "Identity floor 60% with light helper, composer 70% with zinc300 ghost ink, fit-content 85% tonal status/helper protection, inset highlight only; explicit local blur removal in accessibility modes.",
+      "reverification": "42 behavior/contrast checks pass, including actual Edge pixels at 375/1280 and solid/high-contrast/reduced-motion guards; four-width geometry still passes."
+    },
+    {
+      "id": "header-hover-contrast",
+      "priority": "P2",
+      "initial": "Legacy hover:bg-white/5 overrode the protected header button base. Open conversations/New chat/Retry companion motion each measured 1.00:1 over white on hover; idle measured 5.27:1.",
+      "fix": "Scoped button:hover:not(:disabled) uses 80% zinc floor/white ink; high-contrast and reduced-transparency explicitly force both idle and hover to solid #18181B.",
+      "reverification": "18 actual-pixel checks pass across three controls, idle/hover, and normal/high-contrast/reduced-transparency modes. Normal hover is 11.35:1; accessibility hover is 17.72:1.",
+      "beforeObservations": [
+        {
+          "name": "Open conversations",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgba(9, 9, 11, 0.7)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            82,
+            82,
+            84
+          ],
+          "contrast": 5.274662159325225,
+          "pass": true
+        },
+        {
+          "name": "Open conversations",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(255, 255, 255, 0.05)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "contrast": 1,
+          "pass": false
+        },
+        {
+          "name": "New chat",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgba(9, 9, 11, 0.7)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            82,
+            82,
+            84
+          ],
+          "contrast": 5.274662159325225,
+          "pass": true
+        },
+        {
+          "name": "New chat",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(255, 255, 255, 0.05)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "contrast": 1,
+          "pass": false
+        },
+        {
+          "name": "Retry companion motion",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgba(9, 9, 11, 0.7)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            82,
+            82,
+            84
+          ],
+          "contrast": 5.274662159325225,
+          "pass": true
+        },
+        {
+          "name": "Retry companion motion",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(255, 255, 255, 0.05)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "contrast": 1,
+          "pass": false
+        }
+      ],
+      "afterObservations": [
+        {
+          "mode": "normal",
+          "name": "Open conversations",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgba(9, 9, 11, 0.7)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            82,
+            82,
+            84
+          ],
+          "contrast": 5.274662159325225,
+          "pass": true
+        },
+        {
+          "mode": "normal",
+          "name": "Open conversations",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(9, 9, 11, 0.8)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            58,
+            58,
+            60
+          ],
+          "contrast": 11.349023791640015,
+          "pass": true
+        },
+        {
+          "mode": "normal",
+          "name": "New chat",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgba(9, 9, 11, 0.7)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            82,
+            82,
+            84
+          ],
+          "contrast": 5.274662159325225,
+          "pass": true
+        },
+        {
+          "mode": "normal",
+          "name": "New chat",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(9, 9, 11, 0.8)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            58,
+            58,
+            60
+          ],
+          "contrast": 11.349023791640015,
+          "pass": true
+        },
+        {
+          "mode": "normal",
+          "name": "Retry companion motion",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgba(9, 9, 11, 0.7)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            82,
+            82,
+            84
+          ],
+          "contrast": 5.274662159325225,
+          "pass": true
+        },
+        {
+          "mode": "normal",
+          "name": "Retry companion motion",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgba(9, 9, 11, 0.8)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            58,
+            58,
+            60
+          ],
+          "contrast": 11.349023791640015,
+          "pass": true
+        },
+        {
+          "mode": "high-contrast",
+          "name": "Open conversations",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgb(24, 24, 27)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 11.986974864049339,
+          "pass": true
+        },
+        {
+          "mode": "high-contrast",
+          "name": "Open conversations",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 24, 27)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 17.71676507806213,
+          "pass": true
+        },
+        {
+          "mode": "high-contrast",
+          "name": "New chat",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgb(24, 24, 27)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 11.986974864049339,
+          "pass": true
+        },
+        {
+          "mode": "high-contrast",
+          "name": "New chat",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 24, 27)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 17.71676507806213,
+          "pass": true
+        },
+        {
+          "mode": "high-contrast",
+          "name": "Retry companion motion",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgb(24, 24, 27)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 11.986974864049339,
+          "pass": true
+        },
+        {
+          "mode": "high-contrast",
+          "name": "Retry companion motion",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 24, 27)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 17.71676507806213,
+          "pass": true
+        },
+        {
+          "mode": "reduced-transparency",
+          "name": "Open conversations",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgb(24, 24, 27)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 11.986974864049339,
+          "pass": true
+        },
+        {
+          "mode": "reduced-transparency",
+          "name": "Open conversations",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 24, 27)",
+            "x": 21,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 17.71676507806213,
+          "pass": true
+        },
+        {
+          "mode": "reduced-transparency",
+          "name": "New chat",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgb(24, 24, 27)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 11.986974864049339,
+          "pass": true
+        },
+        {
+          "mode": "reduced-transparency",
+          "name": "New chat",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 24, 27)",
+            "x": 320,
+            "y": 79
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 17.71676507806213,
+          "pass": true
+        },
+        {
+          "mode": "reduced-transparency",
+          "name": "Retry companion motion",
+          "hovered": false,
+          "css": {
+            "color": "rgb(212, 212, 216)",
+            "background": "rgb(24, 24, 27)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 11.986974864049339,
+          "pass": true
+        },
+        {
+          "mode": "reduced-transparency",
+          "name": "Retry companion motion",
+          "hovered": true,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(24, 24, 27)",
+            "x": 221,
+            "y": 99
+          },
+          "rgb": [
+            24,
+            24,
+            27
+          ],
+          "contrast": 17.71676507806213,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "measurements": {
+    "viewports": [
+      {
+        "width": 320,
+        "height": 667
+      },
+      {
+        "width": 375,
+        "height": 667
+      },
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 1280,
+        "height": 900
+      }
+    ],
+    "geometryObservationCount": 13,
+    "geometryFailures": [],
+    "geometryErrors": [],
+    "unexpectedRequests": [],
+    "behaviorChecks": [
+      {
+        "name": "full result replacement avoids cumulative duplication",
+        "pass": true
+      },
+      {
+        "name": "recognition never autosends",
+        "pass": true
+      },
+      {
+        "name": "stop accepts pending final result",
+        "pass": true
+      },
+      {
+        "name": "manual edits abort and reject retained late callback",
+        "pass": true
+      },
+      {
+        "name": "inert blocks result synchronously before observer delivery",
+        "pass": true,
+        "detail": {
+          "before": "Manual correction accepted",
+          "after": "Manual correction accepted"
+        }
+      },
+      {
+        "name": "inert aborts active recognition",
+        "pass": true
+      },
+      {
+        "name": "hidden document blocks retained callback",
+        "pass": true,
+        "detail": {
+          "before": "Manual correction accepted",
+          "after": "Manual correction accepted"
+        }
+      },
+      {
+        "name": "new chat unmount rejects retained callback",
+        "pass": true
+      },
+      {
+        "name": "unsent dictated draft persists across chat switch",
+        "pass": true
+      },
+      {
+        "name": "account remount rejects retained callback",
+        "pass": true
+      },
+      {
+        "name": "disabled state rejects retained callback",
+        "pass": true
+      },
+      {
+        "name": "viewer opening aborts and rejects retained callback",
+        "pass": true
+      },
+      {
+        "name": "permission denial has accessible truthful status",
+        "pass": true
+      },
+      {
+        "name": "permission denial retains draft",
+        "pass": true
+      },
+      {
+        "name": "dictation respects 4000 character cap",
+        "pass": true
+      },
+      {
+        "name": "full draft stops active recognition",
+        "pass": true
+      },
+      {
+        "name": "send clears and rejects retained callback",
+        "pass": true
+      },
+      {
+        "name": "one explicit send creates one message",
+        "pass": true
+      },
+      {
+        "name": "voice makes no generation calls",
+        "pass": true
+      },
+      {
+        "name": "webkit prefix fallback works",
+        "pass": true
+      },
+      {
+        "name": "unsupported recognition is honest and keyboard remains usable",
+        "pass": true
+      },
+      {
+        "name": "unsupported recognition retains draft",
+        "pass": true
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over actual-photo 375",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-composer .companion-icon-button",
+          "color": "rgb(212, 212, 216)",
+          "x": 30,
+          "y": 568,
+          "rgb": [
+            31,
+            18,
+            15
+          ],
+          "contrast": 12.33706924357232
+        }
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over actual-photo 375",
+        "pass": true,
+        "detail": {
+          "selector": "#companion-save-status",
+          "color": "rgb(212, 212, 216)",
+          "x": 21,
+          "y": 631,
+          "rgb": [
+            17,
+            15,
+            14
+          ],
+          "contrast": 12.934286019360055
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over actual-photo 375",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-identity-badge",
+          "color": "rgb(255, 255, 255)",
+          "x": 158,
+          "y": 121,
+          "rgb": [
+            79,
+            51,
+            47
+          ],
+          "contrast": 11.369599868947391
+        }
+      },
+      {
+        "name": "filled white draft contrasts over actual-photo 375",
+        "pass": true,
+        "detail": {
+          "rgb": [
+            51,
+            32,
+            30
+          ],
+          "whiteContrast": 15.372073293573134
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over white-reference 375",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-composer .companion-icon-button",
+          "color": "rgb(212, 212, 216)",
+          "x": 30,
+          "y": 568,
+          "rgb": [
+            81,
+            81,
+            83
+          ],
+          "contrast": 5.358124158753567
+        }
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over white-reference 375",
+        "pass": true,
+        "detail": {
+          "selector": "#companion-save-status",
+          "color": "rgb(212, 212, 216)",
+          "x": 21,
+          "y": 631,
+          "rgb": [
+            25,
+            25,
+            26
+          ],
+          "contrast": 11.88683927304376
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over white-reference 375",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-identity-badge",
+          "color": "rgb(255, 255, 255)",
+          "x": 158,
+          "y": 121,
+          "rgb": [
+            107,
+            107,
+            109
+          ],
+          "contrast": 5.317716707755031
+        }
+      },
+      {
+        "name": "filled white draft contrasts over white-reference 375",
+        "pass": true,
+        "detail": {
+          "rgb": [
+            81,
+            81,
+            83
+          ],
+          "whiteContrast": 7.919314760926948
+        }
+      },
+      {
+        "name": "high contrast composer is solid 375",
+        "pass": true,
+        "detail": {
+          "background": "rgb(24, 24, 27)",
+          "filter": "none",
+          "shadow": "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
+          "transition": "0s"
+        }
+      },
+      {
+        "name": "reduced motion disables compositor transition 375",
+        "pass": true,
+        "detail": {
+          "background": "rgb(24, 24, 27)",
+          "filter": "none",
+          "shadow": "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
+          "transition": "0s"
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over actual-photo 1280",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-composer .companion-icon-button",
+          "color": "rgb(212, 212, 216)",
+          "x": 438,
+          "y": 819,
+          "rgb": [
+            67,
+            66,
+            67
+          ],
+          "contrast": 6.769137200398183
+        }
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over actual-photo 1280",
+        "pass": true,
+        "detail": {
+          "selector": "#companion-save-status",
+          "color": "rgb(212, 212, 216)",
+          "x": 587,
+          "y": 873,
+          "rgb": [
+            16,
+            13,
+            13
+          ],
+          "contrast": 13.090294672819592
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over actual-photo 1280",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-identity-badge",
+          "color": "rgb(255, 255, 255)",
+          "x": 727,
+          "y": 131,
+          "rgb": [
+            75,
+            93,
+            45
+          ],
+          "contrast": 7.234385001425958
+        }
+      },
+      {
+        "name": "filled white draft contrasts over actual-photo 1280",
+        "pass": true,
+        "detail": {
+          "rgb": [
+            56,
+            56,
+            58
+          ],
+          "whiteContrast": 11.699701301523259
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over white-reference 1280",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-composer .companion-icon-button",
+          "color": "rgb(212, 212, 216)",
+          "x": 438,
+          "y": 819,
+          "rgb": [
+            77,
+            77,
+            79
+          ],
+          "contrast": 5.706153354755206
+        }
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over white-reference 1280",
+        "pass": true,
+        "detail": {
+          "selector": "#companion-save-status",
+          "color": "rgb(212, 212, 216)",
+          "x": 587,
+          "y": 873,
+          "rgb": [
+            23,
+            23,
+            24
+          ],
+          "contrast": 12.121329572062033
+        }
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over white-reference 1280",
+        "pass": true,
+        "detail": {
+          "selector": ".companion-identity-badge",
+          "color": "rgb(255, 255, 255)",
+          "x": 727,
+          "y": 131,
+          "rgb": [
+            107,
+            107,
+            109
+          ],
+          "contrast": 5.317716707755031
+        }
+      },
+      {
+        "name": "filled white draft contrasts over white-reference 1280",
+        "pass": true,
+        "detail": {
+          "rgb": [
+            77,
+            77,
+            79
+          ],
+          "whiteContrast": 8.43370238380922
+        }
+      },
+      {
+        "name": "high contrast composer is solid 1280",
+        "pass": true,
+        "detail": {
+          "background": "rgb(24, 24, 27)",
+          "filter": "none",
+          "shadow": "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
+          "transition": "0s"
+        }
+      },
+      {
+        "name": "reduced motion disables compositor transition 1280",
+        "pass": true,
+        "detail": {
+          "background": "rgb(24, 24, 27)",
+          "filter": "none",
+          "shadow": "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset",
+          "transition": "0s"
+        }
+      }
+    ],
+    "behaviorFailures": [],
+    "behaviorErrors": [],
+    "compactTextContrastSamples": [
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over actual-photo 375",
+        "contrast": 12.33706924357232
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over actual-photo 375",
+        "contrast": 12.934286019360055
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over actual-photo 375",
+        "contrast": 11.369599868947391
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over white-reference 375",
+        "contrast": 5.358124158753567
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over white-reference 375",
+        "contrast": 11.88683927304376
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over white-reference 375",
+        "contrast": 5.317716707755031
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over actual-photo 1280",
+        "contrast": 6.769137200398183
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over actual-photo 1280",
+        "contrast": 13.090294672819592
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over actual-photo 1280",
+        "contrast": 7.234385001425958
+      },
+      {
+        "name": "compact text/icon contrasts .companion-composer .companion-icon-button over white-reference 1280",
+        "contrast": 5.706153354755206
+      },
+      {
+        "name": "compact text/icon contrasts #companion-save-status over white-reference 1280",
+        "contrast": 12.121329572062033
+      },
+      {
+        "name": "compact text/icon contrasts .companion-identity-badge over white-reference 1280",
+        "contrast": 5.317716707755031
+      }
+    ],
+    "minimumWhiteReferenceIdentityContrast": 5.317716707755031,
+    "minimumWhiteReferenceComposerGhostContrast": 5.358124158753567,
+    "minimumWhiteReferenceSavedStatusContrast": 11.88683927304376,
+    "minimumWhiteReferenceDraftContrast": 7.919314760926948,
+    "minimumNormalHeaderIdleContrast": 5.274662159325225,
+    "minimumNormalHeaderHoverContrast": 11.349023791640015
+  },
+  "checksPersonallyExecuted": [
+    {
+      "command": "node .tmp/companion-glass-independent-20261007/review.mjs",
+      "exitCode": 0,
+      "result": "Four viewports, 20 screenshots, 13 geometry observations, no failure/browser errors/unexpected requests. Repeated after final readability and note-padding fix; later source change was header hover only."
+    },
+    {
+      "command": "node .tmp/companion-glass-independent-20261007/behavior.mjs",
+      "exitCode": 0,
+      "result": "42 mocked dictation/contrast/accessibility checks pass after readability fix; later source change was header hover only."
+    },
+    {
+      "command": "COMPANION_QA_DIR=.tmp/companion-glass-independent-20261007/tall-review COMPANION_LAYOUT_PHASE=independent npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts companion-layout.spec.ts --grep 'new tall brief' --output .tmp/companion-glass-independent-20261007/tall-test-results",
+      "exitCode": 0,
+      "result": "Two tall-review cases passed at 375x667 and 1000x700. Executed before cosmetic contrast/note-padding adjustment; smoke owner subsequently repeated both on final readability geometry and passed."
+    },
+    {
+      "command": "node .tmp/companion-glass-independent-20261007/hover.mjs",
+      "exitCode": 0,
+      "result": "18 final hover/idle/contrast-mode actual-pixel checks pass. Before-fix observations preserve all three hover failures."
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "No whitespace errors. Git emitted normal LF/CRLF conversion warnings."
+    }
+  ],
+  "checksReportedByOtherAgents": [
+    {
+      "owner": "/root/typography_smoke",
+      "result": "31 unique behavior cases passed before final readability CSS; 10 targeted normal-flow cases plus two tall-review repeats passed after readability changes. Header hover/accessibility CSS-only follow-up covered independently here.",
+      "reference": "assets/design/companion-glass/qa/report.md"
+    },
+    {
+      "owner": "/root/typography_builder",
+      "result": "Build and full units passed before final contrast/hover follow-ups: 1453 passed/32 skipped across 118 files. Final required build/unit gates are being rerun by builder/root, and are not claimed as personally executed here."
+    }
+  ],
+  "sourceSha256": {
+    "DESIGN.md": "32e8144a47d229dc681e966cad96257b963e9d3efc302171106641b0e2b1e18b",
+    "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+    "components/CompanionChat/CompanionChatSurface.tsx": "856f7732bc16e4d402e12041157e503e96e4230af4d146a5c1bc0f60844ebc5f",
+    "components/CompanionChat/CompanionComposer.tsx": "e8c3a04ca9ee9207ae124d6992873d3a2b3e5d6acc18c5a9c92e50ab97cd14ed",
+    "components/CompanionChat/companionChat.css": "90332d0ece862bfc2b6239f0d367e599fe60c166a86d09580e149d7da494d151",
+    "components/CompanionChat/useCompanionDictation.ts": "a679206f208f0a4faca858a259dfac00f3992dad73de4851b73e548d77b47acb"
+  },
+  "evidence": {
+    "persistentSmokeReport": "assets/design/companion-glass/qa/report.md",
+    "persistentSmokeVerification": "assets/design/companion-glass/qa/verification.json",
+    "transientGeometry": ".tmp\\companion-glass-independent-20261007\\observations.json",
+    "transientBehavior": ".tmp\\companion-glass-independent-20261007\\behavior-observations.json",
+    "transientFinalHover": ".tmp\\companion-glass-independent-20261007\\hover-observations.json",
+    "independentlyInspectedPixels": [
+      ".tmp\\companion-glass-independent-20261007\\empty-375.png",
+      ".tmp\\companion-glass-independent-20261007\\multiline-375.png",
+      ".tmp\\companion-glass-independent-20261007\\history-overlap-1280.png",
+      ".tmp\\companion-glass-independent-20261007\\viewer-375.png",
+      ".tmp\\companion-glass-independent-20261007\\bright-actual-photo-375.png",
+      ".tmp\\companion-glass-independent-20261007\\bright-actual-photo-1280.png",
+      ".tmp\\companion-glass-independent-20261007\\bright-white-reference-375.png",
+      ".tmp\\companion-glass-independent-20261007\\bright-white-reference-1280.png",
+      ".tmp\\companion-glass-independent-20261007\\header-hover-normal-white.png",
+      ".tmp\\companion-glass-independent-20261007\\header-hover-reduced-transparency-white.png"
+    ],
+    "allGeometryScreenshots": [
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\empty-320.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\filled-320.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\multiline-320.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\history-overlap-320.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\viewer-320.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\empty-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\filled-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\multiline-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\history-overlap-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\viewer-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\empty-390.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\filled-390.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\multiline-390.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\history-overlap-390.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\viewer-390.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\empty-1280.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\filled-1280.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\multiline-1280.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\history-overlap-1280.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\viewer-1280.png"
+    ],
+    "allContrastScreenshots": [
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\bright-actual-photo-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\bright-white-reference-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\accessibility-375.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\bright-actual-photo-1280.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\bright-white-reference-1280.png",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-glass-independent-20261007\\accessibility-1280.png"
+    ]
+  },
+  "limitations": [
+    "Native microphone capture, real browser permission UI and online speech recognition accuracy/service were intentionally not tested; only public API mocks exercised application behavior.",
+    "Responsive tests ran in desktop Edge at CSS viewports and DPR 2. Physical phones, native mobile keyboard resizing, native pinch/browser zoom and live FPS were not verified.",
+    "This review is independent of source production but reused the earlier explorer context because a fresh critic could not be allocated. It is not a fresh-context review.",
+    "Live calling, paid generation and production data mutation are outside this voice-to-draft scope and were not invoked.",
+    "Independent stress screenshots/scripts remain local ignored .tmp evidence per ownership instruction; persistent smoke evidence and the numerical observations in this report are available in QA."
+  ]
+}

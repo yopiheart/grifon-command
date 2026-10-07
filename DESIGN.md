@@ -194,6 +194,16 @@ layer. Grifon had it inverted — 105 `backdrop-filter`s, most of them wrapping 
   [`<LiquidGlass>`](components/ui/LiquidGlass.tsx) is CHROME (functional layer). Both take a `tier` prop.
 - **Scroll edge effect** (`SCROLL_EDGE`) on any sticky bar — content grades out beneath it instead
   of colliding with its labels.
+- **Companion chat glass (owner-approved scope):** the compact centered identity and message
+  composer float above the scrolling conversation. Use local neutral CHROME treatment with
+  restrained tint, blur and edge highlights; messages and output cards stay PLATE. Keep the
+  area around the identity transparent so history remains visible beneath it. This explicit
+  scope permits the two functional surfaces to add bounded blur passes; it does not relax
+  the filter budget elsewhere. Do not add a second rim filter or animate blur strength.
+  Measure header/footer clearance so new messages and review headings stay fully reachable.
+  Keep 44px controls, 14px text, normal message selection, and the approved 56/64px mascot;
+  disable selection and image dragging only on the decorative identity. Reduced transparency
+  and higher contrast use solid compact controls with the same layout and safe clearances.
 - **Accessibility is not optional.** `prefers-reduced-transparency` and `prefers-contrast: more`
   collapse every glass surface to a solid tonal fill (rim + specular off, contrast ring on). Any new
   material must carry the same guards — same standing as `prefers-reduced-motion`.
