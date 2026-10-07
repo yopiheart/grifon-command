@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, original shader study complete; draft PR backup pending**
+**Stamped: 2026-10-07, original shader study saved in draft PR165**
 
 ## Current: original shader material study
 Checkout C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
@@ -12,9 +12,9 @@ Capture/source hashes and fresh-start/reverse/brand-hold checks PASS in qa/.
 Each mode needs a fresh browser; opening text uses permanent opacity promotion.
 qa/rasterization-fix.json preserves original-fail/fix-pass evidence, not tolerance.
 Offline artifacts/grifon-shader-study.html has synchronized videos and download.
-Independent mobile/player/download/encoded-boundary QA PASS; draft PR pending.
-Original free-component recipe, pinned reproducible build and licenses saved.
-User creative review pending. Customer preset UI/API, deployment and merge unbuilt.
+Independent QA PASS; draft https://github.com/yopiheart/grifon-command/pull/165.
+verify/e2e/artifacts CI running; Vercel FAILURE links account-deployment-blocked.
+Creative review pending; customer preset UI/API, deployment and merge unbuilt.
 The approved full film/music/voice below are unchanged; no new provider calls.
 
 ## Motion film / PR156
