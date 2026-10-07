@@ -1,7 +1,43 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, original shader study saved in draft PR165**
+**Stamped: 2026-10-08, shared action pilot implemented and independently reviewed**
 
-## Current: original shader material study
+## Current: scene purpose and shared action pilot
+Checkout C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
+Branch codex/grifon-shader-study; draft PR165 holds this isolated motion work.
+New source/exports workflows/assets/grifon-motion-action-pilot/; eight seconds,
+1080p30,240frames, three actual native AMD WebGPU shader treatments.
+Scene purpose/readable intervals/transitions/actions/contacts share pilot.json;
+animation, sound cue alignment, and QA use the same editable specification.
+Generic action-spec and authored pilot-contract are separate;16 tests PASS.
+Four independent contract findings and one live player syntax defect fixed.
+Original-fail/fix-pass evidence retained. Exact fresh/nonlinear/brand holds PASS;
+copy-only edit changed48,999pixels inside intended line and0outside; contact
+3.03->3.23 moves visual landing and both glass sound cues together.
+Review grifon-motion-action-pilot-review-1080p.mp4 SHA
+a9a473307a0d1df8a12c96b46e9659c88bfcf6f0a0e5c5c4eb85c788d940ce47;
+2,883,189bytes,H264/stereoAAC48k,strictdecodePASS,-16.3LUFS/-2.4dBTP.
+Offline artifacts/grifon-motion-action-pilot.html built from finished committed
+output/poster/spec only; emittedJS now parses before save.
+Actual390x844 CUA HTTP review: fullplay/endedreplay/pause/restart/chapters,
+6.8->1.6scrub,audiotoggle,and byte-exact download PASS. Screenshot/receipt inqa.
+Root drove UI because subagent browser inventory was empty; independent smoke
+agent reviewed screenshots/receipts. Direct hearing and real-phone QA pending.
+File-protocol browser rejection was resolved using a scoped HTTP review route
+serving only vetted finished HTML, no directory/local-file browsing.
+Build PASS;1432unit testsPASS (32skipped with live/paid switches unset);
+artifact-anchor/domain/PSASCII and26Codex checksPASS. Provider calls/spend0.
+Existing accepted film/stems unchanged.
+Raw audio/stems remain ignored; local private recovery ZIP verified byte-for-byte
+by archive.mjs, tracked qa/recovery-archive.json. Git is finished-output/code backup.
+Full31.2s shader launch production is next in the user-requested separate chat;
+brief workflows/grifon_shader_launch_brief.md specifies independentportrait,
+real fixture-labeled UI, sound, offline player, recovery, and zero-new-spend scope.
+Installed Motion Director skill is unchanged. Exact wording proposal is saved in
+workflows/grifon_motion_action_skill_proposal.md for later specific-diff approval.
+Email draft/attachment and PC sleep are pending full-film completion. No merge,
+deployment, customer feature, paid generation, or commercial publication done.
+
+## Original shader material study
 Checkout C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
 Branch codex/grifon-shader-study; source/exports workflows/assets/grifon-shader-study/.
 Eight seconds,1080p30,240frames; three H264 silent exports strictly decode PASS.
@@ -13,7 +49,7 @@ Each mode needs a fresh browser; opening text uses permanent opacity promotion.
 qa/rasterization-fix.json preserves original-fail/fix-pass evidence, not tolerance.
 Offline artifacts/grifon-shader-study.html has synchronized videos and download.
 Independent QA PASS; draft https://github.com/yopiheart/grifon-command/pull/165.
-verify/e2e/artifacts CI running; Vercel FAILURE links account-deployment-blocked.
+Historical verify/e2e/artifacts CI PASS; Vercel FAILURE links account-deployment-blocked.
 Creative review pending; customer preset UI/API, deployment and merge unbuilt.
 The approved full film/music/voice below are unchanged; no new provider calls.
 

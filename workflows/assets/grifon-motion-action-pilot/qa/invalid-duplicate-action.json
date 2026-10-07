@@ -1,0 +1,403 @@
+{
+  "id": "grifon-motion-action-pilot",
+  "schemaVersion": 1,
+  "duration": 8,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "copy": {
+    "opening": "Until now.",
+    "direction": "Give your next ad a clear direction.",
+    "steps": [
+      "Research",
+      "Script",
+      "Storyboard"
+    ],
+    "brand": "GRIFON",
+    "website": "grifon.ai"
+  },
+  "assets": {
+    "logo": "./assets/logo.png",
+    "displayFont": "./assets/inter-900.ttf",
+    "bodyFont": "./assets/inter-variable.ttf"
+  },
+  "targets": [
+    "orb-world",
+    "orb-glint",
+    "opening-copy",
+    "direction-copy",
+    "glass-card",
+    "glass-field",
+    "card-sheen",
+    "workflow-research",
+    "workflow-script",
+    "workflow-storyboard",
+    "workflow-steps",
+    "brand",
+    "brand-url",
+    "finish-light",
+    "transition-light",
+    "end-fade"
+  ],
+  "scenes": [
+    {
+      "id": "orb",
+      "purpose": "Turn creative possibility into a focused promise: Until now.",
+      "start": 0,
+      "end": 2.4,
+      "readable": [
+        0.98,
+        2.4
+      ],
+      "exit": {
+        "kind": "cut"
+      }
+    },
+    {
+      "id": "glass",
+      "purpose": "Explain the connected Grifon planning workflow: research, script, storyboard.",
+      "start": 2.4,
+      "end": 5.2,
+      "readable": [
+        3.1,
+        5.2
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "workflow-compress"
+      }
+    },
+    {
+      "id": "finish",
+      "purpose": "Resolve the workflow into memorable Grifon identity and website.",
+      "start": 5.2,
+      "end": 8,
+      "readable": [
+        6.4,
+        7.6
+      ],
+      "exit": {
+        "kind": "fade",
+        "actionId": "end-fade"
+      }
+    }
+  ],
+  "materialHoldActionId": "brand-reveal",
+  "actions": [
+    {
+      "id": "orb-reveal",
+      "target": "orb-world",
+      "start": 0.05,
+      "end": 1.05,
+      "easing": "outQuart",
+      "contact": 0.95,
+      "soundFamily": "rounded-focus"
+    },
+    {
+      "id": "opening-reveal",
+      "target": "opening-copy",
+      "start": 0.3,
+      "end": 0.98,
+      "easing": "outQuart",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "orb-push",
+      "target": "orb-world",
+      "start": 0.95,
+      "end": 2.4,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "orb-glint",
+      "target": "orb-glint",
+      "start": 0.2,
+      "end": 1.85,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "card-reveal",
+      "target": "glass-card",
+      "start": 2.4,
+      "end": 3.28,
+      "easing": "outQuart",
+      "contact": 3.03,
+      "soundFamily": "glass-contact"
+    },
+    {
+      "id": "direction-reveal",
+      "target": "direction-copy",
+      "start": 2.43,
+      "end": 2.98,
+      "easing": "outQuart",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "card-sweep",
+      "target": "card-sheen",
+      "start": 3.28,
+      "end": 4.75,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "workflow-research",
+      "target": "workflow-research",
+      "start": 2.55,
+      "end": 2.92,
+      "easing": "outQuart",
+      "contact": 2.92,
+      "soundFamily": "ui-contact"
+    },
+    {
+      "id": "workflow-script",
+      "target": "workflow-script",
+      "start": 2.61,
+      "end": 2.98,
+      "easing": "outQuart",
+      "contact": 2.98,
+      "soundFamily": "ui-contact"
+    },
+    {
+      "id": "workflow-storyboard",
+      "target": "workflow-storyboard",
+      "start": 2.67,
+      "end": 3.04,
+      "easing": "outQuart",
+      "contact": 3.04,
+      "soundFamily": "ui-contact"
+    },
+    {
+      "id": "direction-exit",
+      "target": "direction-copy",
+      "start": 5.2,
+      "end": 5.44,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "workflow-exit",
+      "target": "workflow-steps",
+      "start": 5.2,
+      "end": 5.4,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "workflow-compress",
+      "target": "glass-card",
+      "start": 5.2,
+      "end": 5.72,
+      "easing": "smooth",
+      "contact": 5.7,
+      "soundFamily": "screen-travel"
+    },
+    {
+      "id": "card-hide",
+      "target": "glass-card",
+      "start": 5.61,
+      "end": 5.72,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "brand-reveal",
+      "target": "brand",
+      "start": 5.65,
+      "end": 6.4,
+      "easing": "outQuart",
+      "contact": 6.4,
+      "soundFamily": "brand-resolve"
+    },
+    {
+      "id": "brand-url-reveal",
+      "target": "brand-url",
+      "start": 5.97,
+      "end": 6.4,
+      "easing": "outQuart",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "finish-light",
+      "target": "finish-light",
+      "start": 5.55,
+      "end": 6.4,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "transition-sweep",
+      "target": "transition-light",
+      "start": 5.3,
+      "end": 6.18,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "end-fade",
+      "target": "end-fade",
+      "start": 7.6,
+      "end": 8,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "orb-reveal",
+      "target": "orb-world",
+      "start": 0.05,
+      "end": 1.05,
+      "easing": "outQuart",
+      "contact": 0.95,
+      "soundFamily": "rounded-focus"
+    }
+  ],
+  "audio": {
+    "music": {
+      "asset": "./assets/audio/digital-clouds.mp3",
+      "sourceIn": 8,
+      "gainDb": -4,
+      "fadeIn": 0.12,
+      "fadeOut": 0.55
+    },
+    "assets": {
+      "paper-swipe-2": "./assets/audio/paper-swipe-2.wav",
+      "reverse-air-1": "./assets/audio/reverse-air-1.wav",
+      "orb-inward-1": "./assets/audio/orb-inward-1.wav",
+      "card-pop-2": "./assets/audio/card-pop-2.wav",
+      "phone-contact-2": "./assets/audio/phone-contact-2.wav"
+    },
+    "cues": [
+      {
+        "id": "orb-anticipation",
+        "actionId": "orb-reveal",
+        "assetId": "reverse-air-1",
+        "sourceIn": 1.236,
+        "sourceOut": 1.69,
+        "sourceContact": 1.646,
+        "gainDb": -14.5
+      },
+      {
+        "id": "orb-focus",
+        "actionId": "orb-reveal",
+        "assetId": "orb-inward-1",
+        "sourceIn": 0,
+        "sourceOut": 0.32,
+        "sourceContact": 0.056,
+        "gainDb": 0
+      },
+      {
+        "id": "glass-travel",
+        "actionId": "card-reveal",
+        "assetId": "paper-swipe-2",
+        "sourceIn": 1.1,
+        "sourceOut": 1.58,
+        "sourceContact": 1.408,
+        "gainDb": -3
+      },
+      {
+        "id": "glass-contact",
+        "actionId": "card-reveal",
+        "assetId": "phone-contact-2",
+        "sourceIn": 0.145,
+        "sourceOut": 0.4,
+        "sourceContact": 0.18,
+        "gainDb": 1.5
+      },
+      {
+        "id": "research-contact",
+        "actionId": "workflow-research",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.046,
+        "sourceContact": 0.014,
+        "gainDb": -19
+      },
+      {
+        "id": "script-contact",
+        "actionId": "workflow-script",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.046,
+        "sourceContact": 0.014,
+        "gainDb": -19
+      },
+      {
+        "id": "storyboard-contact",
+        "actionId": "workflow-storyboard",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.046,
+        "sourceContact": 0.014,
+        "gainDb": -19
+      },
+      {
+        "id": "workflow-travel",
+        "actionId": "workflow-compress",
+        "assetId": "paper-swipe-2",
+        "sourceIn": 1.1,
+        "sourceOut": 1.58,
+        "sourceContact": 1.408,
+        "gainDb": -4
+      },
+      {
+        "id": "brand-anticipation",
+        "actionId": "brand-reveal",
+        "assetId": "reverse-air-1",
+        "sourceIn": 1.236,
+        "sourceOut": 1.69,
+        "sourceContact": 1.646,
+        "gainDb": -13
+      },
+      {
+        "id": "brand-contact",
+        "actionId": "brand-reveal",
+        "assetId": "phone-contact-2",
+        "sourceIn": 0.145,
+        "sourceOut": 0.4,
+        "sourceContact": 0.18,
+        "gainDb": 5
+      },
+      {
+        "id": "brand-body",
+        "actionId": "brand-reveal",
+        "assetId": "orb-inward-1",
+        "sourceIn": 0,
+        "sourceOut": 0.78,
+        "sourceContact": 0.056,
+        "gainDb": 1.5
+      }
+    ]
+  },
+  "qa": {
+    "copyMutation": {
+      "key": "opening",
+      "value": "Your next ad."
+    },
+    "contactMutation": {
+      "actionId": "card-reveal",
+      "delta": 0.2
+    },
+    "sampleActionIds": [
+      "orb-reveal",
+      "card-reveal",
+      "workflow-storyboard",
+      "workflow-compress",
+      "brand-reveal"
+    ]
+  },
+  "description": "Original eight-second Grifon action-contract pilot. Abstract workflow panels are motion samples, not proof of product output."
+}

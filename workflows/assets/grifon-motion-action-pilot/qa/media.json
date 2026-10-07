@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "file": "grifon-motion-action-pilot-picture-1080p.mp4",
+      "bytes": 2674198,
+      "sha256": "4a1cfe43409c4707f2ee84cfd3c33d10202ddf0fb2c1132d5379f357095eac7f",
+      "frames": 240,
+      "duration": 8,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "fps": "30/1",
+      "audio": null,
+      "strictDecode": "PASS"
+    },
+    {
+      "file": "grifon-motion-action-pilot-review-1080p.mp4",
+      "bytes": 2883189,
+      "sha256": "a9a473307a0d1df8a12c96b46e9659c88bfcf6f0a0e5c5c4eb85c788d940ce47",
+      "frames": 240,
+      "duration": 8,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "fps": "30/1",
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channels": 2,
+        "integratedLufs": -16.3,
+        "truePeakDbtp": -2.4
+      },
+      "strictDecode": "PASS"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

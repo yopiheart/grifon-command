@@ -1,0 +1,245 @@
+{
+  "date": "2026-10-07T16:33:15.290Z",
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "sources": {
+    "index.html": "f2362d819a774ee7bd338ad8111cc8a49f9610634df66c2dfe402ec24e163907",
+    "composition.js": "423cff68900fc0d87227eac89825c341fc47fc1e5de3c1ff408d2ff847d8b193",
+    "pilot.json": "086006716cfeaf2ae6ace1c0f128822b3e25581278f98e39016e888ab4ab4cad",
+    "action-spec.mjs": "f27e12ef4f49864e08defd00e2e46d6ecdcb75c65e774eab94c41897081f40ab",
+    "pilot-contract.mjs": "b05ccf56da0c714d4adcd37bd76312706bf8b3d3247d0e7e537cf1370f527893",
+    "contract.test.mjs": "bb10c06bc98be5462a8b07b546f2e732419cf55471706d9e766d56144dd995f6",
+    "materials-source.js": "f39358a09a3b156f879bfce75359a789bfe31b5a97cc539204e1d98cd2a009c6",
+    "shader-materials.js": "e6a8f8d4698728f050c2c12626189d5acebda5b1a174c9b3af27031d3c6dabe9",
+    "audio.mjs": "4f91ac94fdb88e78836a94063dfa9cf3bc45eccd5ac343d634843ee9c1529a54",
+    "render.mjs": "c10450392527c7e4720381620e188abfaae7a8c58c10157cb7e5f685b5609dca"
+  },
+  "resolution": [
+    1920,
+    1080
+  ],
+  "samples": [
+    {
+      "time": 0,
+      "file": "frame-00.png",
+      "sha256": "fbf5d189aedaf1022a958098a6f462f6443adef10143ffc3019d9982453d9c26"
+    },
+    {
+      "time": 0.49999999999999994,
+      "file": "frame-01.png",
+      "sha256": "5fc8b45250d2fdf5be235ebf505c279c582cc3b38ec74fd03f31d0a644479e86"
+    },
+    {
+      "time": 0.95,
+      "file": "frame-02.png",
+      "sha256": "f11a4e8aa6e52478d5f68333133e4ef1f27125910fb49251c5b496bdb463ac76"
+    },
+    {
+      "time": 0.98,
+      "file": "frame-03.png",
+      "sha256": "042e6925d601a97393021570a9bfb404f191c52e57e24962205622abdb81b78a"
+    },
+    {
+      "time": 2.3666666666666667,
+      "file": "frame-04.png",
+      "sha256": "3929b54b7dae8be4905607503e0f4a5e7b024ff3881097b9874e656a31328eb3"
+    },
+    {
+      "time": 2.4,
+      "file": "frame-05.png",
+      "sha256": "5d2f94a8c00ec4d78b7b93af44962b24cc8d94122725fb01fcfca47d548d4341"
+    },
+    {
+      "time": 2.715,
+      "file": "frame-06.png",
+      "sha256": "8dd594ac9871fc411b76a804c5d9c76567aa0275c7fe927c381f3de46653a403"
+    },
+    {
+      "time": 2.855,
+      "file": "frame-07.png",
+      "sha256": "03e65e6291f258d43291328a1790c03168c134cd5f695c77fb144b35af4332bc"
+    },
+    {
+      "time": 3.03,
+      "file": "frame-08.png",
+      "sha256": "58d5a7794144393627e7c2e1308a67aacb7b9031bba903f6056e5c94d089886d"
+    },
+    {
+      "time": 3.04,
+      "file": "frame-09.png",
+      "sha256": "2a6433f6428e3e7a0e84a0b8125afb8310a91202ed82c9ed54a089b155b3df5c"
+    },
+    {
+      "time": 3.1,
+      "file": "frame-10.png",
+      "sha256": "1de3fbe088c85fd19aa37ce4ab58a699399e1b6bab8543034383b2c6f2c17ffb"
+    },
+    {
+      "time": 5.166666666666667,
+      "file": "frame-11.png",
+      "sha256": "5ca9601a4ced407124432b32f1eaec0d35ffa9ff0a5ee48265b83c578cb0e30c"
+    },
+    {
+      "time": 5.2,
+      "file": "frame-12.png",
+      "sha256": "4e7fcb26dee8f4c06e26f94a998ff17f08d13faeccaaba1aa7b2c222e19654ef"
+    },
+    {
+      "time": 5.45,
+      "file": "frame-13.png",
+      "sha256": "27e68434c8e07a323c7b927cf5a049b1ec01296717a6af554ae278dc168ee90e"
+    },
+    {
+      "time": 5.7,
+      "file": "frame-14.png",
+      "sha256": "2ceb3095efd7a7a6641c14c8f3f2f93d0831cf8a7ae1356d80a380962e11ee6c"
+    },
+    {
+      "time": 6.025,
+      "file": "frame-15.png",
+      "sha256": "c0d90cfc709d561573b2ce8e99c869e3b3e443b48088d48720111512f4216a9f"
+    },
+    {
+      "time": 6.4,
+      "file": "frame-16.png",
+      "sha256": "9f39beb1c44351ff55019162d89c6d61fedab5042b89b63001b1131cd900854d"
+    },
+    {
+      "time": 7.6,
+      "file": "frame-17.png",
+      "sha256": "9f39beb1c44351ff55019162d89c6d61fedab5042b89b63001b1131cd900854d"
+    },
+    {
+      "time": 7.966666666666667,
+      "file": "frame-18.png",
+      "sha256": "f0c875ce35d211fee99e238c3ed68b1852f6b622534e4f033410782ddd0b9eaa"
+    }
+  ],
+  "repeatCases": [
+    {
+      "scene": "orb",
+      "time": 1.69,
+      "first": "bdf49fb2667fc0181eadba00298a27b7682f23bc4d2f3a0ac88a2345a2879378",
+      "nonlinear": "bdf49fb2667fc0181eadba00298a27b7682f23bc4d2f3a0ac88a2345a2879378",
+      "fresh": "bdf49fb2667fc0181eadba00298a27b7682f23bc4d2f3a0ac88a2345a2879378",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "glass",
+      "time": 4.15,
+      "first": "f4aff95dc25954a94c74522ddaa4f803fc8e4ac883128a0c5a144b0b627660c3",
+      "nonlinear": "f4aff95dc25954a94c74522ddaa4f803fc8e4ac883128a0c5a144b0b627660c3",
+      "fresh": "f4aff95dc25954a94c74522ddaa4f803fc8e4ac883128a0c5a144b0b627660c3",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "finish",
+      "time": 7,
+      "first": "9f39beb1c44351ff55019162d89c6d61fedab5042b89b63001b1131cd900854d",
+      "nonlinear": "9f39beb1c44351ff55019162d89c6d61fedab5042b89b63001b1131cd900854d",
+      "fresh": "9f39beb1c44351ff55019162d89c6d61fedab5042b89b63001b1131cd900854d",
+      "result": "EXACT_PASS"
+    }
+  ],
+  "stillBrandHold": {
+    "result": "EXACT_PASS",
+    "start": 6.4,
+    "end": 7.6,
+    "sha256": "9f39beb1c44351ff55019162d89c6d61fedab5042b89b63001b1131cd900854d"
+  },
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID orb-reveal"
+  },
+  "contactRevision": {
+    "result": "PASS",
+    "actionId": "card-reveal",
+    "originalSettle": 3.03,
+    "revisedSettle": 3.23,
+    "visiblyChanged": true,
+    "cues": [
+      {
+        "id": "glass-travel",
+        "oldContact": 3.03,
+        "newContact": 3.23,
+        "oldStart": 2.722,
+        "newStart": 2.922
+      },
+      {
+        "id": "glass-contact",
+        "oldContact": 3.03,
+        "newContact": 3.23,
+        "oldStart": 2.995,
+        "newStart": 3.195
+      }
+    ]
+  },
+  "copyRevision": {
+    "result": "PASS",
+    "textBefore": [
+      "Until now.",
+      "Give your next ad a clear direction.",
+      "Research",
+      "Script",
+      "Storyboard",
+      "GRIFON",
+      "grifon.ai"
+    ],
+    "textAfter": [
+      "Your next ad.",
+      "Give your next ad a clear direction.",
+      "Research",
+      "Script",
+      "Storyboard",
+      "GRIFON",
+      "grifon.ai"
+    ],
+    "changedInside": 48999,
+    "changedOutside": 0
+  },
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1920,
+        1080
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        1400,
+        340
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": [],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}
