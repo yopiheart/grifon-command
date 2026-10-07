@@ -2,13 +2,13 @@
 **Stamped: 2026-10-07, 14px companion chat verified; interface alignment interview in progress**
 
 ## ▶ NEXT ACTION
-Next: finish interface grill, then saved project chats and shared chat/Studio navigation.
+Next: final interface premortem pending; then saved project chats and shared chat/Studio navigation.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
 Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge.
 Current /app?experience=companion: guided ads only,88/96px mascot,14px Inter/gold messages,600ms typing; drafts save immediately.
 Build/1451 units/39 browser cases PASS; evidence chat QA type-14/; prior timing typing/, layout centered/.
-Grill locked targets: one Grifon, separate project chats; chat-first, Studio entry; natural intake asks only missing details.
-Grill locked targets: compact card/viewer;56-64px mascot; cloud sync; expandable progress; approved background jobs with status/Stop.
+Grill targets: one approved griffin, customization later; project chats, chat-first/Studio; natural intake; shared preferences, isolated briefs/files/decisions.
+Grill targets: card + desktop workspace/mobile viewer;56-64px mascot; cloud sync; expandable progress/background status+Stop; time dividers/latest receipt only.
 Approved 3D/tracking unchanged; no side rail/play-pause; tall reviews open at heading. Live providers/voice/phone FPS pending.
 
 ## Motion film / PR156
