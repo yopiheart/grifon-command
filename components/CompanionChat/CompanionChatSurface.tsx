@@ -295,7 +295,6 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   );
 
   return <div ref={surface} className={`companion-chat relative flex h-full min-h-0 flex-col overflow-hidden bg-zinc-950 font-sans font-normal tracking-normal text-white ${viewer ? "companion-viewer-open" : ""}`} style={motionStyle} data-testid="companion-chat" data-chat-id={conversation?.chat.id} data-companion-state={avatarState}>
-    {fixtureLabel && <p role="note" className="shrink-0 border-b border-[#FFCC00]/20 bg-[#FFCC00]/10 px-4 py-2 text-center text-xs text-[#FFCC00]">{fixtureLabel}</p>}
     <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1">
       <section className="relative flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
         <header ref={header} className="companion-header pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pb-3 pt-1 sm:px-8">
@@ -356,7 +355,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
             <CompanionComposer ref={composer} initialText={conversation?.chat.composer} onTextChange={text => conversation?.update({ composer: text })} disabled={disabled} voiceDisabled={disabled || viewer} voiceScope={`${userId}:${conversation?.chat.id ?? 'draft'}:${run?.runId ?? 'brief'}`} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
               placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field || replyPending ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'}
               onAttach={() => upload.current?.click()} onSend={send} onDraftPresence={setHasText} />
-            <p id="companion-save-status" className="companion-footer-note mt-3 text-center text-[11px] leading-relaxed">{conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} No generation starts until you confirm.</p>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.retrySave}>Retry saving</Button>}
+            <p id="companion-save-status" className="companion-footer-note mt-3 text-center text-[11px] leading-relaxed">{conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} {fixtureLabel ?? 'No generation starts until you confirm.'}</p>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.retrySave}>Retry saving</Button>}
           </div>
         </footer>
       </section>

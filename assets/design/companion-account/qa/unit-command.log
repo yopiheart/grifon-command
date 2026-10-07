@@ -1,0 +1,12 @@
+
+> creative-director-ai-assistant@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command
+
+
+ Test Files  119 passed | 9 skipped (128)
+      Tests  1462 passed | 32 skipped (1494)
+   Start at  15:48:45
+   Duration  45.13s (transform 12.17s, setup 0ms, import 33.87s, tests 127.72s, environment 30ms)

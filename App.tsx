@@ -162,12 +162,22 @@ const checkoutReturnHref = (search: string): string => {
 // Allowlist so a stale/tampered sessionStorage value can never route to an
 // unexpected activeModule. Ids match the strings the activeModule switch uses.
 const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads', 'companion']);
+const APP_MODULE_IDS = new Set([...INTENT_MODULE_IDS, 'creative_director', 'generate_video', 'signal_modulator', 'influencer_forge', 'cinematic_studio', 'concierge_mode', 'edit_video', 'image_editor', 'organic_calendar', 'batch_fanout', 'hook_lab']);
 
 // The landing one-question segmentation answers in the EXISTING One-Shot vertical
 // vocabulary (LaunchScreen VERTICALS → deriveBusinessType). Allowlisted so neither
 // a stale sessionStorage stash nor a tampered user_metadata value can pre-select
 // something the picker doesn't know about.
 const INTENT_VERTICALS = new Set(['product', 'service', 'real_estate']);
+const appExperience = (): 'companion' | null => new URLSearchParams(window.location.search).get('experience') === 'studio' ? null : 'companion';
+const readAppModule = (): string | null => {
+  const module = window.history.state?.appModule;
+  return module === null || (typeof module === 'string' && APP_MODULE_IDS.has(module)) ? module : appExperience();
+};
+const accountName = (email: string | null, metadata: Record<string, unknown> = {}): string => {
+  const name = [metadata.full_name, metadata.display_name, metadata.name].find(value => typeof value === 'string' && value.trim());
+  return typeof name === 'string' ? name.trim() : email?.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) || 'Account';
+};
 
 // Plausible-email gate for the signup field: enables the CONTINUE button and
 // drives the on-blur format hint. Intentionally loose (not RFC-perfect) — just
@@ -199,7 +209,7 @@ const App: React.FC = () => {
   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
-  const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
+  const { billing_cycle, plan_id, loading: subLoading, error: subError, refetch: retrySubscription } = useSubscription();
   // Purchased top-up balances — the video gate below must see a paid ₱499
   // credit, or the buyer hits the paywall for the thing they just bought.
   const { credits: topupCredits, loading: creditsLoading, loaded: creditsLoaded, refetch: refetchQuota } = useQuota();
@@ -254,19 +264,26 @@ const App: React.FC = () => {
   }, []);
   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [userName, setUserName] = useState('Account');
+  const loggingOut = useRef(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   // Pre-launch curtain. Read once at mount (localStorage), flipped by LaunchLock
   // after a code is redeemed. Inert unless VITE_LAUNCH_LOCK === 'true' at BUILD
   // time — see services/launchGate.ts.
   const [hasLaunchPass, setHasLaunchPass] = useState(() => LAUNCH_LOCK_ENABLED && hasValidPass());
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const [activeModule, setActiveModule] = useState<string | null>(() => new URLSearchParams(window.location.search).get('experience') === 'companion' ? 'companion' : null);
+  const [activeModule, setActiveModule] = useState<string | null>(readAppModule);
+  useEffect(() => {
+    if (currentRoute !== 'app' || detectInitialRoute() !== 'app') return;
+    if (activeModule !== null && !APP_MODULE_IDS.has(activeModule)) return;
+    window.history.replaceState({ ...window.history.state, appModule: activeModule }, '');
+  }, [currentRoute, activeModule]);
   const selectDashboardModule = (module: string) => {
-    if (module === 'companion') window.history.pushState({}, '', '/app?experience=companion');
+    if (module === 'companion') window.history.pushState({ appModule: 'companion' }, '', '/app');
     setActiveModule(module);
   };
   const leaveCompanion = () => {
-    window.history.pushState({}, '', '/app');
+    window.history.pushState({ appModule: null }, '', '/app?experience=studio');
     setActiveModule(null);
   };
   // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
@@ -441,16 +458,18 @@ const App: React.FC = () => {
     postAuthRedirectedRef.current = true;
     const oauthReturn = isBooting || !!sessionStorage.getItem('grifon_oauth_pending');
     if ((firstAuth && oauthReturn && currentRoute === 'landing') || currentRoute === 'login') {
+      const experience = appExperience();
+      setActiveModule(experience);
       setCurrentRoute('app');
       if (typeof window !== 'undefined') {
-        window.history.replaceState({}, '', ROUTE_PATHS.app);
+        window.history.replaceState({}, '', experience === null ? '/app?experience=studio' : ROUTE_PATHS.app);
       }
     }
   }, [isAuthenticated, currentRoute, isBooting]);
 
   useEffect(() => {
     if (!isCheckingSession && !isAuthenticated && currentRoute === 'app') {
-      window.history.replaceState({}, '', ROUTE_PATHS.login);
+      window.history.replaceState({}, '', appExperience() === null ? '/login?experience=studio' : ROUTE_PATHS.login);
       setCurrentRoute('login');
     }
   }, [isCheckingSession, isAuthenticated, currentRoute]);
@@ -504,7 +523,7 @@ const App: React.FC = () => {
     const onPop = () => {
       setCurrentRoute(detectInitialRoute());
       setLegalReturn(window.history.state?.legalReturn ?? null);
-      setActiveModule(previous => new URLSearchParams(window.location.search).get('experience') === 'companion' ? 'companion' : previous === 'companion' ? null : previous);
+      if (detectInitialRoute() === 'app') setActiveModule(readAppModule());
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
@@ -541,6 +560,7 @@ const App: React.FC = () => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
         setUserEmail(data.session.user.email ?? null);
+        setUserName(accountName(data.session.user.email ?? null, data.session.user.user_metadata));
         setUserId(data.session.user.id);
         setIsAuthenticated(true);
         // Returning from an OAuth redirect — play the Film Leader boot once.
@@ -570,10 +590,12 @@ const App: React.FC = () => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUserEmail(session.user.email ?? null);
+        setUserName(accountName(session.user.email ?? null, session.user.user_metadata));
         setUserId(session.user.id);
         setIsAuthenticated(true);
       } else {
         setUserEmail(null);
+        setUserName('Account');
         setUserId(null);
         setIsAuthenticated(false);
       }
@@ -971,12 +993,15 @@ const App: React.FC = () => {
   };
 
   const handleLogout = async () => {
+    if (loggingOut.current) return;
+    loggingOut.current = true;
     try {
-      if (userId) await clearSession(userId);
       const supabase = getSupabase();
-      await supabase.auth.signOut();
-    } finally {
-      setActiveModule(null);
+      const { error } = await supabase.auth.signOut();
+      if (error) throw new Error('Could not sign out. Please try again.');
+      setIsAuthenticated(false);
+      setUserEmail(null); setUserName('Account'); setUserId(null);
+      setActiveModule('companion');
       restart();
       // Shared cafe-PC hygiene: intent stashes are sessionStorage and would
       // otherwise survive into the NEXT user's login on this tab.
@@ -999,7 +1024,7 @@ const App: React.FC = () => {
       if (typeof window !== 'undefined' && window.history.replaceState) {
         window.history.replaceState({}, '', '/login?from=logout');
       }
-    }
+    } finally { loggingOut.current = false; }
   };
 
   const resumeSession = () => {
@@ -1076,7 +1101,7 @@ const App: React.FC = () => {
     setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
     // A restarted ad is finished business: drop the persisted session too, or
     // the Dashboard keeps offering a "finished ad" card that no longer exists.
-    if (userId) clearSession(userId);
+    if (userId) void clearSession(userId).catch(() => { /* Wizard cleanup cannot undo a successful sign-out. */ });
     setPendingSession(null);
   };
 
@@ -1109,7 +1134,7 @@ const App: React.FC = () => {
   // authenticated users go straight to /app. Replaces bare setCurrentRoute('app'),
   // which left the URL stuck on the marketing page.
   const enterApp = () => {
-    if (isAuthenticated) { goToLegal('app'); return; }
+    if (isAuthenticated) { setActiveModule('companion'); goToLegal('app'); return; }
     // Mirror a guest's pending plan (saved by startCheckout when a plan CTA is
     // clicked) into the /login URL — so the choice survives refresh, is
     // shareable, and the pixel/Custom Audiences can see "wanted Pro, didn't buy".
@@ -1697,7 +1722,9 @@ const App: React.FC = () => {
   if (!activeModule) {
     moduleElement = <Dashboard onSelectModule={selectDashboardModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} onResumeFinishedAd={() => { if (!restoreFinishedAd()) setActiveModule('creative_director'); }} />;
   } else if (activeModule === 'companion' && userId) {
-    moduleElement = <CompanionChat key={userId} userId={userId} presetUnlocked={devUnlocked || planAtLeast(plan_id, 'pro')} isBusinessTier={plan_id === 'business'}
+    moduleElement = <CompanionChat key={userId} userId={userId} userEmail={userEmail} userName={userName} actualPlanId={plan_id} planLoading={subLoading} planError={!!subError} onRetryPlan={retrySubscription} onLogout={handleLogout}
+      onNavigate={href => goToLegal(href.slice(1) as Route, { legalReturn: { route: 'app', href: window.location.pathname + window.location.search } })}
+      presetUnlocked={devUnlocked || planAtLeast(plan_id, 'pro')} isBusinessTier={plan_id === 'business'}
       videoAllowed={subLoading || creditsLoading || !creditsLoaded ? null : plan_id !== 'free' || topupCredits.video_ad_credits > 0}
       videoAllowanceLoading={subLoading || creditsLoading} onRetryVideoAllowance={refetchQuota}
       onBack={leaveCompanion} onUpgrade={() => { setIntendedModule('companion'); goToLegal('pricing'); }} />;

@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { installRecoveryBackend, seededRun, RUN_ID } from './fixtures/oneshotRecovery.js';
 
 const input = (page: Page) => page.getByRole('textbox', { name: 'Message Grifon' });
-const QA = path.resolve('assets/3d-lab/grifon-companion-chat/qa/navigation');
+const QA = path.resolve(process.env.COMPANION_NAV_QA_DIR || 'assets/3d-lab/grifon-companion-chat/qa/navigation');
 async function openFixture(page: Page) {
   await page.route('**/*', route => {
     const req = route.request(); const url = new URL(req.url());
@@ -87,7 +87,7 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
     if (width < 768) {
       await expect(page.getByRole('button', { name: 'Close conversations', exact: true })).toBeFocused();
       await page.keyboard.press('Shift+Tab');
-      await expect(page.getByRole('button', { name: 'Studio', exact: true })).toBeFocused();
+      await expect(page.getByRole('button', { name: 'Account settings', exact: true })).toBeFocused();
       await page.keyboard.press('Tab');
       await expect(page.getByRole('button', { name: 'Close conversations', exact: true })).toBeFocused();
     }

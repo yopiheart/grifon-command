@@ -1,0 +1,38 @@
+[
+  {
+    "file": "App.tsx",
+    "sha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+  },
+  {
+    "file": "components/CompanionChat/CompanionChatShell.tsx",
+    "sha256": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6"
+  },
+  {
+    "file": "components/CompanionChat/index.tsx",
+    "sha256": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b"
+  },
+  {
+    "file": "components/CompanionChat/CompanionChatSurface.tsx",
+    "sha256": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f"
+  },
+  {
+    "file": "components/CompanionChat/companionChat.css",
+    "sha256": "7b1fb135dd375404b7f4b7d390281736faa1eab30d6e658ce09f78ceb9a17bf3"
+  },
+  {
+    "file": "components/dashboard/SettingsModal.tsx",
+    "sha256": "4632a1ba3610c87998b6d3c23136294c71959057a031208c162aef90a34e1c58"
+  },
+  {
+    "file": "hooks/useSubscription.ts",
+    "sha256": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3"
+  },
+  {
+    "file": "services/consentService.ts",
+    "sha256": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f"
+  },
+  {
+    "file": "dev/companionChatPreview.tsx",
+    "sha256": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5"
+  }
+]

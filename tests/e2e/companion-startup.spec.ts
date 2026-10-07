@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const QA = path.resolve('assets/design/companion-startup/qa');
+const QA = path.resolve(process.env.COMPANION_STARTUP_QA_DIR || 'assets/design/companion-startup/qa');
 const phase = process.env.COMPANION_STARTUP_PHASE || 'final';
 const FRAME = 'iframe[title="Grifon animated companion"]';
 const STILL = 'img[src$="/companion/neutral.png"]';

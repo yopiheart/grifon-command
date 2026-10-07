@@ -5,11 +5,17 @@
 }
 
 /* Chat inputs use the body register, overriding the app's technical-data law. */
-.companion-chat :is(input, textarea, select, label, button) {
+:is(.companion-chat, .companion-settings) :is(input, textarea, select, label, button) {
   font-family: inherit !important;
   letter-spacing: normal !important;
 }
-.companion-chat label { text-transform: none !important; }
+:is(.companion-chat, .companion-settings) label { text-transform: none !important; }
+.companion-settings :is(h1, h2, h3, h4, h5, h6) {
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: -.02em !important;
+}
 .companion-chat .font-mono { letter-spacing: normal !important; }
 .companion-chat :is(input, textarea, select) { color-scheme: dark; font-size: 14px; }
 .companion-chat button {
@@ -40,9 +46,17 @@
 .companion-composer .companion-icon-button { color: #D4D4D8; }
 .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::before,
 .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::after { display: none; }
-.companion-scroll {
+.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #3F3F46 transparent;
+  scrollbar-color: #71717A transparent;
+}
+:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar { width: 6px; height: 6px; }
+:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar-track { background: transparent; }
+:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar-thumb { background: #71717A; border-radius: 8px; }
+:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
+.companion-settings { color-scheme: dark; }
+.companion-settings button:focus-visible { outline: 2px solid #FFCC00; outline-offset: -2px; }
+.companion-scroll {
   padding-top: var(--companion-header-offset, 128px);
   padding-bottom: var(--companion-footer-offset, 132px);
   scroll-padding-top: var(--companion-header-offset, 128px);
@@ -104,4 +118,13 @@
   .companion-message-user { border: 1px solid #FFCC00; box-shadow: none; }
   .companion-composer { box-shadow: none; border-color: #82828B; }
   .companion-footer::before { display: none; }
+}
+@media (prefers-contrast: more) {
+  .companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll { scrollbar-color: #A1A1AA transparent; }
+}
+@media (forced-colors: active) {
+  .companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll { scrollbar-color: auto; }
+  .companion-settings button:focus-visible { outline-color: Highlight; }
+  .companion-consent-switch > span { border: 1px solid ButtonText; }
+  .companion-consent-switch > span > span { background: ButtonText; }
 }

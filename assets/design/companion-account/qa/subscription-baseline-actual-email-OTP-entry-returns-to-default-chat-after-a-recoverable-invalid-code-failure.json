@@ -1,0 +1,10 @@
+{
+  "errors": [
+    "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Settings', exact: true })\nExpected substring: \u001b[32m\"Pro Edition\"\u001b[39m\nReceived string:    \u001b[31m\"SettingsAccount Smokeaccount-smoke@example.testPlan & billingFree EditionYour current planFreeUpgrade planView available plansPrivacyPersonalized adsShare limited data with ad partners for relevant ads.AppearanceDark appearanceGrifon uses a dark interface.Help & legalHelp & supportTerms of servicePrivacy policyAccountSign outGrifon Command © 2026\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Settings', exact: true })\u001b[22m\n\u001b[2m    19 × locator resolved to <div role=\"dialog\" tabindex=\"-1\" aria-modal=\"true\" aria-busy=\"false\" aria-labelledby=\"account-settings-title\" class=\"mat-plate relative flex max-h-[calc(100dvh-24px)] w-full max-w-lg flex-col overflow-hidden rounded-2xl ring-1 ring-white/10\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"SettingsAccount Smokeaccount-smoke@example.testPlan & billingFree EditionYour current planFreeUpgrade planView available plansPrivacyPersonalized adsShare limited data with ad partners for relevant ads.AppearanceDark appearanceGrifon uses a dark interface.Help & legalHelp & supportTerms of servicePrivacy policyAccountSign outGrifon Command © 2026\"\u001b[22m\n"
+  ],
+  "evidence": {
+    "unexpected": [],
+    "pageErrors": [],
+    "consentWrites": []
+  }
+}
