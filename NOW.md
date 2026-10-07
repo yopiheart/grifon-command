@@ -1,8 +1,8 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, 14px companion chat verified; interface alignment interview in progress**
+**Stamped: 2026-10-07, 14px chat verified; interface alignment and premortem complete**
 
 ## ▶ NEXT ACTION
-Next: final interface premortem pending; then saved project chats and shared chat/Studio navigation.
+Next: focused chat/navigation milestone. Premortem risk: confusing UI; New chat/return each1click, details only when needed. Cloud/jobs follow.
 Branch codex/companion-chat; draft PR164 (stacked on PR163): https://github.com/yopiheart/grifon-command/pull/164
 Local preview http://127.0.0.1:5173/companion-chat-preview.html (mocked); no paid/deploy/merge.
 Current /app?experience=companion: guided ads only,88/96px mascot,14px Inter/gold messages,600ms typing; drafts save immediately.
