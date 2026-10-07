@@ -1,0 +1,16 @@
+# Bounded pass 3: audio and finish
+
+Reviewed by the root production agent on October 8, 2026 (Asia/Manila). This is a technical finish review; direct listening remains unavailable.
+
+The final specification SHA-256 is `022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515`. The exact finished MP4 hashes, decoded-frame samples and measurements are in `encoded-report.json`.
+
+- The mix starts from the verified clean Digital Clouds file and nine existing selected WAV recordings. It has 15 purposeful cues, no new voiceover, and no old mixed-master input. The cue manifest resolves contact placement from the same action specification as the visuals. Maximum measured native-contact error is zero audio samples.
+- Both actual MP4s strictly decode and contain stereo AAC at 48 kHz. Each measures -16.0 LUFS and -1.9 dBTP, satisfying the approximately -16 LUFS / at most -1.5 dBTP contract. `audio-aac-headroom.json` retains the original failing AAC overshoot and the successful master-headroom correction; preview levels alone were not accepted as final-output evidence.
+- Separate music, SFX and final-master stems each contain exactly 1,497,600 samples per channel / 31.2 seconds. The final master's last 20 ms measure -72.91 dBFS RMS. This establishes a low-level measured tail, not a subjective judgment about the music or sound design.
+- The root visually inspected both actual encoded contact sheets, including arrival samples, product-screen closeups, promise, brand arrival and the last frame. Primary copy and the fixture disclosure remain clear. The ending keeps the unchanged logo/GRIFON mark and separate address; native capture holds are byte-exact, and decoded ending differences remain small after lossy encoding.
+- Both exports contain exactly 936 frames at 30 fps / 31.2 seconds. Portrait is 8,567,773 bytes, below the decimal 12,000,000-byte attachment limit. Landscape remains the CRF 19 quality export.
+- The standalone player is built from those exact MP4s, posters and specification. Rebuilding reproduces all 24,080,586 bytes exactly. Its SHA-256 is `32f8e1c1990a2076ab70f43f7d2aaa29c7101b7d7b4f07d1e3774239025c4f62`. The scoped loopback route serves those exact player bytes; other paths/methods return 404. Live mobile controls/playback/downloads have their own independent smoke receipt.
+
+The completed independent CUA smoke then played both files continuously through 31.2 seconds and the full ending. Controls, all 12 chapters, bidirectional scrubs, paused/playing format switches and audio enabled/disabled states passed. Both actual UI downloads match the finished MP4 bytes and SHA-256 values. Required unscaled 390x844 screenshots passed metadata checks, with no horizontal overflow and minimum measured 46 px control height. See `smoke-report.md` and `smoke-browser-receipt.json`; the initial scaled screenshots are labeled separately. The root also inspected both final exact-size screenshots.
+
+Status: **TECHNICAL PASS; AUDITORY QA PENDING**. No claim about heard musical balance, emotional impact, reference audio similarity or real-device audio is made. The selected ElevenLabs sources predate the paid subscription; this remains **PRIVATE REVIEW ONLY**, requiring cleared source rights before commercial publication. New provider calls and spend: zero.

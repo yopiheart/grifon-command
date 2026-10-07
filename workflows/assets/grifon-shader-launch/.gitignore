@@ -1,0 +1,6 @@
+# Licensed raw recordings and isolated stems are private machine recovery only.
+/assets/audio/
+/*-stem.wav
+/*-master.wav
+/*-premaster.wav
+/.tmp/

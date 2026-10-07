@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "verified": 936,
+  "originalPass": true,
+  "mutationsRejected": [
+    {
+      "file": "0000.png",
+      "error": "Capture frame changed since render: 0000.png"
+    },
+    {
+      "file": "0468.png",
+      "error": "Capture frame changed since render: 0468.png"
+    },
+    {
+      "file": "0935.png",
+      "error": "Capture frame changed since render: 0935.png"
+    },
+    {
+      "file": "source.txt",
+      "error": "Capture source changed since render: source.txt"
+    },
+    {
+      "file": "omitted source.txt",
+      "error": "Capture source manifest is incomplete"
+    }
+  ],
+  "restoredPass": true
+}

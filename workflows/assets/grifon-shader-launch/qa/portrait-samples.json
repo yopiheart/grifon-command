@@ -1,0 +1,516 @@
+{
+  "date": "2026-10-07T17:08:00.393Z",
+  "format": "portrait",
+  "resolution": [
+    1080,
+    1920
+  ],
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "specSha256": "ba41f9a0a83c4772023ebe8a723428aba9f2e677fb1a53b209c8d78ef7fcb907",
+  "samples": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "file": "portrait-sample-00.png",
+      "sha256": "df7948fbca14d5e7c7a2309b87d54d99d1571074f5030cd248b3b5407e8baba2"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "file": "portrait-sample-01.png",
+      "sha256": "1a4d750ec7a9644bcfa4af33a01fe2a08bd62575823009d19130f56a2b341281"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "file": "portrait-sample-02.png",
+      "sha256": "5f1b08a5a4789bb270d3b1026d894eb04d28064c6175fc343d75aba1d1cd7f0f"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "file": "portrait-sample-03.png",
+      "sha256": "f6e3afb87219cef0db51930beb82673741b675156c6daf91daa74d6d0eec2550"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "file": "portrait-sample-04.png",
+      "sha256": "24844a4b5b793ca04d8552a5cd98c1d15dd3d6d1cb5f0a3015b07a83fee839f2"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "file": "portrait-sample-05.png",
+      "sha256": "571634999ad4dbdde10c1c3bb7ad935538e49eabafc7c87eef37a54a1eae74a5"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "file": "portrait-sample-06.png",
+      "sha256": "9f46e1446f96263777a5bea2e4c25915458fd4727304a98b88bcac90c205094b"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "file": "portrait-sample-07.png",
+      "sha256": "1d450e5b5082e7ecf7260226cc05126d7be5fb6137542b7dbc53dd0e2a671606"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "file": "portrait-sample-08.png",
+      "sha256": "40e7d6f98120225b79cd9e74bdba35eeb116f9b64758f549a324179791cacab1"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "file": "portrait-sample-09.png",
+      "sha256": "bcc0be009e1aa4aa34d314db1578ef7c0b3acb1be5bd4e1fd92ad6baff2d46d9"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "file": "portrait-sample-10.png",
+      "sha256": "33091ed7db8cc56dba24ea432f87717dd7ade0e5e7f758a85d1e828713a0b59a"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "file": "portrait-sample-11.png",
+      "sha256": "e8f2571a792f04dc6eeca0a24a5cf75abe5a80ea05a1db7cafbdd3f368b76083"
+    }
+  ],
+  "safeCases": [
+    {
+      "scene": "opening",
+      "boxes": [
+        {
+          "selector": "#opening-copy",
+          "text": "Your next",
+          "x": 90,
+          "y": 655,
+          "width": 749.625,
+          "height": 210
+        },
+        {
+          "selector": "#opening-copy",
+          "text": "ad.",
+          "x": 90,
+          "y": 836.640625,
+          "width": 252.4375,
+          "height": 210
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "product",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To launch",
+          "x": 90,
+          "y": 1136,
+          "width": 388.828125,
+          "height": 121
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "a product.",
+          "x": 90,
+          "y": 1259,
+          "width": 589.828125,
+          "height": 155
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "story",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To tell",
+          "x": 90,
+          "y": 1136,
+          "width": 231.1875,
+          "height": 121
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your story.",
+          "x": 90,
+          "y": 1259,
+          "width": 635.953125,
+          "height": 155
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "business",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To grow",
+          "x": 90,
+          "y": 1136,
+          "width": 324,
+          "height": 121
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your business.",
+          "x": 90,
+          "y": 1259,
+          "width": 866.0625,
+          "height": 155
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Research",
+          "x": 90,
+          "y": 231,
+          "width": 552.921875,
+          "height": 156
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Know your audience.",
+          "x": 90,
+          "y": 415,
+          "width": 477.203125,
+          "height": 69
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 105,
+          "y": 1595,
+          "width": 123.53125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 500.828125,
+          "y": 1595,
+          "width": 78.328125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 778.359375,
+          "y": 1595,
+          "width": 148.265625,
+          "height": 36
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Script",
+          "x": 90,
+          "y": 231,
+          "width": 350.609375,
+          "height": 156
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Shape your message.",
+          "x": 90,
+          "y": 415,
+          "width": 493.265625,
+          "height": 69
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 105,
+          "y": 1595,
+          "width": 123.53125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 500.828125,
+          "y": 1595,
+          "width": 78.328125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 778.359375,
+          "y": 1595,
+          "width": 148.265625,
+          "height": 36
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Storyboard",
+          "x": 90,
+          "y": 231,
+          "width": 664.078125,
+          "height": 156
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Plan every scene.",
+          "x": 90,
+          "y": 415,
+          "width": 397.84375,
+          "height": 69
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 105,
+          "y": 1595,
+          "width": 123.53125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 500.828125,
+          "y": 1595,
+          "width": 78.328125,
+          "height": 36
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 778.359375,
+          "y": 1595,
+          "width": 148.265625,
+          "height": 36
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Research",
+          "x": 90,
+          "y": 178,
+          "width": 392.828125,
+          "height": 109
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 116,
+          "y": 333,
+          "width": 241.265625,
+          "height": 40
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 90,
+          "y": 450,
+          "width": 900,
+          "height": 1330
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Script",
+          "x": 90,
+          "y": 178,
+          "width": 249.921875,
+          "height": 109
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 116,
+          "y": 333,
+          "width": 241.265625,
+          "height": 40
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 90,
+          "y": 450,
+          "width": 900,
+          "height": 1330
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Storyboard",
+          "x": 90,
+          "y": 178,
+          "width": 472.140625,
+          "height": 109
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 116,
+          "y": 333,
+          "width": 241.265625,
+          "height": 40
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 90,
+          "y": 450,
+          "width": 900,
+          "height": 1330
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "direction",
+      "boxes": [
+        {
+          "selector": "#direction-copy",
+          "text": "Give your",
+          "x": 90,
+          "y": 605,
+          "width": 584.78125,
+          "height": 164
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "next ad",
+          "x": 90,
+          "y": 750.796875,
+          "width": 450.203125,
+          "height": 164
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "a clear",
+          "x": 90,
+          "y": 896.59375,
+          "width": 402.078125,
+          "height": 164
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "direction.",
+          "x": 90,
+          "y": 1042.390625,
+          "width": 590.96875,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "finish",
+      "boxes": [
+        {
+          "selector": "#mark-ring",
+          "x": 220.140625,
+          "y": 806,
+          "width": 123,
+          "height": 123
+        },
+        {
+          "selector": "#brand-word",
+          "text": "GRIFON",
+          "x": 369.140625,
+          "y": 785,
+          "width": 476.71875,
+          "height": 164
+        },
+        {
+          "selector": "#brand-url",
+          "text": "grifon.ai",
+          "x": 466.625,
+          "y": 999,
+          "width": 146.734375,
+          "height": 51
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID opening-reveal"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1080,
+        1920
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        900,
+        705
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": []
+}

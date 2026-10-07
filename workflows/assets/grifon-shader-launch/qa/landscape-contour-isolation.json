@@ -1,0 +1,17 @@
+{
+  "purpose": "Diagnosis only, excluded from final verification.",
+  "measurements": [
+    {
+      "contourHidden": false,
+      "first": "d3d88908ba16f4ab52ea22b8e572394ead87e1dbc7aa7cb151bed0e1ce607304",
+      "replay": "d3d88908ba16f4ab52ea22b8e572394ead87e1dbc7aa7cb151bed0e1ce607304",
+      "exact": true
+    },
+    {
+      "contourHidden": true,
+      "first": "790c0d99eda9f42c0fb4f3a1dffddbeb6b1553e3ac8d3d0ec4306a3660fccb14",
+      "replay": "790c0d99eda9f42c0fb4f3a1dffddbeb6b1553e3ac8d3d0ec4306a3660fccb14",
+      "exact": true
+    }
+  ]
+}

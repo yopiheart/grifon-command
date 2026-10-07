@@ -1,0 +1,47 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
+import { actionMap, actionProgress, cueManifest } from '../grifon-motion-action-pilot/action-spec.mjs';
+import { validateLaunchSpec } from './launch-contract.mjs';
+const spec = JSON.parse(fs.readFileSync(new URL('./launch.json',import.meta.url),'utf8'));
+if (process.argv[2] === '--validate') { validateLaunchSpec(JSON.parse(fs.readFileSync(process.argv[3],'utf8'))); console.log('Valid launch specification'); }
+else {
+  let count = 0;
+  const check = (name,fn) => { fn(); count++; console.log(`PASS ${name}`); };
+  const reject = (name,edit,pattern) => check(name,() => { const invalid=structuredClone(spec); edit(invalid); assert.throws(()=>validateLaunchSpec(invalid),pattern); });
+  check('valid 936-frame specification',()=>assert.equal(validateLaunchSpec(spec).duration*spec.fps,936));
+  reject('duplicate action',s=>s.actions.push({...s.actions[0]}),/duplicate\/missing action ID/);
+  reject('unknown target',s=>s.actions[0].target='imaginary',/unknown target/);
+  reject('wrong renderer binding',s=>s.actions[0].target='orb-world',/binding/);
+  reject('unknown easing',s=>s.actions[0].easing='spring',/unknown easing/);
+  reject('impossible contact',s=>s.actions[0].contact=99,/impossible contact/);
+  reject('scene gap',s=>s.scenes[1].start=2.5,/continuously/);
+  reject('missing purpose',s=>s.scenes[0].purpose='',/missing purpose/);
+  reject('read window escaping scene',s=>s.scenes[0].readable[1]=3,/escapes/);
+  reject('landing after reading',s=>s.actions[0].contact=.79,/contact|landing/);
+  reject('wrong scene order',s=>s.scenes[1].id='unknown',/bindings/);
+  reject('exit mismatch',s=>s.scenes[0].exit.actionId='product-exit',/boundary|exit/);
+  reject('exit before readable end',s=>s.actions.find(a=>a.id==='opening-exit').start=1.8,/invades/);
+  reject('missing final hold',s=>s.scenes.at(-1).exit={kind:'fade',actionId:'brand-reveal'},/boundary|hold/);
+  reject('portrait crop dimensions',s=>s.formats.portrait.height=1080,/portrait/);
+  reject('unsafe margins',s=>s.formats.portrait.safeMargin=10,/portrait/);
+  reject('missing safe margin',s=>delete s.formats.portrait.safeMargin,/portrait/);
+  reject('NaN safe margin',s=>s.formats.portrait.safeMargin=NaN,/portrait/);
+  reject('Script copy mismatched',s=>s.scenes.find(scene=>scene.id==='script').copyIndex=0,/binding/);
+  reject('Script screen copy mismatched',s=>s.scenes.find(scene=>scene.id==='script-screen').copyIndex=0,/binding/);
+  reject('wrong reveal action',s=>s.scenes.find(scene=>scene.id==='script').revealActionId='research-reveal',/binding/);
+  reject('wrong material binding',s=>s.scenes.find(scene=>scene.id==='script').material='metal',/binding/);
+  reject('invalid capture crop',s=>s.assets.landscapeFraming[0].width=NaN,/framing/);
+  reject('wrong duration',s=>s.duration=32,/duration|requires|end/);
+  reject('missing fixture disclosure',s=>s.copy.disclosure='',/copy|disclosure/);
+  reject('unknown material hold',s=>s.materialHoldActionId='orb-reveal',/material hold/);
+  reject('invalid QA motion interval',s=>s.qa.motionWindows[0].fraction=[.8,.2],/motion window/);
+  reject('NaN QA motion interval',s=>s.qa.motionWindows[0].fraction=[NaN,.5],/motion window/);
+  reject('incomplete nonlinear coverage',s=>s.qa.nonlinearSceneIds.pop(),/coverage/);
+  reject('missing music tail',s=>s.audio.music.fadeOut=0,/tail/);
+  reject('absent music tail',s=>delete s.audio.music.fadeOut,/tail/);
+  reject('NaN music tail',s=>s.audio.music.fadeOut=NaN,/tail/);
+  check('copy revision preserves timing and actions',()=>{ const changed=structuredClone(spec); changed.copy.opening=spec.qa.copyMutation.value; validateLaunchSpec(changed); assert.deepEqual(changed.scenes,spec.scenes); assert.deepEqual(changed.actions,spec.actions); });
+  check('contact revision changes settling and cue contacts',()=>{ const changed=structuredClone(spec),edit=spec.qa.contactMutation; changed.actions.find(a=>a.id===edit.actionId).contact+=edit.delta; validateLaunchSpec(changed); const a=actionMap(spec)[edit.actionId],b=actionMap(changed)[edit.actionId],time=Math.min(a.contact,b.contact); assert.notEqual(actionProgress(a,time),actionProgress(b,time)); assert.equal(Math.max(actionProgress(a,time),actionProgress(b,time)),1); for(const before of cueManifest(spec).cues.filter(c=>c.actionId===edit.actionId)){ const after=cueManifest(changed).cues.find(c=>c.id===before.id); assert.ok(Math.abs(after.start-before.start-edit.delta)<1e-8); } });
+  console.log(`${count} contract tests passed (${fileURLToPath(import.meta.url)})`);
+}

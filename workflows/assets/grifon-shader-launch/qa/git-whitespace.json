@@ -1,0 +1,17 @@
+{
+  "purpose": "Preserve verified CRLF bytes while retaining all default whitespace checks.",
+  "original": {
+    "exitCode": 2,
+    "cause": "Preserved CR bytes were treated as trailing whitespace."
+  },
+  "fix": "Scoped whitespace attribute keeps blank-at-eol, blank-at-eof and space-before-tab; recognizes cr-at-eol.",
+  "deliberateTrailingSpace": {
+    "exitCode": 2,
+    "detected": true
+  },
+  "restoredStagedCheck": {
+    "exitCode": 0,
+    "result": "PASS"
+  },
+  "sourceRestoredByteExact": true
+}

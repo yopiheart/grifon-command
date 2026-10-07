@@ -1,0 +1,492 @@
+{
+  "date": "2026-10-07T17:11:55.091Z",
+  "format": "landscape",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "specSha256": "8d06647f8d51a587565cc40c26fa4a7dc1269239f79e925d2b80c7a8c6a0de3d",
+  "samples": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "file": "landscape-sample-00.png",
+      "sha256": "020b54f374e59ee1544d695bde8f971670feed0a1c93cadaa0f829d47c7012ea"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "file": "landscape-sample-01.png",
+      "sha256": "fff8685db3fc240239085e462db0064c001b85a4d033588d1cde1ffb401204b4"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "file": "landscape-sample-02.png",
+      "sha256": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "file": "landscape-sample-03.png",
+      "sha256": "680672be0c81383c675a286b2a0b3e7c57ff88824be28ab0a3653e5a2ecd60a7"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "file": "landscape-sample-04.png",
+      "sha256": "087f4d8f832b28a3c2b41d44f7d2df1eb2eb2af052fd4c46ef948ab110b46853"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "file": "landscape-sample-05.png",
+      "sha256": "b6d35e6eb9624dd74fd7c642b14a2b11ec0a0686e68e0ed26e6c50017d194216"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "file": "landscape-sample-06.png",
+      "sha256": "79ce47f1b3efe387ca058e977474bec2580cca3051b630ad5f77a92f8b12cfc3"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "file": "landscape-sample-07.png",
+      "sha256": "c8dce74edd3d78eb0ecf6bd4a892df985843564e2b3f46d5bd4258da2f467f82"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "file": "landscape-sample-08.png",
+      "sha256": "237e6c5c6ce5a4987a62dfb482a3be7d7a03b3dceabe8b06359bbd7cb12cf7de"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "file": "landscape-sample-09.png",
+      "sha256": "88f6dabf537232369806ed960634a2a24b397b0921a8e53be149a884886f86e2"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "file": "landscape-sample-10.png",
+      "sha256": "079b0f080a4192b0fd7fe94678545985bf9ca0f1f8c24a1988145d5da76a4876"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "file": "landscape-sample-11.png",
+      "sha256": "f0cf8721a04a406b55fb6a36827b73c568ffc620d70e2b8e66249a3b11498bcf"
+    }
+  ],
+  "safeCases": [
+    {
+      "scene": "opening",
+      "boxes": [
+        {
+          "selector": "#opening-copy",
+          "text": "Your next ad.",
+          "x": 160,
+          "y": 381,
+          "width": 1047.609375,
+          "height": 215
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "product",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To launch",
+          "x": 165,
+          "y": 340,
+          "width": 397.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "a product.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 623.796875,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "story",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To tell",
+          "x": 165,
+          "y": 340,
+          "width": 236.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your story.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 672.625,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "business",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To grow",
+          "x": 165,
+          "y": 340,
+          "width": 331.171875,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your business.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 915.828125,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Research",
+          "x": 155,
+          "y": 263,
+          "width": 480.671875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Know your audience.",
+          "x": 155,
+          "y": 428,
+          "width": 410.328125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1528.171875,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Script",
+          "x": 155,
+          "y": 263,
+          "width": 304.875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Shape your message.",
+          "x": 155,
+          "y": 428,
+          "width": 424.125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1528.171875,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 263,
+          "width": 577.328125,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Plan every scene.",
+          "x": 155,
+          "y": 428,
+          "width": 342.09375,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1528.171875,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Research",
+          "x": 155,
+          "y": 165,
+          "width": 287.546875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Script",
+          "x": 155,
+          "y": 165,
+          "width": 182.875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 165,
+          "width": 345.578125,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "direction",
+      "boxes": [
+        {
+          "selector": "#direction-copy",
+          "text": "Give your next ad",
+          "x": 160,
+          "y": 261,
+          "width": 1089.65625,
+          "height": 169
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "a clear direction.",
+          "x": 160,
+          "y": 412.5,
+          "width": 1046.6875,
+          "height": 169
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "finish",
+      "boxes": [
+        {
+          "selector": "#mark-ring",
+          "x": 605.5,
+          "y": 434.5,
+          "width": 144,
+          "height": 144
+        },
+        {
+          "selector": "#brand-word",
+          "text": "GRIFON",
+          "x": 783.5,
+          "y": 418.5,
+          "width": 512.984375,
+          "height": 176
+        },
+        {
+          "selector": "#brand-url",
+          "text": "grifon.ai",
+          "x": 869.484375,
+          "y": 635,
+          "width": 181.03125,
+          "height": 63
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID opening-reveal"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1920,
+        1080
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        820,
+        530
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": []
+}
