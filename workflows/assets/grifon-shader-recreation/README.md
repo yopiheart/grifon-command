@@ -182,8 +182,9 @@ downloads. All eight player screenshots were inspected. Encoded audio measures
 -16.33 LUFS / -2.18 dBTP without clipping; 47 authored events use 56 layers.
 `qa/sound-delivery-v1.json` binds the final movie, player, original visual gate,
 source recipe and independent reviews. Build and the unchanged default suite
-pass with 1,432 tests. Perceived musical fit remains for the user's listening
-review. The reports retain earlier failures and the unavailable supplemental
+pass with 1,432 tests. Neil subsequently accepted the delivered sound version
+on 2026-10-08; `reference/sound-v1-user-acceptance.md` records that approval.
+The reports retain earlier failures and the unavailable supplemental
 in-app browser check without changing the completed offline-player evidence.
 
 `tools/artifacts/build-grifon-shader-recreation.mjs` builds

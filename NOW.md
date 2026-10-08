@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08; approved visuals; free sound-v1 complete, listening pending**
+**Stamped: 2026-10-08; Neil accepted the completed visual and sound-v1 film**
 
 ## Current: Grifon shader launch film
 Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
@@ -29,11 +29,13 @@ Original default5 anchor timeouts/isolated1 retained; singlecase1.61s then
 fresh unchanged default suite PASS. Timing cause unproven; no skipped gate.
 First music crest failure and second zero-tail verifier failure remain preserved.
 One bounded music-transient correction; verifier explicitly accepts exact silence.
-qa/sound-delivery-v1.json binds final independent reports; listening remains pending.
+qa/sound-delivery-v1.json binds historical technical reports; Neil accepted sound-v1.
+reference/sound-v1-user-acceptance.md records approval and the long turnaround concern.
 Raw music, stems and all private .tmp builds are ignored; new spendUS$0.
 G/R/a/C at14.8-16.6s are cropped material demos, not an acronym.
 reference/letter-audit.md records eleven inspected pairs; no visual source edit.
-Next: Neil's listening feedback; any revision needs a new version/evidence.
+Complete: user accepted the delivered film; no further edit requested.
+Broad reference coverage and customer turnaround remain unproven beyond this case.
 
 ## Original qualified visual delivery remains frozen
 Original moviec99c93c8/playerb9ae7e24 preserved; full silent filme57f2fae.
