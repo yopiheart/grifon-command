@@ -17,7 +17,7 @@
  * Lifecycle: autosaved (debounced) while editing → restored on return → cleared
  * on launch, an explicit Reset, or "Start fresh".
  */
-import type { BusinessInfo } from '../types';
+import type { AdReferenceBrief, BusinessInfo } from '../types';
 import type { ProductionInput } from '../services/oneShotIntake';
 import type { ServiceArchetype, RealEstateArchetype } from '../components/guidedPhotoSlots';
 import type { RecipeId } from '../components/OneShotAd/recipes';
@@ -56,6 +56,7 @@ export interface OneShotDraft {
   language: ProductionInput['language'];
   aspectRatio: ProductionInput['aspectRatio'];
   voiceId: string;
+  referenceBrief?: AdReferenceBrief;
 }
 
 const DB_NAME = 'grifon-oneshot';

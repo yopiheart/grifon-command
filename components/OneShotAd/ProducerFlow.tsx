@@ -3,6 +3,8 @@ import { ChevronLeft, AlertTriangle, RotateCw, Loader2 } from 'lucide-react';
 import type { Avatar, LockablePresetId } from '../../types';
 import { generateMarketResearch, generateAvatarImage } from '../../services/geminiService';
 import { resolvePersonStatePresenter, type ProductionInput as IntakeInput } from '../../services/oneShotIntake';
+import { AdReferenceError, resolveSelectedReference } from '../../services/adReconBrief';
+import { clearOneShotDraft, hydrateOneShotDraft } from '../../utils/oneShotDraft';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen.fable5';
 import { StoryboardGateScreen } from './StoryboardGateScreen';
@@ -55,6 +57,7 @@ const ACTIVE_RUN_KEY = 'osa_producer_active_run';
  */
 export function hydrateInput(row: ProductionRunRow): OrchInput {
   const input = row.input as unknown as OrchInput;
+  resolveSelectedReference(input?.referenceBrief, input);
   if (!row.avatar_url || !input?.avatar) return input;
   return { ...input, avatar: { ...input.avatar, url: row.avatar_url } };
 }
@@ -122,6 +125,9 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     edl: art.edl,
     finalVideoUrl: art.finalVideoUrl,
     finalDownloadUrl: art.finalDownloadUrl,
+    finalCreativeId: art.finalCreativeId,
+    finalLineage: art.finalLineage,
+    finalAudioPolicies: art.finalAudioPolicies,
     // Cover frame lives on its own run-header column (written via 'record_thumbnail'), NOT in
     // artifacts — it is a base64 data URL and would bloat every later checkpoint. The artifacts
     // fallback covers runs checkpointed before that column existed (it will simply be absent).
@@ -155,6 +161,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming' | 'resume-error'>('resuming');
   const [resumeAttempt, setResumeAttempt] = useState(0);
   const [errMsg, setErrMsg] = useState('');
+  const [referenceResumeError, setReferenceResumeError] = useState('');
   const [reshooting, setReshooting] = useState<number | null>(null);
   const [presetBusy, setPresetBusy] = useState(false);
   const [approving, setApproving] = useState(false);
@@ -173,14 +180,20 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   useEffect(() => {
     let alive = true;
     const activeId = typeof localStorage !== 'undefined' ? localStorage.getItem(ACTIVE_RUN_KEY) : null;
-    if (!activeId) { setPhase('launch'); return; }
+    if (!activeId) {
+      void hydrateOneShotDraft().then(() => { if (alive) setPhase('launch'); });
+      return () => { alive = false; };
+    }
     setPhase('resuming');
+    setReferenceResumeError('');
     void loadRun(activeId)
-      .then((res) => {
+      .then(async (res) => {
         if (!alive) return;
         // Stale-key fix: a missing or already-finished run must not resume — drop the key.
         if (!res || res.run.status === 'done') {
           if (typeof localStorage !== 'undefined') localStorage.removeItem(ACTIVE_RUN_KEY);
+          await hydrateOneShotDraft();
+          if (!alive) return;
           setPhase('launch');
           return;
         }
@@ -198,7 +211,11 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
           void runProduction(resumed, cb(resumed), realProducerDeps);
         }
       })
-      .catch(() => alive && setPhase('resume-error'));
+      .catch((error: unknown) => {
+        if (!alive) return;
+        if (error instanceof AdReferenceError) setReferenceResumeError(error.message);
+        setPhase('resume-error');
+      });
     // NOTE: no abort() here — StrictMode's synchronous cleanup would otherwise kill the
     // resumed run before its second mount. Explicit teardown lives in handleMakeAnother.
     return () => { alive = false; };
@@ -211,6 +228,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     setPhase('researching');
     abortRef.current = new AbortController();
     try {
+      resolveSelectedReference(input.referenceBrief, input);
       // 1 — Market research (auto). Same cache seam as the orchestrator's market_research
       // stage (research stays locked per brand identity; "Re-research" forces fresh) —
       // this path pre-fills the run with doneStages:['market_research'], so the stage's
@@ -253,6 +271,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         isLocalService: input.isLocalService,
         businessAddress: input.businessAddress,
         forceFreshResearch: input.forceFreshResearch,
+        referenceBrief: input.referenceBrief,
       };
       const { clientDetails, businessInfo } = mapReportToWizard(orchInputBase, report);
 
@@ -388,10 +407,12 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
           <GlassPanel className="w-full p-6 text-center">
             <AlertTriangle className="mx-auto mb-4 h-8 w-8 text-zinc-400" />
             <h1 className="mb-3 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
-              Couldn't load your saved ad
+              {referenceResumeError ? 'Saved ad needs a new brief' : "Couldn't load your saved ad"}
             </h1>
             <p role="alert" className="mb-6 text-sm text-zinc-400">
-              Your saved ad is still selected. Retry to open it without starting a new one.
+              {referenceResumeError
+                ? `${referenceResumeError} Your saved ad is kept. Start over to prepare a new brief.`
+                : 'Your saved ad is still selected. Retry to open it without starting a new one.'}
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <GoldButton onClick={() => setResumeAttempt((attempt) => attempt + 1)} className="flex min-h-11 items-center gap-3 !rounded-xl">
@@ -400,6 +421,9 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
               <button onClick={onBack} className={`${CTRL_H} ${R_CTRL} ${T_CTRL} border border-white/10 bg-zinc-950 px-6 text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}>
                 Back
               </button>
+              {referenceResumeError && <button onClick={() => { clearOneShotDraft(); setReferenceResumeError(''); handleMakeAnother(); }} className={`${CTRL_H} ${R_CTRL} ${T_CTRL} border border-white/10 bg-zinc-950 px-6 text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}>
+                Start over
+              </button>}
             </div>
           </GlassPanel>
         </div>

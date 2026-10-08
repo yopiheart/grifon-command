@@ -21,15 +21,12 @@ guardrails.
    (`search_type=page&view_all_page_id=<id>`). A keyword query (`q=im8`) returns
    contaminated, non-brand results (proven 2026-06-26: ~3,400 fuzzy vs ~2,400
    pure). If you only have a brand name, get its page-id first (Step 1).
-3. **"Winning" = longevity, not impressions.** Rank by days-active: ≥30d =
-   winner, ≥60–90d = scaled. Impressions is a tiebreaker only. The tool enforces
-   this **at the source** via the Ad Library "Impressions by date" filter
-   (`start_date[max] = today − min_days`, FROM left at the floor) — proven
-   2026-06-26: it collapses IM8's ~660 video ads to the ~4 that have genuinely
-   run ≥30d. This beats trusting the displayed "Started running" date, which
-   **resets when the advertiser edits the ad** (a 52-day-old creative can show
-   "17 days"). `find_winning_ads.py` adds this filter by default; the ranker
-   then *trusts membership* and won't drop a survivor for a reset date.
+3. **Longevity is a research signal, not performance proof.** Rank by elapsed
+   days from the displayed start date to the recorded observation. A 30-day
+   threshold narrows candidates; it does not prove continuous delivery,
+   spend, sales, scaling or profitability. Date-filter membership never
+   supplies a missing date or increases an ad's age. Keep unknown dates
+   unknown. Never call a competitor ad a proven winner from age alone.
 4. **No silent caps.** If the scrape is blocked/partial (login wall, captcha,
    timeout — Catch 2 fragility), say so. Never present a truncated list as "the
    winners."
@@ -92,11 +89,21 @@ proxy, waitFor ≥12s), save the result as `{ "ads": [...] }` JSON, then:
 python tools/find_winning_ads.py --from-json scraped.json --brand "<name>" --top 5 --min-days 30
 ```
 
-The tool drops "Low Impression Count" ads, applies the `start_date[max]`
-longevity filter automatically (override with `--started-before YYYY-MM-DD`, or
-`--no-date-filter` for a wide scan), ranks by longevity, and writes the
-shortlist to `.tmp/ad-recon/<brand>-<date>.json`. Exit code 3 = no ad cleared
-the bar (report it; don't invent winners).
+The tool emits version 2 research candidates, not profit-proven winners.
+The input JSON needs reviewed collection metadata separate from scraper
+output: `collection.observed_at` (ISO timestamp with timezone), `page_id`,
+`advertiser`, advertiser-pinned `source_url`, matching `identity_source_url`,
+`identity_reviewed: true`, a recorded `identity_evidence` explanation,
+`method`, `status` (`complete|partial|blocked|unknown`) and `limitations`.
+Claim `complete` only with recorded `completion_evidence`. Each ad needs
+its confirmed `page_id`, numeric `library_id`, observed `activity`, and
+displayed `started_running` date; do not manufacture missing fields.
+Bare scraper output remains unverified review material. Dates are ranked
+at the collection observation, never the host's later replay date.
+Low-impression, duplicate, decoy, inactive and invalid records are excluded
+with reasons. A partial sample cannot establish the brand's best ads.
+Exit 2 means blocked acquisition; exit 3 means no eligible candidates in
+this collection, not no advertising. The date filter is discovery only.
 
 Heads-up: a page-pinned + date-filtered scrape can surface **partner/creator
 pages** running the brand's branded content (e.g. IM8's ads via *The Dodo* /

@@ -214,6 +214,8 @@ export interface FinalRenderScene {
   sceneIdx: number;
   videoUrl: string;
   audioUrl?: string | null;
+  /** Native clip audio, external replacement voice, or silence before SFX/music. */
+  audioPolicy?: 'preserve' | 'replace' | 'mute';
   /** Hard cap (sec) from the spoken-length estimate; cuts Veo filler tails. */
   targetDurationSec?: number | null;
   /** Keep the full clip (hook): preserves the visual reveal; pads short audio. */
@@ -290,6 +292,29 @@ export interface FinalRenderRequest {
   preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */
   endCard?: FinalRenderEndCard;
+  /** Server binds producer exports to this authenticated owner's durable run. */
+  producerRunId?: string;
+  expectedReference?: { packetId: string; conceptId: string };
+}
+
+/** Snapshot of durable producer input; recorded observations are not independently verified. */
+export interface FinalRenderLineage {
+  version: 1;
+  producerRunId: string;
+  runRevision: number;
+  reference?: {
+    packetId: string;
+    conceptId: string;
+    sourceIds: string[];
+    observationIds: string[];
+    sources: { id: string; libraryId: string; pageId: string; sourceUrl: string; observedAt: string }[];
+    evidence: 'owner-recorded';
+  };
+}
+
+export interface FinalRenderAudioPolicy {
+  sceneIdx: number;
+  policy: 'preserve' | 'replace' | 'mute';
 }
 
 /** Returned immediately by the fire endpoint; the client polls with this jobId. */
@@ -325,6 +350,8 @@ export interface FinalRenderResult {
   /** Attribution id (= render jobId) for the Data-Driven Growth Loop. Shown to
    * the user so they can name the Meta ad "grifon-<creativeId>". */
   creativeId?: string;
+  lineage?: FinalRenderLineage;
+  audioPolicies?: FinalRenderAudioPolicy[];
 }
 
 export interface AllData {
@@ -402,6 +429,38 @@ export interface MarketResearchAdAngle {
   angle: string;
   openingLine: string;
   whyItWorks: string;
+}
+
+/** Local operator-recorded Ad Library evidence, separate from generated research. */
+export interface AdReferencePacket {
+  version: 1;
+  id: string;
+  evidenceMode: 'observed' | 'synthetic';
+  observedAt: string;
+  subject: { brandName: string; productName: string; offer: string; audience: string };
+  competitors: {
+    id: string; name: string; domain: string; pageId: string; identitySourceUrl: string;
+    collectionStatus: 'complete' | 'partial' | 'blocked' | 'unknown';
+    limitations: string[];
+  }[];
+  sources: {
+    id: string; competitorId: string; libraryId: string; sourceUrl: string;
+    observedAt: string; startDate: string | null;
+    activity: 'active' | 'inactive' | 'unknown'; scope: 'card' | 'video';
+    observations: { id: string; text: string }[];
+  }[];
+  concepts: {
+    id: string; title: string; format: MarketResearchAdAngle['format'];
+    customerProblem: string; sellingAngle: string; hook: string; originalProof: string;
+    requiredAssets: string[]; testHypothesis: string; sourceIds: string[]; observationIds: string[];
+  }[];
+}
+
+/** Review state only. This does not supply production or paid-test authorization. */
+export interface AdReferenceBrief {
+  packet: AdReferencePacket;
+  selectedConceptId?: string;
+  acceptedLimits: boolean;
 }
 
 export interface MarketResearchGraveyardEntry {

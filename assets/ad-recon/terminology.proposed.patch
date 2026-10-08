@@ -1,0 +1,109 @@
+--- a/.agents/skills/ad-recon/SKILL.md
++++ b/.agents/skills/ad-recon/SKILL.md
+@@ -26,9 +26,6 @@
+-3. **"Winning" = longevity, not impressions.** Rank by days-active: ≥30d =
+-   winner, ≥60–90d = scaled. Impressions is a tiebreaker only. The tool enforces
+-   this **at the source** via the Ad Library "Impressions by date" filter
+-   (`start_date[max] = today − min_days`, FROM left at the floor) — proven
+-   2026-06-26: it collapses IM8's ~660 video ads to the ~4 that have genuinely
+-   run ≥30d. This beats trusting the displayed "Started running" date, which
+-   **resets when the advertiser edits the ad** (a 52-day-old creative can show
+-   "17 days"). `find_winning_ads.py` adds this filter by default; the ranker
+-   then *trusts membership* and won't drop a survivor for a reset date.
++3. **Longevity is a research signal, not performance proof.** Rank by elapsed
++   days from the displayed start date to the recorded observation. A 30-day
++   threshold narrows candidates; it does not prove continuous delivery,
++   spend, sales, scaling or profitability. Date-filter membership never
++   supplies a missing date or increases an ad's age. Keep unknown dates
++   unknown. Never call a competitor ad a proven winner from age alone.
+@@ -97,5 +94,15 @@
+-The tool drops "Low Impression Count" ads, applies the `start_date[max]`
+-longevity filter automatically (override with `--started-before YYYY-MM-DD`, or
+-`--no-date-filter` for a wide scan), ranks by longevity, and writes the
+-shortlist to `.tmp/ad-recon/<brand>-<date>.json`. Exit code 3 = no ad cleared
+-the bar (report it; don't invent winners).
++The tool emits version 2 research candidates, not profit-proven winners.
++The input JSON needs reviewed collection metadata separate from scraper
++output: `collection.observed_at` (ISO timestamp with timezone), `page_id`,
++`advertiser`, advertiser-pinned `source_url`, matching `identity_source_url`,
++`identity_reviewed: true`, a recorded `identity_evidence` explanation,
++`method`, `status` (`complete|partial|blocked|unknown`) and `limitations`.
++Claim `complete` only with recorded `completion_evidence`. Each ad needs
++its confirmed `page_id`, numeric `library_id`, observed `activity`, and
++displayed `started_running` date; do not manufacture missing fields.
++Bare scraper output remains unverified review material. Dates are ranked
++at the collection observation, never the host's later replay date.
++Low-impression, duplicate, decoy, inactive and invalid records are excluded
++with reasons. A partial sample cannot establish the brand's best ads.
++Exit 2 means blocked acquisition; exit 3 means no eligible candidates in
++this collection, not no advertising. The date filter is discovery only.
+--- a/.claude/skills/ad-recon/SKILL.md
++++ b/.claude/skills/ad-recon/SKILL.md
+@@ -24,9 +24,6 @@
+-3. **"Winning" = longevity, not impressions.** Rank by days-active: ≥30d =
+-   winner, ≥60–90d = scaled. Impressions is a tiebreaker only. The tool enforces
+-   this **at the source** via the Ad Library "Impressions by date" filter
+-   (`start_date[max] = today − min_days`, FROM left at the floor) — proven
+-   2026-06-26: it collapses IM8's ~660 video ads to the ~4 that have genuinely
+-   run ≥30d. This beats trusting the displayed "Started running" date, which
+-   **resets when the advertiser edits the ad** (a 52-day-old creative can show
+-   "17 days"). `find_winning_ads.py` adds this filter by default; the ranker
+-   then *trusts membership* and won't drop a survivor for a reset date.
++3. **Longevity is a research signal, not performance proof.** Rank by elapsed
++   days from the displayed start date to the recorded observation. A 30-day
++   threshold narrows candidates; it does not prove continuous delivery,
++   spend, sales, scaling or profitability. Date-filter membership never
++   supplies a missing date or increases an ad's age. Keep unknown dates
++   unknown. Never call a competitor ad a proven winner from age alone.
+@@ -95,5 +92,15 @@
+-The tool drops "Low Impression Count" ads, applies the `start_date[max]`
+-longevity filter automatically (override with `--started-before YYYY-MM-DD`, or
+-`--no-date-filter` for a wide scan), ranks by longevity, and writes the
+-shortlist to `.tmp/ad-recon/<brand>-<date>.json`. Exit code 3 = no ad cleared
+-the bar (report it; don't invent winners).
++The tool emits version 2 research candidates, not profit-proven winners.
++The input JSON needs reviewed collection metadata separate from scraper
++output: `collection.observed_at` (ISO timestamp with timezone), `page_id`,
++`advertiser`, advertiser-pinned `source_url`, matching `identity_source_url`,
++`identity_reviewed: true`, a recorded `identity_evidence` explanation,
++`method`, `status` (`complete|partial|blocked|unknown`) and `limitations`.
++Claim `complete` only with recorded `completion_evidence`. Each ad needs
++its confirmed `page_id`, numeric `library_id`, observed `activity`, and
++displayed `started_running` date; do not manufacture missing fields.
++Bare scraper output remains unverified review material. Dates are ranked
++at the collection observation, never the host's later replay date.
++Low-impression, duplicate, decoy, inactive and invalid records are excluded
++with reasons. A partial sample cannot establish the brand's best ads.
++Exit 2 means blocked acquisition; exit 3 means no eligible candidates in
++this collection, not no advertising. The date filter is discovery only.
+--- a/UBIQUITOUS_LANGUAGE.md
++++ b/UBIQUITOUS_LANGUAGE.md
+@@ -141,3 +141,3 @@
+-| **Ad Recon** | The discovery layer that, given a competitor **brand/advertiser**, finds whether they run ads and surfaces their **Winning Ads** from the Meta Ad Library (advertiser-pinned search, ranked by longevity). Produced by `tools/find_winning_ads.py` + the `ad-recon` skill; hands its shortlist to **Viral Autopsy**. Sources only — never analyzes, never touches tuned prompts. | Ad spying, scraping (when ambiguous) |
+-| **Winning Ad** | An *active* competitor ad judged a winner by **longevity** — still running after ≥30 days (≥60–90 = proven/scaled) — since advertisers kill losers. Impressions are a tiebreaker, not the primary signal. Sourced by **Ad Recon**. | Top ad, best ad (when ambiguous) |
+-| **Ad Recon Shortlist** | The ranked output of one **Ad Recon** run: top-N **Winning Ads** for a brand with `library_id`, `started_running`, `days_active`, caption/headline copy, and the `ad_permalink` to download. The handoff artifact into **Viral Autopsy**. | Results, ad list |
++| **Ad Recon** | The discovery layer that collects competitor ad references with advertiser identity, observed activity, displayed dates and collection limits from the Meta Ad Library. `tools/find_winning_ads.py` shortlists research candidates; the `ad-recon` skill hands references to **Viral Autopsy**. Partial or blocked acquisition cannot establish the best ads or absence of advertising. Sources only; never treats longevity as proof of profit. | Ad spying, scraping (when ambiguous) |
++| **Winning Ad** | An ad judged against a declared performance goal using measured results. A long-running competitor ad is a research candidate; its displayed age alone does not establish continuous delivery, spend, sales, scaling or profitability. | Top ad, best ad (when ambiguous) |
++| **Ad Recon Shortlist** | The version 2 ranked research candidates in a reviewed **Ad Recon** collection: `library_id`, confirmed `page_id`, displayed `started_running`, `elapsed_days_since_displayed_start`, `observed_at`, caption and `ad_permalink`. Includes collection status, limits and exclusion reasons. A partial shortlist ranks only the collected subset. The handoff artifact into **Viral Autopsy**. | Results, ad list |
+--- a/workflows/spy_intel.md
++++ b/workflows/spy_intel.md
+@@ -42,9 +42,6 @@
+-2. **"Winning" = longevity, gated at the source.** The pinned URL adds the
+-   "Impressions by date" filter `start_date[max] = today − min_days` (FROM left
+-   at the floor), so Meta returns ONLY ads already running by that date — i.e.
+-   provably ≥`min_days` old. Proven 2026-06-26: this collapses IM8's ~660 video
+-   ads to the ~4 genuine 30+ day survivors. Critical because the displayed
+-   "Started running" date **resets when an ad is edited** (a 52d creative shows
+-   "17d"), so it can't be trusted alone — sort stays impressions desc as the
+-   in-bucket tiebreak. `find_winning_ads.py` applies the filter by default and
+-   the ranker *trusts membership* (won't drop a survivor for a reset date).
++2. **Longevity shortlists candidates; it does not prove winning performance.**
++   Date filters narrow discovery only. Rank elapsed days from a displayed
++   start to the recorded observation; never fill or floor age using URL
++   membership. Preserve operator-reviewed Page identity and complete, partial,
++   blocked or unknown coverage. No profit, scaling or continuity inference
++   follows from age or an impression range. Bare scraper output needs review.
+@@ -55 +52,2 @@
+-   timeout). The tool emits `page_state` + stats and exits 3 on no-winners.
++   timeout). Version 2 emits collection status and exclusions; exit 2 means blocked,
++   exit 3 means no eligible candidates in this collection, not no advertising.

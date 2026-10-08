@@ -74,6 +74,9 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
     scenes: run.scenes,
     finalVideoUrl: run.finalVideoUrl,
     finalDownloadUrl: run.finalDownloadUrl,
+    finalCreativeId: run.finalCreativeId,
+    finalLineage: run.finalLineage,
+    finalAudioPolicies: run.finalAudioPolicies,
   } as Record<string, unknown>,
   error: run.error ?? null,
 });

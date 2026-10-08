@@ -44,8 +44,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json(pending);
   }
 
+  const receipt = sidecar.lineage ? {
+    creativeId: sidecar.creativeId,
+    lineage: sidecar.lineage,
+    audioPolicies: sidecar.audioPolicies,
+  } : {};
+
   if (sidecar.status === 'done') {
     const result: FinalRenderResult = {
+      ...receipt,
       done: true,
       status: 'done',
       url: sidecar.url,
@@ -56,7 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (sidecar.status === 'failed') {
-    const result: FinalRenderResult = { done: true, status: 'failed', error: sidecar.error ?? 'render_failed' };
+    const result: FinalRenderResult = { ...receipt, done: true, status: 'failed', error: sidecar.error ?? 'render_failed' };
     return res.status(200).json(result);
   }
 
@@ -67,14 +74,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // fall through to 'processing' unchanged.
   if (isRenderStalled(sidecar)) {
     await writeSidecar(statusKey(user.id, jobId), {
+      ...receipt,
       status: 'failed',
       error: 'watchdog_stalled',
       updatedAt: new Date().toISOString(),
     }).catch(() => {});
-    const result: FinalRenderResult = { done: true, status: 'failed', error: 'watchdog_stalled' };
+    const result: FinalRenderResult = { ...receipt, done: true, status: 'failed', error: 'watchdog_stalled' };
     return res.status(200).json(result);
   }
 
-  const processing: FinalRenderResult = { done: false, status: 'processing' };
+  const processing: FinalRenderResult = { ...receipt, done: false, status: 'processing' };
   return res.status(200).json(processing);
 }

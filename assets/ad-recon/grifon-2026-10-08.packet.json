@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "id": "grifon-2026-10-08",
+  "evidenceMode": "observed",
+  "observedAt": "2026-10-08T09:15:50Z",
+  "subject": {
+    "brandName": "Grifon AI",
+    "productName": "Grifon AI",
+    "offer": "Turn your product or offer into an ad plan and a reviewable video creative.",
+    "audience": "Philippine small business owners who need usable ads and clear reasons to test each concept. Audience fit is a pilot assumption."
+  },
+  "competitors": [
+    {
+      "id": "creatify",
+      "name": "Creatify AI",
+      "domain": "creatify.ai",
+      "pageId": "145266828662281",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?search_type=page&view_all_page_id=145266828662281",
+      "collectionStatus": "partial",
+      "limitations": [
+        "About named CREATIFY LAB INC and @creatify_ai_official; selected ad destination matched creatify.ai. Identity was operator-reviewed in the browser.",
+        "One card sampled from approximately 39 active results using ALL / All ads. This does not establish Philippine targeting or best-performing ads.",
+        "Playback was sampled, not fully transcribed or analyzed. Observations below cover card text only.",
+        "Advertiser claims about output volume and speed are not independently verified. No spend, conversion or profitability data was available."
+      ]
+    },
+    {
+      "id": "arcads",
+      "name": "Arcads AI",
+      "domain": "arcads.ai",
+      "pageId": "332742426590967",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?search_type=page&view_all_page_id=332742426590967",
+      "collectionStatus": "partial",
+      "limitations": [
+        "About named FRESHR and @arcads_ai; selected ad destination matched www.arcads.ai. Identity was operator-reviewed in the browser.",
+        "One card sampled from approximately 240 active results using ALL / All ads. This does not establish Philippine targeting or best-performing ads.",
+        "Playback was sampled, not fully transcribed or analyzed. Observations below cover card text only.",
+        "Displayed February 17 start date does not prove continuous delivery. Production speed, quality, adoption and profit claims remain unverified."
+      ]
+    },
+    {
+      "id": "higgsfield",
+      "name": "Higgsfield AI",
+      "domain": "higgsfield.ai",
+      "pageId": "611634422026525",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?search_type=page&view_all_page_id=611634422026525",
+      "collectionStatus": "blocked",
+      "limitations": [
+        "About named HIGGSFIELD INC. and @higgsfieldai.fb / @higgsfield.ai. Identity was operator-reviewed in the browser.",
+        "ALL / All ads / Active stayed empty after two loaded refreshes. No active ad ID or ad observation was acquired.",
+        "This session cannot distinguish an actual empty matching collection from Meta's empty-state behavior. Do not infer no advertising or spend.",
+        "Higgsfield website marketing was not substituted for Meta ad evidence. No concept cites Higgsfield as an ad source."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "creatify-one-link",
+      "competitorId": "creatify",
+      "libraryId": "3692662674216626",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=3692662674216626",
+      "observedAt": "2026-10-08T09:15:50Z",
+      "startDate": "2026-10-06",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "creatify-input-output", "text": "Card headline was 'One link. Ten ads.' Caption described a product link as input and ten ready-to-test ads as output. This records the advertiser's promise, not verified product capability." },
+        { "id": "creatify-agency-friction", "text": "Caption opening framed waiting on an agency as a problem before introducing the product-link workflow. This is a messaging observation, not evidence of agency costs or time saved." }
+      ]
+    },
+    {
+      "id": "arcads-photo-creator",
+      "competitorId": "arcads",
+      "libraryId": "2332836127142771",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=2332836127142771",
+      "observedAt": "2026-10-08T09:15:50Z",
+      "startDate": "2026-02-17",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "arcads-visible-process", "text": "Caption described a product photo, an AI creator speaking about the offer, and finished ads. Claimed speed and quality were not independently verified." },
+        { "id": "arcads-refresh-hooks", "text": "Caption encouraged multiple creators, multiple hooks and weekly creative refreshes. This records a testing/refresh message; it does not establish that those variations sold." }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "show-the-proof",
+      "title": "See It Before You Trust It",
+      "format": "Demo",
+      "customerProblem": "The owner distrusts generic AI ads and wants to see whether the output actually represents their product.",
+      "sellingAngle": "Make credibility visible by pairing the owner's exact input with a real Grifon output and showing the review step.",
+      "hook": "An AI ad is easy to promise. Show me what it does with my product.",
+      "originalProof": "Capture one real, owned product brief beside an existing accepted Grifon creative. Show the actual script/storyboard review. Clearly label any illustrative output. Do not fabricate sales, time savings, customer quotes or a generation that has not happened.",
+      "requiredAssets": ["Owned product photo and exact input brief", "An accepted existing Grifon output with permission to show it", "Real One-Shot review screenshots; hide personal data", "Recorded input/output capture matched to that same example"],
+      "testHypothesis": "Priority 1; solution-aware. Visible input/output proof may reduce the objection that AI ads look generic. P6 and S20/S32 support visible proof as a device, but this SaaS execution is an untested hypothesis. Compare qualified free-plan completion against the current creative; clicks alone do not establish success.",
+      "sourceIds": ["creatify-one-link", "arcads-photo-creator"],
+      "observationIds": ["creatify-input-output", "arcads-visible-process"]
+    },
+    {
+      "id": "three-buying-reasons",
+      "title": "One Product, Three Reasons",
+      "format": "Founder POV",
+      "customerProblem": "The owner keeps changing visuals but still has only one reason for a customer to buy.",
+      "sellingAngle": "Show three different customer problems and selling reasons before investing in another creative variant.",
+      "hook": "Three new faces. Same weak reason to buy. What are you really testing?",
+      "originalProof": "Neil shows a real Grifon reference packet with three distinct problem/angle briefs. Explain the reasoning in his own words and select one for review. The current feature produces reviewable plans; do not claim it automatically renders or publishes a batch, or that any concept has already won.",
+      "requiredAssets": ["This reviewed Grifon packet", "Founder recording with Neil's approved wording", "Real reference panel capture showing observations separately from hypotheses", "A test plan naming qualified signups or completed ad plans as the downstream measure"],
+      "testHypothesis": "Priority 2; solution-aware. A founder-led explanation of distinct buying reasons may attract owners seeking strategy rather than decorative variation. Arcads' refresh message provides a relevant contrast, not proof of performance. Compare qualified ad-plan completion and later activation with the visible-proof concept at comparable conditions.",
+      "sourceIds": ["arcads-photo-creator"],
+      "observationIds": ["arcads-refresh-hooks"]
+    },
+    {
+      "id": "less-blank-page-work",
+      "title": "Your Offer, Less Blank Page",
+      "format": "UGC",
+      "customerProblem": "The owner has a clear product and offer but loses momentum deciding what to say in an ad.",
+      "sellingAngle": "Turn a concrete product and offer into a reviewable starting plan that the owner can correct before production.",
+      "hook": "Your product is ready. Your offer is ready. Your ad is still a blank page.",
+      "originalProof": "An identified demonstrator walks through a real product/offer and the resulting plan in the existing flow. Show one useful correction before creative production. Treat the demonstrator as a walkthrough, not a customer testimonial. Any elapsed-time comparison requires a measured capture; omit agency prices and invented savings.",
+      "requiredAssets": ["Owned product and offer details", "Real input-to-plan screen capture", "A consenting demonstrator or clearly identified AI presenter", "One documented review correction", "Approved cold-traffic CTA: Try It Free; free access is an ad plan, not a promised free finished video"],
+      "testHypothesis": "Priority 3; problem-aware. Naming the blank-page task may bring in owners who have not yet chosen an AI tool. Creatify's agency-friction framing is observed, while Philippine SMB response is untested. Measure completed qualified free plans and subsequent activation; do not optimize solely for low-cost clicks.",
+      "sourceIds": ["creatify-one-link"],
+      "observationIds": ["creatify-agency-friction"]
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
-import type { Script, Avatar, Scene, VideoPrompt, BusinessInfo, ClientDetails } from '../types';
+import type { AdReferenceBrief, Script, Avatar, Scene, VideoPrompt, BusinessInfo, ClientDetails, MarketResearchReport } from '../types';
+import { selectedReferenceAngleReport } from '../services/adReconBrief';
+import { deriveAngleBrief } from '../services/producerOrchestrator';
 import {
   generateAdScript,
   generateAvatarImage,
@@ -38,6 +40,7 @@ export interface OneShotParams {
   businessInfo: BusinessInfo;
   language: 'English' | 'Taglish';
   aspectRatio: '9:16' | '16:9';
+  referenceBrief?: AdReferenceBrief;
   /**
    * Presenter chosen at intake (One-Shot Ad: uploaded or generated+accepted).
    * When present, the avatar stage reuses it instead of generating a fresh one,
@@ -192,7 +195,10 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
     try {
       // 1 — Script (critical)
       patch('script', 'running');
-      const script = await generateAdScript(businessInfo, clientDetails.brandName, language, clientDetails.offer, '', '');
+      const selectedReport = params.referenceBrief?.selectedConceptId
+        ? selectedReferenceAngleReport(params.referenceBrief, { brandName: clientDetails.brandName, productName: businessInfo.product, offer: clientDetails.offer }, {} as MarketResearchReport)
+        : undefined;
+      const script = await generateAdScript(businessInfo, clientDetails.brandName, language, clientDetails.offer, selectedReport ? deriveAngleBrief(selectedReport) : '', '');
       // UGC Pro: back-fill the resolved sub-format so the downstream storyboard (which reads
       // businessInfo.ugcProFormat) is populated even on the 'Auto' path. Nullish — an explicit
       // user pick is never overwritten. businessInfo is the same object the storyboard call
