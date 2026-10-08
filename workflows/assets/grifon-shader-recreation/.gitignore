@@ -5,4 +5,8 @@ reference/frames/
 reference/observed-*.png
 reference/observed-sheet-*.jpg
 .tmp/
-assets/audio/
+# Raw music and standalone audio stay private, including frozen pilot snapshots.
+**/assets/audio/
+qa/pilot-failed-review-2/captured-frames/
+# Raw paced browser captures remain local inspection evidence; boards/receipts are saved.
+qa/review-player-timed-*-captures/

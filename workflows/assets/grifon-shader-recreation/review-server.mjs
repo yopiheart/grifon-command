@@ -6,6 +6,9 @@ import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const routes=new Map([
   ['/',{file:'review.html',mime:'text/html; charset=utf-8'}],
+  ['/paired',{file:'paired-review.html',mime:'text/html; charset=utf-8'}],
+  ['/paired.mp4',{file:'.tmp/paired-pilot.mp4',mime:'video/mp4'}],
+  ['/paired-receipt.json',{file:'qa/paired-review-receipt.json',mime:'application/json'}],
   ['/reference.mp4',{file:'reference/source-x.mp4',mime:'video/mp4'}],
   ['/pilot.mp4',{file:'grifon-opening-pilot-silent.mp4',mime:'video/mp4'}],
 ]);
@@ -29,4 +32,4 @@ const server=http.createServer((request,response)=>{
 });
 const requested=Number(process.argv[2]||0);
 if(!Number.isInteger(requested)||requested<0||requested>65535)throw new Error('Port must be an integer from 0 through 65535');
-server.listen(requested,'127.0.0.1',()=>console.log(`Private comparison: http://127.0.0.1:${server.address().port}/`));
+server.listen(requested,'127.0.0.1',()=>console.log(`Private comparison: http://127.0.0.1:${server.address().port}/ (PID ${process.pid})`));

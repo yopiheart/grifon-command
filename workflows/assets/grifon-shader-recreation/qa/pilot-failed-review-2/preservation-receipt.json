@@ -1,0 +1,1770 @@
+{
+  "reviewedVideoSha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8",
+  "reviewedVideoBytes": 3992749,
+  "files": [
+    {
+      "file": "pilot.json",
+      "bytes": 1218,
+      "sha256": "150cc090532a5327938e2de28a4a0d2f1a106bd5b92252526cc24753450b9fec",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "pilot.html",
+      "bytes": 470,
+      "sha256": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "pilot.js",
+      "bytes": 4870,
+      "sha256": "e4853a20d9900813f91069c8da72cafcfcf6caca4a5c1a06b7850ed5d8c61b49",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "surfaces.frag",
+      "bytes": 13408,
+      "sha256": "2362c20374d57008f5b6b098b9920c25a6ff697b8dfdd7764a2ce25cfb35e3c9",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "build-pilot.mjs",
+      "bytes": 7236,
+      "sha256": "1909315a269b9cead317af3563df85caf9c3c0920bf2c26d12abd684fcaeb37d",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "render-pilot.mjs",
+      "bytes": 8314,
+      "sha256": "d1da0be71e930c48eddab099f1f9749962804095858716a892f9cb65beeb65e4",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "verify-sdf.mjs",
+      "bytes": 6468,
+      "sha256": "ae370875a04b1aefab7d362dcfe0e08c41991ecff726d38f8900747cc0c483ee",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "grifon-opening-pilot-silent.mp4",
+      "bytes": 3992749,
+      "sha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\audio\\mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\music-premaster.wav",
+      "bytes": 11960478,
+      "sha256": "8b4343f9a353f46bb34ada46b5605a982e4061023bede5a18d607d33240b85e9",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\negative-dynamic-opening.wav",
+      "bytes": 2133476,
+      "sha256": "09dc1a426552e8f2de6c58a8947cbd7e43a21aec34aea78fea0d9ac73016211d",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\negative-dynamic.wav",
+      "bytes": 8970386,
+      "sha256": "919da4b49c02b226f047f2496dcd6adf43ed11e8c1616ad6ce2bd07a12c2ff4c",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\opening-preview.m4a",
+      "bytes": 201775,
+      "sha256": "d6a694e3dfd600af37eb75938622b0242ba94e7a4128c7f72ab2b153e8763347",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\opening-preview.wav",
+      "bytes": 2133476,
+      "sha256": "3114ba6ad2e9bf379d9f2f0d1f92b8ed5f3fd2c63b8f18b3187fe32371c694ae",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\audio\\private-checks.mjs",
+      "bytes": 4311,
+      "sha256": "6507ef1611702f20411252c8a6f2ddc696b2ebc5c0351c7c24bd178ec1e6231f",
+      "role": "incidental private audio copy; not used by silent pilot renderer"
+    },
+    {
+      "file": "assets\\introduction-mask.png",
+      "bytes": 8784,
+      "sha256": "0ee9381a6e7ab2ce2f490fdb1b94216f78d3e9f2d1881f0f57dda64625b178b3",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\introduction-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\relief-height.bin",
+      "bytes": 1048576,
+      "sha256": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\relief-mask.png",
+      "bytes": 10032,
+      "sha256": "2ee54bf959cb108fccc90d74ab3dc0dbe9d6c549c0fbdb92031665d6ae3c67fc",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\relief-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "assets\\sdf-manifest.json",
+      "bytes": 1990,
+      "sha256": "df704fede157d0ea5b7e350a1640106fb0196c3d6a9776687cdc21cff6ff1399",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "vendor\\LICENSE-Three.txt",
+      "bytes": 1102,
+      "sha256": "df2a91696186fe58c92518a25d48bc59c8ee2edc7cac9ca6d19a5a0d599a2a05",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "vendor\\three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-contact-sheet.jpg",
+      "bytes": 763455,
+      "sha256": "c780dd920953871e0203eeed72f2d9e0a97287738c080e178cdc1a9ad6db231b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-000.png",
+      "bytes": 8508,
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-006.png",
+      "bytes": 150139,
+      "sha256": "da1b2469cf376ce19174171c970ab7ef53510697adff78b31db4eaeffda792eb",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-012.png",
+      "bytes": 176036,
+      "sha256": "ac161fb76f2710a69d7a62bc59292288ea5bd577fdae846eaed87b171d06f9d7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-019.png",
+      "bytes": 175138,
+      "sha256": "e75e57cf9cc53d3c1c739c86fc721e87cea0d35f60dc2ba946db4dc4674230c8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-025.png",
+      "bytes": 250461,
+      "sha256": "aa0fbd78021a629c6ae3c5abaa01d7ea399b5428f3fd7bd406a0d166d9899d81",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-026.png",
+      "bytes": 367945,
+      "sha256": "de0f044beb5d947094d0aec418ff48cb1a44086b463291ccd6df2ae4db0d0076",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-029.png",
+      "bytes": 562912,
+      "sha256": "bc07f1c8f4dd5679a28b7ad709ae0f1abe2e21e1c129d6d00395525974fb1303",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-032.png",
+      "bytes": 432448,
+      "sha256": "305648fa81d85efe138a1b0312c449f14881b51d2c66bd5cfc9cb5b3e057bac1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-034.png",
+      "bytes": 438380,
+      "sha256": "5d4746ea73fe577c11dd3dca9c94c203ece56c073959163baf8300c953d26557",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-036.png",
+      "bytes": 447291,
+      "sha256": "8b8a09b7911fc1210cb17adf79c2ffb8797430fef17482c44a92561471ae5227",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-044.png",
+      "bytes": 404741,
+      "sha256": "b58237abdb848e0063dc3a0c34d56977e924739f04393b97eccf805e158c7207",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-057.png",
+      "bytes": 574630,
+      "sha256": "a2b366f666713a5ddee0c090caf18fd38ddbbb763fd4550da2a29f34ad3b5c2c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-060.png",
+      "bytes": 556680,
+      "sha256": "7c122cc93c514ac4c0c3d94c4cc93b38426fa12e2f94b348d5a41ce6ac66cc15",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-068.png",
+      "bytes": 631657,
+      "sha256": "6c74a33930bc6ab93c3c0caa7f8fc29a12760c15f066c800077ab9dac59ad98e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-069.png",
+      "bytes": 629022,
+      "sha256": "693004e5719018177b761b5da49327fb1fb85c0c645cab2ded50e30d1438d90a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-070.png",
+      "bytes": 622963,
+      "sha256": "e2c188e1f2051c98c133cb025c4eddb55ac6a744f8ce57f2c1a1baf7d3a40cef",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-081.png",
+      "bytes": 527200,
+      "sha256": "11ecbd666b2b77d4b947f6dfd2fd99dfd3c5fc6188ee9f28b2652fa2405b10bd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-084.png",
+      "bytes": 150296,
+      "sha256": "cd69ea916c078ac8fc504aee3bf82be42b9ad880f5a38e15d4d191d02ccb045e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-093.png",
+      "bytes": 96316,
+      "sha256": "ff8d343e98ef41af38daf3cf2bf19ccb715e1724bd22249b0d7dd6f6b3d8744f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-100.png",
+      "bytes": 266719,
+      "sha256": "a6d85c0f1c9b3957a8c39d2f19f27a35fc6fd1ebacf8b07172c6f9bdf8693604",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-107.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-114.png",
+      "bytes": 342579,
+      "sha256": "0784667fc31846f18daf23d979bd73ffad60251c7c7c924202aa17e9cd444d55",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-122.png",
+      "bytes": 125453,
+      "sha256": "c825eadfdfde485439a2a74b11159bcb8fd5f2f854195c8b1d24091580a93b04",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-128.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-135.png",
+      "bytes": 200481,
+      "sha256": "dba86bcc4b4980656b5e370512d80e8766af630fd29a2fbfa7957d763174262e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-140.png",
+      "bytes": 118475,
+      "sha256": "79fb381a88223d9c308166be805aec9e7c10be84153e6f69a67c3ec20f3efd2b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-141.png",
+      "bytes": 8514,
+      "sha256": "4297891b2fde1d5d428e7ece86d7b5edc741fc157e45b760c05a8d4461e0236f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-142.png",
+      "bytes": 8514,
+      "sha256": "4297891b2fde1d5d428e7ece86d7b5edc741fc157e45b760c05a8d4461e0236f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-143.png",
+      "bytes": 157609,
+      "sha256": "397057b981d1911e5d33158885412e3af751c4587f2d6502743ab2e93c4bfad0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-144.png",
+      "bytes": 230063,
+      "sha256": "3d77dccbf1947b1084893b88fbdd594e47e0b02fba6bb671278627b5f64baeea",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-150.png",
+      "bytes": 258820,
+      "sha256": "abbdab9c4375adf7181cf10f68243fb32385ef799c3a54ebd52563443eda855b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-177.png",
+      "bytes": 364466,
+      "sha256": "0560a322e7e62352a711619b5490cc981acef6a964c5286545c39051b05f398c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-188.png",
+      "bytes": 435233,
+      "sha256": "5de0c71a4b51ec78303cccd12db546cd20b3f7052375da9f4de99756b7085d14",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-198.png",
+      "bytes": 985374,
+      "sha256": "f4e080e3cd70b571a4362c2f73e6b3c9a376993a1a0986066a0370577b80c066",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-209.png",
+      "bytes": 610690,
+      "sha256": "00b1bd4d083280f2655980bffaf1336de1f662e4e6c8a7aa319be7f4813e67ea",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-215.png",
+      "bytes": 609970,
+      "sha256": "aef5c4046198f0ef43a6054691fb65a91615091a2e82c1a8dfafb321cc74058a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-frame-221.png",
+      "bytes": 610344,
+      "sha256": "1b1fc7efa790a48b8e8710f2eb957fb9d077be1f173e2b984d7505f908085cb6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-implementation-report.md",
+      "bytes": 5734,
+      "sha256": "5e9f1dea2d2a74c852bc21addac5051711a3aed19d222d8f0fb653b3f902ddea",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-media.json",
+      "bytes": 1247,
+      "sha256": "9fd64ff182ff92cece0c40bf3e6c8bb4f39a9afd61eb8df797618657ca1eb452",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-render.json",
+      "bytes": 17110,
+      "sha256": "dd9d40c6f7578c649e028745a3c25e4068e3f86603b29050c50cae7f2696a69f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\pilot-samples.json",
+      "bytes": 8732,
+      "sha256": "8010fc004697f79552395eb9e2dfbc3842692ecf5d7688a7d3aed5bbdeebce09",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "qa\\sdf-validation.json",
+      "bytes": 5507,
+      "sha256": "09ce0dadd088152a35a424cd15fcd273a1d7d68c67319c75c2aef4cd98afb4c5",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0000.png",
+      "bytes": 8508,
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0001.png",
+      "bytes": 8508,
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0002.png",
+      "bytes": 8508,
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0003.png",
+      "bytes": 8508,
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0004.png",
+      "bytes": 81004,
+      "sha256": "3c606440d7fa8a5997f14a294817cf749b7d59e132621377703e898f4f6d9dea",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0005.png",
+      "bytes": 127801,
+      "sha256": "9d76a4cc604319584af3099a9c370deb927137013052e7e5d717f557aeca9060",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0006.png",
+      "bytes": 150139,
+      "sha256": "da1b2469cf376ce19174171c970ab7ef53510697adff78b31db4eaeffda792eb",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0007.png",
+      "bytes": 160909,
+      "sha256": "68bdcdb42bc1a53126e490be17828e7b3c3b5f761edddf6ae7a3865fb7ecfa14",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0008.png",
+      "bytes": 175805,
+      "sha256": "7fec92933a41c3415a71b82f556f524fe116883eac39e7af303cd4e4eb3fef8b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0009.png",
+      "bytes": 178984,
+      "sha256": "89e770df3a9fcedf242d4ec26644c9ff66533396984a31a0d1a1b89a9b67efc2",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0010.png",
+      "bytes": 181102,
+      "sha256": "d899bfd11043f9f743d5b157049645f6d60210f81a7e9478f24fbaff1022c15c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0011.png",
+      "bytes": 179794,
+      "sha256": "8748ff15ff7402189ee09ddcb8524fd8c9090e9e07e5cc48d43e5e08e58deee9",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0012.png",
+      "bytes": 176036,
+      "sha256": "ac161fb76f2710a69d7a62bc59292288ea5bd577fdae846eaed87b171d06f9d7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0013.png",
+      "bytes": 174418,
+      "sha256": "203f27f24178881edac5487c5bc46be07d53031482530f31d712f9da4c358242",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0014.png",
+      "bytes": 173969,
+      "sha256": "ca253aad47eaae857fd03b86a355fc78a064fb82ff256c1c1fed8079bda7e68c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0015.png",
+      "bytes": 173592,
+      "sha256": "8f48b1ba2dce96f8b7b66a874c53d68ce955984091ff7e34c10a60ab1c25c7be",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0016.png",
+      "bytes": 169586,
+      "sha256": "4e288367c129f31e9ac1d95682544e21070435b47e5ec65c9121a71f982f5d38",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0017.png",
+      "bytes": 168093,
+      "sha256": "d1f4a797fb66bbe7019a155b1ca006244e3974b932d3ad5bca86d13511b48c9f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0018.png",
+      "bytes": 171107,
+      "sha256": "26c6a5162827795a0c4aa2ac0b5a9463c992a2095a044e70a7c34b022b5caa31",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0019.png",
+      "bytes": 175138,
+      "sha256": "e75e57cf9cc53d3c1c739c86fc721e87cea0d35f60dc2ba946db4dc4674230c8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0020.png",
+      "bytes": 170529,
+      "sha256": "35509d52024450bc1e1e4c1a816380df1b057ec5550d7e308a9bac4f4c652961",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0021.png",
+      "bytes": 513631,
+      "sha256": "8c1de1eb8238864785b83b9e8d00e007966e9082096d28bf1d2b4cfd0e00a8a0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0022.png",
+      "bytes": 506055,
+      "sha256": "6be8a80de6391bde0b0109f12302509a1b48641d650f8f5491d8648491c3ef5f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0023.png",
+      "bytes": 468698,
+      "sha256": "81f605a2f8f5ce2d1fa19d5a8efe3871fc3f0a6fcc607268af40a6f89def854b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0024.png",
+      "bytes": 445858,
+      "sha256": "19cad0b65f0bc8e9d7a0239fb278daa9d541acbced9300b436cf9d8e402aaf74",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0025.png",
+      "bytes": 250461,
+      "sha256": "aa0fbd78021a629c6ae3c5abaa01d7ea399b5428f3fd7bd406a0d166d9899d81",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0026.png",
+      "bytes": 367945,
+      "sha256": "de0f044beb5d947094d0aec418ff48cb1a44086b463291ccd6df2ae4db0d0076",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0027.png",
+      "bytes": 449578,
+      "sha256": "8bbc577b5181bca45534dda918242e37a1cae6ec9af90d8ba31a44a8ed6b01b1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0028.png",
+      "bytes": 541841,
+      "sha256": "ffd7d71a0ae7b51c3e9993e0fb1382ab63bd43c90ea5cc10eeff54fc8148ccd7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0029.png",
+      "bytes": 562912,
+      "sha256": "bc07f1c8f4dd5679a28b7ad709ae0f1abe2e21e1c129d6d00395525974fb1303",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0030.png",
+      "bytes": 538595,
+      "sha256": "1dc8730ded8cd1cc4f8971c595517fa92a98bf5924554f2aa34f86105b8ec482",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0031.png",
+      "bytes": 429040,
+      "sha256": "6f1e7ebd7ad935c65bb52849f975ba3a2d68207f32671c01f51d0c5d2449f6dd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0032.png",
+      "bytes": 432448,
+      "sha256": "305648fa81d85efe138a1b0312c449f14881b51d2c66bd5cfc9cb5b3e057bac1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0033.png",
+      "bytes": 437853,
+      "sha256": "0fe84807a896e9348890ba2f897bbd1babdfc0e02ad179428f703843f66d4692",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0034.png",
+      "bytes": 438380,
+      "sha256": "5d4746ea73fe577c11dd3dca9c94c203ece56c073959163baf8300c953d26557",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0035.png",
+      "bytes": 440168,
+      "sha256": "13482348d9e157e789f00ad34371803c2c844acda86a06abacdcb5ad44cf94dc",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0036.png",
+      "bytes": 447291,
+      "sha256": "8b8a09b7911fc1210cb17adf79c2ffb8797430fef17482c44a92561471ae5227",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0037.png",
+      "bytes": 442401,
+      "sha256": "ce351651f5adf71a792165e4c1d2b8d813c7d64063371e5bc6343862affc3981",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0038.png",
+      "bytes": 424677,
+      "sha256": "466e589f86e02670b063eeee05046b508493f2e029da2212b8689919e9a1d110",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0039.png",
+      "bytes": 412412,
+      "sha256": "e8c1047b097c61aade6b8845e4fc7c1c91f6fb0bb0445dba1818be5e4b03b9f8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0040.png",
+      "bytes": 410089,
+      "sha256": "35b02770361ce951b91220bd70980d0f91732514c9c21a08f1f197200e285b1e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0041.png",
+      "bytes": 408302,
+      "sha256": "92b4c59303c329b577e2e3f865e55724cae3b2e18b2fd11c84fd1959af3bfbc7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0042.png",
+      "bytes": 407507,
+      "sha256": "f5f02f4603961b29670a6fe4a4f5ba377d45c5c280602ecb13e7e7347e3d37f7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0043.png",
+      "bytes": 405602,
+      "sha256": "05748a8d868c18e6dda5636be491a439a71d6c268a0dd688b8afb9dfca00c2fd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0044.png",
+      "bytes": 404741,
+      "sha256": "b58237abdb848e0063dc3a0c34d56977e924739f04393b97eccf805e158c7207",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0045.png",
+      "bytes": 402873,
+      "sha256": "35c671726a21ddf84c231b3b4909505a56e686640ba9a23cc3a400c70c31dc8f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0046.png",
+      "bytes": 401933,
+      "sha256": "d6ed185f4459d52fc2c1bc5d38cdeffe0c55cc181403738e073c5871ec4f061f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0047.png",
+      "bytes": 402484,
+      "sha256": "5a68a88c1854b01bee9ee7250ffd3101324a7c26018df8468f8891e43d345ce2",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0048.png",
+      "bytes": 399916,
+      "sha256": "0f9e32d7dbe5fe6c1d443b41483834c99bb6bf5432f6bac6e9c35eba5e2a39dd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0049.png",
+      "bytes": 401408,
+      "sha256": "bb90d3adb237e50154c8d5ef6ae3936918c308c9afa8e98161a0b63af990066e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0050.png",
+      "bytes": 399448,
+      "sha256": "b08e707fd490af6f33a14ec30f1a0dbd27543bec988bac1aad0074174780e25a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0051.png",
+      "bytes": 398343,
+      "sha256": "d59ee09013cc1900e51a7f1b52be08a0c497903826d06879c8aba0702d01ef18",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0052.png",
+      "bytes": 398673,
+      "sha256": "2c76f641012456eb1ffe9eb49f1a6e7642400d03fb4e2df76eb4ccb0e23feb28",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0053.png",
+      "bytes": 397296,
+      "sha256": "b76d698a8a623a330a1404f840922044a7030bfc461ea3b185535c65c83831b0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0054.png",
+      "bytes": 395053,
+      "sha256": "d0b872ed04183e75e2631319e9df4cd0f2895931612396e24415949fe6047992",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0055.png",
+      "bytes": 393371,
+      "sha256": "38f1d88d4b9ca66a1de80cbc07542d5b85d129689bdd89fba293c6c0d95661a8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0056.png",
+      "bytes": 390711,
+      "sha256": "bc77499e4d0d47688eb3dac01b2a2d96f648238b0b04d491731445b443e63806",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0057.png",
+      "bytes": 574630,
+      "sha256": "a2b366f666713a5ddee0c090caf18fd38ddbbb763fd4550da2a29f34ad3b5c2c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0058.png",
+      "bytes": 568575,
+      "sha256": "ab16b3460683bc87de374b2d3bfb70066c0a689548a5f77d47feb573005ca3cf",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0059.png",
+      "bytes": 562057,
+      "sha256": "dc14b9f6d9bde91bcb31af39c36526488aa92c061331329d3eed3f42688ad3a4",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0060.png",
+      "bytes": 556680,
+      "sha256": "7c122cc93c514ac4c0c3d94c4cc93b38426fa12e2f94b348d5a41ce6ac66cc15",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0061.png",
+      "bytes": 557245,
+      "sha256": "bf2ac2be9233023db02126c83727b82d0892e192aa4e4d601f169a133b0531c3",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0062.png",
+      "bytes": 557466,
+      "sha256": "25fc4ad3434305bfc679ed33b33348c1ff87c147113285dfb7103107089b2ac6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0063.png",
+      "bytes": 569952,
+      "sha256": "efa0669957879f31350ba13cb44d3048c3411fbcabfcdf933b5180e55b6d62a6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0064.png",
+      "bytes": 595214,
+      "sha256": "b90fb28547be369c9821a8797ad5afd0457771fac0e7a41fed6f740abd9216c6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0065.png",
+      "bytes": 618289,
+      "sha256": "7c6da2dd4364eca524ce7011f5de840edde4b8ba4a640b2bc5aa9d06cc515041",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0066.png",
+      "bytes": 637066,
+      "sha256": "1baccbc4cdd6c5e51d2f5ccc34e0f6f8300f2cfb0055cd7976cef12287ad63f3",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0067.png",
+      "bytes": 644767,
+      "sha256": "0e21d57144350bce9733915fd2a8d1276a9ba020ba2ecc738694dace58eaedff",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0068.png",
+      "bytes": 631657,
+      "sha256": "6c74a33930bc6ab93c3c0caa7f8fc29a12760c15f066c800077ab9dac59ad98e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0069.png",
+      "bytes": 629022,
+      "sha256": "693004e5719018177b761b5da49327fb1fb85c0c645cab2ded50e30d1438d90a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0070.png",
+      "bytes": 622963,
+      "sha256": "e2c188e1f2051c98c133cb025c4eddb55ac6a744f8ce57f2c1a1baf7d3a40cef",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0071.png",
+      "bytes": 604951,
+      "sha256": "83f626faa1304592b62e5c4183daade1c28c4938b0d379464f35da417648f109",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0072.png",
+      "bytes": 579164,
+      "sha256": "ab1db28249b0517c69feb51d2c7d525cbfa46686618af198988f230f8fb76f21",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0073.png",
+      "bytes": 555577,
+      "sha256": "96c6cb0e091906146c311bf41f1438a8ca7d69adb506a885eb440e0b27eb789e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0074.png",
+      "bytes": 533806,
+      "sha256": "90bf2375b10ee6a0da1afb66737ff2ddaf145a74daa01ac711e746207a1dc299",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0075.png",
+      "bytes": 525661,
+      "sha256": "3c3a42d17d5be1035f394c222ba4bec5da1807423cbe14f574b7e8afbf15751d",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0076.png",
+      "bytes": 523881,
+      "sha256": "590bd644ce7333fc0eb158acc3aa711e57fa84095f8ea1982d93941a1b4a617b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0077.png",
+      "bytes": 524139,
+      "sha256": "2ab715f0a826dc5f18ce9a396feb256567f2099c25f44cc41a5e43104fdea35f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0078.png",
+      "bytes": 524278,
+      "sha256": "1334b237262d9278dfecba9ead5b0ac9acf2d42bb443aba0b958c1235c16f97c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0079.png",
+      "bytes": 523863,
+      "sha256": "97bd7dd425b0a95b68a5ad1f41864846c8c22ce13f685f38bf770475230cb3ef",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0080.png",
+      "bytes": 525592,
+      "sha256": "d34dc6455e51597b34ab1ca7331a9ef6af7996d2b7315c78a1da9f18197b2873",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0081.png",
+      "bytes": 527200,
+      "sha256": "11ecbd666b2b77d4b947f6dfd2fd99dfd3c5fc6188ee9f28b2652fa2405b10bd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0082.png",
+      "bytes": 150740,
+      "sha256": "e119073f5059a59e54c88d6b938067d9ff2fdfa337b076e2947daa440263d253",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0083.png",
+      "bytes": 150610,
+      "sha256": "8eed219737907ff638210c61203beb29d4af49a4faf664200c90e1cd6dd57409",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0084.png",
+      "bytes": 150296,
+      "sha256": "cd69ea916c078ac8fc504aee3bf82be42b9ad880f5a38e15d4d191d02ccb045e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0085.png",
+      "bytes": 150578,
+      "sha256": "b4496f188dee9fc5738c0068720595e83d926be0a72fb849bcc1cf70e92f33fa",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0086.png",
+      "bytes": 150852,
+      "sha256": "a13aa660d709cc9461b5efca57eeb8ca777b474a06920566349b592147009438",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0087.png",
+      "bytes": 150496,
+      "sha256": "b39c8e95ac3f5bbffa684a0365718aa32c95fe1d7c2785319e2b5bc1b8d3e3bf",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0088.png",
+      "bytes": 150101,
+      "sha256": "bae2dfddebfdd84497e98d313e08be419e683d9cde187f4ba06c6c081168a899",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0089.png",
+      "bytes": 150440,
+      "sha256": "e687d06b6808ce7e543936a9d381f57eaaa8e17b4337ca616f210f63c56940ee",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0090.png",
+      "bytes": 149752,
+      "sha256": "bf77ad9a013dfa1fee0f674fe4fc006fecf98b64b7a8a8fae761845dd017973c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0091.png",
+      "bytes": 96378,
+      "sha256": "aaf04e8acd86e2392c47f53bfa9b37212d47726ce80c57da543bbd3b4fc245a3",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0092.png",
+      "bytes": 96213,
+      "sha256": "4111ec25d2cdda653c42ddc8bacdb5a9bd10fb6b6426478dc57184938e00f705",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0093.png",
+      "bytes": 96316,
+      "sha256": "ff8d343e98ef41af38daf3cf2bf19ccb715e1724bd22249b0d7dd6f6b3d8744f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0094.png",
+      "bytes": 96167,
+      "sha256": "1b9b522cb85cf9d6bc45d1f61d70743ace3ab51bd5de74371d999426f589b479",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0095.png",
+      "bytes": 95868,
+      "sha256": "4e58f07ef361c49e01daefd2d0214caab02a2e8412ab819b17db98830cd67d96",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0096.png",
+      "bytes": 95939,
+      "sha256": "2c6f2d3b25a2a6e8efd0ab3b85dbe061c590359a007e990649078294f701fda6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0097.png",
+      "bytes": 267266,
+      "sha256": "4bf3878e7f767dd1e7d3669549a22dadea2aa7d268e524c81dda3288b70314cb",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0098.png",
+      "bytes": 267261,
+      "sha256": "1ac7fb12dfbb684c5af5b9b9566e18d075fd25d6f72ab743161e4ec91f6048b0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0099.png",
+      "bytes": 266720,
+      "sha256": "d539804c53415429017071c45efac38703cf40ebc1760cbbd0c0ae5b0bf91aa5",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0100.png",
+      "bytes": 266719,
+      "sha256": "a6d85c0f1c9b3957a8c39d2f19f27a35fc6fd1ebacf8b07172c6f9bdf8693604",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0101.png",
+      "bytes": 266865,
+      "sha256": "7a45be89a148f100b30d7a2dfb3627e21fa5eabb3175ba4c59d1dd43c329c3b6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0102.png",
+      "bytes": 267145,
+      "sha256": "ddc4ca43fb2258bff6ac8e697df70d7f4bee9ac319462a6d8340d48ea1f65f8a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0103.png",
+      "bytes": 266845,
+      "sha256": "53334938855e13335cbb80ce801df8d80d8ce9181e8d11e14ee70007e4fe74dc",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0104.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0105.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0106.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0107.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0108.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0109.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0110.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0111.png",
+      "bytes": 343326,
+      "sha256": "951333aa5178a6bf3177be8ec5b35c5a27ea9ef0cdcdb310b9aedf5e795cb139",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0112.png",
+      "bytes": 343187,
+      "sha256": "6cae4b7b2893e421c173980c9b77008aca0000ee4891e363d22396f4e9049ace",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0113.png",
+      "bytes": 343074,
+      "sha256": "42871775149a78ad821e2694e3860b0d8b11e0cecf6addfabf85e125cff7329a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0114.png",
+      "bytes": 342579,
+      "sha256": "0784667fc31846f18daf23d979bd73ffad60251c7c7c924202aa17e9cd444d55",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0115.png",
+      "bytes": 342880,
+      "sha256": "4f72aa3adbf0e4a58678a19264c045f9793b5e9b04d0264d8fe34b53988eecd8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0116.png",
+      "bytes": 342566,
+      "sha256": "56c2201b9732505c239d69d00e305e5f8dc2b0395ac9a99adedf809ff83652ec",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0117.png",
+      "bytes": 342568,
+      "sha256": "26cb0a27713bd3c63dc70e8ce7e5b2074dfaaced6d4ac67358b9210aa2649bb1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0118.png",
+      "bytes": 342387,
+      "sha256": "1f8590c95b35a93b7db69757a9eeaa367cdaab1441a44bc0035154534cb6ced8",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0119.png",
+      "bytes": 125403,
+      "sha256": "879beb60117454519c7e599336e5cc0e55d7c87f4bc32f390317531089c6ef68",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0120.png",
+      "bytes": 125413,
+      "sha256": "d4a7e19b5643d07186fe5a404eaa1096d83840095eefb821eb684acffec6ae2d",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0121.png",
+      "bytes": 125432,
+      "sha256": "08cdc85111fc8efa3fe73c5c3f1b209185d95fdf0e965623e855c885236132b5",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0122.png",
+      "bytes": 125453,
+      "sha256": "c825eadfdfde485439a2a74b11159bcb8fd5f2f854195c8b1d24091580a93b04",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0123.png",
+      "bytes": 125309,
+      "sha256": "6d02c78d4130106e66c02a181925a6eb518322e5218d4803003a7a30ba36a3a7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0124.png",
+      "bytes": 125052,
+      "sha256": "465f6fae6fe41e16f7fc26466df02af1d3ef934ae44bfc91ba9ff2b2f7a78154",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0125.png",
+      "bytes": 125262,
+      "sha256": "e6b84376d33cf18c23bbec456e7c80d1d6d198bbc08ee436a7a52c0209934867",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0126.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0127.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0128.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0129.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0130.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0131.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0132.png",
+      "bytes": 199270,
+      "sha256": "8904bb8bf1ac30763157b94cfcb0d857f0fb8a0d102a727c9928d264a1a9c17c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0133.png",
+      "bytes": 200092,
+      "sha256": "a943143a3cc1fd2ab2b66294f26a9d4ddf3efa1aa8c91a6b9f02542d0d06d56e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0134.png",
+      "bytes": 200090,
+      "sha256": "fe2b05a292a67fd130d2c82dd1f5ddb850a4274b6d699e70c09b038908fff6f0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0135.png",
+      "bytes": 200481,
+      "sha256": "dba86bcc4b4980656b5e370512d80e8766af630fd29a2fbfa7957d763174262e",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0136.png",
+      "bytes": 199916,
+      "sha256": "b23264e585225b5a3665ec20b69bce4ed899ce8b849669ded36fa053de926e7b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0137.png",
+      "bytes": 199464,
+      "sha256": "f8545dc8809d174f24170ac97a5cb2c3c00c7089f43476e03ba8856b1afea89a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0138.png",
+      "bytes": 199999,
+      "sha256": "1ab1aa1cb8885ec5c97cee4778285481ca6caf05754a59348b7ecfa6e7de7848",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0139.png",
+      "bytes": 176961,
+      "sha256": "4d1544c1deba389335bdc0ee28ca8ceed9ecfe8c3c4d6131e4afc78d62298fc9",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0140.png",
+      "bytes": 118475,
+      "sha256": "79fb381a88223d9c308166be805aec9e7c10be84153e6f69a67c3ec20f3efd2b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0141.png",
+      "bytes": 8514,
+      "sha256": "4297891b2fde1d5d428e7ece86d7b5edc741fc157e45b760c05a8d4461e0236f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0142.png",
+      "bytes": 8514,
+      "sha256": "4297891b2fde1d5d428e7ece86d7b5edc741fc157e45b760c05a8d4461e0236f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0143.png",
+      "bytes": 157609,
+      "sha256": "397057b981d1911e5d33158885412e3af751c4587f2d6502743ab2e93c4bfad0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0144.png",
+      "bytes": 230063,
+      "sha256": "3d77dccbf1947b1084893b88fbdd594e47e0b02fba6bb671278627b5f64baeea",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0145.png",
+      "bytes": 251728,
+      "sha256": "0b5f0ec2f1812faf2b0db864fbc4705346ecff269312912c22d0e00dd8097ac9",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0146.png",
+      "bytes": 251957,
+      "sha256": "6f9723889e205b4a495ca1ee2af4f4cec8748838b53a9a9fd85553a31c5519fd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0147.png",
+      "bytes": 251740,
+      "sha256": "a9145b709207f8b88541b71761cbb174fe23d7b6d239d54ea9f6578eb42f4d8a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0148.png",
+      "bytes": 252563,
+      "sha256": "178b7881558219b3e419ae9ce1d2cad599d9d634a69b5e9335aae16568506fd1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0149.png",
+      "bytes": 253731,
+      "sha256": "19b83f3e1f14d7d65c513270782369d78b197b654df40a86a6f8a616c6960775",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0150.png",
+      "bytes": 258820,
+      "sha256": "abbdab9c4375adf7181cf10f68243fb32385ef799c3a54ebd52563443eda855b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0151.png",
+      "bytes": 258936,
+      "sha256": "4e8bdd9be0815d1f17358c3ac2028f43191aeb34aaaa01ef31ac2015020ea692",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0152.png",
+      "bytes": 259812,
+      "sha256": "da53d341552f3868a22b4205c9297a6cdfe1c8401279bc93b6c85067a93c0904",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0153.png",
+      "bytes": 258134,
+      "sha256": "3b9c996d24a42900275f67f71e9cfbceb23ed05286b35af9f6e2e471f29538cb",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0154.png",
+      "bytes": 262756,
+      "sha256": "af3bb6bb7b2a3e5298e0c4184ce9e233cf0200de3aa823fb77b6c2a7751aa57c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0155.png",
+      "bytes": 262431,
+      "sha256": "e8c2f066e947279459c070c9e070df71ad60ccb6f26a11ec1e570b96e9a1bd60",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0156.png",
+      "bytes": 265620,
+      "sha256": "9a730405c3dba7e024aac49005c1fbcb8af252bf79dbf2e10d1445ae00a4f862",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0157.png",
+      "bytes": 266066,
+      "sha256": "3abeb721b7f6fcc20e2c3f88cc699644c4546446218b0c695d881b51a6de7d67",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0158.png",
+      "bytes": 269625,
+      "sha256": "21534cdc80940b89f760d9167201ff4ece520e5e4773d7d3706de143f2a1d312",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0159.png",
+      "bytes": 273517,
+      "sha256": "41168b7d529a06524c3e4d5ee3a9a5e1086f79dcb28f402e5ab546326c05905c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0160.png",
+      "bytes": 279337,
+      "sha256": "f93462f4f72ee6ebe0a881ff58452206341a870e7c2530828e1b3c0cd800a46c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0161.png",
+      "bytes": 278597,
+      "sha256": "3ed8e10cc66a8b5379ee4ec7811643ad1096c0f76f4992c16d62c25e98798faa",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0162.png",
+      "bytes": 284375,
+      "sha256": "c4dbaa206c0258bf39feaaba42ef1dacf229e1e5b392de93f751b00e4f6f1615",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0163.png",
+      "bytes": 284149,
+      "sha256": "0e3ebb09efdfae33cff72f6591112d232ac63af157ac6b1ec3b027fc36eabf24",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0164.png",
+      "bytes": 289220,
+      "sha256": "0a4aeb61fba30a12c263d671db44f16b006695a0533a3d7bbf711b73c0387235",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0165.png",
+      "bytes": 296073,
+      "sha256": "2cd5a2b694dea329ebbe5026193319506bfc4bbe0b27b151a0e12901b8bf4892",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0166.png",
+      "bytes": 298285,
+      "sha256": "991c7398d0fb868d4c72b2e2661680a3604fc4f8a1fab4228d58732c75f4d1b1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0167.png",
+      "bytes": 301379,
+      "sha256": "79df8f40f681e4ca79c54697c33fed64ef694bf2595ce4d2f2ca97384aec3ad2",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0168.png",
+      "bytes": 309594,
+      "sha256": "ae6bc06e6ad29356ac887ee7be876561dfe8f1cccb9cc699214d932869adb67a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0169.png",
+      "bytes": 312946,
+      "sha256": "1accb149d80c4af8ea7de154c0b44e7688a7107a4b67f7a78105bb3a1a4a3c40",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0170.png",
+      "bytes": 320206,
+      "sha256": "0fb71389611f7cd989e5f7d1f9852b68781d47811ff19b24470ecfd1f3c758b1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0171.png",
+      "bytes": 324930,
+      "sha256": "7dc39a3c3c683bc1c512466219607463fc259f2f42b0d15858c0928b345dbc9b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0172.png",
+      "bytes": 334377,
+      "sha256": "de8bb65396b7417524078a78e685207dee79cd493ab86ad2d156deb7054505c4",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0173.png",
+      "bytes": 337166,
+      "sha256": "86c0a234e0a94d0bd4f38d652d99e3bf37068ea49d3b4e601dee0248cd7af338",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0174.png",
+      "bytes": 343216,
+      "sha256": "ac270c67959978dd6ba28bf7aefd34024521a31fb85d5fb6c30a3b24d74fbe28",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0175.png",
+      "bytes": 355332,
+      "sha256": "9bd59dab291fc258a231c615bad626bada69e4c2fde8eb453f705b3a72f69d9d",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0176.png",
+      "bytes": 357762,
+      "sha256": "4b7df01d86cb5f16d719bc481afb3257b781924762f575ec6aeb78666a4b78f0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0177.png",
+      "bytes": 364466,
+      "sha256": "0560a322e7e62352a711619b5490cc981acef6a964c5286545c39051b05f398c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0178.png",
+      "bytes": 376710,
+      "sha256": "de0e13ab23c9c2977d16cd5187ac1426da2ae9f9b3d0cdf0bd845d497115857b",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0179.png",
+      "bytes": 385888,
+      "sha256": "f7006b3fe9c98c886e80a1ec14ccb51a3754367a7c278f4b397fe75a259c6779",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0180.png",
+      "bytes": 383085,
+      "sha256": "a0bcbc24e43e083f2f3a248a9ce57618ad317bef6da5b57b5035f103ba82f7b1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0181.png",
+      "bytes": 396876,
+      "sha256": "3649d77869ca8930acde44d24f58dc079ab4b589a3454b5145b1d7cf4e854626",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0182.png",
+      "bytes": 396242,
+      "sha256": "ee5c7ace4e28ac7faa0d2e69244fa65049d48bfb45c6dfbbe27d648adedecea5",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0183.png",
+      "bytes": 406971,
+      "sha256": "51b41223d8ab871afd22452199b1b579a887f285e40b89c0188a94c4e22356fd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0184.png",
+      "bytes": 413115,
+      "sha256": "c89b3897a9e553ec887269287b264add7a287192c5c2f8d5b13eb92a31abb1fb",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0185.png",
+      "bytes": 419155,
+      "sha256": "bdcc4029ee75c0cbc8606ef59085d04de8f3fac2235e529a1e4df7b32ea0abed",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0186.png",
+      "bytes": 430508,
+      "sha256": "7aa8fbb7f060a881df0a54495a1e601dd4bd1f87a7d01050d5264b905f208a02",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0187.png",
+      "bytes": 430218,
+      "sha256": "78e65f66d88ad4ed8965d54591cb059dd09abf0a33f256ffaf968e40cfd7cafd",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0188.png",
+      "bytes": 435233,
+      "sha256": "5de0c71a4b51ec78303cccd12db546cd20b3f7052375da9f4de99756b7085d14",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0189.png",
+      "bytes": 488712,
+      "sha256": "b4495751324732c752e43f1cc29911c34b37830196d5fbf6fec34742f9a591b5",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0190.png",
+      "bytes": 635223,
+      "sha256": "83ce1246a704eed0607ad685a35a00e7c42960a39fe8016c7049c6f1c9ec6a29",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0191.png",
+      "bytes": 756708,
+      "sha256": "c99a6a89fc846e105ff804da62c50f9c91e8fbbb428b7999b158dd8d20018a94",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0192.png",
+      "bytes": 839682,
+      "sha256": "2fdce1ed5d3355d918621a0d6003c88027e318119470ec34b6303f2b389d3390",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0193.png",
+      "bytes": 915248,
+      "sha256": "9adb073938d7a3a33d59a14ac5e5e7f003ab77ab519dd838a041edf25c709298",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0194.png",
+      "bytes": 953865,
+      "sha256": "d71a95b50021b4a62513496003ba3b131ed5bb5236f066a3f89b686806cc62a7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0195.png",
+      "bytes": 1002686,
+      "sha256": "615962dbda53a5ae3d4356681d9618dbeffe4bb47932d7c65c9b9aac75dc68d0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0196.png",
+      "bytes": 996705,
+      "sha256": "e3e773ac73bbb07c233d9f12fa322c6139c546ca34490048152c752b1c4a3547",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0197.png",
+      "bytes": 1000534,
+      "sha256": "549cdad3b77abd6e81d1325200e3af3e2d6703d47045d06a486fa60940b072d7",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0198.png",
+      "bytes": 985374,
+      "sha256": "f4e080e3cd70b571a4362c2f73e6b3c9a376993a1a0986066a0370577b80c066",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0199.png",
+      "bytes": 1007582,
+      "sha256": "9c0bedfef81e5006d9c8697442eccec89800704e2bd8f04c06e0b9a33699ef7d",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0200.png",
+      "bytes": 1008788,
+      "sha256": "f131808bc2769c1ae9bb6f528a58aa9b003cc69f4d30c185789187dfb7359a20",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0201.png",
+      "bytes": 1001758,
+      "sha256": "9d3787fa7c1723f01a5a8d0c61ef835cada432e529950a1825bf637d36e011c0",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0202.png",
+      "bytes": 1007504,
+      "sha256": "8554c66d5ef8f6ea6df6b39bf7509344b466f6ecb7f362a5f50bcd19ab32b556",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0203.png",
+      "bytes": 1008039,
+      "sha256": "482608aaad59ad2ed11b14e95c7d20c27d5dee8560faa767516ccbe0afbef885",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0204.png",
+      "bytes": 1014091,
+      "sha256": "38d16f6e12aa3293822c416720b5cd64ad0a73ed5f673745e3be781e10bc01a1",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0205.png",
+      "bytes": 990277,
+      "sha256": "c8b32265b823462f3e7f2b6478c9e8c9fb85370a2827fd825a75b8ddfbbe4a11",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0206.png",
+      "bytes": 997838,
+      "sha256": "5c5b274e2cb49b4fab3857303ee1f6c145b3d75e61846580e5b4d6b204f72f3c",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0207.png",
+      "bytes": 970860,
+      "sha256": "f3f1253badc42130a9298a9e05bcd8d42829a0c697f6996e93c7903b0c789197",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0208.png",
+      "bytes": 1004918,
+      "sha256": "3c813e7fddefa710fd0fdc864c19b99f4edf7fb0e136a3babfcc2f80a8e94711",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0209.png",
+      "bytes": 610690,
+      "sha256": "00b1bd4d083280f2655980bffaf1336de1f662e4e6c8a7aa319be7f4813e67ea",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0210.png",
+      "bytes": 609973,
+      "sha256": "50ebb02787a56667d8deb715d2f1d86dafd1ba4d22b571abd0348caebc65c5e3",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0211.png",
+      "bytes": 610371,
+      "sha256": "e6d2081e404a9da575a45da25215d056e49ae1be042d787255d8dfabd9065f90",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0212.png",
+      "bytes": 610268,
+      "sha256": "59429c58c86d68efdc6f2870a81a5db6a7173a2709ecca6d6004c522dfc5b9df",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0213.png",
+      "bytes": 609962,
+      "sha256": "a0da6b74ba9932f33310152712766340f984c45261c181892272949dd223e2a5",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0214.png",
+      "bytes": 610695,
+      "sha256": "ba8e21316470ec72fe37fb520bb234da7a3f4fdd2bc482f1bc4ce65936a8b985",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0215.png",
+      "bytes": 609970,
+      "sha256": "aef5c4046198f0ef43a6054691fb65a91615091a2e82c1a8dfafb321cc74058a",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0216.png",
+      "bytes": 610238,
+      "sha256": "d33db65ab2d80cd454a7307a706259b3250aa3c6ea4ae910e1de995ce0f1dbdf",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0217.png",
+      "bytes": 609837,
+      "sha256": "5d2e21e10c1fcb7a516e80e45340e8027bd2f3055dcca5a3c32f8aa2362fbf24",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0218.png",
+      "bytes": 609917,
+      "sha256": "bad4ba3b2a9b6af346dc0d0b4ee696ad1129c8e72c9a64803eefe9ed293d7c51",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0219.png",
+      "bytes": 610126,
+      "sha256": "038ad478444945a0e662612dec72374edd4d1b61d795a8cd02aae75c933d5f6f",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0220.png",
+      "bytes": 609906,
+      "sha256": "bbaac4719a34e3dc9743328100e763868975c10ec28543742b2c76a5a0809210",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\0221.png",
+      "bytes": 610344,
+      "sha256": "1b1fc7efa790a48b8e8710f2eb957fb9d077be1f173e2b984d7505f908085cb6",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "captured-frames\\receipt.json",
+      "bytes": 27967,
+      "sha256": "34d8987e440192083a9a2b6b238f9d62920e34b67a4d91abef166bb15a5d0217",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    },
+    {
+      "file": "builder-inputs/inter-normalized-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "role": "preserved visual source, builder input, runtime, capture, or QA"
+    }
+  ],
+  "installedToolchain": "Existing installed Node/Sharp/Playwright/Chromium/FFmpeg reused unchanged; authored browser runtime and local font input preserved in this snapshot",
+  "incidentalCopies": [
+    "assets\\audio\\mix-master.m4a",
+    "assets\\audio\\mix-master.wav",
+    "assets\\audio\\music-premaster.wav",
+    "assets\\audio\\negative-dynamic-opening.wav",
+    "assets\\audio\\negative-dynamic.wav",
+    "assets\\audio\\opening-preview.m4a",
+    "assets\\audio\\opening-preview.wav",
+    "assets\\audio\\private-checks.mjs"
+  ],
+  "note": "Incidental audio bytes remain preserved. Their paths are excluded from all silent pilot render-input claims. Audio is owned by audio_mix; no further audio copying or inspection is part of visual QA."
+}

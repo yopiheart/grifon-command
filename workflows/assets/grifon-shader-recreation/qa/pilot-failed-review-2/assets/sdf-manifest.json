@@ -1,0 +1,67 @@
+{
+  "specSha256": "150cc090532a5327938e2de28a4a0d2f1a106bd5b92252526cc24753450b9fec",
+  "size": 512,
+  "supersample": 4,
+  "rasterSize": 2048,
+  "method": "2048px contour mask; Euclidean boundary distance; four central subpixel samples per final texel",
+  "format": "headerless row-major Float32; distance in pixel/512; negative inside; top row first",
+  "assets": [
+    {
+      "key": "introduction",
+      "text": "MEET GRIFON",
+      "file": "assets/introduction-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "fontBounds": {
+        "left": 96,
+        "right": 13686.360000000002,
+        "top": -1510,
+        "bottom": 20
+      },
+      "rasterBounds": {
+        "width": 450.56,
+        "height": 50.72395433233556
+      },
+      "aspect": 8.882588235294119,
+      "negativeInside": true,
+      "positiveOutside": true
+    },
+    {
+      "key": "relief",
+      "text": "AI marketing",
+      "file": "assets/relief-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "fontBounds": {
+        "left": 46,
+        "right": 12730.496000000003,
+        "top": -1600,
+        "bottom": 442
+      },
+      "rasterBounds": {
+        "width": 450.56,
+        "height": 72.53291892716902
+      },
+      "aspect": 6.211800195886387,
+      "negativeInside": true,
+      "positiveOutside": true
+    }
+  ],
+  "heightAssets": [
+    {
+      "key": "reliefHeight",
+      "file": "assets/relief-height.bin",
+      "bytes": 1048576,
+      "sha256": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8",
+      "sampleType": "height",
+      "method": "separable Gaussian contour-height convolution in Float32; sigma3 pixels; no repeated distance ridges",
+      "range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "threeSha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -18,7 +18,7 @@
   <main>
     <div class="eyebrow">// PRIVATE REFERENCE STUDY</div>
     <h1>Opening comparison</h1>
-    <p>One shared timeline. Original reference above the Grifon pilot on mobile; side by side on desktop.</p>
+    <p>Shared frame seeking for paused detail. <a href="/paired" style="color:#FFCC00">Open the single-video synced motion review.</a> Original reference above the Grifon pilot on mobile; side by side on desktop.</p>
     <div class="pair">
       <section class="panel"><div class="label">REFERENCE / ORIGINAL 30000:1001</div><video id="reference" src="/reference.mp4" preload="auto" muted playsinline></video></section>
       <section class="panel"><div class="label">GRIFON / SILENT VISUAL PILOT</div><video id="pilot" src="/pilot.mp4" preload="auto" muted playsinline></video></section>
@@ -31,7 +31,7 @@
     <label for="seek">Shared frame</label><input id="seek" type="range" min="0" max="221" step="1" value="0">
     <div class="readout" id="readout" role="status">Loading both videos...</div>
     <div class="cuts" id="cuts" aria-label="Material and scene boundaries"></div>
-    <p class="note">Visual fidelity and soundtrack evidence are separate. The original video is a private inspection input. Its audio is available only for this comparison and is absent from the Grifon export. No listening or fidelity pass is implied by this player.</p>
+    <p class="note">Independent video decoders can drift during playback. Use the single-video review for timed visual judgment. The original audio is a private inspection input and is absent from the Grifon export. No listening or fidelity pass is implied by this player.</p>
     <footer>GRIFON / LOCAL REVIEW</footer>
   </main>
   <script>
@@ -47,7 +47,7 @@
     const cuts=[[0,'Start'],[26,'Lens'],[57,'Warm lens'],[82,'Chrome'],[91,'Glass'],[97,'Gold'],[104,'Cream'],[111,'Carbon'],[119,'Chrome'],[126,'Voxel'],[132,'Glass field'],[138,'Flare'],[145,'Raised type'],[209,'Gray relief']];
     for(const [frame,label] of cuts){const button=document.createElement('button');button.textContent=`${frame} / ${label}`;button.onclick=()=>setFrame(frame);document.getElementById('cuts').append(button);}
     videos.forEach(v=>{v.addEventListener('loadeddata',()=>{loaded++;if(loaded===2){setFrame(0);}} ,{once:true});v.addEventListener('seeked',display);v.addEventListener('error',()=>{readout.textContent='A local review input is unavailable. Start review-server.mjs with the preserved private source and the current pilot.';readout.classList.add('error');});});
-    function tick(){if(playing){if(pilot.currentTime>=end-0.01){pause();setFrame(221);}else{if(Math.abs(reference.currentTime-pilot.currentTime)>1/fps)reference.currentTime=pilot.currentTime;display();}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+    function tick(){if(playing){if(pilot.currentTime>=end-0.01){pause();setFrame(221);}else{display();}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
   </script>
 </body>
 </html>

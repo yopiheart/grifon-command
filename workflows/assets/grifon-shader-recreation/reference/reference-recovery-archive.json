@@ -1,0 +1,25 @@
+{
+  "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tools\\grifon-motion-archives\\grifon-shader-reference-2026-10-08-47c8bbc8e3d0-d04dd16e.zip",
+  "bytes": 12032912,
+  "sha256": "3e09295a59dd7897d2e58ecc35345d337dd2314a36ca482d3e0a7d26aa9704d4",
+  "sourceFiles": [
+    {
+      "file": "source-x.mp4",
+      "bytes": 11514975,
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089"
+    },
+    {
+      "file": "source-audio.m4a",
+      "bytes": 505101,
+      "sha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae"
+    },
+    {
+      "file": "source-x.info.json",
+      "bytes": 11828,
+      "sha256": "9a265870b8663e06a46940753ba5b6d346fb7596b5fc465f2122c3b3138eaea4"
+    }
+  ],
+  "crcAndByteVerification": "PASS",
+  "containsSecretOrSessionFiles": false,
+  "scope": "Three private reference inputs only"
+}

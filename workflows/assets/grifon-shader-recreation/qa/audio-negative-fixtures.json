@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "registered-input-hash",
+      "status": "PASS_EXPECTED_REJECTION",
+      "exitCode": 1,
+      "expectedError": "Clean music input differs from registered source",
+      "verifiedBytesRestored": true
+    },
+    {
+      "id": "opening-prefix",
+      "status": "PASS_EXPECTED_REJECTION",
+      "exitCode": 1,
+      "expectedError": "Opening preview differs from the master prefix",
+      "verifiedBytesRestored": true
+    },
+    {
+      "id": "original-dynamic-compression",
+      "status": "PASS_EXPECTED_REJECTION",
+      "exitCode": 1,
+      "expectedError": "Master gain changes the music dynamics",
+      "verifiedBytesRestored": true
+    }
+  ],
+  "originalDefectReproduced": {
+    "input_i": "-12.67",
+    "input_tp": "0.74",
+    "input_lra": "9.30",
+    "input_thresh": "-23.12",
+    "output_i": "-16.00",
+    "output_tp": "-3.00",
+    "output_lra": "1.60",
+    "output_thresh": "-26.24",
+    "normalization_type": "dynamic",
+    "target_offset": "0.00"
+  },
+  "restoredCandidateVerification": "PASS: 1495040 stereo PCM frames, -16.45 LUFS / -3.04 dBTP; AAC -16.50 LUFS / -3.15 dBTP. Sonic fidelity unverified; cost $0.",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}
