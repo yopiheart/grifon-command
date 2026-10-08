@@ -99,7 +99,7 @@ export async function fillBrief(page: Page) {
   await page.getByPlaceholder('Brand name', { exact: true }).fill('Recovery Goods');
   await page.getByPlaceholder('Price', { exact: false }).fill('199');
   await page.getByRole('button', { name: 'Product Tap to add', exact: true }).click();
-  await page.locator('input[type="file"]').first().setInputFiles(PRODUCT_PHOTO);
+  await page.locator('input[type="file"][accept="image/*"]').setInputFiles(PRODUCT_PHOTO);
   await expect(page.getByRole('img', { name: 'Upload', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Make My Ad', exact: true })).toBeEnabled();

@@ -39,20 +39,18 @@ workflows/viral_swipe_file.md  (entries + Pattern Index compound; gated)
 1. **Brand-pinned search, never keyword.** `search_type=page&view_all_page_id=<id>`,
    not `q=<brand>`. Keyword search is contaminated (proven 2026-06-26: ~3,400
    fuzzy results incl. Sony/AbbVie vs ~2,400 pure IM8).
-2. **"Winning" = longevity, gated at the source.** The pinned URL adds the
-   "Impressions by date" filter `start_date[max] = today − min_days` (FROM left
-   at the floor), so Meta returns ONLY ads already running by that date — i.e.
-   provably ≥`min_days` old. Proven 2026-06-26: this collapses IM8's ~660 video
-   ads to the ~4 genuine 30+ day survivors. Critical because the displayed
-   "Started running" date **resets when an ad is edited** (a 52d creative shows
-   "17d"), so it can't be trusted alone — sort stays impressions desc as the
-   in-bucket tiebreak. `find_winning_ads.py` applies the filter by default and
-   the ranker *trusts membership* (won't drop a survivor for a reset date).
+2. **Longevity shortlists candidates; it does not prove winning performance.**
+   Date filters narrow discovery only. Rank elapsed days from a displayed
+   start to the recorded observation; never fill or floor age using URL
+   membership. Preserve operator-reviewed Page identity and complete, partial,
+   blocked or unknown coverage. No profit, scaling or continuity inference
+   follows from age or an impression range. Bare scraper output needs review.
 3. **Ad Recon sources only.** No Swipe File writes, no preset/prompt proposals,
    no tuned-file edits. The ≥3-corroboration rule and Gated Proposals stay in
    `viral-autopsy`.
 4. **No silent caps.** Report blocked/partial scrapes (login wall, captcha,
-   timeout). The tool emits `page_state` + stats and exits 3 on no-winners.
+   timeout). Version 2 emits collection status and exclusions; exit 2 means blocked,
+   exit 3 means no eligible candidates in this collection, not no advertising.
 
 ## Known-good reference (first live target)
 

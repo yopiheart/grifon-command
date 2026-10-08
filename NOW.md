@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08, Ad Recon reference briefs milestone 1**
+**Stamped: 2026-10-08, approved terminology and CI recovery correction**
 
 ## Current work
 Checkout C:/Users/ADMIN/.codex/worktrees/abf2/grifon-command.
@@ -40,14 +40,15 @@ clearly labeled invented observations with fail-closed mocked providers.
 No paid generation, completed-render proof, ad actions, production data writes,
 unattended worker, merge or deployment. Full closed-loop automation is later work.
 
-Existing Ad Recon skill/glossary still overstate "30d = winner" and filter age.
-assets/ad-recon/terminology.proposed.patch is an exact UNAPPLIED proposal for
-both skill copies, glossary and spy_intel. Zero-context git apply dry run passes.
-approval is required by AGENTS.md before changing agent instructions.
+Neil's latest "Okay G!" approved assets/ad-recon/terminology.proposed.patch.
+Applied that exact diff to both Ad Recon skills, glossary and spy_intel;
+independent review confirmed exact match and correct version2 semantics.
+The original proposal remains the approval receipt. Older untouched Step3
+winner/days-active labels and bare-scrape examples remain outside this diff.
 
 ## Actual verification
-Final npm.cmd run build: PASS (including PowerShell ASCII).
-Final npm.cmd run test: 1463 passed,32 skipped;118 files passed,9 skipped.
+Application checks at36d78bd3: build PASS (including PowerShell ASCII), full
+unit1463 passed,32 skipped;118 files passed,9 skipped. App code unchanged since.
 31 narrow contract/handoff unit tests passed. Python offline ranker10 passed.
 Both new defect verifiers failed original2e1de015, passed fixes: invented age
 and lost selected concept at resumed script stage. No live/paid test switches.
@@ -62,6 +63,12 @@ Bundle-leak, voice-sync, domain, artifact-anchors, eval-prompt parity,26 Codex
 control tests, diff-check and real-packet offline CLI all PASS.
 Screenshots: .tmp/ad-reference-smoke-final/ and .tmp/independent-smoke-brand/.
 Node dependencies were absent; npm.cmd ci completed without lockfile changes.
+CI at458df1d9: verify/artifacts PASS; e2e84passed/4failed. Existing image-upload
+helper selected the new JSON importer via first-file order. One-line image/*
+selector corrected; independent review clear. Narrow recovery6/6 and full
+browser88/88 PASS after correction; no skips/timeouts changed. Test servers exited.
+Two local API diagnostics failed at dummy admin config before providers/writes.
+Approved instruction checks: Codex26, domain and offline Python10 PASS.
 
 ## Preserve earlier accepted work / exhausted paid approvals
 PR156 motion film merged into this main baseline; recipe and recovery remain in
