@@ -1,10 +1,12 @@
 {
   "schema": 1,
   "selected_look": "v01",
-  "status": "comparison candidate; user acceptance pending",
+  "status": "owner-preferred still finish; saved for future work",
   "selection_source": "root instruction after independent visual critique",
   "v01": "Restrained face and beak volume improvement; coat gains are subtle.",
   "v02": "Declined as visually immaterial compared with v01; preserved as evidence.",
   "remaining_gap": "Uniform flyaway fringe over mottled nap remains in the unchanged groom.",
-  "scope": "Materials and lighting only. No mesh, hair position or radius changes; no rig or runtime integration."
+  "scope": "Materials and lighting only. No mesh, hair position or radius changes; no rig or runtime integration.",
+  "previous_status": "comparison candidate; user acceptance pending",
+  "owner_acceptance": "owner-acceptance.json"
 }

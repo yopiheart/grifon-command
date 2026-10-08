@@ -1,5 +1,10 @@
 # Accepted Grifon case - 2026-10-06
 
+The v05 identity and geometry remain accepted. On 2026-10-08 Neil preferred
+[the neutral material finish](neutral-material-finish.md) for future work because
+the earlier lighting appeared yellowish. Preserve this original build history;
+use the newer reference when selecting the Grifon still finish.
+
 Neil approved the v05 render in the originating conversation and asked to save
 this workflow as a repeatable skill: "Save ka ng skill neto para maging repeatable
 para if ever na may papagawa akong 3d na ganto ungg quality!"

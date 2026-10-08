@@ -2,7 +2,8 @@
   "schema": 1,
   "stage": "Local Blender still look-development comparison; app and rig unchanged",
   "selected_look": "v01",
-  "user_acceptance": "pending",
+  "user_acceptance": "owner-preferred still finish; saved for future work",
+  "owner_acceptance": "owner-acceptance.json",
   "declined_trial": "v02: visually immaterial compared with v01; retained",
   "baseline": {
     "path": "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/griffin-master-v05.blend",
@@ -552,8 +553,8 @@
     },
     {
       "path": "trial-selection.json",
-      "bytes": 557,
-      "sha256": "8af793854374099fe88f64c5e2637a365780071bd215b8b81bad05a6c53acfcd"
+      "bytes": 680,
+      "sha256": "9c9b0db1eb746939dee7dd0697314bce6abd6a9307cb519358235a3e1670ca07"
     },
     {
       "path": "verify-saved-study.py",
@@ -679,6 +680,11 @@
       "path": "negative-control/mutation.json",
       "bytes": 896,
       "sha256": "a207186719a15af1a2b76f17a0707af80be327e2a614358db8bc724d2f181356"
+    },
+    {
+      "path": "owner-acceptance.json",
+      "bytes": 2835,
+      "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
     }
   ],
   "inventory_note": "Inventory excludes the manifest itself, local Blender binaries, raw command logs, and root-owned Markdown documentation. Per-run immutable sources and PNG hashes are included."
