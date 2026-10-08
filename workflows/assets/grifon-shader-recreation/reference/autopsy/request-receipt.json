@@ -1,0 +1,26 @@
+{
+  "specSha256": "4d082dc611b2fa349b327a5ef33732b16a08022a75bdcc48b1a6f77c5628e371",
+  "inputSha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+  "canonicalToolSha256": "04e3002f3583071de59b0050e5d83111b6f1a6acf176d2be0700fa0a51d93d30",
+  "promptSha256": "e553ae978ca4b6d18d14e68f5f0de423dd6f4e75513fbfdc5e52b9c9549f378a",
+  "validatorSha256": "c1c3b775069688396a63238b695993673d38c801fa049dc7594eb4b8b4672261",
+  "generationConfig": {
+    "responseMimeType": "application/json",
+    "temperature": 0.2,
+    "maxOutputTokens": 16384
+  },
+  "httpOptions": {
+    "retryOptions": {
+      "attempts": 1
+    }
+  },
+  "maximumTokenCostUsd": 0.237456,
+  "model": "gemini-3.5-flash",
+  "sourceUrl": "https://x.com/npm_i_shaders/status/2107467668009963819",
+  "nativeAudioPreserved": true,
+  "contentsDescription": "Exact uploaded MP4 fileData followed by unchanged canonical ANALYSIS_PROMPT",
+  "countTokens": 4711,
+  "worstCaseUsd": 0.1545225,
+  "countCompletedAt": "2026-10-08T00:41:14.986Z",
+  "noAdditionalToolsOrAuditCalls": true
+}

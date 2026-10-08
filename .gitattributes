@@ -22,3 +22,6 @@ tools/artifacts/build-grifon-shader-review.mjs text eol=lf
 workflows/assets/grifon-shader-launch/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 artifacts/grifon-shader-launch.html text eol=lf
 tools/artifacts/build-grifon-shader-launch.mjs text eol=lf
+
+# Preserve the redo's exact approved prompt/spec and immutable analysis hashes.
+workflows/assets/grifon-shader-recreation/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

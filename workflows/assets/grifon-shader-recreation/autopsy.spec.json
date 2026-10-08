@@ -1,0 +1,51 @@
+{
+  "status": "PROPOSED_AWAITING_EXPLICIT_APPROVAL",
+  "purpose": "Analyze the exact Shaders launch reference, including native music/SFX, before the Grifon close recreation pilot.",
+  "sourceUrl": "https://x.com/npm_i_shaders/status/2107467668009963819",
+  "input": {
+    "file": "reference/source-x.mp4",
+    "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+    "bytes": 11514975,
+    "dimensions": "1920x1080",
+    "containerSeconds": 31.146667,
+    "nativeAudio": "Stereo AAC 48kHz; preserved, not muted or replaced"
+  },
+  "analyzer": {
+    "model": "gemini-3.5-flash",
+    "promptSource": "../../../tools/analyze_video.mjs",
+    "promptSourceSha256": "04e3002f3583071de59b0050e5d83111b6f1a6acf176d2be0700fa0a51d93d30",
+    "prompt": "Exact unchanged ANALYSIS_PROMPT from the existing analyzer",
+    "responseMimeType": "application/json",
+    "temperature": 0.2,
+    "proposedRunOnlyCostBound": {"maxOutputTokens": 16384},
+    "proposedRunOnlyTransportBound": {"httpOptions": {"retryOptions": {"attempts": 1}}},
+    "canonicalToolChanges": "None. A task-local adapter would add only the two proposed bounds after approval.",
+    "niche": "WebGPU software launch motion design",
+    "source": "x"
+  },
+  "budget": {
+    "maxPaidUsd": 0.25,
+    "maxGenerateContentAttempts": 1,
+    "retries": 0,
+    "additionalAuditVisionCalls": 0,
+    "additionalGenerationOrRenderCalls": 0,
+    "maxInputTokens": 60000,
+    "inputPriceUsdPerMillion": 1.5,
+    "outputIncludingThinkingPriceUsdPerMillion": 9,
+    "maximumTokenCostUsd": 0.237456,
+    "pricingSource": "https://ai.google.dev/gemini-api/docs/pricing",
+    "preflight": "Verify exact input/tool hashes; verify model output bound semantics; count exact upload+prompt input tokens before generating; abort on count>60000, unavailable auth, failed upload, changed input or uncertain cap. No alternate model/provider or retry."
+  },
+  "pass": [
+    "Existing specificity validator accepts the JSON, including at least three timestamped numeric why-it-works claims.",
+    "Native audio is supplied; music/SFX/voice/silence findings identify times and preserve confidence. No invented transcript if speech is absent.",
+    "Manual frame-indexed cut/type/material/camera observations cross-check the semantic result. Model times do not replace source frame measurements.",
+    "Token usage and computed cost are recorded; cost<=0.25 and one attempted generation maximum."
+  ],
+  "fail": [
+    "Missing audio, vague result, unsupported sound labels or contradictory visual claims.",
+    "Input drift, unbounded billing, missing authorized credential channel or API failure. Stop; no automatic retry."
+  ],
+  "evidence": ["Raw analyzer JSON", "specificity result", "redacted request/usage/cost receipt", "manual source-frame comparison", "source acquisition hashes"],
+  "limitations": "Gemini audio findings are a machine analysis hypothesis. Root cannot directly hear audio through this runtime. No commercial soundtrack rights or Grifon creative approval is implied."
+}

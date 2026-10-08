@@ -1,0 +1,8 @@
+reference/source-x.mp4
+reference/source-audio.m4a
+reference/source-x.info.json
+reference/frames/
+reference/observed-*.png
+reference/observed-sheet-*.jpg
+.tmp/
+assets/audio/

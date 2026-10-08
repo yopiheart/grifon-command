@@ -1,12 +1,64 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08, corrected shader launch film and Gmail delivery verified**
+**Stamped: 2026-10-08, close recreation redo and reference autopsy in progress**
 
-## Current: 31.2-second shader launch film
+## Current: close recreation redo in the same chat
+Neil explicitly asked to redo and listen carefully. The new reference direction
+supersedes the invented story, regular scene durations, reused soundtrack mandate,
+and three-preset ceiling. Preserve all earlier exports, sources and archives.
+Exact reference: https://x.com/npm_i_shaders/status/2107467668009963819.
+New work: workflows/assets/grifon-shader-recreation/ in the same worktree/branch below.
+Original public source acquired with installed yt-dlp, no login/cookies/install:
+1920x1080,932 frames at30000/1001; video31.097733s, audio/container31.146667s.
+Source SHA47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089.
+Native AAC preserved exactly; source/raw audio are ignored private inspection inputs.
+CUA inline player loads and plays; fullscreen link prompts login, no bypass attempted.
+Direct audio input to this model is unsupported; unmuted playback/metrics are not hearing.
+Root viewed full-source4fps sheets; independent exact-frame shot map saved under reference/.
+Neil explicitly invoked viral-autopsy and approved autopsy.spec.json: one Gemini3.5Flash
+attempt with original native audio, maxUS$0.25, maxOutputTokens16384, no retries.
+One autopsy completed; canonical specificity FAIL (missing numeric sync evidence),
+no retry. Usage4,339 input +3,680 output/thinking; estimatedUS$0.0396285,
+invoice unverified. Independent raw/cost integrity PASS; semantic timing contradicted
+source frames. Keep its audio findings LOW/PENDING; no pattern increments.
+Neil then approved audio-autopsy.spec.json: one separate focused audio-only call,
+native AAC +existing clean Close Up/Digital Clouds, exact new prompt, maxadditional
+US$0.10, maxOutputTokens8192, no retries. One AUDIO-modality call completed;
+6,427 input +2,289 output/thinking, estimated additionalUS$0.0302415;
+combinedUS$0.06987, invoice unverified. Strict timing FAIL: endpoint31.15s
+exceeds31.146667 by3.33ms. Raw findings preserved as hypotheses: vocal chops,
+126BPM, riser7-8.5s, exact Digital Clouds identity. Free PCM/spectral comparisons
+do not establish exact identity. Independent audio receipt/method/report review
+PASS for integrity, with timing FAIL and sonic uncertainty retained. Same-source
+compressed/noisy/1.04x controls recover coherent offsets; actualA/B/C do not.
+C28.905-36.305s is a provisional opening energy candidate; B63.070-94.217s
+has stronger full-length energy similarity. Neither has an accepted sonic pass.
+Free multiband onset/silence measurements complete:148 changes, dominant
+periodicity~130.04/min with slower ambiguities;120BPM unsupported. Periodicity
+does not establish heard tempo/genre/SFX identity. Exact replay output matches.
+First~7.4s visual pilot complete:222 frames at30000/1001,1920x1080,silent;
+strict decode and22 exact fresh/nonlinear seeks PASS, zero external requests.
+Current SHA c8b52e7514162d19ac921ccc69f173fd20a7ccdce764d0663650c5ae3360a0f5.
+Earlier v1 preserved in qa/pilot-v1. Ring geometry/cuts and glyph counters verified.
+Known fidelity gaps: intro field, lens entry, smooth inflated type and organic trails.
+Independent all222-frame reference review FAIL saved; bounded correction pass1
+is in progress. Root completed paired1x playback
+with recorded DOM clocks/screenshots. Private review.html/server keep source bytes
+local and separate from exports. Comparison player34/34 technical smoke PASS;
+native390x844 screenshot inspected, upper-clamp defect reproduced and fixed.
+No visual/audio fidelity pass. npm.cmd run check:codex26/26 PASS; bundle-leak,
+voice-sync, eval-prompt sync and domain-language PASS. Build/Vitest passed after
+both adapters/pilot edits (1432tests,32existing skips; live/paid flags unset).
+Next: finish independent autopsy/audio and pilot reviews; bounded pilot correction,
+then full landscape only after fidelity gate. Portrait follows fidelity.
+No new export is approved/complete. PR166 stays draft. No email work or PC sleep;
+these previous handoff steps are superseded for the redo. No merge/deploy.
+
+## Preserved: first 31.2-second shader launch film (creative direction superseded)
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
 Branch: codex/grifon-shader-launch; production began at exact Phase 1 d76f46af56ce9ddf0e6dfa7229c08a5bf9c48edb.
 Source/exports: workflows/assets/grifon-shader-launch/; player: artifacts/grifon-shader-launch.html.
 Brief: workflows/grifon_shader_launch_brief.md. Chat: Grifon shader launch film,
-01a11748-4bfb-7582-9c06-826e9667b5fd; parent Motion design handles the email/sleep steps.
+01a11748-4bfb-7582-9c06-826e9667b5fd. Previous email/sleep handoff is superseded.
 Landscape:1920x1080 /7,952,020 bytes /SHA256
 c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc.
 Portrait:1080x1920 /8,568,284 bytes (<12,000,000) /SHA256
@@ -61,10 +113,9 @@ unsent and unaddressed, with grifon-launch-portrait-2026-10-08.mp4 attached. Bro
 completion, draft list and full MIME filename/type/8,568,284-byte size are verified.
 Landscape/player links are pinned to e906a852. qa/delivery.json contains no account/draft IDs.
 Private proof screenshot:ignored .tmp/delivery/gmail-launch-draft.jpg. Gmail tab retained.
-No merge/deploy. PC sleep is authorized as the final step after unrelated active work check;
-no shutdown or permanent power setting change. Final sleep handoff uses the own hidden
-one-off .tmp/delivery/sleep-after-delivery.ps1; inspect .tmp/delivery/sleep-result.json
-after waking for the actual return. Other chats and their helpers must not be terminated.
+Historical delivery only: no merge/deploy. The former final PC-sleep step is revoked
+by the redo. Its old .tmp/delivery recovery evidence remains historical; do not run
+that helper or terminate other chats/helpers.
 
 ## Preserved Phase 1 / earlier accepted films
 Original motion checkout PRIMARY/.tmp/worktrees/grifon-motion-depth remains untouched.

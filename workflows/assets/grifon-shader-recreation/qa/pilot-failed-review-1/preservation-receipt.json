@@ -1,0 +1,225 @@
+{
+  "reviewedVideoSha256": "c8b52e7514162d19ac921ccc69f173fd20a7ccdce764d0663650c5ae3360a0f5",
+  "files": [
+    {
+      "file": "pilot.json",
+      "bytes": 1114,
+      "sha256": "a506b3a275772e1856a14ba8f90d42788a1ec3821223e06f07814b265d1a8455"
+    },
+    {
+      "file": "pilot.html",
+      "bytes": 470,
+      "sha256": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe"
+    },
+    {
+      "file": "pilot.js",
+      "bytes": 4490,
+      "sha256": "f1025c9472d260a32bc56a4b5d625ccc235b3cc259b74f6b2899c4e63c0c90bd"
+    },
+    {
+      "file": "surfaces.frag",
+      "bytes": 10126,
+      "sha256": "fcab8b97f23b810556823937584c91430c90ddc41571f2629a3f68c70503681f"
+    },
+    {
+      "file": "build-pilot.mjs",
+      "bytes": 5119,
+      "sha256": "88d252f2842011aee8413a1e7999f37f48fdb1f37975408c4029caf6235ad0e9"
+    },
+    {
+      "file": "render-pilot.mjs",
+      "bytes": 8287,
+      "sha256": "32e7a13c388a4793895b8a6f1ce1985b0e339cd6177bfe39b875a37c7d2bfd04"
+    },
+    {
+      "file": "verify-sdf.mjs",
+      "bytes": 4592,
+      "sha256": "a3ebfb50f6977c51bbde3d35ca829daf40dcdccd18b4aaa2166687e4e9339f3b"
+    },
+    {
+      "file": "grifon-opening-pilot-silent.mp4",
+      "bytes": 4447267,
+      "sha256": "c8b52e7514162d19ac921ccc69f173fd20a7ccdce764d0663650c5ae3360a0f5"
+    },
+    {
+      "file": "assets/introduction-mask.png",
+      "bytes": 5392,
+      "sha256": "da0ca9984ed529b4f4e50e973d1d7d9ce2e213e19f8dac415e9365a3e612ece4"
+    },
+    {
+      "file": "assets/introduction-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "429381440afcf452a91d77d2de36aaf31e8dfb2f9eaf8021a90f7cc8f8f9377d"
+    },
+    {
+      "file": "assets/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "assets/relief-mask.png",
+      "bytes": 6170,
+      "sha256": "1fac7812307965b053f66110e87cec8225faf782a67ea7e25e65a63fb9735fe5"
+    },
+    {
+      "file": "assets/relief-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "0c290d3222504bd7a41c1255299a83a9ce52a138ad6faa47747280ef76ec2004"
+    },
+    {
+      "file": "assets/sdf-manifest.json",
+      "bytes": 1425,
+      "sha256": "e491bf33ce822f19f68e849927ab98fef1d95e095e4f441c05dfafa7117bf5a4"
+    },
+    {
+      "file": "vendor/LICENSE-Three.txt",
+      "bytes": 1102,
+      "sha256": "df2a91696186fe58c92518a25d48bc59c8ee2edc7cac9ca6d19a5a0d599a2a05"
+    },
+    {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    {
+      "file": "qa/pilot-contact-sheet.jpg",
+      "bytes": 399714,
+      "sha256": "f7b7eadf8981e6abb364a4006b246cd50be0bd95e296c06ded4440376ec125e9"
+    },
+    {
+      "file": "qa/pilot-frame-000.png",
+      "bytes": 8508,
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894"
+    },
+    {
+      "file": "qa/pilot-frame-012.png",
+      "bytes": 1550769,
+      "sha256": "72c14d4e8942c62f3fa4b27c359b6925630a117a1bd335da0844ff9d9d0bfe44"
+    },
+    {
+      "file": "qa/pilot-frame-025.png",
+      "bytes": 1217601,
+      "sha256": "c2a68699eafa0f049616c6e8efbefd6da5967fd463292e03c09f7c066aaef86a"
+    },
+    {
+      "file": "qa/pilot-frame-036.png",
+      "bytes": 325403,
+      "sha256": "c2499edd08b7f87a65470da755aa736abee43923c1a50cde4b5543077cee54f8"
+    },
+    {
+      "file": "qa/pilot-frame-044.png",
+      "bytes": 300999,
+      "sha256": "aa6c2034e4fb6a247c846ed99a611169a726d6ff2c454f3edf5624e7ed29b876"
+    },
+    {
+      "file": "qa/pilot-frame-057.png",
+      "bytes": 613554,
+      "sha256": "86cf5a6440d4a0a536140033f7c9f50572ae7aa20793630899994931aefdcf30"
+    },
+    {
+      "file": "qa/pilot-frame-070.png",
+      "bytes": 617574,
+      "sha256": "0aefab0433703eda4c079018b589ef55e5e5b219c730d941d7b91bec6b160ca3"
+    },
+    {
+      "file": "qa/pilot-frame-081.png",
+      "bytes": 525048,
+      "sha256": "ff461308641579c72bd7a3308dba0db3cdf201f54088e6f0bdaffae589948572"
+    },
+    {
+      "file": "qa/pilot-frame-084.png",
+      "bytes": 150296,
+      "sha256": "cd69ea916c078ac8fc504aee3bf82be42b9ad880f5a38e15d4d191d02ccb045e"
+    },
+    {
+      "file": "qa/pilot-frame-093.png",
+      "bytes": 96316,
+      "sha256": "ff8d343e98ef41af38daf3cf2bf19ccb715e1724bd22249b0d7dd6f6b3d8744f"
+    },
+    {
+      "file": "qa/pilot-frame-100.png",
+      "bytes": 266719,
+      "sha256": "a6d85c0f1c9b3957a8c39d2f19f27a35fc6fd1ebacf8b07172c6f9bdf8693604"
+    },
+    {
+      "file": "qa/pilot-frame-107.png",
+      "bytes": 82005,
+      "sha256": "19f5654d839c632755541a000e5e8cdb145ceb7783888e5957abef61e50a4979"
+    },
+    {
+      "file": "qa/pilot-frame-114.png",
+      "bytes": 261814,
+      "sha256": "3764c1e32a44c49e54dd52d952c1ef9459eab30e4db21e9093601a2eee377ff4"
+    },
+    {
+      "file": "qa/pilot-frame-122.png",
+      "bytes": 125453,
+      "sha256": "c825eadfdfde485439a2a74b11159bcb8fd5f2f854195c8b1d24091580a93b04"
+    },
+    {
+      "file": "qa/pilot-frame-128.png",
+      "bytes": 22734,
+      "sha256": "488da139f67964b9d349e5d194bd126768c28038519d1c1c5d1d658577ed3791"
+    },
+    {
+      "file": "qa/pilot-frame-135.png",
+      "bytes": 200481,
+      "sha256": "dba86bcc4b4980656b5e370512d80e8766af630fd29a2fbfa7957d763174262e"
+    },
+    {
+      "file": "qa/pilot-frame-141.png",
+      "bytes": 157581,
+      "sha256": "44b7020a717c5b2fa6dc1e7362321bcb985b03d635ba89ba430a4e94394b9755"
+    },
+    {
+      "file": "qa/pilot-frame-150.png",
+      "bytes": 406580,
+      "sha256": "9199fc66d5fee898ff6782c42c34c1790c1135e5255e1435a5a38fc9776e9495"
+    },
+    {
+      "file": "qa/pilot-frame-177.png",
+      "bytes": 587583,
+      "sha256": "aa3696f7e56afb3cba505f14bda25e0078121dba4c21e78b3b703b003ea29297"
+    },
+    {
+      "file": "qa/pilot-frame-198.png",
+      "bytes": 883751,
+      "sha256": "dec0ac925bd35ea1fd63b13d27e0c3ec1b39871ce69a3f0ceb9ba59c13ee9c2e"
+    },
+    {
+      "file": "qa/pilot-frame-215.png",
+      "bytes": 519096,
+      "sha256": "8d27e90e01a4d9f069faa883aa98bdf6cdf46d0e927a0c044792d672792c0f10"
+    },
+    {
+      "file": "qa/pilot-frame-221.png",
+      "bytes": 520645,
+      "sha256": "a46ddbf065d06b7e6fefeccd85e56f9261e62593d58d927f055108f9cc565dc0"
+    },
+    {
+      "file": "qa/pilot-implementation-report.md",
+      "bytes": 3738,
+      "sha256": "80260e1f348b281ad80e7511fd6fd4cff28d906d2a04c3e64783ae6f713480fe"
+    },
+    {
+      "file": "qa/pilot-media.json",
+      "bytes": 1147,
+      "sha256": "731580ec3ba12cf599f64a1439e51bf0e32e4eb99c8bec92086c9472a496674a"
+    },
+    {
+      "file": "qa/pilot-render.json",
+      "bytes": 10676,
+      "sha256": "cec28058d3ea98d07ca1886fa9bebadde1f238e6e4cf1f49f362d7d040e8b570"
+    },
+    {
+      "file": "qa/pilot-samples.json",
+      "bytes": 5648,
+      "sha256": "e4238e3885bccda32c5e7659b3adb4acd2e301df6a285e9a996106b295e83441"
+    },
+    {
+      "file": "qa/sdf-validation.json",
+      "bytes": 4737,
+      "sha256": "8c25a1cc91bf75061769f15aef38fdc1ae4ca07389c146e943fdec9edf3885c3"
+    }
+  ]
+}

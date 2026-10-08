@@ -1,0 +1,28 @@
+{
+  "completedAt": "2026-10-08T00:41:36.470Z",
+  "generationAttempts": 1,
+  "usageMetadata": {
+    "promptTokenCount": 4339,
+    "candidatesTokenCount": 1695,
+    "totalTokenCount": 8019,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1518
+      },
+      {
+        "modality": "VIDEO",
+        "tokenCount": 2821
+      }
+    ],
+    "thoughtsTokenCount": 1985,
+    "serviceTier": "standard"
+  },
+  "billedOutputTokens": 3680,
+  "reportedCandidateTokens": 1695,
+  "reportedThoughtTokens": 1985,
+  "costUsd": 0.0396285,
+  "pricingBasis": "Standard paid-tier token estimate; invoice not inspected",
+  "ceilingUsd": 0.25,
+  "nativeAudioSupplied": true
+}

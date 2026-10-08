@@ -1,0 +1,2147 @@
+{
+  "schemaVersion": 1,
+  "sources": {
+    "A": {
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\reference\\source-audio.m4a",
+      "bytes": 505101,
+      "sha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae",
+      "decodedMono8kSha256": "5c994c241df047510bf5f3f58d647e666e14acaff6e6db838a472ecace1579b2",
+      "decodedFrames": 249174,
+      "seconds": 31.14675
+    },
+    "B": {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\close-up.mp3",
+      "bytes": 3045294,
+      "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+      "decodedMono8kSha256": "94d5100869f733de3f1cbdc3656bfb930ccf4c6ca95a68b10f9279b5c4716e8e",
+      "decodedFrames": 760848,
+      "seconds": 95.106
+    },
+    "C": {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "decodedMono8kSha256": "f1d5721e01b208c0ace1ebb5e84c338240c2703ffecc4c7e2bdeb27c574df753",
+      "decodedFrames": 808124,
+      "seconds": 101.0155
+    }
+  },
+  "method": {
+    "scriptSha256": "3636ea82ed9ec58f766ed186f9d82d61acbdf1ada0b272c39c8efb0cbed48090",
+    "numpyVersion": "2.3.5",
+    "sampleRate": 8000,
+    "allCleanTrackOffsetsSearched": true,
+    "waveform": "Normalized valid-lag PCM correlation with local mean/variance; additional300-3500Hz search avoids accepting a shared low-frequency beat as identity",
+    "spectral": "40log-frequency band energies plus temporal differences; per-band local mean removal and reference-derived whitening;25fps; searches candidate timeline playback rate0.90-1.10",
+    "rateGrid": [
+      0.9,
+      0.94,
+      0.96,
+      0.98,
+      1.0,
+      1.02,
+      1.031746,
+      1.04,
+      1.06,
+      1.08,
+      1.1
+    ],
+    "windowList": [
+      [
+        0.0,
+        6.0
+      ],
+      [
+        8.0,
+        14.0
+      ],
+      [
+        14.0,
+        20.0
+      ],
+      [
+        20.0,
+        26.0
+      ],
+      [
+        25.0,
+        30.0
+      ]
+    ],
+    "identityCriterion": "At least3 nonoverlapping windows with midband PCM>=.55 and coherent offsets<=50ms, OR spectralpattern>=.80 with coherent offsets<=100ms and rates<=.005 apart. Spectral similarity alone below this cannot establish an exact track",
+    "detectorSelfCheck": {
+      "plantedOffset": 1729,
+      "detectedOffset": 1729,
+      "plantedCorrelation": 0.9999999999999999,
+      "distinctSeededPatternMaximumAbsoluteCorrelation": 0.06892328693404944,
+      "status": "PASS"
+    },
+    "knownLossyNoisyTempoControls": [
+      {
+        "knownSource": "C",
+        "knownSourceStartSeconds": 12.0,
+        "knownTempoRate": 1.0,
+        "addedNoiseRmsRelativeToUnscaledMusic": 0.15,
+        "musicGain": 0.75,
+        "codec": "AAC64k mono8k; all encoded/decoded bytes remained in memory",
+        "windows": [
+          {
+            "referenceWindow": [
+              0.0,
+              6.0
+            ],
+            "bestSpectral": {
+              "rate": 1.0,
+              "score": 0.898139,
+              "candidateStartSeconds": 11.88,
+              "impliedCandidateOffset": 11.88
+            }
+          },
+          {
+            "referenceWindow": [
+              8.0,
+              14.0
+            ],
+            "bestSpectral": {
+              "rate": 1.0,
+              "score": 0.902657,
+              "candidateStartSeconds": 19.88,
+              "impliedCandidateOffset": 11.88
+            }
+          },
+          {
+            "referenceWindow": [
+              14.0,
+              20.0
+            ],
+            "bestSpectral": {
+              "rate": 1.0,
+              "score": 0.929613,
+              "candidateStartSeconds": 25.88,
+              "impliedCandidateOffset": 11.88
+            }
+          },
+          {
+            "referenceWindow": [
+              20.0,
+              26.0
+            ],
+            "bestSpectral": {
+              "rate": 1.0,
+              "score": 0.913634,
+              "candidateStartSeconds": 31.88,
+              "impliedCandidateOffset": 11.88
+            }
+          }
+        ],
+        "status": "PASS_KNOWN_COMPRESSED_NOISY_TRACK_RECOVERED"
+      },
+      {
+        "knownSource": "C",
+        "knownSourceStartSeconds": 12.0,
+        "knownTempoRate": 1.04,
+        "addedNoiseRmsRelativeToUnscaledMusic": 0.15,
+        "musicGain": 0.75,
+        "codec": "AAC64k mono8k; all encoded/decoded bytes remained in memory",
+        "windows": [
+          {
+            "referenceWindow": [
+              0.0,
+              6.0
+            ],
+            "bestSpectral": {
+              "rate": 1.04,
+              "score": 0.829142,
+              "candidateStartSeconds": 11.84,
+              "impliedCandidateOffset": 11.84
+            }
+          },
+          {
+            "referenceWindow": [
+              8.0,
+              14.0
+            ],
+            "bestSpectral": {
+              "rate": 1.04,
+              "score": 0.889861,
+              "candidateStartSeconds": 20.16,
+              "impliedCandidateOffset": 11.84
+            }
+          },
+          {
+            "referenceWindow": [
+              14.0,
+              20.0
+            ],
+            "bestSpectral": {
+              "rate": 1.04,
+              "score": 0.90558,
+              "candidateStartSeconds": 26.4,
+              "impliedCandidateOffset": 11.84
+            }
+          },
+          {
+            "referenceWindow": [
+              20.0,
+              26.0
+            ],
+            "bestSpectral": {
+              "rate": 1.04,
+              "score": 0.856115,
+              "candidateStartSeconds": 32.64,
+              "impliedCandidateOffset": 11.84
+            }
+          }
+        ],
+        "status": "PASS_KNOWN_COMPRESSED_NOISY_TRACK_RECOVERED"
+      }
+    ]
+  },
+  "comparisons": {
+    "B": {
+      "fullReferenceWaveformSearch": {
+        "candidateStartSeconds": 1.113375,
+        "referenceStartSeconds": 0.0,
+        "referenceEndSeconds": 31.14675,
+        "correlation": -0.031736,
+        "absoluteCorrelation": 0.031736,
+        "impliedCandidateOffset": 1.113375,
+        "runnerUpAtLeast1sAway": {
+          "startSeconds": 17.65075,
+          "absoluteCorrelation": 0.027102
+        }
+      },
+      "fullReferenceMidbandWaveformSearch": {
+        "candidateStartSeconds": 35.313375,
+        "referenceStartSeconds": 0.0,
+        "referenceEndSeconds": 31.14675,
+        "correlation": -0.015299,
+        "absoluteCorrelation": 0.015299,
+        "impliedCandidateOffset": 35.313375,
+        "runnerUpAtLeast1sAway": {
+          "startSeconds": 63.628125,
+          "absoluteCorrelation": 0.015215
+        }
+      },
+      "windows": [
+        {
+          "referenceStart": 0.0,
+          "referenceEnd": 6.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 10.48375,
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "correlation": -0.07415,
+            "absoluteCorrelation": 0.07415,
+            "impliedCandidateOffset": 10.48375,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 13.90575,
+              "absoluteCorrelation": 0.072486
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 60.273375,
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "correlation": -0.05008,
+            "absoluteCorrelation": 0.05008,
+            "impliedCandidateOffset": 60.273375,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 31.925125,
+              "absoluteCorrelation": 0.044328
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "candidateStartSeconds": 56.28,
+            "candidateEndSeconds": 61.68,
+            "candidatePlaybackRateRelativeToReference": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.161969,
+            "impliedCandidateOffset": 56.28
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "candidateStartSeconds": 12.04,
+            "candidateEndSeconds": 18.04,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.116058,
+            "impliedCandidateOffset": 12.04
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 56.28,
+              "candidateEndSeconds": 61.68,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.161969,
+              "impliedCandidateOffset": 56.28
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 9.96,
+              "candidateEndSeconds": 15.6,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.137928,
+              "impliedCandidateOffset": 9.96
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 6.36,
+              "candidateEndSeconds": 12.24,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.134782,
+              "impliedCandidateOffset": 6.36
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 40.16,
+              "candidateEndSeconds": 46.4,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.131344,
+              "impliedCandidateOffset": 40.16
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 8.2,
+              "candidateEndSeconds": 13.96,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.13133,
+              "impliedCandidateOffset": 8.2
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 40.2,
+              "candidateEndSeconds": 46.390476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.128684,
+              "impliedCandidateOffset": 40.2
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 33.96,
+              "candidateEndSeconds": 40.56,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.118908,
+              "impliedCandidateOffset": 33.96
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 49.4,
+              "candidateEndSeconds": 55.52,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.117512,
+              "impliedCandidateOffset": 49.4
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 12.04,
+              "candidateEndSeconds": 18.04,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.116058,
+              "impliedCandidateOffset": 12.04
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 13.12,
+              "candidateEndSeconds": 19.6,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.106793,
+              "impliedCandidateOffset": 13.12
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 62.92,
+              "candidateEndSeconds": 69.28,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.105965,
+              "impliedCandidateOffset": 62.92
+            }
+          ]
+        },
+        {
+          "referenceStart": 8.0,
+          "referenceEnd": 14.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 30.932875,
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "correlation": 0.076221,
+            "absoluteCorrelation": 0.076221,
+            "impliedCandidateOffset": 22.932875,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 12.648125,
+              "absoluteCorrelation": 0.073894
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 59.262375,
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "correlation": -0.035656,
+            "absoluteCorrelation": 0.035656,
+            "impliedCandidateOffset": 51.262375,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 44.598875,
+              "absoluteCorrelation": 0.033067
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "candidateStartSeconds": 48.12,
+            "candidateEndSeconds": 54.6,
+            "candidatePlaybackRateRelativeToReference": 1.08,
+            "normalizedSpectralPatternCorrelation": 0.139009,
+            "impliedCandidateOffset": 39.48
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "candidateStartSeconds": 10.8,
+            "candidateEndSeconds": 16.8,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.108808,
+            "impliedCandidateOffset": 2.8
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 48.12,
+              "candidateEndSeconds": 54.6,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.139009,
+              "impliedCandidateOffset": 39.48
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 48.2,
+              "candidateEndSeconds": 54.56,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.126859,
+              "impliedCandidateOffset": 39.72
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 48.28,
+              "candidateEndSeconds": 54.52,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.11802,
+              "impliedCandidateOffset": 39.96
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 48.32,
+              "candidateEndSeconds": 54.510476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.11726,
+              "impliedCandidateOffset": 40.066032
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 66.76,
+              "candidateEndSeconds": 72.64,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.113659,
+              "impliedCandidateOffset": 58.92
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 48.32,
+              "candidateEndSeconds": 54.44,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.111155,
+              "impliedCandidateOffset": 40.16
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 29.6,
+              "candidateEndSeconds": 35.0,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.109975,
+              "impliedCandidateOffset": 22.4
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 48.32,
+              "candidateEndSeconds": 53.96,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.108953,
+              "impliedCandidateOffset": 40.8
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 10.8,
+              "candidateEndSeconds": 16.8,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.108808,
+              "impliedCandidateOffset": 2.8
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 66.36,
+              "candidateEndSeconds": 72.96,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.105043,
+              "impliedCandidateOffset": 57.56
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 71.48,
+              "candidateEndSeconds": 77.24,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.096372,
+              "impliedCandidateOffset": 63.8
+            }
+          ]
+        },
+        {
+          "referenceStart": 14.0,
+          "referenceEnd": 20.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 15.6215,
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "correlation": -0.065401,
+            "absoluteCorrelation": 0.065401,
+            "impliedCandidateOffset": 1.6215,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 88.23625,
+              "absoluteCorrelation": 0.062482
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 42.04825,
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "correlation": -0.040169,
+            "absoluteCorrelation": 0.040169,
+            "impliedCandidateOffset": 28.04825,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 73.17725,
+              "absoluteCorrelation": 0.036446
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "candidateStartSeconds": 50.0,
+            "candidateEndSeconds": 55.4,
+            "candidatePlaybackRateRelativeToReference": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.131937,
+            "impliedCandidateOffset": 37.4
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "candidateStartSeconds": 19.72,
+            "candidateEndSeconds": 25.72,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.116076,
+            "impliedCandidateOffset": 5.72
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 50.0,
+              "candidateEndSeconds": 55.4,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.131937,
+              "impliedCandidateOffset": 37.4
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 86.84,
+              "candidateEndSeconds": 93.08,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.127121,
+              "impliedCandidateOffset": 72.28
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 19.72,
+              "candidateEndSeconds": 25.72,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.116076,
+              "impliedCandidateOffset": 5.72
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 58.52,
+              "candidateEndSeconds": 65.12,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.112365,
+              "impliedCandidateOffset": 43.12
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 86.84,
+              "candidateEndSeconds": 93.030476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.111962,
+              "impliedCandidateOffset": 72.395556
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 5.64,
+              "candidateEndSeconds": 11.4,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.110022,
+              "impliedCandidateOffset": -7.8
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 10.32,
+              "candidateEndSeconds": 15.96,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.108747,
+              "impliedCandidateOffset": -2.84
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 86.8,
+              "candidateEndSeconds": 93.16,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.106433,
+              "impliedCandidateOffset": 71.96
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 5.56,
+              "candidateEndSeconds": 11.44,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.106122,
+              "impliedCandidateOffset": -8.16
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 86.88,
+              "candidateEndSeconds": 93.0,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.099751,
+              "impliedCandidateOffset": 72.6
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 49.88,
+              "candidateEndSeconds": 56.36,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.094736,
+              "impliedCandidateOffset": 34.76
+            }
+          ]
+        },
+        {
+          "referenceStart": 20.0,
+          "referenceEnd": 26.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 10.614,
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "correlation": 0.07277,
+            "absoluteCorrelation": 0.07277,
+            "impliedCandidateOffset": -9.386,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 31.8675,
+              "absoluteCorrelation": 0.068721
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 61.795625,
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "correlation": 0.042026,
+            "absoluteCorrelation": 0.042026,
+            "impliedCandidateOffset": 41.795625,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 35.495125,
+              "absoluteCorrelation": 0.040867
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "candidateStartSeconds": 58.92,
+            "candidateEndSeconds": 64.32,
+            "candidatePlaybackRateRelativeToReference": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.150013,
+            "impliedCandidateOffset": 40.92
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "candidateStartSeconds": 11.04,
+            "candidateEndSeconds": 17.04,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.117133,
+            "impliedCandidateOffset": -8.96
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 58.92,
+              "candidateEndSeconds": 64.32,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.150013,
+              "impliedCandidateOffset": 40.92
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 58.76,
+              "candidateEndSeconds": 65.36,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.117386,
+              "impliedCandidateOffset": 36.76
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 11.04,
+              "candidateEndSeconds": 17.04,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.117133,
+              "impliedCandidateOffset": -8.96
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 8.36,
+              "candidateEndSeconds": 14.12,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.114083,
+              "impliedCandidateOffset": -10.84
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 14.6,
+              "candidateEndSeconds": 20.96,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.113113,
+              "impliedCandidateOffset": -6.6
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 1.92,
+              "candidateEndSeconds": 7.8,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.111446,
+              "impliedCandidateOffset": -17.68
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 41.88,
+              "candidateEndSeconds": 47.52,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.110916,
+              "impliedCandidateOffset": 23.08
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 49.68,
+              "candidateEndSeconds": 55.92,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.106914,
+              "impliedCandidateOffset": 28.88
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 85.96,
+              "candidateEndSeconds": 92.44,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.106195,
+              "impliedCandidateOffset": 64.36
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 49.72,
+              "candidateEndSeconds": 55.910476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.092584,
+              "impliedCandidateOffset": 29.08508
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 11.64,
+              "candidateEndSeconds": 17.76,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.086335,
+              "impliedCandidateOffset": -8.76
+            }
+          ]
+        },
+        {
+          "referenceStart": 25.0,
+          "referenceEnd": 30.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 14.40125,
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "correlation": -0.081641,
+            "absoluteCorrelation": 0.081641,
+            "impliedCandidateOffset": -10.59875,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 87.5445,
+              "absoluteCorrelation": 0.079487
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 63.070375,
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "correlation": -0.053812,
+            "absoluteCorrelation": 0.053812,
+            "impliedCandidateOffset": 38.070375,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 47.3135,
+              "absoluteCorrelation": 0.053597
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "candidateStartSeconds": 88.0,
+            "candidateEndSeconds": 92.5,
+            "candidatePlaybackRateRelativeToReference": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.226805,
+            "impliedCandidateOffset": 65.5
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "candidateStartSeconds": 87.92,
+            "candidateEndSeconds": 92.92,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.170432,
+            "impliedCandidateOffset": 62.92
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 88.0,
+              "candidateEndSeconds": 92.5,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.226805,
+              "impliedCandidateOffset": 65.5
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.88,
+              "candidateEndSeconds": 93.08,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.220475,
+              "impliedCandidateOffset": 61.88
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.44,
+              "candidateEndSeconds": 92.74,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.219736,
+              "impliedCandidateOffset": 60.94
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 88.28,
+              "candidateEndSeconds": 92.98,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.216727,
+              "impliedCandidateOffset": 64.78
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.88,
+              "candidateEndSeconds": 93.03873,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.211808,
+              "impliedCandidateOffset": 62.08635
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 88.24,
+              "candidateEndSeconds": 93.04,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.210262,
+              "impliedCandidateOffset": 64.24
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.92,
+              "candidateEndSeconds": 93.02,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.200511,
+              "impliedCandidateOffset": 62.42
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.32,
+              "candidateEndSeconds": 92.82,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.193135,
+              "impliedCandidateOffset": 59.82
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 88.0,
+              "candidateEndSeconds": 92.9,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.190642,
+              "impliedCandidateOffset": 63.5
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.4,
+              "candidateEndSeconds": 92.8,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.176086,
+              "impliedCandidateOffset": 60.4
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 87.92,
+              "candidateEndSeconds": 92.92,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.170432,
+              "impliedCandidateOffset": 62.92
+            }
+          ]
+        }
+      ],
+      "identityCheck": {
+        "highMidbandWaveformWindowsAtLeast55Percent": 0,
+        "highSpectralWindowsAtLeast80Percent": 0,
+        "coherentWaveformAlignment": false,
+        "coherentSpectralAlignment": false,
+        "status": "EXACT_TRACK_IDENTITY_NOT_ESTABLISHED"
+      },
+      "highestSpectralSimilarity": 0.226805,
+      "highestMidbandWaveformSimilarity": 0.053812,
+      "pilotContinuousRegionSearch": {
+        "referenceInterval": [
+          0.0,
+          7.4
+        ],
+        "bestAcrossOffsetsAndRates": {
+          "candidateStartSeconds": 56.28,
+          "candidateEndSeconds": 62.94,
+          "playbackRate": 0.9,
+          "normalizedSpectralPatternCorrelation": 0.163325,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "bestAtOriginalTempo": {
+          "candidateStartSeconds": 15.36,
+          "candidateEndSeconds": 22.76,
+          "playbackRate": 1.0,
+          "normalizedSpectralPatternCorrelation": 0.095065,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 56.28,
+            "candidateEndSeconds": 62.94,
+            "playbackRate": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.163325,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 40.16,
+            "candidateEndSeconds": 47.856,
+            "playbackRate": 1.04,
+            "normalizedSpectralPatternCorrelation": 0.126672,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 40.2,
+            "candidateEndSeconds": 47.83492,
+            "playbackRate": 1.031746,
+            "normalizedSpectralPatternCorrelation": 0.122395,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 63.08,
+            "candidateEndSeconds": 70.036,
+            "playbackRate": 0.94,
+            "normalizedSpectralPatternCorrelation": 0.119319,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 10.92,
+            "candidateEndSeconds": 18.172,
+            "playbackRate": 0.98,
+            "normalizedSpectralPatternCorrelation": 0.114113,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 49.4,
+            "candidateEndSeconds": 56.948,
+            "playbackRate": 1.02,
+            "normalizedSpectralPatternCorrelation": 0.104364,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 63.04,
+            "candidateEndSeconds": 70.144,
+            "playbackRate": 0.96,
+            "normalizedSpectralPatternCorrelation": 0.102513,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 62.92,
+            "candidateEndSeconds": 70.764,
+            "playbackRate": 1.06,
+            "normalizedSpectralPatternCorrelation": 0.09771,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 15.36,
+            "candidateEndSeconds": 22.76,
+            "playbackRate": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.095065,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 15.08,
+            "candidateEndSeconds": 23.22,
+            "playbackRate": 1.1,
+            "normalizedSpectralPatternCorrelation": 0.084547,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 13.12,
+            "candidateEndSeconds": 21.112,
+            "playbackRate": 1.08,
+            "normalizedSpectralPatternCorrelation": 0.082543,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          }
+        ]
+      },
+      "fullContinuousRegionSearch": {
+        "referenceInterval": [
+          0.0,
+          31.14675
+        ],
+        "bestAcrossOffsetsAndRates": {
+          "candidateStartSeconds": 63.04,
+          "candidateEndSeconds": 94.809685,
+          "playbackRate": 1.02,
+          "normalizedSpectralPatternCorrelation": 0.110795,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "bestAtOriginalTempo": {
+          "candidateStartSeconds": 63.24,
+          "candidateEndSeconds": 94.38675,
+          "playbackRate": 1.0,
+          "normalizedSpectralPatternCorrelation": 0.098094,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 63.04,
+            "candidateEndSeconds": 94.809685,
+            "playbackRate": 1.02,
+            "normalizedSpectralPatternCorrelation": 0.110795,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 66.48,
+            "candidateEndSeconds": 94.512075,
+            "playbackRate": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.106495,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 60.64,
+            "candidateEndSeconds": 94.27849,
+            "playbackRate": 1.08,
+            "normalizedSpectralPatternCorrelation": 0.106098,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 62.8,
+            "candidateEndSeconds": 94.935535,
+            "playbackRate": 1.031746,
+            "normalizedSpectralPatternCorrelation": 0.103326,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 63.24,
+            "candidateEndSeconds": 94.38675,
+            "playbackRate": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.098094,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 60.16,
+            "candidateEndSeconds": 94.421425,
+            "playbackRate": 1.1,
+            "normalizedSpectralPatternCorrelation": 0.092978,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 62.68,
+            "candidateEndSeconds": 95.07262,
+            "playbackRate": 1.04,
+            "normalizedSpectralPatternCorrelation": 0.091856,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 63.48,
+            "candidateEndSeconds": 94.003815,
+            "playbackRate": 0.98,
+            "normalizedSpectralPatternCorrelation": 0.090461,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 65.64,
+            "candidateEndSeconds": 94.917945,
+            "playbackRate": 0.94,
+            "normalizedSpectralPatternCorrelation": 0.088464,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 64.8,
+            "candidateEndSeconds": 94.70088,
+            "playbackRate": 0.96,
+            "normalizedSpectralPatternCorrelation": 0.085396,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 60.96,
+            "candidateEndSeconds": 93.975555,
+            "playbackRate": 1.06,
+            "normalizedSpectralPatternCorrelation": 0.079149,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          }
+        ]
+      }
+    },
+    "C": {
+      "fullReferenceWaveformSearch": {
+        "candidateStartSeconds": 54.419125,
+        "referenceStartSeconds": 0.0,
+        "referenceEndSeconds": 31.14675,
+        "correlation": -0.046534,
+        "absoluteCorrelation": 0.046534,
+        "impliedCandidateOffset": 54.419125,
+        "runnerUpAtLeast1sAway": {
+          "startSeconds": 48.04475,
+          "absoluteCorrelation": 0.046004
+        }
+      },
+      "fullReferenceMidbandWaveformSearch": {
+        "candidateStartSeconds": 12.443,
+        "referenceStartSeconds": 0.0,
+        "referenceEndSeconds": 31.14675,
+        "correlation": -0.01652,
+        "absoluteCorrelation": 0.01652,
+        "impliedCandidateOffset": 12.443,
+        "runnerUpAtLeast1sAway": {
+          "startSeconds": 11.04225,
+          "absoluteCorrelation": 0.016411
+        }
+      },
+      "windows": [
+        {
+          "referenceStart": 0.0,
+          "referenceEnd": 6.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 60.527625,
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "correlation": -0.11995,
+            "absoluteCorrelation": 0.11995,
+            "impliedCandidateOffset": 60.527625,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 66.917,
+              "absoluteCorrelation": 0.11963
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 38.245375,
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "correlation": 0.047146,
+            "absoluteCorrelation": 0.047146,
+            "impliedCandidateOffset": 38.245375,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 32.663875,
+              "absoluteCorrelation": 0.045699
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "candidateStartSeconds": 66.04,
+            "candidateEndSeconds": 72.16,
+            "candidatePlaybackRateRelativeToReference": 1.02,
+            "normalizedSpectralPatternCorrelation": 0.298652,
+            "impliedCandidateOffset": 66.04
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 0.0,
+            "referenceEndSeconds": 6.0,
+            "candidateStartSeconds": 66.08,
+            "candidateEndSeconds": 72.08,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.280122,
+            "impliedCandidateOffset": 66.08
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 66.04,
+              "candidateEndSeconds": 72.16,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.298652,
+              "impliedCandidateOffset": 66.04
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 66.08,
+              "candidateEndSeconds": 72.08,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.280122,
+              "impliedCandidateOffset": 66.08
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 66.0,
+              "candidateEndSeconds": 72.190476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.201158,
+              "impliedCandidateOffset": 66.0
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 66.12,
+              "candidateEndSeconds": 72.0,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.184688,
+              "impliedCandidateOffset": 66.12
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 64.08,
+              "candidateEndSeconds": 70.32,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.152265,
+              "impliedCandidateOffset": 64.08
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 25.44,
+              "candidateEndSeconds": 31.92,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.147221,
+              "impliedCandidateOffset": 25.44
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 26.96,
+              "candidateEndSeconds": 33.32,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.144937,
+              "impliedCandidateOffset": 26.96
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 66.16,
+              "candidateEndSeconds": 71.92,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.142751,
+              "impliedCandidateOffset": 66.16
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 27.08,
+              "candidateEndSeconds": 32.72,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.13778,
+              "impliedCandidateOffset": 27.08
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 29.12,
+              "candidateEndSeconds": 34.52,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.136077,
+              "impliedCandidateOffset": 29.12
+            },
+            {
+              "referenceStartSeconds": 0.0,
+              "referenceEndSeconds": 6.0,
+              "candidateStartSeconds": 13.88,
+              "candidateEndSeconds": 20.48,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.121224,
+              "impliedCandidateOffset": 13.88
+            }
+          ]
+        },
+        {
+          "referenceStart": 8.0,
+          "referenceEnd": 14.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 64.414,
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "correlation": -0.107417,
+            "absoluteCorrelation": 0.107417,
+            "impliedCandidateOffset": 56.414,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 63.2555,
+              "absoluteCorrelation": 0.093933
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 76.776625,
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "correlation": -0.035581,
+            "absoluteCorrelation": 0.035581,
+            "impliedCandidateOffset": 68.776625,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 46.750875,
+              "absoluteCorrelation": 0.035504
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "candidateStartSeconds": 26.24,
+            "candidateEndSeconds": 32.24,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.185243,
+            "impliedCandidateOffset": 18.24
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 8.0,
+            "referenceEndSeconds": 14.0,
+            "candidateStartSeconds": 26.24,
+            "candidateEndSeconds": 32.24,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.185243,
+            "impliedCandidateOffset": 18.24
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 26.24,
+              "candidateEndSeconds": 32.24,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.185243,
+              "impliedCandidateOffset": 18.24
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 26.16,
+              "candidateEndSeconds": 32.28,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.178927,
+              "impliedCandidateOffset": 18.0
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 26.36,
+              "candidateEndSeconds": 32.24,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.169532,
+              "impliedCandidateOffset": 18.52
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 91.08,
+              "candidateEndSeconds": 96.72,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.158922,
+              "impliedCandidateOffset": 83.56
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 61.28,
+              "candidateEndSeconds": 67.88,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.155833,
+              "impliedCandidateOffset": 52.48
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 26.08,
+              "candidateEndSeconds": 32.270476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.154162,
+              "impliedCandidateOffset": 17.826032
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 44.96,
+              "candidateEndSeconds": 50.72,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.151176,
+              "impliedCandidateOffset": 37.28
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 63.92,
+              "candidateEndSeconds": 70.4,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.150414,
+              "impliedCandidateOffset": 55.28
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 26.04,
+              "candidateEndSeconds": 32.28,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.144296,
+              "impliedCandidateOffset": 17.72
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 1.8,
+              "candidateEndSeconds": 7.2,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.142956,
+              "impliedCandidateOffset": -5.4
+            },
+            {
+              "referenceStartSeconds": 8.0,
+              "referenceEndSeconds": 14.0,
+              "candidateStartSeconds": 25.96,
+              "candidateEndSeconds": 32.32,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.134914,
+              "impliedCandidateOffset": 17.48
+            }
+          ]
+        },
+        {
+          "referenceStart": 14.0,
+          "referenceEnd": 20.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 68.292375,
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "correlation": 0.09634,
+            "absoluteCorrelation": 0.09634,
+            "impliedCandidateOffset": 54.292375,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 70.15325,
+              "absoluteCorrelation": 0.088796
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 23.414125,
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "correlation": 0.041838,
+            "absoluteCorrelation": 0.041838,
+            "impliedCandidateOffset": 9.414125,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 24.59375,
+              "absoluteCorrelation": 0.040452
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "candidateStartSeconds": 60.2,
+            "candidateEndSeconds": 66.2,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.241448,
+            "impliedCandidateOffset": 46.2
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 14.0,
+            "referenceEndSeconds": 20.0,
+            "candidateStartSeconds": 60.2,
+            "candidateEndSeconds": 66.2,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.241448,
+            "impliedCandidateOffset": 46.2
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 60.2,
+              "candidateEndSeconds": 66.2,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.241448,
+              "impliedCandidateOffset": 46.2
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 8.04,
+              "candidateEndSeconds": 14.16,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.20378,
+              "impliedCandidateOffset": -6.24
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 59.12,
+              "candidateEndSeconds": 65.0,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.159704,
+              "impliedCandidateOffset": 45.4
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 28.48,
+              "candidateEndSeconds": 34.670476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.137584,
+              "impliedCandidateOffset": 14.035556
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 50.24,
+              "candidateEndSeconds": 55.64,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.130051,
+              "impliedCandidateOffset": 37.64
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 92.6,
+              "candidateEndSeconds": 98.24,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.129552,
+              "impliedCandidateOffset": 79.44
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 92.52,
+              "candidateEndSeconds": 98.28,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.127679,
+              "impliedCandidateOffset": 79.08
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 59.08,
+              "candidateEndSeconds": 65.56,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.125105,
+              "impliedCandidateOffset": 43.96
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 76.2,
+              "candidateEndSeconds": 82.56,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.121385,
+              "impliedCandidateOffset": 61.36
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 62.72,
+              "candidateEndSeconds": 69.32,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.117447,
+              "impliedCandidateOffset": 47.32
+            },
+            {
+              "referenceStartSeconds": 14.0,
+              "referenceEndSeconds": 20.0,
+              "candidateStartSeconds": 18.64,
+              "candidateEndSeconds": 24.88,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.112717,
+              "impliedCandidateOffset": 4.08
+            }
+          ]
+        },
+        {
+          "referenceStart": 20.0,
+          "referenceEnd": 26.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 66.907875,
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "correlation": 0.116543,
+            "absoluteCorrelation": 0.116543,
+            "impliedCandidateOffset": 46.907875,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 64.304625,
+              "absoluteCorrelation": 0.106695
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 74.785875,
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "correlation": -0.050731,
+            "absoluteCorrelation": 0.050731,
+            "impliedCandidateOffset": 54.785875,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 84.051375,
+              "absoluteCorrelation": 0.044752
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "candidateStartSeconds": 36.48,
+            "candidateEndSeconds": 42.48,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.269043,
+            "impliedCandidateOffset": 16.48
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 20.0,
+            "referenceEndSeconds": 26.0,
+            "candidateStartSeconds": 36.48,
+            "candidateEndSeconds": 42.48,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.269043,
+            "impliedCandidateOffset": 16.48
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 36.48,
+              "candidateEndSeconds": 42.48,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.269043,
+              "impliedCandidateOffset": 16.48
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 60.6,
+              "candidateEndSeconds": 66.72,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.255854,
+              "impliedCandidateOffset": 40.2
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 63.8,
+              "candidateEndSeconds": 70.4,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.19364,
+              "impliedCandidateOffset": 41.8
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 64.4,
+              "candidateEndSeconds": 70.28,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.185568,
+              "impliedCandidateOffset": 44.8
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 92.56,
+              "candidateEndSeconds": 97.96,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.163466,
+              "impliedCandidateOffset": 74.56
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 12.24,
+              "candidateEndSeconds": 18.430476,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.157459,
+              "impliedCandidateOffset": -8.39492
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 63.84,
+              "candidateEndSeconds": 70.32,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.149503,
+              "impliedCandidateOffset": 42.24
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 64.16,
+              "candidateEndSeconds": 69.92,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.147357,
+              "impliedCandidateOffset": 44.96
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 64.08,
+              "candidateEndSeconds": 70.32,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.144525,
+              "impliedCandidateOffset": 43.28
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 92.16,
+              "candidateEndSeconds": 97.8,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.141546,
+              "impliedCandidateOffset": 73.36
+            },
+            {
+              "referenceStartSeconds": 20.0,
+              "referenceEndSeconds": 26.0,
+              "candidateStartSeconds": 62.44,
+              "candidateEndSeconds": 68.8,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.125165,
+              "impliedCandidateOffset": 41.24
+            }
+          ]
+        },
+        {
+          "referenceStart": 25.0,
+          "referenceEnd": 30.0,
+          "waveform8kMono": {
+            "candidateStartSeconds": 68.342,
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "correlation": -0.114763,
+            "absoluteCorrelation": 0.114763,
+            "impliedCandidateOffset": 43.342,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 70.202625,
+              "absoluteCorrelation": 0.114315
+            }
+          },
+          "waveform300to3500Hz": {
+            "candidateStartSeconds": 19.23975,
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "correlation": -0.061831,
+            "absoluteCorrelation": 0.061831,
+            "impliedCandidateOffset": -5.76025,
+            "runnerUpAtLeast1sAway": {
+              "startSeconds": 4.35625,
+              "absoluteCorrelation": 0.061158
+            }
+          },
+          "bestSpectral": {
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "candidateStartSeconds": 9.88,
+            "candidateEndSeconds": 14.88,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.324446,
+            "impliedCandidateOffset": -15.12
+          },
+          "spectralAtRate1": {
+            "referenceStartSeconds": 25.0,
+            "referenceEndSeconds": 30.0,
+            "candidateStartSeconds": 9.88,
+            "candidateEndSeconds": 14.88,
+            "candidatePlaybackRateRelativeToReference": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.324446,
+            "impliedCandidateOffset": -15.12
+          },
+          "rateSearch": [
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 9.88,
+              "candidateEndSeconds": 14.88,
+              "candidatePlaybackRateRelativeToReference": 1.0,
+              "normalizedSpectralPatternCorrelation": 0.324446,
+              "impliedCandidateOffset": -15.12
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 9.84,
+              "candidateEndSeconds": 14.94,
+              "candidatePlaybackRateRelativeToReference": 1.02,
+              "normalizedSpectralPatternCorrelation": 0.295212,
+              "impliedCandidateOffset": -15.66
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 71.28,
+              "candidateEndSeconds": 76.18,
+              "candidatePlaybackRateRelativeToReference": 0.98,
+              "normalizedSpectralPatternCorrelation": 0.240397,
+              "impliedCandidateOffset": 46.78
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 93.08,
+              "candidateEndSeconds": 98.23873,
+              "candidatePlaybackRateRelativeToReference": 1.031746,
+              "normalizedSpectralPatternCorrelation": 0.237172,
+              "impliedCandidateOffset": 67.28635
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 71.32,
+              "candidateEndSeconds": 76.12,
+              "candidatePlaybackRateRelativeToReference": 0.96,
+              "normalizedSpectralPatternCorrelation": 0.21231,
+              "impliedCandidateOffset": 47.32
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 93.08,
+              "candidateEndSeconds": 98.28,
+              "candidatePlaybackRateRelativeToReference": 1.04,
+              "normalizedSpectralPatternCorrelation": 0.209488,
+              "impliedCandidateOffset": 67.08
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 93.08,
+              "candidateEndSeconds": 98.38,
+              "candidatePlaybackRateRelativeToReference": 1.06,
+              "normalizedSpectralPatternCorrelation": 0.199785,
+              "impliedCandidateOffset": 66.58
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 93.8,
+              "candidateEndSeconds": 98.5,
+              "candidatePlaybackRateRelativeToReference": 0.94,
+              "normalizedSpectralPatternCorrelation": 0.198204,
+              "impliedCandidateOffset": 70.3
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 94.28,
+              "candidateEndSeconds": 99.78,
+              "candidatePlaybackRateRelativeToReference": 1.1,
+              "normalizedSpectralPatternCorrelation": 0.195114,
+              "impliedCandidateOffset": 66.78
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 95.36,
+              "candidateEndSeconds": 100.76,
+              "candidatePlaybackRateRelativeToReference": 1.08,
+              "normalizedSpectralPatternCorrelation": 0.178488,
+              "impliedCandidateOffset": 68.36
+            },
+            {
+              "referenceStartSeconds": 25.0,
+              "referenceEndSeconds": 30.0,
+              "candidateStartSeconds": 71.52,
+              "candidateEndSeconds": 76.02,
+              "candidatePlaybackRateRelativeToReference": 0.9,
+              "normalizedSpectralPatternCorrelation": 0.177398,
+              "impliedCandidateOffset": 49.02
+            }
+          ]
+        }
+      ],
+      "identityCheck": {
+        "highMidbandWaveformWindowsAtLeast55Percent": 0,
+        "highSpectralWindowsAtLeast80Percent": 0,
+        "coherentWaveformAlignment": false,
+        "coherentSpectralAlignment": false,
+        "status": "EXACT_TRACK_IDENTITY_NOT_ESTABLISHED"
+      },
+      "highestSpectralSimilarity": 0.324446,
+      "highestMidbandWaveformSimilarity": 0.061831,
+      "pilotContinuousRegionSearch": {
+        "referenceInterval": [
+          0.0,
+          7.4
+        ],
+        "bestAcrossOffsetsAndRates": {
+          "candidateStartSeconds": 66.12,
+          "candidateEndSeconds": 73.52,
+          "playbackRate": 1.0,
+          "normalizedSpectralPatternCorrelation": 0.289197,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "bestAtOriginalTempo": {
+          "candidateStartSeconds": 66.12,
+          "candidateEndSeconds": 73.52,
+          "playbackRate": 1.0,
+          "normalizedSpectralPatternCorrelation": 0.289197,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 66.12,
+            "candidateEndSeconds": 73.52,
+            "playbackRate": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.289197,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 66.04,
+            "candidateEndSeconds": 73.588,
+            "playbackRate": 1.02,
+            "normalizedSpectralPatternCorrelation": 0.245635,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 62.24,
+            "candidateEndSeconds": 69.87492,
+            "playbackRate": 1.031746,
+            "normalizedSpectralPatternCorrelation": 0.158916,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 66.16,
+            "candidateEndSeconds": 73.412,
+            "playbackRate": 0.98,
+            "normalizedSpectralPatternCorrelation": 0.15482,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 51.16,
+            "candidateEndSeconds": 57.82,
+            "playbackRate": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.149326,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 66.16,
+            "candidateEndSeconds": 73.264,
+            "playbackRate": 0.96,
+            "normalizedSpectralPatternCorrelation": 0.134465,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 13.88,
+            "candidateEndSeconds": 22.02,
+            "playbackRate": 1.1,
+            "normalizedSpectralPatternCorrelation": 0.133311,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 66.0,
+            "candidateEndSeconds": 73.696,
+            "playbackRate": 1.04,
+            "normalizedSpectralPatternCorrelation": 0.126965,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 28.8,
+            "candidateEndSeconds": 36.644,
+            "playbackRate": 1.06,
+            "normalizedSpectralPatternCorrelation": 0.125997,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 13.92,
+            "candidateEndSeconds": 21.912,
+            "playbackRate": 1.08,
+            "normalizedSpectralPatternCorrelation": 0.122943,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 27.08,
+            "candidateEndSeconds": 34.036,
+            "playbackRate": 0.94,
+            "normalizedSpectralPatternCorrelation": 0.106015,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          }
+        ]
+      },
+      "fullContinuousRegionSearch": {
+        "referenceInterval": [
+          0.0,
+          31.14675
+        ],
+        "bestAcrossOffsetsAndRates": {
+          "candidateStartSeconds": 54.8,
+          "candidateEndSeconds": 86.935535,
+          "playbackRate": 1.031746,
+          "normalizedSpectralPatternCorrelation": 0.093818,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "bestAtOriginalTempo": {
+          "candidateStartSeconds": 55.64,
+          "candidateEndSeconds": 86.78675,
+          "playbackRate": 1.0,
+          "normalizedSpectralPatternCorrelation": 0.076695,
+          "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+        },
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 54.8,
+            "candidateEndSeconds": 86.935535,
+            "playbackRate": 1.031746,
+            "normalizedSpectralPatternCorrelation": 0.093818,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 56.92,
+            "candidateEndSeconds": 88.689685,
+            "playbackRate": 1.02,
+            "normalizedSpectralPatternCorrelation": 0.091053,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 55.92,
+            "candidateEndSeconds": 85.82088,
+            "playbackRate": 0.96,
+            "normalizedSpectralPatternCorrelation": 0.086471,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 52.88,
+            "candidateEndSeconds": 87.141425,
+            "playbackRate": 1.1,
+            "normalizedSpectralPatternCorrelation": 0.084533,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 54.68,
+            "candidateEndSeconds": 87.07262,
+            "playbackRate": 1.04,
+            "normalizedSpectralPatternCorrelation": 0.083507,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 53.88,
+            "candidateEndSeconds": 87.51849,
+            "playbackRate": 1.08,
+            "normalizedSpectralPatternCorrelation": 0.078443,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 55.48,
+            "candidateEndSeconds": 86.003815,
+            "playbackRate": 0.98,
+            "normalizedSpectralPatternCorrelation": 0.07792,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 51.16,
+            "candidateEndSeconds": 79.192075,
+            "playbackRate": 0.9,
+            "normalizedSpectralPatternCorrelation": 0.077612,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 55.64,
+            "candidateEndSeconds": 86.78675,
+            "playbackRate": 1.0,
+            "normalizedSpectralPatternCorrelation": 0.076695,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 56.88,
+            "candidateEndSeconds": 86.157945,
+            "playbackRate": 0.94,
+            "normalizedSpectralPatternCorrelation": 0.076084,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          },
+          {
+            "candidateStartSeconds": 54.16,
+            "candidateEndSeconds": 87.175555,
+            "playbackRate": 1.06,
+            "normalizedSpectralPatternCorrelation": 0.075029,
+            "status": "Diagnostic weak similarity only; no region passes distinctive identity contract"
+          }
+        ]
+      }
+    }
+  },
+  "modelClaim": "Focused model described C/Digital Clouds as exact underlying instrumental starting0s,126BPM; this independent measurement does not treat that claim as evidence",
+  "interpretation": "A matched distinctive PCM/spectral sequence with consistent timing supports an audio fingerprint. Similar tempo, generic spectrum, filenames or model assertion do not. Additional vocals/SFX or processing can lower similarity; failure to establish is not proof of absence",
+  "hearing": "NOT PERFORMED. No sound, genre, words or SFX identities are assigned by this tool",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

@@ -1,0 +1,732 @@
+{
+  "schemaVersion": 1,
+  "sourceHashes": {
+    "A": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae",
+    "B": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+    "C": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+  },
+  "periodicity": {
+    "A": {
+      "wholeTrack": [
+        {
+          "lagSeconds": 0.461386,
+          "bpmCandidate": 130.0428,
+          "normalizedAutocorrelation": 0.683039
+        },
+        {
+          "lagSeconds": 0.922813,
+          "bpmCandidate": 65.0186,
+          "normalizedAutocorrelation": 0.678527
+        },
+        {
+          "lagSeconds": 0.692251,
+          "bpmCandidate": 86.6737,
+          "normalizedAutocorrelation": 0.676431
+        },
+        {
+          "lagSeconds": 0.577357,
+          "bpmCandidate": 103.9218,
+          "normalizedAutocorrelation": 0.06006
+        },
+        {
+          "lagSeconds": 0.345785,
+          "bpmCandidate": 173.518,
+          "normalizedAutocorrelation": 0.054346
+        }
+      ],
+      "first31Seconds": [
+        {
+          "lagSeconds": 0.461386,
+          "bpmCandidate": 130.0428,
+          "normalizedAutocorrelation": 0.683039
+        },
+        {
+          "lagSeconds": 0.922813,
+          "bpmCandidate": 65.0186,
+          "normalizedAutocorrelation": 0.678527
+        },
+        {
+          "lagSeconds": 0.692251,
+          "bpmCandidate": 86.6737,
+          "normalizedAutocorrelation": 0.676431
+        },
+        {
+          "lagSeconds": 0.577357,
+          "bpmCandidate": 103.9218,
+          "normalizedAutocorrelation": 0.06006
+        },
+        {
+          "lagSeconds": 0.345785,
+          "bpmCandidate": 173.518,
+          "normalizedAutocorrelation": 0.054346
+        }
+      ]
+    },
+    "B": {
+      "wholeTrack": [
+        {
+          "lagSeconds": 0.571273,
+          "bpmCandidate": 105.0285,
+          "normalizedAutocorrelation": 0.665433
+        },
+        {
+          "lagSeconds": 0.857348,
+          "bpmCandidate": 69.9832,
+          "normalizedAutocorrelation": 0.570992
+        },
+        {
+          "lagSeconds": 0.285605,
+          "bpmCandidate": 210.0804,
+          "normalizedAutocorrelation": 0.510451
+        },
+        {
+          "lagSeconds": 0.428875,
+          "bpmCandidate": 139.901,
+          "normalizedAutocorrelation": 0.337915
+        },
+        {
+          "lagSeconds": 0.714384,
+          "bpmCandidate": 83.9884,
+          "normalizedAutocorrelation": 0.232865
+        }
+      ],
+      "first31Seconds": [
+        {
+          "lagSeconds": 0.571341,
+          "bpmCandidate": 105.016,
+          "normalizedAutocorrelation": 0.749969
+        },
+        {
+          "lagSeconds": 0.85712,
+          "bpmCandidate": 70.0018,
+          "normalizedAutocorrelation": 0.668013
+        },
+        {
+          "lagSeconds": 0.285537,
+          "bpmCandidate": 210.1307,
+          "normalizedAutocorrelation": 0.639047
+        },
+        {
+          "lagSeconds": 0.428808,
+          "bpmCandidate": 139.9226,
+          "normalizedAutocorrelation": 0.311504
+        },
+        {
+          "lagSeconds": 0.714292,
+          "bpmCandidate": 83.9993,
+          "normalizedAutocorrelation": 0.252713
+        }
+      ]
+    },
+    "C": {
+      "wholeTrack": [
+        {
+          "lagSeconds": 0.930281,
+          "bpmCandidate": 64.4966,
+          "normalizedAutocorrelation": 0.622664
+        },
+        {
+          "lagSeconds": 0.465119,
+          "bpmCandidate": 128.9991,
+          "normalizedAutocorrelation": 0.493328
+        },
+        {
+          "lagSeconds": 0.697939,
+          "bpmCandidate": 85.9674,
+          "normalizedAutocorrelation": 0.429397
+        },
+        {
+          "lagSeconds": 0.349519,
+          "bpmCandidate": 171.6642,
+          "normalizedAutocorrelation": 0.221033
+        },
+        {
+          "lagSeconds": 0.581374,
+          "bpmCandidate": 103.2038,
+          "normalizedAutocorrelation": 0.203242
+        }
+      ],
+      "first31Seconds": [
+        {
+          "lagSeconds": 0.930261,
+          "bpmCandidate": 64.498,
+          "normalizedAutocorrelation": 0.67498
+        },
+        {
+          "lagSeconds": 0.465147,
+          "bpmCandidate": 128.9916,
+          "normalizedAutocorrelation": 0.5604
+        },
+        {
+          "lagSeconds": 0.697777,
+          "bpmCandidate": 85.9873,
+          "normalizedAutocorrelation": 0.359351
+        },
+        {
+          "lagSeconds": 0.353392,
+          "bpmCandidate": 169.783,
+          "normalizedAutocorrelation": 0.135257
+        },
+        {
+          "lagSeconds": 0.581512,
+          "bpmCandidate": 103.1793,
+          "normalizedAutocorrelation": 0.073988
+        }
+      ]
+    }
+  },
+  "energyShape": {
+    "B": {
+      "pilot7.4s": {
+        "referenceInterval": [
+          0.0,
+          7.4
+        ],
+        "atCandidate0sOriginalTempoSlowEnergyCorrelation": 0.433178,
+        "bestAllOffsetsAndRates": {
+          "candidateStartSeconds": 15.635,
+          "candidateEndSeconds": 22.887,
+          "playbackRate": 0.98,
+          "gainInvariantSlowEnergyCorrelation": 0.620796
+        },
+        "bestAllOffsetsAtOriginalTempo": {
+          "candidateStartSeconds": 15.485,
+          "candidateEndSeconds": 22.885,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.620032
+        },
+        "20msEnergyCorrelationAtBestSlowShape": 0.195975,
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 15.635,
+            "candidateEndSeconds": 22.887,
+            "playbackRate": 0.98,
+            "gainInvariantSlowEnergyCorrelation": 0.620796
+          },
+          {
+            "candidateStartSeconds": 15.65,
+            "candidateEndSeconds": 22.754,
+            "playbackRate": 0.96,
+            "gainInvariantSlowEnergyCorrelation": 0.620297
+          },
+          {
+            "candidateStartSeconds": 15.485,
+            "candidateEndSeconds": 22.885,
+            "playbackRate": 1.0,
+            "gainInvariantSlowEnergyCorrelation": 0.620032
+          },
+          {
+            "candidateStartSeconds": 15.475,
+            "candidateEndSeconds": 23.023,
+            "playbackRate": 1.02,
+            "gainInvariantSlowEnergyCorrelation": 0.616613
+          },
+          {
+            "candidateStartSeconds": 15.65,
+            "candidateEndSeconds": 22.606,
+            "playbackRate": 0.94,
+            "gainInvariantSlowEnergyCorrelation": 0.614811
+          },
+          {
+            "candidateStartSeconds": 15.465,
+            "candidateEndSeconds": 23.09992,
+            "playbackRate": 1.031746,
+            "gainInvariantSlowEnergyCorrelation": 0.612127
+          },
+          {
+            "candidateStartSeconds": 15.7,
+            "candidateEndSeconds": 22.36,
+            "playbackRate": 0.9,
+            "gainInvariantSlowEnergyCorrelation": 0.608412
+          },
+          {
+            "candidateStartSeconds": 15.435,
+            "candidateEndSeconds": 23.131,
+            "playbackRate": 1.04,
+            "gainInvariantSlowEnergyCorrelation": 0.606331
+          },
+          {
+            "candidateStartSeconds": 72.27,
+            "candidateEndSeconds": 80.114,
+            "playbackRate": 1.06,
+            "gainInvariantSlowEnergyCorrelation": 0.584649
+          },
+          {
+            "candidateStartSeconds": 15.48,
+            "candidateEndSeconds": 23.62,
+            "playbackRate": 1.1,
+            "gainInvariantSlowEnergyCorrelation": 0.566506
+          },
+          {
+            "candidateStartSeconds": 15.45,
+            "candidateEndSeconds": 23.442,
+            "playbackRate": 1.08,
+            "gainInvariantSlowEnergyCorrelation": 0.563881
+          }
+        ],
+        "interpretation": "Energy-envelope shape only. Matching buildup/fade or pulse does not identify melody, genre or exact underlying audio."
+      },
+      "firstHalf15.573s": {
+        "referenceInterval": [
+          0.0,
+          15.5733335
+        ],
+        "atCandidate0sOriginalTempoSlowEnergyCorrelation": 0.37352,
+        "bestAllOffsetsAndRates": {
+          "candidateStartSeconds": 63.065,
+          "candidateEndSeconds": 79.132725,
+          "playbackRate": 1.031746,
+          "gainInvariantSlowEnergyCorrelation": 0.567541
+        },
+        "bestAllOffsetsAtOriginalTempo": {
+          "candidateStartSeconds": 63.15,
+          "candidateEndSeconds": 78.723333,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.541081
+        },
+        "20msEnergyCorrelationAtBestSlowShape": 0.270486,
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 63.065,
+            "candidateEndSeconds": 79.132725,
+            "playbackRate": 1.031746,
+            "gainInvariantSlowEnergyCorrelation": 0.567541
+          },
+          {
+            "candidateStartSeconds": 63.04,
+            "candidateEndSeconds": 79.236267,
+            "playbackRate": 1.04,
+            "gainInvariantSlowEnergyCorrelation": 0.567009
+          },
+          {
+            "candidateStartSeconds": 63.1,
+            "candidateEndSeconds": 78.9848,
+            "playbackRate": 1.02,
+            "gainInvariantSlowEnergyCorrelation": 0.562294
+          },
+          {
+            "candidateStartSeconds": 62.985,
+            "candidateEndSeconds": 79.492734,
+            "playbackRate": 1.06,
+            "gainInvariantSlowEnergyCorrelation": 0.553788
+          },
+          {
+            "candidateStartSeconds": 63.15,
+            "candidateEndSeconds": 78.723333,
+            "playbackRate": 1.0,
+            "gainInvariantSlowEnergyCorrelation": 0.541081
+          },
+          {
+            "candidateStartSeconds": 62.905,
+            "candidateEndSeconds": 79.7242,
+            "playbackRate": 1.08,
+            "gainInvariantSlowEnergyCorrelation": 0.521396
+          },
+          {
+            "candidateStartSeconds": 6.495,
+            "candidateEndSeconds": 21.756867,
+            "playbackRate": 0.98,
+            "gainInvariantSlowEnergyCorrelation": 0.508867
+          },
+          {
+            "candidateStartSeconds": 6.57,
+            "candidateEndSeconds": 21.5204,
+            "playbackRate": 0.96,
+            "gainInvariantSlowEnergyCorrelation": 0.505888
+          },
+          {
+            "candidateStartSeconds": 6.635,
+            "candidateEndSeconds": 21.273933,
+            "playbackRate": 0.94,
+            "gainInvariantSlowEnergyCorrelation": 0.478859
+          },
+          {
+            "candidateStartSeconds": 67.55,
+            "candidateEndSeconds": 81.566,
+            "playbackRate": 0.9,
+            "gainInvariantSlowEnergyCorrelation": 0.475108
+          },
+          {
+            "candidateStartSeconds": 62.79,
+            "candidateEndSeconds": 79.920667,
+            "playbackRate": 1.1,
+            "gainInvariantSlowEnergyCorrelation": 0.474635
+          }
+        ],
+        "interpretation": "Energy-envelope shape only. Matching buildup/fade or pulse does not identify melody, genre or exact underlying audio."
+      },
+      "full31.147s": {
+        "referenceInterval": [
+          0.0,
+          31.146667
+        ],
+        "atCandidate0sOriginalTempoSlowEnergyCorrelation": 0.252769,
+        "bestAllOffsetsAndRates": {
+          "candidateStartSeconds": 63.07,
+          "candidateEndSeconds": 94.216667,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.660812
+        },
+        "bestAllOffsetsAtOriginalTempo": {
+          "candidateStartSeconds": 63.07,
+          "candidateEndSeconds": 94.216667,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.660812
+        },
+        "20msEnergyCorrelationAtBestSlowShape": 0.542306,
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 63.07,
+            "candidateEndSeconds": 94.216667,
+            "playbackRate": 1.0,
+            "gainInvariantSlowEnergyCorrelation": 0.660812
+          },
+          {
+            "candidateStartSeconds": 60.575,
+            "candidateEndSeconds": 94.2134,
+            "playbackRate": 1.08,
+            "gainInvariantSlowEnergyCorrelation": 0.652135
+          },
+          {
+            "candidateStartSeconds": 60.765,
+            "candidateEndSeconds": 93.157534,
+            "playbackRate": 1.04,
+            "gainInvariantSlowEnergyCorrelation": 0.648004
+          },
+          {
+            "candidateStartSeconds": 63.355,
+            "candidateEndSeconds": 93.878734,
+            "playbackRate": 0.98,
+            "gainInvariantSlowEnergyCorrelation": 0.647239
+          },
+          {
+            "candidateStartSeconds": 63.14,
+            "candidateEndSeconds": 93.0408,
+            "playbackRate": 0.96,
+            "gainInvariantSlowEnergyCorrelation": 0.646827
+          },
+          {
+            "candidateStartSeconds": 60.71,
+            "candidateEndSeconds": 93.725467,
+            "playbackRate": 1.06,
+            "gainInvariantSlowEnergyCorrelation": 0.644986
+          },
+          {
+            "candidateStartSeconds": 60.83,
+            "candidateEndSeconds": 92.965449,
+            "playbackRate": 1.031746,
+            "gainInvariantSlowEnergyCorrelation": 0.638766
+          },
+          {
+            "candidateStartSeconds": 60.18,
+            "candidateEndSeconds": 94.441334,
+            "playbackRate": 1.1,
+            "gainInvariantSlowEnergyCorrelation": 0.635886
+          },
+          {
+            "candidateStartSeconds": 62.745,
+            "candidateEndSeconds": 94.5146,
+            "playbackRate": 1.02,
+            "gainInvariantSlowEnergyCorrelation": 0.629356
+          },
+          {
+            "candidateStartSeconds": 63.45,
+            "candidateEndSeconds": 92.727867,
+            "playbackRate": 0.94,
+            "gainInvariantSlowEnergyCorrelation": 0.620142
+          },
+          {
+            "candidateStartSeconds": 65.435,
+            "candidateEndSeconds": 93.467,
+            "playbackRate": 0.9,
+            "gainInvariantSlowEnergyCorrelation": 0.613078
+          }
+        ],
+        "interpretation": "Energy-envelope shape only. Matching buildup/fade or pulse does not identify melody, genre or exact underlying audio."
+      }
+    },
+    "C": {
+      "pilot7.4s": {
+        "referenceInterval": [
+          0.0,
+          7.4
+        ],
+        "atCandidate0sOriginalTempoSlowEnergyCorrelation": 0.42145,
+        "bestAllOffsetsAndRates": {
+          "candidateStartSeconds": 28.85,
+          "candidateEndSeconds": 36.99,
+          "playbackRate": 1.1,
+          "gainInvariantSlowEnergyCorrelation": 0.841712
+        },
+        "bestAllOffsetsAtOriginalTempo": {
+          "candidateStartSeconds": 28.905,
+          "candidateEndSeconds": 36.305,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.778403
+        },
+        "20msEnergyCorrelationAtBestSlowShape": 0.31078,
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 28.85,
+            "candidateEndSeconds": 36.99,
+            "playbackRate": 1.1,
+            "gainInvariantSlowEnergyCorrelation": 0.841712
+          },
+          {
+            "candidateStartSeconds": 28.87,
+            "candidateEndSeconds": 36.862,
+            "playbackRate": 1.08,
+            "gainInvariantSlowEnergyCorrelation": 0.834692
+          },
+          {
+            "candidateStartSeconds": 28.895,
+            "candidateEndSeconds": 36.739,
+            "playbackRate": 1.06,
+            "gainInvariantSlowEnergyCorrelation": 0.823104
+          },
+          {
+            "candidateStartSeconds": 28.94,
+            "candidateEndSeconds": 35.6,
+            "playbackRate": 0.9,
+            "gainInvariantSlowEnergyCorrelation": 0.811631
+          },
+          {
+            "candidateStartSeconds": 28.925,
+            "candidateEndSeconds": 36.621,
+            "playbackRate": 1.04,
+            "gainInvariantSlowEnergyCorrelation": 0.806233
+          },
+          {
+            "candidateStartSeconds": 28.925,
+            "candidateEndSeconds": 36.55992,
+            "playbackRate": 1.031746,
+            "gainInvariantSlowEnergyCorrelation": 0.797361
+          },
+          {
+            "candidateStartSeconds": 28.895,
+            "candidateEndSeconds": 35.851,
+            "playbackRate": 0.94,
+            "gainInvariantSlowEnergyCorrelation": 0.787595
+          },
+          {
+            "candidateStartSeconds": 28.91,
+            "candidateEndSeconds": 36.458,
+            "playbackRate": 1.02,
+            "gainInvariantSlowEnergyCorrelation": 0.785854
+          },
+          {
+            "candidateStartSeconds": 28.905,
+            "candidateEndSeconds": 36.305,
+            "playbackRate": 1.0,
+            "gainInvariantSlowEnergyCorrelation": 0.778403
+          },
+          {
+            "candidateStartSeconds": 28.9,
+            "candidateEndSeconds": 36.004,
+            "playbackRate": 0.96,
+            "gainInvariantSlowEnergyCorrelation": 0.778168
+          },
+          {
+            "candidateStartSeconds": 28.925,
+            "candidateEndSeconds": 36.177,
+            "playbackRate": 0.98,
+            "gainInvariantSlowEnergyCorrelation": 0.773844
+          }
+        ],
+        "interpretation": "Energy-envelope shape only. Matching buildup/fade or pulse does not identify melody, genre or exact underlying audio."
+      },
+      "firstHalf15.573s": {
+        "referenceInterval": [
+          0.0,
+          15.5733335
+        ],
+        "atCandidate0sOriginalTempoSlowEnergyCorrelation": 0.341417,
+        "bestAllOffsetsAndRates": {
+          "candidateStartSeconds": 28.85,
+          "candidateEndSeconds": 42.866,
+          "playbackRate": 0.9,
+          "gainInvariantSlowEnergyCorrelation": 0.70171
+        },
+        "bestAllOffsetsAtOriginalTempo": {
+          "candidateStartSeconds": 28.9,
+          "candidateEndSeconds": 44.473333,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.661818
+        },
+        "20msEnergyCorrelationAtBestSlowShape": 0.210304,
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 28.85,
+            "candidateEndSeconds": 42.866,
+            "playbackRate": 0.9,
+            "gainInvariantSlowEnergyCorrelation": 0.70171
+          },
+          {
+            "candidateStartSeconds": 28.82,
+            "candidateEndSeconds": 45.6392,
+            "playbackRate": 1.08,
+            "gainInvariantSlowEnergyCorrelation": 0.696879
+          },
+          {
+            "candidateStartSeconds": 28.87,
+            "candidateEndSeconds": 45.377734,
+            "playbackRate": 1.06,
+            "gainInvariantSlowEnergyCorrelation": 0.695873
+          },
+          {
+            "candidateStartSeconds": 28.89,
+            "candidateEndSeconds": 45.086267,
+            "playbackRate": 1.04,
+            "gainInvariantSlowEnergyCorrelation": 0.685278
+          },
+          {
+            "candidateStartSeconds": 28.895,
+            "candidateEndSeconds": 44.962725,
+            "playbackRate": 1.031746,
+            "gainInvariantSlowEnergyCorrelation": 0.677984
+          },
+          {
+            "candidateStartSeconds": 28.895,
+            "candidateEndSeconds": 44.7798,
+            "playbackRate": 1.02,
+            "gainInvariantSlowEnergyCorrelation": 0.673252
+          },
+          {
+            "candidateStartSeconds": 28.73,
+            "candidateEndSeconds": 45.860667,
+            "playbackRate": 1.1,
+            "gainInvariantSlowEnergyCorrelation": 0.672443
+          },
+          {
+            "candidateStartSeconds": 28.9,
+            "candidateEndSeconds": 44.473333,
+            "playbackRate": 1.0,
+            "gainInvariantSlowEnergyCorrelation": 0.661818
+          },
+          {
+            "candidateStartSeconds": 28.86,
+            "candidateEndSeconds": 43.498933,
+            "playbackRate": 0.94,
+            "gainInvariantSlowEnergyCorrelation": 0.657925
+          },
+          {
+            "candidateStartSeconds": 28.885,
+            "candidateEndSeconds": 43.8354,
+            "playbackRate": 0.96,
+            "gainInvariantSlowEnergyCorrelation": 0.655622
+          },
+          {
+            "candidateStartSeconds": 28.905,
+            "candidateEndSeconds": 44.166867,
+            "playbackRate": 0.98,
+            "gainInvariantSlowEnergyCorrelation": 0.652937
+          }
+        ],
+        "interpretation": "Energy-envelope shape only. Matching buildup/fade or pulse does not identify melody, genre or exact underlying audio."
+      },
+      "full31.147s": {
+        "referenceInterval": [
+          0.0,
+          31.146667
+        ],
+        "atCandidate0sOriginalTempoSlowEnergyCorrelation": 0.064462,
+        "bestAllOffsetsAndRates": {
+          "candidateStartSeconds": 65.94,
+          "candidateEndSeconds": 100.201334,
+          "playbackRate": 1.1,
+          "gainInvariantSlowEnergyCorrelation": 0.502924
+        },
+        "bestAllOffsetsAtOriginalTempo": {
+          "candidateStartSeconds": 69.015,
+          "candidateEndSeconds": 100.161667,
+          "playbackRate": 1.0,
+          "gainInvariantSlowEnergyCorrelation": 0.448243
+        },
+        "20msEnergyCorrelationAtBestSlowShape": 0.432852,
+        "allRateResults": [
+          {
+            "candidateStartSeconds": 65.94,
+            "candidateEndSeconds": 100.201334,
+            "playbackRate": 1.1,
+            "gainInvariantSlowEnergyCorrelation": 0.502924
+          },
+          {
+            "candidateStartSeconds": 19.66,
+            "candidateEndSeconds": 52.052534,
+            "playbackRate": 1.04,
+            "gainInvariantSlowEnergyCorrelation": 0.497609
+          },
+          {
+            "candidateStartSeconds": 65.99,
+            "candidateEndSeconds": 99.6284,
+            "playbackRate": 1.08,
+            "gainInvariantSlowEnergyCorrelation": 0.475607
+          },
+          {
+            "candidateStartSeconds": 67.515,
+            "candidateEndSeconds": 100.530467,
+            "playbackRate": 1.06,
+            "gainInvariantSlowEnergyCorrelation": 0.475247
+          },
+          {
+            "candidateStartSeconds": 67.965,
+            "candidateEndSeconds": 100.100449,
+            "playbackRate": 1.031746,
+            "gainInvariantSlowEnergyCorrelation": 0.475124
+          },
+          {
+            "candidateStartSeconds": 68.185,
+            "candidateEndSeconds": 99.9546,
+            "playbackRate": 1.02,
+            "gainInvariantSlowEnergyCorrelation": 0.465853
+          },
+          {
+            "candidateStartSeconds": 70.935,
+            "candidateEndSeconds": 100.212867,
+            "playbackRate": 0.94,
+            "gainInvariantSlowEnergyCorrelation": 0.458399
+          },
+          {
+            "candidateStartSeconds": 19.71,
+            "candidateEndSeconds": 50.233734,
+            "playbackRate": 0.98,
+            "gainInvariantSlowEnergyCorrelation": 0.457453
+          },
+          {
+            "candidateStartSeconds": 71.345,
+            "candidateEndSeconds": 99.377,
+            "playbackRate": 0.9,
+            "gainInvariantSlowEnergyCorrelation": 0.449141
+          },
+          {
+            "candidateStartSeconds": 69.015,
+            "candidateEndSeconds": 100.161667,
+            "playbackRate": 1.0,
+            "gainInvariantSlowEnergyCorrelation": 0.448243
+          },
+          {
+            "candidateStartSeconds": 70.555,
+            "candidateEndSeconds": 100.4558,
+            "playbackRate": 0.96,
+            "gainInvariantSlowEnergyCorrelation": 0.443389
+          }
+        ],
+        "interpretation": "Energy-envelope shape only. Matching buildup/fade or pulse does not identify melody, genre or exact underlying audio."
+      }
+    }
+  },
+  "method": {
+    "scriptSha256": "660dbd26cea2bc166f786cdfbcaf422a06bfd06db11e2db086b40fec362465be",
+    "sampleRate": 48000,
+    "fftSamples": 2048,
+    "hopSeconds": 0.005,
+    "flux": "Exactly theAmeasure.py method: positive log1p(100*HannFFT/NFFT) differences averaged40Hz-12kHz, subtract61-hop movingbaseline, normalized autocorrelationlags50..200, refinedpeaks",
+    "energy": "Stereo20msRMS at5mshop, dBfloor-80, 505msmovingaverage; Pearsonsearch gain-invariant, all cleantrack offsets and playbackrate0.90..1.10",
+    "AReproducedOriginal130Candidate": true,
+    "allPcmDecodedInMemory": true
+  },
+  "identityConclusion": "Neither B nor C has an identifiable exact fingerprint. Do not promote an energy-shape or periodicity match into exact-track identity. Model-assisted sonic comparison remains unverified by direct hearing.",
+  "hearing": "NOT PERFORMED",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

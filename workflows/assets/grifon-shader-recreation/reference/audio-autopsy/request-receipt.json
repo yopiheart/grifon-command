@@ -1,0 +1,71 @@
+{
+  "specSha256": "cc4104c83b9a5d1b55acfdaea0b302afa2e08926095fafd9271d257143aa5d7c",
+  "promptSha256": "5bbb7925a1f60fad306811bee33d41b9ccd14f7633d4958fa7a4253a6d82603b",
+  "canonicalLoaderToolSha256": "04e3002f3583071de59b0050e5d83111b6f1a6acf176d2be0700fa0a51d93d30",
+  "inputs": [
+    {
+      "id": "A",
+      "file": "reference/source-audio.m4a",
+      "bytes": 505101,
+      "sha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae",
+      "seconds": 31.146667,
+      "mimeType": "audio/mp4",
+      "role": "Native reference AAC stream; private inspection only",
+      "measuredContainerSeconds": 31.147,
+      "codec": "aac"
+    },
+    {
+      "id": "B",
+      "file": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources/close-up.mp3",
+      "bytes": 3045294,
+      "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+      "seconds": 95.137959,
+      "mimeType": "audio/mpeg",
+      "role": "Existing registered clean Mixkit music; no old mixed master",
+      "measuredContainerSeconds": 95.137959,
+      "codec": "mp3"
+    },
+    {
+      "id": "C",
+      "file": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "seconds": 101.0155,
+      "mimeType": "audio/mpeg",
+      "role": "Existing registered clean Mixkit music; no automatic reuse decision",
+      "measuredContainerSeconds": 101.0155,
+      "codec": "mp3"
+    }
+  ],
+  "validatorSelfCheck": {
+    "acceptedUncertainNeither": true,
+    "rejectedInvalidFixtures": 9
+  },
+  "generationConfig": {
+    "responseMimeType": "application/json",
+    "temperature": 0.2,
+    "maxOutputTokens": 8192
+  },
+  "httpOptions": {
+    "retryOptions": {
+      "attempts": 1
+    }
+  },
+  "maximumAdditionalTokenCostUsd": 0.091728,
+  "model": "gemini-3.5-flash",
+  "contentsOrder": [
+    "Audio A",
+    "A fileData audio/mp4",
+    "Audio B",
+    "B fileData audio/mpeg",
+    "Audio C",
+    "C fileData audio/mpeg",
+    "Exact approved prompt bytes as UTF-8 text"
+  ],
+  "countTokens": 8019,
+  "worstCaseAdditionalUsd": 0.0857565,
+  "maximumCombinedEstimatedUsd": 0.125385,
+  "noExtraAnalysisInstructions": true,
+  "noVideoFrames": true,
+  "checkedAt": "2026-10-08T00:53:55.907Z"
+}
