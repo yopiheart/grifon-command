@@ -1,0 +1,323 @@
+{
+  "status": "PASS_STAGED_SOUND_SCOPE",
+  "recordedAt": "2026-10-08T12:04:10.136Z",
+  "stagedPaths": 59,
+  "stagedBytes": 116173255,
+  "checkedFiles": 59,
+  "privateInputsExcluded": true,
+  "originalFilmPlayerRuntimeAndPaidTuplesUnchanged": true,
+  "authoredWhitespace": {
+    "exitCode": 0
+  },
+  "fullStagedWhitespace": {
+    "exitCode": 2,
+    "diagnostics": [
+      "workflows/assets/grifon-shader-recreation/sound-v1/qa/build-final-output.txt:33: trailing whitespace.",
+      "+[plugin builtin:vite-reporter] ",
+      "workflows/assets/grifon-shader-recreation/sound-v1/qa/build-output.txt:38: trailing whitespace.",
+      "+[plugin builtin:vite-reporter] ",
+      "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-final-output.txt:9: new blank line at EOF.",
+      "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-isolated-output.txt:27: new blank line at EOF.",
+      "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-output.txt:83: new blank line at EOF.",
+      "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-untracked-output.txt:9: new blank line at EOF."
+    ],
+    "interpretation": "Captured output/review formatting retained byte-exact; authored source passes. No configured mandatory whitespace gate is bypassed, per prior independent delivery-scope audit."
+  },
+  "files": [
+    {
+      "file": ".gitattributes",
+      "bytes": 1827,
+      "sha256": "582a9745946ae4d3707b8f57d4fad3bd8dc0e7e259c036a9873aa247658adb75"
+    },
+    {
+      "file": "NOW.md",
+      "bytes": 4920,
+      "sha256": "6e5a50fb7206048e3aa8fe31d765fb729cb1662c69576df007a33781527a76d6"
+    },
+    {
+      "file": "artifacts/grifon-shader-sound-v1.html",
+      "bytes": 33746991,
+      "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-shader-sound-v1.mjs",
+      "bytes": 7928,
+      "sha256": "deef501d89a22c0841dca39d0815186bcc8527c4edd036aaa2059991eb8b8a4d"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/README.md",
+      "bytes": 12336,
+      "sha256": "ada6707e2faaf92099cc851897fe9f152d9e6171b348f7e7929e8dc083d8210b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+      "bytes": 25057741,
+      "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-delivery-v1.json",
+      "bytes": 10225,
+      "sha256": "6fd8b7f928a6cf806eb94513e5651a0253db3fd77f9028e6b49d4b08f9ff6fb9"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-1280x844-download.mp4",
+      "bytes": 25057741,
+      "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-1280x844-ended.png",
+      "bytes": 694928,
+      "sha256": "3364deda3d97f4595758c3902ea734bff18a795ee6fa723049462cb4f26b9462"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-1280x844-playing.png",
+      "bytes": 830629,
+      "sha256": "5a45672030a4cfbe4f80b193890b17b434adb61c4449ada9ea864919490de1df"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-1280x844-poster.png",
+      "bytes": 614886,
+      "sha256": "292907b46213bc1c8555512050ac80c74ccf1aef760002397983b04ef030fe2d"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-1280x844-scrub.png",
+      "bytes": 813319,
+      "sha256": "777b53c33ea4b536561544e4d055ec00c56327f202c55d43676da451550f2bbe"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-390x844-download.mp4",
+      "bytes": 25057741,
+      "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-390x844-ended.png",
+      "bytes": 296825,
+      "sha256": "81db3ee35c722839c79957956d0acad2669bad689efbacb84eb8065cb1eae843"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-390x844-playing.png",
+      "bytes": 341583,
+      "sha256": "d1cbf2e8c390235518ba44890ea6a99efac4414ef1fec74e2237b4552ad4f5d5"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-390x844-poster.png",
+      "bytes": 311856,
+      "sha256": "cf7cf078789907173feccf28701c89a365edc8445bb98bb454f84cb8bbc5c1fe"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-390x844-scrub.png",
+      "bytes": 327170,
+      "sha256": "2726f438c2887b094ae92d481e763d394d1bc48244b37378264d40ac26b32409"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-report.json",
+      "bytes": 41622,
+      "sha256": "bee46dcecfe3f8e92d6d257097822df726e6aac4a86b307017b283089135c1c2"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-visual-review.json",
+      "bytes": 3750,
+      "sha256": "d36db36ef5f74349106c284025e7a2afcc9aed701203a22ed5586f67249b66b1"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-technical-review-v1.json",
+      "bytes": 167937,
+      "sha256": "eee8bb0f2e346cdce2fe515e311ef8cbec9d50aed521bfc8467436fc60d4f8d1"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-v1-player-build.json",
+      "bytes": 1783,
+      "sha256": "ca326376f564aec497ab4cfb97024218efd3baac0334f96f2b35271db2c4361b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/letter-audit.md",
+      "bytes": 1420,
+      "sha256": "8cebf92b4e2288d1f468521806123c7aa1732853d4d3c1c83b8222b34b3b91e0"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/sound-player-review-v1.md",
+      "bytes": 4815,
+      "sha256": "fa4f84f2e2cd83722c28f03fd22a8912f064265f35bea019a3fc0702d82a311e"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/sound-source-credits-v1.md",
+      "bytes": 1823,
+      "sha256": "53205207a73dbef50ac1316443f2d6a616371f3223ed5f879f455ad485dddaee"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/sound-technical-review-v1.md",
+      "bytes": 3686,
+      "sha256": "4aef8491aaa79444a49e59b0f503c03eccb5d2d79f3b6b06b7bd81e97cb3f928"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/.gitignore",
+      "bytes": 6,
+      "sha256": "9b9916f4875735ae2863d12a01f3357e19147b2f58a9bb70fbae90177a3c26e5"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/README.md",
+      "bytes": 5056,
+      "sha256": "d7756482a4ecb073d8b7e3a48adfd2c23e3ef9c7ae2b1edd24f5eb042c5995e3"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs",
+      "bytes": 34660,
+      "sha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/build-sound.mjs",
+      "bytes": 32082,
+      "sha256": "6bca470284f15957c767cf9991de6a91cc70344d7e81f350c52ce403d5356c4a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/controls.json",
+      "bytes": 3111,
+      "sha256": "3fab7de99f435bf68f5641b1265ef662608ebe070e97720b6946dabd0d56f607"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/failure.json",
+      "bytes": 1099,
+      "sha256": "6ff7a1dfb50844673eba12a3e5e72fb85ad47294c3e4c5ad77d511ab0c4b8613"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/sound-spec.json",
+      "bytes": 9791,
+      "sha256": "e47ccaa4dd601b8d1108b137a06689290fe3849b1eecd2e317244d4b51686ce3"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/build-sound.mjs",
+      "bytes": 32902,
+      "sha256": "c9e5be67a77d84f4170a42d5a7965053b3f5233427a62a1698596774aa1173e6"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/controls-v2.json",
+      "bytes": 3111,
+      "sha256": "f8987f35fe90c1e814805bf0b62a1287329f90af95cbf4bee203f5ff2dff1a9a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/failure.json",
+      "bytes": 1221,
+      "sha256": "fca312e92e28d9503d51583b2acc64de156adb7ae3d1922a1d4f980f2ea4916a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/sound-spec.json",
+      "bytes": 10325,
+      "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/build-final-output.txt",
+      "bytes": 1794,
+      "sha256": "49fccc60b4af8b7aa7643dc3f324a249b0d0bac51cfdb684dd7b923f29a2fa5a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/build-final-result.json",
+      "bytes": 206,
+      "sha256": "9835fa3ccb608df2a4cca8fad5803a4e4a22d872ee581ae9c5de9167e7dbe870"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/build-output.txt",
+      "bytes": 1911,
+      "sha256": "51942f65053b948257189ca26404942352af5ec4248b9e16ddb85840a41915c9"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/build-result.json",
+      "bytes": 156,
+      "sha256": "32a28398adf21172d7f0196a0e8753468c4b3b6c1923d6db9b015684eaa8b4e5"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/checks.json",
+      "bytes": 8009,
+      "sha256": "fa07987cc9fdd35e532a891f117c242f12ebf3385ca50038fdb857f493d33cc5"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/commands.json",
+      "bytes": 14978,
+      "sha256": "5782bb47aeacd9a9d2dee747ac1fea188ebaf6ccaedc482542d074a5752b0701"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls-v2.json",
+      "bytes": 3111,
+      "sha256": "f8987f35fe90c1e814805bf0b62a1287329f90af95cbf4bee203f5ff2dff1a9a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls-v3.json",
+      "bytes": 3944,
+      "sha256": "4996caa915a5410add7f1a6e47337dffa77101c8f390320941ab9cc77c34674b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls.json",
+      "bytes": 3111,
+      "sha256": "3fab7de99f435bf68f5641b1265ef662608ebe070e97720b6946dabd0d56f607"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/cues.json",
+      "bytes": 685220,
+      "sha256": "7e654377d8b3adc059b705db148d2e591ccca546235bf17ae2f3f4f1a795197d"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/media.json",
+      "bytes": 1241,
+      "sha256": "450c44f53cd723c7f522ce34553ba191cd441b05ca0ace7a1ca2963573054bec"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/mix-verification.json",
+      "bytes": 12774,
+      "sha256": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/packets.json",
+      "bytes": 1863148,
+      "sha256": "2fa6e5cd920ead7fbc5e447a73f6992f0f562c077dfe025cd107332d244fecaa"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/sources.json",
+      "bytes": 7422,
+      "sha256": "968f52959c8df8917ed8115ef97965bb48a0d4ccda7ba9b5d87beb90611b913a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-final-output.txt",
+      "bytes": 300,
+      "sha256": "2ef8e4bc463d0409a0aa2eb03dce61d4d3b81c2bc549417feb76e3e29fa19769"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-final-result.json",
+      "bytes": 238,
+      "sha256": "ca4132edcf40e1ee80bd45fed0b6696f6b9f92ed735f124ef7681b9466cce021"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-isolated-output.txt",
+      "bytes": 1198,
+      "sha256": "508cc99f60e3bbf7c254ed1f1594e68280f59e4e6003cc37ff3aac8952409618"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-isolated-result.json",
+      "bytes": 189,
+      "sha256": "817ad006a35eb51a175beaddad0b5493b58fdb10e7459e630e90952191c65754"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-output.txt",
+      "bytes": 4341,
+      "sha256": "6e009fb246d5dc1cf4de9cd43728ac42894718ac9090750c05a4fd63502a4991"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-result.json",
+      "bytes": 157,
+      "sha256": "999a6b2efbdc1c11692e2da3a8c221c0a2440fe556e858d35eb2a849d23f2eb0"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-untracked-output.txt",
+      "bytes": 270,
+      "sha256": "e9f6a23f5f57519f2c23f61744657a785dadd1b6cb659167adc222bb90188234"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/vitest-untracked-result.json",
+      "bytes": 366,
+      "sha256": "ab2af3d0346d375e8760cf4f3d5a268515c43c0109f62201e85606c3262a05e4"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/sound-spec.json",
+      "bytes": 10325,
+      "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+    }
+  ]
+}

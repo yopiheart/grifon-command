@@ -31,3 +31,5 @@ artifacts/grifon-shader-recreation.html text eol=lf
 tools/artifacts/build-grifon-shader-recreation.mjs text eol=lf
 tools/artifacts/grifon-shader-recreation.tpl.html text eol=lf
 tools/artifacts/_gates.mjs text eol=lf
+artifacts/grifon-shader-sound-v1.html text eol=lf
+tools/artifacts/build-grifon-shader-sound-v1.mjs text eol=lf

@@ -1,0 +1,1561 @@
+{
+  "scope": "Actual offline standalone player UI smoke of frozen current candidate; no full-film visual acceptance and no hearing claim",
+  "generatedAt": "2026-10-08T11:57:40.606Z",
+  "artifact": {
+    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\artifacts\\grifon-shader-sound-v1.html",
+    "bytes": 33746991,
+    "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+  },
+  "film": {
+    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4",
+    "bytes": 25057741,
+    "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+  },
+  "viewports": [
+    {
+      "label": "390x844",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1
+      },
+      "offline": true,
+      "states": {
+        "ready": {
+          "currentTime": 0,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0,
+          "scrubMax": 31.146,
+          "status": "Ready. Tap Play to review the film."
+        },
+        "playing": {
+          "currentTime": 0.261836,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.133466666666667,
+          "scrubMax": 31.146,
+          "status": "Playing with the new sound mix."
+        },
+        "pausedImmediate": {
+          "currentTime": 0.398399,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.367033333333333,
+          "scrubMax": 31.146,
+          "status": "Paused."
+        },
+        "pausedSettled": {
+          "currentTime": 0.398399,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.4004,
+          "scrubMax": 31.146,
+          "status": "Paused."
+        },
+        "muted": {
+          "currentTime": 0.398399,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": true,
+          "playText": "Play muted",
+          "audioText": "Enable sound",
+          "audioPressed": "true",
+          "scrubValue": 0.4004,
+          "scrubMax": 31.146,
+          "status": "Sound muted."
+        },
+        "unmutedPlaying": {
+          "currentTime": 0.704624,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.667333333333333,
+          "scrubMax": 31.146,
+          "status": "New sound mix enabled."
+        },
+        "scrubSettled": {
+          "currentTime": 17.550866,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 17.5508666666667,
+          "scrubMax": 31.146,
+          "status": "Paused."
+        },
+        "restart": {
+          "currentTime": 0.16207,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0,
+          "scrubMax": 31.146,
+          "status": "Playing with the new sound mix."
+        },
+        "naturalEnd": {
+          "currentTime": 31.146,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": true,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 31.1311,
+          "scrubMax": 31.146,
+          "status": "Finished. Replay or download the film."
+        },
+        "replay": {
+          "currentTime": 0.165346,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0,
+          "scrubMax": 31.146,
+          "status": "Playing with the new sound mix."
+        },
+        "final": {
+          "currentTime": 0.200154,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.2002,
+          "scrubMax": 31.146,
+          "status": "Downloading the private review MP4."
+        }
+      },
+      "screenshots": [
+        {
+          "phase": "poster",
+          "file": "player-mobile-390x844-poster.png",
+          "actualViewport": {
+            "width": 390,
+            "height": 844
+          }
+        },
+        {
+          "phase": "playing",
+          "file": "player-mobile-390x844-playing.png",
+          "actualViewport": {
+            "width": 390,
+            "height": 844
+          }
+        },
+        {
+          "phase": "scrub",
+          "file": "player-mobile-390x844-scrub.png",
+          "actualViewport": {
+            "width": 390,
+            "height": 844
+          }
+        },
+        {
+          "phase": "ended",
+          "file": "player-mobile-390x844-ended.png",
+          "actualViewport": {
+            "width": 390,
+            "height": 844
+          }
+        }
+      ],
+      "geometry": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "bodyWidth": 390,
+        "documentWidth": 390,
+        "controls": [
+          {
+            "id": "play",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 267.375,
+            "height": 46,
+            "x": 16,
+            "y": 511.796875,
+            "disabled": false
+          }
+        ]
+      },
+      "poster": {
+        "loaded": true,
+        "width": 1920,
+        "height": 1080,
+        "inline": true,
+        "filmInline": true
+      },
+      "naturalPlayStart": "2026-10-08T11:57:43.843Z",
+      "naturalPlayEnd": "2026-10-08T11:58:15.038Z",
+      "download": {
+        "suggestedFilename": "grifon-recreation-landscape-sound-v1.mp4",
+        "failure": null,
+        "file": "player-mobile-390x844-download.mp4",
+        "bytes": 25057741,
+        "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+      },
+      "geometryAfter": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "bodyWidth": 390,
+        "documentWidth": 390,
+        "controls": [
+          {
+            "id": "play",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 267.375,
+            "height": 46,
+            "x": 16,
+            "y": 511.796875,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "1280x844",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "deviceScaleFactor": 1
+      },
+      "offline": true,
+      "states": {
+        "ready": {
+          "currentTime": 0,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0,
+          "scrubMax": 31.146,
+          "status": "Ready. Tap Play to review the film."
+        },
+        "playing": {
+          "currentTime": 0.269213,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.166833333333333,
+          "scrubMax": 31.146,
+          "status": "Playing with the new sound mix."
+        },
+        "pausedImmediate": {
+          "currentTime": 0.53673,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.433766666666667,
+          "scrubMax": 31.146,
+          "status": "Paused."
+        },
+        "pausedSettled": {
+          "currentTime": 0.53673,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.533866666666667,
+          "scrubMax": 31.146,
+          "status": "Paused."
+        },
+        "muted": {
+          "currentTime": 0.53673,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": true,
+          "playText": "Play muted",
+          "audioText": "Enable sound",
+          "audioPressed": "true",
+          "scrubValue": 0.533866666666667,
+          "scrubMax": 31.146,
+          "status": "Sound muted."
+        },
+        "unmutedPlaying": {
+          "currentTime": 0.697949,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.533866666666667,
+          "scrubMax": 31.146,
+          "status": "New sound mix enabled."
+        },
+        "scrubSettled": {
+          "currentTime": 17.484133,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 17.4841333333333,
+          "scrubMax": 31.146,
+          "status": "Paused."
+        },
+        "restart": {
+          "currentTime": 0.163446,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0,
+          "scrubMax": 31.146,
+          "status": "Playing with the new sound mix."
+        },
+        "naturalEnd": {
+          "currentTime": 31.146,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": true,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 31.1311,
+          "scrubMax": 31.146,
+          "status": "Finished. Replay or download the film."
+        },
+        "replay": {
+          "currentTime": 0.162631,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": false,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Pause",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0,
+          "scrubMax": 31.146,
+          "status": "Playing with the new sound mix."
+        },
+        "final": {
+          "currentTime": 0.198322,
+          "duration": 31.146,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "readyState": 4,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "muted": false,
+          "playText": "Play with sound",
+          "audioText": "Mute sound",
+          "audioPressed": "false",
+          "scrubValue": 0.2002,
+          "scrubMax": 31.146,
+          "status": "Downloading the private review MP4."
+        }
+      },
+      "screenshots": [
+        {
+          "phase": "poster",
+          "file": "player-mobile-1280x844-poster.png",
+          "actualViewport": {
+            "width": 1280,
+            "height": 844
+          }
+        },
+        {
+          "phase": "playing",
+          "file": "player-mobile-1280x844-playing.png",
+          "actualViewport": {
+            "width": 1280,
+            "height": 844
+          }
+        },
+        {
+          "phase": "scrub",
+          "file": "player-mobile-1280x844-scrub.png",
+          "actualViewport": {
+            "width": 1280,
+            "height": 844
+          }
+        },
+        {
+          "phase": "ended",
+          "file": "player-mobile-1280x844-ended.png",
+          "actualViewport": {
+            "width": 1280,
+            "height": 844
+          }
+        }
+      ],
+      "geometry": {
+        "innerWidth": 1280,
+        "innerHeight": 844,
+        "bodyWidth": 1280,
+        "documentWidth": 1280,
+        "controls": [
+          {
+            "id": "play",
+            "width": 138.59375,
+            "height": 46,
+            "x": 104,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 82.84375,
+            "height": 46,
+            "x": 252.59375,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 114.546875,
+            "height": 46,
+            "x": 345.4375,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 135.796875,
+            "height": 46,
+            "x": 469.984375,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 970.21875,
+            "height": 46,
+            "x": 106,
+            "y": 879.140625,
+            "disabled": false
+          }
+        ]
+      },
+      "poster": {
+        "loaded": true,
+        "width": 1920,
+        "height": 1080,
+        "inline": true,
+        "filmInline": true
+      },
+      "naturalPlayStart": "2026-10-08T11:58:20.524Z",
+      "naturalPlayEnd": "2026-10-08T11:58:51.714Z",
+      "download": {
+        "suggestedFilename": "grifon-recreation-landscape-sound-v1.mp4",
+        "failure": null,
+        "file": "player-mobile-1280x844-download.mp4",
+        "bytes": 25057741,
+        "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+      },
+      "geometryAfter": {
+        "innerWidth": 1280,
+        "innerHeight": 844,
+        "bodyWidth": 1280,
+        "documentWidth": 1280,
+        "controls": [
+          {
+            "id": "play",
+            "width": 138.59375,
+            "height": 46,
+            "x": 104,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 82.84375,
+            "height": 46,
+            "x": 252.59375,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 114.546875,
+            "height": 46,
+            "x": 345.4375,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 135.796875,
+            "height": 46,
+            "x": 469.984375,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 970.21875,
+            "height": 46,
+            "x": 106,
+            "y": 509.140625,
+            "disabled": false
+          }
+        ]
+      }
+    }
+  ],
+  "console": [],
+  "externalRequests": [],
+  "allowedRequests": [
+    {
+      "viewport": "390x844",
+      "url": "file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/artifacts/grifon-shader-sound-v1.html"
+    },
+    {
+      "viewport": "1280x844",
+      "url": "file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/artifacts/grifon-shader-sound-v1.html"
+    }
+  ],
+  "networkFailures": [],
+  "helperServersStarted": 0,
+  "checks": [
+    {
+      "name": "390x844: no horizontal body/document overflow",
+      "pass": true,
+      "evidence": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "bodyWidth": 390,
+        "documentWidth": 390,
+        "controls": [
+          {
+            "id": "play",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 267.375,
+            "height": 46,
+            "x": 16,
+            "y": 511.796875,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "390x844: every control target is at least44px",
+      "pass": true,
+      "evidence": [
+        {
+          "id": "play",
+          "width": 177,
+          "height": 46,
+          "x": 14,
+          "y": 397.796875,
+          "disabled": false
+        },
+        {
+          "id": "restart",
+          "width": 177,
+          "height": 46,
+          "x": 199,
+          "y": 397.796875,
+          "disabled": false
+        },
+        {
+          "id": "audio",
+          "width": 177,
+          "height": 46,
+          "x": 14,
+          "y": 451.796875,
+          "disabled": false
+        },
+        {
+          "id": "download",
+          "width": 177,
+          "height": 46,
+          "x": 199,
+          "y": 451.796875,
+          "disabled": false
+        },
+        {
+          "id": "scrub",
+          "width": 267.375,
+          "height": 46,
+          "x": 16,
+          "y": 511.796875,
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "name": "390x844: inline film loads paused with correct dimensions",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0,
+        "scrubMax": 31.146,
+        "status": "Ready. Tap Play to review the film."
+      }
+    },
+    {
+      "name": "390x844: inline poster decodes",
+      "pass": true,
+      "evidence": {
+        "loaded": true,
+        "width": 1920,
+        "height": 1080,
+        "inline": true,
+        "filmInline": true
+      }
+    },
+    {
+      "name": "390x844: Play starts actual media",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.261836,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0.133466666666667,
+        "scrubMax": 31.146,
+        "status": "Playing with the new sound mix."
+      }
+    },
+    {
+      "name": "390x844: Pause holds media clock",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.398399,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0.4004,
+        "scrubMax": 31.146,
+        "status": "Paused."
+      }
+    },
+    {
+      "name": "390x844: Mute state and labels update",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.398399,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": true,
+        "playText": "Play muted",
+        "audioText": "Enable sound",
+        "audioPressed": "true",
+        "scrubValue": 0.4004,
+        "scrubMax": 31.146,
+        "status": "Sound muted."
+      }
+    },
+    {
+      "name": "390x844: Unmute preserves playback and reports state",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.704624,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0.667333333333333,
+        "scrubMax": 31.146,
+        "status": "New sound mix enabled."
+      }
+    },
+    {
+      "name": "390x844: Timeline scrubs and pauses at requested value",
+      "pass": true,
+      "evidence": {
+        "currentTime": 17.550866,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 17.5508666666667,
+        "scrubMax": 31.146,
+        "status": "Paused."
+      }
+    },
+    {
+      "name": "390x844: Restart resets and plays",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.16207,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0,
+        "scrubMax": 31.146,
+        "status": "Playing with the new sound mix."
+      }
+    },
+    {
+      "name": "390x844: Natural completion reaches final container duration",
+      "pass": true,
+      "evidence": {
+        "currentTime": 31.146,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": true,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 31.1311,
+        "scrubMax": 31.146,
+        "status": "Finished. Replay or download the film."
+      }
+    },
+    {
+      "name": "390x844: Play after natural end replays from start",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.165346,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0,
+        "scrubMax": 31.146,
+        "status": "Playing with the new sound mix."
+      }
+    },
+    {
+      "name": "390x844: Actual browser download matches frozen MP4 bytes",
+      "pass": true,
+      "evidence": {
+        "suggestedFilename": "grifon-recreation-landscape-sound-v1.mp4",
+        "failure": null,
+        "file": "player-mobile-390x844-download.mp4",
+        "bytes": 25057741,
+        "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+      }
+    },
+    {
+      "name": "390x844: no horizontal body/document overflow",
+      "pass": true,
+      "evidence": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "bodyWidth": 390,
+        "documentWidth": 390,
+        "controls": [
+          {
+            "id": "play",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 397.796875,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 177,
+            "height": 46,
+            "x": 14,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 177,
+            "height": 46,
+            "x": 199,
+            "y": 451.796875,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 267.375,
+            "height": 46,
+            "x": 16,
+            "y": 511.796875,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "390x844: every control target is at least44px",
+      "pass": true,
+      "evidence": [
+        {
+          "id": "play",
+          "width": 177,
+          "height": 46,
+          "x": 14,
+          "y": 397.796875,
+          "disabled": false
+        },
+        {
+          "id": "restart",
+          "width": 177,
+          "height": 46,
+          "x": 199,
+          "y": 397.796875,
+          "disabled": false
+        },
+        {
+          "id": "audio",
+          "width": 177,
+          "height": 46,
+          "x": 14,
+          "y": 451.796875,
+          "disabled": false
+        },
+        {
+          "id": "download",
+          "width": 177,
+          "height": 46,
+          "x": 199,
+          "y": 451.796875,
+          "disabled": false
+        },
+        {
+          "id": "scrub",
+          "width": 267.375,
+          "height": 46,
+          "x": 16,
+          "y": 511.796875,
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "name": "1280x844: no horizontal body/document overflow",
+      "pass": true,
+      "evidence": {
+        "innerWidth": 1280,
+        "innerHeight": 844,
+        "bodyWidth": 1280,
+        "documentWidth": 1280,
+        "controls": [
+          {
+            "id": "play",
+            "width": 138.59375,
+            "height": 46,
+            "x": 104,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 82.84375,
+            "height": 46,
+            "x": 252.59375,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 114.546875,
+            "height": 46,
+            "x": 345.4375,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 135.796875,
+            "height": 46,
+            "x": 469.984375,
+            "y": 819.140625,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 970.21875,
+            "height": 46,
+            "x": 106,
+            "y": 879.140625,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "1280x844: every control target is at least44px",
+      "pass": true,
+      "evidence": [
+        {
+          "id": "play",
+          "width": 138.59375,
+          "height": 46,
+          "x": 104,
+          "y": 819.140625,
+          "disabled": false
+        },
+        {
+          "id": "restart",
+          "width": 82.84375,
+          "height": 46,
+          "x": 252.59375,
+          "y": 819.140625,
+          "disabled": false
+        },
+        {
+          "id": "audio",
+          "width": 114.546875,
+          "height": 46,
+          "x": 345.4375,
+          "y": 819.140625,
+          "disabled": false
+        },
+        {
+          "id": "download",
+          "width": 135.796875,
+          "height": 46,
+          "x": 469.984375,
+          "y": 819.140625,
+          "disabled": false
+        },
+        {
+          "id": "scrub",
+          "width": 970.21875,
+          "height": 46,
+          "x": 106,
+          "y": 879.140625,
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "name": "1280x844: inline film loads paused with correct dimensions",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0,
+        "scrubMax": 31.146,
+        "status": "Ready. Tap Play to review the film."
+      }
+    },
+    {
+      "name": "1280x844: inline poster decodes",
+      "pass": true,
+      "evidence": {
+        "loaded": true,
+        "width": 1920,
+        "height": 1080,
+        "inline": true,
+        "filmInline": true
+      }
+    },
+    {
+      "name": "1280x844: Play starts actual media",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.269213,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0.166833333333333,
+        "scrubMax": 31.146,
+        "status": "Playing with the new sound mix."
+      }
+    },
+    {
+      "name": "1280x844: Pause holds media clock",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.53673,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0.533866666666667,
+        "scrubMax": 31.146,
+        "status": "Paused."
+      }
+    },
+    {
+      "name": "1280x844: Mute state and labels update",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.53673,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": true,
+        "playText": "Play muted",
+        "audioText": "Enable sound",
+        "audioPressed": "true",
+        "scrubValue": 0.533866666666667,
+        "scrubMax": 31.146,
+        "status": "Sound muted."
+      }
+    },
+    {
+      "name": "1280x844: Unmute preserves playback and reports state",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.697949,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0.533866666666667,
+        "scrubMax": 31.146,
+        "status": "New sound mix enabled."
+      }
+    },
+    {
+      "name": "1280x844: Timeline scrubs and pauses at requested value",
+      "pass": true,
+      "evidence": {
+        "currentTime": 17.484133,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 17.4841333333333,
+        "scrubMax": 31.146,
+        "status": "Paused."
+      }
+    },
+    {
+      "name": "1280x844: Restart resets and plays",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.163446,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0,
+        "scrubMax": 31.146,
+        "status": "Playing with the new sound mix."
+      }
+    },
+    {
+      "name": "1280x844: Natural completion reaches final container duration",
+      "pass": true,
+      "evidence": {
+        "currentTime": 31.146,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": true,
+        "seeking": false,
+        "ended": true,
+        "muted": false,
+        "playText": "Play with sound",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 31.1311,
+        "scrubMax": 31.146,
+        "status": "Finished. Replay or download the film."
+      }
+    },
+    {
+      "name": "1280x844: Play after natural end replays from start",
+      "pass": true,
+      "evidence": {
+        "currentTime": 0.162631,
+        "duration": 31.146,
+        "videoWidth": 1920,
+        "videoHeight": 1080,
+        "readyState": 4,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "muted": false,
+        "playText": "Pause",
+        "audioText": "Mute sound",
+        "audioPressed": "false",
+        "scrubValue": 0,
+        "scrubMax": 31.146,
+        "status": "Playing with the new sound mix."
+      }
+    },
+    {
+      "name": "1280x844: Actual browser download matches frozen MP4 bytes",
+      "pass": true,
+      "evidence": {
+        "suggestedFilename": "grifon-recreation-landscape-sound-v1.mp4",
+        "failure": null,
+        "file": "player-mobile-1280x844-download.mp4",
+        "bytes": 25057741,
+        "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+      }
+    },
+    {
+      "name": "1280x844: no horizontal body/document overflow",
+      "pass": true,
+      "evidence": {
+        "innerWidth": 1280,
+        "innerHeight": 844,
+        "bodyWidth": 1280,
+        "documentWidth": 1280,
+        "controls": [
+          {
+            "id": "play",
+            "width": 138.59375,
+            "height": 46,
+            "x": 104,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "restart",
+            "width": 82.84375,
+            "height": 46,
+            "x": 252.59375,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "audio",
+            "width": 114.546875,
+            "height": 46,
+            "x": 345.4375,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "download",
+            "width": 135.796875,
+            "height": 46,
+            "x": 469.984375,
+            "y": 449.140625,
+            "disabled": false
+          },
+          {
+            "id": "scrub",
+            "width": 970.21875,
+            "height": 46,
+            "x": 106,
+            "y": 509.140625,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "1280x844: every control target is at least44px",
+      "pass": true,
+      "evidence": [
+        {
+          "id": "play",
+          "width": 138.59375,
+          "height": 46,
+          "x": 104,
+          "y": 449.140625,
+          "disabled": false
+        },
+        {
+          "id": "restart",
+          "width": 82.84375,
+          "height": 46,
+          "x": 252.59375,
+          "y": 449.140625,
+          "disabled": false
+        },
+        {
+          "id": "audio",
+          "width": 114.546875,
+          "height": 46,
+          "x": 345.4375,
+          "y": 449.140625,
+          "disabled": false
+        },
+        {
+          "id": "download",
+          "width": 135.796875,
+          "height": 46,
+          "x": 469.984375,
+          "y": 449.140625,
+          "disabled": false
+        },
+        {
+          "id": "scrub",
+          "width": 970.21875,
+          "height": 46,
+          "x": 106,
+          "y": 509.140625,
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "name": "Zero external requests while browser offline",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "Zero browser console/page errors",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "Zero observed failed network requests",
+      "pass": true,
+      "evidence": []
+    }
+  ],
+  "browserVersion": "149.0.7827.55",
+  "finalArtifact": {
+    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\artifacts\\grifon-shader-sound-v1.html",
+    "bytes": 33746991,
+    "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+  },
+  "finalFilm": {
+    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4",
+    "bytes": 25057741,
+    "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+  },
+  "status": "PASS_TECHNICAL_PLAYER_CURRENT_CANDIDATE"
+}

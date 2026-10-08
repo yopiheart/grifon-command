@@ -155,6 +155,37 @@ separate byte/CRC receipts under `reference/`. Older exports remain preserved.
 
 ## Standalone delivery
 
+Neil approved the visuals at commit `94cef688` and requested a changed music
+bed with effects for zooms, transitions and UI actions. The separate `sound-v1/`
+recipe and builder author that edit without changing the accepted video packets.
+The new MP4/player use versioned names, retaining the original music-only mix,
+visual gates and offline player. `reference/letter-audit.md` explains the
+decorative G/R/a/C material demonstrations; they are not an acronym.
+
+```powershell
+node workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs --validate
+node workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs --build
+node tools/artifacts/build-grifon-shader-sound-v1.mjs
+node tools/artifacts/build-grifon-shader-sound-v1.mjs --check
+```
+
+These commands use the existing local stock recordings and installed media
+tools. Build commands refuse existing outputs; use `--validate` and `--check`
+to verify this frozen version. Source credits and permitted-use references are in
+`reference/sound-source-credits-v1.md`. Raw samples and stems remain private.
+Independent technical audio and offline player checks are recorded separately;
+meters and playback controls do not substitute for the user's listening judgment.
+
+The completed sound version passes 17 independent technical checks and all 33
+offline phone/desktop player assertions, including natural playback and exact
+downloads. All eight player screenshots were inspected. Encoded audio measures
+-16.33 LUFS / -2.18 dBTP without clipping; 47 authored events use 56 layers.
+`qa/sound-delivery-v1.json` binds the final movie, player, original visual gate,
+source recipe and independent reviews. Build and the unchanged default suite
+pass with 1,432 tests. Perceived musical fit remains for the user's listening
+review. The reports retain earlier failures and the unavailable supplemental
+in-app browser check without changing the completed offline-player evidence.
+
 `tools/artifacts/build-grifon-shader-recreation.mjs` builds
 `artifacts/grifon-shader-recreation.html` from the finished Grifon landscape MP4,
 its native poster and bound QA/audio recipe. `--check` requires byte-identical
