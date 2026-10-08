@@ -6,11 +6,11 @@ One job: brand/advertiser in -> ranked shortlist of Winning Ads out (JSON).
 The `ad-recon` skill (.claude/skills/ad-recon/) orchestrates the handoff:
 shortlist -> Neil one-click downloads the MP4s -> `viral-autopsy` dissects them.
 
-"Winning" = LONGEVITY, not impressions. Advertisers kill losers fast, so an ad
-still ACTIVE after many days is profit-proven. Thresholds: >=30d = winner,
->=60-90d = scaled. (The Ad Library has no "sort by days running", so the pinned
-URL sorts by total_impressions as the best-available proxy; THIS tool then
-re-ranks the scraped ads by days_active, which is the signal we actually trust.)
+The shortlist contains research candidates, not profit-proven winners. Age is
+elapsed time from the displayed start date to the recorded observation; it
+does not establish continuous delivery, spend, sales, or profitability. Source
+filter membership never supplies a missing date or increases an ad's age.
+Reviewed collection metadata is separate from the unchanged scraper schema.
 
 Key lesson baked in (2026-06-26 manual slice): search the ADVERTISER, not a
 keyword. `q=im8` returns ~3,400 contaminated results; pinning the page
@@ -31,8 +31,8 @@ Usage:
   --brand     brand name; used only for labelling/slug (resolution to a page-id
               is not automated yet -- paste --page-id from the browser, 5s)
   --country   Ad Library viewing-audience country (default: US; 'ALL' is flaky)
-  --top       how many Winning Ads to keep (default: 5)
-  --min-days  minimum days-active to count as a winner (default: 30)
+  --top       how many research candidates to keep (default: 5)
+  --min-days  minimum displayed age for the shortlist (default: 30)
   --print-url print the pinned URL and exit
   --from-json rank a pre-scraped ad-records JSON instead of scraping
 
@@ -40,7 +40,7 @@ Output: shortlist JSON on stdout, also written to
   .tmp/ad-recon/<brand-or-pageid>-<date>.json
 A human-readable ranked table is printed to stderr.
 Exit codes: 0 ok, 1 usage/input error, 2 scrape/API failure,
-            3 NO_WINNERS (nothing cleared --min-days, or the scrape was blocked).
+            3 NO_CANDIDATES (no eligible references in the collected subset).
 
 Secrets: FIRECRAWL_API_KEY from environment or repo-root .env (never hardcoded).
 firecrawl-py self-installs via pip (the cafe-PC defreezer wipes site-packages).
@@ -55,6 +55,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUT_DIR = REPO_ROOT / ".tmp" / "ad-recon"
@@ -137,27 +138,23 @@ def slugify(text: str) -> str:
 
 def build_pinned_url(page_id: str, country: str, media_type: str,
                      started_before: str = "") -> str:
-    # Advertiser-pinned (search_type=page), sorted by impressions desc as the
-    # best-available high-performer proxy; we re-rank by days_active after.
+    # Advertiser-pinned discovery, using Meta's requested display order.
+    # Neither this order nor an impression range proves performance.
     url = (
         f"{AD_LIBRARY_BASE}?active_status=active&ad_type=all&country={country}"
         f"&is_targeted_country=false&media_type={media_type}&search_type=page"
         f"&sort_data[direction]=desc&sort_data[mode]=total_impressions"
         f"&view_all_page_id={page_id}"
     )
-    # Longevity gate at the SOURCE (2026-06-26 live finding): the Ad Library
-    # "Impressions by date: on or before <TO>" filter only returns ads already
-    # running by that date. Set TO = today - min_days, leave FROM at the floor,
-    # and even ads whose displayed "Started running" date reset on edit still
-    # surface here iff they are provably >= min_days old. Far cleaner than
-    # trusting the (resettable) displayed date alone.
+    # This filter narrows discovery only. Its membership does not establish an
+    # individual ad's age; ranking requires a displayed date and observation.
     if started_before:
         url += (f"&start_date[min]={AD_LIBRARY_DATE_FLOOR}"
                 f"&start_date[max]={started_before}")
     return url
 
 
-def parse_days_active(started_running: str):
+def parse_days_active(started_running: str, observed_on=None):
     """'Started running on Jun 9, 2026' / 'Jun 9, 2026' -> days since, or None."""
     if not started_running:
         return None
@@ -165,7 +162,7 @@ def parse_days_active(started_running: str):
     for fmt in ("%b %d, %Y", "%B %d, %Y", "%d %b %Y", "%d %B %Y", "%Y-%m-%d"):
         try:
             d = datetime.datetime.strptime(text, fmt).date()
-            return (datetime.date.today() - d).days
+            return ((observed_on or datetime.date.today()) - d).days
         except ValueError:
             continue
     return None
@@ -204,49 +201,156 @@ def scrape_via_firecrawl(url: str, api_key: str):
     return data
 
 
-def rank(ads, top, min_days, trust_membership=False):
-    enriched, skipped_low_imp, skipped_no_date = [], 0, 0
-    for ad in ads or []:
-        if ad.get("low_impression_badge"):
-            skipped_low_imp += 1
+def numeric_id(value):
+    return isinstance(value, str) and re.fullmatch(r"[1-9][0-9]{0,31}", value) is not None
+
+
+def library_query(value):
+    """Validate a Meta source URL without fetching or certifying its contents."""
+    if not isinstance(value, str):
+        raise ValueError("source URL must be a string")
+    url = urlparse(value)
+    if (url.scheme != "https" or url.hostname not in ("facebook.com", "www.facebook.com")
+            or url.username or url.password or url.port or url.fragment
+            or url.path.rstrip("/") != "/ads/library"):
+        raise ValueError("source must be an HTTPS Meta Ad Library URL")
+    query = parse_qs(url.query, keep_blank_values=True)
+    if any(len(values) != 1 for values in query.values()):
+        raise ValueError("ambiguous duplicate source URL parameters")
+    return {key: values[0] for key, values in query.items()}
+
+
+def observation_time(value):
+    if not isinstance(value, str):
+        raise ValueError("observed_at must be an ISO timestamp with timezone")
+    try:
+        timestamp = datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError("invalid observed_at timestamp") from exc
+    if timestamp.tzinfo is None:
+        raise ValueError("observed_at requires a timezone")
+    if timestamp > datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=5):
+        raise ValueError("observed_at cannot be in the future")
+    return timestamp
+
+
+def reviewed_collection(value, requested_page_id=None):
+    """Operator-recorded provenance; validation does not verify the operator."""
+    if value is None:
+        return {"status": "unknown", "limitations": ["No reviewed collection metadata."]}
+    if not isinstance(value, dict):
+        raise ValueError("collection must be an object")
+    status = value.get("status", "unknown")
+    if status not in ("complete", "partial", "blocked", "unknown"):
+        raise ValueError("invalid collection status")
+    page_id = value.get("page_id")
+    if not numeric_id(page_id) or (requested_page_id and requested_page_id != page_id):
+        raise ValueError("collection Page ID missing, invalid, or different from --page-id")
+    query = library_query(value.get("source_url"))
+    if query.get("search_type") != "page" or query.get("view_all_page_id") != page_id:
+        raise ValueError("collection source must be pinned to the reviewed Page ID")
+    timestamp = observation_time(value.get("observed_at"))
+    advertiser = value.get("advertiser", "")
+    method = value.get("method", "")
+    limitations = value.get("limitations", [])
+    if not isinstance(advertiser, str) or not advertiser.strip() or len(advertiser) > 200:
+        raise ValueError("reviewed advertiser name is required")
+    if not isinstance(method, str) or not method.strip() or len(method) > 1000:
+        raise ValueError("collection method is required")
+    if (not isinstance(limitations, list) or len(limitations) > 30
+            or any(not isinstance(x, str) or not x.strip() or len(x) > 2000 for x in limitations)):
+        raise ValueError("invalid collection limitations")
+    identity_evidence = value.get("identity_evidence", "")
+    if status in ("complete", "partial"):
+        identity_query = library_query(value.get("identity_source_url"))
+        if identity_query.get("view_all_page_id") != page_id:
+            raise ValueError("identity source must identify the same Page")
+        if value.get("identity_reviewed") is not True or not isinstance(identity_evidence, str) or not identity_evidence.strip():
+            raise ValueError("eligible collections need a recorded identity review")
+    completion = value.get("completion_evidence", "")
+    if status == "complete" and (not isinstance(completion, str) or not completion.strip()):
+        raise ValueError("complete collection requires recorded termination/coverage evidence")
+    if status != "complete" and not limitations:
+        raise ValueError("incomplete collection requires limitations")
+    return {"status": status, "page_id": page_id, "advertiser": advertiser.strip(),
+            "observed_at": timestamp.isoformat(), "source_url": value["source_url"],
+            "identity_source_url": value.get("identity_source_url", ""),
+            "identity_reviewed": value.get("identity_reviewed") is True,
+            "identity_evidence": identity_evidence, "method": method,
+            "limitations": limitations, "completion_evidence": completion}
+
+
+def rank(ads, top, min_days, trust_membership=False, collection=None):
+    # Kept for older callers, deliberately ignored: URL membership is not age.
+    del trust_membership
+    if not 1 <= top <= 100 or not 0 <= min_days <= 3650:
+        raise ValueError("top must be 1..100 and min_days must be 0..3650")
+    if not isinstance(ads, list) or len(ads) > 10000:
+        raise ValueError("ads must be a bounded list")
+    collection = reviewed_collection(collection)
+    eligible_collection = collection["status"] in ("complete", "partial")
+    observed_on = observation_time(collection["observed_at"]).date() if "observed_at" in collection else None
+    counts = {}
+    for ad in ads:
+        if isinstance(ad, dict) and numeric_id(ad.get("library_id")):
+            key = ad["library_id"]
+            counts[key] = counts.get(key, 0) + 1
+    enriched, excluded = [], []
+    for index, ad in enumerate(ads):
+        reasons = []
+        if not isinstance(ad, dict):
+            excluded.append({"index": index, "library_id": "", "reasons": ["invalid_record"]})
             continue
-        days = parse_days_active(ad.get("started_running", ""))
-        if trust_membership:
-            # The server-side "on or before" date filter already proved this ad
-            # has run >= min_days; the displayed date may read younger (resets on
-            # edit), so floor it to min_days rather than drop a real winner.
-            if days is None or days < min_days:
-                days = min_days
-        else:
-            if days is None:
-                skipped_no_date += 1
-                continue
-            if days < min_days:
-                continue
-        permalink = (
-            f"{AD_LIBRARY_BASE}?id={ad['library_id']}" if ad.get("library_id") else ""
-        )
+        library_id = ad.get("library_id", "")
+        if not numeric_id(library_id):
+            reasons.append("invalid_library_id")
+        elif counts[library_id] > 1:
+            reasons.append("duplicate_library_id")
+        if not eligible_collection:
+            reasons.append("collection_not_reviewable")
+        advertiser = ad.get("advertiser", "")
+        if not isinstance(advertiser, str) or advertiser.strip().casefold() != collection.get("advertiser", "").casefold():
+            reasons.append("advertiser_mismatch")
+        if ad.get("page_id") != collection.get("page_id") or not numeric_id(ad.get("page_id")):
+            reasons.append("page_id_not_confirmed")
+        if ad.get("activity") != "active":
+            reasons.append("activity_not_active")
+        start = ad.get("started_running", "")
+        days = parse_days_active(start, observed_on) if isinstance(start, str) and observed_on else None
+        if days is None:
+            reasons.append("missing_or_invalid_date")
+        elif days < 0:
+            reasons.append("future_start_date")
+        elif days < min_days:
+            reasons.append("below_min_days")
+        if ad.get("low_impression_badge"):
+            reasons.append("low_impression_badge")
+        if ad.get("ad_permalink"):
+            try:
+                if library_query(ad["ad_permalink"]).get("id") != library_id:
+                    reasons.append("permalink_id_mismatch")
+            except ValueError:
+                reasons.append("invalid_permalink")
+        if reasons:
+            excluded.append({"index": index, "library_id": library_id if numeric_id(library_id) else "",
+                             "reasons": reasons})
+            continue
         enriched.append({
-            "advertiser": ad.get("advertiser", ""),
-            "library_id": ad.get("library_id", ""),
-            "started_running": ad.get("started_running", ""),
-            "days_active": days,
-            "impressions": ad.get("impressions", ""),
-            "media_type": ad.get("media_type", ""),
-            "caption": (ad.get("primary_text") or "").strip(),
-            "ad_permalink": permalink,
+            "advertiser": advertiser.strip(), "page_id": ad["page_id"], "library_id": library_id,
+            "started_running": start, "elapsed_days_since_displayed_start": days,
+            "activity": "active", "observed_at": collection["observed_at"],
+            "impressions": str(ad.get("impressions", ""))[:200],
+            "media_type": str(ad.get("media_type", ""))[:50],
+            "caption": str(ad.get("primary_text") or "").strip()[:10000],
+            "ad_permalink": f"{AD_LIBRARY_BASE}?id={library_id}",
         })
-    enriched.sort(key=lambda a: a["days_active"], reverse=True)
-    return enriched[:top], {
-        "scanned": len(ads or []),
-        "skipped_low_impression": skipped_low_imp,
-        "skipped_no_date": skipped_no_date,
-        "passed_min_days": len(enriched),
-    }
+    enriched.sort(key=lambda a: (-a["elapsed_days_since_displayed_start"], a["library_id"]))
+    return enriched[:top], {"scanned": len(ads), "eligible_in_collected_subset": len(enriched),
+                              "excluded": excluded, "collection": collection}
 
 
 def main():
-    p = argparse.ArgumentParser(description="Ad Recon: find a brand's Winning Ads.")
+    p = argparse.ArgumentParser(description="Ad Recon: shortlist sourced research candidates.")
     p.add_argument("--page-id")
     p.add_argument("--brand", default="")
     p.add_argument("--country", default="US")
@@ -257,11 +361,18 @@ def main():
     p.add_argument("--from-json", help="rank a pre-scraped ads JSON file instead of scraping")
     p.add_argument("--started-before",
                    help="Ad Library 'Impressions by date' TO value (YYYY-MM-DD). "
-                        "Default: today - min_days. The longevity gate, enforced server-side.")
+                        "Default: today - min_days. Discovery filter only; not proof of age.")
     p.add_argument("--no-date-filter", action="store_true",
                    help="disable the start_date[max] longevity filter (debug / wide scan)")
     p.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR))
     args = p.parse_args()
+
+    if args.page_id and not numeric_id(args.page_id):
+        fail(1, "INVALID_PAGE_ID", "--page-id must contain only digits (1..32).")
+    if not 1 <= args.top <= 100 or not 0 <= args.min_days <= 3650:
+        fail(1, "INVALID_BOUNDS", "--top must be 1..100 and --min-days 0..3650.")
+    if not re.fullmatch(r"ALL|[A-Z]{2}", args.country) or args.media_type not in ("all", "video", "image", "meme"):
+        fail(1, "INVALID_FILTER", "Invalid country or media-type.")
 
     if not args.page_id and not args.from_json:
         fail(1, "MISSING_TARGET",
@@ -272,6 +383,11 @@ def main():
         started_before = ""
     elif args.started_before:
         started_before = args.started_before
+        try:
+            if datetime.date.fromisoformat(started_before).isoformat() != started_before:
+                raise ValueError()
+        except ValueError:
+            fail(1, "INVALID_DATE", "--started-before must be YYYY-MM-DD.")
     else:
         started_before = (
             datetime.date.today() - datetime.timedelta(days=args.min_days)
@@ -284,17 +400,19 @@ def main():
     # Gather raw ad records: from a file, or by scraping.
     if args.from_json:
         try:
-            raw = json.loads(Path(args.from_json).read_text(encoding="utf-8"))
+            input_path = Path(args.from_json)
+            if input_path.stat().st_size > 1024 * 1024:
+                raise ValueError("input exceeds 1 MiB")
+            raw = json.loads(input_path.read_text(encoding="utf-8-sig"))
         except Exception as exc:
             fail(1, "BAD_INPUT_JSON", f"{args.from_json}: {exc}")
-        ads = raw.get("ads") if isinstance(raw, dict) else raw
+        ads = raw.get("ads", []) if isinstance(raw, dict) else raw
         page_state = (raw.get("page_state") if isinstance(raw, dict) else "from_json") or "from_json"
         result_header = raw.get("result_count_header", "") if isinstance(raw, dict) else ""
-        source_url = raw.get("source_url", "") if isinstance(raw, dict) else ""
+        collection_input = raw.get("collection") if isinstance(raw, dict) else None
     else:
         api_key = load_env_key("FIRECRAWL_API_KEY")
         url = build_pinned_url(args.page_id, args.country, args.media_type, started_before)
-        source_url = url
         if not api_key:
             fail(2, "FIRECRAWL_NOT_CONFIGURED",
                  "No FIRECRAWL_API_KEY. Either set it, or scrape this URL with the "
@@ -303,35 +421,40 @@ def main():
         ads = data.get("ads", [])
         page_state = data.get("page_state", "unknown")
         result_header = data.get("result_count_header", "")
+        # The unchanged scraper cannot establish active status, Page identity
+        # or coverage. Save its records for manual review, not a ready shortlist.
+        collection_input = None
 
-    if page_state in ("login_wall", "captcha"):
-        fail(2, "SCRAPE_BLOCKED",
-             f"Ad Library returned '{page_state}'. Try the agent's browser/MCP scrape "
-             "of the pinned URL, then --from-json. (Catch 2: anti-bot fragility.)")
-
-    # Trust the server-side longevity filter (don't re-drop by displayed date)
-    # whenever the scrape came from a date-filtered URL -- auto-detected from the
-    # source_url so --from-json inherits it without an extra flag.
-    trust_membership = "start_date[max]" in (source_url or "")
-    shortlist, stats = rank(ads, args.top, args.min_days, trust_membership=trust_membership)
+    try:
+        collection = reviewed_collection(collection_input, args.page_id)
+        if page_state in ("login_wall", "captcha"):
+            collection = {**collection, "status": "blocked",
+                          "limitations": [*collection.get("limitations", []), f"Page state: {page_state}"]}
+        # rank revalidates; unknown bare imports have no reviewed Page metadata.
+        shortlist, stats = rank(ads, args.top, args.min_days,
+                                collection=collection if "page_id" in collection else None)
+        stats["collection"] = collection
+    except (ValueError, TypeError) as exc:
+        fail(1, "INVALID_PROVENANCE", str(exc))
 
     label = args.brand or (f"page-{args.page_id}" if args.page_id else "from-json")
     out = {
+        "version": 2,
         "brand": args.brand,
-        "page_id": args.page_id or "",
+        "page_id": collection.get("page_id", args.page_id or ""),
         "country": args.country,
-        "source_url": source_url,
+        "source_url": collection.get("source_url", ""),
         "generated": datetime.date.today().isoformat(),
         "started_before": started_before,
         "result_count_header": result_header,
-        "winning_signal": (
-            f"longevity: only ads running on/before {started_before} "
-            f"(>= {args.min_days}d), impressions tiebreak"
-            if trust_membership
-            else f"longevity (>= {args.min_days} days active), impressions tiebreak"
-        ),
+        "status": "blocked" if page_state in ("login_wall", "captcha") else collection["status"],
+        "signal": f"Displayed start age >= {args.min_days} days at the recorded observation.",
+        "interpretation_limits": ["Not proof of continuous delivery, spend, sales or profitability.",
+                                  "Partial/unknown scans cannot establish the brand's best ads or absence of ads.",
+                                  "Provenance is recorded by the operator; validation does not authenticate it."],
         "stats": stats,
         "shortlist": shortlist,
+        "records_for_review": ads,
     }
 
     out_dir = Path(args.out_dir)
@@ -341,20 +464,20 @@ def main():
 
     # Human-readable table -> stderr (stdout stays clean JSON for piping).
     print(f"\nAd Recon: {label}  ({result_header or 'count n/a'})", file=sys.stderr)
-    print(f"  scanned {stats['scanned']} | "
-          f"dropped low-imp {stats['skipped_low_impression']} | "
-          f"no-date {stats['skipped_no_date']} | "
-          f">= {args.min_days}d: {stats['passed_min_days']}", file=sys.stderr)
+    print(f"  {out['status']} collection | scanned {stats['scanned']} | "
+          f"eligible in collected subset: {stats['eligible_in_collected_subset']}", file=sys.stderr)
     if not shortlist:
-        print("  NO WINNERS cleared the longevity bar (or scrape was partial).", file=sys.stderr)
+        print("  No eligible candidates in this collection; see exclusions and coverage.", file=sys.stderr)
     for i, a in enumerate(shortlist, 1):
         hook = (a["caption"][:70] + "...") if len(a["caption"]) > 70 else a["caption"]
-        print(f"  {i}. {a['days_active']:>4}d  {a['advertiser'][:22]:22}  {a['ad_permalink']}",
+        print(f"  {i}. {a['elapsed_days_since_displayed_start']:>4}d  {a['advertiser'][:22]:22}  {a['ad_permalink']}",
               file=sys.stderr)
         print(f"        hook: {hook}", file=sys.stderr)
     print(f"  -> {out_path}", file=sys.stderr)
 
     print(json.dumps(out, indent=2, ensure_ascii=False))
+    if out["status"] == "blocked":
+        sys.exit(2)
     if not shortlist:
         sys.exit(3)
 

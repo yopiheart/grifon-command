@@ -21,12 +21,14 @@ import { estimateSpokenSec } from '../utils/spokenDuration';
 // businessType / listingPrice so the venue router resolves). oneShotIntake is a pure,
 // types-only module — importing it at runtime pulls no heavy Gemini/voice chain.
 import { mapReportToWizard } from './oneShotIntake';
+import { resolveSelectedReference, selectedReferenceAngleReport } from './adReconBrief';
 // P2 observability spine: stamp the active run id onto proxy calls (so server COGS/node
 // events join to the run) and post node-lifecycle events through the existing analytics
 // sink. Both are light, browser-safe modules; telemetry here is always best-effort.
 import { setActiveRunId } from './runTelemetry';
 import { trackEvent } from './analyticsService';
 import type {
+  AdReferenceBrief,
   Avatar,
   BusinessInfo,
   Script,
@@ -201,6 +203,7 @@ export interface ProductionInput {
   /** When true, ignore any cached market research for this product and run fresh
    * (the intake "Re-research" toggle). Default: reuse the cache when present. */
   forceFreshResearch?: boolean;
+  referenceBrief?: AdReferenceBrief;
 }
 
 export type ProductionRunStatus = 'running' | 'review' | 'done' | 'error';
@@ -1624,6 +1627,7 @@ async function runStage(
 
   switch (id) {
     case 'market_research': {
+      resolveSelectedReference(run.input.referenceBrief, run.input);
       const cacheKey = researchCacheKey(run.input.brandName, run.input.productName);
       let report = run.input.forceFreshResearch ? null : (await deps.getCachedResearch?.(cacheKey)) ?? null;
       const fromCache = report !== null;
@@ -1655,8 +1659,9 @@ async function runStage(
     }
 
     case 'script': {
+      const angleReport = selectedReferenceAngleReport(run.input.referenceBrief, run.input, run.report!);
       const script = await withRetry(
-        () => deps.generateAdScript(run.businessInfo!, run.input.brandName, run.input.language, run.input.offer, deriveAngleBrief(run.report!), run.report!.contrarianTruth ?? ''),
+        () => deps.generateAdScript(run.businessInfo!, run.input.brandName, run.input.language, run.input.offer, deriveAngleBrief(angleReport), run.report!.contrarianTruth ?? ''),
         MAX_STAGE_ATTEMPTS,
         bump
       );

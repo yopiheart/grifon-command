@@ -404,6 +404,38 @@ export interface MarketResearchAdAngle {
   whyItWorks: string;
 }
 
+/** Local operator-recorded Ad Library evidence, separate from generated research. */
+export interface AdReferencePacket {
+  version: 1;
+  id: string;
+  evidenceMode: 'observed' | 'synthetic';
+  observedAt: string;
+  subject: { brandName: string; productName: string; offer: string; audience: string };
+  competitors: {
+    id: string; name: string; domain: string; pageId: string; identitySourceUrl: string;
+    collectionStatus: 'complete' | 'partial' | 'blocked' | 'unknown';
+    limitations: string[];
+  }[];
+  sources: {
+    id: string; competitorId: string; libraryId: string; sourceUrl: string;
+    observedAt: string; startDate: string | null;
+    activity: 'active' | 'inactive' | 'unknown'; scope: 'card' | 'video';
+    observations: { id: string; text: string }[];
+  }[];
+  concepts: {
+    id: string; title: string; format: MarketResearchAdAngle['format'];
+    customerProblem: string; sellingAngle: string; hook: string; originalProof: string;
+    requiredAssets: string[]; testHypothesis: string; sourceIds: string[]; observationIds: string[];
+  }[];
+}
+
+/** Review state only. This does not supply production or paid-test authorization. */
+export interface AdReferenceBrief {
+  packet: AdReferencePacket;
+  selectedConceptId?: string;
+  acceptedLimits: boolean;
+}
+
 export interface MarketResearchGraveyardEntry {
   tried: string;
   whyFailed: string;

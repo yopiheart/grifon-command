@@ -3,6 +3,7 @@ import { ChevronLeft, AlertTriangle, RotateCw, Loader2, Sparkles, FilePlus2 } fr
 import type { ClientDetails, BusinessInfo, Scene } from '../../types';
 import { generateMarketResearch } from '../../services/geminiService';
 import { mapReportToWizard, type ProductionInput } from '../../services/oneShotIntake';
+import { resolveSelectedReference } from '../../services/adReconBrief';
 import { useOneShotGeneration, type OneShotSinks } from '../../hooks/useOneShotGeneration';
 import { hydrateOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import { LaunchScreen } from './LaunchScreen';
@@ -124,6 +125,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     setPhase('running');
     setResearching(true);
     try {
+      resolveSelectedReference(input.referenceBrief, input);
       // 1 — Market research (auto; replaces the manual Step 1/2 prefill).
       const report = await generateMarketResearch({
         brandName: input.brandName,
@@ -145,7 +147,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
 
       // 3 — Run the generation chain, honoring the intake presenter.
       const ok = await oneShot.run(
-        { clientDetails, businessInfo, language: input.language, aspectRatio: ar, presetAvatar: input.avatar, castHints: input.castHints },
+        { clientDetails, businessInfo, language: input.language, aspectRatio: ar, presetAvatar: input.avatar, castHints: input.castHints, referenceBrief: input.referenceBrief },
         sinks,
       );
       if (ok) {

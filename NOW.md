@@ -1,80 +1,80 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, PR156 merge preparation; accepted motion workflow saved**
+**Stamped: 2026-10-08, Ad Recon reference briefs milestone 1**
 
-## Motion film / PR156
-Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
-Branch codex/grifon-motion-depth; https://github.com/yopiheart/grifon-command/pull/156.
-Accepted baseline backed up at ead3abe9. Main reconciled at29feca9c; only NOW.md
-conflicted. Independent Codex review clear after completed-VO replay fix;
-qa/merge-review.md has original-fail/fix-pass evidence. Final CI still required.
-No paid work, application feature or commercial publication in this scope.
+## Current work
+Checkout C:/Users/ADMIN/.codex/worktrees/abf2/grifon-command.
+Branch codex/ad-recon-briefs, based on main 2e1de015.
+Draft PR: pending creation after the verified implementation commit is pushed.
+Neil's "Okay game!" authorized milestone 1 implementation, not paid/live work.
+Goal: sourced competitor observations -> three reviewable concept hypotheses ->
+selected One-Shot script context, retaining existing format rules and no-reference behavior.
 
-Neil accepted the 32.9s film and delegated sound choices; do not ask him to pick
-A-D or individual sounds again. Positive-only prompts; preserve existing Aira take.
-Accepted file: workflows/assets/grifon-motion-upgrade/
-grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4, SHA
-9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c.
-approval.json binds exact user acceptance. 987 frames,1080p30,stereo AAC48k.
-Nine native sources/51 cues; all15 mixer gates PASS; -16.02LUFS/-1.36dBTP.
-Protected H264/music/VO unchanged; old SFX excluded; silent black tail preserved.
-selected-review-manifest.json and qa/replacement-report.json hold actual evidence.
-User acceptance is separate from independent hearing; historical technical report
-remains AUDITORY_QA_PENDING. Do not relabel waveform measurements as listening.
-Sources predate paid subscription and remain private-review-only. Commercial use
-requires cleared sources. No new ElevenLabs generations were made for replacement.
+Implemented a separate versioned AdReferencePacket/AdReferenceBrief contract,
+offline validation/review CLI tools/ad-recon-brief.mjs, and optional One-Shot
+reference import/review/select/remove for both legacy and producer engines.
+Requires explicit review of limits; revalidates identity, links, selected sources,
+active status and subject before generation. Synthetic selections are review-only.
+No source packet is inserted into MarketResearchReport/rawEvidence.
+Selection persists in local drafts, Clone Voice snapshots and generic run input.
+Invalid saved reference recovery explicitly clears the active pointer/draft,
+retaining the cloud run. Stale file imports cannot replace a newer user choice.
 
-Frozen local stems: .tmp/grifon-english-vo-v02/music-ducked.wav SHA
-115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa;
-voice-positioned.wav SHA
-54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7.
-Fixed stem gain1.0752266011723428. Old masters/pilot forbidden as mix inputs.
-One Aira/v4 generation approval consumed; never regenerate from that approval.
-Historical generator now refuses --generate before credential/network access.
+tools/find_winning_ads.py now emits version 2 research candidates with operator
+collection provenance/status and exclusions. URL filters never fill/floor dates;
+elapsed age binds to observation, not replay time. Bare scraper records remain
+unverified. No profit/continuous-delivery/scaling inference from longevity.
+SCRAPE_PROMPT/SCHEMA match 2e1de015; other tuned prompts/models/knobs unchanged.
 
-## Recovery and future audio plan
-workflows/grifon_motion_production.md preserves exact recipe and reuse method.
-workflows/grifon_motion_audio_api.md records future API proposal: one SFX candidate
-first, agent-owned placement, dedicated music and bounded approved retries.
-User fast-v4 preference maps to official eleven_v4_turbo; not active app change.
-Installed Motion Director skill/provider prompts unchanged; customer UI unbuilt.
-PRIMARY/.tools/grifon-motion-archives/approved-2026-10-04-9529b122.zip preserves
-42 checkpoint files including exact stems;41,677,659bytes. Tracked receipt:
-workflows/assets/grifon-motion-upgrade/qa/approved-archive.json.
-Archive/hash/CRC/all entries verified; missing receipt failed before creation.
-Local recovery is not off-device backup; later API design is versioned in Git.
+## Real pilot and limits
+assets/ad-recon/grifon-2026-10-08.packet.json + .review.md contain three ranked
+Grifon concept hypotheses: visible proof first, distinct buying reasons second,
+less blank-page work third. Sources are partial card observations collected Oct8.
+Creatify Page145266828662281 / Ad3692662674216626 displayed start Oct6.
+Arcads Page332742426590967 / Ad2332836127142771 displayed start Feb17.
+Higgsfield Page611634422026525 identity reviewed; active-ad acquisition blocked
+after refresh. No invented ad or substitute vendor claim. ALL != PH targeting.
+Import validates consistency, not factual authenticity. No full video autopsy.
+SaaS vertical lock retained: Grifon pilot is review-only. Handoff proof uses
+clearly labeled invented observations with fail-closed mocked providers.
+No paid generation, completed-render proof, ad actions, production data writes,
+unattended worker, merge or deployment. Full closed-loop automation is later work.
 
-## Gemini accounting - preserve, no retries
-Original spec SHA26eb8ef67ced35afc04f958705859da04f8f6b96c3eba24b5cd47ca00bfe4807.
-Revised SHA c7f9c8f0eac1ece2585ae031c4005657184467d397c208ee27a6cf7d108affeb.
-Approved LOW + one manual repeat;14 comparisons TOTAL,US$0.50/250credits caps.
-Canonical ledger PRIMARY/.tmp/grifon-elevenlabs-assessment/<originalSHA>/.
-Pencil4 valid; card-pop truncated; manual repeat06:36UTC October4 failed with
-unknown usage/result. Three invocations reserveUS$0.09216; known usage-derived
-US$0.039258 plus unknown third; billing debit unverified. No reset/retry.
-Default project logging disabled; BUSINESS USE access auto-review rejected.
-User billing concern is not verified cause. Do not bypass project-access gate.
+Existing Ad Recon skill/glossary still overstate "30d = winner" and filter age.
+assets/ad-recon/terminology.proposed.patch is an exact UNAPPLIED proposal for
+both skill copies, glossary and spy_intel. Zero-context git apply dry run passes.
+approval is required by AGENTS.md before changing agent instructions.
 
-## Other session: Vivo/Blender work preserved from main
-PR157: https://github.com/yopiheart/grifon-command/pull/157.
-Checkout C:/Users/ADMIN/.codex/worktrees/976d/grifon-command; branch
-codex/blender-product-reveal. Its merge was authorized; check remote status.
-Detailed prior state remains in main's pre-reconciliation NOW.md history and
-assets/vivo-x80-ugc, assets/blender-reveal evidence; no files changed here.
-Vivo task cgt-20261004021141-cgh8r succeeded ONCE; NEVER execute again.
-Fixed tools/run_vivo_x80_ugc.mjs, separate Vivo spec/ledger; recovery GET-only.
-Raw361frames/15.041667s/496x864/native audio; comparison360frames/15s.
-ONE paid POST/private upload; exact owned-key cleanup confirmed.301738tokens
-estimate$1.2974734; invoice unknown. No new provider authorization in this task.
-Runner SHA c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109.
-Private raw: https://drive.google.com/file/d/1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT/view
-Private comparison: https://drive.google.com/file/d/15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx/view
-V1/V2 preserved; continuous listening/native phone remain unverified.
-Bottle task cgt-20261003202712-nlxv7 also exhausted; NEVER --execute again.
-Ledger .tmp/byteplus-motion-transfer/attempt.json; GET-only recovery.
-Bottle estimate$0.5200678; invoice unknown; identity PARTIAL. No new model trial.
-Main carried build/1432 unit/26 control/29 Vivo/25 bottle checks and independent
-review; these are historical evidence, not rerun by this motion task.
-PR158 prompt-parity guard merged; never authorizes changing tuned content.
-Vivo proof accepted9/10; priorities assets/vivo-x80-ugc/user-review.json.
-Local-preview/automatic-trigger tests unrun; generic engine/Grifon UI unbuilt.
-Primary Oceanides work untouched. Preserve native scene audio on integration.
+## Actual verification
+Final npm.cmd run build: PASS (including PowerShell ASCII).
+Final npm.cmd run test: 1463 passed,32 skipped;118 files passed,9 skipped.
+31 narrow contract/handoff unit tests passed. Python offline ranker10 passed.
+Both new defect verifiers failed original2e1de015, passed fixes: invented age
+and lost selected concept at resumed script stage. No live/paid test switches.
+14 distinct browser cases passed across10+4runs: both engines at375x667,
+390x844,1280x900; local-only review/reload, blocked/synthetic/mismatch guards,
+checkpoint recovery retaining cloud row, stale import race. Recovery case rerun
+also asserts zero final-render starts. Real backend durability remains untested.
+Independent correctness review: no unresolved actionable findings; pilot subject,
+duplicate identity parameters and resume recovery fixed/reviewed.
+Independent contract PASS; BRAND_PASS43/50,0critical/0nit;6visual probes passed.
+Bundle-leak, voice-sync, domain, artifact-anchors, eval-prompt parity,26 Codex
+control tests, diff-check and real-packet offline CLI all PASS.
+Screenshots: .tmp/ad-reference-smoke-final/ and .tmp/independent-smoke-brand/.
+Node dependencies were absent; npm.cmd ci completed without lockfile changes.
+
+## Preserve earlier accepted work / exhausted paid approvals
+PR156 motion film merged into this main baseline; recipe and recovery remain in
+workflows/grifon_motion_production.md and grifon_motion_audio_api.md.
+Accepted32.9s master SHA9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c
+and approval.json under workflows/assets/grifon-motion-upgrade are unchanged.
+Exact frozen stems remain in PRIMARY/.tmp/grifon-english-vo-v02; use approved
+archive receipt workflows/assets/grifon-motion-upgrade/qa/approved-archive.json.
+One consumed Aira/v4 approval must NEVER regenerate; generator refuses it.
+Source permissions remain private-review-only; auditory QA is not waveform QA.
+Gemini comparison budget exhausted14total; LOW/manualrepeat attempts consumed,
+third outcome/charge unknown. Do not retry or bypass project-access rejection.
+Vivo task cgt-20261004021141-cgh8r succeeded ONCE; never execute again.
+assets/vivo-x80-ugc/user-review.json records accepted9/10; native audio must be
+preserved when integrated. Bottle cgt-20261003202712-nlxv7 also exhausted.
+Their fixed runners/specs/ledgers permit GET-only recovery, no new paid trial.
+Prior full details remain in main2e1de015 NOW.md history and their receipts.

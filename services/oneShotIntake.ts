@@ -1,4 +1,4 @@
-import type { Avatar, BusinessInfo, ClientDetails, MarketResearchReport } from '../types';
+import type { AdReferenceBrief, Avatar, BusinessInfo, ClientDetails, MarketResearchReport } from '../types';
 
 /** Slot-labeled description block from the guided photos — mirrors advanced mode's
  * buildServiceDescription so the per-scene router reads the same shape. Kept inline
@@ -71,6 +71,8 @@ export interface ProductionInput {
   businessAddress?: string;
   /** When true, ignore any cached market research for this product and run fresh (intake "Re-research"). */
   forceFreshResearch?: boolean;
+  /** Optional reviewed reference packet; kept separate from generated research. */
+  referenceBrief?: AdReferenceBrief;
 }
 
 export interface PresenterResolution {

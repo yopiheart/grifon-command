@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { useReducedMotion } from 'motion/react';
 import { GlassPanel } from '../ui/GlassPanel';
+import { ReferenceBriefPanel } from './ReferenceBriefPanel';
+import { resolveSelectedReference } from '../../services/adReconBrief';
 import { DUR } from '../ui/motionTokens';
 import { useOneShotSfx } from '../../services/uiSoundService';
 import { useQuota } from '../../hooks/useQuota';
@@ -26,7 +28,7 @@ import {
   RECIPES_BY_ID, visibleRecipes, SAMPLES, ALLOWED_FORMATS,
   type Recipe, type RecipeId, type RecipeSample,
 } from './recipes';
-import type { BusinessInfo } from '../../types';
+import type { AdReferenceBrief, BusinessInfo } from '../../types';
 import { MAT_VEIL } from '../ui/materialTokens';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
@@ -205,6 +207,7 @@ export const LaunchScreen: React.FC<{
   const [brandName, setBrandName] = useState(restored?.brandName ?? '');
   const [price, setPrice] = useState(restored?.price ?? '');
   const [forceFresh, setForceFresh] = useState(restored?.forceFresh ?? false);
+  const [referenceBrief, setReferenceBrief] = useState<AdReferenceBrief | undefined>(restored?.referenceBrief);
 
   // --- Guided assets (Service / RealEstate verticals — per-slot real photos) ---
   const [servicePhotos, setServicePhotos] = useState<ServicePhoto[]>(restored?.servicePhotos ?? []);
@@ -487,7 +490,10 @@ export const LaunchScreen: React.FC<{
   const addressReady = !isRealEstate || !!businessAddress.trim();
   // Brand + price are load-bearing — they feed Market Research (which writes the
   // whole script). Required, not optional.
-  const ready = !!(assetReady && offer.trim() && brandName.trim() && price.trim() && addressReady && presenterReady && (!voiceNeeded || voiceId));
+  let referenceError = '';
+  try { resolveSelectedReference(referenceBrief, { brandName, productName: brandName, offer }); }
+  catch (e) { referenceError = e instanceof Error ? e.message : 'Review your ad references.'; }
+  const ready = !!(assetReady && offer.trim() && brandName.trim() && price.trim() && addressReady && presenterReady && (!voiceNeeded || voiceId) && !referenceError);
   const reason = !assetReady ? (isGuided ? 'Add your photos' : 'Add a product photo')
     : !offer.trim() ? 'Describe your offer'
       : !brandName.trim() ? 'Add your brand'
@@ -495,7 +501,7 @@ export const LaunchScreen: React.FC<{
           : !addressReady ? 'Add the property location'
             : !presenterReady ? 'Upload your presenter photo'
               : voiceNeeded && !voiceId ? 'Pick a voice'
-                : '';
+                : referenceError;
 
   // Research-reuse hint: the intake sends productName = brand, so the cache key the
   // orchestrator writes/reads is keyed on the brand for both parts. If that key already
@@ -555,6 +561,7 @@ export const LaunchScreen: React.FC<{
       isLocalService: isRealEstate ? true : isService ? localService : false,
       businessAddress: (isRealEstate || (isService && localService)) ? businessAddress.trim() : undefined,
       forceFreshResearch: forceFresh,
+      referenceBrief,
     });
   };
 
@@ -562,7 +569,7 @@ export const LaunchScreen: React.FC<{
   // the "don't persist an empty form" guard.
   const dirty = !!(
     offer.trim() || brandName.trim() || price.trim() || hero || avatarUrl ||
-    servicePhotos.length || businessAddress.trim()
+    servicePhotos.length || businessAddress.trim() || referenceBrief
   );
 
   // Autosave (debounced) — the brief survives reload / lost connection / a closed
@@ -575,7 +582,7 @@ export const LaunchScreen: React.FC<{
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
         vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
         presenterMode, gender, ageRange, ethnicity, avatarUrl,
-        language, aspectRatio, voiceId,
+        language, aspectRatio, voiceId, referenceBrief,
       });
     }, 700);
     return () => clearTimeout(t);
@@ -584,7 +591,7 @@ export const LaunchScreen: React.FC<{
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
     vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
     presenterMode, gender, ageRange, ethnicity, avatarUrl,
-    language, aspectRatio, voiceId,
+    language, aspectRatio, voiceId, referenceBrief,
   ]);
 
   // Reset — wipe the whole brief back to defaults + drop the saved draft. Guarded
@@ -592,6 +599,7 @@ export const LaunchScreen: React.FC<{
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resetAll = () => {
     setHero(''); setHeroDescription(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
+    setReferenceBrief(undefined);
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
     // Reset drops the draft too, so the segmentation answer is the default again.
@@ -667,11 +675,11 @@ export const LaunchScreen: React.FC<{
                   // Snapshot the brief so it survives the detour to Voice Cloning
                   // and is restored when the user comes back.
                   saveOneShotDraft({
-                    hero, offer, brandName, price, forceFresh,
+                    hero, heroDescription, offer, brandName, price, forceFresh,
                     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
                     vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
                     presenterMode, gender, ageRange, ethnicity, avatarUrl,
-                    language, aspectRatio, voiceId,
+                    language, aspectRatio, voiceId, referenceBrief,
                   });
                   onCloneVoice();
                 }}
@@ -767,6 +775,7 @@ export const LaunchScreen: React.FC<{
             <MiniInput placeholder="Price ₱199" value={price} onChange={setPrice} />
           </div>
 
+          <ReferenceBriefPanel value={referenceBrief} onChange={setReferenceBrief} subject={{ brandName, productName: brandName, offer }} />
           {/* Niche-specific location (RealEstate: required; Service: opt-in local) */}
           {isRealEstate && (
             <div className="mt-3">

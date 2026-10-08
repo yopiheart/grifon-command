@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "id": "synthetic-recovery-reference",
+  "evidenceMode": "synthetic",
+  "observedAt": "2026-10-08T02:00:00Z",
+  "subject": { "brandName": "Recovery Coffee", "productName": "Recovery Coffee", "offer": "Fresh coffee", "audience": "Busy coffee drinkers" },
+  "competitors": [{ "id": "fixture-coffee", "name": "Synthetic Coffee Example", "domain": "coffee.example", "pageId": "100000000001", "identitySourceUrl": "https://www.facebook.com/ads/library/?view_all_page_id=100000000001", "collectionStatus": "partial", "limitations": ["Invented contract fixture; no real advertiser or campaign was inspected.", "Only synthetic card observations are included."] }],
+  "sources": [
+    { "id": "fixture-source", "competitorId": "fixture-coffee", "libraryId": "200000000001", "sourceUrl": "https://www.facebook.com/ads/library/?id=200000000001", "observedAt": "2026-10-08T01:00:00Z", "startDate": "2026-10-01", "activity": "active", "scope": "card", "observations": [{ "id": "fixture-observation", "text": "Synthetic card shows a coffee cup and a preparation demonstration." }] }
+  ],
+  "concepts": [
+    { "id": "morning-routine", "title": "An easier morning", "format": "UGC", "customerProblem": "Morning preparation takes too long", "sellingAngle": "Simple daily preparation", "hook": "Make your first cup without the morning rush.", "originalProof": "Film our own measured preparation steps; confirm timing before making claims.", "requiredAssets": ["Owned coffee package", "Original preparation footage"], "testHypothesis": "A clear preparation demonstration may increase relevant clicks.", "sourceIds": ["fixture-source"], "observationIds": ["fixture-observation"] },
+    { "id": "taste-demo", "title": "Show the brew", "format": "Demo", "customerProblem": "The customer cannot judge an unfamiliar coffee", "sellingAngle": "Visible brewing process", "hook": "See what goes into your next cup.", "originalProof": "Show our actual beans and brewing process without copied testimonials.", "requiredAssets": ["Owned beans", "Original brewing footage"], "testHypothesis": "Showing the actual process may improve qualified signups.", "sourceIds": ["fixture-source"], "observationIds": ["fixture-observation"] },
+    { "id": "founder-context", "title": "Meet the maker", "format": "Founder POV", "customerProblem": "The customer does not know who makes the product", "sellingAngle": "Maker transparency", "hook": "Here is why we chose these beans.", "originalProof": "Record our founder explaining documented sourcing details.", "requiredAssets": ["Approved founder footage", "Actual sourcing records"], "testHypothesis": "A specific sourcing explanation may improve purchase confidence.", "sourceIds": ["fixture-source"], "observationIds": ["fixture-observation"] }
+  ]
+}
