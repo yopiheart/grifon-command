@@ -4,7 +4,8 @@
 ## Current work
 Checkout C:/Users/ADMIN/.codex/worktrees/abf2/grifon-command.
 Branch codex/ad-recon-briefs, based on main 2e1de015.
-Draft PR: pending creation after the verified implementation commit is pushed.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/168.
+Implementation commit36d78bd3 pushed and remotely verified; no merge/deployment.
 Neil's "Okay game!" authorized milestone 1 implementation, not paid/live work.
 Goal: sourced competitor observations -> three reviewable concept hypotheses ->
 selected One-Shot script context, retaining existing format rules and no-reference behavior.
