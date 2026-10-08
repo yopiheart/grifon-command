@@ -42,6 +42,11 @@ project skills are optional integrations, not dependencies of this saved package
   original identity, evidence, and limits. This is an approved example, not a
   benchmark proving every future character will be equally successful.
 - Frozen source and hashes live in [the asset manifest](assets/griffin-v05/manifest.json).
+- For Grifon soft-character finishing, use [the preferred neutral material study](references/neutral-material-finish.md),
+  accepted on 2026-10-08, and its bundled hero/front/detail anchors. It preserves
+  the v05 identity and groom while reducing the yellow lighting cast. The v05
+  build remains the geometry baseline; the neutral study is the preferred still
+  finish. Other subjects keep their own material and fidelity requirements.
 
 ## 1. Establish the visual contract
 
@@ -54,8 +59,9 @@ Record briefly in the conversation:
 - Deliverable: still master, rig, animation, or real-time integration.
 - Success: subject fidelity, coherent geometry, believable material/light, and
   the track's actual output requirements.
-- Failure: changed face, metallic body, flat face patch, floating features,
-  visible cuts, fiber intersections, or a polished hero hiding side-view defects.
+- Failure: the chosen track's fidelity or delivery defects. Soft-character
+  examples include changed face, metallic body, flat face patch, floating
+  features, visible cuts, fiber intersections, or a hero hiding side-view defects.
 - Verification: hero, straight-on, close-up, plus the subject track's checks.
 
 For an existing Grifon, inspect the top-left neutral tile of

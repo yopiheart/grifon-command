@@ -1,0 +1,15 @@
+{
+  "purpose": "Preserve hash-bound CRLF evidence without relaxing default whitespace errors",
+  "policy": "trailing-space,space-before-tab,cr-at-eol",
+  "validCRLF": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "genuineTrailingSpace": {
+    "exitCode": 3,
+    "stdout": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\griffin-material-study\\qa\\temporary-whitespace-probe.txt:1: trailing whitespace.\n+genuine trailing space \n",
+    "stderr": ""
+  },
+  "pass": true
+}

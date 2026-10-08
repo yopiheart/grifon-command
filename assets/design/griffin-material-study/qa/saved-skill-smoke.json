@@ -1,0 +1,2721 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-08T13:03:19.220Z",
+  "command": "node assets/design/griffin-material-study/qa/saved-skill-smoke.mjs",
+  "checker_sha256": "68fc4efb67a32f6077aec08df6cd87e1963a93a1e79daa7edd466dc13602d73c",
+  "checks": [
+    {
+      "name": "study inventory has 43 unique entries",
+      "pass": true
+    },
+    {
+      "name": "study inventory: .gitignore",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\.gitignore",
+        "expected": {
+          "path": ".gitignore",
+          "bytes": 17,
+          "sha256": "cd02a3d844235eb38199669606502087486e3da036f03e26de3ad727390994d1"
+        },
+        "actual": {
+          "bytes": 17,
+          "sha256": "cd02a3d844235eb38199669606502087486e3da036f03e26de3ad727390994d1"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final-exit.json",
+        "expected": {
+          "path": "baseline-final-exit.json",
+          "bytes": 993,
+          "sha256": "0962d3bb29db504939fc6052d9e729d4b41132a554da5c22a6fe7fec6a58ddc2"
+        },
+        "actual": {
+          "bytes": 993,
+          "sha256": "0962d3bb29db504939fc6052d9e729d4b41132a554da5c22a6fe7fec6a58ddc2"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-v05-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-v05-exit.json",
+        "expected": {
+          "path": "baseline-v05-exit.json",
+          "bytes": 132,
+          "sha256": "93a9bbf6bc38561de8d4af8ca089294b02f3dcce3a0f110927173f8deb46bb80"
+        },
+        "actual": {
+          "bytes": 132,
+          "sha256": "93a9bbf6bc38561de8d4af8ca089294b02f3dcce3a0f110927173f8deb46bb80"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final-exit.json",
+        "expected": {
+          "path": "candidate-final-exit.json",
+          "bytes": 989,
+          "sha256": "7c2446463f3183183702b7d93688cc8ad1acf6e0c2bc870bffa64d719d5842b6"
+        },
+        "actual": {
+          "bytes": 989,
+          "sha256": "7c2446463f3183183702b7d93688cc8ad1acf6e0c2bc870bffa64d719d5842b6"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v01-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v01-exit.json",
+        "expected": {
+          "path": "candidate-v01-exit.json",
+          "bytes": 127,
+          "sha256": "645e3d12cc898bab3e1190ac58d363bbc5928f561dc5941415fb7e2bfdc91962"
+        },
+        "actual": {
+          "bytes": 127,
+          "sha256": "645e3d12cc898bab3e1190ac58d363bbc5928f561dc5941415fb7e2bfdc91962"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v02-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v02-exit.json",
+        "expected": {
+          "path": "candidate-v02-exit.json",
+          "bytes": 127,
+          "sha256": "5d47b3be1adc174dc79348fa8af52445622b475826b07e27c03c0bab938ce5cc"
+        },
+        "actual": {
+          "bytes": 127,
+          "sha256": "5d47b3be1adc174dc79348fa8af52445622b475826b07e27c03c0bab938ce5cc"
+        }
+      }
+    },
+    {
+      "name": "study inventory: create-geometry-negative-control.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\create-geometry-negative-control.py",
+        "expected": {
+          "path": "create-geometry-negative-control.py",
+          "bytes": 1451,
+          "sha256": "b9a665100ee76fb86359a55bff51384aaf41e923fd2fca3b0d76549dceeb784f"
+        },
+        "actual": {
+          "bytes": 1451,
+          "sha256": "b9a665100ee76fb86359a55bff51384aaf41e923fd2fca3b0d76549dceeb784f"
+        }
+      }
+    },
+    {
+      "name": "study inventory: final-saved-verification-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\final-saved-verification-exit.json",
+        "expected": {
+          "path": "final-saved-verification-exit.json",
+          "bytes": 160,
+          "sha256": "7727f81c1847e1a7c8e4438d1a0228e800d8dc66293798319f9e28940516c321"
+        },
+        "actual": {
+          "bytes": 160,
+          "sha256": "7727f81c1847e1a7c8e4438d1a0228e800d8dc66293798319f9e28940516c321"
+        }
+      }
+    },
+    {
+      "name": "study inventory: final-saved-verification.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\final-saved-verification.json",
+        "expected": {
+          "path": "final-saved-verification.json",
+          "bytes": 56898,
+          "sha256": "c3b5365ae163c45cfc270cd6e0523c188cd6c5e3a51a350c9e6944c45caee291"
+        },
+        "actual": {
+          "bytes": 56898,
+          "sha256": "c3b5365ae163c45cfc270cd6e0523c188cd6c5e3a51a350c9e6944c45caee291"
+        }
+      }
+    },
+    {
+      "name": "study inventory: hardware.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\hardware.json",
+        "expected": {
+          "path": "hardware.json",
+          "bytes": 374,
+          "sha256": "13ce2f29fbbb8186df071d8c84c81420d16a750301b9b55552224c4677178d02"
+        },
+        "actual": {
+          "bytes": 374,
+          "sha256": "13ce2f29fbbb8186df071d8c84c81420d16a750301b9b55552224c4677178d02"
+        }
+      }
+    },
+    {
+      "name": "study inventory: inspect-geometry-attributes.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\inspect-geometry-attributes.py",
+        "expected": {
+          "path": "inspect-geometry-attributes.py",
+          "bytes": 620,
+          "sha256": "7221a75e4328e54ab2b316f93578bc22e4e94b1b8aff99979fac9baeb4046afe"
+        },
+        "actual": {
+          "bytes": 620,
+          "sha256": "7221a75e4328e54ab2b316f93578bc22e4e94b1b8aff99979fac9baeb4046afe"
+        }
+      }
+    },
+    {
+      "name": "study inventory: moderate-saved-verification-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\moderate-saved-verification-exit.json",
+        "expected": {
+          "path": "moderate-saved-verification-exit.json",
+          "bytes": 144,
+          "sha256": "206dbc79ab2c740c37298018542649628da388666902054398822879fb3cfa1b"
+        },
+        "actual": {
+          "bytes": 144,
+          "sha256": "206dbc79ab2c740c37298018542649628da388666902054398822879fb3cfa1b"
+        }
+      }
+    },
+    {
+      "name": "study inventory: moderate-saved-verification.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\moderate-saved-verification.json",
+        "expected": {
+          "path": "moderate-saved-verification.json",
+          "bytes": 56753,
+          "sha256": "d1d2ee930029cd8f0153c8cd9e2763d9e20197a165812f1c0e86c0c0b8fc901b"
+        },
+        "actual": {
+          "bytes": 56753,
+          "sha256": "d1d2ee930029cd8f0153c8cd9e2763d9e20197a165812f1c0e86c0c0b8fc901b"
+        }
+      }
+    },
+    {
+      "name": "study inventory: negative-control-create-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\negative-control-create-exit.json",
+        "expected": {
+          "path": "negative-control-create-exit.json",
+          "bytes": 85,
+          "sha256": "cebf511afb862164fb2752fae1f50854b0027a58e3eda60a91dae992af34ce92"
+        },
+        "actual": {
+          "bytes": 85,
+          "sha256": "cebf511afb862164fb2752fae1f50854b0027a58e3eda60a91dae992af34ce92"
+        }
+      }
+    },
+    {
+      "name": "study inventory: negative-control-verify-exit.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\negative-control-verify-exit.json",
+        "expected": {
+          "path": "negative-control-verify-exit.json",
+          "bytes": 1102,
+          "sha256": "342d4967487208565d1f2a0bd64dbd814e6cc335fd72e5bf036fe3af04917d14"
+        },
+        "actual": {
+          "bytes": 1102,
+          "sha256": "342d4967487208565d1f2a0bd64dbd814e6cc335fd72e5bf036fe3af04917d14"
+        }
+      }
+    },
+    {
+      "name": "study inventory: refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "study inventory: trial-selection.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\trial-selection.json",
+        "expected": {
+          "path": "trial-selection.json",
+          "bytes": 680,
+          "sha256": "9c9b0db1eb746939dee7dd0697314bce6abd6a9307cb519358235a3e1670ca07"
+        },
+        "actual": {
+          "bytes": 680,
+          "sha256": "9c9b0db1eb746939dee7dd0697314bce6abd6a9307cb519358235a3e1670ca07"
+        }
+      }
+    },
+    {
+      "name": "study inventory: verify-saved-study.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\verify-saved-study.py",
+        "expected": {
+          "path": "verify-saved-study.py",
+          "bytes": 6089,
+          "sha256": "c0eb7ed843580d4f2e0f6cf0803633030f2e1146773625484b6018fcc44cd7f9"
+        },
+        "actual": {
+          "bytes": 6089,
+          "sha256": "c0eb7ed843580d4f2e0f6cf0803633030f2e1146773625484b6018fcc44cd7f9"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/griffin-baseline-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\griffin-baseline-final-detail.png",
+        "expected": {
+          "path": "baseline-final/griffin-baseline-final-detail.png",
+          "bytes": 1768520,
+          "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2"
+        },
+        "actual": {
+          "bytes": 1768520,
+          "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/griffin-baseline-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\griffin-baseline-final-front.png",
+        "expected": {
+          "path": "baseline-final/griffin-baseline-final-front.png",
+          "bytes": 1279363,
+          "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc"
+        },
+        "actual": {
+          "bytes": 1279363,
+          "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/griffin-baseline-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\griffin-baseline-final-hero.png",
+        "expected": {
+          "path": "baseline-final/griffin-baseline-final-hero.png",
+          "bytes": 2432774,
+          "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786"
+        },
+        "actual": {
+          "bytes": 2432774,
+          "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/griffin-baseline-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\griffin-baseline-final-profile.png",
+        "expected": {
+          "path": "baseline-final/griffin-baseline-final-profile.png",
+          "bytes": 1284591,
+          "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf"
+        },
+        "actual": {
+          "bytes": 1284591,
+          "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/griffin-baseline-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\griffin-baseline-final-transparent.png",
+        "expected": {
+          "path": "baseline-final/griffin-baseline-final-transparent.png",
+          "bytes": 60858,
+          "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70"
+        },
+        "actual": {
+          "bytes": 60858,
+          "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\manifest.json",
+        "expected": {
+          "path": "baseline-final/manifest.json",
+          "bytes": 92918,
+          "sha256": "6febc6b1666e99c3a6194edea545757c57a66988887cb790dc1a9ddb0248e681"
+        },
+        "actual": {
+          "bytes": 92918,
+          "sha256": "6febc6b1666e99c3a6194edea545757c57a66988887cb790dc1a9ddb0248e681"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-final/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\refine-griffin.py",
+        "expected": {
+          "path": "baseline-final/refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-v05/griffin-baseline-v05-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-v05\\griffin-baseline-v05-hero.png",
+        "expected": {
+          "path": "baseline-v05/griffin-baseline-v05-hero.png",
+          "bytes": 1070870,
+          "sha256": "9ee431a56602bacb4a27ba98a9f1c578275b7d8f5366731421537344116d6ec9"
+        },
+        "actual": {
+          "bytes": 1070870,
+          "sha256": "9ee431a56602bacb4a27ba98a9f1c578275b7d8f5366731421537344116d6ec9"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-v05/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-v05\\manifest.json",
+        "expected": {
+          "path": "baseline-v05/manifest.json",
+          "bytes": 91029,
+          "sha256": "2edfbd24e9b021ab2684ad81c9dc97d21fddddf5463cc4c1fe55ad16f3fda56f"
+        },
+        "actual": {
+          "bytes": 91029,
+          "sha256": "2edfbd24e9b021ab2684ad81c9dc97d21fddddf5463cc4c1fe55ad16f3fda56f"
+        }
+      }
+    },
+    {
+      "name": "study inventory: baseline-v05/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-v05\\refine-griffin.py",
+        "expected": {
+          "path": "baseline-v05/refine-griffin.py",
+          "bytes": 10616,
+          "sha256": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600"
+        },
+        "actual": {
+          "bytes": 10616,
+          "sha256": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "candidate-final/griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-front.png",
+        "expected": {
+          "path": "candidate-final/griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "candidate-final/griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "candidate-final/griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "candidate-final/griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\manifest.json",
+        "expected": {
+          "path": "candidate-final/manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-final/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\refine-griffin.py",
+        "expected": {
+          "path": "candidate-final/refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v01/griffin-material-v01-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v01\\griffin-material-v01-hero.png",
+        "expected": {
+          "path": "candidate-v01/griffin-material-v01-hero.png",
+          "bytes": 1067617,
+          "sha256": "d5b3718623a206440fb7057d7ee5784f4f1b6bf35e2f3d9e05e29be4c8893d7c"
+        },
+        "actual": {
+          "bytes": 1067617,
+          "sha256": "d5b3718623a206440fb7057d7ee5784f4f1b6bf35e2f3d9e05e29be4c8893d7c"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v01/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v01\\manifest.json",
+        "expected": {
+          "path": "candidate-v01/manifest.json",
+          "bytes": 91064,
+          "sha256": "211fd0d30a5e9a728364c9ea1260cacecbd7151a7f0e884eb72932b2781f4d7c"
+        },
+        "actual": {
+          "bytes": 91064,
+          "sha256": "211fd0d30a5e9a728364c9ea1260cacecbd7151a7f0e884eb72932b2781f4d7c"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v01/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v01\\refine-griffin.py",
+        "expected": {
+          "path": "candidate-v01/refine-griffin.py",
+          "bytes": 10616,
+          "sha256": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600"
+        },
+        "actual": {
+          "bytes": 10616,
+          "sha256": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v02/griffin-material-v02-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v02\\griffin-material-v02-hero.png",
+        "expected": {
+          "path": "candidate-v02/griffin-material-v02-hero.png",
+          "bytes": 1064285,
+          "sha256": "bca6373e0b7388a3e9173fb7a80ba9b4c73754891a6210b9e9d05f1799938686"
+        },
+        "actual": {
+          "bytes": 1064285,
+          "sha256": "bca6373e0b7388a3e9173fb7a80ba9b4c73754891a6210b9e9d05f1799938686"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v02/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v02\\manifest.json",
+        "expected": {
+          "path": "candidate-v02/manifest.json",
+          "bytes": 96124,
+          "sha256": "bf63b22b783beb0486dcad1e76eb1472b2dc5d2113206f95fc4a4165b2c447a6"
+        },
+        "actual": {
+          "bytes": 96124,
+          "sha256": "bf63b22b783beb0486dcad1e76eb1472b2dc5d2113206f95fc4a4165b2c447a6"
+        }
+      }
+    },
+    {
+      "name": "study inventory: candidate-v02/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v02\\refine-griffin.py",
+        "expected": {
+          "path": "candidate-v02/refine-griffin.py",
+          "bytes": 13888,
+          "sha256": "d4551152b5dd8498872299917ed54a1d2dd9082e92f47ee991dc932b27a3e77c"
+        },
+        "actual": {
+          "bytes": 13888,
+          "sha256": "d4551152b5dd8498872299917ed54a1d2dd9082e92f47ee991dc932b27a3e77c"
+        }
+      }
+    },
+    {
+      "name": "study inventory: negative-control/mutation.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\negative-control\\mutation.json",
+        "expected": {
+          "path": "negative-control/mutation.json",
+          "bytes": 896,
+          "sha256": "a207186719a15af1a2b76f17a0707af80be327e2a614358db8bc724d2f181356"
+        },
+        "actual": {
+          "bytes": 896,
+          "sha256": "a207186719a15af1a2b76f17a0707af80be327e2a614358db8bc724d2f181356"
+        }
+      }
+    },
+    {
+      "name": "study inventory: owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\owner-acceptance.json",
+        "expected": {
+          "path": "owner-acceptance.json",
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: render-manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\render-manifest.json",
+        "expected": {
+          "path": "render-manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: render-manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\render-manifest.json",
+        "expected": {
+          "path": "render-manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: render-manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\manifest.json",
+        "expected": {
+          "path": "render-manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "project neutral bundle: owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\owner-acceptance.json",
+        "expected": {
+          "path": "owner-acceptance.json",
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "installed neutral bundle: owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\owner-acceptance.json",
+        "expected": {
+          "path": "owner-acceptance.json",
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "bundle exact source copy: owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\owner-acceptance.json",
+        "expected": {
+          "path": "owner-acceptance.json",
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: griffin-material-final.blend",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final.blend",
+        "expected": {
+          "path": "griffin-material-final.blend",
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        },
+        "actual": {
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "saved candidate final: refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "owner-approved view: griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "owner-approved view: griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "owner-approved view: griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "owner-approved view: griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "owner-approved view: griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "owner-approved refinement source",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "owner-approved render evidence",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\manifest.json",
+        "expected": {
+          "path": "candidate-final/manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc",
+          "path_base": "Originating assets/3d-lab/griffin-material-study directory",
+          "bundled_path": "render-manifest.json"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "portable owner-approved render evidence",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\render-manifest.json",
+        "expected": {
+          "path": "candidate-final/manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc",
+          "path_base": "Originating assets/3d-lab/griffin-material-study directory",
+          "bundled_path": "render-manifest.json"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "owner render evidence paths are explicit",
+      "pass": true
+    },
+    {
+      "name": "PNG decode/dimensions: hero",
+      "pass": true,
+      "detail": {
+        "width": 1500,
+        "height": 1500,
+        "expected": 1500,
+        "hasAlpha": true
+      }
+    },
+    {
+      "name": "PNG alpha: hero",
+      "pass": true,
+      "detail": {
+        "min": 255,
+        "max": 255,
+        "intendedTransparent": false
+      }
+    },
+    {
+      "name": "PNG decode/dimensions: front",
+      "pass": true,
+      "detail": {
+        "width": 1100,
+        "height": 1100,
+        "expected": 1100,
+        "hasAlpha": true
+      }
+    },
+    {
+      "name": "PNG alpha: front",
+      "pass": true,
+      "detail": {
+        "min": 255,
+        "max": 255,
+        "intendedTransparent": false
+      }
+    },
+    {
+      "name": "PNG decode/dimensions: detail",
+      "pass": true,
+      "detail": {
+        "width": 1100,
+        "height": 1100,
+        "expected": 1100,
+        "hasAlpha": true
+      }
+    },
+    {
+      "name": "PNG alpha: detail",
+      "pass": true,
+      "detail": {
+        "min": 255,
+        "max": 255,
+        "intendedTransparent": false
+      }
+    },
+    {
+      "name": "PNG decode/dimensions: profile",
+      "pass": true,
+      "detail": {
+        "width": 1100,
+        "height": 1100,
+        "expected": 1100,
+        "hasAlpha": true
+      }
+    },
+    {
+      "name": "PNG alpha: profile",
+      "pass": true,
+      "detail": {
+        "min": 255,
+        "max": 255,
+        "intendedTransparent": false
+      }
+    },
+    {
+      "name": "PNG decode/dimensions: transparent",
+      "pass": true,
+      "detail": {
+        "width": 256,
+        "height": 256,
+        "expected": 256,
+        "hasAlpha": true
+      }
+    },
+    {
+      "name": "PNG alpha: transparent",
+      "pass": true,
+      "detail": {
+        "min": 0,
+        "max": 255,
+        "intendedTransparent": true
+      }
+    },
+    {
+      "name": "installed mirror has exact package file list",
+      "pass": true,
+      "detail": {
+        "projectCount": 25,
+        "mirrorCount": 25
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: SKILL.md",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\SKILL.md",
+        "expected": {
+          "bytes": 9991,
+          "sha256": "ef70d0ec395e6fec1ef9f53f5d7f80d0871fd0b581ff09bfa9cd4389dd069a06"
+        },
+        "actual": {
+          "bytes": 9991,
+          "sha256": "ef70d0ec395e6fec1ef9f53f5d7f80d0871fd0b581ff09bfa9cd4389dd069a06"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/.gitattributes",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\.gitattributes",
+        "expected": {
+          "bytes": 196,
+          "sha256": "61f5f64aaef93edeeba60da122470401bb559acb019dfa9cd969a72afbc7abf1"
+        },
+        "actual": {
+          "bytes": 196,
+          "sha256": "61f5f64aaef93edeeba60da122470401bb559acb019dfa9cd969a72afbc7abf1"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-detail.png",
+        "expected": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-front.png",
+        "expected": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-hero.png",
+        "expected": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-profile.png",
+        "expected": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-transparent.png",
+        "expected": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\manifest.json",
+        "expected": {
+          "bytes": 2460,
+          "sha256": "de2f5f9378f27a6a3dd99f4b85ee0f7f532f9f97223dda671ec39a5ea005f57c"
+        },
+        "actual": {
+          "bytes": 2460,
+          "sha256": "de2f5f9378f27a6a3dd99f4b85ee0f7f532f9f97223dda671ec39a5ea005f57c"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\owner-acceptance.json",
+        "expected": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\refine-griffin.py",
+        "expected": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-neutral-v01/render-manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\render-manifest.json",
+        "expected": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/.gitattributes",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\.gitattributes",
+        "expected": {
+          "bytes": 93,
+          "sha256": "e73360035b91dff331bcac9e7991e6609bbfa28d1346ada41ea4d0d9ef169b1f"
+        },
+        "actual": {
+          "bytes": 93,
+          "sha256": "e73360035b91dff331bcac9e7991e6609bbfa28d1346ada41ea4d0d9ef169b1f"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/build-griffin-master.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\build-griffin-master.py",
+        "expected": {
+          "bytes": 17600,
+          "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+        },
+        "actual": {
+          "bytes": 17600,
+          "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/griffin-master-v05-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-detail.png",
+        "expected": {
+          "bytes": 1768497,
+          "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+        },
+        "actual": {
+          "bytes": 1768497,
+          "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/griffin-master-v05-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-front.png",
+        "expected": {
+          "bytes": 1279340,
+          "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+        },
+        "actual": {
+          "bytes": 1279340,
+          "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/griffin-master-v05-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-hero.png",
+        "expected": {
+          "bytes": 2427394,
+          "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+        },
+        "actual": {
+          "bytes": 2427394,
+          "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/griffin-sprites.webp",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-sprites.webp",
+        "expected": {
+          "bytes": 179536,
+          "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+        },
+        "actual": {
+          "bytes": 179536,
+          "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\manifest.json",
+        "expected": {
+          "bytes": 1217,
+          "sha256": "c3a6b9e315967659b26a778a8abefeac982df1387a97e801a639d1ce6d1216cf"
+        },
+        "actual": {
+          "bytes": 1217,
+          "sha256": "c3a6b9e315967659b26a778a8abefeac982df1387a97e801a639d1ce6d1216cf"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: assets/griffin-v05/render-griffin-views.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\render-griffin-views.py",
+        "expected": {
+          "bytes": 1423,
+          "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+        },
+        "actual": {
+          "bytes": 1423,
+          "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: evals/evals.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\evals\\evals.json",
+        "expected": {
+          "bytes": 1768,
+          "sha256": "19356f3768714324c1d6004a0c8b5424e1b1a8bb3b98dc531fde3817bd4f9026"
+        },
+        "actual": {
+          "bytes": 1768,
+          "sha256": "19356f3768714324c1d6004a0c8b5424e1b1a8bb3b98dc531fde3817bd4f9026"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: evals/status.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\evals\\status.json",
+        "expected": {
+          "bytes": 1336,
+          "sha256": "b1d58ce03742e6399125c0966f3d16f6061499b0d86bb75776c7908772be791e"
+        },
+        "actual": {
+          "bytes": 1336,
+          "sha256": "b1d58ce03742e6399125c0966f3d16f6061499b0d86bb75776c7908772be791e"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: references/accepted-case.md",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\references\\accepted-case.md",
+        "expected": {
+          "bytes": 3580,
+          "sha256": "7f28276b5df0f0615014fe9e6b72111af1cff22fc57e1cbbd814b837e7ac56ce"
+        },
+        "actual": {
+          "bytes": 3580,
+          "sha256": "7f28276b5df0f0615014fe9e6b72111af1cff22fc57e1cbbd814b837e7ac56ce"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: references/neutral-material-finish.md",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\references\\neutral-material-finish.md",
+        "expected": {
+          "bytes": 6607,
+          "sha256": "d4b185dec7e504c0c07fd3dec5b4ad74e356d081bbae1b8489bb2ea0f58cfb36"
+        },
+        "actual": {
+          "bytes": 6607,
+          "sha256": "d4b185dec7e504c0c07fd3dec5b4ad74e356d081bbae1b8489bb2ea0f58cfb36"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: references/production-recipe.md",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\references\\production-recipe.md",
+        "expected": {
+          "bytes": 6275,
+          "sha256": "91f75375eca0abbd21dab337c50908804b2e7a18419d49148a2d87773a13dd44"
+        },
+        "actual": {
+          "bytes": 6275,
+          "sha256": "91f75375eca0abbd21dab337c50908804b2e7a18419d49148a2d87773a13dd44"
+        }
+      }
+    },
+    {
+      "name": "portable mirror exact bytes: references/subject-tracks.md",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\references\\subject-tracks.md",
+        "expected": {
+          "bytes": 5876,
+          "sha256": "009faa4b1e3276918eb1da8dd17703314131b7b12dbef543db2836154ab4d68f"
+        },
+        "actual": {
+          "bytes": 5876,
+          "sha256": "009faa4b1e3276918eb1da8dd17703314131b7b12dbef543db2836154ab4d68f"
+        }
+      }
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> references/subject-tracks.md",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> assets/griffin-v05/griffin-master-v05-hero.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> assets/griffin-v05/griffin-master-v05-front.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> assets/griffin-v05/griffin-master-v05-detail.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> references/production-recipe.md",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> references/accepted-case.md",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> assets/griffin-v05/manifest.json",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> references/neutral-material-finish.md",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: SKILL.md -> assets/griffin-v05/griffin-sprites.webp",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/accepted-case.md -> neutral-material-finish.md",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-hero.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-front.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-detail.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-profile.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-transparent.png",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/manifest.json",
+      "pass": true
+    },
+    {
+      "name": "project local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/refine-griffin.py",
+      "pass": true
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-v05/build-griffin-master.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-v05\\build-griffin-master.py",
+        "expected": {
+          "path": "build-griffin-master.py",
+          "bytes": 17600,
+          "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+        },
+        "actual": {
+          "bytes": 17600,
+          "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-v05/render-griffin-views.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-v05\\render-griffin-views.py",
+        "expected": {
+          "path": "render-griffin-views.py",
+          "bytes": 1423,
+          "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+        },
+        "actual": {
+          "bytes": 1423,
+          "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-v05/griffin-master-v05-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-hero.png",
+        "expected": {
+          "path": "griffin-master-v05-hero.png",
+          "bytes": 2427394,
+          "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+        },
+        "actual": {
+          "bytes": 2427394,
+          "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-v05/griffin-master-v05-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-front.png",
+        "expected": {
+          "path": "griffin-master-v05-front.png",
+          "bytes": 1279340,
+          "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+        },
+        "actual": {
+          "bytes": 1279340,
+          "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-v05/griffin-master-v05-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-detail.png",
+        "expected": {
+          "path": "griffin-master-v05-detail.png",
+          "bytes": 1768497,
+          "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+        },
+        "actual": {
+          "bytes": 1768497,
+          "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-v05/griffin-sprites.webp",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-v05\\griffin-sprites.webp",
+        "expected": {
+          "path": "griffin-sprites.webp",
+          "bytes": 179536,
+          "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+        },
+        "actual": {
+          "bytes": 179536,
+          "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/render-manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\render-manifest.json",
+        "expected": {
+          "path": "render-manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "project manifest anchor: assets/griffin-neutral-v01/owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio\\assets\\griffin-neutral-v01\\owner-acceptance.json",
+        "expected": {
+          "path": "owner-acceptance.json",
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> references/subject-tracks.md",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> assets/griffin-v05/griffin-master-v05-hero.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> assets/griffin-v05/griffin-master-v05-front.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> assets/griffin-v05/griffin-master-v05-detail.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> references/production-recipe.md",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> references/accepted-case.md",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> assets/griffin-v05/manifest.json",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> references/neutral-material-finish.md",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: SKILL.md -> assets/griffin-v05/griffin-sprites.webp",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/accepted-case.md -> neutral-material-finish.md",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-hero.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-front.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-detail.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-profile.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/griffin-material-final-transparent.png",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/manifest.json",
+      "pass": true
+    },
+    {
+      "name": "installed local Markdown link: references/neutral-material-finish.md -> ../assets/griffin-neutral-v01/refine-griffin.py",
+      "pass": true
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-v05/build-griffin-master.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\build-griffin-master.py",
+        "expected": {
+          "path": "build-griffin-master.py",
+          "bytes": 17600,
+          "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+        },
+        "actual": {
+          "bytes": 17600,
+          "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-v05/render-griffin-views.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\render-griffin-views.py",
+        "expected": {
+          "path": "render-griffin-views.py",
+          "bytes": 1423,
+          "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+        },
+        "actual": {
+          "bytes": 1423,
+          "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-v05/griffin-master-v05-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-hero.png",
+        "expected": {
+          "path": "griffin-master-v05-hero.png",
+          "bytes": 2427394,
+          "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+        },
+        "actual": {
+          "bytes": 2427394,
+          "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-v05/griffin-master-v05-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-front.png",
+        "expected": {
+          "path": "griffin-master-v05-front.png",
+          "bytes": 1279340,
+          "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+        },
+        "actual": {
+          "bytes": 1279340,
+          "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-v05/griffin-master-v05-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-master-v05-detail.png",
+        "expected": {
+          "path": "griffin-master-v05-detail.png",
+          "bytes": 1768497,
+          "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+        },
+        "actual": {
+          "bytes": 1768497,
+          "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-v05/griffin-sprites.webp",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-v05\\griffin-sprites.webp",
+        "expected": {
+          "path": "griffin-sprites.webp",
+          "bytes": 179536,
+          "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+        },
+        "actual": {
+          "bytes": 179536,
+          "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/griffin-material-final-hero.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-hero.png",
+        "expected": {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        "actual": {
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/griffin-material-final-front.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-front.png",
+        "expected": {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        "actual": {
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/griffin-material-final-detail.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-detail.png",
+        "expected": {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        "actual": {
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/griffin-material-final-profile.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-profile.png",
+        "expected": {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        "actual": {
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/griffin-material-final-transparent.png",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\griffin-material-final-transparent.png",
+        "expected": {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        "actual": {
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\refine-griffin.py",
+        "expected": {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/render-manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\render-manifest.json",
+        "expected": {
+          "path": "render-manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "installed manifest anchor: assets/griffin-neutral-v01/owner-acceptance.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\skills\\blender-studio\\assets\\griffin-neutral-v01\\owner-acceptance.json",
+        "expected": {
+          "path": "owner-acceptance.json",
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        },
+        "actual": {
+          "bytes": 2835,
+          "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+        }
+      }
+    },
+    {
+      "name": "persistent local storage receipt: griffin-material-final.blend",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+        "expected": {
+          "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        },
+        "actual": {
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        }
+      }
+    },
+    {
+      "name": "persistent local storage receipt: refine-griffin.py",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\refine-griffin.py",
+        "expected": {
+          "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        },
+        "actual": {
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      }
+    },
+    {
+      "name": "persistent local storage receipt: manifest.json",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\manifest.json",
+        "expected": {
+          "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\manifest.json",
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        },
+        "actual": {
+          "bytes": 92954,
+          "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+        }
+      }
+    },
+    {
+      "name": "actual approved original v05 master",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-master-v05.blend",
+        "expected": {
+          "bytes": 35668191,
+          "sha256": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7"
+        },
+        "actual": {
+          "bytes": 35668191,
+          "sha256": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7"
+        }
+      }
+    },
+    {
+      "name": "actual preferred persistent scene",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+        "expected": {
+          "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        },
+        "actual": {
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        }
+      }
+    },
+    {
+      "name": "actual acceptance persistent scene",
+      "pass": true,
+      "detail": {
+        "file": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+        "expected": {
+          "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        },
+        "actual": {
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        }
+      }
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: .gitattributes",
+      "pass": true
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: build-griffin-master.py",
+      "pass": true
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: griffin-master-v05-detail.png",
+      "pass": true
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: griffin-master-v05-front.png",
+      "pass": true
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: griffin-master-v05-hero.png",
+      "pass": true
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: griffin-sprites.webp",
+      "pass": true
+    },
+    {
+      "name": "frozen v05 unchanged Git-filtered content vs HEAD: manifest.json",
+      "pass": true,
+      "detail": {
+        "committedObject": "fd296c42da9d5c76e6042df6c6d05ce8ca2cc054",
+        "workingObject": "fd296c42da9d5c76e6042df6c6d05ce8ca2cc054",
+        "note": "Existing text:auto JSON normalizes CRLF on Git storage; raw checkout bytes are not identical to HEAD."
+      }
+    },
+    {
+      "name": "frozen v05 unchanged raw bytes vs HEAD: render-griffin-views.py",
+      "pass": true
+    },
+    {
+      "name": "preferred specimen is selected v01 everywhere",
+      "pass": true
+    },
+    {
+      "name": "acceptance remains still-only without runtime promotion",
+      "pass": true
+    },
+    {
+      "name": "owner acceptance keeps exact preference and save request",
+      "pass": true
+    },
+    {
+      "name": "historical pending status retained separately from acceptance",
+      "pass": true
+    },
+    {
+      "name": "new reference retains independent limitations and task-specific tracks",
+      "pass": true
+    },
+    {
+      "name": "replay preserves strict identity guard and fresh output",
+      "pass": true
+    },
+    {
+      "name": "package separates local binary persistence from portable assets",
+      "pass": true
+    },
+    {
+      "name": "reference and saved evidence retain 404000 curves",
+      "pass": true
+    },
+    {
+      "name": "isolated valid-copy integrity control exits 0",
+      "pass": true
+    },
+    {
+      "name": "isolated corrupt-copy integrity control rejects with exit 1",
+      "pass": true
+    },
+    {
+      "name": "isolated negative copy removed",
+      "pass": true
+    }
+  ],
+  "limits": "File integrity, portability, PNG decode/alpha and scope checks only. No Blender render, visual reassessment, browser, animation, provider or app calls.",
+  "negative_control": {
+    "path": "C:\\Users\\ADMIN\\AppData\\Local\\Temp\\grifon-neutral-integrity-MZuVwk\\griffin-material-final-hero.png",
+    "mutation": "One byte XOR at offset 0 of isolated hero copy; same length.",
+    "before_sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65",
+    "after_sha256": "2008b4a5812d6987c4c56af0cf6dcf93d97e22754cc422bd473de2ddaddc7e70",
+    "child_pid": 24148,
+    "exit_code": 1,
+    "diagnostic": "INTEGRITY_REJECT: bytes or SHA-256 differ",
+    "actual_asset_untouched": true
+  },
+  "package": {
+    "projectSkill": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.agents\\skills\\blender-studio",
+    "mirrorSkill": "C:/Users/ADMIN/.codex/skills/blender-studio",
+    "totalFiles": 25,
+    "snapshots": [
+      {
+        "path": "SKILL.md",
+        "bytes": 9991,
+        "sha256": "ef70d0ec395e6fec1ef9f53f5d7f80d0871fd0b581ff09bfa9cd4389dd069a06"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/.gitattributes",
+        "bytes": 196,
+        "sha256": "61f5f64aaef93edeeba60da122470401bb559acb019dfa9cd969a72afbc7abf1"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/griffin-material-final-detail.png",
+        "bytes": 1793589,
+        "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/griffin-material-final-front.png",
+        "bytes": 1278188,
+        "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/griffin-material-final-hero.png",
+        "bytes": 2433762,
+        "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/griffin-material-final-profile.png",
+        "bytes": 1244571,
+        "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/griffin-material-final-transparent.png",
+        "bytes": 61398,
+        "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/manifest.json",
+        "bytes": 2460,
+        "sha256": "de2f5f9378f27a6a3dd99f4b85ee0f7f532f9f97223dda671ec39a5ea005f57c"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/owner-acceptance.json",
+        "bytes": 2835,
+        "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/refine-griffin.py",
+        "bytes": 14646,
+        "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+      },
+      {
+        "path": "assets/griffin-neutral-v01/render-manifest.json",
+        "bytes": 92954,
+        "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+      },
+      {
+        "path": "assets/griffin-v05/.gitattributes",
+        "bytes": 93,
+        "sha256": "e73360035b91dff331bcac9e7991e6609bbfa28d1346ada41ea4d0d9ef169b1f"
+      },
+      {
+        "path": "assets/griffin-v05/build-griffin-master.py",
+        "bytes": 17600,
+        "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+      },
+      {
+        "path": "assets/griffin-v05/griffin-master-v05-detail.png",
+        "bytes": 1768497,
+        "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+      },
+      {
+        "path": "assets/griffin-v05/griffin-master-v05-front.png",
+        "bytes": 1279340,
+        "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+      },
+      {
+        "path": "assets/griffin-v05/griffin-master-v05-hero.png",
+        "bytes": 2427394,
+        "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+      },
+      {
+        "path": "assets/griffin-v05/griffin-sprites.webp",
+        "bytes": 179536,
+        "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+      },
+      {
+        "path": "assets/griffin-v05/manifest.json",
+        "bytes": 1217,
+        "sha256": "c3a6b9e315967659b26a778a8abefeac982df1387a97e801a639d1ce6d1216cf"
+      },
+      {
+        "path": "assets/griffin-v05/render-griffin-views.py",
+        "bytes": 1423,
+        "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+      },
+      {
+        "path": "evals/evals.json",
+        "bytes": 1768,
+        "sha256": "19356f3768714324c1d6004a0c8b5424e1b1a8bb3b98dc531fde3817bd4f9026"
+      },
+      {
+        "path": "evals/status.json",
+        "bytes": 1336,
+        "sha256": "b1d58ce03742e6399125c0966f3d16f6061499b0d86bb75776c7908772be791e"
+      },
+      {
+        "path": "references/accepted-case.md",
+        "bytes": 3580,
+        "sha256": "7f28276b5df0f0615014fe9e6b72111af1cff22fc57e1cbbd814b837e7ac56ce"
+      },
+      {
+        "path": "references/neutral-material-finish.md",
+        "bytes": 6607,
+        "sha256": "d4b185dec7e504c0c07fd3dec5b4ad74e356d081bbae1b8489bb2ea0f58cfb36"
+      },
+      {
+        "path": "references/production-recipe.md",
+        "bytes": 6275,
+        "sha256": "91f75375eca0abbd21dab337c50908804b2e7a18419d49148a2d87773a13dd44"
+      },
+      {
+        "path": "references/subject-tracks.md",
+        "bytes": 5876,
+        "sha256": "009faa4b1e3276918eb1da8dd17703314131b7b12dbef543db2836154ab4d68f"
+      }
+    ]
+  },
+  "study_manifest": {
+    "bytes": 22716,
+    "sha256": "2d01aacc817f1d1cd3e8d360519452a69d6bcac9699820f92deed0c7103b3ef6"
+  },
+  "passed": 207,
+  "failed": 0,
+  "status": "PASS",
+  "exit_code": 0
+}

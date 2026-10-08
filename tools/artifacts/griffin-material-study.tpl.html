@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="{{CONTENT_POLICY}}">
+<title>Grifon | Material study</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f5f5f7;background:#070708;font-size:14px}
+*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,input:focus-visible{outline:2px solid #ffcc00;outline-offset:4px}
+.ground{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 50% 0%,#131316 0%,#09090b 55%,#070708 100%)}
+.glow{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 75% 5%,rgba(255,204,0,.06),transparent 45%)}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.12;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h240v240H0z'/%3E%3C/svg%3E");background-repeat:repeat;background-size:240px}
+main{max-width:1040px;margin:auto;padding:40px 28px 32px}.eyebrow{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.24em;color:#ffcc00;margin:0 0 16px}
+.intro{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:24px}h1{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-.04em;margin:0;line-height:1.04}h1 em{font-family:Georgia,serif;color:#ffcc00;font-weight:400;text-shadow:0 0 12px #ffcc0029}.intro p{max-width:280px;color:#d4d4d8;line-height:1.6;margin:0;font-size:13px}
+.panel{border:1px solid #ffffff18;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#ffffff07,transparent 45%),#18181bd9;box-shadow:inset 0 1px #ffffff0d,0 20px 80px #0005}
+.toolbar{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #ffffff0e}.tabs{display:flex;gap:4px}.tabs button,.presets button{border:0;background:transparent;border-radius:10px;padding:10px 12px;font-size:13px;color:#d4d4d8;min-height:40px}.tabs button[aria-pressed="true"]{background:#ffcc001a;color:#ffcc00}.badge{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:#9a9aa3;letter-spacing:.06em;white-space:nowrap}
+.stage{position:relative;aspect-ratio:1;max-width:720px;margin:auto;background:#09090b;--split:50%}.stage img{display:block;width:100%;height:100%;object-fit:contain}.stage .before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--split)) 0 0)}.divider{position:absolute;top:0;bottom:0;left:var(--split);width:1px;background:#ffcc00a6;pointer-events:none}
+.labels{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;pointer-events:none}.labels span{background:#09090baa;border:1px solid #ffffff1a;border-radius:999px;padding:7px 10px;color:#d4d4d8;font-size:11px}.labels span:last-child{color:#ffcc00}
+.controls{padding:18px 24px 20px;border-top:1px solid #ffffff0e}.range-label{display:flex;justify-content:space-between;gap:16px;color:#d4d4d8;font-size:12px}.range-label output{color:#9a9aa3}input[type="range"]{display:block;width:100%;height:28px;margin:10px 0 6px;accent-color:#ffcc00;cursor:ew-resize}.presets{display:flex;justify-content:center;gap:12px}.presets button{font-size:12px;min-height:40px}.presets button:hover{background:#ffffff08}
+.chat-check{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.sample{padding:18px 20px;display:flex;gap:20px;align-items:center;border:1px solid #ffffff12;border-radius:18px;background:linear-gradient(110deg,#ffffff04,transparent),#111113}.avatar{width:64px;height:64px;flex:0 0 64px;object-fit:contain}.sample strong{font-size:13px;font-weight:600}.sample p{margin:5px 0 0;font-size:12px;color:#9a9aa3;line-height:1.5}.caption{color:#9a9aa3;font-size:12px;line-height:1.7;margin:20px 0 0}.signature{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.2em;color:#9a9aa3;margin-top:30px}
+.tabs button,.presets button{min-height:44px}input[type="range"]{height:44px}
+@media(min-width:800px){.panel{background:linear-gradient(135deg,#ffffff07,transparent 45%),#18181bd9}.stage{max-width:640px}}
+@media(max-width:600px){main{padding:28px 16px}.intro{display:block;margin-bottom:20px}.intro p{max-width:none;margin-top:16px}.eyebrow{margin-bottom:14px}.toolbar{padding:8px}.tabs{gap:0;flex:1}.tabs button{padding:10px;flex:1}.badge{display:none}.panel{border-radius:20px}.labels{top:12px;left:12px;right:12px}.controls{padding:14px 16px}.chat-check{gap:10px}.sample{display:block;padding:14px}.avatar{display:block;margin-bottom:12px}.sample p{font-size:11px}.caption{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="ground"></div><div class="glow"></div><div class="grain"></div>
+<main>
+<p class="eyebrow">// GRIFON MATERIAL STUDY</p>
+<div class="intro"><h1>SAME GRIFON.<br><em>A finer finish.</em></h1><p>Compare the approved look with a material and lighting trial. Same character. Same camera.</p></div>
+<section class="panel" aria-label="Matched render comparison">
+<div class="toolbar"><div class="tabs" aria-label="Camera view"><button type="button" data-view="hero" aria-pressed="true">Hero</button><button type="button" data-view="front" aria-pressed="false">Front</button><button type="button" data-view="detail" aria-pressed="false">Detail</button><button type="button" data-view="profile" aria-pressed="false">Profile</button></div><span class="badge">STILL RENDERS</span></div>
+<div class="stage" id="stage"><img id="candidate" src="{{CANDIDATE_HERO}}" alt="Trial Grifon, hero view"><img class="before" id="baseline" src="{{BASELINE_HERO}}" alt="Approved Grifon, hero view"><div class="divider" aria-hidden="true"></div><div class="labels"><span>Approved look</span><span>Material trial</span></div></div>
+<div class="controls"><label class="range-label" for="split"><span>Slide to compare</span><output id="amount" for="split">50% approved</output></label><input id="split" type="range" min="0" max="100" value="50" step="1"><div class="presets"><button type="button" data-split="100">Approved</button><button type="button" data-split="50">Compare</button><button type="button" data-split="0">Trial</button></div></div>
+</section>
+<div class="chat-check" aria-label="Actual 64 pixel chat size"><div class="sample"><img class="avatar" src="{{BASELINE_CHAT}}" alt="Approved Grifon at 64 pixels"><div><strong>Approved look</strong><p>Actual 64px chat size</p></div></div><div class="sample"><img class="avatar" src="{{CANDIDATE_CHAT}}" alt="Trial Grifon at 64 pixels"><div><strong>Material trial</strong><p>Actual 64px chat size</p></div></div></div>
+<p class="caption">{{VERDICT}} The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.</p>
+<p class="signature">GRIFON / 08 OCT 2026</p>
+</main>
+<script>
+const baseline=document.getElementById('baseline'),candidate=document.getElementById('candidate'),split=document.getElementById('split'),stage=document.getElementById('stage'),amount=document.getElementById('amount');
+const views={hero:{baseline:baseline.src,candidate:candidate.src},...{{VIEWS_JSON}}};
+const [baselineLabel,candidateLabel]=document.querySelectorAll('.labels span');
+function updateSplit(value){split.value=value;stage.style.setProperty('--split',value+'%');amount.value=value+'% approved';baselineLabel.hidden=Number(value)===0;candidateLabel.hidden=Number(value)===100;}
+split.addEventListener('input',()=>updateSplit(split.value));
+document.querySelectorAll('[data-split]').forEach(button=>button.addEventListener('click',()=>updateSplit(button.dataset.split)));
+document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{const view=button.dataset.view;baseline.src=views[view].baseline;candidate.src=views[view].candidate;baseline.alt='Approved Grifon, '+view+' view';candidate.alt='Trial Grifon, '+view+' view';document.querySelectorAll('[data-view]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));}));
+</script>
+</body>
+</html>

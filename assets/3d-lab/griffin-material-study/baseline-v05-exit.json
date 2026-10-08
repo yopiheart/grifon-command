@@ -1,0 +1,4 @@
+{
+  "command": "Blender background refine-griffin.py --look baseline --size 1000 --samples 96 --views hero",
+  "exit_code": 0
+}

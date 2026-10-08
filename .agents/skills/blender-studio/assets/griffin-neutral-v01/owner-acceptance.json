@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-08T12:52:07.702Z",
+  "status": "owner-preferred still finish; saved for future work",
+  "selected_look": "v01",
+  "owner": "Neil",
+  "preference_quote": "True, pero mas okay nga itong material trial, kasi ung approved parangg yellowish based dun sa comparison slide.  Pero still parehas parin maganda..",
+  "save_request_quote": "So save mo nalng para atleast in the future gantong quality na rin :)",
+  "reason": "More neutral cream appearance under less yellow studio lighting; preserve approved identity and restrained gold accents.",
+  "scope": "Preferred soft-character still material/light reference and repeatable production discipline. Runtime promotion, rig/motion changes and new paid operations are outside this acceptance.",
+  "source": {
+    "path": "refine-griffin.py",
+    "bytes": 14646,
+    "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+  },
+  "render_manifest": {
+    "path": "candidate-final/manifest.json",
+    "bytes": 92954,
+    "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc",
+    "path_base": "Originating assets/3d-lab/griffin-material-study directory",
+    "bundled_path": "render-manifest.json"
+  },
+  "views": [
+    {
+      "path": "griffin-material-final-hero.png",
+      "bytes": 2433762,
+      "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+    },
+    {
+      "path": "griffin-material-final-front.png",
+      "bytes": 1278188,
+      "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+    },
+    {
+      "path": "griffin-material-final-detail.png",
+      "bytes": 1793589,
+      "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+    },
+    {
+      "path": "griffin-material-final-profile.png",
+      "bytes": 1244571,
+      "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+    },
+    {
+      "path": "griffin-material-final-transparent.png",
+      "bytes": 61398,
+      "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+    }
+  ],
+  "local_scene": {
+    "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+    "bytes": 35663778,
+    "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+  },
+  "runtime_promoted": false,
+  "independent_visual_evidence": "assets/design/griffin-material-study/qa/independent/hero-material-review.md",
+  "independent_limits": "Subtle larger-view depth improvement; no obvious 64px material advantage. Existing groom coherence and hidden-back review remain limited.",
+  "views_path_base": "Originating candidate-final directory; identical filenames within the bundled skill asset directory"
+}

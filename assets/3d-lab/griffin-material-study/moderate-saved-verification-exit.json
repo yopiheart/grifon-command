@@ -1,0 +1,4 @@
+{
+  "purpose": "Read-only reload and compare the actual saved moderate baseline and v01 candidate geometry and palette",
+  "exit_code": 0
+}

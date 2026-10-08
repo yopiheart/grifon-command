@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "kind": "Persistent local asset storage; no off-device binary backup",
+  "copy_verified": true,
+  "files": [
+    {
+      "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\griffin-material-final.blend",
+      "bytes": 35663778,
+      "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+    },
+    {
+      "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\refine-griffin.py",
+      "bytes": 14646,
+      "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+    },
+    {
+      "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-material-study-2026-10-08\\manifest.json",
+      "bytes": 92954,
+      "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "status": "Owner comparison; not accepted or integrated",
+  "selectedLook": "v01",
+  "views": {
+    "hero": {
+      "baseline": {
+        "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-hero.png",
+        "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786"
+      },
+      "candidate": {
+        "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-hero.png",
+        "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+      }
+    },
+    "front": {
+      "baseline": {
+        "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-front.png",
+        "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc"
+      },
+      "candidate": {
+        "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-front.png",
+        "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+      }
+    },
+    "detail": {
+      "baseline": {
+        "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-detail.png",
+        "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2"
+      },
+      "candidate": {
+        "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-detail.png",
+        "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+      }
+    },
+    "profile": {
+      "baseline": {
+        "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-profile.png",
+        "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf"
+      },
+      "candidate": {
+        "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-profile.png",
+        "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+      }
+    }
+  },
+  "chat": {
+    "baseline": {
+      "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-transparent.png",
+      "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70"
+    },
+    "candidate": {
+      "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-transparent.png",
+      "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+    }
+  },
+  "verdict": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain."
+}

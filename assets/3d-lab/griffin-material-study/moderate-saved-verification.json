@@ -1,0 +1,1785 @@
+{
+  "schema": 1,
+  "stage": "saved still-master verification; no rig or runtime validation",
+  "pass": true,
+  "device": "CPU",
+  "blender": "5.2.2 LTS",
+  "input_hashes": {
+    "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-master-v05.blend": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-v05\\griffin-baseline-v05.blend": "ae705fd02eff76905f90a6348bb2323ac94ff30badba7062df013e738226e49d",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-v01\\griffin-material-v01.blend": "16a9a6e5d7455022cf4f6ed878b987727a6cf936cd2608574c7614ab9ee54fa2"
+  },
+  "native_curves": 404000,
+  "mesh_topology_positions_attributes_transforms_exact": true,
+  "curve_positions_radii_attributes_transforms_exact": true,
+  "palette_material_bindings_nonmetallic_identity_exact": true,
+  "matched_final_hero_camera": true,
+  "read_only_source_integrity": true,
+  "geometry": {
+    "Continuous griffin silhouette": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 305602,
+          "sha256": "e210e0cb5d41dab00dcb2fa2528dcfbdeecac93f6cccc62a6599c8f9e39b4338"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 611200,
+          "sha256": "13abd5643a3bf4c8ebf55588cc767d3ba0e884faf0c6b5d24a3ecb7459412a3d"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 1222400,
+          "sha256": "9e3f8c7e23a121fe081a9051a4ac2628ef3c75784af01fde99d47d9063496226"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 1222400,
+          "sha256": "854bc3d83b52d45762bdebc05b8833928bf361c423e88a7e09c5b189a4a7e69c"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 305602,
+          "sha256": "8b690cccba108dbf8c9e16332346a94f7309acfa73ee1904aaa6e1cf11244bb5"
+        }
+      },
+      "material_slots": [
+        "Graphite feather base"
+      ],
+      "vertices": 305602,
+      "edges": 611200,
+      "polygons": 305600,
+      "loops": 1222400,
+      "positions": "e210e0cb5d41dab00dcb2fa2528dcfbdeecac93f6cccc62a6599c8f9e39b4338",
+      "edges_sha256": "13abd5643a3bf4c8ebf55588cc767d3ba0e884faf0c6b5d24a3ecb7459412a3d",
+      "loop_indices": "9e3f8c7e23a121fe081a9051a4ac2628ef3c75784af01fde99d47d9063496226",
+      "face_starts": "1514dd51794bc448baa68abc31bc4450948b2283e94225d67f7c33e5fb915f87",
+      "face_counts": "18ddc1f4e153da73a18c72ad9856e455ac37f962bd9e6bbaece54111f0a6166e"
+    },
+    "Integrated cream facial disc": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 3201,
+          "sha256": "a6f012c35d710e5b28663486974f913236ca9098bf90f4928d42c1cf39bbd40a"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 6400,
+          "sha256": "97ed17cd3058ec221e7cfffb93d03d698a8dd4609e673dd341a32d9e3ca62c7a"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 3200,
+          "sha256": "b44391f206168cd968bdabee69566d4926087a420750ad7977f7e8ee7d15c6b4"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 3200,
+          "sha256": "5a312281df4bd8dfbb4d4a94ad0bf44d01bb8cfced1206b90e21b4ca0568cdb1"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 3201,
+          "sha256": "5d2792511ac95cb0ef759f56830cc84a432b9cd98f2b9c8d2999ddeb428e1b10"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 6400,
+          "sha256": "b2edd1204dbcc1b50da61e6c206491a249d4e9e5a770182d685a1b1b307bc849"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 12672,
+          "sha256": "b158eb9b589d8350a7f0a522866e8d60636b0c4dd0b884aca3869d8b0d87a2aa"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 12672,
+          "sha256": "08fd2da994f8073293a3be2d0781df3c3beba2256d2a20c1202179d7304aca8b"
+        }
+      },
+      "material_slots": [
+        "Warm cream facial down"
+      ],
+      "vertices": 3201,
+      "edges": 6400,
+      "polygons": 3200,
+      "loops": 12672,
+      "positions": "5d2792511ac95cb0ef759f56830cc84a432b9cd98f2b9c8d2999ddeb428e1b10",
+      "edges_sha256": "b2edd1204dbcc1b50da61e6c206491a249d4e9e5a770182d685a1b1b307bc849",
+      "loop_indices": "b158eb9b589d8350a7f0a522866e8d60636b0c4dd0b884aca3869d8b0d87a2aa",
+      "face_starts": "60e6688d7b526dcacf3b334677e7ad73831c2a4a156386aa72f6b6910e8e8084",
+      "face_counts": "cf48019dca468ae805bc7dc2da58af5d1ec9246023e3a00c4fbf3afb8d178a96"
+    },
+    "Left glossy eye": {
+      "type": "MESH",
+      "transform": [
+        0.9743700623512268,
+        -0.22495104372501373,
+        0.0,
+        -0.32499998807907104,
+        0.22495104372501373,
+        0.9743700623512268,
+        0.0,
+        -0.6128948926925659,
+        0.0,
+        0.0,
+        1.0,
+        1.7400000095367432,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "d0ea0d4f2bf621d2e42f4c849128a7a192b3e42a83c187e7c7e1cae7c037d65a"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "093c92fd9ae9c82b3db3183cb17fe81a0430065aa811425852726e93354fbe63"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f58bfce69a8827b7d777491233ea70c64496277167a8940cd6d3262c4714c626"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "4fd49f9bdb750657b15e232707d8a60711b26d00a9875aa77faf67a6480fa8ea"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "5daf358c56c3d96533a4f367c6b6c2928c522013758ad35391db255154022b5b"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "723734f678487b597165935198de911812abbbefbb77b5a90ada940fdb00fc58"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "33235175e2fbf1bdcdf8018657b761897ee95524cb7ff6119e5980c2430f83af"
+        }
+      },
+      "material_slots": [
+        "Obsidian eye"
+      ],
+      "vertices": 1490,
+      "edges": 3024,
+      "polygons": 1536,
+      "loops": 6048,
+      "positions": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0",
+      "edges_sha256": "5daf358c56c3d96533a4f367c6b6c2928c522013758ad35391db255154022b5b",
+      "loop_indices": "723734f678487b597165935198de911812abbbefbb77b5a90ada940fdb00fc58",
+      "face_starts": "aea2d1a8a5d1050aa7515e39441bedcf5f31f85673fc376c12695360b3e68951",
+      "face_counts": "222a161e3ef9d0798b865fd29b2e6c3796c71474cd2a2ab3a10a48904ef64454"
+    },
+    "Right glossy eye": {
+      "type": "MESH",
+      "transform": [
+        0.9743700623512268,
+        0.22495104372501373,
+        0.0,
+        0.32499998807907104,
+        -0.22495104372501373,
+        0.9743700623512268,
+        0.0,
+        -0.6128948926925659,
+        0.0,
+        0.0,
+        1.0,
+        1.7400000095367432,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "4fa80a05a07b1ef137a69deadaaa3ba33c0a7e2963b0fef189875f201dc54a38"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "093c92fd9ae9c82b3db3183cb17fe81a0430065aa811425852726e93354fbe63"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f58bfce69a8827b7d777491233ea70c64496277167a8940cd6d3262c4714c626"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "4fd49f9bdb750657b15e232707d8a60711b26d00a9875aa77faf67a6480fa8ea"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "2388ccb87066d570c65dafee1c5aa80648ea2b62a0e3cd06d970e25520a8af0e"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "69547b253a29281f957b76cb68bde92bd8e925b44cd88662f6780e7f971815d7"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "862b5872cc1acea4a22d67b985a7f9d87374700f2ced1479af4519eafa33a39f"
+        }
+      },
+      "material_slots": [
+        "Obsidian eye"
+      ],
+      "vertices": 1490,
+      "edges": 3024,
+      "polygons": 1536,
+      "loops": 6048,
+      "positions": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0",
+      "edges_sha256": "2388ccb87066d570c65dafee1c5aa80648ea2b62a0e3cd06d970e25520a8af0e",
+      "loop_indices": "69547b253a29281f957b76cb68bde92bd8e925b44cd88662f6780e7f971815d7",
+      "face_starts": "63481ff83e4a0f63d1d6cd4b4d59916a9112f7709e49c0d966d34fe663c96368",
+      "face_counts": "7f2af157e2ac23fe86583f3e35e794a891484bc99990a2c2b044279f2a2a871c"
+    },
+    "Compact hooked upper beak": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 4994,
+          "sha256": "270ea6da2477683d0dd5f93c566611d33ec274658ed92d67457c57bcdbace3a3"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 9984,
+          "sha256": "d0242da8efe9d84df165ca7f2c467bd3ec6d273c5f6cf8a336248dd3cbd26e74"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 19968,
+          "sha256": "6e8e334fe55c9f3d5a950b50ad14106de5ebd55fac25a4ffb3a410f94c5754da"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 19968,
+          "sha256": "57f06eeaab5458e1db8080dcfa9e7df326b9b6f3730660ceabd756e07c8a3385"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 4994,
+          "sha256": "3535aefeb8a0e532cec959ea170f32491c06b7ecc9d2455a51e731ae3191aaf4"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 9984,
+          "sha256": "cf5779924e5a99920a5ccb78f67683975a0f75562fdc5bfe671125aa3f079f6e"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 4992,
+          "sha256": "44822aebebfdc284d20f5d592e0f5c2d0d4b86f70abe5f8a8b3dfd2e3f810e91"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 4992,
+          "sha256": "3b628fecece8197f561fb51e00f8fb1ad33c4e4bc3ff7b0a5d8ba1eb9ed8cb49"
+        }
+      },
+      "material_slots": [
+        "Warm golden beak and feather tips"
+      ],
+      "vertices": 4994,
+      "edges": 9984,
+      "polygons": 4992,
+      "loops": 19968,
+      "positions": "270ea6da2477683d0dd5f93c566611d33ec274658ed92d67457c57bcdbace3a3",
+      "edges_sha256": "d0242da8efe9d84df165ca7f2c467bd3ec6d273c5f6cf8a336248dd3cbd26e74",
+      "loop_indices": "6e8e334fe55c9f3d5a950b50ad14106de5ebd55fac25a4ffb3a410f94c5754da",
+      "face_starts": "73c362e432887b1f12e831801122f2f3a601b964d8bda78b65126d6815fda25c",
+      "face_counts": "7ff8ae9ab0aa9adbce915361377f001074ebdd4387ae8bb92df369d50e062583"
+    },
+    "Integrated lower beak": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 2690,
+          "sha256": "e45ef2873cd1442cd17e1bc1ff8aee3fef0b3417e42e5d9158ac3615818d7e13"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 5376,
+          "sha256": "922477796d1a486522465140f60189c655dc9f84509b55973a12ff1edfa1c139"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 10752,
+          "sha256": "a68ec6b4039c42f79e534b40b3bb6279dfe0130d7dbbb368b11d2ec26bd2607a"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 10752,
+          "sha256": "26e5fa14e58dc166477a1c3467477aa58de5e3c8007e4eaf028701bcbc6036d7"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 2690,
+          "sha256": "2ff4b0fe7a9ef83abcc7bc5cdb04469f0cb840aede0cd317223fd7e531dc3906"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 5376,
+          "sha256": "c800fc588c7f5d05ee0e1d6a3d0b182465e4a6ff28c85c20b188e3437d1e4630"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 2688,
+          "sha256": "588b1bea0cec08685bbc845b232ccb924e129421942bd1ab3065b6e7f79a3bef"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 2688,
+          "sha256": "bb270d5b01806f81489807bec2d3a07d07d3df4ecca188d9390cf4323ddbbee1"
+        }
+      },
+      "material_slots": [
+        "Warm golden beak and feather tips"
+      ],
+      "vertices": 2690,
+      "edges": 5376,
+      "polygons": 2688,
+      "loops": 10752,
+      "positions": "e45ef2873cd1442cd17e1bc1ff8aee3fef0b3417e42e5d9158ac3615818d7e13",
+      "edges_sha256": "922477796d1a486522465140f60189c655dc9f84509b55973a12ff1edfa1c139",
+      "loop_indices": "a68ec6b4039c42f79e534b40b3bb6279dfe0130d7dbbb368b11d2ec26bd2607a",
+      "face_starts": "0dd554b8a19ec8e41c3f20c3e237984cd3393818c01680fcabc24b343d4cfb24",
+      "face_counts": "ab6613cd21c304f53d7b14b27ba271199f5808a88c7f1477fa5c7f1a5c4166a5"
+    },
+    "Mouth shadow": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -0.6499999761581421,
+        0.0,
+        0.0,
+        1.0,
+        1.527999997138977,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "4b66d3f1a218887df9600965e6380a5927ba58ad0bcaa3df39b937cb5b26440d"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "093c92fd9ae9c82b3db3183cb17fe81a0430065aa811425852726e93354fbe63"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f58bfce69a8827b7d777491233ea70c64496277167a8940cd6d3262c4714c626"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "4fd49f9bdb750657b15e232707d8a60711b26d00a9875aa77faf67a6480fa8ea"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "d4c167ca470cad4eb719914090e4d26dcea140021e75ef19ef00fbec53466272"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f94711fdd9fc4ae5da695549631dbd47d039a0e673b5c1425a9db4406983388f"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "5f2cfe09bab86dfaa2e652a596e8bb1fd847c24b222d91657f7c93f24cd40735"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "99da77fbbc9333a0d78d55987281a80403fde78dc997b7456e14f2a42b196ae7"
+        }
+      },
+      "material_slots": [
+        "Beak mouth interior"
+      ],
+      "vertices": 1490,
+      "edges": 3024,
+      "polygons": 1536,
+      "loops": 6048,
+      "positions": "d4c167ca470cad4eb719914090e4d26dcea140021e75ef19ef00fbec53466272",
+      "edges_sha256": "f94711fdd9fc4ae5da695549631dbd47d039a0e673b5c1425a9db4406983388f",
+      "loop_indices": "5f2cfe09bab86dfaa2e652a596e8bb1fd847c24b222d91657f7c93f24cd40735",
+      "face_starts": "ee99c62f0a89d08dd373b96b69b3fb0698390a1dccd07b3c84cfe5519ea91e52",
+      "face_counts": "934ae7e823462f45dea432bdf91f8615ffd75baa35fd1c48967a3fbaa7fec24f"
+    },
+    "Subtle beak nostril": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        -0.05700000002980232,
+        0.0,
+        1.0,
+        0.0,
+        -0.7789999842643738,
+        0.0,
+        0.0,
+        1.0,
+        1.6759999990463257,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "06347360d1c24aa0d9ce3426d515bb17ca72a7b934270b6c96d132ff5323a9e2"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "093c92fd9ae9c82b3db3183cb17fe81a0430065aa811425852726e93354fbe63"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f58bfce69a8827b7d777491233ea70c64496277167a8940cd6d3262c4714c626"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "4fd49f9bdb750657b15e232707d8a60711b26d00a9875aa77faf67a6480fa8ea"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "05ce2e7fd039ad61b6a84e8dcc87a16d467d668b26aa6b6a658f40735b1ba266"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "469b56cb1b53c49693879049428359a0794e6e5066ed5d1bf2938094c1b491af"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "c36782fea0c259075999fcd30d8e3f441db6d70818d46ccedddf01dc5a525f2f"
+        }
+      },
+      "material_slots": [
+        "Beak mouth interior"
+      ],
+      "vertices": 1490,
+      "edges": 3024,
+      "polygons": 1536,
+      "loops": 6048,
+      "positions": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7",
+      "edges_sha256": "05ce2e7fd039ad61b6a84e8dcc87a16d467d668b26aa6b6a658f40735b1ba266",
+      "loop_indices": "469b56cb1b53c49693879049428359a0794e6e5066ed5d1bf2938094c1b491af",
+      "face_starts": "ae7efd533115fda237eb153711cb460ce306f54c491d3ad2c9f46f3da038d5d3",
+      "face_counts": "9dd70c8295d7d392683d15114fb50d38050d5cae511fce38597052f2f4ec5faa"
+    },
+    "Subtle beak nostril.001": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.05700000002980232,
+        0.0,
+        1.0,
+        0.0,
+        -0.7789999842643738,
+        0.0,
+        0.0,
+        1.0,
+        1.6759999990463257,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "5b029e2e382d4bca5410cb87cc4b5ccaf395a1c6736da8970a425554d138047b"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "093c92fd9ae9c82b3db3183cb17fe81a0430065aa811425852726e93354fbe63"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f58bfce69a8827b7d777491233ea70c64496277167a8940cd6d3262c4714c626"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "4fd49f9bdb750657b15e232707d8a60711b26d00a9875aa77faf67a6480fa8ea"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "fd1bb4b177b11bc89d24a1881557261258f3ca313fd68c20ef16ebb1aa2aa7e4"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "3dcf8bdfa07fa04b25c948926e67d1e53926157a7e0fad2a8b73312d95047a6f"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "a1542626e9f360ccbd68f2cc3cce5884daf07cd2d3f703a0a7378f5bd2eb5a95"
+        }
+      },
+      "material_slots": [
+        "Beak mouth interior"
+      ],
+      "vertices": 1490,
+      "edges": 3024,
+      "polygons": 1536,
+      "loops": 6048,
+      "positions": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7",
+      "edges_sha256": "fd1bb4b177b11bc89d24a1881557261258f3ca313fd68c20ef16ebb1aa2aa7e4",
+      "loop_indices": "3dcf8bdfa07fa04b25c948926e67d1e53926157a7e0fad2a8b73312d95047a6f",
+      "face_starts": "228d3dea7093dd1895a7a644bcb764d5d730c052f4b253d69a87ef60e3b494f9",
+      "face_counts": "3f7371ba370f72970026b5429dbc3db9ff77b3d8953c4230dfabeec0129e1d55"
+    },
+    "Left folded wing": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 3522,
+          "sha256": "3ec1d0854848066b89183f32e2901fedf8de8fc7266ff5234741b1534b70626e"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 7040,
+          "sha256": "296a39dfbe1e0473e616f5c0c397d7b367e3316efe228cc26d0e05a32b0648c6"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 14080,
+          "sha256": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 14080,
+          "sha256": "fb1a30ee57d7794e5b50dea07a24c5c504b2f190d03a7a71d153aa1764bca657"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 3522,
+          "sha256": "cc6655fb1059708c3cbe019930ce7d81a4291c1db3eb458ba6d17733119c468e"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 7040,
+          "sha256": "42c92bcd0d2be7cedfee38f769ae1078b141b110b99ea737ae19783b7ba5118d"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 3520,
+          "sha256": "51a5de574b6ce3bbb29adb4d720c9e47fa77df7722e05421fefa4eef715ccc67"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 3520,
+          "sha256": "36a26ecce01fa5b0397415be067d3d275359a48fce772eb50a916862e0bec1d6"
+        }
+      },
+      "material_slots": [
+        "Graphite feather base"
+      ],
+      "vertices": 3522,
+      "edges": 7040,
+      "polygons": 3520,
+      "loops": 14080,
+      "positions": "3ec1d0854848066b89183f32e2901fedf8de8fc7266ff5234741b1534b70626e",
+      "edges_sha256": "296a39dfbe1e0473e616f5c0c397d7b367e3316efe228cc26d0e05a32b0648c6",
+      "loop_indices": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3",
+      "face_starts": "881defe99083f0d817bcb2d7637915c5f978d3a63717335c296a794f3066429b",
+      "face_counts": "c31a926ead6731b8ccd24c916a004578ba23adade47e7659e5077f95a7df80ea"
+    },
+    "Left gold inner wing": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 2882,
+          "sha256": "142a09164a6f844968902b9b797023a62309974ddbece00f62ee4206d14f6d7e"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 5760,
+          "sha256": "6f1c1b9fecd4c88b7b57b22ff615d2fad51e0d47accc818561bff6251141a243"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 11520,
+          "sha256": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 11520,
+          "sha256": "fe59a8a0e9c46b1fec48232f0a8935d30fcb7572fd6371de586622e394ead225"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 2882,
+          "sha256": "002ccec83fc64a1852c384ab4b81c5f448aa29b845a768568b63738cf6c57a80"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 5760,
+          "sha256": "456bd8a0ef2e0e2ebb3931371b534882e27c35039fd6e482974cdf1c7b4fa7b1"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 2880,
+          "sha256": "622d3b9a7b3c441b2074dcfde5d7c3dec836938b11a6660f9266e0c62f46899e"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 2880,
+          "sha256": "39a68c2004ed4a20edb148b72e5aabd663f15cce54b30d2ea1c106e839761ed5"
+        }
+      },
+      "material_slots": [
+        "Warm golden beak and feather tips"
+      ],
+      "vertices": 2882,
+      "edges": 5760,
+      "polygons": 2880,
+      "loops": 11520,
+      "positions": "142a09164a6f844968902b9b797023a62309974ddbece00f62ee4206d14f6d7e",
+      "edges_sha256": "6f1c1b9fecd4c88b7b57b22ff615d2fad51e0d47accc818561bff6251141a243",
+      "loop_indices": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf",
+      "face_starts": "7ec9ed6696734155f1d74d9b73c76c03c62042fdb06670cec0eed5abbbf3d5ae",
+      "face_counts": "61fb766d7f347802bc8f65d6ed860290390717b1252bbb6a5918964d3197aae2"
+    },
+    "Right folded wing": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 3522,
+          "sha256": "b3cd164c94a2bd53c3334303d212aba55b26fb9c8f939a334288e02b9d0acb1a"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 7040,
+          "sha256": "296a39dfbe1e0473e616f5c0c397d7b367e3316efe228cc26d0e05a32b0648c6"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 14080,
+          "sha256": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 14080,
+          "sha256": "fb1a30ee57d7794e5b50dea07a24c5c504b2f190d03a7a71d153aa1764bca657"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 3522,
+          "sha256": "cc6655fb1059708c3cbe019930ce7d81a4291c1db3eb458ba6d17733119c468e"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 7040,
+          "sha256": "42c92bcd0d2be7cedfee38f769ae1078b141b110b99ea737ae19783b7ba5118d"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 3520,
+          "sha256": "51a5de574b6ce3bbb29adb4d720c9e47fa77df7722e05421fefa4eef715ccc67"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 3520,
+          "sha256": "36a26ecce01fa5b0397415be067d3d275359a48fce772eb50a916862e0bec1d6"
+        }
+      },
+      "material_slots": [
+        "Graphite feather base"
+      ],
+      "vertices": 3522,
+      "edges": 7040,
+      "polygons": 3520,
+      "loops": 14080,
+      "positions": "b3cd164c94a2bd53c3334303d212aba55b26fb9c8f939a334288e02b9d0acb1a",
+      "edges_sha256": "296a39dfbe1e0473e616f5c0c397d7b367e3316efe228cc26d0e05a32b0648c6",
+      "loop_indices": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3",
+      "face_starts": "881defe99083f0d817bcb2d7637915c5f978d3a63717335c296a794f3066429b",
+      "face_counts": "c31a926ead6731b8ccd24c916a004578ba23adade47e7659e5077f95a7df80ea"
+    },
+    "Right gold inner wing": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 2882,
+          "sha256": "43338fde51e6bad3c8dfb8e58495a913c421fdbc5d7641c0a52ff59b0fecc01a"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 5760,
+          "sha256": "6f1c1b9fecd4c88b7b57b22ff615d2fad51e0d47accc818561bff6251141a243"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 11520,
+          "sha256": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 11520,
+          "sha256": "fe59a8a0e9c46b1fec48232f0a8935d30fcb7572fd6371de586622e394ead225"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 2882,
+          "sha256": "002ccec83fc64a1852c384ab4b81c5f448aa29b845a768568b63738cf6c57a80"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 5760,
+          "sha256": "456bd8a0ef2e0e2ebb3931371b534882e27c35039fd6e482974cdf1c7b4fa7b1"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 2880,
+          "sha256": "622d3b9a7b3c441b2074dcfde5d7c3dec836938b11a6660f9266e0c62f46899e"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 2880,
+          "sha256": "39a68c2004ed4a20edb148b72e5aabd663f15cce54b30d2ea1c106e839761ed5"
+        }
+      },
+      "material_slots": [
+        "Warm golden beak and feather tips"
+      ],
+      "vertices": 2882,
+      "edges": 5760,
+      "polygons": 2880,
+      "loops": 11520,
+      "positions": "43338fde51e6bad3c8dfb8e58495a913c421fdbc5d7641c0a52ff59b0fecc01a",
+      "edges_sha256": "6f1c1b9fecd4c88b7b57b22ff615d2fad51e0d47accc818561bff6251141a243",
+      "loop_indices": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf",
+      "face_starts": "7ec9ed6696734155f1d74d9b73c76c03c62042fdb06670cec0eed5abbbf3d5ae",
+      "face_counts": "61fb766d7f347802bc8f65d6ed860290390717b1252bbb6a5918964d3197aae2"
+    },
+    "Curled lion tail": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 5218,
+          "sha256": "9f2f1d5d53ce98915ab3cc7f43ebf9ce7bcb1e1bf73571492cf2782921277059"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 10432,
+          "sha256": "6a6ec0ba260a65d03c2ee3cf8a23e8afb0de233f7e7b12dbb7cc9d7558aabd85"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 20864,
+          "sha256": "9187b15fe455bf331b03e4c9f2d5a08d5238a849afd648345502ac89d90eb93e"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 20864,
+          "sha256": "640ae72f4c142740b0673c4513a75bebe1310e732d145a086de18afdb30a3922"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 5218,
+          "sha256": "7f73de1401b3ac9df87b0f59ffc3f26ffae7aa804ccba051c8e7a77cfca967fd"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 10432,
+          "sha256": "118c052f215b894c2df07a77bea137db0666eed4899d90c287d22526a4c03455"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 5216,
+          "sha256": "fbbadbf8fb6f7dbccb3eaf0fc5a0d7640a3914896a812d859307c711390f8dda"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 5216,
+          "sha256": "c40ecdf2a9e08c7bfa129b1953a4adaf545816f6747f6c9110bd223c24724ea8"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 5218,
+          "sha256": "594ab768d3bd2838d4d492261fe448d31c253cc8a53975f4bb6ec1ba272f5494"
+        }
+      },
+      "material_slots": [
+        "Graphite feather base"
+      ],
+      "vertices": 5218,
+      "edges": 10432,
+      "polygons": 5216,
+      "loops": 20864,
+      "positions": "9f2f1d5d53ce98915ab3cc7f43ebf9ce7bcb1e1bf73571492cf2782921277059",
+      "edges_sha256": "6a6ec0ba260a65d03c2ee3cf8a23e8afb0de233f7e7b12dbb7cc9d7558aabd85",
+      "loop_indices": "9187b15fe455bf331b03e4c9f2d5a08d5238a849afd648345502ac89d90eb93e",
+      "face_starts": "64fa9d4e1445b0b4d84986390301b22fc03c8a04bcd80dda235d01d4c17b7b7d",
+      "face_counts": "3b15a2b45d2e4cc89ada7a73e9998bc9cfaf16b13bba3fec09a1ce7ee77cced2"
+    },
+    "Rounded gold tail tip": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.9791253209114075,
+        0.0,
+        1.0,
+        0.0,
+        0.07999999821186066,
+        0.0,
+        0.0,
+        1.0,
+        0.5045632123947144,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "d09547464e2ac1bedf799b7f0f4efb8e802d047fe514a6d27edbf8bf5f0c5c0c"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "093c92fd9ae9c82b3db3183cb17fe81a0430065aa811425852726e93354fbe63"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "f58bfce69a8827b7d777491233ea70c64496277167a8940cd6d3262c4714c626"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "4fd49f9bdb750657b15e232707d8a60711b26d00a9875aa77faf67a6480fa8ea"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "564cbfafc869a8c6eb761a392caa5e792b546bf577af7fe808177b2fdf13cbb0"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1536,
+          "sha256": "80422bc3d307b4a25bdafcc84ac7fb01cb55a09810e8b0f37bb12e0edb5c48ca"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1490,
+          "sha256": "7fd66e1c7420a4dff0bcdbe95c8291688029ea9bec6efeddb970075b6648d5f2"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 3024,
+          "sha256": "9d8329bf06316e2f83582027f2336b0f441dd264e9ee2ec1737754ba04cedb8b"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "a66923a4b78dfebe84bb504292655377bc540698203666449d78f1b83cf29bc7"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 6048,
+          "sha256": "5e61ed30a8988f8e8e1a4de16b60ac839071869f9b15108fbf324c3848635c24"
+        }
+      },
+      "material_slots": [
+        "Warm golden beak and feather tips"
+      ],
+      "vertices": 1490,
+      "edges": 3024,
+      "polygons": 1536,
+      "loops": 6048,
+      "positions": "7fd66e1c7420a4dff0bcdbe95c8291688029ea9bec6efeddb970075b6648d5f2",
+      "edges_sha256": "9d8329bf06316e2f83582027f2336b0f441dd264e9ee2ec1737754ba04cedb8b",
+      "loop_indices": "a66923a4b78dfebe84bb504292655377bc540698203666449d78f1b83cf29bc7",
+      "face_starts": "d606e17d595a18deba72816aa267d49fa03e1b8c2520b5c772d203b2df18f220",
+      "face_counts": "c5232f4599198bc06e3d2df2de4a9be35572e08a4bb555ec61ffb93fe88b499f"
+    },
+    "Graphite short feather coat": {
+      "type": "CURVES",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 1200000,
+          "sha256": "e02af151a3c98861fae9117e39ff5cba681460579846a76cd14d9c2e8ba9cfe2"
+        },
+        "radius": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 1200000,
+          "sha256": "3afbcc2b4d216cada0423b66797d070c20ec362edc371383463ebbede8f71d4f"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 1200000,
+          "sha256": "492555f3b4016cf3894c8749b25a43faf6d70a5594053b634ee905e90a83fe46"
+        }
+      },
+      "material_slots": [
+        "Graphite short feather fibers"
+      ],
+      "curves": 240000,
+      "points": 1200000
+    },
+    "Cream fine facial down": {
+      "type": "CURVES",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 550000,
+          "sha256": "604b18e62ef27f52f802cd1b938b16be637094d7c00f8dcfea1d2696f71a4b39"
+        },
+        "radius": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 550000,
+          "sha256": "841a69fe110e18119800a80788b4db976f30249648c3004a4c2840ae00ed793c"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 550000,
+          "sha256": "76cfcffe6bd0a6dc5e8362126b17c04ce29ea6a3962ff2cee8710408e0aa3c17"
+        }
+      },
+      "material_slots": [
+        "Cream micro down fibers"
+      ],
+      "curves": 110000,
+      "points": 550000
+    },
+    "Folded wing fine feathers 0": {
+      "type": "CURVES",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 65000,
+          "sha256": "65141c0c9c3cafa5e4eea8b6f1c609d6eb570279fcf078cd838f8aafc4a04c9e"
+        },
+        "radius": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 65000,
+          "sha256": "5090e0b5e3718404557c3d56107aaa25d9a4dcad1a158b40419e858ffa133f4c"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 65000,
+          "sha256": "f68a41bf4c3957526a1b9ef341cd5392820624f65a677d695e6411a7e9860425"
+        }
+      },
+      "material_slots": [
+        "Graphite short feather fibers"
+      ],
+      "curves": 13000,
+      "points": 65000
+    },
+    "Folded wing fine feathers 1": {
+      "type": "CURVES",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 65000,
+          "sha256": "b1ff44c6e54a898f6695f4d6490156c0957cb23feb463f83993535d468115fcc"
+        },
+        "radius": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 65000,
+          "sha256": "5090e0b5e3718404557c3d56107aaa25d9a4dcad1a158b40419e858ffa133f4c"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 65000,
+          "sha256": "f68a41bf4c3957526a1b9ef341cd5392820624f65a677d695e6411a7e9860425"
+        }
+      },
+      "material_slots": [
+        "Graphite short feather fibers"
+      ],
+      "curves": 13000,
+      "points": 65000
+    },
+    "Tail short fine coat": {
+      "type": "CURVES",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 140000,
+          "sha256": "83569e6dadcbfba6003464adf1174cb21e5d628dacd02423b4ee3f117f86caa8"
+        },
+        "radius": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 140000,
+          "sha256": "6843bcaee49e2e196054676264736a0200fa80bc220bb480fd4335b4c6f86438"
+        },
+        "crest_gold": {
+          "type": "FLOAT",
+          "domain": "POINT",
+          "elements": 140000,
+          "sha256": "07a5f09dd9ad465ace66068921a3af44dbbb4c4d96bad7fa85fb6c871391d0f1"
+        }
+      },
+      "material_slots": [
+        "Graphite short feather fibers"
+      ],
+      "curves": 28000,
+      "points": 140000
+    },
+    "Studio floor": {
+      "type": "MESH",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -0.03999999910593033,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "attributes": {
+        "UVMap": {
+          "type": "FLOAT2",
+          "domain": "CORNER",
+          "elements": 4,
+          "sha256": "eeb394f1726eac2bb9656979b5b3190f0fc2bfc9a3df8e179d13da2ebc8c513a"
+        },
+        ".select_vert": {
+          "type": "BOOLEAN",
+          "domain": "POINT",
+          "elements": 4,
+          "sha256": "27ecd0a598e76f8a2fd264d427df0a119903e8eae384e478902541756f089dd1"
+        },
+        ".select_edge": {
+          "type": "BOOLEAN",
+          "domain": "EDGE",
+          "elements": 4,
+          "sha256": "27ecd0a598e76f8a2fd264d427df0a119903e8eae384e478902541756f089dd1"
+        },
+        ".select_poly": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1,
+          "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+        },
+        "sharp_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1,
+          "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+        },
+        ".uv_select_vert": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 4,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        },
+        ".uv_select_edge": {
+          "type": "BOOLEAN",
+          "domain": "CORNER",
+          "elements": 4,
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        },
+        ".uv_select_face": {
+          "type": "BOOLEAN",
+          "domain": "FACE",
+          "elements": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "position": {
+          "type": "FLOAT_VECTOR",
+          "domain": "POINT",
+          "elements": 4,
+          "sha256": "f69cbb67088dc9a345cdb801e2d5ecfdca2581181cb7cf0748038cb79debda84"
+        },
+        ".edge_verts": {
+          "type": "INT32_2D",
+          "domain": "EDGE",
+          "elements": 4,
+          "sha256": "b76d3b6400a4f6a225b69a9789af0a5fa7a712d07d3c9e7e40109498e47350c9"
+        },
+        ".corner_vert": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 4,
+          "sha256": "9e97865f268fbcc4190687a97d459d7ac09dfaded381b251528e2041ffe51739"
+        },
+        ".corner_edge": {
+          "type": "INT",
+          "domain": "CORNER",
+          "elements": 4,
+          "sha256": "81c1a5a2f482e82ca2c66653482ab24e6d90944bf183c8164e8f8f8d72db60db"
+        }
+      },
+      "material_slots": [
+        "Graphite studio floor"
+      ],
+      "vertices": 4,
+      "edges": 4,
+      "polygons": 1,
+      "loops": 4,
+      "positions": "f69cbb67088dc9a345cdb801e2d5ecfdca2581181cb7cf0748038cb79debda84",
+      "edges_sha256": "b76d3b6400a4f6a225b69a9789af0a5fa7a712d07d3c9e7e40109498e47350c9",
+      "loop_indices": "9e97865f268fbcc4190687a97d459d7ac09dfaded381b251528e2041ffe51739",
+      "face_starts": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "face_counts": "fb5e512425fc9449316ec95969ebe71e2d576dbab833d61e2a5b9330fd70ee02"
+    }
+  },
+  "palette": {
+    "Graphite feather base": {
+      "base_color": [
+        0.052000001072883606,
+        0.050999999046325684,
+        0.05000000074505806,
+        1.0
+      ],
+      "metallic": 0.0
+    },
+    "Warm cream facial down": {
+      "base_color": [
+        0.8199999928474426,
+        0.6899999976158142,
+        0.49000000953674316,
+        1.0
+      ],
+      "metallic": 0.0
+    },
+    "Warm golden beak and feather tips": {
+      "base_color": [
+        0.9599999785423279,
+        0.5600000023841858,
+        0.006000000052154064,
+        1.0
+      ],
+      "metallic": 0.0
+    },
+    "Obsidian eye": {
+      "base_color": [
+        0.001500000013038516,
+        0.00139999995008111,
+        0.0012000000569969416,
+        1.0
+      ],
+      "metallic": 0.0
+    }
+  },
+  "hero_camera": {
+    "position": [
+      2.700000047683716,
+      -8.0,
+      2.549999952316284
+    ],
+    "rotation": [
+      1.4505736827850342,
+      6.580533451483461e-09,
+      0.3254958689212799
+    ],
+    "scale": 3.75
+  }
+}

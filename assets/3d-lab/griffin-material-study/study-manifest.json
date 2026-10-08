@@ -1,0 +1,691 @@
+{
+  "schema": 1,
+  "stage": "Local Blender still look-development comparison; app and rig unchanged",
+  "selected_look": "v01",
+  "user_acceptance": "owner-preferred still finish; saved for future work",
+  "owner_acceptance": "owner-acceptance.json",
+  "declined_trial": "v02: visually immaterial compared with v01; retained",
+  "baseline": {
+    "path": "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/griffin-master-v05.blend",
+    "sha256": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7",
+    "hash_guard_required": true
+  },
+  "hardware": {
+    "date": "2026-10-08T19:18:41.1658723+08:00",
+    "blender": "5.2.2 LTS",
+    "device": "CPU",
+    "processor": [
+      {
+        "Name": "AMD Ryzen 5 PRO 4650G with Radeon Graphics",
+        "NumberOfCores": 6,
+        "NumberOfLogicalProcessors": 12
+      }
+    ],
+    "display": [
+      {
+        "Name": "AMD Radeon(TM) Graphics",
+        "AdapterRAM": 536870912
+      }
+    ]
+  },
+  "commands": {
+    "final_baseline": {
+      "executable": "C:/Program Files/Blender Foundation/Blender 5.2/blender.exe",
+      "arguments": [
+        "--background",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\refine-griffin.py",
+        "--",
+        "--input",
+        "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/griffin-master-v05.blend",
+        "--output",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final",
+        "--version",
+        "baseline-final",
+        "--look",
+        "baseline",
+        "--size",
+        "1500",
+        "--samples",
+        "160",
+        "--secondary-size",
+        "1100",
+        "--secondary-samples",
+        "96",
+        "--transparent-size",
+        "256",
+        "--transparent-samples",
+        "96",
+        "--views",
+        "hero",
+        "front",
+        "detail",
+        "profile",
+        "transparent"
+      ],
+      "exit_code": 0
+    },
+    "final_candidate": {
+      "executable": "C:/Program Files/Blender Foundation/Blender 5.2/blender.exe",
+      "arguments": [
+        "--background",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\refine-griffin.py",
+        "--",
+        "--input",
+        "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/griffin-master-v05.blend",
+        "--output",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final",
+        "--version",
+        "material-final",
+        "--look",
+        "v01",
+        "--size",
+        "1500",
+        "--samples",
+        "160",
+        "--secondary-size",
+        "1100",
+        "--secondary-samples",
+        "96",
+        "--transparent-size",
+        "256",
+        "--transparent-samples",
+        "96",
+        "--views",
+        "hero",
+        "front",
+        "detail",
+        "profile",
+        "transparent"
+      ],
+      "exit_code": 0
+    },
+    "final_saved_verification": {
+      "executable": "C:/Program Files/Blender Foundation/Blender 5.2/blender.exe",
+      "arguments": [
+        "--background",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "assets/3d-lab/griffin-material-study/verify-saved-study.py",
+        "--",
+        "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/griffin-master-v05.blend",
+        "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final.blend",
+        "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final.blend",
+        "assets/3d-lab/griffin-material-study/final-saved-verification.json"
+      ],
+      "exit_code": 0
+    },
+    "negative_control_verification": {
+      "purpose": "Verifier must reject isolated one-vertex geometry defect",
+      "executable": "C:/Program Files/Blender Foundation/Blender 5.2/blender.exe",
+      "arguments": [
+        "--background",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\verify-saved-study.py",
+        "--",
+        "C:/Users/ADMIN/.codex/visualizations/2026/10/06/01a1103d-37d8-7492-82be-40b3d829d725/griffin-master-v05.blend",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final\\griffin-baseline-final.blend",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\negative-control\\griffin-geometry-defect.blend",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\negative-control\\unexpected-pass-report.json"
+      ],
+      "observed_exit_code": 1,
+      "expected_nonzero": true,
+      "expected_geometry_diagnostic": true,
+      "assertion_passed": true
+    }
+  },
+  "proof": {
+    "saved_verification": "final-saved-verification.json",
+    "saved_verifier_source_sha256": "c0eb7ed843580d4f2e0f6cf0803633030f2e1146773625484b6018fcc44cd7f9",
+    "native_curves": 404000,
+    "exact_geometry_preserved": true,
+    "negative_control_rejected": true,
+    "negative_control_observed_exit_code": 1,
+    "quality_limit": "Uniform groom fringe remains; material-only trial does not replace groom or prove real-time fidelity."
+  },
+  "binary_storage": "Editable .blend and .blend1 remain in persistent local task storage and are ignored by Git. Sources, PNGs, manifests and proof can be Git-backed; no claim of remote binary backup. Replay requires the exact approved input file and deliberately refuses another master hash.",
+  "variants": [
+    {
+      "directory": "baseline-v05",
+      "look": "baseline",
+      "manifest": "baseline-v05/manifest.json",
+      "elapsed_seconds": 75.404,
+      "views": [
+        {
+          "name": "hero",
+          "seconds": 72.336,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75
+        }
+      ],
+      "files": [
+        {
+          "path": "griffin-baseline-v05.blend",
+          "bytes": 35663726,
+          "sha256": "ae705fd02eff76905f90a6348bb2323ac94ff30badba7062df013e738226e49d"
+        },
+        {
+          "path": "griffin-baseline-v05-hero.png",
+          "bytes": 1070870,
+          "sha256": "9ee431a56602bacb4a27ba98a9f1c578275b7d8f5366731421537344116d6ec9"
+        }
+      ]
+    },
+    {
+      "directory": "candidate-v01",
+      "look": "v01",
+      "manifest": "candidate-v01/manifest.json",
+      "elapsed_seconds": 71.222,
+      "views": [
+        {
+          "name": "hero",
+          "seconds": 68.481,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75
+        }
+      ],
+      "files": [
+        {
+          "path": "griffin-material-v01.blend",
+          "bytes": 35663775,
+          "sha256": "16a9a6e5d7455022cf4f6ed878b987727a6cf936cd2608574c7614ab9ee54fa2"
+        },
+        {
+          "path": "griffin-material-v01-hero.png",
+          "bytes": 1067617,
+          "sha256": "d5b3718623a206440fb7057d7ee5784f4f1b6bf35e2f3d9e05e29be4c8893d7c"
+        }
+      ]
+    },
+    {
+      "directory": "candidate-v02",
+      "look": "v02",
+      "manifest": "candidate-v02/manifest.json",
+      "elapsed_seconds": 77.476,
+      "views": [
+        {
+          "name": "hero",
+          "seconds": 74.433,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75,
+          "transparent": false
+        }
+      ],
+      "files": [
+        {
+          "path": "griffin-material-v02.blend",
+          "bytes": 35666044,
+          "sha256": "bef2306ae85dc71955769ecd362d8fd1f68cee28918e937adc7fb22e0c462de4"
+        },
+        {
+          "path": "griffin-material-v02-hero.png",
+          "bytes": 1064285,
+          "sha256": "bca6373e0b7388a3e9173fb7a80ba9b4c73754891a6210b9e9d05f1799938686"
+        },
+        {
+          "path": "refine-griffin.py",
+          "bytes": 13888,
+          "sha256": "d4551152b5dd8498872299917ed54a1d2dd9082e92f47ee991dc932b27a3e77c"
+        }
+      ]
+    },
+    {
+      "directory": "baseline-final",
+      "look": "baseline",
+      "manifest": "baseline-final/manifest.json",
+      "elapsed_seconds": 558.801,
+      "views": [
+        {
+          "name": "hero",
+          "seconds": 245.508,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75,
+          "transparent": false,
+          "resolution": 1500,
+          "samples": 160
+        },
+        {
+          "name": "front",
+          "seconds": 86.332,
+          "camera": [
+            0.0,
+            -8.0,
+            2.049999952316284
+          ],
+          "scale": 3.75,
+          "transparent": false,
+          "resolution": 1100,
+          "samples": 96
+        },
+        {
+          "name": "detail",
+          "seconds": 136.494,
+          "camera": [
+            1.5,
+            -7.0,
+            2.200000047683716
+          ],
+          "scale": 2.1500000953674316,
+          "transparent": false,
+          "resolution": 1100,
+          "samples": 96
+        },
+        {
+          "name": "profile",
+          "seconds": 83.03,
+          "camera": [
+            6.0,
+            -6.0,
+            2.5
+          ],
+          "scale": 3.75,
+          "transparent": false,
+          "resolution": 1100,
+          "samples": 96
+        },
+        {
+          "name": "transparent",
+          "seconds": 3.973,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75,
+          "transparent": true,
+          "resolution": 256,
+          "samples": 96
+        }
+      ],
+      "files": [
+        {
+          "path": "griffin-baseline-final.blend",
+          "bytes": 35663706,
+          "sha256": "8142552bece9a0c151e6cc2db066638f9f43beaa049c8ae1fcefd05a57746fb4"
+        },
+        {
+          "path": "griffin-baseline-final-hero.png",
+          "bytes": 2432774,
+          "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786"
+        },
+        {
+          "path": "griffin-baseline-final-front.png",
+          "bytes": 1279363,
+          "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc"
+        },
+        {
+          "path": "griffin-baseline-final-detail.png",
+          "bytes": 1768520,
+          "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2"
+        },
+        {
+          "path": "griffin-baseline-final-profile.png",
+          "bytes": 1284591,
+          "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf"
+        },
+        {
+          "path": "griffin-baseline-final-transparent.png",
+          "bytes": 60858,
+          "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70"
+        },
+        {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      ]
+    },
+    {
+      "directory": "candidate-final",
+      "look": "v01",
+      "manifest": "candidate-final/manifest.json",
+      "elapsed_seconds": 605.71,
+      "views": [
+        {
+          "name": "hero",
+          "seconds": 270.748,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75,
+          "transparent": false,
+          "resolution": 1500,
+          "samples": 160
+        },
+        {
+          "name": "front",
+          "seconds": 101.241,
+          "camera": [
+            0.0,
+            -8.0,
+            2.049999952316284
+          ],
+          "scale": 3.75,
+          "transparent": false,
+          "resolution": 1100,
+          "samples": 96
+        },
+        {
+          "name": "detail",
+          "seconds": 145.855,
+          "camera": [
+            1.5,
+            -7.0,
+            2.200000047683716
+          ],
+          "scale": 2.1500000953674316,
+          "transparent": false,
+          "resolution": 1100,
+          "samples": 96
+        },
+        {
+          "name": "profile",
+          "seconds": 80.893,
+          "camera": [
+            6.0,
+            -6.0,
+            2.5
+          ],
+          "scale": 3.75,
+          "transparent": false,
+          "resolution": 1100,
+          "samples": 96
+        },
+        {
+          "name": "transparent",
+          "seconds": 3.813,
+          "camera": [
+            2.700000047683716,
+            -8.0,
+            2.549999952316284
+          ],
+          "scale": 3.75,
+          "transparent": true,
+          "resolution": 256,
+          "samples": 96
+        }
+      ],
+      "files": [
+        {
+          "path": "griffin-material-final.blend",
+          "bytes": 35663778,
+          "sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499"
+        },
+        {
+          "path": "griffin-material-final-hero.png",
+          "bytes": 2433762,
+          "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+        },
+        {
+          "path": "griffin-material-final-front.png",
+          "bytes": 1278188,
+          "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+        },
+        {
+          "path": "griffin-material-final-detail.png",
+          "bytes": 1793589,
+          "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+        },
+        {
+          "path": "griffin-material-final-profile.png",
+          "bytes": 1244571,
+          "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+        },
+        {
+          "path": "griffin-material-final-transparent.png",
+          "bytes": 61398,
+          "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+        },
+        {
+          "path": "refine-griffin.py",
+          "bytes": 14646,
+          "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+        }
+      ]
+    }
+  ],
+  "builder_output_inventory": [
+    {
+      "path": ".gitignore",
+      "bytes": 17,
+      "sha256": "cd02a3d844235eb38199669606502087486e3da036f03e26de3ad727390994d1"
+    },
+    {
+      "path": "baseline-final-exit.json",
+      "bytes": 993,
+      "sha256": "0962d3bb29db504939fc6052d9e729d4b41132a554da5c22a6fe7fec6a58ddc2"
+    },
+    {
+      "path": "baseline-v05-exit.json",
+      "bytes": 132,
+      "sha256": "93a9bbf6bc38561de8d4af8ca089294b02f3dcce3a0f110927173f8deb46bb80"
+    },
+    {
+      "path": "candidate-final-exit.json",
+      "bytes": 989,
+      "sha256": "7c2446463f3183183702b7d93688cc8ad1acf6e0c2bc870bffa64d719d5842b6"
+    },
+    {
+      "path": "candidate-v01-exit.json",
+      "bytes": 127,
+      "sha256": "645e3d12cc898bab3e1190ac58d363bbc5928f561dc5941415fb7e2bfdc91962"
+    },
+    {
+      "path": "candidate-v02-exit.json",
+      "bytes": 127,
+      "sha256": "5d47b3be1adc174dc79348fa8af52445622b475826b07e27c03c0bab938ce5cc"
+    },
+    {
+      "path": "create-geometry-negative-control.py",
+      "bytes": 1451,
+      "sha256": "b9a665100ee76fb86359a55bff51384aaf41e923fd2fca3b0d76549dceeb784f"
+    },
+    {
+      "path": "final-saved-verification-exit.json",
+      "bytes": 160,
+      "sha256": "7727f81c1847e1a7c8e4438d1a0228e800d8dc66293798319f9e28940516c321"
+    },
+    {
+      "path": "final-saved-verification.json",
+      "bytes": 56898,
+      "sha256": "c3b5365ae163c45cfc270cd6e0523c188cd6c5e3a51a350c9e6944c45caee291"
+    },
+    {
+      "path": "hardware.json",
+      "bytes": 374,
+      "sha256": "13ce2f29fbbb8186df071d8c84c81420d16a750301b9b55552224c4677178d02"
+    },
+    {
+      "path": "inspect-geometry-attributes.py",
+      "bytes": 620,
+      "sha256": "7221a75e4328e54ab2b316f93578bc22e4e94b1b8aff99979fac9baeb4046afe"
+    },
+    {
+      "path": "moderate-saved-verification-exit.json",
+      "bytes": 144,
+      "sha256": "206dbc79ab2c740c37298018542649628da388666902054398822879fb3cfa1b"
+    },
+    {
+      "path": "moderate-saved-verification.json",
+      "bytes": 56753,
+      "sha256": "d1d2ee930029cd8f0153c8cd9e2763d9e20197a165812f1c0e86c0c0b8fc901b"
+    },
+    {
+      "path": "negative-control-create-exit.json",
+      "bytes": 85,
+      "sha256": "cebf511afb862164fb2752fae1f50854b0027a58e3eda60a91dae992af34ce92"
+    },
+    {
+      "path": "negative-control-verify-exit.json",
+      "bytes": 1102,
+      "sha256": "342d4967487208565d1f2a0bd64dbd814e6cc335fd72e5bf036fe3af04917d14"
+    },
+    {
+      "path": "refine-griffin.py",
+      "bytes": 14646,
+      "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+    },
+    {
+      "path": "trial-selection.json",
+      "bytes": 680,
+      "sha256": "9c9b0db1eb746939dee7dd0697314bce6abd6a9307cb519358235a3e1670ca07"
+    },
+    {
+      "path": "verify-saved-study.py",
+      "bytes": 6089,
+      "sha256": "c0eb7ed843580d4f2e0f6cf0803633030f2e1146773625484b6018fcc44cd7f9"
+    },
+    {
+      "path": "baseline-final/griffin-baseline-final-detail.png",
+      "bytes": 1768520,
+      "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2"
+    },
+    {
+      "path": "baseline-final/griffin-baseline-final-front.png",
+      "bytes": 1279363,
+      "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc"
+    },
+    {
+      "path": "baseline-final/griffin-baseline-final-hero.png",
+      "bytes": 2432774,
+      "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786"
+    },
+    {
+      "path": "baseline-final/griffin-baseline-final-profile.png",
+      "bytes": 1284591,
+      "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf"
+    },
+    {
+      "path": "baseline-final/griffin-baseline-final-transparent.png",
+      "bytes": 60858,
+      "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70"
+    },
+    {
+      "path": "baseline-final/manifest.json",
+      "bytes": 92918,
+      "sha256": "6febc6b1666e99c3a6194edea545757c57a66988887cb790dc1a9ddb0248e681"
+    },
+    {
+      "path": "baseline-final/refine-griffin.py",
+      "bytes": 14646,
+      "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+    },
+    {
+      "path": "baseline-v05/griffin-baseline-v05-hero.png",
+      "bytes": 1070870,
+      "sha256": "9ee431a56602bacb4a27ba98a9f1c578275b7d8f5366731421537344116d6ec9"
+    },
+    {
+      "path": "baseline-v05/manifest.json",
+      "bytes": 91029,
+      "sha256": "2edfbd24e9b021ab2684ad81c9dc97d21fddddf5463cc4c1fe55ad16f3fda56f"
+    },
+    {
+      "path": "baseline-v05/refine-griffin.py",
+      "bytes": 10616,
+      "sha256": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600"
+    },
+    {
+      "path": "candidate-final/griffin-material-final-detail.png",
+      "bytes": 1793589,
+      "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d"
+    },
+    {
+      "path": "candidate-final/griffin-material-final-front.png",
+      "bytes": 1278188,
+      "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349"
+    },
+    {
+      "path": "candidate-final/griffin-material-final-hero.png",
+      "bytes": 2433762,
+      "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65"
+    },
+    {
+      "path": "candidate-final/griffin-material-final-profile.png",
+      "bytes": 1244571,
+      "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b"
+    },
+    {
+      "path": "candidate-final/griffin-material-final-transparent.png",
+      "bytes": 61398,
+      "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6"
+    },
+    {
+      "path": "candidate-final/manifest.json",
+      "bytes": 92954,
+      "sha256": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc"
+    },
+    {
+      "path": "candidate-final/refine-griffin.py",
+      "bytes": 14646,
+      "sha256": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60"
+    },
+    {
+      "path": "candidate-v01/griffin-material-v01-hero.png",
+      "bytes": 1067617,
+      "sha256": "d5b3718623a206440fb7057d7ee5784f4f1b6bf35e2f3d9e05e29be4c8893d7c"
+    },
+    {
+      "path": "candidate-v01/manifest.json",
+      "bytes": 91064,
+      "sha256": "211fd0d30a5e9a728364c9ea1260cacecbd7151a7f0e884eb72932b2781f4d7c"
+    },
+    {
+      "path": "candidate-v01/refine-griffin.py",
+      "bytes": 10616,
+      "sha256": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600"
+    },
+    {
+      "path": "candidate-v02/griffin-material-v02-hero.png",
+      "bytes": 1064285,
+      "sha256": "bca6373e0b7388a3e9173fb7a80ba9b4c73754891a6210b9e9d05f1799938686"
+    },
+    {
+      "path": "candidate-v02/manifest.json",
+      "bytes": 96124,
+      "sha256": "bf63b22b783beb0486dcad1e76eb1472b2dc5d2113206f95fc4a4165b2c447a6"
+    },
+    {
+      "path": "candidate-v02/refine-griffin.py",
+      "bytes": 13888,
+      "sha256": "d4551152b5dd8498872299917ed54a1d2dd9082e92f47ee991dc932b27a3e77c"
+    },
+    {
+      "path": "negative-control/mutation.json",
+      "bytes": 896,
+      "sha256": "a207186719a15af1a2b76f17a0707af80be327e2a614358db8bc724d2f181356"
+    },
+    {
+      "path": "owner-acceptance.json",
+      "bytes": 2835,
+      "sha256": "9904b4a08137ca2f53eda033ee31267d8cbdf27c16303a2a9e707dd71146123a"
+    }
+  ],
+  "inventory_note": "Inventory excludes the manifest itself, local Blender binaries, raw command logs, and root-owned Markdown documentation. Per-run immutable sources and PNG hashes are included."
+}

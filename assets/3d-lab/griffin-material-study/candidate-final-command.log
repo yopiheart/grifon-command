@@ -1,0 +1,21 @@
+00:02.859  blend            | Read blend: "C:\Users\ADMIN\.codex\visualizations\2026\10\06\01a1103d-37d8-7492-82be-40b3d829d725\griffin-master-v05.blend"
+Info: Saved as "griffin-material-final.blend"
+STUDY_RENDER_START material-final hero
+04:35.828  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-hero.png'
+STUDY_RENDER_COMPLETE material-final hero C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-hero.png
+STUDY_RENDER_START material-final front
+06:17.094  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-front.png'
+STUDY_RENDER_COMPLETE material-final front C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-front.png
+STUDY_RENDER_START material-final detail
+08:43.000  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-detail.png'
+STUDY_RENDER_COMPLETE material-final detail C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-detail.png
+STUDY_RENDER_START material-final profile
+10:03.922  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-profile.png'
+STUDY_RENDER_COMPLETE material-final profile C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-profile.png
+STUDY_RENDER_START material-final transparent
+10:07.750  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-transparent.png'
+STUDY_RENDER_COMPLETE material-final transparent C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final-transparent.png
+{"version": "material-final", "geometry_identical": true, "curves": 404000, "output": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final", "seconds": 605.71}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit
