@@ -1,0 +1,11 @@
+# Live audio clock resolution
+
+**Source clock review passes; LP1 is resolved in source.** Preview SHA256 `d62d781c146269c709940eb1e6e3c61d9d14c716023e5def2ade710ee9b27d95` uses the audio media time to select native frames when sound is enabled. Silent playback keeps its elapsed performance clock. Restoring this one expression in memory reproduces the complete prior source hash `3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133`, confirming the production change is confined to the clock.
+
+Independent pure Node VM checks passed against the actual fixed source. A deferred 300ms audio start holds cue 66, media advancement follows frame 68, a further one-second media stall holds frame 68, and resumed media time follows frame 80. Pause preserves frame 80 and rejects the old RAF callback. Audible and silent native endings both stop at frame 931 with controls enabled; silent control snapshots match the old implementation exactly. The restored original clock advances to frames 74, 77 and 107 under the same startup/advancement/stall inputs.
+
+The new regression at `tests/unit/motionLaunchProject.test.ts:140` (SHA256 `5d17b40a6b8fb071ecc047bcb41bf887ed3d06cbd368e73f18bc28e1254b63dd`) tests delayed startup, buffering, resumed media, Pause, silence and final-frame replay. The builder reported the original version fails frame 74 versus expected 66, with 12 passes and one failure; the fixed version has 13 passes. This reviewer inspected that regression and ran the separate VM controls, without rerunning the suite or using a browser.
+
+Actual current-source browser alignment, final current-producer media receipts and refreshed delivery/checkout bindings remain root-owned gates. Native frame quantization and asynchronous drawing still need to be distinguished from clock drift in browser evidence. Historical 35/35 media results, the original standalone preview and fresh 31-file checkout proof remain valid for their original frozen tuple. Their immutable reports are preserved; they are not relabeled as current-source proof. The full 932-frame shader capture remains **NOT RUN**.
+
+Machine-readable hashes, baseline/fixed results and remaining gates are in `live-audio-clock-resolution.json`.

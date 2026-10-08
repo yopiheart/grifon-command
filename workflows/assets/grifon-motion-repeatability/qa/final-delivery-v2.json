@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_AND_DELIVERY_V2_REVIEW_PASS",
+  "reviewer": "Independent Codex review agent",
+  "scope": "Read-only final source, artifact, manifest, existing media evidence and work/index/fresh byte bindings. No browser, capture, FFmpeg, whole-suite test, repeated clock VM or source edit.",
+  "actionableSourceOrArtifactFindings": [],
+  "bindings": {
+    "previewProducerSha256": "d62d781c146269c709940eb1e6e3c61d9d14c716023e5def2ade710ee9b27d95",
+    "audioProducerSha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2",
+    "visualProducerSha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b",
+    "manifest": {
+      "path": "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+      "sha256": "3df54c12e037b65d8fd546f915d8711c1ef300680e2ecf9bb5e0a2aaa1ded9cc"
+    },
+    "mediaReport": {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/report.json",
+      "sha256": "9ac49d23d0e73d8c866be7057ba4c7733cae3b66b13935de8b290b4a301ae172",
+      "checks": 35,
+      "allChecksStatus": "PASS",
+      "producerBeforeAfterEqualAndMatchesCurrentSource": true
+    },
+    "standaloneArtifact": {
+      "path": "artifacts/grifon-motion-reuse-preview.html",
+      "bytes": 2317415,
+      "sha256": "b03318712755658ec0727278b04d747fbc2c6c449c3d042f745ae292abee2d1c",
+      "builderSha256": "65bb52a25ca778c771f8cd8b47295c1405ab7d66a84b4255577d7f380d771eda",
+      "receiptSha256": "a3d260aec86279aff5febc7207b265de8b1f8ede16b1df9e0fa211140c4633f8"
+    }
+  },
+  "currentClips": [
+    {
+      "id": "shader-landscape",
+      "movieSha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556",
+      "posterSha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0",
+      "nativeFromFrame": 222,
+      "nativeFrameCount": 90,
+      "durationSeconds": 3.003,
+      "dimensions": [960, 540],
+      "hasAudio": true,
+      "coldPictureSeconds": 37.024607100000004,
+      "verifiedRepeatSeconds": 1.060801099999997,
+      "repeatNewCapturedFrames": 0
+    },
+    {
+      "id": "basic-portrait",
+      "movieSha256": "8486bd06cc6d29a1750d3feebcb192aee8aba81928beec7d88eed88758c03871",
+      "posterSha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff",
+      "nativeFromFrame": 144,
+      "nativeFrameCount": 72,
+      "durationSeconds": 3,
+      "dimensions": [540, 960],
+      "hasAudio": true,
+      "coldPictureSeconds": 19.842787900000005,
+      "verifiedRepeatSeconds": 0.8715155000000013,
+      "repeatNewCapturedFrames": 0
+    }
+  ],
+  "artifactSourceAndBytesReview": {
+    "status": "PASS",
+    "review": "The current HTML payload decodes to exactly the two current manifest movies and posters. Actual bytes independently match manifest and standalone receipt hashes, and match the independently verified mux records. The source change uses a native download anchor; its synchronous click handler decodes the selected MP4 bytes into a video/mp4 Blob URL and assigns the selected filename. URLs are reused per selected clip and revoked on pagehide.",
+    "embeddedMovies": 2,
+    "embeddedPosters": 2,
+    "standaloneBuilderCurrentCheckoutCheck": { "exitCode": 0, "result": "PASS: byte-identical standalone preview" },
+    "standaloneBuilderFreshCheckoutCheck": { "exitCode": 0, "result": "PASS: byte-identical standalone preview" },
+    "externalResourceAttributes": 0,
+    "embeddedRawAudioSources": 0,
+    "networkPolicy": "connect-src 'none'",
+    "actualBrowserDownloadGate": "PENDING ROOT"
+  },
+  "freshCheckoutV2Review": {
+    "status": "PASS",
+    "receipt": "workflows/assets/grifon-motion-repeatability/qa/staged-checkout-v2.json",
+    "receiptSha256": "4a25298b6e936a0d5785d490a74aae7fd8f2cedbec892761c601cf34c90264a9",
+    "receiptCoreAutocrlf": "true",
+    "boundFilesIndependentlyRehashed": 59,
+    "method": "For all59 stagedBindings, independently read the current working file, actual staged git show :file bytes, and fresh git checkout-index copy. Byte lengths and SHA256 agree with the receipt for all three copies. Run the standalone --check independently in both checkouts.",
+    "mr4CurrentBoundSources": "CLOSED",
+    "acceptedOriginalsIndependentlyRehashed": 17,
+    "acceptedOriginalsStatus": "UNCHANGED",
+    "excludedDocumentation": "The receipt binds59 files from62 staged scope paths; NOW.md, .gitattributes and the workflow prose are not represented as part of those59 raw-byte bindings."
+  },
+  "scopeAndBenchmarkReview": {
+    "status": "PASS",
+    "workflowDocumentSha256": "6430a2506321b9f003d795fb3c8431fd0c7b217af1fc2ca8bc593705acbd4f9c",
+    "workflowDocumentLines": [199, 224],
+    "pictureTimingsAndCacheRepeatBindings": "Manifest cold timings match original picture totalMs, and repeat timings match currentRun.totalMs. Both repeated windows capture zero frames.",
+    "nativeBasicPortrait": { "frames": 288, "durationSeconds": 12, "dimensions": [1080, 1920], "pictureRenderAndVerificationSeconds": 80.9959689 },
+    "basicLandscapeScope": "Four-frame native layout control",
+    "firstAudioMasterSeconds": { "shader": 5.114648599999993, "basic": 1.65812539999999 },
+    "fullNewShaderCapture": "NOT RUN",
+    "claims": "Already authored local treatments only; timings exclude new-reference authoring and creative iterations. No customer SLA, automatic universal reference conversion, customer application integration or direct listening-quality acceptance is claimed.",
+    "protectedAppProviderControlDiffAgainstAccepted118a": "EMPTY",
+    "newStagedSecretSessionOrRawStemPaths": 0,
+    "providerCalls": 0,
+    "newSpendUsd": 0
+  },
+  "historyPreservationReview": {
+    "status": "PASS",
+    "initialMetadataPublicCopiesVerified": 2,
+    "initialPrivateCopiesVerified": 3,
+    "initialArtifactSha256": "1b64604e0432c5ec7ba5004e204f23f829074da975efc92a822ada2f34444af4",
+    "qualification": "Initial manifest/receipt have explicit historical public copies and the initial unaccepted HTML is preserved privately. Earlier failed attempts, old media evidence and initial fresh31 proof remain unchanged and are excluded from the current manifest. Current preview clock resolution is separately bound to d62d781.",
+    "priorReportsModifiedByReviewer": false
+  },
+  "remainingRootGates": [
+    "Current browser controls, actual MP4 download and live source audio/frame alignment checks are pending the independent headless browser run; no browser PASS is claimed by this review.",
+    "Required default repository suite remains pending root.",
+    "Before final commit, update NOW.md's interim initial-run timings36.19/19.92 and83.77 to the current37.02/19.84 and81.00, update narrow-check totals from actual final results, and record the completed freshv2 gate plus actual browser/default outcomes. Root has been notified."
+  ]
+}

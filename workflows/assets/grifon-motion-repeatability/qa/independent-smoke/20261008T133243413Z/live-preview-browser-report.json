@@ -1,0 +1,1136 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "engine": "Codex In-app Browser",
+  "scope": "Viewport/readability and actual local preview controls; no direct listening claim",
+  "checks": [
+    {
+      "name": "Portrait390x844 geometry",
+      "status": "PASS",
+      "evidence": {
+        "bodyWidth": 375,
+        "controls": [
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "play",
+            "width": 53.296875
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "back",
+            "width": 115.421875
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "next",
+            "width": 91.578125
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "format",
+            "width": 108
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "reload",
+            "width": 118.328125
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "sound",
+            "width": 107.515625
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "scrub",
+            "width": 325
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f0 / brand",
+            "width": 158.5
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f72 / describe",
+            "width": 158.5
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f144 / build",
+            "width": 158.5
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f216 / launch",
+            "width": 158.5
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f72 / self-contact-0",
+            "width": 158.5
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f144 / self-contact-1",
+            "width": 158.5
+          },
+          {
+            "disabled": false,
+            "height": 44,
+            "id": "f216 / self-contact-2",
+            "width": 158.5
+          }
+        ],
+        "documentWidth": 375,
+        "sound": false,
+        "status": "Frame 0 / 287 | 0.000s | brand",
+        "viewport": {
+          "height": 844,
+          "width": 375
+        },
+        "actualViewport": {
+          "clientWidth": 375,
+          "innerHeight": 844,
+          "innerWidth": 390,
+          "scrollWidth": 375
+        },
+        "note": "Classic browser scrollbar consumes15px of client width; CSS viewport remains390px."
+      }
+    },
+    {
+      "name": "Phone native shot navigation144",
+      "status": "PASS",
+      "evidence": {
+        "audio": {
+          "paused": true,
+          "readyState": 4,
+          "time": 0
+        },
+        "frame": 144,
+        "play": "Play",
+        "playDisabled": false,
+        "scrubDisabled": false,
+        "sound": "Enable sound",
+        "status": "Frame 144 / 287 | 6.000s | build"
+      }
+    },
+    {
+      "name": "Phone native cue navigation216",
+      "status": "PASS",
+      "evidence": {
+        "audio": {
+          "paused": true,
+          "readyState": 4,
+          "time": 0
+        },
+        "frame": 216,
+        "play": "Play",
+        "playDisabled": false,
+        "scrubDisabled": false,
+        "sound": "Enable sound",
+        "status": "Frame 216 / 287 | 9.000s | launch"
+      }
+    },
+    {
+      "name": "Phone exact native frame steps",
+      "status": "PASS",
+      "evidence": {
+        "previous": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 215,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 215 / 287 | 8.958s | build"
+        },
+        "next": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 216,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 216 / 287 | 9.000s | launch"
+        }
+      }
+    },
+    {
+      "name": "Phone actual slider scrubs native integer frame",
+      "status": "PASS",
+      "evidence": {
+        "home": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 0,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 0 / 287 | 0.000s | brand"
+        },
+        "next": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 1,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 1 / 287 | 0.042s | brand"
+        }
+      }
+    },
+    {
+      "name": "portrait native natural ending",
+      "status": "PASS",
+      "evidence": {
+        "audio": {
+          "paused": true,
+          "readyState": 4,
+          "time": 11.908994
+        },
+        "frame": 287,
+        "play": "Play",
+        "playDisabled": false,
+        "scrubDisabled": false,
+        "sound": "Disable sound",
+        "status": "Frame 287 / 287 | 11.958s | launch"
+      }
+    },
+    {
+      "name": "portrait natural progress and pause",
+      "status": "PASS",
+      "evidence": {
+        "playing": {
+          "audio": {
+            "paused": false,
+            "readyState": 4,
+            "time": 6.168712
+          },
+          "frame": 149,
+          "play": "Pause",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 149 / 287 | 6.208s | build"
+        },
+        "paused": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 6.232445
+          },
+          "frame": 150,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 150 / 287 | 6.250s | build"
+        }
+      }
+    },
+    {
+      "name": "portrait rapid Play Pause retains controls",
+      "status": "PASS",
+      "evidence": {
+        "state": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 6.464858
+          },
+          "frame": 156,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 156 / 287 | 6.500s | build"
+        }
+      }
+    },
+    {
+      "name": "portrait native144 preview sample agrees with exported poster",
+      "status": "PASS",
+      "evidence": {
+        "comparison": "Visual inspection of saved phone screenshot and independently decoded native144 PNG: same BUILD layout, muted initial entrance opacity, gold ground and three bottom rules; responsive scale only."
+      }
+    },
+    {
+      "name": "portrait desktop containment and44px controls",
+      "status": "PASS",
+      "evidence": {
+        "clientWidth": 1265,
+        "controls": [
+          {
+            "height": 44,
+            "label": "Play",
+            "width": 53.296875
+          },
+          {
+            "height": 44,
+            "label": "Previous frame",
+            "width": 115.421875
+          },
+          {
+            "height": 44,
+            "label": "Next frame",
+            "width": 91.578125
+          },
+          {
+            "height": 44,
+            "label": "landscapeportrait",
+            "width": 108
+          },
+          {
+            "height": 44,
+            "label": "Reload sources",
+            "width": 118.328125
+          },
+          {
+            "height": 44,
+            "label": "Disable sound",
+            "width": 110.390625
+          },
+          {
+            "height": 44,
+            "label": null,
+            "width": 1070
+          },
+          {
+            "height": 44,
+            "label": "f0 / brand",
+            "width": 261.5
+          },
+          {
+            "height": 44,
+            "label": "f72 / describe",
+            "width": 261.5
+          },
+          {
+            "height": 44,
+            "label": "f144 / build",
+            "width": 261.5
+          },
+          {
+            "height": 44,
+            "label": "f216 / launch",
+            "width": 261.5
+          },
+          {
+            "height": 44,
+            "label": "f72 / self-contact-0",
+            "width": 351.328125
+          },
+          {
+            "height": 44,
+            "label": "f144 / self-contact-1",
+            "width": 351.328125
+          },
+          {
+            "height": 44,
+            "label": "f216 / self-contact-2",
+            "width": 351.34375
+          }
+        ],
+        "scrollWidth": 1265,
+        "viewport": {
+          "height": 844,
+          "width": 1280
+        }
+      }
+    },
+    {
+      "name": "portrait live browser no warning/error logs",
+      "status": "PASS",
+      "evidence": {
+        "logs": []
+      }
+    },
+    {
+      "name": "basic format selector shows16by9 source",
+      "status": "PASS",
+      "evidence": {
+        "geometry": {
+          "height": 600.75,
+          "width": 1068
+        },
+        "state": {
+          "audio": {
+            "paused": true,
+            "readyState": 0,
+            "time": 0
+          },
+          "frame": 0,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 0 / 287 | 0.000s | brand"
+        }
+      }
+    },
+    {
+      "name": "shader exact shot222 native seek",
+      "status": "PASS",
+      "evidence": {
+        "audio": {
+          "paused": true,
+          "readyState": 4,
+          "time": 0
+        },
+        "frame": 222,
+        "play": "Play",
+        "playDisabled": false,
+        "scrubDisabled": false,
+        "sound": "Enable sound",
+        "status": "Frame 222 / 931 | 7.407s | rosette"
+      }
+    },
+    {
+      "name": "shader initial desktop containment (1280x720)",
+      "status": "PASS",
+      "evidence": {
+        "clientWidth": 1265,
+        "controls": [
+          {
+            "height": 44,
+            "label": "Play",
+            "width": 53.296875
+          },
+          {
+            "height": 44,
+            "label": "Previous frame",
+            "width": 115.421875
+          },
+          {
+            "height": 44,
+            "label": "Next frame",
+            "width": 91.578125
+          },
+          {
+            "height": 44,
+            "label": "landscape",
+            "width": 108
+          },
+          {
+            "height": 44,
+            "label": "Reload sources",
+            "width": 118.328125
+          },
+          {
+            "height": 44,
+            "label": "Enable sound",
+            "width": 107.515625
+          },
+          {
+            "height": 44,
+            "label": null,
+            "width": 1070
+          },
+          {
+            "height": 46,
+            "label": "f0 / locked-encoded-opening",
+            "width": 171.65625
+          },
+          {
+            "height": 46,
+            "label": "f222 / rosette",
+            "width": 171.671875
+          },
+          {
+            "height": 46,
+            "label": "f229 / polygon-strip",
+            "width": 171.671875
+          },
+          {
+            "height": 46,
+            "label": "f238 / dotted-aperture",
+            "width": 171.65625
+          },
+          {
+            "height": 46,
+            "label": "f255 / catalog-overlap",
+            "width": 171.671875
+          },
+          {
+            "height": 46,
+            "label": "f258 / catalog",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f306 / small-capability-lens",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f307 / capability-lens",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f344 / character-reprise",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f357 / twisting-point-shell",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f377 / folded-lobe-cluster",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f391 / folded-pinwheel",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f397 / chevron-one",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f400 / stepped-two",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f403 / zigzag-three",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f407 / stepped-four",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f410 / black-interruption",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f417 / particle-ribbon",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f445 / glyph-cream",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f459 / glyph-dark-gold",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f471 / glyph-rounded-gold",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f483 / glyph-translucent",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f496 / script-desktop",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f514 / script-reflow",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f518 / script-mobile",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f541 / script-whirl",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f547 / script-alternate",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f567 / storyboard",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f586 / canvas-push-type",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f608 / canvas-tear",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f610 / binary-canvas",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f626 / canvas-pullback",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f636 / canvas-erase",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f640 / end-pause",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f655 / end-hold",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f834 / end-exit",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f853 / black-tail",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f26 / first-lens",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f57 / warm-lens",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f82 / ring-reveal",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f91 / ring-material-1",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f97 / ring-material-2",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f104 / ring-material-3",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f111 / ring-material-4",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f119 / ring-material-5",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f126 / ring-material-6",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f132 / ring-material-7",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f145 / relief-reveal",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f209 / relief-desaturate",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f222 / macro-rosette",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f229 / macro-strip",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f238 / macro-dots",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f258 / catalog-swipe",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f307 / capability-dive",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f344 / character-material",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f357 / shell-turn",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f377 / lobe-landing",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f391 / pinwheel",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f397 / pattern-one",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f400 / pattern-two",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f403 / pattern-three",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f407 / pattern-four",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f417 / particle-reveal",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f445 / glyph-reveal",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f459 / glyph-metal",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f471 / glyph-round",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f483 / glyph-glass",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f496 / script-arrival",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f514 / responsive-select",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f547 / whirl-resolve",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f567 / storyboard-select",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f586 / canvas-push",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f590 / typed-E",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f596 / typed-A",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f600 / typed-D",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f603 / typed-S",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f608 / canvas-tear",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f626 / canvas-pullback",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f636 / erase-1",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f637 / erase-2",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f638 / erase-3",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f639 / erase-4",
+            "width": 171.671875
+          },
+          {
+            "height": 44,
+            "label": "f665 / logo-landing",
+            "width": 171.65625
+          },
+          {
+            "height": 44,
+            "label": "f834 / logo-recede",
+            "width": 171.671875
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1265,
+        "width": 1280
+      }
+    },
+    {
+      "name": "shader requested desktop1280x844 containment44px",
+      "status": "PASS",
+      "evidence": {
+        "clientWidth": 1265,
+        "height": 844,
+        "minimumControlHeight": 44,
+        "scrollWidth": 1265,
+        "width": 1280
+      }
+    },
+    {
+      "name": "shader cue navigation and native frame stepping",
+      "status": "PASS",
+      "evidence": {
+        "cue": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 229,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 229 / 931 | 7.641s | polygon-strip"
+        },
+        "next": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 230,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 230 / 931 | 7.674s | polygon-strip"
+        },
+        "previous": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 0
+          },
+          "frame": 229,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Enable sound",
+          "status": "Frame 229 / 931 | 7.641s | polygon-strip"
+        }
+      }
+    },
+    {
+      "name": "shader requested mobile390x844 containment44px",
+      "status": "PASS",
+      "evidence": {
+        "clientWidth": 375,
+        "height": 844,
+        "minimumControlHeight": 44,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "name": "shader native222 preview agrees with exported sample",
+      "status": "PASS",
+      "evidence": {
+        "comparison": "Desktop frame222 screenshot and independently decoded export PNG show matching rosette field and golden wave placement. Mobile raster detail aliases at reduced display size; no pixel-equality or new visual-acceptance claim."
+      }
+    },
+    {
+      "name": "shader natural progress and pause",
+      "status": "PASS",
+      "evidence": {
+        "playing": {
+          "audio": {
+            "paused": false,
+            "readyState": 4,
+            "time": 28.461766
+          },
+          "frame": 860,
+          "play": "Pause",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 860 / 931 | 28.695s | black-tail"
+        },
+        "paused": {
+          "audio": {
+            "paused": true,
+            "readyState": 4,
+            "time": 28.478288
+          },
+          "frame": 862,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 862 / 931 | 28.762s | black-tail"
+        }
+      }
+    },
+    {
+      "name": "shader rapid Play Pause leaves controls enabled",
+      "status": "PASS",
+      "evidence": {
+        "audio": {
+          "paused": true,
+          "readyState": 4,
+          "time": 28.983313
+        },
+        "frame": 870,
+        "play": "Play",
+        "playDisabled": false,
+        "scrubDisabled": false,
+        "sound": "Disable sound",
+        "status": "Frame 870 / 931 | 29.029s | black-tail"
+      }
+    },
+    {
+      "name": "shader natural native ending931",
+      "status": "PASS",
+      "evidence": {
+        "audio": {
+          "paused": true,
+          "readyState": 4,
+          "time": 31.060099
+        },
+        "frame": 931,
+        "play": "Play",
+        "playDisabled": false,
+        "scrubDisabled": false,
+        "sound": "Disable sound",
+        "status": "Frame 931 / 931 | 31.064s | black-tail"
+      }
+    },
+    {
+      "name": "shader slider native endpoints",
+      "status": "PASS",
+      "evidence": {
+        "home": {
+          "audio": {
+            "paused": true,
+            "readyState": 1,
+            "time": 0
+          },
+          "frame": 0,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 0 / 931 | 0.000s | locked-encoded-opening"
+        },
+        "end": {
+          "audio": {
+            "paused": true,
+            "readyState": 1,
+            "time": 31.064366
+          },
+          "frame": 931,
+          "play": "Play",
+          "playDisabled": false,
+          "scrubDisabled": false,
+          "sound": "Disable sound",
+          "status": "Frame 931 / 931 | 31.064s | black-tail"
+        }
+      }
+    },
+    {
+      "name": "shader live no console warning/errors",
+      "status": "PASS",
+      "evidence": {
+        "logs": []
+      }
+    }
+  ],
+  "shots": [
+    {
+      "file": "live-portrait-390x844-ready.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "ready"
+    },
+    {
+      "file": "live-portrait-390x844-frame144.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "nativeFrame": 144
+    },
+    {
+      "file": "live-portrait-1280x844-frame144.jpg",
+      "viewport": {
+        "width": 1280,
+        "height": 844
+      },
+      "nativeFrame": 144
+    },
+    {
+      "file": "live-basic-landscape-1280x844-frame144.jpg",
+      "viewport": {
+        "width": 1280,
+        "height": 844
+      },
+      "nativeFrame": 144
+    },
+    {
+      "file": "live-shader-1280x844-frame222.jpg",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "nativeFrame": 222
+    },
+    {
+      "file": "live-shader-1280x844-frame222-final.jpg",
+      "viewport": {
+        "width": 1280,
+        "height": 844
+      },
+      "nativeFrame": 222
+    },
+    {
+      "file": "live-shader-390x844-frame222.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "nativeFrame": 222
+    }
+  ],
+  "helperProcesses": [
+    {
+      "fixture": "portrait",
+      "pid": 11720,
+      "url": "http://127.0.0.1:53500"
+    },
+    {
+      "fixture": "shader",
+      "pid": 5452,
+      "url": "http://127.0.0.1:53501"
+    }
+  ],
+  "finishedAt": "2026-10-08T13:51:51.131Z"
+}

@@ -33,3 +33,14 @@ tools/artifacts/grifon-shader-recreation.tpl.html text eol=lf
 tools/artifacts/_gates.mjs text eol=lf
 artifacts/grifon-shader-sound-v1.html text eol=lf
 tools/artifacts/build-grifon-shader-sound-v1.mjs text eol=lf
+tools/artifacts/build-grifon-motion-reuse-preview.mjs text eol=lf
+artifacts/grifon-motion-reuse-preview.html text eol=lf
+
+# Bind reusable workflow source and proof receipts to stable checkout bytes.
+tools/motion-launch.mjs text eol=lf
+tools/motion-launch/** text eol=lf
+tests/unit/motionLaunchProject.test.ts text eol=lf
+tests/unit/motionLaunchAudio.test.ts text eol=lf
+workflows/grifon_motion_production.md text eol=lf
+workflows/assets/grifon-motion-repeatability/** -text
+workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

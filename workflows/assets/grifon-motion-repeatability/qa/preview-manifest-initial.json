@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "status": "INDEPENDENT_WORKFLOW_PROOF_PASS",
+  "evidence": {
+    "file": "qa/independent-smoke/20261008T133243413Z/report.json",
+    "sha256": "55e9719e9fb9e34d4eed2962685f47422f29368d0cf257182d1b398567ad7cc4",
+    "checks": 35
+  },
+  "clips": [
+    {
+      "id": "shader-landscape",
+      "label": "Shader launch / landscape",
+      "file": "qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+      "filename": "shader-landscape-draft.mp4",
+      "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556",
+      "poster": "qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+      "posterSha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0",
+      "dimensions": [
+        960,
+        540
+      ],
+      "duration": 3.003,
+      "hasAudio": true,
+      "window": {
+        "format": "landscape",
+        "from": 222,
+        "frames": 90,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "visualKey": "f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf",
+      "audioKey": "2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23",
+      "muxKey": "4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439",
+      "coldSeconds": 36.1884174,
+      "repeatSeconds": 0.9417024999999994,
+      "repeatCapturedFrames": 0
+    },
+    {
+      "id": "basic-portrait",
+      "label": "Typography + UI / portrait",
+      "file": "qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+      "filename": "basic-portrait-draft.mp4",
+      "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf",
+      "poster": "qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+      "posterSha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff",
+      "dimensions": [
+        540,
+        960
+      ],
+      "duration": 3,
+      "hasAudio": true,
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 72,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "visualKey": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+      "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+      "muxKey": "c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6",
+      "coldSeconds": 19.9152559,
+      "repeatSeconds": 0.8006906000000017,
+      "repeatCapturedFrames": 0
+    }
+  ],
+  "nativeBasicExport": {
+    "frames": 288,
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "duration": 12,
+    "elapsedSeconds": 83.771565
+  },
+  "fullNewShaderExport": "NOT_RUN",
+  "scope": "Local authored treatments on the existing Windows desktop. Measured export/verification time excludes new-reference creative authoring; no customer SLA or automatic universal reference conversion.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}
