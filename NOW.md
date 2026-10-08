@@ -2,7 +2,7 @@
 **Stamped: 2026-10-08, Grifon material comparison**
 
 ## NEXT ACTION
-Owner compare artifacts/griffin-material-study.html; subtle close-up refinement, no clear 64px advantage. Then resume interface/login/physical-phone/mic review and natural intake/ad delivery. Branch codex/griffin-material-study based on 8d5a4be/codex/companion-chat; draft PR pending creation.
+Owner compare artifacts/griffin-material-study.html; subtle close-up refinement, no clear 64px advantage. Then resume interface/login/physical-phone/mic review and natural intake/ad delivery. Branch codex/griffin-material-study based on 8d5a4be/codex/companion-chat; draft PR: https://github.com/yopiheart/grifon-command/pull/169.
 v01 selected for comparison; v02 declined as immaterial. Owner acceptance pending. Live mascot, rig, app and frozen skill unchanged. Independent all-view/64px review: face/beak depth gain, coat coherence still limited; no visible hard blocker in supplied views.
 Matched baseline/trial hero 1500px/160 samples, front/detail/oblique profile 1100px/96, transparent 256px/96. All saved mesh/hair buffers, bindings, principal palette/transforms and 404,000 curves preserved; original master SHA 1f5469d4... unchanged. Both final CPU render exits 0; geometry mutation rejected exit 1.
 Evidence: assets/3d-lab/griffin-material-study/study-manifest.json and assets/design/griffin-material-study/qa. Offline viewer uses SHA-locked PNGs, system fonts, CSP. Final 93 browser checks PASS; handle gap resolved; no console/CSP/overflow findings. Codex 26/companion 11 assets/42 Git blob hashes/whitespace PASS. Local preview http://127.0.0.1:5186/griffin-material-study.html.
