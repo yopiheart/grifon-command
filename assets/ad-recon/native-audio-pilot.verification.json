@@ -1,0 +1,99 @@
+{
+  "purpose": "Free native-audio renderer regression and accepted-media proof",
+  "baseline_commit": "6231d8fd30a76e55700091fe3a6796bbf70110cc",
+  "before": {
+    "status": "FAIL",
+    "checkedAt": "2026-10-08T10:50:59.993Z",
+    "purpose": "Local native-audio export of previously accepted Vivo clip",
+    "scope": "Real renderer/media proof; no live producer, competitor evidence, or independent listening verdict",
+    "source": {
+      "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+      "sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+      "durationSec": 15.07,
+      "width": 496,
+      "height": 864
+    },
+    "output": {
+      "path": ".tmp/ad-recon-milestone2/native-audio/grifon-vivo-native-audio.mp4",
+      "sha256": "dd14e331e27f4241b45c49141045b2bc29f07b483b6195adf280063506c310d5",
+      "bytes": 5236128,
+      "durationSec": 15.1,
+      "width": 1080,
+      "height": 1920
+    },
+    "rendererSha256": "278b1b9bfa5f0b92e407a844b6eb4a10a658aa2f3a4212c57c53b57140a5222f",
+    "export": {
+      "audioPolicy": "preserve",
+      "preset": "none",
+      "music": false,
+      "addedOverlays": false
+    },
+    "audio": {
+      "sourceRms": 0.10562821577816149,
+      "outputRms": 0,
+      "correlation": 0,
+      "lagSamples": -64
+    },
+    "checks": {
+      "unchangedAcceptedSource": true,
+      "outputDimensions": true,
+      "visualDurationPreserved": true,
+      "nativeAudioAudible": false,
+      "nativeWaveformPreserved": false,
+      "singleLocalRead": true
+    },
+    "newPaidCalls": 0,
+    "uploads": 0,
+    "realNetworkCalls": 0
+  },
+  "after": {
+    "status": "PASS",
+    "checkedAt": "2026-10-08T11:11:29.243Z",
+    "purpose": "Local native-audio export of previously accepted Vivo clip",
+    "scope": "Real renderer/media proof; no live producer, competitor evidence, or independent listening verdict",
+    "source": {
+      "path": "assets/vivo-x80-ugc/seedance20-raw.mp4",
+      "sha256": "bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8",
+      "durationSec": 15.07,
+      "width": 496,
+      "height": 864
+    },
+    "output": {
+      "path": ".tmp/ad-recon-milestone2/native-audio/grifon-vivo-native-audio.mp4",
+      "sha256": "ec4c1b418ff1ba42290d00d0e21539c29f96c402973c1de7483b1b5bee37651b",
+      "bytes": 5474753,
+      "durationSec": 15.1,
+      "width": 1080,
+      "height": 1920
+    },
+    "rendererSha256": "5175f8d74dc352d25ed15c1c355de559a0aa3541549d047b10146f6a63a86795",
+    "export": {
+      "audioPolicy": "preserve",
+      "preset": "none",
+      "music": false,
+      "addedOverlays": false
+    },
+    "audio": {
+      "sourceRms": 0.10562821577816149,
+      "outputRms": 0.17569748409208674,
+      "correlation": 0.984514016626398,
+      "lagSamples": 0
+    },
+    "checks": {
+      "unchangedAcceptedSource": true,
+      "outputDimensions": true,
+      "visualDurationPreserved": true,
+      "nativeAudioAudible": true,
+      "nativeWaveformPreserved": true,
+      "singleLocalRead": true
+    },
+    "newPaidCalls": 0,
+    "uploads": 0,
+    "realNetworkCalls": 0
+  },
+  "limitations": [
+    "Producer and source-observation joins are tested separately with mocked backends.",
+    "Audio metrics do not establish listening quality or superiority to Higgsfield.",
+    "MP4 remains local; no publication, cloud upload or new generation."
+  ]
+}

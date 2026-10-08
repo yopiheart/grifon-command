@@ -125,6 +125,9 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     edl: art.edl,
     finalVideoUrl: art.finalVideoUrl,
     finalDownloadUrl: art.finalDownloadUrl,
+    finalCreativeId: art.finalCreativeId,
+    finalLineage: art.finalLineage,
+    finalAudioPolicies: art.finalAudioPolicies,
     // Cover frame lives on its own run-header column (written via 'record_thumbnail'), NOT in
     // artifacts — it is a base64 data URL and would bloat every later checkpoint. The artifacts
     // fallback covers runs checkpointed before that column existed (it will simply be absent).

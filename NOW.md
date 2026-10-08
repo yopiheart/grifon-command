@@ -1,88 +1,87 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08, approved terminology and CI recovery correction**
+**Stamped: 2026-10-08, M2 traceable exports and native audio verified**
 
 ## Current work
 Checkout C:/Users/ADMIN/.codex/worktrees/abf2/grifon-command.
 Branch codex/ad-recon-briefs, based on main 2e1de015.
 Draft PR: https://github.com/yopiheart/grifon-command/pull/168.
-Implementation commit36d78bd3 pushed and remotely verified; no merge/deployment.
-Neil's "Okay game!" authorized milestone 1 implementation, not paid/live work.
-Goal: sourced competitor observations -> three reviewable concept hypotheses ->
-selected One-Shot script context, retaining existing format rules and no-reference behavior.
+Neil's "Okay surprise me! Lets defeat higgsfield!" authorized M2 implementation
+following the traceable-export/native-audio/free-pilot plan. No paid/live,
+campaign, production data, merge or deployment authorization.
 
-Implemented a separate versioned AdReferencePacket/AdReferenceBrief contract,
-offline validation/review CLI tools/ad-recon-brief.mjs, and optional One-Shot
-reference import/review/select/remove for both legacy and producer engines.
-Requires explicit review of limits; revalidates identity, links, selected sources,
-active status and subject before generation. Synthetic selections are review-only.
-No source packet is inserted into MarketResearchReport/rawEvidence.
-Selection persists in local drafts, Clone Voice snapshots and generic run input.
-Invalid saved reference recovery explicitly clears the active pointer/draft,
-retaining the cloud run. Stale file imports cannot replace a newer user choice.
+M1 reviewed references feed both One-Shot engines without replacing generated
+research. tools/ad-recon-brief.mjs validates/exports review offline;
+tools/find_winning_ads.py emits provenance-bound version 2 research candidates.
+Synthetic evidence is review-only; age is not profit or continuous delivery.
+Neil's exact terminology.proposed.patch approval remains applied to both Recon
+skills, glossary and spy_intel. Older untouched Step3 labels/examples remain
+outside that approval; do not silently expand the tuned/instruction diff.
 
-tools/find_winning_ads.py now emits version 2 research candidates with operator
-collection provenance/status and exclusions. URL filters never fill/floor dates;
-elapsed age binds to observation, not replay time. Bare scraper records remain
-unverified. No profit/continuous-delivery/scaling inference from longevity.
-SCRAPE_PROMPT/SCHEMA match 2e1de015; other tuned prompts/models/knobs unchanged.
+M2 producer exports bind authenticated owner + durable run + completed scene
+indices/URLs before render/storage writes. Expected packet/concept guards stale
+selection. Server snapshots selected sources' canonical Meta URLs, Library/Page
+IDs and observation dates with source/observation IDs. Snapshot and creativeId
+survive sidecar/heartbeat/failure/watchdog/poll, checkpoint and reload; First Cut
+exports a portable JSON receipt. Busy preset/reshoot work blocks stale receipts.
+Receipts are editable owner records, not signed attestation or verification of
+competitor performance. Legacy exports retain creativeId-only behavior.
+Use /app?osaEngine=producer for receipts; no fabricated joins or DB migrations.
 
-## Real pilot and limits
-assets/ad-recon/grifon-2026-10-08.packet.json + .review.md contain three ranked
-Grifon concept hypotheses: visible proof first, distinct buying reasons second,
-less blank-page work third. Sources are partial card observations collected Oct8.
-Creatify Page145266828662281 / Ad3692662674216626 displayed start Oct6.
-Arcads Page332742426590967 / Ad2332836127142771 displayed start Feb17.
-Higgsfield Page611634422026525 identity reviewed; active-ad acquisition blocked
-after refresh. No invented ad or substitute vendor claim. ALL != PH targeting.
-Import validates consistency, not factual authenticity. No full video autopsy.
-SaaS vertical lock retained: Grifon pilot is review-only. Handoff proof uses
-clearly labeled invented observations with fail-closed mocked providers.
-No paid generation, completed-render proof, ad actions, production data writes,
-unattended worker, merge or deployment. Full closed-loop automation is later work.
+Explicit scene audioPolicy preserve/replace/mute reaches the renderer. Preserve
+uses first native audio, pads short tracks, follows normalized visual duration
+and ignores separate VO alignment/cuts. Missing native track -> silence.
+Mute removes base audio but retains SFX/music; Pure Hype explicitly mutes.
+Replace/omitted policy retains old VO behavior. Native policies use exact-sample
+filter music loops to avoid reproduced demux-loop hang and short MP3 tails.
+No new intake native mode/provider integration. Prompts/models/presets/gains,
+generation knobs, dependencies and lockfile are unchanged.
 
-Neil's latest "Okay G!" approved assets/ad-recon/terminology.proposed.patch.
-Applied that exact diff to both Ad Recon skills, glossary and spy_intel;
-independent review confirmed exact match and correct version2 semantics.
-The original proposal remains the approval receipt. Older untouched Step3
-winner/days-active labels and bare-scrape examples remain outside this diff.
+## Free proof and verification
+Final M2 working tree checked atop 6231d8fd. Build PASS; full unit 1512 passed,
+32 existing skipped (122 files passed, 9 existing skipped). Full browser 97/97
+PASS, exit 0, 3.9min; no new skips or live/paid switches. New audio 12 real-FFmpeg
+integration cases + 10 policy units; lineage 25 + producer 2 = 49 new unit tests.
+New verifiers failed original behavior: foreign runs accepted 202, missing
+receipt/provenance, stale VO cuts, lost native audio, audio outlasting visuals,
+short music tails. Source snapshot tests also proved fail-before/pass-after.
+Bundle-leak, voice-sync, eval-prompt parity, domain, artifact anchors, ASCII,
+26 Codex control tests and diff-check PASS. Actual local final API missing-token
+guard returned 401. Server ownership tested through mocked handler/storage seams.
+Fresh independent correctness review: clear; both P2 audio repros fixed/retested.
+Independent contract PASS; BRAND_PASS 45/50, 0 critical/0 nit. Real keyboard,
+touch, reload, preset/reshoot busy and overflow checked at 375/390/1280px.
+Evidence: .tmp/m2-independent-smoke-brand/ and test-results/.
 
-## Actual verification
-Application checks at36d78bd3: build PASS (including PowerShell ASCII), full
-unit1463 passed,32 skipped;118 files passed,9 skipped. App code unchanged since.
-31 narrow contract/handoff unit tests passed. Python offline ranker10 passed.
-Both new defect verifiers failed original2e1de015, passed fixes: invented age
-and lost selected concept at resumed script stage. No live/paid test switches.
-14 distinct browser cases passed across10+4runs: both engines at375x667,
-390x844,1280x900; local-only review/reload, blocked/synthetic/mismatch guards,
-checkpoint recovery retaining cloud row, stale import race. Recovery case rerun
-also asserts zero final-render starts. Real backend durability remains untested.
-Independent correctness review: no unresolved actionable findings; pilot subject,
-duplicate identity parameters and resume recovery fixed/reviewed.
-Independent contract PASS; BRAND_PASS43/50,0critical/0nit;6visual probes passed.
-Bundle-leak, voice-sync, domain, artifact-anchors, eval-prompt parity,26 Codex
-control tests, diff-check and real-packet offline CLI all PASS.
-Screenshots: .tmp/ad-reference-smoke-final/ and .tmp/independent-smoke-brand/.
-Node dependencies were absent; npm.cmd ci completed without lockfile changes.
-CI at458df1d9: verify/artifacts PASS; e2e84passed/4failed. Existing image-upload
-helper selected the new JSON importer via first-file order. One-line image/*
-selector corrected; independent review clear. Narrow recovery6/6 and full
-browser88/88 PASS after correction; no skips/timeouts changed. Test servers exited.
-Two local API diagnostics failed at dummy admin config before providers/writes.
-Approved instruction checks: Codex26, domain and offline Python10 PASS.
+node tools/verify-native-audio-pilot.mjs uses exact accepted Vivo bytes, actual
+renderer and fail-closed local fetch. Source remains unchanged, SHA
+bea75a9f599e4a785a83f6cfb9cb5b4794cdf2599567712d60b4d43d4673fcd8.
+Original export RMS 0/correlation 0; final RMS 0.175697/correlation 0.984514/lag 0.
+1080x1920 output 15.10s vs source container 15.07s, 5,474,753 bytes.
+Final renderer SHA 5175f8d74dc352d25ed15c1c355de559a0aa3541549d047b10146f6a63a86795.
+MP4: .tmp/ad-recon-milestone2/native-audio/grifon-vivo-native-audio.mp4.
+Tracked evidence: assets/ad-recon/native-audio-pilot.verification.json.
+Zero new paid calls/uploads/real network in media proof. Metrics are not
+listening QA, new creative-quality proof or a Higgsfield superiority claim.
+
+## Next evidence needed
+workflows/ad_reference_export.md documents scope and next pilot contract.
+Live competitor-to-generated-video producer durability remains untested. Existing
+Grifon packet sources are partial Oct8 Creatify/Arcads card observations; Higgsfield
+acquisition blocked, not proof of no ads. SaaS lock retained; packet review-only.
+Next: one supported physical product with observed packet/selected concept and
+fresh exact paid test spec, then creativeId -> actual published-ad results.
+No unattended competitor worker or autonomous campaign operation is implemented.
 
 ## Preserve earlier accepted work / exhausted paid approvals
-PR156 motion film merged into this main baseline; recipe and recovery remain in
-workflows/grifon_motion_production.md and grifon_motion_audio_api.md.
-Accepted32.9s master SHA9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c
-and approval.json under workflows/assets/grifon-motion-upgrade are unchanged.
-Exact frozen stems remain in PRIMARY/.tmp/grifon-english-vo-v02; use approved
-archive receipt workflows/assets/grifon-motion-upgrade/qa/approved-archive.json.
-One consumed Aira/v4 approval must NEVER regenerate; generator refuses it.
-Source permissions remain private-review-only; auditory QA is not waveform QA.
-Gemini comparison budget exhausted14total; LOW/manualrepeat attempts consumed,
-third outcome/charge unknown. Do not retry or bypass project-access rejection.
-Vivo task cgt-20261004021141-cgh8r succeeded ONCE; never execute again.
-assets/vivo-x80-ugc/user-review.json records accepted9/10; native audio must be
-preserved when integrated. Bottle cgt-20261003202712-nlxv7 also exhausted.
-Their fixed runners/specs/ledgers permit GET-only recovery, no new paid trial.
-Prior full details remain in main2e1de015 NOW.md history and their receipts.
+PR156 motion film is in this main baseline; workflows/grifon_motion_production.md
+and grifon_motion_audio_api.md retain recipe/recovery. Accepted 32.9s master
+SHA 9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c
+and approval.json under workflows/assets/grifon-motion-upgrade remain unchanged.
+Frozen stems PRIMARY/.tmp/grifon-english-vo-v02 and qa/approved-archive.json
+are approved sources. Consumed Aira/v4 approval must NEVER regenerate.
+Source permissions private-review-only; waveform QA does not replace listening.
+Gemini comparison budget exhausted 14 total; third outcome/charge unknown. No
+retries or project-access bypass. Vivo cgt-20261004021141-cgh8r succeeded ONCE;
+never execute again. Accepted 9/10 assets/vivo-x80-ugc/user-review.json unchanged.
+Bottle cgt-20261003202712-nlxv7 also exhausted. Fixed runners/ledgers allow
+GET-only recovery, not new paid trials. Earlier details: main 2e1de015 NOW history.

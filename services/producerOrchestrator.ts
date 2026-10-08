@@ -44,6 +44,8 @@ import type {
   FinalRenderRequest,
   FinalRenderResult,
   FinalRenderScene,
+  FinalRenderLineage,
+  FinalRenderAudioPolicy,
   LockablePresetId,
   MarketResearchInput,
   StabilityMode,
@@ -121,6 +123,7 @@ export interface ProductionSceneState {
   imageUrl?: string;
   videoUrl?: string;
   audioUrl?: string;
+  audioPolicy?: FinalRenderScene['audioPolicy'];
   /** Measured word timings for `audioUrl` (ElevenLabs forced alignment, from the
    * consolidation result). Fed to the final render as FinalRenderScene.voiceWords so trim +
    * overlays anchor to REAL speech-end instead of silencedetect. Always written together with
@@ -252,6 +255,9 @@ export interface ProductionRun {
   edl?: EditDecisionList;
   finalVideoUrl?: string;
   finalDownloadUrl?: string;
+  finalCreativeId?: string;
+  finalLineage?: FinalRenderLineage;
+  finalAudioPolicies?: FinalRenderAudioPolicy[];
   /** Signed URL of the producer's generated thumbnail (cover frame), surfaced on
    * First Cut for download. Absent when the run produced no thumbnail artifact. */
   thumbnailUrl?: string;
@@ -2095,6 +2101,7 @@ async function runStage(
             sceneIdx: s.sceneIdx,
             videoUrl: s.videoUrl as string,
             audioUrl: s.audioUrl ?? null,
+            audioPolicy: sfxOnly ? 'mute' : s.audioPolicy,
             keepFullClip: sfxOnly ? false : isHook,
             targetDurationSec: sfxOnly ? sfxTarget : (isHook || estimate <= 0 ? null : estimate),
             overlayText: plan?.overlayText,
@@ -2135,6 +2142,11 @@ async function runStage(
         role: sfxOnly ? ('lead' as const) : undefined,
       };
       const req: FinalRenderRequest = {
+        producerRunId: run.runId,
+        expectedReference: run.input.referenceBrief?.selectedConceptId ? {
+          packetId: run.input.referenceBrief.packet.id,
+          conceptId: run.input.referenceBrief.selectedConceptId,
+        } : undefined,
         scenes,
         aspectRatio: run.input.aspectRatio,
         music,
@@ -2153,6 +2165,9 @@ async function runStage(
       await commit((r) => {
         r.finalVideoUrl = result.url;
         r.finalDownloadUrl = result.downloadUrl ?? result.url;
+        r.finalCreativeId = result.creativeId;
+        r.finalLineage = result.lineage;
+        r.finalAudioPolicies = result.audioPolicies;
       });
       return;
     }

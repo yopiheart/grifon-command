@@ -1,4 +1,4 @@
-import type { FinalRenderStatus } from '../../types.js';
+import type { FinalRenderStatus, FinalRenderLineage, FinalRenderAudioPolicy } from '../../types.js';
 import { putMedia, downloadMediaText } from './mediaStore.js';
 
 // Status tracking for the async final-render job. We use a JSON sidecar object
@@ -33,6 +33,8 @@ export interface RenderSidecar {
   // user so they can name the Meta ad "grifon-<creativeId>"; meta_insights_pull.py
   // parses it back out to join ad_performance to the creative that made the ad.
   creativeId?: string;
+  lineage?: FinalRenderLineage;
+  audioPolicies?: FinalRenderAudioPolicy[];
 }
 
 // Poll-side render watchdog (P1, render_pipeline §3.10). A render runs via

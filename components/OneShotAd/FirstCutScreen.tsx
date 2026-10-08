@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
+import saveAs from 'file-saver';
 import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock, Film, ArrowRight, Image as ImageIcon, ImageDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import ImageModal from '../ui/ImageModal';
 import { GoldButton } from '../ui/GoldButton';
+import { CTRL_H } from '../ui/wizardTokens';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
 import type { LockablePresetId } from '../../types';
@@ -61,6 +63,13 @@ export const FirstCutScreen: React.FC<{
   const [lightbox, setLightbox] = useState<{ url: string; name: string } | null>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const scrollStrip = (dir: -1 | 1) => stripRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' });
+  const exportBusy = !!run.busy || presetBusy || reshooting !== null;
+  const downloadReceipt = () => {
+    if (exportBusy || !run.finalCreativeId || !run.finalLineage) return;
+    const receipt = { version: 1, creativeId: run.finalCreativeId, lineage: run.finalLineage,
+      audioPolicies: run.finalAudioPolicies ?? [] };
+    saveAs(new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }), `grifon-${run.finalCreativeId}.receipt.json`);
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 py-10 text-white">
@@ -294,6 +303,15 @@ export const FirstCutScreen: React.FC<{
         )}
 
         {/* Actions */}
+        {run.finalCreativeId && run.finalLineage && (
+          <div className="mt-6">
+            <GoldButton onClick={downloadReceipt} disabled={exportBusy} className={`${CTRL_H} w-full !rounded-xl border border-[#FFCC00] !bg-transparent !text-[#FFCC00] disabled:opacity-50 sm:w-auto`}>
+              <span className="inline-flex items-center justify-center gap-3">
+                <Download className="h-5 w-5 shrink-0" /> Download Export Receipt
+              </span>
+            </GoldButton>
+          </div>
+        )}
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <div className="flex-1">
             <a href={run.finalDownloadUrl ?? run.finalVideoUrl ?? '#'} download className={run.finalVideoUrl ? '' : 'pointer-events-none'}>

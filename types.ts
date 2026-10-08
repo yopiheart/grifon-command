@@ -214,6 +214,8 @@ export interface FinalRenderScene {
   sceneIdx: number;
   videoUrl: string;
   audioUrl?: string | null;
+  /** Native clip audio, external replacement voice, or silence before SFX/music. */
+  audioPolicy?: 'preserve' | 'replace' | 'mute';
   /** Hard cap (sec) from the spoken-length estimate; cuts Veo filler tails. */
   targetDurationSec?: number | null;
   /** Keep the full clip (hook): preserves the visual reveal; pads short audio. */
@@ -290,6 +292,29 @@ export interface FinalRenderRequest {
   preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */
   endCard?: FinalRenderEndCard;
+  /** Server binds producer exports to this authenticated owner's durable run. */
+  producerRunId?: string;
+  expectedReference?: { packetId: string; conceptId: string };
+}
+
+/** Snapshot of durable producer input; recorded observations are not independently verified. */
+export interface FinalRenderLineage {
+  version: 1;
+  producerRunId: string;
+  runRevision: number;
+  reference?: {
+    packetId: string;
+    conceptId: string;
+    sourceIds: string[];
+    observationIds: string[];
+    sources: { id: string; libraryId: string; pageId: string; sourceUrl: string; observedAt: string }[];
+    evidence: 'owner-recorded';
+  };
+}
+
+export interface FinalRenderAudioPolicy {
+  sceneIdx: number;
+  policy: 'preserve' | 'replace' | 'mute';
 }
 
 /** Returned immediately by the fire endpoint; the client polls with this jobId. */
@@ -325,6 +350,8 @@ export interface FinalRenderResult {
   /** Attribution id (= render jobId) for the Data-Driven Growth Loop. Shown to
    * the user so they can name the Meta ad "grifon-<creativeId>". */
   creativeId?: string;
+  lineage?: FinalRenderLineage;
+  audioPolicies?: FinalRenderAudioPolicy[];
 }
 
 export interface AllData {

@@ -6,7 +6,8 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { putMedia, getMediaUrl } from '../_lib/mediaStore.js';
 import { renderFinalVideo } from '../_lib/renderFfmpeg.js';
 import { resolvePreset, rotationSeed, fnv1a, type RenderPreset } from '../_lib/renderPresets.js';
-import { statusKey, finalKey, writeSidecar } from '../_lib/renderJob.js';
+import { statusKey, finalKey, writeSidecar, type RenderSidecar } from '../_lib/renderJob.js';
+import { resolveRenderLineage, RenderLineageError } from '../_lib/renderLineage.js';
 import { getRequestId } from '../_lib/requestId.js';
 import type { FinalRenderScene, FinalRenderEndCard } from '../../types.js';
 
@@ -44,6 +45,7 @@ const SceneSchema = z.object({
     .url()
     .refine((u) => u.startsWith('https://'), 'audioUrl must be an https URL')
     .nullish(),
+  audioPolicy: z.enum(['preserve', 'replace', 'mute']).optional(),
   targetDurationSec: z.number().positive().nullish(),
   keepFullClip: z.boolean().optional(),
   fallbackDurationSec: z.number().positive().optional(),
@@ -70,9 +72,14 @@ const SceneSchema = z.object({
     .array(z.object({ text: z.string().max(80), start: z.number().nonnegative(), end: z.number().nonnegative() }))
     .max(200)
     .optional(),
-});
+}).refine(scene => scene.audioPolicy !== 'replace' || !!scene.audioUrl, 'replace audioPolicy requires audioUrl');
 
 const Body = z.object({
+  producerRunId: z.string().min(8).max(200).optional(),
+  expectedReference: z.object({
+    packetId: z.string().min(1).max(80),
+    conceptId: z.string().min(1).max(80),
+  }).strict().optional(),
   scenes: z.array(SceneSchema).min(1).max(12),
   aspectRatio: z.enum(['9:16', '16:9', '1:1']),
   music: z
@@ -102,7 +109,7 @@ const Body = z.object({
       recapText: z.string().max(80).optional(),
     })
     .optional(),
-});
+}).refine(body => !body.expectedReference || !!body.producerRunId, 'expectedReference requires producerRunId');
 
 const RENDER_LIMIT = 6;
 const RENDER_WINDOW_SECONDS = 600; // 6 renders / 10 min (renders are expensive)
@@ -129,7 +136,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
 
-  const { scenes, aspectRatio, music, preset: presetReq, endCard } = parsed.data;
+  const { scenes, aspectRatio, music, preset: presetReq, endCard, producerRunId, expectedReference } = parsed.data;
 
   // Edit-style preset: same ad re-renders identically (seed = sorted videoUrls),
   // successive ads rotate looks within the script style's pool. classic = today.
@@ -157,19 +164,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  let lineage: RenderSidecar['lineage'];
+  if (producerRunId) {
+    try {
+      lineage = await resolveRenderLineage(user.id, producerRunId, scenes, expectedReference);
+    } catch (err) {
+      return res.status(err instanceof RenderLineageError ? err.status : 500)
+        .json({ error: err instanceof RenderLineageError ? err.message : 'producer_read_failed' });
+    }
+  }
   const jobId = randomUUID();
+  const receipt: Pick<RenderSidecar, 'creativeId' | 'lineage' | 'audioPolicies'> = lineage ? {
+    creativeId: jobId,
+    lineage,
+    audioPolicies: scenes.map(scene => ({ sceneIdx: scene.sceneIdx, policy: scene.audioPolicy ?? (scene.audioUrl ? 'replace' : 'mute') })),
+  } : {};
 
   // Write 'processing' BEFORE returning so the first poll never 404s. Stamp
   // startedAt (age backstop anchor) + updatedAt (heartbeat freshness) so the
   // poll-side watchdog has both timestamps from the very first poll.
   const startedAt = new Date().toISOString();
   await writeSidecar(statusKey(user.id, jobId), {
+    ...receipt,
     status: 'processing',
     startedAt,
     updatedAt: startedAt,
   });
 
-  const work = runRender(user.id, jobId, rid, startedAt, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed, endCard).catch(() => {});
+  const work = runRender(user.id, jobId, rid, startedAt, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed, endCard, receipt).catch(() => {});
 
   if (process.env.VERCEL) {
     try {
@@ -193,7 +215,8 @@ async function runRender(
   music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset?: RenderPreset,
   variantSeed?: number,
-  endCard?: FinalRenderEndCard
+  endCard?: FinalRenderEndCard,
+  receipt: Pick<RenderSidecar, 'creativeId' | 'lineage' | 'audioPolicies'> = {},
 ): Promise<void> {
   const sKey = statusKey(userId, jobId);
   // Heartbeat: re-stamp the sidecar's updatedAt at pipeline boundaries so a live
@@ -212,6 +235,7 @@ async function runRender(
     if (now - lastBeat < 15_000) return;
     lastBeat = now;
     lastBeatWrite = writeSidecar(sKey, {
+      ...receipt,
       status: 'processing',
       startedAt,
       updatedAt: new Date().toISOString(),
@@ -242,6 +266,7 @@ async function runRender(
 
     await lastBeatWrite;
     await writeSidecar(sKey, {
+      ...receipt,
       status: 'done',
       url: playSign.url,
       downloadUrl: dlSign.url,
@@ -253,6 +278,7 @@ async function runRender(
     console.error(`[api/render/final] job ${jobId} failed:`, { rid, msg });
     await lastBeatWrite;
     await writeSidecar(sKey, {
+      ...receipt,
       status: 'failed',
       error: msg,
       updatedAt: new Date().toISOString(),

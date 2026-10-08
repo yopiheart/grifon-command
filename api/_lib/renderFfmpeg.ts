@@ -570,6 +570,27 @@ export function probeDurationSec(path: string): number | null {
   return parseDurationSec(stderr);
 }
 
+/** Native clips follow their visual stream, not an audio-longer container. */
+function probeVideoDurationSec(path: string): number | null {
+  const { status, stderr } = ffmpeg([
+    '-progress', 'pipe:2', '-nostats', '-i', path,
+    '-map', '0:v:0', '-vf', `fps=${FPS}`, '-f', 'null', '-',
+  ]);
+  const frames = [...stderr.matchAll(/^frame=(\d+)$/gm)];
+  const count = Number(frames[frames.length - 1]?.[1]);
+  return status === 0 && count > 0 ? count / FPS : null;
+}
+
+/** The loop covers decoded samples, excluding MP3 container padding. */
+function measureMusicSampleCount(path: string): number | null {
+  const { status, stderr } = ffmpeg([
+    '-i', path, '-map', '0:a:0',
+    '-af', 'astats=measure_perchannel=none:measure_overall=Number_of_samples', '-f', 'null', '-',
+  ]);
+  const samples = Number(/Number of samples:\s*(\d+)/.exec(stderr)?.[1]);
+  return status === 0 && samples > 0 ? samples : null;
+}
+
 /** Run silencedetect on the voice MP3 and return the trim length in seconds. */
 export function detectTrimSec(mp3Path: string): number | null {
   const { stderr } = ffmpeg([
@@ -665,7 +686,7 @@ export const ACTION_HOLD_SEC = 1.5;
  *    fallbackDurationSec → explicit duration · else → full clip.
  */
 export function chooseTrim(
-  scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'fallbackDurationSec' | 'sceneType' | 'hasEndFrame'>,
+  scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'audioPolicy' | 'fallbackDurationSec' | 'sceneType' | 'hasEndFrame'>,
   probeSec: number | null,
   detectedSec: number | null,
   // Defaults to CLASSIC so the trim math is unchanged for every existing caller
@@ -673,6 +694,18 @@ export function chooseTrim(
   preset: RenderPreset = CLASSIC
 ): TrimPlan {
   const cap = (t: number) => (typeof probeSec === 'number' ? Math.min(t, probeSec) : t);
+
+  if (scene.audioPolicy === 'preserve' || scene.audioPolicy === 'mute') {
+    const padAudio = scene.audioPolicy === 'preserve';
+    if (scene.keepFullClip) return { trimSec: probeSec, padAudio };
+    if (typeof scene.targetDurationSec === 'number' && scene.targetDurationSec > 0) {
+      return { trimSec: cap(scene.targetDurationSec), padAudio };
+    }
+    if (typeof scene.fallbackDurationSec === 'number' && scene.fallbackDurationSec > 0) {
+      return { trimSec: cap(scene.fallbackDurationSec), padAudio };
+    }
+    return { trimSec: probeSec, padAudio };
+  }
 
   if (scene.audioUrl && typeof detectedSec === 'number' && detectedSec > 0) {
     if (scene.keepFullClip) {
@@ -744,7 +777,8 @@ function buildScene(
   sweepName: string | null = null, // BARE sweep.png in `dir` (premium hook glint)
   leadInSec: number = 0, // seconds of pre-speech dead air to skip on BOTH inputs
   midGap: MidGapPlan | null = null, // mid-scene dead air to splice out (ships dark)
-  sceneGradeFilter: string | null = null // colour-cast pull toward the ad's median (ships dark)
+  sceneGradeFilter: string | null = null, // colour-cast pull toward the ad's median (ships dark)
+  nativeAudio: boolean = false // first native audio stream supplied as input 1
 ): void {
   const [w, h] = dims;
 
@@ -824,7 +858,7 @@ function buildScene(
   stmts.push(vChain);
   const vGraph = stmts.join(';');
 
-  // --- Inputs: [0]=video, [1]=audio (voice or silence), [2..]=sfx, [last]=sweep. ---
+  // --- Inputs: [0]=video, [1]=audio (voice/native/silence), [2..]=sfx, [last]=sweep. ---
   // `-ss` before `-i` is INPUT seeking, and it is applied to the video and the voice
   // identically so the two stay locked to each other (an STS scene's lip-sync is the
   // whole reason this cut is done here and not on the audio alone). SFX inputs are
@@ -837,7 +871,7 @@ function buildScene(
   if (sweepInputIdx !== null) inputs.push('-loop', '1', '-t', premiumDur.toFixed(3), '-i', join(dir, sweepName as string));
 
   // --- Audio chain: base (voice padded/passthrough or silence) + SFX amix. ---
-  const aSrc = mg?.audioOut ?? '[1:a]';
+  const aSrc = mg?.audioOut ?? (nativeAudio ? '[1:a:0]' : '[1:a]');
   const base = padAudioToVideo && audioPath ? `${aSrc}apad[abase]` : `${aSrc}anull[abase]`;
   let aChain = base;
   let aOut = '[abase]';
@@ -915,22 +949,30 @@ function mixMusic(
   musicFile: string,
   totalSec: number | null,
   outPath: string,
-  plan: { volume: number; duck: boolean } = { volume: MUSIC_VOLUME, duck: true }
+  plan: { volume: number; duck: boolean } = { volume: MUSIC_VOLUME, duck: true },
+  loopMusic: boolean = false
 ): boolean {
   const fadeOut =
     typeof totalSec === 'number' && totalSec > 2 * MUSIC_FADE_SEC
       ? `,afade=t=out:st=${(totalSec - MUSIC_FADE_SEC).toFixed(3)}:d=${MUSIC_FADE_SEC}`
       : '';
+  // Input demux loops can hang FFmpeg at teardown. Native policies loop the
+  // exact decoded sample range in the filter, bounded by the program instead.
+  const samples = loopMusic ? measureMusicSampleCount(musicFile) : null;
+  if (loopMusic && samples === null) return false;
+  const loopFilter = loopMusic
+    ? `aloop=loop=-1:size=${samples}${totalSec !== null ? `,atrim=duration=${totalSec.toFixed(3)}` : ''},`
+    : '';
   const filter = plan.duck
-    ? `[1:a]volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
+    ? `[1:a]${loopFilter}volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
       `[mus][0:a]sidechaincompress=${MUSIC_DUCK}[ducked];` +
       `[0:a][ducked]amix=inputs=2:normalize=0:duration=first[a]`
-    : `[1:a]volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
+    : `[1:a]${loopFilter}volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
       `[0:a][mus]amix=inputs=2:normalize=0:duration=first[a]`;
   const args = [
     '-y',
     '-i', concatPath,
-    '-stream_loop', '-1', '-i', musicFile,
+    ...(loopMusic ? [] : ['-stream_loop', '-1']), '-i', musicFile,
     '-filter_complex', filter,
     '-map', '0:v', '-map', '[a]',
     '-c:v', 'copy', '-c:a', 'aac', '-ar', '48000', '-ac', '2', outPath,
@@ -987,6 +1029,9 @@ export async function renderFinalVideo(
   onStep?: (label: string) => void // P1 heartbeat: called at pipeline boundaries so the caller can bump the render sidecar's updatedAt (watchdog liveness)
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
+  if (scenes.some((scene) => scene.audioPolicy === 'replace' && !scene.audioUrl)) {
+    throw new RenderError('replace_audio_requires_audio_url');
+  }
   checkFfmpegCapabilities(); // once per process: warn loudly if drawtext is missing
   const tTotal = Date.now();
   const dims = dimsFor(aspectRatio);
@@ -1053,7 +1098,12 @@ export async function renderFinalVideo(
       await downloadToFile(ordered[i].videoUrl, videoPath);
 
       let audioPath: string | null = null;
-      if (ordered[i].audioUrl) {
+      if (ordered[i].audioPolicy === 'preserve') {
+        // The same local clip supplies input 1, keeping SFX/sweep indices fixed.
+        // A video-only source falls back to the existing uniform silent track.
+        const { stderr } = ffmpeg(['-i', videoPath]);
+        if (/^\s*Stream #\d+:\d+[^\r\n]*:\s*Audio:/m.test(stderr)) audioPath = videoPath;
+      } else if (ordered[i].audioPolicy !== 'mute' && ordered[i].audioUrl) {
         audioPath = join(dir, `voice_${i}.mp3`);
         await downloadToFile(ordered[i].audioUrl!, audioPath);
       }
@@ -1090,7 +1140,11 @@ export async function renderFinalVideo(
       // Self-selecting, no route flag needed: a TTS scene arrives already trimmed by
       // consolidate.ts, so its onset is ~0.15s, below planLeadInCut's threshold → 0 →
       // shiftSceneForLeadIn returns the scene untouched and this path is a no-op.
-      const rawScene = ordered[i];
+      const visualAudioPolicy = ordered[i].audioPolicy === 'preserve' || ordered[i].audioPolicy === 'mute';
+      // VO alignment belongs to the separate voice, never the native clip.
+      const rawScene = visualAudioPolicy
+        ? { ...ordered[i], audioUrl: undefined, voiceWords: undefined }
+        : ordered[i];
       const leadInSec = planLeadInCut(rawScene.voiceWords);
       const leadInScene = shiftSceneForLeadIn(rawScene, leadInSec);
       // Mid-scene dead air, planned on the ALREADY lead-in-shifted words so both
@@ -1106,7 +1160,7 @@ export async function renderFinalVideo(
       const audioPath = audioPaths[i];
       const dlMs = dlMsBy[i];
 
-      const probeSec = probeDurationSec(videoPath);
+      const probeSec = visualAudioPolicy ? probeVideoDurationSec(videoPath) : probeDurationSec(videoPath);
       // Length of the clip the graph will actually emit. Identical to probeSec on
       // every path except a video-spliced mid-gap scene, where the file on disk is
       // longer than what survives the concat — and every duration decision below
@@ -1120,7 +1174,7 @@ export async function renderFinalVideo(
       // Measured alignment beats silencedetect whenever the scene carries it (#91).
       const isLastScene = i === scenes.length - 1;
       let detectedSec: number | null = null;
-      if (audioPath) {
+      if (audioPath && !visualAudioPolicy) {
         const ap = audioPath;
         detectedSec = resolveSpeechEndSec(scene, isLastScene, {
           silenceSec: () => detectTrimSec(ap),
@@ -1245,7 +1299,8 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset, hookFontName, sweepName, leadInSec, midGap, gradeFilter
+        camFilter, preset, hookFontName, sweepName, leadInSec, midGap, gradeFilter,
+        scene.audioPolicy === 'preserve' && audioPath !== null
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
@@ -1286,7 +1341,8 @@ export async function renderFinalVideo(
         // itself is a full-program pass. Without this, download + mix + master could share
         // one gap and stall a healthy render past the 120s watchdog (renderJob.ts).
         onStep?.('music bed');
-        if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath, musicMixPlan(music.role))) {
+        const nativeMusicLoop = ordered.some((scene) => scene.audioPolicy === 'preserve' || scene.audioPolicy === 'mute');
+        if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath, musicMixPlan(music.role), nativeMusicLoop)) {
           resultPath = musicedPath;
         }
       } else {
