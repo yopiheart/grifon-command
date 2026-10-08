@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-08T19:18:41.1658723+08:00",
+  "blender": "5.2.2 LTS",
+  "device": "CPU",
+  "processor": [
+    {
+      "Name": "AMD Ryzen 5 PRO 4650G with Radeon Graphics",
+      "NumberOfCores": 6,
+      "NumberOfLogicalProcessors": 12
+    }
+  ],
+  "display": [
+    {
+      "Name": "AMD Radeon(TM) Graphics",
+      "AdapterRAM": 536870912
+    }
+  ]
+}

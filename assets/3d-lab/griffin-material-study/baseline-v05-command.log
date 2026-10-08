@@ -1,0 +1,9 @@
+00:03.937  blend            | Read blend: "C:\Users\ADMIN\.codex\visualizations\2026\10\06\01a1103d-37d8-7492-82be-40b3d829d725\griffin-master-v05.blend"
+Info: Saved as "griffin-baseline-v05.blend"
+STUDY_RENDER_START baseline-v05 hero
+01:18.640  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-v05\griffin-baseline-v05-hero.png'
+STUDY_RENDER_COMPLETE baseline-v05 hero C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-v05\griffin-baseline-v05-hero.png
+{"version": "baseline-v05", "geometry_identical": true, "curves": 404000, "output": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-v05", "seconds": 75.404}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

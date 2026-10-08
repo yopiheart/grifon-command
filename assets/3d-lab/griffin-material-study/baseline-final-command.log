@@ -1,0 +1,21 @@
+00:03.609  blend            | Read blend: "C:\Users\ADMIN\.codex\visualizations\2026\10\06\01a1103d-37d8-7492-82be-40b3d829d725\griffin-master-v05.blend"
+Info: Saved as "griffin-baseline-final.blend"
+STUDY_RENDER_START baseline-final hero
+04:11.391  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-hero.png'
+STUDY_RENDER_COMPLETE baseline-final hero C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-hero.png
+STUDY_RENDER_START baseline-final front
+05:37.750  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-front.png'
+STUDY_RENDER_COMPLETE baseline-final front C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-front.png
+STUDY_RENDER_START baseline-final detail
+07:54.281  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-detail.png'
+STUDY_RENDER_COMPLETE baseline-final detail C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-detail.png
+STUDY_RENDER_START baseline-final profile
+09:17.328  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-profile.png'
+STUDY_RENDER_COMPLETE baseline-final profile C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-profile.png
+STUDY_RENDER_START baseline-final transparent
+09:21.328  render           | Saved: 'C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-transparent.png'
+STUDY_RENDER_COMPLETE baseline-final transparent C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\baseline-final\griffin-baseline-final-transparent.png
+{"version": "baseline-final", "geometry_identical": true, "curves": 404000, "output": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\baseline-final", "seconds": 558.801}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

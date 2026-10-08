@@ -1,0 +1,6 @@
+00:05.609  blend            | Read blend: "C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\3d-lab\griffin-material-study\candidate-final\griffin-material-final.blend"
+Info: Saved as "griffin-geometry-defect.blend"
+{"purpose": "One-vertex negative control; no visual quality or rendering test", "source": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\candidate-final\\griffin-material-final.blend", "source_sha256": "bb2e9a8a197608006c71d1929798ee37fbae5cb7696153b9e9ed209de0d9a499", "source_unchanged": true, "copy": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\griffin-material-study\\negative-control\\griffin-geometry-defect.blend", "copy_sha256": "4889d60977556d7765677955e8a0f823eb31329482189c2200b4302279b33373", "object": "Continuous griffin silhouette", "vertex_index": 0, "before": [-0.8400892615318298, -0.25517550110816956, 1.0784236192703247], "after": [-0.8390892744064331, -0.25517550110816956, 1.0784236192703247], "delta_x": 0.001}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

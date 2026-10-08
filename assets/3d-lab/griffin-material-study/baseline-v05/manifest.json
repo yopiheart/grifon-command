@@ -1,0 +1,3571 @@
+{
+  "stage": "Blender look-development still; rig and app integration unchanged",
+  "version": "baseline-v05",
+  "look": "baseline",
+  "baseline": {
+    "path": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-master-v05.blend",
+    "sha256": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7"
+  },
+  "runtime": {
+    "blender": "5.2.2 LTS",
+    "build_hash": "d13f752e3b9c",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "device": "CPU"
+  },
+  "render": {
+    "resolution": 1000,
+    "samples": 96,
+    "adaptive_threshold": 0.00800000037997961,
+    "denoising": true,
+    "view_transform": "AgX",
+    "look": "AgX - Medium High Contrast",
+    "exposure": 0.25
+  },
+  "invariants": {
+    "native_curves": 404000,
+    "all_geometry_buffers_unchanged": true,
+    "before": {
+      "Continuous griffin silhouette": {
+        "type": "MESH",
+        "vertices": 305602,
+        "polygons": 305600,
+        "coordinates": "e210e0cb5d41dab00dcb2fa2528dcfbdeecac93f6cccc62a6599c8f9e39b4338",
+        "topology": "9e3f8c7e23a121fe081a9051a4ac2628ef3c75784af01fde99d47d9063496226",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Integrated cream facial disc": {
+        "type": "MESH",
+        "vertices": 3201,
+        "polygons": 3200,
+        "coordinates": "5d2792511ac95cb0ef759f56830cc84a432b9cd98f2b9c8d2999ddeb428e1b10",
+        "topology": "b158eb9b589d8350a7f0a522866e8d60636b0c4dd0b884aca3869d8b0d87a2aa",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Left glossy eye": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0",
+        "topology": "723734f678487b597165935198de911812abbbefbb77b5a90ada940fdb00fc58",
+        "transform": [
+          0.9743700623512268,
+          -0.22495104372501373,
+          0.0,
+          -0.32499998807907104,
+          0.22495104372501373,
+          0.9743700623512268,
+          0.0,
+          -0.6128948926925659,
+          0.0,
+          0.0,
+          1.0,
+          1.7400000095367432,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Right glossy eye": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0",
+        "topology": "69547b253a29281f957b76cb68bde92bd8e925b44cd88662f6780e7f971815d7",
+        "transform": [
+          0.9743700623512268,
+          0.22495104372501373,
+          0.0,
+          0.32499998807907104,
+          -0.22495104372501373,
+          0.9743700623512268,
+          0.0,
+          -0.6128948926925659,
+          0.0,
+          0.0,
+          1.0,
+          1.7400000095367432,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Compact hooked upper beak": {
+        "type": "MESH",
+        "vertices": 4994,
+        "polygons": 4992,
+        "coordinates": "270ea6da2477683d0dd5f93c566611d33ec274658ed92d67457c57bcdbace3a3",
+        "topology": "6e8e334fe55c9f3d5a950b50ad14106de5ebd55fac25a4ffb3a410f94c5754da",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Integrated lower beak": {
+        "type": "MESH",
+        "vertices": 2690,
+        "polygons": 2688,
+        "coordinates": "e45ef2873cd1442cd17e1bc1ff8aee3fef0b3417e42e5d9158ac3615818d7e13",
+        "topology": "a68ec6b4039c42f79e534b40b3bb6279dfe0130d7dbbb368b11d2ec26bd2607a",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Mouth shadow": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "d4c167ca470cad4eb719914090e4d26dcea140021e75ef19ef00fbec53466272",
+        "topology": "5f2cfe09bab86dfaa2e652a596e8bb1fd847c24b222d91657f7c93f24cd40735",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.6499999761581421,
+          0.0,
+          0.0,
+          1.0,
+          1.527999997138977,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Subtle beak nostril": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7",
+        "topology": "469b56cb1b53c49693879049428359a0794e6e5066ed5d1bf2938094c1b491af",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          -0.05700000002980232,
+          0.0,
+          1.0,
+          0.0,
+          -0.7789999842643738,
+          0.0,
+          0.0,
+          1.0,
+          1.6759999990463257,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Subtle beak nostril.001": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7",
+        "topology": "3dcf8bdfa07fa04b25c948926e67d1e53926157a7e0fad2a8b73312d95047a6f",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.05700000002980232,
+          0.0,
+          1.0,
+          0.0,
+          -0.7789999842643738,
+          0.0,
+          0.0,
+          1.0,
+          1.6759999990463257,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Left folded wing": {
+        "type": "MESH",
+        "vertices": 3522,
+        "polygons": 3520,
+        "coordinates": "3ec1d0854848066b89183f32e2901fedf8de8fc7266ff5234741b1534b70626e",
+        "topology": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Left gold inner wing": {
+        "type": "MESH",
+        "vertices": 2882,
+        "polygons": 2880,
+        "coordinates": "142a09164a6f844968902b9b797023a62309974ddbece00f62ee4206d14f6d7e",
+        "topology": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Right folded wing": {
+        "type": "MESH",
+        "vertices": 3522,
+        "polygons": 3520,
+        "coordinates": "b3cd164c94a2bd53c3334303d212aba55b26fb9c8f939a334288e02b9d0acb1a",
+        "topology": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Right gold inner wing": {
+        "type": "MESH",
+        "vertices": 2882,
+        "polygons": 2880,
+        "coordinates": "43338fde51e6bad3c8dfb8e58495a913c421fdbc5d7641c0a52ff59b0fecc01a",
+        "topology": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Curled lion tail": {
+        "type": "MESH",
+        "vertices": 5218,
+        "polygons": 5216,
+        "coordinates": "9f2f1d5d53ce98915ab3cc7f43ebf9ce7bcb1e1bf73571492cf2782921277059",
+        "topology": "9187b15fe455bf331b03e4c9f2d5a08d5238a849afd648345502ac89d90eb93e",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Rounded gold tail tip": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "7fd66e1c7420a4dff0bcdbe95c8291688029ea9bec6efeddb970075b6648d5f2",
+        "topology": "a66923a4b78dfebe84bb504292655377bc540698203666449d78f1b83cf29bc7",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.9791253209114075,
+          0.0,
+          1.0,
+          0.0,
+          0.07999999821186066,
+          0.0,
+          0.0,
+          1.0,
+          0.5045632123947144,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Graphite short feather coat": {
+        "type": "CURVES",
+        "curves": 240000,
+        "points": 1200000,
+        "attributes": {
+          "position": "e02af151a3c98861fae9117e39ff5cba681460579846a76cd14d9c2e8ba9cfe2",
+          "radius": "3afbcc2b4d216cada0423b66797d070c20ec362edc371383463ebbede8f71d4f",
+          "crest_gold": "492555f3b4016cf3894c8749b25a43faf6d70a5594053b634ee905e90a83fe46"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Cream fine facial down": {
+        "type": "CURVES",
+        "curves": 110000,
+        "points": 550000,
+        "attributes": {
+          "position": "604b18e62ef27f52f802cd1b938b16be637094d7c00f8dcfea1d2696f71a4b39",
+          "radius": "841a69fe110e18119800a80788b4db976f30249648c3004a4c2840ae00ed793c",
+          "crest_gold": "76cfcffe6bd0a6dc5e8362126b17c04ce29ea6a3962ff2cee8710408e0aa3c17"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Folded wing fine feathers 0": {
+        "type": "CURVES",
+        "curves": 13000,
+        "points": 65000,
+        "attributes": {
+          "position": "65141c0c9c3cafa5e4eea8b6f1c609d6eb570279fcf078cd838f8aafc4a04c9e",
+          "radius": "5090e0b5e3718404557c3d56107aaa25d9a4dcad1a158b40419e858ffa133f4c",
+          "crest_gold": "f68a41bf4c3957526a1b9ef341cd5392820624f65a677d695e6411a7e9860425"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Folded wing fine feathers 1": {
+        "type": "CURVES",
+        "curves": 13000,
+        "points": 65000,
+        "attributes": {
+          "position": "b1ff44c6e54a898f6695f4d6490156c0957cb23feb463f83993535d468115fcc",
+          "radius": "5090e0b5e3718404557c3d56107aaa25d9a4dcad1a158b40419e858ffa133f4c",
+          "crest_gold": "f68a41bf4c3957526a1b9ef341cd5392820624f65a677d695e6411a7e9860425"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Tail short fine coat": {
+        "type": "CURVES",
+        "curves": 28000,
+        "points": 140000,
+        "attributes": {
+          "position": "83569e6dadcbfba6003464adf1174cb21e5d628dacd02423b4ee3f117f86caa8",
+          "radius": "6843bcaee49e2e196054676264736a0200fa80bc220bb480fd4335b4c6f86438",
+          "crest_gold": "07a5f09dd9ad465ace66068921a3af44dbbb4c4d96bad7fa85fb6c871391d0f1"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Studio floor": {
+        "type": "MESH",
+        "vertices": 4,
+        "polygons": 1,
+        "coordinates": "f69cbb67088dc9a345cdb801e2d5ecfdca2581181cb7cf0748038cb79debda84",
+        "topology": "9e97865f268fbcc4190687a97d459d7ac09dfaded381b251528e2041ffe51739",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          -0.03999999910593033,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "after": {
+      "Continuous griffin silhouette": {
+        "type": "MESH",
+        "vertices": 305602,
+        "polygons": 305600,
+        "coordinates": "e210e0cb5d41dab00dcb2fa2528dcfbdeecac93f6cccc62a6599c8f9e39b4338",
+        "topology": "9e3f8c7e23a121fe081a9051a4ac2628ef3c75784af01fde99d47d9063496226",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Integrated cream facial disc": {
+        "type": "MESH",
+        "vertices": 3201,
+        "polygons": 3200,
+        "coordinates": "5d2792511ac95cb0ef759f56830cc84a432b9cd98f2b9c8d2999ddeb428e1b10",
+        "topology": "b158eb9b589d8350a7f0a522866e8d60636b0c4dd0b884aca3869d8b0d87a2aa",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Left glossy eye": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0",
+        "topology": "723734f678487b597165935198de911812abbbefbb77b5a90ada940fdb00fc58",
+        "transform": [
+          0.9743700623512268,
+          -0.22495104372501373,
+          0.0,
+          -0.32499998807907104,
+          0.22495104372501373,
+          0.9743700623512268,
+          0.0,
+          -0.6128948926925659,
+          0.0,
+          0.0,
+          1.0,
+          1.7400000095367432,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Right glossy eye": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "a2ace4770304485c39feefe0eae6b4baf366dee5130ff58686360d516441e6c0",
+        "topology": "69547b253a29281f957b76cb68bde92bd8e925b44cd88662f6780e7f971815d7",
+        "transform": [
+          0.9743700623512268,
+          0.22495104372501373,
+          0.0,
+          0.32499998807907104,
+          -0.22495104372501373,
+          0.9743700623512268,
+          0.0,
+          -0.6128948926925659,
+          0.0,
+          0.0,
+          1.0,
+          1.7400000095367432,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Compact hooked upper beak": {
+        "type": "MESH",
+        "vertices": 4994,
+        "polygons": 4992,
+        "coordinates": "270ea6da2477683d0dd5f93c566611d33ec274658ed92d67457c57bcdbace3a3",
+        "topology": "6e8e334fe55c9f3d5a950b50ad14106de5ebd55fac25a4ffb3a410f94c5754da",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Integrated lower beak": {
+        "type": "MESH",
+        "vertices": 2690,
+        "polygons": 2688,
+        "coordinates": "e45ef2873cd1442cd17e1bc1ff8aee3fef0b3417e42e5d9158ac3615818d7e13",
+        "topology": "a68ec6b4039c42f79e534b40b3bb6279dfe0130d7dbbb368b11d2ec26bd2607a",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Mouth shadow": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "d4c167ca470cad4eb719914090e4d26dcea140021e75ef19ef00fbec53466272",
+        "topology": "5f2cfe09bab86dfaa2e652a596e8bb1fd847c24b222d91657f7c93f24cd40735",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.6499999761581421,
+          0.0,
+          0.0,
+          1.0,
+          1.527999997138977,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Subtle beak nostril": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7",
+        "topology": "469b56cb1b53c49693879049428359a0794e6e5066ed5d1bf2938094c1b491af",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          -0.05700000002980232,
+          0.0,
+          1.0,
+          0.0,
+          -0.7789999842643738,
+          0.0,
+          0.0,
+          1.0,
+          1.6759999990463257,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Subtle beak nostril.001": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "9d09a7c4bc1010fb066cfb8d9a221ffd0f9c079949e7808f865ce8edaaae4db7",
+        "topology": "3dcf8bdfa07fa04b25c948926e67d1e53926157a7e0fad2a8b73312d95047a6f",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.05700000002980232,
+          0.0,
+          1.0,
+          0.0,
+          -0.7789999842643738,
+          0.0,
+          0.0,
+          1.0,
+          1.6759999990463257,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Left folded wing": {
+        "type": "MESH",
+        "vertices": 3522,
+        "polygons": 3520,
+        "coordinates": "3ec1d0854848066b89183f32e2901fedf8de8fc7266ff5234741b1534b70626e",
+        "topology": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Left gold inner wing": {
+        "type": "MESH",
+        "vertices": 2882,
+        "polygons": 2880,
+        "coordinates": "142a09164a6f844968902b9b797023a62309974ddbece00f62ee4206d14f6d7e",
+        "topology": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Right folded wing": {
+        "type": "MESH",
+        "vertices": 3522,
+        "polygons": 3520,
+        "coordinates": "b3cd164c94a2bd53c3334303d212aba55b26fb9c8f939a334288e02b9d0acb1a",
+        "topology": "3f5a94a9e4dd8f82ecef1f240970be96c19fc116c4933a5d5e10de2d3a5966a3",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Right gold inner wing": {
+        "type": "MESH",
+        "vertices": 2882,
+        "polygons": 2880,
+        "coordinates": "43338fde51e6bad3c8dfb8e58495a913c421fdbc5d7641c0a52ff59b0fecc01a",
+        "topology": "33959989fec870d0b25f7ded9e88f88ffbed431bceef231680c25883eb5b0edf",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Curled lion tail": {
+        "type": "MESH",
+        "vertices": 5218,
+        "polygons": 5216,
+        "coordinates": "9f2f1d5d53ce98915ab3cc7f43ebf9ce7bcb1e1bf73571492cf2782921277059",
+        "topology": "9187b15fe455bf331b03e4c9f2d5a08d5238a849afd648345502ac89d90eb93e",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Rounded gold tail tip": {
+        "type": "MESH",
+        "vertices": 1490,
+        "polygons": 1536,
+        "coordinates": "7fd66e1c7420a4dff0bcdbe95c8291688029ea9bec6efeddb970075b6648d5f2",
+        "topology": "a66923a4b78dfebe84bb504292655377bc540698203666449d78f1b83cf29bc7",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.9791253209114075,
+          0.0,
+          1.0,
+          0.0,
+          0.07999999821186066,
+          0.0,
+          0.0,
+          1.0,
+          0.5045632123947144,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Graphite short feather coat": {
+        "type": "CURVES",
+        "curves": 240000,
+        "points": 1200000,
+        "attributes": {
+          "position": "e02af151a3c98861fae9117e39ff5cba681460579846a76cd14d9c2e8ba9cfe2",
+          "radius": "3afbcc2b4d216cada0423b66797d070c20ec362edc371383463ebbede8f71d4f",
+          "crest_gold": "492555f3b4016cf3894c8749b25a43faf6d70a5594053b634ee905e90a83fe46"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Cream fine facial down": {
+        "type": "CURVES",
+        "curves": 110000,
+        "points": 550000,
+        "attributes": {
+          "position": "604b18e62ef27f52f802cd1b938b16be637094d7c00f8dcfea1d2696f71a4b39",
+          "radius": "841a69fe110e18119800a80788b4db976f30249648c3004a4c2840ae00ed793c",
+          "crest_gold": "76cfcffe6bd0a6dc5e8362126b17c04ce29ea6a3962ff2cee8710408e0aa3c17"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Folded wing fine feathers 0": {
+        "type": "CURVES",
+        "curves": 13000,
+        "points": 65000,
+        "attributes": {
+          "position": "65141c0c9c3cafa5e4eea8b6f1c609d6eb570279fcf078cd838f8aafc4a04c9e",
+          "radius": "5090e0b5e3718404557c3d56107aaa25d9a4dcad1a158b40419e858ffa133f4c",
+          "crest_gold": "f68a41bf4c3957526a1b9ef341cd5392820624f65a677d695e6411a7e9860425"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Folded wing fine feathers 1": {
+        "type": "CURVES",
+        "curves": 13000,
+        "points": 65000,
+        "attributes": {
+          "position": "b1ff44c6e54a898f6695f4d6490156c0957cb23feb463f83993535d468115fcc",
+          "radius": "5090e0b5e3718404557c3d56107aaa25d9a4dcad1a158b40419e858ffa133f4c",
+          "crest_gold": "f68a41bf4c3957526a1b9ef341cd5392820624f65a677d695e6411a7e9860425"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Tail short fine coat": {
+        "type": "CURVES",
+        "curves": 28000,
+        "points": 140000,
+        "attributes": {
+          "position": "83569e6dadcbfba6003464adf1174cb21e5d628dacd02423b4ee3f117f86caa8",
+          "radius": "6843bcaee49e2e196054676264736a0200fa80bc220bb480fd4335b4c6f86438",
+          "crest_gold": "07a5f09dd9ad465ace66068921a3af44dbbb4c4d96bad7fa85fb6c871391d0f1"
+        },
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "Studio floor": {
+        "type": "MESH",
+        "vertices": 4,
+        "polygons": 1,
+        "coordinates": "f69cbb67088dc9a345cdb801e2d5ecfdca2581181cb7cf0748038cb79debda84",
+        "topology": "9e97865f268fbcc4190687a97d459d7ac09dfaded381b251528e2041ffe51739",
+        "transform": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          -0.03999999910593033,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    }
+  },
+  "look_before": {
+    "materials": {
+      "Beak mouth interior": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.1599999964237213,
+                0.06599999964237213,
+                0.003000000026077032,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.5799999833106995,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.23000000417232513,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Cream micro down fibers": {
+        "nodes": {
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Principled Hair BSDF": {
+            "type": "ShaderNodeBsdfHairPrincipled",
+            "inputs": {
+              "Color": [
+                0.8199999928474426,
+                0.6700000166893005,
+                0.4399999976158142,
+                1.0
+              ],
+              "Melanin": 0.800000011920929,
+              "Melanin Redness": 1.0,
+              "Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Absorption Coefficient": [
+                0.24553099274635315,
+                0.5199999809265137,
+                1.3650000095367432
+              ],
+              "Aspect Ratio": 0.8500000238418579,
+              "Roughness": 0.6000000238418579,
+              "Radial Roughness": 0.6499999761581421,
+              "Coat": 0.0,
+              "IOR": 1.5499999523162842,
+              "Offset": 0.03490658476948738,
+              "Random Color": 0.0,
+              "Random Roughness": 0.0,
+              "Random": 0.0,
+              "Weight": 0.0,
+              "Reflection": 1.0,
+              "Transmission": 1.0,
+              "Secondary Reflection": 1.0
+            },
+            "ramp": null
+          },
+          "Curves Info": {
+            "type": "ShaderNodeHairInfo",
+            "inputs": {},
+            "ramp": null
+          },
+          "Color Ramp": {
+            "type": "ShaderNodeValToRGB",
+            "inputs": {
+              "Factor": 0.5
+            },
+            "ramp": [
+              [
+                0.0,
+                [
+                  0.5740000009536743,
+                  0.4690000116825104,
+                  0.30799999833106995,
+                  1.0
+                ]
+              ],
+              [
+                1.0,
+                [
+                  0.9675999879837036,
+                  0.7906000018119812,
+                  0.5192000269889832,
+                  1.0
+                ]
+              ]
+            ]
+          }
+        },
+        "links": [
+          [
+            "Curves Info",
+            "Random",
+            "Color Ramp",
+            "Factor"
+          ],
+          [
+            "Color Ramp",
+            "Color",
+            "Principled Hair BSDF",
+            "Color"
+          ],
+          [
+            "Principled Hair BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Graphite feather base": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.052000001072883606,
+                0.050999999046325684,
+                0.05000000074505806,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.6499999761581421,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.02500000037252903,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.2800000011920929,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Noise Texture": {
+            "type": "ShaderNodeTexNoise",
+            "inputs": {
+              "Vector": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "W": 0.0,
+              "Scale": 140.0,
+              "Detail": 2.0,
+              "Roughness": 0.5,
+              "Lacunarity": 2.0,
+              "Offset": 0.0,
+              "Gain": 1.0,
+              "Distortion": 0.0
+            },
+            "ramp": null
+          },
+          "Bump": {
+            "type": "ShaderNodeBump",
+            "inputs": {
+              "Strength": 0.10000000149011612,
+              "Distance": 0.006000000052154064,
+              "Filter Width": 0.10000000149011612,
+              "Height": 1.0,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ramp": null
+          },
+          "Attribute": {
+            "type": "ShaderNodeAttribute",
+            "inputs": {},
+            "ramp": null
+          },
+          "Mix (Legacy)": {
+            "type": "ShaderNodeMixRGB",
+            "inputs": {
+              "Factor": 0.5,
+              "Color1": [
+                0.052000001072883606,
+                0.050999999046325684,
+                0.05000000074505806,
+                1.0
+              ],
+              "Color2": [
+                0.9599999785423279,
+                0.5600000023841858,
+                0.006000000052154064,
+                1.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Noise Texture",
+            "Factor",
+            "Bump",
+            "Height"
+          ],
+          [
+            "Bump",
+            "Normal",
+            "Principled BSDF",
+            "Normal"
+          ],
+          [
+            "Attribute",
+            "Factor",
+            "Mix (Legacy)",
+            "Factor"
+          ],
+          [
+            "Mix (Legacy)",
+            "Color",
+            "Principled BSDF",
+            "Base Color"
+          ]
+        ]
+      },
+      "Graphite short feather fibers": {
+        "nodes": {
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Principled Hair BSDF": {
+            "type": "ShaderNodeBsdfHairPrincipled",
+            "inputs": {
+              "Color": [
+                0.017000000923871994,
+                0.01899999938905239,
+                0.023000000044703484,
+                1.0
+              ],
+              "Melanin": 0.800000011920929,
+              "Melanin Redness": 1.0,
+              "Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Absorption Coefficient": [
+                0.24553099274635315,
+                0.5199999809265137,
+                1.3650000095367432
+              ],
+              "Aspect Ratio": 0.8500000238418579,
+              "Roughness": 0.6499999761581421,
+              "Radial Roughness": 0.6499999761581421,
+              "Coat": 0.0,
+              "IOR": 1.5499999523162842,
+              "Offset": 0.03490658476948738,
+              "Random Color": 0.0,
+              "Random Roughness": 0.0,
+              "Random": 0.0,
+              "Weight": 0.0,
+              "Reflection": 1.0,
+              "Transmission": 1.0,
+              "Secondary Reflection": 1.0
+            },
+            "ramp": null
+          },
+          "Curves Info": {
+            "type": "ShaderNodeHairInfo",
+            "inputs": {},
+            "ramp": null
+          },
+          "Color Ramp": {
+            "type": "ShaderNodeValToRGB",
+            "inputs": {
+              "Factor": 0.5
+            },
+            "ramp": [
+              [
+                0.0,
+                [
+                  0.011900000274181366,
+                  0.013299999758601189,
+                  0.016100000590085983,
+                  1.0
+                ]
+              ],
+              [
+                1.0,
+                [
+                  0.020059999078512192,
+                  0.022420000284910202,
+                  0.027140000835061073,
+                  1.0
+                ]
+              ]
+            ]
+          },
+          "Attribute": {
+            "type": "ShaderNodeAttribute",
+            "inputs": {},
+            "ramp": null
+          },
+          "Mix (Legacy)": {
+            "type": "ShaderNodeMixRGB",
+            "inputs": {
+              "Factor": 0.5,
+              "Color1": [
+                0.5,
+                0.5,
+                0.5,
+                1.0
+              ],
+              "Color2": [
+                0.8700000047683716,
+                0.47999998927116394,
+                0.006000000052154064,
+                1.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Curves Info",
+            "Random",
+            "Color Ramp",
+            "Factor"
+          ],
+          [
+            "Principled Hair BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Color Ramp",
+            "Color",
+            "Mix (Legacy)",
+            "Color1"
+          ],
+          [
+            "Attribute",
+            "Factor",
+            "Mix (Legacy)",
+            "Factor"
+          ],
+          [
+            "Mix (Legacy)",
+            "Color",
+            "Principled Hair BSDF",
+            "Color"
+          ]
+        ]
+      },
+      "Graphite studio floor": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.008999999612569809,
+                0.009999999776482582,
+                0.013000000268220901,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.8799999952316284,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.20000000298023224,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Material": {
+        "nodes": {
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.5,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.5,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Obsidian eye": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.001500000013038516,
+                0.00139999995008111,
+                0.0012000000569969416,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.10000000149011612,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.5,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.27000001072883606,
+              "Coat Roughness": 0.10000000149011612,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Warm cream facial down": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.8199999928474426,
+                0.6899999976158142,
+                0.49000000953674316,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.6499999761581421,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.04500000178813934,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.25,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Noise Texture": {
+            "type": "ShaderNodeTexNoise",
+            "inputs": {
+              "Vector": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "W": 0.0,
+              "Scale": 140.0,
+              "Detail": 2.0,
+              "Roughness": 0.5,
+              "Lacunarity": 2.0,
+              "Offset": 0.0,
+              "Gain": 1.0,
+              "Distortion": 0.0
+            },
+            "ramp": null
+          },
+          "Bump": {
+            "type": "ShaderNodeBump",
+            "inputs": {
+              "Strength": 0.10000000149011612,
+              "Distance": 0.006000000052154064,
+              "Filter Width": 0.10000000149011612,
+              "Height": 1.0,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Noise Texture",
+            "Factor",
+            "Bump",
+            "Height"
+          ],
+          [
+            "Bump",
+            "Normal",
+            "Principled BSDF",
+            "Normal"
+          ]
+        ]
+      },
+      "Warm golden beak and feather tips": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.9599999785423279,
+                0.5600000023841858,
+                0.006000000052154064,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.3700000047683716,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.03500000014901161,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.3199999928474426,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Noise Texture": {
+            "type": "ShaderNodeTexNoise",
+            "inputs": {
+              "Vector": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "W": 0.0,
+              "Scale": 140.0,
+              "Detail": 2.0,
+              "Roughness": 0.5,
+              "Lacunarity": 2.0,
+              "Offset": 0.0,
+              "Gain": 1.0,
+              "Distortion": 0.0
+            },
+            "ramp": null
+          },
+          "Bump": {
+            "type": "ShaderNodeBump",
+            "inputs": {
+              "Strength": 0.10000000149011612,
+              "Distance": 0.006000000052154064,
+              "Filter Width": 0.10000000149011612,
+              "Height": 1.0,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Noise Texture",
+            "Factor",
+            "Bump",
+            "Height"
+          ],
+          [
+            "Bump",
+            "Normal",
+            "Principled BSDF",
+            "Normal"
+          ]
+        ]
+      }
+    },
+    "lights": {
+      "Large window key": {
+        "energy": 430.0,
+        "size": 4.0,
+        "color": [
+          1.0,
+          0.949999988079071,
+          0.8700000047683716
+        ],
+        "position": [
+          -3.5,
+          -4.0,
+          5.0
+        ]
+      },
+      "Gentle camera fill": {
+        "energy": 110.0,
+        "size": 3.0,
+        "color": [
+          0.8899999856948853,
+          0.9399999976158142,
+          1.0
+        ],
+        "position": [
+          3.0,
+          -4.0,
+          2.5999999046325684
+        ]
+      },
+      "Soft feather rim": {
+        "energy": 430.0,
+        "size": 3.0,
+        "color": [
+          1.0,
+          0.9100000262260437,
+          0.7300000190734863
+        ],
+        "position": [
+          1.5,
+          3.0,
+          4.0
+        ]
+      }
+    },
+    "world": {
+      "Color": [
+        0.10999999940395355,
+        0.10499999672174454,
+        0.10000000149011612,
+        1.0
+      ],
+      "Strength": 0.30000001192092896,
+      "Weight": 0.0
+    }
+  },
+  "look_after": {
+    "materials": {
+      "Beak mouth interior": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.1599999964237213,
+                0.06599999964237213,
+                0.003000000026077032,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.5799999833106995,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.23000000417232513,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Cream micro down fibers": {
+        "nodes": {
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Principled Hair BSDF": {
+            "type": "ShaderNodeBsdfHairPrincipled",
+            "inputs": {
+              "Color": [
+                0.8199999928474426,
+                0.6700000166893005,
+                0.4399999976158142,
+                1.0
+              ],
+              "Melanin": 0.800000011920929,
+              "Melanin Redness": 1.0,
+              "Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Absorption Coefficient": [
+                0.24553099274635315,
+                0.5199999809265137,
+                1.3650000095367432
+              ],
+              "Aspect Ratio": 0.8500000238418579,
+              "Roughness": 0.6000000238418579,
+              "Radial Roughness": 0.6499999761581421,
+              "Coat": 0.0,
+              "IOR": 1.5499999523162842,
+              "Offset": 0.03490658476948738,
+              "Random Color": 0.0,
+              "Random Roughness": 0.0,
+              "Random": 0.0,
+              "Weight": 0.0,
+              "Reflection": 1.0,
+              "Transmission": 1.0,
+              "Secondary Reflection": 1.0
+            },
+            "ramp": null
+          },
+          "Curves Info": {
+            "type": "ShaderNodeHairInfo",
+            "inputs": {},
+            "ramp": null
+          },
+          "Color Ramp": {
+            "type": "ShaderNodeValToRGB",
+            "inputs": {
+              "Factor": 0.5
+            },
+            "ramp": [
+              [
+                0.0,
+                [
+                  0.5740000009536743,
+                  0.4690000116825104,
+                  0.30799999833106995,
+                  1.0
+                ]
+              ],
+              [
+                1.0,
+                [
+                  0.9675999879837036,
+                  0.7906000018119812,
+                  0.5192000269889832,
+                  1.0
+                ]
+              ]
+            ]
+          }
+        },
+        "links": [
+          [
+            "Curves Info",
+            "Random",
+            "Color Ramp",
+            "Factor"
+          ],
+          [
+            "Color Ramp",
+            "Color",
+            "Principled Hair BSDF",
+            "Color"
+          ],
+          [
+            "Principled Hair BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Graphite feather base": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.052000001072883606,
+                0.050999999046325684,
+                0.05000000074505806,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.6499999761581421,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.02500000037252903,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.2800000011920929,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Noise Texture": {
+            "type": "ShaderNodeTexNoise",
+            "inputs": {
+              "Vector": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "W": 0.0,
+              "Scale": 140.0,
+              "Detail": 2.0,
+              "Roughness": 0.5,
+              "Lacunarity": 2.0,
+              "Offset": 0.0,
+              "Gain": 1.0,
+              "Distortion": 0.0
+            },
+            "ramp": null
+          },
+          "Bump": {
+            "type": "ShaderNodeBump",
+            "inputs": {
+              "Strength": 0.10000000149011612,
+              "Distance": 0.006000000052154064,
+              "Filter Width": 0.10000000149011612,
+              "Height": 1.0,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ramp": null
+          },
+          "Attribute": {
+            "type": "ShaderNodeAttribute",
+            "inputs": {},
+            "ramp": null
+          },
+          "Mix (Legacy)": {
+            "type": "ShaderNodeMixRGB",
+            "inputs": {
+              "Factor": 0.5,
+              "Color1": [
+                0.052000001072883606,
+                0.050999999046325684,
+                0.05000000074505806,
+                1.0
+              ],
+              "Color2": [
+                0.9599999785423279,
+                0.5600000023841858,
+                0.006000000052154064,
+                1.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Noise Texture",
+            "Factor",
+            "Bump",
+            "Height"
+          ],
+          [
+            "Bump",
+            "Normal",
+            "Principled BSDF",
+            "Normal"
+          ],
+          [
+            "Attribute",
+            "Factor",
+            "Mix (Legacy)",
+            "Factor"
+          ],
+          [
+            "Mix (Legacy)",
+            "Color",
+            "Principled BSDF",
+            "Base Color"
+          ]
+        ]
+      },
+      "Graphite short feather fibers": {
+        "nodes": {
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Principled Hair BSDF": {
+            "type": "ShaderNodeBsdfHairPrincipled",
+            "inputs": {
+              "Color": [
+                0.017000000923871994,
+                0.01899999938905239,
+                0.023000000044703484,
+                1.0
+              ],
+              "Melanin": 0.800000011920929,
+              "Melanin Redness": 1.0,
+              "Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Absorption Coefficient": [
+                0.24553099274635315,
+                0.5199999809265137,
+                1.3650000095367432
+              ],
+              "Aspect Ratio": 0.8500000238418579,
+              "Roughness": 0.6499999761581421,
+              "Radial Roughness": 0.6499999761581421,
+              "Coat": 0.0,
+              "IOR": 1.5499999523162842,
+              "Offset": 0.03490658476948738,
+              "Random Color": 0.0,
+              "Random Roughness": 0.0,
+              "Random": 0.0,
+              "Weight": 0.0,
+              "Reflection": 1.0,
+              "Transmission": 1.0,
+              "Secondary Reflection": 1.0
+            },
+            "ramp": null
+          },
+          "Curves Info": {
+            "type": "ShaderNodeHairInfo",
+            "inputs": {},
+            "ramp": null
+          },
+          "Color Ramp": {
+            "type": "ShaderNodeValToRGB",
+            "inputs": {
+              "Factor": 0.5
+            },
+            "ramp": [
+              [
+                0.0,
+                [
+                  0.011900000274181366,
+                  0.013299999758601189,
+                  0.016100000590085983,
+                  1.0
+                ]
+              ],
+              [
+                1.0,
+                [
+                  0.020059999078512192,
+                  0.022420000284910202,
+                  0.027140000835061073,
+                  1.0
+                ]
+              ]
+            ]
+          },
+          "Attribute": {
+            "type": "ShaderNodeAttribute",
+            "inputs": {},
+            "ramp": null
+          },
+          "Mix (Legacy)": {
+            "type": "ShaderNodeMixRGB",
+            "inputs": {
+              "Factor": 0.5,
+              "Color1": [
+                0.5,
+                0.5,
+                0.5,
+                1.0
+              ],
+              "Color2": [
+                0.8700000047683716,
+                0.47999998927116394,
+                0.006000000052154064,
+                1.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Curves Info",
+            "Random",
+            "Color Ramp",
+            "Factor"
+          ],
+          [
+            "Principled Hair BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Color Ramp",
+            "Color",
+            "Mix (Legacy)",
+            "Color1"
+          ],
+          [
+            "Attribute",
+            "Factor",
+            "Mix (Legacy)",
+            "Factor"
+          ],
+          [
+            "Mix (Legacy)",
+            "Color",
+            "Principled Hair BSDF",
+            "Color"
+          ]
+        ]
+      },
+      "Graphite studio floor": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.008999999612569809,
+                0.009999999776482582,
+                0.013000000268220901,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.8799999952316284,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.20000000298023224,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Material": {
+        "nodes": {
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.800000011920929,
+                0.800000011920929,
+                0.800000011920929,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.5,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.5,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Obsidian eye": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.001500000013038516,
+                0.00139999995008111,
+                0.0012000000569969416,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.10000000149011612,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.0,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.5,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.27000001072883606,
+              "Coat Roughness": 0.10000000149011612,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ]
+        ]
+      },
+      "Warm cream facial down": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.8199999928474426,
+                0.6899999976158142,
+                0.49000000953674316,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.6499999761581421,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.04500000178813934,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.25,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Noise Texture": {
+            "type": "ShaderNodeTexNoise",
+            "inputs": {
+              "Vector": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "W": 0.0,
+              "Scale": 140.0,
+              "Detail": 2.0,
+              "Roughness": 0.5,
+              "Lacunarity": 2.0,
+              "Offset": 0.0,
+              "Gain": 1.0,
+              "Distortion": 0.0
+            },
+            "ramp": null
+          },
+          "Bump": {
+            "type": "ShaderNodeBump",
+            "inputs": {
+              "Strength": 0.10000000149011612,
+              "Distance": 0.006000000052154064,
+              "Filter Width": 0.10000000149011612,
+              "Height": 1.0,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Noise Texture",
+            "Factor",
+            "Bump",
+            "Height"
+          ],
+          [
+            "Bump",
+            "Normal",
+            "Principled BSDF",
+            "Normal"
+          ]
+        ]
+      },
+      "Warm golden beak and feather tips": {
+        "nodes": {
+          "Principled BSDF": {
+            "type": "ShaderNodeBsdfPrincipled",
+            "inputs": {
+              "Base Color": [
+                0.9599999785423279,
+                0.5600000023841858,
+                0.006000000052154064,
+                1.0
+              ],
+              "Metallic": 0.0,
+              "Roughness": 0.3700000047683716,
+              "IOR": 1.5,
+              "Alpha": 1.0,
+              "Thin Wall": false,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Weight": 0.0,
+              "Diffuse Roughness": 0.0,
+              "Subsurface Weight": 0.03500000014901161,
+              "Subsurface Radius": [
+                1.0,
+                0.20000000298023224,
+                0.10000000149011612
+              ],
+              "Subsurface Scale": 0.004999999888241291,
+              "Subsurface IOR": 1.399999976158142,
+              "Subsurface Anisotropy": 0.0,
+              "Specular IOR Level": 0.3199999928474426,
+              "Specular Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Anisotropic": 0.0,
+              "Anisotropic Rotation": 0.0,
+              "Tangent": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Transmission Weight": 0.0,
+              "Coat Weight": 0.0,
+              "Coat Roughness": 0.029999999329447746,
+              "Coat IOR": 1.5,
+              "Coat Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Coat Normal": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Sheen Weight": 0.0,
+              "Sheen Roughness": 0.5,
+              "Sheen Tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "Emission Strength": 0.0,
+              "Thin Film Thickness": 0.0,
+              "Thin Film IOR": 1.3300000429153442
+            },
+            "ramp": null
+          },
+          "Material Output": {
+            "type": "ShaderNodeOutputMaterial",
+            "inputs": {
+              "Surface": null,
+              "Volume": null,
+              "Displacement": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "Thickness": 0.0
+            },
+            "ramp": null
+          },
+          "Noise Texture": {
+            "type": "ShaderNodeTexNoise",
+            "inputs": {
+              "Vector": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "W": 0.0,
+              "Scale": 140.0,
+              "Detail": 2.0,
+              "Roughness": 0.5,
+              "Lacunarity": 2.0,
+              "Offset": 0.0,
+              "Gain": 1.0,
+              "Distortion": 0.0
+            },
+            "ramp": null
+          },
+          "Bump": {
+            "type": "ShaderNodeBump",
+            "inputs": {
+              "Strength": 0.10000000149011612,
+              "Distance": 0.006000000052154064,
+              "Filter Width": 0.10000000149011612,
+              "Height": 1.0,
+              "Normal": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ramp": null
+          }
+        },
+        "links": [
+          [
+            "Principled BSDF",
+            "BSDF",
+            "Material Output",
+            "Surface"
+          ],
+          [
+            "Noise Texture",
+            "Factor",
+            "Bump",
+            "Height"
+          ],
+          [
+            "Bump",
+            "Normal",
+            "Principled BSDF",
+            "Normal"
+          ]
+        ]
+      }
+    },
+    "lights": {
+      "Large window key": {
+        "energy": 430.0,
+        "size": 4.0,
+        "color": [
+          1.0,
+          0.949999988079071,
+          0.8700000047683716
+        ],
+        "position": [
+          -3.5,
+          -4.0,
+          5.0
+        ]
+      },
+      "Gentle camera fill": {
+        "energy": 110.0,
+        "size": 3.0,
+        "color": [
+          0.8899999856948853,
+          0.9399999976158142,
+          1.0
+        ],
+        "position": [
+          3.0,
+          -4.0,
+          2.5999999046325684
+        ]
+      },
+      "Soft feather rim": {
+        "energy": 430.0,
+        "size": 3.0,
+        "color": [
+          1.0,
+          0.9100000262260437,
+          0.7300000190734863
+        ],
+        "position": [
+          1.5,
+          3.0,
+          4.0
+        ]
+      }
+    },
+    "world": {
+      "Color": [
+        0.10999999940395355,
+        0.10499999672174454,
+        0.10000000149011612,
+        1.0
+      ],
+      "Strength": 0.30000001192092896,
+      "Weight": 0.0
+    }
+  },
+  "files": [
+    {
+      "path": "griffin-baseline-v05.blend",
+      "bytes": 35663726,
+      "sha256": "ae705fd02eff76905f90a6348bb2323ac94ff30badba7062df013e738226e49d"
+    },
+    {
+      "path": "griffin-baseline-v05-hero.png",
+      "bytes": 1070870,
+      "sha256": "9ee431a56602bacb4a27ba98a9f1c578275b7d8f5366731421537344116d6ec9"
+    }
+  ],
+  "views": [
+    {
+      "name": "hero",
+      "seconds": 72.336,
+      "camera": [
+        2.700000047683716,
+        -8.0,
+        2.549999952316284
+      ],
+      "scale": 3.75
+    }
+  ],
+  "elapsed_seconds": 75.404
+}

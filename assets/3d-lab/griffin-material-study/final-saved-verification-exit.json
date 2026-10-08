@@ -1,0 +1,4 @@
+{
+  "purpose": "Read-only reload and compare the actual saved final baseline and selected v01 geometry, attributes, palette and camera",
+  "exit_code": 0
+}

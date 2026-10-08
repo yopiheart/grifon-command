@@ -1,0 +1,3643 @@
+{
+  "command": "node assets/design/griffin-material-study/qa/browser/smoke-material-study.mjs",
+  "startedAt": "2026-10-08T11:56:44.850Z",
+  "status": "PASS",
+  "node": "v24.21.0",
+  "browser": "Playwright Chromium, headless",
+  "offline": true,
+  "helperServer": null,
+  "checks": [
+    {
+      "name": "hero-baseline: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "hero-baseline: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "hero-candidate: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "hero-candidate: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "front-baseline: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "front-baseline: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "front-candidate: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "front-candidate: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "detail-baseline: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "detail-baseline: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "detail-candidate: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "detail-candidate: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "profile-baseline: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "profile-baseline: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "profile-candidate: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "profile-candidate: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "chat-baseline: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "chat-baseline: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "chat-baseline: transparent, nonempty chat asset",
+      "status": "PASS"
+    },
+    {
+      "name": "chat-candidate: selected source SHA",
+      "status": "PASS"
+    },
+    {
+      "name": "chat-candidate: PNG decodes and contains pixels",
+      "status": "PASS"
+    },
+    {
+      "name": "chat-candidate: transparent, nonempty chat asset",
+      "status": "PASS"
+    },
+    {
+      "name": "All ten selected PNGs are embedded",
+      "status": "PASS"
+    },
+    {
+      "name": "HTML has no external resource URL",
+      "status": "PASS"
+    },
+    {
+      "name": "Solid artifact text; no fixed background attachment",
+      "status": "PASS"
+    },
+    {
+      "name": "CSP blocks external dependencies and matches inline blocks",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop hero: matched images and pressed state",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop hero: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop hero: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop hero: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop hero: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop hero: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-hero-1440x1000: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop front: matched images and pressed state",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop front: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop front: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop front: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop front: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop front: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-front-1440x1000: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop detail: matched images and pressed state",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop detail: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop detail: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop detail: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop detail: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop detail: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-detail-1440x1000: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop profile: matched images and pressed state",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop profile: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop profile: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop profile: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop profile: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "Desktop profile: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-profile-1440x1000: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Approved preset: visible clip, divider and output change",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-profile-approved: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Compare preset: visible clip, divider and output change",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-profile-compare: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Trial preset: visible clip, divider and output change",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-profile-trial: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Slider input changes actual clip and output",
+      "status": "PASS"
+    },
+    {
+      "name": "Keyboard range adjustment changes clip and output",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile hero: matched images and pressed state",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile hero: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile hero: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile hero: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile hero: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile hero: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile-hero-390x844: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile detail: matched images and pressed state",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile detail: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile detail: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile detail: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile detail: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile detail: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile-detail-390x844: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile: bottom viewport is actually scrolled",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile scrolled bottom: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile scrolled bottom: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile scrolled bottom: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile scrolled bottom: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile scrolled bottom: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "mobile-detail-bottom-390x844: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop: bottom viewport is actually scrolled",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop scrolled bottom: exact viewport, no horizontal overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop scrolled bottom: continuous fixed ground",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop scrolled bottom: solid title and layered glass sheen",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop scrolled bottom: actual 64px avatars",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop scrolled bottom: no external resource performance entries",
+      "status": "PASS"
+    },
+    {
+      "name": "desktop-detail-bottom-1440x1000: actual viewport screenshot dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "No external request attempts while offline",
+      "status": "PASS"
+    },
+    {
+      "name": "No console/CSP errors or unhandled page errors",
+      "status": "PASS"
+    },
+    {
+      "name": "Tested artifact and source hashes remain unchanged",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "console": [],
+  "requests": [
+    {
+      "url": "file:///C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/artifacts/griffin-material-study.html",
+      "resourceType": "document"
+    }
+  ],
+  "viewports": {
+    "desktop": {
+      "hero": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "true",
+            "box": {
+              "x": 245,
+              "y": 216.15625,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 301.171875,
+              "y": 216.15625,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 359.421875,
+              "y": 216.15625,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "false",
+            "box": {
+              "x": 420.65625,
+              "y": 216.15625,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786",
+          "alt": "Approved Grifon, hero view",
+          "naturalWidth": 1500,
+          "naturalHeight": 1500,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65",
+          "alt": "Trial Grifon, hero view",
+          "naturalWidth": 1500,
+          "naturalHeight": 1500,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 720,
+          "y": 273.15625,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": 273.15625,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      },
+      "front": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 245,
+              "y": 216.15625,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "true",
+            "box": {
+              "x": 301.171875,
+              "y": 216.15625,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 359.421875,
+              "y": 216.15625,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "false",
+            "box": {
+              "x": 420.65625,
+              "y": 216.15625,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc",
+          "alt": "Approved Grifon, front view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349",
+          "alt": "Trial Grifon, front view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 720,
+          "y": 273.15625,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": 273.15625,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      },
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 245,
+              "y": 216.15625,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 301.171875,
+              "y": 216.15625,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "true",
+            "box": {
+              "x": 359.421875,
+              "y": 216.15625,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "false",
+            "box": {
+              "x": 420.65625,
+              "y": 216.15625,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2",
+          "alt": "Approved Grifon, detail view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d",
+          "alt": "Trial Grifon, detail view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 720,
+          "y": 273.15625,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": 273.15625,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      },
+      "profile": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 0,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 245,
+              "y": 216.15625,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 301.171875,
+              "y": 216.15625,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 359.421875,
+              "y": 216.15625,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "true",
+            "box": {
+              "x": 420.65625,
+              "y": 216.15625,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+          "alt": "Approved Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+          "alt": "Trial Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": 273.15625,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 720,
+          "y": 273.15625,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": 273.15625,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 1112.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      }
+    },
+    "mobile": {
+      "hero": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scrollY": 0,
+        "documentWidth": 390,
+        "bodyHeight": 1148,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "true",
+            "box": {
+              "x": 25,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 110,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 195,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "false",
+            "box": {
+              "x": 280,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786",
+          "alt": "Approved Grifon, hero view",
+          "naturalWidth": 1500,
+          "naturalHeight": 1500,
+          "box": {
+            "x": 17,
+            "y": 263.125,
+            "width": 356,
+            "height": 356
+          }
+        },
+        "candidate": {
+          "srcSHA256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65",
+          "alt": "Trial Grifon, hero view",
+          "naturalWidth": 1500,
+          "naturalHeight": 1500,
+          "box": {
+            "x": 17,
+            "y": 263.125,
+            "width": 356,
+            "height": 356
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 195,
+          "y": 263.125,
+          "width": 1,
+          "height": 356
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 17,
+          "y": 263.125,
+          "width": 356,
+          "height": 356
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 31,
+              "y": 804.125,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 215,
+              "y": 804.125,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "11px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "11px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "11px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      },
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scrollY": 0,
+        "documentWidth": 390,
+        "bodyHeight": 1148,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 25,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 110,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "true",
+            "box": {
+              "x": 195,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "false",
+            "box": {
+              "x": 280,
+              "y": 210.125,
+              "width": 85,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2",
+          "alt": "Approved Grifon, detail view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 17,
+            "y": 263.125,
+            "width": 356,
+            "height": 356
+          }
+        },
+        "candidate": {
+          "srcSHA256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d",
+          "alt": "Trial Grifon, detail view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 17,
+            "y": 263.125,
+            "width": 356,
+            "height": 356
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 195,
+          "y": 263.125,
+          "width": 1,
+          "height": 356
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 17,
+          "y": 263.125,
+          "width": 356,
+          "height": 356
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 31,
+              "y": 804.125,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 215,
+              "y": 804.125,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "11px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "11px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "11px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      }
+    }
+  },
+  "screenshots": [
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-hero-1440x1000.png",
+      "sha256": "8865a1a02d2800116f501c57307e333311a1372b050b3a0fecee4ea056b9eeb4",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-front-1440x1000.png",
+      "sha256": "25f1997799b920c3ed740f5b65c77a69f968ea2fa4f50f537b6ed22ee9f93a99",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-detail-1440x1000.png",
+      "sha256": "e222af615f4777418fc39021516fdb750bf04cbe83c9565dcacada5bd66b6506",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-profile-1440x1000.png",
+      "sha256": "398c7b0939e86aada716f5f6e315ccd8aee478ab40c4f3019d0f262b39dd011f",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-profile-approved.png",
+      "sha256": "fcbc2e46ab1d5a89db5263504210a7edbf6d7ac639136a4fa62dc5951f1a4ca3",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-profile-compare.png",
+      "sha256": "d97eb8e6bd27bb6b0bde2668c0d6c3f24b10b734c6a47cd55a642d61039c61ed",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-profile-trial.png",
+      "sha256": "586f53be764b3a0b8445e9b83585fb3e8bee8570957fb0fb5ea98da2f06286f8",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/mobile-hero-390x844.png",
+      "sha256": "bde6fc0919e7fe8d93e5c12cb6c077ada80b62f3ad62009e51e750862c800bf2",
+      "width": 390,
+      "height": 844,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/mobile-detail-390x844.png",
+      "sha256": "6afe82dc4e136417e3262d9a04590992f44d4a63813f69483118f718a4eeecbb",
+      "width": 390,
+      "height": 844,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/mobile-detail-bottom-390x844.png",
+      "sha256": "69b3cbff8043515e0e6523e9fdb121cefd25c52a3314258bac76e7fbb939e11f",
+      "width": 390,
+      "height": 844,
+      "capture": "viewport"
+    },
+    {
+      "path": "assets/design/griffin-material-study/qa/browser/desktop-detail-bottom-1440x1000.png",
+      "sha256": "abb1035476d0e2caf0796969ff750b9af1a24739b1cf5097bed57b49d81a7194",
+      "width": 1440,
+      "height": 1000,
+      "capture": "viewport"
+    }
+  ],
+  "limitations": [
+    "Viewport checks use Chromium, not an Android engine.",
+    "Saved stills do not establish animation quality or app runtime FPS."
+  ],
+  "artifactSHA256": "bf8f661d608fe8c99856256d3502f23acb2463d72fe8db54a36094798486b1cd",
+  "sourcesSHA256": {
+    "assets/3d-lab/griffin-material-study/baseline-final/manifest.json": "6febc6b1666e99c3a6194edea545757c57a66988887cb790dc1a9ddb0248e681",
+    "assets/3d-lab/griffin-material-study/baseline-final/refine-griffin.py": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60",
+    "assets/3d-lab/griffin-material-study/baseline-v05/refine-griffin.py": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600",
+    "assets/3d-lab/griffin-material-study/candidate-final/manifest.json": "5dd1e9c9f2a0c3e64b8415f14667e2dfa153b659bfdb84e196044f9ab01bb7fc",
+    "assets/3d-lab/griffin-material-study/candidate-final/refine-griffin.py": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60",
+    "assets/3d-lab/griffin-material-study/candidate-v01/refine-griffin.py": "7ff29c741a00ff2bbc3402fa3f871deeebdc3672ac89e1051f4a310198d4b600",
+    "assets/3d-lab/griffin-material-study/candidate-v02/refine-griffin.py": "d4551152b5dd8498872299917ed54a1d2dd9082e92f47ee991dc932b27a3e77c",
+    "assets/3d-lab/griffin-material-study/create-geometry-negative-control.py": "b9a665100ee76fb86359a55bff51384aaf41e923fd2fca3b0d76549dceeb784f",
+    "assets/3d-lab/griffin-material-study/inspect-geometry-attributes.py": "7221a75e4328e54ab2b316f93578bc22e4e94b1b8aff99979fac9baeb4046afe",
+    "assets/3d-lab/griffin-material-study/refine-griffin.py": "2adad6a2d9acf398b81a573c8a0813356c9df66c3bfd1ac7f529d51423102c60",
+    "assets/3d-lab/griffin-material-study/verify-saved-study.py": "c0eb7ed843580d4f2e0f6cf0803633030f2e1146773625484b6018fcc44cd7f9",
+    "assets/design/griffin-material-study/comparison.json": "98c7e15c192937dbc8a188913e679fcbcf3a5c8bc31a9aad00599c2d513f5985",
+    "assets/design/griffin-material-study/qa/browser/smoke-material-study.mjs": "61c1cc50e2de9b31753854446c1e3441a2da9ca27da6be41be94842bdc7293ec",
+    "tools/artifacts/build-griffin-material-study.mjs": "3386aa2c71f1c6c26d6c526e058b15f8e65e4552da94c42a4d25e82360568371",
+    "tools/artifacts/griffin-material-study.tpl.html": "b0e23ede12d01bfa39b70c7d8469e9567bf977fb2b682cb3cc6688d61f437ab5"
+  },
+  "selectedAssets": [
+    {
+      "name": "hero-baseline",
+      "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-hero.png",
+      "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786",
+      "width": 1500,
+      "height": 1500,
+      "transparentPixels": 0,
+      "opaquePixels": 2250000,
+      "nonemptyPixels": 2250000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1499,
+        "maxY": 1499
+      }
+    },
+    {
+      "name": "hero-candidate",
+      "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-hero.png",
+      "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65",
+      "width": 1500,
+      "height": 1500,
+      "transparentPixels": 0,
+      "opaquePixels": 2250000,
+      "nonemptyPixels": 2250000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1499,
+        "maxY": 1499
+      }
+    },
+    {
+      "name": "front-baseline",
+      "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-front.png",
+      "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc",
+      "width": 1100,
+      "height": 1100,
+      "transparentPixels": 0,
+      "opaquePixels": 1210000,
+      "nonemptyPixels": 1210000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1099,
+        "maxY": 1099
+      }
+    },
+    {
+      "name": "front-candidate",
+      "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-front.png",
+      "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349",
+      "width": 1100,
+      "height": 1100,
+      "transparentPixels": 0,
+      "opaquePixels": 1210000,
+      "nonemptyPixels": 1210000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1099,
+        "maxY": 1099
+      }
+    },
+    {
+      "name": "detail-baseline",
+      "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-detail.png",
+      "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2",
+      "width": 1100,
+      "height": 1100,
+      "transparentPixels": 0,
+      "opaquePixels": 1210000,
+      "nonemptyPixels": 1210000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1099,
+        "maxY": 1099
+      }
+    },
+    {
+      "name": "detail-candidate",
+      "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-detail.png",
+      "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d",
+      "width": 1100,
+      "height": 1100,
+      "transparentPixels": 0,
+      "opaquePixels": 1210000,
+      "nonemptyPixels": 1210000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1099,
+        "maxY": 1099
+      }
+    },
+    {
+      "name": "profile-baseline",
+      "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-profile.png",
+      "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+      "width": 1100,
+      "height": 1100,
+      "transparentPixels": 0,
+      "opaquePixels": 1210000,
+      "nonemptyPixels": 1210000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1099,
+        "maxY": 1099
+      }
+    },
+    {
+      "name": "profile-candidate",
+      "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-profile.png",
+      "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+      "width": 1100,
+      "height": 1100,
+      "transparentPixels": 0,
+      "opaquePixels": 1210000,
+      "nonemptyPixels": 1210000,
+      "contentBounds": {
+        "minX": 0,
+        "minY": 0,
+        "maxX": 1099,
+        "maxY": 1099
+      }
+    },
+    {
+      "name": "chat-baseline",
+      "path": "assets/3d-lab/griffin-material-study/baseline-final/griffin-baseline-final-transparent.png",
+      "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70",
+      "width": 256,
+      "height": 256,
+      "transparentPixels": 43589,
+      "opaquePixels": 18927,
+      "nonemptyPixels": 21947,
+      "contentBounds": {
+        "minX": 49,
+        "minY": 20,
+        "maxX": 216,
+        "maxY": 228
+      }
+    },
+    {
+      "name": "chat-candidate",
+      "path": "assets/3d-lab/griffin-material-study/candidate-final/griffin-material-final-transparent.png",
+      "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6",
+      "width": 256,
+      "height": 256,
+      "transparentPixels": 43592,
+      "opaquePixels": 18928,
+      "nonemptyPixels": 21944,
+      "contentBounds": {
+        "minX": 49,
+        "minY": 20,
+        "maxX": 216,
+        "maxY": 228
+      }
+    }
+  ],
+  "embeddedPNGs": [
+    {
+      "sha256": "f122b78be6f3d0b0914b86483ed10db82c5b6d47607f2e14299b14e718e2ce65",
+      "width": 1500,
+      "height": 1500
+    },
+    {
+      "sha256": "b0132f9951dcf89beda687cce9b051d6799a554764b3c070fb4ae8b3f3fbd786",
+      "width": 1500,
+      "height": 1500
+    },
+    {
+      "sha256": "354edd396cc8cc228f3599ed18c5e6f00cdd0dc1fbdbf9dae949356d0e251e70",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "sha256": "8e871c37f4b7663e5bed286ce4ba4dae2810e85a51fac55bda2198358f0860e6",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "sha256": "a4de920a84401945c2f4991ad89cac5b0f689a48f8bd1a0fcd3b9129c80bdacc",
+      "width": 1100,
+      "height": 1100
+    },
+    {
+      "sha256": "742a0dcff0eb4345cc5e66aa01c08c47b0d2c8079cc7b1f383b78c59769bf349",
+      "width": 1100,
+      "height": 1100
+    },
+    {
+      "sha256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2",
+      "width": 1100,
+      "height": 1100
+    },
+    {
+      "sha256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d",
+      "width": 1100,
+      "height": 1100
+    },
+    {
+      "sha256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+      "width": 1100,
+      "height": 1100
+    },
+    {
+      "sha256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+      "width": 1100,
+      "height": 1100
+    }
+  ],
+  "contentSecurityPolicy": "default-src 'none'; img-src data:; style-src 'sha256-h6ygzYS0OlhdexiKaSY37f74z4VPogNQyuR72geqtxA='; script-src 'sha256-eq+hPW+mjy4fKjs0NFqYvtT5N8LjP47HHWpjOTgSi5E='; base-uri 'none'; form-action 'none'",
+  "browserPID": 26312,
+  "browserVersion": "149.0.7827.55",
+  "controls": [
+    {
+      "name": "Approved",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 360,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 245,
+              "y": -143.84375,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 301.171875,
+              "y": -143.84375,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 359.421875,
+              "y": -143.84375,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "true",
+            "box": {
+              "x": 420.65625,
+              "y": -143.84375,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+          "alt": "Approved Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": -86.84375,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+          "alt": "Trial Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": -86.84375,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "100",
+        "output": "100% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": true,
+            "display": "none"
+          }
+        ],
+        "stageSplit": "100%",
+        "clipPath": "inset(0px 0% 0px 0px)",
+        "divider": {
+          "x": 1040,
+          "y": -86.84375,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": -86.84375,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 752.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 752.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      }
+    },
+    {
+      "name": "Compare",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 360,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 245,
+              "y": -143.84375,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 301.171875,
+              "y": -143.84375,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 359.421875,
+              "y": -143.84375,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "true",
+            "box": {
+              "x": 420.65625,
+              "y": -143.84375,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+          "alt": "Approved Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": -86.84375,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+          "alt": "Trial Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": -86.84375,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "50",
+        "output": "50% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": false,
+            "display": "block"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "50%",
+        "clipPath": "inset(0px 50% 0px 0px)",
+        "divider": {
+          "x": 720,
+          "y": -86.84375,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": -86.84375,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 752.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 752.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      }
+    },
+    {
+      "name": "Trial",
+      "state": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "scrollY": 360,
+        "documentWidth": 1440,
+        "bodyHeight": 1360,
+        "tabs": [
+          {
+            "view": "hero",
+            "pressed": "false",
+            "box": {
+              "x": 245,
+              "y": -143.84375,
+              "width": 52.171875,
+              "height": 44
+            }
+          },
+          {
+            "view": "front",
+            "pressed": "false",
+            "box": {
+              "x": 301.171875,
+              "y": -143.84375,
+              "width": 54.25,
+              "height": 44
+            }
+          },
+          {
+            "view": "detail",
+            "pressed": "false",
+            "box": {
+              "x": 359.421875,
+              "y": -143.84375,
+              "width": 57.234375,
+              "height": 44
+            }
+          },
+          {
+            "view": "profile",
+            "pressed": "true",
+            "box": {
+              "x": 420.65625,
+              "y": -143.84375,
+              "width": 60.59375,
+              "height": 44
+            }
+          }
+        ],
+        "baseline": {
+          "srcSHA256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+          "alt": "Approved Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": -86.84375,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "candidate": {
+          "srcSHA256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+          "alt": "Trial Grifon, profile view",
+          "naturalWidth": 1100,
+          "naturalHeight": 1100,
+          "box": {
+            "x": 400,
+            "y": -86.84375,
+            "width": 640,
+            "height": 640
+          }
+        },
+        "split": "0",
+        "output": "0% approved",
+        "labels": [
+          {
+            "text": "Approved look",
+            "hidden": true,
+            "display": "none"
+          },
+          {
+            "text": "Material trial",
+            "hidden": false,
+            "display": "block"
+          }
+        ],
+        "stageSplit": "0%",
+        "clipPath": "inset(0px 100% 0px 0px)",
+        "divider": {
+          "x": 400,
+          "y": -86.84375,
+          "width": 1,
+          "height": 640
+        },
+        "dividerChildren": 0,
+        "stage": {
+          "x": 400,
+          "y": -86.84375,
+          "width": 640,
+          "height": 640
+        },
+        "avatars": [
+          {
+            "box": {
+              "x": 249,
+              "y": 752.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          },
+          {
+            "box": {
+              "x": 749,
+              "y": 752.15625,
+              "width": 64,
+              "height": 64
+            },
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "ground": {
+          "position": "fixed",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 1000
+          },
+          "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+        },
+        "panel": {
+          "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+          "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+        },
+        "title": {
+          "color": "rgb(245, 245, 247)",
+          "opacity": "1"
+        },
+        "fonts": [
+          {
+            "text": "// GRIFON MATERIAL STUDY",
+            "size": "10px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Hero",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Front",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Detail",
+            "size": "13px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Profile",
+            "size": "13px",
+            "color": "rgb(255, 204, 0)"
+          },
+          {
+            "text": "Approved",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Compare",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Trial",
+            "size": "12px",
+            "color": "rgb(212, 212, 216)"
+          },
+          {
+            "text": "Approved look",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Material trial",
+            "size": "13px",
+            "color": "rgb(245, 245, 247)"
+          },
+          {
+            "text": "Actual 64px chat size",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+            "size": "12px",
+            "color": "rgb(154, 154, 163)"
+          },
+          {
+            "text": "GRIFON / 08 OCT 2026",
+            "size": "10px",
+            "color": "rgb(154, 154, 163)"
+          }
+        ],
+        "resourceURLs": []
+      }
+    }
+  ],
+  "slider": {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "scrollY": 360,
+    "documentWidth": 1440,
+    "bodyHeight": 1360,
+    "tabs": [
+      {
+        "view": "hero",
+        "pressed": "false",
+        "box": {
+          "x": 245,
+          "y": -143.84375,
+          "width": 52.171875,
+          "height": 44
+        }
+      },
+      {
+        "view": "front",
+        "pressed": "false",
+        "box": {
+          "x": 301.171875,
+          "y": -143.84375,
+          "width": 54.25,
+          "height": 44
+        }
+      },
+      {
+        "view": "detail",
+        "pressed": "false",
+        "box": {
+          "x": 359.421875,
+          "y": -143.84375,
+          "width": 57.234375,
+          "height": 44
+        }
+      },
+      {
+        "view": "profile",
+        "pressed": "true",
+        "box": {
+          "x": 420.65625,
+          "y": -143.84375,
+          "width": 60.59375,
+          "height": 44
+        }
+      }
+    ],
+    "baseline": {
+      "srcSHA256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+      "alt": "Approved Grifon, profile view",
+      "naturalWidth": 1100,
+      "naturalHeight": 1100,
+      "box": {
+        "x": 400,
+        "y": -86.84375,
+        "width": 640,
+        "height": 640
+      }
+    },
+    "candidate": {
+      "srcSHA256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+      "alt": "Trial Grifon, profile view",
+      "naturalWidth": 1100,
+      "naturalHeight": 1100,
+      "box": {
+        "x": 400,
+        "y": -86.84375,
+        "width": 640,
+        "height": 640
+      }
+    },
+    "split": "37",
+    "output": "37% approved",
+    "labels": [
+      {
+        "text": "Approved look",
+        "hidden": false,
+        "display": "block"
+      },
+      {
+        "text": "Material trial",
+        "hidden": false,
+        "display": "block"
+      }
+    ],
+    "stageSplit": "37%",
+    "clipPath": "inset(0px 63% 0px 0px)",
+    "divider": {
+      "x": 636.796875,
+      "y": -86.84375,
+      "width": 1,
+      "height": 640
+    },
+    "dividerChildren": 0,
+    "stage": {
+      "x": 400,
+      "y": -86.84375,
+      "width": 640,
+      "height": 640
+    },
+    "avatars": [
+      {
+        "box": {
+          "x": 249,
+          "y": 752.15625,
+          "width": 64,
+          "height": 64
+        },
+        "naturalWidth": 256,
+        "naturalHeight": 256,
+        "complete": true
+      },
+      {
+        "box": {
+          "x": 749,
+          "y": 752.15625,
+          "width": 64,
+          "height": 64
+        },
+        "naturalWidth": 256,
+        "naturalHeight": 256,
+        "complete": true
+      }
+    ],
+    "ground": {
+      "position": "fixed",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000
+      },
+      "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+    },
+    "panel": {
+      "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+      "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+    },
+    "title": {
+      "color": "rgb(245, 245, 247)",
+      "opacity": "1"
+    },
+    "fonts": [
+      {
+        "text": "// GRIFON MATERIAL STUDY",
+        "size": "10px",
+        "color": "rgb(255, 204, 0)"
+      },
+      {
+        "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Hero",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Front",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Detail",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Profile",
+        "size": "13px",
+        "color": "rgb(255, 204, 0)"
+      },
+      {
+        "text": "Approved",
+        "size": "12px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Compare",
+        "size": "12px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Trial",
+        "size": "12px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Approved look",
+        "size": "13px",
+        "color": "rgb(245, 245, 247)"
+      },
+      {
+        "text": "Actual 64px chat size",
+        "size": "12px",
+        "color": "rgb(154, 154, 163)"
+      },
+      {
+        "text": "Material trial",
+        "size": "13px",
+        "color": "rgb(245, 245, 247)"
+      },
+      {
+        "text": "Actual 64px chat size",
+        "size": "12px",
+        "color": "rgb(154, 154, 163)"
+      },
+      {
+        "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+        "size": "12px",
+        "color": "rgb(154, 154, 163)"
+      },
+      {
+        "text": "GRIFON / 08 OCT 2026",
+        "size": "10px",
+        "color": "rgb(154, 154, 163)"
+      }
+    ],
+    "resourceURLs": []
+  },
+  "keyboard": {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "scrollY": 360,
+    "documentWidth": 1440,
+    "bodyHeight": 1360,
+    "tabs": [
+      {
+        "view": "hero",
+        "pressed": "false",
+        "box": {
+          "x": 245,
+          "y": -143.84375,
+          "width": 52.171875,
+          "height": 44
+        }
+      },
+      {
+        "view": "front",
+        "pressed": "false",
+        "box": {
+          "x": 301.171875,
+          "y": -143.84375,
+          "width": 54.25,
+          "height": 44
+        }
+      },
+      {
+        "view": "detail",
+        "pressed": "false",
+        "box": {
+          "x": 359.421875,
+          "y": -143.84375,
+          "width": 57.234375,
+          "height": 44
+        }
+      },
+      {
+        "view": "profile",
+        "pressed": "true",
+        "box": {
+          "x": 420.65625,
+          "y": -143.84375,
+          "width": 60.59375,
+          "height": 44
+        }
+      }
+    ],
+    "baseline": {
+      "srcSHA256": "00633cfe89c4185c2cc05ee45cf1358c48363b4dde71fc9246413db976592ccf",
+      "alt": "Approved Grifon, profile view",
+      "naturalWidth": 1100,
+      "naturalHeight": 1100,
+      "box": {
+        "x": 400,
+        "y": -86.84375,
+        "width": 640,
+        "height": 640
+      }
+    },
+    "candidate": {
+      "srcSHA256": "229eb78e0e921e0dcf3519726c5cd4fd1fb5d2b1dbc4593db4097a2878c8609b",
+      "alt": "Trial Grifon, profile view",
+      "naturalWidth": 1100,
+      "naturalHeight": 1100,
+      "box": {
+        "x": 400,
+        "y": -86.84375,
+        "width": 640,
+        "height": 640
+      }
+    },
+    "split": "38",
+    "output": "38% approved",
+    "labels": [
+      {
+        "text": "Approved look",
+        "hidden": false,
+        "display": "block"
+      },
+      {
+        "text": "Material trial",
+        "hidden": false,
+        "display": "block"
+      }
+    ],
+    "stageSplit": "38%",
+    "clipPath": "inset(0px 62% 0px 0px)",
+    "divider": {
+      "x": 643.1875,
+      "y": -86.84375,
+      "width": 1,
+      "height": 640
+    },
+    "dividerChildren": 0,
+    "stage": {
+      "x": 400,
+      "y": -86.84375,
+      "width": 640,
+      "height": 640
+    },
+    "avatars": [
+      {
+        "box": {
+          "x": 249,
+          "y": 752.15625,
+          "width": 64,
+          "height": 64
+        },
+        "naturalWidth": 256,
+        "naturalHeight": 256,
+        "complete": true
+      },
+      {
+        "box": {
+          "x": 749,
+          "y": 752.15625,
+          "width": 64,
+          "height": 64
+        },
+        "naturalWidth": 256,
+        "naturalHeight": 256,
+        "complete": true
+      }
+    ],
+    "ground": {
+      "position": "fixed",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 1000
+      },
+      "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+    },
+    "panel": {
+      "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+      "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+    },
+    "title": {
+      "color": "rgb(245, 245, 247)",
+      "opacity": "1"
+    },
+    "fonts": [
+      {
+        "text": "// GRIFON MATERIAL STUDY",
+        "size": "10px",
+        "color": "rgb(255, 204, 0)"
+      },
+      {
+        "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Hero",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Front",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Detail",
+        "size": "13px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Profile",
+        "size": "13px",
+        "color": "rgb(255, 204, 0)"
+      },
+      {
+        "text": "Approved",
+        "size": "12px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Compare",
+        "size": "12px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Trial",
+        "size": "12px",
+        "color": "rgb(212, 212, 216)"
+      },
+      {
+        "text": "Approved look",
+        "size": "13px",
+        "color": "rgb(245, 245, 247)"
+      },
+      {
+        "text": "Actual 64px chat size",
+        "size": "12px",
+        "color": "rgb(154, 154, 163)"
+      },
+      {
+        "text": "Material trial",
+        "size": "13px",
+        "color": "rgb(245, 245, 247)"
+      },
+      {
+        "text": "Actual 64px chat size",
+        "size": "12px",
+        "color": "rgb(154, 154, 163)"
+      },
+      {
+        "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+        "size": "12px",
+        "color": "rgb(154, 154, 163)"
+      },
+      {
+        "text": "GRIFON / 08 OCT 2026",
+        "size": "10px",
+        "color": "rgb(154, 154, 163)"
+      }
+    ],
+    "resourceURLs": []
+  },
+  "scrolledViewports": {
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollY": 304,
+      "documentWidth": 390,
+      "bodyHeight": 1148,
+      "tabs": [
+        {
+          "view": "hero",
+          "pressed": "false",
+          "box": {
+            "x": 25,
+            "y": -93.875,
+            "width": 85,
+            "height": 44
+          }
+        },
+        {
+          "view": "front",
+          "pressed": "false",
+          "box": {
+            "x": 110,
+            "y": -93.875,
+            "width": 85,
+            "height": 44
+          }
+        },
+        {
+          "view": "detail",
+          "pressed": "true",
+          "box": {
+            "x": 195,
+            "y": -93.875,
+            "width": 85,
+            "height": 44
+          }
+        },
+        {
+          "view": "profile",
+          "pressed": "false",
+          "box": {
+            "x": 280,
+            "y": -93.875,
+            "width": 85,
+            "height": 44
+          }
+        }
+      ],
+      "baseline": {
+        "srcSHA256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2",
+        "alt": "Approved Grifon, detail view",
+        "naturalWidth": 1100,
+        "naturalHeight": 1100,
+        "box": {
+          "x": 17,
+          "y": -40.875,
+          "width": 356,
+          "height": 356
+        }
+      },
+      "candidate": {
+        "srcSHA256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d",
+        "alt": "Trial Grifon, detail view",
+        "naturalWidth": 1100,
+        "naturalHeight": 1100,
+        "box": {
+          "x": 17,
+          "y": -40.875,
+          "width": 356,
+          "height": 356
+        }
+      },
+      "split": "50",
+      "output": "50% approved",
+      "labels": [
+        {
+          "text": "Approved look",
+          "hidden": false,
+          "display": "block"
+        },
+        {
+          "text": "Material trial",
+          "hidden": false,
+          "display": "block"
+        }
+      ],
+      "stageSplit": "50%",
+      "clipPath": "inset(0px 50% 0px 0px)",
+      "divider": {
+        "x": 195,
+        "y": -40.875,
+        "width": 1,
+        "height": 356
+      },
+      "dividerChildren": 0,
+      "stage": {
+        "x": 17,
+        "y": -40.875,
+        "width": 356,
+        "height": 356
+      },
+      "avatars": [
+        {
+          "box": {
+            "x": 31,
+            "y": 500.125,
+            "width": 64,
+            "height": 64
+          },
+          "naturalWidth": 256,
+          "naturalHeight": 256,
+          "complete": true
+        },
+        {
+          "box": {
+            "x": 215,
+            "y": 500.125,
+            "width": 64,
+            "height": 64
+          },
+          "naturalWidth": 256,
+          "naturalHeight": 256,
+          "complete": true
+        }
+      ],
+      "ground": {
+        "position": "fixed",
+        "box": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+      },
+      "panel": {
+        "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+        "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+      },
+      "title": {
+        "color": "rgb(245, 245, 247)",
+        "opacity": "1"
+      },
+      "fonts": [
+        {
+          "text": "// GRIFON MATERIAL STUDY",
+          "size": "10px",
+          "color": "rgb(255, 204, 0)"
+        },
+        {
+          "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Hero",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Front",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Detail",
+          "size": "13px",
+          "color": "rgb(255, 204, 0)"
+        },
+        {
+          "text": "Profile",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Approved",
+          "size": "12px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Compare",
+          "size": "12px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Trial",
+          "size": "12px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Approved look",
+          "size": "13px",
+          "color": "rgb(245, 245, 247)"
+        },
+        {
+          "text": "Actual 64px chat size",
+          "size": "11px",
+          "color": "rgb(154, 154, 163)"
+        },
+        {
+          "text": "Material trial",
+          "size": "13px",
+          "color": "rgb(245, 245, 247)"
+        },
+        {
+          "text": "Actual 64px chat size",
+          "size": "11px",
+          "color": "rgb(154, 154, 163)"
+        },
+        {
+          "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+          "size": "11px",
+          "color": "rgb(154, 154, 163)"
+        },
+        {
+          "text": "GRIFON / 08 OCT 2026",
+          "size": "10px",
+          "color": "rgb(154, 154, 163)"
+        }
+      ],
+      "resourceURLs": []
+    },
+    "desktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scrollY": 360,
+      "documentWidth": 1440,
+      "bodyHeight": 1360,
+      "tabs": [
+        {
+          "view": "hero",
+          "pressed": "false",
+          "box": {
+            "x": 245,
+            "y": -143.84375,
+            "width": 52.171875,
+            "height": 44
+          }
+        },
+        {
+          "view": "front",
+          "pressed": "false",
+          "box": {
+            "x": 301.171875,
+            "y": -143.84375,
+            "width": 54.25,
+            "height": 44
+          }
+        },
+        {
+          "view": "detail",
+          "pressed": "true",
+          "box": {
+            "x": 359.421875,
+            "y": -143.84375,
+            "width": 57.234375,
+            "height": 44
+          }
+        },
+        {
+          "view": "profile",
+          "pressed": "false",
+          "box": {
+            "x": 420.65625,
+            "y": -143.84375,
+            "width": 60.59375,
+            "height": 44
+          }
+        }
+      ],
+      "baseline": {
+        "srcSHA256": "6de097da6930f32a788d66738e0f883ad633549e54df437ba595595e9cc113e2",
+        "alt": "Approved Grifon, detail view",
+        "naturalWidth": 1100,
+        "naturalHeight": 1100,
+        "box": {
+          "x": 400,
+          "y": -86.84375,
+          "width": 640,
+          "height": 640
+        }
+      },
+      "candidate": {
+        "srcSHA256": "bc92aeafeb66d7c4c96cf490464fa757b3d0255b581c73384d3ebca119434d9d",
+        "alt": "Trial Grifon, detail view",
+        "naturalWidth": 1100,
+        "naturalHeight": 1100,
+        "box": {
+          "x": 400,
+          "y": -86.84375,
+          "width": 640,
+          "height": 640
+        }
+      },
+      "split": "50",
+      "output": "50% approved",
+      "labels": [
+        {
+          "text": "Approved look",
+          "hidden": false,
+          "display": "block"
+        },
+        {
+          "text": "Material trial",
+          "hidden": false,
+          "display": "block"
+        }
+      ],
+      "stageSplit": "50%",
+      "clipPath": "inset(0px 50% 0px 0px)",
+      "divider": {
+        "x": 720,
+        "y": -86.84375,
+        "width": 1,
+        "height": 640
+      },
+      "dividerChildren": 0,
+      "stage": {
+        "x": 400,
+        "y": -86.84375,
+        "width": 640,
+        "height": 640
+      },
+      "avatars": [
+        {
+          "box": {
+            "x": 249,
+            "y": 752.15625,
+            "width": 64,
+            "height": 64
+          },
+          "naturalWidth": 256,
+          "naturalHeight": 256,
+          "complete": true
+        },
+        {
+          "box": {
+            "x": 749,
+            "y": 752.15625,
+            "width": 64,
+            "height": 64
+          },
+          "naturalWidth": 256,
+          "naturalHeight": 256,
+          "complete": true
+        }
+      ],
+      "ground": {
+        "position": "fixed",
+        "box": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "background": "radial-gradient(at 50% 0%, rgb(19, 19, 22) 0%, rgb(9, 9, 11) 55%, rgb(7, 7, 8) 100%)"
+      },
+      "panel": {
+        "background": "linear-gradient(135deg, rgba(255, 255, 255, 0.027), rgba(0, 0, 0, 0) 45%), none",
+        "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px 20px 80px 0px"
+      },
+      "title": {
+        "color": "rgb(245, 245, 247)",
+        "opacity": "1"
+      },
+      "fonts": [
+        {
+          "text": "// GRIFON MATERIAL STUDY",
+          "size": "10px",
+          "color": "rgb(255, 204, 0)"
+        },
+        {
+          "text": "Compare the approved look with a material and lighting trial. Same character. Same camera.",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Hero",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Front",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Detail",
+          "size": "13px",
+          "color": "rgb(255, 204, 0)"
+        },
+        {
+          "text": "Profile",
+          "size": "13px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Approved",
+          "size": "12px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Compare",
+          "size": "12px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Trial",
+          "size": "12px",
+          "color": "rgb(212, 212, 216)"
+        },
+        {
+          "text": "Approved look",
+          "size": "13px",
+          "color": "rgb(245, 245, 247)"
+        },
+        {
+          "text": "Actual 64px chat size",
+          "size": "12px",
+          "color": "rgb(154, 154, 163)"
+        },
+        {
+          "text": "Material trial",
+          "size": "13px",
+          "color": "rgb(245, 245, 247)"
+        },
+        {
+          "text": "Actual 64px chat size",
+          "size": "12px",
+          "color": "rgb(154, 154, 163)"
+        },
+        {
+          "text": "Independent review found a restrained face and beak shading improvement in larger views. At 64px, both look clear with no obvious material advantage. Coat changes remain subtle; the second trial added no clear visible gain. The animated chat mascot still uses the approved look. This viewer compares saved Blender renders; it does not demonstrate animation or app performance.",
+          "size": "12px",
+          "color": "rgb(154, 154, 163)"
+        },
+        {
+          "text": "GRIFON / 08 OCT 2026",
+          "size": "10px",
+          "color": "rgb(154, 154, 163)"
+        }
+      ],
+      "resourceURLs": []
+    }
+  },
+  "browserClosed": true,
+  "finishedAt": "2026-10-08T11:56:54.097Z",
+  "exitCode": 0
+}

@@ -7,3 +7,11 @@
 
 # Vitest's transform of this imported shebang entrypoint rejects CRLF on Windows.
 tools/check-eval-prompt-sync.mjs text eol=lf
+
+# Material study evidence has byte hashes; retain original bytes on every host.
+# Recognize CRLF terminators while retaining every default whitespace error check.
+assets/3d-lab/griffin-material-study/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+assets/design/griffin-material-study/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+tools/artifacts/build-griffin-material-study.mjs -text
+tools/artifacts/griffin-material-study.tpl.html -text
+artifacts/griffin-material-study.html -text
