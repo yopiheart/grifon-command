@@ -1,12 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08; opening joint fidelity PASS, full recreation active**
+**Stamped: 2026-10-08; final visual recreation complete, draft PR166 delivery**
 
 ## Current: close recreation in the same chat
 Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
 Branch: codex/grifon-shader-launch; draft PR166:
 https://github.com/yopiheart/grifon-command/pull/166 (base codex/grifon-shader-study).
-Reference/autopsy evidence pushed at d04dd16e; opening/audio checkpoint being prepared.
+Reference/autopsies pushed d04dd16e; opening/audio checkpoint pushed818ee5db.
 Neil's close-recreation redo supersedes invented story/timing, soundtrack reuse,
 and three-preset ceiling. Preserve earlier exports. No email, PC sleep, merge or deploy.
 Reference: https://x.com/npm_i_shaders/status/2107467668009963819.
@@ -35,10 +35,11 @@ is not heard tempo. No Swipe File/pattern-count/tuned-content changes.
 Provisional free continuous C28.905-60.051667 music candidate:1495040 stereo48k PCM,
 -16.45LUFS/-3.04dBTP; AAC-16.50/-3.15; two fades, no authored VO/SFX/reference samples.
 Linear gain and three original-defect rejection controls PASS; independent PCM audit PASS.
-Audio recipe/QA are local and ready to commit; raw audio ignored recursively.
-SONIC_UNVERIFIED. No film mux or new spend from music task.
+Audio recipe/QA committed818ee5db; raw audio ignored recursively.
+Provisional full AAC mux preserves all1461 packets/1495040 decoded samples.
+SONIC_UNVERIFIED. No new spend from music task.
 
-## Opening joint visual PASS; full landscape continuation active
+## Opening and full landscape joint visual PASS
 Frozen v3 silent pilot:222frames/1920x1080/30000:1001,
 SHA6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69.
 42 exact nonlinear/fresh-browser samples, strict decode and9 source hashes PASS.
@@ -46,7 +47,7 @@ Independent all222 native pairs and actual single-stream1x/0.25x review PASS;
 all37 normal and108 slow captures inspected, presented0-221/natural7.4074s.
 Prior block/profile, ring enlargement/material contrast and relief growth gaps corrected.
 Residuals: more regular lens flow, milkier glass/harder rim, subdued honeycomb/heavier gloss.
-V3 remains a close adaptation, not exact; sound and frames222 onward unassessed.
+V3 remains a close adaptation; sound unverified and full continuation separately reviewed.
 Executor owns separate continuation runtime/render; accepted nine pilot inputs/MP4 frozen.
 Frozen v2: qa/pilot-failed-review-2;292 byte-identical files preserved locally.
 Private recovery ZIP grifon-opening-pilot-v2-2026-10-08-50713631826e.zip in PRIMARY
@@ -58,16 +59,23 @@ its paced review is FAILED/ineligible. Paused frame seeking stays useful.
 New private build-paired-review.mjs encodes both halves in one silent222-frame stream.
 V3 pairedSHAd7622e8c2e71b24cf7da7806e80ea7456272bcec3b51efe761a2d5523ed3a4fa.
 Local root server http://127.0.0.1:61632/paired (PID17604/session6946) serves private pair.
-Older owned root server63407/PID1168 stopped after identity/port checks; tabs now use61632.
+Full server59028/PID21024/session66469 pinsc99/f388; receiptb341f74d, page d65ecb90.
 V2 native/valid timed FAIL and failed dual method remain preserved separately.
-Full-brief.md continuation now authorized by joint opening gate. Landscape incomplete;
-portrait secondary only if composition survives. Full native/timed gate still required.
-Technical checks: build PASS;1432tests PASS/32 existing skips/live flags unset;
-Codex26/26, bundle-leak, voice-sync, prompt-parity, domain, artifact anchors PASS.
-Independent pilot code review PASS; stale-media rebinding/typo guards fixed, original defect and3 rejection controls verified.
-Next: commit/push opening checkpoint; implement710 continuation frames/native timing,
-preserve decoded prefix, mux provisional clean music, create offline NOIR player,
-independently review full native/timed fidelity and390x844 artifact; update draft PR.
+Full candidate045ba2b0 produced932 nativeframes, unchanged222prefix, strictdecode,
+all13 continuation inputs,106 exact fresh/nonlinear samples and79 pureblack tail.
+All932 native review FAIL: strip/dot-shell/macro-material/radial/typing geometry gaps.
+Frozen source/QA151 files: qa/full-failed-review-1; private mux/silent/pair/player and
+all710 rawframes preserved .tmp/full-failed-review-1 before correction. No deletion.
+Two focused55 drafts HOLD; preserved79/130 payloads in full-focused-failed-review-2/3.
+Focused v4 2cfc3443 HOLD shell only/131 preserved; v5 13f5f530 frozen55/131preserved PASS.
+V5 independent native55/source PASS;51others byteidentical; new full15cbddf0 technical PASS.
+Fullpair code review PASS;17 guardchecks PASS (portable16+historical1); media mocked.
+Full932 native15cb FAIL exactly400/403/636/639;185public/22private+710raw preservedv2.
+Player broad test1431PASS/1anchor timeout; unchanged isolated anchor2.04s PASS; cause unproven.
+V5 posteditbuild/defaultVitest PASS1432/32existing skips; rootCodex26PASS; paidflagsunset.
+Independent pilot/source guards PASS, original rebinding defect+3 rejections verified.
+Exact2line JS4fcf4bdd/fragment00fcb082/source PASS; all710 proved706exact+4changed.
+Fullc99/widgetb9ae7e24:1432tests/audio12/player33/native932/paced588team PASS; joint-v3 closes.
 
 ## Preserved prior work and unrelated boundaries
 Prior31.2s film: workflows/assets/grifon-shader-launch/ and artifacts/grifon-shader-launch.html.

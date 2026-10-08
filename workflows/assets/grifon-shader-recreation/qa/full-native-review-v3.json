@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "gate": "INDEPENDENT_FULL_NATIVE_VISUAL_V3",
+  "qualification": "Materially close visual adaptation under approved Grifon copy/typeface/palette/product-capture substitutions, with stated non-blocking residuals. This is the native-image gate only.",
+  "reference": {
+    "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+    "bytes": 11514975
+  },
+  "candidate": {
+    "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+    "bytes": 24994401
+  },
+  "pair": {
+    "sha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf",
+    "bytes": 16376839
+  },
+  "mediaReceipt": {
+    "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a",
+    "bytes": 3119
+  },
+  "pairReceipt": {
+    "sha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402",
+    "bytes": 3525
+  },
+  "captureReceipt": {
+    "sha256": "dc079552beb97ed4f742b0961bce0434d01fa5782a1661287cc47ae4e61bec28",
+    "bytes": 102302
+  },
+  "producingHelper": {
+    "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "bytes": 20291
+  },
+  "nativeFrameConvention": {
+    "first": 0,
+    "last": 931,
+    "count": 932,
+    "fpsNumerator": 30000,
+    "fpsDenominator": 1001,
+    "timeSeconds": "frame*1001/30000"
+  },
+  "reviewed": {
+    "primaryReviewer": "/root/fidelity_critic",
+    "primaryChronologicalFrameCount": 932,
+    "primaryChronologicalSheetCount": 32,
+    "primaryLargerPairedDetailCount": 88,
+    "primaryNativeSourceCandidatePairs": 47,
+    "primaryNativeImages": 94,
+    "primaryDetailFrames": [
+      29,
+      68,
+      111,
+      118,
+      143,
+      145,
+      192,
+      215,
+      222,
+      225,
+      228,
+      229,
+      232,
+      237,
+      242,
+      255,
+      258,
+      269,
+      285,
+      302,
+      306,
+      307,
+      324,
+      344,
+      348,
+      352,
+      356,
+      357,
+      362,
+      369,
+      376,
+      383,
+      393,
+      399,
+      400,
+      401,
+      403,
+      404,
+      407,
+      408,
+      440,
+      443,
+      444,
+      445,
+      446,
+      450,
+      458,
+      459,
+      463,
+      470,
+      471,
+      476,
+      482,
+      483,
+      489,
+      495,
+      496,
+      514,
+      518,
+      529,
+      540,
+      541,
+      544,
+      546,
+      547,
+      555,
+      567,
+      586,
+      600,
+      606,
+      608,
+      609,
+      610,
+      617,
+      633,
+      636,
+      637,
+      638,
+      639,
+      640,
+      655,
+      740,
+      833,
+      834,
+      842,
+      852,
+      853,
+      931
+    ],
+    "primaryNativeFrames": [
+      29,
+      68,
+      111,
+      118,
+      143,
+      145,
+      192,
+      215,
+      225,
+      232,
+      258,
+      306,
+      348,
+      357,
+      362,
+      369,
+      376,
+      383,
+      393,
+      399,
+      400,
+      401,
+      403,
+      404,
+      407,
+      408,
+      444,
+      445,
+      446,
+      450,
+      463,
+      476,
+      489,
+      541,
+      544,
+      546,
+      606,
+      608,
+      609,
+      617,
+      633,
+      636,
+      637,
+      638,
+      639,
+      640,
+      842
+    ],
+    "cutReviewer": "/root/native_cut_critic_v3",
+    "teamCutNeighborhoodCount": 49,
+    "teamCutIndices": [
+      26,
+      57,
+      82,
+      91,
+      97,
+      104,
+      111,
+      119,
+      126,
+      132,
+      138,
+      145,
+      209,
+      222,
+      229,
+      238,
+      255,
+      258,
+      306,
+      307,
+      344,
+      357,
+      377,
+      391,
+      397,
+      400,
+      403,
+      407,
+      410,
+      417,
+      445,
+      459,
+      471,
+      483,
+      496,
+      514,
+      518,
+      541,
+      547,
+      567,
+      586,
+      608,
+      610,
+      626,
+      636,
+      640,
+      655,
+      834,
+      853
+    ],
+    "cutNeighborhoodOffsets": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "cutVerdict": "CUT_PASS",
+    "cutAuxiliary": {
+      "report": {
+        "file": "reference/full-native-cut-review-v3.md",
+        "sha256": "3d81998c519b4eb1dc09e8331b5cdb452dcd6d4fff332310546655e2523ad882"
+      },
+      "qa": {
+        "file": "qa/full-native-cut-review-v3.json",
+        "sha256": "966e24e817e43ff7c09f74e6ade076c01fbc62ab725aebd4cad696799c90dcb8"
+      }
+    },
+    "dedicatedCutBoardsPersonallyInspectedByPrimary": false
+  },
+  "corrections": [
+    {
+      "frame": 400,
+      "timeSeconds": 13.346666666666666,
+      "status": "CORRECTED",
+      "source": "Second rectangular-step pattern",
+      "candidate": "Second rectangular-step pattern at the same native index; no401 delay"
+    },
+    {
+      "frame": 403,
+      "timeSeconds": 13.446766666666667,
+      "status": "CORRECTED",
+      "source": "Third upright zigzag pattern",
+      "candidate": "Third upright zigzag pattern at the same native index; no404 delay"
+    },
+    {
+      "frame": 636,
+      "timeSeconds": 21.2212,
+      "status": "CORRECTED_WITH_RESIDUAL",
+      "source": "Visible initial black-bar erase",
+      "candidate": "Visible initial black-bar erase; fewer bars and different positions"
+    },
+    {
+      "frame": 639,
+      "timeSeconds": 21.3213,
+      "status": "CORRECTED_WITH_RESIDUAL",
+      "source": "Visible surviving horizontal fragments",
+      "candidate": "Visible surviving horizontal fragments; different stripe positions and thicknesses"
+    }
+  ],
+  "unchangedBoundaryChecks": {
+    "407": "Fourth pattern aligned; no delay",
+    "637": "Middle visible erase state retained",
+    "638": "Middle surviving-strip state retained",
+    "640": "Both source and candidate black"
+  },
+  "blockingFindings": [],
+  "families": [
+    {
+      "frames": [
+        0,
+        221
+      ],
+      "status": "RETAINED",
+      "observation": "Accepted opening retains coarse blocks/profile, eight fixed-ring material swaps, tear68–69, flare143–145, relief and broad gray surround."
+    },
+    {
+      "frames": [
+        222,
+        254
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Rosette, continuous curved strip and six-blade aperture present. Residual: rosette placement/twist, narrower strip head and stronger blade separation."
+    },
+    {
+      "frames": [
+        255,
+        343
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Catalog perspective/focus,306 lens and307 expanded cropped rim/copy present. Residual: earlier clean catalog during255–257 source blur blend and sharper focus."
+    },
+    {
+      "frames": [
+        344,
+        390
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Dense folded character field, broad joined two-mouth point shell/cavities and folded lobe cluster present. Residual: darker even rows, crisper regular rims/less glow and rounder ring-like lobes."
+    },
+    {
+      "frames": [
+        391,
+        409
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Pinwheel and four grain-pattern classes present;400/403/407 boundaries align. Residual: segmented pinwheel, finer uniform grain and tile geometry."
+    },
+    {
+      "frames": [
+        417,
+        495
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Diagonal particles, irregular radial burst/diffuse core and four distinct macro materials including soft transmissive final form present. Residual: broader/sparser particle band, stronger445–446 veil and gray sharper final letter counter."
+    },
+    {
+      "frames": [
+        496,
+        585
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Disclosed product desktop/mobile captures, reflow, full-field whirl and desktop resolve present. Residual: stronger first whirl frame541 and crisper device entry."
+    },
+    {
+      "frames": [
+        586,
+        639
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Overlapping binary canvas, type,608–609 tear,610 resolve,626 pullback and all four erase states636–639 present. Residual: coarser mixed binary digits, softer field boundaries and erase stripe density/positions."
+    },
+    {
+      "frames": [
+        640,
+        931
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Black pause, centered mark, bottom-cropped glow sphere/contours and tilted exit present;853–931 visually black. Residual: stronger initial fade, broader regular contours and more visible rectangular exit-panel edge."
+    }
+  ],
+  "necessaryAdaptationsAccepted": [
+    "Grifon copy",
+    "Inter typeface/letter contours",
+    "gold/cream/charcoal palette",
+    "truthfully disclosed product captures"
+  ],
+  "limits": {
+    "continuousPlaybackInspected": false,
+    "perceivedContinuousMotionApproval": false,
+    "audioHeard": false,
+    "sonicStatus": "SONIC_UNVERIFIED",
+    "exactUnderlyingSongIdentity": "NOT_ESTABLISHED",
+    "finalArtifactApproval": false,
+    "reviewerGpuRenders": 0,
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "bindingClosure": {
+    "file": ".tmp/full-native-critic-v3/closure.json",
+    "sha256": "d1e2c3d0fb39a65661d153c15b3a4711aa01374228b77f5e7d7a4d68f9a11198"
+  },
+  "extractedEvidenceManifest": {
+    "file": ".tmp/full-native-critic-v3/receipt-extracted.json",
+    "sha256": "220ae323d771dcfe36d00af8a21e0b4b93d98eea49648525a4ef41089893786d"
+  },
+  "nextGate": "Actual paced single-stream paired playback at1x and.25x, with inspection of every retained capture and frozen input hashes; no sonic approval inferred.",
+  "report": {
+    "file": "reference/full-native-review-v3.md",
+    "sha256": "7e8224fb6fcfa6a0b6c234777c57677e5cab42a9828710aa45e315d8be9f9746"
+  }
+}

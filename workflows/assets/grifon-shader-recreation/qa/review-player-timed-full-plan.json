@@ -1,0 +1,43 @@
+{
+  "status": "PREPARED_WAITING_FOR_OWNER_FROZEN_PAIR",
+  "scope": "Independent actual timed silent full-film reference-fidelity review; no verdict before playback and visual inspection",
+  "contract": "../full-brief.md and ../reference/independent-shot-map.md",
+  "inputs": {
+    "referenceSha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+    "film": "../grifon-recreation-landscape-provisional.mp4",
+    "privatePair": "../.tmp/paired-full.mp4",
+    "ownerReceipt": "full-paired-review-receipt.json",
+    "producerReceipt": "full-media.json",
+    "page": "../paired-full-review.html",
+    "requiredOwnerInputsBeforeExecution": ["localhost origin", "frozen film SHA-256", "frozen pair SHA-256"],
+    "frameCount": 932,
+    "fps": "30000/1001",
+    "pairedDimensions": [1920, 540],
+    "audio": false
+  },
+  "method": {
+    "browser": "Previously authorized installed Playwright localhost fallback if CUA remains unavailable",
+    "viewport": [1600, 1000],
+    "deviceScaleFactor": 1,
+    "runs": [1, 0.25],
+    "controls": "Visible Restart, Speed, Play; no seeking during a run",
+    "sampleIntervalMs": {"normal": 100, "quarterDefault": 170, "quarterBriefTransition": 60},
+    "quarterBriefTransitionFrames": [[222, 258], [391, 417], [496, 547], [586, 640]],
+    "bindings": "Hash reference/film/pair/page before and after; persist actual served HTML and receipt bodies; verify producer binding and accepted 222-frame prefix receipt",
+    "capture": "Chronological screenshots with before/after presented-frame counters, media clock, rate, mute, pause/seek state, wall time and browser dropped-frame metadata",
+    "inspection": "Every retained screenshot in chronological phase/chunk sheets; original-size focused captures where required; separate critic owns every native frame",
+    "naturalEnd": "Presented frame931 and paused natural terminal clock about31.0977s",
+    "cleanup": "Close only owned browser/context; leave parent's shared server active; start no helper server"
+  },
+  "visualSuccess": "Recognizable close recreation of actual subjects, chronological order, composition, camera/material transforms and dense transition rhythm with approved truthful copy/palette changes",
+  "visualFailure": [
+    "invented story or reordered/omitted signature phases",
+    "regular equal-duration scenes replacing rapid native montage",
+    "generic floating cards replacing edge-cropped catalog pullback/dive",
+    "flat capability or glyph material replacing macro lens/extruded surfaces",
+    "missing responsive reflow, spin, typing, canvas pullback or glitch erase",
+    "large unrelated end CTA, missing sustained small end mark, incorrect fade or held image over the black tail"
+  ],
+  "limits": "No full-visual PASS from technical checks or attempt count. No pixel-identical, direct-video-ingestion, hearing, audio-fidelity or provider claim. Native short cuts may need the separate all-frame critic to supplement timed sampling. No installs, providers, secrets, Git changes, renderer/player edits or broad tests.",
+  "report": "../reference/full-timed-review.md"
+}

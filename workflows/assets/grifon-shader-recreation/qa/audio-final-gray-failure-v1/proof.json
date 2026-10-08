@@ -1,0 +1,371 @@
+{
+  "status": "GRAY_CONVERSION_FALSE_FAILURE_DEMONSTRATED",
+  "completedAt": "2026-10-08T07:35:42.494Z",
+  "originalCommand": "node workflows/assets/grifon-shader-recreation/qa/audio-final-verify.mjs --frozen 15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+  "originalExitCode": 1,
+  "originalGateStatus": "TECHNICAL_AUDIO_FAIL_SONIC_UNVERIFIED",
+  "helperSha256": "74bce54ea6ea5f9dafda3705e8ab44245ed6f64528b988789f057f47e37b7d98",
+  "failedReceiptSha256": "442423b851ce9abe0c7bc802e3d2b3b2c6fc64028df5ddd19b3b7695dee6dbc3",
+  "filmSha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+  "producerReceiptSha256": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88",
+  "originalGateBefore": {
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 25018826,
+      "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce"
+    },
+    "aacMaster": {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+    },
+    "pcmMaster": {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+    },
+    "recipe": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audioReceipt": {
+      "file": "qa/audio-verification.json",
+      "bytes": 17884,
+      "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+    },
+    "producerReceipt": {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88"
+    },
+    "fullSpec": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "referenceProbe": {
+      "file": "reference/source-probe.json",
+      "bytes": 3119,
+      "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+    }
+  },
+  "originalGateAfter": {
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 25018826,
+      "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce"
+    },
+    "aacMaster": {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+    },
+    "pcmMaster": {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+    },
+    "recipe": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audioReceipt": {
+      "file": "qa/audio-verification.json",
+      "bytes": 17884,
+      "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+    },
+    "producerReceipt": {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88"
+    },
+    "fullSpec": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "referenceProbe": {
+      "file": "reference/source-probe.json",
+      "bytes": 3119,
+      "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+    }
+  },
+  "diagnosticBefore": {
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 25018826,
+      "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce"
+    },
+    "aacMaster": {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+    },
+    "pcmMaster": {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+    },
+    "recipe": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audioReceipt": {
+      "file": "qa/audio-verification.json",
+      "bytes": 17884,
+      "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+    },
+    "producerReceipt": {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88"
+    },
+    "fullSpec": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "referenceProbe": {
+      "file": "reference/source-probe.json",
+      "bytes": 3119,
+      "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+    }
+  },
+  "diagnosticAfter": {
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 25018826,
+      "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce"
+    },
+    "aacMaster": {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+    },
+    "pcmMaster": {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+    },
+    "recipe": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audioReceipt": {
+      "file": "qa/audio-verification.json",
+      "bytes": 17884,
+      "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+    },
+    "producerReceipt": {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88"
+    },
+    "fullSpec": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "referenceProbe": {
+      "file": "reference/source-probe.json",
+      "bytes": 3119,
+      "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+    }
+  },
+  "allEightFrozenInputsStable": true,
+  "preserved": [
+    {
+      "source": "qa/audio-final-verify.mjs",
+      "preservedFile": "audio-final-verify.mjs",
+      "bytes": 14076,
+      "sha256": "74bce54ea6ea5f9dafda3705e8ab44245ed6f64528b988789f057f47e37b7d98",
+      "byteIdentical": true
+    },
+    {
+      "source": "qa/audio-final-verification.json",
+      "preservedFile": "audio-final-verification.json",
+      "bytes": 23921,
+      "sha256": "442423b851ce9abe0c7bc802e3d2b3b2c6fc64028df5ddd19b3b7695dee6dbc3",
+      "byteIdentical": true
+    },
+    {
+      "source": "qa/audio-final-packets.json",
+      "preservedFile": "audio-final-packets.json",
+      "bytes": 423677,
+      "sha256": "fff8d5d28178500a0d76d3d855ae946e990229a238d34851df130047b0e974ee",
+      "byteIdentical": true
+    },
+    {
+      "source": "qa/audio-final-plan.json",
+      "preservedFile": "audio-final-plan.json",
+      "bytes": 1647,
+      "sha256": "37adf7a4ae46ed19833f705e3ab85ef8ab2aa02bc49ef3aad0674350f8dbe45b",
+      "byteIdentical": true
+    }
+  ],
+  "results": [
+    {
+      "id": "scale-then-gray-default",
+      "suffix": "scale=64:36,format=gray",
+      "pixelFormat": "gray",
+      "channels": 1,
+      "executable": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-provisional.mp4",
+        "-map",
+        "0:v:0",
+        "-vf",
+        "select='gte(n,853)',scale=64:36,format=gray",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "rawvideo",
+        "pipe:1"
+      ],
+      "filter": "select='gte(n,853)',scale=64:36,format=gray",
+      "exitCode": 0,
+      "rawFile": "scale-then-gray-default.raw",
+      "bytes": 182016,
+      "sha256": "b43289215edca06d55615ee50aeb3cc19edb7edf0dc5166126990fadff80a63f",
+      "width": 64,
+      "height": 36,
+      "firstFrame": 853,
+      "lastFrame": 931,
+      "frames": 79,
+      "minimum": 0,
+      "maximum": 7,
+      "mean": 6.611111111111111
+    },
+    {
+      "id": "scale-then-rgb-default",
+      "suffix": "scale=64:36,format=rgb24",
+      "pixelFormat": "rgb24",
+      "channels": 3,
+      "executable": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-provisional.mp4",
+        "-map",
+        "0:v:0",
+        "-vf",
+        "select='gte(n,853)',scale=64:36,format=rgb24",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "rawvideo",
+        "pipe:1"
+      ],
+      "filter": "select='gte(n,853)',scale=64:36,format=rgb24",
+      "exitCode": 0,
+      "rawFile": "scale-then-rgb-default.raw",
+      "bytes": 546048,
+      "sha256": "f5c8c7ed910da5f72201dbe61d21b22dd0a07357c83818c64c65670d2112dfec",
+      "width": 64,
+      "height": 36,
+      "firstFrame": 853,
+      "lastFrame": 931,
+      "frames": 79,
+      "minimum": 0,
+      "maximum": 0,
+      "mean": 0
+    },
+    {
+      "id": "rgb-before-scale",
+      "suffix": "format=rgb24,scale=64:36",
+      "pixelFormat": "rgb24",
+      "channels": 3,
+      "executable": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-provisional.mp4",
+        "-map",
+        "0:v:0",
+        "-vf",
+        "select='gte(n,853)',format=rgb24,scale=64:36",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "rawvideo",
+        "pipe:1"
+      ],
+      "filter": "select='gte(n,853)',format=rgb24,scale=64:36",
+      "exitCode": 0,
+      "rawFile": "rgb-before-scale.raw",
+      "bytes": 546048,
+      "sha256": "f5c8c7ed910da5f72201dbe61d21b22dd0a07357c83818c64c65670d2112dfec",
+      "width": 64,
+      "height": 36,
+      "firstFrame": 853,
+      "lastFrame": 931,
+      "frames": 79,
+      "minimum": 0,
+      "maximum": 0,
+      "mean": 0
+    },
+    {
+      "id": "scale-gray-explicit-full",
+      "suffix": "scale=64:36:out_range=full,format=gray",
+      "pixelFormat": "gray",
+      "channels": 1,
+      "executable": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-provisional.mp4",
+        "-map",
+        "0:v:0",
+        "-vf",
+        "select='gte(n,853)',scale=64:36:out_range=full,format=gray",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "rawvideo",
+        "pipe:1"
+      ],
+      "filter": "select='gte(n,853)',scale=64:36:out_range=full,format=gray",
+      "exitCode": 0,
+      "rawFile": "scale-gray-explicit-full.raw",
+      "bytes": 182016,
+      "sha256": "b43289215edca06d55615ee50aeb3cc19edb7edf0dc5166126990fadff80a63f",
+      "width": 64,
+      "height": 36,
+      "firstFrame": 853,
+      "lastFrame": 931,
+      "frames": 79,
+      "minimum": 0,
+      "maximum": 7,
+      "mean": 6.611111111111111
+    }
+  ],
+  "scriptSha256": "ea128981662eaf4c3b8d7310c1b6bdd5f6a509d492f1106a81d28ba506d0ed41",
+  "mediaEdits": 0,
+  "helperEdits": 0,
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "sonicReview": "SONIC_UNVERIFIED. Direct hearing unavailable. No soundtrack/SFX identity or sonic-similarity claim.",
+  "conclusion": "The original gray-tail failure is preserved. Exact RGB-black tail evidence identifies a verifier conversion defect; it is not a changed threshold, changed film or replacement overall gate."
+}

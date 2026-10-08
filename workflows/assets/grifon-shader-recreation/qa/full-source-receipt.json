@@ -1,0 +1,252 @@
+{
+  "result": "PASS",
+  "claim": "Exact current source, original asset, immutable prefix, captured frame and export byte bindings; black tail decoded separately",
+  "exportedMedia": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 24994401,
+    "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+  },
+  "acceptedMedia": {
+    "file": "grifon-opening-pilot-silent.mp4",
+    "bytes": 5504941,
+    "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+  },
+  "inputs": [
+    {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "file": "full.html",
+      "bytes": 649,
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    {
+      "file": "full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "file": "full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    {
+      "file": "assets/full/manifest.json",
+      "bytes": 2075,
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    }
+  ],
+  "acceptedInputs": [
+    {
+      "file": "pilot.json",
+      "bytes": 1542,
+      "sha256": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af"
+    },
+    {
+      "file": "pilot.html",
+      "bytes": 470,
+      "sha256": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe"
+    },
+    {
+      "file": "pilot.js",
+      "bytes": 5389,
+      "sha256": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd"
+    },
+    {
+      "file": "surfaces.frag",
+      "bytes": 17867,
+      "sha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff"
+    },
+    {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    {
+      "file": "assets/sdf-manifest.json",
+      "bytes": 1990,
+      "sha256": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e"
+    },
+    {
+      "file": "assets/introduction-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d"
+    },
+    {
+      "file": "assets/relief-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691"
+    },
+    {
+      "file": "assets/relief-height.bin",
+      "bytes": 1048576,
+      "sha256": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8"
+    }
+  ],
+  "copiedAssets": [
+    {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "originalSource": "../grifon-motion-depth/assets/inter-normalized-outlines.json",
+      "originalBytesVerified": true
+    },
+    {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "originalSource": "../grifon-motion-depth/assets/inter-900.ttf",
+      "originalBytesVerified": true
+    },
+    {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "originalSource": "../grifon-motion-depth/assets/OFL-Inter.txt",
+      "originalBytesVerified": true
+    },
+    {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "originalSource": "../../../public/logo.png",
+      "originalBytesVerified": true
+    },
+    {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "originalSource": "../grifon-shader-launch/assets/captures/script.png",
+      "originalBytesVerified": true
+    },
+    {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "originalSource": "../grifon-shader-launch/assets/captures/portrait-script.png",
+      "originalBytesVerified": true
+    },
+    {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "originalSource": "../grifon-shader-launch/assets/captures/storyboard.png",
+      "originalBytesVerified": true
+    }
+  ],
+  "producer": {
+    "file": "render-full.mjs",
+    "bytes": 20291,
+    "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+  },
+  "captureSnapshot": {
+    "file": "qa/full-capture-producer.mjs",
+    "bytes": 20291,
+    "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+  },
+  "captureReceiptSha256": "dc079552beb97ed4f742b0961bce0434d01fa5782a1661287cc47ae4e61bec28",
+  "capturedContinuationFrames": 710,
+  "sampledFrames": 106,
+  "deterministicCases": 106,
+  "blackTail": {
+    "start": 853,
+    "endExclusive": 932,
+    "frames": 79,
+    "capturedRgbMaximum": 0,
+    "decodedRgbMaximum": 0,
+    "decodedFrameMd5": "9b2c4088acb2c896d5d79adbe4b893ac"
+  },
+  "proofs": [
+    {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+    },
+    {
+      "file": "qa/full-silent-media.json",
+      "bytes": 2231,
+      "sha256": "ef7d1c66060eb5930e5c489d33d46fa1a91e8a75b2ddbea9b577a46dfc35e4a6"
+    },
+    {
+      "file": "qa/full-render.json",
+      "bytes": 42168,
+      "sha256": "185c304c7e40cd805d6fba1e3c17d9eb03a469e2aae019fc9bb5e88677eba5b3"
+    },
+    {
+      "file": "qa/full-media-verification.json",
+      "bytes": 2584,
+      "sha256": "3c84277ae9f5ea418860bf645868817e08c75cb72b8a4a6912068f66d4d18192"
+    },
+    {
+      "file": "qa/full-temporal-mux.json",
+      "bytes": 20378,
+      "sha256": "6105ce13091d920d769265a483a486c104a3f5fbb5cdb7dd3e929ff765c16290"
+    },
+    {
+      "file": "qa/full-temporal-silent.json",
+      "bytes": 20373,
+      "sha256": "2dcca9992fc54129c4532754cdfb05311f65eb488d6558035459f11743da8f8f"
+    },
+    {
+      "file": "qa/full-audio-mux-proof.json",
+      "bytes": 949,
+      "sha256": "4339061bb785f72f2c1f752788713e195ef3369630c680a22d285e4ad263d30e"
+    },
+    {
+      "file": "qa/full-guard-negative.json",
+      "bytes": 2074,
+      "sha256": "0d7a8cb16931af53e21924dda365088ab3f08c5beaf7107e8c4e104bd46b53c8"
+    },
+    {
+      "file": "qa/full-poster.png",
+      "bytes": 246185,
+      "sha256": "1e8d54f6f57f5c6db2f7bffb716a64e6886168d3b703022c48c9640d47b39003"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "fidelityStatus": "PENDING_INDEPENDENT_FULL_REVIEW",
+  "sonicStatus": "SONIC_UNVERIFIED"
+}

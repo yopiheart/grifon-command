@@ -1,0 +1,514 @@
+{
+  "status": "TWO_BOUNDARY_SOURCE_ERRORS_CONFIRMED_THIRD_REQUIRES_PIXEL_OR_INDEX_CLARIFICATION",
+  "purpose": "Read-only exact JavaScript/native-threshold diagnosis for frozen full candidate; not a new render or full visual verdict.",
+  "createdAt": "2026-10-08T07:43:09.635Z",
+  "film": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+    "receiptVerifiedUnchanged": true,
+    "actualMovieBytesVerified": true
+  },
+  "boundHashes": {
+    "full.js": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full-surfaces.frag": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+    "render-full.mjs": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "qa/full-media.json": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88",
+    "qa/full-render.json": "2253a0b35b8168f2109763265e08aad52fff9e8d75e3df0df3b142be075efddf",
+    ".tmp/full-frames/receipt.json": "b480d87f32c122d8ba640704fb57b4b58bc79824483a1e5e7e14b027f5ec73f3"
+  },
+  "expectedNativeCuts": [
+    397,
+    400,
+    403,
+    407,
+    410
+  ],
+  "predictedNativeCutsFromFrozenSource": [
+    397,
+    401,
+    404,
+    407,
+    410
+  ],
+  "evaluations": [
+    {
+      "frame": 397,
+      "shotKey": "chevron-one",
+      "expectedTreatment": 0,
+      "phaseDouble": 0,
+      "phaseFloat32": 0,
+      "predictedTreatmentDouble": 0,
+      "predictedTreatmentFloat32": 0,
+      "predictedTreatmentKey": "chevron-one",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.246566666666666,
+        "leftAssociatedTimesNumeratorDividedDenominator": 397,
+        "floorA": 397,
+        "timesPrecomputedFps": 397,
+        "floorB": 397
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 397,
+        "float32Uniform": 397
+      }
+    },
+    {
+      "frame": 398,
+      "shotKey": "chevron-one",
+      "expectedTreatment": 0,
+      "phaseDouble": 0.07692307692307693,
+      "phaseFloat32": 0.07692307978868484,
+      "predictedTreatmentDouble": 0,
+      "predictedTreatmentFloat32": 0,
+      "predictedTreatmentKey": "chevron-one",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.279933333333334,
+        "leftAssociatedTimesNumeratorDividedDenominator": 398,
+        "floorA": 398,
+        "timesPrecomputedFps": 398,
+        "floorB": 398
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 398,
+        "float32Uniform": 398.0000000372529
+      }
+    },
+    {
+      "frame": 399,
+      "shotKey": "chevron-one",
+      "expectedTreatment": 0,
+      "phaseDouble": 0.15384615384615385,
+      "phaseFloat32": 0.1538461595773697,
+      "predictedTreatmentDouble": 0,
+      "predictedTreatmentFloat32": 0,
+      "predictedTreatmentKey": "chevron-one",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.3133,
+        "leftAssociatedTimesNumeratorDividedDenominator": 399,
+        "floorA": 399,
+        "timesPrecomputedFps": 399,
+        "floorB": 399
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 399,
+        "float32Uniform": 399.0000000745058
+      }
+    },
+    {
+      "frame": 400,
+      "shotKey": "stepped-two",
+      "expectedTreatment": 1,
+      "phaseDouble": 0.23076923076923078,
+      "phaseFloat32": 0.23076923191547394,
+      "predictedTreatmentDouble": 0,
+      "predictedTreatmentFloat32": 0,
+      "predictedTreatmentKey": "chevron-one",
+      "matchesShotTable": false,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.346666666666666,
+        "leftAssociatedTimesNumeratorDividedDenominator": 400,
+        "floorA": 400,
+        "timesPrecomputedFps": 399.99999999999994,
+        "floorB": 399
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 400,
+        "float32Uniform": 400.00000001490116
+      }
+    },
+    {
+      "frame": 401,
+      "shotKey": "stepped-two",
+      "expectedTreatment": 1,
+      "phaseDouble": 0.3076923076923077,
+      "phaseFloat32": 0.3076923191547394,
+      "predictedTreatmentDouble": 1,
+      "predictedTreatmentFloat32": 1,
+      "predictedTreatmentKey": "stepped-two",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.380033333333333,
+        "leftAssociatedTimesNumeratorDividedDenominator": 401,
+        "floorA": 401,
+        "timesPrecomputedFps": 401,
+        "floorB": 401
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 401,
+        "float32Uniform": 401.0000001490116
+      }
+    },
+    {
+      "frame": 402,
+      "shotKey": "stepped-two",
+      "expectedTreatment": 1,
+      "phaseDouble": 0.38461538461538464,
+      "phaseFloat32": 0.38461539149284363,
+      "predictedTreatmentDouble": 1,
+      "predictedTreatmentFloat32": 1,
+      "predictedTreatmentKey": "stepped-two",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.4134,
+        "leftAssociatedTimesNumeratorDividedDenominator": 402,
+        "floorA": 402,
+        "timesPrecomputedFps": 402,
+        "floorB": 402
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 402,
+        "float32Uniform": 402.00000008940697
+      }
+    },
+    {
+      "frame": 403,
+      "shotKey": "zigzag-three",
+      "expectedTreatment": 2,
+      "phaseDouble": 0.46153846153846156,
+      "phaseFloat32": 0.4615384638309479,
+      "predictedTreatmentDouble": 1,
+      "predictedTreatmentFloat32": 1,
+      "predictedTreatmentKey": "stepped-two",
+      "matchesShotTable": false,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.446766666666667,
+        "leftAssociatedTimesNumeratorDividedDenominator": 403,
+        "floorA": 403,
+        "timesPrecomputedFps": 403,
+        "floorB": 403
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 403,
+        "float32Uniform": 403.0000000298023
+      }
+    },
+    {
+      "frame": 404,
+      "shotKey": "zigzag-three",
+      "expectedTreatment": 2,
+      "phaseDouble": 0.5384615384615384,
+      "phaseFloat32": 0.5384615659713745,
+      "predictedTreatmentDouble": 2,
+      "predictedTreatmentFloat32": 2,
+      "predictedTreatmentKey": "zigzag-three",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.480133333333333,
+        "leftAssociatedTimesNumeratorDividedDenominator": 404,
+        "floorA": 404,
+        "timesPrecomputedFps": 404,
+        "floorB": 404
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 404,
+        "float32Uniform": 404.00000035762787
+      }
+    },
+    {
+      "frame": 405,
+      "shotKey": "zigzag-three",
+      "expectedTreatment": 2,
+      "phaseDouble": 0.6153846153846154,
+      "phaseFloat32": 0.6153846383094788,
+      "predictedTreatmentDouble": 2,
+      "predictedTreatmentFloat32": 2,
+      "predictedTreatmentKey": "zigzag-three",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.5135,
+        "leftAssociatedTimesNumeratorDividedDenominator": 405,
+        "floorA": 405,
+        "timesPrecomputedFps": 405,
+        "floorB": 405
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 405,
+        "float32Uniform": 405.0000002980232
+      }
+    },
+    {
+      "frame": 406,
+      "shotKey": "zigzag-three",
+      "expectedTreatment": 2,
+      "phaseDouble": 0.6923076923076923,
+      "phaseFloat32": 0.692307710647583,
+      "predictedTreatmentDouble": 2,
+      "predictedTreatmentFloat32": 2,
+      "predictedTreatmentKey": "zigzag-three",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.546866666666666,
+        "leftAssociatedTimesNumeratorDividedDenominator": 406,
+        "floorA": 406,
+        "timesPrecomputedFps": 406,
+        "floorB": 406
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 406,
+        "float32Uniform": 406.0000002384186
+      }
+    },
+    {
+      "frame": 407,
+      "shotKey": "stepped-four",
+      "expectedTreatment": 3,
+      "phaseDouble": 0.7692307692307693,
+      "phaseFloat32": 0.7692307829856873,
+      "predictedTreatmentDouble": 3,
+      "predictedTreatmentFloat32": 3,
+      "predictedTreatmentKey": "stepped-four",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.580233333333334,
+        "leftAssociatedTimesNumeratorDividedDenominator": 407,
+        "floorA": 407,
+        "timesPrecomputedFps": 407,
+        "floorB": 407
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 407,
+        "float32Uniform": 407.00000017881393
+      }
+    },
+    {
+      "frame": 408,
+      "shotKey": "stepped-four",
+      "expectedTreatment": 3,
+      "phaseDouble": 0.8461538461538461,
+      "phaseFloat32": 0.8461538553237915,
+      "predictedTreatmentDouble": 3,
+      "predictedTreatmentFloat32": 3,
+      "predictedTreatmentKey": "stepped-four",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.6136,
+        "leftAssociatedTimesNumeratorDividedDenominator": 408,
+        "floorA": 408,
+        "timesPrecomputedFps": 408,
+        "floorB": 408
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 408,
+        "float32Uniform": 408.0000001192093
+      }
+    },
+    {
+      "frame": 409,
+      "shotKey": "stepped-four",
+      "expectedTreatment": 3,
+      "phaseDouble": 0.9230769230769231,
+      "phaseFloat32": 0.9230769276618958,
+      "predictedTreatmentDouble": 3,
+      "predictedTreatmentFloat32": 3,
+      "predictedTreatmentKey": "stepped-four",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.646966666666666,
+        "leftAssociatedTimesNumeratorDividedDenominator": 409,
+        "floorA": 409,
+        "timesPrecomputedFps": 408.99999999999994,
+        "floorB": 408
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 409,
+        "float32Uniform": 409.00000005960464
+      }
+    },
+    {
+      "frame": 410,
+      "shotKey": "black-interruption",
+      "expectedTreatment": null,
+      "phaseDouble": 1,
+      "phaseFloat32": 1,
+      "predictedTreatmentDouble": null,
+      "predictedTreatmentFloat32": null,
+      "predictedTreatmentKey": "black-interruption",
+      "matchesShotTable": true,
+      "hypotheticalUnusedTimeRoundtrip": {
+        "seconds": 13.680333333333333,
+        "leftAssociatedTimesNumeratorDividedDenominator": 410,
+        "floorA": 410,
+        "timesPrecomputedFps": 410,
+        "floorB": 410
+      },
+      "hypotheticalUnusedPhaseReconstruction": {
+        "double": 410,
+        "float32Uniform": 410
+      }
+    }
+  ],
+  "rootCause": {
+    "confirmedFrames": [
+      400,
+      403
+    ],
+    "mechanism": "uPhase=(frame-397)/13 divides a13-frame four-treatment passage into equal quarter bins. Intended3/3/4/3-frame cuts are unequal. Quarter-bin transitions occur at ceil(397+13*.25)=401, ceil(397+13*.5)=404 and ceil(397+13*.75)=407.",
+    "sourceReferences": [
+      {
+        "file": "full.json",
+        "line": 19,
+        "detail": "Native shot map defines397/400/403/407/410."
+      },
+      {
+        "file": "full.js",
+        "line": 192,
+        "detail": "Pattern mode overrides phase with global passage fraction(frame-397)/13."
+      },
+      {
+        "file": "full-surfaces.frag",
+        "line": 96,
+        "detail": "Band family uses .25/.5/.75 quarter thresholds."
+      },
+      {
+        "file": "full-surfaces.frag",
+        "line": 102,
+        "detail": "Light and shadow families repeat the same thresholds."
+      }
+    ],
+    "floatingPointConclusion": "Confirmed400/403 mismatches are not floating-point boundary errors: their phases are strictly below the quarter thresholds in both JS double and Float32. Native407 is safely above .75 in both precisions and selects treatment4.",
+    "unresolvedClaim": "Reported third-family retention at407 and switch408 is inconsistent with the frozen JS/Float32 selector. It cannot be attributed to this source path without checking actual raw native407, decoded movie407, and critic frame indexing."
+  },
+  "continuationFrameTransport": {
+    "nativeIntegerPassedDirectly": true,
+    "sourceReferences": [
+      {
+        "file": "render-full.mjs",
+        "line": 81,
+        "detail": "capture passes integerframe to window.seekFullFrame without seconds conversion."
+      },
+      {
+        "file": "full.js",
+        "line": 227,
+        "detail": "seekFullFrame rejects noninteger inputs."
+      },
+      {
+        "file": "full.js",
+        "line": 229,
+        "detail": "Time conversion is restricted to accepted prefixframes<222; continuation calls applyFrame(frame) directly."
+      }
+    ],
+    "unusedRoundtripCalculationsAreDiagnosticOnly": true
+  },
+  "minimalCorrectionProposal": {
+    "scope": "One local JS assignment in full.js:192; no edit to shaders, shot map, camera, other family state, vendor, provider or generation settings.",
+    "exactProposedLine": "        mode=5;uniforms.uPhase.value=key==='chevron-one'?.125:key==='stepped-two'?.375:key==='zigzag-three'?.625:.875;",
+    "reason": "Select an exact binary midpoint of the existing shader bin using the native shot key already selected from full.json. This preserves the four existing band/palette formulas and lets the shot table determine native cuts.",
+    "expectedChangedFrames": [
+      400,
+      403
+    ],
+    "expectedUnchangedBoundary407": true,
+    "proposedEvaluations": [
+      {
+        "frame": 397,
+        "shotKey": "chevron-one",
+        "phase": 0.125,
+        "predictedTreatment": 0,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 398,
+        "shotKey": "chevron-one",
+        "phase": 0.125,
+        "predictedTreatment": 0,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 399,
+        "shotKey": "chevron-one",
+        "phase": 0.125,
+        "predictedTreatment": 0,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 400,
+        "shotKey": "stepped-two",
+        "phase": 0.375,
+        "predictedTreatment": 1,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 401,
+        "shotKey": "stepped-two",
+        "phase": 0.375,
+        "predictedTreatment": 1,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 402,
+        "shotKey": "stepped-two",
+        "phase": 0.375,
+        "predictedTreatment": 1,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 403,
+        "shotKey": "zigzag-three",
+        "phase": 0.625,
+        "predictedTreatment": 2,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 404,
+        "shotKey": "zigzag-three",
+        "phase": 0.625,
+        "predictedTreatment": 2,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 405,
+        "shotKey": "zigzag-three",
+        "phase": 0.625,
+        "predictedTreatment": 2,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 406,
+        "shotKey": "zigzag-three",
+        "phase": 0.625,
+        "predictedTreatment": 2,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 407,
+        "shotKey": "stepped-four",
+        "phase": 0.875,
+        "predictedTreatment": 3,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 408,
+        "shotKey": "stepped-four",
+        "phase": 0.875,
+        "predictedTreatment": 3,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 409,
+        "shotKey": "stepped-four",
+        "phase": 0.875,
+        "predictedTreatment": 3,
+        "matchesShotTable": true
+      },
+      {
+        "frame": 410,
+        "shotKey": "black-interruption",
+        "phase": null,
+        "predictedTreatment": null,
+        "matchesShotTable": true
+      }
+    ]
+  },
+  "limits": [
+    "No GPU/browser/render/provider/paid operation was performed.",
+    "Shader branch predictions use exact current source predicates and Float32 uniform rounding; actual shader pixels and encoded movie indices remain independent evidence.",
+    "Whole candidate should be preserved before any authorized correction; this report performs no source or media mutation."
+  ],
+  "inputHashesStableAfterEvaluation": true,
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

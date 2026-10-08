@@ -1,0 +1,9 @@
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command
+
+
+ Test Files  116 passed | 9 skipped (125)
+      Tests  1432 passed | 32 skipped (1464)
+   Start at  16:27:47
+   Duration  44.92s (transform 13.85s, setup 0ms, import 36.62s, tests 134.88s, environment 36ms)
+

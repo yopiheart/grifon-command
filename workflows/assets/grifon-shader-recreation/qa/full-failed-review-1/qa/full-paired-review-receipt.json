@@ -1,0 +1,43 @@
+{
+  "purpose": "PRIVATE full reference-fidelity inspection; not a Grifon export",
+  "createdAt": "2026-10-08T03:52:51.743Z",
+  "producerReceiptSha256": "d2ded0249b0975470fb107fcd1c19eda6b8f9cb0cb1ebe5a5df83ff5d2615162",
+  "inputs": {
+    "reference": {
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+      "bytes": 11514975
+    },
+    "film": {
+      "sha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab",
+      "bytes": 27719697
+    },
+    "acceptedOpening": {
+      "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+      "frames": 222
+    }
+  },
+  "output": {
+    "path": ".tmp/paired-full.mp4",
+    "sha256": "898304ae13f5492405411da7b29e975a2f10add657420b6e1b781f69440e5169",
+    "bytes": 15976647,
+    "width": 1920,
+    "height": 540,
+    "frames": 932,
+    "fps": "30000/1001",
+    "audio": false
+  },
+  "layout": {
+    "left": "REFERENCE, native frames0-931 at960x540",
+    "right": "GRIFON, same native frames at960x540"
+  },
+  "method": "[0:v]trim=end_frame=932,setpts=PTS-STARTPTS,scale=960:540,setsar=1[a];[1:v]trim=end_frame=932,setpts=PTS-STARTPTS,scale=960:540,setsar=1[b];[a][b]hstack=inputs=2:shortest=1[v]",
+  "checks": {
+    "encode": 0,
+    "probe": 0,
+    "strictDecode": 0,
+    "inputHashesStable": true,
+    "allNativeInputPresentationTimestamps": true,
+    "decodedOpeningFramesUnchanged": 222,
+    "frozenRuntimeInputsUnchanged": 9
+  }
+}

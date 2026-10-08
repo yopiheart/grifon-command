@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "status": "PACED_PASS",
+  "gate": "INDEPENDENT_TEAM_FULL_PACED_VISUAL_V3",
+  "qualification": "Close visual adaptation under the same approved substitutions/residuals as the native V3 PASS. No new blocking motion/cadence/field-transition issue in retained actual-playback captures.",
+  "runnerExecutedBy": "/root using the unchanged Playwright single-stream runner",
+  "primaryReviewer": "/root/fidelity_critic",
+  "frozenTimedReport": {
+    "file": "qa/review-player-timed-full-single-clocks.json",
+    "sha256": "cac3b8ff89463b80e5a5c3ebf5463ea649af45f65f24282c6db524b32018eabd",
+    "bytes": 664404
+  },
+  "inputs": {
+    "reference": {
+      "file": "reference/source-x.mp4",
+      "bytes": 11514975,
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089"
+    },
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    "pair": {
+      "file": ".tmp/paired-full.mp4",
+      "bytes": 16376839,
+      "sha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf"
+    },
+    "page": {
+      "file": "paired-full-review.html",
+      "bytes": 3739,
+      "sha256": "d65ecb907938b12e83d3bfe4f93c83c57dc27292ccd5b4d3ed0f1e9360e80475"
+    },
+    "mediaReceipt": {
+      "bytes": 3119,
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+    },
+    "pairReceipt": {
+      "bytes": 3525,
+      "sha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402"
+    }
+  },
+  "servedBindings": {
+    "html": {
+      "url": "http://127.0.0.1:59028/paired-full",
+      "status": 200,
+      "cacheControl": "no-store",
+      "bytes": 3739,
+      "sha256": "d65ecb907938b12e83d3bfe4f93c83c57dc27292ccd5b4d3ed0f1e9360e80475"
+    },
+    "receipt": {
+      "url": "http://127.0.0.1:59028/paired-full-receipt.json",
+      "status": 200,
+      "cacheControl": "no-store",
+      "bytes": 3525,
+      "sha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402"
+    }
+  },
+  "wholeRunAudit": {
+    "plays": [
+      {
+        "rate": 1,
+        "observations": 136,
+        "presentedStart": 0,
+        "presentedEnd": 931,
+        "mediaDuration": 31.097733,
+        "wallSeconds": 31.123,
+        "expectedWallSeconds": 31.097733,
+        "overheadSeconds": 0.025266999999999484,
+        "progressErrors": [],
+        "intermediateSeeks": 0,
+        "naturalEndPaused": true,
+        "droppedFramesDelta": 0,
+        "dropIncrements": [],
+        "maxBeforePresentedGap": 11,
+        "maxWallBetweenCapturesSeconds": 0.359
+      },
+      {
+        "rate": 0.25,
+        "observations": 452,
+        "presentedStart": 0,
+        "presentedEnd": 931,
+        "mediaDuration": 31.097733,
+        "wallSeconds": 124.484,
+        "expectedWallSeconds": 124.390932,
+        "overheadSeconds": 0.09306799999998816,
+        "progressErrors": [],
+        "intermediateSeeks": 0,
+        "naturalEndPaused": true,
+        "droppedFramesDelta": 1,
+        "dropIncrements": [
+          {
+            "file": "full-quarter-0001.png",
+            "presentedFrame": 3,
+            "currentTime": 0.0739,
+            "increment": 1
+          }
+        ],
+        "maxBeforePresentedGap": 3,
+        "maxWallBetweenCapturesSeconds": 0.389
+      }
+    ],
+    "pixelProgress": [
+      {
+        "rate": 1,
+        "side": "source",
+        "captures": 136,
+        "uniquePixelHashes": 121,
+        "changedConsecutiveCapturePairs": 120,
+        "longIdenticalRuns": [
+          {
+            "firstFile": "full-normal-0120.png",
+            "lastFile": "full-normal-0135.png",
+            "firstBeforeFrame": 856,
+            "lastAfterFrame": 931,
+            "wallStart": "2026-10-08T08:57:50.647Z",
+            "wallEnd": "2026-10-08T08:57:53.196Z",
+            "count": 16,
+            "wallSeconds": 2.549
+          }
+        ]
+      },
+      {
+        "rate": 1,
+        "side": "candidate",
+        "captures": 136,
+        "uniquePixelHashes": 121,
+        "changedConsecutiveCapturePairs": 120,
+        "longIdenticalRuns": [
+          {
+            "firstFile": "full-normal-0120.png",
+            "lastFile": "full-normal-0135.png",
+            "firstBeforeFrame": 856,
+            "lastAfterFrame": 931,
+            "wallStart": "2026-10-08T08:57:50.647Z",
+            "wallEnd": "2026-10-08T08:57:53.196Z",
+            "count": 16,
+            "wallSeconds": 2.549
+          }
+        ]
+      },
+      {
+        "rate": 0.25,
+        "side": "source",
+        "captures": 452,
+        "uniquePixelHashes": 403,
+        "changedConsecutiveCapturePairs": 403,
+        "longIdenticalRuns": [
+          {
+            "firstFile": "full-quarter-0407.png",
+            "lastFile": "full-quarter-0451.png",
+            "firstBeforeFrame": 856,
+            "lastAfterFrame": 931,
+            "wallStart": "2026-10-08T08:59:47.588Z",
+            "wallEnd": "2026-10-08T08:59:57.790Z",
+            "count": 45,
+            "wallSeconds": 10.202
+          }
+        ]
+      },
+      {
+        "rate": 0.25,
+        "side": "candidate",
+        "captures": 452,
+        "uniquePixelHashes": 399,
+        "changedConsecutiveCapturePairs": 401,
+        "longIdenticalRuns": [
+          {
+            "firstFile": "full-quarter-0407.png",
+            "lastFile": "full-quarter-0451.png",
+            "firstBeforeFrame": 856,
+            "lastAfterFrame": 931,
+            "wallStart": "2026-10-08T08:59:47.588Z",
+            "wallEnd": "2026-10-08T08:59:57.790Z",
+            "count": 45,
+            "wallSeconds": 10.202
+          }
+        ]
+      }
+    ],
+    "sheetUnion": {
+      "captures": 588,
+      "sheetEntries": 588,
+      "uniqueSheetEntries": 588,
+      "exactAllCaptureUnion": true
+    },
+    "localOnly": {
+      "console": 0,
+      "external": 0,
+      "networkFailures": 0
+    },
+    "detailReceipt": {
+      "file": ".tmp/full-paced-critic-v3/audit.json",
+      "sha256": "b4d504e2f03c6986755c5fc8cee9c960f51497a094e73d277744d1c847920ebe",
+      "bytes": 286516
+    }
+  },
+  "coverage": {
+    "selector": "observation.before.presentedFrame; disjoint [0,344),[344,496),[496,932)",
+    "normalCaptures": 136,
+    "quarterCaptures": 452,
+    "allCaptures": 588,
+    "sheets": 55,
+    "allRetainedCapturesVisuallyInspectedByTeam": true,
+    "noThinning": true,
+    "uniqueTeamUnion": true,
+    "primaryPersonallyInspectedAllCaptures": false,
+    "central": {
+      "reviewer": "/root/fidelity_critic",
+      "range": [
+        344,
+        496
+      ],
+      "counts": [
+        {
+          "rate": 1,
+          "count": 20
+        },
+        {
+          "rate": 0.25,
+          "count": 71
+        }
+      ],
+      "captures": [
+        "full-normal-0051.png",
+        "full-normal-0052.png",
+        "full-normal-0053.png",
+        "full-normal-0054.png",
+        "full-normal-0055.png",
+        "full-normal-0056.png",
+        "full-normal-0057.png",
+        "full-normal-0058.png",
+        "full-normal-0059.png",
+        "full-normal-0060.png",
+        "full-normal-0061.png",
+        "full-normal-0062.png",
+        "full-normal-0063.png",
+        "full-normal-0064.png",
+        "full-normal-0065.png",
+        "full-normal-0066.png",
+        "full-normal-0067.png",
+        "full-normal-0068.png",
+        "full-normal-0069.png",
+        "full-normal-0070.png",
+        "full-quarter-0162.png",
+        "full-quarter-0163.png",
+        "full-quarter-0164.png",
+        "full-quarter-0165.png",
+        "full-quarter-0166.png",
+        "full-quarter-0167.png",
+        "full-quarter-0168.png",
+        "full-quarter-0169.png",
+        "full-quarter-0170.png",
+        "full-quarter-0171.png",
+        "full-quarter-0172.png",
+        "full-quarter-0173.png",
+        "full-quarter-0174.png",
+        "full-quarter-0175.png",
+        "full-quarter-0176.png",
+        "full-quarter-0177.png",
+        "full-quarter-0178.png",
+        "full-quarter-0179.png",
+        "full-quarter-0180.png",
+        "full-quarter-0181.png",
+        "full-quarter-0182.png",
+        "full-quarter-0183.png",
+        "full-quarter-0184.png",
+        "full-quarter-0185.png",
+        "full-quarter-0186.png",
+        "full-quarter-0187.png",
+        "full-quarter-0188.png",
+        "full-quarter-0189.png",
+        "full-quarter-0190.png",
+        "full-quarter-0191.png",
+        "full-quarter-0192.png",
+        "full-quarter-0193.png",
+        "full-quarter-0194.png",
+        "full-quarter-0195.png",
+        "full-quarter-0196.png",
+        "full-quarter-0197.png",
+        "full-quarter-0198.png",
+        "full-quarter-0199.png",
+        "full-quarter-0200.png",
+        "full-quarter-0201.png",
+        "full-quarter-0202.png",
+        "full-quarter-0203.png",
+        "full-quarter-0204.png",
+        "full-quarter-0205.png",
+        "full-quarter-0206.png",
+        "full-quarter-0207.png",
+        "full-quarter-0208.png",
+        "full-quarter-0209.png",
+        "full-quarter-0210.png",
+        "full-quarter-0211.png",
+        "full-quarter-0212.png",
+        "full-quarter-0213.png",
+        "full-quarter-0214.png",
+        "full-quarter-0215.png",
+        "full-quarter-0216.png",
+        "full-quarter-0217.png",
+        "full-quarter-0218.png",
+        "full-quarter-0219.png",
+        "full-quarter-0220.png",
+        "full-quarter-0221.png",
+        "full-quarter-0222.png",
+        "full-quarter-0223.png",
+        "full-quarter-0224.png",
+        "full-quarter-0225.png",
+        "full-quarter-0226.png",
+        "full-quarter-0227.png",
+        "full-quarter-0228.png",
+        "full-quarter-0229.png",
+        "full-quarter-0230.png",
+        "full-quarter-0231.png",
+        "full-quarter-0232.png"
+      ],
+      "sheets": [
+        {
+          "file": "review-player-timed-full-single-normal-shell-montage-00.jpg",
+          "captures": [
+            "full-normal-0051.png",
+            "full-normal-0052.png",
+            "full-normal-0053.png",
+            "full-normal-0054.png",
+            "full-normal-0055.png",
+            "full-normal-0056.png",
+            "full-normal-0057.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-normal-rapid-pattern-00.jpg",
+          "captures": [
+            "full-normal-0058.png",
+            "full-normal-0059.png",
+            "full-normal-0060.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-normal-ribbon-00.jpg",
+          "captures": [
+            "full-normal-0061.png",
+            "full-normal-0062.png",
+            "full-normal-0063.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-normal-glyphs-00.jpg",
+          "captures": [
+            "full-normal-0064.png",
+            "full-normal-0065.png",
+            "full-normal-0066.png",
+            "full-normal-0067.png",
+            "full-normal-0068.png",
+            "full-normal-0069.png",
+            "full-normal-0070.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-quarter-shell-montage-00.jpg",
+          "captures": [
+            "full-quarter-0162.png",
+            "full-quarter-0163.png",
+            "full-quarter-0164.png",
+            "full-quarter-0165.png",
+            "full-quarter-0166.png",
+            "full-quarter-0167.png",
+            "full-quarter-0168.png",
+            "full-quarter-0169.png",
+            "full-quarter-0170.png",
+            "full-quarter-0171.png",
+            "full-quarter-0172.png",
+            "full-quarter-0173.png",
+            "full-quarter-0174.png",
+            "full-quarter-0175.png",
+            "full-quarter-0176.png",
+            "full-quarter-0177.png",
+            "full-quarter-0178.png",
+            "full-quarter-0179.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-quarter-shell-montage-01.jpg",
+          "captures": [
+            "full-quarter-0180.png",
+            "full-quarter-0181.png",
+            "full-quarter-0182.png",
+            "full-quarter-0183.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-quarter-rapid-pattern-00.jpg",
+          "captures": [
+            "full-quarter-0184.png",
+            "full-quarter-0185.png",
+            "full-quarter-0186.png",
+            "full-quarter-0187.png",
+            "full-quarter-0188.png",
+            "full-quarter-0189.png",
+            "full-quarter-0190.png",
+            "full-quarter-0191.png",
+            "full-quarter-0192.png",
+            "full-quarter-0193.png",
+            "full-quarter-0194.png",
+            "full-quarter-0195.png",
+            "full-quarter-0196.png",
+            "full-quarter-0197.png",
+            "full-quarter-0198.png",
+            "full-quarter-0199.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-quarter-ribbon-00.jpg",
+          "captures": [
+            "full-quarter-0200.png",
+            "full-quarter-0201.png",
+            "full-quarter-0202.png",
+            "full-quarter-0203.png",
+            "full-quarter-0204.png",
+            "full-quarter-0205.png",
+            "full-quarter-0206.png",
+            "full-quarter-0207.png",
+            "full-quarter-0208.png",
+            "full-quarter-0209.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-quarter-glyphs-00.jpg",
+          "captures": [
+            "full-quarter-0210.png",
+            "full-quarter-0211.png",
+            "full-quarter-0212.png",
+            "full-quarter-0213.png",
+            "full-quarter-0214.png",
+            "full-quarter-0215.png",
+            "full-quarter-0216.png",
+            "full-quarter-0217.png",
+            "full-quarter-0218.png",
+            "full-quarter-0219.png",
+            "full-quarter-0220.png",
+            "full-quarter-0221.png",
+            "full-quarter-0222.png",
+            "full-quarter-0223.png",
+            "full-quarter-0224.png",
+            "full-quarter-0225.png",
+            "full-quarter-0226.png",
+            "full-quarter-0227.png"
+          ]
+        },
+        {
+          "file": "review-player-timed-full-single-quarter-glyphs-01.jpg",
+          "captures": [
+            "full-quarter-0228.png",
+            "full-quarter-0229.png",
+            "full-quarter-0230.png",
+            "full-quarter-0231.png",
+            "full-quarter-0232.png"
+          ]
+        }
+      ],
+      "status": "CENTRAL_PACED_PASS"
+    },
+    "peerAuxiliary": [
+      {
+        "name": "early",
+        "reviewer": "/root/native_cut_critic_v3",
+        "range": [
+          0,
+          344
+        ],
+        "status": "EARLY_PACED_PASS",
+        "report": "reference/full-paced-early-review-v3.md",
+        "reportSha": "e887ea73314f99380599491951c0e3f7eda262e6bf828a318d791db6b940aa24",
+        "qa": "qa/full-paced-early-review-v3.json",
+        "qaSha": "0b9e26a746ce9c6328ce16921ec091ec9a171475b001b5c7290466c6dfd6e655",
+        "captures": 213,
+        "sheets": 20,
+        "counts": [
+          {
+            "rate": 1,
+            "count": 51
+          },
+          {
+            "rate": 0.25,
+            "count": 162
+          }
+        ]
+      },
+      {
+        "name": "late",
+        "reviewer": "/root/paced_late_critic_v3",
+        "range": [
+          496,
+          932
+        ],
+        "status": "LATE_PACED_PASS",
+        "report": "reference/full-paced-late-review-v3.md",
+        "reportSha": "41df9233a55e5b953af9c72735da2de7b4803bf7acb62f65f3dc6b4168e453f9",
+        "qa": "qa/full-paced-late-review-v3.json",
+        "qaSha": "d969189c8bd49eaabf5b6a45e8142bdcfc273896980b68496aca797eb691ff8c",
+        "captures": 284,
+        "sheets": 25,
+        "counts": [
+          {
+            "rate": 1,
+            "count": 65
+          },
+          {
+            "rate": 0.25,
+            "count": 219
+          }
+        ]
+      }
+    ]
+  },
+  "centralPhaseJudgments": [
+    {
+      "phase": "shell-montage",
+      "normal": 7,
+      "quarter": 22,
+      "status": "CENTRAL_PACED_PASS",
+      "observation": "Folded character rows advance; the broad point-shell main/secondary openings change projection and crop, then the folded lobe cluster and silver pinwheel replace them. Residuals: darker regular rows/rims, less glow and rounder lobes."
+    },
+    {
+      "phase": "rapid-pattern",
+      "normal": 3,
+      "quarter": 16,
+      "status": "CENTRAL_PACED_PASS",
+      "observation": "Quarter captures retain all four rapid geometric pattern classes followed by the black beat; one normal capture straddles403–407. Exact400/403/407 boundaries are established by native V3. Grain/tile geometry remains an accepted residual."
+    },
+    {
+      "phase": "ribbon",
+      "normal": 3,
+      "quarter": 10,
+      "status": "CENTRAL_PACED_PASS",
+      "observation": "Diagonal particle field changes through stretch and radial burst/diffuse core; no frozen field. Residuals: broader/sparser band and stronger gray transition veil."
+    },
+    {
+      "phase": "glyphs",
+      "normal": 7,
+      "quarter": 23,
+      "status": "CENTRAL_PACED_PASS",
+      "observation": "Four distinct macro materials replace one another with changing camera/material pixels: pale beveled, dark folded, warm rounded, and softly lit/transmissive final form. Approved G-letter/palette changes retain their families; final counter remains sharper/grayer."
+    }
+  ],
+  "blockingFindings": [],
+  "limits": {
+    "reviewersInspectedAllRetainedNaturallyAdvancingBrowserCaptures": true,
+    "personallyOperatedUninterruptedPlayerByPrimary": false,
+    "everyBrowserRefreshInspected": false,
+    "captureFrameSpansAreWindowsNotExactScreenshotFrame": true,
+    "native932FramePrecisionEstablishedBySeparateGate": "qa/full-native-review-v3.json",
+    "pairedStreamSilent": true,
+    "audioHeard": false,
+    "sonicStatus": "SONIC_UNVERIFIED",
+    "referenceUnderlyingTrackIdentity": "NOT_ESTABLISHED",
+    "audioSyncFidelityApproved": false,
+    "newBrowserRunsByReviewer": 0,
+    "gpuRendersByReviewer": 0,
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "bindingClosure": {
+    "file": ".tmp/full-paced-critic-v3/closure.json",
+    "sha256": "d30750e6da281e1223cedaf95feaddeaaa3df70e6ae535e4212a58fee2f645e6",
+    "bytes": 12653
+  },
+  "report": {
+    "file": "reference/full-paced-review-v3.md",
+    "sha256": "7e713124693c4c225e887b04750afdbfdb352a7ecb69d5e52a1fc03805c659ad",
+    "bytes": 5105
+  }
+}

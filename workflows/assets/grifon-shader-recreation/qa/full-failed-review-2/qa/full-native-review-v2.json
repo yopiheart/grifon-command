@@ -1,0 +1,1679 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "gate": "INDEPENDENT_FULL_NATIVE_VISUAL_V2",
+  "scope": "All932 native-indexed presentation frames inspected through chronological paired sheets; critical composition/materials examined at larger paired and original native resolution. Continuous playback and sound excluded.",
+  "reference": {
+    "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+    "bytes": 11514975
+  },
+  "candidate": {
+    "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+    "bytes": 25018826
+  },
+  "pair": {
+    "sha256": "534db1eb3cb970a6ec709885131205b02e8080de6f1e10dbb32cb5daaa3aad61",
+    "bytes": 16279713
+  },
+  "mediaReceipt": {
+    "sha256": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88",
+    "bytes": 3119
+  },
+  "pairReceipt": {
+    "sha256": "a0c5494003a53c79f4e55e90fabfe82e91385bc3e73c99fc1277235024df3797",
+    "bytes": 3525
+  },
+  "captureReceipt": {
+    "sha256": "b480d87f32c122d8ba640704fb57b4b58bc79824483a1e5e7e14b027f5ec73f3",
+    "bytes": 102302
+  },
+  "producingHelper": {
+    "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "bytes": 20291
+  },
+  "nativeFrameConvention": {
+    "first": 0,
+    "last": 931,
+    "count": 932,
+    "fpsNumerator": 30000,
+    "fpsDenominator": 1001,
+    "timeSeconds": "frame *1001 /30000"
+  },
+  "reviewed": {
+    "chronologicalSheets": [
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-000-029.jpg",
+        "first": 0,
+        "last": 29
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-030-059.jpg",
+        "first": 30,
+        "last": 59
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-060-089.jpg",
+        "first": 60,
+        "last": 89
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-090-119.jpg",
+        "first": 90,
+        "last": 119
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-120-149.jpg",
+        "first": 120,
+        "last": 149
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-150-179.jpg",
+        "first": 150,
+        "last": 179
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-180-209.jpg",
+        "first": 180,
+        "last": 209
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-210-239.jpg",
+        "first": 210,
+        "last": 239
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-240-269.jpg",
+        "first": 240,
+        "last": 269
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-270-299.jpg",
+        "first": 270,
+        "last": 299
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-300-329.jpg",
+        "first": 300,
+        "last": 329
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-330-359.jpg",
+        "first": 330,
+        "last": 359
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-360-389.jpg",
+        "first": 360,
+        "last": 389
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-390-419.jpg",
+        "first": 390,
+        "last": 419
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-420-449.jpg",
+        "first": 420,
+        "last": 449
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-450-479.jpg",
+        "first": 450,
+        "last": 479
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-480-509.jpg",
+        "first": 480,
+        "last": 509
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-510-539.jpg",
+        "first": 510,
+        "last": 539
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-540-569.jpg",
+        "first": 540,
+        "last": 569
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-570-599.jpg",
+        "first": 570,
+        "last": 599
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-600-629.jpg",
+        "first": 600,
+        "last": 629
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-630-659.jpg",
+        "first": 630,
+        "last": 659
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-660-689.jpg",
+        "first": 660,
+        "last": 689
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-690-719.jpg",
+        "first": 690,
+        "last": 719
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-720-749.jpg",
+        "first": 720,
+        "last": 749
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-750-779.jpg",
+        "first": 750,
+        "last": 779
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-780-809.jpg",
+        "first": 780,
+        "last": 809
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-810-839.jpg",
+        "first": 810,
+        "last": 839
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-840-869.jpg",
+        "first": 840,
+        "last": 869
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-870-899.jpg",
+        "first": 870,
+        "last": 899
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-900-929.jpg",
+        "first": 900,
+        "last": 929
+      },
+      {
+        "file": ".tmp/full-native-critic-v2/sheets/sheet-930-931.jpg",
+        "first": 930,
+        "last": 931
+      }
+    ],
+    "chronologicalFrameCount": 932,
+    "largerPairedDetails": [
+      {
+        "frame": 29,
+        "file": ".tmp/full-native-critic-v2/details/pair-000.png"
+      },
+      {
+        "frame": 68,
+        "file": ".tmp/full-native-critic-v2/details/pair-001.png"
+      },
+      {
+        "frame": 111,
+        "file": ".tmp/full-native-critic-v2/details/pair-002.png"
+      },
+      {
+        "frame": 118,
+        "file": ".tmp/full-native-critic-v2/details/pair-003.png"
+      },
+      {
+        "frame": 143,
+        "file": ".tmp/full-native-critic-v2/details/pair-004.png"
+      },
+      {
+        "frame": 145,
+        "file": ".tmp/full-native-critic-v2/details/pair-005.png"
+      },
+      {
+        "frame": 192,
+        "file": ".tmp/full-native-critic-v2/details/pair-006.png"
+      },
+      {
+        "frame": 215,
+        "file": ".tmp/full-native-critic-v2/details/pair-007.png"
+      },
+      {
+        "frame": 222,
+        "file": ".tmp/full-native-critic-v2/details/pair-008.png"
+      },
+      {
+        "frame": 225,
+        "file": ".tmp/full-native-critic-v2/details/pair-009.png"
+      },
+      {
+        "frame": 228,
+        "file": ".tmp/full-native-critic-v2/details/pair-010.png"
+      },
+      {
+        "frame": 229,
+        "file": ".tmp/full-native-critic-v2/details/pair-011.png"
+      },
+      {
+        "frame": 232,
+        "file": ".tmp/full-native-critic-v2/details/pair-012.png"
+      },
+      {
+        "frame": 237,
+        "file": ".tmp/full-native-critic-v2/details/pair-013.png"
+      },
+      {
+        "frame": 242,
+        "file": ".tmp/full-native-critic-v2/details/pair-014.png"
+      },
+      {
+        "frame": 255,
+        "file": ".tmp/full-native-critic-v2/details/pair-015.png"
+      },
+      {
+        "frame": 258,
+        "file": ".tmp/full-native-critic-v2/details/pair-016.png"
+      },
+      {
+        "frame": 269,
+        "file": ".tmp/full-native-critic-v2/details/pair-017.png"
+      },
+      {
+        "frame": 285,
+        "file": ".tmp/full-native-critic-v2/details/pair-018.png"
+      },
+      {
+        "frame": 302,
+        "file": ".tmp/full-native-critic-v2/details/pair-019.png"
+      },
+      {
+        "frame": 306,
+        "file": ".tmp/full-native-critic-v2/details/pair-020.png"
+      },
+      {
+        "frame": 307,
+        "file": ".tmp/full-native-critic-v2/details/pair-021.png"
+      },
+      {
+        "frame": 324,
+        "file": ".tmp/full-native-critic-v2/details/pair-022.png"
+      },
+      {
+        "frame": 344,
+        "file": ".tmp/full-native-critic-v2/details/pair-023.png"
+      },
+      {
+        "frame": 348,
+        "file": ".tmp/full-native-critic-v2/details/pair-024.png"
+      },
+      {
+        "frame": 352,
+        "file": ".tmp/full-native-critic-v2/details/pair-025.png"
+      },
+      {
+        "frame": 356,
+        "file": ".tmp/full-native-critic-v2/details/pair-026.png"
+      },
+      {
+        "frame": 357,
+        "file": ".tmp/full-native-critic-v2/details/pair-027.png"
+      },
+      {
+        "frame": 362,
+        "file": ".tmp/full-native-critic-v2/details/pair-028.png"
+      },
+      {
+        "frame": 369,
+        "file": ".tmp/full-native-critic-v2/details/pair-029.png"
+      },
+      {
+        "frame": 376,
+        "file": ".tmp/full-native-critic-v2/details/pair-030.png"
+      },
+      {
+        "frame": 383,
+        "file": ".tmp/full-native-critic-v2/details/pair-031.png"
+      },
+      {
+        "frame": 393,
+        "file": ".tmp/full-native-critic-v2/details/pair-032.png"
+      },
+      {
+        "frame": 399,
+        "file": ".tmp/full-native-critic-v2/details/pair-033.png"
+      },
+      {
+        "frame": 401,
+        "file": ".tmp/full-native-critic-v2/details/pair-034.png"
+      },
+      {
+        "frame": 404,
+        "file": ".tmp/full-native-critic-v2/details/pair-035.png"
+      },
+      {
+        "frame": 408,
+        "file": ".tmp/full-native-critic-v2/details/pair-036.png"
+      },
+      {
+        "frame": 440,
+        "file": ".tmp/full-native-critic-v2/details/pair-037.png"
+      },
+      {
+        "frame": 443,
+        "file": ".tmp/full-native-critic-v2/details/pair-038.png"
+      },
+      {
+        "frame": 444,
+        "file": ".tmp/full-native-critic-v2/details/pair-039.png"
+      },
+      {
+        "frame": 445,
+        "file": ".tmp/full-native-critic-v2/details/pair-040.png"
+      },
+      {
+        "frame": 446,
+        "file": ".tmp/full-native-critic-v2/details/pair-041.png"
+      },
+      {
+        "frame": 450,
+        "file": ".tmp/full-native-critic-v2/details/pair-042.png"
+      },
+      {
+        "frame": 458,
+        "file": ".tmp/full-native-critic-v2/details/pair-043.png"
+      },
+      {
+        "frame": 459,
+        "file": ".tmp/full-native-critic-v2/details/pair-044.png"
+      },
+      {
+        "frame": 463,
+        "file": ".tmp/full-native-critic-v2/details/pair-045.png"
+      },
+      {
+        "frame": 470,
+        "file": ".tmp/full-native-critic-v2/details/pair-046.png"
+      },
+      {
+        "frame": 471,
+        "file": ".tmp/full-native-critic-v2/details/pair-047.png"
+      },
+      {
+        "frame": 476,
+        "file": ".tmp/full-native-critic-v2/details/pair-048.png"
+      },
+      {
+        "frame": 482,
+        "file": ".tmp/full-native-critic-v2/details/pair-049.png"
+      },
+      {
+        "frame": 483,
+        "file": ".tmp/full-native-critic-v2/details/pair-050.png"
+      },
+      {
+        "frame": 489,
+        "file": ".tmp/full-native-critic-v2/details/pair-051.png"
+      },
+      {
+        "frame": 495,
+        "file": ".tmp/full-native-critic-v2/details/pair-052.png"
+      },
+      {
+        "frame": 496,
+        "file": ".tmp/full-native-critic-v2/details/pair-053.png"
+      },
+      {
+        "frame": 514,
+        "file": ".tmp/full-native-critic-v2/details/pair-054.png"
+      },
+      {
+        "frame": 518,
+        "file": ".tmp/full-native-critic-v2/details/pair-055.png"
+      },
+      {
+        "frame": 529,
+        "file": ".tmp/full-native-critic-v2/details/pair-056.png"
+      },
+      {
+        "frame": 540,
+        "file": ".tmp/full-native-critic-v2/details/pair-057.png"
+      },
+      {
+        "frame": 541,
+        "file": ".tmp/full-native-critic-v2/details/pair-058.png"
+      },
+      {
+        "frame": 544,
+        "file": ".tmp/full-native-critic-v2/details/pair-059.png"
+      },
+      {
+        "frame": 546,
+        "file": ".tmp/full-native-critic-v2/details/pair-060.png"
+      },
+      {
+        "frame": 547,
+        "file": ".tmp/full-native-critic-v2/details/pair-061.png"
+      },
+      {
+        "frame": 555,
+        "file": ".tmp/full-native-critic-v2/details/pair-062.png"
+      },
+      {
+        "frame": 567,
+        "file": ".tmp/full-native-critic-v2/details/pair-063.png"
+      },
+      {
+        "frame": 586,
+        "file": ".tmp/full-native-critic-v2/details/pair-064.png"
+      },
+      {
+        "frame": 600,
+        "file": ".tmp/full-native-critic-v2/details/pair-065.png"
+      },
+      {
+        "frame": 606,
+        "file": ".tmp/full-native-critic-v2/details/pair-066.png"
+      },
+      {
+        "frame": 608,
+        "file": ".tmp/full-native-critic-v2/details/pair-067.png"
+      },
+      {
+        "frame": 609,
+        "file": ".tmp/full-native-critic-v2/details/pair-068.png"
+      },
+      {
+        "frame": 610,
+        "file": ".tmp/full-native-critic-v2/details/pair-069.png"
+      },
+      {
+        "frame": 617,
+        "file": ".tmp/full-native-critic-v2/details/pair-070.png"
+      },
+      {
+        "frame": 633,
+        "file": ".tmp/full-native-critic-v2/details/pair-071.png"
+      },
+      {
+        "frame": 636,
+        "file": ".tmp/full-native-critic-v2/details/pair-072.png"
+      },
+      {
+        "frame": 639,
+        "file": ".tmp/full-native-critic-v2/details/pair-073.png"
+      },
+      {
+        "frame": 640,
+        "file": ".tmp/full-native-critic-v2/details/pair-074.png"
+      },
+      {
+        "frame": 655,
+        "file": ".tmp/full-native-critic-v2/details/pair-075.png"
+      },
+      {
+        "frame": 740,
+        "file": ".tmp/full-native-critic-v2/details/pair-076.png"
+      },
+      {
+        "frame": 833,
+        "file": ".tmp/full-native-critic-v2/details/pair-077.png"
+      },
+      {
+        "frame": 834,
+        "file": ".tmp/full-native-critic-v2/details/pair-078.png"
+      },
+      {
+        "frame": 842,
+        "file": ".tmp/full-native-critic-v2/details/pair-079.png"
+      },
+      {
+        "frame": 852,
+        "file": ".tmp/full-native-critic-v2/details/pair-080.png"
+      },
+      {
+        "frame": 853,
+        "file": ".tmp/full-native-critic-v2/details/pair-081.png"
+      },
+      {
+        "frame": 931,
+        "file": ".tmp/full-native-critic-v2/details/pair-082.png"
+      }
+    ],
+    "nativeDetails": [
+      {
+        "label": "reference",
+        "frame": 29,
+        "file": ".tmp/full-native-critic-v2/native/reference-000.png"
+      },
+      {
+        "label": "reference",
+        "frame": 68,
+        "file": ".tmp/full-native-critic-v2/native/reference-001.png"
+      },
+      {
+        "label": "reference",
+        "frame": 111,
+        "file": ".tmp/full-native-critic-v2/native/reference-002.png"
+      },
+      {
+        "label": "reference",
+        "frame": 118,
+        "file": ".tmp/full-native-critic-v2/native/reference-003.png"
+      },
+      {
+        "label": "reference",
+        "frame": 143,
+        "file": ".tmp/full-native-critic-v2/native/reference-004.png"
+      },
+      {
+        "label": "reference",
+        "frame": 145,
+        "file": ".tmp/full-native-critic-v2/native/reference-005.png"
+      },
+      {
+        "label": "reference",
+        "frame": 192,
+        "file": ".tmp/full-native-critic-v2/native/reference-006.png"
+      },
+      {
+        "label": "reference",
+        "frame": 215,
+        "file": ".tmp/full-native-critic-v2/native/reference-007.png"
+      },
+      {
+        "label": "reference",
+        "frame": 225,
+        "file": ".tmp/full-native-critic-v2/native/reference-008.png"
+      },
+      {
+        "label": "reference",
+        "frame": 232,
+        "file": ".tmp/full-native-critic-v2/native/reference-009.png"
+      },
+      {
+        "label": "reference",
+        "frame": 258,
+        "file": ".tmp/full-native-critic-v2/native/reference-010.png"
+      },
+      {
+        "label": "reference",
+        "frame": 306,
+        "file": ".tmp/full-native-critic-v2/native/reference-011.png"
+      },
+      {
+        "label": "reference",
+        "frame": 348,
+        "file": ".tmp/full-native-critic-v2/native/reference-012.png"
+      },
+      {
+        "label": "reference",
+        "frame": 357,
+        "file": ".tmp/full-native-critic-v2/native/reference-013.png"
+      },
+      {
+        "label": "reference",
+        "frame": 362,
+        "file": ".tmp/full-native-critic-v2/native/reference-014.png"
+      },
+      {
+        "label": "reference",
+        "frame": 369,
+        "file": ".tmp/full-native-critic-v2/native/reference-015.png"
+      },
+      {
+        "label": "reference",
+        "frame": 376,
+        "file": ".tmp/full-native-critic-v2/native/reference-016.png"
+      },
+      {
+        "label": "reference",
+        "frame": 383,
+        "file": ".tmp/full-native-critic-v2/native/reference-017.png"
+      },
+      {
+        "label": "reference",
+        "frame": 393,
+        "file": ".tmp/full-native-critic-v2/native/reference-018.png"
+      },
+      {
+        "label": "reference",
+        "frame": 399,
+        "file": ".tmp/full-native-critic-v2/native/reference-019.png"
+      },
+      {
+        "label": "reference",
+        "frame": 401,
+        "file": ".tmp/full-native-critic-v2/native/reference-020.png"
+      },
+      {
+        "label": "reference",
+        "frame": 404,
+        "file": ".tmp/full-native-critic-v2/native/reference-021.png"
+      },
+      {
+        "label": "reference",
+        "frame": 408,
+        "file": ".tmp/full-native-critic-v2/native/reference-022.png"
+      },
+      {
+        "label": "reference",
+        "frame": 444,
+        "file": ".tmp/full-native-critic-v2/native/reference-023.png"
+      },
+      {
+        "label": "reference",
+        "frame": 445,
+        "file": ".tmp/full-native-critic-v2/native/reference-024.png"
+      },
+      {
+        "label": "reference",
+        "frame": 446,
+        "file": ".tmp/full-native-critic-v2/native/reference-025.png"
+      },
+      {
+        "label": "reference",
+        "frame": 450,
+        "file": ".tmp/full-native-critic-v2/native/reference-026.png"
+      },
+      {
+        "label": "reference",
+        "frame": 463,
+        "file": ".tmp/full-native-critic-v2/native/reference-027.png"
+      },
+      {
+        "label": "reference",
+        "frame": 476,
+        "file": ".tmp/full-native-critic-v2/native/reference-028.png"
+      },
+      {
+        "label": "reference",
+        "frame": 489,
+        "file": ".tmp/full-native-critic-v2/native/reference-029.png"
+      },
+      {
+        "label": "reference",
+        "frame": 541,
+        "file": ".tmp/full-native-critic-v2/native/reference-030.png"
+      },
+      {
+        "label": "reference",
+        "frame": 544,
+        "file": ".tmp/full-native-critic-v2/native/reference-031.png"
+      },
+      {
+        "label": "reference",
+        "frame": 546,
+        "file": ".tmp/full-native-critic-v2/native/reference-032.png"
+      },
+      {
+        "label": "reference",
+        "frame": 606,
+        "file": ".tmp/full-native-critic-v2/native/reference-033.png"
+      },
+      {
+        "label": "reference",
+        "frame": 608,
+        "file": ".tmp/full-native-critic-v2/native/reference-034.png"
+      },
+      {
+        "label": "reference",
+        "frame": 609,
+        "file": ".tmp/full-native-critic-v2/native/reference-035.png"
+      },
+      {
+        "label": "reference",
+        "frame": 617,
+        "file": ".tmp/full-native-critic-v2/native/reference-036.png"
+      },
+      {
+        "label": "reference",
+        "frame": 633,
+        "file": ".tmp/full-native-critic-v2/native/reference-037.png"
+      },
+      {
+        "label": "reference",
+        "frame": 842,
+        "file": ".tmp/full-native-critic-v2/native/reference-038.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 29,
+        "file": ".tmp/full-native-critic-v2/native/candidate-000.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 68,
+        "file": ".tmp/full-native-critic-v2/native/candidate-001.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 111,
+        "file": ".tmp/full-native-critic-v2/native/candidate-002.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 118,
+        "file": ".tmp/full-native-critic-v2/native/candidate-003.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 143,
+        "file": ".tmp/full-native-critic-v2/native/candidate-004.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 145,
+        "file": ".tmp/full-native-critic-v2/native/candidate-005.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 192,
+        "file": ".tmp/full-native-critic-v2/native/candidate-006.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 215,
+        "file": ".tmp/full-native-critic-v2/native/candidate-007.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 225,
+        "file": ".tmp/full-native-critic-v2/native/candidate-008.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 232,
+        "file": ".tmp/full-native-critic-v2/native/candidate-009.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 258,
+        "file": ".tmp/full-native-critic-v2/native/candidate-010.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 306,
+        "file": ".tmp/full-native-critic-v2/native/candidate-011.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 348,
+        "file": ".tmp/full-native-critic-v2/native/candidate-012.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 357,
+        "file": ".tmp/full-native-critic-v2/native/candidate-013.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 362,
+        "file": ".tmp/full-native-critic-v2/native/candidate-014.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 369,
+        "file": ".tmp/full-native-critic-v2/native/candidate-015.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 376,
+        "file": ".tmp/full-native-critic-v2/native/candidate-016.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 383,
+        "file": ".tmp/full-native-critic-v2/native/candidate-017.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 393,
+        "file": ".tmp/full-native-critic-v2/native/candidate-018.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 399,
+        "file": ".tmp/full-native-critic-v2/native/candidate-019.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 401,
+        "file": ".tmp/full-native-critic-v2/native/candidate-020.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 404,
+        "file": ".tmp/full-native-critic-v2/native/candidate-021.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 408,
+        "file": ".tmp/full-native-critic-v2/native/candidate-022.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 444,
+        "file": ".tmp/full-native-critic-v2/native/candidate-023.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 445,
+        "file": ".tmp/full-native-critic-v2/native/candidate-024.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 446,
+        "file": ".tmp/full-native-critic-v2/native/candidate-025.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 450,
+        "file": ".tmp/full-native-critic-v2/native/candidate-026.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 463,
+        "file": ".tmp/full-native-critic-v2/native/candidate-027.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 476,
+        "file": ".tmp/full-native-critic-v2/native/candidate-028.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 489,
+        "file": ".tmp/full-native-critic-v2/native/candidate-029.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 541,
+        "file": ".tmp/full-native-critic-v2/native/candidate-030.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 544,
+        "file": ".tmp/full-native-critic-v2/native/candidate-031.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 546,
+        "file": ".tmp/full-native-critic-v2/native/candidate-032.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 606,
+        "file": ".tmp/full-native-critic-v2/native/candidate-033.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 608,
+        "file": ".tmp/full-native-critic-v2/native/candidate-034.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 609,
+        "file": ".tmp/full-native-critic-v2/native/candidate-035.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 617,
+        "file": ".tmp/full-native-critic-v2/native/candidate-036.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 633,
+        "file": ".tmp/full-native-critic-v2/native/candidate-037.png"
+      },
+      {
+        "label": "candidate",
+        "frame": 842,
+        "file": ".tmp/full-native-critic-v2/native/candidate-038.png"
+      }
+    ],
+    "cutNeighborhoods": [
+      {
+        "cut": 26,
+        "frames": [
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-026.jpg"
+      },
+      {
+        "cut": 57,
+        "frames": [
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-057.jpg"
+      },
+      {
+        "cut": 82,
+        "frames": [
+          80,
+          81,
+          82,
+          83,
+          84
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-082.jpg"
+      },
+      {
+        "cut": 91,
+        "frames": [
+          89,
+          90,
+          91,
+          92,
+          93
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-091.jpg"
+      },
+      {
+        "cut": 97,
+        "frames": [
+          95,
+          96,
+          97,
+          98,
+          99
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-097.jpg"
+      },
+      {
+        "cut": 104,
+        "frames": [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-104.jpg"
+      },
+      {
+        "cut": 111,
+        "frames": [
+          109,
+          110,
+          111,
+          112,
+          113
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-111.jpg"
+      },
+      {
+        "cut": 119,
+        "frames": [
+          117,
+          118,
+          119,
+          120,
+          121
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-119.jpg"
+      },
+      {
+        "cut": 126,
+        "frames": [
+          124,
+          125,
+          126,
+          127,
+          128
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-126.jpg"
+      },
+      {
+        "cut": 132,
+        "frames": [
+          130,
+          131,
+          132,
+          133,
+          134
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-132.jpg"
+      },
+      {
+        "cut": 138,
+        "frames": [
+          136,
+          137,
+          138,
+          139,
+          140
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-138.jpg"
+      },
+      {
+        "cut": 145,
+        "frames": [
+          143,
+          144,
+          145,
+          146,
+          147
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-145.jpg"
+      },
+      {
+        "cut": 209,
+        "frames": [
+          207,
+          208,
+          209,
+          210,
+          211
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-209.jpg"
+      },
+      {
+        "cut": 222,
+        "frames": [
+          220,
+          221,
+          222,
+          223,
+          224
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-222.jpg"
+      },
+      {
+        "cut": 229,
+        "frames": [
+          227,
+          228,
+          229,
+          230,
+          231
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-229.jpg"
+      },
+      {
+        "cut": 238,
+        "frames": [
+          236,
+          237,
+          238,
+          239,
+          240
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-238.jpg"
+      },
+      {
+        "cut": 255,
+        "frames": [
+          253,
+          254,
+          255,
+          256,
+          257
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-255.jpg"
+      },
+      {
+        "cut": 258,
+        "frames": [
+          256,
+          257,
+          258,
+          259,
+          260
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-258.jpg"
+      },
+      {
+        "cut": 306,
+        "frames": [
+          304,
+          305,
+          306,
+          307,
+          308
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-306.jpg"
+      },
+      {
+        "cut": 307,
+        "frames": [
+          305,
+          306,
+          307,
+          308,
+          309
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-307.jpg"
+      },
+      {
+        "cut": 344,
+        "frames": [
+          342,
+          343,
+          344,
+          345,
+          346
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-344.jpg"
+      },
+      {
+        "cut": 357,
+        "frames": [
+          355,
+          356,
+          357,
+          358,
+          359
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-357.jpg"
+      },
+      {
+        "cut": 377,
+        "frames": [
+          375,
+          376,
+          377,
+          378,
+          379
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-377.jpg"
+      },
+      {
+        "cut": 391,
+        "frames": [
+          389,
+          390,
+          391,
+          392,
+          393
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-391.jpg"
+      },
+      {
+        "cut": 397,
+        "frames": [
+          395,
+          396,
+          397,
+          398,
+          399
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-397.jpg"
+      },
+      {
+        "cut": 400,
+        "frames": [
+          398,
+          399,
+          400,
+          401,
+          402
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-400.jpg"
+      },
+      {
+        "cut": 403,
+        "frames": [
+          401,
+          402,
+          403,
+          404,
+          405
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-403.jpg"
+      },
+      {
+        "cut": 407,
+        "frames": [
+          405,
+          406,
+          407,
+          408,
+          409
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-407.jpg"
+      },
+      {
+        "cut": 410,
+        "frames": [
+          408,
+          409,
+          410,
+          411,
+          412
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-410.jpg"
+      },
+      {
+        "cut": 417,
+        "frames": [
+          415,
+          416,
+          417,
+          418,
+          419
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-417.jpg"
+      },
+      {
+        "cut": 445,
+        "frames": [
+          443,
+          444,
+          445,
+          446,
+          447
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-445.jpg"
+      },
+      {
+        "cut": 459,
+        "frames": [
+          457,
+          458,
+          459,
+          460,
+          461
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-459.jpg"
+      },
+      {
+        "cut": 471,
+        "frames": [
+          469,
+          470,
+          471,
+          472,
+          473
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-471.jpg"
+      },
+      {
+        "cut": 483,
+        "frames": [
+          481,
+          482,
+          483,
+          484,
+          485
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-483.jpg"
+      },
+      {
+        "cut": 496,
+        "frames": [
+          494,
+          495,
+          496,
+          497,
+          498
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-496.jpg"
+      },
+      {
+        "cut": 514,
+        "frames": [
+          512,
+          513,
+          514,
+          515,
+          516
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-514.jpg"
+      },
+      {
+        "cut": 518,
+        "frames": [
+          516,
+          517,
+          518,
+          519,
+          520
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-518.jpg"
+      },
+      {
+        "cut": 541,
+        "frames": [
+          539,
+          540,
+          541,
+          542,
+          543
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-541.jpg"
+      },
+      {
+        "cut": 547,
+        "frames": [
+          545,
+          546,
+          547,
+          548,
+          549
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-547.jpg"
+      },
+      {
+        "cut": 567,
+        "frames": [
+          565,
+          566,
+          567,
+          568,
+          569
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-567.jpg"
+      },
+      {
+        "cut": 586,
+        "frames": [
+          584,
+          585,
+          586,
+          587,
+          588
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-586.jpg"
+      },
+      {
+        "cut": 608,
+        "frames": [
+          606,
+          607,
+          608,
+          609,
+          610
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-608.jpg"
+      },
+      {
+        "cut": 610,
+        "frames": [
+          608,
+          609,
+          610,
+          611,
+          612
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-610.jpg"
+      },
+      {
+        "cut": 626,
+        "frames": [
+          624,
+          625,
+          626,
+          627,
+          628
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-626.jpg"
+      },
+      {
+        "cut": 636,
+        "frames": [
+          634,
+          635,
+          636,
+          637,
+          638
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-636.jpg"
+      },
+      {
+        "cut": 640,
+        "frames": [
+          638,
+          639,
+          640,
+          641,
+          642
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-640.jpg"
+      },
+      {
+        "cut": 655,
+        "frames": [
+          653,
+          654,
+          655,
+          656,
+          657
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-655.jpg"
+      },
+      {
+        "cut": 834,
+        "frames": [
+          832,
+          833,
+          834,
+          835,
+          836
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-834.jpg"
+      },
+      {
+        "cut": 853,
+        "frames": [
+          851,
+          852,
+          853,
+          854,
+          855
+        ],
+        "file": ".tmp/full-native-critic-v2/cuts/cut-853.jpg"
+      }
+    ],
+    "additionalExactBoundaryFiles": [
+      ".tmp/full-native-critic-v2/boundaries/reference-00.png",
+      ".tmp/full-native-critic-v2/boundaries/candidate-00.png",
+      ".tmp/full-native-critic-v2/boundaries/raw-400.png",
+      ".tmp/full-native-critic-v2/boundaries/reference-02.png",
+      ".tmp/full-native-critic-v2/boundaries/candidate-02.png",
+      ".tmp/full-native-critic-v2/boundaries/raw-403.png",
+      ".tmp/full-native-critic-v2/boundaries/reference-04.png",
+      ".tmp/full-native-critic-v2/boundaries/candidate-04.png",
+      ".tmp/full-native-critic-v2/boundaries/raw-407.png",
+      ".tmp/full-native-critic-v2/boundaries/pair-04.png",
+      ".tmp/full-native-critic-v2/boundaries/reference-06.png",
+      ".tmp/full-native-critic-v2/boundaries/candidate-06.png",
+      ".tmp/full-native-critic-v2/boundaries/raw-636.png",
+      ".tmp/full-native-critic-v2/boundaries/pair-06.png",
+      ".tmp/full-native-critic-v2/erase-boundaries/reference-01.png",
+      ".tmp/full-native-critic-v2/erase-boundaries/candidate-01.png",
+      ".tmp/full-native-critic-v2/erase-boundaries/raw-639.png",
+      ".tmp/full-native-critic-v2/erase-boundaries/pair-01.png"
+    ]
+  },
+  "findings": [
+    {
+      "id": "NATIVE-CADENCE-1",
+      "priority": 2,
+      "frames": [
+        400,
+        403
+      ],
+      "referencePatternGroups": [
+        [
+          397,
+          399
+        ],
+        [
+          400,
+          402
+        ],
+        [
+          403,
+          406
+        ],
+        [
+          407,
+          409
+        ]
+      ],
+      "candidatePatternGroups": [
+        [
+          397,
+          400
+        ],
+        [
+          401,
+          403
+        ],
+        [
+          404,
+          406
+        ],
+        [
+          407,
+          409
+        ]
+      ],
+      "effect": "The first two internal pattern changes are one native frame (33.3667ms) late. The first three-frame beat gains one frame, changing its hold by one third.",
+      "requiredCorrection": "Use the measured native pattern boundaries 397,400,403,407,410. Preserve geometry, palette, grain and all other phases.",
+      "evidenceAgreement": [
+        "exact decoded reference",
+        "encoded candidate",
+        "captured native PNG",
+        "single-stream pair cut boards"
+      ]
+    },
+    {
+      "id": "NATIVE-CADENCE-2",
+      "priority": 2,
+      "frames": [
+        636,
+        639
+      ],
+      "referenceVisibleEraseFrames": [
+        636,
+        637,
+        638,
+        639
+      ],
+      "candidateVisibleEraseFrames": [
+        637,
+        638
+      ],
+      "effect": "The four-frame erase loses its first and last visible states:636 remains an unerased binary field,639 is already black. Visible erase lasts two frames rather than four (66.7333ms rather than133.4667ms).",
+      "requiredCorrection": "Make636 a visible first black-bar state and639 a visible final surviving-fragment state, with640 black. Retain the637/638 middle states and existing authored randomness/materials.",
+      "evidenceAgreement": [
+        "exact decoded reference",
+        "encoded candidate",
+        "captured native PNG",
+        "single-stream pair"
+      ]
+    }
+  ],
+  "families": [
+    {
+      "frames": [
+        0,
+        221
+      ],
+      "status": "RETAINED",
+      "observation": "Accepted opening prefix retains coarse opening blocks/profile, eight fixed-ring material changes, tear68–69, delayed type through flare143–145, material relief and broad gray surround209–221."
+    },
+    {
+      "frames": [
+        222,
+        254
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Localized rosette, continuous curved strip and six-blade dot aperture are present. Residuals: rosette placement/twist, narrower strip head, stronger blade separation and contrast."
+    },
+    {
+      "frames": [
+        255,
+        343
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Catalog perspective grid,306 circular lens and307 large cropped rim/full-field copy preserve the structural progression. Residual: clean catalog appears during the source255–257 blur blend; candidate focus is sharper."
+    },
+    {
+      "frames": [
+        344,
+        390
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Character-row folded field and joined two-mouth point shell reach the frame edges and sustain readable cavity/projection changes. Residuals: character rows darker/more even, point rings more circular and crisp with less glow, folded lobe cluster more ring-like than the source glass folds."
+    },
+    {
+      "frames": [
+        391,
+        409
+      ],
+      "status": "FAMILY_CLOSE_CADENCE_FAIL",
+      "observation": "Silver pinwheel and four bright grain-pattern classes are present. Residuals: pinwheel more segmented and fine grain more uniform; measured400/403 cut delays are the actionable gate failure."
+    },
+    {
+      "frames": [
+        417,
+        495
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Diagonal particle field, irregular radial burst and diffuse core lead to four distinguishable macro materials, including dark folded and soft milky/transmissive final forms. Residuals: particle band is broader/sparser, gray veil stronger445–446, final macro grayer with a sharper letter counter."
+    },
+    {
+      "frames": [
+        496,
+        585
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Truthfully disclosed Grifon Script desktop/mobile content, reflow, full-field whirl541–545, desktop resolve546 and Storyboard capture preserve the presentation families. Whirl distortion is stronger on its first frame; product content is an approved substitution."
+    },
+    {
+      "frames": [
+        586,
+        639
+      ],
+      "status": "FAMILY_CLOSE_CADENCE_FAIL",
+      "observation": "Tilted binary canvas, overlapping soft materials, growing type,608–609 tear,610 resolve and626 pullback remain coherent. Residuals: digits are coarser/more even; field transitions softer. Measured636/639 erase endpoints are the actionable gate failure."
+    },
+    {
+      "frames": [
+        640,
+        931
+      ],
+      "status": "CLOSE_ADAPTATION",
+      "observation": "Black pause, canonical centered mark, bottom-cropped glow sphere, organic contours and tilted exit remain present;853–931 is visually black. Residuals: stronger initial logo fade, broader/more regular sphere/contours, rectangular panel edge more visible during837–844 exit."
+    }
+  ],
+  "retractedPreliminarySuspicion": {
+    "frame": 407,
+    "status": "ALIGNED",
+    "reason": "Source407, raw captured407, encoded film407 and pair407 all show the fourth step pattern. There is no407→408 delay."
+  },
+  "necessaryAdaptationsAccepted": [
+    "Grifoncopy",
+    "Intertypeface/letter contours",
+    "gold/cream/charcoal palette",
+    "truthfully disclosed example product captures"
+  ],
+  "limits": {
+    "continuousPlaybackInspected": false,
+    "perceivedMotionApproval": false,
+    "audioHeard": false,
+    "sonicStatus": "SONIC_UNVERIFIED",
+    "exactUnderlyingSongIdentity": "NOT_ESTABLISHED",
+    "finalArtifactApproval": false,
+    "reviewerGpuRenders": 0,
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "bindingClosure": {
+    "file": ".tmp/full-native-critic-v2/closure.json",
+    "sha256": "e48af15fcd481c857647d0b8b62aa7b8d492d02ebafd0af14dd012432428527f"
+  },
+  "nextGate": "Preserve this candidate and evidence. Correct only400/403 pattern boundaries and636/639 erase endpoints, freeze a new movie/pair, verify that other frames remain unchanged, and independently inspect the corrected native boundaries before actual1x/.25 playback review.",
+  "report": {
+    "file": "reference/full-native-review-v2.md",
+    "sha256": "38506e5d1e80cd42be09e78ab3e135a472bd9cd7f4ab763e3e23fcdd2adae2a5"
+  }
+}

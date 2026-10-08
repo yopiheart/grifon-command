@@ -1,0 +1,20 @@
+{
+  "status": "PREPARED_WAITING_FOR_EXPLICIT_FROZEN_FILM_ANNOUNCEMENT",
+  "film": "../grifon-recreation-landscape-provisional.mp4",
+  "producerReceipt": "full-media.json",
+  "approvedMaster": "../assets/audio/mix-master.m4a",
+  "approvedMasterSha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+  "method": [
+    "Require producer/root's explicit final SHA256 through --frozen; do not run merely because a file appears.",
+    "Bind film, master, recipe, clean-input receipt, producer receipt, full spec and reference probe JSON before and after every measurement.",
+    "Compare every AAC packet's size and payload hash and independently compare normalized ADTS bytes in memory.",
+    "Decode final audio and master at 48000Hz stereo float32 in memory; require identical bytes and 1495040 frames; report uncorrected container differences if any.",
+    "Strictly decode the whole film; independently meter encoded LUFS, true peak and LRA, then measure authored ending-fade energy.",
+    "Confirm 932 video frames at 30000/1001 and 1920x1080, inspect the 79-frame black tail, and record the approximately 49ms audio/video end gap.",
+    "Original reference AAC is never read or incorporated; final packet identity plus the earlier clean Digital Clouds placement receipt establish the mux input.",
+    "Keep technical audio PASS separate from SONIC_UNVERIFIED. No direct hearing or reference soundtrack identity claim."
+  ],
+  "scope": "Only qa/audio-final-* files; read-only media verification; no provider calls, installs, production writes, film/audio edits or Git operations.",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

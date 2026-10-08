@@ -1,0 +1,446 @@
+{
+  "status": "BOTH_CANVAS_ERASE_ENDPOINT_ERRORS_CONFIRMED",
+  "purpose": "Extends onset-only diagnosis using existing exact native636-640 evidence; no production source/capture/media mutation.",
+  "createdAt": "2026-10-08T07:59:23.811Z",
+  "film": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+    "actualBytesVerified": true
+  },
+  "boundHashes": {
+    "full.js": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full-surfaces.frag": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+    "render-full.mjs": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "qa/full-media.json": "2bdc1c2e192385df6cfa06d8c3df6269632317b9f4c297ebbf116e5f3a9f2c88",
+    "qa/full-render.json": "2253a0b35b8168f2109763265e08aad52fff9e8d75e3df0df3b142be075efddf",
+    ".tmp/full-frames/receipt.json": "b480d87f32c122d8ba640704fb57b4b58bc79824483a1e5e7e14b027f5ec73f3",
+    "qa/full-pattern-boundary-diagnosis-v2.json": "364cbfd6ac870385c5a3c76b20d4f7b3408e887f3b4b713e332eb0661494e65d",
+    "qa/full-canvas-erase-boundary-diagnosis-v2.json": "9b54b77213cd34bf092d8b26f023b0c10f0b5d61452d25aa0dd6bcf4a2f94b1c",
+    ".tmp/full-native-critic-v2/boundaries/receipt.json": "232c0979f6fcf05e6fbe9e19c699e4a9eff07d1ca8b54afe8de40539bea2c258",
+    ".tmp/full-native-critic-v2/erase-boundaries/receipt.json": "2c907c05ed04a62467f0f9844a25b35b48c775bd6d4a8614d1e6ad48554ed05d"
+  },
+  "evidence": [
+    {
+      "label": "reference",
+      "frame": 636,
+      "file": ".tmp/full-native-critic-v2/boundaries/reference-06.png",
+      "sha256": "64eb554ad63986a0af447b951a799d703b667794aa31ee1bf1e6a72c007aa911",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "reference",
+      "frame": 637,
+      "file": ".tmp/full-native-critic-v2/boundaries/reference-07.png",
+      "sha256": "91867e04a272075071da84e5a38451eae93d1f4bd0217c988832a02b6ae507c1",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "candidate",
+      "frame": 636,
+      "file": ".tmp/full-native-critic-v2/boundaries/candidate-06.png",
+      "sha256": "95e6bd3dcc19ee8cd1d77d5d1f58cc1e19707965c787e35ab122e1049cafb249",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "candidate",
+      "frame": 637,
+      "file": ".tmp/full-native-critic-v2/boundaries/candidate-07.png",
+      "sha256": "45a48ca04aad6d410e317ec4ebf38ba45a01f459231bd5ac3ff0eef2c4311d13",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "pair",
+      "frame": 636,
+      "file": ".tmp/full-native-critic-v2/boundaries/pair-06.png",
+      "sha256": "f34dedd0b7f80b92b60d96cd15745a328773d6c6543f01d708b60bbf8ecd00b5",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "pair",
+      "frame": 637,
+      "file": ".tmp/full-native-critic-v2/boundaries/pair-07.png",
+      "sha256": "7a74ae4cbc52f3c4ef14c2336105eb159d1eb436a301b041711a87e8f472557d",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "raw",
+      "frame": 636,
+      "file": ".tmp/full-native-critic-v2/boundaries/raw-636.png",
+      "sourceFile": ".tmp/full-frames/0414.png",
+      "sha256": "d1098a0ee77149cb0aaf04420dbb74ef1348a17b4890fe2999b4dc8c00048dd1",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "raw",
+      "frame": 637,
+      "file": ".tmp/full-native-critic-v2/boundaries/raw-637.png",
+      "sourceFile": ".tmp/full-frames/0415.png",
+      "sha256": "97af12bf61bf8d21438bdc2e587c4b37f006a46271c5bcf755e296ee455e8f50",
+      "receipt": ".tmp/full-native-critic-v2/boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "reference",
+      "frame": 638,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/reference-00.png",
+      "sha256": "65009ff17a1a17cf762689f9f88c3b01ecd900df06c17134a435992e5764f070",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "reference",
+      "frame": 639,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/reference-01.png",
+      "sha256": "834fdd86074e5936378d75db14af9c03752afdf42cc62859a772233d2e1c0848",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "reference",
+      "frame": 640,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/reference-02.png",
+      "sha256": "1f742187ea682ca3e00301a8612006b03b41acd5cf23a6856e9d00b9bf875a79",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "candidate",
+      "frame": 638,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/candidate-00.png",
+      "sha256": "927291a04242ff16a7f87441350268709808791a10b03ba981b90afe2ec3717c",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "candidate",
+      "frame": 639,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/candidate-01.png",
+      "sha256": "08244e9b30bdbd623738ab0e4da93f7612d19b14391b17a10e8d9591c86681f8",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "candidate",
+      "frame": 640,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/candidate-02.png",
+      "sha256": "c957581fe87da899b842d6866ef552d6c4ce5a479d3a3bac1a425703ea499d36",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "pair",
+      "frame": 638,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/pair-00.png",
+      "sha256": "ce4f7d000490d4111f3cfd668177c8f3c357cd9871cf83986b88707f502043a6",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "pair",
+      "frame": 639,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/pair-01.png",
+      "sha256": "afa981ff79415d4906ee4fcde67f8a86f96eee8047c64217d0ad0eae46886c03",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "pair",
+      "frame": 640,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/pair-02.png",
+      "sha256": "1cc80ab0af4c7ce20a58eedd9e9f4cbd1b65998ef13e614688e45c6d8b7b582e",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "raw",
+      "frame": 638,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/raw-638.png",
+      "sourceFile": ".tmp/full-frames/0416.png",
+      "sha256": "d10adc47fdff628b58503b73fe7308715fc903165d91c163223dae42521827df",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "raw",
+      "frame": 639,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/raw-639.png",
+      "sourceFile": ".tmp/full-frames/0417.png",
+      "sha256": "fbdc84bae63077860b07cfa95bfa9a779b5b3f80620bcc61ea2c913afcb745a2",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    },
+    {
+      "label": "raw",
+      "frame": 640,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/raw-640.png",
+      "sourceFile": ".tmp/full-frames/0418.png",
+      "sha256": "82a2e41ba517809f5b58a7da95b52f22e165cd40afabe2fa4b082bc45388d894",
+      "receipt": ".tmp/full-native-critic-v2/erase-boundaries/receipt.json",
+      "sha256Verified": true
+    }
+  ],
+  "inspectedImages": [
+    ".tmp/full-native-critic-v2/cuts/cut-636.jpg",
+    ".tmp/full-native-critic-v2/cuts/cut-640.jpg",
+    ".tmp/full-native-critic-v2/boundaries/reference-06.png",
+    ".tmp/full-native-critic-v2/boundaries/candidate-06.png",
+    ".tmp/full-native-critic-v2/boundaries/reference-07.png",
+    ".tmp/full-native-critic-v2/erase-boundaries/reference-00.png",
+    ".tmp/full-native-critic-v2/erase-boundaries/candidate-00.png",
+    ".tmp/full-native-critic-v2/erase-boundaries/reference-01.png",
+    ".tmp/full-native-critic-v2/erase-boundaries/candidate-01.png",
+    ".tmp/full-native-critic-v2/erase-boundaries/pair-02.png"
+  ],
+  "nativeVisualObservations": {
+    "636": "Reference already has black erase bars across a largely visible field. Candidate still displays its uninterrupted underlying canvas field.",
+    "637": "Reference maintains the first partial erase layout. Existing candidate has horizontal erasure; root requires preserving this frame.",
+    "638": "Reference has mostly black field with sparse bright residue bars. Existing candidate retains horizontal field bars; root requires preserving this frame.",
+    "639": "Reference still retains sparse bright residue bars; candidate loses its entire underlying field, leaving only very dark post-erase grain.",
+    "640": "Both reference and candidate are black."
+  },
+  "descriptiveNativeRgbMeasurements": [
+    {
+      "label": "reference",
+      "frame": 636,
+      "file": ".tmp/full-native-critic-v2/boundaries/reference-06.png",
+      "sha256": "64eb554ad63986a0af447b951a799d703b667794aa31ee1bf1e6a72c007aa911",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.11348524305555556,
+      "darkPixelFractionAt32": 0.1226707175925926,
+      "brightPixelFractionAbove16": 0.8865147569444445,
+      "meanRgb": 140.92505144029502
+    },
+    {
+      "label": "reference",
+      "frame": 637,
+      "file": ".tmp/full-native-critic-v2/boundaries/reference-07.png",
+      "sha256": "91867e04a272075071da84e5a38451eae93d1f4bd0217c988832a02b6ae507c1",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.1145264274691358,
+      "darkPixelFractionAt32": 0.1228882137345679,
+      "brightPixelFractionAbove16": 0.8854735725308642,
+      "meanRgb": 140.96235564550142
+    },
+    {
+      "label": "candidate",
+      "frame": 636,
+      "file": ".tmp/full-native-critic-v2/boundaries/candidate-06.png",
+      "sha256": "95e6bd3dcc19ee8cd1d77d5d1f58cc1e19707965c787e35ab122e1049cafb249",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.19286506558641975,
+      "darkPixelFractionAt32": 0.2899464699074074,
+      "brightPixelFractionAbove16": 0.8071349344135803,
+      "meanRgb": 80.85027906436041
+    },
+    {
+      "label": "candidate",
+      "frame": 637,
+      "file": ".tmp/full-native-critic-v2/boundaries/candidate-07.png",
+      "sha256": "45a48ca04aad6d410e317ec4ebf38ba45a01f459231bd5ac3ff0eef2c4311d13",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.4587471064814815,
+      "darkPixelFractionAt32": 0.5311969521604938,
+      "brightPixelFractionAbove16": 0.5412528935185186,
+      "meanRgb": 53.73941100793521
+    },
+    {
+      "label": "reference",
+      "frame": 638,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/reference-00.png",
+      "sha256": "65009ff17a1a17cf762689f9f88c3b01ecd900df06c17134a435992e5764f070",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.8545876736111111,
+      "darkPixelFractionAt32": 0.8644907407407407,
+      "brightPixelFractionAbove16": 0.1454123263888889,
+      "meanRgb": 22.302293113419452
+    },
+    {
+      "label": "reference",
+      "frame": 639,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/reference-01.png",
+      "sha256": "834fdd86074e5936378d75db14af9c03752afdf42cc62859a772233d2e1c0848",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.8554002700617284,
+      "darkPixelFractionAt32": 0.8644632523148148,
+      "brightPixelFractionAbove16": 0.14459972993827164,
+      "meanRgb": 22.284410043717358
+    },
+    {
+      "label": "reference",
+      "frame": 640,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/reference-02.png",
+      "sha256": "1f742187ea682ca3e00301a8612006b03b41acd5cf23a6856e9d00b9bf875a79",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 1,
+      "darkPixelFractionAt32": 1,
+      "brightPixelFractionAbove16": 0,
+      "meanRgb": 0.0026347093621402508
+    },
+    {
+      "label": "candidate",
+      "frame": 638,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/candidate-00.png",
+      "sha256": "927291a04242ff16a7f87441350268709808791a10b03ba981b90afe2ec3717c",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 0.7523514660493827,
+      "darkPixelFractionAt32": 0.7858825231481481,
+      "brightPixelFractionAbove16": 0.24764853395061726,
+      "meanRgb": 25.52165187766745
+    },
+    {
+      "label": "candidate",
+      "frame": 639,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/candidate-01.png",
+      "sha256": "08244e9b30bdbd623738ab0e4da93f7612d19b14391b17a10e8d9591c86681f8",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 1,
+      "darkPixelFractionAt32": 1,
+      "brightPixelFractionAbove16": 0,
+      "meanRgb": 2.3985018004116685
+    },
+    {
+      "label": "candidate",
+      "frame": 640,
+      "file": ".tmp/full-native-critic-v2/erase-boundaries/candidate-02.png",
+      "sha256": "c957581fe87da899b842d6866ef552d6c4ce5a479d3a3bac1a425703ea499d36",
+      "width": 1920,
+      "height": 1080,
+      "criterion": "Dark pixel means maximum RGB channel<=threshold; descriptive only, not semantic erase mask",
+      "darkPixelFractionAt16": 1,
+      "darkPixelFractionAt32": 1,
+      "brightPixelFractionAbove16": 0,
+      "meanRgb": 0.0017084619341564014
+    }
+  ],
+  "rootCause": {
+    "file": "full-surfaces.frag",
+    "line": 142,
+    "expression": "step(hash(vec2(floor(p.y*34.),f)),(f-636.)/3.)",
+    "mechanism": "Progress includes both exact0 and exact1 within the erase shot. At636 only exact-zero hashes erase. At639 every hash in[0,1) erases the underlying field, one native frame before the source black transition. The later post-erase grain does not restore recognizable residue bars.",
+    "uPhaseUsedForErase": false
+  },
+  "minimalCorrectionProposal": {
+    "file": "full-surfaces.frag",
+    "line": 142,
+    "exactCurrentLine": "    if(f>=636.){float erase=step(hash(vec2(floor(p.y*34.),f)),(f-636.)/3.);color*=1.-erase;}",
+    "exactProposedLine": "    if(f>=636.){float erase=step(hash(vec2(floor(p.y*34.),f)),clamp((f-636.)/3.,.125,.875));color*=1.-erase;}",
+    "thresholds": [
+      {
+        "frame": 636,
+        "current": 0,
+        "currentFloat32": 0,
+        "proposed": 0.125,
+        "proposedFloat32": 0.125,
+        "changed": true,
+        "existingLevelClamp": 0.3333333333333333
+      },
+      {
+        "frame": 637,
+        "current": 0.3333333333333333,
+        "currentFloat32": 0.3333333432674408,
+        "proposed": 0.3333333333333333,
+        "proposedFloat32": 0.3333333432674408,
+        "changed": false,
+        "existingLevelClamp": 0.3333333333333333
+      },
+      {
+        "frame": 638,
+        "current": 0.6666666666666666,
+        "currentFloat32": 0.6666666865348816,
+        "proposed": 0.6666666666666666,
+        "proposedFloat32": 0.6666666865348816,
+        "changed": false,
+        "existingLevelClamp": 0.6666666666666666
+      },
+      {
+        "frame": 639,
+        "current": 1,
+        "currentFloat32": 1,
+        "proposed": 0.875,
+        "proposedFloat32": 0.875,
+        "changed": true,
+        "existingLevelClamp": 0.6666666666666666
+      }
+    ],
+    "expectedAffectedNativeFrames": [
+      636,
+      639
+    ],
+    "exactPreservedMiddleThresholds": [
+      {
+        "frame": 637,
+        "threshold": 0.3333333333333333
+      },
+      {
+        "frame": 638,
+        "threshold": 0.6666666666666666
+      }
+    ],
+    "boundRationale": "A four-frame native shot has first/last half-cell sample positions1/8 and7/8. Use those solely as clamps on the existing ramp endpoints. This keeps progress nonzero at636 and incomplete at639, while preserving the existing middle samples.",
+    "unrelatedExpressionsUnchanged": [
+      "Per-frame hash seedf",
+      "Row seedfloor(p.y*34.)",
+      "Canvas color/light/ink/pullback expressions",
+      "Generic uniformuPhase",
+      "Text hide at636",
+      "Post-erase grain",
+      "Mode transition and black at640",
+      "Every other shader mode"
+    ],
+    "scope": "One local threshold expression, affecting two native frames only in the frozen shot table. No runtime/shot/camera/vendor/provider/settings edit is needed."
+  },
+  "alternativeExistingLevelClamp": {
+    "expression": "clamp((f-636.)/3.,1./3.,2./3.)",
+    "thresholds": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.6666666666666666,
+      0.6666666666666666
+    ],
+    "affectedFrames": [
+      636,
+      639
+    ],
+    "tradeoff": "Reuses existing middle threshold levels but nominally removes a third of rows at636 and retains a third at639. The inspected reference endpoints show smaller erased/residue portions. Exact GPU row coverage is unverified."
+  },
+  "supersedesProposalOnly": {
+    "report": "qa/full-canvas-erase-boundary-diagnosis-v2.json",
+    "sha256": "9b54b77213cd34bf092d8b26f023b0c10f0b5d61452d25aa0dd6bcf4a2f94b1c",
+    "detail": "Prior max-only proposal fixes636 but leaves639 fully erased. That report and every prior frozen input remain unchanged."
+  },
+  "limits": [
+    "No new decode, GPU/browser capture, paid call or provider operation was performed by this reviewer. Critic supplied existing independently hash-bound native images.",
+    "Descriptive RGB classifications do not reproduce the actual erase mask or prove a numeric coverage target.",
+    "The proposed clamp has not been rendered; visible endpoint bars and unchanged middle/other frames need the focused/native gates after authorized editing.",
+    "This diagnosis is not a full movie or paced-playback verdict."
+  ],
+  "inputHashesStableAfterInspection": true,
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -1,0 +1,749 @@
+{
+  "status": "QUALIFIED_CODE_PASS",
+  "scope": "Frozen v5 shell source/provenance only; no visual, native-video, paced playback or hearing approval",
+  "reviewedAt": "2026-10-08T07:01:33.831Z",
+  "boundHashes": {
+    "qa/full-focused.json": "13f5f530ce2cdf81d53e4ffc28c0456cdec6fc95b931ae7aaa553627c7000108",
+    "qa/full-focused-review-5-inputs/preservation.json": "6a567858556a286cbba74513f64ca7bf44ab73487227c1357c24e7365204a4dc",
+    "qa/full-shell-v5-stability.json": "fa74ab6ef633c1780fd8088840ed02fd2b274c4219ea2d598179e8b8e9a287eb",
+    "full.js": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full-surfaces.frag": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214"
+  },
+  "producerToolSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+  "payloadChecks": [
+    {
+      "version": 4,
+      "entries": 131,
+      "frozenBytesVerified": true,
+      "currentBytesVerified": false
+    },
+    {
+      "version": 5,
+      "entries": 131,
+      "frozenBytesVerified": true,
+      "currentBytesVerified": true
+    }
+  ],
+  "currentSourcesVerified": 13,
+  "unchangedRenderInputs": 10,
+  "outsideShellRuntimeBytesEqual": true,
+  "nonShellConfigurationExact": true,
+  "manifestOnlySpecBindingChanged": true,
+  "unchangedNativePNGs": 51,
+  "changedShellPNGs": 4,
+  "acceptedOpeningInputsVerified": 9,
+  "acceptedOpeningMovieVerified": true,
+  "negativeControls": [
+    {
+      "name": "non-shell material source edit",
+      "rejected": true,
+      "inMemoryOnly": true
+    },
+    {
+      "name": "non-shell glyph configuration edit",
+      "rejected": true,
+      "inMemoryOnly": true
+    },
+    {
+      "name": "non-shell native PNG byte edit",
+      "rejected": true,
+      "inMemoryOnly": true
+    }
+  ],
+  "geometryChecks": {
+    "method": "Exact frozen openShellGeometry and helpers evaluated in memory with frozen Three vendor; no WebGL/browser/capture",
+    "nativeFrames": 20,
+    "geometries": [
+      {
+        "frame": 357,
+        "curveLength": 8.536787339993142,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "6f21daf53a83dcdad4f3d710faeb1c50dcaa638b4a5ff47f0326d92644dfee1a"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "8302aa206dc5100a4df294205729442626b1687b7905f89c5ba04ce152dcd76d"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "fdb6886895a6ba86ed4dcaa311ffbff1d7c8f71356335a100f8b05ac63f0425c"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "fc299155ae1c8eb9457ebfbfca3e3e923961d82553fffe0c166af36fc851b174"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 3.080207108115336
+      },
+      {
+        "frame": 358,
+        "curveLength": 8.639233678132214,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "3d07e130f5aaf8516b2c2bc954e67f8a6ae9236d475f4cf2cd0f87055c725040"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "5c60228e9553211d38106f6f00c7dd49819fe49b3ebac566b4b28d8dab7e5441"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "e67cd0f5911b8a38ec72f17ae2acbaf5247a2a96e9506876bbeff67f554f0e45"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "22cd2188367c87874acaba83e9452be6d09da2171a3f04139769650e7b99b37f"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 3.2707572913445953
+      },
+      {
+        "frame": 359,
+        "curveLength": 8.902173895978335,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "9465a192f0b27e4706c5c1081205cfee964cb7a72a73a79906761b2f7b915152"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "c192cc198d479a8ef50a30bfea5a303c2d7e2107e93a6b7c3ac75ef559598031"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "3bf7ff8b1e915f476fc751be00ff6cf4e7985b294b76ff5eecedde8d1dbd2c5f"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "745c1ca2b9ed8c0b86a73e2933891f537b0155c7fd37917f2675572be27da08b"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 3.6711775782343334
+      },
+      {
+        "frame": 360,
+        "curveLength": 9.235439332294701,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "b17f7e3d5f43c7eaab85f56a3e8645516d8c2899a54e5fa145cf9c4c40b1d5dc"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "46d3007690ee3e5b079557385838c6e713a80af7ed5234f5e14d21c9b982e508"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "52c8734d6530846730d81f0764bc835d1ac380313816365c86cb98d6181911dc"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "d1fded8bdf2633c12cf51f4f1f8ffcb14d64635190a5002cb5f7ac38ff4bd826"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.265258397846151
+      },
+      {
+        "frame": 361,
+        "curveLength": 9.52069633202139,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "13b83ec857734165ff0ed08fb7e49567d62a02cac33dba7bb653eb97787ab0b0"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "645d2d160e3b64bfa113ceb8117154cdd191654a9216ab475535663c5f0bb4fa"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "10687777973fafc5a3d763ada3f328fc8cc9350b460f210cd5a85be5f8542c1e"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "3b9561cb63499e213493dd78d9d035a8eeb0768e755bd138a4f78760d51f3b5b"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.764140001129374
+      },
+      {
+        "frame": 362,
+        "curveLength": 9.64051395359923,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "df2ba461e2c5c4697eda7970c7a9731fb95df4c41ab1277f608591f22ba37c32"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "8c5d9aa78d10bb544132279e5338cdd761e6eab86182cbdcdf845a195f7f3fb0"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "285dee6632ae83c5e79d3ae0a6b7ff00c314403bdd51ab65962653050815fa8a"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "6df658d2e1ae4de9a78531d52eb033b880c76129de500bf3003fdafe33e19956"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.983736225768398
+      },
+      {
+        "frame": 363,
+        "curveLength": 9.621246348822242,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "5740ccf0023ccab200568564cc8d1c37d884a33a0792c52300a4c05d14174658"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "3605b51cc3aa0ccde29e44101e5d5c6fa13ba72d4617c06070cc2a27c34d1ae2"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "978a529eff2f2b98d0867b93aa6b55db89adf813dcbbca46b1f37ce8ac252ee3"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "2ae77de1ab2d13725b93fdfd5872ded20d28494463b35ff374d668b26012e169"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.96579754048397
+      },
+      {
+        "frame": 364,
+        "curveLength": 9.574158527616671,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "ea138a672025ffe87bb5a00efed0ad2b030eaa89da8b1a9f6c05442d74f5a00f"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "033ac98c03286091c0b661948eee9244219a005679057dd2d56a172e207cad49"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "048d7b836c9a301f1da14fa85e1e3ac4d291b38727079373a2e057aeb9ddeee6"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "5eb1238298181f3b8098c1c4f35ccfde75f954d5fa00247d051afeabeda47a6d"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.888613252440554
+      },
+      {
+        "frame": 365,
+        "curveLength": 9.515112920695023,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "61cafa8fda10a9a2a4d098f5f721c53804f47a412502121c4bbdf57022d546b4"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "d55c181e3e65ef630fb060df8f19a8e4e6b684ad05f71ae6c57251eeab692fb6"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "96b71b1411da07359f4ef0101d90b8af334e072206fa040257be17d1e8c59fef"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "b00759022065fb5cf257e6a58174b36e802a2e0213b872a069975fd47ee2d441"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.9517463983409105
+      },
+      {
+        "frame": 366,
+        "curveLength": 9.456734201102162,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "e02cc1b7c42f5305ad3524cd4a1909764917b77be4fea76390160735253302c3"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "a57d713af7ba9f82c3cb44c7f8ba444c5e0ea9f032de450ea228ce383891cc72"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "908a969a72db62b869142d31fa3793290b9b819f6492c8dc6a9eae8a586ce98f"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "3e64d012373a74f7f394c53e8b000abbd3587411d80d90d779924e52d2256401"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.903252260750474
+      },
+      {
+        "frame": 367,
+        "curveLength": 9.407918030727496,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "862256b41b47fb6d1def328ee50ebafd493f0ee4332da71c4fc11ed22c4a7796"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "a730a3fe3282e89b86ec5144aa851035a9cda32b46e8435ebd7bac58b298da28"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "4e6c8fe8cc87b56505dbe6def1e711e07b2104951fdcb4e34fcc913261598183"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "2e7cd9925df4f0ffd048ce45f49df003b00c3256c53ad06182130804db276d9f"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.906790064429113
+      },
+      {
+        "frame": 368,
+        "curveLength": 9.374927622559573,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "e5f5859857a3be8828c2cc5ff6b547694704b5beb51912d399568ff96e34ea53"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "2f6598aeecd46b744aa92c3bf1c70c2a99cd91564efc76752e21390f7d82d822"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "2a3afd5e4a7a9f9e9604135bd0803923305988b032adac8f9d921b9f5df813fb"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "8aa500d516e050d2b84223ab7a0d7726b425bb258c82f4163db73d2c5a2cf650"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.929917929001918
+      },
+      {
+        "frame": 369,
+        "curveLength": 9.362750692141464,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "512c06546c419b59d993ddb01305b3a8465973ae7c6f878712a3de917b8a2efa"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "13b39dd5f4126d52917b106930d8382e47664458bf7b0331e45ed2769dcebe65"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "352740aa354cf29e5bf5e368b86f35feff53b3e5149eb58b5eed94db96b9618a"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "53665ea512b411ab8173308ed28dc87f9a48c524c86ee9514408476f553b3525"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.929716547971008
+      },
+      {
+        "frame": 370,
+        "curveLength": 9.359683284807366,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "9522a11abbfcf9438d5db6466170328912c5ab9ae4f245eb2e528d8c45dbd1e5"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "9415a89d0185148411c3d9cf5b375ec3c2dc0f90b8e7cbd29097fae0d839820e"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "d2d9827f96e08a3fa6fc4e9a55fa31169e17cc586169a0e72b8f2275f84303f2"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "f8a74fe966adc159f1aef659ab0cd9de2807cccec079a2229fc226bfbec51a58"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.902687913605158
+      },
+      {
+        "frame": 371,
+        "curveLength": 9.307788984106196,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "cfaf30c6a0c68fdb4e8364b1d5e05697a5885148d592569a1bea45d604d5007b"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "108a4b25e7b141aa7657a40215998cf6393a49ace31e05c03c99142198b12fb3"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "a7f8f6983ef3bbb880f39429093d69a71f8447f4c602d1ca0443e8a1a82c0021"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "90d577dc99fdea1393063c875027f5f5bdc81c02304d0872bb41846f6750984a"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.651821418620486
+      },
+      {
+        "frame": 372,
+        "curveLength": 9.229859332960404,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "46bee66ec91669eded29250e020718333df66f363805e3afcbe7af67630d0c75"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "0311d95e95d104afcda4b19a506b7d61badde7b38395e136a33d805c9a6c7c4a"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "133e5f326eee095ac83ff6611d773537807027263458b5c77f30393efde88d7f"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "ce25cf4deced0df7212ca0837e32f2e301b9147a58ab6baf3b957709936592af"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.344467690915204
+      },
+      {
+        "frame": 373,
+        "curveLength": 9.344909548614268,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "fcebd5289b0093ae2f5b1a7a72a50e322d9a939d58d22c0d329f3d6c5f79468e"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "2cb039232643cd3d8093ed97edff8aadfcab9acf5e226307c2eff2d9a1862c8c"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "b462adda659ef86db0b31c9664aea0d1c621acba244f5c11f3379f07474852fd"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "c43319de066ce2f5fc4f48370d6e53a728bb3a13097af6cb8a40d1d3afcb98c6"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.295733153467425
+      },
+      {
+        "frame": 374,
+        "curveLength": 9.710538311668508,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "4ff85a8ba12636a587cdca2790afeee2ab616dc04aa373cd0193cd3f6a59c148"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "4f156a991059372a0ef2f4f8b284a8283f47b30d9b86f8ab3a8ced7265df47e3"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "295b5600b0d4db7e4ebf0a1c52ec16bf08a940c2dce57aa895a842724164139b"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "0344f8478c1cb29699c8b0ec4e517b0f7786aec288fdce4e92655f0d0991c9f3"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 4.699575412521003
+      },
+      {
+        "frame": 375,
+        "curveLength": 10.050994295950453,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "43006a6426b150e6d10ea55943ec73cc29cf6083cef164b96d0087a9d5310c0b"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "bd83af6a7900b526c51f2919ab34b96ffeff529962bbfee9ce452763865e15c3"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "f1129ba72c51545ccb2797995415c64b18abd80d1d312109f8dfc6ca1fdfc588"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "40492c91f24ce14ab1e05980cdaa216866f7a436637854897b549374d9961d0a"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 5.306641081122558
+      },
+      {
+        "frame": 376,
+        "curveLength": 10.181993061019234,
+        "attributes": {
+          "position": {
+            "count": 54481,
+            "sha256": "4ae35589ebc289df84200a08edaa4c5010052e6a5f7131c9a528f9bf124e0f0d"
+          },
+          "uv": {
+            "count": 54481,
+            "sha256": "f5c0f3d3e741b016590c0d9d673e2750a0e9509cddb51abd9703bff97924a8f4"
+          },
+          "aDepth": {
+            "count": 54481,
+            "sha256": "1465f52c39895a53477004212945d696ea1c1beaf3bd9eb64bf12ca85216b886"
+          },
+          "normal": {
+            "count": 54481,
+            "sha256": "dc6a08c75c55ea7cbef10dd5e32ae8c883ae1fdfaca2512dfbbe0494735a27b1"
+          }
+        },
+        "indexCount": 324000,
+        "indexSha256": "ca6003231346a267794f47a667d55a6301a2b017ecba2fc523f38f10b58b3e66",
+        "seamMaximumPositionDifference": 0,
+        "maximumAdjacentTangentTurnDegrees": 5.495141377324227
+      }
+    ],
+    "initialNormalSeedTurnsDegrees": [
+      {
+        "from": 357,
+        "to": 358,
+        "degrees": 0.0001214551154037217
+      },
+      {
+        "from": 358,
+        "to": 359,
+        "degrees": 0.0002878939420437776
+      },
+      {
+        "from": 359,
+        "to": 360,
+        "degrees": 0.0003396023527382845
+      },
+      {
+        "from": 360,
+        "to": 361,
+        "degrees": 0.000280405834105515
+      },
+      {
+        "from": 361,
+        "to": 362,
+        "degrees": 0.00011631706374350207
+      },
+      {
+        "from": 362,
+        "to": 363,
+        "degrees": 0.00001950643912085486
+      },
+      {
+        "from": 363,
+        "to": 364,
+        "degrees": 0.000049739184915724896
+      },
+      {
+        "from": 364,
+        "to": 365,
+        "degrees": 0.00006673648831408996
+      },
+      {
+        "from": 365,
+        "to": 366,
+        "degrees": 0.00007106864345873956
+      },
+      {
+        "from": 366,
+        "to": 367,
+        "degrees": 0.00006374207945442707
+      },
+      {
+        "from": 367,
+        "to": 368,
+        "degrees": 0.000045738687016867354
+      },
+      {
+        "from": 368,
+        "to": 369,
+        "degrees": 0.000017538763447639102
+      },
+      {
+        "from": 369,
+        "to": 370,
+        "degrees": 0.00014266963817010514
+      },
+      {
+        "from": 370,
+        "to": 371,
+        "degrees": 0.0003725731632916193
+      },
+      {
+        "from": 371,
+        "to": 372,
+        "degrees": 0.0005184880963406176
+      },
+      {
+        "from": 372,
+        "to": 373,
+        "degrees": 0.0005731676969970104
+      },
+      {
+        "from": 373,
+        "to": 374,
+        "degrees": 0.000529547555047849
+      },
+      {
+        "from": 374,
+        "to": 375,
+        "degrees": 0.00038699026986192776
+      },
+      {
+        "from": 375,
+        "to": 376,
+        "degrees": 0.00014959322771552388
+      }
+    ],
+    "repeatFrameOrder": [
+      376,
+      357,
+      369,
+      362,
+      360,
+      371,
+      375,
+      358
+    ],
+    "repeatHashes": [
+      {
+        "frame": 376,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 357,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 369,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 362,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 360,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 371,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 375,
+        "attributesExactlyEqual": true
+      },
+      {
+        "frame": 358,
+        "attributesExactlyEqual": true
+      }
+    ]
+  },
+  "findings": [],
+  "limits": [
+    "Finite geometry and repeat-generation hashes are CPU-only evidence; no rendered pixel replay was performed.",
+    "Fractional native seeking is deliberately rejected; precomputed bank serves exact integer frames357-376.",
+    "Full capture still requires106 nonlinear and106 fresh-runtime exact samples, all710 continuation frames and all932 native timestamps.",
+    "Historical qa/full-capture-producer.mjs must be refreshed with exact current producer at the new full-capture boundary.",
+    "Visual55 review, full native/paced gates and audio verification remain separate."
+  ],
+  "inputsStableAfterReview": true,
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "preexistingShellPoseKeysExactlyEqual": true,
+  "followingFamilyIsolation": {
+    "kind": "STATIC_SOURCE_INSPECTION",
+    "nativeInterval": [
+      377,
+      391
+    ],
+    "geometry": "separate cupGeometry instances",
+    "material": "separate metal ShaderMaterial",
+    "transform": "separate cluster Group with absolute branch assignments",
+    "shellStateShared": false,
+    "clearHidesAllTopLevelObjects": true,
+    "backwardSeekReassignsAllShellState": true,
+    "focusedPNGsCoverThisInterval": false,
+    "renderedReplayPerformed": false
+  },
+  "inputsStableAfterReportCompletion": true
+}
