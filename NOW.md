@@ -1,8 +1,9 @@
 # NOW - the resume doc
-**Stamped: 2026-10-08; accepted film; reusable workflow verified**
+**Stamped: 2026-10-09; accepted film; reusable workflow delivered**
 
-## Active: local motion repeatability
-Branch: codex/grifon-motion-reuse (from accepted118a5e8a); new draft PR pending.
+## Delivered: local motion repeatability
+Branch: codex/grifon-motion-reuse; draft PR170 (base accepted118a5e8a):
+https://github.com/yopiheart/grifon-command/pull/170. Implementation7b99855 pushed.
 Neil said GO and chose reusable workflow + previews before customer dashboard work.
 Added tools/motion-launch.mjs: isolated editable projects, preview, bounded draft/native
 output, byte-bound picture/audio caches and verified audio-window mux.
@@ -13,8 +14,7 @@ Complete native12s portrait1080x1920/288frames81.00s +AACcopyPASS. Fullnew932 NO
 artifacts/grifon-motion-reuse-preview.html has two mixed proofclips; command/scope/timing
 guide: workflows/grifon_motion_production.md. Fresh Windows checkout59bindings PASS.
 Final browser28PASS; build/tests1463PASS/32existingSKIP; all17 originals exact.
-All accepted originals preserved; app/provider/tuned files unchanged; new spend0.
-Any reference is a brief; unsupported effects need authoring/assets; no customer SLA.
+Any reference is a brief; new effects need authoring/assets; no SLA. App/tuned unchanged; spend0.
 
 ## Current: Grifon shader launch film
 Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
