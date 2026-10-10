@@ -252,6 +252,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
         </div>
       )}
       <LaunchScreen
+        demoOwnerId={userId}
         onLaunch={start}
         directorUnlocked={directorUnlocked}
         onUpgrade={onUpgrade}

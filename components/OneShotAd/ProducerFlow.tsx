@@ -118,6 +118,9 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     report: art.report,
     clientDetails: art.clientDetails,
     businessInfo: art.businessInfo,
+    businessInfoMapping: art.businessInfoMapping?.origin === 'automatic-intake' && art.businessInfoMapping?.version === 1
+      ? { origin: 'automatic-intake', version: 1 }
+      : undefined,
     script: art.script,
     finalScript: art.finalScript,
     storyboard,
@@ -302,7 +305,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       const fresh = createProductionRun(
         { ...orchInputBase, avatar },
         userId,
-        { runId, mode: 'oneshot', prefill: { report, clientDetails, businessInfo }, doneStages: ['market_research'] }
+        { runId, mode: 'oneshot', prefill: { report, clientDetails, businessInfo, businessInfoMapping: { origin: 'automatic-intake', version: 1 } }, doneStages: ['market_research'] }
       );
       // First Cut starts as the unstyled assembly; the user opts into an edit preset.
       fresh.presetId = 'none';
@@ -563,6 +566,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         </div>
       )}
       <LaunchScreen
+        demoOwnerId={userId}
         onLaunch={start}
         directorUnlocked={directorUnlocked}
         onUpgrade={onUpgrade}

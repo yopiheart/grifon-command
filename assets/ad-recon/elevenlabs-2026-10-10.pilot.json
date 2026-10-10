@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "pilotBrand": "ElevenLabs",
+  "status": "preparation-only",
+  "files": {
+    "packet": {
+      "path": "assets/ad-recon/elevenlabs-2026-10-10.packet.json",
+      "sha256": "28627c0684a846fdf2ee8c797d0cbc220b92a1562ab9245fa2d192aea79c00a7"
+    },
+    "preparation": {
+      "path": "assets/ad-recon/elevenlabs-2026-10-10.preparation.json",
+      "sha256": "ca9c80e741c86c90cf626b03c2e174c3cca928a5f2db1ae659331430bf38fb1d"
+    }
+  },
+  "collection": {
+    "observedAt": "2026-10-10T09:16:09.297Z",
+    "kind": "operator-recorded Meta card observations",
+    "country": "ALL",
+    "partial": true,
+    "ownBrandCards": 4,
+    "adjacentReaderCards": 2,
+    "directCompetitorCreativeEvidence": "not acquired; Murf and WellSaid collections unknown",
+    "videoAnalysis": false,
+    "performanceProof": false
+  },
+  "productSourceReview": [
+    {
+      "url": "https://elevenlabs.io/text-to-speech",
+      "reviewedOn": "2026-10-10",
+      "scope": "Official product documentation; not an independent performance evaluation",
+      "supportedDescription": "The product accepts text, offers a voice selection and generates speech. This does not prove a particular audible result, speed or superiority."
+    },
+    {
+      "url": "https://elevenlabs.io/docs/eleven-creative/playground/text-to-speech",
+      "reviewedOn": "2026-10-10",
+      "scope": "Official product guide; actual controls must be checked for the chosen model/session"
+    }
+  ],
+  "rankedConcepts": [
+    {
+      "priority": 1,
+      "conceptId": "hear-the-line",
+      "title": "Hear the Line",
+      "status": "hypothesis; required proof assets missing"
+    },
+    {
+      "priority": 2,
+      "conceptId": "same-line-two-deliveries",
+      "title": "Same Line, Two Deliveries",
+      "status": "hypothesis; required proof assets missing"
+    },
+    {
+      "priority": 3,
+      "conceptId": "change-one-line",
+      "title": "Change One Line",
+      "status": "hypothesis; required proof assets missing"
+    }
+  ],
+  "proposal": {
+    "path": "assets/ad-recon/elevenlabs-evidence-prompt.proposed.patch",
+    "sha256": "9182be44a940681e9c3b733c05a8cebc0c2ef527fcc90bd70350de1adf553a05",
+    "approval": "not requested or granted for this exact diff",
+    "active": false,
+    "baseCommit": "2211fe5828f4e095cda8d605faf8a0467bfb20c5",
+    "basePullRequest": 171,
+    "scope": "Optional evidence context and script policy in api/_lib/prompts.ts; no MarketMind duplication, response schema, model or generation knob changes.",
+    "requiredStructuralFollowup": [
+      "Bound and validate the optional evidence request, composing only selected source observations and collection limits from the validated reference packet.",
+      "Transport it through generateAdScript and both supported One-Shot consumers; preserve request behavior when context is absent.",
+      "Verify prompt assembly includes observations, limits and hypotheses distinctly, and evaluate actual generated claims with a separately approved paid spec."
+    ],
+    "notIncluded": "SaaS script/storyboard production support or media routing. This focused policy proposal does not unlock App/SaaS generation.",
+    "offlineAssemblyReview": {
+      "variantLanguageCases": 24,
+      "absentContextByteIdentical": true,
+      "withContextIncludesObservationsLimitsHypotheses": true,
+      "providerCalls": 0,
+      "generatedClaimAccuracyEvaluated": false
+    }
+  },
+  "completionMilestones": [
+    {
+      "name": "Evidence and preparation",
+      "current": true,
+      "pass": "Real card IDs, identity/collection limits and three distinct original concepts; original screenshots can be reviewed, saved locally and imported/exported with visible gaps."
+    },
+    {
+      "name": "Faithful software demo",
+      "current": false,
+      "pass": "Approved evidence policy and SaaS script/storyboard changes; authenticated real-screen assets and matched permitted audio reach the renderer, with legible UI and no invented claims."
+    },
+    {
+      "name": "Reviewable finished creative",
+      "current": false,
+      "pass": "One approved capped production trial yields a playable ad with source/concept receipt, audible matched output, honest edits and owner review."
+    },
+    {
+      "name": "Measured learning loop",
+      "current": false,
+      "pass": "Explicitly approved publishing/campaign action links creativeId to actual first-party activation and cost/conversion results. Monitoring recommends the next test; campaign changes remain user-approved."
+    }
+  ],
+  "productionTrialDraft": {
+    "authorization": "unapproved and not executable",
+    "maximumCostUsd": 0,
+    "maxPaidRolls": 0,
+    "purpose": "Eventually validate the Hear the Line concept through a faithful software demo and traceable export.",
+    "exactInputs": {
+      "packetSha256": "28627c0684a846fdf2ee8c797d0cbc220b92a1562ab9245fa2d192aea79c00a7",
+      "selectedConceptId": "hear-the-line",
+      "sentence": null,
+      "model": null,
+      "voice": null,
+      "settings": null,
+      "setupAssetSha256": null,
+      "actionAssetSha256": null,
+      "resultAssetSha256": null,
+      "matchedAudioSha256": null
+    },
+    "missing": [
+      "Actual setup/action/result screens from the same session",
+      "Owned sample sentence, exact permitted voice/model/settings and matched audio provenance",
+      "Approved SaaS production diff and real-media renderer path",
+      "Fresh maximum-cost approval for the frozen inputs"
+    ],
+    "pass": [
+      "Screen text is legible on mobile; no invented UI or capabilities",
+      "Audible result matches the shown text and settings",
+      "Reference observations remain distinct from hypotheses and supplied claims",
+      "Export receipt retains selected source/concept and actual creative identity"
+    ],
+    "fail": [
+      "Missing or mismatched proof assets",
+      "Invented outcomes, testimonial, speed, ranking or performance verdict",
+      "Silent or mismatched audible example",
+      "Unapproved paid/provider/campaign operation"
+    ],
+    "evidence": "Capture input hashes, approval/spec hash, provider/task receipt and actual output receipt; no generated trial exists yet."
+  }
+}

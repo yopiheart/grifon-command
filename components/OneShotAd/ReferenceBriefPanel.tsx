@@ -9,7 +9,8 @@ export const ReferenceBriefPanel: React.FC<{
   value?: AdReferenceBrief;
   onChange: (value?: AdReferenceBrief) => void;
   subject: { brandName: string; productName: string; offer: string };
-}> = ({ value, onChange, subject }) => {
+  preparationOnly?: boolean;
+}> = ({ value, onChange, subject, preparationOnly = false }) => {
   const fileInput = useRef<HTMLInputElement>(null);
   const importSequence = useRef(0);
   const [importError, setImportError] = useState('');
@@ -94,7 +95,7 @@ export const ReferenceBriefPanel: React.FC<{
               </article>;
             })}
           </div>
-          <p className="text-xs text-zinc-400">Selecting a concept prepares the brief. Make My Ad starts production separately.</p>
+          <p className="text-xs text-zinc-400">{preparationOnly ? 'Selecting a concept records a direction for review. Software video generation is not available in this preparation screen.' : 'Selecting a concept prepares the brief. Make My Ad starts production separately.'}</p>
         </>}
       </GlassPanel>
     </section>
