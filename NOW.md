@@ -2,7 +2,8 @@
 **Stamped: 2026-10-10; Codila audio REVIEW alternate ready**
 
 ## Current: Codila prompt applied to the accepted film
-Branch: codex/grifon-codila-audio; same managed checkout below; draft PR pending.
+Branch: codex/grifon-codila-audio; implementation35ec93d3 pushed; draft PR173:
+https://github.com/yopiheart/grifon-command/pull/173 (base codex/grifon-motion-reuse).
 Neil chose existing film/new audio and asked to read the author's post/prompt.
 Post2108621038141546616 is text + prompt image, not a reference soundtrack.
 Original26 CC0 toolkit pinned c113911c9d47e050569521f97fb88971cd4b07a3.
