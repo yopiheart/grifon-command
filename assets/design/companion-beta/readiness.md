@@ -115,6 +115,7 @@ Playwright phone-sized Edge is emulation, not iPhone Safari or physical Android 
 
 ## External release gates
 
+- [ ] Resolve the Vercel account deployment block and verify an authorized hosted candidate. The PR status reports **Account is blocked.** Existing GitHub Actions CI targets `main`, so it has not run for this stacked PR; local passes are not remote CI. [Observed hosted status](qa/hosted-checks.json).
 - [ ] Apply/review required migration in a separately authorized test environment; prove concurrent same-ad debit is exactly one and failure rolls back.
 - [ ] Real OTP delivery, expired session, and second-account isolation on the release candidate.
 - [ ] Physical iPhone Safari and Android Chrome: keyboard leaves Send reachable; long transcript scrolls; drawer/viewer focus; mic permission allow/deny/revoke; photo selection; playback, sound and download.
