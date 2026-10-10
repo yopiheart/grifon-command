@@ -5,6 +5,7 @@
 Checkout C:/Users/ADMIN/.codex/worktrees/abf2/grifon-command.
 Branch codex/elevenlabs-evidence-handoff, stacked on PR168
 (codex/ad-recon-briefs, 57843bb9); main baseline 2e1de015.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/174 (application46edd541).
 Neil chose ElevenLabs instead of Higgsfield as the pilot and said G to proceed.
 No paid/provider generation, campaign, production-data, merge or deployment
 approval. The shared Vivo clip was a 3D/possibly Blender -> Seedance example,
