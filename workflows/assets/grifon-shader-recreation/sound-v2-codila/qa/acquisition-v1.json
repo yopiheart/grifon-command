@@ -1,0 +1,859 @@
+{
+  "schemaVersion": 1,
+  "post": "https://x.com/0xCodila/status/2108621038141546616",
+  "upstreamRepository": "https://github.com/Bodila51/opus-sound-layer",
+  "upstreamCommit": "c113911c9d47e050569521f97fb88971cd4b07a3",
+  "scriptEdits": 0,
+  "upstream": [
+    {
+      "file": "PROMPT.md",
+      "working": {
+        "path": ".tmp/codila-audio/sound-layer/PROMPT.md",
+        "bytes": 1676,
+        "sha256": "607d1f998f828651070902ea1bb7fe5f92ba0b765f071983e1e98a0ae445a559"
+      },
+      "pinnedGitBlobSha256": "dd37fc82a195a4bfc7a6000dc051af89405af0ca3f6e4e83733a4c3c9bf1e998",
+      "workingEqualsGitBlob": false
+    },
+    {
+      "file": "LICENSE",
+      "working": {
+        "path": ".tmp/codila-audio/sound-layer/LICENSE",
+        "bytes": 1086,
+        "sha256": "3f55e7e1ee79edcd3da24dc0417f4acfeeeb7160c691ca6bb3f759cc51ddaab3"
+      },
+      "pinnedGitBlobSha256": "a2708086c1b24154fb8dc4a41f1c07c1aa9fe4ced2ad98c711ec262e40fc41f2",
+      "workingEqualsGitBlob": false
+    },
+    {
+      "file": "scripts/kit.json",
+      "working": {
+        "path": ".tmp/codila-audio/sound-layer/scripts/kit.json",
+        "bytes": 6677,
+        "sha256": "2930a6e639ab9757e7672de6ee9915e855971b6eb2c4f4a509bed01823217757"
+      },
+      "pinnedGitBlobSha256": "209d1e361c823ddc719e8958f1fe97007186853ccde1b196804ce11bb6f533ee",
+      "workingEqualsGitBlob": false
+    },
+    {
+      "file": "scripts/sfx.py",
+      "working": {
+        "path": ".tmp/codila-audio/sound-layer/scripts/sfx.py",
+        "bytes": 12432,
+        "sha256": "fc3f978ee421d755855e10176d5e1a666ab927c0e88bbc8534c9f842e3ccf680"
+      },
+      "pinnedGitBlobSha256": "52c691c7f6a55999c2b416f5a2e34aced6258b526c1dd23647cbab29a7d9daf3",
+      "workingEqualsGitBlob": false
+    },
+    {
+      "file": "scripts/mix.py",
+      "working": {
+        "path": ".tmp/codila-audio/sound-layer/scripts/mix.py",
+        "bytes": 16932,
+        "sha256": "610e51252e82fd8ce2b72453349840dc28028301d879a9464d9edba50a24c957"
+      },
+      "pinnedGitBlobSha256": "739d36600ddb7b5068456726bdee82451ad1b4195ed83efa1d63c1ae39a30553",
+      "workingEqualsGitBlob": false
+    },
+    {
+      "file": "scripts/qa.py",
+      "working": {
+        "path": ".tmp/codila-audio/sound-layer/scripts/qa.py",
+        "bytes": 11684,
+        "sha256": "be3500b845d1f380367ea49de056921f60b70bfe7b12cd8df253d290f20468ad"
+      },
+      "pinnedGitBlobSha256": "564004dcf893b2be8fa672b6dd7e74a4c1d5a131df280e842e6f3c18e3b8cd90",
+      "workingEqualsGitBlob": false
+    }
+  ],
+  "packages": [
+    "cffi==2.1.1",
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.66.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "pillow==12.3.0",
+    "pycparser==3.11",
+    "pyloudnorm==0.2.0",
+    "pyparsing==3.3.3",
+    "python-dateutil==2.9.0.post0",
+    "scipy==1.18.1",
+    "six==1.17.0",
+    "soundfile==0.14.0",
+    "typing_extensions==4.16.0"
+  ],
+  "kitExitCode": 0,
+  "preparedSidecars": 26,
+  "technicalOk": 26,
+  "selectedCount": 10,
+  "sounds": [
+    {
+      "id": "chime-1",
+      "type": "chime",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "ding.wav",
+        "creator": "Daphne_in_Wonderland",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/127/127149_667113-hq.mp3",
+        "landing": "https://freesound.org/people/Daphne_in_Wonderland/sounds/127149"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/chime-1.mp3",
+        "bytes": 34443,
+        "sha256": "f3f45d7e6a04466d631343544e79e154d03814a452cb50e929ca444a14b28198"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/chime/chime-1.wav",
+        "bytes": 110448,
+        "sha256": "553a8c65aaa7570e6f880a3d2dae310ad9b2cc94b7dad252a3f9a689c3189896"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/chime/chime-1.json",
+        "bytes": 581,
+        "sha256": "c43bae5035ebcb245914fe3e2c74ca57df3def23384966d59fbf3d662676d0ce"
+      }
+    },
+    {
+      "id": "chime-2",
+      "type": "chime",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "sqeeeek_bell_ting1.wav",
+        "creator": "sqeeeek",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/237/237106_4277312-hq.mp3",
+        "landing": "https://freesound.org/people/sqeeeek/sounds/237106"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/chime-2.mp3",
+        "bytes": 10541,
+        "sha256": "5f6a9147540e305db893c7e3753bf548c4a6e7ce6018f892d3f16da166a4f05f"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/chime/chime-2.wav",
+        "bytes": 33690,
+        "sha256": "514a635211bdfb04845d5152e819fae68a9400beef8ceaea4ce28b2f94498dd4"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/chime/chime-2.json",
+        "bytes": 572,
+        "sha256": "867e0a32fe1e3647c40d946a5e2d9684247ab5e4a970232de2ae9ba9be32c552"
+      }
+    },
+    {
+      "id": "click-1",
+      "type": "click",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "mouse clicks",
+        "creator": "chestnutjam",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/399/399443_2955613-hq.mp3",
+        "landing": "https://freesound.org/people/chestnutjam/sounds/399443"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/click-1.mp3",
+        "bytes": 300480,
+        "sha256": "4d174395b4fabf4806bdafa121f39b89ae9b0269681debc3710760be80fbc346"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/click/click-1.wav",
+        "bytes": 13412,
+        "sha256": "d21973b73ba7e92a50e5f623f6fd9cde7c97e9c7f46264ad1d8a65caf083d71e"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/click/click-1.json",
+        "bytes": 571,
+        "sha256": "dae98cbf05de32e31880da044c60792c343f96d589072cc956d5661453a79e60"
+      }
+    },
+    {
+      "id": "click-2",
+      "type": "click",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "mouse-click-double-00.flac",
+        "creator": "pbimal",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/534/534104_11830391-hq.mp3",
+        "landing": "https://freesound.org/people/pbimal/sounds/534104"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/click-2.mp3",
+        "bytes": 11008,
+        "sha256": "9edf989b0e5282f665f31648147972efe5fc66a7ba66736770948dd7fef62827"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/click/click-2.wav",
+        "bytes": 15126,
+        "sha256": "cbf9b13e23a8f32b7e41784660622877e8aa0a81314d7ced1c4c07f0fc11371d"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/click/click-2.json",
+        "bytes": 575,
+        "sha256": "1004ee5cc0c751eb5878a65a71dd9ceec1e77df15229ba272ae8a1915606a5a2"
+      }
+    },
+    {
+      "id": "click-3",
+      "type": "click",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "Mouse clicks and scroll wheel",
+        "creator": "tgfcoder",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/146/146877_197046-hq.mp3",
+        "landing": "https://freesound.org/people/tgfcoder/sounds/146877"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/click-3.mp3",
+        "bytes": 736575,
+        "sha256": "419e5d8b7803477a6240ee4b61319930e12d8c3f0ee9e39283e749c3f2f54c37"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/click/click-3.wav",
+        "bytes": 16352,
+        "sha256": "e6b1203e8038caef7b975261aa26db85a9015fd514319b0e9ac4ef8d8dac70c8"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/click/click-3.json",
+        "bytes": 580,
+        "sha256": "fb903464d185fdd374c8c79c64f67b6db9615b0f51760fe82de51c0706b28baf"
+      }
+    },
+    {
+      "id": "key-1",
+      "type": "key",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "enter key",
+        "creator": "uEffects",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/180/180997_2901073-hq.mp3",
+        "landing": "https://freesound.org/people/uEffects/sounds/180997"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/key-1.mp3",
+        "bytes": 6315,
+        "sha256": "5e4b6c8ca2989923fc994bce5e537d6e83e8ffc3ecdc6195f3d409032b4c791a"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/key/key-1.wav",
+        "bytes": 12296,
+        "sha256": "9e4ee66ea4183fb5d1b27ac879f546fc7087b1594f9735604baf3da024fd10dc"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/key/key-1.json",
+        "bytes": 558,
+        "sha256": "ffdbd95e79878ded8114d85ef625ec0ebfb7bd927f2716bee20204e5ad358fd5"
+      }
+    },
+    {
+      "id": "key-2",
+      "type": "key",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "keyboard5.wav",
+        "creator": "jim-ph",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/194/194799_670763-hq.mp3",
+        "landing": "https://freesound.org/people/jim-ph/sounds/194799"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/key-2.mp3",
+        "bytes": 11689,
+        "sha256": "d1735e6d2ea8ae5769c7bfe1d883428a7fabe54a33cb71fc2a99d77de1d9d058"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/key/key-2.wav",
+        "bytes": 8904,
+        "sha256": "344adcc3e542a47bc6cfd14bfadbe8c37108284347275e6af209abc3084010c7"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/key/key-2.json",
+        "bytes": 557,
+        "sha256": "f1ba2b1702af814b29fb2878ba8b12fb56c367841f00134afcc031fadbc49012"
+      }
+    },
+    {
+      "id": "key-3",
+      "type": "key",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "Keyboard Click.mp3",
+        "creator": "asetkeyzet",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/442/442649_3923226-hq.mp3",
+        "landing": "https://freesound.org/people/asetkeyzet/sounds/442649"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/key-3.mp3",
+        "bytes": 16575,
+        "sha256": "e50bf702ef53dc3c10114340afc7127cabbacd96d810d8611b147786a0bb573a"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/key/key-3.wav",
+        "bytes": 19340,
+        "sha256": "3f9136e56a19b916271cb2dbe78b20fd6af8c95032fa9d4b689a9bc6a43ae2c5"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/key/key-3.json",
+        "bytes": 571,
+        "sha256": "650db40386aba3075257037413ea97ef1a15e154fd82eba241d389ce830bf758"
+      }
+    },
+    {
+      "id": "paper-1",
+      "type": "paper",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Page Turn (2)",
+        "creator": "OwlStorm",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/151/151221_140737-hq.mp3",
+        "landing": "https://freesound.org/people/OwlStorm/sounds/151221"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/paper-1.mp3",
+        "bytes": 43518,
+        "sha256": "0e6737d635998d90f015249c0215691d3cb63d2ff37d49949914284160b6e9e0"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/paper/paper-1.wav",
+        "bytes": 27444,
+        "sha256": "e91a8155d3b98b7bb4465f65fa7123b9ff1a75141a496e5df1300b6d648a914d"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/paper/paper-1.json",
+        "bytes": 568,
+        "sha256": "cc87bb67dc11a839b30f64ceeff1d7cfff6e9b5d7a3864ac63c1bedc98144539"
+      }
+    },
+    {
+      "id": "paper-2",
+      "type": "paper",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Page Turn 04.wav",
+        "creator": "MATRIXXX_",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/397/397551_6142149-hq.mp3",
+        "landing": "https://freesound.org/people/MATRIXXX_/sounds/397551"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/paper-2.mp3",
+        "bytes": 23432,
+        "sha256": "e72ae86d15636442c26fd5708a712869f08cdbec616b1bb99d0d789a88c80bfd"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/paper/paper-2.wav",
+        "bytes": 11310,
+        "sha256": "ea1615b636f09f8c8c5d38d2576e4e21f2e05180a1b78e36149676845fc75cff"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/paper/paper-2.json",
+        "bytes": 574,
+        "sha256": "af4e19d1e6e43294cfb3a9ddc9d5bbcee31d9d81a811ee8a577a8f1aebfd6590"
+      }
+    },
+    {
+      "id": "paper-3",
+      "type": "paper",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Page Turn",
+        "creator": "qubodup",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/442/442857_71257-hq.mp3",
+        "landing": "https://freesound.org/people/qubodup/sounds/442857"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/paper-3.mp3",
+        "bytes": 15759,
+        "sha256": "dfa167cc8f4b70a04ca7bf1c7b835d28459f80a867f3516d4f6c49eeb3fa1535"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/paper/paper-3.wav",
+        "bytes": 29628,
+        "sha256": "a8cce9a9d0e511ecf54c9f82c04fdd2268434740fd37870635ee0438862999ce"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/paper/paper-3.json",
+        "bytes": 561,
+        "sha256": "faa9f6d6c6aab6d0c318e9481fa7eafc81787a3380450730fd5d79f1e11ede1d"
+      }
+    },
+    {
+      "id": "pop-1",
+      "type": "pop",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Bubble Pop",
+        "creator": "Mafon2",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/253/253956_1196472-hq.mp3",
+        "landing": "https://freesound.org/people/Mafon2/sounds/253956"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/pop-1.mp3",
+        "bytes": 8328,
+        "sha256": "09a72dba775c2407cd2227fb5fceb385d5dd18979fc1715f4d07c63d5f444a83"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/pop/pop-1.wav",
+        "bytes": 19026,
+        "sha256": "edc99d35e4dfef2b914c5a8d2a8b46df6c78a01c9cf0f535904ea0f04a92e909"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/pop/pop-1.json",
+        "bytes": 552,
+        "sha256": "ac8f388217e1672fc4edd2f5c37ca84065375c057b95f76a1035d2d8fb9b8af6"
+      }
+    },
+    {
+      "id": "pop-2",
+      "type": "pop",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Bubbles popping on the surface of water",
+        "creator": "vintage2005",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/459/459582_4807538-hq.mp3",
+        "landing": "https://freesound.org/people/vintage2005/sounds/459582"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/pop-2.mp3",
+        "bytes": 550848,
+        "sha256": "c17bad00fa9253d8484eb525893feed47cd364d17ca6185f9d025fd1c403a54b"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/pop/pop-2.wav",
+        "bytes": 8606,
+        "sha256": "c0aa102bde4245fafd1d744dcab4ae722cbb3f00842fdf7364fb6f718860912b"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/pop/pop-2.json",
+        "bytes": 593,
+        "sha256": "5c899c78b79eec39a95886750568dafc177bf2f3a6354b32879373c1f69f3dd6"
+      }
+    },
+    {
+      "id": "pop-3",
+      "type": "pop",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "bubble pop out",
+        "creator": "tsidilin",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/254/254892_1385065-hq.mp3",
+        "landing": "https://freesound.org/people/tsidilin/sounds/254892"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/pop-3.mp3",
+        "bytes": 6994,
+        "sha256": "203c829018ca49b4096deefa3c5c26c57bf7a7841cd89e9f97ab0aa25f3bd396"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/pop/pop-3.wav",
+        "bytes": 5478,
+        "sha256": "915331bdda1fd2aa1e05a10db30a00b167e9d8e05ac4ef9b266321a000cb9f93"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/pop/pop-3.json",
+        "bytes": 561,
+        "sha256": "60d76cca802399f282cca46899ec1e59900ccffd649e5232899333e71b32505a"
+      }
+    },
+    {
+      "id": "swish-1",
+      "type": "swish",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "Fabric flaps",
+        "creator": "PelicanPolice",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/580/580967_13110737-hq.mp3",
+        "landing": "https://freesound.org/people/PelicanPolice/sounds/580967"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/swish-1.mp3",
+        "bytes": 888768,
+        "sha256": "585ac326d2337c785da3fc003b0f99548b0913a3b6883c83c068f7b2b386367c"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/swish/swish-1.wav",
+        "bytes": 17046,
+        "sha256": "be437302a3f8e3e124294f12b3f0861dc53475a5a330ef83406ae7bcf43245ce"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/swish/swish-1.json",
+        "bytes": 576,
+        "sha256": "25ec75b41dd737b042ab9cb88f782314e3f8c4a9d6e2df31e96649a23acc4903"
+      }
+    },
+    {
+      "id": "swish-2",
+      "type": "swish",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Fabrics.mp3",
+        "creator": "livvy0221",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/467/467264_4440707-hq.mp3",
+        "landing": "https://freesound.org/people/livvy0221/sounds/467264"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/swish-2.mp3",
+        "bytes": 59283,
+        "sha256": "e9462ab00cc456ed717daca53a525e901f98a8502df9b9ecfd6c11c8afba6963"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/swish/swish-2.wav",
+        "bytes": 22614,
+        "sha256": "f7d796b94f07daa6c4b29d40a4c6659ece47ea37a19303b10f85c42fa1e7ae94"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/swish/swish-2.json",
+        "bytes": 569,
+        "sha256": "0ffa30d6385f620fd55fde7e748364555e720cb773ec8eb6c8bbf59f320beffb"
+      }
+    },
+    {
+      "id": "tap-1",
+      "type": "tap",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Wood Knock",
+        "creator": "Mrguff",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/369/369710_2855293-hq.mp3",
+        "landing": "https://freesound.org/people/Mrguff/sounds/369710"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/tap-1.mp3",
+        "bytes": 24212,
+        "sha256": "e1635813031d126a04d8db80ab8bf95c61299e4891241695aada36d8508910d9"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/tap/tap-1.wav",
+        "bytes": 16166,
+        "sha256": "5d09229712afbc96ee4613f0c2c6ed5a70693cfb37f8f7e572e673e6285cacae"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/tap/tap-1.json",
+        "bytes": 552,
+        "sha256": "9c9d5d5b35357f5597fa3ba80059425a9609c1e23f589201add48bde03ffade6"
+      }
+    },
+    {
+      "id": "tap-2",
+      "type": "tap",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "drop06.wav",
+        "creator": "newagesoup",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/339/339364_4067257-hq.mp3",
+        "landing": "https://freesound.org/people/newagesoup/sounds/339364"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/tap-2.mp3",
+        "bytes": 5472,
+        "sha256": "dbce1ea434118525d29df7957d79f1bde7cafb509b1bc987afa44f5b6197605d"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/tap/tap-2.wav",
+        "bytes": 14390,
+        "sha256": "b3a8b38ec8f03783fcb9735bacefa455ffeb14a5af86ff65e1c4bdc0ad3e09f1"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/tap/tap-2.json",
+        "bytes": 559,
+        "sha256": "e343d623f74ef9455127d746fc74f50e93f37f00d810195694fdda8baab65813"
+      }
+    },
+    {
+      "id": "thump-1",
+      "type": "thump",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Three Thuds more reverb",
+        "creator": "AVstudent",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/732/732784_5610899-hq.mp3",
+        "landing": "https://freesound.org/people/AVstudent/sounds/732784"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/thump-1.mp3",
+        "bytes": 487050,
+        "sha256": "546cef16acbe5bbdcb67db5bb5a26b3ecc40baca9d44e7a11a46a64988d114bc"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/thump/thump-1.wav",
+        "bytes": 129644,
+        "sha256": "b96663d8ad7d610ece75e6603e7531ff5a766c5348071d4f6f0c0cb3c49b7696"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/thump/thump-1.json",
+        "bytes": 577,
+        "sha256": "9c25ba9660ad400f9f478a4e2e36557e8a19cca03bbc9f6a766154142122b457"
+      }
+    },
+    {
+      "id": "thump-2",
+      "type": "thump",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Dull Decompression Punch Impact Explodes 96kHz",
+        "creator": "qubodup",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/71/71274_71257-hq.mp3",
+        "landing": "https://freesound.org/people/qubodup/sounds/71274"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/thump-2.mp3",
+        "bytes": 20880,
+        "sha256": "d03061d7fea6b4e8405ae09d187344b9841a0fbd85ab26090e4370ee9c69fbe0"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/thump/thump-2.wav",
+        "bytes": 31880,
+        "sha256": "551db85a3fed93c083a23153371223d92df5dbd7c6d313b32a732ec967074f5f"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/thump/thump-2.json",
+        "bytes": 593,
+        "sha256": "826b01deb3b4afa0dcba2a0f3bd8ed6bd7cf0b96d558eb9be843c11191c42792"
+      }
+    },
+    {
+      "id": "thump-3",
+      "type": "thump",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "ANI Big Pipe Hit",
+        "creator": "ani_music",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/244/244983_3008343-hq.mp3",
+        "landing": "https://freesound.org/people/ani_music/sounds/244983"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/thump-3.mp3",
+        "bytes": 24318,
+        "sha256": "ff93844c194107290b677462bcda2c0c7fc972975a3e747a3d6fae75b181e740"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/thump/thump-3.wav",
+        "bytes": 97598,
+        "sha256": "8a83d0a12a9f9592884506341bcf90b7fabac506dd3f8af5a7b77b95583d3baa"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/thump/thump-3.json",
+        "bytes": 569,
+        "sha256": "d045b85b43eb46bacb7eabe7438a83da91ee23f9f15934b3a7b8cb5bcb5d7acd"
+      }
+    },
+    {
+      "id": "tick-1",
+      "type": "tick",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "Clock ticking",
+        "creator": "olver",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/130/130388_2037384-hq.mp3",
+        "landing": "https://freesound.org/people/olver/sounds/130388"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/tick-1.mp3",
+        "bytes": 64655,
+        "sha256": "7586dfe084b2f22171ee1092da477627ca2195c46e888d50b6f9d4fd69444642"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/tick/tick-1.wav",
+        "bytes": 17324,
+        "sha256": "bccecef5b37f54bf1b33baa35f254b93f3d37305a45ba0a9af77e92ebea9ad65"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/tick/tick-1.json",
+        "bytes": 556,
+        "sha256": "6093709861437b9dc4b82ed54789a296add175e7f9ad7cf1c76cad8cb30288d7"
+      }
+    },
+    {
+      "id": "tick-2",
+      "type": "tick",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "Clock Tick",
+        "creator": "FlashTrauma",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/398/398275_2351866-hq.mp3",
+        "landing": "https://freesound.org/people/FlashTrauma/sounds/398275"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/tick-2.mp3",
+        "bytes": 164677,
+        "sha256": "bc4a1dff5243e5dfd305f8d3d399435ba948077e5eec81a5c02058ff3c2f2229"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/tick/tick-2.wav",
+        "bytes": 17324,
+        "sha256": "cbb368160256a6cf073c6051e13cf3cb1f149bfcdd55450fbf66b0b994fdd2bd"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/tick/tick-2.json",
+        "bytes": 565,
+        "sha256": "8ee0486f59e379619feb06b12360ebfce253eaaf0860d52f929e112a60a26f35"
+      }
+    },
+    {
+      "id": "whoosh-1",
+      "type": "whoosh",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "FX - Swoosh - Light",
+        "creator": "bolkmar",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/475/475132_2927958-hq.mp3",
+        "landing": "https://freesound.org/people/bolkmar/sounds/475132"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/whoosh-1.mp3",
+        "bytes": 18624,
+        "sha256": "54658039d8fada83f60cd2bb1696ae01d3fd25a0cef3b8d05faea05612f932d1"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/whoosh/whoosh-1.wav",
+        "bytes": 44616,
+        "sha256": "6f9b899481250cb6f348182b3423e15471a334a8fe60c2d4399fb2b5ff9dd640"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/whoosh/whoosh-1.json",
+        "bytes": 577,
+        "sha256": "45238ed6c2fbf0e74f024883b78e6fc3153cba2cb24a4b930a3c2c68b4809894"
+      }
+    },
+    {
+      "id": "whoosh-2",
+      "type": "whoosh",
+      "selected": false,
+      "verdict": "ok",
+      "source": {
+        "title": "whip01.wav",
+        "creator": "snowflakes",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/72/72189_1070711-hq.mp3",
+        "landing": "https://freesound.org/people/snowflakes/sounds/72189"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/whoosh-2.mp3",
+        "bytes": 18993,
+        "sha256": "a0cae6d12669d27e6e15808720cac6444a87bef9549a83757c49f974feba4c6f"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/whoosh/whoosh-2.wav",
+        "bytes": 31380,
+        "sha256": "81db31c0261781597eb243598284f7e5fcac8bea6b73e4520518fd18c46a03bf"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/whoosh/whoosh-2.json",
+        "bytes": 570,
+        "sha256": "68f50d434175a4d6a505ce815c027ebd0c9da8262e3f68aaf72769f0f6715b31"
+      }
+    },
+    {
+      "id": "whoosh-3",
+      "type": "whoosh",
+      "selected": true,
+      "verdict": "ok",
+      "source": {
+        "title": "Swoosh 3",
+        "creator": "D4XX",
+        "license": "cc0",
+        "url": "https://cdn.freesound.org/previews/607/607250_887696-hq.mp3",
+        "landing": "https://freesound.org/people/D4XX/sounds/607250"
+      },
+      "raw": {
+        "path": ".tmp/codila-audio/kit/_raw/whoosh-3.mp3",
+        "bytes": 18213,
+        "sha256": "8d3fd64a0b53608df070e830ed00eec29548fba44683579f288dc8e4b37dc676"
+      },
+      "prepared": {
+        "path": ".tmp/codila-audio/kit/whoosh/whoosh-3.wav",
+        "bytes": 51764,
+        "sha256": "4bc2b77603a5078f2313e9eb8f415a14839f1cd70c349dbe5f00434e25f9b876"
+      },
+      "sidecar": {
+        "path": ".tmp/codila-audio/kit/whoosh/whoosh-3.json",
+        "bytes": 559,
+        "sha256": "edcd2f9d41fbfe249c6f71c9d487d9e0b579de050ce5d93b1cd9621557724034"
+      }
+    }
+  ],
+  "visualSelection": {
+    "sheets": [
+      {
+        "path": ".tmp/codila-audio/kit-sheet-a.png",
+        "bytes": 608329,
+        "sha256": "15f517de415674a196ff4ff78f75a8824842c8d39d0ea4aeeabf1d50fda5e8c4"
+      },
+      {
+        "path": ".tmp/codila-audio/kit-sheet-b.png",
+        "bytes": 715976,
+        "sha256": "d4fd42d5b5a914d0f1a4ec2144e5f2556afc5b943acf0ff5f0f0a69053c0e2d8"
+      }
+    ],
+    "family": "Real air movement, cloth and tactile contact. No synthesized SFX or sub.",
+    "excludedByChoice": "Chimes/bubble pops add an unwanted tonal motif; paper candidates show multi-event/steady texture; alternate thumps/clicks/swishes not selected for this palette. All exclusions are visual/editorial selection, not a claim they failed the upstream metrics.",
+    "scope": "Waveform/spectrogram review does not establish auditory fit."
+  },
+  "music": {
+    "source": {
+      "path": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+    },
+    "prepared": {
+      "path": ".tmp/codila-audio/digital-clouds-31.146667.wav",
+      "bytes": 8970386,
+      "sha256": "388566baa82822655460f8367c01c1f906c2395913fbc61f01643e536df14cf5"
+    },
+    "sourceInSeconds": 0,
+    "sampleFrames": 1495040,
+    "sampleRate": 48000,
+    "channels": 2,
+    "recordedRegister": "workflows/assets/grifon-reference-full/assets/audio-v07/source-manifest.json",
+    "rights": "Existing registered Mixkit music; does not infer raw-asset library redistribution."
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

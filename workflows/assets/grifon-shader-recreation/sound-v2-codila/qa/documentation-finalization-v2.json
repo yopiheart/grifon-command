@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "status": "FINAL_DOCS_BIND_REVIEW_ONLY_TECHNICAL_AUDIO_FAIL",
+  "finalHumanVerdict": "PENDING",
+  "roundsConsumed": 2,
+  "maximumTotalRounds": 2,
+  "newMixOrQaRun": false,
+  "producerFiles": [
+    {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/export-cues-v2.mjs",
+      "sha256": "a6fe8d09cb260b532f2bf063336747169fee86472e63e5def50f45d8ed70a442"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/selection-recipe-v2.json",
+      "sha256": "662caba720c2d1bd33f61e4d4e1ab9a3c484f11cae7966b974b82c40b98f41b7"
+    }
+  ],
+  "privateOutputsUnchanged": [
+    {
+      "path": ".tmp/codila-audio/attempt-2/audio/cues.json",
+      "bytes": 4743,
+      "sha256": "395e459f680661cff400a7fa8b637fd83d49111a749384ace878f248a8c0070a"
+    },
+    {
+      "path": ".tmp/codila-audio/attempt-2/audio/derived-timing.json",
+      "bytes": 13564,
+      "sha256": "7f371dee7cf41c78bf53411fdbac956645a7b6b37c0d994711876d02f90eaeb4"
+    },
+    {
+      "path": ".tmp/codila-audio/attempt-2/audio/LISTEN.md",
+      "bytes": 1421,
+      "sha256": "343395a61ef671c71c9b0a469ed30c3673c254c7a08c71726d41f8e2f6863dab"
+    }
+  ],
+  "initialExportReceipt": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2.json",
+    "sha256": "b7a0e03f3166002324804a94718183360e5a8217001941c3d5e2ac24cf899d2e",
+    "qualification": "Historical export-time receipt; its README/LISTEN hashes correspond to the exact drafts preserved by snapshot index"
+  },
+  "draftPreservation": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2-draft/index.json",
+    "sha256": "143a2eb222d1efcbd87d5ba7ac2150a980192c7cf2fc09114c141b354d5e6e8c",
+    "files": [
+      {
+        "originalPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/README-v2.md",
+        "preservedPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2-draft/README-v2.md",
+        "sha256": "e6380299acfaaf7104fc61b7505eccbfbb89d79fca5042a33308932abd0251af"
+      },
+      {
+        "originalPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/LISTEN-v2.md",
+        "preservedPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2-draft/LISTEN-v2.md",
+        "sha256": "f3b69956bfb60f3d25b32b766503ab56e083e4d4f48fa062dd95685f9829f86b"
+      }
+    ]
+  },
+  "finalDocuments": [
+    {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/README-v2.md",
+      "bytes": 5451,
+      "sha256": "3aa8376f9f38846f590cfa8801a2e4b2b39639ed660258a283b24a924f27f51c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/LISTEN-v2.md",
+      "bytes": 2540,
+      "sha256": "c62c4e9cc84c38e28612d4b0c715d96bfba8a3e93631a63fa390a7cbbe13af5f"
+    }
+  ],
+  "originalQa": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/attempt-2/qa-report.json",
+    "sha256": "9c1965da6ad4fdfaee988f74bf0531a3240723758bcdf7c6932ca59ca2a1eb20",
+    "passed": false,
+    "failures": [
+      {
+        "check": "audible first-lens-move",
+        "status": "FAIL",
+        "detail": "stands out by 0.3 dB in 1000-2000 Hz over music+voice"
+      },
+      {
+        "check": "hero body relief-grayscale",
+        "status": "FAIL",
+        "detail": "main band 250-500 Hz lifted 2.0 dB (needs 3)"
+      },
+      {
+        "check": "hero body character-reprise",
+        "status": "FAIL",
+        "detail": "main band 250-500 Hz lifted 1.1 dB (needs 3)"
+      },
+      {
+        "check": "audible script-arrival",
+        "status": "FAIL",
+        "detail": "stands out by 1.4 dB in 500-1000 Hz over music+voice"
+      },
+      {
+        "check": "hero body storyboard-arrival",
+        "status": "FAIL",
+        "detail": "main band 250-500 Hz lifted 2.9 dB (needs 3)"
+      },
+      {
+        "check": "audible canvas-typing-6",
+        "status": "FAIL",
+        "detail": "stands out by 0.8 dB in 1000-2000 Hz over music+voice"
+      }
+    ],
+    "warnings": [
+      {
+        "check": "picture canvas-typing-6",
+        "status": "warn",
+        "detail": "appear at frame 590: change at frame 591 (1.33 vs local 1.24)"
+      },
+      {
+        "check": "picture canvas-typing-8",
+        "status": "warn",
+        "detail": "appear at frame 596: change at frame 596 (1.51 vs local 1.30)"
+      }
+    ]
+  },
+  "independentQa": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/independent/attempt-2.json",
+    "sha256": "dbca52cd3af95b448deeb40c670c151bc684701f758bd4baf7adad7db847c0f4",
+    "status": "INDEPENDENT_TECHNICAL_AUDIO_FAIL"
+  },
+  "listenCheckpoints": [
+    {
+      "id": "first-lens-move",
+      "frame": 29,
+      "seconds": 0.968
+    },
+    {
+      "id": "relief-grayscale",
+      "frame": 209,
+      "seconds": 6.974
+    },
+    {
+      "id": "character-reprise",
+      "frame": 344,
+      "seconds": 11.478
+    },
+    {
+      "id": "script-arrival",
+      "frame": 496,
+      "seconds": 16.55
+    },
+    {
+      "id": "logo-landing",
+      "frame": 665,
+      "seconds": 22.189
+    }
+  ],
+  "claims": [
+    "Reviewalternate only; accepted soundv1 is not replaced",
+    "No all-pass result, auditory quality, superiority or sonic-reference match claimed",
+    "Both original permitted rounds consumed; no third automatic attempt"
+  ],
+  "deviations": []
+}

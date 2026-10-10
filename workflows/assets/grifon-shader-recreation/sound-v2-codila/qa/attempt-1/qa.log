@@ -1,0 +1,121 @@
+pass  offset                 encoded audio vs mix.wav: worst 0 samples (0.00 ms), lags [0, 0, 0]
+pass  loudness               integrated -16.21 LUFS, target -16
+pass  true peak              -1.18 dBTP (limit -1.0)
+FAIL  picture first-lens     cut at frame 26: largest change at frame 26 (5.9 vs local 6.6)
+pass  picture lens-reverse   move at frame 67: motion peak at frame 68
+pass  picture ring-arrival   cut at frame 82: largest change at frame 82 (188.2 vs local 1.6)
+pass  picture ring-gold      cut at frame 97: largest change at frame 97 (16.4 vs local 1.3)
+pass  picture ring-carbon    cut at frame 111: largest change at frame 111 (21.4 vs local 1.2)
+pass  picture ring-colored-glass cut at frame 132: largest change at frame 132 (26.3 vs local 1.1)
+FAIL  picture relief-arrival cut at frame 145: largest change at frame 145 (10.1 vs local 4.3)
+warn  picture relief-materials-1 cut at frame 163: largest change at frame 163 (1.9 vs local 4.4)
+warn  picture relief-materials-2 cut at frame 177: largest change at frame 178 (3.6 vs local 5.0)
+warn  picture relief-materials-3 cut at frame 188: largest change at frame 187 (8.9 vs local 10.6)
+warn  picture relief-materials-4 cut at frame 198: largest change at frame 197 (10.1 vs local 10.0)
+pass  picture relief-grayscale cut at frame 209: largest change at frame 209 (52.0 vs local 4.2)
+pass  picture macro-rosette  cut at frame 222: largest change at frame 222 (138.3 vs local 1.4)
+pass  picture macro-aperture cut at frame 238: largest change at frame 238 (69.4 vs local 8.8)
+pass  picture catalog-out    move at frame 264: motion peak at frame 264
+pass  picture capability-arrival cut at frame 307: largest change at frame 307 (126.3 vs local 2.3)
+pass  picture character-reprise cut at frame 344: largest change at frame 344 (219.1 vs local 1.2)
+pass  picture shell-spin     move at frame 373: motion peak at frame 374
+pass  picture particle-arrival cut at frame 417: largest change at frame 417 (101.3 vs local 1.4)
+pass  picture glyph-materials-glyph-dark-gold cut at frame 459: largest change at frame 459 (79.9 vs local 1.8)
+pass  picture glyph-materials-glyph-rounded-gold cut at frame 471: largest change at frame 471 (104.3 vs local 1.8)
+pass  picture glyph-materials-glyph-translucent cut at frame 483: largest change at frame 483 (74.7 vs local 1.7)
+pass  picture script-arrival cut at frame 496: largest change at frame 496 (107.4 vs local 1.0)
+pass  picture responsive-reflow move at frame 516: motion peak at frame 518
+pass  picture script-whirl   cut at frame 541: largest change at frame 541 (15.0 vs local 1.0)
+pass  picture storyboard-arrival cut at frame 567: largest change at frame 567 (18.5 vs local 1.4)
+pass  picture canvas-arrival cut at frame 586: largest change at frame 586 (136.9 vs local 1.9)
+warn  picture canvas-typing-6 appear at frame 590: change at frame 591 (1.33 vs local 1.24)
+warn  picture canvas-typing-8 appear at frame 596: change at frame 596 (1.51 vs local 1.30)
+pass  picture canvas-typing-9 appear at frame 600: change at frame 600 (5.40 vs local 1.31)
+warn  picture canvas-typing-10 appear at frame 603: change at frame 603 (1.51 vs local 1.30)
+pass  picture canvas-tear    cut at frame 608: largest change at frame 608 (29.9 vs local 2.3)
+pass  picture canvas-pullback move at frame 627: motion peak at frame 627
+pass  picture canvas-erase   cut at frame 636: largest change at frame 637 (39.1 vs local 3.9)
+pass  picture logo-landing   land at frame 665: motion stops at frame 666
+warn  picture logo-exit      move at frame 844: motion peak at frame 841
+pass  sync first-lens        peak 0.00 frames from its cue
+pass  audible first-lens     stands out by 8.6 dB in 1000-2000 Hz over music+voice
+FAIL  hero body first-lens   main band 125-250 Hz lifted 2.5 dB (needs 3)
+pass  sync lens-reverse      peak 0.00 frames from its cue
+pass  audible lens-reverse   stands out by 1.9 dB in 2000-4000 Hz over music+voice
+pass  sync ring-arrival      peak 0.00 frames from its cue
+pass  audible ring-arrival   stands out by 1.9 dB in 500-1000 Hz over music+voice
+pass  sync ring-gold         peak 0.00 frames from its cue
+pass  audible ring-gold      stands out by 2.1 dB in 500-1000 Hz over music+voice
+pass  sync ring-carbon       peak 0.00 frames from its cue
+pass  audible ring-carbon    stands out by 2.8 dB in 500-1000 Hz over music+voice
+pass  sync ring-colored-glass peak 0.00 frames from its cue
+pass  audible ring-colored-glass stands out by 2.1 dB in 500-1000 Hz over music+voice
+pass  sync relief-arrival    peak 0.00 frames from its cue
+pass  audible relief-arrival stands out by 15.4 dB in 500-1000 Hz over music+voice
+pass  hero body relief-arrival main band 125-250 Hz lifted 9.9 dB (needs 3)
+pass  sync relief-materials-1 peak 0.02 frames from its cue
+pass  audible relief-materials-1 stands out by 2.5 dB in 500-1000 Hz over music+voice
+pass  sync relief-materials-2 peak 0.00 frames from its cue
+FAIL  audible relief-materials-2 stands out by 1.2 dB in 500-1000 Hz over music+voice
+pass  sync relief-materials-3 peak 0.00 frames from its cue
+pass  audible relief-materials-3 stands out by 1.7 dB in 500-1000 Hz over music+voice
+pass  sync relief-materials-4 peak 0.00 frames from its cue
+pass  audible relief-materials-4 stands out by 2.9 dB in 500-1000 Hz over music+voice
+pass  sync relief-grayscale  peak 0.00 frames from its cue
+pass  audible relief-grayscale stands out by 2.1 dB in 500-1000 Hz over music+voice
+pass  sync macro-rosette     peak 0.00 frames from its cue
+FAIL  audible macro-rosette  stands out by 0.9 dB in 500-1000 Hz over music+voice
+pass  sync macro-aperture    peak 0.00 frames from its cue
+pass  audible macro-aperture stands out by 2.3 dB in 1000-2000 Hz over music+voice
+pass  sync catalog-out       peak 0.00 frames from its cue
+FAIL  audible catalog-out    stands out by 0.4 dB in 250-500 Hz over music+voice
+pass  sync capability-arrival peak 0.00 frames from its cue
+pass  audible capability-arrival stands out by 8.2 dB in 250-500 Hz over music+voice
+pass  hero body capability-arrival main band 125-250 Hz lifted 7.0 dB (needs 3)
+pass  sync character-reprise peak 0.00 frames from its cue
+pass  audible character-reprise stands out by 2.1 dB in 1000-2000 Hz over music+voice
+pass  sync shell-spin        peak 0.00 frames from its cue
+FAIL  audible shell-spin     stands out by 0.8 dB in 250-500 Hz over music+voice
+pass  sync particle-arrival  peak 0.00 frames from its cue
+pass  audible particle-arrival stands out by 3.6 dB in 500-1000 Hz over music+voice
+FAIL  hero body particle-arrival main band 125-250 Hz lifted 2.8 dB (needs 3)
+pass  sync glyph-materials-glyph-dark-gold peak 0.00 frames from its cue
+FAIL  audible glyph-materials-glyph-dark-gold stands out by 1.4 dB in 500-1000 Hz over music+voice
+pass  sync glyph-materials-glyph-rounded-gold peak 0.00 frames from its cue
+pass  audible glyph-materials-glyph-rounded-gold stands out by 2.1 dB in 500-1000 Hz over music+voice
+pass  sync glyph-materials-glyph-translucent peak 0.00 frames from its cue
+pass  audible glyph-materials-glyph-translucent stands out by 2.7 dB in 500-1000 Hz over music+voice
+pass  sync script-arrival    peak 0.00 frames from its cue
+pass  audible script-arrival stands out by 2.5 dB in 500-1000 Hz over music+voice
+pass  sync responsive-reflow peak 0.00 frames from its cue
+pass  audible responsive-reflow stands out by 1.7 dB in 125-250 Hz over music+voice
+pass  sync script-whirl      peak 0.00 frames from its cue
+pass  audible script-whirl   stands out by 2.5 dB in 125-250 Hz over music+voice
+pass  sync storyboard-arrival peak 0.00 frames from its cue
+pass  audible storyboard-arrival stands out by 18.9 dB in 500-1000 Hz over music+voice
+FAIL  hero body storyboard-arrival main band 125-250 Hz lifted 1.4 dB (needs 3)
+pass  sync canvas-arrival    peak 0.00 frames from its cue
+FAIL  audible canvas-arrival stands out by -0.3 dB in 250-500 Hz over music+voice
+pass  sync canvas-typing-6   peak 0.00 frames from its cue
+FAIL  audible canvas-typing-6 stands out by 0.1 dB in 1000-2000 Hz over music+voice
+pass  sync canvas-typing-8   peak 0.00 frames from its cue
+pass  audible canvas-typing-8 stands out by 4.2 dB in 1000-2000 Hz over music+voice
+pass  sync canvas-typing-9   peak 0.00 frames from its cue
+FAIL  audible canvas-typing-9 stands out by 0.3 dB in 1000-2000 Hz over music+voice
+pass  sync canvas-typing-10  peak 0.00 frames from its cue
+pass  audible canvas-typing-10 stands out by 3.6 dB in 1000-2000 Hz over music+voice
+pass  sync canvas-tear       peak 0.00 frames from its cue
+pass  audible canvas-tear    stands out by 2.1 dB in 500-1000 Hz over music+voice
+pass  sync canvas-pullback   peak 0.00 frames from its cue
+pass  audible canvas-pullback stands out by 2.1 dB in 4000-8000 Hz over music+voice
+pass  sync canvas-erase      peak 0.00 frames from its cue
+pass  audible canvas-erase   stands out by 2.8 dB in 250-500 Hz over music+voice
+pass  sync logo-landing      peak 0.00 frames from its cue
+pass  audible logo-landing   stands out by 15.3 dB in 500-1000 Hz over music+voice
+FAIL  hero body logo-landing main band 125-250 Hz lifted 2.3 dB (needs 3)
+pass  sync logo-exit         peak 0.00 frames from its cue
+pass  audible logo-exit      stands out by 6.6 dB in 250-500 Hz over music+voice
+pass  music                  median -15.7 LUFS short-term; unplanned dips at []
+pass  silence                none
+
+FAILED: 14 failed, 8 warnings. Picture: .tmp/codila-audio/attempt-1/audio\qa.png

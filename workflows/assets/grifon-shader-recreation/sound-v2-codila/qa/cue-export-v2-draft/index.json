@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "EXACT_PRE_QA_DOCUMENT_DRAFTS_PRESERVED",
+  "initialReceipt": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2.json",
+    "sha256": "b7a0e03f3166002324804a94718183360e5a8217001941c3d5e2ac24cf899d2e"
+  },
+  "files": [
+    {
+      "originalPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/README-v2.md",
+      "preservedPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2-draft/README-v2.md",
+      "sha256": "e6380299acfaaf7104fc61b7505eccbfbb89d79fca5042a33308932abd0251af"
+    },
+    {
+      "originalPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/LISTEN-v2.md",
+      "preservedPath": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/cue-export-v2-draft/LISTEN-v2.md",
+      "sha256": "f3b69956bfb60f3d25b32b766503ab56e083e4d4f48fa062dd95685f9829f86b"
+    }
+  ],
+  "reason": "Final actual encodedQA arrived after initial export receipt. Preserve exact bound drafts before finalizing reviewer-facing README/LISTEN; initial export receipt remains historical and unchanged."
+}

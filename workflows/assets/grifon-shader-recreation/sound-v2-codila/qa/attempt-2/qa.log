@@ -1,0 +1,82 @@
+pass  offset                 encoded audio vs mix.wav: worst 0 samples (0.00 ms), lags [0, 0, 0]
+pass  loudness               integrated -16.22 LUFS, target -16
+pass  true peak              -1.70 dBTP (limit -1.0)
+pass  picture first-lens-move move at frame 29: motion peak at frame 31
+pass  picture lens-reverse   move at frame 67: motion peak at frame 68
+pass  picture ring-arrival   cut at frame 82: largest change at frame 82 (188.2 vs local 1.6)
+pass  picture ring-carbon    cut at frame 111: largest change at frame 111 (21.4 vs local 1.2)
+pass  picture relief-grayscale cut at frame 209: largest change at frame 209 (52.0 vs local 4.2)
+pass  picture catalog-out    move at frame 264: motion peak at frame 264
+pass  picture capability-arrival cut at frame 307: largest change at frame 307 (126.3 vs local 2.3)
+pass  picture character-reprise cut at frame 344: largest change at frame 344 (219.1 vs local 1.2)
+pass  picture shell-spin     move at frame 373: motion peak at frame 374
+pass  picture particle-arrival cut at frame 417: largest change at frame 417 (101.3 vs local 1.4)
+pass  picture glyph-dark-gold cut at frame 459: largest change at frame 459 (79.9 vs local 1.8)
+pass  picture glyph-translucent cut at frame 483: largest change at frame 483 (74.7 vs local 1.7)
+pass  picture script-arrival cut at frame 496: largest change at frame 496 (107.4 vs local 1.0)
+pass  picture responsive-reflow move at frame 516: motion peak at frame 518
+pass  picture script-whirl   cut at frame 541: largest change at frame 541 (15.0 vs local 1.0)
+pass  picture storyboard-arrival cut at frame 567: largest change at frame 567 (18.5 vs local 1.4)
+warn  picture canvas-typing-6 appear at frame 590: change at frame 591 (1.33 vs local 1.24)
+warn  picture canvas-typing-8 appear at frame 596: change at frame 596 (1.51 vs local 1.30)
+pass  picture canvas-tear    cut at frame 608: largest change at frame 608 (29.9 vs local 2.3)
+pass  picture canvas-pullback move at frame 627: motion peak at frame 627
+pass  picture canvas-erase   cut at frame 636: largest change at frame 637 (39.1 vs local 3.9)
+pass  picture logo-landing   land at frame 665: motion stops at frame 666
+pass  picture logo-exit      move at frame 842: motion peak at frame 840
+pass  sync first-lens-move   peak 0.00 frames from its cue
+FAIL  audible first-lens-move stands out by 0.3 dB in 1000-2000 Hz over music+voice
+pass  sync lens-reverse      peak 0.00 frames from its cue
+pass  audible lens-reverse   stands out by 1.8 dB in 1000-2000 Hz over music+voice
+pass  sync ring-arrival      peak 0.00 frames from its cue
+pass  audible ring-arrival   stands out by 11.6 dB in 500-1000 Hz over music+voice
+pass  hero body ring-arrival main band 250-500 Hz lifted 6.3 dB (needs 3)
+pass  sync ring-carbon       peak 0.00 frames from its cue
+pass  audible ring-carbon    stands out by 2.7 dB in 500-1000 Hz over music+voice
+pass  sync relief-grayscale  peak 0.00 frames from its cue
+pass  audible relief-grayscale stands out by 12.5 dB in 500-1000 Hz over music+voice
+FAIL  hero body relief-grayscale main band 250-500 Hz lifted 2.0 dB (needs 3)
+pass  sync catalog-out       peak 0.00 frames from its cue
+pass  audible catalog-out    stands out by 2.0 dB in 1000-2000 Hz over music+voice
+pass  sync capability-arrival peak 0.00 frames from its cue
+pass  audible capability-arrival stands out by 2.4 dB in 250-500 Hz over music+voice
+pass  sync character-reprise peak 0.00 frames from its cue
+pass  audible character-reprise stands out by 3.8 dB in 125-250 Hz over music+voice
+FAIL  hero body character-reprise main band 250-500 Hz lifted 1.1 dB (needs 3)
+pass  sync shell-spin        peak 0.00 frames from its cue
+pass  audible shell-spin     stands out by 6.9 dB in 125-250 Hz over music+voice
+pass  sync particle-arrival  peak 0.00 frames from its cue
+pass  audible particle-arrival stands out by 2.3 dB in 250-500 Hz over music+voice
+pass  sync glyph-dark-gold   peak 0.00 frames from its cue
+pass  audible glyph-dark-gold stands out by 14.2 dB in 500-1000 Hz over music+voice
+pass  hero body glyph-dark-gold main band 250-500 Hz lifted 3.3 dB (needs 3)
+pass  sync glyph-translucent peak 0.00 frames from its cue
+pass  audible glyph-translucent stands out by 1.5 dB in 500-1000 Hz over music+voice
+pass  sync script-arrival    peak 0.00 frames from its cue
+FAIL  audible script-arrival stands out by 1.4 dB in 500-1000 Hz over music+voice
+pass  sync responsive-reflow peak 0.00 frames from its cue
+pass  audible responsive-reflow stands out by 1.9 dB in 125-250 Hz over music+voice
+pass  sync script-whirl      peak 0.00 frames from its cue
+pass  audible script-whirl   stands out by 2.2 dB in 1000-2000 Hz over music+voice
+pass  sync storyboard-arrival peak 0.00 frames from its cue
+pass  audible storyboard-arrival stands out by 2.9 dB in 250-500 Hz over music+voice
+FAIL  hero body storyboard-arrival main band 250-500 Hz lifted 2.9 dB (needs 3)
+pass  sync canvas-typing-6   peak 0.00 frames from its cue
+FAIL  audible canvas-typing-6 stands out by 0.8 dB in 1000-2000 Hz over music+voice
+pass  sync canvas-typing-8   peak 0.00 frames from its cue
+pass  audible canvas-typing-8 stands out by 4.3 dB in 1000-2000 Hz over music+voice
+pass  sync canvas-tear       peak 0.00 frames from its cue
+pass  audible canvas-tear    stands out by 2.1 dB in 500-1000 Hz over music+voice
+pass  sync canvas-pullback   peak 0.00 frames from its cue
+pass  audible canvas-pullback stands out by 2.1 dB in 4000-8000 Hz over music+voice
+pass  sync canvas-erase      peak 0.00 frames from its cue
+pass  audible canvas-erase   stands out by 2.2 dB in 125-250 Hz over music+voice
+pass  sync logo-landing      peak 0.00 frames from its cue
+pass  audible logo-landing   stands out by 9.0 dB in 500-1000 Hz over music+voice
+pass  hero body logo-landing main band 250-500 Hz lifted 3.2 dB (needs 3)
+pass  sync logo-exit         peak 0.00 frames from its cue
+pass  audible logo-exit      stands out by 1.9 dB in 4000-8000 Hz over music+voice
+pass  music                  median -15.8 LUFS short-term; unplanned dips at []
+pass  silence                none
+
+FAILED: 6 failed, 2 warnings. Picture: .tmp/codila-audio/attempt-2/audio\qa.png

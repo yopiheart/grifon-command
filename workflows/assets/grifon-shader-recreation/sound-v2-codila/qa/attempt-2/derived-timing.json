@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "status": "CUE_EXPORT_ONLY_NOT_MIXED_OR_LISTENED",
+  "recipe": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/selection-recipe-v2.json",
+    "sha256": "662caba720c2d1bd33f61e4d4e1ab9a3c484f11cae7966b974b82c40b98f41b7"
+  },
+  "exporter": {
+    "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/export-cues-v2.mjs",
+    "sha256": "a6fe8d09cb260b532f2bf063336747169fee86472e63e5def50f45d8ed70a442"
+  },
+  "pictureSources": [
+    {
+      "path": "workflows/assets/grifon-shader-recreation/pilot.json",
+      "bytes": 1542,
+      "sha256": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/pilot.js",
+      "bytes": 5389,
+      "sha256": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/surfaces.frag",
+      "bytes": 17867,
+      "sha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    }
+  ],
+  "toolkit": {
+    "repository": "https://github.com/Bodila51/opus-sound-layer",
+    "commit": "c113911c9d47e050569521f97fb88971cd4b07a3",
+    "sourceDiffAgainstPin": "PASS",
+    "files": [
+      {
+        "path": ".tmp/codila-audio/sound-layer/PROMPT.md",
+        "sha256": "607d1f998f828651070902ea1bb7fe5f92ba0b765f071983e1e98a0ae445a559"
+      },
+      {
+        "path": ".tmp/codila-audio/sound-layer/scripts/mix.py",
+        "sha256": "610e51252e82fd8ce2b72453349840dc28028301d879a9464d9edba50a24c957"
+      },
+      {
+        "path": ".tmp/codila-audio/sound-layer/scripts/qa.py",
+        "sha256": "be3500b845d1f380367ea49de056921f60b70bfe7b12cd8df253d290f20468ad"
+      },
+      {
+        "path": ".tmp/codila-audio/sound-layer/scripts/sfx.py",
+        "sha256": "fc3f978ee421d755855e10176d5e1a666ab927c0e88bbc8534c9f842e3ccf680"
+      },
+      {
+        "path": ".tmp/codila-audio/sound-layer/scripts/kit.json",
+        "sha256": "2930a6e639ab9757e7672de6ee9915e855971b6eb2c4f4a509bed01823217757"
+      }
+    ]
+  },
+  "music": {
+    "path": ".tmp/codila-audio/digital-clouds-31.146667.wav",
+    "bytes": 8970386,
+    "sha256": "388566baa82822655460f8367c01c1f906c2395913fbc61f01643e536df14cf5",
+    "timing": "prepared source 0 to native audio duration; no loop"
+  },
+  "kit": {
+    "path": ".tmp/codila-audio/selected-kit-v2",
+    "approval": "Selected recording rights, sidecars and sheets are a separate root-owned gate; this exporter does not approve audio"
+  },
+  "fpsNumerator": 30000,
+  "fpsDenominator": 1001,
+  "videoFrames": 932,
+  "sampleRate": 48000,
+  "sampleFrames": 1495040,
+  "heroGapsSeconds": [
+    4.237566666666667,
+    4.5045,
+    3.8371666666666666,
+    3.6036,
+    3.2699333333333334
+  ],
+  "meanHeroGapSeconds": 3.890553333333334,
+  "cues": [
+    {
+      "frame": 29,
+      "actionWindow": [
+        26,
+        32
+      ],
+      "derivative": 0.21666666666666656,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": "pilot.json#/camera/entryZoom",
+      "id": "first-lens-move",
+      "role": "Peak first-lens entry zoom; a movement rather than a hard-cut impact",
+      "sound": "whoosh",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 0.9676333333333333
+    },
+    {
+      "frame": 67,
+      "actionWindow": [
+        57,
+        76
+      ],
+      "derivative": 0.08360693978714095,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": "pilot.json#/camera/reversePitch",
+      "id": "lens-reverse",
+      "role": "Peak speed of the lens reverse pitch",
+      "sound": "whoosh",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 2.2355666666666667
+    },
+    {
+      "frame": 82,
+      "reference": "pilot.json#/cuts/ring",
+      "method": "authored action boundary",
+      "id": "ring-arrival",
+      "role": "Ring replaces the lens",
+      "sound": "thump+tap",
+      "weight": "hero",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 2.736066666666667
+    },
+    {
+      "frame": 111,
+      "reference": "pilot.json#/cuts/carbon",
+      "method": "authored action boundary",
+      "id": "ring-carbon",
+      "role": "Carbon ring material change",
+      "sound": "click",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 3.7037
+    },
+    {
+      "frame": 209,
+      "reference": "pilot.json#/cuts/grayscale",
+      "method": "authored action boundary",
+      "id": "relief-grayscale",
+      "role": "Relief desaturation change",
+      "sound": "thump+tap",
+      "weight": "hero",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 6.973633333333333
+    },
+    {
+      "frame": 264,
+      "actionWindow": [
+        255,
+        285
+      ],
+      "derivative": 0.5847483095416983,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": [
+        "full.json#/camera/catalogFrames",
+        "full.json#/camera/catalogDistance"
+      ],
+      "id": "catalog-out",
+      "role": "Peak outward catalog camera distance change",
+      "sound": "whoosh",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 8.8088
+    },
+    {
+      "frame": 307,
+      "reference": "full.json#/shots/6/start",
+      "method": "authored action boundary",
+      "id": "capability-arrival",
+      "role": "Full capability lens replaces the small lens transition",
+      "sound": "tap",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 10.243566666666666
+    },
+    {
+      "frame": 344,
+      "reference": "full.json#/shots/7/start",
+      "method": "authored action boundary",
+      "id": "character-reprise",
+      "role": "Character texture replaces the capability lens",
+      "sound": "thump+tap",
+      "weight": "hero",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 11.478133333333334
+    },
+    {
+      "frame": 373,
+      "actionWindow": [
+        357,
+        376
+      ],
+      "derivative": 0.5320699708454812,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": [
+        "full.json#/camera/shellFrames",
+        "full.json#/camera/shellRotationZ"
+      ],
+      "id": "shell-spin",
+      "role": "Peak authored shell Z rotation speed",
+      "sound": "swish",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 12.445766666666668
+    },
+    {
+      "frame": 417,
+      "reference": "full.json#/shots/16/start",
+      "method": "authored action boundary",
+      "id": "particle-arrival",
+      "role": "Particle ribbon replaces the black interruption",
+      "sound": "tap",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 13.9139
+    },
+    {
+      "frame": 459,
+      "reference": "full.json#/shots/18/start",
+      "method": "authored action boundary",
+      "id": "glyph-dark-gold",
+      "role": "Major cream-to-dark-gold glyph scene change",
+      "sound": "thump+tap",
+      "weight": "hero",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 15.3153
+    },
+    {
+      "frame": 483,
+      "reference": "full.json#/shots/20/start",
+      "method": "authored action boundary",
+      "id": "glyph-translucent",
+      "role": "Final translucent material scene change",
+      "sound": "tap",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 16.1161
+    },
+    {
+      "frame": 496,
+      "reference": "full.json#/shots/21/start",
+      "method": "authored action boundary",
+      "id": "script-arrival",
+      "role": "Desktop script UI replaces the glyph",
+      "sound": "click",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 16.549866666666667
+    },
+    {
+      "frame": 516,
+      "actionWindow": [
+        514,
+        518
+      ],
+      "derivative": 0.34375,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": "full.json#/shots/22",
+      "sourceExpression": "smooth(514,518,frame)",
+      "id": "responsive-reflow",
+      "role": "Peak smooth opacity and scale change of the responsive mobile UI",
+      "sound": "swish",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 17.2172
+    },
+    {
+      "frame": 541,
+      "reference": "full.json#/shots/24/start",
+      "method": "authored action boundary",
+      "id": "script-whirl",
+      "role": "Whirl composition replaces the static script view",
+      "sound": "whoosh",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 18.051366666666667
+    },
+    {
+      "frame": 567,
+      "reference": "full.json#/shots/26/start",
+      "method": "authored action boundary",
+      "id": "storyboard-arrival",
+      "role": "Storyboard UI replaces the alternate script",
+      "sound": "thump+tap",
+      "weight": "hero",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 18.9189
+    },
+    {
+      "frame": 590,
+      "reference": [
+        "full.json#/copy/canvas",
+        "full.json#/shots/27"
+      ],
+      "method": "first frame where the source character-count expression increases; only authored spaced character indices selected",
+      "suffix": "6",
+      "character": "E",
+      "sourceExpression": "Math.floor((frame-586)*.30)+5",
+      "id": "canvas-typing-6",
+      "role": "Each newly visible non-space canvas character",
+      "sound": "key",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0,
+      "seconds": 19.686333333333334
+    },
+    {
+      "frame": 596,
+      "reference": [
+        "full.json#/copy/canvas",
+        "full.json#/shots/27"
+      ],
+      "method": "first frame where the source character-count expression increases; only authored spaced character indices selected",
+      "suffix": "8",
+      "character": "A",
+      "sourceExpression": "Math.floor((frame-586)*.30)+5",
+      "id": "canvas-typing-8",
+      "role": "Each newly visible non-space canvas character",
+      "sound": "key",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0,
+      "seconds": 19.886533333333333
+    },
+    {
+      "frame": 608,
+      "reference": "full.json#/shots/28/start",
+      "method": "authored action boundary",
+      "id": "canvas-tear",
+      "role": "Canvas tear replaces the typed canvas",
+      "sound": "click",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 20.286933333333334
+    },
+    {
+      "frame": 627,
+      "actionWindow": [
+        626,
+        635
+      ],
+      "derivative": 0.0990990990990992,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": "full.json#/shots/30",
+      "sourceExpression": "const pull=frame>=626?1.+(frame-626)*.11:1.;",
+      "id": "canvas-pullback",
+      "role": "Peak inverse-scale speed of the canvas pullback",
+      "sound": "whoosh",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 20.9209
+    },
+    {
+      "frame": 636,
+      "reference": "full.json#/shots/31/start",
+      "method": "authored action boundary",
+      "id": "canvas-erase",
+      "role": "Erase composition replaces the pullback",
+      "sound": "swish",
+      "weight": "support",
+      "visual": "cut",
+      "pan": 0,
+      "seconds": 21.2212
+    },
+    {
+      "frame": 665,
+      "reference": "full.json#/camera/endOnset/1",
+      "method": "end of authored smooth onset; picture QA must confirm visual settling",
+      "id": "logo-landing",
+      "role": "Logo onset opacity reaches its authored landing",
+      "sound": "thump+tap",
+      "weight": "hero",
+      "visual": "land",
+      "pan": 0,
+      "seconds": 22.188833333333335
+    },
+    {
+      "frame": 842,
+      "actionWindow": [
+        834,
+        853
+      ],
+      "derivative": 0.08774499423052917,
+      "method": "maximum absolute first discrete derivative; difference belongs to its arrival frame",
+      "reference": "full.json#/camera/endExit",
+      "sourceExpression": "opacity=onset*Math.pow(exit,1.35)",
+      "opacityExponent": 1.35,
+      "id": "logo-exit",
+      "role": "Peak derivative of the actual source logo-exit opacity, including its source exponent",
+      "sound": "whoosh",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0,
+      "seconds": 28.094733333333334
+    }
+  ],
+  "warnings": [
+    "A source action boundary is not proof of an encoded picture cut. Original qa.py must inspect the muxed film.",
+    "Logo settling and small typing/reflow actions may produce meaningful picture warnings or failures; retain and explain them.",
+    "Upstream QA and source verdicts do not establish auditory quality. A human must listen to the complete candidate."
+  ]
+}

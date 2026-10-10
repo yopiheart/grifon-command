@@ -1,0 +1,600 @@
+{
+ "passed": false,
+ "results": [
+  {
+   "check": "offset",
+   "status": "pass",
+   "detail": "encoded audio vs mix.wav: worst 0 samples (0.00 ms), lags [0, 0, 0]"
+  },
+  {
+   "check": "loudness",
+   "status": "pass",
+   "detail": "integrated -16.21 LUFS, target -16"
+  },
+  {
+   "check": "true peak",
+   "status": "pass",
+   "detail": "-1.18 dBTP (limit -1.0)"
+  },
+  {
+   "check": "picture first-lens",
+   "status": "FAIL",
+   "detail": "cut at frame 26: largest change at frame 26 (5.9 vs local 6.6)"
+  },
+  {
+   "check": "picture lens-reverse",
+   "status": "pass",
+   "detail": "move at frame 67: motion peak at frame 68"
+  },
+  {
+   "check": "picture ring-arrival",
+   "status": "pass",
+   "detail": "cut at frame 82: largest change at frame 82 (188.2 vs local 1.6)"
+  },
+  {
+   "check": "picture ring-gold",
+   "status": "pass",
+   "detail": "cut at frame 97: largest change at frame 97 (16.4 vs local 1.3)"
+  },
+  {
+   "check": "picture ring-carbon",
+   "status": "pass",
+   "detail": "cut at frame 111: largest change at frame 111 (21.4 vs local 1.2)"
+  },
+  {
+   "check": "picture ring-colored-glass",
+   "status": "pass",
+   "detail": "cut at frame 132: largest change at frame 132 (26.3 vs local 1.1)"
+  },
+  {
+   "check": "picture relief-arrival",
+   "status": "FAIL",
+   "detail": "cut at frame 145: largest change at frame 145 (10.1 vs local 4.3)"
+  },
+  {
+   "check": "picture relief-materials-1",
+   "status": "warn",
+   "detail": "cut at frame 163: largest change at frame 163 (1.9 vs local 4.4)"
+  },
+  {
+   "check": "picture relief-materials-2",
+   "status": "warn",
+   "detail": "cut at frame 177: largest change at frame 178 (3.6 vs local 5.0)"
+  },
+  {
+   "check": "picture relief-materials-3",
+   "status": "warn",
+   "detail": "cut at frame 188: largest change at frame 187 (8.9 vs local 10.6)"
+  },
+  {
+   "check": "picture relief-materials-4",
+   "status": "warn",
+   "detail": "cut at frame 198: largest change at frame 197 (10.1 vs local 10.0)"
+  },
+  {
+   "check": "picture relief-grayscale",
+   "status": "pass",
+   "detail": "cut at frame 209: largest change at frame 209 (52.0 vs local 4.2)"
+  },
+  {
+   "check": "picture macro-rosette",
+   "status": "pass",
+   "detail": "cut at frame 222: largest change at frame 222 (138.3 vs local 1.4)"
+  },
+  {
+   "check": "picture macro-aperture",
+   "status": "pass",
+   "detail": "cut at frame 238: largest change at frame 238 (69.4 vs local 8.8)"
+  },
+  {
+   "check": "picture catalog-out",
+   "status": "pass",
+   "detail": "move at frame 264: motion peak at frame 264"
+  },
+  {
+   "check": "picture capability-arrival",
+   "status": "pass",
+   "detail": "cut at frame 307: largest change at frame 307 (126.3 vs local 2.3)"
+  },
+  {
+   "check": "picture character-reprise",
+   "status": "pass",
+   "detail": "cut at frame 344: largest change at frame 344 (219.1 vs local 1.2)"
+  },
+  {
+   "check": "picture shell-spin",
+   "status": "pass",
+   "detail": "move at frame 373: motion peak at frame 374"
+  },
+  {
+   "check": "picture particle-arrival",
+   "status": "pass",
+   "detail": "cut at frame 417: largest change at frame 417 (101.3 vs local 1.4)"
+  },
+  {
+   "check": "picture glyph-materials-glyph-dark-gold",
+   "status": "pass",
+   "detail": "cut at frame 459: largest change at frame 459 (79.9 vs local 1.8)"
+  },
+  {
+   "check": "picture glyph-materials-glyph-rounded-gold",
+   "status": "pass",
+   "detail": "cut at frame 471: largest change at frame 471 (104.3 vs local 1.8)"
+  },
+  {
+   "check": "picture glyph-materials-glyph-translucent",
+   "status": "pass",
+   "detail": "cut at frame 483: largest change at frame 483 (74.7 vs local 1.7)"
+  },
+  {
+   "check": "picture script-arrival",
+   "status": "pass",
+   "detail": "cut at frame 496: largest change at frame 496 (107.4 vs local 1.0)"
+  },
+  {
+   "check": "picture responsive-reflow",
+   "status": "pass",
+   "detail": "move at frame 516: motion peak at frame 518"
+  },
+  {
+   "check": "picture script-whirl",
+   "status": "pass",
+   "detail": "cut at frame 541: largest change at frame 541 (15.0 vs local 1.0)"
+  },
+  {
+   "check": "picture storyboard-arrival",
+   "status": "pass",
+   "detail": "cut at frame 567: largest change at frame 567 (18.5 vs local 1.4)"
+  },
+  {
+   "check": "picture canvas-arrival",
+   "status": "pass",
+   "detail": "cut at frame 586: largest change at frame 586 (136.9 vs local 1.9)"
+  },
+  {
+   "check": "picture canvas-typing-6",
+   "status": "warn",
+   "detail": "appear at frame 590: change at frame 591 (1.33 vs local 1.24)"
+  },
+  {
+   "check": "picture canvas-typing-8",
+   "status": "warn",
+   "detail": "appear at frame 596: change at frame 596 (1.51 vs local 1.30)"
+  },
+  {
+   "check": "picture canvas-typing-9",
+   "status": "pass",
+   "detail": "appear at frame 600: change at frame 600 (5.40 vs local 1.31)"
+  },
+  {
+   "check": "picture canvas-typing-10",
+   "status": "warn",
+   "detail": "appear at frame 603: change at frame 603 (1.51 vs local 1.30)"
+  },
+  {
+   "check": "picture canvas-tear",
+   "status": "pass",
+   "detail": "cut at frame 608: largest change at frame 608 (29.9 vs local 2.3)"
+  },
+  {
+   "check": "picture canvas-pullback",
+   "status": "pass",
+   "detail": "move at frame 627: motion peak at frame 627"
+  },
+  {
+   "check": "picture canvas-erase",
+   "status": "pass",
+   "detail": "cut at frame 636: largest change at frame 637 (39.1 vs local 3.9)"
+  },
+  {
+   "check": "picture logo-landing",
+   "status": "pass",
+   "detail": "land at frame 665: motion stops at frame 666"
+  },
+  {
+   "check": "picture logo-exit",
+   "status": "warn",
+   "detail": "move at frame 844: motion peak at frame 841"
+  },
+  {
+   "check": "sync first-lens",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible first-lens",
+   "status": "pass",
+   "detail": "stands out by 8.6 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "hero body first-lens",
+   "status": "FAIL",
+   "detail": "main band 125-250 Hz lifted 2.5 dB (needs 3)"
+  },
+  {
+   "check": "sync lens-reverse",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible lens-reverse",
+   "status": "pass",
+   "detail": "stands out by 1.9 dB in 2000-4000 Hz over music+voice"
+  },
+  {
+   "check": "sync ring-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible ring-arrival",
+   "status": "pass",
+   "detail": "stands out by 1.9 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync ring-gold",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible ring-gold",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync ring-carbon",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible ring-carbon",
+   "status": "pass",
+   "detail": "stands out by 2.8 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync ring-colored-glass",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible ring-colored-glass",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync relief-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible relief-arrival",
+   "status": "pass",
+   "detail": "stands out by 15.4 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "hero body relief-arrival",
+   "status": "pass",
+   "detail": "main band 125-250 Hz lifted 9.9 dB (needs 3)"
+  },
+  {
+   "check": "sync relief-materials-1",
+   "status": "pass",
+   "detail": "peak 0.02 frames from its cue"
+  },
+  {
+   "check": "audible relief-materials-1",
+   "status": "pass",
+   "detail": "stands out by 2.5 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync relief-materials-2",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible relief-materials-2",
+   "status": "FAIL",
+   "detail": "stands out by 1.2 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync relief-materials-3",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible relief-materials-3",
+   "status": "pass",
+   "detail": "stands out by 1.7 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync relief-materials-4",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible relief-materials-4",
+   "status": "pass",
+   "detail": "stands out by 2.9 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync relief-grayscale",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible relief-grayscale",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync macro-rosette",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible macro-rosette",
+   "status": "FAIL",
+   "detail": "stands out by 0.9 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync macro-aperture",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible macro-aperture",
+   "status": "pass",
+   "detail": "stands out by 2.3 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "sync catalog-out",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible catalog-out",
+   "status": "FAIL",
+   "detail": "stands out by 0.4 dB in 250-500 Hz over music+voice"
+  },
+  {
+   "check": "sync capability-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible capability-arrival",
+   "status": "pass",
+   "detail": "stands out by 8.2 dB in 250-500 Hz over music+voice"
+  },
+  {
+   "check": "hero body capability-arrival",
+   "status": "pass",
+   "detail": "main band 125-250 Hz lifted 7.0 dB (needs 3)"
+  },
+  {
+   "check": "sync character-reprise",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible character-reprise",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "sync shell-spin",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible shell-spin",
+   "status": "FAIL",
+   "detail": "stands out by 0.8 dB in 250-500 Hz over music+voice"
+  },
+  {
+   "check": "sync particle-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible particle-arrival",
+   "status": "pass",
+   "detail": "stands out by 3.6 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "hero body particle-arrival",
+   "status": "FAIL",
+   "detail": "main band 125-250 Hz lifted 2.8 dB (needs 3)"
+  },
+  {
+   "check": "sync glyph-materials-glyph-dark-gold",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible glyph-materials-glyph-dark-gold",
+   "status": "FAIL",
+   "detail": "stands out by 1.4 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync glyph-materials-glyph-rounded-gold",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible glyph-materials-glyph-rounded-gold",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync glyph-materials-glyph-translucent",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible glyph-materials-glyph-translucent",
+   "status": "pass",
+   "detail": "stands out by 2.7 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync script-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible script-arrival",
+   "status": "pass",
+   "detail": "stands out by 2.5 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync responsive-reflow",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible responsive-reflow",
+   "status": "pass",
+   "detail": "stands out by 1.7 dB in 125-250 Hz over music+voice"
+  },
+  {
+   "check": "sync script-whirl",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible script-whirl",
+   "status": "pass",
+   "detail": "stands out by 2.5 dB in 125-250 Hz over music+voice"
+  },
+  {
+   "check": "sync storyboard-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible storyboard-arrival",
+   "status": "pass",
+   "detail": "stands out by 18.9 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "hero body storyboard-arrival",
+   "status": "FAIL",
+   "detail": "main band 125-250 Hz lifted 1.4 dB (needs 3)"
+  },
+  {
+   "check": "sync canvas-arrival",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-arrival",
+   "status": "FAIL",
+   "detail": "stands out by -0.3 dB in 250-500 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-typing-6",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-typing-6",
+   "status": "FAIL",
+   "detail": "stands out by 0.1 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-typing-8",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-typing-8",
+   "status": "pass",
+   "detail": "stands out by 4.2 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-typing-9",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-typing-9",
+   "status": "FAIL",
+   "detail": "stands out by 0.3 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-typing-10",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-typing-10",
+   "status": "pass",
+   "detail": "stands out by 3.6 dB in 1000-2000 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-tear",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-tear",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-pullback",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-pullback",
+   "status": "pass",
+   "detail": "stands out by 2.1 dB in 4000-8000 Hz over music+voice"
+  },
+  {
+   "check": "sync canvas-erase",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible canvas-erase",
+   "status": "pass",
+   "detail": "stands out by 2.8 dB in 250-500 Hz over music+voice"
+  },
+  {
+   "check": "sync logo-landing",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible logo-landing",
+   "status": "pass",
+   "detail": "stands out by 15.3 dB in 500-1000 Hz over music+voice"
+  },
+  {
+   "check": "hero body logo-landing",
+   "status": "FAIL",
+   "detail": "main band 125-250 Hz lifted 2.3 dB (needs 3)"
+  },
+  {
+   "check": "sync logo-exit",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible logo-exit",
+   "status": "pass",
+   "detail": "stands out by 6.6 dB in 250-500 Hz over music+voice"
+  },
+  {
+   "check": "music",
+   "status": "pass",
+   "detail": "median -15.7 LUFS short-term; unplanned dips at []"
+  },
+  {
+   "check": "silence",
+   "status": "pass",
+   "detail": "none"
+  }
+ ]
+}

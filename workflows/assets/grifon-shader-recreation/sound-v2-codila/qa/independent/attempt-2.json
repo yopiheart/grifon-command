@@ -1,0 +1,915 @@
+{
+  "schemaVersion": 1,
+  "status": "INDEPENDENT_TECHNICAL_AUDIO_FAIL",
+  "completedAt": "2026-10-10T08:37:47.399122+00:00",
+  "candidate": {
+    "path": ".tmp/codila-audio/attempt-2/candidate.mp4",
+    "bytes": 25230219,
+    "sha256": "fead0215c187016b0409c76d26189d2ced7de191f42ee6a4339b350f065916dc"
+  },
+  "inputs": {
+    "cues": {
+      "path": ".tmp/codila-audio/attempt-2/audio/cues.json",
+      "bytes": 4743,
+      "sha256": "395e459f680661cff400a7fa8b637fd83d49111a749384ace878f248a8c0070a"
+    },
+    "timing": {
+      "path": ".tmp/codila-audio/attempt-2/audio/derived-timing.json",
+      "bytes": 13564,
+      "sha256": "7f371dee7cf41c78bf53411fdbac956645a7b6b37c0d994711876d02f90eaeb4"
+    },
+    "listen": {
+      "path": ".tmp/codila-audio/attempt-2/audio/LISTEN.md",
+      "bytes": 1421,
+      "sha256": "343395a61ef671c71c9b0a469ed30c3673c254c7a08c71726d41f8e2f6863dab"
+    },
+    "selection": {
+      "path": ".tmp/codila-audio/selection-v2.json",
+      "bytes": 3727,
+      "sha256": "28259bae8dcbbf2d8e704ba6a484cb5a15617faf8de78b7a6ff392023c37229a"
+    },
+    "mix": {
+      "path": ".tmp/codila-audio/attempt-2/audio/mix.wav",
+      "bytes": 8970284,
+      "sha256": "10dffda05a6df4314f2de99be194c42d5c2659fe777cde2dd26b80aed2ebf358"
+    },
+    "mixReport": {
+      "path": ".tmp/codila-audio/attempt-2/audio/mix-report.json",
+      "bytes": 10448,
+      "sha256": "a89855f06eb857ba657d12fcd7a409a05e99d9cc7f7228f143e55846ab2e5198"
+    },
+    "baseline": {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v2-codila/qa/independent/baseline-v1.json",
+      "bytes": 29482,
+      "sha256": "6100226bb853bcb06dc480965a07054bd575571deef328d8355b14a94acc323a"
+    },
+    "qaScript": {
+      "path": ".tmp/codila-audio/independent/verify_candidate.py",
+      "bytes": 23447,
+      "sha256": "51e71820321edfa368bb041405de28bb5a928cc647017f0ccdb9b5175ebbcd67"
+    },
+    "ffmpeg": {
+      "path": "C:/Users/ADMIN/Desktop/grifon-command/node_modules/ffmpeg-static/ffmpeg.exe",
+      "bytes": 81114624,
+      "sha256": "e9fd5e711debab9d680955fc1e38a2c1160fd280b144476cc3f62bc43ef49db1"
+    },
+    "ffprobe": {
+      "path": "C:/Users/ADMIN/Desktop/grifon-command/.tools/media-runtime/node_modules/ffprobe-static/bin/win32/x64/ffprobe.exe",
+      "bytes": 63059968,
+      "sha256": "4303ec85855340689b1f8aa5d9c1dc06ef3e3090682de3034edc3fca2b0798d5"
+    }
+  },
+  "checksPassed": 21,
+  "checksFailed": 1,
+  "checks": [
+    {
+      "check": "frozen-originals-and-upstream",
+      "status": "PASS",
+      "detail": {
+        "filesChecked": 20,
+        "changed": []
+      }
+    },
+    {
+      "check": "independently-derived-cue-frames",
+      "status": "PASS",
+      "detail": {
+        "cueCount": 23,
+        "independentlyExpected": 23,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "cue-provenance-bindings",
+      "status": "PASS",
+      "detail": {
+        "changed": [],
+        "timingCues": 23,
+        "sampleFrames": 1495040
+      }
+    },
+    {
+      "check": "native-duration-and-recorded-only-cues",
+      "status": "PASS",
+      "detail": {
+        "sampleFrames": 1495040,
+        "fps": 29.97002997002997,
+        "voice": [],
+        "synth": false
+      }
+    },
+    {
+      "check": "selected-recording-lineage",
+      "status": "PASS",
+      "detail": {
+        "selectedFiles": [
+          {
+            "file": {
+              "path": ".tmp/codila-audio/selected-kit-v2/click/click-1.wav",
+              "bytes": 13412,
+              "sha256": "d21973b73ba7e92a50e5f623f6fd9cde7c97e9c7f46264ad1d8a65caf083d71e"
+            },
+            "sidecar": {
+              "path": ".tmp/codila-audio/selected-kit-v2/click/click-1.json",
+              "bytes": 571,
+              "sha256": "dae98cbf05de32e31880da044c60792c343f96d589072cc956d5661453a79e60"
+            },
+            "originalRaw": {
+              "path": ".tmp/codila-audio/kit/_raw/click-1.mp3",
+              "bytes": 300480,
+              "sha256": "4d174395b4fabf4806bdafa121f39b89ae9b0269681debc3710760be80fbc346"
+            },
+            "source": {
+              "title": "mouse clicks",
+              "creator": "chestnutjam",
+              "license": "cc0",
+              "url": "https://cdn.freesound.org/previews/399/399443_2955613-hq.mp3",
+              "landing": "https://freesound.org/people/chestnutjam/sounds/399443"
+            },
+            "verdict": "ok"
+          },
+          {
+            "file": {
+              "path": ".tmp/codila-audio/selected-kit-v2/key/key-2.wav",
+              "bytes": 8904,
+              "sha256": "344adcc3e542a47bc6cfd14bfadbe8c37108284347275e6af209abc3084010c7"
+            },
+            "sidecar": {
+              "path": ".tmp/codila-audio/selected-kit-v2/key/key-2.json",
+              "bytes": 557,
+              "sha256": "f1ba2b1702af814b29fb2878ba8b12fb56c367841f00134afcc031fadbc49012"
+            },
+            "originalRaw": {
+              "path": ".tmp/codila-audio/kit/_raw/key-2.mp3",
+              "bytes": 11689,
+              "sha256": "d1735e6d2ea8ae5769c7bfe1d883428a7fabe54a33cb71fc2a99d77de1d9d058"
+            },
+            "source": {
+              "title": "keyboard5.wav",
+              "creator": "jim-ph",
+              "license": "cc0",
+              "url": "https://cdn.freesound.org/previews/194/194799_670763-hq.mp3",
+              "landing": "https://freesound.org/people/jim-ph/sounds/194799"
+            },
+            "verdict": "ok"
+          },
+          {
+            "file": {
+              "path": ".tmp/codila-audio/selected-kit-v2/swish/swish-2.wav",
+              "bytes": 22614,
+              "sha256": "f7d796b94f07daa6c4b29d40a4c6659ece47ea37a19303b10f85c42fa1e7ae94"
+            },
+            "sidecar": {
+              "path": ".tmp/codila-audio/selected-kit-v2/swish/swish-2.json",
+              "bytes": 569,
+              "sha256": "0ffa30d6385f620fd55fde7e748364555e720cb773ec8eb6c8bbf59f320beffb"
+            },
+            "originalRaw": {
+              "path": ".tmp/codila-audio/kit/_raw/swish-2.mp3",
+              "bytes": 59283,
+              "sha256": "e9462ab00cc456ed717daca53a525e901f98a8502df9b9ecfd6c11c8afba6963"
+            },
+            "source": {
+              "title": "Fabrics.mp3",
+              "creator": "livvy0221",
+              "license": "cc0",
+              "url": "https://cdn.freesound.org/previews/467/467264_4440707-hq.mp3",
+              "landing": "https://freesound.org/people/livvy0221/sounds/467264"
+            },
+            "verdict": "ok"
+          },
+          {
+            "file": {
+              "path": ".tmp/codila-audio/selected-kit-v2/tap/tap-1.wav",
+              "bytes": 16166,
+              "sha256": "5d09229712afbc96ee4613f0c2c6ed5a70693cfb37f8f7e572e673e6285cacae"
+            },
+            "sidecar": {
+              "path": ".tmp/codila-audio/selected-kit-v2/tap/tap-1.json",
+              "bytes": 552,
+              "sha256": "9c9d5d5b35357f5597fa3ba80059425a9609c1e23f589201add48bde03ffade6"
+            },
+            "originalRaw": {
+              "path": ".tmp/codila-audio/kit/_raw/tap-1.mp3",
+              "bytes": 24212,
+              "sha256": "e1635813031d126a04d8db80ab8bf95c61299e4891241695aada36d8508910d9"
+            },
+            "source": {
+              "title": "Wood Knock",
+              "creator": "Mrguff",
+              "license": "cc0",
+              "url": "https://cdn.freesound.org/previews/369/369710_2855293-hq.mp3",
+              "landing": "https://freesound.org/people/Mrguff/sounds/369710"
+            },
+            "verdict": "ok"
+          },
+          {
+            "file": {
+              "path": ".tmp/codila-audio/selected-kit-v2/thump/thump-2.wav",
+              "bytes": 31880,
+              "sha256": "551db85a3fed93c083a23153371223d92df5dbd7c6d313b32a732ec967074f5f"
+            },
+            "sidecar": {
+              "path": ".tmp/codila-audio/selected-kit-v2/thump/thump-2.json",
+              "bytes": 593,
+              "sha256": "826b01deb3b4afa0dcba2a0f3bd8ed6bd7cf0b96d558eb9be843c11191c42792"
+            },
+            "originalRaw": {
+              "path": ".tmp/codila-audio/kit/_raw/thump-2.mp3",
+              "bytes": 20880,
+              "sha256": "d03061d7fea6b4e8405ae09d187344b9841a0fbd85ab26090e4370ee9c69fbe0"
+            },
+            "source": {
+              "title": "Dull Decompression Punch Impact Explodes 96kHz",
+              "creator": "qubodup",
+              "license": "cc0",
+              "url": "https://cdn.freesound.org/previews/71/71274_71257-hq.mp3",
+              "landing": "https://freesound.org/people/qubodup/sounds/71274"
+            },
+            "verdict": "ok"
+          },
+          {
+            "file": {
+              "path": ".tmp/codila-audio/selected-kit-v2/whoosh/whoosh-1.wav",
+              "bytes": 44616,
+              "sha256": "6f9b899481250cb6f348182b3423e15471a334a8fe60c2d4399fb2b5ff9dd640"
+            },
+            "sidecar": {
+              "path": ".tmp/codila-audio/selected-kit-v2/whoosh/whoosh-1.json",
+              "bytes": 577,
+              "sha256": "45238ed6c2fbf0e74f024883b78e6fc3153cba2cb24a4b930a3c2c68b4809894"
+            },
+            "originalRaw": {
+              "path": ".tmp/codila-audio/kit/_raw/whoosh-1.mp3",
+              "bytes": 18624,
+              "sha256": "54658039d8fada83f60cd2bb1696ae01d3fd25a0cef3b8d05faea05612f932d1"
+            },
+            "source": {
+              "title": "FX - Swoosh - Light",
+              "creator": "bolkmar",
+              "license": "cc0",
+              "url": "https://cdn.freesound.org/previews/475/475132_2927958-hq.mp3",
+              "landing": "https://freesound.org/people/bolkmar/sounds/475132"
+            },
+            "verdict": "ok"
+          }
+        ],
+        "eventCount": 23,
+        "errors": [],
+        "declaration": "Original pinned upstream CC0 declarations; no new legal clearance opinion"
+      }
+    },
+    {
+      "check": "music-start-zero-region-exact-pcm24",
+      "status": "PASS",
+      "detail": {
+        "sampleFrames": 1495040,
+        "sampleRate": 48000,
+        "channels": 2,
+        "bytesPerSample": 3,
+        "sourceStartSample": 0,
+        "sourcePcmSha256": "e3e2a147cdea2b0f1e78165ff5c55e76a357f566ff1ef3440c735151c2ebb2fe",
+        "preparedPcmSha256": "e3e2a147cdea2b0f1e78165ff5c55e76a357f566ff1ef3440c735151c2ebb2fe",
+        "note": "Read-only decode using the exact recorded preparation filter, not a new source trim or mix artifact."
+      }
+    },
+    {
+      "check": "master-native-samples-and-finite",
+      "status": "PASS",
+      "detail": {
+        "sampleFrames": 1495040,
+        "channels": 2,
+        "sampleRate": 48000,
+        "finite": true,
+        "samplePeak": 0.7938230037689209,
+        "clippedSamples": 0
+      }
+    },
+    {
+      "check": "prelimiter-stems-finite-and-present",
+      "status": "PASS",
+      "detail": {
+        "music": {
+          "sampleFrames": 1495040,
+          "channels": 2,
+          "sampleRate": 48000,
+          "finite": true,
+          "samplePeak": 0.9262367486953735,
+          "nonzeroSamples": 2989457
+        },
+        "voice": {
+          "sampleFrames": 1495040,
+          "channels": 2,
+          "sampleRate": 48000,
+          "finite": true,
+          "samplePeak": 0.0,
+          "nonzeroSamples": 0
+        },
+        "sfx": {
+          "sampleFrames": 1495040,
+          "channels": 2,
+          "sampleRate": 48000,
+          "finite": true,
+          "samplePeak": 0.30706462264060974,
+          "nonzeroSamples": 422168
+        }
+      }
+    },
+    {
+      "check": "native-video-and-stereo-aac-streams",
+      "status": "PASS",
+      "detail": {
+        "video": {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "avg_frame_rate": "30000/1001",
+          "time_base": "1/30000",
+          "nb_frames": "932",
+          "extradata_hash": "SHA256:11abece1d3473f351a0e2fc518c4c58d431ddd93860fdd256a9e50aad4e89297"
+        },
+        "audio": {
+          "codec_name": "aac",
+          "sample_rate": "48000",
+          "channels": 2,
+          "channel_layout": "stereo",
+          "duration_ts": 1495008,
+          "duration": "31.146000",
+          "time_base": "1/48000",
+          "nb_frames": "1461"
+        }
+      }
+    },
+    {
+      "check": "silent-all-video-packets-timestamps-extradata",
+      "status": "PASS",
+      "detail": {
+        "packetCount": 932,
+        "candidatePackets": 932,
+        "rowsSha256": "40892d3fde2cd253bbc2f877ce6a299e141612b3adecc20e10685be42f4dbc8f",
+        "candidateRowsSha256": "40892d3fde2cd253bbc2f877ce6a299e141612b3adecc20e10685be42f4dbc8f",
+        "extradataEqual": true
+      }
+    },
+    {
+      "check": "accepted-v1-all-video-packets-timestamps-extradata",
+      "status": "PASS",
+      "detail": {
+        "packetCount": 932,
+        "candidatePackets": 932,
+        "rowsSha256": "40892d3fde2cd253bbc2f877ce6a299e141612b3adecc20e10685be42f4dbc8f",
+        "candidateRowsSha256": "40892d3fde2cd253bbc2f877ce6a299e141612b3adecc20e10685be42f4dbc8f",
+        "extradataEqual": true
+      }
+    },
+    {
+      "check": "all-native-decoded-video-frames",
+      "status": "PASS",
+      "detail": {
+        "candidateFrames": 932,
+        "sourceFrames": 932,
+        "frameRowsSha256": "e5499968973399d6b7fd85aecbae5c3c4eef0c37c9764a18f638164d77637d3a"
+      }
+    },
+    {
+      "check": "protected-opening-decoded-frames",
+      "status": "PASS",
+      "detail": {
+        "prefixFrames": 222,
+        "hashesSha256": "a111c787757922c3ac63d403334bc80bb91131f9b6339b2c4f8c294fedc27371"
+      }
+    },
+    {
+      "check": "aac-duration-padding-and-finite",
+      "status": "PASS",
+      "detail": {
+        "sampleFrames": 1495040,
+        "logicalMasterSampleFrames": 1495040,
+        "decoderPaddingSamples": 0,
+        "declaredDurationSamples": 1495008,
+        "firstPacket": {
+          "pts": -1024,
+          "dts": -1024,
+          "duration": 1024,
+          "side_data_list": [
+            {
+              "side_data_type": "Skip Samples",
+              "skip_samples": 1024,
+              "discard_padding": 0,
+              "skip_reason": 0,
+              "discard_reason": 0
+            }
+          ]
+        },
+        "lastPacket": {
+          "pts": 1494016,
+          "dts": 1494016,
+          "duration": 992,
+          "side_data_list": null
+        },
+        "finite": true,
+        "samplePeak": 0.8172187805175781,
+        "clippedSamples": 0,
+        "note": "AAC sample padding and MP4 edit duration are reported separately from the exact logical master; encoded lossy audio is not PCM identity."
+      }
+    },
+    {
+      "check": "nonempty-offset-guard-negative-controls",
+      "status": "PASS",
+      "detail": {
+        "originalUpstreamEmptyLagBehavior": "PASS because worst=max([], default=0)",
+        "independentEmptyLags": "FAIL",
+        "twoLags": "FAIL",
+        "fortyNineSampleLag": "FAIL",
+        "threeZeroLags": "PASS"
+      }
+    },
+    {
+      "check": "actual-encoded-offset-correlations",
+      "status": "PASS",
+      "detail": {
+        "windows": [
+          {
+            "masterStartSample": 1080000,
+            "lagSamples": 0,
+            "normalizedCorrelation": 0.9996289314237551,
+            "masterEnergy": 1490.704493750135
+          },
+          {
+            "masterStartSample": 360000,
+            "lagSamples": 0,
+            "normalizedCorrelation": 0.9997141981702308,
+            "masterEnergy": 1548.7017675622726
+          },
+          {
+            "masterStartSample": 168000,
+            "lagSamples": 0,
+            "normalizedCorrelation": 0.9997757237711917,
+            "masterEnergy": 1792.2505019051416
+          }
+        ],
+        "worstOffsetSamples": 0,
+        "toleranceSamples": 48,
+        "toleranceMilliseconds": 1
+      }
+    },
+    {
+      "check": "actual-encoded-loudness",
+      "status": "PASS",
+      "detail": {
+        "integratedLufs": -16.224691814798177,
+        "targetLufs": -16,
+        "toleranceLu": 1,
+        "upstreamClaim": -16.18
+      }
+    },
+    {
+      "check": "actual-encoded-true-peak",
+      "status": "PASS",
+      "detail": {
+        "truePeakDbtp": -1.7044919085563135,
+        "limitDbtp": -1,
+        "oversampleFactor": 4,
+        "upstreamClaim": -2.0
+      }
+    },
+    {
+      "check": "ffmpeg-encoded-loudness-and-peak-cross-check",
+      "status": "PASS",
+      "detail": {
+        "integratedLufs": -16.2,
+        "truePeakDbtp": -1.7,
+        "independentPyloudnormIntegratedLufs": -16.224691814798177,
+        "exactLog": {
+          "path": ".tmp/codila-audio/independent/attempt-2/encoded-ebur128-cross-check-stderr.txt",
+          "bytes": 56160,
+          "sha256": "f899e7658d2ca562d075a76b769c6b515ff18579f6b0e63baf0b5e727cc7fd3e"
+        }
+      }
+    },
+    {
+      "check": "original-upstream-qa-hard-gates",
+      "status": "FAIL",
+      "detail": {
+        "report": {
+          "path": ".tmp/codila-audio/attempt-2/audio/qa-report.json",
+          "bytes": 10649,
+          "sha256": "9c1965da6ad4fdfaee988f74bf0531a3240723758bcdf7c6932ca59ca2a1eb20"
+        },
+        "failures": [
+          {
+            "check": "audible first-lens-move",
+            "status": "FAIL",
+            "detail": "stands out by 0.3 dB in 1000-2000 Hz over music+voice"
+          },
+          {
+            "check": "hero body relief-grayscale",
+            "status": "FAIL",
+            "detail": "main band 250-500 Hz lifted 2.0 dB (needs 3)"
+          },
+          {
+            "check": "hero body character-reprise",
+            "status": "FAIL",
+            "detail": "main band 250-500 Hz lifted 1.1 dB (needs 3)"
+          },
+          {
+            "check": "audible script-arrival",
+            "status": "FAIL",
+            "detail": "stands out by 1.4 dB in 500-1000 Hz over music+voice"
+          },
+          {
+            "check": "hero body storyboard-arrival",
+            "status": "FAIL",
+            "detail": "main band 250-500 Hz lifted 2.9 dB (needs 3)"
+          },
+          {
+            "check": "audible canvas-typing-6",
+            "status": "FAIL",
+            "detail": "stands out by 0.8 dB in 1000-2000 Hz over music+voice"
+          }
+        ],
+        "warningCount": 2
+      }
+    },
+    {
+      "check": "five-derived-listening-checkpoints",
+      "status": "PASS",
+      "detail": {
+        "checkpoints": [
+          {
+            "cue": "2.736 s / frame 82 - ring-arrival",
+            "listenFor": "Check the ring reveal: the recorded thump/tap should arrive with the clear scene change, after the lens camera air; listen for ringing or a double hit."
+          },
+          {
+            "cue": "6.974 s / frame 209 - relief-grayscale",
+            "listenFor": "Check the major grayscale change and the macro sequence that follows: a single hero should provide emphasis without tapping every shallow relief material shift."
+          },
+          {
+            "cue": "15.315 s / frame 459 - glyph-dark-gold",
+            "listenFor": "Check the dark-gold glyph reveal after the smaller capability and particle arrivals: main impacts should remain distinct from supporting contacts and camera air."
+          },
+          {
+            "cue": "18.919 s / frame 567 - storyboard-arrival",
+            "listenFor": "Check the UI sequence: earlier responsive reflow, storyboard arrival, then the two later non-space typing accents. Keys should stay smaller than the hero without a rapid cluster."
+          },
+          {
+            "cue": "22.189 s / frame 665 - logo-landing",
+            "listenFor": "Check logo settling, the long hold, exit and black tail: no repeated hero during the hold; music should fade smoothly without clipping or an abrupt ending."
+          }
+        ],
+        "humanVerdict": "PENDING"
+      }
+    },
+    {
+      "check": "frozen-originals-still-exact-after-qa",
+      "status": "PASS",
+      "detail": {
+        "changed": []
+      }
+    }
+  ],
+  "upstreamWarnings": [
+    {
+      "check": "picture canvas-typing-6",
+      "status": "warn",
+      "detail": "appear at frame 590: change at frame 591 (1.33 vs local 1.24)"
+    },
+    {
+      "check": "picture canvas-typing-8",
+      "status": "warn",
+      "detail": "appear at frame 596: change at frame 596 (1.51 vs local 1.30)"
+    }
+  ],
+  "prelimiterStemDiagnostic": {
+    "samplePeak": 0.9262367486953735,
+    "overFullScaleSamples": 0,
+    "masterDifferenceRms": 0.006212403627487129,
+    "caution": "Stems are master gain scaled before the limiter; their sum is not asserted to equal the limited master and must not be published as the final mix."
+  },
+  "privateCommandEvidence": [
+    {
+      "name": "music-source-native-region-pcm24",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-v",
+        "error",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\digital-clouds.mp3",
+        "-af",
+        "aresample=48000,atrim=end_sample=1495040,asetpts=N/SR/TB",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_s24le",
+        "-f",
+        "s24le",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:24.604331+00:00",
+      "completedAt": "2026-10-10T08:37:24.705734+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/music-source-native-region-pcm24.bin",
+        "bytes": 8970240,
+        "sha256": "e3e2a147cdea2b0f1e78165ff5c55e76a357f566ff1ef3440c735151c2ebb2fe"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/music-source-native-region-pcm24-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "music-prepared-pcm24",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-v",
+        "error",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\codila-audio\\digital-clouds-31.146667.wav",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_s24le",
+        "-f",
+        "s24le",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:24.721197+00:00",
+      "completedAt": "2026-10-10T08:37:24.797706+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/music-prepared-pcm24.bin",
+        "bytes": 8970240,
+        "sha256": "e3e2a147cdea2b0f1e78165ff5c55e76a357f566ff1ef3440c735151c2ebb2fe"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/music-prepared-pcm24-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "candidate-probe",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tools\\media-runtime\\node_modules\\ffprobe-static\\bin\\win32\\x64\\ffprobe.exe",
+        "-v",
+        "error",
+        "-show_data_hash",
+        "sha256",
+        "-show_streams",
+        "-show_format",
+        "-show_packets",
+        "-of",
+        "json",
+        ".tmp\\codila-audio\\attempt-2\\candidate.mp4"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:24.956683+00:00",
+      "completedAt": "2026-10-10T08:37:25.195023+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/candidate-probe.txt",
+        "bytes": 1161961,
+        "sha256": "2fb5ae0150e1ba1dc45919692cc781cee93952d5a2281b828b159d2e1611453a"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/candidate-probe-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "silent-packets",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tools\\media-runtime\\node_modules\\ffprobe-static\\bin\\win32\\x64\\ffprobe.exe",
+        "-v",
+        "error",
+        "-show_data_hash",
+        "sha256",
+        "-select_streams",
+        "v:0",
+        "-show_streams",
+        "-show_format",
+        "-show_packets",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-silent.mp4"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:25.209850+00:00",
+      "completedAt": "2026-10-10T08:37:25.352232+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/silent-packets.txt",
+        "bytes": 453565,
+        "sha256": "4bcfc972ef0170e24d7efb1f6f9b811c9562f16ca8dff52063d6b6b4e87b3e36"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/silent-packets-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "accepted-v1-packets",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tools\\media-runtime\\node_modules\\ffprobe-static\\bin\\win32\\x64\\ffprobe.exe",
+        "-v",
+        "error",
+        "-show_data_hash",
+        "sha256",
+        "-select_streams",
+        "v:0",
+        "-show_streams",
+        "-show_format",
+        "-show_packets",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:25.365760+00:00",
+      "completedAt": "2026-10-10T08:37:25.510374+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/accepted-v1-packets.txt",
+        "bytes": 453580,
+        "sha256": "034ac9a44220ae8122a5de077cdb2a0e090e61e7d7c8bd2a7ad4432eab4a71d6"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/accepted-v1-packets-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "candidate-decoded-frames",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-v",
+        "error",
+        "-i",
+        ".tmp\\codila-audio\\attempt-2\\candidate.mp4",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "framehash",
+        "-hash",
+        "sha256",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:25.523065+00:00",
+      "completedAt": "2026-10-10T08:37:34.916151+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/candidate-decoded-frames.txt",
+        "bytes": 104609,
+        "sha256": "790b0bacc0817ffd63f7889c4bd821933223c7dd9b5a8029d8e51530dbc49a20"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/candidate-decoded-frames-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "silent-decoded-frames",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-v",
+        "error",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-silent.mp4",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "framehash",
+        "-hash",
+        "sha256",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:34.924433+00:00",
+      "completedAt": "2026-10-10T08:37:44.321658+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/silent-decoded-frames.txt",
+        "bytes": 104609,
+        "sha256": "790b0bacc0817ffd63f7889c4bd821933223c7dd9b5a8029d8e51530dbc49a20"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/silent-decoded-frames-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "protected-prefix-decoded-frames",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-v",
+        "error",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-opening-pilot-silent.mp4",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-fps_mode",
+        "passthrough",
+        "-frames:v",
+        "222",
+        "-f",
+        "framehash",
+        "-hash",
+        "sha256",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:44.331838+00:00",
+      "completedAt": "2026-10-10T08:37:46.641794+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/protected-prefix-decoded-frames.txt",
+        "bytes": 25089,
+        "sha256": "42b59f4fe2d7f6014bbaeedb3ab45527c68a6cadd91f0cee50e03547c71fba10"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/protected-prefix-decoded-frames-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "candidate-decoded-audio",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-v",
+        "error",
+        "-i",
+        ".tmp\\codila-audio\\attempt-2\\candidate.mp4",
+        "-map",
+        "0:a:0",
+        "-vn",
+        "-acodec",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:46.650970+00:00",
+      "completedAt": "2026-10-10T08:37:46.739106+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/candidate-decoded-audio.bin",
+        "bytes": 11960320,
+        "sha256": "5b6eb96bdb2257fd724b1d149f38f9eae37f5062799bfb2b0feca10bc1200241"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/candidate-decoded-audio-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "encoded-ebur128-cross-check",
+      "command": [
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+        "-hide_banner",
+        "-nostats",
+        "-i",
+        ".tmp\\codila-audio\\attempt-2\\candidate.mp4",
+        "-vn",
+        "-af",
+        "ebur128=peak=true",
+        "-f",
+        "null",
+        "-"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-10T08:37:47.108032+00:00",
+      "completedAt": "2026-10-10T08:37:47.303275+00:00",
+      "stdout": {
+        "path": ".tmp/codila-audio/independent/attempt-2/encoded-ebur128-cross-check.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": ".tmp/codila-audio/independent/attempt-2/encoded-ebur128-cross-check-stderr.txt",
+        "bytes": 56160,
+        "sha256": "f899e7658d2ca562d075a76b769c6b515ff18579f6b0e63baf0b5e727cc7fd3e"
+      }
+    }
+  ],
+  "limitations": [
+    "No human listening, sensory audio perception, reference sonic identity or creative superiority verdict.",
+    "Upstream support picture warnings are retained, not silently converted into passed visual judgments.",
+    "Source lineage is bound to the original source declarations and prepared bytes, not an independent copyright clearance.",
+    "No mixing, source preparation, GPU capture, paid request, browser session or video rendering was performed by this verifier."
+  ]
+}

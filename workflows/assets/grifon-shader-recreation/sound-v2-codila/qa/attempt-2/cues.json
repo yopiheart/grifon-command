@@ -1,0 +1,241 @@
+{
+  "fps": 29.97002997002997,
+  "duration_s": 31.14666666666667,
+  "energy": "punchy",
+  "lufs": -16,
+  "kit": ".tmp/codila-audio/selected-kit-v2",
+  "music": {
+    "file": ".tmp/codila-audio/digital-clouds-31.146667.wav",
+    "start_s": 0,
+    "loop": false,
+    "fade_out_s": 3.3188666666666684
+  },
+  "voice": [],
+  "silence_ok": [
+    [
+      28.461766666666666,
+      31.14666666666667
+    ]
+  ],
+  "cues": [
+    {
+      "id": "first-lens-move",
+      "frame": 29,
+      "sound": "whoosh",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    },
+    {
+      "id": "lens-reverse",
+      "frame": 67,
+      "sound": "whoosh",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    },
+    {
+      "id": "ring-arrival",
+      "frame": 82,
+      "sound": "thump+tap",
+      "weight": "hero",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "ring-carbon",
+      "frame": 111,
+      "sound": "click",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "relief-grayscale",
+      "frame": 209,
+      "sound": "thump+tap",
+      "weight": "hero",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "catalog-out",
+      "frame": 264,
+      "sound": "whoosh",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    },
+    {
+      "id": "capability-arrival",
+      "frame": 307,
+      "sound": "tap",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "character-reprise",
+      "frame": 344,
+      "sound": "thump+tap",
+      "weight": "hero",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "shell-spin",
+      "frame": 373,
+      "sound": "swish",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    },
+    {
+      "id": "particle-arrival",
+      "frame": 417,
+      "sound": "tap",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "glyph-dark-gold",
+      "frame": 459,
+      "sound": "thump+tap",
+      "weight": "hero",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "glyph-translucent",
+      "frame": 483,
+      "sound": "tap",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "script-arrival",
+      "frame": 496,
+      "sound": "click",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "responsive-reflow",
+      "frame": 516,
+      "sound": "swish",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    },
+    {
+      "id": "script-whirl",
+      "frame": 541,
+      "sound": "whoosh",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "storyboard-arrival",
+      "frame": 567,
+      "sound": "thump+tap",
+      "weight": "hero",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "canvas-typing-6",
+      "frame": 590,
+      "sound": "key",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "appear"
+    },
+    {
+      "id": "canvas-typing-8",
+      "frame": 596,
+      "sound": "key",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "appear"
+    },
+    {
+      "id": "canvas-tear",
+      "frame": 608,
+      "sound": "click",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "canvas-pullback",
+      "frame": 627,
+      "sound": "whoosh",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    },
+    {
+      "id": "canvas-erase",
+      "frame": 636,
+      "sound": "swish",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "cut"
+    },
+    {
+      "id": "logo-landing",
+      "frame": 665,
+      "sound": "thump+tap",
+      "weight": "hero",
+      "align": "peak",
+      "pan": 0,
+      "visual": "land",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "logo-exit",
+      "frame": 842,
+      "sound": "whoosh",
+      "weight": "support",
+      "align": "peak",
+      "pan": 0,
+      "visual": "move"
+    }
+  ]
+}

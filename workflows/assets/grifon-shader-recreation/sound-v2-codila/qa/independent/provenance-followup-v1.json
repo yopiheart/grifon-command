@@ -1,0 +1,875 @@
+{
+  "schemaVersion": 1,
+  "status": "PROVENANCE_AND_PRESERVATION_PASS_UPSTREAM_QA_STILL_FAIL",
+  "recordedAt": "2026-10-10T08:38:47.277Z",
+  "scope": "Read-only final byte binding of all baseline files, all26 original raw/prepared/sidecar triples, music, selected6 copies and original upstream pin. No media decoder, QA.py or mixing rerun.",
+  "baselineSha256": "6100226bb853bcb06dc480965a07054bd575571deef328d8355b14a94acc323a",
+  "mediaReportSha256": "dbca52cd3af95b448deeb40c670c151bc684701f758bd4baf7adad7db847c0f4",
+  "selectionSha256": "28259bae8dcbbf2d8e704ba6a484cb5a15617faf8de78b7a6ff392023c37229a",
+  "baselineFilesChecked": 100,
+  "baselineFiles": [
+    {
+      "path": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+      "bytes": 24137255,
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b",
+      "expectedSha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+      "bytes": 25057741,
+      "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+      "expectedSha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+      "bytes": 5504941,
+      "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+      "expectedSha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/pilot.json",
+      "bytes": 1542,
+      "sha256": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "expectedSha256": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/pilot.js",
+      "bytes": 5389,
+      "sha256": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "expectedSha256": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/surfaces.frag",
+      "bytes": 17867,
+      "sha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "expectedSha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "expectedSha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "expectedSha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "expectedSha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v1/sound-spec.json",
+      "bytes": 10325,
+      "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+      "expectedSha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+      "pass": true
+    },
+    {
+      "path": "workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs",
+      "bytes": 34660,
+      "sha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7",
+      "expectedSha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7",
+      "pass": true
+    },
+    {
+      "path": "artifacts/grifon-shader-sound-v1.html",
+      "bytes": 33746991,
+      "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a",
+      "expectedSha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a",
+      "pass": true
+    },
+    {
+      "path": "tools/artifacts/build-grifon-shader-sound-v1.mjs",
+      "bytes": 7928,
+      "sha256": "deef501d89a22c0841dca39d0815186bcc8527c4edd036aaa2059991eb8b8a4d",
+      "expectedSha256": "deef501d89a22c0841dca39d0815186bcc8527c4edd036aaa2059991eb8b8a4d",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/PROMPT.md",
+      "bytes": 1676,
+      "sha256": "607d1f998f828651070902ea1bb7fe5f92ba0b765f071983e1e98a0ae445a559",
+      "expectedSha256": "607d1f998f828651070902ea1bb7fe5f92ba0b765f071983e1e98a0ae445a559",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/README.md",
+      "bytes": 2268,
+      "sha256": "c926aa027263f005997b127533e4049932e4df11569237c5ca66371577300a5c",
+      "expectedSha256": "c926aa027263f005997b127533e4049932e4df11569237c5ca66371577300a5c",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/LICENSE",
+      "bytes": 1086,
+      "sha256": "3f55e7e1ee79edcd3da24dc0417f4acfeeeb7160c691ca6bb3f759cc51ddaab3",
+      "expectedSha256": "3f55e7e1ee79edcd3da24dc0417f4acfeeeb7160c691ca6bb3f759cc51ddaab3",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/scripts/mix.py",
+      "bytes": 16932,
+      "sha256": "610e51252e82fd8ce2b72453349840dc28028301d879a9464d9edba50a24c957",
+      "expectedSha256": "610e51252e82fd8ce2b72453349840dc28028301d879a9464d9edba50a24c957",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/scripts/qa.py",
+      "bytes": 11684,
+      "sha256": "be3500b845d1f380367ea49de056921f60b70bfe7b12cd8df253d290f20468ad",
+      "expectedSha256": "be3500b845d1f380367ea49de056921f60b70bfe7b12cd8df253d290f20468ad",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/scripts/sfx.py",
+      "bytes": 12432,
+      "sha256": "fc3f978ee421d755855e10176d5e1a666ab927c0e88bbc8534c9f842e3ccf680",
+      "expectedSha256": "fc3f978ee421d755855e10176d5e1a666ab927c0e88bbc8534c9f842e3ccf680",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/sound-layer/scripts/kit.json",
+      "bytes": 6677,
+      "sha256": "2930a6e639ab9757e7672de6ee9915e855971b6eb2c4f4a509bed01823217757",
+      "expectedSha256": "2930a6e639ab9757e7672de6ee9915e855971b6eb2c4f4a509bed01823217757",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/click-1.mp3",
+      "bytes": 300480,
+      "sha256": "4d174395b4fabf4806bdafa121f39b89ae9b0269681debc3710760be80fbc346",
+      "expectedSha256": "4d174395b4fabf4806bdafa121f39b89ae9b0269681debc3710760be80fbc346",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/click/click-1.wav",
+      "bytes": 13412,
+      "sha256": "d21973b73ba7e92a50e5f623f6fd9cde7c97e9c7f46264ad1d8a65caf083d71e",
+      "expectedSha256": "d21973b73ba7e92a50e5f623f6fd9cde7c97e9c7f46264ad1d8a65caf083d71e",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/click/click-1.json",
+      "bytes": 571,
+      "sha256": "dae98cbf05de32e31880da044c60792c343f96d589072cc956d5661453a79e60",
+      "expectedSha256": "dae98cbf05de32e31880da044c60792c343f96d589072cc956d5661453a79e60",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/click-2.mp3",
+      "bytes": 11008,
+      "sha256": "9edf989b0e5282f665f31648147972efe5fc66a7ba66736770948dd7fef62827",
+      "expectedSha256": "9edf989b0e5282f665f31648147972efe5fc66a7ba66736770948dd7fef62827",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/click/click-2.wav",
+      "bytes": 15126,
+      "sha256": "cbf9b13e23a8f32b7e41784660622877e8aa0a81314d7ced1c4c07f0fc11371d",
+      "expectedSha256": "cbf9b13e23a8f32b7e41784660622877e8aa0a81314d7ced1c4c07f0fc11371d",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/click/click-2.json",
+      "bytes": 575,
+      "sha256": "1004ee5cc0c751eb5878a65a71dd9ceec1e77df15229ba272ae8a1915606a5a2",
+      "expectedSha256": "1004ee5cc0c751eb5878a65a71dd9ceec1e77df15229ba272ae8a1915606a5a2",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/click-3.mp3",
+      "bytes": 736575,
+      "sha256": "419e5d8b7803477a6240ee4b61319930e12d8c3f0ee9e39283e749c3f2f54c37",
+      "expectedSha256": "419e5d8b7803477a6240ee4b61319930e12d8c3f0ee9e39283e749c3f2f54c37",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/click/click-3.wav",
+      "bytes": 16352,
+      "sha256": "e6b1203e8038caef7b975261aa26db85a9015fd514319b0e9ac4ef8d8dac70c8",
+      "expectedSha256": "e6b1203e8038caef7b975261aa26db85a9015fd514319b0e9ac4ef8d8dac70c8",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/click/click-3.json",
+      "bytes": 580,
+      "sha256": "fb903464d185fdd374c8c79c64f67b6db9615b0f51760fe82de51c0706b28baf",
+      "expectedSha256": "fb903464d185fdd374c8c79c64f67b6db9615b0f51760fe82de51c0706b28baf",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/key-1.mp3",
+      "bytes": 6315,
+      "sha256": "5e4b6c8ca2989923fc994bce5e537d6e83e8ffc3ecdc6195f3d409032b4c791a",
+      "expectedSha256": "5e4b6c8ca2989923fc994bce5e537d6e83e8ffc3ecdc6195f3d409032b4c791a",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/key/key-1.wav",
+      "bytes": 12296,
+      "sha256": "9e4ee66ea4183fb5d1b27ac879f546fc7087b1594f9735604baf3da024fd10dc",
+      "expectedSha256": "9e4ee66ea4183fb5d1b27ac879f546fc7087b1594f9735604baf3da024fd10dc",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/key/key-1.json",
+      "bytes": 558,
+      "sha256": "ffdbd95e79878ded8114d85ef625ec0ebfb7bd927f2716bee20204e5ad358fd5",
+      "expectedSha256": "ffdbd95e79878ded8114d85ef625ec0ebfb7bd927f2716bee20204e5ad358fd5",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/key-2.mp3",
+      "bytes": 11689,
+      "sha256": "d1735e6d2ea8ae5769c7bfe1d883428a7fabe54a33cb71fc2a99d77de1d9d058",
+      "expectedSha256": "d1735e6d2ea8ae5769c7bfe1d883428a7fabe54a33cb71fc2a99d77de1d9d058",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/key/key-2.wav",
+      "bytes": 8904,
+      "sha256": "344adcc3e542a47bc6cfd14bfadbe8c37108284347275e6af209abc3084010c7",
+      "expectedSha256": "344adcc3e542a47bc6cfd14bfadbe8c37108284347275e6af209abc3084010c7",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/key/key-2.json",
+      "bytes": 557,
+      "sha256": "f1ba2b1702af814b29fb2878ba8b12fb56c367841f00134afcc031fadbc49012",
+      "expectedSha256": "f1ba2b1702af814b29fb2878ba8b12fb56c367841f00134afcc031fadbc49012",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/key-3.mp3",
+      "bytes": 16575,
+      "sha256": "e50bf702ef53dc3c10114340afc7127cabbacd96d810d8611b147786a0bb573a",
+      "expectedSha256": "e50bf702ef53dc3c10114340afc7127cabbacd96d810d8611b147786a0bb573a",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/key/key-3.wav",
+      "bytes": 19340,
+      "sha256": "3f9136e56a19b916271cb2dbe78b20fd6af8c95032fa9d4b689a9bc6a43ae2c5",
+      "expectedSha256": "3f9136e56a19b916271cb2dbe78b20fd6af8c95032fa9d4b689a9bc6a43ae2c5",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/key/key-3.json",
+      "bytes": 571,
+      "sha256": "650db40386aba3075257037413ea97ef1a15e154fd82eba241d389ce830bf758",
+      "expectedSha256": "650db40386aba3075257037413ea97ef1a15e154fd82eba241d389ce830bf758",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/tick-1.mp3",
+      "bytes": 64655,
+      "sha256": "7586dfe084b2f22171ee1092da477627ca2195c46e888d50b6f9d4fd69444642",
+      "expectedSha256": "7586dfe084b2f22171ee1092da477627ca2195c46e888d50b6f9d4fd69444642",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tick/tick-1.wav",
+      "bytes": 17324,
+      "sha256": "bccecef5b37f54bf1b33baa35f254b93f3d37305a45ba0a9af77e92ebea9ad65",
+      "expectedSha256": "bccecef5b37f54bf1b33baa35f254b93f3d37305a45ba0a9af77e92ebea9ad65",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tick/tick-1.json",
+      "bytes": 556,
+      "sha256": "6093709861437b9dc4b82ed54789a296add175e7f9ad7cf1c76cad8cb30288d7",
+      "expectedSha256": "6093709861437b9dc4b82ed54789a296add175e7f9ad7cf1c76cad8cb30288d7",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/tick-2.mp3",
+      "bytes": 164677,
+      "sha256": "bc4a1dff5243e5dfd305f8d3d399435ba948077e5eec81a5c02058ff3c2f2229",
+      "expectedSha256": "bc4a1dff5243e5dfd305f8d3d399435ba948077e5eec81a5c02058ff3c2f2229",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tick/tick-2.wav",
+      "bytes": 17324,
+      "sha256": "cbb368160256a6cf073c6051e13cf3cb1f149bfcdd55450fbf66b0b994fdd2bd",
+      "expectedSha256": "cbb368160256a6cf073c6051e13cf3cb1f149bfcdd55450fbf66b0b994fdd2bd",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tick/tick-2.json",
+      "bytes": 565,
+      "sha256": "8ee0486f59e379619feb06b12360ebfce253eaaf0860d52f929e112a60a26f35",
+      "expectedSha256": "8ee0486f59e379619feb06b12360ebfce253eaaf0860d52f929e112a60a26f35",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/tap-1.mp3",
+      "bytes": 24212,
+      "sha256": "e1635813031d126a04d8db80ab8bf95c61299e4891241695aada36d8508910d9",
+      "expectedSha256": "e1635813031d126a04d8db80ab8bf95c61299e4891241695aada36d8508910d9",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tap/tap-1.wav",
+      "bytes": 16166,
+      "sha256": "5d09229712afbc96ee4613f0c2c6ed5a70693cfb37f8f7e572e673e6285cacae",
+      "expectedSha256": "5d09229712afbc96ee4613f0c2c6ed5a70693cfb37f8f7e572e673e6285cacae",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tap/tap-1.json",
+      "bytes": 552,
+      "sha256": "9c9d5d5b35357f5597fa3ba80059425a9609c1e23f589201add48bde03ffade6",
+      "expectedSha256": "9c9d5d5b35357f5597fa3ba80059425a9609c1e23f589201add48bde03ffade6",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/tap-2.mp3",
+      "bytes": 5472,
+      "sha256": "dbce1ea434118525d29df7957d79f1bde7cafb509b1bc987afa44f5b6197605d",
+      "expectedSha256": "dbce1ea434118525d29df7957d79f1bde7cafb509b1bc987afa44f5b6197605d",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tap/tap-2.wav",
+      "bytes": 14390,
+      "sha256": "b3a8b38ec8f03783fcb9735bacefa455ffeb14a5af86ff65e1c4bdc0ad3e09f1",
+      "expectedSha256": "b3a8b38ec8f03783fcb9735bacefa455ffeb14a5af86ff65e1c4bdc0ad3e09f1",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/tap/tap-2.json",
+      "bytes": 559,
+      "sha256": "e343d623f74ef9455127d746fc74f50e93f37f00d810195694fdda8baab65813",
+      "expectedSha256": "e343d623f74ef9455127d746fc74f50e93f37f00d810195694fdda8baab65813",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/thump-1.mp3",
+      "bytes": 487050,
+      "sha256": "546cef16acbe5bbdcb67db5bb5a26b3ecc40baca9d44e7a11a46a64988d114bc",
+      "expectedSha256": "546cef16acbe5bbdcb67db5bb5a26b3ecc40baca9d44e7a11a46a64988d114bc",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/thump/thump-1.wav",
+      "bytes": 129644,
+      "sha256": "b96663d8ad7d610ece75e6603e7531ff5a766c5348071d4f6f0c0cb3c49b7696",
+      "expectedSha256": "b96663d8ad7d610ece75e6603e7531ff5a766c5348071d4f6f0c0cb3c49b7696",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/thump/thump-1.json",
+      "bytes": 577,
+      "sha256": "9c25ba9660ad400f9f478a4e2e36557e8a19cca03bbc9f6a766154142122b457",
+      "expectedSha256": "9c25ba9660ad400f9f478a4e2e36557e8a19cca03bbc9f6a766154142122b457",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/thump-2.mp3",
+      "bytes": 20880,
+      "sha256": "d03061d7fea6b4e8405ae09d187344b9841a0fbd85ab26090e4370ee9c69fbe0",
+      "expectedSha256": "d03061d7fea6b4e8405ae09d187344b9841a0fbd85ab26090e4370ee9c69fbe0",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/thump/thump-2.wav",
+      "bytes": 31880,
+      "sha256": "551db85a3fed93c083a23153371223d92df5dbd7c6d313b32a732ec967074f5f",
+      "expectedSha256": "551db85a3fed93c083a23153371223d92df5dbd7c6d313b32a732ec967074f5f",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/thump/thump-2.json",
+      "bytes": 593,
+      "sha256": "826b01deb3b4afa0dcba2a0f3bd8ed6bd7cf0b96d558eb9be843c11191c42792",
+      "expectedSha256": "826b01deb3b4afa0dcba2a0f3bd8ed6bd7cf0b96d558eb9be843c11191c42792",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/thump-3.mp3",
+      "bytes": 24318,
+      "sha256": "ff93844c194107290b677462bcda2c0c7fc972975a3e747a3d6fae75b181e740",
+      "expectedSha256": "ff93844c194107290b677462bcda2c0c7fc972975a3e747a3d6fae75b181e740",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/thump/thump-3.wav",
+      "bytes": 97598,
+      "sha256": "8a83d0a12a9f9592884506341bcf90b7fabac506dd3f8af5a7b77b95583d3baa",
+      "expectedSha256": "8a83d0a12a9f9592884506341bcf90b7fabac506dd3f8af5a7b77b95583d3baa",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/thump/thump-3.json",
+      "bytes": 569,
+      "sha256": "d045b85b43eb46bacb7eabe7438a83da91ee23f9f15934b3a7b8cb5bcb5d7acd",
+      "expectedSha256": "d045b85b43eb46bacb7eabe7438a83da91ee23f9f15934b3a7b8cb5bcb5d7acd",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/pop-1.mp3",
+      "bytes": 8328,
+      "sha256": "09a72dba775c2407cd2227fb5fceb385d5dd18979fc1715f4d07c63d5f444a83",
+      "expectedSha256": "09a72dba775c2407cd2227fb5fceb385d5dd18979fc1715f4d07c63d5f444a83",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/pop/pop-1.wav",
+      "bytes": 19026,
+      "sha256": "edc99d35e4dfef2b914c5a8d2a8b46df6c78a01c9cf0f535904ea0f04a92e909",
+      "expectedSha256": "edc99d35e4dfef2b914c5a8d2a8b46df6c78a01c9cf0f535904ea0f04a92e909",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/pop/pop-1.json",
+      "bytes": 552,
+      "sha256": "ac8f388217e1672fc4edd2f5c37ca84065375c057b95f76a1035d2d8fb9b8af6",
+      "expectedSha256": "ac8f388217e1672fc4edd2f5c37ca84065375c057b95f76a1035d2d8fb9b8af6",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/pop-2.mp3",
+      "bytes": 550848,
+      "sha256": "c17bad00fa9253d8484eb525893feed47cd364d17ca6185f9d025fd1c403a54b",
+      "expectedSha256": "c17bad00fa9253d8484eb525893feed47cd364d17ca6185f9d025fd1c403a54b",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/pop/pop-2.wav",
+      "bytes": 8606,
+      "sha256": "c0aa102bde4245fafd1d744dcab4ae722cbb3f00842fdf7364fb6f718860912b",
+      "expectedSha256": "c0aa102bde4245fafd1d744dcab4ae722cbb3f00842fdf7364fb6f718860912b",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/pop/pop-2.json",
+      "bytes": 593,
+      "sha256": "5c899c78b79eec39a95886750568dafc177bf2f3a6354b32879373c1f69f3dd6",
+      "expectedSha256": "5c899c78b79eec39a95886750568dafc177bf2f3a6354b32879373c1f69f3dd6",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/pop-3.mp3",
+      "bytes": 6994,
+      "sha256": "203c829018ca49b4096deefa3c5c26c57bf7a7841cd89e9f97ab0aa25f3bd396",
+      "expectedSha256": "203c829018ca49b4096deefa3c5c26c57bf7a7841cd89e9f97ab0aa25f3bd396",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/pop/pop-3.wav",
+      "bytes": 5478,
+      "sha256": "915331bdda1fd2aa1e05a10db30a00b167e9d8e05ac4ef9b266321a000cb9f93",
+      "expectedSha256": "915331bdda1fd2aa1e05a10db30a00b167e9d8e05ac4ef9b266321a000cb9f93",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/pop/pop-3.json",
+      "bytes": 561,
+      "sha256": "60d76cca802399f282cca46899ec1e59900ccffd649e5232899333e71b32505a",
+      "expectedSha256": "60d76cca802399f282cca46899ec1e59900ccffd649e5232899333e71b32505a",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/whoosh-1.mp3",
+      "bytes": 18624,
+      "sha256": "54658039d8fada83f60cd2bb1696ae01d3fd25a0cef3b8d05faea05612f932d1",
+      "expectedSha256": "54658039d8fada83f60cd2bb1696ae01d3fd25a0cef3b8d05faea05612f932d1",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/whoosh/whoosh-1.wav",
+      "bytes": 44616,
+      "sha256": "6f9b899481250cb6f348182b3423e15471a334a8fe60c2d4399fb2b5ff9dd640",
+      "expectedSha256": "6f9b899481250cb6f348182b3423e15471a334a8fe60c2d4399fb2b5ff9dd640",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/whoosh/whoosh-1.json",
+      "bytes": 577,
+      "sha256": "45238ed6c2fbf0e74f024883b78e6fc3153cba2cb24a4b930a3c2c68b4809894",
+      "expectedSha256": "45238ed6c2fbf0e74f024883b78e6fc3153cba2cb24a4b930a3c2c68b4809894",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/whoosh-2.mp3",
+      "bytes": 18993,
+      "sha256": "a0cae6d12669d27e6e15808720cac6444a87bef9549a83757c49f974feba4c6f",
+      "expectedSha256": "a0cae6d12669d27e6e15808720cac6444a87bef9549a83757c49f974feba4c6f",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/whoosh/whoosh-2.wav",
+      "bytes": 31380,
+      "sha256": "81db31c0261781597eb243598284f7e5fcac8bea6b73e4520518fd18c46a03bf",
+      "expectedSha256": "81db31c0261781597eb243598284f7e5fcac8bea6b73e4520518fd18c46a03bf",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/whoosh/whoosh-2.json",
+      "bytes": 570,
+      "sha256": "68f50d434175a4d6a505ce815c027ebd0c9da8262e3f68aaf72769f0f6715b31",
+      "expectedSha256": "68f50d434175a4d6a505ce815c027ebd0c9da8262e3f68aaf72769f0f6715b31",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/whoosh-3.mp3",
+      "bytes": 18213,
+      "sha256": "8d3fd64a0b53608df070e830ed00eec29548fba44683579f288dc8e4b37dc676",
+      "expectedSha256": "8d3fd64a0b53608df070e830ed00eec29548fba44683579f288dc8e4b37dc676",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/whoosh/whoosh-3.wav",
+      "bytes": 51764,
+      "sha256": "4bc2b77603a5078f2313e9eb8f415a14839f1cd70c349dbe5f00434e25f9b876",
+      "expectedSha256": "4bc2b77603a5078f2313e9eb8f415a14839f1cd70c349dbe5f00434e25f9b876",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/whoosh/whoosh-3.json",
+      "bytes": 559,
+      "sha256": "edcd2f9d41fbfe249c6f71c9d487d9e0b579de050ce5d93b1cd9621557724034",
+      "expectedSha256": "edcd2f9d41fbfe249c6f71c9d487d9e0b579de050ce5d93b1cd9621557724034",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/swish-1.mp3",
+      "bytes": 888768,
+      "sha256": "585ac326d2337c785da3fc003b0f99548b0913a3b6883c83c068f7b2b386367c",
+      "expectedSha256": "585ac326d2337c785da3fc003b0f99548b0913a3b6883c83c068f7b2b386367c",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/swish/swish-1.wav",
+      "bytes": 17046,
+      "sha256": "be437302a3f8e3e124294f12b3f0861dc53475a5a330ef83406ae7bcf43245ce",
+      "expectedSha256": "be437302a3f8e3e124294f12b3f0861dc53475a5a330ef83406ae7bcf43245ce",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/swish/swish-1.json",
+      "bytes": 576,
+      "sha256": "25ec75b41dd737b042ab9cb88f782314e3f8c4a9d6e2df31e96649a23acc4903",
+      "expectedSha256": "25ec75b41dd737b042ab9cb88f782314e3f8c4a9d6e2df31e96649a23acc4903",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/swish-2.mp3",
+      "bytes": 59283,
+      "sha256": "e9462ab00cc456ed717daca53a525e901f98a8502df9b9ecfd6c11c8afba6963",
+      "expectedSha256": "e9462ab00cc456ed717daca53a525e901f98a8502df9b9ecfd6c11c8afba6963",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/swish/swish-2.wav",
+      "bytes": 22614,
+      "sha256": "f7d796b94f07daa6c4b29d40a4c6659ece47ea37a19303b10f85c42fa1e7ae94",
+      "expectedSha256": "f7d796b94f07daa6c4b29d40a4c6659ece47ea37a19303b10f85c42fa1e7ae94",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/swish/swish-2.json",
+      "bytes": 569,
+      "sha256": "0ffa30d6385f620fd55fde7e748364555e720cb773ec8eb6c8bbf59f320beffb",
+      "expectedSha256": "0ffa30d6385f620fd55fde7e748364555e720cb773ec8eb6c8bbf59f320beffb",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/chime-1.mp3",
+      "bytes": 34443,
+      "sha256": "f3f45d7e6a04466d631343544e79e154d03814a452cb50e929ca444a14b28198",
+      "expectedSha256": "f3f45d7e6a04466d631343544e79e154d03814a452cb50e929ca444a14b28198",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/chime/chime-1.wav",
+      "bytes": 110448,
+      "sha256": "553a8c65aaa7570e6f880a3d2dae310ad9b2cc94b7dad252a3f9a689c3189896",
+      "expectedSha256": "553a8c65aaa7570e6f880a3d2dae310ad9b2cc94b7dad252a3f9a689c3189896",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/chime/chime-1.json",
+      "bytes": 581,
+      "sha256": "c43bae5035ebcb245914fe3e2c74ca57df3def23384966d59fbf3d662676d0ce",
+      "expectedSha256": "c43bae5035ebcb245914fe3e2c74ca57df3def23384966d59fbf3d662676d0ce",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/chime-2.mp3",
+      "bytes": 10541,
+      "sha256": "5f6a9147540e305db893c7e3753bf548c4a6e7ce6018f892d3f16da166a4f05f",
+      "expectedSha256": "5f6a9147540e305db893c7e3753bf548c4a6e7ce6018f892d3f16da166a4f05f",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/chime/chime-2.wav",
+      "bytes": 33690,
+      "sha256": "514a635211bdfb04845d5152e819fae68a9400beef8ceaea4ce28b2f94498dd4",
+      "expectedSha256": "514a635211bdfb04845d5152e819fae68a9400beef8ceaea4ce28b2f94498dd4",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/chime/chime-2.json",
+      "bytes": 572,
+      "sha256": "867e0a32fe1e3647c40d946a5e2d9684247ab5e4a970232de2ae9ba9be32c552",
+      "expectedSha256": "867e0a32fe1e3647c40d946a5e2d9684247ab5e4a970232de2ae9ba9be32c552",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/paper-1.mp3",
+      "bytes": 43518,
+      "sha256": "0e6737d635998d90f015249c0215691d3cb63d2ff37d49949914284160b6e9e0",
+      "expectedSha256": "0e6737d635998d90f015249c0215691d3cb63d2ff37d49949914284160b6e9e0",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/paper/paper-1.wav",
+      "bytes": 27444,
+      "sha256": "e91a8155d3b98b7bb4465f65fa7123b9ff1a75141a496e5df1300b6d648a914d",
+      "expectedSha256": "e91a8155d3b98b7bb4465f65fa7123b9ff1a75141a496e5df1300b6d648a914d",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/paper/paper-1.json",
+      "bytes": 568,
+      "sha256": "cc87bb67dc11a839b30f64ceeff1d7cfff6e9b5d7a3864ac63c1bedc98144539",
+      "expectedSha256": "cc87bb67dc11a839b30f64ceeff1d7cfff6e9b5d7a3864ac63c1bedc98144539",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/paper-2.mp3",
+      "bytes": 23432,
+      "sha256": "e72ae86d15636442c26fd5708a712869f08cdbec616b1bb99d0d789a88c80bfd",
+      "expectedSha256": "e72ae86d15636442c26fd5708a712869f08cdbec616b1bb99d0d789a88c80bfd",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/paper/paper-2.wav",
+      "bytes": 11310,
+      "sha256": "ea1615b636f09f8c8c5d38d2576e4e21f2e05180a1b78e36149676845fc75cff",
+      "expectedSha256": "ea1615b636f09f8c8c5d38d2576e4e21f2e05180a1b78e36149676845fc75cff",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/paper/paper-2.json",
+      "bytes": 574,
+      "sha256": "af4e19d1e6e43294cfb3a9ddc9d5bbcee31d9d81a811ee8a577a8f1aebfd6590",
+      "expectedSha256": "af4e19d1e6e43294cfb3a9ddc9d5bbcee31d9d81a811ee8a577a8f1aebfd6590",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/_raw/paper-3.mp3",
+      "bytes": 15759,
+      "sha256": "dfa167cc8f4b70a04ca7bf1c7b835d28459f80a867f3516d4f6c49eeb3fa1535",
+      "expectedSha256": "dfa167cc8f4b70a04ca7bf1c7b835d28459f80a867f3516d4f6c49eeb3fa1535",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/paper/paper-3.wav",
+      "bytes": 29628,
+      "sha256": "a8cce9a9d0e511ecf54c9f82c04fdd2268434740fd37870635ee0438862999ce",
+      "expectedSha256": "a8cce9a9d0e511ecf54c9f82c04fdd2268434740fd37870635ee0438862999ce",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/kit/paper/paper-3.json",
+      "bytes": 561,
+      "sha256": "faa9f6d6c6aab6d0c318e9481fa7eafc81787a3380450730fd5d79f1e11ede1d",
+      "expectedSha256": "faa9f6d6c6aab6d0c318e9481fa7eafc81787a3380450730fd5d79f1e11ede1d",
+      "pass": true
+    },
+    {
+      "path": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "expectedSha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/digital-clouds-31.146667.wav",
+      "bytes": 8970386,
+      "sha256": "388566baa82822655460f8367c01c1f906c2395913fbc61f01643e536df14cf5",
+      "expectedSha256": "388566baa82822655460f8367c01c1f906c2395913fbc61f01643e536df14cf5",
+      "pass": true
+    }
+  ],
+  "selectedFilesChecked": 12,
+  "selectedFiles": [
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/whoosh/whoosh-1.wav",
+      "preparedSource": ".tmp/codila-audio/kit/whoosh/whoosh-1.wav",
+      "bytes": 44616,
+      "sha256": "6f9b899481250cb6f348182b3423e15471a334a8fe60c2d4399fb2b5ff9dd640",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/whoosh/whoosh-1.json",
+      "preparedSource": ".tmp/codila-audio/kit/whoosh/whoosh-1.json",
+      "bytes": 577,
+      "sha256": "45238ed6c2fbf0e74f024883b78e6fc3153cba2cb24a4b930a3c2c68b4809894",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/swish/swish-2.wav",
+      "preparedSource": ".tmp/codila-audio/kit/swish/swish-2.wav",
+      "bytes": 22614,
+      "sha256": "f7d796b94f07daa6c4b29d40a4c6659ece47ea37a19303b10f85c42fa1e7ae94",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/swish/swish-2.json",
+      "preparedSource": ".tmp/codila-audio/kit/swish/swish-2.json",
+      "bytes": 569,
+      "sha256": "0ffa30d6385f620fd55fde7e748364555e720cb773ec8eb6c8bbf59f320beffb",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/thump/thump-2.wav",
+      "preparedSource": ".tmp/codila-audio/kit/thump/thump-2.wav",
+      "bytes": 31880,
+      "sha256": "551db85a3fed93c083a23153371223d92df5dbd7c6d313b32a732ec967074f5f",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/thump/thump-2.json",
+      "preparedSource": ".tmp/codila-audio/kit/thump/thump-2.json",
+      "bytes": 593,
+      "sha256": "826b01deb3b4afa0dcba2a0f3bd8ed6bd7cf0b96d558eb9be843c11191c42792",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/tap/tap-1.wav",
+      "preparedSource": ".tmp/codila-audio/kit/tap/tap-1.wav",
+      "bytes": 16166,
+      "sha256": "5d09229712afbc96ee4613f0c2c6ed5a70693cfb37f8f7e572e673e6285cacae",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/tap/tap-1.json",
+      "preparedSource": ".tmp/codila-audio/kit/tap/tap-1.json",
+      "bytes": 552,
+      "sha256": "9c9d5d5b35357f5597fa3ba80059425a9609c1e23f589201add48bde03ffade6",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/click/click-1.wav",
+      "preparedSource": ".tmp/codila-audio/kit/click/click-1.wav",
+      "bytes": 13412,
+      "sha256": "d21973b73ba7e92a50e5f623f6fd9cde7c97e9c7f46264ad1d8a65caf083d71e",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/click/click-1.json",
+      "preparedSource": ".tmp/codila-audio/kit/click/click-1.json",
+      "bytes": 571,
+      "sha256": "dae98cbf05de32e31880da044c60792c343f96d589072cc956d5661453a79e60",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/key/key-2.wav",
+      "preparedSource": ".tmp/codila-audio/kit/key/key-2.wav",
+      "bytes": 8904,
+      "sha256": "344adcc3e542a47bc6cfd14bfadbe8c37108284347275e6af209abc3084010c7",
+      "pass": true
+    },
+    {
+      "path": ".tmp/codila-audio/selected-kit-v2/key/key-2.json",
+      "preparedSource": ".tmp/codila-audio/kit/key/key-2.json",
+      "bytes": 557,
+      "sha256": "f1ba2b1702af814b29fb2878ba8b12fb56c367841f00134afcc031fadbc49012",
+      "pass": true
+    }
+  ],
+  "upstreamNormalizedFiles": [
+    {
+      "file": "PROMPT.md",
+      "workingSha256": "607d1f998f828651070902ea1bb7fe5f92ba0b765f071983e1e98a0ae445a559",
+      "pinnedGitBlobSha256": "dd37fc82a195a4bfc7a6000dc051af89405af0ca3f6e4e83733a4c3c9bf1e998",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    },
+    {
+      "file": "README.md",
+      "workingSha256": "c926aa027263f005997b127533e4049932e4df11569237c5ca66371577300a5c",
+      "pinnedGitBlobSha256": "3bf729484d20d90cbf1f6920785cfeea8515edb932c912cd4e43ecf0ba232a2d",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    },
+    {
+      "file": "LICENSE",
+      "workingSha256": "3f55e7e1ee79edcd3da24dc0417f4acfeeeb7160c691ca6bb3f759cc51ddaab3",
+      "pinnedGitBlobSha256": "a2708086c1b24154fb8dc4a41f1c07c1aa9fe4ced2ad98c711ec262e40fc41f2",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    },
+    {
+      "file": "scripts/mix.py",
+      "workingSha256": "610e51252e82fd8ce2b72453349840dc28028301d879a9464d9edba50a24c957",
+      "pinnedGitBlobSha256": "739d36600ddb7b5068456726bdee82451ad1b4195ed83efa1d63c1ae39a30553",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    },
+    {
+      "file": "scripts/qa.py",
+      "workingSha256": "be3500b845d1f380367ea49de056921f60b70bfe7b12cd8df253d290f20468ad",
+      "pinnedGitBlobSha256": "564004dcf893b2be8fa672b6dd7e74a4c1d5a131df280e842e6f3c18e3b8cd90",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    },
+    {
+      "file": "scripts/sfx.py",
+      "workingSha256": "fc3f978ee421d755855e10176d5e1a666ab927c0e88bbc8534c9f842e3ccf680",
+      "pinnedGitBlobSha256": "52c691c7f6a55999c2b416f5a2e34aced6258b526c1dd23647cbab29a7d9daf3",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    },
+    {
+      "file": "scripts/kit.json",
+      "workingSha256": "2930a6e639ab9757e7672de6ee9915e855971b6eb2c4f4a509bed01823217757",
+      "pinnedGitBlobSha256": "209d1e361c823ddc719e8958f1fe97007186853ccde1b196804ce11bb6f533ee",
+      "rawBytesEqual": false,
+      "lfNormalizedEqual": true,
+      "note": "Windows checkout uses CRLF; semantic pin comparison normalizes only CRLF to LF and does not alter either file."
+    }
+  ],
+  "audioDurationAccounting": {
+    "masterSampleFrames": 1495040,
+    "decodedAacSampleFrames": 1495040,
+    "decoderExtraPaddingSamples": 0,
+    "containerDeclaredSampleFrames": 1495008,
+    "containerMinusMasterSamples": -32,
+    "containerMinusMasterMilliseconds": -0.6666666666666666,
+    "firstAacSkipSamples": 1024,
+    "lastPacketDeclaredDurationSamples": 992,
+    "toleranceSamples": 48,
+    "note": "Container duration and decoder sample output differ by32samples (0.667ms); both are reported. The accepted picture packets and timestamps are exact. No lossy AAC-to-master PCM identity is asserted."
+  },
+  "candidate": {
+    "path": ".tmp/codila-audio/attempt-2/candidate.mp4",
+    "bytes": 25230219,
+    "sha256": "fead0215c187016b0409c76d26189d2ced7de191f42ee6a4339b350f065916dc"
+  },
+  "candidateVerdict": "REVIEW_ONLY_NOT_APPROVED: original upstreamQA retains6 hard audibility/body failures and2 picture warnings; human listening pending"
+}
