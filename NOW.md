@@ -64,6 +64,7 @@ Bundle-leak, voice-sync, eval prompt parity(6), domain, artifact anchors, ASCII,
 Codex controls26 PASS. Generated snapshot churn restored only after proving
 normalized content identical to HEAD. Unrelated port5173/PID18480 left alone;
 new browser suite isolates the current checkout on5186.
+PR174: main-only Actions filter means no CI run; Vercel account deployment block.
 
 ## Next approval and work
 workflows/ad_reference_export.md has the contract and full-loop milestones.
