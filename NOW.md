@@ -4,6 +4,8 @@
 ## Authorized work
 Neil approved the exact MarketMind proposal in this chat on 2026-10-10.
 Branch: codex/marketmind-evidence; base main 2e1de015.
+Implementation committed/pushed: 64d0b389.
+Draft PR171: https://github.com/yopiheart/grifon-command/pull/171 (attached).
 Checkout: C:/Users/ADMIN/.codex/worktrees/4382/grifon-command.
 Only application change: MARKETMIND_SYSTEM_INSTRUCTION in api/_lib/prompts.ts.
 Approved patch SHA256:
@@ -45,8 +47,10 @@ and PDF legacy labels/omitted narrative research status; no consumer changes
 were included in this approved prompt-only slice.
 
 ## ▶ NEXT ACTION
-Commit/push this verified branch and create an attached draft PR.
-Review only; merge/deployment and paid tests remain gated.
+Review draft PR171. GitHub verify/artifacts/e2e checks are pending as of handoff.
+Vercel preview check reports "Account is blocked" (account/deployment limitation,
+not a local build failure). Do not change billing/account settings autonomously.
+Merge/deployment and paid tests still need their separate explicit authorization.
 
 ## Other work retained
 Main 2e1de015 contains motion PR156 and Blender/Vivo PR157; prompt-parity PR158
