@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-07, companion account interface verified**
+**Stamped: 2026-10-10, Companion beta audit verified**
 
-## ▶ NEXT ACTION
-Next: owner review of chat/account Settings and real login delivery; manually verify physical-phone behavior and microphone transcription, then open a focused backend milestone for natural intake and reliable ad delivery.
-Branch codex/companion-chat; draft PR164 stacked on PR163: https://github.com/yopiheart/grifon-command/pull/164. Mocked preview http://127.0.0.1:5173/companion-chat-preview.html; no paid/deploy/merge. Developer fixture toolbar now requires ?debug=1; compact preview disclosure remains visible.
-/app defaults to Chat; explicit Studio/tool/checkout intents and per-entry Back/Forward are preserved. New/Search/saved project chats; account-scoped IndexedDB preserves chats/photos/unsent text/old keys. Device-local; cloud sync/durable jobs/natural intake/live voice/provider output remain future milestones.
-Settings shows account, confirmed plan/retry, confirmed ad consent/retry, appearance, help/legal and sign out. Preview account actions are simulated; real Supabase helpers are reused. Latest draft flushes before exit/navigation; save/sign-out failure retains session/draft. Confirmed same-account refresh keeps Studio forms mounted.
-Inter/system14px UI,600 headings/buttons/labels,400 values,normal case/tracking; portalled preview Settings now overrides stale heavy/mono fixture styles. Section icons20px/gap12px/shrink0. Thin neutral gray scrollbars; focus trap/restore and inert background verified. Technical/art/serif treatments preserved.
-Approved56/64px min2x/DPR mascot and persistent player/startup reveal unchanged. Transparent floating header/composer, measured clearances, narrow selection guard, aligned44px Plus/mic/Send, growing1-line input and editable browser dictation remain. Real mic/phone GPU/native zoom untested.
-Final build/1462 units PASS (32 existing skips); 102 unique browser cases PASS (34 account,54 companion regressions,14 routes including targeted OAuth fixture retry). Final typography/icon-only delta passed preview8 +four-context16 assertions; fresh independent49 behavior assertions PASS, BRAND_PASS46/50,zero findings.
-Evidence/final nine-source hashes under assets/design/companion-account/qa; original toolbar, auth-plan, refresh data-loss, history and preview-font failures retained. Voice-sync/domain/anchors/11 companion assets/design-lint/bundle-leak/PowerShell ASCII PASS. Historical typography/glass/continuity/startup proof preserved; prior Codex26 control checks PASS.
+## NEXT ACTION
+
+Beta release HOLD. Free audit/fixes and independent review complete; save the reviewed branch/draft PR. No merge/deploy/invitations/paid generation authorized.
+Branch codex/companion-beta-readiness; worktree C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command; base8d5a4be on chatPR164 https://github.com/yopiheart/grifon-command/pull/164. Readiness PR pending.
+Fixed stale-tab chat overwrites, Stop/Resume overlap, close-tab uncertainty, atomic finished-ad debit and raw producer telemetry. Durable local receipts block ambiguous paid repeat; Check saved progress reads only. Structural transport/missing-output guards; tuned prompts/schemas/models/knobs unchanged.
+Frozen application source: build PASS; full units 1,529 PASS/0 FAIL/32 existing skips, final affected fixture checks12 PASS. Codex26, bundle leak, voice sync, domain, eval prompts, artifact anchors, design lint and11 accepted Companion assets PASS. QA/root-gates.json binds20 application hashes.
+Mocked Companion45 unique cases green across split runs, independent43 unique green (39+9 runs), shared recovery18/18 PASS. Fresh diff review PASS; brand42/50 with one cosmetic clipped placeholder. Original red/partial diagnostics retained; do not imply physical-phone/provider proof. Extra QA copies and unrelated3d-lab work excluded from this PR.
+Checklist/bug evidence assets/design/companion-beta/readiness.md; live-test-spec.md proposes US$15 two-stage cap, NOT approved/not run. Target SQL rollout+concurrency, real OTP/accounts/phones, live audio/video/download, first-time testers and monitored support/recovery remain gates. Uncertain operations can require human recovery; device-local guided intake only.
+Material Trial v01 preferred neutral cream finish safely committed e2580bfb on separate branch codex/griffin-material-study, draftPR169 https://github.com/yopiheart/grifon-command/pull/169. Saved anchors/recipe there; v05 identity/groom/live mascot unchanged; unrelated local3d-lab files excluded here.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

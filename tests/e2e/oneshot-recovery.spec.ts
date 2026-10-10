@@ -87,10 +87,11 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
       await expect(page.getByText(/FINAL_RENDER_POLL_FAILED/)).toBeVisible();
       const completedVideo = backend.scenes[0].video_url;
       expect(backend.row?.status).toBe('error');
-      expect(backend.finalStarts).toHaveLength(2); // Existing bounded retry policy.
+      expect(backend.finalStarts).toHaveLength(1); // Poll failure cannot automatically restart submitted work.
       backend.finalPollFails = false;
       await page.getByRole('button', { name: 'Retry', exact: true }).click();
       await expect(page.getByRole('heading', { name: 'Your First Cut', exact: true })).toBeVisible({ timeout: 15_000 });
+      expect(backend.finalStarts).toHaveLength(2); // Only the explicit customer Retry submits again.
       expect(backend.scenes[0].video_url).toBe(completedVideo);
       expect(backend.submissions).toHaveLength(0);
       expect(backend.row?.run_id).toBe(RUN_ID);

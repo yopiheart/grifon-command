@@ -4,7 +4,7 @@ import Button from '../ui/Button';
 import SettingsModal from '../dashboard/SettingsModal';
 import type { PlanId } from '../../utils/planGate';
 import { CompanionAvatarLayer, type CompanionAvatarPresentation } from './CompanionAvatarLayer';
-import { createConversation, loadConversations, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations } from '../../services/companionConversations';
+import { ConversationConflictError, createConversation, loadConversations, saveConversationCopy, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations } from '../../services/companionConversations';
 import './companionChat.css';
 
 export interface ConversationBinding {
@@ -12,6 +12,8 @@ export interface ConversationBinding {
   update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId'>>) => void;
   saved: boolean;
   saving: boolean;
+  saveConflict: boolean;
+  recoverCopy: () => void;
   retrySave: () => void;
   openNavigation: () => void;
   newChat: () => void;
@@ -39,9 +41,11 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const [book, setBook] = useState<CompanionConversations | null>(null);
   const current = useRef<CompanionConversations | null>(null);
   const writes = useRef<Promise<void>>(Promise.resolve());
+  const revision = useRef(0);
   const mounted = useRef(true);
   const [saved, setSaved] = useState(true);
   const [saving, setSaving] = useState(true);
+  const [saveConflict, setSaveConflict] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
@@ -53,6 +57,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const drawer = useRef<HTMLElement>(null);
   const main = useRef<HTMLDivElement>(null);
   const navigating = useRef(false);
+  const recovering = useRef(false);
   const [avatar, setAvatar] = useState<CompanionAvatarPresentation | null>(null);
   const presentAvatar = useCallback((chatId: string, presentation: CompanionAvatarPresentation) => {
     if (!mounted.current || current.current?.selectedId !== chatId || !main.current) return;
@@ -64,12 +69,14 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   }, []);
   const persist = useCallback((next: CompanionConversations) => {
     setSaving(true);
-    const task = writes.current.catch(() => {}).then(() => saveConversations(next));
+    const task = writes.current.catch(() => {}).then(async () => {
+      revision.current = await saveConversations({ ...next, revision: revision.current });
+    });
     writes.current = task;
     void task.then(() => {
       if (mounted.current && current.current === next && writes.current === task) { setSaved(true); setSaving(false); }
-    }, () => {
-      if (mounted.current && current.current === next && writes.current === task) { setSaved(false); setSaving(false); }
+    }, error => {
+      if (mounted.current && current.current === next && writes.current === task) { setSaved(false); setSaving(false); setSaveConflict(error instanceof ConversationConflictError); }
     });
     return task;
   }, []);
@@ -79,10 +86,19 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     setLoadError(false);
     void loadConversations(userId).then(next => {
       if (!alive) return;
-      current.current = next; setBook(next); void persist(next);
+      revision.current = next.revision ?? 0;
+      current.current = next; setBook(next);
+      if (next.revision === undefined) void persist(next);
+      else { setSaved(true); setSaving(false); }
     }).catch(() => { if (alive) setLoadError(true); });
     return () => { alive = false; mounted.current = false; };
   }, [userId, attempt, persist]);
+  useEffect(() => {
+    if (saved && !saving) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [saved, saving]);
   useLayoutEffect(() => {
     if (!mobileOpen) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -105,8 +121,28 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const update = useCallback((id: string, patch: Parameters<ConversationBinding['update']>[0]) => {
     if (!current.current) return;
     const next = updateConversation(current.current, id, patch);
-    current.current = next; setBook(next); void persist(next);
+    if (next === current.current) return;
+    current.current = next; setBook(next); if (!recovering.current) void persist(next);
   }, [persist]);
+  const recoverCopy = async () => {
+    if (!current.current || navigating.current) return;
+    navigating.current = true; recovering.current = true;
+    const wasInert = main.current?.hasAttribute('inert');
+    main.current?.setAttribute('inert', ''); setSaving(true);
+    try {
+      await writes.current.catch(() => {});
+      const latest = current.current;
+      const selected = latest.chats.find(item => item.id === latest.selectedId)!;
+      let next = await saveConversationCopy(userId, selected);
+      if (!mounted.current) return;
+      const pending = current.current.chats.find(item => item.id === latest.selectedId)!;
+      if (pending !== selected) next = updateConversation(next, next.selectedId, { draft: pending.draft, composer: pending.composer, runId: pending.runId });
+      revision.current = next.revision ?? 0; current.current = next; setBook(next);
+      if (pending !== selected) await persist(next);
+      setSaveConflict(false); setSaved(true); setNavigationError('');
+    } catch { if (mounted.current) setNavigationError('The copy could not be saved. Keep this tab open and try again.'); }
+    finally { navigating.current = false; recovering.current = false; if (mounted.current) setSaving(false); if (!wasInert) main.current?.removeAttribute('inert'); }
+  };
   const leave = useCallback(async (action: () => void | Promise<void>) => {
     if (!current.current || navigating.current) throw new Error('Chat navigation is busy.');
     navigating.current = true;
@@ -151,7 +187,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
     {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
-    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave })}<CompanionAvatarLayer presentation={avatar} />{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
+    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, saveConflict, recoverCopy: () => void recoverCopy(), retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave })}<CompanionAvatarLayer presentation={avatar} />{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
     <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
       onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />
   </div>;

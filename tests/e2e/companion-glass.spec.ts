@@ -117,7 +117,16 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900], [320, 667]])
     expect(initial.overflow).toBeLessThanOrEqual(0);
     await seedHistory(page);
     const scroller = page.getByTestId('conversation-scroll');
-    await scroller.evaluate(node => { node.scrollTop = node.scrollHeight * .45; node.dispatchEvent(new Event('scroll')); });
+    await scroller.evaluate(node => {
+      node.scrollTop = node.scrollHeight * .45;
+      // Anchor the pixel probe inside a real bubble; a percentage alone can
+      // land between messages when disclosure copy changes transcript height.
+      const sampleY = document.querySelector('.companion-header')!.getBoundingClientRect().bottom - 8;
+      const bubble = Array.from(node.querySelectorAll('.companion-message')).find(message => message.getBoundingClientRect().bottom > sampleY)!;
+      const bounds = bubble.getBoundingClientRect();
+      node.scrollTop += bounds.y + bounds.height / 2 - sampleY;
+      node.dispatchEvent(new Event('scroll'));
+    });
     const overlap = await page.evaluate(() => {
       const header = document.querySelector('.companion-header')!.getBoundingClientRect();
       const messages = Array.from(document.querySelectorAll('.companion-message')).map(node => ({ text: node.textContent, rect: node.getBoundingClientRect().toJSON() }));

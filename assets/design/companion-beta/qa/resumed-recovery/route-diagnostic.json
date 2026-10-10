@@ -1,0 +1,10 @@
+{
+  "status": "INTERRUPTED_DIAGNOSTIC",
+  "full18Verdict": false,
+  "completedPassedCases": 7,
+  "completedFailedCases": 7,
+  "reason": "Confirmed stale MarketMind fixture, reload helper assumes Dashboard despite restored module, and old automatic-final-render retry count",
+  "playwrightPid": 19876,
+  "serverPid": 20848,
+  "interruptedAt": "2026-10-10T03:09:28.6204253Z"
+}

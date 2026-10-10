@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { getUserFromAccessToken, getSupabaseAdmin } from './_lib/supabaseAdmin.js';
 import { rateLimitCheck } from './_lib/rateLimit.js';
+import { PRODUCER_EVENTS, sanitizeProducerMeta } from '../utils/producerTelemetry.js';
 
 // In-app telemetry sink for the Data-Driven Growth Loop (workflows/growth_loop.md
 // Phase 0). The client (services/analyticsService.ts) POSTs first-party product
@@ -117,7 +118,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     event,
     module: module ?? null,
     step: step ?? null,
-    meta: meta ?? {},
+    meta: PRODUCER_EVENTS.has(event) ? sanitizeProducerMeta(meta ?? {}) : meta ?? {},
     run_id: runId,
   });
   if (error) {

@@ -1,0 +1,100 @@
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command
+
+ ❯ tests/unit/geminiService.proxy.test.ts (11 tests | 1 failed | 10 skipped) 35ms
+     × keeps a valid JSON image response without an image unresolved 32ms
+ ❯ tests/producerOrchestrator.test.ts (99 tests | 1 failed | 98 skipped) 28ms
+     × does not degrade an unknown shot-planning outcome into a runnable fallback 25ms
+ ❯ tests/unit/productionTransport.test.ts (5 tests | 2 failed | 3 skipped) 27ms
+     × does not silently drop missing voice results from a successful POST 14ms
+     × keeps a successful final-render poll without its output unresolved 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/producerOrchestrator.test.ts > P3 — video_prompts as its own stage > does not degrade an unknown shot-planning outcome into a runnable fallback
+AssertionError: expected 'review' to be 'error' // Object.is equality
+
+Expected: "error"
+Received: "review"
+
+ ❯ tests/producerOrchestrator.test.ts:1221:24
+    1219|     const { deps, spies } = makeFakeDeps({ generateVideoPrompts });
+    1220|     const run = await runProduction(createProductionRun(makeInput(), '…
+    1221|     expect(run.status).toBe('error');
+       |                        ^
+    1222|     expect(run.stages.find(stage => stage.id === 'video_prompts')?.sta…
+    1223|     expect(generateVideoPrompts).toHaveBeenCalledTimes(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps a valid JSON image response without an image unresolved
+AssertionError: expected Error: Consistent image generation failed. to match object { generationOutcomeUnknown: true }
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
++ Error {
++   "message": "Consistent image generation failed.",
+  }
+
+ ❯ tests/unit/geminiService.proxy.test.ts:66:26
+     64|     const result = generateSceneImage('Fixture image', '9:16', '1K').c…
+     65|     await vi.runAllTimersAsync();
+     66|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     67|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     68|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/unit/productionTransport.test.ts > paid production transport uncertainty > does not silently drop missing voice results from a successful POST
+AssertionError: promise resolved "[]" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+[]
+
+ ❯ tests/unit/productionTransport.test.ts:14:109
+     12|   it('does not silently drop missing voice results from a successful P…
+     13|     fetchMock.mockResolvedValue({ ok: true, json: async () => ({}) });
+     14|     await expect(consolidateVoices([{ sceneIdx: 0, type: 'b-roll', scr…
+       |                                                                                                             ^
+     15|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     16|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/unit/productionTransport.test.ts > paid production transport uncertainty > keeps a successful final-render poll without its output unresolved
+AssertionError: expected { done: true, status: 'done' } to match object { generationOutcomeUnknown: true }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "generationOutcomeUnknown": true,
++   "done": true,
++   "status": "done",
+  }
+
+ ❯ tests/unit/productionTransport.test.ts:23:26
+     21|     const result = renderFinalVideo({} as FinalRenderRequest).catch(er…
+     22|     await vi.runAllTimersAsync();
+     23|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     24|     expect(fetchMock.mock.calls.map(call => call[1]?.method ?? 'GET'))…
+     25|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  4 failed | 111 skipped (115)
+   Start at  10:44:11
+   Duration  1.68s (transform 891ms, setup 0ms, import 1.23s, tests 90ms, environment 0ms)

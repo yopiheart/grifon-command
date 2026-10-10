@@ -1,0 +1,51 @@
+[
+  {
+    "pid": 20856,
+    "parentPid": 16704,
+    "name": "node.exe",
+    "role": "recovery server",
+    "createdAt": "2026-10-10T03:00:50.6080720Z"
+  },
+  {
+    "pid": 16704,
+    "parentPid": 12512,
+    "name": "cmd.exe",
+    "role": "recovery server",
+    "createdAt": "2026-10-10T03:00:50.5883030Z"
+  },
+  {
+    "pid": 12512,
+    "parentPid": 2868,
+    "name": "node.exe",
+    "role": "recovery Playwright runner",
+    "createdAt": "2026-10-10T03:00:49.6647290Z"
+  },
+  {
+    "pid": 2868,
+    "parentPid": 22080,
+    "name": "node.exe",
+    "role": "recovery runner",
+    "createdAt": "2026-10-10T03:00:49.4244070Z"
+  },
+  {
+    "pid": 22080,
+    "parentPid": 21872,
+    "name": "cmd.exe",
+    "role": "recovery runner",
+    "createdAt": "2026-10-10T03:00:49.3965840Z"
+  },
+  {
+    "pid": 21872,
+    "parentPid": 20364,
+    "name": "node.exe",
+    "role": "launcher",
+    "createdAt": "2026-10-10T03:00:49.1207870Z"
+  },
+  {
+    "pid": 20364,
+    "parentPid": 18000,
+    "name": "cmd.exe",
+    "role": "launcher",
+    "createdAt": "2026-10-10T03:00:48.9413530Z"
+  }
+]

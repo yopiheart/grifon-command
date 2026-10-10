@@ -27,7 +27,8 @@ async function openFixture(page: Page) {
   });
   await page.goto('/companion-chat-preview.html');
   await expect(composer(page)).toBeVisible();
-  await expect(page.getByText(/local test fixture.*mocked generation/i)).toBeVisible();
+  await expect(page.locator('#companion-save-status')).toBeVisible();
+  await expect(page.locator('#companion-save-status')).toContainText('Preview · simulated output');
   return { unexpected, errors };
 }
 
@@ -63,11 +64,11 @@ test('brief, explicit start, truthful callbacks, storyboard approval, video and 
   await composer(page).fill('Reshoot scene 1'); await page.getByRole('button', { name: 'Send', exact: true }).click();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'reshoot')).toHaveLength(0);
   await page.getByRole('button', { name: 'Confirm reshoot', exact: true }).click();
-  expect((await snapshot(page)).calls).toContainEqual({ name: 'reshoot', value: 0 });
+  await expect.poll(async () => (await snapshot(page)).calls.filter((call: any) => call.name === 'reshoot')).toEqual([{ name: 'reshoot', value: 0 }]);
   await composer(page).fill('style clean'); await page.getByRole('button', { name: 'Send', exact: true }).click();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'choosePreset')).toHaveLength(0);
   await page.getByRole('button', { name: 'Apply style', exact: true }).click();
-  expect((await snapshot(page)).calls).toContainEqual({ name: 'choosePreset', value: 'clean' });
+  await expect.poll(async () => (await snapshot(page)).calls.filter((call: any) => call.name === 'choosePreset')).toEqual([{ name: 'choosePreset', value: 'clean' }]);
   const before = (await snapshot(page)).calls.length;
   await composer(page).fill('Make it magically viral'); await page.getByRole('button', { name: 'Send', exact: true }).click();
   expect((await snapshot(page)).calls.length).toBe(before);
