@@ -3,8 +3,8 @@
 
 ## NEXT ACTION
 
-Beta release HOLD. Free audit/fixes and independent review complete; save the reviewed branch/draft PR. No merge/deploy/invitations/paid generation authorized.
-Branch codex/companion-beta-readiness; worktree C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command; base8d5a4be on chatPR164 https://github.com/yopiheart/grifon-command/pull/164. Readiness PR pending.
+Beta release HOLD. Free audit/fixes and independent review complete, committed and pushed in draft PR172. No merge/deploy/invitations/paid generation authorized.
+Branch codex/companion-beta-readiness; worktree C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command; reviewed candidate5200a4a0 on base8d5a4be/chatPR164. Draft https://github.com/yopiheart/grifon-command/pull/172; only resume documentation follows the reviewed candidate.
 Fixed stale-tab chat overwrites, Stop/Resume overlap, close-tab uncertainty, atomic finished-ad debit and raw producer telemetry. Durable local receipts block ambiguous paid repeat; Check saved progress reads only. Structural transport/missing-output guards; tuned prompts/schemas/models/knobs unchanged.
 Frozen application source: build PASS; full units 1,529 PASS/0 FAIL/32 existing skips, final affected fixture checks12 PASS. Codex26, bundle leak, voice sync, domain, eval prompts, artifact anchors, design lint and11 accepted Companion assets PASS. QA/root-gates.json binds20 application hashes.
 Mocked Companion45 unique cases green across split runs, independent43 unique green (39+9 runs), shared recovery18/18 PASS. Fresh diff review PASS; brand42/50 with one cosmetic clipped placeholder. Original red/partial diagnostics retained; do not imply physical-phone/provider proof. Extra QA copies and unrelated3d-lab work excluded from this PR.
