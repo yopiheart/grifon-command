@@ -1,31 +1,18 @@
 # NOW - the resume doc
-**Stamped: 2026-10-10; Codila audio REVIEW alternate ready**
+**Stamped: 2026-10-10; rejected Bodila experiment removed**
 
-## Current: Codila prompt applied to the accepted film
-Branch: codex/grifon-codila-audio; implementation35ec93d3 pushed; draft PR173:
-https://github.com/yopiheart/grifon-command/pull/173 (base codex/grifon-motion-reuse).
-Neil chose existing film/new audio and asked to read the author's post/prompt.
-Post2108621038141546616 is text + prompt image, not a reference soundtrack.
-Original26 CC0 toolkit pinned c113911c9d47e050569521f97fb88971cd4b07a3.
-All26 actual downloads/preparations OK; original scripts unchanged; local DSP only.
-Existing registered Digital Clouds replaces Close Up; no paid calls/new AI spec.
-New assets only: workflows/assets/grifon-shader-recreation/sound-v2-codila/.
-Protected animation-derived cues; same silent picture, copy video/native timescale.
-Review movie: grifon-recreation-landscape-sound-v2-codila-review.mp4,25230219bytes,
-SHAfead0215c187016b0409c76d26189d2ced7de191f42ee6a4339b350f065916dc.
-Attempt1 FAIL14/WARN8; correction FAIL6/WARN2. Both actual reports preserved.
-Both permitted mix rounds consumed; upstream overall FAIL, no third mix/weakening.
-Final23 recorded cues/six hero beats; source timing, no new picture render or synth.
-Independent21 media/provenance checks PASS; all932 packet/decode +222 prefix exact.
-Encoded -16.22469LUFS/-1.70449dBTP,0sample correlations,finite/unclipped48kstereo.
-Master/decoded1495040samples; container1495008(-32/.667ms), explicitly accounted.
-All100 source bindings +12 selected WAV/sidecar copies exact; scripts clean CRLF.
-README-v2/LISTEN-v2 +CREDITS identify review status and five listening checkpoints.
-Human ear pending. This does not establish a finished fully passing soundtrack.
-Root build/default tests1463PASS/32existingSKIP; all five applicable guards PASS.
-Independent Codex source/docs/staged-byte review PASS; two raw mux logs gzip-exact.
-Normal staged whitespace gate PASS; final backup does not waive failed audio gates.
-Accepted sound-v1, reusable workflow, app/tuned files and PRIMARY stay preserved.
+## Current: Bodila sound-layer experiment withdrawn
+Neil rejected the audio alternate and requested deletion; correct upstream name:
+Bodila51/opus-sound-layer, commit c113911c9d47e050569521f97fb88971cd4b07a3.
+Removed the sound-v2-codila folder and review MP4 by reverting its task commits.
+Local .tmp/codila-audio clone, venv, downloads, stems and candidates went to
+Windows Recycle Bin after recursive-delete policy rejection; active path absent.
+Draft PR173 closed: https://github.com/yopiheart/grifon-command/pull/173.
+Branch codex/grifon-codila-audio records withdrawal; ordinary Git history retained.
+Accepted sound-v1, original animation sources and reusable motion workflow remain.
+Independent check: all three removed targets absent; eleven protected hashes exact.
+Working tree equals prior workflow base60c10376 except NOW.md; artifact anchors PASS.
+No replacement soundtrack, paid run, merge, deployment or broader cleanup requested.
 
 ## Delivered: local motion repeatability
 Branch: codex/grifon-motion-reuse; draft PR170 (base accepted118a5e8a):
