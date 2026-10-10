@@ -248,6 +248,8 @@ export interface ProductionRun {
   report?: MarketResearchReport;
   clientDetails?: ClientDetails;
   businessInfo?: BusinessInfo;
+  /** Set only by a known automatic intake mapping; manual and older prefills stay unmarked. */
+  businessInfoMapping?: { origin: 'automatic-intake'; version: 1 };
   script?: Script;
   finalScript?: string[];
   storyboard?: Scene[];
@@ -1659,6 +1661,7 @@ async function runStage(
         r.report = report!;
         r.clientDetails = clientDetails;
         r.businessInfo = businessInfo;
+        r.businessInfoMapping = { origin: 'automatic-intake', version: 1 };
       });
       await setStage(id, { detail: fromCache ? 'Reused your saved market research' : report.threeAmThought ? "Found your customer's #1 fear" : 'Mapped your market' });
       return;
@@ -1666,8 +1669,15 @@ async function runStage(
 
     case 'script': {
       const angleReport = selectedReferenceAngleReport(run.input.referenceBrief, run.input, run.report!);
+      const automaticMapping = run.businessInfoMapping?.origin === 'automatic-intake' && run.businessInfoMapping.version === 1;
+      if (automaticMapping && run.businessInfo && (run.businessInfo.benefit !== run.input.offer || run.businessInfo.separator !== '')) {
+        await commit((r) => {
+          r.businessInfo!.benefit = r.input.offer;
+          r.businessInfo!.separator = '';
+        });
+      }
       const script = await withRetry(
-        () => deps.generateAdScript(run.businessInfo!, run.input.brandName, run.input.language, run.input.offer, deriveAngleBrief(angleReport), run.report!.contrarianTruth ?? ''),
+        () => deps.generateAdScript(run.businessInfo!, run.input.brandName, run.input.language, run.input.offer, deriveAngleBrief(angleReport), automaticMapping ? '' : run.report!.contrarianTruth ?? ''),
         MAX_STAGE_ATTEMPTS,
         bump
       );

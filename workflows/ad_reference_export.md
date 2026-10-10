@@ -67,11 +67,50 @@ The browser/ownership tests use explicitly invented observations and mocked
 backends. The Vivo proof uses real previously accepted media. They are separate
 pieces of evidence; neither is a completed live competitor-to-generated-ad run.
 
+## Evidence handoff and software preparation
+
+Automatic intake now maps its supplied offer into the benefit field and leaves
+the differentiator empty. Generated desires and reframes stay in the research
+report; they are not promoted into these product fields. New automatically
+mapped producer runs checkpoint an explicit mapping marker. A marked pending
+script reprojects only these two fields and omits the generated contrarian hook
+seed. Manual prefills and completed scripts retain their existing behavior.
+Older pending checkpoints without the marker cannot safely be distinguished
+from manual work, so their existing behavior remains unchanged.
+
+This is a structural safeguard, not complete evidence-aware generation. Existing
+generated angle text still enters the script prompt. The proposed optional
+evidence-context policy is saved separately in
+`assets/ad-recon/elevenlabs-evidence-prompt.proposed.patch`; it is not applied or
+approved. It builds on PR171's source without duplicating its MarketMind change.
+Structural transport, bounded input validation and output evaluation must follow
+approval before the new policy can be consumed by either One-Shot engine.
+
+One-Shot's **Prepare software demo** opens a separate local preparation screen.
+Keep original PNG/JPEG setup/action/result screenshots (maximum 1 MiB each),
+captions, source URLs, capture times and owner observations. Audience and
+creative hypotheses are separate from supplied product details and references.
+Review, save on this device, import and export work without creating a producer
+run or calling an AI provider. Device storage is scoped to the signed-in owner;
+portable exports contain the screenshot bytes, so review private screen content
+before sharing. Missing assets and reference-review gaps remain visible.
+
+The ElevenLabs pilot files are `assets/ad-recon/elevenlabs-2026-10-10.*`.
+Import the `.preparation.json` into this screen. It intentionally contains no
+screenshots or completed audio proof and does not pre-accept collection limits.
+Four ElevenLabs cards are own-brand messaging benchmarks. Two Speechify cards
+are adjacent consumer reader ads; direct Murf/WellSaid creative evidence remains
+unknown. Three concepts are original hypotheses, ranked with audible proof first.
+Neither the packet nor the preparation export is production authorization.
+
 ## Next production pilot
 
-The next paid test remains unapproved. Use one supported physical product with
-an observed, reviewed packet and one selected concept. The Grifon SaaS packet
-remains review-only while that vertical is locked.
+Neil selected ElevenLabs Text to Speech for the pilot. App/SaaS generation stays
+locked: a preparation screen is not a faithful software-demo renderer. The next
+step is matched real screens and permitted audio, approved SaaS script/storyboard
+changes, authenticated asset registration and a renderer path that preserves
+those screens instead of replacing them with generated UI. The focused evidence
+policy proposal alone does not enable this production route.
 
 Before approval, freeze the product/presenter assets and hashes, full intake,
 selected packet/concept, provider requests, output criteria, evidence plan and
@@ -81,6 +120,9 @@ Success requires a reviewable MP4, correct audible track, resumed selection and
 a server-derived receipt linking source observations to the creative ID.
 
 After that pilot, connect a human-approved published creative to the existing
-performance importer. Success for Milestone 3 is a joined result and a useful
-next-concept recommendation. Automated competitor monitoring and campaign
-actions are separate later work; ad longevity never replaces performance tests.
+performance importer. Success for the full learning loop is a joined result and
+a useful next-concept recommendation, using actual activation and conversion
+data. Automated competitor monitoring and campaign actions are separate later
+work; ad longevity never replaces performance tests. The pilot JSON records the
+completion milestones and an unapproved, non-executable trial draft with zero
+spend/roll allowance until exact assets and requests are frozen and approved.

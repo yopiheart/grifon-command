@@ -66,6 +66,7 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
     report: run.report,
     clientDetails: run.clientDetails,
     businessInfo: run.businessInfo,
+    businessInfoMapping: run.businessInfoMapping,
     script: run.script,
     finalScript: run.finalScript,
     storyboard: run.storyboard,

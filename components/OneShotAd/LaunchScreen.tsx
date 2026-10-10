@@ -8,6 +8,7 @@ import {
 import { useReducedMotion } from 'motion/react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ReferenceBriefPanel } from './ReferenceBriefPanel';
+import { SaasDemoPreparation } from './SaasDemoPreparation';
 import { resolveSelectedReference } from '../../services/adReconBrief';
 import { DUR } from '../ui/motionTokens';
 import { useOneShotSfx } from '../../services/uiSoundService';
@@ -177,7 +178,10 @@ export const LaunchScreen: React.FC<{
   preferredVertical?: string;
   /** True on the producer engine (?osaEngine=producer) — unlocks producer-only recipes (Pure Hype). */
   producerEngine?: boolean;
-}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice, preferredVertical, producerEngine }) => {
+  /** Authenticated owner for the separate device-local software preparation. */
+  demoOwnerId?: string;
+}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice, preferredVertical, producerEngine, demoOwnerId }) => {
+  const [showPreparation, setShowPreparation] = useState(false);
   // Premium cinematic click cues — One-Shot only, ON by default, mutable.
   const sfx = useOneShotSfx();
   const isMobile = useIsMobile();
@@ -699,6 +703,8 @@ export const LaunchScreen: React.FC<{
     </div>
   );
 
+  if (showPreparation && demoOwnerId) return <SaasDemoPreparation key={demoOwnerId} ownerId={demoOwnerId} onBack={() => setShowPreparation(false)} />;
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 py-10 pb-28 text-white md:pb-10">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,204,0,0.07),transparent_60%)]" />
@@ -759,6 +765,7 @@ export const LaunchScreen: React.FC<{
         </header>
 
         <GlassPanel className={`p-5 sm:p-7 ${R_PANEL}`}>
+          {demoOwnerId && <div className="mb-5 space-y-2 border-b border-white/10 pb-5"><p className="text-sm text-zinc-400">App / SaaS generation is coming soon. Prepare real screens and a reviewable brief.</p><button type="button" onClick={() => setShowPreparation(true)} className={`inline-flex items-center justify-center gap-3 border border-white/10 bg-zinc-950 px-4 text-zinc-300 hover:border-[#FFCC00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#FFCC00] ${CTRL_H} ${R_CTRL} ${T_CTRL}`}><Smartphone className="h-5 w-5 shrink-0" />Prepare software demo</button></div>}
           {/* ---- Composer: the offer is the one thing we ask for up-front ---- */}
           <label className={`mb-2 block text-zinc-400 ${T_LABEL}`}>// Your offer</label>
           <textarea

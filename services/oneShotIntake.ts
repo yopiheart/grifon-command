@@ -141,9 +141,9 @@ export function mapReportToWizard(
     businessInfo: {
       product: input.productName,
       audience: report.winningAvatar || report.demographics || '',
-      benefit: report.emotionalPayoff || report.magicGenie || input.offer,
+      benefit: input.offer,
       painPoint: report.bleedingNeck || report.threeAmThought || '',
-      separator: report.contrarianTruth || report.villain || '',
+      separator: '',
       features: input.productDescription,
       productImageUrls,
       productImageDescription,

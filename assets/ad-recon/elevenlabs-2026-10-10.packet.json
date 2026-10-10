@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "id": "elevenlabs-2026-10-10",
+  "evidenceMode": "observed",
+  "observedAt": "2026-10-10T09:16:09.297Z",
+  "subject": {
+    "brandName": "ElevenLabs",
+    "productName": "ElevenLabs Text to Speech",
+    "offer": "Create a voice-over from supplied text.",
+    "audience": "English-speaking video creators evaluating AI voice-over. Global audience and creator use case are pilot hypotheses, not verified ad targeting."
+  },
+  "competitors": [
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs (pilot brand benchmark)",
+      "domain": "elevenlabs.io",
+      "pageId": "108361132071329",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&search_type=page&view_all_page_id=108361132071329",
+      "collectionStatus": "partial",
+      "limitations": [
+        "The pilot brand's own ads are messaging benchmarks; they are not evidence of a competitor's superiority. Typeahead @elevenlabsio and pinned heading/card links matched facebook.com/elevenlabsio.",
+        "Four active cards sampled from the visible first page of approximately 2,200 results using ALL / All ads / Active. No global ranking, language filter or targeting verification.",
+        "Card text only. No video playback analysis, transcript, edit DNA, spend, conversion, CPA, ROAS or continuous-delivery evidence.",
+        "Displayed start dates are research signals only. Advertiser claims about speed, quality, adoption and virality are unverified.",
+        "Creative workspace and Flows positioning extends beyond this Text to Speech pilot. Do not transfer their capabilities to TTS without product-specific evidence.",
+        "Concepts are original test plans. No production, publishing, testimonial, affiliation or campaign authorization is supplied by this packet."
+      ]
+    },
+    {
+      "id": "speechify",
+      "name": "Speechify (adjacent consumer reader)",
+      "domain": "speechify.com",
+      "pageId": "248986568895243",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&search_type=page&view_all_page_id=248986568895243",
+      "collectionStatus": "partial",
+      "limitations": [
+        "Pinned @getspeechify matched the established consumer reader page. A similarly named 19-follower Speechify Studio page was excluded.",
+        "Two visible active cards promote reading books, long texts and emails. This does not establish Speechify Studio as a direct creator voice-over workflow competitor.",
+        "No concept below cites these adjacent reader ads as direct competitive proof. Adoption, review counts and celebrity-voice claims were not verified."
+      ]
+    },
+    {
+      "id": "murf",
+      "name": "Murf AI",
+      "domain": "murf.ai",
+      "pageId": "102063189056647",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&search_type=page&view_all_page_id=102063189056647",
+      "collectionStatus": "unknown",
+      "limitations": [
+        "Typeahead @murfaistudio matched the software page; unrelated Murf entries were excluded.",
+        "Collection remained empty after the required refresh. No ad ID was acquired. This cannot distinguish an empty collection from Meta loading/filter behavior and does not prove no advertising."
+      ]
+    },
+    {
+      "id": "wellsaid",
+      "name": "WellSaid Labs (identity partly checked)",
+      "domain": "wellsaidlabs.com",
+      "pageId": "103024077831966",
+      "identitySourceUrl": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&search_type=page&view_all_page_id=103024077831966",
+      "collectionStatus": "unknown",
+      "limitations": [
+        "Typeahead @wellsaidlabsai and About description referenced an AI voice-over Studio. The official domain cross-link was not independently verified; identity remains provisional.",
+        "Collection remained empty after refresh. No ad ID or creative observation was acquired; advertising status is unknown."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "elevenlabs-editing-friction",
+      "competitorId": "elevenlabs",
+      "libraryId": "894049600304080",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=894049600304080",
+      "observedAt": "2026-10-10T09:16:09.297Z",
+      "startDate": "2026-03-31",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "editing-friction", "text": "Caption framed editing time as the problem and creating voice-overs as the response. Its numerical time-saving, adoption and quality claims were not verified. Visible destination promoted ElevenCreative, beyond TTS alone." }
+      ]
+    },
+    {
+      "id": "elevenlabs-hear-it",
+      "competitorId": "elevenlabs",
+      "libraryId": "936495315676431",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=936495315676431",
+      "observedAt": "2026-10-10T09:16:09.297Z",
+      "startDate": "2026-04-28",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "audible-invitation", "text": "Caption invited the viewer to hear the voice rather than only read a quality promise. This is an observed CTA device, not a listening assessment or evidence of voice realism." },
+        { "id": "delivery-control-message", "text": "Caption named pronunciation, pacing, style, accent, tone and emotion as controls. Actual availability and behavior depend on the product/model and still require a matched screen capture and audible output for this pilot." }
+      ]
+    },
+    {
+      "id": "elevenlabs-creator-outcome",
+      "competitorId": "elevenlabs",
+      "libraryId": "1472955364266923",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=1472955364266923",
+      "observedAt": "2026-10-10T09:16:09.297Z",
+      "startDate": "2026-02-02",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "creator-outcome-claim", "text": "Caption connected creator output with voice, music, captions and sound effects. Its virality and creator-count promises were not verified and are excluded from our concepts' factual claims." }
+      ]
+    },
+    {
+      "id": "elevenlabs-workflow",
+      "competitorId": "elevenlabs",
+      "libraryId": "2045962006803238",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=2045962006803238",
+      "observedAt": "2026-10-10T09:16:09.297Z",
+      "startDate": "2026-04-10",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "workflow-message", "text": "Caption framed moving from ideas to finished content without switching tabs as the benefit. Visible destination was elevenlabs.io/flows. This is Flows positioning, not proof of a TTS-only workflow or time saving." }
+      ]
+    },
+    {
+      "id": "speechify-reader-a",
+      "competitorId": "speechify",
+      "libraryId": "1742242590440347",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=1742242590440347",
+      "observedAt": "2026-10-10T09:16:09.297Z",
+      "startDate": "2026-09-09",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "speechify-reader-scope-a", "text": "Visible card promoted consumer reading/listening to books, long texts or emails. Not confirmed as a Studio ad for producing creator voice-over." }
+      ]
+    },
+    {
+      "id": "speechify-reader-b",
+      "competitorId": "speechify",
+      "libraryId": "2083529642370548",
+      "sourceUrl": "https://www.facebook.com/ads/library/?id=2083529642370548",
+      "observedAt": "2026-10-10T09:16:09.297Z",
+      "startDate": "2026-09-09",
+      "activity": "active",
+      "scope": "card",
+      "observations": [
+        { "id": "speechify-reader-scope-b", "text": "Second visible consumer reader card; no evidence acquired of creator Studio workflow, video editing sequence or conversion performance." }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "hear-the-line",
+      "title": "Hear the Line",
+      "format": "Demo",
+      "customerProblem": "A creator cannot judge whether an AI voice fits their video from quality adjectives alone.",
+      "sellingAngle": "Let a matched text-to-audio example carry the claim, with the real input and generated result visible.",
+      "hook": "Your script. One voice. Hear it yourself.",
+      "originalProof": "Capture the actual TTS input, selected permitted voice and playback of its matching output. Use owned text and an approved output with documented use permission. Label it AI-generated. No generic waveform, invented app UI, testimonials, realism ranking or promised results. A screenshot alone cannot prove the sound.",
+      "requiredAssets": ["Real setup/action/result captures from the same TTS session", "Owned sample sentence and exact selected settings", "Matching permitted audio output and its provenance", "Approved CTA destination"],
+      "testHypothesis": "Priority 1; solution-aware. Audible proof may help creators decide whether to try the workflow. The observed hear-it invitation motivates this test but proves no lift. Compare qualified first voice-over completion against the current creative, at comparable conditions, using consented first-party event data; clicks alone are insufficient. No campaign has been launched.",
+      "sourceIds": ["elevenlabs-hear-it"],
+      "observationIds": ["audible-invitation"]
+    },
+    {
+      "id": "same-line-two-deliveries",
+      "title": "Same Line, Two Deliveries",
+      "format": "Demo",
+      "customerProblem": "A creator's words are right but the delivery does not match the intended mood.",
+      "sellingAngle": "Show a controlled delivery comparison using the same sentence and a documented product setting.",
+      "hook": "Same words. Which delivery fits your video?",
+      "originalProof": "Show two real outputs of the same owned sentence, keeping voice and model fixed where supported and recording the exact changed setting. Display the actual control and let both takes play. Do not invent a tone slider, imply every model supports every control, or call one take universally better. This comparison remains a plan until matching assets exist.",
+      "requiredAssets": ["Actual supported control visible in the chosen TTS model", "Same owned sentence and documented settings for both takes", "Two matched permitted audio outputs", "Legible real screen captures with no private account information"],
+      "testHypothesis": "Priority 2; solution-aware. A delivery comparison may address control concerns more clearly than a broad realism promise. This is a different buying reason from merely hearing one output. Measure qualified completion of the demonstrated use case and downstream activation, not engagement with the comparison alone.",
+      "sourceIds": ["elevenlabs-hear-it"],
+      "observationIds": ["delivery-control-message"]
+    },
+    {
+      "id": "change-one-line",
+      "title": "Change One Line",
+      "format": "Demo",
+      "customerProblem": "A creator needs to revise a voice-over after the wording changes and wants to see the actual revision process.",
+      "sellingAngle": "Demonstrate one honest text revision and its matching audio update instead of claiming unmeasured production speed.",
+      "hook": "Changed the script? Watch this line update.",
+      "originalProof": "Capture a real short text input, one clearly highlighted wording change and the matching regenerated audio. Preserve the actual sequence, and label any cut. Do not claim partial audio regeneration, zero rework, a number of minutes saved, an all-in-one video workflow or faster performance than a rival unless the chosen product and recording establish it.",
+      "requiredAssets": ["Owned before/after sentence differing in one line", "Actual TTS screen capture of the revision", "Matched permitted before/after audio", "Capture notes identifying any editing cuts and model limitations"],
+      "testHypothesis": "Priority 3; problem-aware. A concrete revision task may attract creators frustrated by voice-over rework. The editing-friction card is relevant messaging evidence, not a measured productivity result. Compare qualified voice-over completion and later repeat use with the audible-proof concept under comparable conditions.",
+      "sourceIds": ["elevenlabs-editing-friction"],
+      "observationIds": ["editing-friction"]
+    }
+  ]
+}

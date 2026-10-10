@@ -38,7 +38,7 @@ export function seededRun(gate: 'storyboard' | 'first_cut' | 'video' | 'final_re
   return { row, scenes };
 }
 
-export async function installRecoveryBackend(page: Page, seed = seededRun('storyboard')) {
+export async function installRecoveryBackend(page: Page, seed = seededRun('storyboard'), appOrigin = 'http://localhost:5173') {
   const state = {
     row: seed.row as ProductionRunRow | null, scenes: seed.scenes,
     loadFails: false, holdVideo: false, finalPollFails: false,
@@ -52,7 +52,7 @@ export async function installRecoveryBackend(page: Page, seed = seededRun('story
   await page.route('**/*', async route => {
     const request = route.request();
     const url = new URL(request.url());
-    if (url.origin !== 'http://localhost:5173') {
+    if (url.origin !== appOrigin) {
       state.blockedExternal.push(url.origin);
       if (['fetch', 'xhr'].includes(request.resourceType())) state.unexpected.push(`External runtime request: ${url.origin}${url.pathname}`);
       return route.abort('blockedbyclient');
