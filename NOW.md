@@ -17,7 +17,9 @@ Bundle-leak, voice-sync, domain, PS1-ASCII, artifact-anchor checks PASS.
 Independent visual critic found mobile overlay masking poster footer: fixed.
 QA20/20PASS; embedded inquiry Next scroll defect reproduced before fix, nowPASS.
 Final qa/report.json, regression evidence and README hold delivery verification.
-Git backup/draft PR and final local review opening pending.
+Backed up at b1364942; draftPR176 https://github.com/yopiheart/grifon-command/pull/176.
+Local review browser queued; helperPID26224/session8856 serves127.0.0.1:52904
+/clients/oceanides/flagship-2026-10/ (package only). No public deployment.
 
 ## Release boundaries
 August8 compliance-findings records closure pending own NCR ESC; unresolved here.
