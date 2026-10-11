@@ -1,0 +1,3 @@
+# Keep exported documents byte-identical across Windows checkouts.
+output/pdf/*.pdf binary
+output/pptx/*.pptx binary

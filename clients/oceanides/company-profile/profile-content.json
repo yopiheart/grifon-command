@@ -1,0 +1,206 @@
+{
+  "companyOverview": [
+    "Oceanides Plumbing, Siphoning, and Pest Management Services OPC brings essential property services together through one service partner. We serve commercial, industrial, and residential clients, from restaurants and hotels to offices, warehouses, factories, hospitals, and homes.",
+    "Our business was registered as Oceanides Plumbing Services under DTI in 2023 and has since developed into an SEC-registered One Person Corporation. Our service experience grew through recurring septic tank and plumbing work, including customer relationships that began during the pandemic. Today, our offer includes pest management, cleaning, renovation, restoration, and air-conditioning cleaning.",
+    "We are also introducing onsite wastewater treatment systems for properties that need a planned approach to wastewater management. From the initial site assessment to installation coordination and agreed after-sales support, our aim is to help clients manage their property needs with clearer scope, practical advice, and a familiar point of contact."
+  ],
+  "services": [
+    {
+      "id": "siphoning",
+      "title": "Septic Tank Siphoning",
+      "lead": "Plan septic tank servicing before an overflow disrupts your property.",
+      "description": "Oceanides provides septic tank siphoning for commercial, industrial, and residential properties. We coordinate access, the work area, and the agreed service schedule with your site representative.",
+      "includes": [
+        "Review of tank access and service requirements",
+        "Removal of accumulated septic contents within the agreed scope",
+        "Coordination with site personnel during the work",
+        "Recommendations for the next service based on site conditions"
+      ],
+      "benefit": "A planned service schedule helps your team address tank buildup and reduce the risk of avoidable disruption."
+    },
+    {
+      "id": "manual-septic-cleaning",
+      "title": "Manual Septic Tank Cleaning",
+      "lead": "Address deposits and buildup that require more detailed cleaning.",
+      "description": "Oceanides assesses deposits that need detailed cleaning beyond siphoning. The method follows tank condition and access. Any confined-space entry requires qualified personnel, suitable equipment, and applicable safety procedures.",
+      "includes": [
+        "Assessment of remaining sludge and solid deposits",
+        "Selection of a suitable cleaning method",
+        "Detailed cleaning within the agreed work area",
+        "Site turnover and maintenance observations"
+      ],
+      "benefit": "A site-specific cleaning plan helps resolve buildup while making the work requirements clear before service begins."
+    },
+    {
+      "id": "plumbing",
+      "title": "Plumbing Services",
+      "lead": "Keep your property's water supply and drainage working.",
+      "description": "Oceanides handles plumbing assessment, repairs, and installation work for existing properties and renovation projects. We identify the affected area and explain the proposed work before implementation.",
+      "includes": [
+        "Water supply and drainage assessment",
+        "Pipe and fixture repair or replacement",
+        "Installation and alteration within the approved scope",
+        "Functional checks and site turnover"
+      ],
+      "benefit": "One point of contact for plumbing concerns helps your team coordinate repairs and planned improvements."
+    },
+    {
+      "id": "excavation",
+      "title": "Excavation Services",
+      "lead": "Create access for the underground work your property needs.",
+      "description": "Oceanides provides excavation support for plumbing, drainage, septic tank, and related property works. The method and boundaries follow a site review, utility coordination, and the approved work scope.",
+      "includes": [
+        "Site access and excavation scope review",
+        "Coordination of known utilities and work boundaries",
+        "Excavation for agreed plumbing or drainage works",
+        "Backfilling and surface reinstatement where included"
+      ],
+      "benefit": "Coordinating excavation with the main repair helps your team plan access, work areas, and reinstatement together."
+    },
+    {
+      "id": "declogging",
+      "title": "Drain and Pipe Declogging",
+      "lead": "Address slow drains and blocked lines before problems spread.",
+      "description": "Oceanides assesses drainage blockages and applies a suitable clearing method based on pipe condition, access, and the likely cause. Recurring blockages may require a separate repair or further inspection.",
+      "includes": [
+        "Review of the affected drainage line",
+        "Clearing of accessible blockages within scope",
+        "Water-flow checks after the work",
+        "Advice on recurring issues and further repairs"
+      ],
+      "benefit": "Clear findings help you decide whether a drain needs cleaning, repair, or a planned maintenance schedule."
+    },
+    {
+      "id": "grease-tank-cleaning",
+      "title": "Grease Tank and Trap Cleaning",
+      "lead": "Keep grease buildup from becoming a recurring kitchen drainage problem.",
+      "description": "Oceanides provides grease tank and grease trap cleaning for food-service properties and other sites with grease-management needs. Work is coordinated around access and your operating schedule.",
+      "includes": [
+        "Assessment of grease tank or trap access",
+        "Removal of accumulated grease and settled waste",
+        "Cleaning of accessible internal areas within scope",
+        "Recommendations for a practical cleaning schedule"
+      ],
+      "benefit": "Routine servicing helps your team manage grease buildup and maintain kitchen drainage."
+    },
+    {
+      "id": "pest-control",
+      "title": "Pest Management Services",
+      "lead": "Protect the spaces where people work, stay, and dine.",
+      "description": "Oceanides develops a pest-management scope around the pest concern, property use, and site findings. Programs can support restaurants, hotels, condominiums, offices, warehouses, and residential properties.",
+      "includes": [
+        "Site inspection and pest concern assessment",
+        "Treatment plan for the identified concern",
+        "Coordination of preparation and re-entry instructions",
+        "Follow-up and prevention advice within the agreed program"
+      ],
+      "benefit": "A planned program combines treatment with practical prevention advice and clearer follow-up responsibilities."
+    },
+    {
+      "id": "general-cleaning",
+      "title": "General Cleaning Services",
+      "lead": "Present a cleaner, better-cared-for space to everyone who enters.",
+      "description": "Oceanides provides cleaning support for commercial and residential properties. Cleaning areas, frequency, materials, and exclusions are defined with the client before work starts.",
+      "includes": [
+        "Site walkthrough and cleaning checklist",
+        "Cleaning of agreed rooms and common areas",
+        "Coordination around occupancy and site access",
+        "Completion review with the client representative"
+      ],
+      "benefit": "A clear checklist makes it easier to coordinate cleaning work and review the result."
+    },
+    {
+      "id": "renovation-restoration",
+      "title": "Renovation, Restoration and Leak Repairs",
+      "lead": "Repair damaged spaces and plan improvements with a defined scope.",
+      "description": "Oceanides accepts renovation and restoration work for homes, condominiums, and commercial properties, including ceiling repairs and water-leak concerns. The proposed work follows a site assessment, with specialist involvement where the project requires it.",
+      "includes": [
+        "Site assessment of damage and requested improvements",
+        "Ceiling repair and restoration within scope",
+        "Water-leak investigation and proposed corrective work",
+        "Renovation coordination and agreed finish review"
+      ],
+      "benefit": "Combining related repair work under one coordinated scope helps your team manage access, schedules, and turnover."
+    },
+    {
+      "id": "aircon-cleaning",
+      "title": "Air-Conditioning Cleaning",
+      "lead": "Include your air-conditioning units in your property maintenance plan.",
+      "description": "Oceanides provides air-conditioning cleaning based on unit type, access, and condition. Cleaning findings that require repair or further technical work are discussed separately with the client.",
+      "includes": [
+        "Review of unit type and service access",
+        "Cleaning of agreed accessible components",
+        "Drainage and visible-condition observations",
+        "Basic operation check after cleaning"
+      ],
+      "benefit": "Planned cleaning helps you manage unit upkeep and identify concerns that need further attention."
+    }
+  ],
+  "treatment": {
+    "title": "Onsite Wastewater Treatment System",
+    "lead": "Explore a treatment system designed around the needs of your property.",
+    "description": "Oceanides proposes a site assessment for a wastewater treatment system installed at the client's property. Technical design and capacity follow site assessment. The assessment must establish the wastewater source, volume, site constraints, and intended treatment requirements before a system is recommended. Treatment systems still require proper operation, monitoring, sludge removal, and servicing. Potential changes to maintenance frequency or operating costs must be evaluated for the specific site. Oceanides can coordinate installation, operating guidance, after-sales support, and assistance with applicable permit documentation. The scope, fees, response arrangements, and duration of ongoing support will be agreed in the service agreement. Regulatory approval remains subject to the relevant authority's review.",
+    "steps": [
+      {
+        "title": "Assess the site",
+        "text": "Review existing tanks, wastewater sources, available space, service records, and the client's operating requirements."
+      },
+      {
+        "title": "Define the system",
+        "text": "Confirm the appropriate treatment approach, design capacity, installation requirements, and any grease pretreatment with the technical provider."
+      },
+      {
+        "title": "Present the proposal",
+        "text": "Set out the equipment, works, schedule, costs, operating responsibilities, and maintenance requirements for the client's review."
+      },
+      {
+        "title": "Install and turn over",
+        "text": "Coordinate the approved installation, checks, operating guidance, and handover documentation."
+      },
+      {
+        "title": "Support ongoing operation",
+        "text": "Provide the maintenance support and permit-document assistance defined in the service agreement."
+      }
+    ]
+  },
+  "workflow": [
+    {
+      "title": "Tell us what your site needs",
+      "text": "Share the location, property type, service concern, and preferred schedule."
+    },
+    {
+      "title": "Review the scope",
+      "text": "Oceanides assesses the information and arranges a site visit where needed."
+    },
+    {
+      "title": "Approve the proposal",
+      "text": "Review the work scope, price, schedule, site requirements, and agreed responsibilities."
+    },
+    {
+      "title": "Coordinate the service",
+      "text": "Our team works with your representative on access, implementation, and progress updates."
+    },
+    {
+      "title": "Review and plan ahead",
+      "text": "Confirm completion and discuss any recommended follow-up or recurring service needs."
+    }
+  ],
+  "pitch": [
+    "Managing a property means keeping essential services working while your business continues. A full septic tank, blocked drain, plumbing leak, pest concern, or damaged ceiling can quickly add work for your team. Oceanides brings these service needs together through one familiar point of contact.",
+    "We began with plumbing and septic tank services, building ongoing relationships through repeat service. Today, Oceanides Plumbing, Siphoning, and Pest Management Services OPC offers a broader range of property services, including grease tank cleaning, pest management, general cleaning, renovation, restoration, and air-conditioning cleaning. Each engagement begins with a clear scope and a schedule agreed with your team.",
+    "For properties reviewing their wastewater arrangements, we also propose an onsite treatment system assessment. Our first step is to understand the site and confirm the right technical approach. We can then present an installation and operating proposal, including maintenance responsibilities and the support available after turnover. Any projected maintenance or cost benefit will be based on the actual site and proposed system.",
+    "We would welcome the opportunity to review your current service needs and prepare a practical proposal. Whether you need one immediate service or a coordinated maintenance plan, Oceanides is ready to discuss how we can support your property."
+  ],
+  "existingClientEmail": {
+    "subject": "More property services from your Oceanides service partner",
+    "body": "Dear [Client Name],\n\nThank you for continuing to work with Oceanides on your property's service needs.\n\nWe are pleased to introduce our expanded offer under Oceanides Plumbing, Siphoning, and Pest Management Services OPC. Alongside septic tank siphoning, manual cleaning, plumbing, declogging, and grease tank cleaning, we can now discuss pest management, general cleaning, renovation and restoration, water-leak repairs, and air-conditioning cleaning.\n\nWe are also offering site assessments for onsite wastewater treatment systems. A proposal would be based on your property's wastewater conditions, technical requirements, and maintenance arrangements, with the scope of installation and ongoing support clearly set out.\n\nAttached is our first-draft company profile for your reference. May we arrange a short discussion with your facilities team to review your upcoming service requirements?\n\nSincerely,\nOceanides Plumbing, Siphoning, and Pest Management Services OPC"
+  },
+  "newClientEmail": {
+    "subject": "Property maintenance support for [Company / Property Name]",
+    "body": "Dear [Client Name],\n\nYour facilities team needs dependable coordination when plumbing, septic tank, cleaning, and pest concerns require attention. Oceanides Plumbing, Siphoning, and Pest Management Services OPC brings these services together through one point of contact.\n\nOur offer includes septic tank siphoning and manual cleaning, plumbing, excavation, declogging, grease tank cleaning, pest management, general cleaning, renovation and restoration, water-leak repairs, and air-conditioning cleaning. We also offer site assessments for onsite wastewater treatment systems.\n\nWe serve commercial, industrial, and residential properties, prioritizing Metro Manila and nearby provinces, with wider service arrangements available nationwide. The work scope and schedule are agreed for each site.\n\nPlease see our attached first-draft company profile. May we speak with your facilities or administration team about your property's current needs and prepare a suitable service proposal?\n\nSincerely,\nOceanides Plumbing, Siphoning, and Pest Management Services OPC"
+  },
+  "ayalaEmail": {
+    "subject": "Proposal for an onsite wastewater treatment assessment at [Ayala Land Property]",
+    "body": "Dear [Property / Facilities Manager],\n\nThank you for the opportunity to support your property through Oceanides' plumbing, septic tank, and grease tank maintenance services.\n\nBuilding on our service experience at your site, we would like to propose an assessment for an onsite wastewater treatment system. The aim is to determine whether a suitable system could improve the site's wastewater management and support a more planned maintenance approach.\n\nOur proposed next step is a site review covering the existing tanks, wastewater sources and volume, available space, current service frequency, and operating requirements. We would then present the technical scope, installation works, costs, ongoing servicing needs, and available after-sales support. Any expected reduction in maintenance frequency or cost would need to be established through this assessment.\n\nOceanides can also discuss assistance with applicable permit documentation, with responsibilities and support terms defined in the service agreement.\n\nPlease see our attached first-draft company profile. May we arrange a meeting with your facilities team to review the site's requirements and agree the assessment scope?\n\nSincerely,\nOceanides Plumbing, Siphoning, and Pest Management Services OPC"
+  }
+}

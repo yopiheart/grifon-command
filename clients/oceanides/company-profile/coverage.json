@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Metro Manila",
+    "cities": ["Caloocan", "Las Piñas", "Makati", "Malabon", "Mandaluyong", "Manila", "Marikina", "Muntinlupa", "Navotas", "Parañaque", "Pasay", "Pasig", "Quezon City", "San Juan", "Taguig", "Valenzuela", "Pateros"],
+    "source": "https://psa.gov.ph/classification/psgc/summary"
+  },
+  {
+    "name": "Cavite",
+    "cities": ["Bacoor", "Carmona", "Cavite City", "Dasmariñas", "General Trias", "Imus", "Tagaytay", "Trece Martires", "Alfonso", "Amadeo", "General Emilio Aguinaldo", "Indang", "Kawit", "Magallanes", "Maragondon", "Mendez", "Naic", "Noveleta", "Rosario", "Silang", "Tanza", "Ternate", "General Mariano Alvarez"],
+    "source": "https://psa.gov.ph/classification/psgc/citimuni/0402100000"
+  },
+  {
+    "name": "Laguna",
+    "cities": ["Biñan", "Cabuyao", "Calamba", "San Pablo", "San Pedro", "Santa Rosa", "Alaminos", "Bay", "Calauan", "Cavinti", "Famy", "Kalayaan", "Liliw", "Los Baños", "Luisiana", "Lumban", "Mabitac", "Magdalena", "Majayjay", "Nagcarlan", "Paete", "Pagsanjan", "Pakil", "Pangil", "Pila", "Rizal", "Santa Cruz", "Santa Maria", "Siniloan", "Victoria"],
+    "source": "https://psa.gov.ph/classification/psgc/citimuni/0403400000"
+  },
+  {
+    "name": "Batangas",
+    "cities": ["Batangas City", "Calaca", "Lipa", "Santo Tomas", "Tanauan", "Agoncillo", "Alitagtag", "Balayan", "Balete", "Bauan", "Calatagan", "Cuenca", "Ibaan", "Laurel", "Lemery", "Lian", "Lobo", "Mabini", "Malvar", "Mataasnakahoy", "Nasugbu", "Padre Garcia", "Rosario", "San Jose", "San Juan", "San Luis", "San Nicolas", "San Pascual", "Santa Teresita", "Taal", "Talisay", "Taysan", "Tingloy", "Tuy"],
+    "source": "https://psa.gov.ph/classification/psgc/citimuni/0401000000"
+  },
+  {
+    "name": "Rizal",
+    "cities": ["Antipolo", "Angono", "Baras", "Binangonan", "Cainta", "Cardona", "Jala-Jala", "Rodriguez", "Morong", "Pililla", "San Mateo", "Tanay", "Taytay", "Teresa"],
+    "source": "https://psa.gov.ph/classification/psgc/citimuni/0405800000"
+  },
+  {
+    "name": "Bulacan",
+    "cities": ["Baliwag", "Malolos", "Meycauayan", "San Jose del Monte", "Angat", "Balagtas", "Bocaue", "Bulacan", "Bustos", "Calumpit", "Guiguinto", "Hagonoy", "Marilao", "Norzagaray", "Obando", "Pandi", "Paombong", "Plaridel", "Pulilan", "San Ildefonso", "San Miguel", "San Rafael", "Santa Maria", "Doña Remedios Trinidad"],
+    "source": "https://psa.gov.ph/classification/psgc/citimuni/0301400000"
+  },
+  {
+    "name": "Pampanga and Angeles",
+    "cities": ["Angeles", "Mabalacat", "San Fernando", "Apalit", "Arayat", "Bacolor", "Candaba", "Floridablanca", "Guagua", "Lubao", "Macabebe", "Magalang", "Masantol", "Mexico", "Minalin", "Porac", "San Luis", "San Simon", "Santa Ana", "Santa Rita", "Santo Tomas", "Sasmuan"],
+    "source": "https://psa.gov.ph/classification/psgc/summary"
+  },
+  {
+    "name": "Zambales and Olongapo",
+    "cities": ["Olongapo", "Botolan", "Cabangan", "Candelaria", "Castillejos", "Iba", "Masinloc", "Palauig", "San Antonio", "San Felipe", "San Marcelino", "San Narciso", "Santa Cruz", "Subic"],
+    "source": "https://psa.gov.ph/classification/psgc/summary"
+  },
+  {
+    "name": "Bataan",
+    "cities": ["Balanga", "Abucay", "Bagac", "Dinalupihan", "Hermosa", "Limay", "Mariveles", "Morong", "Orani", "Orion", "Pilar", "Samal"],
+    "source": "https://psa.gov.ph/classification/psgc/citimuni/0300800000"
+  }
+]
