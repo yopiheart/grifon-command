@@ -136,7 +136,17 @@ credit/rate-limit functions, appropriate RLS and service-only credit execution.
 `consume_finished_ad` is absent. Its production installation needs separate
 approval before callers are deployed; no target records or schema were changed.
 The earlier PR164 Vercel account block is superseded by a successful current
-preview check. A new main-target PR and its exact-head CI are still pending.
+preview check. [Draft PR177](https://github.com/yopiheart/grifon-command/pull/177)
+now targets main. Its first database CI attempt correctly rejected the Docker
+bridge address; the reviewed workflow correction runs the unchanged verifier
+inside the database service with read-only sources. Exact-head CI remains required.
+
+The [exact additive migration proposal](qa/main-readiness/database-rollout/finished-ad-meter-proposal.sql)
+passed independent source review and a separate native rehearsal: all seeded rows
+were preserved, a second application refused safely, and a deliberately invalid
+local postcondition rolled back the new function completely.
+[Rehearsal evidence](qa/main-readiness/database-rollout/rehearsal-result.json).
+Production mutation approval was requested separately; the target remains unchanged.
 
 ## External release gates
 

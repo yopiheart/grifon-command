@@ -228,13 +228,14 @@ jobs:
     timeout-minutes: 5
     services:
       postgres:
-        image: postgres:17
+        image: postgres:17-bookworm
         env:
           POSTGRES_DB: grifon_meter_test
           POSTGRES_HOST_AUTH_METHOD: trust
         ports:
           - 127.0.0.1:5432:5432
         options: >-
+          --volume "${{ github.workspace }}:/workspace:ro"
           --health-cmd "pg_isready -U postgres -d grifon_meter_test"
           --health-interval 5s
           --health-timeout 5s
@@ -250,7 +251,13 @@ jobs:
         with:
           node-version: 24
       - name: Verify finished-ad meter on isolated PostgreSQL
-        run: node tools/verify-finished-ad-meter.mjs --isolated-test-server
+        # Run inside the service so both libpq and the backend see loopback.
+        # Host port forwarding makes inet_server_addr() a Docker bridge address.
+        # Only the Node executable is copied; fixtures are mounted read-only.
+        run: |
+          docker cp "$(command -v node)" "${{ job.services.postgres.id }}:/tmp/grifon-node"
+          docker exec "${{ job.services.postgres.id }}" /tmp/grifon-node --version
+          docker exec -e PGHOST=127.0.0.1 -e PGPORT=5432 -e PGUSER=postgres -e PGDATABASE=grifon_meter_test -w /workspace "${{ job.services.postgres.id }}" /tmp/grifon-node tools/verify-finished-ad-meter.mjs --isolated-test-server
 
   # ── main-status ────────────────────────────────────────────────────────────
   # The 2026-08-04→08-07 outage was not a detection failure — CI went red

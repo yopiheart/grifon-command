@@ -1,0 +1,106 @@
+{
+  "status": "PROPOSAL_ONLY_NOT_APPROVED_NOT_APPLIED",
+  "preparedOn": "2026-10-11",
+  "purpose": "Install the reviewed atomic finished-ad debit/receipt RPC before deploying its quota.ts callers. This preparation performs no target writes, quota debits or provider calls.",
+  "target": {
+    "projectName": "GRIFON AI",
+    "projectRef": "varoqxjccqmskzeejagn",
+    "observedPostgresVersion": "17.6",
+    "observedFunctionState": "consume_finished_ad absent",
+    "observationSource": "Root agent's read-only target catalog inspection; not independently queried by proposal builder.",
+    "selectionGuard": "The approved apply_migration call must use this exact project_id. SQL cannot attest the Supabase project ref by itself. Recheck identity and absence immediately before applying."
+  },
+  "proposal": {
+    "sqlFile": "finished-ad-meter-proposal.sql",
+    "rawSha256": "b3d564f25522c9d25d1ca8b8b66ec37dc15cb907953389d01612722a5269ee89",
+    "proposedMigrationName": "companion_finished_ad_meter_atomic",
+    "applyTool": "mcp__codex_apps__supabase_apply_migration",
+    "applyArguments": {
+      "project_id": "varoqxjccqmskzeejagn",
+      "name": "companion_finished_ad_meter_atomic",
+      "query": "Read the exact sqlFile bytes after confirming rawSha256; do not substitute this sentence as SQL."
+    },
+    "approval": "A later explicit human approval is required for this exact target, SQL hash and operation. Preparation is not approval."
+  },
+  "source": {
+    "file": "supabase/finished_ad_meter.sql",
+    "rawSha256": "4ee39c8e04d17b4d42579606e86c759d8f0bf02643d77c91a8da43d6ee7979d3",
+    "normalizedBodyMd5": "7cfd6fb078444301ec89dfebf51dbf54",
+    "bodyNormalization": "Replace CRLF with LF in pg_proc.prosrc only; preserve all other whitespace, comments and leading/trailing newlines. Do not collapse whitespace or trim.",
+    "changes": [
+      "CREATE OR REPLACE becomes bare CREATE so an existing exact-signature function cannot be silently overwritten.",
+      "The function parameters, return type, body, SECURITY DEFINER, search_path, REVOKE and GRANT remain identical to the reviewed source.",
+      "An atomic deployment wrapper adds prerequisite checks, catalog postconditions, local timeout settings and a commit-delivered PostgREST schema-cache notification."
+    ]
+  },
+  "successCriteria": [
+    "Exact target identity confirmed and exact-signature function absent immediately before applying.",
+    "One function is created as postgres with exact normalized body MD5, jsonb return, plpgsql language, SECURITY DEFINER and exactly search_path=public.",
+    "The only explicit non-owner ACL is non-grantable service_role EXECUTE. PUBLIC and every unexpected non-owner ACL are rejected. Effective EXECUTE is denied to anon and authenticated and allowed to service_role.",
+    "The migration runner reports success, migration history is confirmed, and a fresh read-only catalog query confirms the same definition and ACLs.",
+    "No subscriptions, rate_limits, receipts, balances, provider jobs or user data are inserted, updated, deleted or purged by the deployment wrapper.",
+    "Deploy updated quota.ts callers only after the migration and separate transport/schema-cache verification succeed."
+  ],
+  "failureCriteria": [
+    "Wrong or unconfirmed target, changed SQL/source hash, existing RPC, missing prerequisite tables/functions/roles, or migration role other than postgres.",
+    "Lock timeout, SQL error, definition mismatch, PUBLIC/unexpected ACL or failed effective-role permission check.",
+    "Uncertain migration outcome, missing migration history or inability to confirm catalog state. Do not blindly retry or deploy callers.",
+    "PostgREST schema reload notification alone is not proof the RPC is reachable through the Data API."
+  ],
+  "transactionAndLimits": {
+    "atomicUnit": "A single DO statement contains bare CREATE, ACL changes and postconditions. Any exception rolls back that statement's changes. No nested BEGIN/COMMIT can prematurely commit an apply_migration outer transaction.",
+    "connectorSemantics": "The exposed apply_migration tool documents DDL/migration recording but does not specify its outer transaction or request-timeout implementation. The wrapper does not depend on it for DDL/ACL atomicity.",
+    "lockTimeout": "2 seconds per lock acquisition, set locally inside the atomic DO before catalog DDL.",
+    "statementTimeout": "15s setting is local, but setting it inside an already-running DO does not establish a verified hard 15-second wall-clock cap for that top-level DO. Do not claim such a cap.",
+    "requestTimeout": "The applying operator must use a bounded migration request and inspect an uncertain result using read-only catalog/history queries; no automatic repeat.",
+    "notification": "pg_notify('pgrst','reload schema') is delivered on surrounding transaction commit. Reload success and Data API reachability remain separate checks.",
+    "cost": "No paid AI/render operations or finished-ad debits. No new infrastructure resources are provisioned by this SQL."
+  },
+  "ordering": [
+    "Review independent native PostgreSQL verification and independent proposal review.",
+    "Obtain exact production mutation approval for target and proposal hash.",
+    "Refresh read-only target catalog: required rate_limit.sql/credits.sql schema exists and consume_finished_ad remains absent; confirm postgres migration identity.",
+    "Apply the exact approved proposal via apply_migration on varoqxjccqmskzeejagn only.",
+    "Confirm migration history and exact catalog postconditions without calling the debit RPC against real users.",
+    "Confirm PostgREST schema/transport behavior separately without spending a real user's allowance.",
+    "Only then deploy updated callers under separate deployment authorization. Main merge and deployment are separate decisions."
+  ],
+  "rollback": {
+    "beforeCommit": "Any error in the DO statement automatically rolls back its function and ACL changes. A timed-out or lost response still requires fresh read-only inspection before retry.",
+    "afterCommit": "Leave the additive function and all receipts/balances intact pending a reviewed forward fix. If necessary, stop affected paid entry points through a separately authorized operational action. Do not automatically drop the function or roll back to the original duplicate-charge protocol.",
+    "reapply": "Intentionally fails if the function already exists, even if it matches. Confirm catalog/history and decide explicitly; do not convert it back to CREATE OR REPLACE.",
+    "legacyCallers": "Existing separate-RPC callers remain exposed to their original race until updated callers are deployed. This additive migration does not repair historical charges or change existing receipts."
+  },
+  "verification": {
+    "confirmedByBuilder": [
+      "Source raw SHA256 matches the approved source.",
+      "Embedded function prosrc MD5 matches 7cfd6fb078444301ec89dfebf51dbf54; only CREATE OR REPLACE was changed to CREATE.",
+      "Proposal bytes were re-opened and hash computed after writing."
+    ],
+    "independentNativeRuntime": "Pending wrapper-specific run; core RPC native PostgreSQL verifier passed separately in attempt-03-native-result.json.",
+    "targetExecution": "NOT RUN; no target mutation authorization.",
+    "postgrestReachability": "NOT RUN; catalog and native SQL results do not establish Data API cache/transport behavior."
+  },
+  "references": [
+    {
+      "url": "https://www.postgresql.org/docs/17/sql-do.html",
+      "supports": "DO executes a transient anonymous block; no transaction control is embedded in this proposal."
+    },
+    {
+      "url": "https://www.postgresql.org/docs/17/sql-notify.html",
+      "supports": "Notifications generated inside a transaction are delivered only after commit."
+    },
+    {
+      "url": "https://postgrest.org/en/latest/references/schema_cache.html",
+      "supports": "NOTIFY pgrst, 'reload schema' requests a schema-cache reload; reload failure is possible."
+    },
+    {
+      "url": "https://supabase.com/docs/guides/local-development/cli-workflows",
+      "supports": "Migration failure atomicity must be considered; do not rely on unverified runner transaction behavior."
+    },
+    {
+      "url": "https://supabase.com/changelog.md",
+      "supports": "Changelog inspected on 2026-10-11. September PostgreSQL minor-release notes concern extensions/operators absent from this proposal; no dependency or database upgrade is included."
+    }
+  ]
+}
