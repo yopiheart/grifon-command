@@ -130,10 +130,16 @@ test('another tab cannot resume the same ad while a scene image request is pendi
   await page.getByRole('button', { name: 'Resume saved progress', exact: true }).click();
   await expect.poll(() => page.evaluate(() => (window as any).betaImage.calls)).toBe(1);
   const second = await context.newPage(); const backend = await install(second);
-  await second.getByRole('button', { name: 'Resume saved progress', exact: true }).click();
+  const secondUrl = second.url();
+  const secondDocument = await second.evaluateHandle(() => document);
+  await second.getByRole('button', { name: 'Resume saved progress', exact: true }).click({ noWaitAfter: true });
   await expect(second.getByText(/already being updated in another tab/).first()).toBeVisible();
+  expect(await page.evaluate(() => (window as any).betaImage.calls)).toBe(1);
   expect(await second.evaluate(() => (window as any).betaImage.calls)).toBe(0);
-  expect(backend.unexpected).toEqual([]); await second.close();
+  expect(backend.unexpected).toEqual([]);
+  expect(second.url()).toBe(secondUrl);
+  expect(await secondDocument.evaluate(node => node === document)).toBe(true);
+  await secondDocument.dispose(); await second.close();
 });
 
 test('guided intake accepts a long brief and corrections use Edit brief without generation', async ({ page }) => {

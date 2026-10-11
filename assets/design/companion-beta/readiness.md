@@ -263,6 +263,47 @@ mobile/desktop rendering remains NOT RUN because no browser surface is available
 the dev-only chat fixture cannot establish deployed behavior. Beta release and
 main merge remain on hold at this evidence boundary.
 
+### Sixteen-shard result and final follow-up
+
+Exact head `0ebcf551` [run38128468369](https://github.com/yopiheart/grifon-command/actions/runs/38128468369)
+passed build/static/artifact gates,1,572 unit tests (32existing skips), all24 native
+database checks and Vercel. Fourteen browser shards passed. Shards6/7 reached the
+unchanged15-minute job cap:220/224 unique cases passed,217 first-pass and3 retry-pass,
+zero persistent reported assertions, four cases unreported. This remains an
+incomplete gate. [Terminal receipt](qa/main-readiness/ci-sixteen-summary.json).
+
+Two reload flakes were reproduced4/4 locally: the UI selected the old conversation
+while the latest selection write was still Saving; the old conversation itself
+remained stored. Exactly two Saved-footer prerequisites now precede reloads,
+retaining all original restoration/no-call assertions. Patched6/6 passes, two
+native held-transaction controls fail at Saved, and two release controls commit
+before reload and pass. No retries/skips or application/store changes. The baseline
+caveat was corrected as metadata only; results and source bindings remain intact.
+[Original failures](qa/main-readiness/ci-navigation-reload-baseline.json),
+[fix and controls](qa/main-readiness/ci-navigation-reload-result.json).
+
+The third retry-pass was a second-tab Resume click timeout after dispatch while
+Playwright waited for possible navigation. Original local repetitions pass2/2;
+the exact hosted cause remains unproven. The narrow follow-up opts only that click
+out of post-click navigation waiting, preserving actionability and the lock-error,
+second-tab-zero and backend assertions. It additionally requires unchanged URL,
+the same browser document and first-tab call count still one. An intermediate
+event-count check failed3/3 on two same-URL frame events per run; their event type
+was not classified. Document identity replaces that overbroad check. Final
+patched3/3 pass without retries/skips. Canceled-click
+and disabled-lock controls fail the original contention-text assertion. A forced
+same-URL reload passes all business and URL assertions, then correctly fails the
+old document handle. These controls prove verifier sensitivity, not a hosted cause.
+[Resume result and controls](qa/main-readiness/ci-beta-resume-result.json).
+
+CI now partitions all224 cases into32 one-worker shards of seven, retaining the
+same retry and job/test/action/assertion budgets. Static discovery proves the case
+union without duplicates or omissions. Final-source discovery repeats all36
+CLI/config commands successfully and binds the final Resume source.
+[Discovery receipt](qa/main-readiness/ci-thirtytwo-discovery.json).
+Full exact-head CI must pass before merge readiness. Physical phones, hosted auth
+and live output remain separate release gates.
+
 ## External release gates
 
 - [ ] Complete exact-head CI on the integrated main-target PR and verify its hosted candidate. The old [blocked status](qa/hosted-checks.json) is historical.

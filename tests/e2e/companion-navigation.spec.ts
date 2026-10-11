@@ -198,6 +198,7 @@ test('legacy device draft is adopted without losing image or history; only lates
   await page.getByRole('button', { name: 'New chat', exact: true }).click();
   await nav(page).getByRole('button', { name: /Legacy Coffee/ }).click();
   await expect(page.locator('.companion-message-user')).toHaveCount(2);
+  await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
   await page.reload();
   await expect(page.getByText(/legacy-coffee\.png/)).toBeVisible();
   await expect(page.getByRole('img', { name: 'Attached product', exact: true })).toHaveAttribute('src', image);
@@ -262,6 +263,7 @@ test('failed storage keeps the current draft and allows an explicit save retry',
   await expect(page.locator('.companion-message-user')).toHaveCount(0);
   await nav(page).getByRole('button', { name: /Keep this unsaved coffee project/ }).click();
   await expect(page.locator('.companion-message-user')).toHaveText('Keep this unsaved coffee project');
+  await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
   await page.reload();
   await expect(page.locator('.companion-message-user')).toHaveText('Keep this unsaved coffee project');
 });
