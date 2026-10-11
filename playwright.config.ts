@@ -18,6 +18,9 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
   timeout: 60_000,
+  // Headless software rendering can delay a two-tab IndexedDB save past 5s.
+  // Keep the same state assertions and test cap with a bounded CI wait budget.
+  expect: { timeout: process.env.CI ? 15_000 : 5_000 },
   use: {
     baseURL: `http://localhost:${PORT}`,
     screenshot: 'only-on-failure',

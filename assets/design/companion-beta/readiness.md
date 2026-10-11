@@ -47,7 +47,7 @@ keyboard/focus behavior, and narrow-screen layout. Evidence is linked in the fin
 | --- | --- | --- | --- |
 | BETA-01 / P1 data loss | Open two tabs for one account. Create/edit a chat in A, then save B's old book. B's whole-book write silently erases A's new work. | Stale write rejected; both drafts recoverable | Fixed with transactional revision checks and Save this chat as a copy; original failure and recovery evidence retained |
 | BETA-02 / P1 duplicate work | Hold a script/image provider promise. Stop, then Resume while it remains pending. Old guard clears and the same stage can dispatch twice. A second tab/remount can also drive the same run. | No overlapping driver; refresh checkpoint before continuation | Fixed for this browser/account with operation guards, non-queued locks and fresh checkpoint reads; regression passed |
-| BETA-03 / P1 duplicate debit | Two concurrent first-scene requests for one finished ad read an empty marker, then each debit a credit. Mocked original returned two allowed calls and two top-up debits. | One atomic charge per account/ad; same result on retries | Atomic debit/receipt RPC implemented; mocked regression and local SQL/rollback checks passed. Migration rollout and concurrent target-DB proof remain release gates |
+| BETA-03 / P1 duplicate debit | Two concurrent first-scene requests for one finished ad read an empty marker, then each debit a credit. Mocked original returned two allowed calls and two top-up debits. | One atomic charge per account/ad; same result on retries | Atomic debit/receipt RPC implemented; original-defect rejection and independent-session concurrency/rollback/permission checks passed on native PostgreSQL17.6 and CI17.11. Exact approved target migration installed and verified; no real-user debit performed |
 | BETA-04 / P1 monitoring privacy | Provider error detail reaches raw `meta.error`/`detail` in stored lifecycle events. Exclusion of private text is not enforced. No actual secret leak observed. | Only allowlisted categories/status/counters leave the client | Fixed with client and server allowlists; original failure and privacy regressions retained |
 | BETA-05 / P2 clarity | Fixed intake, device history, background limits and several disabled conditions are not clear before action. | Short English guidance visible at relevant step | Guidance added; phone-size/desktop behavior and independent brand checks passed |
 | BETA-06 / P1 interrupted paid work | Close the tab during a held image request, reopen and Resume. Independent browser reproduction submitted the same scene twice because closing released the browser lock. | Persist an uncertainty marker before dispatch; never automatically repeat an ambiguous request | Durable local receipt implemented; close/reopen and read-only recovery checks passed. Manual recovery remains an operational release gate |
@@ -131,28 +131,54 @@ alarm. [Database results](qa/main-readiness/database-result.json),
 [local checks](qa/main-readiness/local-summary.json),
 [independent review](qa/main-readiness/independent-review.md).
 
-Read-only catalog verification on GRIFON AI found PostgreSQL 17.6, matching
-credit/rate-limit functions, appropriate RLS and service-only credit execution.
-`consume_finished_ad` is absent. Its production installation needs separate
-approval before callers are deployed; no target records or schema were changed.
+Initial read-only catalog verification on GRIFON AI found PostgreSQL 17.6,
+matching credit/rate-limit functions, appropriate RLS and service-only credit
+execution. `consume_finished_ad` was absent before its separately approved
+installation recorded below.
 The earlier PR164 Vercel account block is superseded by a successful current
 preview check. [Draft PR177](https://github.com/yopiheart/grifon-command/pull/177)
 now targets main. Its first database CI attempt correctly rejected the Docker
 bridge address; the reviewed workflow correction runs the unchanged verifier
 inside the database service with read-only sources. Exact-head CI remains required.
 
+The corrected database job passed all24 native checks on CI PostgreSQL17.11.
+Build/unit/static/artifact jobs passed; the browser job hit its15-minute cap after
+48 of224 unique cases (45 first-pass,2 retry-pass,1 persistent failure). The stale-tab
+failure still displayed both correct conversations and a Saving footer. Local
+instrumentation reproduced it on the correct candidate and observed the save
+complete5.83s after Enter, beyond the default5s assertion. Two visible software-rendered
+avatar canvases ran at3-5fps; no correctness defect was established by that failure.
+All224 browser cases are now split across4 independent one-worker runners with
+the same15-minute cap. CI expectations receive15s (local5s; test60s and retry1
+unchanged). No assertions or real avatars were removed. The same two affected
+cases passed6/6 across3 local repeats, zero retries/skips; saved conversations,
+copy/reload recovery and active-tab1/second-tab0 image-call assertions passed.
+Full hosted results remain required. [Browser timing proof](qa/main-readiness/browser-timing-result.json),
+[initial cloud summary](qa/main-readiness/ci-pre-shard-summary.json),
+[cloud database proof](qa/main-readiness/ci-database-result.json).
+
 The [exact additive migration proposal](qa/main-readiness/database-rollout/finished-ad-meter-proposal.sql)
 passed independent source review and a separate native rehearsal: all seeded rows
 were preserved, a second application refused safely, and a deliberately invalid
 local postcondition rolled back the new function completely.
 [Rehearsal evidence](qa/main-readiness/database-rollout/rehearsal-result.json).
-Production mutation approval was requested separately; the target remains unchanged.
+The user approved that exact proposal separately. Migration
+`20261011072946_companion_finished_ad_meter_atomic` is installed on GRIFON AI.
+Fresh catalog hashes, owner, search path, service-only ACL and table RLS match.
+A publishable-key anonymous REST probe with all-null arguments returned
+`401 / 42501 permission denied for function consume_finished_ad`, proving cache
+resolution and denial. A read-only service-role all-null SQL call reached the
+expected invalid-input guard. No valid debit against a real user was performed.
+[Target verification](qa/main-readiness/database-rollout/target-result.json).
+The frozen proposal/manifest's proposal-only status is historical; approved bytes
+remain unchanged. Valid service-role HTTP debits and live generation remain
+separate live tests.
 
 ## External release gates
 
 - [ ] Complete exact-head CI on the integrated main-target PR and verify its hosted candidate. The old [blocked status](qa/hosted-checks.json) is historical.
 - [x] Prove exactly-once debit, rollback and permissions on isolated native PostgreSQL with real concurrent sessions.
-- [ ] Approve/apply the required target migration before deploying callers, then verify target permissions and RPC availability.
+- [x] Approve/apply the exact target migration; verify catalog, permissions, REST cache resolution/anonymous denial and read-only service-role input validation.
 - [ ] Real OTP delivery, expired session, and second-account isolation on the release candidate.
 - [ ] Physical iPhone Safari and Android Chrome: keyboard leaves Send reachable; long transcript scrolls; drawer/viewer focus; mic permission allow/deny/revoke; photo selection; playback, sound and download.
 - [ ] Approved live test from `live-test-spec.md`: product identity, playable finished video, intelligible voice/audio, correct offer, download and return-to-history.

@@ -104,6 +104,12 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # The complete Companion suite outgrew one runner's time budget. Keep every
+    # case and the existing per-job cap; independent shards use one worker each.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
 
@@ -135,13 +141,13 @@ jobs:
         run: npx playwright install-deps chromium
 
       - name: Boot/render smoke
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/4
 
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: boot-smoke-screenshots
+          name: boot-smoke-screenshots-${{ matrix.shard }}
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7
