@@ -1,68 +1,69 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11, MarketMind pilot; PR175 merge authorized**
+**Stamped: 2026-10-11, PR171 merge authorization and integration verification**
 
-## Current work
-Checkout: C:/Users/ADMIN/.codex/worktrees/0b05/grifon-command.
-Branch: codex/marketmind-presentation, based on main 2e1de015.
-PR: https://github.com/yopiheart/grifon-command/pull/175.
-User authorized the presentation pilot with saved reports, existing handoffs,
-clear evidence/assumptions, and mobile support. No prompt changes or paid calls.
+## Current authorized work
+PR171: https://github.com/yopiheart/grifon-command/pull/171.
+Branch codex/marketmind-evidence; checkout C:/Users/ADMIN/.codex/worktrees/4382/grifon-command.
+Neil explicitly approved merging PR171 despite the Vercel "Account is blocked"
+check on October 11. That exception covers Vercel only; CI/review still must pass.
+Original application commit 64d0b389; reviewed handoff head 2211fe58.
+Main advanced to ff489cad (merged presentation PR175), requiring reconciliation.
+Only NOW.md conflicted. Main's presentation code and the approved prompt are retained.
 
-MarketResearch now presents structured audience/buying reasons, evidence,
-campaign direction, hooks and competitors. Original narrative remains expandable.
-Source link supplied / User-provided / Attribution missing describe attribution,
-not independent verification. Sparse historical reports explicitly show missing
-support; untrusted report text stays plain text. PDF carries the same caveat and
-no longer turns every evidence entry into a customer quote. Download label is PDF.
-Director AI / Offer Lab navigation, saved payloads, premise gate and generation
-handlers are preserved. Report controls precede intake in mobile DOM/tab order;
-loading a saved report moves focus to the report heading.
+## Approved prompt scope and limits
+Only MARKETMIND_SYSTEM_INSTRUCTION in api/_lib/prompts.ts changes relative to main:
+23 additions / 22 removals. Approved proposal SHA256:
+d65482ca98b901a26784b89fcc9605a25c40c88c7b01ba7d74cbdd4e1a4ada85.
+Evidence attribution and labeled hypotheses replace mandatory simulated research.
+Empty evidence/comparison lists are permitted. Keys/types/models/settings and
+provider transport/script formats are unchanged. This affects NEW reports only.
+Existing cached/imported reports remain; hypothesis-to-script benefits and
+Services/Testimonial customer proof need a separate exact proposal.
+No deterministic fact checking or live model honesty verification is claimed.
 
-## Verification and review
-PASS: npm.cmd run build (includes PowerShell ASCII check).
-PASS: npm.cmd run test -- --maxWorkers=2, 1444 passed / 32 existing skips.
-Full units predate a final Download-radius-only fix; behavior code is unchanged.
-PASS: npm.cmd run test:e2e -- tests/e2e/marketmind-presentation.spec.ts --workers=1,
-7 tests: 390/1280 widths, sparse report, keyboard order, unchanged handoff payloads,
-long text/URLs, escaped narrative, PDF download and zero generation/API attempts.
-The evidence-heading assertion failed against the original view before the pilot;
-the keyboard assertion failed against CSS-only report ordering before the fix.
-PASS: bundle-leak, voice-sync, domain, artifact-anchors, eval-prompts and design lint.
-Voice/domain/anchor/prompt checks predate the focus-only fix; their code is unchanged.
-PASS: independent diff review, including final focus/order repair; all 12 existing
-handlers match baseline after line-ending normalization. Final component blob
-1802995b and keyboard-test blob 996f2bb2 reviewed; no actionable findings.
-Build and all 7 browser cases rerun after final Download rounded-xl correction.
-PASS: independent browser smoke at 390x844, 375x667 and 1280x900, including sparse
-states, plain-text narrative, keyboard sequence and no horizontal overflow/errors.
-Brand check: pass with optional icon-style nits; mandatory Download radius fixed.
-Evidence is synthetic saved fixtures, not live research/source verification.
-Handoff tests assert navigation/payloads; destination generation was not run.
-API calls blocked in tests; paid/live switches unset. No tuned/API/service/type,
-dependency, production-data or migration changes. Neil explicitly authorized
-merging PR175 on October 11; no separate deploy or paid generation was requested.
-GitHub CI897 passed at 7b735d44: verify, all 81 browser tests and artifacts.
-Local-only captures: .tmp/marketmind-presentation/qa/ (not shared PR artifacts).
+## Checks and review
+Prior source head2211fe58: GitHub verify/e2e/artifacts PASS; independent review PASS.
+Vercel remains failed for its account block. Legacy Claude review is opt-in/skipped.
+Prior local application checks: build,161 targeted tests,1432 full tests PASS;
+32 existing guarded skips. Initial anchor timeout passed isolated and full
+rerun with two workers; no timeout/exclusion changes were made.
+Desktop/mobile empty-report fixture smoke passed with zero API/provider attempts.
+Post-reconciliation PASS: build,1444 units/32 existing guarded skips,
+7 browser cases via isolated5179 fixture config (.tmp/pr171-merge/playwright.config.ts),
+bundle/voice/domain/ASCII/artifact/eval/resume checks and independent integration review.
+Browser fixtures exercised mobile/desktop/sparse reports, attribution, safe links,
+focus, handoff payloads and PDF with zero API attempts. No paid generation.
+Evidence local-only: .tmp/pr171-merge/results.json and playwright.log.
+Exact updated-head GitHub CI is checked before merge; live PR holds its receipt.
+Paid/live generation NOT RUN; no test spec or cost approval was supplied.
+Reuse matching primary dependencies via ignored node_modules junction.
 
-## Resume / next decision
-Merge authorization covers PR175. Check PR/main status when resuming; the remote
-PR is authoritative for merge completion. Keep all paid/live switches unset.
-Local preview: http://127.0.0.1:5173/.tmp/marketmind-presentation/index.html.
-It uses synthetic saved fixtures and connect-src none; Vite must be running.
-Dependencies reuse the matching primary install through ignored node_modules
-junction; no install, credential repair or environment changes were needed.
+## Presentation pilot retained from main / PR175
+PR175 is merged at ff489cad. Its source checkout is worktrees/0b05/grifon-command.
+Structured audience, evidence, campaign direction, hooks and comparisons render;
+original narrative remains expandable. Attribution labels do not verify claims.
+Sparse reports show missing support; plain-text untrusted narrative is preserved.
+PDF mirrors attribution caveats and does not turn every evidence item into a quote.
+Mobile controls precede intake; saved report loading focuses the report heading.
+Existing Director AI / Offer Lab navigation, payloads and generation handlers remain.
+PR175's historical build/1444 units/7 fixture browser cases, independent review,
+mobile smoke and GitHub CI passed. Those are its evidence, not reruns by PR171.
+Local preview/details: git show ff489cad:NOW.md and .tmp/marketmind-presentation/qa/.
 
-## Prior work and consumed paid approvals - preserve
+## ▶ NEXT ACTION
+PR171 merge is authorized with the Vercel exception; its remote status is the
+final merge receipt. Revised prompt applies to newly generated research only.
+Future proof-to-script work needs a separate exact proposal, and paid testing
+needs approved inputs/cost cap. No account changes or manual deployment authorized.
+
+## Prior work and consumed approvals - preserve
 Main contains motion PR156, Vivo/Blender PR157 and prompt-parity PR158.
-Detailed previous state: git show 2e1de015:NOW.md. Primary Oceanides work untouched.
-Accepted 32.9s motion film/approval and archive receipts remain under
-workflows/assets/grifon-motion-upgrade/; recipe: workflows/grifon_motion_production.md.
-Aira/v4 approval is consumed; never regenerate from it. Accepted SFX sources remain
-private-review-only until rights are cleared. User acceptance and technical audio
-measurements do not establish independent listening; historical auditory QA pending.
+Detailed previous state: git show 2e1de015:NOW.md. Oceanides work is separate.
+Accepted motion film/approval/archive receipts: workflows/assets/grifon-motion-upgrade/;
+recipe workflows/grifon_motion_production.md. Aira/v4 approval consumed; never
+regenerate. Accepted SFX sources private-review-only until rights cleared;
+user acceptance/technical audio checks do not establish independent listening.
 Gemini assessment third invocation has unknown usage/result; no reset/retry or
-access-gate bypass. Ledger stays PRIMARY/.tmp/grifon-elevenlabs-assessment/.
+access-gate bypass. Ledger PRIMARY/.tmp/grifon-elevenlabs-assessment/ is retained.
 Vivo cgt-20261004021141-cgh8r and bottle cgt-20261003202712-nlxv7 already ran;
 recovery GET-only, never repeat paid POST/--execute. Invoices remain unverified.
-Separate evidence-prompt PR171 was open/unmerged when inspected; this branch uses
-main's existing prompts and gives no approval to change them.
