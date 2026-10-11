@@ -7,6 +7,7 @@ import { saveActiveJob, clearActiveJob } from './activeJobStore';
 import { triggerQuotaWall } from './quotaWallStore';
 import type { MeterUnit } from '../hooks/useQuota';
 import type { PlanId } from '../utils/planGate';
+import { isUnknownGenerationOutcome, unknownGenerationOutcome } from './generationTransportError';
 
 /**
  * Thrown when a metered generation hits the user's monthly plan allowance
@@ -76,6 +77,8 @@ const refreshAccessToken = async (): Promise<string | null> => {
   return inFlightRefresh;
 };
 
+const isGenerationEndpoint = (endpoint: string) => /^\/api\/(?:gemini\/(?:text|image|video)|kling\/(?:video|omni-video))$/.test(endpoint);
+
 const proxyFetch = async (endpoint: string, params: any, token: string): Promise<Response> => {
   // Abort 5s before Vercel's hard 60s ceiling so the client surfaces a clear
   // PROXY_TIMEOUT instead of an opaque 504 from the platform.
@@ -103,9 +106,9 @@ const proxyFetch = async (endpoint: string, params: any, token: string): Promise
     if (err?.name === 'AbortError') {
       const timeoutErr: any = new Error('PROXY_TIMEOUT: request exceeded 55s ceiling');
       timeoutErr.status = 504;
-      throw timeoutErr;
+      throw isGenerationEndpoint(endpoint) ? unknownGenerationOutcome(timeoutErr) : timeoutErr;
     }
-    throw err;
+    throw isGenerationEndpoint(endpoint) ? unknownGenerationOutcome(err) : err;
   } finally {
     clearTimeout(timeoutId);
   }
@@ -165,14 +168,32 @@ const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: 
         const err: any = new Error(body?.detail ? `429: ${body.detail}` : 'RESOURCE_EXHAUSTED');
         err.status = 429;
         err.retry_after_seconds = body?.retry_after_seconds ?? 30;
-        throw err;
+        throw isGenerationEndpoint(endpoint) && body?.error === 'gemini_quota' ? unknownGenerationOutcome(err) : err;
       }
       const err: any = new Error(`PROXY_ERROR_${res.status}: ${body?.error ?? 'unknown'}${body?.detail ? ` — ${body.detail}` : ''}`);
       err.status = res.status;
       err.body = body;
-      throw err;
+      throw isGenerationEndpoint(endpoint) && ((res.status >= 500 && body?.error !== 'quota_unavailable') || body?.error === 'flow_output_invalid') ? unknownGenerationOutcome(err) : err;
     }
-    return (await res.json()) as T;
+    try {
+      const payload = await res.json();
+      if (endpoint === '/api/gemini/text') {
+        const invalid = params.flow === 'adscript'
+          ? !['hook1', 'hook2', 'body'].every(key => Array.isArray(payload?.[key]) && payload[key].length > 0)
+          : params.flow === 'marketmind'
+            ? typeof payload?.subject !== 'string' || typeof payload?.narrativeReport !== 'string' || !payload.narrativeReport.length
+            : params.flow === 'storyboard'
+              ? !Array.isArray(payload?.scenes) || !payload.scenes.length || payload.scenes.some((scene: any) => typeof scene?.scriptLine !== 'string' || typeof scene?.sceneDescription !== 'string')
+              : !params.flow && typeof payload?.text !== 'string' && !payload?.promptFeedback?.blockReason && !payload?.candidates?.[0]?.finishReason;
+        if (invalid) throw unknownGenerationOutcome(new Error('GENERATION_INCOMPLETE_RESPONSE'));
+      }
+      if (isGenerationEndpoint(endpoint) && /\/video$|\/omni-video$/.test(endpoint)) {
+        const identity = endpoint.startsWith('/api/kling/') ? payload?.operation?.task_id : payload?.operation?.name;
+        if (typeof identity !== 'string' || !identity.trim()) throw unknownGenerationOutcome(new Error('VIDEO_SUBMIT_INCOMPLETE_RESPONSE'));
+      }
+      return payload as T;
+    }
+    catch (error) { throw isGenerationEndpoint(endpoint) ? unknownGenerationOutcome(error) : error; }
   } finally {
     if (trackedJobId) endJob(trackedJobId);
   }
@@ -712,7 +733,7 @@ export const submitVideo = async (
     } catch (err: any) {
       // Veo 3.1 Lite rejects startFrame+endFrame morph mode with 400 INVALID_ARGUMENT.
       // Fall back to single-frame render so the scene still produces a usable clip.
-      const isMorphRejection = params.config?.lastFrame && (err?.status === 400 || /"code":\s*400|INVALID_ARGUMENT/.test(err?.message ?? ''));
+      const isMorphRejection = !isUnknownGenerationOutcome(err) && params.config?.lastFrame && (err?.status === 400 || /"code":\s*400|INVALID_ARGUMENT/.test(err?.message ?? ''));
       if (isMorphRejection) {
         console.warn('[grifon:gv:morph-fallback] Veo rejected startFrame+endFrame, retrying without endFrame');
         delete params.config.lastFrame;
@@ -991,6 +1012,7 @@ const retryWithBackoff = async <T>(
   try {
     return await fn();
   } catch (error: any) {
+    if (isUnknownGenerationOutcome(error)) throw error;
     const errorString = JSON.stringify(error);
     const msg = error?.message || '';
 
@@ -1754,14 +1776,16 @@ the nearest valid value. Never emit anything else.
         'blockReason:', finalBlockReason ?? 'none',
         'promptFeedback:', JSON.stringify((response as any).promptFeedback ?? null),
       );
-      throw new Error(
+      throw unknownGenerationOutcome(new Error(
         `EDL_EMPTY_RESPONSE: model returned no text (finishReason: ${finishReason ?? 'none'}, blockReason: ${finalBlockReason ?? 'none'}) — retry the edit.${wasBlocked ? ' (degraded retry also blocked)' : ''}`,
-      );
+      ));
     }
   }
 
   const raw = response.text;
-  const parsed = JSON.parse(cleanJson(raw)) as EditDecisionList;
+  let parsed: EditDecisionList;
+  try { parsed = JSON.parse(cleanJson(raw)) as EditDecisionList; }
+  catch (error) { throw unknownGenerationOutcome(error); }
 
   // Shape guarantee: this call has responseMimeType json but NO responseSchema,
   // so the model occasionally drifts shape (2026-06-10 live smoke: a draft with
@@ -1773,8 +1797,8 @@ the nearest valid value. Never emit anything else.
   // model response is thrown separately above as EDL_EMPTY_RESPONSE, carrying
   // promptFeedback/finishReason (2026-07-23 canary: 4/4 zero-output-token
   // responses were masked by the old `|| '{}'` fallback).
-  if (!Array.isArray(parsed.scenes) || parsed.scenes.length === 0) {
-    throw new Error('EDL_MALFORMED: model returned no scenes array — re-draft the EDL.');
+  if (!Array.isArray(parsed?.scenes) || parsed.scenes.length === 0 || parsed.scenes.some(scene => !scene || typeof scene !== 'object')) {
+    throw unknownGenerationOutcome(new Error('EDL_MALFORMED: model returned no scenes array — re-draft the EDL.'));
   }
 
   // Defensive passthrough: the model occasionally substitutes long Supabase
@@ -2653,10 +2677,11 @@ export const generateSceneImage = async (
         },
     }));
 
-    const resultPart = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+    const resultParts = response?.candidates?.[0]?.content?.parts;
+    const resultPart = Array.isArray(resultParts) ? resultParts.find(p => typeof p?.inlineData?.mimeType === 'string' && p.inlineData.mimeType.startsWith('image/') && typeof p.inlineData.data === 'string' && p.inlineData.data.trim()) : undefined;
     if (resultPart?.inlineData) return `data:${resultPart.inlineData.mimeType};base64,${resultPart.inlineData.data}`;
     
-    throw new Error("Consistent image generation failed.");
+    throw unknownGenerationOutcome(new Error("Consistent image generation failed."));
 };
 
 export const generateThumbnail = async (
@@ -2724,9 +2749,9 @@ export const generateThumbnail = async (
 
     let responseBase64 = null;
     let responseMime = null;
-    if (response.candidates?.[0]?.content?.parts) {
+    if (Array.isArray(response?.candidates?.[0]?.content?.parts)) {
         for (const part of response.candidates[0].content.parts) {
-            if (part.inlineData) {
+            if (typeof part?.inlineData?.mimeType === 'string' && part.inlineData.mimeType.startsWith('image/') && typeof part.inlineData.data === 'string' && part.inlineData.data.trim()) {
                 responseBase64 = part.inlineData.data;
                 responseMime = part.inlineData.mimeType;
                 break;
@@ -2737,7 +2762,7 @@ export const generateThumbnail = async (
     if (responseBase64 && responseMime) {
         return `data:${responseMime};base64,${responseBase64}`;
     }
-    throw new Error("Thumbnail generation failed");
+    throw unknownGenerationOutcome(new Error("Thumbnail generation failed"));
 };
 
 export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: BusinessInfo): Promise<VideoPrompt[]> => {
@@ -2885,8 +2910,13 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
         },
       }));
     
-    const prompts = JSON.parse(cleanJson(response.text || "[]"));
-    return prompts;
+    try {
+        const prompts = JSON.parse(cleanJson(response.text || "[]"));
+        if (!Array.isArray(prompts) || (storyboard.length > 0 && !prompts.length) || prompts.some(p => typeof p?.prompt !== 'string' || typeof p?.type !== 'string')) {
+            throw new Error('VIDEO_PROMPTS_INCOMPLETE_RESPONSE');
+        }
+        return prompts;
+    } catch (error) { throw unknownGenerationOutcome(error); }
 };
 
 export const optimizeImagePrompt = async (userRequest: string, imageBase64s: string[]): Promise<OptimizedPromptResponse> => {

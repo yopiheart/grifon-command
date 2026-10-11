@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-10",
+  "pullRequest": "https://github.com/yopiheart/grifon-command/pull/172",
+  "observedHead": "e6b9c081189e7ccb81c336495cc790e71553fd15",
+  "vercel": {
+    "state": "failure",
+    "description": "Account is blocked.",
+    "targetUrl": "https://vercel.com/knowledge/why-is-my-account-deployment-blocked"
+  },
+  "githubActions": {
+    "branchRuns": [],
+    "existingCiTriggers": "Pull requests targeting main and pushes to main",
+    "thisPullRequestBase": "codex/companion-chat",
+    "workflowModified": false,
+    "interpretation": "The existing CI workflow does not run for this stacked PR. Local gate results are not a remote CI pass."
+  },
+  "decision": "External hosted-preview/account gate remains blocked. No deployment command, account change or workflow bypass was performed. No successful deployment was reported. Deployment authorization remains separate."
+}

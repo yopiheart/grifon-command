@@ -258,6 +258,18 @@ function makeFakeDeps(over: Partial<ProducerDeps> = {}, storeSeed: Record<number
 }
 
 /** Callback factory — optional onUpdate/signal so tests can observe transitions / abort. */
+it('does not automatically replay a stage with an unknown generation outcome', async () => {
+  vi.useFakeTimers();
+  try {
+    const generation = vi.fn(async () => { throw Object.assign(new Error('PROXY_TIMEOUT'), { generationOutcomeUnknown: true }); });
+    const { deps } = makeFakeDeps({ generateAdScript: generation });
+    const result = runProduction(createProductionRun(makeInput(), 'u1'), cb(), deps);
+    await vi.runAllTimersAsync();
+    expect((await result).status).toBe('error');
+    expect(generation).toHaveBeenCalledTimes(1);
+  } finally { vi.useRealTimers(); }
+});
+
 function cb(opts: { onUpdate?: (r: ProductionRun) => void; signal?: AbortSignal } = {}) {
   return { onUpdate: opts.onUpdate ?? (() => {}), signal: opts.signal ?? new AbortController().signal, userId: 'u1' };
 }
@@ -1202,6 +1214,15 @@ describe("no-VO path (audioMode: 'sfx_only')", () => {
 const flush = () => new Promise((r) => setTimeout(r, 0));
 
 describe('P3 — video_prompts as its own stage', () => {
+  it('does not degrade an unknown shot-planning outcome into a runnable fallback', async () => {
+    const generateVideoPrompts = vi.fn(async () => { throw Object.assign(new Error('Lost response'), { generationOutcomeUnknown: true }); });
+    const { deps, spies } = makeFakeDeps({ generateVideoPrompts });
+    const run = await runProduction(createProductionRun(makeInput(), 'u1'), cb(), deps);
+    expect(run.status).toBe('error');
+    expect(run.stages.find(stage => stage.id === 'video_prompts')?.status).toBe('failed');
+    expect(generateVideoPrompts).toHaveBeenCalledTimes(1);
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+  });
   it('runs as its own stage (called once) and lands before the gate', async () => {
     const { deps, spies } = makeFakeDeps();
     const run = createProductionRun(makeInput(), 'u1');
@@ -1715,7 +1736,7 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
     expect(skips).toHaveLength(1);
     expect(skips[0].run_id).toBe(run.runId);
     expect(skips[0].meta).toMatchObject({ node: 'scene_images', sceneIdx: 0, kind: 'gate', reason: 'rate_limited' });
-    expect(String(skips[0].meta.detail)).toContain('IMAGE_GATE_429');
+    expect(skips[0].meta.detail).toBeUndefined(); // provider text must stay out of telemetry
 
     // Fail-open UNCHANGED: image kept, scene never flagged, no verdict invented, run parks.
     const sc0 = run.scenes.find((s) => s.sceneIdx === 0)!;
@@ -1803,7 +1824,8 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
 
     expect(emitted('check_skip')).toHaveLength(0);
     expect(emitted('check_fail')).toHaveLength(2);
-    expect(emitted('check_fail')[0].meta).toMatchObject({ kind: 'gate', flags: ['identity_drift'] });
+    expect(emitted('check_fail')[0].meta).toMatchObject({ kind: 'gate' });
+    expect(emitted('check_fail')[0].meta.flags).toBeUndefined(); // arbitrary provider strings are not monitoring metadata
   });
 
   it('a SERVER-side fail-open emits check_skip{gate_unavailable} — the third silent non-run', async () => {
@@ -1831,7 +1853,7 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
     expect(run.gate).toBe('storyboard');
   });
 
-  it('forwards the server’s fail-open CAUSE, so the rate can be explained and not just counted', async () => {
+  it('keeps the stable fail-open reason while excluding raw provider detail', async () => {
     // Two live runs failed open on 22% then 37.5% of scenes with every non-run looking identical.
     // The cause now rides the verdict; without it the gate's reliability is unfixable by
     // inspection — IMAGE_GATE_EMPTY (no text: safety stop, unread SDK shape) and
@@ -1845,8 +1867,8 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
 
     await runProduction(run, cb(), deps);
 
-    expect(emitted('check_skip').map((s) => s.meta.detail))
-      .toEqual(['IMAGE_GATE_EMPTY: finish=SAFETY', 'IMAGE_GATE_EMPTY: finish=SAFETY']);
+    expect(emitted('check_skip').map((s) => s.meta.reason)).toEqual(['gate_unavailable', 'gate_unavailable']);
+    expect(emitted('check_skip').map((s) => s.meta.detail)).toEqual([undefined, undefined]);
   });
 });
 

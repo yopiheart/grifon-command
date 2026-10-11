@@ -1,0 +1,17 @@
+
+> creative-director-ai-assistant@1.0.0 check:artifact-anchors
+> node tools/artifacts/check-anchors.mjs
+
+
+build-eli5-image-gate.mjs
+  api/gemini/image.ts:105                     the server 503 when the unprefixed flag is off
+  services/producerDeps.ts:138                the one function that hands out BOTH halves from the client flag
+  services/producerOrchestrator.ts:1828       Half A, the deterministic check
+  services/producerOrchestrator.ts:1849       Half A hard-flagging a scene out of approval
+  services/producerOrchestrator.ts:1871       Half B, the AI gate
+
+> C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\artifacts\eli5-image-gate.html
+  page 15 KB
+  artifacts/eli5-image-gate.html unchanged
+
+check:artifact-anchors ok

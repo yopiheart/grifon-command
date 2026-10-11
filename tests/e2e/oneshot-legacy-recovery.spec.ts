@@ -11,7 +11,7 @@ for (const width of [375, 1280]) {
 
     test('typed brief and uploaded asset survive closing and reopening the page', async ({ page, context }, testInfo) => {
       const backend = await legacyBackend(context);
-      await page.goto('/app');
+      await page.goto('/app?experience=studio');
       await enterOneShot(page);
       await fillBrief(page);
       await expect.poll(async () => (await readStored<OneShotDraft>(page, 'grifon-oneshot', 'draft', 'current'))?.heroDescription)
@@ -20,7 +20,7 @@ for (const width of [375, 1280]) {
       expect(saved?.hero).toMatch(/^data:image\//);
       await page.close();
       const reopened = await context.newPage();
-      await reopened.goto('/app');
+      await reopened.goto('/app?experience=studio');
       await enterOneShot(reopened);
       await expect(reopened.getByRole('heading', { name: 'Resume your draft?' })).toBeVisible();
       await reopened.getByRole('button', { name: 'Resume', exact: true }).click();
@@ -37,7 +37,7 @@ for (const width of [375, 1280]) {
 
     test('actual interrupted generation retains its persisted script in consumer review', async ({ page, context }, testInfo) => {
       const backend = await legacyBackend(context);
-      await page.goto('/app');
+      await page.goto('/app?experience=studio');
       await enterOneShot(page);
       await fillBrief(page);
       await expect.poll(() => backend.calls).toContain('describe-upload');
@@ -52,7 +52,7 @@ for (const width of [375, 1280]) {
       await page.close();
       await backend.interrupt();
       const reopened = await context.newPage();
-      await reopened.goto('/app');
+      await reopened.goto('/app?experience=studio');
       await enterOneShot(reopened);
       await reopened.getByRole('button', { name: 'RESUME', exact: true }).click();
       await expect(reopened.getByRole('heading', { name: 'Your Ad Plan', exact: true })).toBeVisible();
@@ -70,7 +70,7 @@ for (const width of [375, 1280]) {
 
     test('seeded completed plan opens from the real Dashboard with saved script and scenes', async ({ page, context }, testInfo) => {
       const backend = await legacyBackend(context);
-      await page.goto('/app');
+      await page.goto('/app?experience=studio');
       await expect(page.getByText('What are we selling today?')).toBeVisible();
       await seedCompletedSession(page);
       await page.reload();

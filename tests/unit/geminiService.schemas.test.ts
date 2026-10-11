@@ -466,7 +466,7 @@ describe('generateVideoPrompts — expression continuity (identity survives the 
   });
 
   it('runs on the 3.7-flash lane, asserted on the wire not on a private const', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini([]));
+    fetchMock.mockResolvedValueOnce(okGemini([{ scriptLine: 'Fixture line', type: 'b-roll', prompt: 'Fixture camera move' }]));
     await generateVideoPrompts(storyboard, businessInfo);
     // `fastTextModel` has exactly ONE caller — this brain — so the flip had zero blast radius.
     // It is the last reasoning step before paid video, where a bad prompt costs a render.

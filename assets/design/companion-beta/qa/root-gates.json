@@ -1,0 +1,187 @@
+{
+  "date": "2026-10-10",
+  "base": "8d5a4be8292d653ae6f9182a1d49eac62077001a",
+  "branch": "codex/companion-beta-readiness",
+  "sourceState": "Final application files frozen before final9 independent seam cases, recovery18, build and full unit run. Earlier45 Companion UI and39 independent cases reused with hash-bound two-line transport delta documented in independent-review.md. Documentation and QA packaging followed.",
+  "checks": [
+    {
+      "command": "npm.cmd run check:codex",
+      "exitCode": 0,
+      "log": "qa/beta-final-check-codex.log"
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "exitCode": 0,
+      "log": "qa/beta-final-check-voice-sync.log"
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0,
+      "log": "qa/beta-final-check-domain.log"
+    },
+    {
+      "command": "npm.cmd run check:eval-prompts",
+      "exitCode": 0,
+      "log": "qa/beta-final-check-eval-prompts.log"
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "log": "qa/beta-final-check-artifact-anchors.log"
+    },
+    {
+      "command": "npm.cmd run design:lint",
+      "exitCode": 0,
+      "log": "qa/beta-final-design-lint.log"
+    },
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "log": "qa/build.log"
+    },
+    {
+      "command": "npm.cmd run test -- --maxWorkers=2 --reporter=json --outputFile=.tmp/beta-final-tests.json",
+      "exitCode": 0,
+      "counts": {
+        "total": 1561,
+        "passed": 1529,
+        "failed": 0,
+        "skipped": 32
+      },
+      "log": "qa/unit-final.log",
+      "report": "qa/unit-final.json"
+    },
+    {
+      "command": "npm.cmd run check:bundle-leak",
+      "exitCode": 0,
+      "log": "qa/bundle-leak.log"
+    },
+    {
+      "command": "npm.cmd run test -- tests/unit/dialogueLock.test.ts tests/unit/productionTransport.test.ts --maxWorkers=1",
+      "exitCode": 0,
+      "passed": 12,
+      "log": "qa/dialogue-fixture-final.log"
+    },
+    {
+      "command": "node tools/sync-companion-assets.mjs --check",
+      "exitCode": 0,
+      "acceptedAssets": 11,
+      "log": "qa/accepted-assets.log"
+    }
+  ],
+  "files": [
+    {
+      "path": "components/CompanionChat/CompanionChatShell.tsx",
+      "sha256": "0e381c6cb6406b6dc3957f9ea6c4b38bdad5ad7fc719e0cd3b5afc4238657b6e",
+      "gitBlob": "4fbb7022a80b6a2953dff09a2bd6d4345a1faa28"
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "sha256": "71d83e71ded1abc8623ef2c5ea00a64463a9682b9321f9670f3e2650ecfa84f1",
+      "gitBlob": "f2c3b547f6b4de98895597884a8bf84494595a69"
+    },
+    {
+      "path": "components/CompanionChat/index.tsx",
+      "sha256": "a9d3a4bfe1ccb2d647e96f4b1dba43c75c2d5dbb259175998973277ba3970ef3",
+      "gitBlob": "15badcef4b90b5da80ec366db3a1799685ab7e2a"
+    },
+    {
+      "path": "components/OneShotAd/ProducerFlow.tsx",
+      "sha256": "0709891055aa8ba251b3f58839235242945d44b4c9a70bef09f3b79832918c3f",
+      "gitBlob": "178778591c78f066c77a31414217e85fac65e8b1"
+    },
+    {
+      "path": "services/companionConversations.ts",
+      "sha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+      "gitBlob": "63df7cddd2d908d2b7020571d990e48de7ef3a65"
+    },
+    {
+      "path": "services/companionProductionLock.ts",
+      "sha256": "de1c09bbc4ea935cef072fa2dade5f4a86cfbbcb315d9b1d8a3e95593fd042d0",
+      "gitBlob": "d387fefbdb4f726c8508f0968fc88fe2d1f961bc"
+    },
+    {
+      "path": "services/generationTransportError.ts",
+      "sha256": "57ba8533c84420a0a366bfeee134107c18e5a9b62b484fbfd303c831233b1bb9",
+      "gitBlob": "66ebbceae2fd7ad3acad33ea8c1624ed4bd1b19b"
+    },
+    {
+      "path": "services/geminiService.ts",
+      "sha256": "a3345b5b495022b1f87941dd7011f391f9ab68f3d860101c7ec91a9480bf51d0",
+      "gitBlob": "0553209e790a485901e418a5dd4a9578e7a56b78"
+    },
+    {
+      "path": "services/producerOrchestrator.ts",
+      "sha256": "1c1da4ca2eeedc6f7effbaa66bf75d7c009207fefb351763517a2a941fe680c5",
+      "gitBlob": "8981e2d2cd64f5c48e2fcb3718c11c926c15435e"
+    },
+    {
+      "path": "services/voiceConsolidationService.ts",
+      "sha256": "d5b8a523b915b9392945f4def1ec4c3c65de10a4478924f5a10d8c0239fec154",
+      "gitBlob": "2fc8f413bbb6f011eb45d2e329985264ae04407d"
+    },
+    {
+      "path": "services/finalRenderService.ts",
+      "sha256": "baeecef4da13db6cbac5209c12cc976d1761297781e1a3cabfce65bbde66fd82",
+      "gitBlob": "1c42d56030aef5265d02ebc326d4decfd2db8ddf"
+    },
+    {
+      "path": "api/_lib/quota.ts",
+      "sha256": "79af7228f37031e9048fbd4dafcf00cee75f630eba1655e6665175f68d5ff135",
+      "gitBlob": "31a5130536db9e2c37c076b39fa361c36cb3d41d"
+    },
+    {
+      "path": "api/events.ts",
+      "sha256": "3aa81406498622a5978fcbfada4bf9fed6e099ac40335fbe06011ce2868e9288",
+      "gitBlob": "3bdcef090945b34fcdbde2be8773b0db03798f2f"
+    },
+    {
+      "path": "api/gemini/video.ts",
+      "sha256": "b11a244624ef6d4059cdf35c05da8127060e39ff5e318ded3acfa6fb9b1237cb",
+      "gitBlob": "0dc140fba585314b0903cf517e70567b8822cc20"
+    },
+    {
+      "path": "api/kling/video.ts",
+      "sha256": "745d5deed829876d4cf332b6c9d66e82cbe21e5ada1fe389d73acdaf0bb42caf",
+      "gitBlob": "7185b8a8bd805d7b26de6f9da46741cf56d67b92"
+    },
+    {
+      "path": "api/kling/omni-video.ts",
+      "sha256": "c8731887874a794b426d36531dc1d18d640cd1397365ea00c9c0d14f278da676",
+      "gitBlob": "3067ffe3e9e63d90aa6fa926bb191902fd60e30f"
+    },
+    {
+      "path": "api/gemini/omni-video.ts",
+      "sha256": "d3131fb96c1ee4772b77b0637ddff0eec1ca9c94f923b1eb1c73bc59ea6780aa",
+      "gitBlob": "09341b46350f584f5bbe6a7b0318920284694b37"
+    },
+    {
+      "path": "api/gemini/omni-video/consume.ts",
+      "sha256": "14ea39edbdae8ba12e9ae22f18ec8f45980e4866f5c45ff37d3a123913662aa3",
+      "gitBlob": "8e458033e72ad2013a08b90bb7d47e9fa591ac18"
+    },
+    {
+      "path": "supabase/finished_ad_meter.sql",
+      "sha256": "4ee39c8e04d17b4d42579606e86c759d8f0bf02643d77c91a8da43d6ee7979d3",
+      "gitBlob": "577c1ea9ba87dea8454ac8aa92742af7d4a670fa"
+    },
+    {
+      "path": "utils/producerTelemetry.ts",
+      "sha256": "204da96d676868fff65979cf5bf840e5ce769cfc99a00fce13f0ac3c12649d37",
+      "gitBlob": "69d815595809b31f5b397eabd1059253ec1e0304"
+    }
+  ],
+  "unitHarnessNote": "The dialogueLock mock was refined to the full VideoPrompt fixture shape during the final full-unit run. Its six unchanged prompt assertions and six transport regressions were rerun after that run against the final fixture. No production source changed.",
+  "paidLiveFlags": "unset",
+  "paidCalls": 0,
+  "productionDatabaseChanges": 0,
+  "deployment": false,
+  "invitations": false,
+  "limitations": [
+    "Mocked browser/provider evidence only",
+    "Embedded SQL was single-connection; target database concurrency not run",
+    "Physical phones, real account delivery, live generated audio/video and first-time testers not run",
+    "Uncertain operations may require support-assisted recovery"
+  ],
+  "logFormatting": "Captured evidence retains output text with trailing whitespace and excess terminal blank lines normalized for Git. Original raw command output remains in ignored .tmp. One extra terminal blank line was removed from companion-beta.spec.ts after browser verification; assertions and application source are unchanged."
+}

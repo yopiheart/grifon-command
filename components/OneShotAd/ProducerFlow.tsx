@@ -26,6 +26,7 @@ import {
 import { getCachedResearch, putCachedResearch } from '../../services/researchCacheStore';
 import { realProducerDeps } from '../../services/producerDeps';
 import { newRunId, loadRun, type ProductionRunRow, type ProductionSceneRow } from '../../services/producerRunService';
+import { canSettleCompanionRun, withCompanionProductionLock, type CompanionOperationReceipt } from '../../services/companionProductionLock';
 
 /**
  * One-Shot PRODUCER container (slice 4, 2026-07-01 grill). Drives the real consumer
@@ -219,9 +220,22 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   // fresh reference or useState bails the re-render (Object.is) and the UI freezes.
   const cb = (r: ProductionRun) => {
     const epoch = epochRef.current;
+    const signal = abortRef.current.signal;
     return { onUpdate: (u: ProductionRun) => {
-      if (mountedRef.current && epoch === epochRef.current && u.userId === userId) setRun({ ...u });
-    }, signal: abortRef.current.signal, userId: r.userId };
+      if (mountedRef.current && epoch === epochRef.current && !signal.aborted && u.userId === userId) setRun({ ...u });
+    }, signal, userId: r.userId };
+  };
+
+  const lockProduction = <T,>(identity: string, action: (receipt: CompanionOperationReceipt) => Promise<T>) => conversation && userId
+    ? withCompanionProductionLock(userId, identity, action) : action({ begin: () => {}, settle: () => {} });
+  const settleProduction = async (receipt: CompanionOperationReceipt, completed: ProductionRun) => {
+    if (!conversation) return true;
+    try {
+      const latest = await loadRun(completed.runId);
+      if (!latest || !canSettleCompanionRun(completed, fromRow(latest.run, latest.scenes))) return false;
+      receipt.settle();
+      return true;
+    } catch { return false; }
   };
 
   // Resume-on-mount: if a run id is remembered, pull its true state from the server and
@@ -238,6 +252,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     setErrMsg('');
     if (!userId) { setPhase('launch'); return; }
     const activeId = conversation ? initialConversationRun.current : readActiveRun(activeRunKey);
+    if (conversation) setReadOnly(!!activeId);
     if (!activeId) { setPhase('launch'); return; }
     setPhase('resuming');
     void loadRun(activeId)
@@ -290,7 +305,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     setErrMsg('');
     setPhase('researching');
     abortRef.current = new AbortController();
-    try {
+    try { await lockProduction(`chat:${conversation?.id}`, async receipt => {
       // 1 — Market research (auto). Same cache seam as the orchestrator's market_research
       // stage (research stays locked per brand identity; "Re-research" forces fresh) —
       // this path pre-fills the run with doneStages:['market_research'], so the stage's
@@ -300,6 +315,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       let report = input.forceFreshResearch ? null : await getCachedResearch(cacheKey);
       if (!current()) return;
       if (!report) {
+        receipt.begin();
         report = await generateMarketResearch({
           brandName: input.brandName,
           productName: input.productName,
@@ -347,6 +363,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       if (!avatar?.url) {
         const castAr: '9:16' | '16:9' = input.aspectRatio === '16:9' ? '16:9' : '9:16';
         const ethnicity = input.castHints?.ethnicity?.trim() || 'Filipino';
+        receipt.begin();
         const cast = await generateAvatarImage(
           businessInfo.audience || input.productDescription,
           input.castHints?.gender ?? 'Any',
@@ -375,7 +392,13 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       fresh.presetId = 'none';
       setRun(fresh);
       setPhase('launch'); // phase derives from run.status now
-      await runProduction(fresh, cb(fresh), realProducerDeps);
+      const settled = await lockProduction(`run:${fresh.runId}`, async runReceipt => {
+        runReceipt.begin();
+        const completed = await runProduction(fresh, cb(fresh), realProducerDeps);
+        return settleProduction(runReceipt, completed);
+      });
+      if (settled) receipt.settle();
+    });
     } catch (e: unknown) {
       if (!current()) return;
       setErrMsg(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
@@ -385,16 +408,33 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     }
   };
 
-  const withRun = async (action: (active: ProductionRun) => Promise<void>) => {
+  const withRun = async (action: (active: ProductionRun, receipt: CompanionOperationReceipt) => Promise<ProductionRun | void>) => {
     if (!run || readOnly || operationRef.current || run.busy || (run.status === 'running' && !run.gate)) return;
     operationRef.current = true;
     setOperationBusy(true);
     setErrMsg('');
+    abortRef.current = new AbortController();
     const epoch = epochRef.current;
+    const signal = abortRef.current.signal;
     try {
-      await action(run);
+      await lockProduction(`run:${run.runId}`, async receipt => {
+        let active = run;
+        if (conversation) {
+          const latest = await loadRun(run.runId);
+          if (!mountedRef.current || epoch !== epochRef.current || signal.aborted) return;
+          if (!latest || latest.run.user_id !== userId) throw new Error('Your saved ad could not be opened. Please retry.');
+          active = fromRow(latest.run, latest.scenes);
+          setRun(active);
+          if (active.gate !== run.gate || !!active.storyboardApproved !== !!run.storyboardApproved || (active.status === 'done' && !active.gate)) {
+            setReadOnly(true);
+            return;
+          }
+        }
+        const completed = await action(active, receipt);
+        if (completed) await settleProduction(receipt, completed);
+      });
     } catch (error) {
-      if (mountedRef.current && epoch === epochRef.current) {
+      if (mountedRef.current && epoch === epochRef.current && !signal.aborted) {
         const message = error instanceof Error ? error.message : 'Please try again.';
         setErrMsg(message);
         setRun(active => active ? { ...active, status: active.gate ? 'review' : 'error', busy: undefined, error: message } : active);
@@ -410,41 +450,46 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
 
   const handleApprove = async () => {
     if (!run || run.gate !== 'storyboard' || approvingRef.current || !run.scenes.length || run.scenes.some(scene => !scene.imageUrl || scene.status === 'flagged')) return;
-    await withRun(async active => {
+    await withRun(async (active, receipt) => {
+      if (!active.scenes.length || active.scenes.some(scene => !scene.imageUrl || scene.status === 'flagged')) throw new Error('Every scene needs an image without a flag before approval. Review the refreshed storyboard.');
       approvingRef.current = true; setApproving(true);
-      await approveStoryboard(active, cb(active), realProducerDeps);
+      receipt.begin();
+      return approveStoryboard(active, cb(active), realProducerDeps);
     });
   };
 
   // Storyboard gate: image-ONLY regen (cheap — the cost gate hasn't fired yet).
   const handleRegenImage = async (sceneIdx: number) => {
     if (!run || run.gate !== 'storyboard' || !run.scenes.some(scene => scene.sceneIdx === sceneIdx)) return;
-    await withRun(async active => {
+    await withRun(async (active, receipt) => {
       setReshooting(sceneIdx);
-      await regenSceneImage(active, sceneIdx, cb(active), realProducerDeps);
+      receipt.begin();
+      return regenSceneImage(active, sceneIdx, cb(active), realProducerDeps);
     });
   };
 
   // First Cut: full reshoot (image → video → voice → re-assemble) for a rendered clip.
   const handleReshoot = async (sceneIdx: number) => {
     if (!run || run.gate !== 'first_cut' || !run.scenes.some(scene => scene.sceneIdx === sceneIdx)) return;
-    await withRun(async active => {
+    await withRun(async (active, receipt) => {
     setReshooting(sceneIdx);
     // C3: a manual re-roll of a scene that already worked counts toward the free-take
     // allowance; fixing a FLAGGED scene is always free. Mutating run.takesUsed here means
     // reshootScene's own persist() checkpoints it, so the count survives remount AND reload.
     const sc = active.scenes.find((s) => s.sceneIdx === sceneIdx);
+    receipt.begin();
     if (sc && sc.status !== 'flagged') active.takesUsed = (active.takesUsed ?? 0) + 1;
-    await reshootScene(active, sceneIdx, cb(active), realProducerDeps);
+    return reshootScene(active, sceneIdx, cb(active), realProducerDeps);
     });
   };
 
   const handleChoosePreset = async (id: LockablePresetId | null) => {
     if (!run || run.gate !== 'first_cut') return;
     if (id !== null && id !== 'none' && !presetUnlocked) { onUpgrade(); return; }
-    await withRun(async active => {
+    await withRun(async (active, receipt) => {
       setPresetBusy(true);
-      await applyPreset(active, id, cb(active), realProducerDeps);
+      receipt.begin();
+      return applyPreset(active, id, cb(active), realProducerDeps);
     });
   };
 
@@ -453,11 +498,12 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   // 'running' first — setStage doesn't touch run.status, so this is what lifts the UI off
   // the error screen onto live progress. Mirrors the resume path's fresh-controller pattern.
   const handleRetry = async () => {
-    await withRun(async active => {
-      abortRef.current = new AbortController();
+    await withRun(async (active, receipt) => {
+      if (active.gate || active.status === 'done') { setRun(active); setPhase('launch'); return; }
       const resumed: ProductionRun = { ...active, status: 'running', error: undefined, busy: undefined };
       setRun(resumed); setPhase('launch');
-      await runProduction(resumed, cb(resumed), realProducerDeps);
+      receipt.begin();
+      return runProduction(resumed, cb(resumed), realProducerDeps);
     });
   };
 
@@ -466,11 +512,12 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     operationRef.current = true; setOperationBusy(true); setErrMsg('');
     abortRef.current = new AbortController();
     const epoch = ++epochRef.current;
+    const signal = abortRef.current.signal;
     const continuationApproved = !run.gate && run.status !== 'done';
-    try {
+    try { await lockProduction(`run:${run.runId}`, async receipt => {
       // Submitted work may have checkpointed since history was opened.
       const latest = await loadRun(run.runId);
-      if (!mountedRef.current || epoch !== epochRef.current) return;
+      if (!mountedRef.current || epoch !== epochRef.current || signal.aborted) return;
       if (!latest || latest.run.user_id !== userId) throw new Error('Your saved ad could not be opened. Please retry.');
       const fresh = fromRow(latest.run, latest.scenes);
       setRun(fresh);
@@ -481,10 +528,13 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       setReadOnly(false);
       const resumed: ProductionRun = { ...fresh, status: 'running', error: undefined, busy: undefined };
       setRun(resumed);
-      await runProduction(resumed, cb(resumed), realProducerDeps);
+      receipt.begin();
+      const completed = await runProduction(resumed, cb(resumed), realProducerDeps);
+      await settleProduction(receipt, completed);
+    });
     }
     catch (error) {
-      if (mountedRef.current && epoch === epochRef.current) {
+      if (mountedRef.current && epoch === epochRef.current && !signal.aborted) {
         const message = error instanceof Error ? error.message : 'Could not resume your ad.';
         setErrMsg(message); setPhase('resume-error'); setReadOnly(true);
       }
@@ -492,17 +542,17 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   };
 
   const handleCancel = () => {
-    epochRef.current++;
     abortRef.current.abort();
-    operationRef.current = false; approvingRef.current = false;
-    setOperationBusy(false); setApproving(false); setReshooting(null); setPresetBusy(false);
-    const message = 'Stopped waiting. Work already submitted may still finish. Resume this ad to check its saved progress.';
+    const message = operationRef.current
+      ? 'Stopped waiting. A submitted step is still finishing and may use your allowance. When it settles, check saved progress. If its outcome is uncertain, contact support before more production.'
+      : 'Stopped waiting. Work already submitted may still finish. Resume this ad to check its saved progress.';
     setErrMsg(message);
     if (run) setRun({ ...run, status: 'error', busy: undefined, error: message });
     else setPhase('error');
   };
 
   const handleMakeAnother = () => {
+    if (operationRef.current) return;
     epochRef.current++;
     abortRef.current.abort();
     resumeStarted.current = false;
@@ -535,7 +585,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     reshooting, presetBusy, approving,
     start, approve: handleApprove, regenScene: handleRegenImage, reshoot: handleReshoot,
     choosePreset: handleChoosePreset, retry: handleRetry,
-    retryResume: () => setResumeAttempt(attempt => attempt + 1), reset: handleMakeAnother, cancel: handleCancel,
+    retryResume: () => { if (operationRef.current) return; if (conversation && run) initialConversationRun.current = run.runId; setResumeAttempt(attempt => attempt + 1); }, reset: handleMakeAnother, cancel: handleCancel,
   })}</>;
 
   if (phase === 'resume-error') {

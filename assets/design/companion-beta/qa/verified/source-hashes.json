@@ -1,0 +1,43 @@
+{
+  "base": "8d5a4be8292d653ae6f9182a1d49eac62077001a",
+  "branch": "codex/companion-beta-readiness",
+  "capturedAt": "2026-10-09T05:26:23.9025924Z",
+  "files": [
+    {
+      "path": "components/CompanionChat/CompanionChatShell.tsx",
+      "sha256": "0E381C6CB6406B6DC3957F9EA6C4B38BDAD5AD7FC719E0CD3B5AFC4238657B6E"
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "sha256": "F47B4C542AE32183A847F3F88A6AB8502BB2708AB358281C69DD5BCE75B6071F"
+    },
+    {
+      "path": "components/CompanionChat/CompanionComposer.tsx",
+      "sha256": "E8C3A04CA9EE9207AE124D6992873D3A2B3E5D6ACC18C5A9C92E50AB97CD14ED"
+    },
+    {
+      "path": "components/CompanionChat/index.tsx",
+      "sha256": "A9D3A4BFE1CCB2D647E96F4B1DBA43C75C2D5DBB259175998973277BA3970EF3"
+    },
+    {
+      "path": "components/OneShotAd/ProducerFlow.tsx",
+      "sha256": "559CA9DB5C0DFBA28327E1803EF31FD5CEB7AF5C4F2F84BF8621F79F1F36FF6E"
+    },
+    {
+      "path": "services/companionConversations.ts",
+      "sha256": "883575CDA4E95275219BFAA8298DC255E47E3FDDF7C4D97548024E010B3D8345"
+    },
+    {
+      "path": "services/companionProductionLock.ts",
+      "sha256": "C1FF973904FFB3A6E3C108D7BD585066FAF9F042DD4CE1012F233E3574280A7B"
+    },
+    {
+      "path": "services/producerOrchestrator.ts",
+      "sha256": "CD2D424FE499215DC05712BA7E5EC7E8559E3E6B3BFA3E15FD2030CDB567C3AA"
+    },
+    {
+      "path": "tests/e2e/companion-beta.spec.ts",
+      "sha256": "BD39E19D608132AAEFCF126D8417D91B0C1389522EFDDD0FD90F3DD3A0858407"
+    }
+  ]
+}

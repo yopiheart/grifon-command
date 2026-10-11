@@ -45,7 +45,7 @@ export async function legacyBackend(context: BrowserContext) {
       const body = route.request().postDataJSON();
       if (body.flow === 'marketmind') {
         calls.push('marketmind');
-        return route.fulfill({ json: { winningAvatar: 'Everyday shoppers', emotionalPayoff: 'An easier routine' } });
+        return route.fulfill({ json: { subject: 'Recovery Goods', narrativeReport: 'Everyday shoppers want a useful daily upgrade.', winningAvatar: 'Everyday shoppers', emotionalPayoff: 'An easier routine' } });
       }
       if (body.flow === 'adscript') {
         calls.push('adscript');

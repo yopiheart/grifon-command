@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ACCOUNT_EMAIL, ACCOUNT_ID, installAccountApp, readAccountBook, showAccountSettings } from './companion-account-fixture.js';
 
-const QA = path.resolve('assets/design/companion-account/qa');
+const QA = path.resolve(process.env.COMPANION_ACCOUNT_QA_DIR || 'assets/design/companion-account/qa');
 const phase = process.env.COMPANION_ACCOUNT_PHASE || 'final';
 const input = (page: Page) => page.getByRole('textbox', { name: 'Message Grifon', exact: true });
 

@@ -1,6 +1,6 @@
 import { getSupabaseAdmin } from './supabaseAdmin.js';
 import { rateLimitCheck } from './rateLimit.js';
-import { consumeCredit, peekCredits } from './credits.js';
+import { peekCredits } from './credits.js';
 import type { ServerPlanId } from './userPlan.js';
 
 // Per-tier daily request budgets for ElevenLabs hot paths.
@@ -167,7 +167,44 @@ export const finishedAdJobKey = (userId: string, finishedAdId: string): string =
 
 // `fromCredit` is true when the ad was funded by a purchased top-up credit
 // rather than the monthly allowance (used/limit then reflect the now-full meter).
-export type FinishedAdResult = ConsumeResult & { alreadyCounted: boolean; fromCredit?: boolean };
+export type FinishedAdResult = ConsumeResult & { alreadyCounted: boolean; fromCredit?: boolean; unavailable?: boolean };
+
+// Debit and receipt must commit together. Never fall back to the fail-open rate
+// limiter or separate top-up calls if this RPC is missing/unavailable.
+async function consumeAdOnce(
+  unit: 'video_ads' | 'omni_ads',
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId: string,
+): Promise<FinishedAdResult> {
+  const limit = MONTHLY_LIMITS[plan][unit];
+  if (process.env.GRIFON_DEV_UNMETERED === 'true' ||
+    (unit === 'video_ads' && process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true')) {
+    const devLimit = limit || 999;
+    return { allowed: true, alreadyCounted: false, used: 0, limit: devLimit, remaining: devLimit };
+  }
+  const denied: FinishedAdResult = { allowed: false, alreadyCounted: false, used: limit, limit, remaining: 0, unavailable: true };
+  try {
+    const { data, error } = await getSupabaseAdmin().rpc('consume_finished_ad', {
+      p_user_id: userId, p_unit: unit, p_finished_ad_id: finishedAdId, p_limit: limit,
+    });
+    if (error || !data || typeof data.allowed !== 'boolean' || typeof data.alreadyCounted !== 'boolean' ||
+      typeof data.fromCredit !== 'boolean' || data.limit !== limit ||
+      !Number.isInteger(data.used) || data.used < 0 || data.used > limit ||
+      data.remaining !== limit - data.used) {
+      console.error('[quota] finished-ad meter unavailable');
+      return denied;
+    }
+    return {
+      allowed: data.allowed, alreadyCounted: data.alreadyCounted,
+      used: data.used, limit, remaining: data.remaining,
+      ...(data.fromCredit ? { fromCredit: true } : {}),
+    };
+  } catch {
+    console.error('[quota] finished-ad meter unavailable');
+    return denied;
+  }
+}
 
 // Consumes ONE video_ad allowance the first time finishedAdId is seen; subsequent
 // scenes of the same ad return allowed:true without touching the meter. When the
@@ -178,35 +215,7 @@ export async function consumeFinishedAd(
   plan: ServerPlanId,
   finishedAdId: string,
 ): Promise<FinishedAdResult> {
-  const jobKey = finishedAdJobKey(userId, finishedAdId);
-
-  // Already metered this ad? peek the marker WITHOUT incrementing. Covers ads
-  // funded by either the monthly meter OR a top-up credit — the marker is set
-  // in both cases, so later scenes are always free.
-  const seen = await peekQuota(jobKey, 1, MONTHLY_WINDOW_SECONDS);
-  if (seen.used >= 1) {
-    const status = await peekMonthly('video_ads', userId, plan);
-    return { allowed: true, alreadyCounted: true, used: status.used, limit: status.limit, remaining: status.remaining };
-  }
-
-  // First scene of a new finished ad → consume one monthly credit.
-  const result = await consumeMonthly('video_ads', userId, plan);
-  if (result.allowed) {
-    // Mark the ad as counted (0→1) so later scenes are free. Only on success, so
-    // a rejected (out-of-quota) ad can still be metered after the user upgrades.
-    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
-    return { ...result, alreadyCounted: false };
-  }
-
-  // Monthly allowance exhausted → fall back to a purchased top-up credit. The
-  // RPC fails closed, so on infra error we don't hand out a free render.
-  const spentCredit = await consumeCredit(userId, 'video_ad');
-  if (spentCredit) {
-    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
-    return { allowed: true, alreadyCounted: false, fromCredit: true, used: result.used, limit: result.limit, remaining: 0 };
-  }
-
-  return { ...result, alreadyCounted: false };
+  return consumeAdOnce('video_ads', userId, plan, finishedAdId);
 }
 
 // ---------------------------------------------------------------------------
@@ -231,6 +240,7 @@ export type OmniAllowance = {
   used: number;
   limit: number;
   credits: number;
+  unavailable?: boolean;
 };
 
 // PEEK ONLY — never increments. The fire path (api/gemini/omni-video.ts) uses
@@ -255,8 +265,13 @@ export async function peekOmniAllowance(
   }
 
   // Already charged this ad? A re-roll of an already-charged ad always passes.
-  const seen = await peekQuota(omniAdJobKey(userId, finishedAdId), 1, MONTHLY_WINDOW_SECONDS);
-  if (seen.used >= 1) {
+  const { data: receipt, error: receiptError } = await getSupabaseAdmin()
+    .from('rate_limits').select('count, window_start')
+    .eq('key', omniAdJobKey(userId, finishedAdId)).maybeSingle();
+  if (receiptError) {
+    return { allowed: false, alreadyCharged: false, used: status.used, limit: status.limit, credits: 0, unavailable: true };
+  }
+  if (receipt && receipt.count >= 1) {
     return { allowed: true, alreadyCharged: true, used: status.used, limit: status.limit, credits: 0 };
   }
 
@@ -286,35 +301,12 @@ export async function consumeOmniAd(
   plan: ServerPlanId,
   finishedAdId: string,
 ): Promise<FinishedAdResult> {
-  const jobKey = omniAdJobKey(userId, finishedAdId);
-
-  // Already charged this ad? peek the marker WITHOUT incrementing.
-  const seen = await peekQuota(jobKey, 1, MONTHLY_WINDOW_SECONDS);
-  if (seen.used >= 1) {
-    const status = await peekMonthly('omni_ads', userId, plan);
-    return { allowed: true, alreadyCounted: true, used: status.used, limit: status.limit, remaining: status.remaining };
-  }
-
-  // First charge for this ad → consume one monthly credit.
-  const result = await consumeMonthly('omni_ads', userId, plan);
-  if (result.allowed) {
-    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
-    return { ...result, alreadyCounted: false };
-  }
-
-  // Monthly allowance exhausted → fall back to a purchased omni_style credit.
-  const spentCredit = await consumeCredit(userId, 'omni_style');
-  if (spentCredit) {
-    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
-    return { allowed: true, alreadyCounted: false, fromCredit: true, used: result.used, limit: result.limit, remaining: 0 };
-  }
-
-  return { ...result, alreadyCounted: false };
+  return consumeAdOnce('omni_ads', userId, plan, finishedAdId);
 }
 
 export type VideoMeterResult =
   | { ok: true; used: number; limit: number; remaining: number }
-  | { ok: false; used: number; limit: number };
+  | { ok: false; used: number; limit: number; unavailable?: boolean };
 
 // Single entry point the three video proxies share. With a finishedAdId it
 // meters per finished ad (idempotent); without one it falls back to the legacy
@@ -333,7 +325,7 @@ export async function meterVideoRequest(
   const credit = await consumeFinishedAd(userId, plan, finishedAdId);
   return credit.allowed
     ? { ok: true, used: credit.used, limit: credit.limit, remaining: credit.remaining }
-    : { ok: false, used: credit.used, limit: credit.limit };
+    : { ok: false, used: credit.used, limit: credit.limit, ...(credit.unavailable ? { unavailable: true } : {}) };
 }
 
 // `${unit}:monthly:${YYYY}-${MM}:${userId}` — UTC calendar month.

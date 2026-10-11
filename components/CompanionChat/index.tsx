@@ -46,6 +46,9 @@ export default function CompanionChat({ userId, userEmail, userName, actualPlanI
       controller={{ ...controller,
         start: input => !quotaReady ? Promise.resolve() : quotaBlocked ? Promise.resolve(upgrade()) : controller.start(input),
         approve: () => !quotaReady ? Promise.resolve() : videoAllowed === true ? controller.approve() : videoAllowed === false ? Promise.resolve(upgrade()) : Promise.resolve(),
+        retry: () => controller.run?.gate ? controller.retry()
+          : !quotaReady ? Promise.resolve() : quotaBlocked || (controller.run?.storyboardApproved && videoAllowed === false) ? Promise.resolve(upgrade())
+            : controller.run?.storyboardApproved && videoAllowed !== true ? Promise.resolve() : controller.retry(),
         resume: () => controller.run?.gate ? controller.resume?.() ?? Promise.resolve()
           : !quotaReady ? Promise.resolve() : quotaBlocked || (controller.run?.storyboardApproved && videoAllowed === false) ? Promise.resolve(upgrade())
             : controller.run?.storyboardApproved && videoAllowed !== true ? Promise.resolve() : controller.resume?.() ?? Promise.resolve(),

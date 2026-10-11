@@ -1,0 +1,8 @@
+{
+  "pid": 21276,
+  "identity": "tools/verify-recovery-server.mjs",
+  "originalCreationDate": "2026-10-10T03:11:23.837666Z",
+  "status": "exited through Playwright cleanup",
+  "port5173Listening": false,
+  "verifiedAt": "2026-10-10T03:13:57.5748892Z"
+}
