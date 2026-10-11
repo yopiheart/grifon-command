@@ -1,8 +1,10 @@
+import { contacts } from '../posts.mjs';
+
 const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 
 const photo = (src, alt, classes = '') => `<img class="photo ${classes}" src="${src}" alt="${escape(alt)}">`;
 const brand = (logo, label) => `<header class="masthead"><div class="brand"><img class="logo" src="${logo}" alt="Oceanides"><span>OCEANIDES</span></div><p class="eyebrow">${label}</p></header>`;
-const footer = (label = 'SEPTIC TANK · PLUMBING') => `<footer class="signature"><span>OCEANIDES</span><span>${label}</span></footer>`;
+const footer = (label = 'SEPTIC TANK · PLUMBING') => `<footer class="signature"><div class="signature-meta"><span>OCEANIDES</span><span>${label}</span></div><div class="contact-numbers">${contacts.map(contact => `<p class="contact-line"><span>${escape(contact.label)}</span><strong>${escape(contact.number)}</strong></p>`).join('')}</div></footer>`;
 
 export function renderCanvas(post, assets) {
   const templates = {

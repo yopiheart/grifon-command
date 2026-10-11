@@ -7,11 +7,17 @@ Neil authorized six flagship designs + matching interactive inquiry preview.
 Package clients/oceanides/flagship-2026-10: index.html, six2160x2700 PNGs,
 1080x1350 WEBPs, reusable canvases/builders, exact draft captions and sources.
 Three families: problem/proof/decision; navy/amber/Anton/Inter client brand.
+Neil supplied Globe0917-671-6383 and Smart0939-245-6217; added to all six
+poster footers/captions and refreshed gallery/exports/contact sheet. Render and
+20 browser checks PASS again. Source mappings distinguish adaptation from direct
+format reuse (S4 checklist, S21 native platform format, loose S28 stage sequence).
 Inquiry has validation, back/edit, safe creative IDs, copy/select fallback/reset;
 no contact PII, network submission, booking or persistence. No paid generation.
 Build succeeded with --outDir F:/codex-task-output/oceanides-flagship-20261011.
 C: filled during first build; preserved incomplete output on F: instead of deleting.
 Ignored node_modules junction reuses PRIMARY dependencies; dist junction points F:.
+Own PRIMARY/.tmp/oceanides-posting-audit-20261011 diagnostics preserved on F:
+with a junction at the original path (131 files/102525555 bytes matched).
 Full unit suite1432PASS/32SKIP (116filesPASS/9SKIP), --maxWorkers=2.
 Bundle-leak, voice-sync, domain, PS1-ASCII, artifact-anchor checks PASS.
 Independent visual critic found mobile overlay masking poster footer: fixed.

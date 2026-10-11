@@ -1,4 +1,8 @@
 const sourceRoot = 'clients/oceanides/assets/';
+export const contacts = [
+  { label: 'Globe', number: '0917-671-6383' },
+  { label: 'Smart', number: '0939-245-6217' },
+];
 const archiveContext = {
   source: 'funnels/oceanides-price-page/scripts/build-assets.mjs',
   attestation: 'Neil confirmed the tb2-ba2 and tb2-ba3 pairs were real job photos on 2026-08-01 ("totoo yan").',
@@ -34,7 +38,7 @@ Ang litrato ay mula sa naunang Oceanides archive.`,
     family: 'problem',
     title: 'BAGO KA MAGPASIPSIP.',
     awareness: 'Solution aware',
-    inspiration: 'OpenAI / ChatGPT Business E51: generous negative space, restrained hierarchy and a single editorial idea. S15 information-stack pattern supplies the three practical questions.',
+    inspiration: 'OpenAI / ChatGPT Business E51: generous negative space and restrained editorial hierarchy. S4 supplies the numbered checklist adaptation; no testimonial or statistics are borrowed.',
     assetSources: [],
     proofContext: null,
     caption: `Bago ka magpasipsip, itanong muna ang tatlong ito:
@@ -55,7 +59,7 @@ I-save ang listahan. Buksan ang inquiry guide at ihanda ang city, concern, at ta
     family: 'proof',
     title: 'PAREHONG TANGKE.',
     awareness: 'Solution aware',
-    inspiration: 'S21 native before/after proof: matched fixture, equal image treatment and clear chronology. The photos carry the message rather than decorative trust badges.',
+    inspiration: 'The saved Oceanides gallery-tb2 UGC direction referenced S21 native-format honesty. This version adapts that proof-first intent into a plain matched-photo comparison; it does not imitate social-platform UI.',
     assetSources: [`${sourceRoot}tb2-ba2-before.png`, `${sourceRoot}tb2-ba2-after.png`],
     proofContext: archiveContext,
     caption: `Parehong tangke. Bago at pagkatapos.
@@ -76,7 +80,7 @@ Mga litrato mula sa naunang Oceanides archive.`,
     family: 'proof',
     title: 'SA RESULTA MAKIKITA.',
     awareness: 'Solution aware',
-    inspiration: 'S21 native proof with the photo-first editorial hierarchy of Kylie E47/E48: a dominant image, a compact comparison and very little competing decoration. No testimonial is borrowed or invented.',
+    inspiration: 'Kylie E47/E48: asymmetric photo-and-copy hierarchy with one dominant image and generous clear space. Adapted to the saved Oceanides matched-photo direction; no celebrity endorsement or testimonial is borrowed.',
     assetSources: [`${sourceRoot}tb2-ba3-before.png`, `${sourceRoot}tb2-ba3-after.png`],
     proofContext: archiveContext,
     caption: `Sa resulta makikita ang pagbabago.
@@ -116,7 +120,7 @@ Buksan ang inquiry guide. Ihanda ang city, concern, at target na schedule para m
     family: 'decision',
     title: 'ALAMIN MUNA. SAKA MAG-BOOK.',
     awareness: 'Solution aware',
-    inspiration: 'S28 process-sequence pattern: three visible steps reduce uncertainty. The navy numbered flow follows Oceanides matte field-note typography rather than a generic app diagram.',
+    inspiration: 'Loosely adapted from S28 illustrated transformation timelines: named stages make a sequence visible. Here the stages explain buying decisions, not a claimed transformation. Oceanides navy and field-note typography replace the source styling.',
     assetSources: [],
     proofContext: null,
     caption: `Alamin muna. Saka mag-book.
@@ -129,4 +133,7 @@ Buksan ang inquiry guide at ayusin ang city, concern, at target na schedule bago
     destination: 'inquiry.html?post=06',
     publicationStatus: 'private-review',
   },
-];
+].map(post => ({
+  ...post,
+  caption: `${post.caption}\n\n${contacts.map(contact => `${contact.label}: ${contact.number}`).join('\n')}`,
+}));

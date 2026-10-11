@@ -14,13 +14,21 @@ does not establish current service availability or operating clearance.
 | Post | Job | Main idea | Saved reference |
 | --- | --- | --- | --- |
 | 01 | Problem | Recurring blockage: clarify the cause | ChatGPT Tricks news graphic |
-| 02 | Problem | Three questions before pumping | OpenAI E51 + S15 information stack |
-| 03 | Proof | Same round tank, before and after | S21 native proof |
-| 04 | Proof | Same rectangular tank, visible change | S21 + Kylie E47/E48 hierarchy |
+| 02 | Problem | Three questions before pumping | OpenAI E51 + S4 checklist adaptation |
+| 03 | Proof | Same round tank, before and after | Saved Oceanides UGC proof direction (originally S21-inspired) |
+| 04 | Proof | Same rectangular tank, visible change | Kylie E47/E48 hierarchy + Oceanides matched photos |
 | 05 | Decision | Understand the whole quote first | S4 offer stack, work-order treatment |
-| 06 | Decision | Details, scope/price, then schedule | S28 process sequence |
+| 06 | Decision | Details, scope/price, then schedule | Loose S28 named-stage sequence adaptation |
 
 These are design references, not evidence of performance for this new batch.
+S15 in the swipe file means statistics, not a generic checklist; S21 means native
+platform formatting, not every before/after. The mappings above distinguish the
+original inspiration from the actual adapted layout. These six are the first
+flagship batch, not a limit on future design variants.
+
+Neil supplied the contact details on October 11: Globe **0917-671-6383**, Smart
+**0939-245-6217**. `contacts` in `posts.mjs` supplies the phone footer on all six
+designs and the contact lines in their captions. No live website was modified.
 `posts.mjs` holds the exact captions, awareness level, sources, destination and
 review status. The gallery shows that same copy; there is no second copy source.
 
