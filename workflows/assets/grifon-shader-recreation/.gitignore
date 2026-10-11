@@ -10,3 +10,11 @@ reference/observed-sheet-*.jpg
 qa/pilot-failed-review-2/captured-frames/
 # Raw paced browser captures remain local inspection evidence; boards/receipts are saved.
 qa/review-player-timed-*-captures/
+# Historical QA binaries are recoverable through qa-media-archive.json.
+/qa/**/*.png
+/qa/**/*.jpg
+/qa/**/*.mp4
+/qa/**/*.bin
+/qa/**/*.raw
+/qa/**/*.ttf
+!/qa/full-poster.png

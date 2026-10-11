@@ -6,7 +6,8 @@ name: CI
 # still get gated before they reach main. Status feeds the PR-babysit loop.
 on:
   pull_request:
-    branches: [main]
+    # The motion delivery is reviewed as a stack before its branches land on main.
+    branches: [main, codex/grifon-shader-study, codex/grifon-shader-launch]
   push:
     branches: [main]
     # A docs-only push cannot change a build, a test, or a bundle, but it ran the

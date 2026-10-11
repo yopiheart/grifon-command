@@ -4,3 +4,12 @@
 /*-master.wav
 /*-premaster.wav
 /.tmp/
+# Historical QA binaries are recoverable through qa-media-archive.json.
+/qa/**/*.png
+/qa/**/*.jpg
+/qa/**/*.mp4
+/qa/**/*.bin
+/qa/**/*.raw
+/qa/**/*.ttf
+!/qa/landscape-poster.png
+!/qa/portrait-poster.png
