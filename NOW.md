@@ -1,14 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11, Companion feature integration approved**
+**Stamped: 2026-10-11, Companion main-readiness CI/database work**
 
 ## NEXT ACTION
 
-Beta release HOLD. Neil approved PR172 integration into codex/companion-chat only; GitHub PR status is the authoritative integration receipt. Main merge/deploy/DB/invitations/paid generation remain unauthorized. Next: combined-stack main CI and separate release gates below.
-Branch codex/companion-beta-readiness; worktree C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command; reviewed candidate5200a4a0 on base8d5a4be/chatPR164. PR https://github.com/yopiheart/grifon-command/pull/172; only audit documentation follows the reviewed candidate. Final normal feature-merge review PASS; hosted Vercel failure remains an account block.
-Fixed stale-tab chat overwrites, Stop/Resume overlap, close-tab uncertainty, atomic finished-ad debit and raw producer telemetry. Durable local receipts block ambiguous paid repeat; Check saved progress reads only. Structural transport/missing-output guards; tuned prompts/schemas/models/knobs unchanged.
-Frozen application source: build PASS; full units 1,529 PASS/0 FAIL/32 existing skips, final affected fixture checks12 PASS. Codex26, bundle leak, voice sync, domain, eval prompts, artifact anchors, design lint and11 accepted Companion assets PASS; qa/root-gates.json binds20 hashes. Hosted Vercel check: Account is blocked; existing main-only Actions CI did not run on this stacked PR. No successful deployment.
-Mocked Companion45 unique cases green across split runs, independent43 unique green (39+9 runs), shared recovery18/18 PASS. Fresh diff review PASS; brand42/50 with one cosmetic clipped placeholder. Original red/partial diagnostics retained; do not imply physical-phone/provider proof. Extra QA copies and unrelated3d-lab work excluded from this PR.
-Checklist/bug evidence assets/design/companion-beta/readiness.md; live-test-spec.md proposes US$15 two-stage cap, NOT approved/not run. Target SQL rollout+concurrency, real OTP/accounts/phones, live audio/video/download, first-time testers and monitored support/recovery remain gates. Uncertain operations can require human recovery; device-local guided intake only.
+Current authorization: fix CI and verify the database for a main-ready Companion candidate. Main merge, production DB mutations, deployment, invitations and paid generation remain separate. PR172 merged into codex/companion-chat at889c0e1d.
+Branch codex/companion-main-readiness; checkout C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command. Chat889c0e1d integrated with main4b36c62b; only NOW.md conflicted and is resolved. Draft main-target PR pending; existing main-only CI can run without widening triggers.
+Combined candidate: build, 1,541 units (32 existing skipped), static gates and 10 affected browser checks PASS. Two original hostname failures reproduced then fixed; full local E2E excluded because it reused another checkout. Playwright now refuses existing servers; full suite required on isolated GitHub CI. Evidence assets/design/companion-beta/qa/main-readiness/.
+Connected GRIFON AI read-only catalog: PostgreSQL17.6, consume_finished_ad absent; rate_limits/subscriptions RLS enabled and consume_credit service-only. No target DB writes. Chat PR164 Vercel preview now PASS, superseding the older account-block status.
+Native PostgreSQL17.6 PASS: four original double-charge rejections, 12 observed separate-session lock cases, replay/rollback/permissions; owned resources cleaned. New isolated CI database job feeds main-status. Independent source review PASS/no open P1/P2. Exact target migration proposal/rehearsal pending; no production changes.
+Main PR175 presentation and PR171 evidence prompt are retained exactly from4b36c62b, including approved MARKETMIND_SYSTEM_INSTRUCTION (proposal SHA d65482ca98b901a26784b89fcc9605a25c40c88c7b01ba7d74cbdd4e1a4ada85). No new tuned diff. Live-test-spec US$15 remains unapproved; phones/live output/testers/support remain release gates.
 Material Trial v01 preferred neutral cream finish safely committed e2580bfb on separate branch codex/griffin-material-study, draftPR169 https://github.com/yopiheart/grifon-command/pull/169. Saved anchors/recipe there; v05 identity/groom/live mascot unchanged; unrelated local3d-lab files excluded here.
 
 ## Motion film / PR156

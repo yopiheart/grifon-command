@@ -1,0 +1,6 @@
+{
+  "purpose": "Verify all cases affected by localhost hostname harness fixes",
+  "sourceHashCount": 440,
+  "command": "npm.cmd run test:e2e -- tests/e2e/typography.spec.ts tests/e2e/companion-account.spec.ts --grep ordinary-or-public-stub-or-settings-navigation --workers=1 --reporter=json,list --output=.tmp/companion-main-readiness/qa/affected-green/test-results",
+  "exitCode": 0
+}

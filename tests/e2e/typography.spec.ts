@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
   await page.route('**/*', async route => {
     const request = route.request();
     const url = new URL(request.url());
-    const local = url.origin === 'http://127.0.0.1:5173';
+    const local = ['http://127.0.0.1:5173', 'http://localhost:5173'].includes(url.origin);
     // Client-shared preset constants are served by Vite as a static JS module;
     // this exact source import is not a callable API handler.
     const sharedSource = url.pathname === '/api/_lib/omniPresets.ts' && request.resourceType() === 'script';

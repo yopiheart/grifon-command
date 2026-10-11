@@ -25,12 +25,12 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    // Dev server (not preview) so SPA history-fallback serves /pricing, /terms,
-    // etc. directly, and VITE_ vars are read from process.env at runtime (no
-    // build-time inlining to coordinate).
+    // Dev server retains SPA fallback and the real pre-auth API guards checked
+    // by codex-desktop.spec.ts. CI has no .env files or provider credentials.
     command: 'npm run dev',
     url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
+    // Refuse a preview from another checkout instead of testing the wrong app.
+    reuseExistingServer: false,
     timeout: 120_000,
     env: {
       // Truthy dummies only — getSupabase() checks presence, not validity.

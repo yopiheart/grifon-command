@@ -113,10 +113,36 @@ All provider/API responses in browser checks were mocked or blocked. Fixture vid
 and downloaded WebM bytes passed; this proves the controls, not generated media quality.
 Playwright phone-sized Edge is emulation, not iPhone Safari or physical Android Chrome proof.
 
+## Main integration checks, 2026-10-11
+
+The main candidate combines Companion `889c0e1d` with main `4b36c62b`. Main's
+MarketMind presentation and approved prompt are retained exactly. Build, 1,541
+unit tests (32 existing skipped), static gates and 10 affected browser checks
+passed. Two hostname assertion defects were reproduced before repair. The full
+local browser attempt reused another checkout and is excluded; Playwright now
+refuses an existing server. Full isolated GitHub CI remains required.
+
+Native PostgreSQL 17.6 reproduced the old double charge in all four billing
+combinations. The fix passed twelve observed lock-contention cases across
+distinct database sessions, plus rollback, replay, aged receipt and real-role
+permission assertions. Cleanup left no temporary databases, bootstrap roles or
+test tables. This verifier is now an independent CI job included in the main-red
+alarm. [Database results](qa/main-readiness/database-result.json),
+[local checks](qa/main-readiness/local-summary.json),
+[independent review](qa/main-readiness/independent-review.md).
+
+Read-only catalog verification on GRIFON AI found PostgreSQL 17.6, matching
+credit/rate-limit functions, appropriate RLS and service-only credit execution.
+`consume_finished_ad` is absent. Its production installation needs separate
+approval before callers are deployed; no target records or schema were changed.
+The earlier PR164 Vercel account block is superseded by a successful current
+preview check. A new main-target PR and its exact-head CI are still pending.
+
 ## External release gates
 
-- [ ] Resolve the Vercel account deployment block and verify an authorized hosted candidate. The PR status reports **Account is blocked.** Existing GitHub Actions CI targets `main`, so it has not run for this stacked PR; local passes are not remote CI. [Observed hosted status](qa/hosted-checks.json).
-- [ ] Apply/review required migration in a separately authorized test environment; prove concurrent same-ad debit is exactly one and failure rolls back.
+- [ ] Complete exact-head CI on the integrated main-target PR and verify its hosted candidate. The old [blocked status](qa/hosted-checks.json) is historical.
+- [x] Prove exactly-once debit, rollback and permissions on isolated native PostgreSQL with real concurrent sessions.
+- [ ] Approve/apply the required target migration before deploying callers, then verify target permissions and RPC availability.
 - [ ] Real OTP delivery, expired session, and second-account isolation on the release candidate.
 - [ ] Physical iPhone Safari and Android Chrome: keyboard leaves Send reachable; long transcript scrolls; drawer/viewer focus; mic permission allow/deny/revoke; photo selection; playback, sound and download.
 - [ ] Approved live test from `live-test-spec.md`: product identity, playable finished video, intelligible voice/audio, correct offer, download and return-to-history.

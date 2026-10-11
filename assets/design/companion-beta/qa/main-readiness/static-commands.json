@@ -1,0 +1,32 @@
+[
+  {
+    "log": "check-voice-sync.log",
+    "command": "npm.cmd run check:voice-sync",
+    "exitCode": 0
+  },
+  {
+    "log": "check-eval-prompts.log",
+    "command": "npm.cmd run check:eval-prompts",
+    "exitCode": 0
+  },
+  {
+    "log": "check-domain.log",
+    "command": "npm.cmd run check:domain",
+    "exitCode": 0
+  },
+  {
+    "log": "check-artifact-anchors.log",
+    "command": "npm.cmd run check:artifact-anchors",
+    "exitCode": 0
+  },
+  {
+    "log": "design-lint.log",
+    "command": "npm.cmd run design:lint",
+    "exitCode": 0
+  },
+  {
+    "log": "check-codex.log",
+    "command": "npm.cmd run check:codex",
+    "exitCode": 0
+  }
+]

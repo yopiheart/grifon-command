@@ -475,13 +475,13 @@ test('settings keep an unconfirmed plan pending and recover a failed plan read',
 });
 
 for (const [action, destination] of [['Upgrade plan', '/pricing'], ['Help & support', '/support'], ['Terms of service', '/terms'], ['Privacy policy', '/privacy']]) {
-  test(`settings ${action} navigates after saving and browser Back restores chat`, async ({ page }) => {
+  test(`settings ${action} navigates after saving and browser Back restores chat`, async ({ page, baseURL }) => {
     const evidence = await installAccountApp(page);
     await page.goto('/app'); await expect(input(page)).toBeVisible();
     await input(page).fill(`Keep this draft while opening ${action}`);
     const settings = await showAccountSettings(page);
     await settings.getByRole('button', { name: new RegExp(`^${action.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`) }).click();
-    await expect(page).toHaveURL(`http://127.0.0.1:5173${destination}`);
+    await expect(page).toHaveURL(new URL(destination, baseURL).href);
     const book = await readAccountBook(page);
     expect(book.chats.find((chat: any) => chat.id === book.selectedId).composer).toBe(`Keep this draft while opening ${action}`);
     await page.goBack();
