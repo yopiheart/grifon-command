@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  X, User, Crown, Bell, Palette, LifeBuoy, Shield, LogOut, ArrowRight, Check,
-} from 'lucide-react';
-import { SPRING } from '../ui/motionTokens';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { X, User, Crown, Palette, LifeBuoy, Shield, LogOut, ArrowRight, Check } from 'lucide-react';
+import Button from '../ui/Button';
+import { MAT_PLATE, MAT_PLATE_INSET } from '../ui/materialTokens';
 import type { PlanId } from '../../utils/planGate';
 import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
-import { MAT_VEIL, MAT_PLATE_INSET } from '../ui/materialTokens';
 
 interface SettingsModalProps {
   open: boolean;
@@ -14,175 +12,132 @@ interface SettingsModalProps {
   userEmail?: string | null;
   userName: string;
   plan: PlanId;
-  onUpgrade?: () => void;
-  onLogout?: () => void;
+  planLoading?: boolean;
+  planError?: boolean;
+  onRetryPlan?: () => Promise<void>;
+  onUpgrade?: () => void | Promise<void>;
+  onLogout?: () => void | Promise<void>;
+  onNavigate?: (href: string) => void | Promise<void>;
+  preview?: boolean;
+  restoreFocus?: () => HTMLElement | null;
 }
-
-const PLAN_LABEL: Record<string, string> = {
-  free: 'Free Edition',
-  starter: 'Starter Edition',
-  pro: 'Pro Edition',
-  business: 'Business Edition',
+const PLAN_LABEL: Record<PlanId, string> = { free: 'Free Edition', starter: 'Starter Edition', pro: 'Pro Edition', business: 'Business Edition' };
+const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
+const Section: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
+  <section className="space-y-2"><h3 className="flex items-center gap-3 px-1 text-sm font-semibold text-zinc-300"><span className="shrink-0 text-zinc-400 [&>svg]:h-5 [&>svg]:w-5">{icon}</span>{title}</h3><div className={`${MAT_PLATE_INSET} overflow-hidden rounded-2xl divide-y divide-white/[0.06]`}>{children}</div></section>
+);
+const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onClick?: () => void; disabled?: boolean }> = ({ label, sub, right, onClick, disabled }) => {
+  const content = <><div className="min-w-0 flex-1"><div className="text-sm font-semibold text-white">{label}</div>{sub && <div className="mt-0.5 text-sm leading-relaxed text-zinc-400">{sub}</div>}</div>{right}</>;
+  return onClick ? <Button type="button" variant="ghost" disabled={disabled} onClick={onClick} className={`${control} flex w-full items-center gap-3 !rounded-none !px-4 !py-3 text-left`}>{content}</Button> : <div className="flex min-h-11 items-center gap-3 px-4 py-3">{content}</div>;
 };
 
-const Section: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
-  <div className="space-y-2">
-    <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel px-1">
-      <span className="text-zinc-400">{icon}</span>
-      {title}
-    </div>
-    <div className="bg-zinc-950/60 rounded-2xl ring-1 ring-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-      {children}
-    </div>
-  </div>
-);
-
-const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onClick?: () => void; danger?: boolean }> = ({ label, sub, right, onClick, danger }) => (
-  <button
-    onClick={onClick}
-    disabled={!onClick}
-    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${onClick ? 'hover:bg-white/[0.04]' : 'cursor-default'}`}
-  >
-    <div className="flex-1 min-w-0">
-      <div className={`text-sm font-semibold ${danger ? 'text-red-400' : 'text-white'}`}>{label}</div>
-      {sub && <div className="text-xs text-on-surface-sublabel mt-0.5 truncate">{sub}</div>}
-    </div>
-    {right}
-  </button>
-);
-
-/**
- * GRIFON COMMAND settings — a single, responsive, sectioned modal (Meta-style).
- * Real surfaces only: account, plan/billing (→ pricing), appearance (dark by
- * design), notification prefs (local), help, legal, sign out. No invented features.
- */
-export const SettingsModal: React.FC<SettingsModalProps> = ({
-  open, onClose, userEmail, userName, plan, onUpgrade, onLogout,
-}) => {
-  const [renderPing, setRenderPing] = useState(true);
-  const [tips, setTips] = useState(true);
-  // Marketing/retargeting consent — server-backed (NOT localStorage like the two
-  // above). Withdrawal here is legally mandatory, so it always reflects the real
-  // record. See consentService / workflows/consent_capture_plan.md.
-  const [marketingAds, setMarketingAds] = useState(false);
+/** Account settings expose confirmed server preferences and existing destinations. */
+export const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose, userEmail, userName, plan, planLoading = false, planError = false, onRetryPlan, onUpgrade, onLogout, onNavigate, preview = false, restoreFocus }) => {
+  const overlay = useRef<HTMLDivElement>(null);
+  const dialog = useRef<HTMLDivElement>(null);
+  const consentEpoch = useRef(0);
+  const marketingPending = useRef(false);
+  const actionPending = useRef(false);
+  const callbacks = useRef({ onClose, restoreFocus });
+  callbacks.current = { onClose, restoreFocus };
+  const active = useRef(open);
+  active.current = open;
+  const [marketingAds, setMarketingAds] = useState<boolean | null>(null);
   const [marketingBusy, setMarketingBusy] = useState(false);
-
-  useEffect(() => {
-    setRenderPing(localStorage.getItem('grifon_notif_render') !== 'false');
-    setTips(localStorage.getItem('grifon_notif_tips') !== 'false');
-    if (open) {
-      getMarketingConsent().then((c) => setMarketingAds(c.granted)).catch(() => {});
-    }
-  }, [open]);
-
-  const toggleMarketing = async () => {
-    if (marketingBusy) return;
-    const next = !marketingAds;
-    setMarketingAds(next); // optimistic
-    setMarketingBusy(true);
+  const [marketingError, setMarketingError] = useState('');
+  const [actionBusy, setActionBusy] = useState('');
+  const [actionError, setActionError] = useState('');
+  const close = useCallback(() => { if (!actionPending.current) callbacks.current.onClose(); }, []);
+  const loadConsent = useCallback(async () => {
+    if (preview) return;
+    const epoch = ++consentEpoch.current;
+    marketingPending.current = true; setMarketingAds(null); setMarketingBusy(true); setMarketingError('');
     try {
-      if (next) await grantConsent();
-      else await withdrawConsent();
+      const consent = await getMarketingConsent({ strict: true });
+      if (active.current && consentEpoch.current === epoch) setMarketingAds(consent.granted);
     } catch {
-      setMarketingAds(!next); // revert on failure
+      if (active.current && consentEpoch.current === epoch) setMarketingError('Your ad preference could not be loaded. Try again.');
     } finally {
-      setMarketingBusy(false);
+      if (active.current && consentEpoch.current === epoch) { marketingPending.current = false; setMarketingBusy(false); }
+    }
+  }, [preview]);
+  useEffect(() => {
+    if (!open) return;
+    active.current = true;
+    setActionError(''); void loadConsent();
+    return () => { active.current = false; consentEpoch.current += 1; marketingPending.current = false; };
+  }, [open, userEmail, loadConsent]);
+  useLayoutEffect(() => {
+    if (!open || !overlay.current) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const background = Array.from(document.body.children).filter((node): node is HTMLElement => node instanceof HTMLElement && node !== overlay.current).map(node => ({ node, inert: node.hasAttribute('inert') }));
+    const overflow = document.body.style.overflow;
+    background.forEach(({ node }) => node.setAttribute('inert', ''));
+    document.body.style.overflow = 'hidden'; dialog.current?.querySelector<HTMLElement>('button')?.focus();
+    const key = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); return; }
+      if (event.key !== 'Tab') return;
+      event.stopPropagation();
+      const items = Array.from(dialog.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), [tabindex="0"]') ?? []).filter(item => item.getClientRects().length);
+      const first = items[0], last = items[items.length - 1];
+      if (!first) { event.preventDefault(); dialog.current?.focus(); }
+      else if (event.shiftKey && (document.activeElement === first || !dialog.current?.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && (document.activeElement === last || !dialog.current?.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', key, true);
+    return () => {
+      document.removeEventListener('keydown', key, true);
+      background.forEach(({ node, inert }) => { if (!inert) node.removeAttribute('inert'); }); document.body.style.overflow = overflow;
+      const target = callbacks.current.restoreFocus?.() ?? previous;
+      if (target?.isConnected && !target.closest('[inert]')) target.focus();
+    };
+  }, [open, close]);
+  const toggleMarketing = async () => {
+    if (preview || marketingPending.current || marketingAds === null) return;
+    const epoch = ++consentEpoch.current;
+    marketingPending.current = true; setMarketingBusy(true); setMarketingError('');
+    try {
+      const consent = await (marketingAds ? withdrawConsent() : grantConsent());
+      if (active.current && consentEpoch.current === epoch) setMarketingAds(consent.granted);
+    } catch {
+      if (active.current && consentEpoch.current === epoch) setMarketingError('Your ad preference was not changed. Try again.');
+    } finally {
+      if (active.current && consentEpoch.current === epoch) { marketingPending.current = false; setMarketingBusy(false); }
     }
   };
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    if (open) window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
-
-  const toggle = (key: string, val: boolean, setter: (v: boolean) => void) => {
-    setter(val);
-    localStorage.setItem(key, String(val));
+  const runAction = async (label: string, action: () => void | Promise<void>) => {
+    if (actionPending.current) return;
+    actionPending.current = true; setActionBusy(label); setActionError('');
+    try { await action(); }
+    catch (error) { if (active.current) setActionError(error instanceof Error && error.message === 'CHAT_SAVE_FAILED' ? 'Draft could not be saved. Your chat is still here. Try this action again.' : label === 'Sign out' ? 'Sign out failed. Your session and draft are still here. Try again.' : 'This page could not be opened. Your chat has been kept. Try again.'); }
+    finally { actionPending.current = false; if (active.current) setActionBusy(''); }
   };
-
-  const Switch: React.FC<{ on: boolean; onToggle: () => void }> = ({ on, onToggle }) => (
-    <span
-      onClick={(e) => { e.stopPropagation(); onToggle(); }}
-      className={`relative w-10 h-6 rounded-full transition-colors shrink-0 cursor-pointer ${on ? 'bg-[#FFCC00]' : 'bg-zinc-700'}`}
-    >
-      <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-zinc-950 transition-all ${on ? 'left-[18px]' : 'left-0.5'}`} />
-    </span>
-  );
-
-  return (
-    <AnimatePresence>
-      {open && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-4">
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={onClose}
-            className={`absolute inset-0 ${MAT_VEIL}`}
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: 16 }}
-            transition={SPRING.standard}
-            className="relative w-full sm:max-w-lg h-full sm:h-auto sm:max-h-[85vh] bg-zinc-900/90 sm:rounded-3xl ring-1 ring-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden"
-          >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
-              <span className="text-lg font-bold text-white tracking-tight">Settings</span>
-              <button onClick={onClose} aria-label="Close" className="w-9 h-9 rounded-full bg-zinc-950 ring-1 ring-white/10 text-zinc-400 hover:text-white hover:ring-[#FFCC00]/50 transition-all flex items-center justify-center">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="overflow-y-auto px-5 py-5 space-y-6 custom-scrollbar">
-              {/* Profile card */}
-              <div className={`flex items-center gap-3 ${MAT_PLATE_INSET} rounded-2xl ring-1 ring-white/[0.06] p-4`}>
-                <div className="w-12 h-12 rounded-full bg-zinc-800 ring-1 ring-white/10 flex items-center justify-center shrink-0">
-                  <User className="w-5 h-5 text-zinc-400" />
-                </div>
-                <div className="min-w-0">
-                  <div className="text-sm font-semibold text-white truncate">{userName}</div>
-                  <div className="text-xs text-on-surface-sublabel truncate">{userEmail}</div>
-                </div>
-              </div>
-
-              <Section icon={<Crown className="w-3.5 h-3.5" />} title="Plan & billing">
-                <Row label={PLAN_LABEL[plan] ?? 'Free Edition'} sub="Your current plan" right={
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#FFCC00] bg-[#FFCC00]/10 ring-1 ring-[#FFCC00]/30 rounded-full px-2 py-1">{plan}</span>
-                } />
-                <Row label="Upgrade plan" sub="More ads, cinematic renders, priority support" onClick={onUpgrade} right={<ArrowRight className="w-4 h-4 text-[#FFCC00]" />} />
-              </Section>
-
-              <Section icon={<Bell className="w-3.5 h-3.5" />} title="Notifications">
-                <Row label="Render finished" sub="Ping me when my ad is ready" right={<Switch on={renderPing} onToggle={() => toggle('grifon_notif_render', !renderPing, setRenderPing)} />} />
-                <Row label="Tips & product news" sub="Occasional in-app tips" right={<Switch on={tips} onToggle={() => toggle('grifon_notif_tips', !tips, setTips)} />} />
-                <Row label="Personalized ads" sub="Share limited data with ad partners (e.g. Meta) for relevant ads" right={<Switch on={marketingAds} onToggle={toggleMarketing} />} />
-              </Section>
-
-              <Section icon={<Palette className="w-3.5 h-3.5" />} title="Appearance">
-                <Row label="Theme" sub="Grifon is cinematic dark by design" right={
-                  <span className="inline-flex items-center gap-1.5 text-xs text-zinc-300"><Check className="w-3.5 h-3.5 text-[#FFCC00]" /> Dark</span>
-                } />
-              </Section>
-
-              <Section icon={<LifeBuoy className="w-3.5 h-3.5" />} title="Help & legal">
-                <Row label="Help & support" onClick={() => { window.location.href = '/support'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
-                <Row label="Terms of service" onClick={() => { window.location.href = '/terms'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
-                <Row label="Privacy policy" onClick={() => { window.location.href = '/privacy'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
-              </Section>
-
-              <Section icon={<Shield className="w-3.5 h-3.5" />} title="Account">
-                <Row label="Sign out" danger onClick={onLogout} right={<LogOut className="w-4 h-4 text-red-400" />} />
-              </Section>
-
-              <p className="text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel pt-2">
-                GRIFON COMMAND © 2026
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
-  );
+  const navigate = (href: string) => void runAction('Opening page', () => onNavigate ? onNavigate(href) : window.location.assign(href));
+  if (!open) return null;
+  return createPortal(<div ref={overlay} className="companion-settings fixed inset-0 z-[80] flex items-center justify-center bg-zinc-950/80 p-3 font-sans text-sm text-white sm:p-4" onClick={close}>
+    <div ref={dialog} role="dialog" aria-modal="true" aria-labelledby="account-settings-title" aria-busy={!!actionBusy} tabIndex={-1} className={`${MAT_PLATE} relative flex max-h-[calc(100dvh-24px)] w-full max-w-lg flex-col overflow-hidden rounded-2xl ring-1 ring-white/10`} onClick={event => event.stopPropagation()}>
+      <div className="flex shrink-0 items-center justify-between border-b border-white/[0.06] px-5 py-3"><h2 id="account-settings-title" className="!text-base !font-semibold !normal-case !tracking-tight">Settings</h2><Button type="button" variant="ghost" disabled={!!actionBusy} onClick={close} aria-label="Close settings" className={`${control} !p-3`}><X className="h-4 w-4" /></Button></div>
+      <div className="companion-settings-scroll min-h-0 overflow-y-auto overscroll-contain space-y-5 px-5 py-5">
+        {preview && <p className="text-sm leading-relaxed text-zinc-300">Preview account · settings and sign-out are simulated. No external account preference is changed.</p>}
+        <div className={`${MAT_PLATE_INSET} flex items-center gap-3 rounded-2xl p-4`}><div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-800"><User className="h-5 w-5 text-zinc-300" /></div><div className="min-w-0"><p className="truncate text-sm font-semibold">{userName}</p><p className="break-all text-sm text-zinc-400">{userEmail}</p></div></div>
+        <Section icon={<Crown className="h-4 w-4" />} title="Plan & billing"><Row label={planLoading ? 'Checking your plan…' : planError ? 'Your plan could not be confirmed.' : PLAN_LABEL[plan]} sub={preview ? 'Simulated preview plan' : 'Your current plan'} right={!planLoading && !planError && <span className="text-sm text-[#FFCC00]">{plan.charAt(0).toUpperCase() + plan.slice(1)}</span>} />{planError && <div className="px-4 pb-3"><p role="alert" className="text-sm text-zinc-300">Your plan could not be loaded. Try again.</p>{onRetryPlan && <Button variant="secondary" className={`${control} mt-2 !px-3`} disabled={planLoading || !!actionBusy} onClick={() => { void onRetryPlan().catch(() => {}); }}>Retry plan</Button>}</div>}{onUpgrade && <Row label={preview ? 'Preview plan options' : 'Upgrade plan'} sub="View available plans" disabled={!!actionBusy || planLoading || planError} onClick={() => void runAction('Opening plans', onUpgrade)} right={<ArrowRight className="h-4 w-4 text-[#FFCC00]" />} />}</Section>
+        <Section icon={<Shield className="h-4 w-4" />} title="Privacy">
+          {preview ? <Row label="Personalized ads" sub="Unavailable in preview. Sign in to manage your real preference." /> : <>
+            <div className="flex items-center gap-3 px-4 py-3"><div className="min-w-0 flex-1"><p className="text-sm font-semibold">Personalized ads</p><p className="mt-0.5 text-sm leading-relaxed text-zinc-400">Share limited data with ad partners for relevant ads.</p></div>{marketingAds !== null && <button type="button" role="switch" aria-label="Personalized ads" aria-checked={marketingAds} aria-busy={marketingBusy} disabled={marketingBusy || !!actionBusy} onClick={() => void toggleMarketing()} className="companion-consent-switch flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-xl disabled:opacity-50"><span aria-hidden="true" className={`relative h-6 w-10 rounded-full ${marketingAds ? 'bg-[#FFCC00]' : 'bg-zinc-700'}`}><span className={`absolute top-0.5 h-5 w-5 rounded-full ${marketingAds ? 'left-[18px] bg-zinc-950' : 'left-0.5 bg-zinc-100'}`} /></span></button>}</div>
+            {marketingAds === null && !marketingBusy && !marketingError && <p role="status" className="px-4 pb-3 text-sm text-zinc-300">Your ad preference has not been loaded yet.</p>}
+            {marketingBusy && <p role="status" className="px-4 pb-3 text-sm text-zinc-300">{marketingAds === null ? 'Loading your ad preference…' : 'Saving your ad preference…'}</p>}
+            {marketingError && <div className="px-4 pb-3"><p role="alert" className="text-sm text-zinc-300">{marketingError}</p><Button variant="secondary" className={`${control} mt-2 !px-3`} disabled={marketingBusy || !!actionBusy} onClick={() => void (marketingAds === null ? loadConsent() : toggleMarketing())}>Retry ad preference</Button></div>}
+          </>}
+        </Section>
+        <Section icon={<Palette className="h-4 w-4" />} title="Appearance"><Row label="Dark appearance" sub="Grifon uses a dark interface." right={<Check className="h-4 w-4 text-[#FFCC00]" />} /></Section>
+        <Section icon={<LifeBuoy className="h-4 w-4" />} title="Help & legal">{[['Help & support', '/support'], ['Terms of service', '/terms'], ['Privacy policy', '/privacy']].map(([label, href]) => <Row key={href} label={label} disabled={!!actionBusy} onClick={() => navigate(href)} right={<ArrowRight className="h-4 w-4 text-zinc-300" />} />)}{preview && <Row label="Sign in to Grifon" sub="Open the real login page" disabled={!!actionBusy} onClick={() => navigate('/login')} right={<ArrowRight className="h-4 w-4 text-zinc-300" />} />}</Section>
+        {onLogout && <Section icon={<User className="h-4 w-4" />} title="Account"><Row label={actionBusy === 'Sign out' ? 'Signing out…' : preview ? 'Simulate sign out' : 'Sign out'} disabled={!!actionBusy || (marketingBusy && marketingAds !== null)} onClick={() => void runAction('Sign out', onLogout)} right={<LogOut className="h-4 w-4 text-zinc-300" />} /></Section>}
+        {actionBusy && <p role="status" className="text-sm text-zinc-300">{actionBusy === 'Sign out' ? 'Saving your chat and signing out…' : 'Saving your chat…'}</p>}
+        {actionError && <p role="alert" className="text-sm leading-relaxed text-zinc-300">{actionError}</p>}
+        <p className="text-center text-sm text-zinc-400">Grifon Command © 2026</p>
+      </div>
+    </div>
+  </div>, document.body);
 };
 
 export default SettingsModal;

@@ -1,0 +1,290 @@
+{
+  "verdict": "PASS",
+  "scope": "Within-app saved-chat and New-chat mascot continuity; per-chat draft/producer isolation; cold/failure/retry and existing responsive geometry.",
+  "baseline": {
+    "baselineCommit": "5c6d6a072a65c39ff2741f93aa55d1975a723196",
+    "source": {
+      "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+      "components/CompanionChat/CompanionChatShell.tsx": "59f07a7df0de48ce2fe33dd082cc5d9343d164f608583e16b302e36406774aa4",
+      "components/CompanionChat/CompanionChatSurface.tsx": "f70dd6ced1a60c6067e989066731c50c5aa579bcfcac27cead0704cae83e4740",
+      "components/CompanionChat/index.tsx": "05167f797d6245dfd9f04b471621c50f842e3be3d3288e2484a77efe086cdf28",
+      "dev/companionChatPreview.tsx": "21745c98b2fbbd026b0d0ccdb411006c690a14bda32b7ac1cdbf6cbe048b3ba6",
+      "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+      "public/companion/frame.html": "e90ac0d1522ffd87b661e7de22736309d60e12cf55be07d38f30a7c7f3d4361d"
+    },
+    "command": "npx.cmd playwright test --config tests/e2e/companion-continuity.config.ts --grep \"continuity.*375px\" --output assets/design/companion-continuity/qa/baseline-test-results",
+    "exitCode": 1,
+    "expectedFailingCases": 1,
+    "viewports": [
+      {
+        "width": 375,
+        "height": 667
+      }
+    ],
+    "switches": 6,
+    "observations": 8,
+    "iframeRemounts": 6,
+    "neutralFallbackInsertions": 6,
+    "fallbackDurationMs": [
+      386.69999998807907,
+      379.20000000298023,
+      423,
+      385.79999999701977,
+      350.5,
+      411
+    ],
+    "warmRendererRequests": 72,
+    "frameCount": {
+      "initial": 92,
+      "final": 45
+    },
+    "allSwitchIdentitiesLost": true,
+    "unexpectedRequests": [],
+    "mockedCalls": [
+      {
+        "name": "fixture-event",
+        "value": "storyboard"
+      }
+    ],
+    "proof": "Captured before builder edits; immutable git blob source hashes reverified after final suite.",
+    "environment": {
+      "COMPANION_CONTINUITY_QA_DIR": "assets/design/companion-continuity/qa/baseline",
+      "COMPANION_CONTINUITY_PHASE": "baseline"
+    }
+  },
+  "runs": [
+    {
+      "name": "Final continuity",
+      "command": "npx.cmd playwright test --config tests/e2e/companion-continuity.config.ts --output assets/design/companion-continuity/qa/final-test-results",
+      "environment": {
+        "COMPANION_CONTINUITY_QA_DIR": "assets/design/companion-continuity/qa/final",
+        "COMPANION_CONTINUITY_PHASE": "final"
+      },
+      "exitCode": 0,
+      "cases": 6,
+      "passed": 6,
+      "seconds": 24.6
+    },
+    {
+      "name": "Existing focused layout",
+      "command": "npx.cmd playwright test tests/e2e/companion-layout.spec.ts --config tests/e2e/companion.config.ts --output assets/design/companion-continuity/qa/layout-test-results",
+      "environment": {
+        "COMPANION_QA_DIR": "assets/design/companion-continuity/qa/layout",
+        "COMPANION_LAYOUT_PHASE": "continuity"
+      },
+      "exitCode": 0,
+      "cases": 6,
+      "passed": 6,
+      "seconds": 46.2
+    }
+  ],
+  "uniqueFinalCases": 12,
+  "warmSwitchResults": [
+    {
+      "width": 375,
+      "height": 667,
+      "switches": 6,
+      "observations": 8,
+      "allIdentityRetained": true,
+      "warmRendererRequests": 0,
+      "fallbackInsertions": 0,
+      "iframeRemounts": 0,
+      "readyResets": 0,
+      "frameCount": {
+        "initial": 74,
+        "final": 210
+      },
+      "unexpectedRequests": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "switches": 6,
+      "observations": 8,
+      "allIdentityRetained": true,
+      "warmRendererRequests": 0,
+      "fallbackInsertions": 0,
+      "iframeRemounts": 0,
+      "readyResets": 0,
+      "frameCount": {
+        "initial": 87,
+        "final": 218
+      },
+      "unexpectedRequests": []
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "switches": 6,
+      "observations": 8,
+      "allIdentityRetained": true,
+      "warmRendererRequests": 0,
+      "fallbackInsertions": 0,
+      "iframeRemounts": 0,
+      "readyResets": 0,
+      "frameCount": {
+        "initial": 89,
+        "final": 200
+      },
+      "unexpectedRequests": []
+    }
+  ],
+  "reactionIsolation": {
+    "identityRetained": true,
+    "warmRendererRequests": 0,
+    "events": 0,
+    "unexpectedRequests": []
+  },
+  "coldFailureRetry": {
+    "coldFallback": true,
+    "coldReadyVerifiedByBrowser": true,
+    "failedFallback": true,
+    "retryReadyVerifiedByBrowser": true,
+    "totalSceneAssetRequests": 2
+  },
+  "sourceSHA256": {
+    "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+    "components/CompanionChat/CompanionAvatarLayer.tsx": "5cc687a510c07cd9f9b1e2dc4da770078708e8f29eb6dba5fc0686347fd1ddb1",
+    "components/CompanionChat/companionChat.css": "d1c934d9cf484f5a41fb90d51d08e96a1e946aef5deecdd6fdc924042c2e2638",
+    "components/CompanionChat/CompanionChatShell.tsx": "7096bcc3cbc43d6980f3252c35d58b1472a1b24862f6ef77cb1f70cd72bf872c",
+    "components/CompanionChat/CompanionChatSurface.tsx": "b8775adf86159bebeda89f18245aec5bf951d1851c22ed99afc71abf1bb86f99",
+    "components/CompanionChat/CompanionComposer.tsx": "e8c3a04ca9ee9207ae124d6992873d3a2b3e5d6acc18c5a9c92e50ab97cd14ed",
+    "components/CompanionChat/CompanionOutputViewer.tsx": "4bf6247ba31101152decb065b2b335af2298ecba7755b869d6858b2d23075423",
+    "components/CompanionChat/index.tsx": "35e482ae934e35834f09c7b88609c1433ebc1dfcaa68f47b15146531a1a975d9",
+    "components/CompanionChat/useCompanionDictation.ts": "a679206f208f0a4faca858a259dfac00f3992dad73de4851b73e548d77b47acb",
+    "dev/companionChatPreview.tsx": "b7face635c969026114cb925db0e4d507c5da3c0ff5f80032b4f5251d791b6ce",
+    "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "public/companion/frame.html": "e90ac0d1522ffd87b661e7de22736309d60e12cf55be07d38f30a7c7f3d4361d",
+    "tests/e2e/companion-continuity.spec.ts": "7993261f73809e5878fdc9af3adaad1dace271a035f3c7606fd78abed37c84de",
+    "tests/e2e/companion-continuity.config.ts": "bee88e4a3a93bb35729baefa9c5a97c5028185af0bed84f8a6b5b46f57eaa4b2"
+  },
+  "sourceBeforeAfterIdentical": true,
+  "originalUnchangedSourceSHA256": {
+    "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+    "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "public/companion/frame.html": "e90ac0d1522ffd87b661e7de22736309d60e12cf55be07d38f30a7c7f3d4361d"
+  },
+  "independent": {
+    "report": "assets/design/companion-continuity/qa/independent-review.json",
+    "verdict": "PASS",
+    "observations": 40,
+    "allObservationsPass": true,
+    "findings": [],
+    "brandVerdict": "BRAND_PASS",
+    "brandScore": 46,
+    "matchingSourceHashes": true
+  },
+  "formattingNormalization": {
+    "scope": "Generated Playwright error-context.md only",
+    "operation": "Remove spaces/tabs at line endings; preserve content, line endings, commands, source proof and JSON outcomes.",
+    "protectedBaselineEvidenceSHA256": {
+      "baseline-verification.json": "bef9a3f7cb1de493b04a4ca502bb8781fbc5b753ae1ccc4611a1e80122250dbb",
+      "baseline/baseline-switches-375.json": "25cf7783e19c08b31f4d4eb18f4f1ed9f6a08313e2597bf91acd3ba1cf82cba7"
+    },
+    "reports": [
+      {
+        "path": "assets/design/companion-continuity/qa/baseline-test-results/companion-continuity-ready-e68bd-at-and-saved-chats-at-375px/error-context.md",
+        "normalizedLines": 6,
+        "beforeSHA256": "50c83d921490c15183253a0d0603c1d8622b0091b140aec55e69ab88873f262c",
+        "afterSHA256": "511e7483c3dfcd862cffa52a72c71ad05628331dbbc390d9bc972d7396a08e85"
+      }
+    ]
+  },
+  "safety": {
+    "browser": "Headless Edge",
+    "serialWorkers": 1,
+    "existingViteServerReused": true,
+    "helperProcessesStarted": 0,
+    "paidLiveSwitches": false,
+    "actualMicrophone": false,
+    "externalProviderOrAPI": false,
+    "productionData": false,
+    "publicFontGETsAllowed": true,
+    "priorNavigationQAOverwritten": false
+  },
+  "limitations": [
+    "Responsive desktop browser simulation; no physical phone/native zoom/GPU claim.",
+    "Within-app chat lifecycle only; leaving app/Studio or real account/auth/session transitions not exercised.",
+    "Local mocked persistence/intake/production preview; no real user-state, microphone, provider or paid generation.",
+    "Parent/builder own full build/unit/repository gates, not independently rerun by this smoke agent."
+  ],
+  "artifactSHA256": {
+    "assets/design/companion-continuity/qa/baseline-test-results/.last-run.json": "a244730638e23986f67f0ad33b19c53bb0d36f9a37965470940c3417db1665dc",
+    "assets/design/companion-continuity/qa/baseline-test-results/companion-continuity-ready-e68bd-at-and-saved-chats-at-375px/error-context.md": "511e7483c3dfcd862cffa52a72c71ad05628331dbbc390d9bc972d7396a08e85",
+    "assets/design/companion-continuity/qa/baseline-verification.json": "bef9a3f7cb1de493b04a4ca502bb8781fbc5b753ae1ccc4611a1e80122250dbb",
+    "assets/design/companion-continuity/qa/baseline/baseline-switches-375.json": "25cf7783e19c08b31f4d4eb18f4f1ed9f6a08313e2597bf91acd3ba1cf82cba7",
+    "assets/design/companion-continuity/qa/baseline/baseline-switches-375.png": "f1827dbf32a9e2241fa30a3c8a44e2d0cd61eb703605b36e9be6e8c876f6144d",
+    "assets/design/companion-continuity/qa/browser-run-output.json": "8b4cc16722f4ee808261e1b9950e9eb75d4cbbf485a98631f050c876af567b18",
+    "assets/design/companion-continuity/qa/final-source-end.json": "6491975942613c6c4d3d59ce1c63f806b599e2ce133191b287dd5aea38d5df2a",
+    "assets/design/companion-continuity/qa/final-source-start.json": "7820296198e46ae14b8a0644a4a01680d72354c86247866fad14fa509ad486dd",
+    "assets/design/companion-continuity/qa/final-test-results/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "assets/design/companion-continuity/qa/final/final-cold-loading.json": "c065e1c995d463c5103760ad978c5eded96336e13d0f7bbfa170451d5993ecee",
+    "assets/design/companion-continuity/qa/final/final-cold-loading.png": "1bc821fbe04527fc1cd47197e8ac7e806951e1df7f46a0e47033d068a229dfd5",
+    "assets/design/companion-continuity/qa/final/final-cold-ready.json": "6f1a79d7dee2286db489a1ff0e50eec9a6cc7c65d21c83709b4e352a638ee68c",
+    "assets/design/companion-continuity/qa/final/final-cold-ready.png": "e6fbd38d0a8e2e3efe2645747402ae1924e739e7813ace28ca8f51efe9c68ae3",
+    "assets/design/companion-continuity/qa/final/final-failed-fallback.json": "0c3ad850f525ffdae395be1b2a07906f22dd03791ba6faea3b7e3b54949c1fa9",
+    "assets/design/companion-continuity/qa/final/final-failed-fallback.png": "bcaa62220e1c4d47a50205ab39e6b38af299567202b40cd26b476ce3dd802d56",
+    "assets/design/companion-continuity/qa/final/final-reaction-isolation-390.json": "59614b442e6ab785cc02ed90662714328f9c56a7cbfb346c6f1ff4fe4474974e",
+    "assets/design/companion-continuity/qa/final/final-reaction-isolation-390.png": "a18aa7035ac5d0663816968d2f2ff8fc992581fa6f64875af5b12c83f206acd9",
+    "assets/design/companion-continuity/qa/final/final-retry-ready.json": "4753c3914b4a5968cd3e67e20e3b197c76afc80335b68968269a6da9d53fe981",
+    "assets/design/companion-continuity/qa/final/final-retry-ready.png": "9f63dbd23f91bcc036fad73f66612c53b66932d974b4e72eace9f39f7346472a",
+    "assets/design/companion-continuity/qa/final/final-switches-1280.json": "071d40e98f35b4380bc55c578fbbc68dc4924ad2b0f44f5008cd3b517dd57116",
+    "assets/design/companion-continuity/qa/final/final-switches-1280.png": "b004de31d40b1ad9d04be1c1b23454c0517ac0f9250d66702eb8b2501be9d03a",
+    "assets/design/companion-continuity/qa/final/final-switches-375.json": "9295f6389ba6cd91e27ac3fb7e8045e794db766557aafe49559b743fa0fb1095",
+    "assets/design/companion-continuity/qa/final/final-switches-375.png": "17d4c2e0b50202d653a9bfcaf2934a9b59a96e929a19e80f5ba73c784b0cb357",
+    "assets/design/companion-continuity/qa/final/final-switches-390.json": "dccfedd5de7dba2373eede8f8a07e86bb2a6c06fbf65fbcf60963384aeb58391",
+    "assets/design/companion-continuity/qa/final/final-switches-390.png": "db2a80cc43ca55b6318588a7f7b5202e1766aad62d14812b415c04e214edee17",
+    "assets/design/companion-continuity/qa/formatting-normalization.json": "7b065de5f3386164f95f47f4e1ba7bd558af812b54b4794501e03d8d4f31a7a2",
+    "assets/design/companion-continuity/qa/independent-review.json": "1af0b251ed2d0ac0dbdb73c98a7c29ba1f7964437e27e641dd767ebca44d3fe6",
+    "assets/design/companion-continuity/qa/independent/composer-zoom-1280.png": "e61a9d46d5da8c84eab94cb33a5439b39d05b1d69a3f35eade8b88e98a0d9156",
+    "assets/design/companion-continuity/qa/independent/composer-zoom-375.png": "f5dccf9fde1ae937246ceca6059a61a542122adcb9ac05518f9077da3ef20eec",
+    "assets/design/companion-continuity/qa/independent/failure-375.png": "1c22418d9d3452ec9804a71eeb740ecfd76c75e1f184b69bc16b661fa6572dda",
+    "assets/design/companion-continuity/qa/independent/header-zoom-1280.png": "2f14263f4cd3a4905fdf824f13103075e03d99e498ed598ebf3cfba0082f34a6",
+    "assets/design/companion-continuity/qa/independent/header-zoom-375.png": "57e6edc560951f27a00c44270faa42717bde2980cb9600b3335ced61c175cd35",
+    "assets/design/companion-continuity/qa/independent/normal-1280.png": "0673536738e800a3740333fb211087ffa8229c5d1610a081e7ec928b82d366c3",
+    "assets/design/companion-continuity/qa/independent/normal-375.png": "26a7ce260e2401cd2a93c7414db4956764e03c160a8d35ecc4c9befa6925ebdc",
+    "assets/design/companion-continuity/qa/independent/viewer-1280.png": "3a7c30df22dd997a40dea86346103220d070b00f746711f49643e92cfe616cb7",
+    "assets/design/companion-continuity/qa/independent/viewer-375.png": "7463396c41b01e34b8ffcbb540680b01d073a76eb341a986fed292c295f35f10",
+    "assets/design/companion-continuity/qa/layout-test-results/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "assets/design/companion-continuity/qa/layout/continuity-active-1280.png": "78d9d0f7c6480217d8c0620dcbd766930598fad1c916cd7ebeab5ea24c282530",
+    "assets/design/companion-continuity/qa/layout/continuity-active-375.png": "70afc50ffd581a83330421d47847671dd0669f36233d8ad8f0d06c294ae9574c",
+    "assets/design/companion-continuity/qa/layout/continuity-active-390.png": "29e52bd341a128b791c67548fb81500450a9ccc66b69744a9ccf44ed4a88aff2",
+    "assets/design/companion-continuity/qa/layout/continuity-geometry-1280.json": "93da335230463330e96e2042a3515cd8e9733ddd8ec59444c9d2312ca608cb91",
+    "assets/design/companion-continuity/qa/layout/continuity-geometry-375.json": "396f43e600e65b2e9a5082a2a4a2878470fbc354c3766858bc6421bb677f724d",
+    "assets/design/companion-continuity/qa/layout/continuity-geometry-390.json": "b15cf0c95e36e88d15c561d87067f4e8357b37aed31992d94bc87f4303af1d98",
+    "assets/design/companion-continuity/qa/layout/continuity-initial-1280.png": "a171cb4937a13b7d0cef93df89ba0ba58a1e913b3c91612d9577e7b0a8010a38",
+    "assets/design/companion-continuity/qa/layout/continuity-initial-375.png": "8e03bfc8b7b91c9ed1ca88432e82590b9cc7826aea7322cbabcc917dc9fd07fb",
+    "assets/design/companion-continuity/qa/layout/continuity-initial-390.png": "950a2a367448ab9ce80557e3d6b55e339ce09ae15948c4f89cd0e10aa3ff732e",
+    "assets/design/companion-continuity/qa/layout/continuity-ready-1280.png": "2cf0d5e491bfe68e5c735c15fcbe2a53192808bb0bde41e6917c0a3430e2283c",
+    "assets/design/companion-continuity/qa/layout/continuity-ready-375.png": "7463396c41b01e34b8ffcbb540680b01d073a76eb341a986fed292c295f35f10",
+    "assets/design/companion-continuity/qa/layout/continuity-ready-390.png": "c0db4d004cf68b5201dd689c0cd1b116998ffd3c4e8f5c9f3cbdff750ab617c4",
+    "assets/design/companion-continuity/qa/layout/continuity-result-1280.png": "b958ba486358596880a5f845bb05905cf28a3c1bdb56a9c38a5969e0fb028c6b",
+    "assets/design/companion-continuity/qa/layout/continuity-result-375.png": "e321fba270f44f915daf0dafb96cf460a7fb8f87be27350b494ce23f9ca47bbe",
+    "assets/design/companion-continuity/qa/layout/continuity-result-390.png": "ab13c0709805d41b021fca2db0e33715ae1d095615aa1532141cca24aa2f8631",
+    "assets/design/companion-continuity/qa/layout/continuity-retry-320.json": "96972d4e42bb4fa3ee237bba0a77f3842a5bd424f9ed74ebfd94d59f5018822d",
+    "assets/design/companion-continuity/qa/layout/continuity-retry-320.png": "7e9ad00cbf455cbe3212ef41e9e77667d0d07669844b2b6dbc746e134e2b94c8",
+    "assets/design/companion-continuity/qa/layout/continuity-review-1000.json": "0229e97c6d1e78b9ce64a6393d1bc97735f54b7c0387affcdbd15e5d6de54181",
+    "assets/design/companion-continuity/qa/layout/continuity-review-1000.png": "9b1cd884cc4dc3c3172dc3cd59656a60eed9a56ca9be26faf582642a8138e0d5",
+    "assets/design/companion-continuity/qa/layout/continuity-review-375.json": "9f4d2166b53921dfe5b17710dc981656362f5140d5a71deb3f9649ea9535c1b8",
+    "assets/design/companion-continuity/qa/layout/continuity-review-375.png": "993c3934c7636291d488b5f546d259a35a43d4778b575382d4d23964fa18c9c7",
+    "assets/design/companion-continuity/qa/layout/continuity-working-1280.png": "0cbaf41bbe3d1b44c2a0cd6c4be124bcec802fedecc0d96e0b5644534d6428ed",
+    "assets/design/companion-continuity/qa/layout/continuity-working-375.png": "6162b63cbda7cf061045880021b7a4d0d499230a49df723604ff0a886718fb1b",
+    "assets/design/companion-continuity/qa/layout/continuity-working-390.png": "30fe70c3f86ee0cbf22caf7b5156fe7dc85e479786f9ca31b10b91ecd639c4aa",
+    "assets/design/companion-continuity/qa/report.md": "621559ad9ae75c85c933d71cf86baea10d6b428dd1833d3db07d9d3b5f978ddf"
+  },
+  "localIgnoredLogSHA256": {
+    "baseline-browser.log": "b6a38c3b68f95738c8c107f90f7fa75920ac234b4d88759300168b7af9775549",
+    "final-browser.log": "1c47e9ee88d94927489dd192c591d814da560982cc2db916cb55e9ff8e36f52f",
+    "layout-browser.log": "59c8de85c53b84abac3029ef1c3060d0ce5b13980ab1abf312cd10a5c80df7bc"
+  },
+  "existingTestSHA256": {
+    "tests/e2e/companion-layout.spec.ts": "8bd3ded07ae8cdef06c06ec51df77ea87d86adcdef11afddf313571d7f060f7e",
+    "tests/e2e/companion.config.ts": "aae78f75f06f84c665be78fce0614443bc3c97cb877dbc730bed666d73ef2e89"
+  },
+  "postBrowserConfigReview": {
+    "file": "package.json",
+    "changes": "One design:lint launcher correction after browser window; UI/test hashes unchanged.",
+    "evidence": "assets/design/companion-continuity/qa/independent-review.json",
+    "designLintExitCode": 0
+  }
+}

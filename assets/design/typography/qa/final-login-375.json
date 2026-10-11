@@ -1,0 +1,494 @@
+{
+  "viewport": {
+    "width": 375,
+    "height": 667
+  },
+  "fonts": [
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "loaded"
+    }
+  ],
+  "measurements": [
+    {
+      "tag": "H1",
+      "role": null,
+      "text": "Your business. Your next ad.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "400",
+      "letterSpacing": "-1.35px",
+      "textTransform": "none",
+      "width": 343,
+      "height": 72,
+      "left": 16,
+      "right": 359
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Continue with Google",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 293,
+      "height": 46,
+      "left": 41,
+      "right": 334
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// EMAIL",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 293,
+      "height": 20,
+      "left": 41,
+      "right": 334
+    },
+    {
+      "tag": "INPUT",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 293,
+      "height": 54,
+      "left": 41,
+      "right": 334
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": " Members-only dealsYes — send me deals and offers picked for my business. I'm okay sharing limited data with partners like Meta to keep them relevant. Privacy Policy.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 293,
+      "height": 119,
+      "left": 41,
+      "right": 334
+    },
+    {
+      "tag": "INPUT",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 20,
+      "height": 20,
+      "left": 52,
+      "right": 72
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Privacy Policy",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 81.484375,
+      "height": 19.5,
+      "left": 136.265625,
+      "right": 217.75
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "CONTINUE WITH EMAIL",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 293,
+      "height": 44,
+      "left": 41,
+      "right": 334
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Terms of Service",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 98.5,
+      "height": 44,
+      "left": 228.671875,
+      "right": 327.171875
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Privacy Policy",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 81.484375,
+      "height": 44,
+      "left": 157.296875,
+      "right": 238.78125
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "REFUND",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "10px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 56.640625,
+      "height": 44,
+      "left": 111.890625,
+      "right": 168.53125
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "SUPPORT",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "10px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 63.578125,
+      "height": 44,
+      "left": 199.53125,
+      "right": 263.109375
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 44,
+      "height": 44,
+      "left": 310,
+      "right": 354
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Privacy Policy",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 116.40625,
+      "height": 44,
+      "left": 33,
+      "right": 149.40625
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Decline",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 88.296875,
+      "height": 44,
+      "left": 157.40625,
+      "right": 245.703125
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Accept",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 88.296875,
+      "height": 44,
+      "left": 253.703125,
+      "right": 342
+    }
+  ]
+}

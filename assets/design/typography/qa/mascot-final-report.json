@@ -1,0 +1,608 @@
+{
+  "recordedAtUTC": "2026-10-07T03:02:43.656Z",
+  "phase": "mascot-final",
+  "sourceSHA": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "mainSHA256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+  "originalSHA": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "originalMainSHA256": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+  "textures": [
+    {
+      "file": "baked-skin.png",
+      "sha256": "4b73fa1280927a4157bb0de9371643fbfc03e23a61d8cc4ad4b462015cb3f5d0",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "baked-hero.png",
+      "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a",
+      "width": 1500,
+      "height": 1500
+    },
+    {
+      "file": "baked-body-clean.png",
+      "sha256": "da6d0f17f903692c2e63ffe621f7a2c76ea44e53886b8fa3b8952d49f3b37900",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "neutral.png",
+      "sha256": "e3d14aec0b8e435136493b8a19ee4f7652ebc5f526a77aafa2adc4dd6bcb694e",
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "contract": "Minimum 2x backing at 56/64px; follow DPR live, paused/reduced-motion, and after reload; backing edge <=1024px.",
+  "method": "CDP/deviceScaleFactor DPR simulation; native browser zoom NOT tested.",
+  "nativeBrowserZoomTested": false,
+  "noPaidOrProviderCalls": true,
+  "observations": [
+    {
+      "name": "normal-56",
+      "expectedEdge": 112,
+      "assertedBuffer": {
+        "width": 112,
+        "height": 112
+      },
+      "assertedDpr": 1,
+      "dpr": 1,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 112,
+        "height": 112
+      },
+      "buffer": {
+        "width": 112,
+        "height": 112
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 2,
+      "frameCount": 10,
+      "paused": false,
+      "frameTimes": [
+        1000.3999999999999,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.899999999999636,
+        1000.1000000000004,
+        1000.3999999999996,
+        1000.5
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 5,
+        "observationWindowMs": 4000,
+        "meanMs": 606.9399999999999,
+        "p95Ms": 1000.3999999999996,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "normal-64",
+      "expectedEdge": 128,
+      "assertedBuffer": {
+        "width": 128,
+        "height": 128
+      },
+      "assertedDpr": 1,
+      "dpr": 1,
+      "css": {
+        "width": 64,
+        "height": 64
+      },
+      "canvas": {
+        "width": 128,
+        "height": 128
+      },
+      "buffer": {
+        "width": 128,
+        "height": 128
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 2,
+      "frameCount": 9,
+      "paused": false,
+      "frameTimes": [
+        1000.3999999999999,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        1000.2999999999997,
+        1000.4000000000005,
+        1000.2999999999993
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 5,
+        "observationWindowMs": 4000,
+        "meanMs": 606.8599999999999,
+        "p95Ms": 1000.2999999999997,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "density3-56",
+      "expectedEdge": 168,
+      "assertedBuffer": {
+        "width": 168,
+        "height": 168
+      },
+      "assertedDpr": 3,
+      "dpr": 3,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 168,
+        "height": 168
+      },
+      "buffer": {
+        "width": 168,
+        "height": 168
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 3,
+      "frameCount": 5,
+      "paused": false,
+      "frameTimes": [
+        1000.6999999999998,
+        1000.2000000000003,
+        16.799999999999727,
+        16.40000000000009
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 4,
+        "observationWindowMs": null,
+        "meanMs": 508.525,
+        "p95Ms": 1000.2000000000003,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "density3-64",
+      "expectedEdge": 192,
+      "assertedBuffer": {
+        "width": 192,
+        "height": 192
+      },
+      "assertedDpr": 3,
+      "dpr": 3,
+      "css": {
+        "width": 64,
+        "height": 64
+      },
+      "canvas": {
+        "width": 192,
+        "height": 192
+      },
+      "buffer": {
+        "width": 192,
+        "height": 192
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 3,
+      "frameCount": 5,
+      "paused": false,
+      "frameTimes": [
+        1000.3,
+        1000.7000000000003,
+        16.699999999999818,
+        16.40000000000009
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 4,
+        "observationWindowMs": null,
+        "meanMs": 508.52500000000003,
+        "p95Ms": 1000.3,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "density8-56",
+      "expectedEdge": 448,
+      "assertedBuffer": {
+        "width": 448,
+        "height": 448
+      },
+      "assertedDpr": 8,
+      "dpr": 8,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 448,
+        "height": 448
+      },
+      "buffer": {
+        "width": 448,
+        "height": 448
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 8,
+      "frameCount": 1,
+      "paused": false,
+      "frameTimes": [],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 0,
+        "observationWindowMs": null,
+        "meanMs": null,
+        "p95Ms": null,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "density8-64",
+      "expectedEdge": 512,
+      "assertedBuffer": {
+        "width": 512,
+        "height": 512
+      },
+      "assertedDpr": 8,
+      "dpr": 8,
+      "css": {
+        "width": 64,
+        "height": 64
+      },
+      "canvas": {
+        "width": 512,
+        "height": 512
+      },
+      "buffer": {
+        "width": 512,
+        "height": 512
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 8,
+      "frameCount": 1,
+      "paused": false,
+      "frameTimes": [],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 0,
+        "observationWindowMs": null,
+        "meanMs": null,
+        "p95Ms": null,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "large-512",
+      "expectedEdge": 1024,
+      "assertedBuffer": {
+        "width": 1024,
+        "height": 1024
+      },
+      "assertedDpr": 3,
+      "dpr": 3,
+      "css": {
+        "width": 512,
+        "height": 512
+      },
+      "canvas": {
+        "width": 1024,
+        "height": 1024
+      },
+      "buffer": {
+        "width": 1024,
+        "height": 1024
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 2,
+      "frameCount": 58,
+      "paused": false,
+      "frameTimes": [
+        133.49999999999997,
+        16.600000000000023,
+        16.80000000000001,
+        16.599999999999966,
+        16.600000000000023,
+        16.80000000000001,
+        16.80000000000001,
+        16.5,
+        16.69999999999999,
+        16.80000000000001,
+        16.5,
+        16.699999999999932,
+        16.600000000000023,
+        16.700000000000045,
+        200.29999999999995,
+        16.600000000000023,
+        16.700000000000045,
+        16.5,
+        16.699999999999932,
+        16.600000000000023,
+        16.700000000000045,
+        16.699999999999932,
+        16.700000000000045,
+        16.600000000000023,
+        16.699999999999932,
+        16.700000000000045,
+        16.699999999999932,
+        16.90000000000009,
+        16.5,
+        17.200000000000045,
+        16.09999999999991,
+        16.59999999999991,
+        16.700000000000045,
+        16.700000000000045,
+        16.700000000000045,
+        16.59999999999991,
+        16.600000000000136,
+        16.799999999999955,
+        16.59999999999991,
+        16.700000000000045,
+        17.09999999999991,
+        16.600000000000136,
+        16.399999999999864,
+        16.600000000000136,
+        16.700000000000045,
+        16.699999999999818,
+        16.600000000000136,
+        16.700000000000045,
+        16.699999999999818,
+        16.90000000000009,
+        16.700000000000045,
+        16.799999999999955,
+        16.59999999999991,
+        16.40000000000009,
+        16.59999999999991,
+        33.40000000000009,
+        16.59999999999991
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 57,
+        "observationWindowMs": null,
+        "meanMs": 22.23157894736842,
+        "p95Ms": 17.200000000000045,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "before-dpr-change",
+      "expectedEdge": 112,
+      "assertedBuffer": {
+        "width": 112,
+        "height": 112
+      },
+      "assertedDpr": 1,
+      "dpr": 1,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 112,
+        "height": 112
+      },
+      "buffer": {
+        "width": 112,
+        "height": 112
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 2,
+      "frameCount": 2,
+      "paused": false,
+      "frameTimes": [
+        116.70000000000002
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 1,
+        "observationWindowMs": null,
+        "meanMs": 116.70000000000002,
+        "p95Ms": 116.70000000000002,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "after-live-dpr3",
+      "expectedEdge": 168,
+      "assertedBuffer": {
+        "width": 168,
+        "height": 168
+      },
+      "assertedDpr": 3,
+      "dpr": 3,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 168,
+        "height": 168
+      },
+      "buffer": {
+        "width": 168,
+        "height": 168
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 3,
+      "frameCount": 3,
+      "paused": false,
+      "frameTimes": [
+        116.70000000000002,
+        1000.4
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 2,
+        "observationWindowMs": null,
+        "meanMs": 558.55,
+        "p95Ms": 116.70000000000002,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "after-live-dpr8",
+      "expectedEdge": 448,
+      "assertedBuffer": {
+        "width": 448,
+        "height": 448
+      },
+      "assertedDpr": 8,
+      "dpr": 8,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 448,
+        "height": 448
+      },
+      "buffer": {
+        "width": 448,
+        "height": 448
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 8,
+      "frameCount": 4,
+      "paused": false,
+      "frameTimes": [
+        116.70000000000002,
+        1000.4,
+        1000.5
+      ],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 3,
+        "observationWindowMs": null,
+        "meanMs": 705.8666666666667,
+        "p95Ms": 1000.4,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "after-reload-dpr8",
+      "expectedEdge": 448,
+      "assertedBuffer": {
+        "width": 448,
+        "height": 448
+      },
+      "assertedDpr": 8,
+      "dpr": 8,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 448,
+        "height": 448
+      },
+      "buffer": {
+        "width": 448,
+        "height": 448
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 8,
+      "frameCount": 1,
+      "paused": false,
+      "frameTimes": [],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 0,
+        "observationWindowMs": null,
+        "meanMs": null,
+        "p95Ms": null,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    },
+    {
+      "name": "paused-live-dpr3",
+      "expectedEdge": 168,
+      "assertedBuffer": {
+        "width": 168,
+        "height": 168
+      },
+      "assertedDpr": 3,
+      "dpr": 3,
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "canvas": {
+        "width": 168,
+        "height": 168
+      },
+      "buffer": {
+        "width": 168,
+        "height": 168
+      },
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "rendererRatio": 3,
+      "frameCount": 1,
+      "paused": true,
+      "frameTimes": [],
+      "reaction": "idle",
+      "timing": {
+        "sampleCount": 0,
+        "observationWindowMs": null,
+        "meanMs": null,
+        "p95Ms": null,
+        "limitation": "Local headless Edge intervals; not physical-phone performance or GPU-only render time. Small sample counts cannot establish a performance regression."
+      }
+    }
+  ],
+  "performanceObservations": [
+    {
+      "name": "hosted-56",
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "css": {
+        "width": 56,
+        "height": 56
+      },
+      "dpr": 1,
+      "buffer": {
+        "width": 112,
+        "height": 112
+      },
+      "reducedMotion": false,
+      "observationWindowMs": 4000,
+      "sampleCount": 241,
+      "storedIntervalCount": 180,
+      "meanMs": 16.676111111111112,
+      "p95Ms": 16.899999999999636,
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "limitation": "Local headless Edge in a realistic-size host, not physical-phone performance or GPU-only render time; four-second samples do not prove all-device performance."
+    },
+    {
+      "name": "hosted-64",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "css": {
+        "width": 64,
+        "height": 64
+      },
+      "dpr": 1,
+      "buffer": {
+        "width": 128,
+        "height": 128
+      },
+      "reducedMotion": false,
+      "observationWindowMs": 4000,
+      "sampleCount": 240,
+      "storedIntervalCount": 180,
+      "meanMs": 16.673333333333336,
+      "p95Ms": 17,
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "limitation": "Local headless Edge in a realistic-size host, not physical-phone performance or GPU-only render time; four-second samples do not prove all-device performance."
+    }
+  ],
+  "failures": [],
+  "verdict": "PASS"
+}

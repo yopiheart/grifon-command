@@ -1,0 +1,24 @@
+
+> creative-director-ai-assistant@1.0.0 verify:recovery
+> node tools/verify-recovery.mjs
+
+[WebServer] Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+[WebServer]   npx update-browserslist-db@latest
+[WebServer]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+Running 18 tests using 2 workers
+
+  x   2 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:38:5 › legacy recovery at 375 › actual interrupted generation retains its persisted script in consumer review (43.6s)
+  x   1 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:12:5 › legacy recovery at 375 › typed brief and uploaded asset survive closing and reopening the page (51.3s)
+  x   3 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:71:5 › legacy recovery at 375 › seeded completed plan opens from the real Dashboard with saved script and scenes (34.0s)
+  x   4 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:12:5 › legacy recovery at 1280 › typed brief and uploaded asset survive closing and reopening the page (41.2s)
+  x   6 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:71:5 › legacy recovery at 1280 › seeded completed plan opens from the real Dashboard with saved script and scenes (19.8s)
+  x   5 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:38:5 › legacy recovery at 1280 › actual interrupted generation retains its persisted script in consumer review (24.9s)
+  x   8 [chromium] › tests\e2e\oneshot-recovery.spec.ts:35:7 › 375px Producer recovery › seeded storyboard gate remains parked after reload (2.0m)
+  x   7 [chromium] › tests\e2e\oneshot-recovery.spec.ts:10:5 › 375px Producer recovery › seeded saved-run load failure offers Retry on the same run and Back (2.0m)
+
+Recovery verification: FAIL
+Evidence: C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\.tmp\recovery-verification\2026-10-10T03-00-49-480Z-SE46SF\summary.md
+Infrastructure: Playwright JSON report is missing or invalid.
+Infrastructure: Invalid or missing Playwright JSON report.
+Infrastructure: Playwright exited with code 4294967295.

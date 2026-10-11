@@ -1,0 +1,74 @@
+{
+  "controls": [
+    {
+      "control": "no-transition",
+      "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/startup-controls.config.ts --grep 'fast normal motion startup reveals only after actual pixels at 390px'",
+      "exitCode": 1,
+      "expectedNegative": true,
+      "mutation": "Browser-only CSS transition:none !important for the actual companion iframe",
+      "ci": true,
+      "expectationTimeoutMs": 15000,
+      "testTimeoutMs": 60000,
+      "retries": 0,
+      "workers": 1,
+      "verifier": "Unchanged startup verifier and assertions",
+      "stats": {
+        "startTime": "2026-10-11T08:45:36.331Z",
+        "duration": 5160.399,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "durationMs": 4216,
+      "actualErrors": [
+        "Error: normal motion gets one real opacity transition\n\nexpect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 0\nReceived array:  []\n\n  188 |     expect(value.ledger.revealAnimations).toEqual([]);\n  189 |   } else {\n> 190 |     expect(value.ledger.revealAnimations, 'normal motion gets one real opacity transition').toHaveLength(1);\n      |                                                                                             ^\n  191 |     for (const animation of value.ledger.revealAnimations) {\n  192 |       expect(animation.at).toBeGreaterThanOrEqual(value.firstPaint.at);\n  193 |       expect(Number(animation.duration)).toBeGreaterThan(0); expect(Number(animation.duration)).toBeLessThanOrEqual(500);\n    at assertReady (C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-startup-controls.spec.ts:190:93)\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-startup-controls.spec.ts:282:39"
+      ],
+      "mutationApplied": true,
+      "actualColoredPixels": 3431,
+      "ready": "true",
+      "opacity": "1",
+      "actualTransitionCount": 0,
+      "observedSourceSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    },
+    {
+      "control": "slot-drift",
+      "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/startup-controls.config.ts --grep 'cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px'",
+      "exitCode": 1,
+      "expectedNegative": true,
+      "mutation": "Browser-only translateX(0.125px) on the avatar slot after real data-ready",
+      "ci": true,
+      "expectationTimeoutMs": 15000,
+      "testTimeoutMs": 60000,
+      "retries": 0,
+      "workers": 1,
+      "verifier": "Unchanged startup verifier and assertions",
+      "stats": {
+        "startTime": "2026-10-11T08:45:56.409Z",
+        "duration": 8509.512,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "durationMs": 7663,
+      "actualErrors": [
+        "Error: avatar slot left stays stable\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.02\nReceived:    0.125\n\n  159 |   expect(actual.width).toBe(before.width); expect(actual.height).toBe(before.height);\n  160 |   // Chromium may quantize the same position by one 1/64px layout unit.\n> 161 |   for (const axis of ['left', 'top'] as const) expect(Math.abs(actual[axis] - before[axis]), `avatar slot ${axis} stays stable`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                  ^\n  162 | }\n  163 | async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observation>>, reduced = false) {\n  164 |   await expect(page.locator(FRAME)).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });\n    at assertStableSlot (C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-startup-controls.spec.ts:161:130)\n    at assertReady (C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-startup-controls.spec.ts:173:15)\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-startup-controls.spec.ts:267:32"
+      ],
+      "mutationApplied": true,
+      "actualColoredPixels": 3431,
+      "ready": "true",
+      "opacity": "1",
+      "actualTransitionCount": 1,
+      "observedSourceSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    }
+  ],
+  "assertionsUnchanged": true,
+  "adaptation": "Two imports for identity/control hooks and loopback literal origins 5173→5187 only; independent browser-only CSS/style mutations; no verifier assertion change",
+  "startupVerifierFile": "tests/e2e/companion-startup.spec.ts",
+  "startupVerifierSha256": "a44b1a1f726a7e04ce7d5d6cd1a709e48088276999a0fb07d46c84c776564ad6",
+  "originalConfigSha256": "2cdd715a808ca2ec3f3b101575af6c7eb53ff7812ab61a44d2e19431a4da5f8e",
+  "applicationWatchedFiles": 420,
+  "applicationSourceChanges": [],
+  "scope": "Negative controls demonstrate the verifier rejects absent real transition and >0.02px drift. Local isolated fixture-only Chromium; no provider calls/app source mutation."
+}

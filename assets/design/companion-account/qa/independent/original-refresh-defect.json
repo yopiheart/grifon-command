@@ -1,0 +1,86 @@
+{
+  "checks": [
+    {
+      "name": "same-account token refresh preserves mounted paid tool and its unsent script",
+      "pass": false,
+      "fieldDuringRefresh": false,
+      "valueAfterRefresh": ""
+    }
+  ],
+  "observations": [
+    {
+      "scenario": "initial-studio-network",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "initial-studio-text",
+      "text": "R\n\nGood afternoon, Review-Account-A\n.\n\n// ON THE LOT\n\nWhat are we selling today?\nMake an ad with Grifon\nMake a video ad\nResearch my market\nBuild an offer\n\nStart with your business. Build the ad plan, then choose a paid plan for a finished video.\n\nPick up where you left off\n\nNo saved Director ad plan found on this device\n\nResearch your business above, or open Director to start your ad plan.\n\nCheck againOpen Director \n// FIRST AD?\n\nStart with Director — the 8-step guided workflow.\n\nOr pick any module below para mag-explore. Lahat ng AI tools ready na.\n\nStart with Director\nOR SCROLL\n\n// EXPLORE TOOLS\n\nDirector AI\n\nDirect a full ad, scene by scene\n\nRecon\n\nFind your dream customers\n\nWar Room\n\nBuild an offer they can't refuse\n\nBroadcast\n\nCaptions & headlines that stop the scroll\n\nBUSINESS\n\nConcierge\n\nBring your own script; control every shot\n\nHook Lab\n\nEngineer scroll-stopping hooks\n\nBUSINESS\n\nCinema Command\n\nCraft commercial-grade cinematic ads\n\nBUSINESS\n\nInfluencer Forge\n\nBuild your own AI influencer\n\nRender Bay\n\nTurn your script into video\n\nCreative Strike\n\nGenerate scroll-stopping ad images\n\nSwarm\n\n100+ ad creatives from one hero image\n\nImage Lab\n\nEdit & retouch any image\n\nCampaign Planner\n\nPlan & schedule your content\n\nEdit Bay\n\nAuto-edit your final ad\n\nSignal Modulator\n\nLock your character's voiceover"
+    },
+    {
+      "scenario": "studio-buttons",
+      "buttons": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "R",
+        "",
+        " Make an ad with Grifon",
+        "Make a video ad",
+        "Research my market",
+        "Build an offer",
+        "Check again",
+        "Open Director ",
+        "",
+        "Start with Director",
+        "Director AIDirect a full ad, scene by scene",
+        "ReconFind your dream customers",
+        "War RoomBuild an offer they can't refuse",
+        "BroadcastCaptions & headlines that stop the scroll",
+        " businessConciergeBring your own script; control every shot",
+        "Hook LabEngineer scroll-stopping hooks",
+        " businessCinema CommandCraft commercial-grade cinematic ads",
+        " businessInfluencer ForgeBuild your own AI influencer",
+        "Render BayTurn your script into video",
+        "Creative StrikeGenerate scroll-stopping ad images",
+        "Swarm100+ ad creatives from one hero image",
+        "Image LabEdit & retouch any image",
+        "Campaign PlannerPlan & schedule your content",
+        "Edit BayAuto-edit your final ad",
+        "Signal ModulatorLock your character's voiceover"
+      ]
+    },
+    {
+      "scenario": "same-account-token-refresh",
+      "fieldDuringRefresh": false,
+      "valueAfterRefresh": "",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    }
+  ]
+}

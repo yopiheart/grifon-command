@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-06",
+  "branch": "codex/companion-chat",
+  "baseCommit": "70506cf20b57ef5c1db3577d9176b394c1123914",
+  "scope": "Final uncommitted application source after allowance and return-intent fixes. Browser and source hashes are recorded in the adjacent independent reports.",
+  "checks": [
+    { "command": "npm.cmd run build", "exitCode": 0 },
+    { "command": "npm.cmd run test", "exitCode": 0, "passedTests": 1451, "passedFiles": 117, "existingSkippedTests": 32, "existingSkippedFiles": 9 },
+    { "command": "npm.cmd run check:bundle-leak", "exitCode": 0, "scannedFiles": 11 },
+    { "command": "npm.cmd run check:voice-sync", "exitCode": 0 },
+    { "command": "npm.cmd run check:domain", "exitCode": 0, "scannedFiles": 296 },
+    { "command": "npm.cmd run check:artifact-anchors", "exitCode": 0 },
+    { "command": "node tools/sync-companion-assets.mjs --check", "exitCode": 0, "matchedAssets": 11 },
+    { "command": "git diff --check", "exitCode": 0 },
+    { "command": "git diff --cached --check", "exitCode": 0 }
+  ],
+  "limits": [
+    "Final packaging removes three extra EOF blank lines from CompanionChatSurface.tsx; independent review confirmed no runtime change. Prior runtime checks reused; exact historical and final hashes are retained in final-verification.json. Scene JSON uses whitespace=cr-at-eol so Git recognizes its preserved CRLF bytes.",
+    "Provider calls and production writes were not exercised; browser tests use controlled service fixtures.",
+    "Actual physical phone performance is not verified.",
+    "No deployment, merge, voice integration, or new tuned generation settings."
+  ]
+}

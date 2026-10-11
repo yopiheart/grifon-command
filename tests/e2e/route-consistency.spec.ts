@@ -1,6 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
+import { installAccountApp } from './companion-account-fixture.js';
 
 test.use({ reducedMotion: 'reduce' });
+test.beforeEach(async ({ page }) => { await installAccountApp(page, false); });
 
 // The real App router and page components run against a deterministic auth
 // fixture. No real account, OAuth provider, billing request or payment is used.
@@ -94,7 +96,7 @@ test('signed-in pricing Home, app entry and logout keep screen and path aligned'
   await expect(page).toHaveURL(/\/$/);
   await page.getByRole('button', { name: /^log in$/i }).click();
   await expect(page).toHaveURL(/\/app$/);
-  await expect(page.getByText('What are we selling today?')).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Message Grifon', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Account settings', exact: true }).click();
   await page.getByRole('button', { name: /sign out/i }).click();
   await expect(page).toHaveURL(/\/login\?from=logout$/);
@@ -107,12 +109,13 @@ test('signed-in pricing Home, app entry and logout keep screen and path aligned'
 test('marked OAuth return enters the app after a full callback reload', async ({ page }) => {
   await authFixture(page);
   await page.addInitScript(() => {
+    if (window !== window.top) return;
     sessionStorage.setItem('route_fixture_signed_in', '1');
     sessionStorage.setItem('grifon_oauth_pending', '1');
   });
   await page.goto('/');
   await expect(page).toHaveURL(/\/app$/);
-  await expect(page.getByText('What are we selling today?')).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Message Grifon', exact: true })).toBeVisible();
   expect(await page.evaluate(() => sessionStorage.getItem('grifon_oauth_pending'))).toBeNull();
 });
 
@@ -189,7 +192,7 @@ test('mobile menu routes and direct Reviews links match their visible location',
   await expect(page.locator('#reviews')).toBeInViewport();
 });
 
-test('billing success continues to the authenticated dashboard URL', async ({ page }) => {
+test('billing success continues to the authenticated chat URL', async ({ page }) => {
   await authFixture(page);
   await page.addInitScript(() => sessionStorage.setItem('route_fixture_signed_in', '1'));
   await page.route(/\/hooks\/useSubscription\.ts(?:\?.*)?$/, route => route.fulfill({
@@ -199,7 +202,7 @@ test('billing success continues to the authenticated dashboard URL', async ({ pa
   await page.goto('/billing/success');
   await page.getByRole('button', { name: 'Create my first ad', exact: false }).click();
   await expect(page).toHaveURL(/\/app$/);
-  await expect(page.getByText('What are we selling today?')).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Message Grifon', exact: true })).toBeVisible();
 });
 
 test('invalid checkout return selection falls back to pricing on the same origin', async ({ page }) => {

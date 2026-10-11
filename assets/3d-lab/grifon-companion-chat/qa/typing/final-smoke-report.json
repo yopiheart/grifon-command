@@ -1,0 +1,77 @@
+{
+  "verdict": "PASS",
+  "baseCommit": "359e943629d12e24a9d00fd0b7147c162c5572d6",
+  "sourceState": "Uncommitted task edits over baseCommit, exact verified bytes identified by SHA256",
+  "sourceSha256": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "3E4496A912330E266DCEDAF5923438240170A9E4103EB4EF8409084BDEF9E7C0",
+    "components/CompanionChat/CompanionComposer.tsx": "481B7C93B37188B9217E363F2136FF938AE7199202DE737CDEE230FF4725D153",
+    "components/CompanionChat/companionChat.css": "DFEA02EA49B2C02785F7253F3DC90417A2CB675533B1B00DB88882AEFEE22CAC",
+    "tests/e2e/companion-chat.spec.ts": "61EA1C20058B09C9B440CEA65AB5F9608677CDDD642DE3F65E1C1508F9C732A2",
+    "tests/e2e/companion-layout.spec.ts": "3AAC76BF7B221413FC8C7DBCF2267FC95D5246D86335F3C66ED78956AB0AC002",
+    "tests/e2e/companion-typing.spec.ts": "C76060F4EFFAAB473E7B39B8791BE3202A86647F7CFB1908C77B9455AF8DD8FF"
+  },
+  "command": "npx.cmd playwright test --config tests/e2e/companion.config.ts",
+  "environment": {
+    "POLISH_PHASE": "../typing/final",
+    "baseUrl": "http://127.0.0.1:5173",
+    "browser": "Installed Microsoft Edge via Playwright, headless",
+    "COMPANION_LAYOUT_PHASE": "final",
+    "COMPANION_QA_DIR": "assets/3d-lab/grifon-companion-chat/qa/typing",
+    "COMPANION_TYPING_PHASE": "final"
+  },
+  "testsPassed": 38,
+  "testsFailed": 0,
+  "exitCode": 0,
+  "runnerDuration": "2.1m",
+  "existingTestsRetained": 27,
+  "newTypingTests": 11,
+  "baseline": {
+    "exitCode": 1,
+    "evidence": "baseline-result.json;baseline-timing-baseline.json;baseline-timing-initial.png",
+    "failure": "No accessible typing status; second assistant question already visible immediately and at499ms.",
+    "commit": "359e943629d12e24a9d00fd0b7147c162c5572d6",
+    "selectorRefinement": "Final message-count selector scopes to article, excluding the decorative typing bubble which shares assistant styling. Original baseline had no typing bubble, so the original failure remains valid."
+  },
+  "contract": {
+    "typography": "Message/input Inter16px400; visible New ad control Inter14px600; timestamps JetBrains Mono11px400.",
+    "motion": "Reduced motion has zero typing-indicator animations but retains the same delay.",
+    "bubble": "Warm gold rgba(255,204,0,.16) user bubble, light text, neutral dark assistant; gold edge retained under higher-contrast media.",
+    "lifecycle": "New ad cancels pending delivery. Account switch isolates it. Reload and unmount/return preserve the accepted answer and next question.",
+    "clock": "Immediate accepted user bubble; typing status present through499ms; next question revealed at600ms for all five intake steps; final brief review absent until reveal.",
+    "revisions": "Result revision reply and confirmation controls remain immediate; no style application occurs without explicit confirmation.",
+    "doubleEnter": "No extra accepted message while pending; next typed text retained; textbox enabled and focused while send is disabled.",
+    "layout": "No horizontal overflow at375/1280; original responsive,scroll,recovery,avatar,quota andgeneration approval cases remain passing."
+  },
+  "realTimer": {
+    "acceptanceToDeliveryMs": 612.5,
+    "fixtureCalls": [],
+    "note": "Observed timer measurement; deterministic499/600ms checks are the timing gate, avoiding load-sensitive wall-time thresholds.",
+    "marks": {
+      "accepted": 21,
+      "typing": 21.099999994039536,
+      "delivered": 633.5
+    }
+  },
+  "screenshots": [
+    "final-typing-375.png",
+    "final-delivered-375.png",
+    "final-typing-1280.png",
+    "final-delivered-1280.png",
+    "final-user-bubble-2x.png",
+    "final-composer-2x.png",
+    "final-new-ad-button-2x.png"
+  ],
+  "detailCapture": {
+    "exitCode": 0,
+    "command": "node assets/3d-lab/grifon-companion-chat/qa/typing/capture-detail.cjs",
+    "deviceScaleFactor": 2,
+    "note": "Native browser pixel density, no upscaling."
+  },
+  "independentPixelReview": "PASS: three dots appear in assistant bubble; user gold is distinguishable from dark assistant and brighter send control; Inter text and mono timestamps readable; latest reply visible after delivery.",
+  "limitations": [
+    "Local fixture and mocked backend only; no paid provider or live generation exercised.",
+    "Deterministic screenshots freeze the browser clock, so fixture timestamp differences are test artifacts.",
+    "Eye animation remains intentionally subtle at compact avatar size; this change does not alter the approved runtime."
+  ],
+  "paidCalls": 0
+}

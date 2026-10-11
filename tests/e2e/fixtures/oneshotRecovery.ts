@@ -139,11 +139,14 @@ export async function installRecoveryBackend(page: Page, seed = seededRun('story
 }
 
 export async function openOneShot(page: Page) {
-  await page.getByRole('button', { name: 'Make a video ad', exact: true }).click();
+  const launcher = page.getByRole('button', { name: 'Make a video ad', exact: true });
+  const restoredModule = page.getByRole('button', { name: 'Command Center', exact: true });
+  await expect.poll(async () => await launcher.isVisible() || await restoredModule.isVisible()).toBe(true);
+  if (await launcher.isVisible()) await launcher.click();
 }
 
 export async function openSeededProducer(page: Page) {
-  await page.goto('/app?osaEngine=producer');
+  await page.goto('/app?experience=studio&osaEngine=producer');
   await page.evaluate(id => localStorage.setItem('osa_producer_active_run', id), RUN_ID);
   await openOneShot(page);
 }

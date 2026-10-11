@@ -1,9 +1,9 @@
 // ===========================================================================
 // WIZARD TOKEN SYSTEM — one source of truth for the ad-creation wizard + One-Shot.
 //
-// Values are COPIED verbatim from the One-Shot composer
-// (components/OneShotAd/LaunchScreen.tsx, lines 25-37), which remains the
-// untouched gold standard. Every interactive control sits on the h-11 (44px)
+// Sizing and surfaces come from the One-Shot composer
+// (components/OneShotAd/LaunchScreen.tsx); typography follows DESIGN.md.
+// Every interactive control sits on the h-11 (44px)
 // tap-target floor; radii follow three tiers (control / panel / modal); type
 // follows one scale. Steps import these instead of inlining ad-hoc strings, so
 // heights / radii / spacing / colors never drift step-to-step.
@@ -21,9 +21,9 @@ export const R_PANEL = 'rounded-2xl'; // panels (16px)
 export const R_MODAL = 'rounded-3xl'; // modals (24px)
 
 /** Type scale. */
-export const T_DISPLAY = 'text-4xl md:text-5xl font-black tracking-tight';
-export const T_CTRL = 'text-sm font-semibold'; // control labels
-export const T_VALUE = 'text-xs font-mono'; // current value
+export const T_DISPLAY = 'text-4xl md:text-5xl font-sans font-semibold normal-case tracking-[-0.02em]';
+export const T_CTRL = 'text-sm font-sans font-semibold normal-case tracking-normal'; // control labels
+export const T_VALUE = 'text-sm font-sans normal-case tracking-normal'; // current value
 export const T_LABEL = 'text-[10px] uppercase tracking-widest font-mono'; // meta labels only
 
 // --- Shared surface strings (reused so the glass/border/accent grammar is uniform) ---

@@ -1,0 +1,728 @@
+{
+  "390": {
+    "snapshot": {
+      "controls": {
+        "gazeX": -0.04014314769443013,
+        "gazeY": -0.5498870729104182,
+        "headYaw": -0.00047980581965123125,
+        "headPitch": 0.09069362339554306,
+        "headRoll": 0,
+        "blink": 0,
+        "breath": 0.4986233333036881
+      },
+      "reaction": {
+        "state": "reading",
+        "stateAge": 0.9172999999999999,
+        "blend": 1,
+        "weights": [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "wingLeft": [
+          -1.2202404029808003,
+          0,
+          0.6283396807241748
+        ],
+        "wingRight": [
+          -1.32698827515591,
+          0,
+          -0.7558364335895036
+        ],
+        "tapLeft": 0,
+        "tapRight": 0,
+        "propReading": 1,
+        "propWorking": 0,
+        "readingSupport": [
+          -0.4489107708396112,
+          -0.7119690494090121,
+          1.0882737671408098
+        ],
+        "readingTrace": [
+          0.37227749361825246,
+          -0.6546489876173943,
+          1.168429143567103
+        ],
+        "readingRow": 0.07854173660858445,
+        "cleanBody": 1,
+        "cursorScale": 0.2,
+        "readyBlink": 0,
+        "touring": false
+      },
+      "frameCount": 63,
+      "activeTime": 1.0839666666666665,
+      "pause": false,
+      "ready": true,
+      "failed": false
+    },
+    "capture": {
+      "full": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\candidate-390.png",
+      "crop": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\candidate-390-stage.png"
+    },
+    "motion": {
+      "durationMs": 12011.5,
+      "ranges": {
+        "controls.gazeX": {
+          "min": -0.21999999999997516,
+          "max": 0.23999699273104494
+        },
+        "controls.gazeY": {
+          "min": -0.7499999999999993,
+          "max": -0.04012447410320444
+        },
+        "controls.headYaw": {
+          "min": -0.002199252224378572,
+          "max": 0.002325078135419515
+        },
+        "controls.headPitch": {
+          "min": 0.04068039571982374,
+          "max": 0.0999999999949773
+        },
+        "controls.headRoll": {
+          "min": 0,
+          "max": 0
+        },
+        "controls.blink": {
+          "min": 0,
+          "max": 1
+        },
+        "controls.breath": {
+          "min": -0.5499988335898502,
+          "max": 0.5499976916412693
+        },
+        "reaction.stateAge": {
+          "min": 1.350499999999999,
+          "max": 13.355200000000012
+        },
+        "reaction.blend": {
+          "min": 1,
+          "max": 1
+        },
+        "reaction.weights.0": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.weights.1": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.weights.2": {
+          "min": 1,
+          "max": 1
+        },
+        "reaction.weights.3": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.weights.4": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.wingLeft.0": {
+          "min": -1.2202404029808003,
+          "max": -1.2202404029808003
+        },
+        "reaction.wingLeft.1": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.wingLeft.2": {
+          "min": 0.6283396807241748,
+          "max": 0.6283396807241748
+        },
+        "reaction.wingRight.0": {
+          "min": -1.366450242163914,
+          "max": -1.171201572626248
+        },
+        "reaction.wingRight.1": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.wingRight.2": {
+          "min": -0.7954918027426103,
+          "max": -0.5550361966958308
+        },
+        "reaction.tapLeft": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.tapRight": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.propReading": {
+          "min": 1,
+          "max": 1
+        },
+        "reaction.propWorking": {
+          "min": 0,
+          "max": 0
+        },
+        "reaction.readingSupport.0": {
+          "min": -0.4489107708396112,
+          "max": -0.4489107708396112
+        },
+        "reaction.readingSupport.1": {
+          "min": -0.7119690494090121,
+          "max": -0.7119690494090121
+        },
+        "reaction.readingSupport.2": {
+          "min": 1.0882737671408098,
+          "max": 1.0882737671408098
+        },
+        "reaction.readingTrace.0": {
+          "min": 0.3513431657978291,
+          "max": 0.49721474878476496
+        },
+        "reaction.readingTrace.1": {
+          "min": -0.7381447884348867,
+          "max": -0.6334418323313877
+        },
+        "reaction.readingTrace.2": {
+          "min": 1.0516700694252878,
+          "max": 1.1980848602873753
+        },
+        "reaction.readingRow": {
+          "min": -0.065,
+          "max": 0.115
+        },
+        "reaction.cleanBody": {
+          "min": 1,
+          "max": 1
+        },
+        "reaction.cursorScale": {
+          "min": 0.2,
+          "max": 0.2
+        },
+        "reaction.readyBlink": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      "events": [
+        {
+          "event": "state",
+          "elapsedMs": 6.700000002980232,
+          "state": "reading"
+        },
+        {
+          "event": "fullBlink",
+          "elapsedMs": 1991,
+          "state": "reading",
+          "natural": true
+        },
+        {
+          "event": "fullBlink",
+          "elapsedMs": 6859.60000000149,
+          "state": "reading",
+          "natural": true
+        },
+        {
+          "event": "fullBlink",
+          "elapsedMs": 10944.10000000149,
+          "state": "reading",
+          "natural": true
+        }
+      ],
+      "samples": [
+        {
+          "elapsedMs": 506.5,
+          "controls": {
+            "gazeX": 0.22864055048858567,
+            "gazeY": -0.5499999990324637,
+            "headYaw": 0.0016667514548469268,
+            "headPitch": 0.09958547977494446,
+            "headRoll": 0,
+            "blink": 0,
+            "breath": 0.4712342402960639
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 1.8506999999999991,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.2690496304283099,
+              0,
+              -0.6909788736763802
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.4097859014786073,
+              -0.6857933103831373,
+              1.1248774648563316
+            ],
+            "readingRow": 0.025,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 2007.3000000044703,
+          "controls": {
+            "gazeX": -0.019598648335763844,
+            "gazeY": -0.6499998977787345,
+            "headYaw": -0.0004446742391958665,
+            "headPitch": 0.09999721256514182,
+            "headRoll": 0,
+            "blink": 1,
+            "breath": -0.2839124793116476
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 3.3513000000000006,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.1806201452428182,
+              0,
+              -0.5701194853530445
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.48710045808456454,
+              -0.7331298990392049,
+              1.058682803443413
+            ],
+            "readingRow": -0.05637865706169327,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 3508.3000000044703,
+          "controls": {
+            "gazeX": -0.20681510713989495,
+            "gazeY": -0.747133084607018,
+            "headYaw": -0.0005238843771320575,
+            "headPitch": 0.09999998126218428,
+            "headRoll": 0,
+            "blink": 0,
+            "breath": -0.470847700560333
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 4.852000000000005,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.3625144349390423,
+              0,
+              -0.7916775706294001
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.3532791611158185,
+              -0.6355556037597944,
+              1.1951289991241576
+            ],
+            "readingRow": 0.11136611160493806,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 5008.9000000059605,
+          "controls": {
+            "gazeX": 0.1600856504403354,
+            "gazeY": -0.7499999999795292,
+            "headYaw": 0.001157755561849835,
+            "headPitch": 0.09999999987399785,
+            "headRoll": 0,
+            "blink": 0,
+            "breath": 0.2845534912500161
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 6.352600000000011,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.1749430823248004,
+              0,
+              -0.5610929294861997
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.4931438184958987,
+              -0.7361534312943171,
+              1.0544547485797142
+            ],
+            "readingRow": -0.0615765600261733,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 6525.5,
+          "controls": {
+            "gazeX": 0.0005967029401213679,
+            "gazeY": -0.04188483900524849,
+            "headYaw": 0.0004348223102970494,
+            "headPitch": 0.04872462904543726,
+            "headRoll": 0,
+            "blink": 0,
+            "breath": 0.4655596349173953
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 7.869500000000023,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.171201572626248,
+              0,
+              -0.5550361966958308
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.49721474878476496,
+              -0.7381447884348867,
+              1.0516700694252878
+            ],
+            "readingRow": -0.065,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 8026.5,
+          "controls": {
+            "gazeX": -0.21999964780865064,
+            "gazeY": -0.5499991835796656,
+            "headYaw": -0.0021396186057074324,
+            "headPitch": 0.09839450633110114,
+            "headRoll": 0,
+            "blink": 0,
+            "breath": -0.2932768750316926
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 9.37040000000002,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.2608691943169745,
+              0,
+              -0.6810587797831669
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.4158167878156456,
+              -0.6901862376608978,
+              1.1187344718351042
+            ],
+            "readingRow": 0.01744790272000281,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 9527.40000000596,
+          "controls": {
+            "gazeX": -0.08945475660476732,
+            "gazeY": -0.5499999999999942,
+            "headYaw": -0.0016559651182675643,
+            "headPitch": 0.09998921107760604,
+            "headRoll": 0,
+            "blink": 0,
+            "breath": -0.46503757635437903
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 10.871200000000018,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.3640663175710575,
+              0,
+              -0.7931850389290358
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.35251191897629597,
+              -0.6347220987060374,
+              1.1962945580794149
+            ],
+            "readingRow": 0.11279903112564345,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        },
+        {
+          "elapsedMs": 11027.80000000447,
+          "controls": {
+            "gazeX": 0.23748851489627432,
+            "gazeY": -0.5499999999999998,
+            "headYaw": 0.0019035741396592229,
+            "headPitch": 0.09999992735326005,
+            "headRoll": 0,
+            "blink": 0.6060035549609829,
+            "breath": 0.293763957809003
+          },
+          "reaction": {
+            "state": "reading",
+            "stateAge": 12.371400000000017,
+            "blend": 1,
+            "weights": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "wingLeft": [
+              -1.2202404029808003,
+              0,
+              0.6283396807241748
+            ],
+            "wingRight": [
+              -1.2690496304283099,
+              0,
+              -0.6909788736763802
+            ],
+            "tapLeft": 0,
+            "tapRight": 0,
+            "propReading": 1,
+            "propWorking": 0,
+            "readingSupport": [
+              -0.4489107708396112,
+              -0.7119690494090121,
+              1.0882737671408098
+            ],
+            "readingTrace": [
+              0.4097859014786073,
+              -0.6857933103831373,
+              1.1248774648563316
+            ],
+            "readingRow": 0.025,
+            "cleanBody": 1,
+            "cursorScale": 0.2,
+            "readyBlink": 0,
+            "touring": false
+          }
+        }
+      ]
+    },
+    "logs": []
+  },
+  "1280": {
+    "snapshot": {
+      "controls": {
+        "gazeX": -0.0401445329907578,
+        "gazeY": -0.5498860888555661,
+        "headYaw": -0.0004800392914594821,
+        "headPitch": 0.09067217577880628,
+        "headRoll": 0,
+        "blink": 0,
+        "breath": 0.49014942808658096
+      },
+      "reaction": {
+        "state": "reading",
+        "stateAge": 0.9166000000000004,
+        "blend": 1,
+        "weights": [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "wingLeft": [
+          -1.2202404029808003,
+          0,
+          0.6283396807241748
+        ],
+        "wingRight": [
+          -1.3270656347502383,
+          0,
+          -0.7559174141740543
+        ],
+        "tapLeft": 0,
+        "tapRight": 0,
+        "propReading": 1,
+        "propWorking": 0,
+        "readingSupport": [
+          -0.4489107708396112,
+          -0.7119690494090121,
+          1.0882737671408098
+        ],
+        "readingTrace": [
+          0.3722330283222651,
+          -0.6546073940188023,
+          1.1684873073311999
+        ],
+        "readingRow": 0.07861324220904867,
+        "cleanBody": 1,
+        "cursorScale": 0.2,
+        "readyBlink": 0,
+        "touring": false
+      },
+      "frameCount": 60,
+      "activeTime": 1.050366666666667,
+      "pause": false,
+      "ready": true,
+      "failed": false
+    },
+    "capture": {
+      "full": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\candidate-1280.png",
+      "crop": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\candidate-1280-stage.png"
+    },
+    "logs": []
+  },
+  "hashes": {
+    "main.js": "06ac4460e40d5d17e6f98444a4c06f94746de8ca404bd1d99ac351e4bbf81244",
+    "reactions.js": "4e8efcd6113a1197127ff777bbaeaad2b65b720503c2f83c3f53d621f120a769"
+  },
+  "video": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\3d-lab\\grifon-companion-live\\qa\\reading-held\\candidate-reading-12s.webm",
+  "sourceUnchanged": true
+}

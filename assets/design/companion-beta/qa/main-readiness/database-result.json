@@ -1,0 +1,459 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "Existing SQL transactional assertions"
+    },
+    {
+      "name": "video_ads: original monthly duplicate-charge rejection",
+      "sourceSha256": "f8a9622495830bd5d65fbcac19c6801d510d10a85f5e5fc08bf167b76f3fe826",
+      "reads": 2,
+      "debits": 2,
+      "totals": {
+        "monthly": 2,
+        "credits": 0,
+        "receipts": 0
+      }
+    },
+    {
+      "name": "video_ads: original topup duplicate-charge rejection",
+      "sourceSha256": "f8a9622495830bd5d65fbcac19c6801d510d10a85f5e5fc08bf167b76f3fe826",
+      "reads": 2,
+      "debits": 2,
+      "totals": {
+        "monthly": 0,
+        "credits": 0,
+        "receipts": 0
+      }
+    },
+    {
+      "name": "omni_ads: original monthly duplicate-charge rejection",
+      "sourceSha256": "f8a9622495830bd5d65fbcac19c6801d510d10a85f5e5fc08bf167b76f3fe826",
+      "reads": 2,
+      "debits": 2,
+      "totals": {
+        "monthly": 2,
+        "credits": 0,
+        "receipts": 0
+      }
+    },
+    {
+      "name": "omni_ads: original topup duplicate-charge rejection",
+      "sourceSha256": "f8a9622495830bd5d65fbcac19c6801d510d10a85f5e5fc08bf167b76f3fe826",
+      "reads": 2,
+      "debits": 2,
+      "totals": {
+        "monthly": 0,
+        "credits": 0,
+        "receipts": 0
+      }
+    },
+    {
+      "name": "video_ads: same ad monthly exactly once",
+      "holderPid": 9256,
+      "waiterPid": 8984,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          9256
+        ]
+      },
+      "first": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": true
+      },
+      "state": {
+        "monthly": 1,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "video_ads: same ad topup exactly once",
+      "holderPid": 9668,
+      "waiterPid": 26748,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          9668
+        ]
+      },
+      "first": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": true
+      },
+      "state": {
+        "monthly": 0,
+        "credits": 1,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "video_ads: different ads last monthly slot",
+      "holderPid": 28556,
+      "waiterPid": 20068,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          28556
+        ]
+      },
+      "first": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 1,
+        "limit": 1,
+        "allowed": false,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 1,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "video_ads: different ads last topup credit",
+      "holderPid": 15308,
+      "waiterPid": 25308,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          15308
+        ]
+      },
+      "first": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 0,
+        "limit": 0,
+        "allowed": false,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 0,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "video_ads: rolled back holder then waiter",
+      "holderPid": 27972,
+      "waiterPid": 23276,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          27972
+        ]
+      },
+      "first": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 1,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "video_ads: rolled back topup holder then waiter",
+      "holderPid": 21880,
+      "waiterPid": 17980,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          21880
+        ]
+      },
+      "first": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 0,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "video_ads: monthly lost response replay and aged receipt"
+    },
+    {
+      "name": "video_ads: topup lost response replay and aged receipt"
+    },
+    {
+      "name": "omni_ads: same ad monthly exactly once",
+      "holderPid": 1912,
+      "waiterPid": 22364,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          1912
+        ]
+      },
+      "first": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": true
+      },
+      "state": {
+        "monthly": 1,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "omni_ads: same ad topup exactly once",
+      "holderPid": 7988,
+      "waiterPid": 8168,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          7988
+        ]
+      },
+      "first": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": true
+      },
+      "state": {
+        "monthly": 0,
+        "credits": 1,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "omni_ads: different ads last monthly slot",
+      "holderPid": 22752,
+      "waiterPid": 23016,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          22752
+        ]
+      },
+      "first": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 1,
+        "limit": 1,
+        "allowed": false,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 1,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "omni_ads: different ads last topup credit",
+      "holderPid": 15516,
+      "waiterPid": 7584,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          15516
+        ]
+      },
+      "first": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 0,
+        "limit": 0,
+        "allowed": false,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 0,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "omni_ads: rolled back holder then waiter",
+      "holderPid": 15224,
+      "waiterPid": 16276,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          15224
+        ]
+      },
+      "first": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 1,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "omni_ads: rolled back topup holder then waiter",
+      "holderPid": 6108,
+      "waiterPid": 17548,
+      "observed": {
+        "wait": "Lock",
+        "blockers": [
+          6108
+        ]
+      },
+      "first": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "second": {
+        "used": 0,
+        "limit": 0,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": true,
+        "alreadyCounted": false
+      },
+      "state": {
+        "monthly": 0,
+        "credits": 0,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "omni_ads: monthly lost response replay and aged receipt"
+    },
+    {
+      "name": "omni_ads: topup lost response replay and aged receipt"
+    },
+    {
+      "name": "SET ROLE anon: denied"
+    },
+    {
+      "name": "SET ROLE authenticated: denied"
+    },
+    {
+      "name": "SET ROLE service_role: allowed"
+    }
+  ],
+  "cleanup": "Owned database and bootstrap roles dropped",
+  "limitations": "Isolated PostgreSQL only; not target Supabase rollout or PostgREST verification"
+}

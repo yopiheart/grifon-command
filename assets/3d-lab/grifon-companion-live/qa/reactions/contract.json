@@ -1,0 +1,26 @@
+{
+  "states": ["Idle", "Listening", "Reading", "Working", "Ready"],
+  "visual": {
+    "all": "Preserve the approved soft griffin identity; silhouettes and gestures must distinguish states without their labels.",
+    "Idle": "Existing neutral companion baseline.",
+    "Listening": "Attentive head tilt and wing near cheek.",
+    "Reading": "Downward gaze scanning a page.",
+    "Working": "Alternating wing tips visibly press a gold control pad, with actual contact rather than a UI-only pulse.",
+    "Ready": "Perked head and raised wing or celebration gesture.",
+    "fur": "Wing surfaces and their fibers move coherently; no stationary duplicate wing or new bald patch."
+  },
+  "behavior": [
+    "Accessible state buttons and validated window.grifonCompanion.setState API select all five states.",
+    "State head, wing and prop trajectories differ; working cursor response is attenuated.",
+    "Blink reaches full closure and reopens.",
+    "Pause freezes pose, state age, taps, props, transitions and tour progress; resume continues.",
+    "Reduced motion uses distinct static poses without idle oscillation or an automatic tour.",
+    "Rapid switching cleans up transient props and Ready blink; manual selection cancels tour and remains selected.",
+    "Preview all runs approximately three seconds per state and ends Idle.",
+    "Invalid API state is rejected without changing state.",
+    "Context loss, load failure and render exceptions preserve fallback and recovery.",
+    "320, 375, 390 and 1280 pixel viewports have no horizontal overflow and interactive targets at least 44 pixels.",
+    "Normal operation has no console errors or page errors."
+  ],
+  "limits": ["Manual reaction previews do not use a microphone or perform actual jobs.", "Desktop AMD rendering and mobile emulation are not evidence of real-phone performance.", "Fixed-camera baked lighting is not GLB/PBR or splat validation."]
+}

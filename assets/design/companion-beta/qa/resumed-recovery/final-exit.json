@@ -1,0 +1,6 @@
+{
+  "command": "npm.cmd run verify:recovery",
+  "startedAt": "2026-10-10T03:11:21.8038171Z",
+  "finishedAt": "2026-10-10T03:12:51.7084676Z",
+  "exitCode": 0
+}

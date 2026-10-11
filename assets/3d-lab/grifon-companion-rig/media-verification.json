@@ -1,0 +1,26 @@
+{
+  "pass": true,
+  "render_exit": 0,
+  "png_frames": 144,
+  "resolution": [
+    512,
+    512
+  ],
+  "fps": 24,
+  "seconds": 6,
+  "encode_exit": 0,
+  "full_decode_exit": 0,
+  "decoded_frames": 144,
+  "last_decoded_frame_timestamp_microseconds": 5958333,
+  "container_duration_seconds": 6,
+  "decode_errors": "",
+  "codec": "H264",
+  "pixel_format": "yuv420p",
+  "visual_inspection": "Selected poses inspected; continuous timing awaits owner review.",
+  "sha256": {
+    "griffin-motion-preview.mp4": "45a110e6a3be1c62f3faca68c78622e29fa2ca98536b674e62f3bf6efb6ca420",
+    "neutral.png": "e3d14aec0b8e435136493b8a19ee4f7652ebc5f526a77aafa2adc4dd6bcb694e",
+    "blink.png": "de7ad2ba64a38fc7e216f267a87690ae6a716a9d3b45ae8e92877dad367e1b29",
+    "head-turn.png": "e43e02eae6db13ae17cce0ea6e723433d30567f847ea78bb2a23a8e329d1979b"
+  }
+}

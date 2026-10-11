@@ -1,0 +1,32 @@
+{
+  "header": {
+    "x": 0,
+    "y": 45,
+    "width": 320,
+    "height": 104,
+    "top": 45,
+    "right": 320,
+    "bottom": 149,
+    "left": 0
+  },
+  "crossing": [
+    {
+      "text": "History message 27. Readable conversation continues beneath the floating companion. Readable conversation continues beneath the floating companion. Readable conversation continues beneath the floating companion. ",
+      "rect": {
+        "x": 50.5625,
+        "y": 56.21875,
+        "width": 253.4375,
+        "height": 185.65625,
+        "top": 56.21875,
+        "right": 304,
+        "bottom": 241.875,
+        "left": 50.5625
+      }
+    }
+  ],
+  "pixelPoint": {
+    "x": 59,
+    "y": 141
+  },
+  "top": 5698
+}

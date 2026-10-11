@@ -1,0 +1,41 @@
+{
+  "header": {
+    "x": 0,
+    "y": 45,
+    "width": 375,
+    "height": 96,
+    "top": 45,
+    "right": 375,
+    "bottom": 141,
+    "left": 0
+  },
+  "crossing": [
+    {
+      "text": "History message 26. Readable conversation continues beneath the floating companion. Readable conversation continues beneath the floating companion. Readable conversation continues beneath the floating companion. ",
+      "rect": {
+        "x": 16,
+        "y": -107.90625,
+        "width": 315.546875,
+        "height": 185.65625,
+        "top": -107.90625,
+        "right": 331.546875,
+        "bottom": 77.75,
+        "left": 16
+      }
+    },
+    {
+      "text": "History message 27. Readable conversation continues beneath the floating companion. Readable conversation continues beneath the floating companion. Readable conversation continues beneath the floating companion. ",
+      "rect": {
+        "x": 57.171875,
+        "y": 97.75,
+        "width": 301.828125,
+        "height": 185.65625,
+        "top": 97.75,
+        "right": 359,
+        "bottom": 283.40625,
+        "left": 57.171875
+      }
+    }
+  ],
+  "top": 5537
+}

@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "failure": null,
+  "checks": [
+    {
+      "name": "Guarded empty isolated server preflight",
+      "status": "PASS",
+      "observed": {
+        "address": "127.0.0.1",
+        "port": 55437,
+        "version": "17.6",
+        "database": "grifon_meter_test",
+        "roles": 0,
+        "otherDatabases": 0,
+        "tables": 0
+      }
+    },
+    {
+      "name": "Exact frozen proposal applies and preserves all seeded rows",
+      "status": "PASS",
+      "proposalSha256": "b3d564f25522c9d25d1ca8b8b66ec37dc15cb907953389d01612722a5269ee89",
+      "rateLimitRows": 3,
+      "subscriptionRows": 2,
+      "catalog": {
+        "bodyMd5": "7cfd6fb078444301ec89dfebf51dbf54",
+        "owner": "postgres",
+        "securityDefiner": true,
+        "config": [
+          "search_path=public"
+        ],
+        "returnType": "jsonb",
+        "language": "plpgsql",
+        "acl": [
+          {
+            "grantee": "postgres",
+            "privilege": "EXECUTE",
+            "grantable": false
+          },
+          {
+            "grantee": "service_role",
+            "privilege": "EXECUTE",
+            "grantable": false
+          }
+        ],
+        "anonExecute": false,
+        "authenticatedExecute": false,
+        "serviceExecute": true
+      },
+      "bodySha256": "6587a88ca83f7f9c7ea7883069b743a295fce3c8a89f202062a7fb40afb5188c"
+    },
+    {
+      "name": "Real SET ROLE anon denied without data changes",
+      "status": "PASS"
+    },
+    {
+      "name": "Real SET ROLE authenticated denied without data changes",
+      "status": "PASS"
+    },
+    {
+      "name": "Real SET ROLE service_role allowed one monthly debit",
+      "status": "PASS",
+      "result": {
+        "used": 1,
+        "limit": 1,
+        "allowed": true,
+        "remaining": 0,
+        "fromCredit": false,
+        "alreadyCounted": false
+      }
+    },
+    {
+      "name": "Second exact apply refuses existing function and preserves function, ACL and rows",
+      "status": "PASS"
+    },
+    {
+      "name": "Separate local wrong-postcondition variant rolls back function/ACL and preserves rows",
+      "status": "PASS",
+      "exactProposal": false,
+      "alteredVariantSha256": "db78e0a01333a0270365b64112e27016f2e5e37221b8c08543a4995714616694",
+      "observed": {
+        "functionAbsent": true,
+        "matchingFunctions": 0
+      }
+    },
+    {
+      "name": "Cleanup leaves zero owned databases, roles and admin tables",
+      "status": "PASS",
+      "observed": {
+        "remainingTestDatabases": 0,
+        "bootstrapRoles": 0,
+        "tables": 0
+      }
+    },
+    {
+      "name": "All frozen source hashes unchanged",
+      "status": "PASS",
+      "count": 4
+    }
+  ],
+  "clusterPreserved": true,
+  "target": "Isolated local PostgreSQL 17.6, 127.0.0.1:55437; no target cloud writes",
+  "limitations": "Does not prove Supabase apply_migration runner behavior, hosted project state, PostgREST reload or API dispatch."
+}

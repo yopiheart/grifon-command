@@ -1,0 +1,19 @@
+{
+  "phase": "baseline",
+  "head": "55ef2b2196c6958467cfd1c72c86290027f79f41",
+  "command": "npm.cmd run test:e2e -- --config tests/e2e/companion-account.config.ts",
+  "exitCode": 1,
+  "passed": 0,
+  "failed": 2,
+  "findings": [
+    "Default preview renders Local test fixture toolbar",
+    "Account settings entry is absent"
+  ],
+  "auth": "Not run; real credentials and providers unused",
+  "files": {
+    "App.tsx": "dc6f3237d1c3f687c6e6455211eaf63bbd834c2b132196ed886e354c4b8fe3e1",
+    "components/CompanionChat/CompanionChatShell.tsx": "7096bcc3cbc43d6980f3252c35d58b1472a1b24862f6ef77cb1f70cd72bf872c",
+    "components/CompanionChat/companionChat.css": "81697a3d2f1b912419aff69e6d30111c3e034d1d4bbab18951ade3ef720d086c",
+    "dev/companionChatPreview.tsx": "b7face635c969026114cb925db0e4d507c5da3c0ff5f80032b4f5251d791b6ce"
+  }
+}

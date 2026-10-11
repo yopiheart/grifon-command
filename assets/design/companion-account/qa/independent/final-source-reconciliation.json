@@ -1,0 +1,50 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "file": "App.tsx",
+      "expected": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+      "actual": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    },
+    {
+      "file": "components/CompanionChat/CompanionChatShell.tsx",
+      "expected": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6",
+      "actual": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6"
+    },
+    {
+      "file": "components/CompanionChat/index.tsx",
+      "expected": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b",
+      "actual": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b"
+    },
+    {
+      "file": "components/CompanionChat/companionChat.css",
+      "expected": "7b1fb135dd375404b7f4b7d390281736faa1eab30d6e658ce09f78ceb9a17bf3",
+      "actual": "7b1fb135dd375404b7f4b7d390281736faa1eab30d6e658ce09f78ceb9a17bf3"
+    },
+    {
+      "file": "components/dashboard/SettingsModal.tsx",
+      "expected": "4632a1ba3610c87998b6d3c23136294c71959057a031208c162aef90a34e1c58",
+      "actual": "4632a1ba3610c87998b6d3c23136294c71959057a031208c162aef90a34e1c58"
+    },
+    {
+      "file": "dev/companionChatPreview.tsx",
+      "expected": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+      "actual": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5"
+    },
+    {
+      "file": "services/consentService.ts",
+      "expected": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f",
+      "actual": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f"
+    },
+    {
+      "file": "hooks/useSubscription.ts",
+      "expected": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3",
+      "actual": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3"
+    },
+    {
+      "file": "components/CompanionChat/CompanionChatSurface.tsx",
+      "expected": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+      "actual": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f"
+    }
+  ]
+}

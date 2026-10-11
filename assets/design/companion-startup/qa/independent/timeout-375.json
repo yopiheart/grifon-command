@@ -1,0 +1,155 @@
+{
+  "slot": {
+    "x": 159.5,
+    "y": 49,
+    "width": 56,
+    "height": 56
+  },
+  "opacity": 0,
+  "ready": null,
+  "transition": {
+    "duration": "0s",
+    "property": "all",
+    "ease": "ease"
+  },
+  "loader": null,
+  "retry": {
+    "width": 44,
+    "height": 44,
+    "radius": "12px",
+    "color": "rgb(212, 212, 216)",
+    "background": "rgba(9, 9, 11, 0.7)",
+    "fontSize": "12px",
+    "outline": "rgb(212, 212, 216) none 3px",
+    "icon": {
+      "width": 16,
+      "height": 16,
+      "shrink": "0"
+    }
+  },
+  "image": {
+    "width": 56,
+    "height": 56,
+    "naturalWidth": 512,
+    "naturalHeight": 512,
+    "objectFit": "contain"
+  },
+  "innerFallbackHidden": false,
+  "paint": null,
+  "debug": {
+    "ready": false,
+    "renderer": null,
+    "failed": false,
+    "pause": false,
+    "reducedMotion": false,
+    "visible": true,
+    "frameCount": 0,
+    "activeTime": 0,
+    "controls": {
+      "gazeX": 0,
+      "gazeY": 0,
+      "headYaw": 0,
+      "headPitch": 0,
+      "headRoll": 0,
+      "blink": 0,
+      "breath": 0
+    },
+    "target": {
+      "x": 0,
+      "y": 0
+    },
+    "reaction": {
+      "state": "idle",
+      "stateAge": 0,
+      "blend": 1,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wingLeft": [
+        0,
+        0,
+        0
+      ],
+      "wingRight": [
+        0,
+        0,
+        0
+      ],
+      "tapLeft": 0,
+      "tapRight": 0,
+      "propReading": 0,
+      "propWorking": 0,
+      "readingSupport": [
+        -0.48718262753774655,
+        -0.7687732176875274,
+        0.8859607000207929
+      ],
+      "readingTrace": [
+        0.44465278241632034,
+        -0.7589179167683405,
+        0.9298682511229925
+      ],
+      "readingRow": 0.025,
+      "readingWingExtension": 1,
+      "cleanBody": 0,
+      "cursorScale": 1,
+      "readyBlink": 0,
+      "touring": false
+    },
+    "rollingFrameTimes": [],
+    "viewport": {
+      "width": 56,
+      "height": 56,
+      "pixelRatio": 0
+    }
+  },
+  "ledger": {
+    "samples": [
+      {
+        "at": 1791350558019,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            0,
+            0,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350588087,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": true,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      }
+    ],
+    "messages": []
+  },
+  "overflow": 0,
+  "chatCalls": [],
+  "typography": {
+    "font": "Inter, sans-serif",
+    "inputSize": "14px"
+  },
+  "counts": {
+    "iframe": 1,
+    "still": 1
+  }
+}

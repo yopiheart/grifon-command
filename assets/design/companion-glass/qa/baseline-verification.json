@@ -1,0 +1,19 @@
+{
+  "baseline": "110d882a",
+  "command": "npx.cmd playwright test --config tests/e2e/companion-glass.config.ts --grep \"baseline contract\" --output assets/design/companion-glass/qa/baseline-test-results",
+  "exitCode": 1,
+  "expectedFailures": 4,
+  "findings": [
+    "Opaque header rgb(9,9,11) and scroller y141 below avatar bottom105",
+    "Mascot parent userSelect auto",
+    "Composer61.5px with8.75px misaligned control centers, Paperclip, no growth",
+    "Start voice input absent"
+  ],
+  "source": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "7f933dd86f75c787be9680c22c9220c9f755ac270bc11fbee5191256d445697b",
+    "components/CompanionChat/CompanionComposer.tsx": "a6fbc9b95a8fb87b2c2c87f27f7c0ad9c0a409e67a675be49b0c4bca39176c4f",
+    "components/CompanionChat/CompanionAvatar.tsx": "91e2dba357932768044e8755351efe9e5eb9bb58496104cb9afa22dbd02182f2",
+    "components/CompanionChat/companionChat.css": "ebf712916537e1b05622d156504a527bcb6c9d115eac013a2710046ff2955c37",
+    "components/CompanionChat/CompanionChatShell.tsx": "59f07a7df0de48ce2fe33dd082cc5d9343d164f608583e16b302e36406774aa4"
+  }
+}

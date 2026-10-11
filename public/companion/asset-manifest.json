@@ -1,0 +1,17 @@
+{
+  "source": "assets/3d-lab/grifon-companion-live",
+  "approval": "qa/reading-held/owner-approval.json",
+  "hashes": {
+    "main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "reactions.js": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce",
+    "scene.json": "1a199b50faf7be25b38b78b56bff2c81cc9ba75d34b13882e6ba668486ce62cd",
+    "scene.bin": "607ba0c913859739f2a908758d55c34eea8126dc4b7427468887bf7afdd3cca5",
+    "baked-skin.png": "4b73fa1280927a4157bb0de9371643fbfc03e23a61d8cc4ad4b462015cb3f5d0",
+    "baked-hero.png": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a",
+    "baked-body-clean.png": "da6d0f17f903692c2e63ffe621f7a2c76ea44e53886b8fa3b8952d49f3b37900",
+    "neutral.png": "e3d14aec0b8e435136493b8a19ee4f7652ebc5f526a77aafa2adc4dd6bcb694e",
+    "vendor/three.module.js": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a",
+    "vendor/three.core.js": "94337bbcde63e61eb954f00d2ad72d122d1cc3dc3e0de68e57277eca3d30af47",
+    "vendor/LICENSE": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "scope": "Formatting-only normalization of generated Playwright baseline error reports: removed line-end spaces and tabs. Baseline source bytes, commands, and counts are unchanged.",
+  "files": [
+    {
+      "path": "assets/design/companion-glass/qa/baseline-test-results/companion-glass-compact-co-103b2-ard-and-Plus-upload-actions/error-context.md",
+      "beforeSha256": "46694b483b1ad6f227204e98fa34a60d19bd23a5514e9c727e365807e9028a8b",
+      "afterSha256": "aa48cb5e1428166b416ab213d95c125d67e8bf0f932c828d7529fad1a8eee8c2",
+      "linesNormalized": 11
+    },
+    {
+      "path": "assets/design/companion-glass/qa/baseline-test-results/companion-glass-glass-overlay-baseline-contract-at-375px/error-context.md",
+      "beforeSha256": "ae9b2bd50ce007d8cf4526714152ae50281ac1241e716a7a89562e19a949d07a",
+      "afterSha256": "d88e612848793eb85b6ce37399e5327dbf18ddd37885bf5dc1e95a45f9aa6726",
+      "linesNormalized": 9
+    },
+    {
+      "path": "assets/design/companion-glass/qa/baseline-test-results/companion-glass-mascot-sel-6dce0-ves-ordinary-text-selection/error-context.md",
+      "beforeSha256": "cb7bc2d330cbbf085ed6d359404e38e2c37ee13ee3de896f2197f930ec7c15e7",
+      "afterSha256": "c335dbe093535c7e98728e1f9a23cf0a150410c51bb11b5b277dbcf7b0cfa692",
+      "linesNormalized": 11
+    },
+    {
+      "path": "assets/design/companion-glass/qa/baseline-test-results/companion-glass-voice-base-aeb47-d-interim-and-final-results/error-context.md",
+      "beforeSha256": "304c8ab3cf496b8d3fd5fff425bf3a11c7d99fb3e911f3283be63081e91f238e",
+      "afterSha256": "6e44cbeeb8a1d099792c4999677e99cd59aa12cd014062f5d013a37c11b673e2",
+      "linesNormalized": 9
+    }
+  ]
+}

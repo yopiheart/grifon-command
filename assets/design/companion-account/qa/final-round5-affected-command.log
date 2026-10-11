@@ -1,0 +1,23 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep preview|real account settings|collapsed navigation|consent
+
+
+Running 12 tests using 1 worker
+
+(node:21640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\companion-account.spec.ts:36:1 › default preview hides the local test fixture toolbar (1.2s)
+  ok  2 tests\e2e\companion-account.spec.ts:51:1 › default preview exposes account settings from chat navigation (698ms)
+  ok  3 tests\e2e\companion-account.spec.ts:57:1 › developer fixture controls require explicit opt-in and preview stays truthful (2.1s)
+  ok  4 tests\e2e\companion-account.spec.ts:76:1 › preview disclosure stays visible on mobile and with desktop navigation collapsed (1.3s)
+  ok  5 tests\e2e\companion-account.spec.ts:101:3 › real account settings preserve player and keyboard access at 375px (3.3s)
+  ok  6 tests\e2e\companion-account.spec.ts:101:3 › real account settings preserve player and keyboard access at 390px (2.9s)
+  ok  7 tests\e2e\companion-account.spec.ts:101:3 › real account settings preserve player and keyboard access at 1280px (3.0s)
+  ok  8 tests\e2e\companion-account.spec.ts:139:1 › collapsed navigation exposes the account settings entry (1.6s)
+  ok  9 tests\e2e\companion-account.spec.ts:150:1 › settings confirm consent and recover read and write failures without dead preferences (2.5s)
+  ok 10 tests\e2e\companion-account.spec.ts:174:1 › an unconfirmed consent record withholds the switch until its read finishes (1.5s)
+  ok 11 tests\e2e\companion-account.spec.ts:487:1 › an unknown held consent read does not block saved-draft logout and its late response is ignored (2.2s)
+  ok 12 tests\e2e\companion-account.spec.ts:508:1 › a pending confirmed consent write guards logout until the response finishes (1.9s)
+
+  12 passed (26.7s)

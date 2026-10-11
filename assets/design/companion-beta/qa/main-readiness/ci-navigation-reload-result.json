@@ -1,0 +1,501 @@
+{
+  "capturedUtc": "2026-10-11T09:49:07.156Z",
+  "originalSourceSha256": "333c9d7c6f0dec036a0c559f8c283016a3132d722823d398f6cc070f06ed541a",
+  "patchedSourceSha256": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+  "applicationSourceHashes": {
+    "app": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+    "conversationStore": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345"
+  },
+  "rootConfigSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+  "settings": {
+    "wholeTestMs": 180000,
+    "actionMs": 15000,
+    "expectMs": 15000,
+    "workers": 1,
+    "retries": 0
+  },
+  "runs": [
+    {
+      "phase": "baseline",
+      "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-reload/playwright.config.ts --grep \"legacy device draft is adopted without losing image or history; only latest user has a receipt|failed storage keeps the current draft and allows an explicit save retry\" --repeat-each=2",
+      "exitCode": 1,
+      "stats": {
+        "startTime": "2026-10-11T09:42:24.357Z",
+        "duration": 94750.94200000001,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 4,
+        "flaky": 0
+      },
+      "assertionsUnchanged": true,
+      "sourceAfter": {
+        "navigationSha256": "333c9d7c6f0dec036a0c559f8c283016a3132d722823d398f6cc070f06ed541a",
+        "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "storeSha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+        "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "cases": [
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "failed",
+          "durationMs": 20829,
+          "retry": 0,
+          "failure": "Legacy image absent after immediate reload",
+          "reloads": [
+            {
+              "at": 1791711749855.3,
+              "domSelectedId": "0a32aa18-9299-45d2-8a39-7463f060545d",
+              "committedSelectedId": "42056b58-325f-4ef5-ae93-21fb01aa1258",
+              "selectionAcknowledged": false,
+              "oldChatStillStored": true,
+              "saveFooter": "Saving on this device… Preview · simulated output.",
+              "lastWriteAt": 1791711749733.9,
+              "lastCommittedWriteAt": 1791711749040.5999
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 0,
+          "finalImagePresent": false,
+          "dialogs": "NOT OBSERVED in original baseline; no dialog listener",
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "failed",
+          "durationMs": 27165,
+          "retry": 0,
+          "failure": "Stored message absent after immediate reload",
+          "reloads": [
+            {
+              "at": 1791711777538.4,
+              "domSelectedId": "8f5d4ad8-f92c-40c5-bf34-5973c56bc7c6",
+              "committedSelectedId": "e54a981a-ea40-4cab-be3b-9002d61a1a25",
+              "selectionAcknowledged": false,
+              "oldChatStillStored": true,
+              "saveFooter": "Saving on this device… Preview · simulated output.",
+              "lastWriteAt": 1791711777038.5,
+              "lastCommittedWriteAt": 1791711777291
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 0,
+          "finalImagePresent": false,
+          "dialogs": "NOT OBSERVED in original baseline; no dialog listener",
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "failed",
+          "durationMs": 17981,
+          "retry": 0,
+          "failure": "Legacy image absent after immediate reload",
+          "reloads": [
+            {
+              "at": 1791711796498.9,
+              "domSelectedId": "5fc3b93b-13ba-4723-9d93-b128b1071b5c",
+              "committedSelectedId": "663fe461-a170-4087-9c51-2e4b3cd9385a",
+              "selectionAcknowledged": false,
+              "oldChatStillStored": true,
+              "saveFooter": "Saving on this device… Preview · simulated output.",
+              "lastWriteAt": 1791711795677.8,
+              "lastCommittedWriteAt": 1791711795682
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 0,
+          "finalImagePresent": false,
+          "dialogs": "NOT OBSERVED in original baseline; no dialog listener",
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "failed",
+          "durationMs": 25435,
+          "retry": 0,
+          "failure": "Stored message absent after immediate reload",
+          "reloads": [
+            {
+              "at": 1791711822617.0999,
+              "domSelectedId": "4cec15e7-34ad-4f3d-9bd6-95ebd1cbb1f3",
+              "committedSelectedId": "81c54459-cee0-4400-9fbb-dc5fa2a8bcfb",
+              "selectionAcknowledged": false,
+              "oldChatStillStored": true,
+              "saveFooter": "Saving on this device… Preview · simulated output.",
+              "lastWriteAt": 1791711822118,
+              "lastCommittedWriteAt": 1791711822361.2998
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 0,
+          "finalImagePresent": false,
+          "dialogs": "NOT OBSERVED in original baseline; no dialog listener",
+          "pageErrors": [],
+          "unexpectedRequests": []
+        }
+      ],
+      "summarySha256": "90761aeae6643c4617739a71f53029e56e5a96d53681c434f93c260de00c3603"
+    },
+    {
+      "phase": "patched",
+      "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-reload/playwright.config.ts --grep \"legacy device draft is adopted without losing image or history; only latest user has a receipt|failed storage keeps the current draft and allows an explicit save retry\" --repeat-each=3",
+      "exitCode": 0,
+      "stats": {
+        "startTime": "2026-10-11T09:46:29.666Z",
+        "duration": 44144.379,
+        "expected": 6,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "assertionsUnchanged": true,
+      "sourceAfter": {
+        "navigationSha256": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+        "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "storeSha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+        "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "cases": [
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "passed",
+          "durationMs": 4737,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791711995462.6,
+              "domSelectedId": "0d425dfc-cce4-4868-952a-92462a0e193d",
+              "committedSelectedId": "0d425dfc-cce4-4868-952a-92462a0e193d",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791711994948.5,
+              "lastCommittedWriteAt": 1791711995210.6
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 2,
+          "finalImagePresent": true,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "passed",
+          "durationMs": 10813,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712006381,
+              "domSelectedId": "286ce31e-2a1d-4241-ba0f-fddcd00a2408",
+              "committedSelectedId": "286ce31e-2a1d-4241-ba0f-fddcd00a2408",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712005851.9001,
+              "lastCommittedWriteAt": 1791712006118.5
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 1,
+          "finalImagePresent": false,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "passed",
+          "durationMs": 973,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712008183.0999,
+              "domSelectedId": "0e26a0ee-b8d1-4b64-bfad-4d81c634890a",
+              "committedSelectedId": "0e26a0ee-b8d1-4b64-bfad-4d81c634890a",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712008145.0999,
+              "lastCommittedWriteAt": 1791712008148
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 2,
+          "finalImagePresent": true,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "passed",
+          "durationMs": 10598,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712018780.3,
+              "domSelectedId": "2885a9aa-9f4d-49a7-bc5f-dd953a698f60",
+              "committedSelectedId": "2885a9aa-9f4d-49a7-bc5f-dd953a698f60",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712018278.7002,
+              "lastCommittedWriteAt": 1791712018527.8
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 1,
+          "finalImagePresent": false,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "passed",
+          "durationMs": 3135,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712022635.0999,
+              "domSelectedId": "9be5b3b7-4722-4af4-a193-6da4d6f67873",
+              "committedSelectedId": "9be5b3b7-4722-4af4-a193-6da4d6f67873",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712022144.7998,
+              "lastCommittedWriteAt": 1791712022386
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 2,
+          "finalImagePresent": true,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "passed",
+          "durationMs": 10611,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712033208.9001,
+              "domSelectedId": "3016b215-6c0f-4845-9883-c079f3f18a69",
+              "committedSelectedId": "3016b215-6c0f-4845-9883-c079f3f18a69",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712032694.7,
+              "lastCommittedWriteAt": 1791712032957.9001
+            }
+          ],
+          "heldFinalSelectionWrite": false,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 1,
+          "finalImagePresent": false,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        }
+      ],
+      "summarySha256": "5f3e2a42178012372d11f4651be0acd14c80866cb769923868899f83eb2e0fec"
+    },
+    {
+      "phase": "hold",
+      "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-reload/playwright.config.ts --grep \"legacy device draft is adopted without losing image or history; only latest user has a receipt|failed storage keeps the current draft and allows an explicit save retry\"",
+      "exitCode": 1,
+      "stats": {
+        "startTime": "2026-10-11T09:47:33.991Z",
+        "duration": 44578.146,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "assertionsUnchanged": true,
+      "sourceAfter": {
+        "navigationSha256": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+        "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "storeSha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+        "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "cases": [
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "failed",
+          "durationMs": 18048,
+          "retry": 0,
+          "failure": "Saved-footer prerequisite timed out with actual Saving status",
+          "reloads": [],
+          "heldFinalSelectionWrite": true,
+          "heldAt": 1791712056862.4,
+          "finalSaveFooter": "Saving on this device… Preview · simulated output.",
+          "finalUserMessageCount": 2,
+          "finalImagePresent": true,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "failed",
+          "durationMs": 25078,
+          "retry": 0,
+          "failure": "Saved-footer prerequisite timed out with actual Saving status",
+          "reloads": [],
+          "heldFinalSelectionWrite": true,
+          "heldAt": 1791712082666.4001,
+          "finalSaveFooter": "Saving on this device… Preview · simulated output.",
+          "finalUserMessageCount": 1,
+          "finalImagePresent": false,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        }
+      ],
+      "summarySha256": "e83e01cb1d670e65a7449a8e55d4f5cf7a527c1b6dfc0e5cc0375dcba3ff10ef"
+    },
+    {
+      "phase": "release",
+      "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-reload/playwright.config.ts --grep \"legacy device draft is adopted without losing image or history; only latest user has a receipt|failed storage keeps the current draft and allows an explicit save retry\"",
+      "exitCode": 0,
+      "stats": {
+        "startTime": "2026-10-11T09:48:19.690Z",
+        "duration": 17017.673,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "assertionsUnchanged": true,
+      "sourceAfter": {
+        "navigationSha256": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+        "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "storeSha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+        "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "cases": [
+        {
+          "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+          "status": "passed",
+          "durationMs": 4663,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712104575.2,
+              "domSelectedId": "5b305169-6ae8-4efd-a155-869cc24d1378",
+              "committedSelectedId": "5b305169-6ae8-4efd-a155-869cc24d1378",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712102733,
+              "lastCommittedWriteAt": 1791712104078.2
+            }
+          ],
+          "heldFinalSelectionWrite": true,
+          "heldAt": 1791712102733.2,
+          "releasedAt": 1791712103958,
+          "heldTransactionCommittedAt": 1791712104078.2,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 2,
+          "finalImagePresent": true,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        },
+        {
+          "test": "failed storage keeps the current draft and allows an explicit save retry",
+          "status": "passed",
+          "durationMs": 11579,
+          "retry": 0,
+          "failure": null,
+          "reloads": [
+            {
+              "at": 1791712116056.1,
+              "domSelectedId": "0a3c88f5-19cb-4cfe-9812-19a4c4a7e713",
+              "committedSelectedId": "0a3c88f5-19cb-4cfe-9812-19a4c4a7e713",
+              "selectionAcknowledged": true,
+              "oldChatStillStored": true,
+              "saveFooter": "Draft saved on this device. Preview · simulated output.",
+              "lastWriteAt": 1791712114268.2,
+              "lastCommittedWriteAt": 1791712115558.4
+            }
+          ],
+          "heldFinalSelectionWrite": true,
+          "heldAt": 1791712114268.3,
+          "releasedAt": 1791712115443.5,
+          "heldTransactionCommittedAt": 1791712115558.4,
+          "finalSaveFooter": "Draft saved on this device. Preview · simulated output.",
+          "finalUserMessageCount": 1,
+          "finalImagePresent": false,
+          "dialogs": [],
+          "pageErrors": [],
+          "unexpectedRequests": []
+        }
+      ],
+      "summarySha256": "1bffaf8d97b9f1b2dda1d2e595713a4e1942f61032d0c27b59e2e1c1108aad58"
+    }
+  ],
+  "validation": {
+    "baselineExactFourFail": true,
+    "baselineAllReloadUnacknowledged": true,
+    "patchedSixPass": true,
+    "patchedAllReloadAcknowledged": true,
+    "heldTwoFailAtSavedPrerequisite": true,
+    "releasedTwoPassWithNativeCommit": true,
+    "noRetriesOrSkips": true,
+    "noUnexpectedRequestsOrPageErrors": true,
+    "originalRestoreAssertionsRetained": true,
+    "appAndStoreUnchanged": true
+  },
+  "sourceDiff": "Exactly two actual Saved-footer prerequisites before the two final page.reload calls. Original image/message/date/status/restoration/no-call assertions preserved.",
+  "harnessHashes": [
+    {
+      "name": "instrumentation.ts",
+      "sha256": "ea63561813db10b5adf3e8e41febdb4f00dfc5a64f10b0a41461b1a6e19b50b4"
+    },
+    {
+      "name": "playwright.config.ts",
+      "sha256": "70e8cf65536bde09723ecea2d52cf3f076506b6f4ebd88145febde81832b775a"
+    },
+    {
+      "name": "server.mjs",
+      "sha256": "45dcef9b79ee461df22e2b0410664e82e334521bd8a790e8e7441e0f7551ef00"
+    }
+  ],
+  "cleanup": {
+    "onlyRecordedPidStopped": true,
+    "listenerRemaining": false,
+    "stoppedOwnPid": 23224,
+    "finishedUtc": "2026-10-11T09:49:07.0786232Z"
+  },
+  "limits": [
+    "Installed repository Playwright Chromium on fixture-only isolated loopback origin; not hosted Linux or paid generation proof",
+    "Original baseline had no dialog listener/observer; actual beforeunload events were recorded, dialog presence NOT OBSERVED. New runs passively observed CDP dialog events without changing default handling.",
+    "Synchronous observer metadata/console work adds small scheduling overhead. No awaited diagnostic read or delay was inserted before reload.",
+    "Control holds only native final return-selection transaction with IndexedDB keepalive; release stops keepalive after1s. Footer/save function and application source are real and unchanged.",
+    "Recorded only synthetic fixture IDs/counts/image presence/save-status, no brief text or photo bodies. No secrets, providers, production data, deployments or commits touched."
+  ]
+}

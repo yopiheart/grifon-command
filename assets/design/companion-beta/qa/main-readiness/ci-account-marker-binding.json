@@ -1,0 +1,222 @@
+{
+  "result": "PASS",
+  "capturedUtc": "2026-10-11T10:51:51.958Z",
+  "validations": {
+    "staticPass": true,
+    "finalAccountRawHashBound": true,
+    "exactGuardedCopyBindingIgnoringLineEndings": true,
+    "allExpectedPassed": true,
+    "all36OwnExitsZero": true,
+    "sameCaseSetAsPrevious": true
+  },
+  "sourceHashes": {
+    "head": "3791952e118303cf885c9fd3a296aab0f48f031d",
+    "files": {
+      ".github/workflows/ci.yml": "2b6a772b2de9f001c0558793e4cd5c5a8ddc62521a190accd68c22c5ce6ec6fd",
+      "package-lock.json": "30a1f510ff766b144978e4730ba3af22bdeab7cdbfca432a6375f6207978377e",
+      "package.json": "1da2d81a5be844bfbe9d5cbeca5a5b57db63b7d04031b75c7425321aa6248f8f",
+      "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+      "tests/e2e/boot.spec.ts": "a243c10038c0d93025d318234b86012480ce06685e5d950ca99c807e5ce91803",
+      "tests/e2e/codex-desktop.spec.ts": "944c9513aee1b77ecd24988f845cec61da8dc05500837025e6e688ea6604ca85",
+      "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+      "tests/e2e/companion-account-regression.config.ts": "47216f63bebc8e4eb0a5c7e8fa570df7699820373596cb647a65e72c78b81c30",
+      "tests/e2e/companion-account.config.ts": "26feabf9556521166d3233b92bc22b8dafe7d17ac78704c7ac4a7883e0941ed4",
+      "tests/e2e/companion-account.spec.ts": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528",
+      "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+      "tests/e2e/companion-chat.spec.ts": "adae48cd56b3275b12af4da057cc626aa5852bc51cdd878add29606e4cc9c3bd",
+      "tests/e2e/companion-continuity.config.ts": "bee88e4a3a93bb35729baefa9c5a97c5028185af0bed84f8a6b5b46f57eaa4b2",
+      "tests/e2e/companion-continuity.spec.ts": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c",
+      "tests/e2e/companion-glass.config.ts": "9096b7e2021652a5b8ee2574a88437aa83e8f24db41e8aba4bdb9a53be18d4af",
+      "tests/e2e/companion-glass.spec.ts": "6cdb3f02db435d0c32ba82977b7c72764f4933b7290081aca486ad7181123bc2",
+      "tests/e2e/companion-layout.spec.ts": "8bd3ded07ae8cdef06c06ec51df77ea87d86adcdef11afddf313571d7f060f7e",
+      "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+      "tests/e2e/companion-polish.spec.ts": "3ad342a7eba5a5eac4da1cb077516bb66bb7882c428b5025cf4215bde02ea2e0",
+      "tests/e2e/companion-startup.config.ts": "4d257800381718782f3e41ea72d0dce1017c7a6a40879ee8a33bd5b9f3c0e252",
+      "tests/e2e/companion-startup.spec.ts": "135571039c24349644bb96294d79aef119888b5e1897a4248f7d9cf93d55a7e1",
+      "tests/e2e/companion-typing.spec.ts": "9a3a47e77d261e41d9e2e74b8e4bdd2917f5d2545191a1260af9cc2e68009bd7",
+      "tests/e2e/companion.config.ts": "aae78f75f06f84c665be78fce0614443bc3c97cb877dbc730bed666d73ef2e89",
+      "tests/e2e/cookie-presentation.spec.ts": "d5badb55d2d2ba2f9b26616684e7e26bb22965987f83d9572d25e4598cd4e64f",
+      "tests/e2e/dashboard-states.spec.ts": "42f1d2829ae997d184bd6d1431f11e92faff6c4aaeacd10cb71ce226a7bda927",
+      "tests/e2e/fixtures/marketMindReport.ts": "eed12d1b7e3306cf0449257c32bd2a528d128c43f1cc22bd04809a3209988741",
+      "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+      "tests/e2e/fixtures/recovery.webm": "e65041bee11d69279a0ad7d85240892f9df3f494c6b4f3e09f7fbee194df027f",
+      "tests/e2e/landing-reveal.spec.ts": "85c9cdfc70ec8e5c7c5d3a6af2cdd809dcaf6b74cb8b3dbfc215cbd7e2162284",
+      "tests/e2e/legacyRecovery.ts": "9779f9229af35bac65b788f56a715c7007ee0c224a95e0db39f1d3e2be5bd756",
+      "tests/e2e/marketmind-presentation.spec.ts": "74601cca563c6ea40904ad6c5175a67aab633d80d0048a538b9c60e802728fec",
+      "tests/e2e/oneshot-legacy-recovery.spec.ts": "36ad3cf863ed5a10dac8055d3f58b14db6b86ffde6fd32d7f90f97dc0fca3a90",
+      "tests/e2e/oneshot-recovery.spec.ts": "fab61f494b72b9b4bce0663fb0c3761f580156be5bda80c01dae1fc10f79bd71",
+      "tests/e2e/purchase-journey.spec.ts": "277b9f09ab5ff75313ee85a1aa7d86e4ef17890d986b5f76fd1871611430a8ff",
+      "tests/e2e/review-smoke.spec.ts": "ce740884d33d32313983ea1d8b2ca196279f9a1c60d0742544b5023817f08ca5",
+      "tests/e2e/route-consistency.spec.ts": "2f531ee84b66ed56fe56cd80c59d4f368aeb7c80862e32b47bc16a75fd2ea368",
+      "tests/e2e/typography.config.ts": "37a0696d9b21a349934e854d1593a88fca6b4b6b5dfafbc1f9538156f91c7a73",
+      "tests/e2e/typography.spec.ts": "f8bddb3dfb6d2b69c5f933b757e7e9f3036b499b78d5bc87990a3ae3022b6636"
+    }
+  },
+  "sourceFilesWatched": 38,
+  "discoveryReceipt": ".tmp/companion-main-readiness/qa/ci-marker-validation/validation-receipt.json",
+  "discoveryReceiptSha256": "664e39d9c9732cb91adef20bd7c2ef47a81aee82d6d299d4432cbbc55196efd5",
+  "proofReceipt": ".tmp/companion-main-readiness/qa/account-marker/account-marker-summary.json",
+  "proofReceiptSha256": "c15eaa3c40bf717ae51fa0163803170437ca1f73c4575365c587ecadcd70433d",
+  "expectedStatusCounts": {
+    "local-all": {
+      "passed": 224,
+      "other": 0
+    },
+    "ci-all": {
+      "passed": 224,
+      "other": 0
+    },
+    "ci-shard-1": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-2": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-3": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-4": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-5": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-6": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-7": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-8": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-9": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-10": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-11": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-12": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-13": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-14": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-15": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-16": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-17": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-18": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-19": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-20": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-21": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-22": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-23": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-24": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-25": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-26": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-27": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-28": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-29": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-30": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-31": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-32": {
+      "passed": 7,
+      "other": 0
+    }
+  },
+  "commands": {
+    "total": 36,
+    "rawConfigImports": 2,
+    "playwrightListCommands": 34,
+    "allOwnExitCodesZero": true
+  },
+  "coverage": {
+    "local": 224,
+    "ci": 224,
+    "shards": 32,
+    "casesPerShard": 7,
+    "unique": 224,
+    "duplicates": 0,
+    "omissions": 0,
+    "extras": 0,
+    "caseSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267"
+  },
+  "browserLaunches": 0,
+  "webServerLaunches": 0,
+  "limits": [
+    "Final tracked source matches the tested guarded copy after documented imports/origin/probe seam and line-ending normalization",
+    "Static discovery does not constitute a final224-case hosted runtime run",
+    "Previousci-thirtytwo-validation evidence preserved unchanged"
+  ]
+}

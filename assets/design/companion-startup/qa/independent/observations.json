@@ -1,0 +1,1222 @@
+{
+  "startedAt": "2026-10-07T05:22:17.318Z",
+  "base": "http://127.0.0.1:5173/companion-chat-preview.html",
+  "browser": "headless msedge; fresh context per scenario; serviceWorkers blocked",
+  "sourceHashes": {
+    "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+    "components/CompanionChat/companionChat.css": "81697a3d2f1b912419aff69e6d30111c3e034d1d4bbab18951ade3ef720d086c",
+    "tests/e2e/companion-startup.spec.ts": "646d3626279fdd3bb97ddf2d6cbd76e25f86b39d77c438ab55d11d5e77fbf797",
+    "tests/e2e/companion-startup.config.ts": "4d257800381718782f3e41ea72d0dce1017c7a6a40879ee8a33bd5b9f3c0e252",
+    "tests/e2e/companion-continuity.spec.ts": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c"
+  },
+  "scenarios": [
+    {
+      "name": "cold slow refresh 375",
+      "pass": true,
+      "elapsedMs": 5267,
+      "network": {
+        "requests": [
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png",
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png"
+        ],
+        "blocked": [],
+        "errors": []
+      },
+      "size": [
+        375,
+        667
+      ]
+    },
+    {
+      "name": "genuine failure retry 375",
+      "pass": true,
+      "elapsedMs": 2654,
+      "network": {
+        "requests": [
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/neutral.png",
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png"
+        ],
+        "blocked": [],
+        "errors": []
+      },
+      "size": [
+        375,
+        667
+      ]
+    },
+    {
+      "name": "reduced motion 375",
+      "pass": true,
+      "elapsedMs": 2237,
+      "size": [
+        375,
+        667
+      ],
+      "network": {
+        "blocked": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "cold slow refresh 1280",
+      "pass": true,
+      "elapsedMs": 4800,
+      "network": {
+        "requests": [
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png",
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png"
+        ],
+        "blocked": [],
+        "errors": []
+      },
+      "size": [
+        1280,
+        900
+      ]
+    },
+    {
+      "name": "genuine failure retry 1280",
+      "pass": true,
+      "elapsedMs": 2397,
+      "network": {
+        "requests": [
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/neutral.png",
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png"
+        ],
+        "blocked": [],
+        "errors": []
+      },
+      "size": [
+        1280,
+        900
+      ]
+    },
+    {
+      "name": "reduced motion 1280",
+      "pass": true,
+      "elapsedMs": 2306,
+      "size": [
+        1280,
+        900
+      ],
+      "network": {
+        "blocked": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "30 second timeout and valid late ready",
+      "pass": true,
+      "elapsedMs": 1639,
+      "timerSeam": "Playwright page.clock.install then fastForward(30010); real scene.bin request held; release with natural resumed clock for actual WebGL readiness; fastForward(31000) post-recovery",
+      "network": {
+        "requests": [
+          "/companion/frame.html",
+          "/companion/neutral.png",
+          "/companion/bridge.js",
+          "/companion/main.js",
+          "/companion/neutral.png",
+          "/companion/reactions.js",
+          "/companion/vendor/three.module.js",
+          "/companion/vendor/three.core.js",
+          "/companion/scene.json",
+          "/companion/baked-skin.png",
+          "/companion/baked-hero.png",
+          "/companion/baked-body-clean.png"
+        ],
+        "blocked": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "warm renderer identity and reactions 375",
+      "pass": true,
+      "elapsedMs": 4326,
+      "warm": [
+        {
+          "sameIframe": true,
+          "sameWindow": true,
+          "sameCanvas": true,
+          "ready": "true",
+          "debug": {
+            "ready": true,
+            "renderer": "WebGL2 / Three.js",
+            "failed": false,
+            "pause": false,
+            "reducedMotion": false,
+            "visible": true,
+            "frameCount": 160,
+            "activeTime": 2.700966666666664,
+            "controls": {
+              "gazeX": -0.2588341700195387,
+              "gazeY": -0.3980662092386863,
+              "headYaw": -0.0061256577899402465,
+              "headPitch": 0.04086377336423647,
+              "headRoll": 0,
+              "blink": 0.06773020895812487,
+              "breath": 0.21642031481715057
+            },
+            "target": {
+              "x": -0.15269335937499995,
+              "y": -0.48275862068965525
+            },
+            "reaction": {
+              "state": "reading",
+              "stateAge": 0.16669999999999982,
+              "blend": 0.3762789386562493,
+              "weights": [
+                0.426591066957167,
+                0,
+                0.3762789386562493,
+                0.19712999438658377,
+                0
+              ],
+              "wingLeft": [
+                -0.602387961536636,
+                0,
+                0.2997761350922216
+              ],
+              "wingRight": [
+                -0.6647613070225563,
+                0,
+                -0.34869106334715866
+              ],
+              "tapLeft": 0,
+              "tapRight": 0,
+              "propReading": 0.3762789386562493,
+              "propWorking": 0.19712999438658377,
+              "readingSupport": [
+                -0.48718262753774655,
+                -0.7687732176875274,
+                0.8859607000207929
+              ],
+              "readingTrace": [
+                0.3821841471414778,
+                -0.7392073149299667,
+                1.017683353327392
+              ],
+              "readingRow": 0.115,
+              "readingWingExtension": 1.037627893865625,
+              "cleanBody": 0.573408933042833,
+              "cursorScale": 0.5314163538464044,
+              "readyBlink": 0,
+              "touring": false
+            },
+            "rollingFrameTimes": [
+              183.39999999999998,
+              16.700000000000045,
+              16.899999999999977,
+              16.399999999999977,
+              16.800000000000068,
+              16.59999999999991,
+              16.700000000000045,
+              16.600000000000023,
+              16.699999999999932,
+              16.800000000000068,
+              16.5,
+              16.699999999999932,
+              16.800000000000068,
+              16.600000000000023,
+              16.59999999999991,
+              16.800000000000068,
+              16.5,
+              16.699999999999932,
+              16.700000000000045,
+              16.700000000000045,
+              16.699999999999932,
+              16.600000000000023,
+              16.799999999999955,
+              16.600000000000023,
+              16.700000000000045,
+              16.600000000000023,
+              16.699999999999932,
+              16.600000000000023,
+              16.799999999999955,
+              16.600000000000023,
+              16.899999999999977,
+              16.5,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.600000000000136,
+              16.799999999999955,
+              16.5,
+              16.799999999999955,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.90000000000009,
+              16.5,
+              16.699999999999818,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.800000000000182,
+              16.59999999999991,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.799999999999955,
+              16.600000000000136,
+              16.59999999999991,
+              16.799999999999955,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.700000000000045,
+              17,
+              16.299999999999955,
+              16.700000000000045,
+              16.600000000000136,
+              16.699999999999818,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.800000000000182,
+              16.5,
+              16.59999999999991,
+              16.799999999999955,
+              16.700000000000045,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.5,
+              16.799999999999727,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.600000000000364,
+              16.799999999999727,
+              17.09999999999991,
+              16.200000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.799999999999727,
+              16.600000000000364,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.59999999999991,
+              16.699999999999818,
+              16.800000000000182,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.59999999999991,
+              16.800000000000182,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818
+            ],
+            "viewport": {
+              "width": 56,
+              "height": 56,
+              "pixelRatio": 2
+            }
+          }
+        },
+        {
+          "sameIframe": true,
+          "sameWindow": true,
+          "sameCanvas": true,
+          "ready": "true",
+          "debug": {
+            "ready": true,
+            "renderer": "WebGL2 / Three.js",
+            "failed": false,
+            "pause": false,
+            "reducedMotion": false,
+            "visible": true,
+            "frameCount": 169,
+            "activeTime": 2.851066666666664,
+            "controls": {
+              "gazeX": -0.28704962614164636,
+              "gazeY": -0.5311028995292216,
+              "headYaw": -0.011189098534776263,
+              "headPitch": 0.0686473755833602,
+              "headRoll": 0,
+              "blink": 0.15987704832000005,
+              "breath": 0.08967899898945825
+            },
+            "target": {
+              "x": -0.15269335937499995,
+              "y": -0.33883058470764604
+            },
+            "reaction": {
+              "state": "reading",
+              "stateAge": 0.3168000000000002,
+              "blend": 0.8882058240000004,
+              "weights": [
+                0.07646109739615414,
+                0,
+                0.8882058240000004,
+                0.03533307860384549,
+                0
+              ],
+              "wingLeft": [
+                -0.9274450593499446,
+                0,
+                0.5012249428121839
+              ],
+              "wingRight": [
+                -1.0746772401379578,
+                0,
+                -0.6166885515693774
+              ],
+              "tapLeft": 0,
+              "tapRight": 0,
+              "propReading": 0.8882058240000004,
+              "propWorking": 0.03533307860384549,
+              "readingSupport": [
+                -0.48718262753774655,
+                -0.7687732176875274,
+                0.8859607000207929
+              ],
+              "readingTrace": [
+                0.3821841471414778,
+                -0.7392073149299667,
+                1.017683353327392
+              ],
+              "readingRow": 0.115,
+              "readingWingExtension": 1.0888205824000001,
+              "cleanBody": 0.9235389026038459,
+              "cursorScale": 0.2594022239867311,
+              "readyBlink": 0,
+              "touring": false
+            },
+            "rollingFrameTimes": [
+              183.39999999999998,
+              16.700000000000045,
+              16.899999999999977,
+              16.399999999999977,
+              16.800000000000068,
+              16.59999999999991,
+              16.700000000000045,
+              16.600000000000023,
+              16.699999999999932,
+              16.800000000000068,
+              16.5,
+              16.699999999999932,
+              16.800000000000068,
+              16.600000000000023,
+              16.59999999999991,
+              16.800000000000068,
+              16.5,
+              16.699999999999932,
+              16.700000000000045,
+              16.700000000000045,
+              16.699999999999932,
+              16.600000000000023,
+              16.799999999999955,
+              16.600000000000023,
+              16.700000000000045,
+              16.600000000000023,
+              16.699999999999932,
+              16.600000000000023,
+              16.799999999999955,
+              16.600000000000023,
+              16.899999999999977,
+              16.5,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.600000000000136,
+              16.799999999999955,
+              16.5,
+              16.799999999999955,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.90000000000009,
+              16.5,
+              16.699999999999818,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.800000000000182,
+              16.59999999999991,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.799999999999955,
+              16.600000000000136,
+              16.59999999999991,
+              16.799999999999955,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.700000000000045,
+              17,
+              16.299999999999955,
+              16.700000000000045,
+              16.600000000000136,
+              16.699999999999818,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.800000000000182,
+              16.5,
+              16.59999999999991,
+              16.799999999999955,
+              16.700000000000045,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.5,
+              16.799999999999727,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.600000000000364,
+              16.799999999999727,
+              17.09999999999991,
+              16.200000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.799999999999727,
+              16.600000000000364,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.59999999999991,
+              16.699999999999818,
+              16.800000000000182,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.59999999999991,
+              16.800000000000182,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273
+            ],
+            "viewport": {
+              "width": 56,
+              "height": 56,
+              "pixelRatio": 2
+            }
+          }
+        },
+        {
+          "sameIframe": true,
+          "sameWindow": true,
+          "sameCanvas": true,
+          "ready": "true",
+          "debug": {
+            "ready": true,
+            "renderer": "WebGL2 / Three.js",
+            "failed": false,
+            "pause": false,
+            "reducedMotion": false,
+            "visible": true,
+            "frameCount": 177,
+            "activeTime": 2.9843666666666633,
+            "controls": {
+              "gazeX": -0.1901259691879383,
+              "gazeY": -0.5805693203251582,
+              "headYaw": -0.010442013658152307,
+              "headPitch": 0.0962303500426525,
+              "headRoll": 0,
+              "blink": 0.18,
+              "breath": 0.009003751407178085
+            },
+            "target": {
+              "x": -0.15269335937499995,
+              "y": -0.48275862068965525
+            },
+            "reaction": {
+              "state": "reading",
+              "stateAge": 0.4500999999999999,
+              "blend": 1,
+              "weights": [
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "wingLeft": [
+                -0.9984307634482725,
+                0,
+                0.5452171692609142
+              ],
+              "wingRight": [
+                -1.162364946642107,
+                0,
+                -0.674134052571776
+              ],
+              "tapLeft": 0,
+              "tapRight": 0,
+              "propReading": 1,
+              "propWorking": 0,
+              "readingSupport": [
+                -0.48718262753774655,
+                -0.7687732176875274,
+                0.8859607000207929
+              ],
+              "readingTrace": [
+                0.38303787213537005,
+                -0.7395399103244877,
+                1.0162015670885916
+              ],
+              "readingRow": 0.11348134594,
+              "readingWingExtension": 1.1,
+              "cleanBody": 1,
+              "cursorScale": 0.2,
+              "readyBlink": 0,
+              "touring": false
+            },
+            "rollingFrameTimes": [
+              183.39999999999998,
+              16.700000000000045,
+              16.899999999999977,
+              16.399999999999977,
+              16.800000000000068,
+              16.59999999999991,
+              16.700000000000045,
+              16.600000000000023,
+              16.699999999999932,
+              16.800000000000068,
+              16.5,
+              16.699999999999932,
+              16.800000000000068,
+              16.600000000000023,
+              16.59999999999991,
+              16.800000000000068,
+              16.5,
+              16.699999999999932,
+              16.700000000000045,
+              16.700000000000045,
+              16.699999999999932,
+              16.600000000000023,
+              16.799999999999955,
+              16.600000000000023,
+              16.700000000000045,
+              16.600000000000023,
+              16.699999999999932,
+              16.600000000000023,
+              16.799999999999955,
+              16.600000000000023,
+              16.899999999999977,
+              16.5,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.600000000000136,
+              16.799999999999955,
+              16.5,
+              16.799999999999955,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.90000000000009,
+              16.5,
+              16.699999999999818,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.800000000000182,
+              16.59999999999991,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.799999999999955,
+              16.600000000000136,
+              16.59999999999991,
+              16.799999999999955,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.600000000000136,
+              16.700000000000045,
+              16.699999999999818,
+              16.700000000000045,
+              17,
+              16.299999999999955,
+              16.700000000000045,
+              16.600000000000136,
+              16.699999999999818,
+              16.700000000000045,
+              16.700000000000045,
+              16.59999999999991,
+              16.800000000000182,
+              16.5,
+              16.59999999999991,
+              16.799999999999955,
+              16.700000000000045,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.5,
+              16.799999999999727,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.600000000000364,
+              16.799999999999727,
+              17.09999999999991,
+              16.200000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.799999999999727,
+              16.600000000000364,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.59999999999991,
+              16.699999999999818,
+              16.800000000000182,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.59999999999991,
+              16.800000000000182,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.800000000000182,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.59999999999991,
+              16.699999999999818,
+              16.700000000000273,
+              16.699999999999818,
+              16.59999999999991,
+              16.700000000000273,
+              16.699999999999818,
+              16.699999999999818,
+              16.600000000000364,
+              16.699999999999818,
+              16.59999999999991
+            ],
+            "viewport": {
+              "width": 56,
+              "height": 56,
+              "pixelRatio": 2
+            }
+          }
+        }
+      ],
+      "network": {
+        "requests": [],
+        "blocked": [],
+        "errors": []
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "description": "initial 375 has no still and invisible frame",
+      "pass": true
+    },
+    {
+      "description": "initial 375 stable square slot",
+      "pass": true
+    },
+    {
+      "description": "slow 375 visible loading cue",
+      "pass": true
+    },
+    {
+      "description": "slow 375 slot unchanged",
+      "pass": true
+    },
+    {
+      "description": "ready 375 has real colored pixels and hidden iframe still",
+      "pass": true
+    },
+    {
+      "description": "ready 375 slot unchanged",
+      "pass": true
+    },
+    {
+      "description": "ready 375 restrained fade observed",
+      "pass": true
+    },
+    {
+      "description": "ready 375 bridge follows real rendered pixels",
+      "pass": true
+    },
+    {
+      "description": "cold 375 never inserts static image",
+      "pass": true
+    },
+    {
+      "description": "refresh 375 no static flash",
+      "pass": true
+    },
+    {
+      "description": "refresh 375 slot unchanged",
+      "pass": true
+    },
+    {
+      "description": "cold 375 no horizontal overflow",
+      "pass": true
+    },
+    {
+      "description": "cold 375 no provider requests or page errors",
+      "pass": true
+    },
+    {
+      "description": "cold 375 no production calls",
+      "pass": true
+    },
+    {
+      "description": "failure 375 retry target >=44px",
+      "pass": true
+    },
+    {
+      "description": "failure 375 correct control radius and lucide sizing",
+      "pass": true
+    },
+    {
+      "description": "failure 375 still not stretched",
+      "pass": true
+    },
+    {
+      "description": "failure 375 gold focus ring",
+      "pass": true
+    },
+    {
+      "description": "retry 375 hides failure still",
+      "pass": true
+    },
+    {
+      "description": "retry 375 no slot shift",
+      "pass": true
+    },
+    {
+      "description": "retry 375 true live recovery",
+      "pass": true
+    },
+    {
+      "description": "retry 375 fits and no external calls or page errors",
+      "pass": true
+    },
+    {
+      "description": "reduced 375 dots do not move",
+      "pass": true
+    },
+    {
+      "description": "reduced 375 cue legible",
+      "pass": true
+    },
+    {
+      "description": "reduced 375 no reveal fade",
+      "pass": true
+    },
+    {
+      "description": "reduced 375 instant reveal observed",
+      "pass": true
+    },
+    {
+      "description": "reduced 375 actual pixels and clean network",
+      "pass": true
+    },
+    {
+      "description": "initial 1280 has no still and invisible frame",
+      "pass": true
+    },
+    {
+      "description": "initial 1280 stable square slot",
+      "pass": true
+    },
+    {
+      "description": "slow 1280 visible loading cue",
+      "pass": true
+    },
+    {
+      "description": "slow 1280 slot unchanged",
+      "pass": true
+    },
+    {
+      "description": "ready 1280 has real colored pixels and hidden iframe still",
+      "pass": true
+    },
+    {
+      "description": "ready 1280 slot unchanged",
+      "pass": true
+    },
+    {
+      "description": "ready 1280 restrained fade observed",
+      "pass": true
+    },
+    {
+      "description": "ready 1280 bridge follows real rendered pixels",
+      "pass": true
+    },
+    {
+      "description": "cold 1280 never inserts static image",
+      "pass": true
+    },
+    {
+      "description": "refresh 1280 no static flash",
+      "pass": true
+    },
+    {
+      "description": "refresh 1280 slot unchanged",
+      "pass": true
+    },
+    {
+      "description": "cold 1280 no horizontal overflow",
+      "pass": true
+    },
+    {
+      "description": "cold 1280 no provider requests or page errors",
+      "pass": true
+    },
+    {
+      "description": "cold 1280 no production calls",
+      "pass": true
+    },
+    {
+      "description": "failure 1280 retry target >=44px",
+      "pass": true
+    },
+    {
+      "description": "failure 1280 correct control radius and lucide sizing",
+      "pass": true
+    },
+    {
+      "description": "failure 1280 still not stretched",
+      "pass": true
+    },
+    {
+      "description": "failure 1280 gold focus ring",
+      "pass": true
+    },
+    {
+      "description": "retry 1280 hides failure still",
+      "pass": true
+    },
+    {
+      "description": "retry 1280 no slot shift",
+      "pass": true
+    },
+    {
+      "description": "retry 1280 true live recovery",
+      "pass": true
+    },
+    {
+      "description": "retry 1280 fits and no external calls or page errors",
+      "pass": true
+    },
+    {
+      "description": "reduced 1280 dots do not move",
+      "pass": true
+    },
+    {
+      "description": "reduced 1280 cue legible",
+      "pass": true
+    },
+    {
+      "description": "reduced 1280 no reveal fade",
+      "pass": true
+    },
+    {
+      "description": "reduced 1280 instant reveal observed",
+      "pass": true
+    },
+    {
+      "description": "reduced 1280 actual pixels and clean network",
+      "pass": true
+    },
+    {
+      "description": "timeout gives truthful still",
+      "pass": true
+    },
+    {
+      "description": "valid late ready recovers automatically after timeout",
+      "pass": true
+    },
+    {
+      "description": "recovered renderer not failed by lingering timer",
+      "pass": true
+    },
+    {
+      "description": "timeout path no external calls/page errors",
+      "pass": true
+    },
+    {
+      "description": "New chat gets isolated identity",
+      "pass": true
+    },
+    {
+      "description": "saved chat preserves warm renderer identity",
+      "pass": true
+    },
+    {
+      "description": "saved chat preserves warm renderer identity",
+      "pass": true
+    },
+    {
+      "description": "saved chat preserves warm renderer identity",
+      "pass": true
+    },
+    {
+      "description": "warm switches do not reload renderer resources",
+      "pass": true
+    },
+    {
+      "description": "warm switches keep one live renderer and no still",
+      "pass": true
+    },
+    {
+      "description": "warm no external calls/page errors",
+      "pass": true
+    }
+  ],
+  "failures": [],
+  "endedAt": "2026-10-07T05:22:43.746Z",
+  "exitCode": 0
+}

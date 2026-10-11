@@ -1,30 +1,118 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11; authorized ordered motion-stack landing**
+**Stamped: 2026-10-11, Companion main-readiness CI/database work**
 
-## Active task
-Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
-Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Neil explicitly authorized PR165 -> PR166 -> PR170, retargeting each to main
-and rechecking before merge. This supersedes the earlier no-merge boundary.
-No manual deployment, provider call, new paid run, email or PC sleep was requested.
-PR173 remains closed; rejected Bodila files remain absent.
+## NEXT ACTION
 
-## Landing receipts
-PR165 merged 2026-10-11 at 73c3ea2aa9236409db286fa8c5fe4ad791ddfb04.
-Its merged tree exactly equals reviewed head 0d19d8f0.
-PR166 was retargeted to main and synchronized at 62764123 with an identical
-reviewed tree; fresh CI 38121674177 and exact-head Vercel passed.
-PR166 merge receipt: 1f43eeaf804471fa09a4d15ee896dba81cc133db.
-PR170 is retargeted to main; its current branch contains both predecessor merges.
-This resume update accompanies its final landing review, before the merge.
-The final exact-head CI/Vercel and merged receipt are authoritative on GitHub:
-- PR165: https://github.com/yopiheart/grifon-command/pull/165
-- PR166: https://github.com/yopiheart/grifon-command/pull/166
-- PR170: https://github.com/yopiheart/grifon-command/pull/170
-## ▶ NEXT ACTION
-Check live PR170 state before any further landing attempt. Once MERGED, the
-authorized motion-stack task is complete; no creative/source edits remain.
-Ordinary merge commits preserve history; no branch deletion or forced push.
+Final checkout/continuity source, raw controls, all225 discovery IDs, copied receipt hashes, build/unit logs and updated documentation independently reviewed PASS/no actionableP1/P2. Current check:codex26/26PASS and authored diffcheckPASS. Commit/push the scoped fixes, then require complete exact-head225-case CI before merge readiness. Do not add a docs-only commit merely to restamp that run; update PR177 with its actual terminal result and inspect latest status before any merge. Main merge/manual deployment still require an explicit request.
+
+Latest completed source CI: exact1b230ba4 run38133637033 FAILURE, all224/224 unique cases accounted across32x7:222first-pass,1checkoutretry-pass,1persistentcontinuityfailure,0skips/omissions/duplicates. Build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel PASS. All35 checkouts used merge203d47bd; head/local/tested tree11200e9a matches,442watchedfiles unchanged through terminal. Continuity157 fails typing-visible line161 before New chat/isolation assertions; no callback leak established. Evidence ci-marker-guard-summary.json, ci-checkout-intent-flake.json and ci-continuity-typing-failure.json. Prior379/9c green receipts preserved. Main remains e6e083bf; no merge/manual deployment/paid generation performed.
+
+Current scoped fixes: Appcf4afb30 holds checkout-pending state after plan pop, guards return handling and resets only on rejection. Original controlled red observes held billing auth, real wizard IDB completion and automatic marker removal before checkout; no manual marker clear. Both strengthened checkout regressions fail originalApp and pass fixedApp; omitting only catch reset reaches both error toasts then fails unchanged marker-null recovery. Continuity9039fef1 pauses before input through changed chat, resumes before renderer polls and retains original700ms/downstream assertions. Original delayed observation1010ms finds accepted reply/typing0 and fails; fixed1013ms delay holds typing1 and completes journey. Removing only outer fixture remount key fails original input-enabled assertion for retained production state; this does not prove a hosted intake callback leak. New rejection regression adds225th case, retaining original224. No tuned content changes. Build and full unit commands EXIT0:1,572passed/32existing skips, four source hashes unchanged. Fresh discovery:225unique, shard1=8/rest7, all original224IDs/titles retained,36command exits0 and38watchedhashes unchanged. Evidence ci-checkout-intent-result.json, ci-continuity-clock-result.json, ci-checkout-build-unit.json, ci-checkout-partition-result.json and ci-checkout-binding.json. Final independent evidence review and exact-head CI remain required.
+
+Only379 retry: account373 marker-null assertion saw1 after15s; retry passed. Proven fixture defect: unguarded addInitScript can seed shared sessionStorage again in a same-origin child after App consumes the marker. One-line top-window guard preserves input visibility, marker cleanup and error assertions; product code is unchanged. Original/guarded ordinary runs and guarded forced-frame run PASS; original forced-frame and guarded cleanup-disabled controls fail the unchanged marker-null assertion. No manual marker clear; actual App consumed null before the forced child. All five runs source/harness frozen,0retry/skip, unexpected/pageerrors/consentwrites0, externalOther0. API calls are fixture-handled. Hosted iframe timing remains inferred, not measured. Evidence ci-account-marker-flake.json and ci-account-marker-result.json. Latest exact-head PR status is the runtime gate before any main merge; beta release still requires hosted auth, physical phones and approved live quality/testers/support checks.
+
+Scoped save/Resume/clock/marker follow-ups independently reviewed PASS/noP1/P2, including source, raw controls, copied receipt hashes and refreshed32-shard partition. Both completed full CI runs retain their exact224-case union and tested tree. Independent reviewer rederived379 from raw logs and confirmed the narrow guard resolves the fixture P2. Fresh32-shard discovery retains224sameIDs/32x7/36zero-exit commands and38unchangedhashes; final binding ties trackedaf9b7250 to tested guarded copy. Current check:codex26/26PASS and authored diffcheckPASS. Before any merge, inspect the latest exact-head CI on PR177; main merge and deployment still need an explicit request.
+
+Readiness fixes retained: two reload tests await the existing Saved footer before refreshing. Original4/4 failures reproduced selected-chat DOM ahead of its committed IndexedDB selection while the old chat stayed intact; patched6/6pass, two held native writes fail at Saved, two released writes commit before restoration passes. Exact assertions retained; application/store unchanged. Corrected metadata-only caveat preserves original results. Cross-tab Resume original2/2passes locally; exact hosted post-dispatch stall remains unexplained. Only second click opts out of automatic post-click navigation waiting, retaining lock-error/second0/provider assertions and adding first1/unchangedURL/same-document checks. Intermediate3/3 event-count failures on two unclassified same-URL events remain documented. Final3/3PASS and canceled-click/disabled-lock/same-URL-reload controls work as intended. All seven former CI blockers passed first attempt in9c. CI32shards retains every224case, seven per runner, same15-minute cap/worker1/retry1. Discovery and final-clock source binding are recorded separately; repositorycontrols26/26PASS. Runtime status of the latest PR head governs merge readiness, not these historical snapshots.
+
+Current authorization: fix CI and verify database for a main-ready Companion candidate. User separately approved exact b3d564... additive RPC migration; applied successfully to GRIFON AI. Main merge, other production mutations, deployment, invitations and paid generation remain separate. PR172 merged into codex/companion-chat at889c0e1d.
+Branch codex/companion-main-readiness; checkout C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command. Chat889c0e1d integrated with main4b36c62b atf2568ad2. Draft PR177 https://github.com/yopiheart/grifon-command/pull/177 targets main; existing CI runs without widening triggers. First database job rejected Docker bridge address; fd63fdd7 runs verifier inside service with read-only source mount, preserving loopback guards. Cloud database/verify/artifact gates PASS; browser job38121024346 hit its15-minute cap after48/224 unique cases (45 first-pass,2 retry-pass,1 repeated save-status failure).
+Combined candidate: build, 1,541 units (32 existing skipped), static gates and 10 affected browser checks PASS. Two original hostname failures reproduced then fixed; full local E2E excluded because it reused another checkout. Playwright now refuses existing servers; full suite required on isolated GitHub CI. Evidence assets/design/companion-beta/qa/main-readiness/.
+The repeated stale-tab save-status failure reproduced on the correct local candidate: final save completed5.83s after Enter, beyond the default5s assertion, with two visible SwiftShader avatars3-5fps. No data-loss or duplicate-request defect established. CI has a bounded15s expectation budget (local5s, test60s unchanged). Same two cases PASS6/6 across3 repeats, zero retries/skips, original copy/reload and1/0 image-call assertions intact. All224cases now split across8 one-worker runners with the same15-minute cap/fail-fast false after4shards proved insufficient; all assertions remain. Control check26/26 PASS. Branch-protection/effective-rule APIs return403 feature-upgrade required; no repository rules changed.
+Integrated b60c4451 CI38123364739: build/static/artifact/nativeDB PASS;1,572units/32existing skips. Shard4 PASS56/56; shards1-3 hit15-minute cap after persistent failures. Of224planned cases,154 reported results:134first-pass,4retry-pass,14persistent failures,2unresolved retries;70unreported. Full completion NOT established. Sourcepartition is contiguous, leaving all34account cases together with4shards;8shards28each now pending. Sanitized complete-run summary: qa/main-readiness/ci-four-shard-summary.json.
+Harness fixes preserve app/runtime/paid behavior: await accepted intake and async save/action callbacks; install typing clock before navigation with a safe future pause, retain499/600ms boundaries without stepping every avatar frame; poll actual pointer response with original0.1delta; observe real CSS opacity transition and interpolation instead of missing its200ms fade under slow RAF, allow only0.02px position quantization. Focused smoke PASS15/15,0retry/skip,184.911s,455watched source hashes unchanged. Full3spec run41PASS/2FAIL of43,0retry/skip,7.7min; all13startup casesPASS. The two failures navigate before the final photo/accepted-answer write is acknowledged; default Playwright beforeunload handling proceeds. Save-footer waits added before those navigations; photo/answer/question restoration assertions retained. Account-switch test also awaits new shell before Settings; stale-plan assertions unchanged. Final affected verification PASS12/12 (four cases x3),78.078s,0retry/skip,455frozen hashes unchanged; all12 served App identity verified. Startup negative controls correctly FAIL on missing transition and0.125px drift, after real coloredpixels PASS. Independent source follow-up and receipt binding PASS; ci-harness-binding.json records current source/config/harness hashes and instrumentation limits. Evidence ci-harness-{focused-result,full-before-save-waits,save-account-result}.json and ci-startup-negative-controls.json. Control check26/26 PASS after edits. Exact-head8shard CI required next. VercelREADYexactb60candidate; anonymousGET302toSSO blocks hosted render verification, not an observed app defect. Main merge still separate.
+Latest exact-head ad20cd62 CI38126267694 is RED/incomplete: verify1,572PASS/32existing skips, nativeDB24PASS, artifactsPASS, VercelSUCCESS; shards1/5/6/7/8SUCCESS,2FAILURE,3/4jobcap. Of224cases,199reported:186first-pass,3retry-pass,10persistent failures,25unreported;212attempts/13retries/0observed skips. Evidence ci-eight-shard-summary.json. Retry traces show20-32sequential UI calls with successful4-10s operations then a pending operation at60s; no completed40s call, CPU/GPU cause unproven and first-attempt viewport stall untraced. Newchat separately hit its3s click cap. Startup retry errors exactly match unpublished hidden overlay defaults; pending verifier captures actual reservation before visibility publication and compares immediately afterward, preserving0.02px/exact dimensions. All13startup+delayed-publication controlPASS; missingtransition/overlaydrift/reservationdrift correctlyFAIL. Independent source reviewPASS. Evidence ci-retry-trace-timings.json and ci-startup-publication-result.json. Local unchanged corejourneyPASS3/3 at33-39s; fullChromium mode cannot launch (spawn UNKNOWN), so no performance comparison or browser change. Evidence ci-browser-channel-result.json.
+Pending calibration keeps default browser, all224cases, one worker/retry1 and15-minute job cap;16shards14each, CI wholejourney180s/local60, ordinary CI actions15s/localunchanged, expectations15s/5s unchanged. Newchat remains exactlyone click with CI15s/local3s; no extra save prerequisite. Not every protocol operation supports the action budget, so full exact-head CI must still resolve remaining stalls. Independent source/discovery reviewPASS; actual224unique/16x14/zeroomissionsorduplicates. NewchatPASS3/3,0retry/skip; blockednavigation control correctlyFAIL at15s unchanged chat-ID predicate. Freshcheck:codex26/26PASS and authored diffcheckPASS. Evidence ci-sixteen-partition-result.json and ci-navigation-budget-result.json. Commit/push next, then exact-head fullCI required. Main merge HOLD; hosted authenticated render still NOTRUN (CUA unavailable), phones/livequality/testers/support separate.
+
+GRIFON AI PostgreSQL17.6: approved consume_finished_ad migration20261011072946 installed, exact body MD5/SHA+postgres owner/service-onlyACL verified; RLS unchanged. REST anonymous all-null probe401/42501 proves cache resolution+denial; RO service-role all-null call reaches input guard. No real debit/provider calls or existing-user-row writes. Evidence qa/main-readiness/database-rollout/target-result.json. PR177 Vercel PASS supersedes older account block.
+Native PostgreSQL17.6 PASS: four original double-charge rejections, 12 observed separate-session lock cases, replay/rollback/permissions. CI PostgreSQL17.11 also PASS24checks. Owned local test server stopped; DB/roles cleaned, runtime files excluded. Independent source/rollout review PASS/no open P1/P2. Exact SQL b3d564f25522c9d25d1ca8b8b66ec37dc15cb907953389d01612722a5269ee89 preserved; separately rehearsed row preservation, duplicate refusal and failed-postcondition rollback.
+Main PR175 presentation and PR171 evidence prompt are retained exactly from4b36c62b, including approved MARKETMIND_SYSTEM_INSTRUCTION (proposal SHA d65482ca98b901a26784b89fcc9605a25c40c88c7b01ba7d74cbdd4e1a4ada85). No new tuned diff. Live-test-spec US$15 remains unapproved; phones/live output/testers/support remain release gates.
+Material Trial v01 preferred neutral cream finish safely committed e2580bfb on separate branch codex/griffin-material-study, draftPR169 https://github.com/yopiheart/grifon-command/pull/169. Saved anchors/recipe there; v05 identity/groom/live mascot unchanged; unrelated local3d-lab files excluded here.
+
+
+Latest main e6e083bf integrated after motion PR165/166/170 landed; remote main unchanged on fresh check. No application/prompt/dependency/E2E source changed upstream; CI retains all3 existing PR targets. New motion unit suites and byte-stability attributes inherited exactly. Full integrated CI still blocked as recorded above. Initial checkout ran out of C: space; own stoppedPG/runtime/downloads and only merge-created partial checkout files moved to F:/GrifonLocalArchives/companion-main-readiness-runtime-20261011. Test evidence retained; no unrelated state removed.
+
+## Motion film / PR156
+Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
+Branch codex/grifon-motion-depth; https://github.com/yopiheart/grifon-command/pull/156.
+Accepted baseline backed up at ead3abe9. Main reconciled at29feca9c; only NOW.md
+conflicted. Independent Codex review clear after completed-VO replay fix;
+qa/merge-review.md has original-fail/fix-pass evidence. Final CI still required.
+No paid work, application feature or commercial publication in this scope.
+
+Neil accepted the 32.9s film and delegated sound choices; do not ask him to pick
+A-D or individual sounds again. Positive-only prompts; preserve existing Aira take.
+Accepted file: workflows/assets/grifon-motion-upgrade/
+grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4, SHA
+9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c.
+approval.json binds exact user acceptance. 987 frames,1080p30,stereo AAC48k.
+Nine native sources/51 cues; all15 mixer gates PASS; -16.02LUFS/-1.36dBTP.
+Protected H264/music/VO unchanged; old SFX excluded; silent black tail preserved.
+selected-review-manifest.json and qa/replacement-report.json hold actual evidence.
+User acceptance is separate from independent hearing; historical technical report
+remains AUDITORY_QA_PENDING. Do not relabel waveform measurements as listening.
+Sources predate paid subscription and remain private-review-only. Commercial use
+requires cleared sources. No new ElevenLabs generations were made for replacement.
+
+Frozen local stems: .tmp/grifon-english-vo-v02/music-ducked.wav SHA
+115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa;
+voice-positioned.wav SHA
+54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7.
+Fixed stem gain1.0752266011723428. Old masters/pilot forbidden as mix inputs.
+One Aira/v4 generation approval consumed; never regenerate from that approval.
+Historical generator now refuses --generate before credential/network access.
+
+## Recovery and future audio plan
+workflows/grifon_motion_production.md preserves exact recipe and reuse method.
+workflows/grifon_motion_audio_api.md records future API proposal: one SFX candidate
+first, agent-owned placement, dedicated music and bounded approved retries.
+User fast-v4 preference maps to official eleven_v4_turbo; not active app change.
+Installed Motion Director skill/provider prompts unchanged; customer UI unbuilt.
+PRIMARY/.tools/grifon-motion-archives/approved-2026-10-04-9529b122.zip preserves
+42 checkpoint files including exact stems;41,677,659bytes. Tracked receipt:
+workflows/assets/grifon-motion-upgrade/qa/approved-archive.json.
+Archive/hash/CRC/all entries verified; missing receipt failed before creation.
+Local recovery is not off-device backup; later API design is versioned in Git.
+
+## Gemini accounting - preserve, no retries
+Original spec SHA26eb8ef67ced35afc04f958705859da04f8f6b96c3eba24b5cd47ca00bfe4807.
+Revised SHA c7f9c8f0eac1ece2585ae031c4005657184467d397c208ee27a6cf7d108affeb.
+Approved LOW + one manual repeat;14 comparisons TOTAL,US$0.50/250credits caps.
+Canonical ledger PRIMARY/.tmp/grifon-elevenlabs-assessment/<originalSHA>/.
+Pencil4 valid; card-pop truncated; manual repeat06:36UTC October4 failed with
+unknown usage/result. Three invocations reserveUS$0.09216; known usage-derived
+US$0.039258 plus unknown third; billing debit unverified. No reset/retry.
+Default project logging disabled; BUSINESS USE access auto-review rejected.
+User billing concern is not verified cause. Do not bypass project-access gate.
+
+## Other session: Vivo/Blender work preserved from main
+PR157: https://github.com/yopiheart/grifon-command/pull/157.
+Checkout C:/Users/ADMIN/.codex/worktrees/976d/grifon-command; branch
+codex/blender-product-reveal. Its merge was authorized; check remote status.
+Detailed prior state remains in main's pre-reconciliation NOW.md history and
+assets/vivo-x80-ugc, assets/blender-reveal evidence; no files changed here.
+Vivo task cgt-20261004021141-cgh8r succeeded ONCE; NEVER execute again.
+Fixed tools/run_vivo_x80_ugc.mjs, separate Vivo spec/ledger; recovery GET-only.
+Raw361frames/15.041667s/496x864/native audio; comparison360frames/15s.
+ONE paid POST/private upload; exact owned-key cleanup confirmed.301738tokens
+estimate$1.2974734; invoice unknown. No new provider authorization in this task.
+Runner SHA c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109.
+Private raw: https://drive.google.com/file/d/1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT/view
+Private comparison: https://drive.google.com/file/d/15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx/view
+V1/V2 preserved; continuous listening/native phone remain unverified.
+Bottle task cgt-20261003202712-nlxv7 also exhausted; NEVER --execute again.
+Ledger .tmp/byteplus-motion-transfer/attempt.json; GET-only recovery.
+Bottle estimate$0.5200678; invoice unknown; identity PARTIAL. No new model trial.
+Main carried build/1432 unit/26 control/29 Vivo/25 bottle checks and independent
+review; these are historical evidence, not rerun by this motion task.
+PR158 prompt-parity guard merged; never authorizes changing tuned content.
+Vivo proof accepted9/10; priorities assets/vivo-x80-ugc/user-review.json.
+Local-preview/automatic-trigger tests unrun; generic engine/Grifon UI unbuilt.
+Primary Oceanides work untouched. Preserve native scene audio on integration.
+
+## Latest main motion-stack receipts
+
+PR165 merged73c3ea2a; PR166 merged1f43eeaf; PR170 verified MERGED2026-10-11T07:48:03Z at e6e083bf3c880cfcab4e908d320d9d5f83fabaa0. These are inherited completed tasks, not Companion merge authorization.
 
 ## Protected delivery
 Accepted film: workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4

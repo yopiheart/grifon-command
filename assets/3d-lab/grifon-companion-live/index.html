@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#09090B">
+  <link rel="icon" href="data:,">
+  <title>Grifon · Live companion prototype</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="companion-shell">
+    <header class="header">
+      <a class="wordmark" href="./">GRIFON<span> / companion</span></a>
+      <span class="prototype">Prototype</span>
+    </header>
+    <section class="companion" aria-labelledby="title">
+      <div class="introduction">
+        <h1 id="title">A little more expressive.</h1>
+        <p>Pick a reaction. Move your cursor, or touch and drag to catch his eye.</p>
+      </div>
+      <div id="stage" class="stage" aria-label="Interactive Grifon companion. Use the Look controls below to change his gaze.">
+        <div class="contact-shadow" aria-hidden="true"></div>
+        <img id="fallback" class="fallback" src="./neutral.png" width="800" height="800" alt="The approved soft, feathered Grifon companion">
+        <div id="canvas-host" class="canvas-host"></div>
+        <div class="stage-status"><span id="status" role="status">Preparing your companion…</span></div>
+      </div>
+      <div class="controls" aria-label="Companion controls">
+        <span class="control-label">Reaction preview</span>
+        <div class="reaction-picker" role="group" aria-label="Reaction preview">
+          <button type="button" data-state="idle" aria-pressed="true" disabled>Idle</button>
+          <button type="button" data-state="listening" aria-pressed="false" disabled>Listening</button>
+          <button type="button" data-state="reading" aria-pressed="false" disabled>Reading</button>
+          <button type="button" data-state="working" aria-pressed="false" disabled>Working</button>
+          <button type="button" data-state="ready" aria-pressed="false" disabled>Ready</button>
+        </div>
+        <div class="actions">
+          <button id="preview-all" type="button" aria-pressed="false" disabled>Preview all</button>
+          <button id="reset" type="button" disabled>Center</button>
+          <button id="pause" type="button" aria-pressed="false" disabled>Pause</button>
+          <button id="retry" type="button" hidden>Try again</button>
+        </div>
+        <details class="look-controls">
+          <summary>Gaze and blink controls</summary>
+          <div class="directions" role="group" aria-label="Look here">
+            <button type="button" data-look="-1,0" disabled>Left</button>
+            <button type="button" data-look="0,1" disabled>Up</button>
+            <button type="button" data-look="0,-1" disabled>Down</button>
+            <button type="button" data-look="1,0" disabled>Right</button>
+          </div>
+          <button id="blink" type="button" disabled>Blink</button>
+        </details>
+      </div>
+      <p class="motion-note" id="motion-note">Reaction previews only. No microphone or agent tasks are running.</p>
+      <details class="diagnostics">
+        <summary>Prototype details</summary>
+        <p>Live geometry with a fixed camera and baked lighting. This is an interaction study, before chat integration.</p>
+        <output id="diagnostics">Loading renderer…</output>
+      </details>
+    </section>
+    <footer>GRIFON COMPANION <span>Made to feel present.</span></footer>
+  </main>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

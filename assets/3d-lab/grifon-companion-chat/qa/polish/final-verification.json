@@ -1,0 +1,119 @@
+{
+  "verdict": "PASS",
+  "completedAt": "2026-10-06T16:18:34.871Z",
+  "baseCommit": "79c3a0de419e91c3de6570c4ce7ef87a7a033009",
+  "scope": "Independent no-spend browser verification of companion chat polish; real UI and WebGL avatar with explicitly labeled mocked generation/sample media.",
+  "checks": {
+    "browser": {
+      "command": "COMPANION_QA_DIR=assets/3d-lab/grifon-companion-chat/qa/polish/final-suite POLISH_PHASE=final npm run test:e2e -- --config tests/e2e/companion.config.ts",
+      "exitCode": 0,
+      "passed": 21,
+      "durationSeconds": 32.3,
+      "coverage": "Existing 18 workflow/recovery/allowance/fallback/account/mobile cases plus pointer batching, composer typography, and capped-history send regressions."
+    },
+    "focusedScroll": {
+      "command": "node assets/3d-lab/grifon-companion-chat/qa/polish/scroll-check.cjs",
+      "exitCode": 0,
+      "evidence": "scroll-report.json",
+      "finalDistanceFromBottomAt100ms": 0,
+      "finalDistanceFromBottomAt500ms": 0,
+      "nativeWheelCancelsFollow": true,
+      "typingPreservesReadingPosition": true
+    },
+    "performanceRefresh": {
+      "command": "node assets/3d-lab/grifon-companion-chat/qa/polish/measure.cjs final-refresh 375",
+      "exitCode": 0,
+      "evidence": "final-refresh-metrics.json",
+      "quietMachine": true,
+      "composerInputToNextFrameP95Ms": 12.6,
+      "composerSampleCount": 63,
+      "briefEditInputToNextFrameP95Ms": 44.2,
+      "briefEditMaxMs": 70.9,
+      "briefEditSampleCount": 32,
+      "storageWriteP95Ms": 0.5,
+      "storedDraftBytes": 333170,
+      "longTasksOver50ms": 0,
+      "avatarFrameP95Ms": 17,
+      "avatarFrameMaxMs": 66.6,
+      "focusIMEAndReadingPositionPreserved": true
+    },
+    "layout": {
+      "widths": [
+        320,
+        375,
+        390,
+        1280
+      ],
+      "overflow": false,
+      "controlsAtLeast44px": true,
+      "composerFont": "16px Inter, normal tracking"
+    },
+    "visual": {
+      "inspected": "final-typing-375.png plus independent critic final 375/390/1280 empty, brief, working and ready captures",
+      "whiteIframeMatteResolved": true,
+      "cornerPixelBefore": [
+        255,
+        255,
+        255
+      ],
+      "cornerPixelAfter": [
+        9,
+        9,
+        11
+      ],
+      "evidence": "capture-report.json"
+    }
+  },
+  "regressionProof": {
+    "pointer": {
+      "baselineImmediateBoundsReads": 120,
+      "finalImmediateBoundsReads": 0,
+      "finalAfterFrameBoundsReads": 1,
+      "baseline": "baseline-pointer.json",
+      "final": "final-pointer.json"
+    },
+    "typography": {
+      "baseline": "14px JetBrains Mono / 1.4px tracking; new test failed baseline",
+      "final": "16px Inter / normal tracking; test passes"
+    },
+    "scroll": {
+      "baselineCapped120DistanceAfterSend": 10319,
+      "oldPendingIntentRouteOverride": {
+        "exitCode": 1,
+        "timeoutMs": 500,
+        "remainingDistancePx": 12321
+      },
+      "causeEvidence": "scroll-trace.json proves browser scroll anchoring cancels unprotected pending follow before RAF",
+      "fixedEvidence": "scroll-report.json"
+    },
+    "matte": "white-iframe-regression-375.png and white-iframe-regression-1280.png preserve introduced visual failure; final-* corrected."
+  },
+  "provenance": {
+    "baseline": "baseline-metrics.json records served cached transformed-module hashes and git base source hashes separately; workspace hashes are not mislabeled as baseline.",
+    "earlierFinal": "final-metrics.json contains 375/390/1280 measurements after typography/matte fixes and before scroll-only fixes; its recorded source hashes remain authoritative.",
+    "current": "final-refresh-metrics.json and final 21-case suite ran against sourceHashes below. Final screenshots in final-suite are current source.",
+    "media": "final-mobile.webm and final-empty/typing/composer/brief/working/ready captures precede only the final scroll behavior changes; appearance, avatar, CSS and composer unchanged.",
+    "doNotUseForHandoff": "initial-* and white-iframe-regression-* show pre-fix matte; use final-* or final-suite captures."
+  },
+  "sourceHashes": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "42ef8b56bab51e6638feb98c081047d062e7d43ead8d097a83f99f5d07214db2",
+    "components/CompanionChat/CompanionAvatar.tsx": "cb70f156ab0a0b27906535fbc97a9cb162a143b377f01c765ed7500da8d21b71",
+    "components/CompanionChat/CompanionComposer.tsx": "11f2ea570b4124ab8cf5d7ec315ddec005d2664a6d0f1221038dd75d12593f6a",
+    "components/CompanionChat/companionChat.css": "a465f702e5416581b59143eabaceab99d53b1dc91312bd0da0c3620b67fccb5c"
+  },
+  "limitations": [
+    "Desktop Edge on ANGLE AMD Radeon(TM) Graphics (0x00001636), D3D11; mobile widths are viewport/touch emulation, not physical phone performance.",
+    "Input-event to next animation-frame opportunity is not physical input-to-photon latency; actual iOS keyboard unavailable.",
+    "No universal 60fps or broad speedup claim: before and after were locally responsive; initial brief-edit frame excursions remain below the 100ms local ceiling.",
+    "Mocked controller/API receipts verify UI wiring and recovery behavior, not actual paid provider output. No provider calls or production writes."
+  ],
+  "artifacts": {
+    "screenshots": "final-suite/initial-{320,375,390,1280}.png and final-{empty,typing,composer,brief,working,ready}-{375,390,1280}.png",
+    "video": "final-mobile.webm",
+    "parentBuildAndUnitEvidence": "build-verification.json"
+  },
+  "processes": {
+    "vitePID23652": "Parent-owned; left running.",
+    "standalonePID18960": "Untouched; left running."
+  }
+}

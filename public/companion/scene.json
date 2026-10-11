@@ -1,0 +1,676 @@
+{
+  "camera": {
+    "position": [
+      2.700000047683716,
+      -8.0,
+      2.549999952316284
+    ],
+    "target": [
+      0,
+      0,
+      1.53
+    ],
+    "up": [
+      0,
+      0,
+      1
+    ],
+    "ortho": 3.75
+  },
+  "objects": [
+    {
+      "name": "Left glossy eye blink crease",
+      "kind": "mesh",
+      "deform": "crease",
+      "texture": "hero",
+      "eyeCenter": [
+        -0.32499998807907104,
+        -0.6128948926925659,
+        1.7400000095367432
+      ],
+      "eyeBaseZ": 0.22689279913902283,
+      "attributes": {
+        "position": {
+          "offset": 0,
+          "count": 792,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 3168,
+          "count": 528,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 5280,
+          "count": 528,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 7392,
+        "count": 1536,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Right glossy eye blink crease",
+      "kind": "mesh",
+      "deform": "crease",
+      "texture": "hero",
+      "eyeCenter": [
+        0.32499998807907104,
+        -0.6128948926925659,
+        1.7400000095367432
+      ],
+      "eyeBaseZ": -0.22689279913902283,
+      "attributes": {
+        "position": {
+          "offset": 13536,
+          "count": 792,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 16704,
+          "count": 528,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 18816,
+          "count": 528,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 20928,
+        "count": 1536,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Continuous griffin silhouette",
+      "kind": "mesh",
+      "deform": "body",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 27072,
+          "count": 73350,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 320472,
+          "count": 48900,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 516072,
+          "count": 48900,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 711672,
+        "count": 146688,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Integrated cream facial disc",
+      "kind": "mesh",
+      "deform": "head",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 1298424,
+          "count": 9603,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 1336836,
+          "count": 6402,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 1362444,
+          "count": 6402,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 1388052,
+        "count": 18816,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Left glossy eye",
+      "kind": "mesh",
+      "deform": "eye",
+      "texture": "hero",
+      "eyeCenter": [
+        -0.32499998807907104,
+        -0.6128948926925659,
+        1.7400000095367432
+      ],
+      "eyeBaseZ": 0.22689279913902283,
+      "attributes": {
+        "position": {
+          "offset": 1463316,
+          "count": 4470,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 1481196,
+          "count": 2980,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 1493116,
+          "count": 2980,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 1505036,
+        "count": 8928,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Right glossy eye",
+      "kind": "mesh",
+      "deform": "eye",
+      "texture": "hero",
+      "eyeCenter": [
+        0.32499998807907104,
+        -0.6128948926925659,
+        1.7400000095367432
+      ],
+      "eyeBaseZ": -0.22689279913902283,
+      "attributes": {
+        "position": {
+          "offset": 1540748,
+          "count": 4470,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 1558628,
+          "count": 2980,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 1570548,
+          "count": 2980,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 1582468,
+        "count": 8928,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Compact hooked upper beak",
+      "kind": "mesh",
+      "deform": "head",
+      "texture": "hero",
+      "attributes": {
+        "position": {
+          "offset": 1618180,
+          "count": 14982,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 1678108,
+          "count": 9988,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 1718060,
+          "count": 9988,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 1758012,
+        "count": 29952,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Integrated lower beak",
+      "kind": "mesh",
+      "deform": "head",
+      "texture": "hero",
+      "attributes": {
+        "position": {
+          "offset": 1877820,
+          "count": 8070,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 1910100,
+          "count": 5380,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 1931620,
+          "count": 5380,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 1953140,
+        "count": 16128,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Mouth shadow",
+      "kind": "mesh",
+      "deform": "head",
+      "texture": "hero",
+      "attributes": {
+        "position": {
+          "offset": 2017652,
+          "count": 4470,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2035532,
+          "count": 2980,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2047452,
+          "count": 2980,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2059372,
+        "count": 8928,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Subtle beak nostril",
+      "kind": "mesh",
+      "deform": "head",
+      "texture": "hero",
+      "attributes": {
+        "position": {
+          "offset": 2095084,
+          "count": 4470,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2112964,
+          "count": 2980,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2124884,
+          "count": 2980,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2136804,
+        "count": 8928,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Subtle beak nostril.001",
+      "kind": "mesh",
+      "deform": "head",
+      "texture": "hero",
+      "attributes": {
+        "position": {
+          "offset": 2172516,
+          "count": 4470,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2190396,
+          "count": 2980,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2202316,
+          "count": 2980,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2214236,
+        "count": 8928,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Left folded wing",
+      "kind": "mesh",
+      "deform": "none",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 2249948,
+          "count": 10566,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2292212,
+          "count": 7044,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2320388,
+          "count": 7044,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2348564,
+        "count": 21120,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Left gold inner wing",
+      "kind": "mesh",
+      "deform": "none",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 2433044,
+          "count": 8646,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2467628,
+          "count": 5764,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2490684,
+          "count": 5764,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2513740,
+        "count": 17280,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Right folded wing",
+      "kind": "mesh",
+      "deform": "none",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 2582860,
+          "count": 10566,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2625124,
+          "count": 7044,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2653300,
+          "count": 7044,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2681476,
+        "count": 21120,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Right gold inner wing",
+      "kind": "mesh",
+      "deform": "none",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 2765956,
+          "count": 8646,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2800540,
+          "count": 5764,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 2823596,
+          "count": 5764,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 2846652,
+        "count": 17280,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Curled lion tail",
+      "kind": "mesh",
+      "deform": "none",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 2915772,
+          "count": 15654,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 2978388,
+          "count": 10436,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 3020132,
+          "count": 10436,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 3061876,
+        "count": 31296,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Rounded gold tail tip",
+      "kind": "mesh",
+      "deform": "none",
+      "texture": "skin",
+      "attributes": {
+        "position": {
+          "offset": 3187060,
+          "count": 4470,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 3204940,
+          "count": 2980,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 3216860,
+          "count": 2980,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 3228780,
+        "count": 8928,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Graphite short feather coat",
+      "kind": "hair",
+      "deform": "body",
+      "texture": "skin",
+      "sourceStrands": 240000,
+      "strands": 30000,
+      "attributes": {
+        "position": {
+          "offset": 3264492,
+          "count": 450000,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 5064492,
+          "count": 300000,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 6264492,
+          "count": 300000,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 7464492,
+        "count": 240000,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Cream fine facial down",
+      "kind": "hair",
+      "deform": "head",
+      "texture": "skin",
+      "sourceStrands": 110000,
+      "strands": 13750,
+      "attributes": {
+        "position": {
+          "offset": 8424492,
+          "count": 206250,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 9249492,
+          "count": 137500,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 9799492,
+          "count": 137500,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 10349492,
+        "count": 110000,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Folded wing fine feathers 0",
+      "kind": "hair",
+      "deform": "none",
+      "texture": "skin",
+      "sourceStrands": 13000,
+      "strands": 1625,
+      "attributes": {
+        "position": {
+          "offset": 10789492,
+          "count": 24375,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 10886992,
+          "count": 16250,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 10951992,
+          "count": 16250,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 11016992,
+        "count": 13000,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Folded wing fine feathers 1",
+      "kind": "hair",
+      "deform": "none",
+      "texture": "skin",
+      "sourceStrands": 13000,
+      "strands": 1625,
+      "attributes": {
+        "position": {
+          "offset": 11068992,
+          "count": 24375,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 11166492,
+          "count": 16250,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 11231492,
+          "count": 16250,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 11296492,
+        "count": 13000,
+        "itemSize": 1
+      }
+    },
+    {
+      "name": "Tail short fine coat",
+      "kind": "hair",
+      "deform": "none",
+      "texture": "skin",
+      "sourceStrands": 28000,
+      "strands": 3500,
+      "attributes": {
+        "position": {
+          "offset": 11348492,
+          "count": 52500,
+          "itemSize": 3
+        },
+        "uv": {
+          "offset": 11558492,
+          "count": 35000,
+          "itemSize": 2
+        },
+        "weight": {
+          "offset": 11698492,
+          "count": 35000,
+          "itemSize": 2
+        }
+      },
+      "index": {
+        "offset": 11838492,
+        "count": 28000,
+        "itemSize": 1
+      }
+    }
+  ],
+  "binaryBytes": 11950492,
+  "hairStrands": 50500,
+  "sourceSha256": "94fb26540d6f8f2f600416b39bf891d573cec5a2f923d3bd591275e699904446",
+  "appearance": "Camera-projected baked Cycles lighting on real 3D geometry. Fixed camera and limited head motion; not free-view or relighting."
+}

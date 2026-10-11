@@ -1,0 +1,12 @@
+{
+  "calls": 1,
+  "storedStage": {
+    "id": "scene_images",
+    "label": "scene_images",
+    "status": "running",
+    "attempts": 1
+  },
+  "unexpected": [],
+  "readOnlyOutput": "visible",
+  "meaning": "One simulated image submission; unresolved receipt prevents repeat, saved output remains viewable."
+}

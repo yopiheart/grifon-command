@@ -1,0 +1,19 @@
+{
+  "checkedOn": "2026-10-11",
+  "operation": "Read-only PostgreSQL catalogs; no user rows or function invocation",
+  "project": "GRIFON AI",
+  "projectRef": "varoqxjccqmskzeejagn",
+  "postgresVersion": "17.6",
+  "consumeFinishedAdPresent": false,
+  "requiredTables": {
+    "rate_limits": { "rls": true, "primaryKey": "key", "countType": "integer", "windowType": "timestamp with time zone" },
+    "subscriptions": { "rls": true, "primaryKey": "user_id", "creditTypes": "integer NOT NULL DEFAULT 0" }
+  },
+  "prerequisiteFunctions": [
+    { "name": "consume_credit(uuid,text)", "sourceMd5Lf": "4bfb6db77ed4d04f45f9b218eeb43430", "securityDefiner": true, "searchPath": "public", "anonExecute": false, "authenticatedExecute": false, "serviceRoleExecute": true },
+    { "name": "rate_limit_check(text,integer,integer)", "sourceMd5Lf": "b395e65a39839e583a762ffb87faaeb6", "securityDefiner": true, "searchPath": "public", "anonExecute": false, "authenticatedExecute": false, "serviceRoleExecute": true }
+  ],
+  "productionMutations": "NONE",
+  "restRpcVerification": "NOT RUN; catalog existence does not prove PostgREST invocation",
+  "rolloutGate": "Separate approval and exact target migration required before deploying callers"
+}

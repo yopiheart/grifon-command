@@ -1,0 +1,161 @@
+{
+  "checks": [
+    {
+      "name": "default preview hides fixture controls",
+      "pass": true
+    },
+    {
+      "name": "mobile preview exposes an always-visible simulation disclosure",
+      "pass": true
+    },
+    {
+      "name": "preview never exposes consent switch",
+      "pass": true
+    },
+    {
+      "name": "preview settings section headings use normal-case sans semibold",
+      "pass": true
+    },
+    {
+      "name": "preview settings action controls use normal-case sans semibold",
+      "pass": true
+    },
+    {
+      "name": "preview signed-out screen has real login link",
+      "pass": true
+    },
+    {
+      "name": "collapsed desktop preview exposes an always-visible simulation disclosure",
+      "pass": true
+    },
+    {
+      "name": "preview has no external account writes",
+      "pass": true,
+      "requests": []
+    }
+  ],
+  "observations": [
+    {
+      "scenario": "preview-settings-typography",
+      "typography": [
+        {
+          "text": "",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        },
+        {
+          "text": "Plan & billing",
+          "tag": "H3",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "-0.28px",
+          "size": "14px"
+        },
+        {
+          "text": "Preview plan optionsView available plans",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        },
+        {
+          "text": "Privacy",
+          "tag": "H3",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "-0.28px",
+          "size": "14px"
+        },
+        {
+          "text": "Appearance",
+          "tag": "H3",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "-0.28px",
+          "size": "14px"
+        },
+        {
+          "text": "Help & legal",
+          "tag": "H3",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "-0.28px",
+          "size": "14px"
+        },
+        {
+          "text": "Help & support",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        },
+        {
+          "text": "Terms of service",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        },
+        {
+          "text": "Privacy policy",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        },
+        {
+          "text": "Sign in to GrifonOpen the real login page",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        },
+        {
+          "text": "Account",
+          "tag": "H3",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "-0.28px",
+          "size": "14px"
+        },
+        {
+          "text": "Simulate sign out",
+          "tag": "BUTTON",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "spacing": "normal",
+          "size": "14px"
+        }
+      ]
+    },
+    {
+      "scenario": "preview-network",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    }
+  ]
+}

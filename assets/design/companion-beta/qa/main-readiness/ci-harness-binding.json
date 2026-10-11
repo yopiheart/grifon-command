@@ -1,0 +1,147 @@
+{
+  "capturedUtc": "2026-10-11T08:49:53.571Z",
+  "headAtReceipt": "b60c44513a60d3d8bb15e4ce94d13c450fe26b93",
+  "platform": "win32",
+  "browser": "Installed Playwright Chromium",
+  "focused": {
+    "exitCode": 0,
+    "passed": 15,
+    "failed": 0,
+    "retries": 0,
+    "skipped": 0,
+    "durationMs": 184910.981,
+    "instrumentedCases": 4
+  },
+  "originalFull": {
+    "exitCode": 1,
+    "passed": 41,
+    "failed": 2,
+    "retries": 0,
+    "skipped": 0,
+    "durationMs": 462531.39300000004,
+    "instrumentedCases": 24,
+    "sourceChangeExplanation": "The account spec gained the parent-authorized shell-ready wait while this 43-case run was active. Account is outside these three tested specs; all three tested specs and application source stayed frozen. No tracked file was edited by this smoke agent.",
+    "failures": [
+      "Immediate reload before uploaded photo save acknowledgement",
+      "Leave-and-return before accepted answer save acknowledgement"
+    ]
+  },
+  "postFixRepeats": {
+    "exitCode": 0,
+    "passed": 12,
+    "failed": 0,
+    "retries": 0,
+    "skipped": 0,
+    "durationMs": 78077.65999999999,
+    "cases": [
+      "Draft reload/account isolation",
+      "Reload during typing",
+      "Leave-and-return during typing",
+      "Late subscription response account isolation"
+    ],
+    "repeatsEach": 3,
+    "instrumentedCases": 12,
+    "watchedFiles": 455,
+    "sourceChanges": [],
+    "pageErrors": [],
+    "rejectedExternalRequests": 0
+  },
+  "startupControls": [
+    {
+      "control": "no-transition",
+      "exitCode": 1,
+      "expectedNegative": true,
+      "mutationApplied": true,
+      "coloredPixels": 3431,
+      "transitionCount": 0,
+      "failure": "normal motion gets one real opacity transition: expected length 1, received 0"
+    },
+    {
+      "control": "slot-drift",
+      "exitCode": 1,
+      "expectedNegative": true,
+      "mutationApplied": true,
+      "coloredPixels": 3431,
+      "transitionCount": 1,
+      "failure": "avatar slot left stays stable: expected <=0.02px, received 0.125px"
+    }
+  ],
+  "sourceHashes": [
+    {
+      "filename": "tests/e2e/companion-chat.spec.ts",
+      "sha256": "adae48cd56b3275b12af4da057cc626aa5852bc51cdd878add29606e4cc9c3bd",
+      "copiedAssertionsUnchanged": true
+    },
+    {
+      "filename": "tests/e2e/companion-typing.spec.ts",
+      "sha256": "9a3a47e77d261e41d9e2e74b8e4bdd2917f5d2545191a1260af9cc2e68009bd7",
+      "copiedAssertionsUnchanged": true
+    },
+    {
+      "filename": "tests/e2e/companion-account.spec.ts",
+      "sha256": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+      "copiedAssertionsUnchanged": true
+    },
+    {
+      "filename": "App.tsx",
+      "sha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    },
+    {
+      "filename": "playwright.config.ts",
+      "sha256": "2cdd715a808ca2ec3f3b101575af6c7eb53ff7812ab61a44d2e19431a4da5f8e"
+    },
+    {
+      "filename": "tests/e2e/companion-startup.spec.ts",
+      "sha256": "a44b1a1f726a7e04ce7d5d6cd1a709e48088276999a0fb07d46c84c776564ad6"
+    },
+    {
+      "filename": "tests/e2e/companion-account-fixture.ts",
+      "sha256": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4"
+    },
+    {
+      "filename": "tests/e2e/fixtures/oneshotRecovery.ts",
+      "sha256": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507"
+    },
+    {
+      "filename": "tools/verify-recovery-server.mjs",
+      "sha256": "a48f6d3fd9e701a3f1b6902221d74eece56e944156cc4b5ccc0ef91c6ebbf990"
+    }
+  ],
+  "harnessHashes": [
+    {
+      "filename": ".tmp/companion-main-readiness/repro/three-specs.config.ts",
+      "sha256": "a3abd7dc5029c784a61d4c5873794188c93d4dcc3282443633346ad2898df84f"
+    },
+    {
+      "filename": ".tmp/companion-main-readiness/repro/recovery-repeat.config.ts",
+      "sha256": "e1f2b383aa2691e4cc2553f31bf17d065af890387a066b895a54c415cb705226"
+    },
+    {
+      "filename": ".tmp/companion-main-readiness/repro/startup-controls.config.ts",
+      "sha256": "bcb65f9372794892401fc43e1d81fdab2de7a5c2c9df58e41bff5ac64bc622ce"
+    },
+    {
+      "filename": ".tmp/companion-main-readiness/repro/server.mjs",
+      "sha256": "45dcef9b79ee461df22e2b0410664e82e334521bd8a790e8e7441e0f7551ef00"
+    },
+    {
+      "filename": ".tmp/companion-main-readiness/repro/startup-negative-control.ts",
+      "sha256": "43cae0412b8b7feed9945172dc1f95175c275ffec464e80dbb4d4166d8405209"
+    }
+  ],
+  "serverOnlyHostPortAdapted": true,
+  "cleanup": {
+    "pid": 17500,
+    "stopped": true,
+    "stoppedUtc": "2026-10-11T08:49:04.0190261Z",
+    "exactCommandLine": "\"C:\\Program Files\\nodejs\\node.exe\" .tmp/companion-main-readiness/repro/server.mjs",
+    "unrelated5173Untouched": true,
+    "leftover5187Listeners": 0
+  },
+  "limits": [
+    "Local isolated fixture-only origin; not a root public API-guard, hosted Linux or entire browser-suite pass",
+    "The original full 43-case run remains 41 pass/2 fail; subsequent affected cases all passed three repeats after parent fixes",
+    "Early shared identity-hook counters cover 4 focused/24 full cases only; unique hooks covered all 12 post-fix executions",
+    "No app source edits, credentials, paid/live calls, production writes or unrelated process stops"
+  ]
+}

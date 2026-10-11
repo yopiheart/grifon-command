@@ -1,0 +1,174 @@
+[
+  {
+    "width": 375,
+    "overflow": false,
+    "controls": [
+      {
+        "label": "Open conversations",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "New chat",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Attach product photo",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Message Grifon",
+        "height": 44,
+        "font": "14px",
+        "weight": "400",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Start voice input",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Send",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "controls": [
+      {
+        "label": "Open conversations",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "New chat",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Attach product photo",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Message Grifon",
+        "height": 44,
+        "font": "14px",
+        "weight": "400",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Start voice input",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Send",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "overflow": false,
+    "controls": [
+      {
+        "label": "Collapse conversations",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "New chat",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Search chats",
+        "height": 20,
+        "font": "14px",
+        "weight": "400",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Open chat: New chat",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Studio",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Account settings",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Attach product photo",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Message Grifon",
+        "height": 44,
+        "font": "14px",
+        "weight": "400",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Start voice input",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      },
+      {
+        "label": "Send",
+        "height": 44,
+        "font": "14px",
+        "weight": "600",
+        "family": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+      }
+    ]
+  }
+]

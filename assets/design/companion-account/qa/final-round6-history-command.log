@@ -1,0 +1,47 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep actual landing Research|Studio Edit Bay|chat is the default|intended tool|pending checkout|return-to-ad|actual email OTP|navigates after saving and browser Back
+
+
+Running 11 tests using 1 worker
+
+(node:26876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\companion-account.spec.ts:264:1 › chat is the default app entry and Studio navigation preserves draft and browser history (3.4s)
+  ok  2 tests\e2e\companion-account.spec.ts:276:1 › actual landing Research action survives browser Back and Forward (2.0s)
+  x   3 tests\e2e\companion-account.spec.ts:293:1 › Studio Edit Bay selection returns to the original chat with browser Back (45.1s)
+(node:4020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 tests\e2e\companion-account.spec.ts:310:1 › actual email OTP entry returns to default chat after a recoverable invalid code (4.1s)
+  ok  5 tests\e2e\companion-account.spec.ts:340:1 › an intended tool takes precedence over the default chat entry (1.2s)
+  ok  6 tests\e2e\companion-account.spec.ts:350:1 › pending checkout keeps precedence over intended tool and return-to-ad intents (2.3s)
+  ok  7 tests\e2e\companion-account.spec.ts:372:1 › a return-to-ad marker with no finished ad safely retains the chat entry (1.3s)
+  ok  8 tests\e2e\companion-account.spec.ts:477:3 › settings Upgrade plan navigates after saving and browser Back restores chat (1.7s)
+  ok  9 tests\e2e\companion-account.spec.ts:477:3 › settings Help & support navigates after saving and browser Back restores chat (1.7s)
+  ok 10 tests\e2e\companion-account.spec.ts:477:3 › settings Terms of service navigates after saving and browser Back restores chat (1.8s)
+  ok 11 tests\e2e\companion-account.spec.ts:477:3 › settings Privacy policy navigates after saving and browser Back restores chat (1.8s)
+
+
+  1) tests\e2e\companion-account.spec.ts:293:1 › Studio Edit Bay selection returns to the original chat with browser Back
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Edit Bay, requires pro', exact: true })
+
+
+      297 |   await page.getByRole('button', { name: 'Studio', exact: true }).click();
+      298 |   await expect(page).toHaveURL(/\/app\?experience=studio$/);
+    > 299 |   await page.getByRole('button', { name: 'Edit Bay, requires pro', exact: true }).click();
+          |                                                                                   ^
+      300 |   await expect(page.getByPlaceholder('Paste your script or outline here...', { exact: true })).toBeVisible();
+      301 |   await page.goBack();
+      302 |   await expect(page).toHaveURL(/\/app$/);
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:299:83
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-Studio-E-39e49-inal-chat-with-browser-Back\error-context.md
+
+  1 failed
+    tests\e2e\companion-account.spec.ts:293:1 › Studio Edit Bay selection returns to the original chat with browser Back
+  10 passed (1.2m)
