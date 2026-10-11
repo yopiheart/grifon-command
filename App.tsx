@@ -203,6 +203,7 @@ const App: React.FC = () => {
   // component's state, which doesn't unmount while a legal route renders.
   const [legalReturn, setLegalReturn] = useState<LegalReturn | null>(() => window.history.state?.legalReturn ?? null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isResumingCheckout, setIsResumingCheckout] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
 
   // Quota-wall: published by the transport layer (proxyCall) when a metered
@@ -623,11 +624,11 @@ const App: React.FC = () => {
   // redirect) can restore the finished ad instead of falsely finding nothing.
   useEffect(() => {
     if (!isAuthenticated || currentRoute !== 'app') return;
-    if (peekIntendedPlan()) return;
+    if (isResumingCheckout || peekIntendedPlan()) return;
     if (isLoadingSession) return;
     if (!popReturnToAd()) return;
     restoreFinishedAd(); // no-op when no step-8 ad exists
-  }, [isAuthenticated, currentRoute, isLoadingSession]);
+  }, [isAuthenticated, currentRoute, isLoadingSession, isResumingCheckout]);
 
   // One-question segmentation intent (the landing chip modal). Same ordering
   // contract as the two intents above — a pending plan checkout still wins. A
@@ -657,7 +658,9 @@ const App: React.FC = () => {
     if (!isAuthenticated) return;
     const intended = popIntendedPlan();
     if (!intended) return;
+    setIsResumingCheckout(true);
     startCheckout(intended.plan_id, intended.billing_cycle).catch((err) => {
+      setIsResumingCheckout(false);
       toast.error('Could not resume checkout', { description: err?.message ?? 'Please try again.' });
     });
   }, [isAuthenticated]);

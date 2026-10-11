@@ -157,11 +157,13 @@ for (const width of [375, 390, 1280]) {
 test('pending intake and working production reactions cannot leak into a new chat', async ({ page }) => {
   const network = await configure(page, 390); await load(page); await ready(page); await markReadyRenderer(page);
   const requestStart = network.requests.length;
+  await page.clock.install(); await page.clock.pauseAt(new Date(Date.now() + 2 * 60 * 60 * 1000));
   await input(page).fill('A pending coffee question'); await input(page).press('Enter');
   await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toBeVisible();
   const intakeId = (await currentId(page))!;
   await page.getByRole('button', { name: 'New chat', exact: true }).click();
-  await expect(page.getByTestId('companion-chat')).not.toHaveAttribute('data-chat-id', intakeId); await ready(page);
+  await expect(page.getByTestId('companion-chat')).not.toHaveAttribute('data-chat-id', intakeId);
+  await page.clock.resume(); await ready(page);
   await expect.poll(async () => (await observation(page)).reaction).toBe('idle');
   // Exceed the existing600ms reply window to observe any retained old callback.
   await page.waitForTimeout(700); await expect(page.locator('.companion-message-user')).toHaveCount(0);

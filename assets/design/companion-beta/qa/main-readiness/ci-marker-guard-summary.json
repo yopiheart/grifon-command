@@ -1,0 +1,894 @@
+{
+  "capturedUtc": "2026-10-11T11:06:39.870Z",
+  "runId": 38133637033,
+  "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033",
+  "status": "completed",
+  "conclusion": "failure",
+  "identity": {
+    "head": "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb",
+    "base": "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+    "remoteMain": "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+    "prMergeCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9",
+    "mergeParents": [
+      "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+      "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb"
+    ],
+    "actualCheckoutCommits": [
+      "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+    ],
+    "checkoutJobCount": 35,
+    "missingCheckoutJobs": [],
+    "testedCommits": [
+      {
+        "parents": [
+          "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+          "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb"
+        ],
+        "sha": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9",
+        "tree": "11200e9ac442e49f2f85f43e5847c1d690920064"
+      }
+    ],
+    "remoteHeadTree": "11200e9ac442e49f2f85f43e5847c1d690920064",
+    "mergeTree": "11200e9ac442e49f2f85f43e5847c1d690920064",
+    "localHead": "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb",
+    "localTree": "11200e9ac442e49f2f85f43e5847c1d690920064",
+    "allTreesMatch": true,
+    "watchedFiles": 442,
+    "changedFiles": []
+  },
+  "source": {
+    "watchedFiles": 442,
+    "beforeHashSet": "a9d3ccd8520c5e73d7320ecf31a7e06da7c9f7c499965ffbfcbb3b32c5023982",
+    "currentHashSet": "a9d3ccd8520c5e73d7320ecf31a7e06da7c9f7c499965ffbfcbb3b32c5023982",
+    "changedFiles": [],
+    "allObservationsUnchanged": true
+  },
+  "browser": {
+    "planned": 224,
+    "plannedShards": 32,
+    "plannedPerShard": 7,
+    "collectedShards": 32,
+    "uniqueReported": 224,
+    "mappedDiscoveryIds": 224,
+    "firstAttemptPasses": 222,
+    "passedIncludingFlakes": 223,
+    "flakyPasses": 1,
+    "persistentFailures": 1,
+    "unresolvedFailedFirstAttempts": 0,
+    "failed": 1,
+    "skipped": 0,
+    "unreported": 0,
+    "attempts": 226,
+    "retryAttempts": 2,
+    "duplicates": [],
+    "omissions": [],
+    "extras": [],
+    "partitionMismatches": [],
+    "actualKeySetSha256": "24c66a4a7765b4f17588d8afc0bf25685162c4a7372f5e5d90306712d8686b50",
+    "mappedDiscoveryIdSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267",
+    "expectedDiscoveryIdSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267",
+    "exactDiscoveryIdUnion": true,
+    "shards": [
+      {
+        "name": "e2e (1)",
+        "jobId": 114452910839,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 137,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910839",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (2)",
+        "jobId": 114452911039,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 233,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452911039",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (3)",
+        "jobId": 114452910827,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 288,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910827",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (4)",
+        "jobId": 114452910831,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 271,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910831",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (5)",
+        "jobId": 114452910886,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 8,
+        "passed": 7,
+        "firstAttemptPasses": 6,
+        "flakyPasses": 1,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 1,
+        "durationSeconds": 147,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910886",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (6)",
+        "jobId": 114452910808,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 156,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910808",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (7)",
+        "jobId": 114452910906,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 360,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910906",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (8)",
+        "jobId": 114452910885,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 452,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910885",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (9)",
+        "jobId": 114452910891,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 535,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910891",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (10)",
+        "jobId": 114452910853,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 224,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910853",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (11)",
+        "jobId": 114452910921,
+        "conclusion": "failure",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 8,
+        "passed": 6,
+        "firstAttemptPasses": 6,
+        "flakyPasses": 0,
+        "failed": 1,
+        "skipped": 0,
+        "retryAttempts": 1,
+        "durationSeconds": 473,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910921",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (12)",
+        "jobId": 114452911011,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 342,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452911011",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (13)",
+        "jobId": 114452911072,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 332,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452911072",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (14)",
+        "jobId": 114452910942,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 691,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910942",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (15)",
+        "jobId": 114452910954,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 390,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910954",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (16)",
+        "jobId": 114452910907,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 183,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910907",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (17)",
+        "jobId": 114452910972,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 215,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910972",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (18)",
+        "jobId": 114452910968,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 213,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910968",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (19)",
+        "jobId": 114452910958,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 284,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910958",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (20)",
+        "jobId": 114452910989,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 202,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910989",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (21)",
+        "jobId": 114452911080,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 281,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452911080",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (22)",
+        "jobId": 114452910965,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 136,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910965",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (23)",
+        "jobId": 114452910920,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 139,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910920",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (24)",
+        "jobId": 114452910929,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 175,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910929",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (25)",
+        "jobId": 114452910999,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 155,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910999",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (26)",
+        "jobId": 114452910984,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 156,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910984",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (27)",
+        "jobId": 114452910948,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 143,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910948",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (28)",
+        "jobId": 114452910909,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 137,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910909",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (29)",
+        "jobId": 114452910971,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 212,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910971",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (30)",
+        "jobId": 114452911031,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 143,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452911031",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (31)",
+        "jobId": 114452910994,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 162,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910994",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      },
+      {
+        "name": "e2e (32)",
+        "jobId": 114452911098,
+        "conclusion": "success",
+        "planned": 7,
+        "uniqueCases": 7,
+        "attemptCount": 7,
+        "passed": 7,
+        "firstAttemptPasses": 7,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "durationSeconds": 162,
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452911098",
+        "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+      }
+    ],
+    "flakyCases": [
+      {
+        "key": "[chromium] › tests/e2e/companion-account.spec.ts:351:1 › pending checkout keeps precedence over intended tool and return-to-ad intents",
+        "discoveryId": "09b356c665385834cc94-bb64b0a208535d2dad71",
+        "shard": 5,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-account.spec.ts:351:1 › pending checkout keeps precedence over intended tool and return-to-ad intents",
+            "status": "failed",
+            "index": 3,
+            "retry": 0,
+            "duration": "2.0s",
+            "timestamp": "2026-10-11T11:00:10.8715772Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-account.spec.ts:351:1 › pending checkout keeps precedence over intended tool and return-to-ad intents",
+            "status": "passed",
+            "index": 4,
+            "retry": 1,
+            "duration": "3.2s",
+            "timestamp": "2026-10-11T11:00:14.7531033Z"
+          }
+        ]
+      }
+    ],
+    "failureCases": [
+      {
+        "key": "[chromium] › tests/e2e/companion-continuity.spec.ts:157:1 › pending intake and working production reactions cannot leak into a new chat",
+        "discoveryId": "e3c9461a09e5dd994bb3-34ba3ebf3a59c207ec13",
+        "shard": 11,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-continuity.spec.ts:157:1 › pending intake and working production reactions cannot leak into a new chat",
+            "status": "failed",
+            "index": 4,
+            "retry": 0,
+            "duration": "25.1s",
+            "timestamp": "2026-10-11T11:03:18.6243128Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-continuity.spec.ts:157:1 › pending intake and working production reactions cannot leak into a new chat",
+            "status": "failed",
+            "index": 5,
+            "retry": 1,
+            "duration": "29.4s",
+            "timestamp": "2026-10-11T11:03:49.2626856Z"
+          }
+        ]
+      }
+    ],
+    "countingLimit": "Actual completed reporter keys are mapped one-to-one to immutable fresh-discovery IDs; CI list reporter does not itself emit IDs. Running/unreported attempts are not counted as passes or skips."
+  },
+  "verify": {
+    "conclusion": "success",
+    "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910899",
+    "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9",
+    "units": {
+      "passed": 1572,
+      "existingSkipped": 32,
+      "total": 1604,
+      "failed": 0
+    },
+    "unitFiles": {
+      "passed": 127,
+      "skipped": 9,
+      "total": 136
+    },
+    "duration": "   Duration  134.59s (transform 1.82s, setup 0ms, import 6.64s, tests 114.48s, environment 10ms)",
+    "nativeContracts": {
+      "total": 26,
+      "passed": 25,
+      "failed": 0,
+      "skipped": 1
+    },
+    "gates": [
+      "OK: every scripts/*.ps1 is pure ASCII.",
+      "✓ built in 3.30s",
+      "[bundle-leak] OK — scanned 11 bundle file(s), 0 crown-jewel markers found.",
+      "voice-lint sync ok — 2 funnel katulad ng _template (222b3ede9f9b)",
+      "Eval prompt sync: 6 covered pairs match. Other harness prompts, models and runtime behavior are outside this check.",
+      "pass=25 fail=0"
+    ],
+    "steps": [
+      {
+        "name": "Set up job",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install dependencies",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build (tsc + vite)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Crown-jewel bundle-leak guard",
+        "conclusion": "success"
+      },
+      {
+        "name": "Funnel voice-lint sync",
+        "conclusion": "success"
+      },
+      {
+        "name": "Evaluation prompt copy sync (static, no provider calls)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Permission-gate harness",
+        "conclusion": "success"
+      },
+      {
+        "name": "Codex desktop migration contracts",
+        "conclusion": "success"
+      },
+      {
+        "name": "Test (vitest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Design token lint",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "conclusion": "success"
+      },
+      {
+        "name": "Complete job",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "database": {
+    "conclusion": "success",
+    "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910810",
+    "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9",
+    "totalChecks": 24,
+    "checkNames": [
+      "Existing SQL transactional assertions",
+      "video_ads: original monthly duplicate-charge rejection",
+      "video_ads: original topup duplicate-charge rejection",
+      "omni_ads: original monthly duplicate-charge rejection",
+      "omni_ads: original topup duplicate-charge rejection",
+      "video_ads: same ad monthly exactly once",
+      "video_ads: same ad topup exactly once",
+      "video_ads: different ads last monthly slot",
+      "video_ads: different ads last topup credit",
+      "video_ads: rolled back holder then waiter",
+      "video_ads: rolled back topup holder then waiter",
+      "video_ads: monthly lost response replay and aged receipt",
+      "video_ads: topup lost response replay and aged receipt",
+      "omni_ads: same ad monthly exactly once",
+      "omni_ads: same ad topup exactly once",
+      "omni_ads: different ads last monthly slot",
+      "omni_ads: different ads last topup credit",
+      "omni_ads: rolled back holder then waiter",
+      "omni_ads: rolled back topup holder then waiter",
+      "omni_ads: monthly lost response replay and aged receipt",
+      "omni_ads: topup lost response replay and aged receipt",
+      "SET ROLE anon: denied",
+      "SET ROLE authenticated: denied",
+      "SET ROLE service_role: allowed"
+    ],
+    "observedIndependentLockCases": 12,
+    "cleanup": "Owned database and bootstrap roles dropped",
+    "runtime": "Isolated PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2); no application or provider connections",
+    "limitations": "Isolated PostgreSQL only; not target Supabase rollout or PostgREST verification"
+  },
+  "artifacts": {
+    "conclusion": "success",
+    "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910830",
+    "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9",
+    "anchorCount": 5,
+    "useful": [
+      "  page 15 KB",
+      "  artifacts/eli5-image-gate.html unchanged",
+      "check:artifact-anchors ok"
+    ]
+  },
+  "pr": {
+    "base": "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+    "draft": true,
+    "head": "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb",
+    "mergeCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9",
+    "mergeable": true,
+    "mergeableState": "unstable",
+    "url": "https://github.com/yopiheart/grifon-command/pull/177"
+  },
+  "commitStatuses": {
+    "sha": "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb",
+    "state": "success",
+    "statuses": [
+      {
+        "context": "Vercel",
+        "description": "Deployment has completed",
+        "state": "success",
+        "target_url": "https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/8T2fHskV21hTfw9BeUxhW2bActkb",
+        "updated_at": "2026-10-11T10:56:49Z"
+      }
+    ]
+  },
+  "deployments": [
+    {
+      "created_at": "2026-10-11T10:56:49Z",
+      "description": null,
+      "environment": "Preview",
+      "id": 6994510371,
+      "sha": "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb",
+      "statuses": [
+        {
+          "created_at": "2026-10-11T10:56:49Z",
+          "description": "Deployment has completed",
+          "environment": "Preview",
+          "environment_url": "https://grifon-command-hy952an3h-neilmaglayabusiness22-2085s-projects.vercel.app",
+          "state": "success"
+        }
+      ]
+    }
+  ],
+  "discovery": {
+    "sourceDirectory": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\ci-marker-validation",
+    "sourceAllSha256": "c3616db813ae5e0034fd14c549a9b19b74c0925135e96bcd374cfa31f19bf3b3",
+    "sourceValidationSha256": "664e39d9c9732cb91adef20bd7c2ef47a81aee82d6d299d4432cbbc55196efd5",
+    "config": {
+      "forbidOnly": true,
+      "workers": 1,
+      "shard": null,
+      "projects": [
+        {
+          "name": "chromium",
+          "retries": 1,
+          "timeout": 180000,
+          "actionTimeout": 15000,
+          "baseURL": "http://localhost:5173"
+        }
+      ]
+    }
+  },
+  "validation": {
+    "complete224": false,
+    "exact32x7": true,
+    "zeroOmissionsOrDuplicates": true,
+    "exactDiscoveryIdUnion": true,
+    "zeroBrowserFailuresOrSkips": false,
+    "allGateJobsPassed": true,
+    "exactTreeIdentity": true,
+    "watchedSourceUnchanged": true
+  },
+  "limits": [
+    "Read-only GitHub/local-identity observer; no browser, test rerun, provider, DB, deployment, cancel or source-mutation actions",
+    "Database gate exercises isolated PostgreSQL; target Supabase/PostgREST verification is separate evidence",
+    "Vercel/GitHub deployment status metadata does not prove hosted rendering, login or completed ad quality"
+  ],
+  "evidence": {
+    "fullSummary": "summary.json",
+    "caseLedger": "case-ledger.json",
+    "immutableExpectedIdsAndPartition": "expected-discovery.json",
+    "commandExitReceipts": "commands.json",
+    "pollHistory": "poll-history.json",
+    "sourceBefore": "source-before.json",
+    "sourceAfter": "source-after.json",
+    "actualCheckoutIdentities": "tested-checkout-identities.json",
+    "databaseProof": "database-proof.json"
+  }
+}

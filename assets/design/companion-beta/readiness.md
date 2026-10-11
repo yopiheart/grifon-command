@@ -54,6 +54,7 @@ keyboard/focus behavior, and narrow-screen layout. Evidence is linked in the fin
 | BETA-07 / P2 misleading recovery | Stop during research, then Back to brief. The button opens an empty new chat despite its label; the original draft remains in history. | Return to the same brief when no run exists; explicitly label creation of a new chat | Fixed; canceled-research browser regression preserves the completed brief |
 | BETA-08 / P1 automatic duplicate submission | One Resume, then a lost/missing paid output, without any user Retry, submitted another image request. Paid text 422/429 errors also replayed the whole flow. | Ambiguous paid submissions surface recovery instead of automatic re-submission; known safe pre-submit retry behavior remains distinct | Fixed with structural transport/output checks. Independent real-HTTP mocked red/green proof covers lost/malformed image, text, voice, video-ID and render results; final paid-text checks dispatch once. Tuned server ladder unchanged |
 | BETA-09 / P3 cosmetic | At a narrow phone viewport after intake, the long composer placeholder wraps and clips inside its one-line field. | Placeholder fits the field | Documented cosmetic issue; Edit brief and the complete instructions remain reachable. See independent disabled-generation screenshot; no core action is hidden |
+| BETA-10 / P2 checkout recovery | Resume a pending checkout, hold its auth read and let the real wizard session finish loading. App consumes the return-to-ad marker before leaving for checkout. | Checkout retains the marker until handoff; a failed handoff releases recovery | Fixed locally with a pending guard and recovery dependency. Original regressions2/2fail, fixed2/2pass; missing catch reset fails recovery. Final exact-head CI required. [Original timeline](qa/main-readiness/ci-checkout-intent-baseline.json) |
 
 Severity: P0 active privacy/charge incident; P1 launch blocker (data loss, unintended spend,
 privacy boundary, or blocked core journey); P2 recoverable usability/confusion; P3 cosmetic.
@@ -359,9 +360,57 @@ all38 watched hashes and ties the final tracked guard to the tested copy after
 the documented imports/origin/probe adaptation and line-ending normalization.
 The final guard still requires successful exact-head CI before merge.
 
+### Final marker CI: remaining checkout and typing blockers
+
+Exact `1b230ba4` completed all224 cases but failed the merge gate:222 first-pass,
+one checkout retry-pass and one persistent continuity failure; zero browser
+skips/omissions/duplicates. Build/static/artifacts,1,572units (32existing skips),
+database24/24 and Vercel passed. All35 checkout identities and442 frozen source
+files match the tested tree. [Full failed-run receipt](qa/main-readiness/ci-marker-guard-summary.json).
+
+The [checkout retry](qa/main-readiness/ci-checkout-intent-flake.json) exposed a
+real product race. Removing the pending plan precedes an awaited billing auth
+read; meanwhile wizard-session completion can rerun return-to-ad handling and
+consume its marker while the old App document is still open. The
+[controlled original](qa/main-readiness/ci-checkout-intent-baseline.json)
+observes actual plan removal, held SDK auth, real wizard IndexedDB success,
+automatic marker removal, auth release and actual checkout navigation in that
+order. The unchanged checkout URL/cycle/module assertions pass, then its marker
+assertion fails. No manual marker clear or product-module override is used.
+The [original fixture screenshot](qa/main-readiness/checkout-intent-original.png)
+shows the reached annual checkout; its email and billing response are synthetic.
+The pending guard now passes both strengthened checkout regressions locally;
+both fail against the original App. Removing only catch recovery reaches both
+error toasts, then fails the original marker-null assertion. The initial
+wrong-setter control failed during harness setup and is excluded from this
+proof. [Checkout control receipt](qa/main-readiness/ci-checkout-intent-result.json).
+
+The [continuity failure](qa/main-readiness/ci-continuity-typing-failure.json)
+occurs at the600ms typing-status prerequisite, before New chat or callback
+isolation assertions are reached. It does not demonstrate a callback leak.
+The scoped verifier holds the reply timer through the chat switch and resumes
+before renderer checks, retaining the original700ms observation window and
+all state/resource identity assertions. A real1,000ms Node delay expires the
+original typing status and fails its assertion; the fixed clock holds typing
+and passes the complete journey. Removing only the outer fixture remount key
+fails the original enabled-input assertion, proving production-state leakage
+detection. This does not establish a hosted intake callback leak or its exact
+timer timeline. [Continuity control receipt](qa/main-readiness/ci-continuity-clock-result.json).
+
+Build and full unit commands exited0:1,572passed and32existing skips; all four
+changed source hashes stayed unchanged. [Build/unit receipt](qa/main-readiness/ci-checkout-build-unit.json).
+Fresh static discovery retains all original224 IDs/titles and adds only the
+checkout-rejection regression:225unique cases, shard1=8 and the other31=7,
+zero omissions/duplicates,36zero-exit commands and38unchanged watched hashes.
+[Partition receipt](qa/main-readiness/ci-checkout-partition-result.json) and
+[final source binding](qa/main-readiness/ci-checkout-binding.json).
+Independent Codex source/raw-evidence/documentation review passes with no
+actionable P1/P2. [Review](qa/main-readiness/independent-review.md).
+Successful exact-head hosted CI remains required before merge readiness.
+
 ## External release gates
 
-- CI merge gate: all224 cases and required jobs must pass on the exact PR head. Completed `3791952e` passed [run38132512230](https://github.com/yopiheart/grifon-command/actions/runs/38132512230):223first-pass,1retry-pass, zero terminal failures/browser skips/omissions; build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel passed. [Bound receipt](qa/main-readiness/ci-clock-guard-summary.json). Latest head status on [PR177](https://github.com/yopiheart/grifon-command/pull/177) is authoritative before merge.
+- CI merge gate: every discovered browser case and required job must pass on the exact PR head. Latest completed `1b230ba4` [run38133637033](https://github.com/yopiheart/grifon-command/actions/runs/38133637033) is FAILED:223/224pass, one persistent continuity failure, checkout retry; non-browser gates pass. [Bound receipt](qa/main-readiness/ci-marker-guard-summary.json). Prior green379/9c receipts remain historical. Latest head status on [PR177](https://github.com/yopiheart/grifon-command/pull/177) is authoritative before merge.
 - [ ] Authenticated hosted desktop/mobile render and login checks on the release candidate. Vercel metadata confirms a successful preview build only; the old [blocked status](qa/hosted-checks.json) is historical.
 - [x] Prove exactly-once debit, rollback and permissions on isolated native PostgreSQL with real concurrent sessions.
 - [x] Approve/apply the exact target migration; verify catalog, permissions, REST cache resolution/anonymous denial and read-only service-role input validation.

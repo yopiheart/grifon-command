@@ -7,11 +7,11 @@ export const ACCOUNT_ID = 'account-fixture-user';
 export const ACCOUNT_EMAIL = 'account-smoke@example.test';
 
 /** Runs the real App, auth helpers, settings and IndexedDB against a mock SDK. */
-export async function installAccountApp(page: Page, signedIn = true) {
+export async function installAccountApp(page: Page, signedIn = true, holdCheckoutAuth = false) {
   const evidence = { unexpected: [] as string[], pageErrors: [] as string[], consentWrites: [] as string[] };
   (page as any).accountEvidence = evidence;
   page.on('pageerror', error => evidence.pageErrors.push(error.message));
-  await page.addInitScript(({ signedIn, userId, email }) => {
+  await page.addInitScript(({ signedIn, userId, email, holdCheckoutAuth }) => {
     if (!sessionStorage.getItem('account_fixture_initialized')) {
       sessionStorage.setItem('account_fixture_initialized', '1');
       if (signedIn) sessionStorage.setItem('account_fixture_signed_in', '1');
@@ -27,7 +27,18 @@ export async function installAccountApp(page: Page, signedIn = true) {
       planWaiters: [] as { userId: string; resolve: () => void }[],
       plans: { [userId]: 'pro', 'account-fixture-second': 'starter' } as Record<string, string>,
       activeUserId: userId,
+      checkoutAuthArmed: false, checkoutAuthHeld: false,
+      releaseCheckoutAuth: null as (() => void) | null,
+      rejectCheckoutAuth: null as (() => void) | null,
     };
+    if (holdCheckoutAuth) {
+      const originalRemove = Storage.prototype.removeItem;
+      Storage.prototype.removeItem = function (key: string) {
+        const planRemoved = this === sessionStorage && key === 'grifon_intended_plan' && this.getItem(key) !== null;
+        originalRemove.call(this, key);
+        if (planRemoved) state.checkoutAuthArmed = true;
+      };
+    }
     const user = { id: userId, email, created_at: '2025-01-01T00:00:00Z', last_sign_in_at: '2026-10-07T00:00:00Z', user_metadata: { full_name: 'Account Smoke', marketing_opt_in: false } };
     const session = () => sessionStorage.getItem('account_fixture_signed_in') ? { access_token: 'test-only-account-token', user: { ...user, id: state.activeUserId } } : null;
     const listeners = new Set<(event: string, session: unknown) => void>();
@@ -83,7 +94,16 @@ export async function installAccountApp(page: Page, signedIn = true) {
     const channel: any = { on: () => channel, subscribe: () => channel };
     (window as any).accountMockClient = {
       auth: {
-        getSession: async () => ({ data: { session: session() }, error: null }),
+        getSession: async () => {
+          if (state.checkoutAuthArmed) {
+            state.checkoutAuthArmed = false; state.checkoutAuthHeld = true;
+            await new Promise<void>((resolve, reject) => {
+              state.releaseCheckoutAuth = resolve;
+              state.rejectCheckoutAuth = () => reject(new Error('Account fixture checkout auth unavailable'));
+            });
+          }
+          return { data: { session: session() }, error: null };
+        },
         onAuthStateChange: (fn: (event: string, session: unknown) => void) => {
           listeners.add(fn); return { data: { subscription: { unsubscribe: () => listeners.delete(fn) } } };
         },
@@ -109,7 +129,7 @@ export async function installAccountApp(page: Page, signedIn = true) {
       },
       from: query, channel: () => channel, removeChannel() {},
     };
-  }, { signedIn, userId: ACCOUNT_ID, email: ACCOUNT_EMAIL });
+  }, { signedIn, userId: ACCOUNT_ID, email: ACCOUNT_EMAIL, holdCheckoutAuth });
   // Only the SDK's createClient factory is mocked; production OTP wrappers run.
   await page.route(/\/node_modules\/\.vite\/deps\/@supabase_supabase-js\.js(?:\?.*)?$/, route => route.fulfill({
     contentType: 'application/javascript', body: 'const createClient = () => window.accountMockClient; export { createClient }; export default { createClient };',

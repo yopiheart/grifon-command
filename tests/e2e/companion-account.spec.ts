@@ -348,25 +348,70 @@ test('an intended tool takes precedence over the default chat entry', async ({ p
   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);
 });
 
-test('pending checkout keeps precedence over intended tool and return-to-ad intents', async ({ page }) => {
-  const evidence = await installAccountApp(page);
+async function prepareHeldCheckout(page: Page) {
+  const evidence = await installAccountApp(page, true, true);
+  await page.goto('/privacy');
+  await page.evaluate(async userId => {
+    const store = await import('/services/wizardSessionStore.ts');
+    await store.setSession(userId, {
+      version: 1, savedAt: Date.now(), currentStep: 3,
+      clientDetails: { brandName: 'Account checkout draft', offer: 'Preserve this saved work' },
+      businessInfo: { product: 'Saved draft', audience: '', benefit: '', painPoint: '', separator: '', features: '', scriptType: 'Testimonial' },
+      script: null, language: null, finalScript: [], avatar: null, storyboard: [], videoPrompts: [],
+      aspectRatio: null, thumbnailUrl: null,
+    });
+  }, ACCOUNT_ID);
   await page.addInitScript(() => {
     if (window !== window.top || sessionStorage.getItem('account_plan_intent_seeded')) return;
     sessionStorage.setItem('account_plan_intent_seeded', '1');
     sessionStorage.setItem('grifon_intended_plan', JSON.stringify({ plan_id: 'business', billing_cycle: 'annual' }));
     sessionStorage.setItem('grifon_intended_module', 'market_research');
     sessionStorage.setItem('grifon_return_to_ad', '1');
+    window.history.replaceState({ appModule: 'creative_director' }, '', window.location.href);
   });
+  return evidence;
+}
+
+async function expectHeldCheckout(page: Page) {
+  await expect.poll(() => page.evaluate(() => (window as any).accountFixture.checkoutAuthHeld)).toBe(true);
+  // This surface is published only after the real saved-wizard read completes.
+  await expect(page.getByText('// PREVIOUS_SESSION_DETECTED', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'RESUME', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_plan'))).toBeNull();
+  expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');
+  expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');
+}
+
+test('pending checkout keeps precedence over intended tool and return-to-ad intents', async ({ page }) => {
+  const evidence = await prepareHeldCheckout(page);
   await page.route('**/api/billing?action=intent', route => route.fulfill({ json: {
     intent_id: 'account-fixture-intent', client_key: 'test-only-intent', status: 'awaiting_payment_method',
     plan: { id: 'business', name: 'Business', billing_cycle: 'annual', description: 'Account smoke fixture' },
     breakdown: { subtotal_centavos: 499700, vat_centavos: 0, total_centavos: 499700, add_on_centavos: 0 },
   } }));
   await page.goto('/app');
+  await expectHeldCheckout(page);
+  await page.evaluate(() => (window as any).accountFixture.releaseCheckoutAuth());
   await expect(page).toHaveURL(/\/checkout\?plan=business&cycle=annual$/);
   await expect(page.getByRole('radio', { name: /^Annual/ })).toBeChecked();
   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');
   expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');
+  expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);
+});
+
+test('failed checkout releases return-to-ad recovery after the saved draft has loaded', async ({ page }) => {
+  const evidence = await prepareHeldCheckout(page);
+  await page.goto('/app');
+  await expectHeldCheckout(page);
+  await page.evaluate(() => (window as any).accountFixture.rejectCheckoutAuth());
+  await expect(page.getByText('Could not resume checkout', { exact: true })).toBeVisible();
+  await expect(page.getByText('Account fixture checkout auth unavailable', { exact: true })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBeNull();
+  await expect(page).toHaveURL(/\/app$/);
+  await expect(page.getByText('// PREVIOUS_SESSION_DETECTED', { exact: true })).toBeVisible();
+  await expect(page.getByText('STEP_03_OF_08 — ACCOUNT CHECKOUT DRAFT', { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');
+  expect(evidence.consentWrites).toEqual([]);
   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);
 });
 
