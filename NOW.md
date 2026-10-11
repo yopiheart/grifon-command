@@ -1,9 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11, MarketMind saved-report presentation pilot**
+**Stamped: 2026-10-11, MarketMind pilot; PR175 merge authorized**
 
 ## Current work
 Checkout: C:/Users/ADMIN/.codex/worktrees/0b05/grifon-command.
 Branch: codex/marketmind-presentation, based on main 2e1de015.
+PR: https://github.com/yopiheart/grifon-command/pull/175.
 User authorized the presentation pilot with saved reports, existing handoffs,
 clear evidence/assumptions, and mobile support. No prompt changes or paid calls.
 
@@ -38,11 +39,14 @@ Brand check: pass with optional icon-style nits; mandatory Download radius fixed
 Evidence is synthetic saved fixtures, not live research/source verification.
 Handoff tests assert navigation/payloads; destination generation was not run.
 API calls blocked in tests; paid/live switches unset. No tuned/API/service/type,
-dependency, production-data or migration changes. No merge/deployment authorized.
+dependency, production-data or migration changes. Neil explicitly authorized
+merging PR175 on October 11; no separate deploy or paid generation was requested.
+GitHub CI897 passed at 7b735d44: verify, all 81 browser tests and artifacts.
 Local-only captures: .tmp/marketmind-presentation/qa/ (not shared PR artifacts).
 
 ## Resume / next decision
-Review the draft PR and CI; merge/deployment require Neil's request.
+Merge authorization covers PR175. Check PR/main status when resuming; the remote
+PR is authoritative for merge completion. Keep all paid/live switches unset.
 Local preview: http://127.0.0.1:5173/.tmp/marketmind-presentation/index.html.
 It uses synthetic saved fixtures and connect-src none; Vite must be running.
 Dependencies reuse the matching primary install through ignored node_modules
