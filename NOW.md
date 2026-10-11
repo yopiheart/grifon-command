@@ -1,80 +1,68 @@
 # NOW - the resume doc
-**Stamped: 2026-10-04, PR156 merge preparation; accepted motion workflow saved**
+**Stamped: 2026-10-11, MarketMind pilot; PR175 merge authorized**
 
-## Motion film / PR156
-Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.
-Branch codex/grifon-motion-depth; https://github.com/yopiheart/grifon-command/pull/156.
-Accepted baseline backed up at ead3abe9. Main reconciled at29feca9c; only NOW.md
-conflicted. Independent Codex review clear after completed-VO replay fix;
-qa/merge-review.md has original-fail/fix-pass evidence. Final CI still required.
-No paid work, application feature or commercial publication in this scope.
+## Current work
+Checkout: C:/Users/ADMIN/.codex/worktrees/0b05/grifon-command.
+Branch: codex/marketmind-presentation, based on main 2e1de015.
+PR: https://github.com/yopiheart/grifon-command/pull/175.
+User authorized the presentation pilot with saved reports, existing handoffs,
+clear evidence/assumptions, and mobile support. No prompt changes or paid calls.
 
-Neil accepted the 32.9s film and delegated sound choices; do not ask him to pick
-A-D or individual sounds again. Positive-only prompts; preserve existing Aira take.
-Accepted file: workflows/assets/grifon-motion-upgrade/
-grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4, SHA
-9529b122fe4ba99555bdf91fa441bc2eb8d5421de22d611524c35593ce907e3c.
-approval.json binds exact user acceptance. 987 frames,1080p30,stereo AAC48k.
-Nine native sources/51 cues; all15 mixer gates PASS; -16.02LUFS/-1.36dBTP.
-Protected H264/music/VO unchanged; old SFX excluded; silent black tail preserved.
-selected-review-manifest.json and qa/replacement-report.json hold actual evidence.
-User acceptance is separate from independent hearing; historical technical report
-remains AUDITORY_QA_PENDING. Do not relabel waveform measurements as listening.
-Sources predate paid subscription and remain private-review-only. Commercial use
-requires cleared sources. No new ElevenLabs generations were made for replacement.
+MarketResearch now presents structured audience/buying reasons, evidence,
+campaign direction, hooks and competitors. Original narrative remains expandable.
+Source link supplied / User-provided / Attribution missing describe attribution,
+not independent verification. Sparse historical reports explicitly show missing
+support; untrusted report text stays plain text. PDF carries the same caveat and
+no longer turns every evidence entry into a customer quote. Download label is PDF.
+Director AI / Offer Lab navigation, saved payloads, premise gate and generation
+handlers are preserved. Report controls precede intake in mobile DOM/tab order;
+loading a saved report moves focus to the report heading.
 
-Frozen local stems: .tmp/grifon-english-vo-v02/music-ducked.wav SHA
-115b8f535a2d51ea9db4114d4a9fcac3fe738f157cf9e32bb7068ed10c5c28fa;
-voice-positioned.wav SHA
-54bcb035d532ef4c9f42a3a4ef9a6321af5382d75a2c4663a963dd8bc36934f7.
-Fixed stem gain1.0752266011723428. Old masters/pilot forbidden as mix inputs.
-One Aira/v4 generation approval consumed; never regenerate from that approval.
-Historical generator now refuses --generate before credential/network access.
+## Verification and review
+PASS: npm.cmd run build (includes PowerShell ASCII check).
+PASS: npm.cmd run test -- --maxWorkers=2, 1444 passed / 32 existing skips.
+Full units predate a final Download-radius-only fix; behavior code is unchanged.
+PASS: npm.cmd run test:e2e -- tests/e2e/marketmind-presentation.spec.ts --workers=1,
+7 tests: 390/1280 widths, sparse report, keyboard order, unchanged handoff payloads,
+long text/URLs, escaped narrative, PDF download and zero generation/API attempts.
+The evidence-heading assertion failed against the original view before the pilot;
+the keyboard assertion failed against CSS-only report ordering before the fix.
+PASS: bundle-leak, voice-sync, domain, artifact-anchors, eval-prompts and design lint.
+Voice/domain/anchor/prompt checks predate the focus-only fix; their code is unchanged.
+PASS: independent diff review, including final focus/order repair; all 12 existing
+handlers match baseline after line-ending normalization. Final component blob
+1802995b and keyboard-test blob 996f2bb2 reviewed; no actionable findings.
+Build and all 7 browser cases rerun after final Download rounded-xl correction.
+PASS: independent browser smoke at 390x844, 375x667 and 1280x900, including sparse
+states, plain-text narrative, keyboard sequence and no horizontal overflow/errors.
+Brand check: pass with optional icon-style nits; mandatory Download radius fixed.
+Evidence is synthetic saved fixtures, not live research/source verification.
+Handoff tests assert navigation/payloads; destination generation was not run.
+API calls blocked in tests; paid/live switches unset. No tuned/API/service/type,
+dependency, production-data or migration changes. Neil explicitly authorized
+merging PR175 on October 11; no separate deploy or paid generation was requested.
+GitHub CI897 passed at 7b735d44: verify, all 81 browser tests and artifacts.
+Local-only captures: .tmp/marketmind-presentation/qa/ (not shared PR artifacts).
 
-## Recovery and future audio plan
-workflows/grifon_motion_production.md preserves exact recipe and reuse method.
-workflows/grifon_motion_audio_api.md records future API proposal: one SFX candidate
-first, agent-owned placement, dedicated music and bounded approved retries.
-User fast-v4 preference maps to official eleven_v4_turbo; not active app change.
-Installed Motion Director skill/provider prompts unchanged; customer UI unbuilt.
-PRIMARY/.tools/grifon-motion-archives/approved-2026-10-04-9529b122.zip preserves
-42 checkpoint files including exact stems;41,677,659bytes. Tracked receipt:
-workflows/assets/grifon-motion-upgrade/qa/approved-archive.json.
-Archive/hash/CRC/all entries verified; missing receipt failed before creation.
-Local recovery is not off-device backup; later API design is versioned in Git.
+## Resume / next decision
+Merge authorization covers PR175. Check PR/main status when resuming; the remote
+PR is authoritative for merge completion. Keep all paid/live switches unset.
+Local preview: http://127.0.0.1:5173/.tmp/marketmind-presentation/index.html.
+It uses synthetic saved fixtures and connect-src none; Vite must be running.
+Dependencies reuse the matching primary install through ignored node_modules
+junction; no install, credential repair or environment changes were needed.
 
-## Gemini accounting - preserve, no retries
-Original spec SHA26eb8ef67ced35afc04f958705859da04f8f6b96c3eba24b5cd47ca00bfe4807.
-Revised SHA c7f9c8f0eac1ece2585ae031c4005657184467d397c208ee27a6cf7d108affeb.
-Approved LOW + one manual repeat;14 comparisons TOTAL,US$0.50/250credits caps.
-Canonical ledger PRIMARY/.tmp/grifon-elevenlabs-assessment/<originalSHA>/.
-Pencil4 valid; card-pop truncated; manual repeat06:36UTC October4 failed with
-unknown usage/result. Three invocations reserveUS$0.09216; known usage-derived
-US$0.039258 plus unknown third; billing debit unverified. No reset/retry.
-Default project logging disabled; BUSINESS USE access auto-review rejected.
-User billing concern is not verified cause. Do not bypass project-access gate.
-
-## Other session: Vivo/Blender work preserved from main
-PR157: https://github.com/yopiheart/grifon-command/pull/157.
-Checkout C:/Users/ADMIN/.codex/worktrees/976d/grifon-command; branch
-codex/blender-product-reveal. Its merge was authorized; check remote status.
-Detailed prior state remains in main's pre-reconciliation NOW.md history and
-assets/vivo-x80-ugc, assets/blender-reveal evidence; no files changed here.
-Vivo task cgt-20261004021141-cgh8r succeeded ONCE; NEVER execute again.
-Fixed tools/run_vivo_x80_ugc.mjs, separate Vivo spec/ledger; recovery GET-only.
-Raw361frames/15.041667s/496x864/native audio; comparison360frames/15s.
-ONE paid POST/private upload; exact owned-key cleanup confirmed.301738tokens
-estimate$1.2974734; invoice unknown. No new provider authorization in this task.
-Runner SHA c9148596585e1a8af041c82ea47d471bb795b07fbb4f513db461acd9c0b8f109.
-Private raw: https://drive.google.com/file/d/1z_EscTYdF8j_DJbGPKjpGFoytlonoqBT/view
-Private comparison: https://drive.google.com/file/d/15SvnmpFV0Fgu_OK1WgsUf-fswByj3HAx/view
-V1/V2 preserved; continuous listening/native phone remain unverified.
-Bottle task cgt-20261003202712-nlxv7 also exhausted; NEVER --execute again.
-Ledger .tmp/byteplus-motion-transfer/attempt.json; GET-only recovery.
-Bottle estimate$0.5200678; invoice unknown; identity PARTIAL. No new model trial.
-Main carried build/1432 unit/26 control/29 Vivo/25 bottle checks and independent
-review; these are historical evidence, not rerun by this motion task.
-PR158 prompt-parity guard merged; never authorizes changing tuned content.
-Vivo proof accepted9/10; priorities assets/vivo-x80-ugc/user-review.json.
-Local-preview/automatic-trigger tests unrun; generic engine/Grifon UI unbuilt.
-Primary Oceanides work untouched. Preserve native scene audio on integration.
+## Prior work and consumed paid approvals - preserve
+Main contains motion PR156, Vivo/Blender PR157 and prompt-parity PR158.
+Detailed previous state: git show 2e1de015:NOW.md. Primary Oceanides work untouched.
+Accepted 32.9s motion film/approval and archive receipts remain under
+workflows/assets/grifon-motion-upgrade/; recipe: workflows/grifon_motion_production.md.
+Aira/v4 approval is consumed; never regenerate from it. Accepted SFX sources remain
+private-review-only until rights are cleared. User acceptance and technical audio
+measurements do not establish independent listening; historical auditory QA pending.
+Gemini assessment third invocation has unknown usage/result; no reset/retry or
+access-gate bypass. Ledger stays PRIMARY/.tmp/grifon-elevenlabs-assessment/.
+Vivo cgt-20261004021141-cgh8r and bottle cgt-20261003202712-nlxv7 already ran;
+recovery GET-only, never repeat paid POST/--execute. Invoices remain unverified.
+Separate evidence-prompt PR171 was open/unmerged when inspected; this branch uses
+main's existing prompts and gives no approval to change them.
