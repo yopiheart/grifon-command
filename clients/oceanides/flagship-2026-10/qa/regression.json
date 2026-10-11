@@ -1,0 +1,40 @@
+{
+  "issue": "Embedded mobile inquiry retained its previous scroll position after Next, hiding the new stage heading.",
+  "before": {
+    "status": "fail",
+    "passed": 18,
+    "total": 19,
+    "failure": "embedded details heading outside frame viewport: {\"y\":-77.25,\"height\":74.78125,\"viewportHeight\":760}",
+    "bounds": [
+      {
+        "mode": "embedded",
+        "stage": "details",
+        "y": -77.25,
+        "height": 74.78125,
+        "viewportHeight": 760
+      }
+    ]
+  },
+  "after": {
+    "status": "pass",
+    "passed": 20,
+    "total": 20,
+    "stageCheck": "pass",
+    "bounds": [
+      {
+        "mode": "embedded",
+        "stage": "details",
+        "y": 169.75,
+        "height": 74.78125,
+        "viewportHeight": 760
+      },
+      {
+        "mode": "embedded",
+        "stage": "review",
+        "y": 169.75,
+        "height": 74.78125,
+        "viewportHeight": 760
+      }
+    ]
+  }
+}

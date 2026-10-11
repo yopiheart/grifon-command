@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fil">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="color-scheme" content="light">
+    <title>Oceanides | Inquiry preview</title>
+    <link rel="stylesheet" href="inquiry.css">
+    <script src="inquiry.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#journey">Skip to inquiry preview</a>
+    <div class="preview-banner"><strong>Private preview</strong><span>Design review lang. Walang request na ipapadala.</span></div>
+    <div class="page-shell">
+      <aside class="story-rail" aria-label="About this preview">
+        <a class="brand" href="index.html" aria-label="Back to Oceanides flagship review">
+          <img src="templates/logo.webp" alt="Oceanides" width="64" height="64">
+          <span><strong>OCEANIDES</strong><small>INQUIRY DESIGN STUDY / 2026</small></span>
+        </a>
+        <div class="rail-content">
+          <p class="eyebrow"><span class="short-rule" aria-hidden="true"></span>START WITH WHAT YOU KNOW</p>
+          <h1>UNAHIN ANG<br><span>MALINAW NA</span><br>DETALYE.</h1>
+          <p class="rail-intro">Ano ang napansin nyo? Saan ang property? Kailan nyo gustong magpa-check? Tatlong steps para maayos ang inquiry.</p>
+          <div class="rail-map" aria-hidden="true"><span>CONCERN</span><i></i><span>CONTEXT</span><i></i><span>SUMMARY</span></div>
+          <div class="rail-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 4 6v6c0 4 8 9 8 9s8-5 8-9V6l-8-3Z"/><path d="m8.5 11.5 2.5 2.5 4.5-5"/></svg>
+            <p>Walang pangalan o contact number na kailangan sa preview. Nasa page lang ang choices nyo.</p>
+          </div>
+        </div>
+        <div class="rail-footer"><span>LESS GUESSWORK.<br>CLEARER NEXT STEP.</span><a href="index.html">Back to design collection <span aria-hidden="true">↗</span></a></div>
+      </aside>
+
+      <main id="journey" class="journey">
+        <div class="journey-topline"><span id="inquiry-source">YOUR INQUIRY, ORGANIZED</span><span id="step-counter">01 / 03</span></div>
+        <nav class="step-nav" aria-label="Inquiry steps">
+          <button class="step-item active" type="button" data-step="0" aria-current="step"><span class="step-number">01</span><span>Concern</span></button>
+          <button class="step-item" type="button" data-step="1" disabled><span class="step-number">02</span><span>Details</span></button>
+          <button class="step-item" type="button" data-step="2" disabled><span class="step-number">03</span><span>Review</span></button>
+        </nav>
+        <div class="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
+        <noscript><p class="notice">Kailangan ng JavaScript para masubukan ang interactive preview. Walang request na ipinapadala.</p></noscript>
+        <form id="inquiry-form" novalidate>
+          <section class="stage" data-panel="0" aria-labelledby="concern-title">
+            <div class="stage-heading"><p class="eyebrow">01 / ANG NAPANSIN NYO</p><h2 id="concern-title" tabindex="-1">Saan tayo magsisimula?</h2><p>Piliin ang pinaka-fit. Hindi pa ito diagnosis.</p></div>
+            <fieldset class="choice-fieldset"><legend>Ano ang concern sa property?</legend>
+              <div class="concern-grid">
+                <label class="choice-card"><input type="radio" name="problem" value="slow-flush" required><span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 10h18M9 6h14M8 14v5a8 8 0 0 0 16 0v-5M16 19v8M12 23l4 4 4-4"/></svg></span><span class="choice-copy"><strong>Mabagal ang flush</strong><small>Matagal bumaba ang tubig.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+                <label class="choice-card"><input type="radio" name="problem" value="returning-clog" required><span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 11a10 10 0 1 1-2 11M8 5v6H2"/><path d="m13 13 6 6m0-6-6 6"/></svg></span><span class="choice-copy"><strong>Pabalik-balik ang bara</strong><small>Bumabalik matapos ma-clear.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+                <label class="choice-card"><input type="radio" name="problem" value="odor" required><span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 26c-6-7 6-9 0-16M16 23c-6-7 6-9 0-17M23 26c-6-7 6-9 0-16"/></svg></span><span class="choice-copy"><strong>May kakaibang amoy</strong><small>May amoy sa bathroom o drain.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+                <label class="choice-card"><input type="radio" name="problem" value="maintenance" required><span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="7" width="22" height="21" rx="1"/><path d="M5 13h22M11 4v6M21 4v6m-11 12 4 4 8-8"/></svg></span><span class="choice-copy"><strong>Planning maintenance</strong><small>Gustong planuhin ang pagpa-check.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+                <label class="choice-card wide"><input type="radio" name="problem" value="other" required><span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M27 15a11 11 0 0 1-11 11c-2 0-4-.5-5.5-1.5L5 27l1.5-5.5A11 11 0 1 1 27 15Z"/><path d="M11 15h10M11 11h7M11 19h6"/></svg></span><span class="choice-copy"><strong>Iba pang concern</strong><small>Kailangan munang maipaliwanag ang situation.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="choice-fieldset role-fieldset"><legend>Ano ang role nyo sa property?</legend><div class="compact-options"><label><input type="radio" name="role" value="owner" required><span>Owner</span></label><label><input type="radio" name="role" value="tenant" required><span>Tenant</span></label><label><input type="radio" name="role" value="manager" required><span>Property manager</span></label></div></fieldset>
+            <p id="tenant-note" class="context-note" hidden>Ipaalam muna sa may-ari ang concern. Makakatulong ang summary para maipasa ang details.</p>
+            <p class="form-error" id="error-0" role="alert" hidden>Piliin muna ang concern at role nyo para makapag-next.</p>
+            <div class="stage-actions"><p class="privacy-note">Preview lang. Walang request na ipapadala.</p><button class="primary-button" type="button" data-next="1">Next: property details <span aria-hidden="true">→</span></button></div>
+          </section>
+
+          <section class="stage" data-panel="1" aria-labelledby="details-title" hidden>
+            <div class="stage-heading"><p class="eyebrow">02 / KAUNTING CONTEXT</p><h2 id="details-title" tabindex="-1">Tungkol sa property.</h2><p>Okay lang kung may details na hindi pa sure.</p></div>
+            <div class="select-field"><label for="city">Saan ang property?</label><div class="select-wrap"><select id="city" name="city" required><option value="">Piliin ang city</option><option>Caloocan</option><option>Las Piñas</option><option>Makati</option><option>Malabon</option><option>Mandaluyong</option><option>Manila</option><option>Marikina</option><option>Muntinlupa</option><option>Navotas</option><option>Parañaque</option><option>Pasay</option><option>Pasig</option><option>Pateros</option><option>Quezon City</option><option>San Juan</option><option>Taguig</option><option>Valenzuela</option><option value="outside-ncr">Outside NCR</option></select><span aria-hidden="true">⌄</span></div><p class="field-helper">Location detail lang ito. Hindi ito confirmation ng service coverage.</p></div>
+            <fieldset class="choice-fieldset"><legend>Alam nyo ba kung saan ang septic tank?</legend><div class="compact-options"><label><input type="radio" name="tank" value="yes" required><span>Oo, alam ko</span></label><label><input type="radio" name="tank" value="no" required><span>Hindi ko alam</span></label><label><input type="radio" name="tank" value="unsure" required><span>Hindi pa sure</span></label></div></fieldset>
+            <p id="tank-note" class="context-note" hidden>Ihanda lang ang available na location info, gaya ng property plan o detalye mula sa may-ari. Hindi kailangang buksan ang tank para sa inquiry.</p>
+            <fieldset class="choice-fieldset"><legend>Kailan nyo gustong magpa-check?</legend><div class="timing-options"><label class="timing-card"><input type="radio" name="timing" value="urgent" required><span class="radio-mark" aria-hidden="true"></span><span><strong>As soon as possible</strong><small>May concern na kailangang ma-assess.</small></span></label><label class="timing-card"><input type="radio" name="timing" value="planned" required><span class="radio-mark" aria-hidden="true"></span><span><strong>Planuhin muna</strong><small>Gustong magtanong bago mag-schedule.</small></span></label></div><p class="field-helper">Preference lang ito. Walang schedule o arrival time na naka-reserve.</p></fieldset>
+            <p class="form-error" id="error-1" role="alert" hidden>Piliin muna ang city, tank location, at preferred timing.</p>
+            <div class="stage-actions"><button class="back-button" type="button" data-back="0"><span aria-hidden="true">←</span> Back</button><button class="primary-button" type="button" data-next="2">Review my summary <span aria-hidden="true">→</span></button></div>
+          </section>
+
+          <section class="stage" data-panel="2" aria-labelledby="review-title" hidden>
+            <div class="stage-heading"><p class="eyebrow">03 / READY TO REVIEW</p><h2 id="review-title" tabindex="-1">Mas malinaw na ngayon.</h2><p>Check ang details. Pwede pang baguhin bago i-copy.</p></div>
+            <div class="summary-ticket"><div class="ticket-header"><span>INQUIRY SUMMARY</span><span>PREVIEW ONLY</span></div><dl class="summary-list"><div><dt>Concern</dt><dd id="review-problem"></dd></div><div><dt>Role sa property</dt><dd id="review-role"></dd></div><div><dt>City</dt><dd id="review-city"></dd></div><div><dt>Tank location</dt><dd id="review-tank"></dd></div><div><dt>Preferred timing</dt><dd id="review-timing"></dd></div></dl><div class="ticket-edit"><button type="button" data-back="0">Edit concern + role <span aria-hidden="true">↗</span></button><button type="button" data-back="1">Edit property details <span aria-hidden="true">↗</span></button></div></div>
+            <div class="review-notes" id="review-notes"></div>
+            <div class="copy-area"><label for="summary-text">Copy-ready text</label><textarea id="summary-text" readonly spellcheck="false" rows="7" aria-describedby="copy-help"></textarea><p id="copy-help" class="field-helper">Preview text lang. Walang inquiry na na-send o booking na nakumpirma.</p></div>
+            <div class="copy-actions"><button class="primary-button" id="copy-summary" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="7" y="7" width="10" height="11" rx="1"/><path d="M13 7V2H2v11h5"/></svg>Copy summary</button><button class="text-button" id="select-summary" type="button">Select text instead</button></div>
+            <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+            <div class="review-footer"><p>Design preview lang ang journey na ito. Walang live booking o sending.</p><button class="back-button" id="restart" type="button">Start again <span aria-hidden="true">↺</span></button></div>
+          </section>
+        </form>
+        <footer class="journey-footer"><span>OCEANIDES / PRIVATE DESIGN PREVIEW</span><span>NO REQUEST SENT</span></footer>
+      </main>
+    </div>
+  </body>
+</html>
