@@ -14,10 +14,10 @@ Editable source/recipe/licenses/contact sheet/evidence are in the same folder.
 New orbital-launch treatment preserves existing basic and shader contracts.
 Final visual source:5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083.
 No paid provider calls or additional spend. No new merge/deploy authorized.
-Draft PR backup is pending creation; completed work is ready to commit/push.
+Draft PR178:https://github.com/yopiheart/grifon-command/pull/178; backup pushed.
+Remote CI/Vercel checks are running; no passing remote result claimed yet.
 
 ## ▶ NEXT ACTION
-Commit/push this branch and create/attach a draft PR; record the actual PR here.
 Show the finished MP4 to Neil for whole-film playback and music/SFX fit review.
 Technical verification is complete; human listening and creative acceptance pending.
 Live preview:http://127.0.0.1:50585 (local server session21610); Enable sound then Play.
@@ -43,6 +43,12 @@ Landscape only; new visual styles still require authoring, not arbitrary convers
 
 ## Verification and limits
 Independent Codex source review PASS; four findings resolved on the final source.
+Independent final packaging audit PASS; bundle/film/contact hashes and scope verified.
+Scoped Git attributes preserve hashed bundle bytes across Windows checkouts;
+this follows existing film bundles and retains the license whitespace diagnostic.
+Fresh checkout proof PASS:25package files exact, initialized source key5f unchanged.
+Negative control demonstrates4normalization failures in the first backup commit.
+Proof:workflows/assets/grifon-pluto-adaptation/git-byte-preservation.json.
 Native source QA:33frames,9exact out-of-order seeks,390px phone preview,zeroerrors.
 Actual MP4 strict AV decode PASS; all1389video packets/timestamps match master.
 Bounded encoded visual inspection:55frames across all7beats/transitions PASS.

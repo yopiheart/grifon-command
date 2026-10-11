@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "verifiedUtc": "2026-10-11T09:04:58.517Z",
+  "status": "PASS",
+  "method": "Fresh git checkout-index from staged blobs with normal Windows Git attributes, compare 25 package files before adding this evidence, then init isolated orbital project from checked-out source.",
+  "negativeControl": {
+    "preFixCommit": "12b6236a6261cb01bd46152fb7c9d3971e4c8c21",
+    "status": "FAIL_BYTE_IDENTITY_AS_EXPECTED",
+    "mismatches": [
+      {
+        "file": "workflows/assets/grifon-pluto-adaptation/assets/OFL-Inter.txt",
+        "worktreeSha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+        "preFixGitBlobSha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+      },
+      {
+        "file": "workflows/assets/grifon-pluto-adaptation/audio-source-credits.md",
+        "worktreeSha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9",
+        "preFixGitBlobSha256": "cf7366eb2f73aed35d347957caf1210944221b58c7442a472c07c1e69532237e"
+      },
+      {
+        "file": "workflows/assets/grifon-pluto-adaptation/audio-source-manifest.json",
+        "worktreeSha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7",
+        "preFixGitBlobSha256": "df05420917ed1ed9f5c8e34abfd24f91ba7b42855121113aa47a2e9c0c92d148"
+      },
+      {
+        "file": "workflows/assets/grifon-pluto-adaptation/reference-visual-crosscheck.json",
+        "worktreeSha256": "fd57de6f178a67ae63afcbc5108a4e9b277ea765774e5c05f3be153d98b6070a",
+        "preFixGitBlobSha256": "35919d480db803c2ad79aacfe034083804bb5124c3612cb94b578004fade4005"
+      }
+    ]
+  },
+  "packageFiles": 25,
+  "allBytesIdentical": true,
+  "expectedVisualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+  "checkedOutVisualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+  "checkout": "F:/GrifonBenchmarks/pluto-2100297302497997167/git-checkout-proof-2026-10-11T09-04-57-484Z",
+  "checks": [
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/.gitignore",
+      "bytes": 192,
+      "sha256": "5e07682202ad4f8322f52739e6b3bcaec5f0131969ea88f2d5618f66ffa8c402",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/README.md",
+      "bytes": 7718,
+      "sha256": "1a697779a81a87bc2e650a1775e11727f81f9cd0bbd64c04e9d3cba50f6e11f2",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/OFL-JetBrainsMono.txt",
+      "bytes": 4399,
+      "sha256": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/jbmono-600.ttf",
+      "bytes": 112160,
+      "sha256": "df54dbfafba61d4911eb3dab9bba2d20531fb009f01d64dd42fa96ab862584d8",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/manifest.json",
+      "bytes": 1262,
+      "sha256": "9e38a446393eae38fcd68b5f154bc347bef21e42788ca7a83a66a856d707e1a5",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-evidence.json",
+      "bytes": 5173,
+      "sha256": "650758721b43b8a9a601aadd63456229d98f3798e0a6708a80cc722268a64d59",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-plan.json",
+      "bytes": 12489,
+      "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-source-credits.md",
+      "bytes": 2995,
+      "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-source-manifest.json",
+      "bytes": 2060,
+      "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/benchmark.json",
+      "bytes": 11676,
+      "sha256": "42dccf4dd617203d8dc591b9d87e0bc15cdfb0f62e78d6c230e70d76bd3e8003",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/brief.md",
+      "bytes": 3530,
+      "sha256": "5c4b17d7d1f2fbf9075bb65bdff81b8961b7aba8c6340ad31d94838cee425f90",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/encoded-output-verification.json",
+      "bytes": 4701,
+      "sha256": "7937c94dd22bafb582abf7dfc2bc7c3da4a65f873fc00d56e24d51623ed1627c",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1-contact-sheet.png",
+      "bytes": 2158701,
+      "sha256": "19db7c312a22040bd01509757f1bd3c9f7bb326b1fb6665f350da2986becfd00",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+      "bytes": 11399802,
+      "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/independent-source-review.json",
+      "bytes": 11898,
+      "sha256": "87d8d868f96d4cecbc5606da4eb23e23a7c5f87e75a6f60bde3d09a36d2b6f62",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/orbital.html",
+      "bytes": 742,
+      "sha256": "aafdb084687a84ea64f7f38b1ac240758120086ddcd6cdc85da4d20a4633d004",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/orbital.js",
+      "bytes": 16700,
+      "sha256": "1b196edfeb835738bd41059a7207686f4d0ef3436b67249cfcaa93c8b34048f9",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/orbital.json",
+      "bytes": 2405,
+      "sha256": "38a4eccca97d9d5be8c2da3defda8b9966f10982e1b2e0de52bee965741e9771",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/reference-provenance.json",
+      "bytes": 964,
+      "sha256": "ec3fdfcf86c47fda15e11cf449e238413ec86c6ec7a2e8ce222f200f8869fbe3",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/reference-visual-crosscheck.json",
+      "bytes": 5613,
+      "sha256": "fd57de6f178a67ae63afcbc5108a4e9b277ea765774e5c05f3be153d98b6070a",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/revision-verification.json",
+      "bytes": 6080,
+      "sha256": "410076b3005d06480987dd1d87321839285c34a9ba4cfe9e6b031b74ef223f78",
+      "identical": true
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/visual-qa.json",
+      "bytes": 2938,
+      "sha256": "9dbc138c2f6d7b60afd15e48cb00f8af732f6ddd607c099e2ad81cac5bed6b52",
+      "identical": true
+    }
+  ],
+  "paidSpendUsd": 0,
+  "providerCalls": 0,
+  "note": "Scoped -text preserves bytes. cr-at-eol recognizes genuine CRLF endings; the existing upstream JetBrains line21 trailing-space diagnostic is not suppressed. No source/render/audio bytes changed."
+}
