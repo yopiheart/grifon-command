@@ -372,7 +372,7 @@ test('pending checkout keeps precedence over intended tool and return-to-ad inte
 
 test('a return-to-ad marker with no finished ad safely retains the chat entry', async ({ page }) => {
   const evidence = await installAccountApp(page);
-  await page.addInitScript(() => sessionStorage.setItem('grifon_return_to_ad', '1'));
+  await page.addInitScript(() => { if (window !== window.top) return; sessionStorage.setItem('grifon_return_to_ad', '1'); });
   await page.goto('/app'); await expect(input(page)).toBeVisible();
   await expect.poll(() => page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBeNull();
   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);

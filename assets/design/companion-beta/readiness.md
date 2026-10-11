@@ -328,9 +328,40 @@ again verifies224 identical IDs,32x7, no duplicates/omissions and36 successful
 CLI/config commands against the guarded source.
 The current PR head must still have a fully successful CI before merge.
 
+### Clock guard CI and return-to-ad fixture isolation
+
+Exact `3791952e` passed all224 browser cases across32x7,223 first-attempt plus
+one retry-pass, with zero final failures, skips, omissions or duplicates.
+Build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel
+passed. All35 checkout identities agree, local/head/tested trees match and442
+watched files stayed unchanged through terminal observation. Clock, both reload
+fixes and cross-tab Resume passed first attempt.
+[Bound receipt](qa/main-readiness/ci-clock-guard-summary.json).
+
+The sole retry saw the return-to-ad marker still1 after15s. Its fixture seeded
+sessionStorage in every child document, including the same-origin avatar frame,
+which can reintroduce a marker App already consumed. The one-line guard now seeds
+only the top window; every original input, cleanup and error assertion remains.
+Ordinary original/guarded runs and guarded forced-frame run pass. After actual
+App consumption reaches null, a forced same-origin child makes the original
+fail that unchanged marker-null assertion; the guard keeps it null. Disabling
+only the served cleanup removeItem also fails the original assertion with the
+guard, so cleanup remains required. Five executions use no retries/skips and
+retain source/harness hashes, fail-closed fixtures and error counters. Their API
+requests are fixture-handled; no paid generation runs. This proves fixture
+mutation mechanics, while its exact hosted timing remains unmeasured.
+[Original CI failure](qa/main-readiness/ci-account-marker-flake.json),
+[controlled result](qa/main-readiness/ci-account-marker-result.json).
+Fresh [32-shard discovery](qa/main-readiness/ci-marker-partition-result.json)
+retains the same224 IDs with no duplicates/omissions and36 zero-exit commands.
+The [source binding](qa/main-readiness/ci-account-marker-binding.json) verifies
+all38 watched hashes and ties the final tracked guard to the tested copy after
+the documented imports/origin/probe adaptation and line-ending normalization.
+The final guard still requires successful exact-head CI before merge.
+
 ## External release gates
 
-- CI merge gate: all224 cases and required jobs must pass on the exact PR head. The completed source candidate `9c6ca440` passed [run38130887530](https://github.com/yopiheart/grifon-command/actions/runs/38130887530):223first-pass,1retry-pass, zero terminal failures/browser skips/omissions; build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel passed. [Bound receipt](qa/main-readiness/ci-thirtytwo-summary.json). Latest head status on [PR177](https://github.com/yopiheart/grifon-command/pull/177) is authoritative before merge.
+- CI merge gate: all224 cases and required jobs must pass on the exact PR head. Completed `3791952e` passed [run38132512230](https://github.com/yopiheart/grifon-command/actions/runs/38132512230):223first-pass,1retry-pass, zero terminal failures/browser skips/omissions; build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel passed. [Bound receipt](qa/main-readiness/ci-clock-guard-summary.json). Latest head status on [PR177](https://github.com/yopiheart/grifon-command/pull/177) is authoritative before merge.
 - [ ] Authenticated hosted desktop/mobile render and login checks on the release candidate. Vercel metadata confirms a successful preview build only; the old [blocked status](qa/hosted-checks.json) is historical.
 - [x] Prove exactly-once debit, rollback and permissions on isolated native PostgreSQL with real concurrent sessions.
 - [x] Approve/apply the exact target migration; verify catalog, permissions, REST cache resolution/anonymous denial and read-only service-role input validation.
