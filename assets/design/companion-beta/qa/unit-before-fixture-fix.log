@@ -1,0 +1,5 @@
+
+> creative-director-ai-assistant@1.0.0 test
+> vitest run --maxWorkers=2 --reporter=json --outputFile=.tmp/beta-final-tests.json
+
+JSON report written to C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/.tmp/beta-final-tests.json

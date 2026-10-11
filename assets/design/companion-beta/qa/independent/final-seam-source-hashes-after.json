@@ -1,0 +1,22 @@
+{
+  "components/CompanionChat/CompanionChatSurface.tsx": "71d83e71ded1abc8623ef2c5ea00a64463a9682b9321f9670f3e2650ecfa84f1",
+  "components/OneShotAd/ProducerFlow.tsx": "0709891055aa8ba251b3f58839235242945d44b4c9a70bef09f3b79832918c3f",
+  "services/companionProductionLock.ts": "de1c09bbc4ea935cef072fa2dade5f4a86cfbbcb315d9b1d8a3e95593fd042d0",
+  "api/kling/omni-video.ts": "c8731887874a794b426d36531dc1d18d640cd1397365ea00c9c0d14f278da676",
+  "services/producerOrchestrator.ts": "1c1da4ca2eeedc6f7effbaa66bf75d7c009207fefb351763517a2a941fe680c5",
+  "services/generationTransportError.ts": "57ba8533c84420a0a366bfeee134107c18e5a9b62b484fbfd303c831233b1bb9",
+  "api/_lib/quota.ts": "79af7228f37031e9048fbd4dafcf00cee75f630eba1655e6665175f68d5ff135",
+  "api/gemini/omni-video/consume.ts": "14ea39edbdae8ba12e9ae22f18ec8f45980e4866f5c45ff37d3a123913662aa3",
+  "services/finalRenderService.ts": "baeecef4da13db6cbac5209c12cc976d1761297781e1a3cabfce65bbde66fd82",
+  "services/geminiService.ts": "a3345b5b495022b1f87941dd7011f391f9ab68f3d860101c7ec91a9480bf51d0",
+  "api/gemini/video.ts": "b11a244624ef6d4059cdf35c05da8127060e39ff5e318ded3acfa6fb9b1237cb",
+  "components/CompanionChat/index.tsx": "a9d3a4bfe1ccb2d647e96f4b1dba43c75c2d5dbb259175998973277ba3970ef3",
+  "utils/producerTelemetry.ts": "204da96d676868fff65979cf5bf840e5ce769cfc99a00fce13f0ac3c12649d37",
+  "services/voiceConsolidationService.ts": "d5b8a523b915b9392945f4def1ec4c3c65de10a4478924f5a10d8c0239fec154",
+  "supabase/finished_ad_meter.sql": "4ee39c8e04d17b4d42579606e86c759d8f0bf02643d77c91a8da43d6ee7979d3",
+  "services/companionConversations.ts": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+  "api/events.ts": "3aa81406498622a5978fcbfada4bf9fed6e099ac40335fbe06011ce2868e9288",
+  "api/gemini/omni-video.ts": "d3131fb96c1ee4772b77b0637ddff0eec1ca9c94f923b1eb1c73bc59ea6780aa",
+  "components/CompanionChat/CompanionChatShell.tsx": "0e381c6cb6406b6dc3957f9ea6c4b38bdad5ad7fc719e0cd3b5afc4238657b6e",
+  "api/kling/video.ts": "745d5deed829876d4cf332b6c9d66e82cbe21e5ada1fe389d73acdaf0bb42caf"
+}

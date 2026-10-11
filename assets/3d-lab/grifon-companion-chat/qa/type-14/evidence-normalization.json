@@ -1,0 +1,25 @@
+{
+  "purpose": "Remove trailing whitespace emitted by Playwright baseline error-context documents; assertions/results/screenshots unchanged",
+  "files": [
+    {
+      "path": "baseline-results/companion-polish-polish-mo-5d86c-s-text-with-normal-tracking/error-context.md",
+      "originalSha256": "214A36F1981440BBFDE373AED67721ACEFBC6AE971E2E188D61ED7020BF5E706",
+      "normalizedSha256": "7461A0A9501E73E60550D695CA042DE9FF04DB715BF5D2843817B8050E625381"
+    },
+    {
+      "path": "baseline-results/companion-typing-typing-an-41750-olden-user-bubble-at-1280px/error-context.md",
+      "originalSha256": "916AED90D8BBF81C2AB1AC7E304FE67E7CF96B2303F23BFA88884212E81EF520",
+      "normalizedSha256": "974D8DB0717EAA0E5540A413943A23E3EF7266D1CBDBA70A79D748AA0E64EE0D"
+    },
+    {
+      "path": "baseline-results/companion-typing-typing-an-6bede-golden-user-bubble-at-375px/error-context.md",
+      "originalSha256": "97E8296610823823F5862013C986EB224444AB6CCAB3D021717ACB9E358EBF56",
+      "normalizedSha256": "451D46098F317189CF7F8EA3D3F009C0D3D111B9339633E69C21459679F142C6"
+    },
+    {
+      "path": "baseline-results/companion-typing-typing-an-98af9-golden-user-bubble-at-390px/error-context.md",
+      "originalSha256": "D35A12F07D78CE925B6B536D566A62F6633E61B798D8547608DAC73B9060110B",
+      "normalizedSha256": "EAD2B210EEB66C9491085F957CC0BCA3E2DD0B29DD32DD36913F5B9D7DAE3C57"
+    }
+  ]
+}

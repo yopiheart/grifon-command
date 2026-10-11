@@ -1,0 +1,395 @@
+{
+  "slot": {
+    "x": 159.5,
+    "y": 49,
+    "width": 56,
+    "height": 56
+  },
+  "opacity": 1,
+  "ready": "true",
+  "transition": {
+    "duration": "0.2s",
+    "property": "opacity",
+    "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+  },
+  "loader": null,
+  "retry": null,
+  "image": null,
+  "innerFallbackHidden": true,
+  "paint": {
+    "at": 1791350542331,
+    "count": 3429,
+    "width": 112,
+    "height": 112
+  },
+  "debug": {
+    "ready": true,
+    "renderer": "WebGL2 / Three.js",
+    "failed": false,
+    "pause": false,
+    "reducedMotion": false,
+    "visible": true,
+    "frameCount": 33,
+    "activeTime": 0.5834666666666667,
+    "controls": {
+      "gazeX": 0,
+      "gazeY": 0,
+      "headYaw": 0,
+      "headPitch": 0,
+      "headRoll": 0,
+      "blink": 0,
+      "breath": 0.5736908059615689
+    },
+    "target": {
+      "x": 0,
+      "y": 0
+    },
+    "reaction": {
+      "state": "idle",
+      "stateAge": 0.5834666666666667,
+      "blend": 1,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wingLeft": [
+        0,
+        0,
+        0
+      ],
+      "wingRight": [
+        0,
+        0,
+        0
+      ],
+      "tapLeft": 0,
+      "tapRight": 0,
+      "propReading": 0,
+      "propWorking": 0,
+      "readingSupport": [
+        -0.48718262753774655,
+        -0.7687732176875274,
+        0.8859607000207929
+      ],
+      "readingTrace": [
+        0.44465278241632034,
+        -0.7589179167683405,
+        0.9298682511229925
+      ],
+      "readingRow": 0.025,
+      "readingWingExtension": 1,
+      "cleanBody": 0,
+      "cursorScale": 1,
+      "readyBlink": 0,
+      "touring": false
+    },
+    "rollingFrameTimes": [
+      216.7,
+      16.600000000000023,
+      16.700000000000045,
+      16.59999999999991,
+      16.800000000000068,
+      16.600000000000023,
+      16.699999999999932,
+      16.700000000000045,
+      16.699999999999932,
+      17.200000000000045,
+      16.100000000000023,
+      16.699999999999932,
+      16.600000000000023,
+      16.700000000000045,
+      16.699999999999932,
+      16.700000000000045,
+      16.700000000000045,
+      16.699999999999932,
+      16.500000000000114,
+      16.799999999999955,
+      16.59999999999991,
+      16.799999999999955,
+      16.600000000000136,
+      16.59999999999991,
+      16.799999999999955,
+      16.700000000000045,
+      16.600000000000136,
+      16.59999999999991,
+      16.700000000000045,
+      16.700000000000045,
+      16.799999999999955,
+      16.5
+    ],
+    "viewport": {
+      "width": 56,
+      "height": 56,
+      "pixelRatio": 2
+    }
+  },
+  "ledger": {
+    "samples": [
+      {
+        "at": 1791350541628,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            0,
+            0,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350541660,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350541900,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 1
+        }
+      },
+      {
+        "at": 1791350542350,
+        "sample": {
+          "opacity": 0,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542366,
+        "sample": {
+          "opacity": 0.342282,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542383,
+        "sample": {
+          "opacity": 0.597699,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542400,
+        "sample": {
+          "opacity": 0.765232,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542417,
+        "sample": {
+          "opacity": 0.867092,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542433,
+        "sample": {
+          "opacity": 0.927003,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542450,
+        "sample": {
+          "opacity": 0.961455,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542467,
+        "sample": {
+          "opacity": 0.981049,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542484,
+        "sample": {
+          "opacity": 0.991902,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542500,
+        "sample": {
+          "opacity": 0.996904,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542517,
+        "sample": {
+          "opacity": 0.999192,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542533,
+        "sample": {
+          "opacity": 0.999911,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350542550,
+        "sample": {
+          "opacity": 1,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      }
+    ],
+    "messages": [
+      {
+        "event": "ready",
+        "at": 1791350542346,
+        "paint": {
+          "at": 1791350542331,
+          "count": 3429,
+          "width": 112,
+          "height": 112
+        }
+      }
+    ]
+  },
+  "overflow": 0,
+  "chatCalls": [],
+  "typography": {
+    "font": "Inter, sans-serif",
+    "inputSize": "14px"
+  },
+  "counts": {
+    "iframe": 1,
+    "still": 0
+  }
+}

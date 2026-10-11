@@ -1,0 +1,619 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "tests/e2e/companion-startup.config.ts"
+    ],
+    "configFile": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.config.ts",
+    "rootDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/assets/design/companion-startup/qa/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "companion-startup.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "assets/design/companion-startup/qa/final-playwright-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "companion-startup.spec.ts",
+      "file": "companion-startup.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "held model startup never shows an outer static mascot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5876,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:27.354Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-68f22ad0796088293e8a",
+          "file": "companion-startup.spec.ts",
+          "line": 161,
+          "column": 1
+        },
+        {
+          "title": "cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2575,
+                  "error": {
+                    "message": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m245.199951171875\u001b[39m",
+                    "stack": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m245.199951171875\u001b[39m\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts:207:111",
+                    "location": {
+                      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                      "column": 111,
+                      "line": 207
+                    },
+                    "snippet": "  205 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);\n  206 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();\n> 207 |       expect(firstCue.at - slow.ledger.samples[0].at, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);\n      |                                                                                                               ^\n  208 |       const indicator = page.locator('.companion-avatar [role=\"status\"]');\n  209 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);\n  210 |       expect(await indicator.evaluate(element => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                        "column": 111,
+                        "line": 207
+                      },
+                      "message": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m245.199951171875\u001b[39m\n\n  205 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);\n  206 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();\n> 207 |       expect(firstCue.at - slow.ledger.samples[0].at, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);\n      |                                                                                                               ^\n  208 |       const indicator = page.locator('.companion-avatar [role=\"status\"]');\n  209 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);\n  210 |       expect(await indicator.evaluate(element => {\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts:207:111"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:34.310Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-startup\\qa\\test-results\\companion-startup-cold-slo-4dc4d-reveal-real-pixels-at-375px\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                    "column": 111,
+                    "line": 207
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-0f8dbfa5832543d8c4d4",
+          "file": "companion-startup.spec.ts",
+          "line": 194,
+          "column": 3
+        },
+        {
+          "title": "fast normal motion startup reveals only after actual pixels at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7068,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:37.991Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-e369670ab0d21e3498cd",
+          "file": "companion-startup.spec.ts",
+          "line": 233,
+          "column": 5
+        },
+        {
+          "title": "reduced motion instantaneous startup reveals only after actual pixels at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1958,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:45.532Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-5a1af8b65b4ebda8d653",
+          "file": "companion-startup.spec.ts",
+          "line": 233,
+          "column": 5
+        },
+        {
+          "title": "genuine model failure offers truthful still and retry hides it until new real pixels at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:47.522Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-cb8f88827dcc7a622cbf",
+          "file": "companion-startup.spec.ts",
+          "line": 244,
+          "column": 3
+        },
+        {
+          "title": "cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2578,
+                  "error": {
+                    "message": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m248.400146484375\u001b[39m",
+                    "stack": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m248.400146484375\u001b[39m\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts:207:111",
+                    "location": {
+                      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                      "column": 111,
+                      "line": 207
+                    },
+                    "snippet": "  205 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);\n  206 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();\n> 207 |       expect(firstCue.at - slow.ledger.samples[0].at, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);\n      |                                                                                                               ^\n  208 |       const indicator = page.locator('.companion-avatar [role=\"status\"]');\n  209 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);\n  210 |       expect(await indicator.evaluate(element => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                        "column": 111,
+                        "line": 207
+                      },
+                      "message": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m248.400146484375\u001b[39m\n\n  205 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);\n  206 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();\n> 207 |       expect(firstCue.at - slow.ledger.samples[0].at, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);\n      |                                                                                                               ^\n  208 |       const indicator = page.locator('.companion-avatar [role=\"status\"]');\n  209 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);\n  210 |       expect(await indicator.evaluate(element => {\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts:207:111"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:50.972Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-startup\\qa\\test-results\\companion-startup-cold-slo-3bbd3-reveal-real-pixels-at-390px\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                    "column": 111,
+                    "line": 207
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-472a9656fe07b034fe14",
+          "file": "companion-startup.spec.ts",
+          "line": 194,
+          "column": 3
+        },
+        {
+          "title": "fast normal motion startup reveals only after actual pixels at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:54.673Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-84c6e825e67fd0a384bb",
+          "file": "companion-startup.spec.ts",
+          "line": 233,
+          "column": 5
+        },
+        {
+          "title": "reduced motion instantaneous startup reveals only after actual pixels at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:57.609Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-a8406365d338db568ce3",
+          "file": "companion-startup.spec.ts",
+          "line": 233,
+          "column": 5
+        },
+        {
+          "title": "genuine model failure offers truthful still and retry hides it until new real pixels at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:19:59.315Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-e7a6511978c583658d14",
+          "file": "companion-startup.spec.ts",
+          "line": 244,
+          "column": 3
+        },
+        {
+          "title": "cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2619,
+                  "error": {
+                    "message": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m240.199951171875\u001b[39m",
+                    "stack": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m240.199951171875\u001b[39m\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts:207:111",
+                    "location": {
+                      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                      "column": 111,
+                      "line": 207
+                    },
+                    "snippet": "  205 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);\n  206 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();\n> 207 |       expect(firstCue.at - slow.ledger.samples[0].at, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);\n      |                                                                                                               ^\n  208 |       const indicator = page.locator('.companion-avatar [role=\"status\"]');\n  209 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);\n  210 |       expect(await indicator.evaluate(element => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                        "column": 111,
+                        "line": 207
+                      },
+                      "message": "Error: loading cue waits through the brief fast-load window\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m280\u001b[39m\nReceived:    \u001b[31m240.199951171875\u001b[39m\n\n  205 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);\n  206 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();\n> 207 |       expect(firstCue.at - slow.ledger.samples[0].at, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);\n      |                                                                                                               ^\n  208 |       const indicator = page.locator('.companion-avatar [role=\"status\"]');\n  209 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);\n  210 |       expect(await indicator.evaluate(element => {\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts:207:111"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:20:02.603Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-startup\\qa\\test-results\\companion-startup-cold-slo-0d4c7-eveal-real-pixels-at-1280px\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.spec.ts",
+                    "column": 111,
+                    "line": 207
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-7d9463ffdffed2e7f417",
+          "file": "companion-startup.spec.ts",
+          "line": 194,
+          "column": 3
+        },
+        {
+          "title": "fast normal motion startup reveals only after actual pixels at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:20:06.301Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-44c4297a6e27ce193cc4",
+          "file": "companion-startup.spec.ts",
+          "line": 233,
+          "column": 5
+        },
+        {
+          "title": "reduced motion instantaneous startup reveals only after actual pixels at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:20:09.065Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-4909665c3cc1464a9a97",
+          "file": "companion-startup.spec.ts",
+          "line": 233,
+          "column": 5
+        },
+        {
+          "title": "genuine model failure offers truthful still and retry hides it until new real pixels at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3181,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:20:10.827Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-fdf58c8f8c49ba3efaa6",
+          "file": "companion-startup.spec.ts",
+          "line": 244,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-07T05:19:26.540Z",
+    "duration": 48098.14,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

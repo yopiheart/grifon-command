@@ -1,0 +1,18 @@
+{
+  ".companion-scroll": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)"
+  },
+  ".companion-sidebar-scroll": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)"
+  },
+  ".companion-output-viewer": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)"
+  },
+  ".companion-settings-scroll": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)"
+  }
+}

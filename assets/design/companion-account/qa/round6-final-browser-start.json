@@ -1,0 +1,79 @@
+{
+  "phase": "round6-final-browser-start",
+  "recordedAt": "2026-10-07T15:27:41.8182021+08:00",
+  "source": {
+    "capturedAt": "2026-10-07T15:27:10.0529943+08:00",
+    "files": [
+      {
+        "sha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "path": "App.tsx"
+      },
+      {
+        "sha256": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6",
+        "path": "components/CompanionChat/CompanionChatShell.tsx"
+      },
+      {
+        "sha256": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b",
+        "path": "components/CompanionChat/index.tsx"
+      },
+      {
+        "sha256": "d547e4b3c7ba5b19785a9717f9ebeee8066f2bbef591fe1bce33c33e96f4fe11",
+        "path": "components/CompanionChat/companionChat.css"
+      },
+      {
+        "sha256": "da09b2a1ba34e4d465338b3ec1327cc27d3ddd7a6967438139dc2b1d705c922e",
+        "path": "components/dashboard/SettingsModal.tsx"
+      },
+      {
+        "sha256": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "path": "dev/companionChatPreview.tsx"
+      },
+      {
+        "sha256": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f",
+        "path": "services/consentService.ts"
+      },
+      {
+        "sha256": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3",
+        "path": "hooks/useSubscription.ts"
+      },
+      {
+        "sha256": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+        "path": "components/CompanionChat/CompanionChatSurface.tsx"
+      }
+    ]
+  },
+  "tests": [
+    {
+      "path": "tests/e2e/companion-account.spec.ts",
+      "sha256": "950e1f843b952232693ed244ce2b5ae94089be460653330db4926a751a9a4505"
+    },
+    {
+      "path": "tests/e2e/companion-account-fixture.ts",
+      "sha256": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4"
+    },
+    {
+      "path": "tests/e2e/companion-account.config.ts",
+      "sha256": "26feabf9556521166d3233b92bc22b8dafe7d17ac78704c7ac4a7883e0941ed4"
+    },
+    {
+      "path": "tests/e2e/companion-account-regression.config.ts",
+      "sha256": "47216f63bebc8e4eb0a5c7e8fa570df7699820373596cb647a65e72c78b81c30"
+    },
+    {
+      "path": "tests/e2e/route-consistency.spec.ts",
+      "sha256": "01415f6f3065e00a85d4ae6449faf71d4b5c703113b073a28a4ece94e1224aff"
+    },
+    {
+      "path": "tests/e2e/companion-navigation.spec.ts",
+      "sha256": "e42a9b5bee9eaed869c8270ab39878ff433789fced9406158460001a8d1ace4c"
+    },
+    {
+      "path": "tests/e2e/companion-startup.spec.ts",
+      "sha256": "df2e4efbbabad8a391e392857f07eda210890581999bf441d7fb6ecce7c9e3d2"
+    },
+    {
+      "path": "tests/unit/companionAccountConsent.test.ts",
+      "sha256": "679a5fb35299f98201103849a2cbb9c796e544bbff5bfb793c7b72a4043cd6e0"
+    }
+  ]
+}

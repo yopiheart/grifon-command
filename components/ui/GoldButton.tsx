@@ -35,12 +35,12 @@ export const GoldButton: React.FC<GoldButtonProps> = ({ children, className = ''
   };
 
   const flatClass =
-    'rounded-full bg-[#FFCC00] text-black font-bold uppercase py-3 text-xs md:text-sm text-center leading-tight px-4 md:px-8 shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:shadow-[0_0_25px_rgba(255,204,0,0.5)] hover:scale-105 active:scale-95 transition-all duration-300';
+    'min-h-11 rounded-full bg-[#FFCC00] text-black font-sans font-semibold normal-case tracking-normal py-3 text-sm text-center leading-tight px-4 md:px-8 shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:shadow-[0_0_25px_rgba(255,204,0,0.5)] hover:scale-105 active:scale-95 transition-all duration-300';
 
   // Glossy: gold GRADIENT (tints of the same #FFCC00 — no new hue) for depth, inset top
   // highlight + soft gold halo for the light-source look, hover lift + press for tactility.
   const glossyClass =
-    'relative overflow-hidden rounded-full bg-gradient-to-b from-[#FFD83D] via-[#FFCC00] to-[#E6B800] text-black font-black uppercase py-3 text-xs md:text-sm text-center leading-tight px-4 md:px-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_0_18px_rgba(255,204,0,0.35)] hover:-translate-y-0.5 hover:from-[#FFE266] hover:to-[#F0C200] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_0_28px_rgba(255,204,0,0.55)] active:translate-y-0 active:scale-[0.99] transition-all duration-300';
+    'relative overflow-hidden min-h-11 rounded-full bg-gradient-to-b from-[#FFD83D] via-[#FFCC00] to-[#E6B800] text-black font-sans font-semibold normal-case tracking-normal py-3 text-sm text-center leading-tight px-4 md:px-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_0_18px_rgba(255,204,0,0.35)] hover:-translate-y-0.5 hover:from-[#FFE266] hover:to-[#F0C200] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_0_28px_rgba(255,204,0,0.55)] active:translate-y-0 active:scale-[0.99] transition-all duration-300';
 
   return (
     <button

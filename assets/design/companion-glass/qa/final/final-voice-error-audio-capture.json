@@ -1,0 +1,13 @@
+{
+  "notice": [
+    "No microphone is available. You can keep typing."
+  ],
+  "speech": [
+    {
+      "starts": 1,
+      "stops": 0,
+      "aborts": 1,
+      "interimResults": true
+    }
+  ]
+}

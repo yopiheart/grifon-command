@@ -1,0 +1,60 @@
+{
+  "phase": "source-frozen",
+  "checks": [
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "94ad3b",
+        "wall_time_seconds": 0.7499682,
+        "exit_code": 0,
+        "original_token_count": 75,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:voice-sync\n> node tools/check-voice-lint-sync.mjs\n\n  ·  grifon-starter — walang voice gate (dapat ENGLISH ang copy nito, STEP 0a)\n  ✓  oceanides-paolo\n  ✓  oceanides-price-page\nvoice-lint sync ok — 2 funnel katulad ng _template (222b3ede9f9b)\n"
+      }
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "7b749b",
+        "wall_time_seconds": 2.6410158,
+        "exit_code": 0,
+        "original_token_count": 39,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:domain\n> node tools/check-domain-language.mjs\n\n[domain-language] OK — scanned 302 file(s), 0 drift hits.\n"
+      }
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "0ad15c",
+        "wall_time_seconds": 4.0285818,
+        "exit_code": 0,
+        "original_token_count": 186,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:artifact-anchors\n> node tools/artifacts/check-anchors.mjs\n\n\nbuild-eli5-image-gate.mjs\n  api/gemini/image.ts:105                     the server 503 when the unprefixed flag is off\n  services/producerDeps.ts:138                the one function that hands out BOTH halves from the client flag\n  services/producerOrchestrator.ts:1825       Half A, the deterministic check\n  services/producerOrchestrator.ts:1846       Half A hard-flagging a scene out of approval\n  services/producerOrchestrator.ts:1868       Half B, the AI gate\n\n> C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\artifacts\\eli5-image-gate.html\n  page 15 KB\n  artifacts/eli5-image-gate.html unchanged\n\ncheck:artifact-anchors ok\n\n"
+      }
+    },
+    {
+      "command": "npm.cmd run design:lint",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "872a0f",
+        "wall_time_seconds": 3.9212376,
+        "exit_code": 0,
+        "original_token_count": 94,
+        "output": "\n> creative-director-ai-assistant@1.0.0 design:lint\n> node node_modules/@google/design.md/dist/index.js lint DESIGN.md\n\n{\n  \"findings\": [\n    {\n      \"severity\": \"info\",\n      \"message\": \"Design system defines 8 colors, 7 typography scales, 5 rounding levels, 4 spacing tokens, 6 components.\"\n    }\n  ],\n  \"summary\": {\n    \"errors\": 0,\n    \"warnings\": 0,\n    \"infos\": 1\n  }\n}\n"
+      }
+    },
+    {
+      "command": "npm.cmd run check:ps1-ascii",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "bc3268",
+        "wall_time_seconds": 3.8510266,
+        "exit_code": 0,
+        "original_token_count": 33,
+        "output": "\n> creative-director-ai-assistant@1.0.0 check:ps1-ascii\n> node tools/check-ps1-ascii.mjs\n\nOK: every scripts/*.ps1 is pure ASCII.\n"
+      }
+    }
+  ]
+}

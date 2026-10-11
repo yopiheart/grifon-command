@@ -1,0 +1,38 @@
+{
+  ".companion-scroll": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)",
+    "background": [
+      9,
+      9,
+      11
+    ]
+  },
+  ".companion-sidebar-scroll": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)",
+    "background": [
+      15,
+      15,
+      17.4
+    ]
+  },
+  ".companion-output-viewer": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)",
+    "background": [
+      9,
+      9,
+      11
+    ]
+  },
+  ".companion-settings-scroll": {
+    "width": "thin",
+    "color": "rgb(113, 113, 122) rgba(0, 0, 0, 0)",
+    "background": [
+      9,
+      9,
+      11
+    ]
+  }
+}

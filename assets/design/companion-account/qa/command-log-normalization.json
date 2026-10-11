@@ -1,0 +1,72 @@
+[
+  {
+    "path": "assets/design/companion-account/qa/build-before-settings-typography-command.log",
+    "originalSha256": "1a13bb89983523012976500df082ec12aee53aac323b2c369a7fd68d801f78ad",
+    "displaySha256": "bf8bb1b66eb3911a3346f64f8478e7962f5ea631cb480310bb808e2beacde157"
+  },
+  {
+    "path": "assets/design/companion-account/qa/build-command.log",
+    "originalSha256": "9f2b832f5553ddfc0fbfea264a9cd556b6b511f6c0ed1a58778739d31a6ed433",
+    "displaySha256": "29ccacc10f70ef8bf79386aea6737da5108a0fc095a34268615e913c030e4cca"
+  },
+  {
+    "path": "assets/design/companion-account/qa/final-account-command.log",
+    "originalSha256": "2a0df75ba6abcc25b0bd636489a2276b65823400fd4d6e1676835956277f9ba3",
+    "displaySha256": "a038aea8acf5e8c35585bcfd972ecbee5b5ff41c1a320c365cfb40589ec0c81a"
+  },
+  {
+    "path": "assets/design/companion-account/qa/final-round6-history-command.log",
+    "originalSha256": "26919f082eff05e99969b82747eca0597f531b14bd31442c6b16ad09f68a0ab6",
+    "displaySha256": "4ff26b8512e5783da3764f44b466e69d3a821b2f69a227790235696a76c7ee67"
+  },
+  {
+    "path": "assets/design/companion-account/qa/refresh-baseline-command.log",
+    "originalSha256": "b88341939033d551663b4605a095e8bc41782b7435176a8767aa2bed3e1a0d42",
+    "displaySha256": "4bf6b5b7bc780083124f45497a5431cf5c8a5740490675fc2ece5001e8c9b353"
+  },
+  {
+    "path": "assets/design/companion-account/qa/refresh-baseline-proof-command.log",
+    "originalSha256": "69eae81322a3ad45c9887bdd0b2a501e03544615cc07272581fe267d13ffe3fe",
+    "displaySha256": "348fbb9b2f0b6dd64d4a760d0cbe1febd246b8a00ed0fc7316ee52e74526d194"
+  },
+  {
+    "path": "assets/design/companion-account/qa/route-final-round6-command.log",
+    "originalSha256": "68ed4e969262ea97ac534f21164ec3cb6839b3f595c3d0408b3ace4f0d3f053e",
+    "displaySha256": "8d19005c29d9a42f86b454dd6b89b2aa598256097b8c2bd90a3b7dc252e510c5"
+  },
+  {
+    "path": "assets/design/companion-account/qa/subscription-baseline-command.log",
+    "originalSha256": "e2ede9e9cd8be48b0d37629c6f3e8c2845c471aad31de6bb72973b195cbea7eb",
+    "displaySha256": "c2d9a15a411582880470f8ab1dee82a468c50dc360d719cba6867c049436f017"
+  },
+  {
+    "path": "assets/design/companion-account/qa/subscription-baseline-harness-command.log",
+    "originalSha256": "127a1b6a2dff9985cc8727564855406799c8d804a8d0bd59ee10ddc12894c41f",
+    "displaySha256": "180dbcfd5249a558f2b0d33e23e50aa5a1d722f68243cff7b9a0ba468d82d69f"
+  },
+  {
+    "path": "assets/design/companion-account/qa/subscription-baseline-original-proof-command.log",
+    "originalSha256": "bafc8b9ba23851fa26320dccf4919c70975984c4743097f415785d3224971ca6",
+    "displaySha256": "fee08868e7796f9d04cb44677d429828b52d0706285abb059a7a0f880604d077"
+  },
+  {
+    "path": "assets/design/companion-account/qa/subscription-baseline-otp-command.log",
+    "originalSha256": "dca9febb4e59a0be9448dba98ce116dd0b4cf67efefdcd2d2c19063fa076b13a",
+    "displaySha256": "8fd0f004accec9b461897af6ec4ae470af02f40619f545d3c8c801679e88be5d"
+  },
+  {
+    "path": "assets/design/companion-account/qa/subscription-baseline-otp-proof-command.log",
+    "originalSha256": "44045145c15b9513557a8ad81cd61e36bb21b91d5b6fabead72c1bd981dc6d83",
+    "displaySha256": "064a2d655d3766efd0fb4d0f6f64acb8188208bc1c532c85c8b52788d605cbd4"
+  },
+  {
+    "path": "assets/design/companion-account/qa/subscription-baseline-valid-command.log",
+    "originalSha256": "fdf274178972fb588e7b6ce6612b6a7ec13a6ee8363585f01f705b4732e5fbd4",
+    "displaySha256": "b97f90d69c6bbc76379fb2f8f6b04d025d150af99353cbfe2219705b223207fa"
+  },
+  {
+    "path": "assets/design/companion-account/qa/unit-command.log",
+    "originalSha256": "382c48f4f10e65640139009e3809196a2036a435443eda906bc71cbcec677d7e",
+    "displaySha256": "ecd670a7746e02e4898c5301e77d7116f55dd94a5bf40c3a3c8c88d7b468541f"
+  }
+]

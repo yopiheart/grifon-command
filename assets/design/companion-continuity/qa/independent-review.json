@@ -1,0 +1,403 @@
+{
+  "baseline": "5c6d6a07",
+  "sourceHashes": {
+    "components/CompanionChat/CompanionChatShell.tsx": "7096bcc3cbc43d6980f3252c35d58b1472a1b24862f6ef77cb1f70cd72bf872c",
+    "components/CompanionChat/CompanionChatSurface.tsx": "b8775adf86159bebeda89f18245aec5bf951d1851c22ed99afc71abf1bb86f99",
+    "components/CompanionChat/CompanionAvatarLayer.tsx": "5cc687a510c07cd9f9b1e2dc4da770078708e8f29eb6dba5fc0686347fd1ddb1",
+    "components/CompanionChat/index.tsx": "35e482ae934e35834f09c7b88609c1433ebc1dfcaa68f47b15146531a1a975d9",
+    "components/CompanionChat/companionChat.css": "d1c934d9cf484f5a41fb90d51d08e96a1e946aef5deecdd6fdc924042c2e2638",
+    "dev/companionChatPreview.tsx": "b7face635c969026114cb925db0e4d507c5da3c0ff5f80032b4f5251d791b6ce"
+  },
+  "contract": "Ready animation continuous through saved chat/New chat; conversation draft/task state isolated; reactions/pointer/fallback truthful; approved layout retained.",
+  "checks": [
+    {
+      "name": "375 initial aligned size",
+      "pass": true,
+      "a": {
+        "x": 159.5,
+        "y": 49,
+        "w": 56,
+        "h": 56
+      },
+      "s": {
+        "x": 159.5,
+        "y": 49,
+        "w": 56,
+        "h": 56
+      },
+      "c": {
+        "x": 16,
+        "y": 537.25,
+        "w": 343,
+        "h": 62
+      },
+      "delta": 0,
+      "overflow": 0
+    },
+    {
+      "name": "375 typing reaction",
+      "pass": true
+    },
+    {
+      "name": "375 pending reply reaction",
+      "pass": true
+    },
+    {
+      "name": "375 new chat isolation",
+      "pass": true
+    },
+    {
+      "name": "375 restored Alpha isolation",
+      "pass": true
+    },
+    {
+      "name": "375 restored Beta isolation",
+      "pass": true
+    },
+    {
+      "name": "375 navigation continuous",
+      "pass": true,
+      "same": true,
+      "flashes": [],
+      "ready": "true",
+      "frameRequests": 1
+    },
+    {
+      "name": "375 pointer reaches live renderer",
+      "pass": true,
+      "pointer": {
+        "channel": "grifon-companion",
+        "command": "pointer",
+        "x": 0.9466666666666667,
+        "y": -1
+      }
+    },
+    {
+      "name": "375 output reaction",
+      "pass": true
+    },
+    {
+      "name": "375 viewer alignment and inert",
+      "pass": true,
+      "a": {
+        "x": 159.484375,
+        "y": 49,
+        "w": 56,
+        "h": 56
+      },
+      "s": {
+        "x": 159.484375,
+        "y": 49,
+        "w": 56,
+        "h": 56
+      },
+      "c": {
+        "x": 16,
+        "y": 537.25,
+        "w": 343,
+        "h": 62
+      },
+      "delta": 0,
+      "overflow": 0,
+      "inert": ""
+    },
+    {
+      "name": "375 mobile focus trap",
+      "pass": true
+    },
+    {
+      "name": "375 viewer return",
+      "pass": true
+    },
+    {
+      "name": "375 failed task reaction",
+      "pass": true
+    },
+    {
+      "name": "375 current states bridge",
+      "pass": true,
+      "states": [
+        "reading",
+        "working",
+        "idle",
+        "reading",
+        "idle",
+        "reading",
+        "working",
+        "idle",
+        "reading",
+        "ready",
+        "idle"
+      ]
+    },
+    {
+      "name": "375 no runtime exceptions",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "375 no provider/API traffic",
+      "pass": true,
+      "blocked": []
+    },
+    {
+      "name": "1280 initial aligned size",
+      "pass": true,
+      "a": {
+        "x": 727.984375,
+        "y": 49,
+        "w": 64,
+        "h": 64
+      },
+      "s": {
+        "x": 727.984375,
+        "y": 49,
+        "w": 64,
+        "h": 64
+      },
+      "c": {
+        "x": 424,
+        "y": 788.125,
+        "w": 672,
+        "h": 62
+      },
+      "delta": 0,
+      "overflow": 0
+    },
+    {
+      "name": "1280 typing reaction",
+      "pass": true
+    },
+    {
+      "name": "1280 pending reply reaction",
+      "pass": true
+    },
+    {
+      "name": "1280 new chat isolation",
+      "pass": true
+    },
+    {
+      "name": "1280 restored Alpha isolation",
+      "pass": true
+    },
+    {
+      "name": "1280 restored Beta isolation",
+      "pass": true
+    },
+    {
+      "name": "1280 navigation continuous",
+      "pass": true,
+      "same": true,
+      "flashes": [],
+      "ready": "true",
+      "frameRequests": 1
+    },
+    {
+      "name": "1280 pointer reaches live renderer",
+      "pass": true,
+      "pointer": {
+        "channel": "grifon-companion",
+        "command": "pointer",
+        "x": 0.7968994140625,
+        "y": -1
+      }
+    },
+    {
+      "name": "1280 output reaction",
+      "pass": true
+    },
+    {
+      "name": "1280 viewer alignment and inert",
+      "pass": true,
+      "a": {
+        "x": 493.984375,
+        "y": 49,
+        "w": 64,
+        "h": 64
+      },
+      "s": {
+        "x": 493.984375,
+        "y": 49,
+        "w": 64,
+        "h": 64
+      },
+      "c": {
+        "x": 272,
+        "y": 788.125,
+        "w": 508,
+        "h": 62
+      },
+      "delta": 0,
+      "overflow": 0,
+      "inert": null
+    },
+    {
+      "name": "1280 viewer return",
+      "pass": true
+    },
+    {
+      "name": "1280 sidebar collapsed alignment",
+      "pass": true
+    },
+    {
+      "name": "1280 sidebar restored alignment",
+      "pass": true
+    },
+    {
+      "name": "1280 failed task reaction",
+      "pass": true
+    },
+    {
+      "name": "1280 current states bridge",
+      "pass": true,
+      "states": [
+        "reading",
+        "working",
+        "idle",
+        "reading",
+        "idle",
+        "reading",
+        "working",
+        "idle",
+        "reading",
+        "ready",
+        "idle"
+      ]
+    },
+    {
+      "name": "1280 no runtime exceptions",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "1280 no provider/API traffic",
+      "pass": true,
+      "blocked": []
+    },
+    {
+      "name": "cold load truthful still",
+      "pass": true
+    },
+    {
+      "name": "renderer failure truthful fallback",
+      "pass": true
+    },
+    {
+      "name": "retry restores actual live renderer",
+      "pass": true,
+      "frameRequests": 2
+    },
+    {
+      "name": "375 animation frame progression",
+      "pass": true,
+      "before": 39,
+      "after": 51
+    },
+    {
+      "name": "375 contrast fallback preserved",
+      "pass": true,
+      "background": "rgb(24, 24, 27)",
+      "blur": "none"
+    },
+    {
+      "name": "1280 animation frame progression",
+      "pass": true,
+      "before": 38,
+      "after": 50
+    },
+    {
+      "name": "1280 contrast fallback preserved",
+      "pass": true,
+      "background": "rgb(24, 24, 27)",
+      "blur": "none"
+    }
+  ],
+  "findings": [],
+  "screenshots": [
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\normal-375.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\viewer-375.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\normal-1280.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\viewer-1280.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\failure-375.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\header-zoom-375.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\composer-zoom-375.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\header-zoom-1280.png",
+    "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-continuity\\qa\\independent\\composer-zoom-1280.png"
+  ],
+  "safety": {
+    "freshContexts": true,
+    "providerCalls": false,
+    "realMicrophone": false,
+    "productionData": false
+  },
+  "limitations": [
+    "No native phone/GPU or real WebGL context-loss event tested. Renderer failure was injected through the existing trusted frame event; the separate continuity suite covers real asset failure.",
+    "No real microphone, authentication, paid provider, or real-user saved history was exercised.",
+    "Build/full unit checks and pre-change failure proof are owned by the parent/smoke agent and are not claimed as independently rerun here."
+  ],
+  "runtimeVerdict": "PASS",
+  "staticReview": {
+    "verdict": "PASS",
+    "actionableFindings": 0,
+    "filesReviewed": [
+      "components/CompanionChat/CompanionChatShell.tsx",
+      "components/CompanionChat/CompanionChatSurface.tsx",
+      "components/CompanionChat/CompanionAvatarLayer.tsx",
+      "components/CompanionChat/index.tsx",
+      "components/CompanionChat/companionChat.css",
+      "dev/companionChatPreview.tsx"
+    ],
+    "testReview": "New continuity E2E tests block API/external requests, use fresh fixture state, and assert iframe/window/canvas identity plus fallback events and frame progression.",
+    "invariants": [
+      "Keyed ProducerFlow and CompanionChatSurface preserve per-chat reset boundaries.",
+      "Shell owns one CompanionAvatarLayer for its account lifetime; avatar state uses the currently selected chat guard.",
+      "Disconnected slots cannot publish; ResizeObserver and inert MutationObserver are cleaned up on remount and state change.",
+      "Renderer bridge, runtime, mesh, textures, generation knobs, and failure/retry implementation are unchanged.",
+      "Shell-relative coordinates match slot bounds without adding chrome surfaces or blur passes."
+    ]
+  },
+  "brandReview": {
+    "verdict": "BRAND_PASS",
+    "critical": 0,
+    "nit": 0,
+    "score": {
+      "philosophyCoherence": 9,
+      "visualHierarchy": 9,
+      "executionCraft": 9,
+      "functionality": 10,
+      "innovationDistinctiveness": 9,
+      "total": 46
+    },
+    "quickWins": [],
+    "visualEvidence": "Full-page mobile/desktop normal, viewer, and mobile renderer failure screenshots; 2x header/composer element snapshots.",
+    "criteria": [
+      "56px mobile / 64px desktop slot and live frame geometry retained.",
+      "Centered identity remains aligned after sidebar collapse/restore and desktop output viewer.",
+      "Mobile modal covers the layer; inert and focus trap remain active.",
+      "Gold actions, zinc surfaces, 14px input/message register, neutral compact glass, and high contrast fallback retained.",
+      "No source-added shadow, color, typography, icon, primitive, motion-token, or responsive violation."
+    ],
+    "authorityNote": "Current DESIGN.md governs newer typography/material/contrast rules where brand-check prose is older."
+  },
+  "sourceUnchanged": true,
+  "verdict": "PASS",
+  "independentConfigReview": {
+    "verdict": "PASS",
+    "file": "package.json",
+    "line": 26,
+    "script": "node node_modules/@google/design.md/dist/index.js lint DESIGN.md",
+    "packageSha256": "1da2d81a5be844bfbe9d5cbeca5a5b57db63b7d04031b75c7425321aa6248f8f",
+    "declaredCliBin": "./dist/index.js",
+    "installedCliVersion": "0.1.1",
+    "uiSourceUnchanged": true,
+    "findings": [],
+    "portability": "Calls the installed package declared CLI entry via Node with relative forward-slash paths supported on Windows and POSIX. npm runs package scripts from this package root. Arguments and package version are unchanged; avoids ambiguous shell executable resolution for the design.md name beside DESIGN.md.",
+    "independentVerification": {
+      "command": "npm.cmd run design:lint",
+      "exitCode": 0,
+      "errors": 0,
+      "warnings": 0
+    },
+    "browserRerun": "Not needed: all six reviewed UI source SHA-256 hashes still match the original independent pass."
+  }
+}

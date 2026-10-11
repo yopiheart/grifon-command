@@ -1,0 +1,9 @@
+{
+  "status": "INTERRUPTED_DIAGNOSTIC",
+  "reason": "Repeated inherited recovery entry URLs select Companion instead of the existing Studio",
+  "completedFailedCases": 8,
+  "full18Verdict": false,
+  "playwrightPid": 12512,
+  "serverPid": 20856,
+  "interruptedAt": "2026-10-10T03:05:39.1956244Z"
+}

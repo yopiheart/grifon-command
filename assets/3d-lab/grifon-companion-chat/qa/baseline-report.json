@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "70506cf20b57ef5c1db3577d9176b394c1123914",
+  "url": "http://127.0.0.1:5173/app?experience=companion",
+  "requiredFlow": "Enter a brief in the companion chat composer",
+  "passed": false,
+  "expectedFailure": true,
+  "reason": "Rendered existing app has no companion message composer; guided chat flow cannot begin",
+  "blockedOrigins": [
+    "https://fonts.googleapis.com"
+  ]
+}

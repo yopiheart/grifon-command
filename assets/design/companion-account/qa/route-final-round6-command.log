@@ -1,0 +1,47 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account-regression.config.ts route-consistency.spec.ts
+
+
+Running 14 tests using 1 worker
+
+(node:25436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\route-consistency.spec.ts:37:1 › pricing Home changes the URL and refresh preserves the landing screen (3.9s)
+  ok  2 tests\e2e\route-consistency.spec.ts:46:1 › landing, pricing and login retain real Back and Forward entries (3.7s)
+  ok  3 tests\e2e\route-consistency.spec.ts:70:1 › checkout error Back updates the URL to pricing (1.3s)
+  ok  4 tests\e2e\route-consistency.spec.ts:77:1 › Reviews anchor and logo reflect the current landing location (3.0s)
+  ok  5 tests\e2e\route-consistency.spec.ts:87:1 › signed-in pricing Home, app entry and logout keep screen and path aligned (4.0s)
+  x   6 tests\e2e\route-consistency.spec.ts:109:1 › marked OAuth return enters the app after a full callback reload (2.8s)
+(node:3748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 tests\e2e\route-consistency.spec.ts:121:1 › payment retry carries a billing cycle changed within checkout (3.1s)
+  ok  8 tests\e2e\route-consistency.spec.ts:141:1 › auth and browser history preserve legal and annual checkout return (3.2s)
+  ok  9 tests\e2e\route-consistency.spec.ts:157:1 › guest app deep link presents login at its own URL (1.2s)
+  ok 10 tests\e2e\route-consistency.spec.ts:164:3 › payment retry restores the selected checkout: plan=business&cycle=annual (3.3s)
+  ok 11 tests\e2e\route-consistency.spec.ts:164:3 › payment retry restores the selected checkout: topup=video_ad_pack5 (2.9s)
+  ok 12 tests\e2e\route-consistency.spec.ts:175:1 › mobile menu routes and direct Reviews links match their visible location (4.6s)
+  ok 13 tests\e2e\route-consistency.spec.ts:194:1 › billing success continues to the authenticated chat URL (1.8s)
+  ok 14 tests\e2e\route-consistency.spec.ts:207:1 › invalid checkout return selection falls back to pricing on the same origin (1.3s)
+
+
+  1) tests\e2e\route-consistency.spec.ts:109:1 › marked OAuth return enters the app after a full callback reload
+
+    Error: expect(received).toBeNull()
+
+    Received: "1"
+
+      116 |   await expect(page).toHaveURL(/\/app$/);
+      117 |   await expect(page.getByRole('textbox', { name: 'Message Grifon', exact: true })).toBeVisible();
+    > 118 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_oauth_pending'))).toBeNull();
+          |                                                                                     ^
+      119 | });
+      120 |
+      121 | test('payment retry carries a billing cycle changed within checkout', async ({ page }) => {
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\route-consistency.spec.ts:118:85
+
+    Error Context: assets\design\companion-account\qa\regression-test-results\route-consistency-marked-O-8d0f5-fter-a-full-callback-reload\error-context.md
+
+  1 failed
+    tests\e2e\route-consistency.spec.ts:109:1 › marked OAuth return enters the app after a full callback reload
+  13 passed (45.2s)

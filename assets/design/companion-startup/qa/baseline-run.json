@@ -1,0 +1,13 @@
+{
+  "head": "bccbc2dc",
+  "command": "$env:COMPANION_STARTUP_PHASE='baseline'; npx.cmd playwright test --config tests/e2e/companion-startup.config.ts",
+  "exitCode": 1,
+  "result": "FAIL (expected regression demonstration)",
+  "test": "held model startup never shows an outer static mascot",
+  "modelSeam": "/companion/scene.bin",
+  "error": "loading must reserve the avatar slot without showing neutral.png: expected false, received true",
+  "viewport": { "width": 375, "height": 667 },
+  "evidence": ["baseline-held-model-375.json", "baseline-held-model-375.png"],
+  "browser": "Isolated Playwright headless Microsoft Edge context, existing Vite 5173",
+  "network": "External provider and API routes blocked; no microphone or paid generation"
+}

@@ -1,0 +1,11 @@
+
+> creative-director-ai-assistant@1.0.0 check:eval-prompts
+> node tools/check-eval-prompt-sync.mjs
+
+PASS tools/eval_scene_image_models.mjs: REALISM_INSTRUCTION
+PASS tools/eval_scene_image_models.mjs: NO_TEXT_CONSTRAINT
+PASS tools/eval_scene_image_models.mjs: REALISM_INSTRUCTION_CINEMATIC
+PASS tools/eval_realism_formula.mjs: REALISM_INSTRUCTION
+PASS tools/eval_realism_formula.mjs: NO_TEXT_CONSTRAINT
+PASS tools/eval_realism_formula.mjs: avatar shared template tail
+Eval prompt sync: 6 covered pairs match. Other harness prompts, models and runtime behavior are outside this check.

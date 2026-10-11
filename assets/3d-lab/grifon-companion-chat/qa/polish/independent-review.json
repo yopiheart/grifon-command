@@ -1,0 +1,89 @@
+{
+  "reviewedDate": "2026-10-07",
+  "reviewer": "Independent companion_polish_review agent; report-only; no product edits",
+  "baseCommit": "79c3a0de419e91c3de6570c4ce7ef87a7a033009",
+  "verdict": "PASS",
+  "brandVerdict": "BRAND_PASS",
+  "unresolvedFindings": [],
+  "sourceHashes": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "42ef8b56bab51e6638feb98c081047d062e7d43ead8d097a83f99f5d07214db2",
+    "components/CompanionChat/CompanionAvatar.tsx": "cb70f156ab0a0b27906535fbc97a9cb162a143b377f01c765ed7500da8d21b71",
+    "components/CompanionChat/CompanionComposer.tsx": "11f2ea570b4124ab8cf5d7ec315ddec005d2664a6d0f1221038dd75d12593f6a",
+    "components/CompanionChat/companionChat.css": "a465f702e5416581b59143eabaceab99d53b1dc91312bd0da0c3620b67fccb5c"
+  },
+  "correctnessCoverage": [
+    "Adversarial source review of final tracked delta and new Composer/CSS against base; composer callback freshness, validation-preserving clear, IME guards, account/reset clearing, upload/action epochs, unchanged synchronous persistence, and inherited allowance/recovery semantics.",
+    "Reviewed memo boundaries: composer keystrokes remain local; parent receives presence edges; avatar and transcript memoization does not retain stale controller callbacks.",
+    "Reviewed pointer-event coalescing and cancellation on pointer leave/unmount; measured final burst is zero immediate bounds reads and one after frame versus 120 immediate baseline reads.",
+    "Reviewed scroll follow dependencies and native input cancellation. Last-message id handles the 120-message cap; queued frame rechecks follow intent; programmatic smooth scroll does not falsely detach following; wheel/touch/navigation keys stop it.",
+    "Read final scroll-report and its harness: baseline capped transcript remains10319px from latest; final is exactly at bottom by100ms and stays there at500ms. Nearby native smooth following is interrupted by an upward wheel; the reader remains500px above bottom. Typing preserves history position.",
+    "Final source makes jumps longer than one viewport instant while keeping nearby following smooth. Explicit send and effect scheduling both mark pending following, so browser scroll anchoring cannot cancel the queued request. Native user input still cancels it. Final scroll-report surface hash matches current source. Earlier source hashes matched final-metrics/build evidence before this final scroll-only edit. Git diff against base for public/companion is empty. Approved mesh, reactions and packaged character assets are unchanged."
+  ],
+  "visualCoverage": {
+    "method": "Independent inspection of discrete final screenshots and native-resolution composer crops produced by the smoke agent; no continuous playback claim.",
+    "viewports": ["375x667", "390x844", "1280x900"],
+    "inspectedFiles": [
+      "baseline-375.png",
+      "initial-375.png", "initial-390.png", "initial-1280.png",
+      "final-375.png", "final-390.png", "final-1280.png",
+      "final-typing-375.png", "final-composer-375.png", "final-composer-1280.png",
+      "final-brief-375.png", "final-working-375.png",
+      "final-ready-375.png", "final-ready-390.png", "final-ready-1280.png"
+    ],
+    "observations": [
+      "Corrected screenshots retain the neutral dark canvas and approved griffin without the intermediate white rectangle.",
+      "Readable normal-tracking sans input and message text; controlled gold emphasis; coherent mobile spacing and desktop rail/conversation hierarchy.",
+      "Composer icon silhouettes and control alignment are intact in cropped screenshots; no observed clipping or horizontal overflow in reviewed states.",
+      "Existing GlassPanel/MAT_PLATE and Button primitives retained; no new backdrop-filter declaration; new motion uses shared tokens and reduced-motion guards.",
+      "Reduced-transparency evidence reports solid rgb(24,24,27) composer. Source removes decorative fade/rail treatment for reduced transparency; reduced-motion source prevents smooth following and control transforms."
+    ]
+  },
+  "brandScore": {
+    "philosophyCoherence": 9,
+    "visualHierarchy": 8,
+    "executionCraft": 8,
+    "functionality": 9,
+    "innovationAndDistinctiveness": 8,
+    "total": 42,
+    "critical": 0,
+    "nits": 0,
+    "quickWins": []
+  },
+  "resolvedFindings": [
+    {
+      "severity": "P1 / BRAND_CRITICAL",
+      "locationAtDiscovery": "components/CompanionChat/companionChat.css:2",
+      "issue": "Root color-scheme: dark introduced a white rectangular matte behind the transparent companion iframe at all reviewed widths.",
+      "resolution": "Scoped color-scheme to native inputs/selects/textareas at current companionChat.css:11. Fresh final screenshots independently show the matte gone; capture-report samples changed from RGB255,255,255 to RGB9,9,11 at375 and1280."
+    },
+    {
+      "severity": "P2",
+      "location": "components/CompanionChat/CompanionChatSurface.tsx:125",
+      "issue": "Message-count-only scrolling misses new messages once the transcript reaches its120-message cap. Programmatic smooth-scroll events could also detach follow intent before later updates.",
+      "resolution": "Final source uses last-message id and separates pending/programmatic follow from native interruption. Long jumps are instant; final browser evidence reaches exact bottom by100ms while exact baseline fails. Nearby following remains smooth and interruptible."
+    },
+    {
+      "severity": "P2",
+      "location": "components/CompanionChat/CompanionChatSurface.tsx:113",
+      "issue": "Intermediate distance-aware scroll update exposed a race: transcript truncation generated a scroll-anchor event before the queued frame, clearing nearBottom and cancelling explicit-send following.",
+      "resolution": "The final source sets followingScroll before scheduling and when sending (line163). Native input still clears it. Final scroll-report matches current source hash and shows exact bottom at100ms/500ms. The smoke agent also reported a route-reconstructed pre-fix regression failing with12321px remaining; its final suite report owns that execution evidence."
+    }
+  ],
+  "evidenceReviewed": [
+    "contract.json", "final-pointer.json", "final-metrics.json", "capture-report.json", "scroll-report.json", "build-verification.json",
+    "measure.cjs", "capture.cjs", "scroll-check.cjs", "tests/e2e/companion-chat.spec.ts", "tests/e2e/companion-polish.spec.ts"
+  ],
+  "verificationAttribution": {
+    "reviewerExecution": "Source and evidence reads, source hash verification, discrete screenshot inspection; did not rerun builder or smoke-agent checks.",
+    "buildAndUnit": "Parent build-verification records successful build/unit/applicable gates from before the last minimal scroll-only edit. Parent is refreshing checks on final source; this independent review does not represent that pending execution as already passed.",
+    "functionalSuite": "Parent/smoke reported20 browser cases passed before the CSS-only matte correction. Corrected visual captures and final hash-matched targeted scroll check are reviewed here. Smoke is running21 cases including the new scroll-race regression; its final report owns that execution result.",
+    "performance": "The measurement before final scroll-only fixes reports input-to-next-rAF p95 of12.3-12.9ms and warm avatar frame p95 of17-17.1ms, with no long tasks in the measured windows.375px brief editing p95 is43.6ms/max70.7ms, compared with baseline30ms/max68.9ms: this does not support claiming a universal latency improvement. Smoke owns a final source refresh; the older metrics are not mislabeled as measurements of the final hash."
+  },
+  "limits": [
+    "Desktop Edge mobile emulation only; no physical phone, iOS virtual keyboard, input-to-photon measurement, or universal FPS claim.",
+    "Screenshot inspection establishes discrete layout/pose observations; the saved video was not continuously watched by this reviewer.",
+    "IME coverage uses synthetic events; actual platform IME behavior was not manually exercised.",
+    "Actual provider generation, billed operations and production account flows were not executed; mocked callback/account/backend tests establish only their stated scope.",
+    "Review covers this polish delta, not unrelated pre-existing product behavior. No deployment, merge, paid call, or external write was performed by this reviewer."
+  ]
+}

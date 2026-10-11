@@ -1,15 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, owner approved held-card Reading; prior work preserved**
+**Stamped: 2026-10-11, Companion feature integration approved**
 
-## ▶ NEXT ACTION
-Next: text-chat integration with real state events; actual phone performance pending.
-Branch codex/griffin-live-prototype, draft PR163 stacked on PR162.
-assets/3d-lab/grifon-companion-live: Reading holds a card and traces its text with a wing.
-Fixed-camera baked appearance; local http://127.0.0.1:8765/ needs host server running.
-qa/reading-held/owner-approval.json binds acceptance to exact preview/source hashes.
-Blink continuity preserved; prior QA/AMD timing retained, not current phone FPS.
-Independent source/pose review clear; build/1432 tests PASS; no real tasks/mic.
-Approved v05/rig-v09 preserved in repo/personal Blender skill; no paid/deploy/merge.
+## NEXT ACTION
+
+Beta release HOLD. Neil approved PR172 integration into codex/companion-chat only; GitHub PR status is the authoritative integration receipt. Main merge/deploy/DB/invitations/paid generation remain unauthorized. Next: combined-stack main CI and separate release gates below.
+Branch codex/companion-beta-readiness; worktree C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command; reviewed candidate5200a4a0 on base8d5a4be/chatPR164. PR https://github.com/yopiheart/grifon-command/pull/172; only audit documentation follows the reviewed candidate. Final normal feature-merge review PASS; hosted Vercel failure remains an account block.
+Fixed stale-tab chat overwrites, Stop/Resume overlap, close-tab uncertainty, atomic finished-ad debit and raw producer telemetry. Durable local receipts block ambiguous paid repeat; Check saved progress reads only. Structural transport/missing-output guards; tuned prompts/schemas/models/knobs unchanged.
+Frozen application source: build PASS; full units 1,529 PASS/0 FAIL/32 existing skips, final affected fixture checks12 PASS. Codex26, bundle leak, voice sync, domain, eval prompts, artifact anchors, design lint and11 accepted Companion assets PASS; qa/root-gates.json binds20 hashes. Hosted Vercel check: Account is blocked; existing main-only Actions CI did not run on this stacked PR. No successful deployment.
+Mocked Companion45 unique cases green across split runs, independent43 unique green (39+9 runs), shared recovery18/18 PASS. Fresh diff review PASS; brand42/50 with one cosmetic clipped placeholder. Original red/partial diagnostics retained; do not imply physical-phone/provider proof. Extra QA copies and unrelated3d-lab work excluded from this PR.
+Checklist/bug evidence assets/design/companion-beta/readiness.md; live-test-spec.md proposes US$15 two-stage cap, NOT approved/not run. Target SQL rollout+concurrency, real OTP/accounts/phones, live audio/video/download, first-time testers and monitored support/recovery remain gates. Uncertain operations can require human recovery; device-local guided intake only.
+Material Trial v01 preferred neutral cream finish safely committed e2580bfb on separate branch codex/griffin-material-study, draftPR169 https://github.com/yopiheart/grifon-command/pull/169. Saved anchors/recipe there; v05 identity/groom/live mascot unchanged; unrelated local3d-lab files excluded here.
 
 ## Motion film / PR156
 Own checkout: C:/Users/ADMIN/Desktop/grifon-command/.tmp/worktrees/grifon-motion-depth.

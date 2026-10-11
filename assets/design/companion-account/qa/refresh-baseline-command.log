@@ -1,0 +1,35 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep same-account token refresh
+
+
+Running 1 test using 1 worker
+
+(node:20780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\companion-account.spec.ts:417:1 › same-account token refresh keeps the paid Studio form and unsent script mounted (2.0s)
+
+
+  1) tests\e2e\companion-account.spec.ts:417:1 › same-account token refresh keeps the paid Studio form and unsent script mounted
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: /Edit Bay/ }) resolved to 2 elements:
+        1) <button aria-label="Edit Bay, requires pro" title="Edit Bay — Auto-edit your final ad — pro" class="relative w-full flex items-center h-11 rounded-xl transition-all group justify-center hover:bg-white/[0.06]">…</button> aka getByRole('button', { name: 'Edit Bay, requires pro' })
+        2) <button class="relative text-left rounded-2xl p-4 group transition-all duration-300 active:scale-[0.98] overflow-hidden bg-zinc-900/70 hover:bg-zinc-900">…</button> aka getByRole('button', { name: 'pro Edit Bay Auto-edit your' })
+
+    Call log:
+      - waiting for getByRole('button', { name: /Edit Bay/ })
+
+
+      418 |   const evidence = await installAccountApp(page);
+      419 |   await page.goto('/app?experience=studio');
+    > 420 |   await page.getByRole('button', { name: /Edit Bay/ }).click();
+          |                                                        ^
+      421 |   const script = page.getByPlaceholder('Paste your script or outline here...', { exact: true });
+      422 |   await expect(script).toBeVisible();
+      423 |   const field = await script.elementHandle();
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:420:56
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-same-acc-9766a-m-and-unsent-script-mounted\error-context.md
+
+  1 failed
+    tests\e2e\companion-account.spec.ts:417:1 › same-account token refresh keeps the paid Studio form and unsent script mounted

@@ -1,0 +1,17 @@
+{
+  "loading": {
+    "ready": null,
+    "slot": {
+      "left": 159.5,
+      "top": 49,
+      "width": 56,
+      "height": 56
+    },
+    "visibleStill": false,
+    "fixtureCalls": []
+  },
+  "network": {
+    "rejected": [],
+    "pageErrors": []
+  }
+}

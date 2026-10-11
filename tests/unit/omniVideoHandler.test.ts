@@ -124,6 +124,15 @@ describe('api/gemini/omni-video — omni-ad allowance wall', () => {
       credits: 0,
     });
   });
+
+  it('returns retryable 503 when the allowance receipt cannot be read', async () => {
+    peekOmniAllowanceMock.mockResolvedValue({ allowed: false, alreadyCharged: false, used: 0, limit: 5, credits: 0, unavailable: true });
+    const res = mockRes();
+    await handler(fireReq(), res);
+    expect(res.statusCode).toBe(503);
+    expect(res.body.error).toBe('quota_unavailable');
+    expect(res.headers['Retry-After']).toBe('30');
+  });
 });
 
 describe('deriveGateExpectations — style-brand leak guard', () => {

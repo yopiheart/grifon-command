@@ -1,0 +1,16 @@
+{
+  "scope": "Generated Playwright error-context.md only",
+  "operation": "Remove spaces/tabs at line endings; preserve content, line endings, commands, source proof and JSON outcomes.",
+  "protectedBaselineEvidenceSHA256": {
+    "baseline-verification.json": "bef9a3f7cb1de493b04a4ca502bb8781fbc5b753ae1ccc4611a1e80122250dbb",
+    "baseline/baseline-switches-375.json": "25cf7783e19c08b31f4d4eb18f4f1ed9f6a08313e2597bf91acd3ba1cf82cba7"
+  },
+  "reports": [
+    {
+      "path": "assets/design/companion-continuity/qa/baseline-test-results/companion-continuity-ready-e68bd-at-and-saved-chats-at-375px/error-context.md",
+      "normalizedLines": 6,
+      "beforeSHA256": "50c83d921490c15183253a0d0603c1d8622b0091b140aec55e69ab88873f262c",
+      "afterSHA256": "511e7483c3dfcd862cffa52a72c71ad05628331dbbc390d9bc972d7396a08e85"
+    }
+  ]
+}

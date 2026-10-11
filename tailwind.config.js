@@ -61,7 +61,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
         oswald: ['Oswald', 'sans-serif'],
         // serif-accent (DESIGN.md): marketing headline accent words + marquees ONLY

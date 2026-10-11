@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "width": 375,
+      "frameBounds": {
+        "x": 24.8125,
+        "y": 157.5,
+        "width": 136,
+        "height": 136
+      },
+      "pauseTarget": {
+        "x": 126.046875,
+        "y": 249.5,
+        "width": 44,
+        "height": 44
+      },
+      "errors": [],
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "frameBounds": {
+        "x": 32.3125,
+        "y": 141.5,
+        "width": 136,
+        "height": 136
+      },
+      "pauseTarget": {
+        "x": 133.546875,
+        "y": 233.5,
+        "width": 44,
+        "height": 44
+      },
+      "errors": [],
+      "overflow": false
+    },
+    {
+      "width": 1280,
+      "frameBounds": {
+        "x": 88,
+        "y": 324.25,
+        "width": 291,
+        "height": 291
+      },
+      "pauseTarget": {
+        "x": 335,
+        "y": 496.75,
+        "width": 44,
+        "height": 44
+      },
+      "errors": [],
+      "overflow": false
+    }
+  ],
+  "video": "final-mobile.webm",
+  "emulationOnly": true,
+  "fixture": "Real UI/avatar, mocked callbacks and existing sample media, no provider calls",
+  "matte": [
+    {
+      "width": 375,
+      "x": 27,
+      "y": 160,
+      "failedScreenshotRGB": [
+        255,
+        255,
+        255
+      ],
+      "fixedScreenshotRGB": [
+        9,
+        9,
+        11
+      ],
+      "oldFails": true,
+      "fixedPass": true
+    },
+    {
+      "width": 1280,
+      "x": 91,
+      "y": 327,
+      "failedScreenshotRGB": [
+        255,
+        255,
+        255
+      ],
+      "fixedScreenshotRGB": [
+        9,
+        9,
+        11
+      ],
+      "oldFails": true,
+      "fixedPass": true
+    }
+  ]
+}

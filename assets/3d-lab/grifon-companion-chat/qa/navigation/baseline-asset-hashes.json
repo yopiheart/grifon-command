@@ -1,0 +1,30 @@
+[
+  {
+    "file": "public/companion/scene.bin",
+    "hash": "607BA0C913859739F2A908758D55C34EEA8126DC4B7427468887BF7AFDD3CCA5"
+  },
+  {
+    "file": "public/companion/scene.json",
+    "hash": "1A199B50FAF7BE25B38B78B56BFF2C81CC9BA75D34B13882E6BA668486CE62CD"
+  },
+  {
+    "file": "public/companion/baked-skin.png",
+    "hash": "4B73FA1280927A4157BB0DE9371643FBFC03E23A61D8CC4AD4B462015CB3F5D0"
+  },
+  {
+    "file": "public/companion/baked-body-clean.png",
+    "hash": "DA6D0F17F903692C2E63FFE621F7A2C76EA44E53886B8FA3B8952D49F3B37900"
+  },
+  {
+    "file": "public/companion/baked-hero.png",
+    "hash": "0CAD0D727D64526C8F8A36B228C09A316A60EFDD6C3813F7B141EB2825F81F0A"
+  },
+  {
+    "file": "public/companion/main.js",
+    "hash": "CA60E8737997220B0C571323F914D0A92F44549AF0D1282D3840E1FD52D16892"
+  },
+  {
+    "file": "public/companion/reactions.js",
+    "hash": "41ADEE9A7FDFCC671C6BCDFBAD520B00DFDAAE3A20D13C623DD3F2AC505648CE"
+  }
+]

@@ -1,0 +1,78 @@
+
+Running 3 tests using 1 worker
+
+(node:20856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px (2.9s)
+(node:24688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px (2.9s)
+(node:8236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px (3.0s)
+
+
+  1) tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px
+
+    Error: loading cue waits through the brief fast-load window
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 280
+    Received:    241.199951171875
+
+      217 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);
+      218 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();
+    > 219 |       expect(firstCue.at - slow.ledger.frameInsertedAt, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);
+          |                                                                                                                 ^
+      220 |       const indicator = page.locator('.companion-avatar [role="status"]');
+      221 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);
+      222 |       expect(await indicator.evaluate(element => {
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-startup.spec.ts:219:113
+
+    Error Context: assets\design\companion-startup\qa\test-results\companion-startup-cold-slo-4dc4d-reveal-real-pixels-at-375px\error-context.md
+
+  2) tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px
+
+    Error: loading cue waits through the brief fast-load window
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 280
+    Received:    235.800048828125
+
+      217 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);
+      218 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();
+    > 219 |       expect(firstCue.at - slow.ledger.frameInsertedAt, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);
+          |                                                                                                                 ^
+      220 |       const indicator = page.locator('.companion-avatar [role="status"]');
+      221 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);
+      222 |       expect(await indicator.evaluate(element => {
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-startup.spec.ts:219:113
+
+    Error Context: assets\design\companion-startup\qa\test-results\companion-startup-cold-slo-3bbd3-reveal-real-pixels-at-390px\error-context.md
+
+  3) tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px
+
+    Error: loading cue waits through the brief fast-load window
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 280
+    Received:    218.5
+
+      217 |       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);
+      218 |       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();
+    > 219 |       expect(firstCue.at - slow.ledger.frameInsertedAt, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);
+          |                                                                                                                 ^
+      220 |       const indicator = page.locator('.companion-avatar [role="status"]');
+      221 |       await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);
+      222 |       expect(await indicator.evaluate(element => {
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-startup.spec.ts:219:113
+
+    Error Context: assets\design\companion-startup\qa\test-results\companion-startup-cold-slo-0d4c7-eveal-real-pixels-at-1280px\error-context.md
+
+  3 failed
+    tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px
+    tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px
+    tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px

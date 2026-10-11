@@ -1,0 +1,49 @@
+{
+  "baselineCommit": "852dec3dcbf444cd3a84dd9bb079a97c1491f7fe",
+  "sourceSha256": {
+    "components/CompanionChat/CompanionChatShell.tsx": "59F07A7DF0DE48CE2FE33DD082CC5D9343D164F608583E16B302E36406774AA4",
+    "components/CompanionChat/CompanionComposer.tsx": "A6FBC9B95A8FB87B2C2C87F27F7C0AD9C0A409E67A675BE49B0C4BCA39176C4F",
+    "services/companionConversations.ts": "5CFB45BB0CDADB9FF372CB0CA1D96C2AB53DF0538DFA2290655064FF28D15E3D",
+    "components/CompanionChat/index.tsx": "05167F797D6245DFD9F04B471621C50F842E3BE3D3288E2484A77EFE086CDF28",
+    "components/CompanionChat/CompanionOutputViewer.tsx": "4BF6247BA31101152DECB065B2B335AF2298ECBA7755B869D6858B2D23075423",
+    "dev/companionChatPreview.tsx": "21745C98B2FBBD026B0D0CCDB411006C690A14BDA32B7AC1CDBF6CBE048B3BA6",
+    "components/CompanionChat/companionChat.css": "EBF712916537E1B05622D156504A527BCB6C9D115EAC013A2710046FF2955C37",
+    "components/OneShotAd/ProducerFlow.tsx": "3FE16B39C1EE59031C541CB10DADE0999E2900F264B1D4061B20093276D19241",
+    "components/CompanionChat/CompanionChatSurface.tsx": "34B2CE38FBD38A51A9522779CBD9E01A1CFCE1BF3DB35236F24619104BD1AE61"
+  },
+  "build": {
+    "exitCode": 0,
+    "modules": 2589,
+    "command": "npm.cmd run build",
+    "warnings": "Existing Browserslist data age, plugin timing, large bundle warnings"
+  },
+  "unit": {
+    "skippedFiles": 9,
+    "passedTests": 1453,
+    "passedFiles": 118,
+    "exitCode": 0,
+    "command": "npm.cmd run test",
+    "durationSeconds": 44.46,
+    "skippedTests": 32
+  },
+  "checks": [
+    "check:bundle-leak",
+    "check:voice-sync",
+    "check:domain",
+    "check:ps1-ascii",
+    "check:artifact-anchors",
+    "check:eval-prompts",
+    "node tools/sync-companion-assets.mjs --check",
+    "git diff --check"
+  ],
+  "checkExitCodes": "All 0",
+  "approvedAssetsMatching": 11,
+  "manualPreview": "Existing IAB Morning brew draft retained through upgrade, New chat, saved-chat selection and reload",
+  "paidCalls": 0,
+  "deployment": false,
+  "limits": [
+    "Device/browser-local persistence only; no cloud sync",
+    "Client driver stops on navigation; durable background jobs not implemented",
+    "Physical-phone keyboard/FPS and live provider output unverified"
+  ]
+}

@@ -124,6 +124,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   });
 
   if (!result.allowed) {
+    if (result.unavailable) {
+      res.setHeader('Retry-After', '30');
+      return res.status(503).json({ error: 'quota_unavailable', detail: 'Allowance is temporarily unavailable. Retry shortly.' });
+    }
     // Shouldn't happen after the fire-time peek passed (allowance drained
     // between fire and consume) — surface it but don't crash the client.
     console.warn('[api/gemini/omni-video/consume] consume denied post-fire-peek', {

@@ -1,5 +1,6 @@
 import type { FinalRenderRequest, FinalRenderResult } from '../types';
 import { getSupabase } from './supabaseClient';
+import { unknownGenerationOutcome } from './generationTransportError';
 
 // Client coordinator for the async final-render executor (Phase 2). Fires
 // api/render/final, then polls api/render/final/poll until done. Deliberately
@@ -26,13 +27,15 @@ export const startFinalRender = async (req: FinalRenderRequest): Promise<string>
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify(req),
-  });
+  }).catch(error => { throw unknownGenerationOutcome(error); });
   if (!res.ok) {
     const detail = await res.text().catch(() => res.statusText);
-    throw new Error(`FINAL_RENDER_START_FAILED (${res.status}): ${detail}`);
+    const error = new Error(`FINAL_RENDER_START_FAILED (${res.status}): ${detail}`);
+    throw res.status >= 500 ? unknownGenerationOutcome(error) : error;
   }
-  const { jobId } = (await res.json()) as { jobId?: string };
-  if (!jobId) throw new Error('FINAL_RENDER_NO_JOB_ID');
+  const body = (await res.json().catch(error => { throw unknownGenerationOutcome(error); })) as { jobId?: string } | null;
+  const jobId = body?.jobId;
+  if (typeof jobId !== 'string' || !jobId.trim()) throw unknownGenerationOutcome(new Error('FINAL_RENDER_NO_JOB_ID'));
   return jobId;
 };
 
@@ -63,9 +66,12 @@ export const renderFinalVideo = async (
 
   while (Date.now() < deadline) {
     await sleep(POLL_INTERVAL_MS);
-    const result = await pollFinalRender(jobId);
+    const result = await pollFinalRender(jobId).catch(error => { throw unknownGenerationOutcome(error); });
+    if (typeof result?.done !== 'boolean' || (result.done && result.status !== 'failed' && (typeof result.url !== 'string' || !result.url.trim()))) {
+      throw unknownGenerationOutcome(new Error('FINAL_RENDER_INCOMPLETE_RESPONSE'));
+    }
     if (result.done) return result;
     onProgress?.('processing');
   }
-  throw new Error('FINAL_RENDER_TIMEOUT');
+  throw unknownGenerationOutcome(new Error('FINAL_RENDER_TIMEOUT'));
 };

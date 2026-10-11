@@ -1,0 +1,96 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts
+
+
+Running 29 tests using 1 worker
+
+(node:1840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\companion-account.spec.ts:36:1 › default preview hides the local test fixture toolbar (1.4s)
+  ok  2 tests\e2e\companion-account.spec.ts:51:1 › default preview exposes account settings from chat navigation (826ms)
+  ok  3 tests\e2e\companion-account.spec.ts:57:1 › developer fixture controls require explicit opt-in and preview stays truthful (2.1s)
+  ok  4 tests\e2e\companion-account.spec.ts:77:3 › real account settings preserve player and keyboard access at 375px (3.1s)
+  ok  5 tests\e2e\companion-account.spec.ts:77:3 › real account settings preserve player and keyboard access at 390px (3.1s)
+  ok  6 tests\e2e\companion-account.spec.ts:77:3 › real account settings preserve player and keyboard access at 1280px (2.9s)
+  ok  7 tests\e2e\companion-account.spec.ts:115:1 › collapsed navigation exposes the account settings entry (1.6s)
+  ok  8 tests\e2e\companion-account.spec.ts:126:1 › settings confirm consent and recover read and write failures without dead preferences (2.3s)
+  ok  9 tests\e2e\companion-account.spec.ts:150:1 › an unconfirmed consent record withholds the switch until its read finishes (1.6s)
+  ok 10 tests\e2e\companion-account.spec.ts:164:1 › logout waits for the latest IndexedDB draft before signing out and cleaning wizard state (2.0s)
+  ok 11 tests\e2e\companion-account.spec.ts:187:1 › failed logout keeps the session, draft and player and permits retry (2.0s)
+  ok 12 tests\e2e\companion-account.spec.ts:208:3 › failed draft save blocks settings Sign out and preserves session (1.9s)
+  ok 13 tests\e2e\companion-account.spec.ts:208:3 › failed draft save blocks settings Upgrade plan and preserves session (1.9s)
+  ok 14 tests\e2e\companion-account.spec.ts:208:3 › failed draft save blocks settings Help & support and preserves session (1.9s)
+  ok 15 tests\e2e\companion-account.spec.ts:208:3 › failed draft save blocks settings Terms of service and preserves session (2.0s)
+  ok 16 tests\e2e\companion-account.spec.ts:208:3 › failed draft save blocks settings Privacy policy and preserves session (1.9s)
+  ok 17 tests\e2e\companion-account.spec.ts:240:1 › chat is the default app entry and Studio navigation preserves draft and browser history (2.5s)
+  ok 18 tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code (3.3s)
+  ok 19 tests\e2e\companion-account.spec.ts:282:1 › an intended tool takes precedence over the default chat entry (1.2s)
+  x  20 tests\e2e\companion-account.spec.ts:292:1 › pending checkout keeps precedence over intended tool and return-to-ad intents (9.4s)
+(node:16640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 tests\e2e\companion-account.spec.ts:312:1 › a return-to-ad marker with no finished ad safely retains the chat entry (1.8s)
+  x  22 tests\e2e\companion-account.spec.ts:320:1 › chat, sidebar, viewer and settings use neutral thin accessible scrollbars (1.0s)
+(node:22968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 23 tests\e2e\companion-account.spec.ts:358:1 › late subscription response cannot replace the newly signed-in account plan (2.4s)
+  ok 24 tests\e2e\companion-account.spec.ts:379:1 › settings keep an unconfirmed plan pending and recover a failed plan read (1.9s)
+  ok 25 tests\e2e\companion-account.spec.ts:402:3 › settings Upgrade plan navigates after saving and browser Back restores chat (2.3s)
+  ok 26 tests\e2e\companion-account.spec.ts:402:3 › settings Help & support navigates after saving and browser Back restores chat (1.9s)
+  ok 27 tests\e2e\companion-account.spec.ts:402:3 › settings Terms of service navigates after saving and browser Back restores chat (1.9s)
+  ok 28 tests\e2e\companion-account.spec.ts:402:3 › settings Privacy policy navigates after saving and browser Back restores chat (1.8s)
+  ok 29 tests\e2e\companion-account.spec.ts:417:1 › same-account token refresh keeps the paid Studio form and unsent script mounted (1.8s)
+
+
+  1) tests\e2e\companion-account.spec.ts:292:1 › pending checkout keeps precedence over intended tool and return-to-ad intents
+
+    Error: expect(locator).toBeChecked() failed
+
+    Locator: getByRole('radio', { name: /^Annual/ })
+    Expected: checked
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeChecked" with timeout 8000ms
+      - waiting for getByRole('radio', { name: /^Annual/ })
+        2 × waiting for" http://127.0.0.1:5173/checkout?plan=business&cycle=annual" navigation to finish...
+          - navigated to "http://127.0.0.1:5173/checkout?plan=business&cycle=annual"
+        - waiting for navigation to finish...
+        - navigated to "http://127.0.0.1:5173/checkout?plan=business&cycle=annual"
+
+
+      304 |   await page.goto('/app');
+      305 |   await expect(page).toHaveURL(/\/checkout\?plan=business&cycle=annual$/);
+    > 306 |   await expect(page.getByRole('radio', { name: /^Annual/ })).toBeChecked();
+          |                                                              ^
+      307 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');
+      308 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');
+      309 |   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:306:62
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-pending--3cf03-ol-and-return-to-ad-intents\error-context.md
+
+  2) tests\e2e\companion-account.spec.ts:320:1 › chat, sidebar, viewer and settings use neutral thin accessible scrollbars
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "122"
+    Received: "113"
+
+      331 |     const first = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      332 |     expect(first, `visible neutral thumb in ${color}`).not.toBeNull();
+    > 333 |     expect(first![1]).toBe(first![2]); expect(first![2]).toBe(first![3]);
+          |                                                          ^
+      334 |     expect(Number(first![1])).toBeGreaterThan(0); expect(Number(first![1])).toBeLessThan(255);
+      335 |   };
+      336 |   const styles: Record<string, unknown> = {};
+        at neutral (C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:333:58)
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:340:39
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-chat-sid-dc2f2--thin-accessible-scrollbars\error-context.md
+
+  2 failed
+    tests\e2e\companion-account.spec.ts:292:1 › pending checkout keeps precedence over intended tool and return-to-ad intents
+    tests\e2e\companion-account.spec.ts:320:1 › chat, sidebar, viewer and settings use neutral thin accessible scrollbars
+  27 passed (1.2m)

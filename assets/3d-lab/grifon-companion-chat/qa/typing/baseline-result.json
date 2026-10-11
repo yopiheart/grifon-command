@@ -1,0 +1,17 @@
+{
+  "baseCommit": "359e943629d12e24a9d00fd0b7147c162c5572d6",
+  "command": "npx.cmd playwright test --config tests/e2e/companion.config.ts companion-typing.spec.ts",
+  "phase": "baseline",
+  "exitCode": 1,
+  "testsFailed": 1,
+  "immediate": {
+    "assistantMessages": 2,
+    "typingStatusCount": 0
+  },
+  "at499ms": {
+    "assistantMessages": 2,
+    "typingStatusCount": 0
+  },
+  "expected": "Typing status present; only original assistant question until600ms. Actual immediate next question violates paced interaction.",
+  "paidCalls": 0
+}

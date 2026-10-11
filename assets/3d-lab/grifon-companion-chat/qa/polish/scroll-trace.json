@@ -1,0 +1,93 @@
+[
+  {
+    "phase": "baseline",
+    "messageCount": 120,
+    "typingPreservesPosition": true,
+    "before": 7007,
+    "afterTyping": 7007,
+    "at100ms": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "at500ms": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "afterSend": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "followSampleMs": 100,
+    "explicitSendFollowsLatest": false
+  },
+  {
+    "phase": "final",
+    "messageCount": 120,
+    "typingPreservesPosition": true,
+    "before": 8540,
+    "afterTyping": 8540,
+    "at100ms": {
+      "top": 8200,
+      "distance": 12653
+    },
+    "at500ms": {
+      "top": 8200,
+      "distance": 12653
+    },
+    "afterSend": {
+      "top": 8200,
+      "distance": 12653
+    },
+    "followSampleMs": 100,
+    "explicitSendFollowsLatest": false,
+    "surfaceSHA256": "dcbf5138d280002c4549cc2ec40d9445b646d19bb2acb8a77aa5263c636b6f74",
+    "trace": [
+      {
+        "event": "INTENT_TRUE",
+        "at": 752.7999999970198,
+        "near": true,
+        "following": false,
+        "top": 8540,
+        "distance": 12389
+      },
+      {
+        "event": "SCHEDULE",
+        "at": 768.4000000059605,
+        "near": true,
+        "following": false,
+        "top": 8200,
+        "distance": 12653
+      },
+      {
+        "event": "SCROLL",
+        "at": 770.5,
+        "near": true,
+        "following": false,
+        "top": 8200,
+        "distance": 12653
+      },
+      {
+        "event": "RAF",
+        "at": 771.0999999940395,
+        "near": false,
+        "following": false,
+        "top": 8200,
+        "distance": 12653
+      }
+    ],
+    "nativeWheelInterruptedFollow": true,
+    "interrupted": {
+      "sampledTop": 20221,
+      "settled": {
+        "top": 20221,
+        "distance": 500
+      }
+    },
+    "reduced": {
+      "motion": true,
+      "transparency": true,
+      "background": "rgb(24, 24, 27)",
+      "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px 1px 0px 0px"
+    }
+  }
+]

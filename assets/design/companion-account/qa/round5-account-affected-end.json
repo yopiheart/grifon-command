@@ -1,0 +1,24 @@
+{
+  "phase": "round5-account-affected-end",
+  "recordedAt": "2026-10-07T15:26:13.6618281+08:00",
+  "paths": [
+    {
+      "path": "components/dashboard/SettingsModal.tsx",
+      "expected": "da09b2a1ba34e4d465338b3ec1327cc27d3ddd7a6967438139dc2b1d705c922e",
+      "actual": "da09b2a1ba34e4d465338b3ec1327cc27d3ddd7a6967438139dc2b1d705c922e",
+      "unchanged": true
+    },
+    {
+      "path": "dev/companionChatPreview.tsx",
+      "expected": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+      "actual": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+      "unchanged": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "expected": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+      "actual": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+      "unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "errors": [
+    "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+  ],
+  "evidence": {
+    "unexpected": [],
+    "pageErrors": [],
+    "consentWrites": []
+  }
+}

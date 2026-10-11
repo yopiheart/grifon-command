@@ -1,0 +1,49 @@
+{
+  "baseCommit": "a22b0b39e03f4d436e594dd88713554bcfa89386",
+  "scope": "14px default conversation typography only; interface grill targets are not yet implemented",
+  "sourceSha256": "74AA029ADA0EE44C3ECE1766D66DB81927D419BA1E87D640C2770BBE8A64E9EA",
+  "commands": [
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "warnings": "Existing Browserslist, chunk size and plugin timing warnings",
+      "modules": 2586
+    },
+    {
+      "durationSeconds": 44.28,
+      "exitCode": 0,
+      "command": "npm.cmd run test",
+      "skippedFiles": 9,
+      "passedTests": 1451,
+      "passedFiles": 117,
+      "skippedTests": 32
+    },
+    {
+      "exitCode": 0,
+      "command": "npm.cmd run check:bundle-leak"
+    },
+    {
+      "exitCode": 0,
+      "command": "npm.cmd run check:voice-sync"
+    },
+    {
+      "exitCode": 0,
+      "command": "npm.cmd run check:domain"
+    },
+    {
+      "exitCode": 0,
+      "command": "npm.cmd run check:artifact-anchors"
+    },
+    {
+      "command": "node tools/sync-companion-assets.mjs --check",
+      "exitCode": 0,
+      "matchingAssets": 11
+    },
+    {
+      "exitCode": 0,
+      "command": "git diff --check"
+    }
+  ],
+  "paidCalls": 0,
+  "deployment": false
+}

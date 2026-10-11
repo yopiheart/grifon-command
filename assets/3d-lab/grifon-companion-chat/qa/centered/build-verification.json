@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-07",
+  "baseCommit": "491e86092261ea7183b408ec15ea6ec0264cbc84",
+  "applicationChecks": {
+    "executor": "centered_chat_builder",
+    "build": { "command": "npm.cmd run build", "exitCode": 0, "modules": 2586 },
+    "unitTests": { "command": "npx.cmd vitest run", "exitCode": 0, "passed": 1451, "skipped": 32, "passedFiles": 117, "skippedFiles": 9, "seconds": 44.42 },
+    "warnings": "Existing Browserslist age, large bundle and plugin timing warnings."
+  },
+  "parentChecks": {
+    "npm.cmd run check:bundle-leak": 0,
+    "npm.cmd run check:voice-sync": 0,
+    "npm.cmd run check:domain": 0,
+    "npm.cmd run check:artifact-anchors": 0,
+    "node tools/sync-companion-assets.mjs --check": 0,
+    "git diff --check": 0
+  },
+  "sha256": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "4dbc7ab584df14e4eaa4363546b05c13480818f28a99a273a0d5e2262998abc7",
+    "components/CompanionChat/CompanionAvatar.tsx": "91e2dba357932768044e8755351efe9e5eb9bb58496104cb9afa22dbd02182f2",
+    "components/CompanionChat/companionChat.css": "f79b261050df090ab3f684fd33fa2d83e220231875aef3dfa8bedd2fc99c663c",
+    "dev/companionChatPreview.tsx": "18ba81c40f9bba6c938938b4d2011d4e12359321d98909fbc4354444ff30158e"
+  },
+  "scope": "Centered compact header, quiet conversation layout, removed play/pause, tall-review scroll anchoring, duplicate fixture-banner removal. Approved character runtime/assets, composer and tuned files unchanged.",
+  "limitations": "Browser tests simulate services. No paid generation, deployment or merge. Physical-phone FPS and software keyboard behavior not verified. Gaze diagnostic screenshots precede duplicate fixture-banner removal; gaze/runtime source is unchanged. Owner confirmed in-app cursor tracking works."
+}

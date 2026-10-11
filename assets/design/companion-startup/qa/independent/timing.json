@@ -1,0 +1,1387 @@
+{
+  "command": "node assets/design/companion-startup/qa/independent/timing.mjs",
+  "exitCode": 0,
+  "clockMeaning": "Native document.timeline verifies the CSS animation delay; wallElapsed retained as a separate observation and is not a UX-performance claim.",
+  "observations": [
+    {
+      "width": 375,
+      "height": 667,
+      "inserted": {
+        "wall": 673.1999999880791,
+        "timeline": 572
+      },
+      "firstVisible": {
+        "wall": 890.0999999940395,
+        "timeline": 888.7,
+        "visible": true,
+        "opacity": "1",
+        "animation": {
+          "startTime": 588.7,
+          "currentTime": 300,
+          "delay": 300,
+          "duration": 0,
+          "playbackRate": 1
+        }
+      },
+      "timelineElapsed": 316.70000000000005,
+      "wallElapsed": 216.90000000596046,
+      "visibleBefore280Timeline": [],
+      "blocked": [],
+      "samples": [
+        {
+          "wall": 677.6999999880791,
+          "timeline": 588.7,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": null,
+            "currentTime": 0,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 708.6999999880791,
+          "timeline": 672.2,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 83.50000000000001,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 868.5999999940395,
+          "timeline": 855.4,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 266.70000000000005,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 872.6999999880791,
+          "timeline": 872.1,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 283.4,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 890.0999999940395,
+          "timeline": 888.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 906.1999999880791,
+          "timeline": 905.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 922.6999999880791,
+          "timeline": 922.1,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 939.6999999880791,
+          "timeline": 938.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 956.2999999970198,
+          "timeline": 955.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 972.6999999880791,
+          "timeline": 972.1,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 989.6999999880791,
+          "timeline": 988.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1005.8999999910593,
+          "timeline": 1005.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1022.7999999970198,
+          "timeline": 1022.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1039.8999999910593,
+          "timeline": 1038.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1056.2999999970198,
+          "timeline": 1055.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1073.7999999970198,
+          "timeline": 1072.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1089.5999999940395,
+          "timeline": 1089.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1106,
+          "timeline": 1105.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1123,
+          "timeline": 1122.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1139.2999999970198,
+          "timeline": 1138.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1156,
+          "timeline": 1155.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1172.5999999940395,
+          "timeline": 1172.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1189.5999999940395,
+          "timeline": 1188.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1206.5999999940395,
+          "timeline": 1205.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1222.699999988079,
+          "timeline": 1222.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1239.3999999910593,
+          "timeline": 1238.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1256,
+          "timeline": 1255.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1272.699999988079,
+          "timeline": 1272.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1289.699999988079,
+          "timeline": 1288.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1306.5,
+          "timeline": 1305.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1322.8999999910593,
+          "timeline": 1322.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1340.3999999910593,
+          "timeline": 1339,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1356,
+          "timeline": 1355.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1372.699999988079,
+          "timeline": 1372.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1390.8999999910593,
+          "timeline": 1389,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1406.0999999940395,
+          "timeline": 1405.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1423.2999999970198,
+          "timeline": 1422.4,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1439.3999999910593,
+          "timeline": 1439,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1456.0999999940395,
+          "timeline": 1455.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1472.8999999910593,
+          "timeline": 1472.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1489.5,
+          "timeline": 1488.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1506,
+          "timeline": 1505.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1522.7999999970198,
+          "timeline": 1522.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1539.8999999910593,
+          "timeline": 1539,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1556.2999999970198,
+          "timeline": 1555.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1572.7999999970198,
+          "timeline": 1572.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1589.5999999940395,
+          "timeline": 1589,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 588.7,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "inserted": {
+        "wall": 393.30000001192093,
+        "timeline": 302.3
+      },
+      "firstVisible": {
+        "wall": 619.8000000119209,
+        "timeline": 619,
+        "visible": true,
+        "opacity": "1",
+        "animation": {
+          "startTime": 318.79999999999995,
+          "currentTime": 300,
+          "delay": 300,
+          "duration": 0,
+          "playbackRate": 1
+        }
+      },
+      "timelineElapsed": 316.7,
+      "wallElapsed": 226.5,
+      "visibleBefore280Timeline": [],
+      "blocked": [],
+      "samples": [
+        {
+          "wall": 393.80000001192093,
+          "timeline": 318.8,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": null,
+            "currentTime": 0,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 437.6000000089407,
+          "timeline": 385.6,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 66.80000000000003,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 444.30000001192093,
+          "timeline": 435.6,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 116.80000000000001,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 454.5,
+          "timeline": 452.2,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 133.4,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 475.80000001192093,
+          "timeline": 468.9,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 150.10000000000002,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 486.80000001192093,
+          "timeline": 485.7,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 166.90000000000003,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 504.5,
+          "timeline": 502.4,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 183.6,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 520.2000000029802,
+          "timeline": 519,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 200.20000000000005,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 543.3000000119209,
+          "timeline": 535.6,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 216.79999999999998,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 552.8000000119209,
+          "timeline": 552.3,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 233.50000000000003,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 569.6000000089407,
+          "timeline": 569,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 250.2,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 586.1000000089407,
+          "timeline": 585.6,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 266.8,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 602.9000000059605,
+          "timeline": 602.3,
+          "visible": false,
+          "opacity": "0",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 283.5,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 619.8000000119209,
+          "timeline": 619,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 636.3000000119209,
+          "timeline": 635.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 652.8000000119209,
+          "timeline": 652.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 670,
+          "timeline": 669,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 686.5,
+          "timeline": 685.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 703,
+          "timeline": 702.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 719.5,
+          "timeline": 719,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 736.3000000119209,
+          "timeline": 735.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 752.8000000119209,
+          "timeline": 752.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 769.8000000119209,
+          "timeline": 769.1,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 786.1000000089407,
+          "timeline": 785.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 802.9000000059605,
+          "timeline": 802.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 819.7000000029802,
+          "timeline": 819.1,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 836.4000000059605,
+          "timeline": 835.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 852.8000000119209,
+          "timeline": 852.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 870,
+          "timeline": 869.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 886.1000000089407,
+          "timeline": 885.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 902.9000000059605,
+          "timeline": 902.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 919.7000000029802,
+          "timeline": 919.1,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 936.2000000029802,
+          "timeline": 935.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 953.3000000119209,
+          "timeline": 952.4,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 969.9000000059605,
+          "timeline": 969.1,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 986.3000000119209,
+          "timeline": 985.7,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1003.2000000029802,
+          "timeline": 1002.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1019.8000000119209,
+          "timeline": 1019.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1036.5,
+          "timeline": 1035.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1052.9000000059605,
+          "timeline": 1052.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1071.1000000089407,
+          "timeline": 1070.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1086.6000000089407,
+          "timeline": 1085.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1103,
+          "timeline": 1102.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1119.7000000029802,
+          "timeline": 1119.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1136.5,
+          "timeline": 1136,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1153,
+          "timeline": 1152.5,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1169.7000000029802,
+          "timeline": 1169.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1186.5,
+          "timeline": 1185.8,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1203,
+          "timeline": 1202.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1220.4000000059605,
+          "timeline": 1219.2,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1236.300000011921,
+          "timeline": 1235.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1253.2000000029802,
+          "timeline": 1252.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1270.1000000089407,
+          "timeline": 1269.3,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1286.300000011921,
+          "timeline": 1285.9,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        },
+        {
+          "wall": 1303.5,
+          "timeline": 1302.6,
+          "visible": true,
+          "opacity": "1",
+          "animation": {
+            "startTime": 318.79999999999995,
+            "currentTime": 300,
+            "delay": 300,
+            "duration": 0,
+            "playbackRate": 1
+          }
+        }
+      ]
+    }
+  ]
+}
