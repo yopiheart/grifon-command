@@ -1,79 +1,86 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11; authorized merge-readiness packaging in progress**
+**Stamped: 2026-10-11; merge-readiness fixes verified locally and independently**
 
-## Current: Grifon shader launch film
-Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
+## Current: Grifon shader launch film and reusable workflow
+Chat: Grifon shader launch film,01a11748-4bfb-7582-9c06-826e9667b5fd.
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Active branch after synchronization: codex/grifon-motion-reuse (PR170).
-Neil authorized fixing CI coverage, the stale Vercel block and PR166's media
-footprint while preserving the accepted film and editable source.
-Accepted stack: PR165 codex/grifon-shader-study -> PR166
-codex/grifon-shader-launch -> PR170 codex/grifon-motion-reuse.
-PR173 is closed; rejected Bodila audio was removed on 1f84337a.
-No main merge, manual deployment, new paid call, email or PC sleep is authorized.
+Active branch: codex/grifon-motion-reuse (PR170).
+Neil authorized the CI/Vercel readiness fixes and reducing PR166 QA/media
+while preserving the accepted film and editable source.
+Stack: PR165 codex/grifon-shader-study -> PR166 codex/grifon-shader-launch ->
+PR170 codex/grifon-motion-reuse. PR173 remains closed; rejected Bodila files
+were removed on1f84337a. No main merge, manual deployment, paid call, email
+or PC sleep is authorized.
 
-## QA packaging
-Original PR166 checkpoint: 118a5e8aac30739b2705489077ad862b671dbfd4.
-762 historical QA binary files, 917501853 bytes, were verified against that
-commit and archived on F: before exact tracked removal. All 629 retained
-original PR166 paths match their before/after working-file SHA256 values.
-Archive: F:/GrifonLocalArchives/pr166-media-archive/118a5e8a-qa-media.tar.
-Archive bytes918128640; SHA12e3895e0bc1590205e315163c64297142bd4f740371f1c5b1d1cecacfae546d.
-Tracked archive manifest/docs bind individual paths, Git blobs and SHA256 values.
-Historical JSON/reviews/logs remain unchanged; image-dependent historical
-comparison builders require archived media restoration. The three posters
-needed by the three finished offline players stay tracked.
-Logical changed-file footprint drops from1146939394 to229437541 bytes before
-new packaging metadata, about80 percent. Ordinary Git history is preserved;
-this does not shrink historical Git blobs or full-history clone transfer.
-The first check attempt hit ENOSPC on C: before checks could run; archive/prune
-recovered headroom. This was a setup failure. Fresh old-base PR166 checks pass:
-build,1432 default tests/32existing skips,26Codex checks, bundle leak, voice,
-domain, artifact anchors and design lint. Logs are in
-.tmp/merge-ready-verification/retry-20261011/.
-Staged tree856c65211daffef6c44620e14602da8885ce6175 clean-input export on F:
-reproduced all three finished players exactly, with no node_modules, none of
-the762 archived paths and only the3required QA posters. Nine pinned delivery
-hashes also passed; no ignored local capture could mask a missing builder input.
+## Reduced PR166 package
+Original checkpoint118a5e8aac30739b2705489077ad862b671dbfd4.
+Exactly762 historical QA binaries,917501853bytes, archived before removal.
+Both asset folders contain ARCHIVED_MEDIA.md and qa-media-archive.json with
+each original path, Git blob, size and SHA256. Historical reports/logs/reviews
+remain unchanged; listed image-dependent historical runners need restoration.
+All629 retained files were exact immediately after pruning; only intentional
+NOW/ignore edits followed. All625 retained nonmetadata delivery inputs remain
+exact, including all films, players, editable sources, licenses and cue maps.
+Current PR166 diff8dcfafc0..a9e93db5:633files/229662740bytes, down79.976percent
+from1391files/1146939394bytes. Git history is intact; this is active-tree
+reduction, not historical blob deletion or a full-history clone-size claim.
+Local archiveF:/GrifonLocalArchives/pr166-media-archive/118a5e8a-qa-media.tar,
+918128640bytes,SHA12e3895e0bc1590205e315163c64297142bd4f740371f1c5b1d1cecacfae546d.
+Independent review streamed all762entries against originalGit blobs/SHA256,
+with no extras/duplicates. Actual first/last/raw recovery samples passed.
+F: is on this machine, not off-device backup. Initial C: ENOSPC stopped the
+first check attempt before verification; scoped archive/prune restored space.
 
-## Protected delivery and reuse
-Accepted film: workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4.
+## Protected accepted delivery
+Film workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4,
 SHAf92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df.
-Accepted player: artifacts/grifon-shader-sound-v1.html.
+Player artifacts/grifon-shader-sound-v1.html,
 SHA550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a.
-Silent picturee57f2fae, opening6815c6e5, full JS4fcf4bdd, fragment00fcb082,
-full JSON76a34cfb and sound recipe2814f78a remain exact.
-All root films, players, editable sources, fonts, product captures, material
-assets, licenses, cue maps and generators remain tracked. No visual/audio edit.
-User acceptance: reference/sound-v1-user-acceptance.md; historical sound proof:
-qa/sound-delivery-v1.json. The47 motion events/56layers remain unchanged.
-PR170's CLI, guide, previews, proof clips and final bound receipts are preserved.
-Its earlier build1463tests/32existing skips,35media/28browser checks and27 final
-bindings remain historical evidence; packaging verification is separate.
-Universal reference coverage, customer turnaround and auditory scoring remain
-unproven beyond the recorded cases. Raw recordings/stems remain private.
+Silente57f2fae, opening6815c6e5, fullJS4fcf4bdd, fragment00fcb082,
+fullJSON76a34cfb and sound recipe2814f78a are unchanged.
+All root films, source assets/fonts/product captures, generators and the3
+required QA posters remain tracked. No visual or soundtrack change.
+Clean staged-tree856c6521 export onF reproduced all3finished players exactly;
+no node_modules, none of762archived paths and only3QA binaryposters were present.
+Nine pinned delivery SHA256 checks passed. No ignored captures masked inputs.
 
-## Checks and account status
-CI's pull_request filter now covers main and both known stack bases; all job
-bodies, paid/live defaults, push/main alarm and skips are unchanged.
-Independent CI/dependency and complete packaging/archive review passed.
-Main advanced to ff489cad (MarketMind PR175) while preparing this change.
-PR165 base8dcfafc0 is integrated here, retaining upstream MarketMind changes.
-Only NOW.md conflicted; the accepted film/editable source did not conflict.
-PR170 inherits this exact accepted base; its original producers, proof clips,
-final source-bound receipts and preview player remain unchanged.
-Fresh latest-main full-stack checks are required before pushing PR170.
-Authenticated Vercel read shows active account, no soft/feature block, and a
-successful unrelated preview today. Old exact heads still show Account is
-blocked. Require native fresh-head checks after necessary branch pushes;
-do not disable checks, purchase a plan or manually redeploy to hide the status.
-Next: propagate the feature-stack updates, run latest full-stack checks and
-inspect exact-head GitHub CI and Vercel results before any authorized merge.
+## Reusable workflow and latest verification
+PR170 synchronization8610a23e incorporated accepted film a9e93db5 and main
+ff489cad (MarketMind PR175), via basePR1658dcfafc0. Only NOW.md conflicted.
+Independent propagation review: all79 original PR170 paths exceptNOW are
+byte-identical to60c10376; all7upstream product/test files match latestmain.
+The CLI, guide, preview, proof clips, final27source bindings and historical
+35media/28browser evidence remain unchanged. No new full-film render was run.
+Fresh latest-stack checks at8610a23e on2026-10-11 all PASS:
+build/PSASCII;119Vitestfiles/1475tests;9files/32existing paid/live skips;
+26Codex checks;bundle leak6bundles/0markers;voice2funnels;eval6promptpairs;
+domain294/0drift;artifact anchors;design lint.
+Both shader-reference and basic-launch init+validate passed;21copied inputs
+match source/provenance SHA256, all24declared inputs tracked, noQAdependencies.
+No provider calls, paid spend, audio regeneration or picture capture.
+Actual exit logs and source proofs:.tmp/merge-ready-verification/latest-main-20261011/.
+Earlier old-base1432tests and clean-export checks are separately retained.
+Universal reference coverage, auditory scoring and customer turnaround remain
+unproven beyond the recorded cases; raw recordings/stems remain private.
+
+## CI, Vercel and merge discipline
+CI now covers main and both known stack targets. All job bodies, unpaid
+defaults, push/main alarm, concurrency and existing skips are unchanged.
+Independent CI, archive and propagation review passed with no findings.
+Native fresh-head Vercel checks onPR1658dcfafc0 andPR166a9e93db5 passed;
+the old Account is blocked status is superseded by real successful previews.
+No billing/plan/account changes, gate disabling or manual redeploy were used.
+PR165CI38118411322 passed verify/e2e/artifacts;main-status correctly skipped.
+Current-head native CI/Vercel results are live onPR165/166/170; inspect each
+exact current head rather than accepting an older run or a document as a gate.
+Only after Neil explicitly authorizes landing: merge165 to main, retarget166
+to main and verify its new base, then retarget170 after166 lands and verify.
+Do not merge170 merely into its feature base and describe it as landed onmain.
 
 ## Preserved boundaries
-Two single-attempt autopsies are consumed; combined estimate US$0.06987,
-invoice unverified. Their exact approved specs/prompts are unchanged; no retry.
-No tuned/provider configuration, customer application, production data or
-unrelated Oceanides/Vivo work changed. Existing source rights still apply.
-Prior reference/pilot recovery ZIPs and protected local stems remain intact.
-Historical unsent Gmail draft and all unrelated paid caps remain untouched.
+Both single-attempt autopsies are consumed; combined estimateUS$0.06987,
+invoice unverified; exact approved specs/prompts unchanged. No retry.
+No tuned/provider configuration, accepted source, source rights, customer
+application behavior, production data or unrelated Oceanides/Vivo work changed.
+Existing reference/pilot recovery ZIPs and protected local stems remain intact.
+Historical unsent Gmail draft and all unrelated paid caps are untouched.
