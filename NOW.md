@@ -1,76 +1,69 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11; authorized merge-readiness packaging in progress**
+**Stamped: 2026-10-11, PR171 merge authorization and integration verification**
 
-## Current: Grifon shader launch film
-Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
-Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Neil authorized fixing CI coverage, the stale Vercel block and PR166's media
-footprint while preserving the accepted film and editable source.
-Accepted stack: PR165 codex/grifon-shader-study -> PR166
-codex/grifon-shader-launch -> PR170 codex/grifon-motion-reuse.
-PR173 is closed; rejected Bodila audio was removed on 1f84337a.
-No main merge, manual deployment, new paid call, email or PC sleep is authorized.
+## Current authorized work
+PR171: https://github.com/yopiheart/grifon-command/pull/171.
+Branch codex/marketmind-evidence; checkout C:/Users/ADMIN/.codex/worktrees/4382/grifon-command.
+Neil explicitly approved merging PR171 despite the Vercel "Account is blocked"
+check on October 11. That exception covers Vercel only; CI/review still must pass.
+Original application commit 64d0b389; reviewed handoff head 2211fe58.
+Main advanced to ff489cad (merged presentation PR175), requiring reconciliation.
+Only NOW.md conflicted. Main's presentation code and the approved prompt are retained.
 
-## QA packaging
-Original PR166 checkpoint: 118a5e8aac30739b2705489077ad862b671dbfd4.
-762 historical QA binary files, 917501853 bytes, were verified against that
-commit and archived on F: before exact tracked removal. All 629 retained
-original PR166 paths match their before/after working-file SHA256 values.
-Archive: F:/GrifonLocalArchives/pr166-media-archive/118a5e8a-qa-media.tar.
-Archive bytes918128640; SHA12e3895e0bc1590205e315163c64297142bd4f740371f1c5b1d1cecacfae546d.
-Tracked archive manifest/docs bind individual paths, Git blobs and SHA256 values.
-Historical JSON/reviews/logs remain unchanged; image-dependent historical
-comparison builders require archived media restoration. The three posters
-needed by the three finished offline players stay tracked.
-Logical changed-file footprint drops from1146939394 to229437541 bytes before
-new packaging metadata, about80 percent. Ordinary Git history is preserved;
-this does not shrink historical Git blobs or full-history clone transfer.
-The first check attempt hit ENOSPC on C: before checks could run; archive/prune
-recovered headroom. This was a setup failure. Fresh old-base PR166 checks pass:
-build,1432 default tests/32existing skips,26Codex checks, bundle leak, voice,
-domain, artifact anchors and design lint. Logs are in
-.tmp/merge-ready-verification/retry-20261011/.
-Staged tree856c65211daffef6c44620e14602da8885ce6175 clean-input export on F:
-reproduced all three finished players exactly, with no node_modules, none of
-the762 archived paths and only the3required QA posters. Nine pinned delivery
-hashes also passed; no ignored local capture could mask a missing builder input.
+## Approved prompt scope and limits
+Only MARKETMIND_SYSTEM_INSTRUCTION in api/_lib/prompts.ts changes relative to main:
+23 additions / 22 removals. Approved proposal SHA256:
+d65482ca98b901a26784b89fcc9605a25c40c88c7b01ba7d74cbdd4e1a4ada85.
+Evidence attribution and labeled hypotheses replace mandatory simulated research.
+Empty evidence/comparison lists are permitted. Keys/types/models/settings and
+provider transport/script formats are unchanged. This affects NEW reports only.
+Existing cached/imported reports remain; hypothesis-to-script benefits and
+Services/Testimonial customer proof need a separate exact proposal.
+No deterministic fact checking or live model honesty verification is claimed.
 
-## Protected delivery and reuse
-Accepted film: workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4.
-SHAf92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df.
-Accepted player: artifacts/grifon-shader-sound-v1.html.
-SHA550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a.
-Silent picturee57f2fae, opening6815c6e5, full JS4fcf4bdd, fragment00fcb082,
-full JSON76a34cfb and sound recipe2814f78a remain exact.
-All root films, players, editable sources, fonts, product captures, material
-assets, licenses, cue maps and generators remain tracked. No visual/audio edit.
-User acceptance: reference/sound-v1-user-acceptance.md; historical sound proof:
-qa/sound-delivery-v1.json. The47 motion events/56layers remain unchanged.
-PR170's CLI, guide, previews, proof clips and final bound receipts are preserved.
-Its earlier build1463tests/32existing skips,35media/28browser checks and27 final
-bindings remain historical evidence; packaging verification is separate.
-Universal reference coverage, customer turnaround and auditory scoring remain
-unproven beyond the recorded cases. Raw recordings/stems remain private.
+## Checks and review
+Prior source head2211fe58: GitHub verify/e2e/artifacts PASS; independent review PASS.
+Vercel remains failed for its account block. Legacy Claude review is opt-in/skipped.
+Prior local application checks: build,161 targeted tests,1432 full tests PASS;
+32 existing guarded skips. Initial anchor timeout passed isolated and full
+rerun with two workers; no timeout/exclusion changes were made.
+Desktop/mobile empty-report fixture smoke passed with zero API/provider attempts.
+Post-reconciliation PASS: build,1444 units/32 existing guarded skips,
+7 browser cases via isolated5179 fixture config (.tmp/pr171-merge/playwright.config.ts),
+bundle/voice/domain/ASCII/artifact/eval/resume checks and independent integration review.
+Browser fixtures exercised mobile/desktop/sparse reports, attribution, safe links,
+focus, handoff payloads and PDF with zero API attempts. No paid generation.
+Evidence local-only: .tmp/pr171-merge/results.json and playwright.log.
+Exact updated-head GitHub CI is checked before merge; live PR holds its receipt.
+Paid/live generation NOT RUN; no test spec or cost approval was supplied.
+Reuse matching primary dependencies via ignored node_modules junction.
 
-## Checks and account status
-CI's pull_request filter now covers main and both known stack bases; all job
-bodies, paid/live defaults, push/main alarm and skips are unchanged.
-Independent CI/dependency and complete packaging/archive review passed.
-Main advanced to ff489cad (MarketMind PR175) while preparing this change.
-PR165 base8dcfafc0 is integrated here, retaining upstream MarketMind changes.
-Only NOW.md conflicted; the accepted film/editable source did not conflict.
-Fresh full-stack checks are required after propagating this base to PR170.
-Authenticated Vercel read shows active account, no soft/feature block, and a
-successful unrelated preview today. Old exact heads still show Account is
-blocked. Require native fresh-head checks after necessary branch pushes;
-do not disable checks, purchase a plan or manually redeploy to hide the status.
-Next: propagate the feature-stack updates, run latest full-stack checks and
-inspect exact-head GitHub CI and Vercel results before any authorized merge.
+## Presentation pilot retained from main / PR175
+PR175 is merged at ff489cad. Its source checkout is worktrees/0b05/grifon-command.
+Structured audience, evidence, campaign direction, hooks and comparisons render;
+original narrative remains expandable. Attribution labels do not verify claims.
+Sparse reports show missing support; plain-text untrusted narrative is preserved.
+PDF mirrors attribution caveats and does not turn every evidence item into a quote.
+Mobile controls precede intake; saved report loading focuses the report heading.
+Existing Director AI / Offer Lab navigation, payloads and generation handlers remain.
+PR175's historical build/1444 units/7 fixture browser cases, independent review,
+mobile smoke and GitHub CI passed. Those are its evidence, not reruns by PR171.
+Local preview/details: git show ff489cad:NOW.md and .tmp/marketmind-presentation/qa/.
 
-## Preserved boundaries
-Two single-attempt autopsies are consumed; combined estimate US$0.06987,
-invoice unverified. Their exact approved specs/prompts are unchanged; no retry.
-No tuned/provider configuration, customer application, production data or
-unrelated Oceanides/Vivo work changed. Existing source rights still apply.
-Prior reference/pilot recovery ZIPs and protected local stems remain intact.
-Historical unsent Gmail draft and all unrelated paid caps remain untouched.
+## ▶ NEXT ACTION
+PR171 merge is authorized with the Vercel exception; its remote status is the
+final merge receipt. Revised prompt applies to newly generated research only.
+Future proof-to-script work needs a separate exact proposal, and paid testing
+needs approved inputs/cost cap. No account changes or manual deployment authorized.
+
+## Prior work and consumed approvals - preserve
+Main contains motion PR156, Vivo/Blender PR157 and prompt-parity PR158.
+Detailed previous state: git show 2e1de015:NOW.md. Oceanides work is separate.
+Accepted motion film/approval/archive receipts: workflows/assets/grifon-motion-upgrade/;
+recipe workflows/grifon_motion_production.md. Aira/v4 approval consumed; never
+regenerate. Accepted SFX sources private-review-only until rights cleared;
+user acceptance/technical audio checks do not establish independent listening.
+Gemini assessment third invocation has unknown usage/result; no reset/retry or
+access-gate bypass. Ledger PRIMARY/.tmp/grifon-elevenlabs-assessment/ is retained.
+Vivo cgt-20261004021141-cgh8r and bottle cgt-20261003202712-nlxv7 already ran;
+recovery GET-only, never repeat paid POST/--execute. Invoices remain unverified.
