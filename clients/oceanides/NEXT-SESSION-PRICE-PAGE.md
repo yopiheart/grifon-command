@@ -1,5 +1,9 @@
 # NEXT SESSION — Oceanides: thank-you page pass, tapos DEPLOY
 
+**Historical handoff only.** Neil retired Gabriel and all related projects/assets
+on 2026-10-11. Older likeness approvals and restart instructions below are void.
+Use NOW.md for current work; do not restore this retired identity.
+
 **Isinulat 2026-08-01 (gabi, pagkatapos ng redesign session).** Ang landing page ay
 REDESIGNED na at **inaprubahan ni Neil**: *"Okay na saken tong first page."*
 
@@ -36,10 +40,8 @@ Ang buong DGP-2 redesign (`workflows/design_swipe_file.md` sa main ang evidence 
   baligtad at naayos** (kaliwa = BEFORE madumi, kanan = AFTER malinis). Provenance ng
   dalawang pairs: RESOLVED — totoong litrato, kumpirmado ni Neil (nakatala sa
   `scripts/build-assets.mjs`).
-- **Si Gabriel sa page** — consent pirmado ✅, images approved ✅ (Neil 2026-08-01).
-  "Si Gabriel ang haharap sa inyo" section bago ang FAQ.
-- **Watermarks** — OCEANIDES diagonal na NAKAPASO sa webp files (proof, truck, van,
-  Gabriel) via `build-assets.mjs`. Hindi CSS overlay.
+- **Watermarks** — OCEANIDES diagonal na NAKAPASO sa webp files (proof, truck, van)
+  via `build-assets.mjs`. Hindi CSS overlay.
 - **==highlighter==** — amber marker sa 4 na load-bearing na linya (goldEmphasis).
 - **DENR Certificate FAQ** — hiwalay na serbisyo: **₱12,000 bahay / ₱15,000 company**
   (hindi kasama sa ₱5,000). Nasa `workflows/oceanides_business_model.md` din.
@@ -179,14 +181,13 @@ hindi, at mas makitid pala ang rule kaysa sa akala.
 - **Real-bookings feed** ("may nag-book sa Pasig, 2 oras ang nakalipas") — POST-LAUNCH,
   totoong data lang mula `funnel_leads`. Ang fake version ay tinanggihan at bawal.
 - **Kuya Marvin legacy**: PAUSED ang lumang ad; ⚠️ may utang sa 100 taong nag-message
-  ("libre ang tingin") — sinuman ang tumawag, libre. Bagong Page ni Gabriel: 3-5 post
-  muna bago i-ON ang unang ad.
+  ("libre ang tingin") — sinuman ang tumawag, libre.
 
 ## ⚙️ Mga gate na wag galawin
 
 `scripts/lint-voice.mjs` + `scripts/lint-layout.mjs`, naka-wire sa prebuild. Kapag
-pumalya, **ang section ang ayusin, hindi ang exception list.** Ang Gabriel image lessons
-ay nasa [`kuya-gabriel/IDENTITY.md`](kuya-gabriel/IDENTITY.md).
+pumalya, **ang section ang ayusin, hindi ang exception list.** Current personnel and
+asset restrictions are in [DESIGN.md](DESIGN.md); retired identities must not return.
 
 ## Re-arm pagkatapos ng reboot
 

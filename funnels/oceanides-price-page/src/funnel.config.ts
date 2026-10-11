@@ -595,37 +595,20 @@ export const funnelConfig: FunnelConfig = {
     // sinasagot, pagkatapos ng garantiya at bago ang FAQ, kasi kapag tapos na
     // ang usapang presyo, tao na ang natitirang alalahanin.
     //
-    // 🔴 May pirmadong consent si Gabriel at aprubado ang mga litrato (Neil,
-    // 2026-08-01). Parehong gate ito ng lahat ng plate ni Marvin. Walang mukha
-    // ng tao ang lumalabas dito nang wala nito.
     {
       type: 'fieldInspector',
       ground: 'navy',
       props: {
         eyebrow: 'Sino ang darating',
-        heading: 'Si **Marvin** o si **Gabriel** ang haharap sayo',
+        heading: 'Si **Marvin** ang haharap sayo',
         body: [
-          'Sila ang field inspector namin. Sila ang titingin sa tangke mo pagdating, sila ang magsasabi ng buong presyo bago magsimula ang trabaho, at sila ang bahala na maayos ang lahat bago umalis ang team.',
-          'Kapag may tanong ka habang nandyan ang truck, sila ang kausapin mo. Hindi ka namin ipapasa sa iba.',
+          'Sya ang field inspector namin. Sya ang titingin sa tangke mo pagdating, sya ang magsasabi ng buong presyo bago magsimula ang trabaho, at sya ang bahala na maayos ang lahat bago umalis ang team.',
+          'Kapag may tanong ka habang nandyan ang truck, sya ang kausapin mo. Hindi ka namin ipapasa sa iba.',
         ],
         image: '/img/marvin.webp',
         imageAlt: 'Si Marvin, field inspector ng Oceanides',
         name: 'Marvin',
         role: 'Field Inspector',
-        // 🔴 DALAWA NA SILA (2026-08-03). Si Marvin ang nasa KM-004 na video ad,
-        // si Gabriel ang nasa GB-001. Kung isang mukha lang ang nasa page at iba
-        // ang galing sa ad, sira ang message match — at nasa CLOSE yun naka-upo,
-        // ang tanging bagay na sinusubukan nating ayusin (A3: 100 message,
-        // isang order). Si Marvin ang nauuna dahil sya ang tumatakbong ad.
-        //
-        // Para bumalik sa isang tao: tanggalin ang `second`, ibalik ang `image`
-        // at `name` sa isa, at ibalik ang heading sa "Si X ang haharap sayo".
-        second: {
-          image: '/img/gabriel.webp',
-          imageAlt: 'Si Gabriel, field inspector ng Oceanides',
-          name: 'Gabriel',
-          role: 'Field Inspector',
-        },
       },
     },
 

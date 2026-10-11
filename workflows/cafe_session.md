@@ -232,7 +232,6 @@ builders read straight out of excluded paths:
 |---|---|
 | `tools/artifacts/build-one-hook-twelve-worlds.mjs` | `assets/ad-swipe/` |
 | `tools/artifacts/build-km-week01-runsheet.mjs` | `clients/oceanides/kuya-marvin/organic/` |
-| `tools/artifacts/build-gabriel-review.mjs` | `clients/oceanides/kuya-gabriel/identity-lock/` |
 
 ⚠️ **`/artifacts` stays excluded, but the ONE anchored twin is re-included** (2026-08-26). The
 sparse line carries `'!/artifacts' '/artifacts/eli5-image-gate.html'` — the later pattern wins and
@@ -252,7 +251,7 @@ echo "artifacts/km-value-week-01.html" | git sparse-checkout check-rules --no-co
 
 Why not just drop the exclusion: an earlier version of this block did, on the grounds that
 "it is text, so it costs nothing." **Measured, that was wrong.** `artifacts/` is 3.5 MB and 84% of
-it is two base64-heavy pages — `km-value-week-01.html` 2.3 MB, `gabriel-review.html` 628 KB — none
+it includes base64-heavy pages such as `km-value-week-01.html` (2.3 MB) — none
 of which any check reads. At the ~30 KiB/s this file records for cafe wifi that is ~2 extra minutes
 on a clone whose whole purpose is avoiding a 13-hour one, and it grows with every kept artifact. A
 sentence that says "costs nothing" never gets re-measured, so it must not be written.

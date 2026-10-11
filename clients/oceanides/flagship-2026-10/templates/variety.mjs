@@ -11,7 +11,7 @@ export function renderVarietyCanvas(post, assets, { brand, footer, photo, escape
     '07': () => `${brand(assets.logo, 'PARA SA TENANT')}
       <section class="tenant-title">${headline('NANGUNGUPAHAN<br><em>KA?</em>')}</section>
       <div class="tenant-note"><span class="tenant-tab">OWNER /<br>MANAGER</span>${support()}<p class="tenant-small">Sino ang<br>mag-aapprove?</p></div>
-      <figure class="tenant-portrait">${photo(assets.gabriel, 'Approved AI portrait of Gabriel, used as an illustration.')}<figcaption>AI PORTRAIT</figcaption><span class="portrait-corner"></span></figure>
+      <figure class="tenant-property"><div class="tenant-home">${homeDrawing}</div><div class="tenant-key">${keyDrawing}</div><figcaption>CONCEPTUAL ILLUSTRATION</figcaption><span class="portrait-corner"></span></figure>
       ${footer('ISAMA ANG OWNER SA USAPAN')}`,
     '08': () => `${brand(assets.logo, 'BUSINESS / BUILDING')}
       <div class="notice-wall" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -59,7 +59,7 @@ export function renderVarietyCanvas(post, assets, { brand, footer, photo, escape
       <section class="context-notebook"><div class="notebook-rings" aria-hidden="true">${'<span></span>'.repeat(8)}</div><figure class="context-photo">${photo(assets.ba3Before, 'Historical Oceanides tank archive photo, used to illustrate the need for image context.')}<figcaption>PHOTO ARCHIVE</figcaption></figure><div class="context-questions"><p>Saan?</p><p>Kailan?</p><p>Ano ang<br>napansin?</p></div><p class="context-note">Kung luma ang photo,<br>sabihin din.</p></section>
       ${footer('PHOTO LANG AY HINDI SAPAT PARA SA DIAGNOSIS')}`,
     '18': () => `${brand(assets.logo, 'GABAY SA MAINTENANCE')}
-      <figure class="planning-portrait">${photo(assets.gabriel, 'Approved AI portrait of Gabriel, treated as a navy monochrome illustration.')}<figcaption>AI PORTRAIT</figcaption></figure>
+      <figure class="planning-calendar"><svg viewBox="0 0 440 600" aria-label="Illustrated maintenance record with a check mark"><rect x="8" y="45" width="422" height="540" rx="8" fill="#F4F6FA"/><path d="M8 150h422" stroke="#F5B301" stroke-width="12"/><path d="M100 8v74M330 8v74" stroke="#8FB3DD" stroke-width="22" stroke-linecap="round"/><circle cx="220" cy="315" r="110" fill="#0E2C5E"/><path d="m155 315 45 48 88-99" fill="none" stroke="#F5B301" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M70 475h300M70 515h210" stroke="#8FB3DD" stroke-width="10"/></svg><figcaption>CONCEPTUAL ILLUSTRATION</figcaption></figure>
       <section class="planning-title">${headline('WALANG<br>ISSUE<br><em>NGAYON?</em>')}</section>
       <div class="planning-close">${support()}<p>I-save ang huling service<br>at kung ano ang ginawa.</p></div>
       ${footer('PLANUHIN AYON SA PROPERTY MO')}`,

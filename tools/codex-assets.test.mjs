@@ -22,6 +22,18 @@ test('Zam includes the approved master outside the bundled skill', () => {
   const master = 'workflows/believability-samples/zam-master/opt-C-presenter.png';
   assert.deepEqual(selectPaths([master, 'workflows/believability-samples/zam-master/old.png'], 'zam'), [master]);
 });
+
+test('retired identity and project assets cannot be restored by any profile', () => {
+  const retired = [
+    'clients/oceanides/kuya-gabriel/IDENTITY.md',
+    'clients/oceanides/kuya-gabriel/identity-lock/gabriel-website-v4.png',
+    'funnels/oceanides-price-page/public/img/gabriel.webp',
+    'artifacts/gabriel-review.html', 'artifacts/gb-001-brief.html',
+  ];
+  for (const profile of ['instructions', 'wizard', 'zam', 'marvin', 'artifact-sources']) {
+    assert.deepEqual(selectPaths(retired, profile), [], profile);
+  }
+});
 test('unrecognized profile fails before any git mutation; sparse metacharacters are literal', () => {
   assert.throws(() => selectPaths([], 'everything'), /Unknown profile/);
   assert.equal(sparsePattern('clients/a [approved]/photo?.png'), '/clients/a \\[approved\\]/photo\\?.png');

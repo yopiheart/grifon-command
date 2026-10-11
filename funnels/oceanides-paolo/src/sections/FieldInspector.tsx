@@ -16,7 +16,7 @@ import { goldEmphasis } from '../lib/goldEmphasis';
 //
 // This is the same lever clients/oceanides/DESIGN.md keeps "totoong litrato ni
 // Marvin" in the system for: the photo is evidence, not decoration. It carries
-// the same precondition too — a signed likeness consent (Gabriel's, 2026-08-01)
+// the same precondition too — a signed likeness consent
 // before the face ships anywhere customer-facing.
 //
 // LAYOUT, DALAWANG ANYO (binago 2026-08-03, Neil: "ang liit ng picture nilang

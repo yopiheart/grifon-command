@@ -31,7 +31,7 @@ const out = path.join(here, 'out');
 await mkdir(out, { recursive: true });
 const dataUrl = async (filename, type) => `data:${type};base64,${(await readFile(filename)).toString('base64')}`;
 const source = path.join(repo, 'clients/oceanides/assets');
-const [baseCss, varietyCss, anton, inter, logo, ba2Before, ba2After, ba3Before, ba3After, gabriel, truck, inquiryUI] = await Promise.all([
+const [baseCss, varietyCss, anton, inter, logo, ba2Before, ba2After, ba3Before, ba3After, truck, inquiryUI] = await Promise.all([
   readFile(path.join(here, 'posts.css'), 'utf8'),
   readFile(path.join(here, 'templates/variety.css'), 'utf8'),
   dataUrl(path.join(here, 'templates/fonts/Anton-Regular.ttf'), 'font/ttf'),
@@ -41,12 +41,11 @@ const [baseCss, varietyCss, anton, inter, logo, ba2Before, ba2After, ba3Before, 
   dataUrl(path.join(source, 'tb2-ba2-after.png'), 'image/png'),
   dataUrl(path.join(source, 'tb2-ba3-before.png'), 'image/png'),
   dataUrl(path.join(source, 'tb2-ba3-after.png'), 'image/png'),
-  dataUrl(path.join(repo, 'funnels/oceanides-price-page/public/img/gabriel.webp'), 'image/webp'),
   dataUrl(path.join(repo, 'funnels/oceanides-price-page/public/img/hero-truck.webp'), 'image/webp'),
   dataUrl(path.join(here, 'templates/inquiry-ui.webp'), 'image/webp'),
 ]);
 const css = `${baseCss}\n${varietyCss}`;
-const assets = { logo, ba2Before, ba2After, ba3Before, ba3After, gabriel, truck, inquiryUI };
+const assets = { logo, ba2Before, ba2After, ba3Before, ba3After, truck, inquiryUI };
 const browser = await chromium.launch();
 const manifest = [];
 

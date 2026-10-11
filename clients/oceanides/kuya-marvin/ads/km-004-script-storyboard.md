@@ -154,7 +154,7 @@ bilang ng eksena. Labing-isang beat sa ~28s ay bagong stimulus kada 2.5s.
 1. **Isang linya kada roll.** Tatlong beses bumagsak ang GB-001 dito sa preflight.
 2. **`maxPaidRolls` = 5.** Wala nun sa GB-001, at sampung tawag ang nangyari noong dalawa lang ang aprubado.
 3. **1.2s lang ang scroll**, tapos hard cut sa nababasang card. 5.6s na walang makakabasa ang v2.
-4. **Walang caption chunk na tatawid sa kuwit.** Kokopyahin ang `gb-001/captions.mjs`.
+4. **Walang caption chunk na tatawid sa kuwit.** Reference: `km-004/captions.mjs`.
 5. **NO-SMILE clause sa bawat roll.** Tatlong beses ngumiti si Gabriel. May tooth-gap issue si Marvin, kaya mas mabigat pa dito.
 6. **Hook overlay sa frame 0, walang fade, y=288.** Nasa y=150 ang v1 at pinutol nang malinis ng 4:5 crop.
 7. **Existence guard sa fontfile.** Tahimik syang bumabagsak sa serif at mukhang tama sa thumbnail.

@@ -20,7 +20,7 @@ papuntang ~4, nang walang dagdag na eksena at walang dagdag na piso.
 - Anton caps, **outline hindi box** (P2, 8 corroborations)
 - 1-3 salita kada chunk, 0.4-0.6s
 - **Walang chunk na tumatawid sa kuwit** (aral 18) — kokopyahin ang
-  `gb-001/captions.mjs` bilang reference implementation
+  `captions.mjs` in this folder as the reference implementation
 - `y≈1267`, hindi tumatakip sa mukha
 - Humihinto kapag may big text sa itaas (batas na isang-layer-lang)
 

@@ -1,0 +1,86 @@
+[
+  {
+    "funnel": "price",
+    "page": "index",
+    "width": 390,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": [],
+    "marvinCount": 1
+  },
+  {
+    "funnel": "price",
+    "page": "index",
+    "width": 1440,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": [],
+    "marvinCount": 1
+  },
+  {
+    "funnel": "price",
+    "page": "thank-you.html",
+    "width": 390,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": []
+  },
+  {
+    "funnel": "price",
+    "page": "thank-you.html",
+    "width": 1440,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": []
+  },
+  {
+    "funnel": "paolo",
+    "page": "index",
+    "width": 390,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": [],
+    "marvinCount": 1
+  },
+  {
+    "funnel": "paolo",
+    "page": "index",
+    "width": 1440,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": [],
+    "marvinCount": 1
+  },
+  {
+    "funnel": "paolo",
+    "page": "thank-you.html",
+    "width": 390,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": []
+  },
+  {
+    "funnel": "paolo",
+    "page": "thank-you.html",
+    "width": 1440,
+    "gabriel": false,
+    "broken": [],
+    "overflow": false,
+    "errors": [],
+    "missing": []
+  }
+]

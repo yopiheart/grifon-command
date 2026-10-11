@@ -574,9 +574,7 @@ export const funnelConfig: FunnelConfig = {
     // ---------------------------------------------------------------------
     // 11 · fieldInspector
     //
-    // 🔴 May pirmadong consent si Gabriel at aprubado ang mga litrato (Neil,
-    // 2026-08-01). Parehong gate ito ng lahat ng plate ni Marvin. WALANG MUKHA
-    // NG TAO ANG LUMALABAS NANG WALA NITO.
+    // Portraits require approved likeness consent for current personnel.
     //
     // 🎨 Ang salitang PIPIRMA ang buong trabaho ng section na to. Kay Helen, ang
     // tanong ay "sino ang papasok sa bakuran ko." Kay Paolo, ang tanong ay
@@ -587,21 +585,15 @@ export const funnelConfig: FunnelConfig = {
       ground: 'navy',
       props: {
         eyebrow: 'Sino ang darating',
-        heading: 'Si **Marvin** o si **Gabriel** ang pipirma sa report mo',
+        heading: 'Si **Marvin** ang pipirma sa report mo',
         body: [
-          'Sila ang field inspector namin. Sila ang susukat ng tangke mo, sila ang kukuha ng litrato, at sila ang pipirma sa report na ipa-file mo.',
-          'Kapag may tanong ka habang nandyan sila, sila ang kausapin mo. Hindi ka namin ipapasa sa iba.',
+          'Sya ang field inspector namin. Sya ang susukat ng tangke mo, sya ang kukuha ng litrato, at sya ang pipirma sa report na ipa-file mo.',
+          'Kapag may tanong ka habang nandyan sya, sya ang kausapin mo. Hindi ka namin ipapasa sa iba.',
         ],
         image: '/img/marvin.webp',
         imageAlt: 'Si Marvin, field inspector ng Oceanides',
         name: 'Marvin',
         role: 'Field Inspector',
-        second: {
-          image: '/img/gabriel.webp',
-          imageAlt: 'Si Gabriel, field inspector ng Oceanides',
-          name: 'Gabriel',
-          role: 'Field Inspector',
-        },
       },
     },
 
@@ -819,7 +811,7 @@ export const funnelConfig: FunnelConfig = {
     stepsHeading: 'Ito ang susunod na mangyayari',
     steps: [
       'Tatawagan ka namin para sa schedule. 8AM hanggang 5PM kami tumatawag, kaya kung gabi ka nag-book, bukas ng umaga ang tawag.',
-      'Susukatin at kukunan ng litrato ni Marvin o ni Gabriel ang tangke mo. Mga isang oras lang sya.',
+      'Susukatin at kukunan ng litrato ni Marvin ang tangke mo. Mga isang oras lang sya.',
       'Sa loob ng 48 hours, nasa email mo na ang report na may pirma. Kasama na ang quotation kung kailangan mo ng dokumentadong load.',
     ],
     nextStep: {

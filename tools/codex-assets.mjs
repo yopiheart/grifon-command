@@ -17,6 +17,13 @@ const under = (path, prefix) => path.startsWith(prefix + '/');
 export function selectPaths(paths, profile) {
   if (!Object.hasOwn(profiles, profile)) throw new Error(`Unknown profile: ${profile}`);
   return paths.filter(path => {
+    // Retired by Neil on 2026-10-11. Do not restore discontinued identity assets.
+    if (under(path, 'clients/oceanides/kuya-gabriel') || [
+      'clients/oceanides/page-assets/fb-profile-gabriel-1080.png',
+      'funnels/oceanides-price-page/public/img/gabriel.webp',
+      'funnels/oceanides-paolo/public/img/gabriel.webp',
+      'artifacts/gabriel-review.html', 'artifacts/gb-001-brief.html',
+    ].includes(path)) return false;
     if (profile === 'instructions') return /^(clients|assets|samples|workflows)\//.test(path) &&
       (textExtensions.has(extname(path)) || (/\/(templates|overlays)\//.test(path) && path.endsWith('.html')));
     if (profile === 'wizard') return under(path, 'public/examples') || under(path, 'tests/fixtures/sample-batch');
@@ -27,7 +34,6 @@ export function selectPaths(paths, profile) {
       path === 'clients/oceanides/assets/Aluminum-C-VAN-6-Wheeler-Truck-14-m.jpg';
     return /^assets\/ad-swipe\/E(?:8[2-9]|9[0-3])-/.test(path) ||
       under(path, 'clients/oceanides/kuya-marvin/organic') ||
-      under(path, 'clients/oceanides/kuya-gabriel/identity-lock') ||
       under(path, 'artifacts');
   }).sort();
 }

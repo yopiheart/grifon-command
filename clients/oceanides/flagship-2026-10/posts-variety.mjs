@@ -1,9 +1,4 @@
 const sourceRoot = 'funnels/oceanides-price-page/public/img/';
-const portraitContext = {
-  source: 'funnels/oceanides-price-page/scripts/build-assets.mjs',
-  status: 'Approved AI portrait of Gabriel. Neil recorded likeness consent and image approval on 2026-08-01.',
-  limit: 'A portrait illustration only. It is not a testimonial, job photograph, or promise that this person will attend a service.',
-};
 const archiveContext = {
   source: 'funnels/oceanides-price-page/scripts/build-assets.mjs',
   attestation: 'Neil confirmed the tb2-ba2 and tb2-ba3 pairs were real job photos on 2026-08-01 ("totoo yan").',
@@ -15,8 +10,8 @@ export const extraPosts = [
   {
     id: '07', slug: '07-nangungupahan-ka', family: 'problem',
     title: 'NANGUNGUPAHAN KA?', support: 'Isama ang owner bago magpa-service.', awareness: 'Problem aware',
-    inspiration: 'Saved E65 Alex Hormozi: one dominant portrait inside a collectible character-card frame. Adapted as a tenant coordination card, without ratings, credentials, achievements, or endorsement. Source: assets/ad-swipe/E65-alex-hormozi.jpg.',
-    assetSources: [`${sourceRoot}gabriel.webp`], proofContext: portraitContext,
+    inspiration: 'Saved E65 Alex Hormozi: one dominant subject inside a collectible card frame. The frame is adapted around custom house and key illustrations for tenant coordination; no person, rating, credential, or endorsement is depicted. Source: assets/ad-swipe/E65-alex-hormozi.jpg.',
+    assetSources: [], proofContext: { status: 'Custom SVG house and key illustrations. No real property or person is depicted.' },
     caption: `May problema sa drainage ng inuupahan mo? Isama muna ang owner o property manager sa usapan.
 
 Linawin kung sino ang mag-aapprove, sino ang kausap sa property, at paano ang payment. I-send din kung saan may problema at kailan mo unang napansin.
@@ -140,8 +135,8 @@ Ang litrato sa design ay mula sa naunang Oceanides archive.`,
   {
     id: '18', slug: '18-walang-issue-ngayon', family: 'decision',
     title: 'WALANG ISSUE NGAYON?', support: 'Pwede nang ayusin ang maintenance record.', awareness: 'Unaware',
-    inspiration: 'Saved E46 Kylie Cosmetics: a single-colour portrait creates one calm focal point. Adapted as a navy monochrome portrait with a quiet maintenance-planning message and a visible AI disclosure. No endorsement, testimonial, or attendance promise is borrowed. Source: assets/ad-swipe/E46-kylie-cosmetics.jpg.',
-    assetSources: [`${sourceRoot}gabriel.webp`], proofContext: portraitContext,
+    inspiration: 'Saved E46 Kylie Cosmetics: restrained colour and one calm focal point. Only the tonal hierarchy is adapted, using a custom maintenance-record illustration instead of a portrait. No person, endorsement, or attendance promise is depicted. Source: assets/ad-swipe/E46-kylie-cosmetics.jpg.',
+    assetSources: [], proofContext: { status: 'Custom SVG maintenance-record illustration. No completed service or recommended interval is depicted.' },
     caption: `Wala ka pang concern ngayon? Pwede mong gamitin ang oras para ayusin ang maintenance records ng bahay.
 
 I-save kung kailan ang huling septic service, ano ang ginawa, at anumang advice na ibinigay para sa property mo. Kung may kulang sa record, i-note para maitanong.
@@ -150,13 +145,13 @@ Huwag basta kopyahin ang schedule ng ibang bahay. Kapag magpaplano ka ng susunod
   },
 ].map(post => {
   const disclosures = {
-    '07': 'AI portrait ni Gabriel ang nasa design. Illustration ito, hindi litrato ng actual service.',
+    '07': 'Conceptual illustration ang nasa design. Hindi ito plan o diagnosis ng property.',
     '09': 'Conceptual illustration ang nasa design. Hindi ito plan o diagnosis ng property.',
     '11': 'Illustration ng susi ang nasa design. Walang actual property o service record na ipinapakita.',
     '12': 'Conceptual illustration ang bahay sa design. Hindi ito actual project o technical plan.',
     '14': 'Edited fleet-context image ang nasa design. Ipa-confirm ang actual vehicle at setup para sa location mo.',
     '15': 'Screenshot ito ng private inquiry preview. Walang request na ipinapadala at walang booking na ginagawa ang guide.',
-    '18': 'AI portrait ni Gabriel ang nasa design. Illustration ito, hindi litrato ng actual service.',
+    '18': 'Conceptual illustration ang nasa design. Hindi ito plan o diagnosis ng property.',
   };
   return {
     ...post,

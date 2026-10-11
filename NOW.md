@@ -8,10 +8,12 @@ Package clients/oceanides/flagship-2026-10: index.html, 18 PNGs at 2160x2700,
 1080x1350 WEBPs, reusable canvases/builders, exact draft captions and sources.
 Three families: problem/proof/decision; navy/amber/Anton/Inter client brand.
 Globe 0917-671-6383 and Smart 0939-245-6217 appear in all 18 footers/captions.
-New 07..18 first: portrait, poster, cutaway, whiteboard, collage, home, folder,
-fleet, actual inquiry UI, split, notebook, monochrome. Saved references recorded.
+New 07..18 first: property card, poster, cutaway, whiteboard, collage, home, folder,
+fleet, actual inquiry UI, split, notebook, maintenance record. References recorded.
 18 render checks PASS; original six PNGs pixel-identical to 6ffbee1f.
-Saved approved Gabriel AI portrait + edited fleet labelled; SVGs, no paid AI.
+Neil retired Gabriel and all related projects/assets on October11; no likeness reuse.
+53 dedicated files deleted; 07/18 now SVGs; saved funnels/builders remove his role.
+Asset-restoration regression demonstrated FAIL before fix, PASS after; no paid AI.
 Inquiry has validation, back/edit, safe creative IDs, copy/select fallback/reset;
 no contact PII, network submission, booking or persistence. No paid generation.
 Build PASS again; dist junction: F:/codex-task-output/oceanides-flagship-20261011.
@@ -21,7 +23,9 @@ Own PRIMARY/.tmp/oceanides-posting-audit-20261011 diagnostics preserved on F:
 with a junction at the original path (131 files/102525555 bytes matched).
 Full unit suite rerun: 1432 PASS / 32 SKIP (116 files PASS / 9 SKIP).
 Bundle-leak, voice-sync, domain, PS1-ASCII, artifact-anchor checks PASS.
-Independent visual/diff review PASS (44/50); 09 label and 17 metadata fixed.
+Retirement independent visual/diff review PASS; no remaining findings.
+Both saved funnel builds/voice/layout PASS; 8/8 landing/thank-you browser checks.
+Codex control checks 27/27 PASS; retired paths cannot be restored by profiles.
 QA 21/21 PASS; all 18 modals/captions/exports/IDs, 1440/390/320 responsive.
 First expanded QA 20/21 caught stale 15 manifest; evidence kept, rebuild fixed.
 Original embedded inquiry Next-scroll regression remains PASS.

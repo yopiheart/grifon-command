@@ -1,5 +1,9 @@
 # Oceanides — Price Page Offer (Gate 1)
 
+**Historical proposal:** the Gabriel project and assets were stopped by Neil on
+2026-10-11. The staffing, pilot and costing assumptions below are not an active
+assignment or permission to reuse that identity.
+
 > **Status: HINDI PA APPROVED.** Gate 1 artifact ng funnel-forge. Basahin ni Neil,
 > aprubahan o baguhin, bago magsulat ng copy o code.
 > Ginawa 2026-07-30 (`grifon-cmo`). Source ng presyo: **`workflows/oceanides_business_model.md`

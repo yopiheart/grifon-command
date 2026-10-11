@@ -19,7 +19,7 @@ does not establish current service availability or operating clearance.
 | 04 | Proof | Same rectangular tank, visible change | Kylie E47/E48 hierarchy + Oceanides matched photos |
 | 05 | Decision | Understand the whole quote first | S4 offer stack, work-order treatment |
 | 06 | Decision | Details, scope/price, then schedule | Loose S28 named-stage sequence adaptation |
-| 07 | Problem | Tenant / owner coordination | E65 Alex Hormozi character-card composition |
+| 07 | Problem | Tenant / owner coordination | E65 Alex Hormozi card frame, adapted to property illustrations |
 | 08 | Problem | Business maintenance contact | E90 Russell Brunson street poster |
 | 09 | Problem | Unknown tank information | E26 Gruns surface / hidden-area metaphor |
 | 10 | Problem | Describe affected areas | E91 Russell Brunson useful whiteboard |
@@ -30,7 +30,7 @@ does not establish current service availability or operating clearance.
 | 15 | Decision | Clear first inquiry | E58 Meta for Business actual-interface hero |
 | 16 | Decision | Unit / building coordination | E28 Gruns two-panel contrast |
 | 17 | Decision | Give a photo context | E57 Meta for Business notebook flat lay |
-| 18 | Decision | Organize maintenance history | E46 Kylie Cosmetics monochrome portrait |
+| 18 | Decision | Organize maintenance history | E46 Kylie Cosmetics tonal hierarchy, adapted to a record illustration |
 
 These are design references, not evidence of performance for this new batch.
 S15 in the swipe file means statistics, not a generic checklist; S21 means native
@@ -89,10 +89,16 @@ labels them AI. Original camera files remain with Boss Jay and were not inspecte
 in this task. The gallery and metadata disclose that conflict. Captions identify
 the photos as archive material; no job date, city or universal outcome is claimed.
 
-Posts 07 and 18 reuse the saved Gabriel AI portrait. The August 1 asset builder
-records Neil's likeness-consent and image-approval confirmation; the agreement
-itself was not inspected here. Both posters visibly say AI PORTRAIT. This is
-neither a testimonial nor a promise about who will attend a service. Post 14
+Neil retired Gabriel and all projects/assets related to him on October 11.
+Dedicated identity references, portraits, ad/video projects, profile image,
+review artifacts and builders have been removed from the current workspace.
+Posts 07 and 18 now use custom property/key and maintenance-record illustrations;
+their exports, captions, gallery and contact sheets were rebuilt. Both saved
+funnels and asset builders no longer reference him. The workflow asset selector
+rejects the retired paths, including when examining an older HEAD. Historical
+financial/lesson records remain context and never authorize identity reuse.
+This removes current project files; Git history and external hosted copies are
+not purged by this local change. Post 14
 reuses the edited fleet-context image with a visible EDITED IMAGE label, without
 claiming a particular job, vehicle assignment, equipment or availability. Post
 15 uses a screenshot of the actual local inquiry guide, saved as
@@ -134,7 +140,13 @@ No scheduler or production database was changed by this task.
   and WebP dimensions. The original six PNGs remain pixel-identical to the
   approved-contact commit. Independent visual/diff review passed after moving
   post 09's illustration disclosure fully onto its light surface and aligning
-  post 17's metadata with the exact rendered PNG source.
+  post 17's metadata with the exact rendered PNG source. The retirement update
+  replaces both portrait designs with illustrations and removes identity inputs.
+  Independent retirement review also passes: both saved funnels build with voice
+  and layout checks; 8/8 landing/thank-you browser cases pass at 390/1440px with
+  one Marvin portrait and no Gabriel text or missing images. Evidence is in
+  `qa/funnel-retirement-review.json`. Asset-restore tests pass 5/5 and Codex
+  control checks pass 27/27. The restore regression failed before the fix.
 - Expanded browser smoke: 21/21 checks pass at 1440px, 390px and 320px, including filters,
   keyboard slider, modal focus/Escape, copy fallback, validation, edit/reset,
   safe source attribution and no external/write requests. The local HTTP helper
