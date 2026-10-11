@@ -21,9 +21,11 @@ export async function generateMarketResearchPdf(
   });
 
   drawCoverTitle(ctx, 'Market Intelligence Report', titleProduct);
+  drawWrappedText(ctx, 'Audience, motives and campaign ideas are hypotheses to review. Evidence labels and source links come from the saved report and have not been independently verified.');
+  ctx.cursorY += 3;
 
   // 1 — WINNING AVATAR
-  drawSectionHeader(ctx, '// WINNING_AVATAR', 'Who you actually sell to');
+  drawSectionHeader(ctx, '// WINNING_AVATAR', 'Audience hypothesis to review');
   if (result.winningAvatar) drawWrappedText(ctx, result.winningAvatar);
   if (result.demographics) {
     ctx.cursorY += 2;
@@ -137,14 +139,16 @@ export async function generateMarketResearchPdf(
     ctx.cursorY += 3;
   }
 
-  // 12 — RAW EVIDENCE (verbatim voice-of-customer)
+  // 12 — Preserve supplied evidence without turning every entry into a quote.
+  ensureSpace(ctx, 30);
+  drawSectionHeader(ctx, '// RAW_EVIDENCE', 'Supplied evidence and attribution — not independently verified');
   if (result.rawEvidence?.length) {
-    ensureSpace(ctx, 30);
-    drawSectionHeader(ctx, '// RAW_EVIDENCE', 'Voice-of-customer — quote, do not paraphrase');
     for (const ev of result.rawEvidence) {
-      drawWrappedText(ctx, `“${ev}”`, { italic: true });
+      drawWrappedText(ctx, ev);
       ctx.cursorY += 1;
     }
+  } else {
+    drawWrappedText(ctx, 'No supporting evidence supplied in this report.');
   }
 
   return finalizePdf(ctx);
