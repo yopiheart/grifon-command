@@ -172,7 +172,7 @@ results:134 first-pass,4 retry-pass,14 persistent failures and2 unresolved retri
 70 had no reported result. [Terminal summary](qa/main-readiness/ci-four-shard-summary.json).
 This is another partial run, not full-suite proof. Playwright
 partitions contiguous test ranges, so all34 account cases remained in shard1.
-The unchanged224 cases now use8 shards of28 tests each, with the same single worker,
+At that revision, the unchanged224 cases used8 shards of28 tests each, with the same single worker,
 retry/assertion budgets, real assets and15-minute cap. Full completion remains required.
 Pending test fixes await accepted intake turns and asynchronous save/action callbacks,
 avoid a fake-clock pause in the past, retain exact499/600ms reply boundaries without
@@ -216,6 +216,52 @@ expected invalid-input guard. No valid debit against a real user was performed.
 The frozen proposal/manifest's proposal-only status is historical; approved bytes
 remain unchanged. Valid service-role HTTP debits and live generation remain
 separate live tests.
+
+### Latest hosted result and bounded CI calibration
+
+The exact `ad20cd62` [eight-shard run](https://github.com/yopiheart/grifon-command/actions/runs/38126267694)
+is **RED/incomplete**. Build/static/artifact gates, 1,572 units (32 existing skips),
+and all24 isolated database checks passed. Browser results cover199/224 cases:
+186 first-pass,3 retry-pass,10 persistent failures and25 unreported. Shards1/5/6/7/8
+passed;2 failed;3/4 hit the15-minute cap. [Terminal receipt](qa/main-readiness/ci-eight-shard-summary.json).
+
+[Retry traces](qa/main-readiness/ci-retry-trace-timings.json) show20-32 sequential
+browser calls, repeated successful4-10s operations and a final pending action at
+the60s test cap. No completed call exceeded10.2s. This supports cumulative latency,
+not a proven CPU/GPU cause. The first-attempt viewport timeout was not traced and
+remains unresolved. New chat separately exceeded its explicit3s click budget.
+
+Two startup retries measured the hidden unpublished overlay defaults, not the
+actual reserved slot. The verifier now captures that reservation before awaiting
+layer visibility, then immediately compares reservation stability and overlay
+alignment. Exact dimensions and0.02px position bounds remain. [Local verification](qa/main-readiness/ci-startup-publication-result.json)
+passed13/13 with no retries/skips; delayed hidden publication passes while missing
+transition,0.125px overlay drift and0.125px reservation drift correctly fail.
+Independent source review found no actionable P1/P2.
+
+The [browser-mode experiment](qa/main-readiness/ci-browser-channel-result.json)
+passed the unchanged core journey3/3 in the default shell at33.2-38.6s. Full
+Chromium failed to launch before navigation, so its journey is NOT RUN and no
+performance comparison is available. The default browser remains unchanged.
+
+The next candidate keeps all224 cases, one worker, one CI retry and the15-minute
+job cap. Sixteen shards provide14 cases each. CI allows180s for a complete journey,
+with15s ordinary actions and unchanged15s expectations; local budgets remain
+unchanged. New chat remains one click, using15s in CI and its original3s locally.
+No save, privacy, geometry or exact paid-call assertion was removed. Not every
+protocol operation supports the action budget. Partition validation, affected
+navigation smoke are complete: [discovery](qa/main-readiness/ci-sixteen-partition-result.json)
+proves224 unique expected-passing cases,14 per shard with no duplicates/omissions;
+[New chat](qa/main-readiness/ci-navigation-budget-result.json) passes3/3 with no
+retries/skips, while blocked navigation correctly fails its unchanged chat-ID
+predicate after15s. Independent review and fresh26/26 controls pass. Exact-head
+full CI remains required; this calibration is not a passing browser gate or proof
+that all stalls are resolved.
+
+Vercel reports SUCCESS for the exact ad20 candidate. Authenticated hosted
+mobile/desktop rendering remains NOT RUN because no browser surface is available;
+the dev-only chat fixture cannot establish deployed behavior. Beta release and
+main merge remain on hold at this evidence boundary.
 
 ## External release gates
 

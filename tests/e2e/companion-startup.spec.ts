@@ -118,17 +118,30 @@ async function configure(page: Page, width: number, height: number) {
 async function load(page: Page) {
   await page.goto('/companion-chat-preview.html', { waitUntil: 'domcontentloaded' });
   await expect(input(page)).toBeVisible();
+  await assertPublishedSlot(page);
+}
+async function assertPublishedSlot(page: Page) {
+  const initialReservation = await page.locator('[data-companion-avatar-slot]').evaluate(element => {
+    const b = element.getBoundingClientRect();
+    return { left: b.left, top: b.top, width: b.width, height: b.height };
+  });
+  await expect(page.locator('.companion-avatar-layer')).toHaveCSS('visibility', 'visible');
+  const value = await observation(page);
+  assertStableSlot(value.reservedSlot, initialReservation);
+  assertStableSlot(value.slot, initialReservation);
 }
 async function observation(page: Page) {
   return page.evaluate(() => {
     const frame = document.querySelector('iframe[title="Grifon animated companion"]') as HTMLIFrameElement;
     const b = frame.parentElement!.getBoundingClientRect();
+    const reserved = document.querySelector('[data-companion-avatar-slot]')!.getBoundingClientRect();
     const style = getComputedStyle(frame);
     const inner = frame.contentDocument!, canvas = inner.querySelector('canvas');
     const fallback = inner.querySelector('#fallback');
     return {
       ready: frame.getAttribute('data-ready'), opacity: Number(style.opacity),
       slot: { left: b.left, top: b.top, width: b.width, height: b.height },
+      reservedSlot: { left: reserved.left, top: reserved.top, width: reserved.width, height: reserved.height },
       canvas: canvas ? { width: canvas.width, height: canvas.height } : null,
       innerFallbackVisible: !!fallback && getComputedStyle(fallback).display !== 'none' && getComputedStyle(fallback).visibility !== 'hidden' && Number(getComputedStyle(fallback).opacity) > 0,
       firstPaint: (frame.contentWindow as any).startupPixels?.firstPaint,
@@ -148,6 +161,7 @@ async function assertLoading(page: Page, width: number) {
   const value = await observation(page), size = width < 768 ? 56 : 64;
   expect(value.opacity).toBe(0);
   expect(value.slot.width).toBe(size); expect(value.slot.height).toBe(size);
+  assertStableSlot(value.slot, value.reservedSlot);
   expect(value.firstPaint).toBeNull();
   expect(value.ledger.readyMessages).toEqual([]);
   expect(value.overflow).toBeLessThanOrEqual(0);
@@ -168,6 +182,7 @@ async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observ
   expect(value.ledger.readyMessages[0].firstPaint?.at).toBeLessThanOrEqual(value.ledger.readyMessages[0].at);
   expect(value.innerFallbackVisible).toBe(false);
   await expect(page.locator(STILL)).not.toBeVisible();
+  assertStableSlot(value.slot, value.reservedSlot);
   if (before) assertStableSlot(value.slot, before.slot);
   const positive = value.ledger.samples.filter((sample: any) => sample.state.visible && sample.state.opacity > 0);
   expect(positive.length).toBeGreaterThan(0);
@@ -206,8 +221,7 @@ test('held model startup never shows an outer static mascot', async ({ page }) =
     requested = true; await held; await route.continue();
   });
   try {
-    await page.goto('/companion-chat-preview.html', { waitUntil: 'domcontentloaded' });
-    await expect(page.getByRole('textbox', { name: 'Message Grifon', exact: true })).toBeVisible();
+    await load(page);
     await expect.poll(() => requested).toBe(true);
     const loading = await page.evaluate(() => {
       const frame = document.querySelector('iframe[title="Grifon animated companion"]') as HTMLIFrameElement;
@@ -264,6 +278,7 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       await capture(page, `slow-${width}`, { before, slow, network });
       release(); const ready = await assertReady(page, before); await capture(page, `cold-ready-${width}`, { ready, network });
       hold(); await page.reload({ waitUntil: 'domcontentloaded' }); await expect(input(page)).toBeVisible();
+      await assertPublishedSlot(page);
       await expect.poll(() => requests).toBe(2);
       const reloading = await assertLoading(page, width); await capture(page, `reload-loading-${width}`, { reloading, network });
       release(); const refreshed = await assertReady(page, reloading);

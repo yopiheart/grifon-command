@@ -17,12 +17,14 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
-  timeout: 60_000,
+  // Hosted traces show many successful 4-10s actions exhausting a full journey's
+  // 60s cap. Bound individual actions below while allowing the complete journey.
+  timeout: process.env.CI ? 180_000 : 60_000,
   // Headless software rendering can delay a two-tab IndexedDB save past 5s.
-  // Keep the same state assertions and test cap with a bounded CI wait budget.
   expect: { timeout: process.env.CI ? 15_000 : 5_000 },
   use: {
     baseURL: `http://localhost:${PORT}`,
+    actionTimeout: process.env.CI ? 15_000 : 0,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },

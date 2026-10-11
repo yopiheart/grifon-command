@@ -39,7 +39,7 @@ test('New chat preserves a pre-generation conversation and returns in one click'
   expect(firstId).toBeTruthy();
   await input(page).fill('Coffee project'); await input(page).press('Enter');
   await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
-  await page.getByRole('button', { name: 'New chat', exact: true }).click({ timeout: 3000 });
+  await page.getByRole('button', { name: 'New chat', exact: true }).click({ timeout: process.env.CI ? 15_000 : 3_000 });
   await expect.poll(() => currentId(page)).not.toBe(firstId);
   await expect(page.locator('.companion-message-user')).toHaveCount(0);
   await page.getByRole('navigation', { name: 'Conversations', exact: true }).getByRole('button', { name: /Coffee project/ }).click();
