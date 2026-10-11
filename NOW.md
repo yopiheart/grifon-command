@@ -57,8 +57,9 @@ CI's pull_request filter now covers main and both known stack bases; all job
 bodies, paid/live defaults, push/main alarm and skips are unchanged.
 Independent CI/dependency and complete packaging/archive review passed.
 Main advanced to ff489cad (MarketMind PR175) while preparing this change.
-PR165 is now8dcfafc0, retaining those upstream changes with only a NOW conflict.
-Propagate that base forward; fresh full-stack checks are required after sync.
+PR165 base8dcfafc0 is integrated here, retaining upstream MarketMind changes.
+Only NOW.md conflicted; the accepted film/editable source did not conflict.
+Fresh full-stack checks are required after propagating this base to PR170.
 Authenticated Vercel read shows active account, no soft/feature block, and a
 successful unrelated preview today. Old exact heads still show Account is
 blocked. Require native fresh-head checks after necessary branch pushes;
