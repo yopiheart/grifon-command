@@ -21,6 +21,9 @@ passed on2026-10-11. Base-branch Codex check passed26/26; fresh GitHub head chec
 Vercel's account is currently active with a successful unrelated preview today;
 old motion-head statuses still say Account is blocked. Require native fresh
 checks rather than disabling the gate or buying/changing account settings.
+Main advanced to ff489cad (MarketMind PR175) during preparation. Its product
+changes are retained; the only integration conflict was this resume document.
+Latest full-stack verification will run after propagating the base forward.
 
 ## Protected work
 All original PR165 source, media, players and evidence remain unchanged.
