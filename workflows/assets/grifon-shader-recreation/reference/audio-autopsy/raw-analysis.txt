@@ -1,0 +1,72 @@
+{
+  "reference": {
+    "voice": {
+      "present": true,
+      "transcript": "drop drop drop fire",
+      "confidence": "medium",
+      "evidence": "Repetitive vocal chops saying 'drop drop drop fire' are heard in the first 8 seconds of the audio."
+    },
+    "music": {
+      "style": "Upbeat electronic dance music with a bright synth melody and driving 4/4 beat",
+      "instruments_and_texture": [
+        "synthesizer",
+        "electronic drums",
+        "bass synth"
+      ],
+      "tempo_bpm_estimate": 126,
+      "tempo_confidence": "high",
+      "tempo_is_estimate": true,
+      "energy_and_changes": [
+        {
+          "start_s": 0.0,
+          "end_s": 8.0,
+          "observation": "Intro with a basic electronic beat and vocal chops",
+          "confidence": "high"
+        },
+        {
+          "start_s": 8.0,
+          "end_s": 31.15,
+          "observation": "Main energetic synth melody enters with a full driving beat",
+          "confidence": "high"
+        }
+      ]
+    },
+    "foreground_events": [
+      {
+        "start_s": 7.0,
+        "end_s": 8.5,
+        "description": "Synth riser and transition effect",
+        "class": "separate effect",
+        "confidence": "high",
+        "evidence": "A rising sweep sound marking the transition into the main melody"
+      }
+    ],
+    "silence_intervals": [],
+    "uncertainties": []
+  },
+  "candidates": [
+    {
+      "id": "B",
+      "audible_style": "Deep house electronic track with a plucky synth bassline and steady 4/4 beat",
+      "tempo_bpm_estimate": 120,
+      "closest_region_start_s": null,
+      "closest_region_end_s": null,
+      "match_to_A": "No match. The melody, instrumentation, tempo, and overall musical style are completely different from Audio A.",
+      "confidence": "high"
+    },
+    {
+      "id": "C",
+      "audible_style": "Upbeat electronic dance music with a bright synth melody and driving 4/4 beat",
+      "tempo_bpm_estimate": 126,
+      "closest_region_start_s": 0.0,
+      "closest_region_end_s": 31.15,
+      "match_to_A": "Excellent match. Audio C is the clean instrumental version of the music track heard in Audio A. The beat, synth melody, and arrangement from 0:00 to 0:31 in Audio C are identical to Audio A, which simply has additional vocal chops and transition sound effects overlaid.",
+      "confidence": "high"
+    }
+  ],
+  "recommendation": {
+    "choice": "C",
+    "reason": "Audio C ('Digital Clouds') is the exact clean instrumental track used in Audio A. The musical structure, synth melody, and tempo match perfectly, whereas Audio B is an entirely different song.",
+    "confidence": "high"
+  }
+}

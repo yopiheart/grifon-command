@@ -1,0 +1,881 @@
+{
+  "id": "grifon-shader-launch",
+  "schemaVersion": 1,
+  "duration": 31.2,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "formats": {
+    "landscape": {
+      "width": 1920,
+      "height": 1080,
+      "safeMargin": 80
+    },
+    "portrait": {
+      "width": 1080,
+      "height": 1920,
+      "safeMargin": 70
+    }
+  },
+  "copy": {
+    "opening": "Your next ad.",
+    "intents": [
+      "To launch a product.",
+      "To tell your story.",
+      "To grow your business."
+    ],
+    "steps": [
+      "Research",
+      "Script",
+      "Storyboard"
+    ],
+    "details": [
+      "Know your audience.",
+      "Shape your message.",
+      "Plan every scene."
+    ],
+    "direction": "Give your next ad a clear direction.",
+    "brand": "GRIFON",
+    "website": "grifon.ai",
+    "disclosure": "Example project"
+  },
+  "assets": {
+    "logo": "./assets/logo.png",
+    "displayFont": "./assets/inter-900.ttf",
+    "bodyFont": "./assets/inter-variable.ttf",
+    "captures": [
+      "./assets/captures/framed-research.png",
+      "./assets/captures/framed-script.png",
+      "./assets/captures/framed-storyboard.png"
+    ],
+    "portraitCaptures": [
+      "./assets/captures/portrait-research.png",
+      "./assets/captures/portrait-script-detail.png",
+      "./assets/captures/portrait-storyboard-detail.png"
+    ],
+    "landscapeFraming": [
+      {
+        "left": 0,
+        "top": 0,
+        "width": 1800,
+        "height": 768
+      },
+      {
+        "left": 0,
+        "top": 0,
+        "width": 1800,
+        "height": 768
+      },
+      {
+        "left": 0,
+        "top": 0,
+        "width": 1800,
+        "height": 768
+      }
+    ]
+  },
+  "targets": [
+    "opening-copy",
+    "fragment-field",
+    "opening-signal",
+    "orb-world",
+    "intent-copy",
+    "orb-ring",
+    "workflow-panel",
+    "workflow-copy",
+    "workflow-signal",
+    "workflow-exit",
+    "screen-panel",
+    "screen-copy",
+    "direction-copy",
+    "direction-field",
+    "brand",
+    "brand-url",
+    "finish-light"
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "purpose": "Interrupt and resolve fragmented type into the subject of the film.",
+      "start": 0,
+      "end": 2.4,
+      "readable": [
+        0.78,
+        2.05
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "opening-exit"
+      },
+      "revealActionId": "opening-reveal",
+      "copyKey": "opening",
+      "material": "contour",
+      "sample": 1.45
+    },
+    {
+      "id": "product",
+      "purpose": "Introduce a product launch using a reflective orb and decisive typography.",
+      "start": 2.4,
+      "end": 4.2,
+      "readable": [
+        2.99,
+        3.94
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "product-exit"
+      },
+      "revealActionId": "product-reveal",
+      "copyIndex": 0,
+      "material": "metal",
+      "sample": 3.35
+    },
+    {
+      "id": "story",
+      "purpose": "Give storytelling a warmer cream interlude while preserving the same orb.",
+      "start": 4.2,
+      "end": 6,
+      "readable": [
+        4.76,
+        5.75
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "story-exit"
+      },
+      "revealActionId": "story-reveal",
+      "copyIndex": 1,
+      "material": "metal",
+      "sample": 5.15
+    },
+    {
+      "id": "business",
+      "purpose": "Build scale and ambition with the connected gold material.",
+      "start": 6,
+      "end": 7.8,
+      "readable": [
+        6.56,
+        7.52
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "business-exit"
+      },
+      "revealActionId": "business-reveal",
+      "copyIndex": 2,
+      "material": "metal",
+      "sample": 6.95
+    },
+    {
+      "id": "research",
+      "purpose": "Land the signal on audience understanding before the next workflow step.",
+      "start": 7.8,
+      "end": 10.4,
+      "readable": [
+        8.6,
+        10.15
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "research-exit"
+      },
+      "revealActionId": "research-reveal",
+      "copyIndex": 0,
+      "material": "glass",
+      "sample": 9.3
+    },
+    {
+      "id": "script",
+      "purpose": "Carry the same signal into shaping the message.",
+      "start": 10.4,
+      "end": 13,
+      "readable": [
+        11.12,
+        12.75
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "script-exit"
+      },
+      "revealActionId": "script-reveal",
+      "copyIndex": 1,
+      "material": "glass",
+      "sample": 11.95
+    },
+    {
+      "id": "storyboard",
+      "purpose": "Arrange that message into planned scenes.",
+      "start": 13,
+      "end": 15.6,
+      "readable": [
+        13.7,
+        15.35
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "storyboard-exit"
+      },
+      "revealActionId": "storyboard-reveal",
+      "copyIndex": 2,
+      "material": "glass",
+      "sample": 14.4
+    },
+    {
+      "id": "research-screen",
+      "purpose": "Show real Research input controls with clearly identified manually prepared example content.",
+      "start": 15.6,
+      "end": 17.9,
+      "readable": [
+        16.22,
+        17.65
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "research-screen-exit"
+      },
+      "revealActionId": "research-screen-reveal",
+      "copyIndex": 0,
+      "material": "screen",
+      "sample": 16.8
+    },
+    {
+      "id": "script-screen",
+      "purpose": "Show genuine Script controls with a preloaded example, without implying generation.",
+      "start": 17.9,
+      "end": 20.2,
+      "readable": [
+        18.52,
+        19.95
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "script-screen-exit"
+      },
+      "revealActionId": "script-screen-reveal",
+      "copyIndex": 1,
+      "material": "screen",
+      "sample": 19.1
+    },
+    {
+      "id": "storyboard-screen",
+      "purpose": "Show real Storyboard controls containing manually prepared example frames.",
+      "start": 20.2,
+      "end": 22.5,
+      "readable": [
+        20.82,
+        22.25
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "storyboard-screen-exit"
+      },
+      "revealActionId": "storyboard-screen-reveal",
+      "copyIndex": 2,
+      "material": "screen",
+      "sample": 21.45
+    },
+    {
+      "id": "direction",
+      "purpose": "Resolve the workflow into the approved clear-direction promise.",
+      "start": 22.5,
+      "end": 26.4,
+      "readable": [
+        23.3,
+        26.05
+      ],
+      "exit": {
+        "kind": "transition",
+        "actionId": "direction-exit"
+      },
+      "revealActionId": "direction-reveal",
+      "copyKey": "direction",
+      "material": "contour",
+      "sample": 24.5
+    },
+    {
+      "id": "finish",
+      "purpose": "Allow a restrained Grifon identity and address to hold through the finished tail.",
+      "start": 26.4,
+      "end": 31.2,
+      "readable": [
+        28.2,
+        31.1666666667
+      ],
+      "exit": {
+        "kind": "cut"
+      },
+      "revealActionId": "brand-reveal",
+      "material": "hold",
+      "sample": 29.45
+    }
+  ],
+  "materialHoldActionId": "brand-url-reveal",
+  "actions": [
+    {
+      "id": "opening-reveal",
+      "target": "opening-copy",
+      "start": 0.08,
+      "end": 0.78,
+      "easing": "outQuart",
+      "contact": 0.68,
+      "soundFamily": "type-arrival"
+    },
+    {
+      "id": "fragment-resolve",
+      "target": "fragment-field",
+      "start": 0,
+      "end": 0.68,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "opening-signal",
+      "target": "opening-signal",
+      "start": 0.45,
+      "end": 2.4,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "opening-exit",
+      "target": "opening-copy",
+      "start": 2.05,
+      "end": 2.4,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "orb-reveal",
+      "target": "orb-world",
+      "start": 2.4,
+      "end": 3.05,
+      "easing": "outQuart",
+      "contact": 2.85,
+      "soundFamily": "rounded-focus"
+    },
+    {
+      "id": "orb-orbit",
+      "target": "orb-ring",
+      "start": 2.4,
+      "end": 7.8,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "product-reveal",
+      "target": "intent-copy",
+      "start": 2.48,
+      "end": 2.99,
+      "easing": "outQuart",
+      "contact": 2.94,
+      "soundFamily": null
+    },
+    {
+      "id": "product-exit",
+      "target": "intent-copy",
+      "start": 3.94,
+      "end": 4.2,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "story-reveal",
+      "target": "intent-copy",
+      "start": 4.2,
+      "end": 4.76,
+      "easing": "outQuart",
+      "contact": 4.66,
+      "soundFamily": "material-turn"
+    },
+    {
+      "id": "story-exit",
+      "target": "intent-copy",
+      "start": 5.75,
+      "end": 6,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "business-reveal",
+      "target": "intent-copy",
+      "start": 6,
+      "end": 6.56,
+      "easing": "outQuart",
+      "contact": 6.46,
+      "soundFamily": null
+    },
+    {
+      "id": "business-exit",
+      "target": "intent-copy",
+      "start": 7.52,
+      "end": 7.8,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "research-reveal",
+      "target": "workflow-copy",
+      "start": 7.8,
+      "end": 8.6,
+      "easing": "outQuart",
+      "contact": 8.4,
+      "soundFamily": "ui-contact"
+    },
+    {
+      "id": "research-signal",
+      "target": "workflow-signal",
+      "start": 7.8,
+      "end": 8.6,
+      "easing": "smooth",
+      "contact": 8.4,
+      "soundFamily": null
+    },
+    {
+      "id": "research-panel",
+      "target": "workflow-panel",
+      "start": 7.8,
+      "end": 8.6,
+      "easing": "outQuart",
+      "contact": 8.4,
+      "soundFamily": null
+    },
+    {
+      "id": "research-exit",
+      "target": "workflow-exit",
+      "start": 10.15,
+      "end": 10.4,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "script-reveal",
+      "target": "workflow-copy",
+      "start": 10.4,
+      "end": 11.12,
+      "easing": "outQuart",
+      "contact": 11,
+      "soundFamily": "write-contact"
+    },
+    {
+      "id": "script-signal",
+      "target": "workflow-signal",
+      "start": 10.4,
+      "end": 11.12,
+      "easing": "smooth",
+      "contact": 11,
+      "soundFamily": null
+    },
+    {
+      "id": "script-panel",
+      "target": "workflow-panel",
+      "start": 10.4,
+      "end": 11.12,
+      "easing": "outQuart",
+      "contact": 11,
+      "soundFamily": null
+    },
+    {
+      "id": "script-exit",
+      "target": "workflow-exit",
+      "start": 12.75,
+      "end": 13,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "storyboard-reveal",
+      "target": "workflow-copy",
+      "start": 13,
+      "end": 13.7,
+      "easing": "outQuart",
+      "contact": 13.6,
+      "soundFamily": "ui-contact"
+    },
+    {
+      "id": "storyboard-signal",
+      "target": "workflow-signal",
+      "start": 13,
+      "end": 13.7,
+      "easing": "smooth",
+      "contact": 13.6,
+      "soundFamily": null
+    },
+    {
+      "id": "storyboard-panel",
+      "target": "workflow-panel",
+      "start": 13,
+      "end": 13.7,
+      "easing": "outQuart",
+      "contact": 13.6,
+      "soundFamily": null
+    },
+    {
+      "id": "storyboard-exit",
+      "target": "workflow-exit",
+      "start": 15.35,
+      "end": 15.6,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "research-screen-reveal",
+      "target": "screen-panel",
+      "start": 15.6,
+      "end": 16.22,
+      "easing": "outQuart",
+      "contact": 16.1,
+      "soundFamily": "screen-contact"
+    },
+    {
+      "id": "research-screen-exit",
+      "target": "screen-panel",
+      "start": 17.65,
+      "end": 17.9,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "script-screen-reveal",
+      "target": "screen-panel",
+      "start": 17.9,
+      "end": 18.52,
+      "easing": "outQuart",
+      "contact": 18.4,
+      "soundFamily": "screen-contact"
+    },
+    {
+      "id": "script-screen-exit",
+      "target": "screen-panel",
+      "start": 19.95,
+      "end": 20.2,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "storyboard-screen-reveal",
+      "target": "screen-panel",
+      "start": 20.2,
+      "end": 20.82,
+      "easing": "outQuart",
+      "contact": 20.7,
+      "soundFamily": "screen-contact"
+    },
+    {
+      "id": "storyboard-screen-exit",
+      "target": "screen-panel",
+      "start": 22.25,
+      "end": 22.5,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "direction-reveal",
+      "target": "direction-copy",
+      "start": 22.5,
+      "end": 23.3,
+      "easing": "outQuart",
+      "contact": 23.15,
+      "soundFamily": "promise-arrival"
+    },
+    {
+      "id": "direction-flow",
+      "target": "direction-field",
+      "start": 22.5,
+      "end": 26.4,
+      "easing": "linear",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "direction-exit",
+      "target": "direction-copy",
+      "start": 26.05,
+      "end": 26.4,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "brand-reveal",
+      "target": "brand",
+      "start": 26.4,
+      "end": 27.6,
+      "easing": "outQuart",
+      "contact": 27.2,
+      "soundFamily": "brand-resolve"
+    },
+    {
+      "id": "brand-url-reveal",
+      "target": "brand-url",
+      "start": 27.15,
+      "end": 28.2,
+      "easing": "outQuart",
+      "contact": 27.9,
+      "soundFamily": null
+    },
+    {
+      "id": "finish-light",
+      "target": "finish-light",
+      "start": 26.4,
+      "end": 28.2,
+      "easing": "smooth",
+      "contact": null,
+      "soundFamily": null
+    },
+    {
+      "id": "opening-reveal",
+      "target": "opening-copy",
+      "start": 0.08,
+      "end": 0.78,
+      "easing": "outQuart",
+      "contact": 0.68,
+      "soundFamily": "type-arrival"
+    }
+  ],
+  "audio": {
+    "music": {
+      "asset": "./assets/audio/digital-clouds.mp3",
+      "sourceIn": 8,
+      "gainDb": -4,
+      "fadeIn": 0.12,
+      "fadeOut": 1.6
+    },
+    "assets": {
+      "paper-swipe-2": "./assets/audio/paper-swipe-2.wav",
+      "rotation-air-2": "./assets/audio/rotation-air-2.wav",
+      "camera-contact-2": "./assets/audio/camera-contact-2.wav",
+      "phone-contact-2": "./assets/audio/phone-contact-2.wav",
+      "laptop-contact-1": "./assets/audio/laptop-contact-1.wav",
+      "card-pop-2": "./assets/audio/card-pop-2.wav",
+      "reverse-air-1": "./assets/audio/reverse-air-1.wav",
+      "orb-inward-1": "./assets/audio/orb-inward-1.wav",
+      "pencil-4": "./assets/audio/pencil-4.wav"
+    },
+    "cues": [
+      {
+        "id": "opening-contact",
+        "actionId": "opening-reveal",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.062,
+        "sourceContact": 0.014,
+        "gainDb": -12
+      },
+      {
+        "id": "orb-anticipation",
+        "actionId": "orb-reveal",
+        "assetId": "reverse-air-1",
+        "sourceIn": 1.236,
+        "sourceOut": 1.69,
+        "sourceContact": 1.646,
+        "gainDb": -14.5
+      },
+      {
+        "id": "orb-body",
+        "actionId": "orb-reveal",
+        "assetId": "orb-inward-1",
+        "sourceIn": 0,
+        "sourceOut": 0.32,
+        "sourceContact": 0.056,
+        "gainDb": 0
+      },
+      {
+        "id": "story-material-turn",
+        "actionId": "story-reveal",
+        "assetId": "rotation-air-2",
+        "sourceIn": 0.296,
+        "sourceOut": 1.03,
+        "sourceContact": 0.564,
+        "gainDb": -11
+      },
+      {
+        "id": "research-contact",
+        "actionId": "research-reveal",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.046,
+        "sourceContact": 0.014,
+        "gainDb": -17
+      },
+      {
+        "id": "script-friction",
+        "actionId": "script-reveal",
+        "assetId": "pencil-4",
+        "sourceIn": 1.4,
+        "sourceOut": 1.94,
+        "sourceContact": 1.888,
+        "gainDb": -3
+      },
+      {
+        "id": "storyboard-contact",
+        "actionId": "storyboard-reveal",
+        "assetId": "camera-contact-2",
+        "sourceIn": 0.1,
+        "sourceOut": 0.3,
+        "sourceContact": 0.136,
+        "gainDb": -3
+      },
+      {
+        "id": "research-screen-travel",
+        "actionId": "research-screen-reveal",
+        "assetId": "paper-swipe-2",
+        "sourceIn": 1.1,
+        "sourceOut": 1.58,
+        "sourceContact": 1.408,
+        "gainDb": -3
+      },
+      {
+        "id": "research-screen-contact",
+        "actionId": "research-screen-reveal",
+        "assetId": "laptop-contact-1",
+        "sourceIn": 0.23,
+        "sourceOut": 0.54,
+        "sourceContact": 0.268,
+        "gainDb": 3
+      },
+      {
+        "id": "script-screen-contact",
+        "actionId": "script-screen-reveal",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.062,
+        "sourceContact": 0.014,
+        "gainDb": -16
+      },
+      {
+        "id": "storyboard-screen-contact",
+        "actionId": "storyboard-screen-reveal",
+        "assetId": "phone-contact-2",
+        "sourceIn": 0.145,
+        "sourceOut": 0.4,
+        "sourceContact": 0.18,
+        "gainDb": 3
+      },
+      {
+        "id": "direction-contact",
+        "actionId": "direction-reveal",
+        "assetId": "card-pop-2",
+        "sourceIn": 0.004,
+        "sourceOut": 0.062,
+        "sourceContact": 0.014,
+        "gainDb": -17
+      },
+      {
+        "id": "brand-anticipation",
+        "actionId": "brand-reveal",
+        "assetId": "reverse-air-1",
+        "sourceIn": 1.236,
+        "sourceOut": 1.69,
+        "sourceContact": 1.646,
+        "gainDb": -13
+      },
+      {
+        "id": "brand-contact",
+        "actionId": "brand-reveal",
+        "assetId": "phone-contact-2",
+        "sourceIn": 0.145,
+        "sourceOut": 0.4,
+        "sourceContact": 0.18,
+        "gainDb": 5
+      },
+      {
+        "id": "brand-body",
+        "actionId": "brand-reveal",
+        "assetId": "orb-inward-1",
+        "sourceIn": 0,
+        "sourceOut": 0.78,
+        "sourceContact": 0.056,
+        "gainDb": 1.5
+      }
+    ]
+  },
+  "qa": {
+    "copyMutation": {
+      "key": "opening",
+      "value": "Your new ad."
+    },
+    "contactMutation": {
+      "actionId": "research-reveal",
+      "delta": -0.3
+    },
+    "nonlinearSceneIds": [
+      "opening",
+      "product",
+      "story",
+      "business",
+      "research",
+      "script",
+      "storyboard",
+      "research-screen",
+      "script-screen",
+      "storyboard-screen",
+      "direction",
+      "finish"
+    ],
+    "motionWindows": [
+      {
+        "actionId": "opening-reveal",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      },
+      {
+        "actionId": "orb-reveal",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      },
+      {
+        "actionId": "research-panel",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      },
+      {
+        "actionId": "script-signal",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      },
+      {
+        "actionId": "research-screen-reveal",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      },
+      {
+        "actionId": "direction-reveal",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      },
+      {
+        "actionId": "brand-reveal",
+        "fraction": [
+          0.2,
+          0.75
+        ]
+      }
+    ]
+  },
+  "description": "Original full launch film with authored shader materials and independently composed formats. Real component screenshots contain manually prepared Example project fixtures, demonstrating existing controls without provider generation. Private review only. Zero new spend."
+}

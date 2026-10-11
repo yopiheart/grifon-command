@@ -1,0 +1,59 @@
+{
+  "specSha256": "086006716cfeaf2ae6ace1c0f128822b3e25581278f98e39016e888ab4ab4cad",
+  "sources": [
+    {
+      "asset": "./assets/audio/digital-clouds.mp3",
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+    },
+    {
+      "asset": "./assets/audio/paper-swipe-2.wav",
+      "sha256": "398a01aee9b2f7b1de01de2d0852ca3708107a29120ae734f0ecc86217b4afd5"
+    },
+    {
+      "asset": "./assets/audio/reverse-air-1.wav",
+      "sha256": "90531a66e2239f7a4cbd0533a592d72982771778e7dd7bb2370f069ab1054baa"
+    },
+    {
+      "asset": "./assets/audio/orb-inward-1.wav",
+      "sha256": "2d6eba0d507ace2579fd41e7952213ddb512d2821adb5af91740427b9e3759ab"
+    },
+    {
+      "asset": "./assets/audio/card-pop-2.wav",
+      "sha256": "6c2123f4908a256f5324c74d6fc1d50a31255741eba8029dc56dfda9ed8f99f7"
+    },
+    {
+      "asset": "./assets/audio/phone-contact-2.wav",
+      "sha256": "0fa98d4669deea51b9605a9c599463ea4e966cd052b2e9718ecabb73f38c374b"
+    }
+  ],
+  "firstPass": {
+    "input_i": "-17.05",
+    "input_tp": "-3.50",
+    "input_lra": "1.80",
+    "input_thresh": "-27.13",
+    "output_i": "-15.48",
+    "output_tp": "-1.80",
+    "output_lra": "1.10",
+    "output_thresh": "-25.53",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.52"
+  },
+  "finalMeter": "Summary:\r\n\r\n  Integrated loudness:\r\n    I:         -16.2 LUFS\r\n    Threshold: -26.3 LUFS\r\n\r\n  Loudness range:\r\n    LRA:         1.6 LU\r\n    Threshold: -36.4 LUFS\r\n    LRA low:   -17.1 LUFS\r\n    LRA high:  -15.6 LUFS\r\n\r\n  True peak:\r\n    Peak:       -2.4 dBFS\r\n",
+  "stems": [
+    {
+      "file": "music-stem.wav",
+      "sha256": "f25cfe628bb8044e7bad90de4264b05e094f2eacb74efe05acc887413cf1b083"
+    },
+    {
+      "file": "sfx-stem.wav",
+      "sha256": "fd27c9e2d854e4542a79afdeecc897889d90a3c0815f26bd4f57a4acc6a8cd5e"
+    },
+    {
+      "file": "mix-master.wav",
+      "sha256": "26957d27e77b6463061a5f0c148c5ea0f2374bd1b3f47ebecf8f76a931f0d984"
+    }
+  ],
+  "auditoryQa": "Pending: this tool measures levels and timing; direct listening was not available.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -1,0 +1,32 @@
+{
+  "artifact": "artifacts/grifon-shader-recreation.html",
+  "bytes": 33662393,
+  "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423",
+  "media": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 24994401,
+    "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "frames": 932,
+    "fps": "30000/1001",
+    "duration": 31.146,
+    "videoDuration": 31.097733
+  },
+  "inputs": {
+    "tools/artifacts/build-grifon-shader-recreation.mjs": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157",
+    "tools/artifacts/grifon-shader-recreation.tpl.html": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d",
+    "tools/artifacts/_gates.mjs": "57dd8b78b37160c9643964dffbdc4a07cdddeb728fe0ecbbf8ab177747af0f94",
+    "qa/full-media.json": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a",
+    "qa/full-poster.png": "1e8d54f6f57f5c6db2f7bffb716a64e6886168d3b703022c48c9640d47b39003",
+    "audio.json": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689",
+    "qa/audio-verification.json": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+  },
+  "embeddedMedia": "Finished Grifon MP4 and its poster only",
+  "download": "Original MP4 bytes, decoded from the same inline payload",
+  "soundtrack": "PROVISIONAL_SONIC_UNVERIFIED",
+  "directListening": "PENDING",
+  "externalRequests": "Blocked by CSP; browser verification remains a separate gate"
+}

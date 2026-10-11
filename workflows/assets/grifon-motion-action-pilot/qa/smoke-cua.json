@@ -1,0 +1,101 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "route": "Scoped HTTP endpoint for vetted finished HTML; no file protocol",
+  "play": {
+    "duration": 8,
+    "muted": false,
+    "paused": false,
+    "readyState": 4,
+    "time": 0.42292
+  },
+  "ended": {
+    "ended": true,
+    "paused": true,
+    "time": 8
+  },
+  "replay": {
+    "muted": false,
+    "paused": false,
+    "time": 0.375604
+  },
+  "pause": {
+    "paused": true,
+    "time": 0.442159
+  },
+  "restart": {
+    "paused": false,
+    "time": 0.384291
+  },
+  "chapterWorkflow": {
+    "paused": true,
+    "time": 2.4
+  },
+  "scrubForward": {
+    "paused": true,
+    "time": 6.8
+  },
+  "scrubBackward": {
+    "paused": true,
+    "time": 1.6
+  },
+  "audioOff": {
+    "muted": true
+  },
+  "audioOn": {
+    "muted": false
+  },
+  "downloadPath": "C:\\Users\\ADMIN\\Downloads\\grifon-motion-action-pilot-review-1080p.mp4",
+  "download": {
+    "bytes": 2883189,
+    "sha256": "a9a473307a0d1df8a12c96b46e9659c88bfcf6f0a0e5c5c4eb85c788d940ce47"
+  },
+  "layout": {
+    "clientWidth": 375,
+    "controls": [
+      {
+        "height": 46,
+        "right": 152.578125,
+        "text": "Play with sound"
+      },
+      {
+        "height": 46,
+        "right": 240.828125,
+        "text": "Restart"
+      },
+      {
+        "height": 46,
+        "right": 345.375,
+        "text": "Sound on"
+      },
+      {
+        "height": 46,
+        "right": 145.5625,
+        "text": "Download MP4"
+      },
+      {
+        "height": 46,
+        "right": 129.375,
+        "text": "01 / Possibility"
+      },
+      {
+        "height": 46,
+        "right": 246.515625,
+        "text": "02 / Workflow"
+      },
+      {
+        "height": 46,
+        "right": 345.859375,
+        "text": "03 / Grifon"
+      }
+    ],
+    "innerHeight": 844,
+    "innerWidth": 390,
+    "scrollWidth": 375
+  },
+  "driver": "Root documented CUA; independent smoke agent reviews screenshot/receipt because its browser inventory is empty.",
+  "auditoryQa": "Pending direct listening; audio enablement/stream and measured levels verified separately.",
+  "date": "2026-10-07T16:43:45.198Z"
+}

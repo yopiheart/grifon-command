@@ -1,0 +1,1440 @@
+{
+  "status": "PASS",
+  "purpose": "Exact staged bytes of final render inputs, media, player and evidence; resume Markdown uses ordinary Git text conversion.",
+  "files": [
+    {
+      "path": "artifacts/grifon-shader-launch.html",
+      "gitBlobSha": "8a70b644bec8ba9b269447a957ea4c5a97341c77",
+      "bytes": 24116406,
+      "sha256": "1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207"
+    },
+    {
+      "path": "tools/artifacts/build-grifon-shader-launch.mjs",
+      "gitBlobSha": "8b4be5a668a09777a3a476e084b03e2679cd6e12",
+      "bytes": 11935,
+      "sha256": "2453f9a12cc2736e3cab7078f3b0b2535cc8fc071e5558d652d6ee8fb1aa97c5"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/.gitignore",
+      "gitBlobSha": "1943f963757878f93368698a8306a14d32c91940",
+      "bytes": 145,
+      "sha256": "c4b91b69e4f29b03c3e571f3a030cbe65deb6c0a6294aabb0409354315e2dcdf"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/README.md",
+      "gitBlobSha": "8d4af2bdcc3ecea797cb289d8e8c41f357111521",
+      "bytes": 12314,
+      "sha256": "3867ae040cd91a12a7052accf22f0bd2603494068674fb198e3de6bb9934fd49"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/archive.mjs",
+      "gitBlobSha": "2b4afb73eb1244454245b455811d72a7c708f8a9",
+      "bytes": 7469,
+      "sha256": "b2d18d9ba64f4c59daf14c6a914bbc0d9e3b7f620787f29aea234da814ae122b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/asset-provenance.json",
+      "gitBlobSha": "6b3a935c1b5a59a27ca88c2dd7c8ab9e0d86977f",
+      "bytes": 4990,
+      "sha256": "12464eb9358b0cec74aac1868c3d7febe6370705b570ae5aa7324bb2e8131fcb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/OFL-Inter.txt",
+      "gitBlobSha": "a3049bc891e8a6ed8e34240dd907861e7bbff1af",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-research.png",
+      "gitBlobSha": "46b0c8eaa22ed437d9578bf6de4462c3415df9fb",
+      "bytes": 66562,
+      "sha256": "8058746ce6a4996369211ba180f808cb94761464e8fc905f2bae5ec32922bec3"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-script.png",
+      "gitBlobSha": "3b50b328f0c0b3b157a1aa28a38f9bc6671d7818",
+      "bytes": 51645,
+      "sha256": "8282c3e1469b45cf552fde0b5f3aa32bd5959fff0f773a4dbb7979b1d482c02c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-storyboard.png",
+      "gitBlobSha": "9ca3f39f5c4aa6396afded607ffbd50cdb6158d0",
+      "bytes": 99655,
+      "sha256": "86cdbc74c5431504f91b1a1226a0b2ad9a82e3a1901dfae05eafb2b066c3efbc"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-research.png",
+      "gitBlobSha": "4196f70c02bbd3ddf06c0e0e4754cc66899f2d1c",
+      "bytes": 76307,
+      "sha256": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-script-detail.png",
+      "gitBlobSha": "a860ee7ad99a293668915a12bdfa8f29575951c0",
+      "bytes": 170762,
+      "sha256": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-script.png",
+      "gitBlobSha": "d95d358d3a6f3b1a91223aac3fdc07ad33712a8c",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-storyboard-detail.png",
+      "gitBlobSha": "21c62207f49db52fedb10485ab9e2183b46b5090",
+      "bytes": 234195,
+      "sha256": "e79060385aa3a006235ca3cc05f63ed3195ff46d42d62ca3ebd257133e56bbee"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-storyboard.png",
+      "gitBlobSha": "8e92b0883e916fd3777de95f7614c8702df5dc70",
+      "bytes": 260393,
+      "sha256": "522a5ddd068fedde0bf4f60eb16923055b4886d2f5a944e53d3003e39f2d56b8"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/research.png",
+      "gitBlobSha": "efa2c8a34786bc9ead39aff49a27ca733c5c0d56",
+      "bytes": 624576,
+      "sha256": "c458fc1accca4f6484d94ee945b9d75d92031ef308c403ed5a1d097cfe804da0"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/script.png",
+      "gitBlobSha": "77188ad498341cc5aba295e13601c50685702b33",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/storyboard.png",
+      "gitBlobSha": "143dd5e74744260f742cfac2e343e4bf3ae971ea",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/generate-plates.mjs",
+      "gitBlobSha": "52e83093f6f2649e6e3fe6dec1547f83dfc5a06d",
+      "bytes": 11691,
+      "sha256": "7b3897e01ea6f4a65517b1930a5b64bc7ac31a9c9b08b050da7ac99d2a738abd"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/plates-manifest.json",
+      "gitBlobSha": "3adcad782a893f40311c602c15b69ce4f95f333f",
+      "bytes": 2047,
+      "sha256": "8c62b8791cb2e2cf9f5b57dc475e632d9b6c6594fa3ef8ec6f919b99759465b4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/research-example-7x12.png",
+      "gitBlobSha": "b76b943fc4b65d29b850556a120f9c111e718a33",
+      "bytes": 199791,
+      "sha256": "b78f2ddef59dffcbb128445f8d9482bfa8743b2844301481940cd28e96ac0b48"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/script-example-7x12.png",
+      "gitBlobSha": "d8e980c2a4a30e0a10fb3a35bf4e9ca5793d14d9",
+      "bytes": 80294,
+      "sha256": "ef882c6cce9ca423e914cb4fb7386f297ef3aa280f586f8731ad91e0969e81fb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/storyboard-example-7x12.png",
+      "gitBlobSha": "fce8295512628eb8649c210c5793289456d26ce0",
+      "bytes": 183875,
+      "sha256": "7cab2a2095c830145fdff2bccece2654fc154ee73e0cc62e65efc9663b952a05"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/inter-900.ttf",
+      "gitBlobSha": "5b8b67110adf942c14c1aaa0b10bfcc9c9e2c33e",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/inter-variable.ttf",
+      "gitBlobSha": "047c92f6e2212473dc436020afed689527076d44",
+      "bytes": 876576,
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/logo.png",
+      "gitBlobSha": "89410f78671b4970a4a074f7cd91df63854af529",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/audio.mjs",
+      "gitBlobSha": "eb521d316b9b9488648b5d7ee284196be88842a2",
+      "bytes": 12475,
+      "sha256": "46e57bf264e66024aa940fb74ecb6a09d82d7ea4a0a4adce85ffd55f55276198"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/build.mjs",
+      "gitBlobSha": "d05838e095684e659b7cd50a8c8d1ca8146c04af",
+      "bytes": 4154,
+      "sha256": "e6d3b1e9dd9beb9e8b7df68152933f849cc1c60a2faf9fb3941b04cbfed9ac79"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/capture-fixtures.tsx",
+      "gitBlobSha": "567ad66e432e0f33d91e92c9ebee104753ac8f2d",
+      "bytes": 3230,
+      "sha256": "59b1ff7e2131896317916863a0bc57bdbef6a77cf3e21aa9dcc95e043a50da9f"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/capture-ui.mjs",
+      "gitBlobSha": "0ff91a4b9c2bd45db8afdff1051ccd8af34c2571",
+      "bytes": 13028,
+      "sha256": "80656a69740735ae5cece18146e78e9c396be2656e147191af0b6ac650848394"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/composition.js",
+      "gitBlobSha": "624e150375f9178078e96ea7d69a7c0608512a49",
+      "bytes": 16577,
+      "sha256": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/contract.test.mjs",
+      "gitBlobSha": "6780a428d5af4110c6b4a8eb1e93a9bcfa847c21",
+      "bytes": 4610,
+      "sha256": "423f898fa9d841c66d4340e202c2d4bdfc9bd37e8ccbf5092e4f5865e1957503"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/index.html",
+      "gitBlobSha": "82fc4da6b8799523319c0f945296cd1aaa132602",
+      "bytes": 15398,
+      "sha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/landscape.mp4",
+      "gitBlobSha": "98af82316f4410995fbf80f48f8b85c2179b0a6e",
+      "bytes": 7952020,
+      "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/launch-contract.mjs",
+      "gitBlobSha": "d23d138f096ece717310d3106b69064100ce0e99",
+      "bytes": 6033,
+      "sha256": "ead7766a98106df20749faf9e0c69f437d9acf8fc17082598a08130ed2f856f1"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/launch.json",
+      "gitBlobSha": "a91e1755fd36887616a02c4fc9146077f8a7f1ab",
+      "bytes": 20052,
+      "sha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/licenses/README.md",
+      "gitBlobSha": "38344fa88255348fdea58c27b4fc68bcd861bc90",
+      "bytes": 1157,
+      "sha256": "fec36b060f8f0b797b1cb8addb49bb3af265393f38cf58922e81d84c75c9df24"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/licenses/shaders-MIT.txt",
+      "gitBlobSha": "6a1baa70be694b4d2001aabef3bea967c135f1ff",
+      "bytes": 1076,
+      "sha256": "eeaaa26f5c65cb6dfebf1c098ac2375fdcdb497cebf105b0542f229482b106f4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/licenses/tinyest-MIT.txt",
+      "gitBlobSha": "9b1ae5de959628edf8a22ca236cd6c77c06196df",
+      "bytes": 1089,
+      "sha256": "abfe140e29a001c90ded00cf8a8f418cf3f35cb6252c148c7dd4406fa07e2337"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/licenses/tsover-runtime-Apache-2.0.txt",
+      "gitBlobSha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/licenses/typed-binary-MIT.txt",
+      "gitBlobSha": "228b5be3fd7228d2013f3aa0fe858daeb3f651c1",
+      "bytes": 1066,
+      "sha256": "17fd2977635e3561f3ed368c7bb6829bfdaf5962c4859d799d1592ce53dd0c52"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/licenses/typegpu-MIT.txt",
+      "gitBlobSha": "9b1ae5de959628edf8a22ca236cd6c77c06196df",
+      "bytes": 1089,
+      "sha256": "abfe140e29a001c90ded00cf8a8f418cf3f35cb6252c148c7dd4406fa07e2337"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/materials-source.js",
+      "gitBlobSha": "abf9373e552449a6c83ad2497510a2d26f06650e",
+      "bytes": 6270,
+      "sha256": "8e2c3f249a28fe56def66593ea6927320f26ee070da84614601bac6f9f29fb79"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/media-check.mjs",
+      "gitBlobSha": "669d95e67e9e6b6be965f0313df07b8a76a2858a",
+      "bytes": 6227,
+      "sha256": "86252daccad1729f3c8e63eb9352bb572d87fa595f19089f187526bbb58e435b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/portrait.mp4",
+      "gitBlobSha": "e48ed6920810cd4f8a50cc1a5491ba6706792581",
+      "bytes": 8568284,
+      "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/prepare-assets.mjs",
+      "gitBlobSha": "03a7b684a95b976fbbacbd4f28ec33c1864afa6e",
+      "bytes": 2513,
+      "sha256": "49a33ac187c7cbccfb8b7e37599ac554f809f75116c06870901685968e7c6cb6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/preview.mjs",
+      "gitBlobSha": "f6c3de0f74cf7fcd837143b374f7415fbfc44967",
+      "bytes": 1111,
+      "sha256": "f4c1a41c4eb66cf25ea1ee2571561fda1d746fd0324bda16b415c02b37bcb780"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/application-checks.json",
+      "gitBlobSha": "a68b6ccf8ee115db83211dfa81230a8cb48b8b39",
+      "bytes": 2179,
+      "sha256": "98bc38ea81294969742132ac058d2ce6f9a5f9caca306ac5f325b67925d764d1"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/application-correction-checks.json",
+      "gitBlobSha": "f22ce793310dbf1f33f58d56baaed77a8ccd04c3",
+      "bytes": 3291,
+      "sha256": "4ce274dcad2f121ea898675a51a28e9891024cd0579254ed37e9d877bf1fcb43"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/audio-aac-headroom.json",
+      "gitBlobSha": "23d69ec61a8571b72d45aa6c806559adccd7254a",
+      "bytes": 1146,
+      "sha256": "ce810efa31922c8e15fd6d04edc847f558711a1872765e68b8ba201ded838f10"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/audio-cue-manifest.json",
+      "gitBlobSha": "529379e54a291900965c3012da8397bcf2e467bb",
+      "bytes": 11266,
+      "sha256": "148784b3ca5d3bd53c0041f5bab41ef03d00a4e2695b51f069dbee61cfb39155"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/audio-proposal.json",
+      "gitBlobSha": "2a3b95399b77fa185b4015b274e376302b11e60e",
+      "bytes": 3439,
+      "sha256": "a9eebd54581dec0ad3b940a7558ed799ae0ebd2dba99752930d7f2c1a8461255"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/audio-source-recovery.json",
+      "gitBlobSha": "91c9652d538fab9c6485e8664df06aad4321d8bf",
+      "bytes": 2469,
+      "sha256": "85ad773c6afe8c10ddfaf2935caff5600adc12d3ce491e4d2909d43d92643537"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/audio-source-waveforms.json",
+      "gitBlobSha": "6aa6db4db174e10ad43347b87dc5d63897cb349f",
+      "bytes": 6763,
+      "sha256": "e2c594750cc99e75bd55c7a54cc58188374a0f738159fac73800b105f158f565"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/audio.json",
+      "gitBlobSha": "12553ae153ac6324d886d53935e0f65bca8c9c8c",
+      "bytes": 5487,
+      "sha256": "8618b00e4aa229b493acc5e83566ba9b670357a0954791b56c303198d179c3a4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/cache-integrity-test.json",
+      "gitBlobSha": "c0e6bfdd9dd5a781ca72d6230d12efe2d9c7ec1c",
+      "bytes": 632,
+      "sha256": "c0da2651eefe2351f8a3db4773a03cc321b049bc0718005a9a469730efc27f46"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/audio.json",
+      "gitBlobSha": "4f4fd975c2c519f6bce2ee22f8235344187fb477",
+      "bytes": 5487,
+      "sha256": "35451a7d46a385379af3c45fcae0f5d046506d4f6d3e18fb49ee9dcdead132cc"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/baseline.json",
+      "gitBlobSha": "34516c412ee13b2d85a94c420782f443f343d3d6",
+      "bytes": 2111,
+      "sha256": "6292ef13d35032a51436c04f75f6fe6007b95bbd0751814b3cafb8c2cdd491d1"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/encoded-report.json",
+      "gitBlobSha": "50aaf9cb6b97727c549773573450af0c51f6cf74",
+      "bytes": 14939,
+      "sha256": "9c8829be07a3501671d878002ec20e701ceb72ff29839d89f9a7a442eedb8e38"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/github-backup.json",
+      "gitBlobSha": "4a63e5189de41f88c578d85c5ec4bb42af70834a",
+      "bytes": 2008,
+      "sha256": "914124ec59cca763e3645d3fe7b9bc3dbe33e52414bf164810fcd4ae7f812295"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-capture-check.json",
+      "gitBlobSha": "d1e1bddb6e2a7bf3191adbc14cf89169d65fa214",
+      "bytes": 23413,
+      "sha256": "3f5de66a3c72cdb127d762005717dd43b8605772626dcaa4dcac1e29711e8e56"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-media.json",
+      "gitBlobSha": "8663e5fc4ff6f71a62e6eb8b66e6a91fb84e1db5",
+      "bytes": 567,
+      "sha256": "6e24ee3180c83ed69b014e70975f029556bc1c01e294e5af175f876c3afd2778"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-sample-07.png",
+      "gitBlobSha": "b6125784e1631bd808adc84d07a30a4d6f95c8de",
+      "bytes": 454996,
+      "sha256": "5d05b454520008618a204d085799c0c6407f8c4db787d02362fe05eb809a7e88"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-sample-08.png",
+      "gitBlobSha": "bfde5bfdc1507c2175296e3d12410e4c73042eab",
+      "bytes": 427351,
+      "sha256": "5072dd2d15e29dba3091c6cf64e2f9f5a9292131d5b64221475c7b4249e58b23"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-sample-09.png",
+      "gitBlobSha": "4ba30b4515b5c4b0b348226f3e6afeffb231b8e5",
+      "bytes": 474865,
+      "sha256": "c2dfb428f0a737a49f6366b1bc678449363504bf1ae8a388ceb9c1b3582a88fc"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-track-13-60.png",
+      "gitBlobSha": "f2b7bda7ffd5d64584dd1a148af927534c89d645",
+      "bytes": 1127272,
+      "sha256": "0083b5350fd4f01240b039e422f26eca247368a43cdc99183674816dd39a58f9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-track-13-70.png",
+      "gitBlobSha": "3661498ef46178a87f31192856ddcd483c9b369c",
+      "bytes": 1129171,
+      "sha256": "a0c9b6761b848ee7402b1dc2ec0371b74decb281c4ffabc20d8f95e3276adf3b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-track-14-40.png",
+      "gitBlobSha": "9128d1d5d41c3388092281042b2c98d4f38e614a",
+      "bytes": 1133074,
+      "sha256": "e375961238e425532220f126b0db13ca6fbac317759e36ca823b62512721de26"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-track-15-35.png",
+      "gitBlobSha": "b5f07dcdc0920140cdbbd01c3bd393ec7272690a",
+      "bytes": 1132336,
+      "sha256": "9b17f2aa6ad44ff92d607bb95d2039cf6cea78fb625400aee65af6450206862f"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/landscape-track-geometry.json",
+      "gitBlobSha": "58586724d5d91b7819f66506b79d29eb964cd2d7",
+      "bytes": 2894,
+      "sha256": "44a5c46c35246c7c345ac13ae19bb9509366165332c1946442771d039a5db518"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/player-race.json",
+      "gitBlobSha": "952da4bb77d3d644709389396eabe466351f4757",
+      "bytes": 903,
+      "sha256": "ec320185be42146f881ca8343e445f8f1856a69c8328e539a76636ac506c76b4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-capture-check.json",
+      "gitBlobSha": "c391188035741c9c0e5c045fef0986e7a61a2837",
+      "bytes": 23738,
+      "sha256": "88cf1d4f01959887f56810faad69c071fa54b60142e5b573ac5eb633fea4fc1d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-media.json",
+      "gitBlobSha": "cdb00cdd31f8877c1decaa724155a0dd545ba190",
+      "bytes": 566,
+      "sha256": "78fa778eaaf467dbab4e4f87eb0763b5f49f78d499cd1a6cca272450891165c7"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-sample-09.png",
+      "gitBlobSha": "6c7c9d6000b017c5595fc7ff837e2bd2e71ed0fd",
+      "bytes": 594470,
+      "sha256": "f79f6f644122382293aba8b2300fa59ea5867d5d98c309354006556d32136dc9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-track-13-60.png",
+      "gitBlobSha": "e5cb937b5472dde5e17883064173209034fdacf0",
+      "bytes": 1135805,
+      "sha256": "6f356732e7788c5cb532f463be2cc6a084fd7da53207e899b045d89374b74c39"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-track-13-70.png",
+      "gitBlobSha": "ee4af2bacb42cba0ab57ae1f71fb69f09313b9bd",
+      "bytes": 1136575,
+      "sha256": "99d551e47d6dd0b98e82cb78680d47ce0b5d44d1ef759eba00c3b11019ec90d5"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-track-14-40.png",
+      "gitBlobSha": "4929cc30f1b2f62187316a593cb3da2225f5c241",
+      "bytes": 1142083,
+      "sha256": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-track-15-35.png",
+      "gitBlobSha": "3fe907304b619bdb6f937ab2d0158a078875f821",
+      "bytes": 1132027,
+      "sha256": "4c23dfa6f97cfb37867e37b23f4f23857e3d6fd58039bf331b6166ec5549db38"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/portrait-track-geometry.json",
+      "gitBlobSha": "e44a87b4b7f3c5291778c57be2e51658ba0cf754",
+      "bytes": 2889,
+      "sha256": "6ef61b74fd90c231852c8120520ab45af8adc2fdaa5cdc6de2f48b0bf20df0aa"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/product-capture.json",
+      "gitBlobSha": "83c132ed04c06ca78bf629098592efc04256e62d",
+      "bytes": 8787,
+      "sha256": "10d18eb082835741bc44cbbfc4d7b988bb8695f8bcb3088bcdc3bc06a446bc40"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/recovery-archive.json",
+      "gitBlobSha": "a76d4601973a3e1bf7dccea46fc583408eb485b4",
+      "bytes": 42466,
+      "sha256": "17863666d579fd87138fc2cfff829efbacd2b137f31322ffcd499bff4767154b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/smoke-browser-receipt.json",
+      "gitBlobSha": "cb8d398333e79d7d0d39e30c10cf5f22de73b2d2",
+      "bytes": 28570,
+      "sha256": "bccf43d70d651295300763a6060a8960be9fd9f3e1484ff7dc6111a82a41d121"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/smoke-report.md",
+      "gitBlobSha": "17a47547981ce387570ac24c2e1e82694dea35d4",
+      "bytes": 4538,
+      "sha256": "479372b5cac79273a13e8d3a76678a5315bb6ec39b8b6b254cce2711e1735322"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections-before/smoke-source-checks.json",
+      "gitBlobSha": "fdfb17249a7a7312f2885d7e11d2aa93a17f1d7c",
+      "bytes": 1425,
+      "sha256": "c384262a0b12bfcd3481becfb6e4cc61a74b01a8a876ee66035631f0287246ff"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/corrections.json",
+      "gitBlobSha": "4fb430b1e142cc1f8adb0a9a6e51cc0cec87d735",
+      "bytes": 18407,
+      "sha256": "e566ed8dacdbc8dcfd9dd7e0c8876581db32fdba2290565bc6873199f7a65782"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-00.png",
+      "gitBlobSha": "953a91cb7b8f91bafb8071e5985b5a9a79f369f8",
+      "bytes": 948965,
+      "sha256": "c126a75d7961c13cf4a3c4de1e8cea55a3eb7c2af325b682776e85368c42de53"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-01.png",
+      "gitBlobSha": "0f5e85b08126c9374399021e71290f7354838429",
+      "bytes": 987009,
+      "sha256": "fd6fad07e7ac81e145c72542530d783f3559c6341212949254a8aef449007e46"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-02.png",
+      "gitBlobSha": "d9760aea1a4636f990f4c49cc31c2b31300ff004",
+      "bytes": 1049647,
+      "sha256": "47484e62d51e04a7093b15177c21bc42c4af6019571c8f6e1a517867acf866d9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-03.png",
+      "gitBlobSha": "1c1f9acb06eda7041332f50d90d9cf4eaa280d1f",
+      "bytes": 757693,
+      "sha256": "78bb7b5a3fcab5ea3617e59516e4bed8045cef559e820d5d5a5a6ee4ba1faf0e"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-04.png",
+      "gitBlobSha": "9e70753ba226d5866af887a020da4c7a496b22e0",
+      "bytes": 953121,
+      "sha256": "3f50f7cee741ffac100ac221d168c56931e9149a74c69659d646f130176c36ad"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-05.png",
+      "gitBlobSha": "d8e8583b658248973d4c4b45dbce4c49c57a9269",
+      "bytes": 970193,
+      "sha256": "8502aa09172dfb5053c435a36b70e8fc48568b8939d0a2eb690994777076a2e3"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-06.png",
+      "gitBlobSha": "a8e408e7011a794a4367ff970e5310ff2c0b571b",
+      "bytes": 504618,
+      "sha256": "5c2ad0e7bccea1c80dacbcb79d932fcd0d87ecb88d9582339b1a2281a303293d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-07.png",
+      "gitBlobSha": "a4d2a9eac5b7256d368d6218621a50a0c4265a2e",
+      "bytes": 988842,
+      "sha256": "df01f58593b143cfceb2c4ef59dadd5f3316bd9f6eb1b5eba6a978ad8887107b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-08.png",
+      "gitBlobSha": "1d29acdb9d2e49dd8ad3ea99497f21748453e7db",
+      "bytes": 1023363,
+      "sha256": "64b2b77cac2e6d5dc2d2156b537413d2767e38f57911f8498e4385244e6101db"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-09.png",
+      "gitBlobSha": "c15a0a56e933edda28f9b6b37734404d461e7d82",
+      "bytes": 1034486,
+      "sha256": "c07e7eebe21b1599ae2633c70b845f118996823c9e635f307669fe3b6ee7189b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-10.png",
+      "gitBlobSha": "05b00c4f10cacb0fd28561c809ca0efcd7ef2122",
+      "bytes": 1124464,
+      "sha256": "f2c90728c4e1c07c66864ba0637927218f002d3ebea6bb0cb6e1312e2878a965"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-11.png",
+      "gitBlobSha": "463a846b5180dc050f3498aebbeb0de9345ee3b4",
+      "bytes": 1087146,
+      "sha256": "e96f6fc40eb568422a170b10385b31803048148f16fcf2e6f49c4722b13368b1"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-12.png",
+      "gitBlobSha": "b379e6cbabedd1ceb1e9a01cf3a42d238db63c71",
+      "bytes": 1024137,
+      "sha256": "50f81b9252500c55b2452c560b8afd63fa33a576ef6accce8c1d07785ba8b3b1"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-13.png",
+      "gitBlobSha": "23d3e8d8bfc52f8ff8d68e23a64efec9307194a3",
+      "bytes": 1086249,
+      "sha256": "ff19888a82a1f8397bc91ec6d3c29fb114d8c5ab3d68981f7d24f99e4922fbdb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-14.png",
+      "gitBlobSha": "60a44a920681f5a5354ff51dc6f233d0702f7055",
+      "bytes": 1155582,
+      "sha256": "d13eee876a480888cc03d60e184e83a2767840ce3e060a038c02f492ca47fb34"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-15.png",
+      "gitBlobSha": "c5485b27ecd04cc43591f350210b0a81567aabb3",
+      "bytes": 446692,
+      "sha256": "e8fa4493f583ddadb4846934101a4f2f4a8e18908d597a77882d1576f0007c58"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-16.png",
+      "gitBlobSha": "5bdd5ba51e2d56d9651fd5a26e1a50fdd4379c14",
+      "bytes": 449177,
+      "sha256": "ec42b04bc184b7a1509794959ce68ba9a84af60e2654d7439ecb210240989003"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-17.png",
+      "gitBlobSha": "977435edbcd498ab9469b78522a767d41d3ba885",
+      "bytes": 472040,
+      "sha256": "8dd74e759ecb95a3ddf63bdfa7e76d783349cfd5772296dd703c7363545cfea0"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-18.png",
+      "gitBlobSha": "eec4488b402d2fe268c95e3bdba5c06aff527f9a",
+      "bytes": 387871,
+      "sha256": "9c4b543a3fc09f5f34055a5737b3a448fc78e9007def2a46e3be47caddec4ca0"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-19.png",
+      "gitBlobSha": "f5425a5c4aa3f129b32be21a0c5be895e973cde1",
+      "bytes": 452011,
+      "sha256": "9cc2e21572ea18a02d78694dab6fa75b742d23dc20ec60619f03a0a3e7dc690b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-20.png",
+      "gitBlobSha": "b89d64d2bfbc61f4db2a0e1be74a88875c24b010",
+      "bytes": 1234010,
+      "sha256": "ff9f874722bbe3da8b5d53656f4b77541638dffc66921ef35f36ff7f64ef7ee4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-21.png",
+      "gitBlobSha": "dc44bce7a0da1ca1fed498e1b6bd936a928aa48a",
+      "bytes": 1169464,
+      "sha256": "485aa81c0eb5441e7519f4bc40058b20bf108ae6c16dd97f0cb31c59609d395d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-22.png",
+      "gitBlobSha": "7713a582522a0ba8ae8705831c22290157e2a83c",
+      "bytes": 1191680,
+      "sha256": "9114217d2772344c5316f1755945646b6e3143dfd5a987d6fadba3eaefdd2e6b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-23.png",
+      "gitBlobSha": "37c71b24cc557ea34acae9bc518ce7ba48613ed3",
+      "bytes": 636991,
+      "sha256": "405f983a8631ee77b5fd6418c189b954c7ee8fbbef84f7368613046a17f58550"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-24.png",
+      "gitBlobSha": "869061d58ed111d365896dcdae28295b17ee7b55",
+      "bytes": 647233,
+      "sha256": "e10153aec97a800ae4c65185aba06c0838205cd9cef8e27dae1d954d06aafc09"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-25.png",
+      "gitBlobSha": "82dab5bb727ce22505b567f686b7e43452ad0dbe",
+      "bytes": 695047,
+      "sha256": "61c01b1a4e44106d705f28100e7705f777fadebebffd2d71438ab46a478101a4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-landscape/frame-26.png",
+      "gitBlobSha": "aedd292208cd2b252553399b70f40eed89d88a77",
+      "bytes": 695713,
+      "sha256": "c5804fc7425b9cb8585f998124c69c15f9884c73bf759db43d09033d4892773d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-00.png",
+      "gitBlobSha": "31259dffdbc9a0fb2623cb73399f9e045129592a",
+      "bytes": 584870,
+      "sha256": "3eea4ea4fdfb1ae7b164597a414aba1059457b27fb13452ceda7b02030ce6462"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-01.png",
+      "gitBlobSha": "6f3bfe01fe402e0752c51b2e1471d06012b6a42a",
+      "bytes": 590919,
+      "sha256": "0413caf977b771b7c60c07e432223b56ebc1938d0c2e42c11e3b5804916250bd"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-02.png",
+      "gitBlobSha": "071327cf1cd77e8e56981dc36b408c33f0e74211",
+      "bytes": 767465,
+      "sha256": "f892a2de27791e99fe24c161ff85e40da7c50cc6bf787fba2640827458dcd647"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-03.png",
+      "gitBlobSha": "9730a80b0825c267d3f63021fa64ad8f16c6152d",
+      "bytes": 735259,
+      "sha256": "b8da6b8ca454c8f20dc4dbebe9b8f3f4dda46fc01c0e9fb39894799dcd022f1c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-04.png",
+      "gitBlobSha": "c2d05d8ca510e9d506ebc633321925e41bf859cb",
+      "bytes": 883080,
+      "sha256": "f38b1ddbfae0c9104bff14afa9c9c99c36571e869c0152d0ce181ee72aec1727"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-05.png",
+      "gitBlobSha": "c89ae64eb10438fa3e2196e76d8b5cd6a54016db",
+      "bytes": 920075,
+      "sha256": "fc758734acdf8cf82e8f2256c5212c29d3e509f07d7351664d14281df6185149"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-06.png",
+      "gitBlobSha": "fea87504e42107b98036514c431e7206ea9863d7",
+      "bytes": 460004,
+      "sha256": "511f2a9c36079cd5c0c0806dd5ef258a94f8305ae4128b4809db497a3520e7fe"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-07.png",
+      "gitBlobSha": "8a34ced9205c0f4fdced50434cdc9f050204cccf",
+      "bytes": 1012048,
+      "sha256": "2bf905d19be99744ec3bae8169c183932b63d3bef1c5ce5cd8205aed3a1ef8af"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-08.png",
+      "gitBlobSha": "f4a5798399b77296b8d09b38d6c585977b2e901a",
+      "bytes": 923763,
+      "sha256": "15096594a49e9c3c25742af15e32a2dccc063e9bf2fa36d3e5f1937351524d2d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-09.png",
+      "gitBlobSha": "947d7766e6d13a96f7bcebc0c988e6567a8cfbb3",
+      "bytes": 1032440,
+      "sha256": "9bd6cbd4521e9d4d93c1dd69ee6906d5958d6c949d488fd9c4059976c411e076"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-10.png",
+      "gitBlobSha": "d6c67ce3c513bf5f5890bb04bb142ad23c4f7da1",
+      "bytes": 1106321,
+      "sha256": "a25d558bca03d9623fb47578dc768e2db50b4f459e576483ced55e8caeac7c84"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-11.png",
+      "gitBlobSha": "cecf1a0dfab6ffb16297bb2ff366f523f6f525a4",
+      "bytes": 943164,
+      "sha256": "7c949b74d2c6c88912056cceee2678a5532f008368f357fbca0e273c505cbe08"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-12.png",
+      "gitBlobSha": "398affd92c1eb8d98923a50b69f38c4e0c1af4c5",
+      "bytes": 988949,
+      "sha256": "ead7e6f2f42728c5c1dbeaf23b0745647586eaf00801ddbf766617c470ed24dc"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-13.png",
+      "gitBlobSha": "3d4b646255e258d94055737526d86d95e95626ba",
+      "bytes": 1072568,
+      "sha256": "fdd5a24a259a07c80f1ce49f80ff40739a566dcbcd1dc7d55a8d264bdc6d7892"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-14.png",
+      "gitBlobSha": "9700efd1615bd5f9a43393ca4923faff31bcc83d",
+      "bytes": 1126861,
+      "sha256": "f181f6df4f218274df771afd893213061e555c548b91cb695d3a2fc7f309ad27"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-15.png",
+      "gitBlobSha": "3f93754452d36069afc8a2b59fe588344d14ba50",
+      "bytes": 531344,
+      "sha256": "0386647c34e921d965d39ee16dd16bf9bf529b7508e42e051a0d5f5e094d0341"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-16.png",
+      "gitBlobSha": "47220e99a6e061fa0f518c96160fb9fbb225facb",
+      "bytes": 468399,
+      "sha256": "3005722e92638016f857eb9cd5fe0a7199bdb7062079741e546caf2580c50e35"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-17.png",
+      "gitBlobSha": "3b08d8e6a73837625cba594457bc7ceab7038b0f",
+      "bytes": 495890,
+      "sha256": "97bc439f559074eb7b954bcd7a833598eccc70795ffc7715f42b0e49a8271f17"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-18.png",
+      "gitBlobSha": "8ed2511dc8cce0a77bd70cf1e117482d09dc3d54",
+      "bytes": 490376,
+      "sha256": "9080518f5d58ea8221a22fb97c08ce881bc27b8ccf18d22a1115bf7c731bd6cb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-19.png",
+      "gitBlobSha": "bc18974e49c3af50461523112c97ee8fb468f0ab",
+      "bytes": 534938,
+      "sha256": "3b0fe56aa0b4f210bed91da8870c36371e9521e0e2e2c27f2bbf2924adec70d6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-20.png",
+      "gitBlobSha": "deaf6feea724e7a766683c9a6cdd13fc870074aa",
+      "bytes": 1121252,
+      "sha256": "e9b0939006d07334c33777d234f40e619d0d6546077db4a5c2a622bbd3a598f4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-21.png",
+      "gitBlobSha": "cc614022a591f061b62d42c3ce1887529f5d3037",
+      "bytes": 1061891,
+      "sha256": "b44765166f5c2328147e7adddf0d1afdaa38d9350cf79df40afd7b29bd6dc619"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-22.png",
+      "gitBlobSha": "fc7e66d0f51ac7ba62e6ebe224ec191a5a77e39c",
+      "bytes": 1077417,
+      "sha256": "9830b2dbf042bcd91fe07bda6a30d60b7f333401c0d32b55ae4ad7cab61e91b5"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-23.png",
+      "gitBlobSha": "679b69fbfb2ac85c9d46de7fd3d388da7390eee5",
+      "bytes": 614942,
+      "sha256": "38a8fbfe1471195a2fc4e97ba60a67e141453c0776d2ade842b7a80324ddc9bb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-24.png",
+      "gitBlobSha": "4b666d0ce09f8641d8b566438a79952fb4161464",
+      "bytes": 649369,
+      "sha256": "9e5fb7422016317550aad96865a2ac1df78bbc2f5ce3b98eba843bf2da10f782"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-25.png",
+      "gitBlobSha": "22149b10dbf4b6218e889cd554f54f78600fca8b",
+      "bytes": 701668,
+      "sha256": "ae840c7c4137aafd2ea941a6eb11d4614ad919aa39bffcf390485eb701193875"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-portrait/frame-26.png",
+      "gitBlobSha": "a880c7443c27f8963748038f93a77d7933f7c56f",
+      "bytes": 708804,
+      "sha256": "233941c2feac4f1bcdc8eb05f506cf2f45b3fd4a22d1e6f52887e73db9a8e795"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/encoded-report.json",
+      "gitBlobSha": "20adc567d531aac8d6909b0c400604a06ec0d458",
+      "bytes": 14933,
+      "sha256": "6c0f2439636a889dc8a24baf09576b55ffb1240ad7ea463f7a350536f89f13cb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/executor-report.md",
+      "gitBlobSha": "3000a8d439c7b95a44f3fd4034ca57dc3273bca8",
+      "bytes": 5822,
+      "sha256": "3a08c8d297a69f069078cc639a8b874ee0158ae7183c604d8d77ac09f21877c2"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/git-staged-bytes.json",
+      "gitBlobSha": "08bdbb4d53359c7ea8893f193ac17b5beda7cd55",
+      "bytes": 37515,
+      "sha256": "3fc3569fb6c90e19325726e86dbb982268a29c10ee3627a38b5b1a96c063a940"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/git-whitespace.json",
+      "gitBlobSha": "e05a6c2f0f0f03ce0021ad9a2532177f3b9bda36",
+      "bytes": 506,
+      "sha256": "291c3a4ed40346d221be102b8bcef046df7dcb841c0b7f2bb08d9b3a4d8d246a"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/github-backup.json",
+      "gitBlobSha": "4a63e5189de41f88c578d85c5ec4bb42af70834a",
+      "bytes": 2008,
+      "sha256": "914124ec59cca763e3645d3fe7b9bc3dbe33e52414bf164810fcd4ae7f812295"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/independent-code-review.md",
+      "gitBlobSha": "3b0cde118fecc30428decd2d2989115037e2a9f7",
+      "bytes": 17950,
+      "sha256": "b54dfae2442b81d981ef1439fd30758dabf03dc177c23e96ee21b48d2fe31e05"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/invalid-duplicate-action.json",
+      "gitBlobSha": "de34f712730671b1f7b22ee951fc8e77948862aa",
+      "bytes": 20254,
+      "sha256": "8d31b1926321f7c5a1b78c6608ba289ba54df970779cd6414a4f9f29d2d73f4b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-capture-check.json",
+      "gitBlobSha": "9b9c0841aabd1f0b5fe2744075f25c08637d9416",
+      "bytes": 26578,
+      "sha256": "ea34a295806438cda5565ad37ee114e29fe40f9d31ddde0a3e45ba97eb63dd8d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-contact-original.png",
+      "gitBlobSha": "3e32c24ab99ea6b35bfa122c469b1f3fae0c6941",
+      "bytes": 1162393,
+      "sha256": "0ea0254954df09a79b62990feaf7369f6d7fbd75cd0a5636e80c7a4043ce19ae"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-contact-revised.png",
+      "gitBlobSha": "7a0b194d1291cfd11f78f900b8d1f4f59907810e",
+      "bytes": 1161724,
+      "sha256": "23de55c95d97406ead493afa623287cf1f3cc1e8718107c04e39f427c02522ad"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-contact-sheet.jpg",
+      "gitBlobSha": "9e6f5887ceec7d56faa3229bbf5eaee146bbf0a3",
+      "bytes": 196353,
+      "sha256": "73e43e49459445151e0570a3c364612d239b3b9c448fa08a7a1f1cf79929a9cf"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-contour-isolation.json",
+      "gitBlobSha": "b38d452db7067178c8911de259224781723f60ee",
+      "bytes": 552,
+      "sha256": "aa44769afcc884d32d80cd61ab8ccabae051eb835221a23e7b70f2a51db11ef7"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-copy-original.png",
+      "gitBlobSha": "0811a2c27241837e6812568cee3e0b15789ae5db",
+      "bytes": 1018700,
+      "sha256": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-copy-revised.png",
+      "gitBlobSha": "3efcd11fd1bd8312b4b341db89710a8c32f4f19f",
+      "bytes": 1017630,
+      "sha256": "9280bed2b5797ec3de0965d72b1c0fbb303126ea04dba820c07baeb19e784f92"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-encoded-contact-sheet.jpg",
+      "gitBlobSha": "f2e8b1ac65e81804cf99208e7824f0fbdc1d9c3f",
+      "bytes": 420163,
+      "sha256": "89df04fb944020427e6c99fb12b3f768eca58724c8d05058d25bbba8fbf4418f"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-frame-receipt.json",
+      "gitBlobSha": "39a502db9edd902572133ccdb12404b54bd99829",
+      "bytes": 116507,
+      "sha256": "a622c0b71a5cf565ca4b5f2061d414d96362f4f0e2aa78560f3c5c08a0fb4643"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-media.json",
+      "gitBlobSha": "f44dd39f27310cbfbb0c04e2b25ac0af407d33cc",
+      "bytes": 567,
+      "sha256": "3ba4ab2d0c2cd4dcf9876478b3852f1bac98385a0a5846e2d78a5711455c148f"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-nonlinear-diff.png",
+      "gitBlobSha": "9a916d7dbbacaeb09c7a3e0223e17d41f1cc64e6",
+      "bytes": 7896,
+      "sha256": "aeac7d37ba9583a10529409a85af0afbc9991b05cdbe4477ce0f46d0e9e46e7e"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-nonlinear-failure.json",
+      "gitBlobSha": "3041e83aa0fa54ecc26873db8dab74899f6babe7",
+      "bytes": 1446,
+      "sha256": "dadc078bd82e78b78ffdcd59497345b862f0c1d72a8e73453bec9846fafb7c1c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-nonlinear-first.png",
+      "gitBlobSha": "a33e47d4851fd43e6c684d399d6c598856efcf0a",
+      "bytes": 1103047,
+      "sha256": "57f8c22dab8bedbc2e876be326fafaac36fd7a761a85014e521a5777adad3aca"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-nonlinear-replay.png",
+      "gitBlobSha": "784537dfadde6ec3253b514302a9f884eb49da91",
+      "bytes": 1103045,
+      "sha256": "52e8ba62136023c770314df0519b0b47c8071c52c5872b434238be7904421152"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-poster.png",
+      "gitBlobSha": "1a7785959f73e368725d981a7cd327c921a08f0e",
+      "bytes": 760627,
+      "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-00.png",
+      "gitBlobSha": "0811a2c27241837e6812568cee3e0b15789ae5db",
+      "bytes": 1018700,
+      "sha256": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-01.png",
+      "gitBlobSha": "9af309c8e3e963545a01b35b9c6a3bc50884a99e",
+      "bytes": 925880,
+      "sha256": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-02.png",
+      "gitBlobSha": "d494e5081e8aea7acfcdcfd64ef844c43de846bd",
+      "bytes": 363861,
+      "sha256": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-03.png",
+      "gitBlobSha": "2da2d74a06f7579c6990304088bd22ff029ad199",
+      "bytes": 936883,
+      "sha256": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-04.png",
+      "gitBlobSha": "21c5a7b5ffd7cd6784c577a057f4eeb5738a7845",
+      "bytes": 1138861,
+      "sha256": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-05.png",
+      "gitBlobSha": "1ff32335b42dcc489955389362595242f03bcb7e",
+      "bytes": 1111179,
+      "sha256": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-06.png",
+      "gitBlobSha": "5d432adaa97372db6ec2aca0d76a745784d3256d",
+      "bytes": 1131976,
+      "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-07.png",
+      "gitBlobSha": "d0da6ad702a1359148ba14f67587de292e6133b1",
+      "bytes": 473439,
+      "sha256": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-08.png",
+      "gitBlobSha": "f58aa23813936536e68fe0f16ece765be7e3d360",
+      "bytes": 442421,
+      "sha256": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-09.png",
+      "gitBlobSha": "2feb59be76044d577c218d63114840724de8bf14",
+      "bytes": 524470,
+      "sha256": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-10.png",
+      "gitBlobSha": "6cd8c21109d2653548831f3328b1a540998ea81b",
+      "bytes": 1036191,
+      "sha256": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-sample-11.png",
+      "gitBlobSha": "1a7785959f73e368725d981a7cd327c921a08f0e",
+      "bytes": 760627,
+      "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-samples.json",
+      "gitBlobSha": "39576aa87b9b5e6ac51d10a76b91871f1a075ce3",
+      "bytes": 14470,
+      "sha256": "2a6260ecbe576f58ec407f15eb9022bf4da295ebe561c180ecb4feef147bb538"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-track-13-60.png",
+      "gitBlobSha": "76d2f1e8a77b042f59117a15a97ee80c1a115cff",
+      "bytes": 1126041,
+      "sha256": "d158ed3dc3cda9345a2341f60fc04031cc67952ec84548a143854eba6438fa77"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-track-13-70.png",
+      "gitBlobSha": "0c2a5e9fcd2f10f76c4adcbc984387c371a5572e",
+      "bytes": 1127947,
+      "sha256": "2151397f6c50ddb475f45a329304edd5a03b5384fc66a402613f8289b959ec2e"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-track-14-40.png",
+      "gitBlobSha": "5d432adaa97372db6ec2aca0d76a745784d3256d",
+      "bytes": 1131976,
+      "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-track-15-35.png",
+      "gitBlobSha": "b4634359dc7b6e748f842a0c1700e46fabccc059",
+      "bytes": 1131349,
+      "sha256": "2b78a260c722a6b7c83c8dfcac99def465341b2796aa3b9c50b4c954931fea8e"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/landscape-track-geometry.json",
+      "gitBlobSha": "921a7a964a0969a602f6a1b5cec9db1a617155f3",
+      "bytes": 2886,
+      "sha256": "278717d928bd610e773483a75f1ce4e89c7b7469314e103cc0caec3c58c474a2"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/parent-final-mobile-390x844-landscape.jpg",
+      "gitBlobSha": "3c6e80c2f25dc9260a27ff39081c2b7009f21d24",
+      "bytes": 40351,
+      "sha256": "2d8194f8bf3a8be812fb1fc0c9b47cfa352f4c31d98729f1d2b832ed895e5a8c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/parent-final-mobile-390x844-portrait.jpg",
+      "gitBlobSha": "10d50d6e05df9cfaa713cd2fc6b0636401dd54a7",
+      "bytes": 31998,
+      "sha256": "b7029e501c1205fd9f12b54348a12d16b5148a3b69789a584b9a2cb271e44bf0"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/parent-final-smoke.json",
+      "gitBlobSha": "f070e2c20231bee9d4d59232793ad949771bfe91",
+      "bytes": 3739,
+      "sha256": "619bbd6ba59966e06cd2f34918d8bbef1a1879a48f1e176326b3f114366a5c61"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/parent-independent-correction-review.md",
+      "gitBlobSha": "6eb020204fb2d67a24d0c4fa7f7d57c9091a544c",
+      "bytes": 1884,
+      "sha256": "912003170272df8530a5aff08f4c205eb69d55c4363c0910d8fed411846cffb6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/pass1-review.md",
+      "gitBlobSha": "9d450175e6266894bd55d80927bd4341a0b613d1",
+      "bytes": 5201,
+      "sha256": "b87db44ed382005e46fb8c33299bc024b7b35056e66f3d43298a3af032b5af85"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/pass2-review.md",
+      "gitBlobSha": "c70417636384c8c85f37fee8893a73f4eaeddb6d",
+      "bytes": 5884,
+      "sha256": "5b611b1d7418f795ed4d9702a49aba50415092dccf59c1675ced107a93698771"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/pass3-review.md",
+      "gitBlobSha": "a5520aab4f55080085bc294b9dc1ca00d273429d",
+      "bytes": 3300,
+      "sha256": "1a3aca5896fa8f94e1d39e5b9cc894cf2d0080d0a74c59c0eccf63c68e783ab6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/player-race-fixture.mjs",
+      "gitBlobSha": "0a7f5820f841a69d4fb146480085dfcf89f5c300",
+      "bytes": 4796,
+      "sha256": "34dfd450f65e81089c7d75890818eb055a72f5a5671a8360b4551b2ef06d7653"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/player-race.json",
+      "gitBlobSha": "952da4bb77d3d644709389396eabe466351f4757",
+      "bytes": 903,
+      "sha256": "ec320185be42146f881ca8343e445f8f1856a69c8328e539a76636ac506c76b4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-capture-check.json",
+      "gitBlobSha": "dd25874c3d8b8e96bfa9ae45716226f095f3ea7b",
+      "bytes": 26898,
+      "sha256": "b4cc62c4aa27f6538b6e5d0bf4b60a4dacb6e5826aab86785d24249a8ab2b45f"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-contact-original.png",
+      "gitBlobSha": "ffb38e36ca3b4c3b8d8505bb7fd8084db886cbe1",
+      "bytes": 1192371,
+      "sha256": "7c4ef70c792b3e7c1ab18361ecc48dd5ea4467d356314c84af515e0f54fd0c75"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-contact-revised.png",
+      "gitBlobSha": "7a10180dbb73aff9764dc7d8a6338e73d0066722",
+      "bytes": 1191098,
+      "sha256": "47cca5059c626670a21c0ec132fde3e43bd1ded9230f7d9fcc2fcd1938c8feab"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-contact-sheet.jpg",
+      "gitBlobSha": "c176def9bffcce4d92eec97426039f511eeae632",
+      "bytes": 217471,
+      "sha256": "3c7fad0f4d56e7183cb88753bdb2bb0e054a081a08a6cc6084241b40224d1e61"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-copy-original.png",
+      "gitBlobSha": "0111cb940822a5ab686fb0492752d6c924645c77",
+      "bytes": 1025929,
+      "sha256": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-copy-revised.png",
+      "gitBlobSha": "989bd01274f221b3c009ce48d38ebe8ab27cc0e9",
+      "bytes": 1026723,
+      "sha256": "be85ff60660292ede7672594649111b95ea7419657c37de03105888836f6d52c"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-encoded-contact-sheet.jpg",
+      "gitBlobSha": "cdf79c035696cf30bdc5fa822884be3072c2ad68",
+      "bytes": 455640,
+      "sha256": "1a46cba8b86d5c9c0ddec945faf8a8d826f1f82e08089e3725fdd605e9e9b3f6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-frame-receipt.json",
+      "gitBlobSha": "4d6b69617b06ea9bb3ae058ef041504781cd062c",
+      "bytes": 116506,
+      "sha256": "33811282776af099de1120f73a8dee83b4b130653ed0731b4151d0aa8d1a421a"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-media.json",
+      "gitBlobSha": "811655ccf4541e964a730494fb8bbcf5fea42c11",
+      "bytes": 566,
+      "sha256": "241cb7221fbe37ae95c6439c28f9e1898784d8120773e0a1c29937b7c4ea78a9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-poster.png",
+      "gitBlobSha": "bd969ad07e56b8e81da3a5b1a38fe1641d87d63d",
+      "bytes": 798237,
+      "sha256": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-00.png",
+      "gitBlobSha": "0111cb940822a5ab686fb0492752d6c924645c77",
+      "bytes": 1025929,
+      "sha256": "b12fceea88d373c9505c5404db7c7acba0f495a523f9ab732a2679fb3ef235c9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-01.png",
+      "gitBlobSha": "ac116e2b2c4b83971d24ca3b4e458ef7a03f5ebd",
+      "bytes": 950549,
+      "sha256": "4ce36dc9a7efc0975e92817527dd97c831b8b4b8966e1990f313c6e340154494"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-02.png",
+      "gitBlobSha": "b88f77ddd80eef5a9797e837880f9dbb7af8da78",
+      "bytes": 352318,
+      "sha256": "5f1b08a5a4789bb270d3b1026d894eb04d28064c6175fc343d75aba1d1cd7f0f"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-03.png",
+      "gitBlobSha": "e0c824a630476b08571ceca356e6677ca654f0ff",
+      "bytes": 991162,
+      "sha256": "f6e3afb87219cef0db51930beb82673741b675156c6daf91daa74d6d0eec2550"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-04.png",
+      "gitBlobSha": "dd90a3ceb6a6ed49ed4c713e6fc493a7eb5fc638",
+      "bytes": 1144430,
+      "sha256": "63a560cdc8cde557ac02791a38998e3279053d123aa7a75ce5b14eccea68e2ee"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-05.png",
+      "gitBlobSha": "e1c4c4fa9207187c1c9f458337697c48c8ed8ed6",
+      "bytes": 1102112,
+      "sha256": "614ef5018319f7dde2c8f72f00ef90f51dd3bfdd56f9f22b8515c3f5db5e9708"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-06.png",
+      "gitBlobSha": "5c9709202b7f3f46bc109703edfac5b0fe18b449",
+      "bytes": 1141207,
+      "sha256": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-07.png",
+      "gitBlobSha": "c0f4c3e4b90f0fadf712609d4ef6af2b629d7ac1",
+      "bytes": 465203,
+      "sha256": "3c1c35e9d534a056fe23b451516173058eb0aae3a96aceb99e8c4be9416dbca2"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-08.png",
+      "gitBlobSha": "ed9b122196decd1896c6cb4c51c7922a71265d1c",
+      "bytes": 528783,
+      "sha256": "9428aaa52b6ceb67aa7c0aea33605f8f99f7a5bd4e840586956f130416573c86"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-09.png",
+      "gitBlobSha": "296f8a07fd4a3243033d876b687650f3c677db27",
+      "bytes": 577530,
+      "sha256": "e69ce8908c04222219c76b068db702d286c5552c9d314e1e0ac86f6cc6f9cb37"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-10.png",
+      "gitBlobSha": "c900ed3ddf6d050cd27e50b26055b1a31eca8804",
+      "bytes": 1041072,
+      "sha256": "fe31b4fb6226d0532986914a40e071cb731a17df3d062161014f3748c5967088"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-sample-11.png",
+      "gitBlobSha": "bd969ad07e56b8e81da3a5b1a38fe1641d87d63d",
+      "bytes": 798237,
+      "sha256": "4059291df2c417222441e2a95adf6557e15d09bf4eff1fcb7e376e2c1b7cd097"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-samples.json",
+      "gitBlobSha": "b1ede9cfd87af228768acc91916cc3d5b1094eda",
+      "bytes": 14968,
+      "sha256": "0b44061620c5849e639e6f3904c5e08d7026d094b97645644af146559db771f6"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-track-13-60.png",
+      "gitBlobSha": "52c56e73c86de8cb166a47be6c30e22a805f488b",
+      "bytes": 1135052,
+      "sha256": "07892eb9ae02f14ebc38f54083155007ff96e9819a41cd00da211520cb20a4d2"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-track-13-70.png",
+      "gitBlobSha": "020471e63f6dce0c5c3c3f42132c1b64f902e8cd",
+      "bytes": 1135853,
+      "sha256": "b72c2ae45b979cebef5f2434631e7e3df55c8b01bae2762009f1f0e2f90e0bfc"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-track-14-40.png",
+      "gitBlobSha": "5c9709202b7f3f46bc109703edfac5b0fe18b449",
+      "bytes": 1141207,
+      "sha256": "e82bc6e83d7f5ac895a42a769e8f70de3a3b5fda135dc0c85668643cd6a5af54"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-track-15-35.png",
+      "gitBlobSha": "91d2b25ee9b5ae3bca1da07464f47ab32fd9fc94",
+      "bytes": 1131106,
+      "sha256": "9d30d0495ace495db4a724ab851e6e83f9f160f45c6414de2b223c3906214942"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/portrait-track-geometry.json",
+      "gitBlobSha": "b5203ba33c06cb27158d7ee2d9327372a6c8c66f",
+      "bytes": 2881,
+      "sha256": "01011390e8e3d4c9ec47a70bfc0a33c05e250945f667aa40e3070df768701544"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/preview-route.json",
+      "gitBlobSha": "c5054b7f34f286bdf372490b05bab385c612a3d8",
+      "bytes": 1087,
+      "sha256": "efcd270fb918220a564b2e2b89087fb4260e3300221ad0b273fef3db9e089de5"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/product-capture-before-import-fix.json",
+      "gitBlobSha": "223f1a0af1fda0706ed8ee490e2dcda779d89125",
+      "bytes": 8787,
+      "sha256": "5284d5ce8cae80e5dc16792e94453acbc86c8616597546e6edd487d83e47a84a"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/product-capture-rebuild.json",
+      "gitBlobSha": "328c5c1ecb99396936ef2df613a8b6d725c3565a",
+      "bytes": 2897,
+      "sha256": "cc8d233f4d516aff08b04d0e55b5f64b2244111e5b34232b6e5af8a5a29d8a3d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/product-capture.json",
+      "gitBlobSha": "922c7822357748dc4f5dffa65b0abde34edc6e3a",
+      "bytes": 12160,
+      "sha256": "d2d0349fcd54a5e3eafd54ed644fdb185e096c8f78033120d01ec42d810eea85"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/recovery-archive.json",
+      "gitBlobSha": "a76d4601973a3e1bf7dccea46fc583408eb485b4",
+      "bytes": 42466,
+      "sha256": "17863666d579fd87138fc2cfff829efbacd2b137f31322ffcd499bff4767154b"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-browser-receipt.json",
+      "gitBlobSha": "cb8d398333e79d7d0d39e30c10cf5f22de73b2d2",
+      "bytes": 28570,
+      "sha256": "bccf43d70d651295300763a6060a8960be9fd9f3e1484ff7dc6111a82a41d121"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-390x844-landscape.jpg",
+      "gitBlobSha": "9dfd35101a72907250e65a4859889fd99074efa0",
+      "bytes": 41405,
+      "sha256": "ffd4d6cbe96dda4038f4016ce6088e9e20bf5647932c7ac5f487f54d1838a3c9"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-390x844-portrait.jpg",
+      "gitBlobSha": "1ecd34de3a7fe9c879fed0345a6d99b99d0a227f",
+      "bytes": 39001,
+      "sha256": "4f9e329901fe3a07c377c8d26ee94c17fb4b5a304e4e22f24b96d4692ebe3ab1"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-landscape-midplay.jpg",
+      "gitBlobSha": "74eac56bece784fd39a92a9adc5ba5fe3e0419fa",
+      "bytes": 34866,
+      "sha256": "fc7353998a19799ded2f00401b405c535053dfc1749f2860d1d7aedd1362b8f7"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-landscape-playing.jpg",
+      "gitBlobSha": "3076a4375ee3726fa440508eb0f80413a2ecace0",
+      "bytes": 36129,
+      "sha256": "c6469ec33d9752baee1ff586b4f867854401a8681f924a192ffa2747f5a38733"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-landscape.jpg",
+      "gitBlobSha": "34b9a2a15462a728009b1b62687d311a1cc3cb55",
+      "bytes": 37086,
+      "sha256": "58e2d6cc1f0aa52b41be213dda22f76faab8afd9412fda63f1c8239496535f63"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-portrait-ended.jpg",
+      "gitBlobSha": "15ab1dd53b6cdac4a9afc8623488c8c907fa5f33",
+      "bytes": 31387,
+      "sha256": "8bb5cac3432e2add604066453976f5ed2d51c10dc539c8a42fff0ebc125a0f18"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-portrait-playing.jpg",
+      "gitBlobSha": "190f2c829ee896a2546e87ef6961c2c6f2343310",
+      "bytes": 31205,
+      "sha256": "aad46aeff8e229bd1fc0f56876940737ca16603b2b9ca2fb8e48534d78183cf7"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-portrait-workflow.jpg",
+      "gitBlobSha": "754e25b3766f6115a22dfa45e641e6936ad35964",
+      "bytes": 35309,
+      "sha256": "2bbfacb11397b420be2d26466cc23ed13b4e78a12c6f2f631bad5fd4264f614d"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-portrait.jpg",
+      "gitBlobSha": "76ae20f745e7261d8df18bdf9b70273c087db691",
+      "bytes": 30575,
+      "sha256": "9257d69ba86faa5c327e0fe3fb26453a60c4af5bb487444edb3e9d15686b4dc4"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-sizing-clip.jpg",
+      "gitBlobSha": "7720c37c57c3b97033e36ac2a72afebd8a28e1c7",
+      "bytes": 40988,
+      "sha256": "964a430ef1db92ff4d8f78ca55b9e2ec632a73017523b7159d925f6a98531132"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-sizing-direct.jpg",
+      "gitBlobSha": "8d2da402f628f1506833b6768177593f25fae54b",
+      "bytes": 36655,
+      "sha256": "55a7f62cfcb7d2454a1047b4a8173a2414fef753b059adf13e691c14e8c8f868"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-mobile-sizing-retry.jpg",
+      "gitBlobSha": "8d2da402f628f1506833b6768177593f25fae54b",
+      "bytes": 36655,
+      "sha256": "55a7f62cfcb7d2454a1047b4a8173a2414fef753b059adf13e691c14e8c8f868"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-report.md",
+      "gitBlobSha": "17a47547981ce387570ac24c2e1e82694dea35d4",
+      "bytes": 4538,
+      "sha256": "479372b5cac79273a13e8d3a76678a5315bb6ec39b8b6b254cce2711e1735322"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-source-checks.json",
+      "gitBlobSha": "d016197c831a61c8d976020e2c955cfb64feffca",
+      "bytes": 1425,
+      "sha256": "06e11893ae9c1b8169863d1b7e806628010782d62f09eb18544bdbd38ac31b11"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/qa/smoke-source-checks.mjs",
+      "gitBlobSha": "d00137d82372d7680aaabc0a97501a6a40545724",
+      "bytes": 3681,
+      "sha256": "c953719f5ddcfea5d0b1e41b3d91d308a7b74168d818f959a770830e71f36f82"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/render.mjs",
+      "gitBlobSha": "94a626271d61c18763c814395f230e28466cd466",
+      "bytes": 24129,
+      "sha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/shader-materials.js",
+      "gitBlobSha": "d234bf23a3e8cc44145d7e97b33f2635a6830c0e",
+      "bytes": 2540548,
+      "sha256": "e7725b0c66554fe2365d1b3152f8c2cbc5db57e1b3cc306e81ea6d3ddf73e546"
+    }
+  ]
+}

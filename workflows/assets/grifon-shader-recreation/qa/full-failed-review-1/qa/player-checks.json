@@ -1,0 +1,48 @@
+{
+  "status": "BUILD_PASS_FULL_VITEST_TIMEOUT_NARROW_ORIGINAL_PASS",
+  "sourceState": "Technically valid candidate; independent full visual review failed. No visual acceptance is claimed.",
+  "hashes": {
+    "builder": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157",
+    "template": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d",
+    "artifact": "a8e04c2f4f6ff218414ab7c90dffd9a7248587e652165a46e6af6a77ccb75ade",
+    "mp4": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab"
+  },
+  "liveFlagsUnset": [
+    "RUN_REGRESSION",
+    "RUN_BURNIN",
+    "RUN_IMAGE_GATE_SMOKE"
+  ],
+  "build": {
+    "command": "npm.cmd run build",
+    "exitCode": 0,
+    "output": "\n> creative-director-ai-assistant@1.0.0 prebuild\n> npm run check:ps1-ascii\n\n\n> creative-director-ai-assistant@1.0.0 check:ps1-ascii\n> node tools/check-ps1-ascii.mjs\n\nOK: every scripts/*.ps1 is pure ASCII.\n\n> creative-director-ai-assistant@1.0.0 build\n> tsc && vite build\n\nvite v8.0.16 building client environment for production...\n\u001b[2K\rtransforming...Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:\n  npx update-browserslist-db@latest\n  Why you should do it regularly: https://github.com/browserslist/update-db#readme\n✓ 2580 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                 14.62 kB │ gzip:   4.29 kB\ndist/assets/index-BX484UXo.css                 132.02 kB │ gzip:  21.85 kB\ndist/assets/captionRegionDetect-CGt4KQrd.js      2.03 kB │ gzip:   1.12 kB\ndist/assets/purify.es-Bs0Imjnk.js               27.11 kB │ gzip:  10.53 kB\ndist/assets/vision_bundle--cbkgjk9.js          134.91 kB │ gzip:  39.98 kB\ndist/assets/index.es-RXJBSIiA.js               151.38 kB │ gzip:  48.88 kB\ndist/assets/html2canvas-CDhlPu6X.js            199.56 kB │ gzip:  46.78 kB\ndist/assets/index-PwJmHO7B.js                2,052.67 kB │ gzip: 589.96 kB\n\n\u001b[33m[PLUGIN_TIMINGS] \u001b[0mYour build spent significant time in plugins. Here is a breakdown:\n  - vite:css (60%)\n  - vite:build-html (16%)\n  - rolldown:vite-resolve (13%)\nSee https://rolldown.rs/options/checks#plugintimings for more details.\n\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n✓ built in 5.11s\n"
+  },
+  "fullVitest": {
+    "command": "npx.cmd vitest run",
+    "exitCode": 1,
+    "filesPassed": 115,
+    "filesFailed": 1,
+    "filesSkipped": 9,
+    "testsPassed": 1431,
+    "testsFailed": 1,
+    "testsSkipped": 32,
+    "durationSeconds": 44.89,
+    "failure": "tests/unit/checkAnchors.test.ts:241 LOST-anchor case exceeded its unchanged 5000ms timeout at 6607ms.",
+    "output": "\n RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command\n\n ❯ tests/unit/checkAnchors.test.ts (9 tests | 1 failed) 32279ms\n     × reports a LOST anchor as a builder failure, not as a moved twin 6607ms\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > reports a LOST anchor as a builder failure, not as a moved twin\nError: Test timed out in 5000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n ❯ tests/unit/checkAnchors.test.ts:241:3\n    239|   });\n    240|\n    241|   it('reports a LOST anchor as a builder failure, not as a moved twin'…\n       |   ^\n    242|     const sb = sandbox();\n    243|     write(sb, ORCH, read(sb, ORCH).replace('if (deps.imageGateCheck) {…\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n\n Test Files  1 failed | 115 passed | 9 skipped (125)\n      Tests  1 failed | 1431 passed | 32 skipped (1464)\n   Start at  11:59:46\n   Duration  44.89s (transform 15.56s, setup 0ms, import 35.79s, tests 144.88s, environment 28ms)\n\n"
+  },
+  "diagnosticVitest": {
+    "command": "npx.cmd vitest run tests/unit/checkAnchors.test.ts -t 'reports a LOST anchor as a builder failure, not as a moved twin'",
+    "exitCode": 0,
+    "testsPassed": 1,
+    "otherFileTestsExcludedBySelection": 8,
+    "durationSeconds": 2.89,
+    "output": "\n RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command\n\n\n Test Files  1 passed (1)\n      Tests  1 passed | 8 skipped (9)\n   Start at  12:04:59\n   Duration  2.89s (transform 57ms, setup 0ms, import 84ms, tests 2.04s, environment 0ms)\n\n"
+  },
+  "diagnosis": {
+    "confirmed": "The original LOST-anchor test passes in isolation with the unchanged timeout and assertions. Its sandbox reads four existing artifact files and does not read the new movie/player.",
+    "observedHostLoad": "Two later samples reported 68 percent CPU across 12 logical processors.",
+    "unproven": "Contention is a hypothesis. The exact cause of the full-suite timeout was not established.",
+    "changes": "No test, timeout, renderer, model, prompt or application code changed.",
+    "limit": "This agent does not claim its full Vitest run passed. The producer reported a separate complete green run; that is separate evidence."
+  }
+}

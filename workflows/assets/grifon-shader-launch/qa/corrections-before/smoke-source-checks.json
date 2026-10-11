@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "fixture": "Independent offline source byte smoke",
+  "html": {
+    "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\artifacts\\grifon-shader-launch.html",
+    "bytes": 24080586,
+    "sha256": "32f8e1c1990a2076ab70f43f7d2aaa29c7101b7d7b4f07d1e3774239025c4f62"
+  },
+  "checks": [
+    "Full document has explicit UTF-8 charset",
+    "CSP rejects external connections",
+    "CSP defaults to no remote resources",
+    "Media sources restricted to embedded data and downloads",
+    "No remote asset URL in resource elements",
+    "Mobile-fragile clipped type and fixed attachment absent",
+    "Source declares at least 46 px control targets",
+    "Continuous ground has its own fixed layer",
+    "Display type is solid near-white and bold",
+    "Fixture disclosure remains present",
+    "Player honestly preserves unperformed hearing and device checks"
+  ],
+  "formats": {
+    "landscape": {
+      "bytes": 7925665,
+      "sha256": "176f6b495914cc3ef101dbffbfe58acb1b03382895826e5f331e43a62bd7f6a1",
+      "embeddedExact": true,
+      "posterExact": true,
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    "portrait": {
+      "bytes": 8567773,
+      "sha256": "0d3de0fe547aed299776c34ac8473dfa888c7e2036c3646c40f2c1574b9933a4",
+      "embeddedExact": true,
+      "posterExact": true,
+      "dimensions": [
+        1080,
+        1920
+      ]
+    }
+  }
+}

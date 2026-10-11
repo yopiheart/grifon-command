@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_CLOCK_REVIEW_PASS",
+  "reviewer": "Independent Codex review agent",
+  "scope": "Read-only source and regression inspection plus independent pure Node VM controls; no browser, capture, FFmpeg, cache mutation or source edit",
+  "resolves": {
+    "findingId": "LP1",
+    "findingReport": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-review.json",
+    "findingReportSha256": "bc34ff67d266a4ccf7a9e906d13c5cb33eeb36be178d8d0be7946cb261c57345",
+    "reviewedOriginalPreviewSha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133",
+    "sourceResolution": "PASS",
+    "unresolvedSourceFindingsInThisScope": []
+  },
+  "reviewedFreeze": {
+    "preview": {
+      "path": "tools/motion-launch/preview-page.mjs",
+      "sha256": "d62d781c146269c709940eb1e6e3c61d9d14c716023e5def2ade710ee9b27d95",
+      "line": 17,
+      "clockExpression": "const target=enabled?Math.floor(audio.currentTime*fps):first+Math.floor((now-start)/1000*fps);"
+    },
+    "regression": {
+      "path": "tests/unit/motionLaunchProject.test.ts",
+      "sha256": "5d17b40a6b8fb071ecc047bcb41bf887ed3d06cbd368e73f18bc28e1254b63dd",
+      "firstLine": 140,
+      "lastLine": 170
+    }
+  },
+  "changeIsolationProof": {
+    "method": "Replace the single new clock expression with the old expression in memory, then SHA256 the restored whole source file.",
+    "replacementOccurrenceCount": 1,
+    "restoredWholeSourceSha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133",
+    "matchesReviewedOriginalSource": true,
+    "conclusion": "The clock expression is the only production source difference from the previously reviewed preview. Draw serialization, generation guards, cancellation handling, active error handling, control flow and silent clock remain unchanged."
+  },
+  "independentVmVerification": {
+    "status": "PASS",
+    "exitCode": 0,
+    "method": "Run actual generated preview scripts with a controlled DOM, deferred audio.play(), manually delivered RAF callbacks, immediate native frame seeks, controlled media time and setImmediate event-boundary drains. The baseline restores only the former clock in memory. No files or caches are changed.",
+    "initialCueFrame": 66,
+    "initialMediaTimeSeconds": 2.2022,
+    "performanceStartMs": 1000,
+    "baseline": {
+      "at1300MsWhileAudioPlayPendingFrame": 74,
+      "at1400MsAfterMediaAdvances100MsFrame": 77,
+      "at2400MsWithMediaTimeHeldFrame": 107,
+      "at2500MsAfterMediaTimeSetToFrame80Frame": 110,
+      "pausedFrame": 110
+    },
+    "fixedActualSource": {
+      "at1300MsWhileAudioPlayPendingFrame": 66,
+      "at1400MsAfterMediaAdvances100MsFrame": 68,
+      "at2400MsWithMediaTimeHeldFrame": 68,
+      "at2500MsAfterMediaTimeSetToFrame80Frame": 80,
+      "pausedFrame": 80,
+      "oldRafAfterPauseProducesNoNewCallbacks": true,
+      "pauseControlsEnabled": true,
+      "audibleEnding": {
+        "nativeFrame": 931,
+        "playLabel": "Play",
+        "playDisabled": false,
+        "pendingRafCallbacks": 0
+      }
+    },
+    "silentModeWholeControlResultEqualsBaseline": true,
+    "silentEnding": {
+      "nativeFrame": 931,
+      "playLabel": "Play",
+      "playDisabled": false,
+      "pendingRafCallbacks": 0
+    }
+  },
+  "regressionInspection": {
+    "status": "PASS",
+    "meaningfulAssertions": [
+      "A 300ms pending audio startup must hold selected cue66; the restored original expression advances to74 and fails this invariant.",
+      "Media-clock advancement follows frame70, buffering holds frame70 despite RAF time advancement, and resumed media follows frame74.",
+      "Pause rejects the previous RAF callback, silent playback still advances from elapsed time, and final-frame replay resets to zero before native ending."
+    ],
+    "builderReportedSuiteEvidence": {
+      "originalClock": "12 PASS, 1 FAIL: native frame74 instead of66",
+      "fixedClock": "13 PASS",
+      "independentReviewerReranWholeSuite": false
+    }
+  },
+  "remainingEvidenceGates": {
+    "actualCurrentSourcePreviewAlignment": "PENDING ROOT: sample native frame and audio.currentTime during audible playback and pause, distinguish native frame quantization and asynchronous rendering lag from independent-clock lead.",
+    "currentProducerMediaReceipts": "PENDING ROOT: new frozen producer smoke is running. Preserve old receipts as evidence for their original tuple.",
+    "currentManifestStandaloneAndFreshCheckout": "PENDING ROOT: regenerate current delivery after new media proof, then bind current staged/work/fresh bytes. The original fresh31 proof remains PASS for its historical tuple.",
+    "full932ShaderCapture": "NOT RUN"
+  },
+  "historicalEvidence": {
+    "priorFinal35MediaReportSha256": "55e9719e9fb9e34d4eed2962685f47422f29368d0cf257182d1b398567ad7cc4",
+    "priorStandaloneEncodedPreviewSha256": "1b64604e0432c5ec7ba5004e204f23f829074da975efc92a822ada2f34444af4",
+    "priorFresh31ReceiptSha256": "955c20240da87a8f81ede6bb933c15502208328afc7f4208d957f7b50a6a5541",
+    "qualification": "Historical PASS evidence remains valid for its original sources and bytes. It is not relabeled as evidence for changed current preview/test/builder sources.",
+    "priorReportsModified": false
+  }
+}

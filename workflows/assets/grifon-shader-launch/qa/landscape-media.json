@@ -1,0 +1,25 @@
+{
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+  "output": {
+    "file": "landscape.mp4",
+    "bytes": 7952020,
+    "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc",
+    "frames": 936,
+    "duration": 31.2,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": "30/1",
+    "audio": {
+      "codec": "aac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "integratedLufs": -16,
+      "truePeakDbtp": -1.9
+    },
+    "strictDecode": "PASS"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

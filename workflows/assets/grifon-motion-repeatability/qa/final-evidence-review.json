@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "FINAL_DOCS_AND_EVIDENCE_REVIEW_PASS",
+  "reviewer": "Independent Codex review agent",
+  "scope": "Read-only final claims, existing results, packaging and byte bindings; no test reruns, browser, capture, cache or source changes",
+  "findings": [],
+  "reviewedRootRecord": {
+    "path": "workflows/assets/grifon-motion-repeatability/qa/delivery-root-final.json",
+    "sha256": "74845726ce94d10bdc2a4394717f1d7342ddb844fa31e9e18258da21fb0760b4",
+    "workingAndActualStagedSourceEvidenceBindingsVerified": 27,
+    "privateCheckLogBindingsVerified": 7
+  },
+  "browserEvidence": {
+    "sha256": "35c4defade19a0a4890897cb3b4e184aadd761dd519da00edd02260e28db12fa",
+    "checksPassed": 28,
+    "engine": "Fresh isolated installed Playwright headless shell; not Codex IAB",
+    "nativeBlobDownloadsVerifiedAgainstManifestBytesAndFilenames": 2,
+    "rawDiagnosticClockSnapshots": 24,
+    "selectedLiveClockSamples": 12,
+    "selection": "Six explicitly selected startup/delayed-start/progress/pause/resume/cue-playback labels per treatment; other snapshots include paused cue navigation, silence, ending and cancellation controls.",
+    "independentlyDerivedMaximumVisualLeadMs": 0,
+    "independentlyDerivedMaximumVisualLagMs": 43.92833333333357,
+    "statedSchedulingBoundMs": 100,
+    "qualification": "Recorded same-evaluation native frame and actual media time substantiate the clock statement. This is technical synchronization evidence, not auditory-quality acceptance."
+  },
+  "repositoryEvidence": {
+    "recordedBuildAndFiveGuardsExitCodes": 0,
+    "recordedDefaultTestExitCode": 0,
+    "defaultLogCountersIndependentlyMatched": {
+      "passedFiles": 118,
+      "skippedFiles": 9,
+      "passedTests": 1463,
+      "existingSkippedTests": 32,
+      "durationSeconds": 43.95
+    },
+    "codexControlsRecordedTestsPassed": 26,
+    "exitCodeAuthority": "Root observed actual process exits; this reviewer verified the retained log hashes and reported counters, without executing those checks.",
+    "postPackagingControlRerun": "Root owns the additional rerun triggered by final attributes metadata; its result was pending at this review checkpoint."
+  },
+  "packagingEvidence": {
+    "finalStagingReceiptSha256": "c2dbb20bdfb0a67120034a2655be8acb10b87f433b6751b7d2c041f818f9a07f",
+    "actualFreshMetadataFilesIndependentlyRehashed": 2,
+    "workflowGuideSha256": "ed41af93575b4090743103965a2c00aa0460c06410ad87440ee525212a875d77",
+    "guideChangeFromPreservedPreNormalizationCopy": "CRLF to LF only; complete text comparison matched",
+    "immutableFailedHarnessReceiptBytesPreserved": true,
+    "defaultBlankAtEolBlankAtEofAndSpaceBeforeTabChecksRetained": true,
+    "rootEvidencePreservationSha256": "4cf725030dc4ec4b3ec55993af82dcbf6e973f517bb202463fae704860cbe681",
+    "initialRootGuideAndAttributesCopiesMatchPreservedHashes": true
+  },
+  "documentationReview": {
+    "workflowFinalParagraph": "Accurate: media35, browser28, selected12 clock samples, both native Blob downloads, repository results, private local scope and auditory-quality limits",
+    "nowLineCount": 90,
+    "nowCurrentBenchmarksAndGateStatements": "Accurate at review checkpoint; draft PR remains root-owned publication work",
+    "fullNew932ShaderCapture": "NOT RUN",
+    "sourceArtifactMediaRuntimeTuple": "Unchanged from independently reviewed final freeze",
+    "historicalReports": "Preserved and qualified; earlier pending checkpoints are completed by the later root record where supported"
+  },
+  "reviewerMutations": "New review reports only; no existing reports or sources changed"
+}

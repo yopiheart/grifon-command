@@ -1,0 +1,1111 @@
+{
+  "status": "PASS",
+  "driver": "Independent smoke agent documented CUA browser 2",
+  "url": "http://127.0.0.1:55282/review",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "screenshots": [
+    {
+      "file": "qa/smoke-mobile-landscape.jpg",
+      "bytes": 37086,
+      "sha256": "58e2d6cc1f0aa52b41be213dda22f76faab8afd9412fda63f1c8239496535f63",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-landscape-playing.jpg",
+      "bytes": 36129,
+      "sha256": "c6469ec33d9752baee1ff586b4f867854401a8681f924a192ffa2747f5a38733",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-landscape-midplay.jpg",
+      "bytes": 34866,
+      "sha256": "fc7353998a19799ded2f00401b405c535053dfc1749f2860d1d7aedd1362b8f7",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-portrait.jpg",
+      "bytes": 30575,
+      "sha256": "9257d69ba86faa5c327e0fe3fb26453a60c4af5bb487444edb3e9d15686b4dc4",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-portrait-playing.jpg",
+      "bytes": 31205,
+      "sha256": "aad46aeff8e229bd1fc0f56876940737ca16603b2b9ca2fb8e48534d78183cf7",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-portrait-workflow.jpg",
+      "bytes": 35309,
+      "sha256": "2bbfacb11397b420be2d26466cc23ed13b4e78a12c6f2f631bad5fd4264f614d",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-portrait-ended.jpg",
+      "bytes": 31387,
+      "sha256": "8bb5cac3432e2add604066453976f5ed2d51c10dc539c8a42fff0ebc125a0f18",
+      "width": 375,
+      "height": 812,
+      "capture": "documented CUA screenshot(fullPage:false), backend scaled additional capture"
+    },
+    {
+      "file": "qa/smoke-mobile-390x844-landscape.jpg",
+      "bytes": 41405,
+      "sha256": "ffd4d6cbe96dda4038f4016ce6088e9e20bf5647932c7ac5f487f54d1838a3c9",
+      "width": 390,
+      "height": 844,
+      "capture": "documented CUA screenshot(fullPage:false, explicit390x844 clip), no resize"
+    },
+    {
+      "file": "qa/smoke-mobile-390x844-portrait.jpg",
+      "bytes": 39001,
+      "sha256": "4f9e329901fe3a07c377c8d26ee94c17fb4b5a304e4e22f24b96d4692ebe3ab1",
+      "width": 390,
+      "height": 844,
+      "capture": "documented CUA screenshot(fullPage:false, explicit390x844 clip), no resize"
+    }
+  ],
+  "observations": [
+    {
+      "label": "landscape continuous playback at research",
+      "currentTime": 10.418476,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Playing with music and sound.",
+      "time": "10.40 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "landscape continuous ending hold",
+      "currentTime": 29.834308,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Playing with music and sound.",
+      "time": "29.82 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "landscape complete 31.2 second playback",
+      "currentTime": 31.2,
+      "duration": 31.2,
+      "ended": true,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Finished. Replay or download the film.",
+      "time": "31.20 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "portrait selected after landscape ending",
+      "currentTime": 31.16,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Ready. Tap Play to review portrait.",
+      "time": "31.16 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "portrait Restart begins continuous full playback",
+      "currentTime": 0.896245,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Playing with music and sound.",
+      "time": "0.89 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "portrait continuous first intent",
+      "currentTime": 3.522142,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Playing with music and sound.",
+      "time": "3.51 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "portrait continuous actual interface interval",
+      "currentTime": 19.650126,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Playing with music and sound.",
+      "time": "19.63 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "portrait complete 31.2 second playback",
+      "currentTime": 31.2,
+      "duration": 31.2,
+      "ended": true,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Finished. Replay or download the film.",
+      "time": "31.20 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "audio control mutes encoded portrait",
+      "currentTime": 31.2,
+      "duration": 31.2,
+      "ended": true,
+      "muted": true,
+      "paused": true,
+      "play": "Play muted",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Sound muted.",
+      "time": "31.20 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "audio control unmutes encoded portrait",
+      "currentTime": 31.2,
+      "duration": 31.2,
+      "ended": true,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Sound enabled.",
+      "time": "31.20 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "Play restarts from ended portrait",
+      "currentTime": 1.228064,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Playing with music and sound.",
+      "time": "1.23 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "Pause stops portrait playback",
+      "currentTime": 1.297748,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Paused.",
+      "time": "1.29 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "scrub forward to 12.6 seconds",
+      "currentTime": 12.6,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Paused.",
+      "time": "12.60 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "invalid 3.35-second range entry rejected",
+      "result": "Input is on a 1/30-second step; 3.35 is not a valid frame-aligned value. No page mutation."
+    },
+    {
+      "label": "scrub backward to 3.4 seconds",
+      "currentTime": 3.4,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Paused.",
+      "time": "3.40 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 01 / opening",
+      "currentTime": 0,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "0.00 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 02 / product",
+      "currentTime": 2.4,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "2.40 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 03 / story",
+      "currentTime": 4.2,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "4.20 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 04 / business",
+      "currentTime": 6,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "6.00 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 05 / research",
+      "currentTime": 7.8,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "7.80 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 06 / script",
+      "currentTime": 10.4,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "10.40 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 07 / storyboard",
+      "currentTime": 13,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "13.00 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 08 / research screen",
+      "currentTime": 15.6,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "15.60 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 09 / script screen",
+      "currentTime": 17.9,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "17.90 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 10 / storyboard screen",
+      "currentTime": 20.2,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "20.20 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 11 / direction",
+      "currentTime": 22.5,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "22.50 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "chapter 12 / finish",
+      "currentTime": 26.4,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Scene ready. Tap Play.",
+      "time": "26.40 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "paused format switch preserves chapter time",
+      "currentTime": 26.4,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Ready. Tap Play to review landscape.",
+      "time": "26.40 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "landscape playing before live format switch",
+      "currentTime": 13.860632,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Playing with music and sound.",
+      "time": "13.85 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "playing format switch preserves progress and resumes",
+      "currentTime": 14.394418,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Playing with music and sound.",
+      "time": "14.38 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "pause after resumed format switch",
+      "currentTime": 14.46491,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Paused.",
+      "time": "14.45 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    },
+    {
+      "label": "landscape Restart returns to beginning",
+      "currentTime": 0.86169,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": false,
+      "play": "Pause",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Playing with music and sound.",
+      "time": "0.85 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "finished smoke leaves player paused",
+      "currentTime": 0.926577,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Landscape / 16:9",
+      "status": "Paused.",
+      "time": "0.91 / 31.20s",
+      "videoHeight": 1080,
+      "videoWidth": 1920
+    },
+    {
+      "label": "portrait exact390 screenshot manually prepared Script evidence",
+      "currentTime": 19.1,
+      "duration": 31.2,
+      "ended": false,
+      "muted": false,
+      "paused": true,
+      "play": "Play with sound",
+      "readyState": 4,
+      "selected": "Portrait / 9:16",
+      "status": "Ready. Tap Play to review portrait.",
+      "time": "19.10 / 31.20s",
+      "videoHeight": 1920,
+      "videoWidth": 1080
+    }
+  ],
+  "directListening": "PENDING: no hearing tool/output available",
+  "realPhone": "PENDING: Chromium viewport emulation only",
+  "initial": {
+    "controls": [
+      {
+        "height": 46,
+        "id": "",
+        "label": "Landscape / 16:9",
+        "width": 168.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "Portrait / 9:16",
+        "width": 168.5
+      },
+      {
+        "height": 46,
+        "id": "play",
+        "label": "Play with sound",
+        "width": 136.578125
+      },
+      {
+        "height": 46,
+        "id": "restart",
+        "label": "Restart",
+        "width": 78.25
+      },
+      {
+        "height": 46,
+        "id": "audio",
+        "label": "Sound on",
+        "width": 94.546875
+      },
+      {
+        "height": 46,
+        "id": "download",
+        "label": "Download MP4",
+        "width": 129.5625
+      },
+      {
+        "height": 46,
+        "id": "scrub",
+        "label": "Video timeline",
+        "width": 252.375
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "01 / opening",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "02 / product",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "03 / story",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "04 / business",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "05 / research",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "06 / script",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "07 / storyboard",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "08 / research screen",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "09 / script screen",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "10 / storyboard screen",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "11 / direction",
+        "width": 169.5
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "12 / finish",
+        "width": 169.5
+      }
+    ],
+    "document": {
+      "clientWidth": 375,
+      "scrollWidth": 375
+    },
+    "resources": [],
+    "video": {
+      "duration": 31.2,
+      "height": 1080,
+      "readyState": 4,
+      "width": 1920
+    },
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  "chapterChecks": [
+    {
+      "name": "01 / opening",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "name": "02 / product",
+      "expected": 2.4,
+      "actual": 2.4,
+      "passed": true
+    },
+    {
+      "name": "03 / story",
+      "expected": 4.2,
+      "actual": 4.2,
+      "passed": true
+    },
+    {
+      "name": "04 / business",
+      "expected": 6,
+      "actual": 6,
+      "passed": true
+    },
+    {
+      "name": "05 / research",
+      "expected": 7.8,
+      "actual": 7.8,
+      "passed": true
+    },
+    {
+      "name": "06 / script",
+      "expected": 10.4,
+      "actual": 10.4,
+      "passed": true
+    },
+    {
+      "name": "07 / storyboard",
+      "expected": 13,
+      "actual": 13,
+      "passed": true
+    },
+    {
+      "name": "08 / research screen",
+      "expected": 15.6,
+      "actual": 15.6,
+      "passed": true
+    },
+    {
+      "name": "09 / script screen",
+      "expected": 17.9,
+      "actual": 17.9,
+      "passed": true
+    },
+    {
+      "name": "10 / storyboard screen",
+      "expected": 20.2,
+      "actual": 20.2,
+      "passed": true
+    },
+    {
+      "name": "11 / direction",
+      "expected": 22.5,
+      "actual": 22.5,
+      "passed": true
+    },
+    {
+      "name": "12 / finish",
+      "expected": 26.4,
+      "actual": 26.4,
+      "passed": true
+    }
+  ],
+  "downloads": {
+    "portrait": {
+      "path": "C:\\Users\\ADMIN\\Downloads\\grifon-shader-launch-portrait.mp4",
+      "bytes": 8567773,
+      "sha256": "0d3de0fe547aed299776c34ac8473dfa888c7e2036c3646c40f2c1574b9933a4",
+      "passed": true
+    },
+    "landscape": {
+      "path": "C:\\Users\\ADMIN\\Downloads\\grifon-shader-launch-landscape.mp4",
+      "bytes": 7925665,
+      "sha256": "176f6b495914cc3ef101dbffbfe58acb1b03382895826e5f331e43a62bd7f6a1",
+      "passed": true
+    }
+  },
+  "logs": [],
+  "sizingLimitation": "Unclipped CUA screenshot/getScreenshot returned375x812 despite DOM390x844. Required gate resolved by documented fullPage:false and explicit clip {x:0,y:0,width:390,height:844}; no pixel resizing or alternative driver.",
+  "layouts": {
+    "landscape": {
+      "clientHeight": 844,
+      "clientWidth": 390,
+      "controls": [
+        {
+          "height": 46,
+          "id": "",
+          "label": "Landscape / 16:9",
+          "width": 176
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "Portrait / 9:16",
+          "width": 176
+        },
+        {
+          "height": 46,
+          "id": "play",
+          "label": "Play with sound",
+          "width": 136.578125
+        },
+        {
+          "height": 46,
+          "id": "restart",
+          "label": "Restart",
+          "width": 78.25
+        },
+        {
+          "height": 46,
+          "id": "audio",
+          "label": "Sound on",
+          "width": 94.546875
+        },
+        {
+          "height": 46,
+          "id": "download",
+          "label": "Download MP4",
+          "width": 129.5625
+        },
+        {
+          "height": 46,
+          "id": "scrub",
+          "label": "Video timeline",
+          "width": 267.375
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "01 / opening",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "02 / product",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "03 / story",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "04 / business",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "05 / research",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "06 / script",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "07 / storyboard",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "08 / research screen",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "09 / script screen",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "10 / storyboard screen",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "11 / direction",
+          "width": 177
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "12 / finish",
+          "width": 177
+        }
+      ],
+      "displayType": {
+        "color": "rgb(245, 245, 247)",
+        "weight": "900"
+      },
+      "ground": {
+        "height": 844,
+        "width": 390,
+        "x": 0,
+        "y": 0
+      },
+      "horizontalOverflow": false,
+      "innerHeight": 844,
+      "innerWidth": 390,
+      "scrollWidth": 390
+    },
+    "portrait": {
+      "clientHeight": 844,
+      "clientWidth": 375,
+      "controls": [
+        {
+          "height": 46,
+          "id": "",
+          "label": "Landscape / 16:9",
+          "width": 168.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "Portrait / 9:16",
+          "width": 168.5
+        },
+        {
+          "height": 46,
+          "id": "play",
+          "label": "Play with sound",
+          "width": 136.578125
+        },
+        {
+          "height": 46,
+          "id": "restart",
+          "label": "Restart",
+          "width": 78.25
+        },
+        {
+          "height": 46,
+          "id": "audio",
+          "label": "Sound on",
+          "width": 94.546875
+        },
+        {
+          "height": 46,
+          "id": "download",
+          "label": "Download MP4",
+          "width": 129.5625
+        },
+        {
+          "height": 46,
+          "id": "scrub",
+          "label": "Video timeline",
+          "width": 246.328125
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "01 / opening",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "02 / product",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "03 / story",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "04 / business",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "05 / research",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "06 / script",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "07 / storyboard",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "08 / research screen",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "09 / script screen",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "10 / storyboard screen",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "11 / direction",
+          "width": 169.5
+        },
+        {
+          "height": 46,
+          "id": "",
+          "label": "12 / finish",
+          "width": 169.5
+        }
+      ],
+      "displayType": {
+        "color": "rgb(245, 245, 247)",
+        "weight": "900"
+      },
+      "ground": {
+        "height": 844,
+        "width": 375,
+        "x": 0,
+        "y": 0
+      },
+      "horizontalOverflow": false,
+      "innerHeight": 844,
+      "innerWidth": 390,
+      "scrollWidth": 375
+    }
+  },
+  "requestEvidence": {
+    "csp": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'",
+    "remoteResourceElements": [],
+    "videoSourceEmbedded": true,
+    "trafficTrace": "NOT AVAILABLE: documented CUA read-only evaluate scope does not expose performance entries. No external resource URL is present and CSP prohibits connections; this is source/DOM evidence, not a network packet trace."
+  },
+  "summary": {
+    "fullPlaybackBothFormats": true,
+    "completeEnding31_2": true,
+    "playPause": true,
+    "restartBothFormats": true,
+    "audioMuteUnmute": true,
+    "forwardBackwardFrameAlignedScrub": true,
+    "all12ChapterJumps": true,
+    "formatSwitchWhilePaused": true,
+    "formatSwitchWhilePlaying": true,
+    "exact390x844Screenshots": true,
+    "noHorizontalOverflow": true,
+    "allControlsAtLeast46px": true,
+    "downloadBytesExact": true,
+    "noPageWarningsOrErrors": true,
+    "offlineSourcesAndCSP": true,
+    "zeroNewSpend": true
+  },
+  "visualReview": "PASS: continuous charcoal ground; glass sheen/edge remains visible; solid near-white display type; gold controls; film and controls fit horizontally; portrait independently composed; Example project visible in filmed interface; full GRIFON and grifon.ai ending available.",
+  "date": "2026-10-08 Asia/Manila",
+  "html": {
+    "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\artifacts\\grifon-shader-launch.html",
+    "bytes": 24080586,
+    "sha256": "32f8e1c1990a2076ab70f43f7d2aaa29c7101b7d7b4f07d1e3774239025c4f62"
+  },
+  "sourceByteChecks": "PASS, exit0"
+}

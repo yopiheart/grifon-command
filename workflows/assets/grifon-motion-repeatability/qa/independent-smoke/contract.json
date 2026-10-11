@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-10-08T12:58:36.887Z",
+  "status": "PREPARED_NOT_RUN",
+  "scope": "Independent local draft workflow correctness; no final reference acceptance or direct listening claim",
+  "bounds": {
+    "providerCalls": 0,
+    "newSpendUsd": 0,
+    "downloads": 0,
+    "maximumDraftFramesPerRender": 120,
+    "maximumDraftSeconds": 5,
+    "full932ShaderRender": false
+  },
+  "projects": [
+    {
+      "template": "shader-reference",
+      "format": "landscape",
+      "frames": 932,
+      "fps": "30000/1001",
+      "encodedPrefixLockedFrames": 222
+    },
+    {
+      "template": "basic-launch",
+      "format": "landscape",
+      "frames": 288,
+      "fps": "24/1"
+    },
+    {
+      "template": "basic-launch",
+      "format": "portrait",
+      "frames": 288,
+      "fps": "24/1"
+    }
+  ],
+  "criteria": [
+    "Fresh isolated projects retain editable native source, copy, asset inputs and source rights",
+    "Bounded actual draft produces decoded native frame samples and phase timing/source/cache receipts",
+    "Unchanged repeat and audio-only changes cause zero new visual GPU captures",
+    "Changed copy/source/producer invalidates visual cache; visual-copy-only changes reuse unchanged AAC",
+    "Corrupt or missing cached output cannot be accepted as current valid cache",
+    "Preview and export sample agree at the same native frame index",
+    "Invalid frames, paths and options fail before capture or media work",
+    "Audio supports24/30/30000:1001, declared source rights, meaningful sample/contact/mux integrity and rejects failed source decoding without silent substitution",
+    "Preview at390x844 and1280x844 has NOIR readability, no horizontal overflow and controls>=44px",
+    "Transport advances naturally, pauses, scrubs, ends, and navigates native shot/cue indices",
+    "Original accepted movies, encoded prefix, player, full native source and old helpers remain byte-identical"
+  ],
+  "originalsBefore": [
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+      "bytes": 24137255,
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+      "bytes": 5504941,
+      "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+    },
+    {
+      "file": "artifacts/grifon-shader-recreation.html",
+      "bytes": 33662393,
+      "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/render-full.mjs",
+      "bytes": 20291,
+      "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/build-full.mjs",
+      "bytes": 3252,
+      "sha256": "dbfe243676e6ce8173a1f64265ceaee4a3e32d6878cd95bb26011f88eebbb2bf"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+      "bytes": 5459,
+      "sha256": "ffb4c9fd5104cadf97bab26e4674152e150312e59eb7f3821f493461c068b223"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+      "bytes": 2352,
+      "sha256": "2d282feb4dda8d7c470f416431930267aa76ea38a6beda877f1ad29392a09cc3"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-shader-recreation.mjs",
+      "bytes": 5801,
+      "sha256": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157"
+    },
+    {
+      "file": "tools/artifacts/grifon-shader-recreation.tpl.html",
+      "bytes": 7987,
+      "sha256": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d"
+    }
+  ]
+}

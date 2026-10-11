@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "scope": "Corrected terminal-control check in IAB; initial comprehensive checks in preserved baseline report",
+  "generatedAt": "2026-10-08T01:16:56.437Z",
+  "sourceHtmlSha256": "303d871d0a9a40eb570b9ae8803ce8ca389fdb44619a8f0ec5b44af3d00899a0",
+  "initialFailure": "review-player-evidence-original-fail.json",
+  "seek": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "times": [
+      7.374033,
+      7.374033
+    ]
+  },
+  "next": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "times": [
+      7.374033,
+      7.374033
+    ]
+  },
+  "settled": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "times": [
+      7.374033,
+      7.374033
+    ]
+  },
+  "screenshot": "review-player-mobile-corrected-390x844.png",
+  "screenshotActualPixels": {
+    "width": 390,
+    "height": 844
+  },
+  "limitation": "CUA media seeking property unavailable; native Playwright runner checks seeking=false"
+}

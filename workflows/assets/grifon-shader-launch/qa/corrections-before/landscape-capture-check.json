@@ -1,0 +1,839 @@
+{
+  "date": "2026-10-07T17:29:15.043Z",
+  "format": "landscape",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "samples": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "file": "landscape-sample-00.png",
+      "sha256": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "file": "landscape-sample-01.png",
+      "sha256": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "file": "landscape-sample-02.png",
+      "sha256": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "file": "landscape-sample-03.png",
+      "sha256": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "file": "landscape-sample-04.png",
+      "sha256": "e13892d8c7ec8f9ff00b34339194be6f1fd0faf924d5dd0b009aecd988272a91"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "file": "landscape-sample-05.png",
+      "sha256": "cdfb19f78e5392ca5b7c2ee4d000ca94114eb7112ce822ead32975e00ad12cde"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "file": "landscape-sample-06.png",
+      "sha256": "e375961238e425532220f126b0db13ca6fbac317759e36ca823b62512721de26"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "file": "landscape-sample-07.png",
+      "sha256": "5d05b454520008618a204d085799c0c6407f8c4db787d02362fe05eb809a7e88"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "file": "landscape-sample-08.png",
+      "sha256": "5072dd2d15e29dba3091c6cf64e2f9f5a9292131d5b64221475c7b4249e58b23"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "file": "landscape-sample-09.png",
+      "sha256": "c2dfb428f0a737a49f6366b1bc678449363504bf1ae8a388ceb9c1b3582a88fc"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "file": "landscape-sample-10.png",
+      "sha256": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "file": "landscape-sample-11.png",
+      "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+    }
+  ],
+  "safeCases": [
+    {
+      "scene": "opening",
+      "boxes": [
+        {
+          "selector": "#opening-copy",
+          "text": "Your next ad.",
+          "x": 160,
+          "y": 381,
+          "width": 1047.609375,
+          "height": 215
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "product",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To launch",
+          "x": 165,
+          "y": 340,
+          "width": 397.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "a product.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 623.796875,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "story",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To tell",
+          "x": 165,
+          "y": 340,
+          "width": 236.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your story.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 672.625,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "business",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To grow",
+          "x": 165,
+          "y": 340,
+          "width": 331.171875,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your business.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 915.828125,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Research",
+          "x": 155,
+          "y": 263,
+          "width": 480.671875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Know your audience.",
+          "x": 155,
+          "y": 428,
+          "width": 410.328125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1528.171875,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Script",
+          "x": 155,
+          "y": 263,
+          "width": 304.875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Shape your message.",
+          "x": 155,
+          "y": 428,
+          "width": 424.125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1528.171875,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 263,
+          "width": 577.328125,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Plan every scene.",
+          "x": 155,
+          "y": 428,
+          "width": 342.09375,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1528.171875,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Research",
+          "x": 155,
+          "y": 165,
+          "width": 287.546875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Script",
+          "x": 155,
+          "y": 165,
+          "width": 182.875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 165,
+          "width": 345.578125,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "direction",
+      "boxes": [
+        {
+          "selector": "#direction-copy",
+          "text": "Give your next ad",
+          "x": 160,
+          "y": 261,
+          "width": 1089.65625,
+          "height": 169
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "a clear direction.",
+          "x": 160,
+          "y": 412.5,
+          "width": 1046.6875,
+          "height": 169
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "finish",
+      "boxes": [
+        {
+          "selector": "#mark-ring",
+          "x": 605.5,
+          "y": 434.5,
+          "width": 144,
+          "height": 144
+        },
+        {
+          "selector": "#brand-word",
+          "text": "GRIFON",
+          "x": 783.5,
+          "y": 418.5,
+          "width": 512.984375,
+          "height": 176
+        },
+        {
+          "selector": "#brand-url",
+          "text": "grifon.ai",
+          "x": 869.484375,
+          "y": 635,
+          "width": 181.03125,
+          "height": 63
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID opening-reveal"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "sources": {
+    "index.html": "2193f9f0383ebb103a51e699f315942fca5d54b384e791f1685022b8d6172311",
+    "composition.js": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352",
+    "launch.json": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+    "launch-contract.mjs": "ead7766a98106df20749faf9e0c69f437d9acf8fc17082598a08130ed2f856f1",
+    "contract.test.mjs": "423f898fa9d841c66d4340e202c2d4bdfc9bd37e8ccbf5092e4f5865e1957503",
+    "materials-source.js": "8e2c3f249a28fe56def66593ea6927320f26ee070da84614601bac6f9f29fb79",
+    "shader-materials.js": "e7725b0c66554fe2365d1b3152f8c2cbc5db57e1b3cc306e81ea6d3ddf73e546",
+    "build.mjs": "e6d3b1e9dd9beb9e8b7df68152933f849cc1c60a2faf9fb3941b04cbfed9ac79",
+    "render.mjs": "fd87358c0591063f8ccfc468371623839690768f9de75b52d5a5afdd83b82a05",
+    "../grifon-motion-action-pilot/action-spec.mjs": "1915a827194a80b2f49e91a5101584292c75921805a58325d2ddcc75f9a32491",
+    "./assets/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "./assets/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "./assets/inter-variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "./assets/captures/research.png": "95d9410e9fd43d426fb304f353538dd2501673f11c6f1f0814325244873bc763",
+    "./assets/captures/script.png": "80d6964bf1e22d1059a2d1556915381397076e2b6ee45282d0ca1d43acb0dd69",
+    "./assets/captures/storyboard.png": "274def3f27a41166f5cfd754b477669968e731c7a41845be36a7151838eac23f",
+    "./assets/captures/portrait-research.png": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
+    "./assets/captures/portrait-script-detail.png": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
+    "./assets/captures/portrait-storyboard-detail.png": "37f8c97181627653ad75f7a787fc9985b4e0a59d93c2da35724b18ac82f37bad"
+  },
+  "nonlinear": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "first": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b",
+      "nonlinear": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b",
+      "fresh": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "first": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717",
+      "nonlinear": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717",
+      "fresh": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "first": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c",
+      "nonlinear": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c",
+      "fresh": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "first": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd",
+      "nonlinear": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd",
+      "fresh": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "first": "e13892d8c7ec8f9ff00b34339194be6f1fd0faf924d5dd0b009aecd988272a91",
+      "nonlinear": "e13892d8c7ec8f9ff00b34339194be6f1fd0faf924d5dd0b009aecd988272a91",
+      "fresh": "e13892d8c7ec8f9ff00b34339194be6f1fd0faf924d5dd0b009aecd988272a91",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "first": "cdfb19f78e5392ca5b7c2ee4d000ca94114eb7112ce822ead32975e00ad12cde",
+      "nonlinear": "cdfb19f78e5392ca5b7c2ee4d000ca94114eb7112ce822ead32975e00ad12cde",
+      "fresh": "cdfb19f78e5392ca5b7c2ee4d000ca94114eb7112ce822ead32975e00ad12cde",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "first": "e375961238e425532220f126b0db13ca6fbac317759e36ca823b62512721de26",
+      "nonlinear": "e375961238e425532220f126b0db13ca6fbac317759e36ca823b62512721de26",
+      "fresh": "e375961238e425532220f126b0db13ca6fbac317759e36ca823b62512721de26",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "first": "5d05b454520008618a204d085799c0c6407f8c4db787d02362fe05eb809a7e88",
+      "nonlinear": "5d05b454520008618a204d085799c0c6407f8c4db787d02362fe05eb809a7e88",
+      "fresh": "5d05b454520008618a204d085799c0c6407f8c4db787d02362fe05eb809a7e88",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "first": "5072dd2d15e29dba3091c6cf64e2f9f5a9292131d5b64221475c7b4249e58b23",
+      "nonlinear": "5072dd2d15e29dba3091c6cf64e2f9f5a9292131d5b64221475c7b4249e58b23",
+      "fresh": "5072dd2d15e29dba3091c6cf64e2f9f5a9292131d5b64221475c7b4249e58b23",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "first": "c2dfb428f0a737a49f6366b1bc678449363504bf1ae8a388ceb9c1b3582a88fc",
+      "nonlinear": "c2dfb428f0a737a49f6366b1bc678449363504bf1ae8a388ceb9c1b3582a88fc",
+      "fresh": "c2dfb428f0a737a49f6366b1bc678449363504bf1ae8a388ceb9c1b3582a88fc",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "first": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78",
+      "nonlinear": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78",
+      "fresh": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "first": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83",
+      "nonlinear": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83",
+      "fresh": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83",
+      "result": "EXACT_PASS"
+    }
+  ],
+  "motionWindows": [
+    {
+      "actionId": "opening-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "opening-copy",
+      "times": [
+        0.2,
+        0.53
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 14.336)",
+          "opacity": "0.5904",
+          "filter": "blur(2.8672px)"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 0.136719)",
+          "opacity": "0.996094",
+          "filter": "blur(0.0273438px)"
+        }
+      ],
+      "hashes": [
+        "c9082591e92e4fb7692387cceac8a126961302ec5688a71dce046086ff4a8b8a",
+        "bf69d8bcf6b20ffc18feeb4b654b83d57c2aa567ec126b3828693eb632031025"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "orb-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "orb-world",
+      "times": [
+        2.4899999999999998,
+        2.7375
+      ],
+      "styles": [
+        {
+          "transform": "matrix(0.913984, 0, 0, 0.913984, 59.392, 20.48)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(0.99918, 0, 0, 0.99918, 0.566406, 0.195312)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "552aec80eb825d2f8ddf18463d864a0daa21ca92fffca3ebf8619f2c046b4394",
+        "072e2103fed7ce8a8b53077455a31bcdfadc77756e6c2b4c23d567c357f69aa1"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "research-panel",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "workflow-panel",
+      "times": [
+        7.92,
+        8.25
+      ],
+      "styles": [
+        {
+          "transform": "matrix3d(0.960098, 0, 0.117259, -6.51441e-05, -0.00921148, 0.964243, 0.075422, -4.19011e-05, -0.120857, -0.0785565, 0.989557, -0.000549754, 0, 38.912, 0, 1)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix3d(0.999687, 0, 0.00115865, -6.43692e-07, -8.68921e-07, 0.999687, 0.000749711, -4.16506e-07, -0.00115901, -0.000749946, 0.999999, -0.000555555, 0, 0.371094, 0, 1)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "a79d7ff35e9aecb9f1e06b7136e7d354ae7a0b768c2f7c1ed3da7feb3ac8ac63",
+        "021f7381c5b2ebff1ba833c1f40f8d00364f9524f496c560bf2cdfc5af3100dd"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "script-signal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "workflow-signal",
+      "times": [
+        10.52,
+        10.85
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 83.216, 0)",
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 650.234, 0)",
+          "opacity": "1",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "1b0948e8624ab765f5ec9e2ca1bfbedd7ee7f1a819dc7a9cf5c0d031c0acdc77",
+        "9ed36a5e79cbefd9239e0ee0dc56a561c3994b12320f656f143d852f213c94d3"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "research-screen-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "screen-panel",
+      "times": [
+        15.7,
+        15.975000000000001
+      ],
+      "styles": [
+        {
+          "transform": "matrix3d(0.987308, -0.00161421, 0.0281941, -1.34257e-05, 0, 0.986097, 0.0564574, -2.68845e-05, -0.0285916, -0.0571364, 0.997957, -0.000475218, 0, 23.7568, 0, 1)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix3d(0.999883, -1.48722e-07, 0.000272676, -1.29846e-07, 0, 0.999883, 0.000545351, -2.59691e-07, -0.000272708, -0.000545415, 1, -0.00047619, 0, 0.226562, 0, 1)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "41b2acbff6ba773b4249e422e108f50530fd95c4def6dd498a3bc48e3f034e5e",
+        "78f457ce6593b6b2bfed0499179cb6060577510c77d42d4add79ebe747dadd9e"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "direction-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "direction-copy",
+      "times": [
+        22.63,
+        22.987499999999997
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 26.624)",
+          "opacity": "0.5904",
+          "filter": "blur(3.2768px)"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 0.253906)",
+          "opacity": "0.996094",
+          "filter": "blur(0.03125px)"
+        }
+      ],
+      "hashes": [
+        "e9fbc6023da18fea57d8eeec18434f86c0b537d75b940341509d82ebc1460395",
+        "96fb738128bfbae1a3f59adc96c4532c7df62b300288e49af76a7da79d675ad0"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "brand-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "brand",
+      "times": [
+        26.56,
+        27
+      ],
+      "styles": [
+        {
+          "transform": "matrix(0.971328, 0, 0, 0.971328, 0, 22.528)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(0.999727, 0, 0, 0.999727, 0, 0.214844)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "cd5379e4b19db0a2e7bf2ba4f68b2abc170717f4eb9ab6f95b0a51dd306fa8d9",
+        "30fe0f71b08ce19085cb00cceae129b3f52b31667aa4647587de7b95083e9af4"
+      ],
+      "result": "PASS"
+    }
+  ],
+  "stillBrandHold": {
+    "result": "EXACT_PASS",
+    "start": 28.2,
+    "end": 31.1666666667,
+    "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+  },
+  "contactRevision": {
+    "result": "PASS",
+    "actionId": "research-reveal",
+    "delta": -0.3,
+    "cues": [
+      {
+        "id": "research-contact",
+        "before": 8.39,
+        "after": 8.09
+      }
+    ]
+  },
+  "copyRevision": {
+    "result": "PASS",
+    "changedInside": 18754,
+    "changedOutside": 0
+  },
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1920,
+        1080
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        820,
+        530
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": []
+}

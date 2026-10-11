@@ -1,0 +1,27 @@
+{
+  "status": "INITIAL_UNACCEPTED_PREVIEW_PRESERVED",
+  "scope": "The initial data-URI download player and its bound manifest/receipt are retained before the corrected Blob-download player is generated. Initial QA and checkout records remain historical evidence; accepted film files were not modified.",
+  "records": [
+    {
+      "source": "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+      "published": "workflows/assets/grifon-motion-repeatability/qa/preview-manifest-initial.json",
+      "preserved": ".tmp/motion-repeatability-root/preview-manifest-initial.json",
+      "bytes": 2960,
+      "sha256": "e247092b9fff86a26d8f35e01c02ecf77abbc9dcc5585de793af9d64b5ab52a6"
+    },
+    {
+      "source": "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build.json",
+      "published": "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build-initial.json",
+      "preserved": ".tmp/motion-repeatability-root/standalone-preview-build-initial.json",
+      "bytes": 1230,
+      "sha256": "bd6db2791b4241c04fc9ffbeea860ed139c8c325e6227d4a3bee922e9c0b3c3e"
+    },
+    {
+      "source": "artifacts/grifon-motion-reuse-preview.html",
+      "published": null,
+      "preserved": ".tmp/motion-repeatability-root/standalone-initial.html",
+      "bytes": 2315769,
+      "sha256": "1b64604e0432c5ec7ba5004e204f23f829074da975efc92a822ada2f34444af4"
+    }
+  ]
+}

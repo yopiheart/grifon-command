@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-08T13:24:18.499Z",
+  "purpose": "Reproduce explicit full-browser failure against installed default and explicit headless-shell selection.",
+  "diagnosisSha256": "0d50eea84ff6fd6baba803abe9264a69479547a73d8e889e4d662d4453d7a53c",
+  "producerSha256": "d1d79f4f1516a8335568cc7302f286a11a78c3645bd7ef124bfc935d4cfb5265",
+  "originalExecutableSha256": "b798f9e53a98d29eb7f36f8c409f905d3184780a04d2bcb56989067194784bd1",
+  "selectedExecutableSha256": "28016df6864d302434c9231e1f9f1a8a7ecc512cb2fe3faabb2a36130b96bcf1",
+  "trials": [
+    {
+      "name": "explicit-full",
+      "status": "FAIL",
+      "elapsedMs": 23.469100000000026,
+      "error": "browserType.launch: spawn UNKNOWN",
+      "headless": true,
+      "args": [
+        "--use-angle=d3d11",
+        "--disable-features=CalculateNativeWinOcclusion"
+      ]
+    },
+    {
+      "name": "default-headless",
+      "status": "PASS",
+      "elapsedMs": 362.32970000000006,
+      "version": "149.0.7827.55",
+      "detail": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "headless": true,
+      "args": [
+        "--enable-gpu",
+        "--ignore-gpu-blocklist",
+        "--disable-gpu-rasterization"
+      ]
+    },
+    {
+      "name": "explicit-headless-shell",
+      "status": "PASS",
+      "elapsedMs": 227.2926,
+      "version": "149.0.7827.55",
+      "detail": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+        "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "headless": true,
+      "args": [
+        "--enable-gpu",
+        "--ignore-gpu-blocklist",
+        "--disable-gpu-rasterization"
+      ]
+    }
+  ],
+  "verdict": "ORIGINAL_SPAWN_FAILURE_REPRODUCED_INSTALLED_HEADLESS_SELECTION_PASS",
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "installedOrDownloaded": false
+}

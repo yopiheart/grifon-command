@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Local private-review input register; original sources remain immutable.",
+  "providerCalls": 0, "paidSpendUsd": 0,
+  "rawAudio": "Ignored local inputs and stems; final mixed MP4 is the review deliverable. This is not a customer sound library.",
+  "files": [
+    {"path":"assets/audio/digital-clouds.mp3","source":"workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3","sha256":"71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48","credit":"Digital Clouds / Alejandro Magaña (A. M.) / Mixkit 175","sourceUrl":"https://assets.mixkit.co/music/175/175.mp3","license":"https://mixkit.co/license/","rights":"Recorded Mixkit stock music permission for manually authored web/social video; no raw music or template-library redistribution."},
+    {"path":"assets/audio/paper-swipe-2.wav","source":"workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/paper-swipe-candidate-2.wav","sha256":"398a01aee9b2f7b1de01de2d0852ca3708107a29120ae734f0ecc86217b4afd5","credit":"ElevenLabs Sound Effects History / selected candidate 2","rights":"PRIVATE REVIEW ONLY: source predates paid subscription."},
+    {"path":"assets/audio/reverse-air-1.wav","source":"workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/reverse-air-candidate-1.wav","sha256":"90531a66e2239f7a4cbd0533a592d72982771778e7dd7bb2370f069ab1054baa","credit":"ElevenLabs Sound Effects History / selected candidate 1","rights":"PRIVATE REVIEW ONLY: source predates paid subscription."},
+    {"path":"assets/audio/orb-inward-1.wav","source":"workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/orb-inward-candidate-1.wav","sha256":"2d6eba0d507ace2579fd41e7952213ddb512d2821adb5af91740427b9e3759ab","credit":"ElevenLabs Sound Effects History / selected candidate 1","rights":"PRIVATE REVIEW ONLY: source predates paid subscription."},
+    {"path":"assets/audio/card-pop-2.wav","source":"workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/card-pop-candidate-2.wav","sha256":"6c2123f4908a256f5324c74d6fc1d50a31255741eba8029dc56dfda9ed8f99f7","credit":"ElevenLabs Sound Effects History / selected candidate 2","rights":"PRIVATE REVIEW ONLY: source predates paid subscription."},
+    {"path":"assets/audio/phone-contact-2.wav","source":"workflows/assets/grifon-motion-upgrade/sfx-elevenlabs/inputs/phone-contact-candidate-2.wav","sha256":"0fa98d4669deea51b9605a9c599463ea4e966cd052b2e9718ecabb73f38c374b","credit":"ElevenLabs Sound Effects History / selected candidate 2","rights":"PRIVATE REVIEW ONLY: source predates paid subscription."}
+  ],
+  "identity": "logo.png is byte-identical to public/logo.png; Inter fonts/OFL copied from the original study.",
+  "shaderSource": "shaders 4.0.1 + pinned TypeGPU dependencies; original free-component composition with bundled notices in licenses/. No Pro preset extraction.",
+  "auditoryQa": "Technical alignment/level checks performed; direct audio audition pending."
+}

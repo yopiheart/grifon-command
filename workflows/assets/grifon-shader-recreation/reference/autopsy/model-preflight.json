@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-08T00:41:01.802Z",
+  "name": "models/gemini-3.5-flash",
+  "inputTokenLimit": 1048576,
+  "outputTokenLimit": 65536,
+  "supportedActions": [
+    "generateContent",
+    "countTokens",
+    "createCachedContent",
+    "batchGenerateContent"
+  ]
+}

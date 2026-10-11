@@ -1,0 +1,170 @@
+{
+  "status": "PASS",
+  "purpose": "Parent CUA smoke of corrected final exports",
+  "atUtc": "2026-10-07T19:05:05.154Z",
+  "playerSha256": "1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207",
+  "browserApi": "Documented CUA browser APIs only",
+  "landscapeStart": {
+    "muted": true,
+    "paused": false,
+    "time": 0.217125,
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "landscapeEnd": {
+    "currentTime": 31.2,
+    "ended": true,
+    "error": null,
+    "paused": true,
+    "scrollWidth": 375,
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "portraitEnd": {
+    "currentTime": 31.2,
+    "ended": true,
+    "error": null,
+    "height": 1920,
+    "paused": true,
+    "scrollWidth": 375,
+    "viewport": [
+      390,
+      844
+    ],
+    "width": 1080
+  },
+  "mobileMetrics": {
+    "chapterCount": 12,
+    "minimumControlHeight": 46,
+    "scrollWidth": 375,
+    "videoError": null,
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "chapterChecks": [
+    {
+      "chapter": "01 / opening",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 0
+    },
+    {
+      "chapter": "02 / product",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 2.4
+    },
+    {
+      "chapter": "03 / story",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 4.2
+    },
+    {
+      "chapter": "04 / business",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 6
+    },
+    {
+      "chapter": "05 / research",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 7.8
+    },
+    {
+      "chapter": "06 / script",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 10.4
+    },
+    {
+      "chapter": "07 / storyboard",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 13
+    },
+    {
+      "chapter": "08 / research screen",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 15.6
+    },
+    {
+      "chapter": "09 / script screen",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 17.9
+    },
+    {
+      "chapter": "10 / storyboard screen",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 20.2
+    },
+    {
+      "chapter": "11 / direction",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 22.5
+    },
+    {
+      "chapter": "12 / finish",
+      "paused": true,
+      "status": "Scene ready. Tap Play.",
+      "time": 26.4
+    }
+  ],
+  "scrubHome": {
+    "paused": true,
+    "time": 0
+  },
+  "scrubEnd": {
+    "paused": true,
+    "time": 31.2
+  },
+  "audioEnabled": {
+    "label": "Sound on",
+    "muted": false,
+    "paused": true
+  },
+  "audioMuted": {
+    "label": "Sound off",
+    "muted": true,
+    "paused": true
+  },
+  "playingFormatSwitch": {
+    "muted": true,
+    "paused": false,
+    "status": "Playing muted.",
+    "time": 4.618037,
+    "width": 1920
+  },
+  "downloads": {
+    "landscape": {
+      "path": "C:\\Users\\ADMIN\\Downloads\\grifon-shader-launch-landscape (1).mp4",
+      "bytes": 7952020,
+      "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc"
+    },
+    "portrait": {
+      "path": "C:\\Users\\ADMIN\\Downloads\\grifon-shader-launch-portrait (1).mp4",
+      "bytes": 8568284,
+      "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5"
+    }
+  },
+  "screenshots": [
+    "parent-final-mobile-390x844-landscape.jpg",
+    "parent-final-mobile-390x844-portrait.jpg"
+  ],
+  "console": [],
+  "limitations": [
+    "Muted playback and paused audio-state toggles are not direct hearing.",
+    "Desktop390x844 viewport is not a physical Android test."
+  ]
+}

@@ -1,0 +1,959 @@
+{
+  "date": "2026-10-07T18:45:32.443Z",
+  "format": "landscape",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+  "samples": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "file": "landscape-sample-00.png",
+      "sha256": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "file": "landscape-sample-01.png",
+      "sha256": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "file": "landscape-sample-02.png",
+      "sha256": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "file": "landscape-sample-03.png",
+      "sha256": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "file": "landscape-sample-04.png",
+      "sha256": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "file": "landscape-sample-05.png",
+      "sha256": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "file": "landscape-sample-06.png",
+      "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "file": "landscape-sample-07.png",
+      "sha256": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "file": "landscape-sample-08.png",
+      "sha256": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "file": "landscape-sample-09.png",
+      "sha256": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "file": "landscape-sample-10.png",
+      "sha256": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "file": "landscape-sample-11.png",
+      "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+    }
+  ],
+  "safeCases": [
+    {
+      "scene": "opening",
+      "boxes": [
+        {
+          "selector": "#opening-copy",
+          "text": "Your next ad.",
+          "x": 160,
+          "y": 381,
+          "width": 1047.609375,
+          "height": 215
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "product",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To launch",
+          "x": 165,
+          "y": 340,
+          "width": 397.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "a product.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 623.796875,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "story",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To tell",
+          "x": 165,
+          "y": 340,
+          "width": 236.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your story.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 672.625,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "business",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To grow",
+          "x": 165,
+          "y": 340,
+          "width": 331.171875,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your business.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 915.828125,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Research",
+          "x": 155,
+          "y": 263,
+          "width": 480.671875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Know your audience.",
+          "x": 155,
+          "y": 428,
+          "width": 410.328125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1596.359375,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Script",
+          "x": 155,
+          "y": 263,
+          "width": 304.875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Shape your message.",
+          "x": 155,
+          "y": 428,
+          "width": 424.125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1596.359375,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 263,
+          "width": 577.328125,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Plan every scene.",
+          "x": 155,
+          "y": 428,
+          "width": 342.09375,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1596.359375,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Research",
+          "x": 155,
+          "y": 165,
+          "width": 287.546875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Script",
+          "x": 155,
+          "y": 165,
+          "width": 182.875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 165,
+          "width": 345.578125,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "direction",
+      "boxes": [
+        {
+          "selector": "#direction-copy",
+          "text": "Give your next ad",
+          "x": 160,
+          "y": 261,
+          "width": 1089.65625,
+          "height": 169
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "a clear direction.",
+          "x": 160,
+          "y": 412.5,
+          "width": 1046.6875,
+          "height": 169
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "finish",
+      "boxes": [
+        {
+          "selector": "#mark-ring",
+          "x": 605.5,
+          "y": 434.5,
+          "width": 144,
+          "height": 144
+        },
+        {
+          "selector": "#brand-word",
+          "text": "GRIFON",
+          "x": 783.5,
+          "y": 418.5,
+          "width": 512.984375,
+          "height": 176
+        },
+        {
+          "selector": "#brand-url",
+          "text": "grifon.ai",
+          "x": 869.484375,
+          "y": 635,
+          "width": 181.03125,
+          "height": 63
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "trackGeometry": {
+    "format": "landscape",
+    "result": "PASS",
+    "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+    "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+    "indexSha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+    "renderSha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+    "cases": [
+      {
+        "time": 13.6,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-13-60.png",
+        "sha256": "d158ed3dc3cda9345a2341f60fc04031cc67952ec84548a143854eba6438fa77",
+        "result": "PASS"
+      },
+      {
+        "time": 13.7,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-13-70.png",
+        "sha256": "2151397f6c50ddb475f45a329304edd5a03b5384fc66a402613f8289b959ec2e",
+        "result": "PASS"
+      },
+      {
+        "time": 14.4,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-14-40.png",
+        "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+        "result": "PASS"
+      },
+      {
+        "time": 15.35,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-15-35.png",
+        "sha256": "2b78a260c722a6b7c83c8dfcac99def465341b2796aa3b9c50b4c954931fea8e",
+        "result": "PASS"
+      }
+    ],
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID opening-reveal"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "sources": {
+    "index.html": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+    "composition.js": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352",
+    "launch.json": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+    "launch-contract.mjs": "ead7766a98106df20749faf9e0c69f437d9acf8fc17082598a08130ed2f856f1",
+    "contract.test.mjs": "423f898fa9d841c66d4340e202c2d4bdfc9bd37e8ccbf5092e4f5865e1957503",
+    "materials-source.js": "8e2c3f249a28fe56def66593ea6927320f26ee070da84614601bac6f9f29fb79",
+    "shader-materials.js": "e7725b0c66554fe2365d1b3152f8c2cbc5db57e1b3cc306e81ea6d3ddf73e546",
+    "build.mjs": "e6d3b1e9dd9beb9e8b7df68152933f849cc1c60a2faf9fb3941b04cbfed9ac79",
+    "render.mjs": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+    "../grifon-motion-action-pilot/action-spec.mjs": "1915a827194a80b2f49e91a5101584292c75921805a58325d2ddcc75f9a32491",
+    "./assets/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "./assets/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "./assets/inter-variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "./assets/captures/framed-research.png": "8058746ce6a4996369211ba180f808cb94761464e8fc905f2bae5ec32922bec3",
+    "./assets/captures/framed-script.png": "8282c3e1469b45cf552fde0b5f3aa32bd5959fff0f773a4dbb7979b1d482c02c",
+    "./assets/captures/framed-storyboard.png": "86cdbc74c5431504f91b1a1226a0b2ad9a82e3a1901dfae05eafb2b066c3efbc",
+    "./assets/captures/portrait-research.png": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
+    "./assets/captures/portrait-script-detail.png": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
+    "./assets/captures/portrait-storyboard-detail.png": "e79060385aa3a006235ca3cc05f63ed3195ff46d42d62ca3ebd257133e56bbee"
+  },
+  "nonlinear": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "first": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b",
+      "nonlinear": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b",
+      "fresh": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "first": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717",
+      "nonlinear": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717",
+      "fresh": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "first": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c",
+      "nonlinear": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c",
+      "fresh": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "first": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd",
+      "nonlinear": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd",
+      "fresh": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "first": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3",
+      "nonlinear": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3",
+      "fresh": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "first": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4",
+      "nonlinear": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4",
+      "fresh": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "first": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+      "nonlinear": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+      "fresh": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "first": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559",
+      "nonlinear": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559",
+      "fresh": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "first": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7",
+      "nonlinear": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7",
+      "fresh": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "first": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a",
+      "nonlinear": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a",
+      "fresh": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "first": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78",
+      "nonlinear": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78",
+      "fresh": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78",
+      "result": "EXACT_PASS"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "first": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83",
+      "nonlinear": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83",
+      "fresh": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83",
+      "result": "EXACT_PASS"
+    }
+  ],
+  "motionWindows": [
+    {
+      "actionId": "opening-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "opening-copy",
+      "times": [
+        0.2,
+        0.53
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 14.336)",
+          "opacity": "0.5904",
+          "filter": "blur(2.8672px)"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 0.136719)",
+          "opacity": "0.996094",
+          "filter": "blur(0.0273438px)"
+        }
+      ],
+      "hashes": [
+        "c9082591e92e4fb7692387cceac8a126961302ec5688a71dce046086ff4a8b8a",
+        "bf69d8bcf6b20ffc18feeb4b654b83d57c2aa567ec126b3828693eb632031025"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "orb-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "orb-world",
+      "times": [
+        2.4899999999999998,
+        2.7375
+      ],
+      "styles": [
+        {
+          "transform": "matrix(0.913984, 0, 0, 0.913984, 59.392, 20.48)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(0.99918, 0, 0, 0.99918, 0.566406, 0.195312)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "552aec80eb825d2f8ddf18463d864a0daa21ca92fffca3ebf8619f2c046b4394",
+        "072e2103fed7ce8a8b53077455a31bcdfadc77756e6c2b4c23d567c357f69aa1"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "research-panel",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "workflow-panel",
+      "times": [
+        7.92,
+        8.25
+      ],
+      "styles": [
+        {
+          "transform": "matrix3d(0.960098, 0, 0.117259, -6.51441e-05, -0.00921148, 0.964243, 0.075422, -4.19011e-05, -0.120857, -0.0785565, 0.989557, -0.000549754, 0, 38.912, 0, 1)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix3d(0.999687, 0, 0.00115865, -6.43692e-07, -8.68921e-07, 0.999687, 0.000749711, -4.16506e-07, -0.00115901, -0.000749946, 0.999999, -0.000555555, 0, 0.371094, 0, 1)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "84731b8223c2fd1dc562289706f9f0875df60dfe1e7d0190411a16e7504d6a37",
+        "ffcda578fbc78b1f865726ed4637e0a5244ee4933d5a4a5e76ef41a0f28f23f4"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "script-signal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "workflow-signal",
+      "times": [
+        10.52,
+        10.85
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 83.216, 0)",
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 650.234, 0)",
+          "opacity": "1",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "35f97d647bcef8539c38aade6ab43cbf80fa3977aee3abce54400d29f3b8cc94",
+        "5c999089fecd4a945b07005a85aa3d6c76eb1a9964cbbb288be4d7997c8e6828"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "research-screen-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "screen-panel",
+      "times": [
+        15.7,
+        15.975000000000001
+      ],
+      "styles": [
+        {
+          "transform": "matrix3d(0.987308, -0.00161421, 0.0281941, -1.34257e-05, 0, 0.986097, 0.0564574, -2.68845e-05, -0.0285916, -0.0571364, 0.997957, -0.000475218, 0, 23.7568, 0, 1)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix3d(0.999883, -1.48722e-07, 0.000272676, -1.29846e-07, 0, 0.999883, 0.000545351, -2.59691e-07, -0.000272708, -0.000545415, 1, -0.00047619, 0, 0.226562, 0, 1)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "3e8ce379e4fb88a73ce2b7a171bcec1e9d2002cb91e2f35efd4822e580704b50",
+        "8f3dde512f066bcf3ec9daaa440da97725c5745ba3599f3cc3c49887408e47c8"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "direction-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "direction-copy",
+      "times": [
+        22.63,
+        22.987499999999997
+      ],
+      "styles": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 26.624)",
+          "opacity": "0.5904",
+          "filter": "blur(3.2768px)"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, 0.253906)",
+          "opacity": "0.996094",
+          "filter": "blur(0.03125px)"
+        }
+      ],
+      "hashes": [
+        "e9fbc6023da18fea57d8eeec18434f86c0b537d75b940341509d82ebc1460395",
+        "96fb738128bfbae1a3f59adc96c4532c7df62b300288e49af76a7da79d675ad0"
+      ],
+      "result": "PASS"
+    },
+    {
+      "actionId": "brand-reveal",
+      "fraction": [
+        0.2,
+        0.75
+      ],
+      "target": "brand",
+      "times": [
+        26.56,
+        27
+      ],
+      "styles": [
+        {
+          "transform": "matrix(0.971328, 0, 0, 0.971328, 0, 22.528)",
+          "opacity": "0.5904",
+          "filter": "none"
+        },
+        {
+          "transform": "matrix(0.999727, 0, 0, 0.999727, 0, 0.214844)",
+          "opacity": "0.996094",
+          "filter": "none"
+        }
+      ],
+      "hashes": [
+        "cd5379e4b19db0a2e7bf2ba4f68b2abc170717f4eb9ab6f95b0a51dd306fa8d9",
+        "30fe0f71b08ce19085cb00cceae129b3f52b31667aa4647587de7b95083e9af4"
+      ],
+      "result": "PASS"
+    }
+  ],
+  "stillBrandHold": {
+    "result": "EXACT_PASS",
+    "start": 28.2,
+    "end": 31.1666666667,
+    "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+  },
+  "contactRevision": {
+    "result": "PASS",
+    "actionId": "research-reveal",
+    "delta": -0.3,
+    "cues": [
+      {
+        "id": "research-contact",
+        "before": 8.39,
+        "after": 8.09
+      }
+    ]
+  },
+  "copyRevision": {
+    "result": "PASS",
+    "changedInside": 18754,
+    "changedOutside": 0
+  },
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1920,
+        1080
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        820,
+        530
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": []
+}

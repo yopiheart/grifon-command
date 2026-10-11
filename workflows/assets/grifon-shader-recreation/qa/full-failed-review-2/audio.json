@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "status": "PROVISIONAL_SONIC_UNVERIFIED",
+  "purpose": "Free clean music-only candidate for the measured full landscape recreation.",
+  "sampleRate": 48000,
+  "channels": 2,
+  "sampleFrames": 1495040,
+  "previewVideoFrames": 222,
+  "videoFpsNumerator": 30000,
+  "videoFpsDenominator": 1001,
+  "music": {
+    "id": "digital-clouds",
+    "source": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+    "bytes": 3232566,
+    "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+    "sourceInSeconds": 28.905,
+    "playbackRate": 1,
+    "gainDb": 0,
+    "credit": "Digital Clouds / Alejandro Magaña (A. M.) / Mixkit 175",
+    "sourceUrl": "https://assets.mixkit.co/music/175/175.mp3",
+    "licenseUrl": "https://mixkit.co/license/",
+    "provenance": "Existing source register records manually authored web/social video permission; raw music, stems and music-only mixes remain private. No new license review or legal clearance is asserted.",
+    "selectionEvidence": "C at 28.905s is the stronger measured opening slow-energy candidate; C whole-track periodicity is closer to A. Neither observation establishes heard tempo, exact identity or full-film sonic fidelity."
+  },
+  "fades": [
+    {
+      "id": "opening-taper",
+      "type": "in",
+      "startSeconds": 0,
+      "endSeconds": 0.06,
+      "curve": "tri",
+      "reason": "Authored short taper to prevent an abrupt nonzero music start; not a reconstructed SFX."
+    },
+    {
+      "id": "ending-taper",
+      "type": "out",
+      "startSeconds": 27.8278,
+      "endSeconds": 31.14666666666667,
+      "curve": "qua",
+      "reason": "Authored broad decline from the source's end-composition recession through the audio tail. Reference measurements show quieter late energy; this is not a copied waveform or exact envelope match."
+    }
+  ],
+  "cues": [],
+  "voice": "NONE_AUTHORED_NO_REFERENCE_TRANSCRIPT_ACCEPTED",
+  "normalization": {
+    "integratedLufs": -16.45,
+    "loudnessToleranceLu": 0.5,
+    "masterTruePeakDbtp": -3,
+    "maximumEncodedTruePeakDbtp": -1.5,
+    "loudnessRangeLu": 11,
+    "aacBitrate": "192k"
+  },
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

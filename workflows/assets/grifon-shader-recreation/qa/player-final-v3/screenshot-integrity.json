@@ -1,0 +1,141 @@
+{
+  "status": "PASS_INSPECTED_ACTUAL_VIEWPORT_LAYOUTS",
+  "generatedAt": "2026-10-08T08:37:41.822Z",
+  "scope": "All eight exact viewport screenshots inspected using local image tools; no full-film fidelity acceptance.",
+  "artifact": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423",
+  "film": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+  "images": [
+    {
+      "viewport": "390x844",
+      "phase": "poster",
+      "file": "player-mobile-390x844-poster.png",
+      "bytes": 307914,
+      "sha256": "7d8b25638eead047c7c55bfe49d313c9f0683b842c71484e274eee5ae98d92d3",
+      "dimensions": [
+        390,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "390x844",
+      "phase": "playing",
+      "file": "player-mobile-390x844-playing.png",
+      "bytes": 338428,
+      "sha256": "58db9149e27c7266ad95a9c6d7559f7e1c12047ff4aa617ff46923aec45bf1d8",
+      "dimensions": [
+        390,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "390x844",
+      "phase": "scrub",
+      "file": "player-mobile-390x844-scrub.png",
+      "bytes": 323152,
+      "sha256": "07a573f2211235aa44a9989595cf6acc770a0c0a4f2d8fa1247629e5d9ae5ff0",
+      "dimensions": [
+        390,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "390x844",
+      "phase": "ended",
+      "file": "player-mobile-390x844-ended.png",
+      "bytes": 292953,
+      "sha256": "5c62521af2218597ec3f1c2a5b3712c9d8bceeffc3880b31d56e4b1f2d4548c7",
+      "dimensions": [
+        390,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "1280x844",
+      "phase": "poster",
+      "file": "player-mobile-1280x844-poster.png",
+      "bytes": 614813,
+      "sha256": "99484577445f5e3c85dc629ce379ade787a612fbcec10d098b946cc01c611010",
+      "dimensions": [
+        1280,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "1280x844",
+      "phase": "playing",
+      "file": "player-mobile-1280x844-playing.png",
+      "bytes": 830841,
+      "sha256": "bff00958c685441f24fb31ba1a3df1c14c1236a1300468faba60869dbdb0bf3b",
+      "dimensions": [
+        1280,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "1280x844",
+      "phase": "scrub",
+      "file": "player-mobile-1280x844-scrub.png",
+      "bytes": 801708,
+      "sha256": "682cd2a53d221ab3d25fe4f5c46d54c4be6608e7042694bde45cca55809aa33a",
+      "dimensions": [
+        1280,
+        844
+      ],
+      "inspected": true
+    },
+    {
+      "viewport": "1280x844",
+      "phase": "ended",
+      "file": "player-mobile-1280x844-ended.png",
+      "bytes": 669947,
+      "sha256": "90d63bc9225708e35801510d5884dafa89f5a2a01378aa78adb0fce6edcc5f14",
+      "dimensions": [
+        1280,
+        844
+      ],
+      "inspected": true
+    }
+  ],
+  "downloads": [
+    {
+      "viewport": "390x844",
+      "file": "player-mobile-390x844-download.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+      "byteEquality": true
+    },
+    {
+      "viewport": "1280x844",
+      "file": "player-mobile-1280x844-download.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+      "byteEquality": true
+    }
+  ],
+  "findings": {
+    "mobile": "Film, controls, timeline, and example/provisional-soundtrack disclosures fit within the viewport width and remain legible.",
+    "desktop": "Normal vertical scrolling is required to reach timeline/details; action controls and disclosures remain usable without horizontal clipping."
+  },
+  "historicalCurrentEvidencePreserved": [
+    {
+      "current": "qa/player-integrity.json",
+      "preserved": "qa/full-failed-review-1/qa/player-integrity.json",
+      "bytes": 1004,
+      "sha256": "06d15c53f321a955dbf010ac48db9bf3aad293569156ff1268b6791590f6795a",
+      "byteEquality": true
+    },
+    {
+      "current": "qa/player-checks.json",
+      "preserved": "qa/full-failed-review-1/qa/player-checks.json",
+      "bytes": 5446,
+      "sha256": "866d9979ef9043b63bc66d3a8532caa8cb60c95ae4349ca85fdce1f84d0a0e6c",
+      "byteEquality": true
+    }
+  ]
+}

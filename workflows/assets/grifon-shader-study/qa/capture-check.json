@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-07",
+  "browser": "149.0.7827.55",
+  "browserIsolation": "one composition mode per fresh browser",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc"
+  ],
+  "sources": {
+    "index.html": "147fda40106d05e78c56954f39e9e14b01e6aaec3adb0cf4b1bd080cd1fbb525",
+    "composition.js": "360e5b9d399db53b3f827c1e9593c38a37ac7db6b9267d5f4d99dce3a5c241f3",
+    "study.json": "47c383c0bb1e1f219a045ff6803f87bcf456824ecfbe8d57e8fc46f361db1250",
+    "materials-source.js": "0b468b1c90c18cc54152cf59a65ee94381347726e6f120191c3efbb7ff8ce16e",
+    "shader-materials.js": "9fe9eb7f08eee117e29ed45aa1e00f448fcd3d4f8dd0903bd08ee054905b3fd4"
+  },
+  "resolution": [
+    1920,
+    1080
+  ],
+  "modes": {
+    "before": {
+      "samples": [
+        {
+          "t": 0.8,
+          "sha256": "aa3cf1e2658370a833be6d7a628a711ad7d511795fcf25c5b727310e1289ec8d"
+        },
+        {
+          "t": 1.6,
+          "sha256": "4355e966c4db1d6e52d998f5674afca424473d2dc8c2f7097e408e917248e9ec"
+        },
+        {
+          "t": 2.9,
+          "sha256": "c1905ad52a513286650d5a4432357fed1ddd37315a3cb390655bb5a569c71b05"
+        },
+        {
+          "t": 4.15,
+          "sha256": "5cae917386d9f81d37526035c0137b5cb635a610b96abbab28f0c07f9fea51a3"
+        },
+        {
+          "t": 5.85,
+          "sha256": "fd6d7b19857c9230efeeab93b110662a3994388b5c8866185f3a3a675f3bb574"
+        },
+        {
+          "t": 6.8,
+          "sha256": "e9c8f3ea6264514dc5ada17f34319e71d0fd7252c517266084d539453c7b0fee"
+        }
+      ],
+      "nonlinearSeek": "PASS",
+      "freshBrowser": "PASS",
+      "repeatSha256": "4355e966c4db1d6e52d998f5674afca424473d2dc8c2f7097e408e917248e9ec",
+      "freshSha256": "4355e966c4db1d6e52d998f5674afca424473d2dc8c2f7097e408e917248e9ec",
+      "stillBrandHold": "PASS",
+      "gpu": null
+    },
+    "after": {
+      "samples": [
+        {
+          "t": 0.8,
+          "sha256": "4e062c9115c2d35469ee95a623bf3e2bdf4d7468aac618e6f4ac55bf52bbf4f5"
+        },
+        {
+          "t": 1.6,
+          "sha256": "a371c272dbbdfd6f1bcc93010b1a55562b400d4b16b9e3e3abcb07a8c49704e6"
+        },
+        {
+          "t": 2.9,
+          "sha256": "6c920648d99a816377b539e400e5bdb9b336d261fe41bfa17a981421756daa9b"
+        },
+        {
+          "t": 4.15,
+          "sha256": "5d0e1712cea1f82ac62812e20f0ce318efdd03781e46dc0edce20fec8e401856"
+        },
+        {
+          "t": 5.85,
+          "sha256": "171cac8cbc2a9e9ae024cb816538b2b76e31d63b646901c1419bc484dd0c3b80"
+        },
+        {
+          "t": 6.8,
+          "sha256": "21f99402f1a279cb0f09041f09d9daafce946f45edaeb3ddccfbb83c3f3e635f"
+        }
+      ],
+      "nonlinearSeek": "PASS",
+      "freshBrowser": "PASS",
+      "repeatSha256": "a371c272dbbdfd6f1bcc93010b1a55562b400d4b16b9e3e3abcb07a8c49704e6",
+      "freshSha256": "a371c272dbbdfd6f1bcc93010b1a55562b400d4b16b9e3e3abcb07a8c49704e6",
+      "stillBrandHold": "PASS",
+      "gpu": {
+        "renderer": "WebGPU",
+        "failure": null,
+        "package": "shaders",
+        "version": "4.0.1",
+        "backend": "webgpu",
+        "adapter": {
+          "vendor": "amd",
+          "architecture": "gcn-5",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "materials": [
+          "FlowingGradient",
+          "LiquidMetal",
+          "FlutedGlass"
+        ],
+        "resolution": {
+          "background": [
+            1920,
+            1080
+          ],
+          "orb": [
+            960,
+            960
+          ],
+          "glass": [
+            1400,
+            340
+          ]
+        },
+        "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+      }
+    }
+  },
+  "runtimeErrors": [],
+  "externalRequests": [],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

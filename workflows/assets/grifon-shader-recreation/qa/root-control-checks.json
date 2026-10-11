@@ -1,0 +1,16 @@
+{
+  "command": "npm.cmd run check:codex",
+  "date": "2026-10-08",
+  "exitCode": 0,
+  "skillEntrypoints": 33,
+  "skillFiles": 106,
+  "skillErrors": 0,
+  "sparseReferences": 0,
+  "tests": 26,
+  "passed": 26,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 16530.3533,
+  "reason": "Verify the four byte-stable offline-player LF pins before committing the control change.",
+  "newProviderCalls": 0
+}

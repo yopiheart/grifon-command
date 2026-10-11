@@ -1,0 +1,29 @@
+{
+  "status": "PASS_INLINE_BYTE_INTEGRITY",
+  "artifact": {
+    "file": "artifacts/grifon-shader-recreation.html",
+    "bytes": 37296121,
+    "sha256": "a8e04c2f4f6ff218414ab7c90dffd9a7248587e652165a46e6af6a77ccb75ade"
+  },
+  "mp4": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 27719697,
+    "sha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab",
+    "byteEquality": true
+  },
+  "poster": {
+    "file": "qa/full-poster.png",
+    "bytes": 246185,
+    "sha256": "1e8d54f6f57f5c6db2f7bffb716a64e6886168d3b703022c48c9640d47b39003",
+    "byteEquality": true
+  },
+  "duration": {
+    "actualContainerSeconds": 31.146,
+    "actualVideoSeconds": 31.097733,
+    "actualAacStreamSeconds": 31.146,
+    "logicalDecodedAudioSeconds": 31.14666666666667,
+    "decodedAudioSampleFrames": 1495040
+  },
+  "ascii": true,
+  "scope": "Decoded inline payload equality only. Actual browser download, mobile playback, direct hearing and visual fidelity are separate gates."
+}

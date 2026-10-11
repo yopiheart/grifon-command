@@ -1,0 +1,3554 @@
+{
+  "schemaVersion": 1,
+  "runId": "20261008T133243413Z",
+  "startedAt": "2026-10-08T13:32:43.416Z",
+  "status": "PASS_LOCAL_DRAFT_CONTRACT",
+  "claim": "Independent local draft workflow correctness; no final reference acceptance or direct listening claim",
+  "checks": [
+    {
+      "name": "Preserved original baseline before execution",
+      "status": "PASS",
+      "evidence": [
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+          "bytes": 24137255,
+          "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+          "bytes": 5504941,
+          "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+        },
+        {
+          "file": "artifacts/grifon-shader-recreation.html",
+          "bytes": 33662393,
+          "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.js",
+          "bytes": 37633,
+          "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.json",
+          "bytes": 5060,
+          "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+          "bytes": 10269,
+          "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/render-full.mjs",
+          "bytes": 20291,
+          "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/build-full.mjs",
+          "bytes": 3252,
+          "sha256": "dbfe243676e6ce8173a1f64265ceaee4a3e32d6878cd95bb26011f88eebbb2bf"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+          "bytes": 5459,
+          "sha256": "ffb4c9fd5104cadf97bab26e4674152e150312e59eb7f3821f493461c068b223"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+          "bytes": 2352,
+          "sha256": "2d282feb4dda8d7c470f416431930267aa76ea38a6beda877f1ad29392a09cc3"
+        },
+        {
+          "file": "tools/artifacts/build-grifon-shader-recreation.mjs",
+          "bytes": 5801,
+          "sha256": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157"
+        },
+        {
+          "file": "tools/artifacts/grifon-shader-recreation.tpl.html",
+          "bytes": 7987,
+          "sha256": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d"
+        }
+      ]
+    },
+    {
+      "name": "Fresh isolated project: shader",
+      "status": "PASS",
+      "evidence": {
+        "project": ".tmp/motion-repeatability-smoke/20261008T133243413Z/shader",
+        "visualSourceKey": "3e9249e49b1a445d7324661bebbc30c83774d6f9144ff21ec01680f1d1635e6e",
+        "files": 15,
+        "timeline": {
+          "fpsNumerator": 30000,
+          "fpsDenominator": 1001,
+          "frames": 932,
+          "sampleFrames": 1495040
+        },
+        "shots": 37,
+        "cues": 47,
+        "lockedPrefixFrames": 222
+      }
+    },
+    {
+      "name": "Fresh isolated project: portrait",
+      "status": "PASS",
+      "evidence": {
+        "project": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait",
+        "visualSourceKey": "e9ad8ac53a50c26b51cf9d8756e44273fefa7c91992d34c89b4183df09801a8c",
+        "files": 6,
+        "timeline": {
+          "fpsNumerator": 24,
+          "fpsDenominator": 1,
+          "frames": 288,
+          "sampleFrames": 576000
+        },
+        "shots": 4,
+        "cues": 0,
+        "lockedPrefixFrames": 0
+      }
+    },
+    {
+      "name": "Fresh isolated project: landscape",
+      "status": "PASS",
+      "evidence": {
+        "project": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-landscape",
+        "visualSourceKey": "e9ad8ac53a50c26b51cf9d8756e44273fefa7c91992d34c89b4183df09801a8c",
+        "files": 6,
+        "timeline": {
+          "fpsNumerator": 24,
+          "fpsDenominator": 1,
+          "frames": 288,
+          "sampleFrames": 576000
+        },
+        "shots": 4,
+        "cues": 0,
+        "lockedPrefixFrames": 0
+      }
+    },
+    {
+      "name": "Fresh project refuses existing directory",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: EEXIST: file already exists, mkdir 'C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader'"
+      }
+    },
+    {
+      "name": "CLI unknown/duplicate/fractional/path options reject early",
+      "status": "PASS",
+      "evidence": [
+        {
+          "error": "Error: Unknown, duplicated or missing option --unknown"
+        },
+        {
+          "error": "Error: --frames requires a nonnegative integer"
+        },
+        {
+          "error": "Error: --port requires a nonnegative integer"
+        },
+        {
+          "error": "Error: Unknown, duplicated or missing option --frames"
+        }
+      ]
+    },
+    {
+      "name": "Invalid native frames/formats/profile reject before cache creation",
+      "status": "PASS",
+      "evidence": [
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Draft preview is bounded to 120 native frames and five seconds"
+        },
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Unsupported format portrait for shader-reference"
+        },
+        {
+          "error": "Error: Unknown profile fast"
+        },
+        {
+          "error": "Error: Native final export preserves the locked encoded opening only for the complete shader timeline; use draft for an opening window or final from frame 222 onward"
+        }
+      ]
+    },
+    {
+      "name": "Unsafe project paths reject",
+      "status": "PASS",
+      "evidence": [
+        {
+          "error": "Error: Unsafe project path ../job.json"
+        },
+        {
+          "error": "Error: Unsafe project path composition/../job.json"
+        },
+        {
+          "error": "Error: Unsafe project path C:/Windows/win.ini"
+        },
+        {
+          "error": "Error: Unsafe project path composition\\full.js"
+        },
+        {
+          "error": "Error: Unsafe project path /job.json"
+        }
+      ]
+    },
+    {
+      "name": "Locked encoded prefix mutation rejects",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Locked encoded opening changed"
+      }
+    },
+    {
+      "name": "Cold shader landscape actual bounded90-frame draft",
+      "status": "PASS",
+      "evidence": {
+        "key": "f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf",
+        "media": {
+          "file": "draft.mp4",
+          "bytes": 755203,
+          "sha256": "a9d4a240cb85f704ea878b553e475f5227ef91a4b680ba0b3ffab7b6aeec3f1f",
+          "width": 960,
+          "height": 540,
+          "frames": 90,
+          "fps": "30000/1001",
+          "timeBase": "1/30000",
+          "duration": 3.003,
+          "strictDecode": "PASS",
+          "audio": null
+        },
+        "phases": {
+          "preflightMs": 744.4395,
+          "browserSetupMs": 3685.059,
+          "captureMs": 30272.370199999998,
+          "encodeMs": 909.0100999999995,
+          "verificationMs": 321.6663000000044,
+          "totalMs": 36188.4174
+        }
+      }
+    },
+    {
+      "name": "Cold basic portrait actual bounded72-frame draft",
+      "status": "PASS",
+      "evidence": {
+        "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+        "media": {
+          "file": "draft.mp4",
+          "bytes": 46427,
+          "sha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+          "width": 540,
+          "height": 960,
+          "frames": 72,
+          "fps": "24/1",
+          "timeBase": "1/24",
+          "duration": 3,
+          "strictDecode": "PASS",
+          "audio": null
+        },
+        "phases": {
+          "preflightMs": 755.3498000000036,
+          "browserSetupMs": 329.9386000000013,
+          "captureMs": 17524.7178,
+          "encodeMs": 1006.5897000000041,
+          "verificationMs": 186.28310000000056,
+          "totalMs": 19915.255899999996
+        }
+      }
+    },
+    {
+      "name": "Cold basic landscape native format",
+      "status": "PASS",
+      "evidence": {
+        "key": "0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a",
+        "media": {
+          "file": "draft.mp4",
+          "bytes": 6316,
+          "sha256": "d1cf3ed2eab8ef0b009c1a1f74cde41430ac40c5520145d591422eff80fef983",
+          "width": 960,
+          "height": 540,
+          "frames": 4,
+          "fps": "24/1",
+          "timeBase": "1/24",
+          "duration": 0.166667,
+          "strictDecode": "PASS",
+          "audio": null
+        }
+      }
+    },
+    {
+      "name": "Unchanged rerender captures zero: shader",
+      "status": "PASS",
+      "evidence": {
+        "key": "f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf",
+        "newGpuCaptures": 0,
+        "currentRun": {
+          "cacheVerificationMs": 291.96630000000005,
+          "totalMs": 941.7024999999994,
+          "capturedFrames": 0
+        }
+      }
+    },
+    {
+      "name": "Unchanged rerender captures zero: portrait",
+      "status": "PASS",
+      "evidence": {
+        "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+        "newGpuCaptures": 0,
+        "currentRun": {
+          "cacheVerificationMs": 176.0381999999954,
+          "totalMs": 800.6906000000017,
+          "capturedFrames": 0
+        }
+      }
+    },
+    {
+      "name": "Unchanged rerender captures zero: landscape",
+      "status": "PASS",
+      "evidence": {
+        "key": "0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a",
+        "newGpuCaptures": 0,
+        "currentRun": {
+          "cacheVerificationMs": 119.55919999999605,
+          "totalMs": 798.7318999999989,
+          "capturedFrames": 0
+        }
+      }
+    },
+    {
+      "name": "Adding/altering audio plan causes zero visual capture",
+      "status": "PASS",
+      "evidence": {
+        "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+        "newGpuCaptures": 0
+      }
+    },
+    {
+      "name": "Shader registered source actual AAC master",
+      "status": "PASS",
+      "evidence": {
+        "key": "2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23",
+        "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f",
+        "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING",
+        "elapsedMs": 5026.178999999996,
+        "sampleFrames": 1495040,
+        "levels": {
+          "input_i": "-16.33",
+          "input_tp": "-2.18",
+          "input_lra": "9.90",
+          "input_thresh": "-26.80",
+          "output_i": "-14.85",
+          "output_tp": "-2.20",
+          "output_lra": "2.20",
+          "output_thresh": "-25.11",
+          "normalization_type": "dynamic",
+          "target_offset": "-0.35"
+        },
+        "tail": {
+          "rmsDbfs": null,
+          "peakDbfs": null,
+          "peak": 0,
+          "nonfinite": 0,
+          "monoFoldEnergyRatio": null
+        },
+        "cues": 47
+      }
+    },
+    {
+      "name": "Basic self-authored actual24fps AAC master",
+      "status": "PASS",
+      "evidence": {
+        "key": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+        "sha256": "386c08341e1acc0d22ea58b60ded0b2b68707a7aa673852659699926fd5d4075",
+        "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING",
+        "elapsedMs": 1693.915200000003,
+        "sampleFrames": 576000,
+        "levels": {
+          "input_i": "-25.01",
+          "input_tp": "-11.49",
+          "input_lra": "15.50",
+          "input_thresh": "-37.31",
+          "output_i": "-24.17",
+          "output_tp": "-10.40",
+          "output_lra": "0.70",
+          "output_thresh": "-35.59",
+          "normalization_type": "dynamic",
+          "target_offset": "-0.83"
+        },
+        "tail": {
+          "rmsDbfs": null,
+          "peakDbfs": null,
+          "peak": 0,
+          "nonfinite": 0,
+          "monoFoldEnergyRatio": null
+        }
+      }
+    },
+    {
+      "name": "Generic native24/30/30000:1001 independently measured contacts",
+      "status": "PASS",
+      "evidence": [
+        {
+          "fps": "24/1",
+          "sampleFrames": 576000,
+          "contactFrame": 144,
+          "independentlyMeasuredStrongestSample": 288000,
+          "expectedSample": 288000,
+          "quantizationErrorSamples": 0,
+          "peak": 0.10000000149011612
+        },
+        {
+          "fps": "30/1",
+          "sampleFrames": 576000,
+          "contactFrame": 180,
+          "independentlyMeasuredStrongestSample": 288000,
+          "expectedSample": 288000,
+          "quantizationErrorSamples": 0,
+          "peak": 0.10000000149011612
+        },
+        {
+          "fps": "30000/1001",
+          "sampleFrames": 576576,
+          "contactFrame": 180,
+          "independentlyMeasuredStrongestSample": 288288,
+          "expectedSample": 288288,
+          "quantizationErrorSamples": 0,
+          "peak": 0.10000000149011612
+        }
+      ]
+    },
+    {
+      "name": "Producer bytes independently change visual/audio cache identity",
+      "status": "PASS",
+      "evidence": {
+        "originalVisualKey": "0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a",
+        "changedVisualKey": "75f517f50b4a43e419acb5232ebfbaf3a789516b2edff3f8ba90d6e6d05e14a7",
+        "originalAudioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+        "changedAudioKey": "9ee4e9109bbbf3357c5906f7281f7914e8914dedd1a2220f2618543ae313351e"
+      }
+    },
+    {
+      "name": "Short prepared source cache uses exact cold PCM byte span",
+      "status": "PASS",
+      "evidence": {
+        "preparedBytes": 3072,
+        "preparedSha256": "cccca117ed4be9c72d5198ef326c3c1bc6da48e9053e88e6b1f4e29e65e9ea9e",
+        "preparedCacheHit": true,
+        "firstMasterKey": "3b7f558ad411ee5fc57167a8ae3f37a0d61248cedfd4b231ff48e3deec4ca67f",
+        "secondMasterKey": "31b03cf838f77c219b12cea3327e9af1f1352b98dcf7ddbc226c542fcbe2d349"
+      }
+    },
+    {
+      "name": "Failed registered source decode rejects without silent fallback",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: ffmpeg.exe failed (1): C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\broken-source\\pulse.wav: Invalid data found when processing input\r\n",
+        "retainedAacMasters": 0
+      }
+    },
+    {
+      "name": "Visual-copy-only edit captures new frames and reuses unchanged AAC",
+      "status": "PASS",
+      "evidence": {
+        "visualKey": "c6fa1001f9e865c1f71a5257b9607edfe2b9f97edfe25a4c05092ea310acf028",
+        "newGpuCaptures": 4,
+        "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+        "audioCacheHit": true
+      }
+    },
+    {
+      "name": "Audio-only edit creates new AAC and captures zero images",
+      "status": "PASS",
+      "evidence": {
+        "visualKey": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+        "newGpuCaptures": 0,
+        "audioKey": "58cb61b6054eea713c5244a8f9bccc180854d1f441003259aaff8f9224691e39",
+        "masterChanged": true
+      }
+    },
+    {
+      "name": "Source edit invalidates cached visual key",
+      "status": "PASS",
+      "evidence": {
+        "oldKey": "0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a",
+        "newKey": "48af7f4ac9b97d7be341c481a472016193f1af4d6fb5c4f308a156f2074dad8d",
+        "newGpuCaptures": 4
+      }
+    },
+    {
+      "name": "Retained visual cache rejects stale-producer",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Visual cache binding is stale",
+        "newGpuCaptures": 0
+      }
+    },
+    {
+      "name": "Retained visual cache rejects corrupt-media",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Visual cache media is corrupt",
+        "newGpuCaptures": 0
+      }
+    },
+    {
+      "name": "Retained visual cache rejects missing-media",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: ENOENT: no such file or directory, realpath 'C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-landscape\\.cache\\visual\\0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a\\draft.mp4'",
+        "newGpuCaptures": 0
+      }
+    },
+    {
+      "name": "Retained audio cache rejects corrupt-aac",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Retained cache bytes are corrupt: master.m4a"
+      }
+    },
+    {
+      "name": "Retained audio cache rejects missing-aac",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Retained cache bytes are corrupt: master.m4a"
+      }
+    },
+    {
+      "name": "Bounded draft window actual verified audio mux: shader",
+      "status": "PASS",
+      "evidence": {
+        "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+        "bytes": 846083,
+        "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556",
+        "window": {
+          "format": "landscape",
+          "from": 222,
+          "frames": 90,
+          "profile": "draft",
+          "width": 960,
+          "height": 540
+        },
+        "status": "STREAM_COPY_PASS",
+        "poster": {
+          "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+          "bytes": 804612,
+          "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0"
+        },
+        "receipt": {
+          "schemaVersion": 1,
+          "key": "4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439",
+          "status": "STREAM_COPY_PASS",
+          "sourceSha256": "a9d4a240cb85f704ea878b553e475f5227ef91a4b680ba0b3ffab7b6aeec3f1f",
+          "audioKey": "2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23",
+          "audioSha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f",
+          "outputs": [
+            {
+              "file": "film.mp4",
+              "bytes": 846083,
+              "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+            },
+            {
+              "file": "window.m4a",
+              "bytes": 89489,
+              "sha256": "e2a31c3679c65013fda7421c188194e1a1db8336fff33b881f3ad1fa7ec85799"
+            },
+            {
+              "file": "window.wav",
+              "bytes": 864966,
+              "sha256": "0182d9f4fdc0d0d7f24339533724be23141492880d9190a15e58206ac6ff658b"
+            }
+          ],
+          "videoPacketsVerified": 90,
+          "visualReceiptSha256": "d2944991efdece0c394a4199898b981e1cfa5c22d9adcf38a7d8c6a8af0912bd",
+          "windowAudio": {
+            "fromFrame": 222,
+            "frameCount": 90,
+            "startSample": 355555,
+            "endSample": 499699,
+            "pcmSliceSha256": "6c0f255669d9ad9772520c5cd17fce0e368e37401b621aee2a6504e0f85a6dab",
+            "logicalSampleFrames": 144144,
+            "decodedAacFrames": 144384,
+            "decodedAacPcmSha256": "012db4f89b8e8c0f1a1481662aa8d66d332089317c7f62f6486190707fc12f52",
+            "levels": {
+              "input_i": "-16.74",
+              "input_tp": "-2.63",
+              "input_lra": "0.20",
+              "input_thresh": "-26.74",
+              "output_i": "-15.55",
+              "output_tp": "-2.20",
+              "output_lra": "0.00",
+              "output_thresh": "-25.55",
+              "normalization_type": "dynamic",
+              "target_offset": "0.35"
+            },
+            "samples": {
+              "rmsDbfs": -18.006039182469404,
+              "peakDbfs": -2.6312782428744756,
+              "peak": 0.7386455535888672,
+              "nonfinite": 0,
+              "monoFoldEnergyRatio": 0.9457244423972608
+            },
+            "cues": [
+              {
+                "id": "macro-rosette",
+                "frame": 222,
+                "shiftedContactSample": 0,
+                "contactInsideWindow": true,
+                "layers": [
+                  {
+                    "source": "gear",
+                    "shiftedStartSample": 0,
+                    "shiftedEndSample": 4194,
+                    "croppedHeadSamples": 3754,
+                    "croppedTailSamples": 0
+                  }
+                ]
+              },
+              {
+                "id": "macro-strip",
+                "frame": 229,
+                "shiftedContactSample": 11211,
+                "contactInsideWindow": true,
+                "layers": [
+                  {
+                    "source": "shutter",
+                    "shiftedStartSample": 7350,
+                    "shiftedEndSample": 14060,
+                    "croppedHeadSamples": 0,
+                    "croppedTailSamples": 0
+                  }
+                ]
+              },
+              {
+                "id": "macro-dots",
+                "frame": 238,
+                "shiftedContactSample": 25626,
+                "contactInsideWindow": true,
+                "layers": [
+                  {
+                    "source": "bubble",
+                    "shiftedStartSample": 25489,
+                    "shiftedEndSample": 26970,
+                    "croppedHeadSamples": 0,
+                    "croppedTailSamples": 0
+                  }
+                ]
+              },
+              {
+                "id": "catalog-swipe",
+                "frame": 258,
+                "shiftedContactSample": 57658,
+                "contactInsideWindow": true,
+                "layers": [
+                  {
+                    "source": "sweep",
+                    "shiftedStartSample": 46411,
+                    "shiftedEndSample": 72945,
+                    "croppedHeadSamples": 0,
+                    "croppedTailSamples": 0
+                  }
+                ]
+              },
+              {
+                "id": "capability-dive",
+                "frame": 307,
+                "shiftedContactSample": 136136,
+                "contactInsideWindow": true,
+                "layers": [
+                  {
+                    "source": "air-zoom",
+                    "shiftedStartSample": 120538,
+                    "shiftedEndSample": 144144,
+                    "croppedHeadSamples": 0,
+                    "croppedTailSamples": 1486
+                  },
+                  {
+                    "source": "sub",
+                    "shiftedStartSample": 135760,
+                    "shiftedEndSample": 144144,
+                    "croppedHeadSamples": 0,
+                    "croppedTailSamples": 4416
+                  }
+                ]
+              }
+            ],
+            "method": "Exact native-frame sample slice of verified PCM master, reset PTS to zero, separately encoded AAC. Whole-film AAC bytes are not copied into this window; local loudness is descriptive, not a whole-film loudness gate."
+          },
+          "nativeVideoDuration": 3.003,
+          "decodedAudioDuration": 3.008,
+          "decodedAudioSha256": "012db4f89b8e8c0f1a1481662aa8d66d332089317c7f62f6486190707fc12f52",
+          "metadata": {
+            "streams": [
+              {
+                "index": 0,
+                "codec_name": "h264",
+                "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+                "profile": "High",
+                "codec_type": "video",
+                "codec_time_base": "1001/60000",
+                "codec_tag_string": "avc1",
+                "codec_tag": "0x31637661",
+                "width": 960,
+                "height": 540,
+                "coded_width": 960,
+                "coded_height": 544,
+                "has_b_frames": 2,
+                "pix_fmt": "yuv420p",
+                "level": 31,
+                "chroma_location": "left",
+                "refs": 4,
+                "is_avc": "true",
+                "nal_length_size": "4",
+                "r_frame_rate": "30000/1001",
+                "avg_frame_rate": "30000/1001",
+                "time_base": "1/30000",
+                "start_pts": 0,
+                "start_time": "0.000000",
+                "duration_ts": 90090,
+                "duration": "3.003000",
+                "bit_rate": "2007134",
+                "bits_per_raw_sample": "8",
+                "nb_frames": "90",
+                "nb_read_frames": "90",
+                "extradata_hash": "SHA256:ec4b07b1c3be41c99be9ca18e3415b0600b45d3354e68e77450ebc23f5a11f97",
+                "disposition": {
+                  "default": 1,
+                  "dub": 0,
+                  "original": 0,
+                  "comment": 0,
+                  "lyrics": 0,
+                  "karaoke": 0,
+                  "forced": 0,
+                  "hearing_impaired": 0,
+                  "visual_impaired": 0,
+                  "clean_effects": 0,
+                  "attached_pic": 0,
+                  "timed_thumbnails": 0
+                },
+                "tags": {
+                  "language": "und",
+                  "handler_name": "VideoHandler",
+                  "encoder": "Lavc60.3.100 libx264"
+                }
+              },
+              {
+                "index": 1,
+                "codec_name": "aac",
+                "codec_long_name": "AAC (Advanced Audio Coding)",
+                "profile": "LC",
+                "codec_type": "audio",
+                "codec_time_base": "1/48000",
+                "codec_tag_string": "mp4a",
+                "codec_tag": "0x6134706d",
+                "sample_fmt": "fltp",
+                "sample_rate": "48000",
+                "channels": 2,
+                "channel_layout": "stereo",
+                "bits_per_sample": 0,
+                "r_frame_rate": "0/0",
+                "avg_frame_rate": "0/0",
+                "time_base": "1/48000",
+                "start_pts": 0,
+                "start_time": "0.000000",
+                "duration_ts": 144144,
+                "duration": "3.003000",
+                "bit_rate": "233082",
+                "max_bit_rate": "233082",
+                "nb_frames": "142",
+                "nb_read_frames": "141",
+                "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+                "disposition": {
+                  "default": 1,
+                  "dub": 0,
+                  "original": 0,
+                  "comment": 0,
+                  "lyrics": 0,
+                  "karaoke": 0,
+                  "forced": 0,
+                  "hearing_impaired": 0,
+                  "visual_impaired": 0,
+                  "clean_effects": 0,
+                  "attached_pic": 0,
+                  "timed_thumbnails": 0
+                },
+                "tags": {
+                  "language": "und",
+                  "handler_name": "SoundHandler"
+                }
+              }
+            ],
+            "format": {
+              "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4",
+              "nb_streams": 2,
+              "nb_programs": 0,
+              "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+              "format_long_name": "QuickTime / MOV",
+              "start_time": "0.000000",
+              "duration": "3.003000",
+              "size": "846083",
+              "bit_rate": "2253967",
+              "probe_score": 100,
+              "tags": {
+                "major_brand": "isom",
+                "minor_version": "512",
+                "compatible_brands": "isomiso2avc1mp41",
+                "encoder": "Lavf60.3.100"
+              }
+            }
+          },
+          "commands": [
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-count_frames",
+                "-show_streams",
+                "-show_format",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\visual\\f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf\\draft.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\audio\\2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23\\master.wav",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\audio\\2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23\\master.wav",
+                "-af",
+                "atrim=start_sample=355555:end_sample=499699,asetpts=PTS-STARTPTS",
+                "-c:a",
+                "pcm_s24le",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.wav"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.wav",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.wav",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "224k",
+                "-movflags",
+                "+faststart",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+                "-map",
+                "0:a:0",
+                "-af",
+                "loudnorm=I=-15.2:TP=-2.2:LRA=14:print_format=json",
+                "-f",
+                "null",
+                "-"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\visual\\f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf\\draft.mp4",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+                "-map",
+                "0:v:0",
+                "-map",
+                "1:a:0",
+                "-c",
+                "copy",
+                "-video_track_timescale",
+                "30000",
+                "-movflags",
+                "+faststart",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4",
+                "-f",
+                "null",
+                "-"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-count_frames",
+                "-show_streams",
+                "-show_format",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "v:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\visual\\f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf\\draft.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "v:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "a:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "a:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-count_frames",
+                "-show_streams",
+                "-show_format",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            }
+          ],
+          "providerCalls": 0,
+          "paidSpendUsd": 0,
+          "elapsedMs": 2853.8627000000124
+        }
+      }
+    },
+    {
+      "name": "Bounded draft window actual verified audio mux: portrait",
+      "status": "PASS",
+      "evidence": {
+        "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+        "bytes": 52970,
+        "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf",
+        "window": {
+          "format": "portrait",
+          "from": 144,
+          "frames": 72,
+          "profile": "draft",
+          "width": 540,
+          "height": 960
+        },
+        "status": "STREAM_COPY_PASS",
+        "poster": {
+          "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+          "bytes": 25786,
+          "sha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff"
+        },
+        "receipt": {
+          "schemaVersion": 1,
+          "key": "c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6",
+          "status": "STREAM_COPY_PASS",
+          "sourceSha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+          "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+          "audioSha256": "386c08341e1acc0d22ea58b60ded0b2b68707a7aa673852659699926fd5d4075",
+          "outputs": [
+            {
+              "file": "film.mp4",
+              "bytes": 52970,
+              "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf"
+            },
+            {
+              "file": "window.m4a",
+              "bytes": 6112,
+              "sha256": "ad864cc289ef004770e3a40f08d127ac8a49e6346c0ad817119e87898f2c0a2e"
+            },
+            {
+              "file": "window.wav",
+              "bytes": 864102,
+              "sha256": "fda790ddcaf268b47bc4adb10a2cea81eadd44be6d2844ef13922c060b5ed230"
+            }
+          ],
+          "videoPacketsVerified": 72,
+          "visualReceiptSha256": "7d54a915891d0c60d6dccdc93a2054eac05f8bbb3b3d7468126f3f4b1606bea2",
+          "windowAudio": {
+            "fromFrame": 144,
+            "frameCount": 72,
+            "startSample": 288000,
+            "endSample": 432000,
+            "pcmSliceSha256": "34b61b43ebc517a21a5cd5720e99db33103ded88b4a091548c16f30e568de069",
+            "logicalSampleFrames": 144000,
+            "decodedAacFrames": 144384,
+            "decodedAacPcmSha256": "acd10f994dad3981e7f6e1b566e683c7391e22bcee1c37698721b8f436cdae3e",
+            "levels": {
+              "input_i": "-30.78",
+              "input_tp": "-10.48",
+              "input_lra": "8.00",
+              "input_thresh": "-41.74",
+              "output_i": "-20.89",
+              "output_tp": "-2.77",
+              "output_lra": "0.00",
+              "output_thresh": "-32.13",
+              "normalization_type": "dynamic",
+              "target_offset": "-4.11"
+            },
+            "samples": {
+              "rmsDbfs": -33.05250013064135,
+              "peakDbfs": -10.750049978246086,
+              "peak": 0.2900664508342743,
+              "nonfinite": 0,
+              "monoFoldEnergyRatio": 0.9999980826830412
+            },
+            "cues": [
+              {
+                "id": "self-contact-1",
+                "frame": 144,
+                "shiftedContactSample": 0,
+                "contactInsideWindow": true,
+                "layers": [
+                  {
+                    "source": "sub",
+                    "shiftedStartSample": 0,
+                    "shiftedEndSample": 13045,
+                    "croppedHeadSamples": 395,
+                    "croppedTailSamples": 0
+                  }
+                ]
+              },
+              {
+                "id": "self-contact-2",
+                "frame": 216,
+                "shiftedContactSample": 144000,
+                "contactInsideWindow": false,
+                "layers": [
+                  {
+                    "source": "sub",
+                    "shiftedStartSample": 143605,
+                    "shiftedEndSample": 144000,
+                    "croppedHeadSamples": 0,
+                    "croppedTailSamples": 13045
+                  }
+                ]
+              }
+            ],
+            "method": "Exact native-frame sample slice of verified PCM master, reset PTS to zero, separately encoded AAC. Whole-film AAC bytes are not copied into this window; local loudness is descriptive, not a whole-film loudness gate."
+          },
+          "nativeVideoDuration": 3,
+          "decodedAudioDuration": 3.008,
+          "decodedAudioSha256": "acd10f994dad3981e7f6e1b566e683c7391e22bcee1c37698721b8f436cdae3e",
+          "metadata": {
+            "streams": [
+              {
+                "index": 0,
+                "codec_name": "h264",
+                "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+                "profile": "High",
+                "codec_type": "video",
+                "codec_time_base": "1/48",
+                "codec_tag_string": "avc1",
+                "codec_tag": "0x31637661",
+                "width": 540,
+                "height": 960,
+                "coded_width": 544,
+                "coded_height": 960,
+                "has_b_frames": 2,
+                "pix_fmt": "yuv420p",
+                "level": 31,
+                "chroma_location": "left",
+                "refs": 4,
+                "is_avc": "true",
+                "nal_length_size": "4",
+                "r_frame_rate": "24/1",
+                "avg_frame_rate": "24/1",
+                "time_base": "1/24",
+                "start_pts": 0,
+                "start_time": "0.000000",
+                "duration_ts": 72,
+                "duration": "3.000000",
+                "bit_rate": "119389",
+                "bits_per_raw_sample": "8",
+                "nb_frames": "72",
+                "nb_read_frames": "72",
+                "extradata_hash": "SHA256:732e659679eb0584d887debf646480440f47d78f469832883e1cf4d4c0554115",
+                "disposition": {
+                  "default": 1,
+                  "dub": 0,
+                  "original": 0,
+                  "comment": 0,
+                  "lyrics": 0,
+                  "karaoke": 0,
+                  "forced": 0,
+                  "hearing_impaired": 0,
+                  "visual_impaired": 0,
+                  "clean_effects": 0,
+                  "attached_pic": 0,
+                  "timed_thumbnails": 0
+                },
+                "tags": {
+                  "language": "und",
+                  "handler_name": "VideoHandler",
+                  "encoder": "Lavc60.3.100 libx264"
+                }
+              },
+              {
+                "index": 1,
+                "codec_name": "aac",
+                "codec_long_name": "AAC (Advanced Audio Coding)",
+                "profile": "LC",
+                "codec_type": "audio",
+                "codec_time_base": "1/48000",
+                "codec_tag_string": "mp4a",
+                "codec_tag": "0x6134706d",
+                "sample_fmt": "fltp",
+                "sample_rate": "48000",
+                "channels": 2,
+                "channel_layout": "stereo",
+                "bits_per_sample": 0,
+                "r_frame_rate": "0/0",
+                "avg_frame_rate": "0/0",
+                "time_base": "1/48000",
+                "start_pts": 0,
+                "start_time": "0.000000",
+                "duration_ts": 144000,
+                "duration": "3.000000",
+                "bit_rate": "12545",
+                "max_bit_rate": "12545",
+                "nb_frames": "142",
+                "nb_read_frames": "141",
+                "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+                "disposition": {
+                  "default": 1,
+                  "dub": 0,
+                  "original": 0,
+                  "comment": 0,
+                  "lyrics": 0,
+                  "karaoke": 0,
+                  "forced": 0,
+                  "hearing_impaired": 0,
+                  "visual_impaired": 0,
+                  "clean_effects": 0,
+                  "attached_pic": 0,
+                  "timed_thumbnails": 0
+                },
+                "tags": {
+                  "language": "und",
+                  "handler_name": "SoundHandler"
+                }
+              }
+            ],
+            "format": {
+              "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4",
+              "nb_streams": 2,
+              "nb_programs": 0,
+              "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+              "format_long_name": "QuickTime / MOV",
+              "start_time": "0.000000",
+              "duration": "3.000000",
+              "size": "52970",
+              "bit_rate": "141253",
+              "probe_score": 100,
+              "tags": {
+                "major_brand": "isom",
+                "minor_version": "512",
+                "compatible_brands": "isomiso2avc1mp41",
+                "encoder": "Lavf60.3.100"
+              }
+            }
+          },
+          "commands": [
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-count_frames",
+                "-show_streams",
+                "-show_format",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\visual\\0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91\\draft.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\audio\\3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197\\master.wav",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\audio\\3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197\\master.wav",
+                "-af",
+                "atrim=start_sample=288000:end_sample=432000,asetpts=PTS-STARTPTS",
+                "-c:a",
+                "pcm_s24le",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.wav"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.wav",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.wav",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "224k",
+                "-movflags",
+                "+faststart",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+                "-map",
+                "0:a:0",
+                "-af",
+                "loudnorm=I=-25:TP=-2.2:LRA=14:print_format=json",
+                "-f",
+                "null",
+                "-"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\visual\\0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91\\draft.mp4",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+                "-map",
+                "0:v:0",
+                "-map",
+                "1:a:0",
+                "-c",
+                "copy",
+                "-video_track_timescale",
+                "24",
+                "-movflags",
+                "+faststart",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4",
+                "-f",
+                "null",
+                "-"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-count_frames",
+                "-show_streams",
+                "-show_format",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "v:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\visual\\0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91\\draft.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "v:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "a:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-select_streams",
+                "a:0",
+                "-show_packets",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffprobe.exe",
+              "args": [
+                "-v",
+                "error",
+                "-count_frames",
+                "-show_streams",
+                "-show_format",
+                "-show_data_hash",
+                "sha256",
+                "-of",
+                "json",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            },
+            {
+              "tool": "ffmpeg.exe",
+              "args": [
+                "-nostdin",
+                "-hide_banner",
+                "-v",
+                "error",
+                "-xerror",
+                "-i",
+                "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+                "-map",
+                "0:a:0",
+                "-ar",
+                "48000",
+                "-ac",
+                "2",
+                "-f",
+                "f32le",
+                "pipe:1"
+              ],
+              "exitCode": 0
+            }
+          ],
+          "providerCalls": 0,
+          "paidSpendUsd": 0,
+          "elapsedMs": 2284.0961000000098
+        }
+      }
+    },
+    {
+      "name": "Complete basic portrait12s288-frame native export and full AAC stream copy",
+      "status": "PASS",
+      "evidence": {
+        "media": {
+          "file": "draft.mp4",
+          "bytes": 1343403,
+          "sha256": "d8b40cf6f220cc8d5d4802125656c8b974f243066f26868347bcc81b9de4c17c",
+          "width": 1080,
+          "height": 1920,
+          "frames": 288,
+          "fps": "24/1",
+          "timeBase": "1/24",
+          "duration": 12,
+          "strictDecode": "PASS",
+          "audio": null
+        },
+        "phases": {
+          "preflightMs": 646.2030999999988,
+          "browserSetupMs": 297.38129999999364,
+          "captureMs": 78282.9593,
+          "encodeMs": 3351.585699999996,
+          "verificationMs": 1084.3755999999994,
+          "totalMs": 83771.565
+        },
+        "visualReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/cadcabf14f53d1303ad9fe162f2e27f71c86db15cdb78008e541c8a5f3cf4add/receipt.json",
+        "muxReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/mux/15bcd4d15632e60cd9e0a0e3373e9a58356a7f610fa6cafdc5cfa0ac1746e4cd/receipt.json",
+        "videoPacketsVerified": 288,
+        "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+        "muxSha256": "932f9e68cfd669180b02e719cafa4c8af0eff84fe9ca8a3eb20b5557e8d23ba4",
+        "nativeVideoDuration": 12
+      }
+    },
+    {
+      "name": "Frozen implementation unchanged through smoke",
+      "status": "PASS",
+      "evidence": [
+        {
+          "file": "tools/motion-launch.mjs",
+          "bytes": 2799,
+          "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+        },
+        {
+          "file": "tools/motion-launch/project.mjs",
+          "bytes": 12093,
+          "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+        },
+        {
+          "file": "tools/motion-launch/visual.mjs",
+          "bytes": 22930,
+          "sha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b"
+        },
+        {
+          "file": "tools/motion-launch/preview-page.mjs",
+          "bytes": 10246,
+          "sha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133"
+        },
+        {
+          "file": "tools/motion-launch/templates.mjs",
+          "bytes": 2097,
+          "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+        },
+        {
+          "file": "tools/motion-launch/audio.mjs",
+          "bytes": 42037,
+          "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+        }
+      ]
+    },
+    {
+      "name": "Accepted originals and old helpers preserved after smoke",
+      "status": "PASS",
+      "evidence": [
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+          "bytes": 24137255,
+          "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+          "bytes": 5504941,
+          "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+        },
+        {
+          "file": "artifacts/grifon-shader-recreation.html",
+          "bytes": 33662393,
+          "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.js",
+          "bytes": 37633,
+          "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.json",
+          "bytes": 5060,
+          "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+          "bytes": 10269,
+          "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/render-full.mjs",
+          "bytes": 20291,
+          "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/build-full.mjs",
+          "bytes": 3252,
+          "sha256": "dbfe243676e6ce8173a1f64265ceaee4a3e32d6878cd95bb26011f88eebbb2bf"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+          "bytes": 5459,
+          "sha256": "ffb4c9fd5104cadf97bab26e4674152e150312e59eb7f3821f493461c068b223"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+          "bytes": 2352,
+          "sha256": "2d282feb4dda8d7c470f416431930267aa76ea38a6beda877f1ad29392a09cc3"
+        },
+        {
+          "file": "tools/artifacts/build-grifon-shader-recreation.mjs",
+          "bytes": 5801,
+          "sha256": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157"
+        },
+        {
+          "file": "tools/artifacts/grifon-shader-recreation.tpl.html",
+          "bytes": 7987,
+          "sha256": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d"
+        }
+      ]
+    }
+  ],
+  "renderRuns": [
+    {
+      "label": "shader-cold",
+      "id": "shader",
+      "key": "f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf",
+      "cacheHit": false,
+      "capturedFramesThisRun": 90,
+      "window": {
+        "format": "landscape",
+        "from": 222,
+        "frames": 90,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 755203,
+        "sha256": "a9d4a240cb85f704ea878b553e475f5227ef91a4b680ba0b3ffab7b6aeec3f1f",
+        "width": 960,
+        "height": 540,
+        "frames": 90,
+        "fps": "30000/1001",
+        "timeBase": "1/30000",
+        "duration": 3.003,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 744.4395,
+        "browserSetupMs": 3685.059,
+        "captureMs": 30272.370199999998,
+        "encodeMs": 909.0100999999995,
+        "verificationMs": 321.6663000000044,
+        "totalMs": 36188.4174
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/shader/.cache/visual/f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf/receipt.json"
+    },
+    {
+      "label": "basic-portrait-cold",
+      "id": "portrait",
+      "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+      "cacheHit": false,
+      "capturedFramesThisRun": 72,
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 72,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 46427,
+        "sha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+        "width": 540,
+        "height": 960,
+        "frames": 72,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 3,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 755.3498000000036,
+        "browserSetupMs": 329.9386000000013,
+        "captureMs": 17524.7178,
+        "encodeMs": 1006.5897000000041,
+        "verificationMs": 186.28310000000056,
+        "totalMs": 19915.255899999996
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91/receipt.json"
+    },
+    {
+      "label": "basic-landscape-cold",
+      "id": "landscape",
+      "key": "0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a",
+      "cacheHit": false,
+      "capturedFramesThisRun": 4,
+      "window": {
+        "format": "landscape",
+        "from": 144,
+        "frames": 4,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 6316,
+        "sha256": "d1cf3ed2eab8ef0b009c1a1f74cde41430ac40c5520145d591422eff80fef983",
+        "width": 960,
+        "height": 540,
+        "frames": 4,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 0.166667,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 653.8827999999994,
+        "browserSetupMs": 310.8015000000014,
+        "captureMs": 997.9591999999975,
+        "encodeMs": 170.87509999999747,
+        "verificationMs": 128.09769999999844,
+        "totalMs": 2353.496500000001
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-landscape/.cache/visual/0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a/receipt.json"
+    },
+    {
+      "label": "unchanged-shader",
+      "id": "shader",
+      "key": "f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf",
+      "cacheHit": true,
+      "capturedFramesThisRun": 0,
+      "window": {
+        "format": "landscape",
+        "from": 222,
+        "frames": 90,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 755203,
+        "sha256": "a9d4a240cb85f704ea878b553e475f5227ef91a4b680ba0b3ffab7b6aeec3f1f",
+        "width": 960,
+        "height": 540,
+        "frames": 90,
+        "fps": "30000/1001",
+        "timeBase": "1/30000",
+        "duration": 3.003,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 744.4395,
+        "browserSetupMs": 3685.059,
+        "captureMs": 30272.370199999998,
+        "encodeMs": 909.0100999999995,
+        "verificationMs": 321.6663000000044,
+        "totalMs": 36188.4174
+      },
+      "currentRun": {
+        "cacheVerificationMs": 291.96630000000005,
+        "totalMs": 941.7024999999994,
+        "capturedFrames": 0
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/shader/.cache/visual/f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf/receipt.json"
+    },
+    {
+      "label": "unchanged-portrait",
+      "id": "portrait",
+      "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+      "cacheHit": true,
+      "capturedFramesThisRun": 0,
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 72,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 46427,
+        "sha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+        "width": 540,
+        "height": 960,
+        "frames": 72,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 3,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 755.3498000000036,
+        "browserSetupMs": 329.9386000000013,
+        "captureMs": 17524.7178,
+        "encodeMs": 1006.5897000000041,
+        "verificationMs": 186.28310000000056,
+        "totalMs": 19915.255899999996
+      },
+      "currentRun": {
+        "cacheVerificationMs": 176.0381999999954,
+        "totalMs": 800.6906000000017,
+        "capturedFrames": 0
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91/receipt.json"
+    },
+    {
+      "label": "unchanged-landscape",
+      "id": "landscape",
+      "key": "0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a",
+      "cacheHit": true,
+      "capturedFramesThisRun": 0,
+      "window": {
+        "format": "landscape",
+        "from": 144,
+        "frames": 4,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 6316,
+        "sha256": "d1cf3ed2eab8ef0b009c1a1f74cde41430ac40c5520145d591422eff80fef983",
+        "width": 960,
+        "height": 540,
+        "frames": 4,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 0.166667,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 653.8827999999994,
+        "browserSetupMs": 310.8015000000014,
+        "captureMs": 997.9591999999975,
+        "encodeMs": 170.87509999999747,
+        "verificationMs": 128.09769999999844,
+        "totalMs": 2353.496500000001
+      },
+      "currentRun": {
+        "cacheVerificationMs": 119.55919999999605,
+        "totalMs": 798.7318999999989,
+        "capturedFrames": 0
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-landscape/.cache/visual/0b28089a94a65ce7d9e9fc56b105604a80018e6381fad24e288a9228dafa709a/receipt.json"
+    },
+    {
+      "label": "audio-added",
+      "id": "portrait",
+      "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+      "cacheHit": true,
+      "capturedFramesThisRun": 0,
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 72,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 46427,
+        "sha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+        "width": 540,
+        "height": 960,
+        "frames": 72,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 3,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 755.3498000000036,
+        "browserSetupMs": 329.9386000000013,
+        "captureMs": 17524.7178,
+        "encodeMs": 1006.5897000000041,
+        "verificationMs": 186.28310000000056,
+        "totalMs": 19915.255899999996
+      },
+      "currentRun": {
+        "cacheVerificationMs": 171.3824999999997,
+        "totalMs": 824.3464999999997,
+        "capturedFrames": 0
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91/receipt.json"
+    },
+    {
+      "label": "copy-edited",
+      "id": "portrait",
+      "key": "c6fa1001f9e865c1f71a5257b9607edfe2b9f97edfe25a4c05092ea310acf028",
+      "cacheHit": false,
+      "capturedFramesThisRun": 4,
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 4,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 8447,
+        "sha256": "fc2223d1f8bff2ea4d63c009a78fce005259bb59a848e0bba20c282e10741e17",
+        "width": 540,
+        "height": 960,
+        "frames": 4,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 0.166667,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 622.3819000000076,
+        "browserSetupMs": 306.085699999996,
+        "captureMs": 1147.502199999988,
+        "encodeMs": 183.7317000000039,
+        "verificationMs": 127.06030000001192,
+        "totalMs": 2477.842000000004
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/c6fa1001f9e865c1f71a5257b9607edfe2b9f97edfe25a4c05092ea310acf028/receipt.json"
+    },
+    {
+      "label": "audio-edited",
+      "id": "portrait",
+      "key": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+      "cacheHit": true,
+      "capturedFramesThisRun": 0,
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 72,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 46427,
+        "sha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+        "width": 540,
+        "height": 960,
+        "frames": 72,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 3,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 755.3498000000036,
+        "browserSetupMs": 329.9386000000013,
+        "captureMs": 17524.7178,
+        "encodeMs": 1006.5897000000041,
+        "verificationMs": 186.28310000000056,
+        "totalMs": 19915.255899999996
+      },
+      "currentRun": {
+        "cacheVerificationMs": 172.22179999999935,
+        "totalMs": 814.8110000000015,
+        "capturedFrames": 0
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91/receipt.json"
+    },
+    {
+      "label": "source-edited",
+      "id": "landscape",
+      "key": "48af7f4ac9b97d7be341c481a472016193f1af4d6fb5c4f308a156f2074dad8d",
+      "cacheHit": false,
+      "capturedFramesThisRun": 4,
+      "window": {
+        "format": "landscape",
+        "from": 144,
+        "frames": 4,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 6316,
+        "sha256": "d1cf3ed2eab8ef0b009c1a1f74cde41430ac40c5520145d591422eff80fef983",
+        "width": 960,
+        "height": 540,
+        "frames": 4,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 0.166667,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 651.097299999994,
+        "browserSetupMs": 297.3801999999996,
+        "captureMs": 987.3825999999972,
+        "encodeMs": 174.34870000000228,
+        "verificationMs": 131.12240000000747,
+        "totalMs": 2330.0561000000016
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-landscape/.cache/visual/48af7f4ac9b97d7be341c481a472016193f1af4d6fb5c4f308a156f2074dad8d/receipt.json"
+    },
+    {
+      "label": "basic-native-full",
+      "id": "portrait",
+      "key": "cadcabf14f53d1303ad9fe162f2e27f71c86db15cdb78008e541c8a5f3cf4add",
+      "cacheHit": false,
+      "capturedFramesThisRun": 288,
+      "window": {
+        "format": "portrait",
+        "from": 0,
+        "frames": 288,
+        "profile": "final",
+        "width": 1080,
+        "height": 1920
+      },
+      "media": {
+        "file": "draft.mp4",
+        "bytes": 1343403,
+        "sha256": "d8b40cf6f220cc8d5d4802125656c8b974f243066f26868347bcc81b9de4c17c",
+        "width": 1080,
+        "height": 1920,
+        "frames": 288,
+        "fps": "24/1",
+        "timeBase": "1/24",
+        "duration": 12,
+        "strictDecode": "PASS",
+        "audio": null
+      },
+      "phases": {
+        "preflightMs": 646.2030999999988,
+        "browserSetupMs": 297.38129999999364,
+        "captureMs": 78282.9593,
+        "encodeMs": 3351.585699999996,
+        "verificationMs": 1084.3755999999994,
+        "totalMs": 83771.565
+      },
+      "privateReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/cadcabf14f53d1303ad9fe162f2e27f71c86db15cdb78008e541c8a5f3cf4add/receipt.json"
+    }
+  ],
+  "audioRuns": [
+    {
+      "label": "shader-cold",
+      "key": "2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23",
+      "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f",
+      "cacheHit": false,
+      "elapsedMs": 5026.178999999996,
+      "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING"
+    },
+    {
+      "label": "basic-cold",
+      "key": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+      "sha256": "386c08341e1acc0d22ea58b60ded0b2b68707a7aa673852659699926fd5d4075",
+      "cacheHit": false,
+      "elapsedMs": 1693.915200000003,
+      "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING"
+    }
+  ],
+  "drafts": [
+    {
+      "id": "shader",
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+      "bytes": 846083,
+      "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556",
+      "window": {
+        "format": "landscape",
+        "from": 222,
+        "frames": 90,
+        "profile": "draft",
+        "width": 960,
+        "height": 540
+      },
+      "visualKey": "f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf",
+      "visualReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/shader/.cache/visual/f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf/receipt.json",
+      "audioKey": "2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23",
+      "muxKey": "4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439",
+      "muxReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/shader/.cache/mux/4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439/receipt.json",
+      "poster": {
+        "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+        "bytes": 804612,
+        "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0",
+        "nativeFrame": 222
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "key": "4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439",
+        "status": "STREAM_COPY_PASS",
+        "sourceSha256": "a9d4a240cb85f704ea878b553e475f5227ef91a4b680ba0b3ffab7b6aeec3f1f",
+        "audioKey": "2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23",
+        "audioSha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f",
+        "outputs": [
+          {
+            "file": "film.mp4",
+            "bytes": 846083,
+            "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+          },
+          {
+            "file": "window.m4a",
+            "bytes": 89489,
+            "sha256": "e2a31c3679c65013fda7421c188194e1a1db8336fff33b881f3ad1fa7ec85799"
+          },
+          {
+            "file": "window.wav",
+            "bytes": 864966,
+            "sha256": "0182d9f4fdc0d0d7f24339533724be23141492880d9190a15e58206ac6ff658b"
+          }
+        ],
+        "videoPacketsVerified": 90,
+        "visualReceiptSha256": "d2944991efdece0c394a4199898b981e1cfa5c22d9adcf38a7d8c6a8af0912bd",
+        "windowAudio": {
+          "fromFrame": 222,
+          "frameCount": 90,
+          "startSample": 355555,
+          "endSample": 499699,
+          "pcmSliceSha256": "6c0f255669d9ad9772520c5cd17fce0e368e37401b621aee2a6504e0f85a6dab",
+          "logicalSampleFrames": 144144,
+          "decodedAacFrames": 144384,
+          "decodedAacPcmSha256": "012db4f89b8e8c0f1a1481662aa8d66d332089317c7f62f6486190707fc12f52",
+          "levels": {
+            "input_i": "-16.74",
+            "input_tp": "-2.63",
+            "input_lra": "0.20",
+            "input_thresh": "-26.74",
+            "output_i": "-15.55",
+            "output_tp": "-2.20",
+            "output_lra": "0.00",
+            "output_thresh": "-25.55",
+            "normalization_type": "dynamic",
+            "target_offset": "0.35"
+          },
+          "samples": {
+            "rmsDbfs": -18.006039182469404,
+            "peakDbfs": -2.6312782428744756,
+            "peak": 0.7386455535888672,
+            "nonfinite": 0,
+            "monoFoldEnergyRatio": 0.9457244423972608
+          },
+          "cues": [
+            {
+              "id": "macro-rosette",
+              "frame": 222,
+              "shiftedContactSample": 0,
+              "contactInsideWindow": true,
+              "layers": [
+                {
+                  "source": "gear",
+                  "shiftedStartSample": 0,
+                  "shiftedEndSample": 4194,
+                  "croppedHeadSamples": 3754,
+                  "croppedTailSamples": 0
+                }
+              ]
+            },
+            {
+              "id": "macro-strip",
+              "frame": 229,
+              "shiftedContactSample": 11211,
+              "contactInsideWindow": true,
+              "layers": [
+                {
+                  "source": "shutter",
+                  "shiftedStartSample": 7350,
+                  "shiftedEndSample": 14060,
+                  "croppedHeadSamples": 0,
+                  "croppedTailSamples": 0
+                }
+              ]
+            },
+            {
+              "id": "macro-dots",
+              "frame": 238,
+              "shiftedContactSample": 25626,
+              "contactInsideWindow": true,
+              "layers": [
+                {
+                  "source": "bubble",
+                  "shiftedStartSample": 25489,
+                  "shiftedEndSample": 26970,
+                  "croppedHeadSamples": 0,
+                  "croppedTailSamples": 0
+                }
+              ]
+            },
+            {
+              "id": "catalog-swipe",
+              "frame": 258,
+              "shiftedContactSample": 57658,
+              "contactInsideWindow": true,
+              "layers": [
+                {
+                  "source": "sweep",
+                  "shiftedStartSample": 46411,
+                  "shiftedEndSample": 72945,
+                  "croppedHeadSamples": 0,
+                  "croppedTailSamples": 0
+                }
+              ]
+            },
+            {
+              "id": "capability-dive",
+              "frame": 307,
+              "shiftedContactSample": 136136,
+              "contactInsideWindow": true,
+              "layers": [
+                {
+                  "source": "air-zoom",
+                  "shiftedStartSample": 120538,
+                  "shiftedEndSample": 144144,
+                  "croppedHeadSamples": 0,
+                  "croppedTailSamples": 1486
+                },
+                {
+                  "source": "sub",
+                  "shiftedStartSample": 135760,
+                  "shiftedEndSample": 144144,
+                  "croppedHeadSamples": 0,
+                  "croppedTailSamples": 4416
+                }
+              ]
+            }
+          ],
+          "method": "Exact native-frame sample slice of verified PCM master, reset PTS to zero, separately encoded AAC. Whole-film AAC bytes are not copied into this window; local loudness is descriptive, not a whole-film loudness gate."
+        },
+        "nativeVideoDuration": 3.003,
+        "decodedAudioDuration": 3.008,
+        "decodedAudioSha256": "012db4f89b8e8c0f1a1481662aa8d66d332089317c7f62f6486190707fc12f52",
+        "metadata": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_time_base": "1001/60000",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 960,
+              "height": 540,
+              "coded_width": 960,
+              "coded_height": 544,
+              "has_b_frames": 2,
+              "pix_fmt": "yuv420p",
+              "level": 31,
+              "chroma_location": "left",
+              "refs": 4,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "r_frame_rate": "30000/1001",
+              "avg_frame_rate": "30000/1001",
+              "time_base": "1/30000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 90090,
+              "duration": "3.003000",
+              "bit_rate": "2007134",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "90",
+              "nb_read_frames": "90",
+              "extradata_hash": "SHA256:ec4b07b1c3be41c99be9ca18e3415b0600b45d3354e68e77450ebc23f5a11f97",
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "encoder": "Lavc60.3.100 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_time_base": "1/48000",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 144144,
+              "duration": "3.003000",
+              "bit_rate": "233082",
+              "max_bit_rate": "233082",
+              "nb_frames": "142",
+              "nb_read_frames": "141",
+              "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "SoundHandler"
+              }
+            }
+          ],
+          "format": {
+            "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "3.003000",
+            "size": "846083",
+            "bit_rate": "2253967",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "isom",
+              "minor_version": "512",
+              "compatible_brands": "isomiso2avc1mp41",
+              "encoder": "Lavf60.3.100"
+            }
+          }
+        },
+        "commands": [
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-count_frames",
+              "-show_streams",
+              "-show_format",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\visual\\f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf\\draft.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\audio\\2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23\\master.wav",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\audio\\2e784d6ad67c1b73f57596cc42f4fdf295dd0144bc9d6e03d2ae16cc59bbdd23\\master.wav",
+              "-af",
+              "atrim=start_sample=355555:end_sample=499699,asetpts=PTS-STARTPTS",
+              "-c:a",
+              "pcm_s24le",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.wav"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.wav",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.wav",
+              "-c:a",
+              "aac",
+              "-b:a",
+              "224k",
+              "-movflags",
+              "+faststart",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+              "-map",
+              "0:a:0",
+              "-af",
+              "loudnorm=I=-15.2:TP=-2.2:LRA=14:print_format=json",
+              "-f",
+              "null",
+              "-"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\visual\\f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf\\draft.mp4",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+              "-map",
+              "0:v:0",
+              "-map",
+              "1:a:0",
+              "-c",
+              "copy",
+              "-video_track_timescale",
+              "30000",
+              "-movflags",
+              "+faststart",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4",
+              "-f",
+              "null",
+              "-"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-count_frames",
+              "-show_streams",
+              "-show_format",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "v:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\visual\\f17dd9517fdf5a913eaedce2f963173da2a94641b2d77d57b8737410a0106faf\\draft.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "v:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "a:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "a:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-count_frames",
+              "-show_streams",
+              "-show_format",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\film.mp4",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\shader\\.cache\\mux\\4ed18baa7f02286d5b3fea97b8f038fbc45f89381006805b34d1add5306e5439\\window.m4a",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          }
+        ],
+        "providerCalls": 0,
+        "paidSpendUsd": 0,
+        "elapsedMs": 2853.8627000000124
+      }
+    },
+    {
+      "id": "portrait",
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+      "bytes": 52970,
+      "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf",
+      "window": {
+        "format": "portrait",
+        "from": 144,
+        "frames": 72,
+        "profile": "draft",
+        "width": 540,
+        "height": 960
+      },
+      "visualKey": "0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91",
+      "visualReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91/receipt.json",
+      "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+      "muxKey": "c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6",
+      "muxReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/mux/c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6/receipt.json",
+      "poster": {
+        "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+        "bytes": 25786,
+        "sha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff",
+        "nativeFrame": 144
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "key": "c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6",
+        "status": "STREAM_COPY_PASS",
+        "sourceSha256": "46d082e49572d4200a16e2f191637e835618ea5ccc7183746abced2227866b63",
+        "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+        "audioSha256": "386c08341e1acc0d22ea58b60ded0b2b68707a7aa673852659699926fd5d4075",
+        "outputs": [
+          {
+            "file": "film.mp4",
+            "bytes": 52970,
+            "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf"
+          },
+          {
+            "file": "window.m4a",
+            "bytes": 6112,
+            "sha256": "ad864cc289ef004770e3a40f08d127ac8a49e6346c0ad817119e87898f2c0a2e"
+          },
+          {
+            "file": "window.wav",
+            "bytes": 864102,
+            "sha256": "fda790ddcaf268b47bc4adb10a2cea81eadd44be6d2844ef13922c060b5ed230"
+          }
+        ],
+        "videoPacketsVerified": 72,
+        "visualReceiptSha256": "7d54a915891d0c60d6dccdc93a2054eac05f8bbb3b3d7468126f3f4b1606bea2",
+        "windowAudio": {
+          "fromFrame": 144,
+          "frameCount": 72,
+          "startSample": 288000,
+          "endSample": 432000,
+          "pcmSliceSha256": "34b61b43ebc517a21a5cd5720e99db33103ded88b4a091548c16f30e568de069",
+          "logicalSampleFrames": 144000,
+          "decodedAacFrames": 144384,
+          "decodedAacPcmSha256": "acd10f994dad3981e7f6e1b566e683c7391e22bcee1c37698721b8f436cdae3e",
+          "levels": {
+            "input_i": "-30.78",
+            "input_tp": "-10.48",
+            "input_lra": "8.00",
+            "input_thresh": "-41.74",
+            "output_i": "-20.89",
+            "output_tp": "-2.77",
+            "output_lra": "0.00",
+            "output_thresh": "-32.13",
+            "normalization_type": "dynamic",
+            "target_offset": "-4.11"
+          },
+          "samples": {
+            "rmsDbfs": -33.05250013064135,
+            "peakDbfs": -10.750049978246086,
+            "peak": 0.2900664508342743,
+            "nonfinite": 0,
+            "monoFoldEnergyRatio": 0.9999980826830412
+          },
+          "cues": [
+            {
+              "id": "self-contact-1",
+              "frame": 144,
+              "shiftedContactSample": 0,
+              "contactInsideWindow": true,
+              "layers": [
+                {
+                  "source": "sub",
+                  "shiftedStartSample": 0,
+                  "shiftedEndSample": 13045,
+                  "croppedHeadSamples": 395,
+                  "croppedTailSamples": 0
+                }
+              ]
+            },
+            {
+              "id": "self-contact-2",
+              "frame": 216,
+              "shiftedContactSample": 144000,
+              "contactInsideWindow": false,
+              "layers": [
+                {
+                  "source": "sub",
+                  "shiftedStartSample": 143605,
+                  "shiftedEndSample": 144000,
+                  "croppedHeadSamples": 0,
+                  "croppedTailSamples": 13045
+                }
+              ]
+            }
+          ],
+          "method": "Exact native-frame sample slice of verified PCM master, reset PTS to zero, separately encoded AAC. Whole-film AAC bytes are not copied into this window; local loudness is descriptive, not a whole-film loudness gate."
+        },
+        "nativeVideoDuration": 3,
+        "decodedAudioDuration": 3.008,
+        "decodedAudioSha256": "acd10f994dad3981e7f6e1b566e683c7391e22bcee1c37698721b8f436cdae3e",
+        "metadata": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_time_base": "1/48",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 540,
+              "height": 960,
+              "coded_width": 544,
+              "coded_height": 960,
+              "has_b_frames": 2,
+              "pix_fmt": "yuv420p",
+              "level": 31,
+              "chroma_location": "left",
+              "refs": 4,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "r_frame_rate": "24/1",
+              "avg_frame_rate": "24/1",
+              "time_base": "1/24",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 72,
+              "duration": "3.000000",
+              "bit_rate": "119389",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "72",
+              "nb_read_frames": "72",
+              "extradata_hash": "SHA256:732e659679eb0584d887debf646480440f47d78f469832883e1cf4d4c0554115",
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "encoder": "Lavc60.3.100 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_time_base": "1/48000",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 144000,
+              "duration": "3.000000",
+              "bit_rate": "12545",
+              "max_bit_rate": "12545",
+              "nb_frames": "142",
+              "nb_read_frames": "141",
+              "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "SoundHandler"
+              }
+            }
+          ],
+          "format": {
+            "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "3.000000",
+            "size": "52970",
+            "bit_rate": "141253",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "isom",
+              "minor_version": "512",
+              "compatible_brands": "isomiso2avc1mp41",
+              "encoder": "Lavf60.3.100"
+            }
+          }
+        },
+        "commands": [
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-count_frames",
+              "-show_streams",
+              "-show_format",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\visual\\0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91\\draft.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\audio\\3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197\\master.wav",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\audio\\3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197\\master.wav",
+              "-af",
+              "atrim=start_sample=288000:end_sample=432000,asetpts=PTS-STARTPTS",
+              "-c:a",
+              "pcm_s24le",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.wav"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.wav",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.wav",
+              "-c:a",
+              "aac",
+              "-b:a",
+              "224k",
+              "-movflags",
+              "+faststart",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+              "-map",
+              "0:a:0",
+              "-af",
+              "loudnorm=I=-25:TP=-2.2:LRA=14:print_format=json",
+              "-f",
+              "null",
+              "-"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\visual\\0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91\\draft.mp4",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+              "-map",
+              "0:v:0",
+              "-map",
+              "1:a:0",
+              "-c",
+              "copy",
+              "-video_track_timescale",
+              "24",
+              "-movflags",
+              "+faststart",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4",
+              "-f",
+              "null",
+              "-"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-count_frames",
+              "-show_streams",
+              "-show_format",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "v:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\visual\\0e36f5354131f90162ab5a3a3eec0333e8b3714e6cc04da9f88f1156cacebf91\\draft.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "v:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "a:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-select_streams",
+              "a:0",
+              "-show_packets",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffprobe.exe",
+            "args": [
+              "-v",
+              "error",
+              "-count_frames",
+              "-show_streams",
+              "-show_format",
+              "-show_data_hash",
+              "sha256",
+              "-of",
+              "json",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\film.mp4",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          },
+          {
+            "tool": "ffmpeg.exe",
+            "args": [
+              "-nostdin",
+              "-hide_banner",
+              "-v",
+              "error",
+              "-xerror",
+              "-i",
+              "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T133243413Z\\basic-portrait\\.cache\\mux\\c92d92186f06bf608d590f93beaceda94c98ef95c7e0dfc0632f24ec9165d3c6\\window.m4a",
+              "-map",
+              "0:a:0",
+              "-ar",
+              "48000",
+              "-ac",
+              "2",
+              "-f",
+              "f32le",
+              "pipe:1"
+            ],
+            "exitCode": 0
+          }
+        ],
+        "providerCalls": 0,
+        "paidSpendUsd": 0,
+        "elapsedMs": 2284.0961000000098
+      }
+    }
+  ],
+  "commands": [],
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "producersBefore": [
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 22930,
+      "sha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 10246,
+      "sha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 42037,
+      "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+    }
+  ],
+  "privateProjects": {
+    "shader": ".tmp/motion-repeatability-smoke/20261008T133243413Z/shader",
+    "portrait": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait",
+    "landscape": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-landscape"
+  },
+  "nativeExport": {
+    "media": {
+      "file": "draft.mp4",
+      "bytes": 1343403,
+      "sha256": "d8b40cf6f220cc8d5d4802125656c8b974f243066f26868347bcc81b9de4c17c",
+      "width": 1080,
+      "height": 1920,
+      "frames": 288,
+      "fps": "24/1",
+      "timeBase": "1/24",
+      "duration": 12,
+      "strictDecode": "PASS",
+      "audio": null
+    },
+    "phases": {
+      "preflightMs": 646.2030999999988,
+      "browserSetupMs": 297.38129999999364,
+      "captureMs": 78282.9593,
+      "encodeMs": 3351.585699999996,
+      "verificationMs": 1084.3755999999994,
+      "totalMs": 83771.565
+    },
+    "visualReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/visual/cadcabf14f53d1303ad9fe162f2e27f71c86db15cdb78008e541c8a5f3cf4add/receipt.json",
+    "muxReceipt": ".tmp/motion-repeatability-smoke/20261008T133243413Z/basic-portrait/.cache/mux/15bcd4d15632e60cd9e0a0e3373e9a58356a7f610fa6cafdc5cfa0ac1746e4cd/receipt.json",
+    "videoPacketsVerified": 288,
+    "audioKey": "3bb47867d19607cc71c643180515c9bdbfe8fa50ea677c9a60e837655370b197",
+    "muxSha256": "932f9e68cfd669180b02e719cafa4c8af0eff84fe9ca8a3eb20b5557e8d23ba4",
+    "nativeVideoDuration": 12
+  },
+  "producersAfter": [
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 22930,
+      "sha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 10246,
+      "sha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 42037,
+      "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+    }
+  ],
+  "finishedAt": "2026-10-08T13:35:42.121Z"
+}

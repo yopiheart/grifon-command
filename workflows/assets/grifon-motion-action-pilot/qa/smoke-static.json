@@ -1,0 +1,14 @@
+{
+  "status": "PARTIAL PASS",
+  "browserSmoke": "BLOCKED: CUA file protocol denied; controls and viewport screenshot not verified.",
+  "embeddedMediaBytes": 2883189,
+  "embeddedMediaSha256": "a9a473307a0d1df8a12c96b46e9659c88bfcf6f0a0e5c5c4eb85c788d940ce47",
+  "byteEqualSource": true,
+  "utf8Charset": true,
+  "noRemoteUrls": true,
+  "solidText": true,
+  "fixedGround": true,
+  "cssControlHeight46": true,
+  "downloadAction": "Source implementation uses Blob URL, not browser exercised.",
+  "directListening": "NOT RUN"
+}

@@ -1,0 +1,23 @@
+{
+  "status": "PASS_BYTE_EXACT_RERUN",
+  "files": [
+    {
+      "file": "events.json",
+      "bytes": 452752,
+      "sha256": "82ceaaee9ddf1c2a1c49051fc0dcd2ac23ccb00956c301f0907d0b5ece2e4358"
+    },
+    {
+      "file": "summary.json",
+      "bytes": 3764,
+      "sha256": "1560d6d4a387735661be3c4763c14230384cc51c1b2d4e5620dd7c9e65fcaad0"
+    },
+    {
+      "file": "timeline.svg",
+      "bytes": 77416,
+      "sha256": "b7731cfc99fd0b64a35b857401b4ac707db2516148b8050f5c2c68867b7b7eac"
+    }
+  ],
+  "commandExitCode": 0,
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

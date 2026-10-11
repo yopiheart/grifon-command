@@ -1,0 +1,82 @@
+{
+  "status": "PASS_PLAYER_UI_AND_INLINE_INTEGRITY",
+  "generatedAt": "2026-10-08T08:37:41.822Z",
+  "sourceState": "Technical acceptance of frozen standalone player only; full-film visual fidelity, paced comparison and direct hearing are separate gates.",
+  "hashes": {
+    "builder": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157",
+    "template": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d",
+    "gates": "57dd8b78b37160c9643964dffbdc4a07cdddeb728fe0ecbbf8ab177747af0f94",
+    "helper": "a4ad69b109e4cc5c6bc7c5d3fa85b7fd17f36651b3c685ae0513784c2c687eba",
+    "artifact": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423",
+    "mp4": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+  },
+  "playerSmoke": {
+    "command": "node workflows/assets/grifon-shader-recreation/qa/player-mobile-smoke.mjs --artifact b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423 --film c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917 --out player-final-v3",
+    "exitCode": 0,
+    "report": "qa/player-final-v3/player-mobile-report.json",
+    "bytes": 41775,
+    "sha256": "92505935f393560a062bf03bf7194c17b1a79a9e51596f661bfd03af0242a0dc",
+    "status": "PASS_TECHNICAL_PLAYER_CURRENT_CANDIDATE",
+    "checksPassed": 33,
+    "viewports": [
+      "390x844",
+      "1280x844"
+    ],
+    "browser": "149.0.7827.55",
+    "offline": true,
+    "screenshotsInspected": 8,
+    "downloadByteEquality": true,
+    "externalRequests": 0,
+    "failedRequests": 0,
+    "consoleAndPageErrors": 0,
+    "helperServersStarted": 0,
+    "contextsAndBrowserClosed": true
+  },
+  "inlineIntegrity": "qa/player-integrity.json",
+  "applicationChecks": {
+    "source": "qa/full-timing-v3-checks.json",
+    "bytes": 1562,
+    "sha256": "a61444ebc4c21f0965e6dc25ab8929e409a065eafd09e314894384af4a1184fa",
+    "scope": "Existing producer execution evidence; this agent did not rerun build or Vitest.",
+    "result": "PASS",
+    "build": {
+      "output": "qa/full-timing-v3-build-output.txt",
+      "exit": 0,
+      "elapsedMs": 32841,
+      "paidLiveFlagsUnset": true,
+      "command": "npm.cmd run build"
+    },
+    "vitest": {
+      "command": "npx.cmd vitest run",
+      "exit": 0,
+      "elapsedMs": 48394,
+      "output": "qa/full-timing-v3-vitest-output.txt",
+      "paidLiveFlagsUnset": true
+    },
+    "passedFiles": 116,
+    "passedTests": 1432,
+    "defaultSkippedFiles": 9,
+    "defaultSkippedTests": 32,
+    "verifiedLogs": [
+      {
+        "file": "qa/full-timing-v3-build-output.txt",
+        "bytes": 1895,
+        "sha256": "3d8d480e626a00534ea18c8f19d18c25154a3c691bd52db5ff4fb62198645ce2"
+      },
+      {
+        "file": "qa/full-timing-v3-vitest-output.txt",
+        "bytes": 301,
+        "sha256": "b3d0e1e60027e902b72f0dc9244dd827ca3dd96635a4c9657bca42772f978dca"
+      }
+    ]
+  },
+  "historicalPredecessor": {
+    "current": "qa/player-checks.json",
+    "preserved": "qa/full-failed-review-1/qa/player-checks.json",
+    "bytes": 5446,
+    "sha256": "866d9979ef9043b63bc66d3a8532caa8cb60c95ae4349ca85fdce1f84d0a0e6c",
+    "byteEquality": true
+  },
+  "soundtrack": "PROVISIONAL_SONIC_UNVERIFIED",
+  "directListening": "NOT_PERFORMED"
+}

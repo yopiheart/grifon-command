@@ -1,0 +1,12 @@
+{
+  "status": "ORIGINAL_FAIL_FIX_PASS",
+  "original": {"pcmMasterIntegratedLufs":-15.98,"pcmMasterTruePeakDbtp":-1.8,"encodedAacIntegratedLufs":-16.04,"encodedAacTruePeakDbtp":-1.16,"aacBitrate":"192k","encodedTruePeakLimitDbtp":-1.5,"checkExitCode":1},
+  "cause": "The native AAC encoder overshot the measured PCM ceiling by 0.64 dB.",
+  "intermediate": {"masterTruePeakTargetDbtp":-2.5,"pcmMasterIntegratedLufs":-15.88,"pcmMasterTruePeakDbtp":-2.47,"encodedAacIntegratedLufs":-15.94,"encodedAacTruePeakDbtp":-1.42,"checkExitCode":1},
+  "fix": "Retain two-pass -16 LUFS normalization and lower the master true-peak target to -3 dBTP; measure exact AAC again.",
+  "fixed": {"pcmMasterIntegratedLufs":-15.97,"pcmMasterTruePeakDbtp":-2.88,"encodedAacIntegratedLufs":-16.03,"encodedAacTruePeakDbtp":-1.85,"encodedAacSha256":"a0a00ee1acf74b30b874d70df5273228a9b4f509bac5c5fce2efbb3a7d7b4da2","checkExitCode":0},
+  "verification": "audio.mjs gates both PCM and actual AAC preview, and finished MP4 must be separately measured.",
+  "auditoryQa":"PENDING: levels and waveform checks are not direct listening.",
+  "providerCalls":0,
+  "paidSpendUsd":0
+}

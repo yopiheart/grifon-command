@@ -1,0 +1,1328 @@
+[
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 0.740211,
+    "file": "observed-000.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 1.060328,
+    "file": "observed-001.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 1.382108,
+    "file": "observed-002.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 1.708129,
+    "file": "observed-003.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 2.03458,
+    "file": "observed-004.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 2.359647,
+    "file": "observed-005.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 2.672711,
+    "file": "observed-006.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 2.992992,
+    "file": "observed-007.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 3.319551,
+    "file": "observed-008.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 3.653951,
+    "file": "observed-009.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 4.006888,
+    "file": "observed-010.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 4.373188,
+    "file": "observed-011.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 4.694859,
+    "file": "observed-012.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 5.005645,
+    "file": "observed-013.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 5.35571,
+    "file": "observed-014.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 5.666731,
+    "file": "observed-015.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 5.974768,
+    "file": "observed-016.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 6.289432,
+    "file": "observed-017.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 6.610931,
+    "file": "observed-018.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 6.928197,
+    "file": "observed-019.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 7.241643,
+    "file": "observed-020.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 7.564692,
+    "file": "observed-021.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 7.874261,
+    "file": "observed-022.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 8.196059,
+    "file": "observed-023.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 8.522944,
+    "file": "observed-024.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 8.844952,
+    "file": "observed-025.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 9.161478,
+    "file": "observed-026.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 9.473242,
+    "file": "observed-027.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 9.7973,
+    "file": "observed-028.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 10.113147,
+    "file": "observed-029.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 10.434585,
+    "file": "observed-030.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 10.75603,
+    "file": "observed-031.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 11.099567,
+    "file": "observed-032.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 11.407147,
+    "file": "observed-033.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 11.731601,
+    "file": "observed-034.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 12.049735,
+    "file": "observed-035.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 12.362021,
+    "file": "observed-036.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 12.682107,
+    "file": "observed-037.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 12.993795,
+    "file": "observed-038.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 13.310224,
+    "file": "observed-039.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 13.623673,
+    "file": "observed-040.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 13.949907,
+    "file": "observed-041.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 14.265833,
+    "file": "observed-042.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 14.579571,
+    "file": "observed-043.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 14.896061,
+    "file": "observed-044.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 15.21014,
+    "file": "observed-045.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 15.525291,
+    "file": "observed-046.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 15.845888,
+    "file": "observed-047.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 16.159238,
+    "file": "observed-048.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 16.466486,
+    "file": "observed-049.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 16.782532,
+    "file": "observed-050.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 17.09721,
+    "file": "observed-051.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 17.417974,
+    "file": "observed-052.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 17.731761,
+    "file": "observed-053.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 18.042084,
+    "file": "observed-054.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 18.357496,
+    "file": "observed-055.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 18.681722,
+    "file": "observed-056.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 18.997434,
+    "file": "observed-057.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 19.313145,
+    "file": "observed-058.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 19.627726,
+    "file": "observed-059.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 19.949145,
+    "file": "observed-060.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 20.258524,
+    "file": "observed-061.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 20.582868,
+    "file": "observed-062.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 20.896957,
+    "file": "observed-063.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 21.216473,
+    "file": "observed-064.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 21.529364,
+    "file": "observed-065.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 21.849051,
+    "file": "observed-066.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 22.167252,
+    "file": "observed-067.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 22.48022,
+    "file": "observed-068.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 22.826854,
+    "file": "observed-069.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 23.146725,
+    "file": "observed-070.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 23.468858,
+    "file": "observed-071.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 23.78757,
+    "file": "observed-072.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 24.102416,
+    "file": "observed-073.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 24.411118,
+    "file": "observed-074.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 24.731241,
+    "file": "observed-075.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 25.058267,
+    "file": "observed-076.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 25.379906,
+    "file": "observed-077.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 25.702639,
+    "file": "observed-078.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 26.020635,
+    "file": "observed-079.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 26.333044,
+    "file": "observed-080.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 26.655321,
+    "file": "observed-081.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 26.968538,
+    "file": "observed-082.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 27.29659,
+    "file": "observed-083.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 27.636986,
+    "file": "observed-084.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 27.974338,
+    "file": "observed-085.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 28.316327,
+    "file": "observed-086.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 28.634912,
+    "file": "observed-087.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 28.95622,
+    "file": "observed-088.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 29.270396,
+    "file": "observed-089.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 29.58953,
+    "file": "observed-090.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 29.922739,
+    "file": "observed-091.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 30.241929,
+    "file": "observed-092.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 30.571167,
+    "file": "observed-093.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 30.879093,
+    "file": "observed-094.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 0.015409,
+    "file": "observed-095.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 0.294546,
+    "file": "observed-096.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 0.605397,
+    "file": "observed-097.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 0.906499,
+    "file": "observed-098.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 1.222903,
+    "file": "observed-099.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 1.52979,
+    "file": "observed-100.png"
+  },
+  {
+    "duration": 31.146666,
+    "muted": false,
+    "paused": false,
+    "rect": {
+      "height": 317.25,
+      "width": 564,
+      "x": 293,
+      "y": 71
+    },
+    "time": 1.860222,
+    "file": "observed-101.png"
+  }
+]

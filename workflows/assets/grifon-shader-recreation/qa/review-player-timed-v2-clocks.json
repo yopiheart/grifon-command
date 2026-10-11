@@ -1,0 +1,5399 @@
+{
+  "scope": "Independent actual timed visual comparison capture, audio muted; not a technical or listening approval",
+  "generatedAt": "2026-10-08T01:36:09.929Z",
+  "bindings": {
+    "grifon-opening-pilot-silent.mp4": {
+      "bytes": 3992749,
+      "sha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8"
+    },
+    "reference/source-x.mp4": {
+      "bytes": 11514975,
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089"
+    }
+  },
+  "plays": [
+    {
+      "rate": 1,
+      "label": "normal",
+      "start": {
+        "frame": 0,
+        "status": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+        "reference": 0,
+        "pilot": 0,
+        "paused": [
+          true,
+          true
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      },
+      "observations": [
+        {
+          "file": "normal-000.png",
+          "wallBefore": "2026-10-08T01:36:11.931Z",
+          "wallAfter": "2026-10-08T01:36:12.061Z",
+          "before": {
+            "frame": 0,
+            "status": "Frame 0 / 221 | 0.0000 s | clock difference 0.0010 s",
+            "reference": 0.014581,
+            "pilot": 0.013625,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 3,
+            "status": "Frame 3 / 221 | 0.1001 s | clock difference 0.0146 s",
+            "reference": 0.112001,
+            "pilot": 0.142406,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-001.png",
+          "wallBefore": "2026-10-08T01:36:12.176Z",
+          "wallAfter": "2026-10-08T01:36:12.313Z",
+          "before": {
+            "frame": 7,
+            "status": "Frame 7 / 221 | 0.2336 s | clock difference 0.0222 s",
+            "reference": 0.234516,
+            "pilot": 0.259338,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 11,
+            "status": "Frame 11 / 221 | 0.3670 s | clock difference 0.0000 s",
+            "reference": 0.367673,
+            "pilot": 0.396533,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-002.png",
+          "wallBefore": "2026-10-08T01:36:12.423Z",
+          "wallAfter": "2026-10-08T01:36:12.590Z",
+          "before": {
+            "frame": 15,
+            "status": "Frame 15 / 221 | 0.5005 s | clock difference 0.0000 s",
+            "reference": 0.502671,
+            "pilot": 0.505891,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 18,
+            "status": "Frame 18 / 221 | 0.6006 s | clock difference 0.0000 s",
+            "reference": 0.600412,
+            "pilot": 0.673124,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-003.png",
+          "wallBefore": "2026-10-08T01:36:12.703Z",
+          "wallAfter": "2026-10-08T01:36:12.876Z",
+          "before": {
+            "frame": 23,
+            "status": "Frame 23 / 221 | 0.7674 s | clock difference 0.0000 s",
+            "reference": 0.784468,
+            "pilot": 0.786288,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 26,
+            "status": "Frame 26 / 221 | 0.8675 s | clock difference 0.0157 s",
+            "reference": 0.86834,
+            "pilot": 0.958456,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-004.png",
+          "wallBefore": "2026-10-08T01:36:12.988Z",
+          "wallAfter": "2026-10-08T01:36:13.145Z",
+          "before": {
+            "frame": 32,
+            "status": "Frame 32 / 221 | 1.0677 s | clock difference 0.0324 s",
+            "reference": 1.035388,
+            "pilot": 1.071363,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 35,
+            "status": "Frame 35 / 221 | 1.1678 s | clock difference 0.0326 s",
+            "reference": 1.134821,
+            "pilot": 1.228186,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-005.png",
+          "wallBefore": "2026-10-08T01:36:13.264Z",
+          "wallAfter": "2026-10-08T01:36:13.450Z",
+          "before": {
+            "frame": 40,
+            "status": "Frame 40 / 221 | 1.3347 s | clock difference 0.0158 s",
+            "reference": 1.31847,
+            "pilot": 1.34729,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 45,
+            "status": "Frame 45 / 221 | 1.5015 s | clock difference 0.0000 s",
+            "reference": 1.518289,
+            "pilot": 1.532617,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-006.png",
+          "wallBefore": "2026-10-08T01:36:13.560Z",
+          "wallAfter": "2026-10-08T01:36:13.710Z",
+          "before": {
+            "frame": 49,
+            "status": "Frame 49 / 221 | 1.6350 s | clock difference 0.0173 s",
+            "reference": 1.617251,
+            "pilot": 1.644403,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 51,
+            "status": "Frame 51 / 221 | 1.7017 s | clock difference 0.0000 s",
+            "reference": 1.734376,
+            "pilot": 1.789223,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-007.png",
+          "wallBefore": "2026-10-08T01:36:13.827Z",
+          "wallAfter": "2026-10-08T01:36:14.020Z",
+          "before": {
+            "frame": 56,
+            "status": "Frame 56 / 221 | 1.8685 s | clock difference 0.0132 s",
+            "reference": 1.887914,
+            "pilot": 1.91041,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 60,
+            "status": "Frame 60 / 221 | 2.0020 s | clock difference 0.0000 s",
+            "reference": 2.018905,
+            "pilot": 2.103468,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-008.png",
+          "wallBefore": "2026-10-08T01:36:14.123Z",
+          "wallAfter": "2026-10-08T01:36:14.314Z",
+          "before": {
+            "frame": 65,
+            "status": "Frame 65 / 221 | 2.1688 s | clock difference 0.0157 s",
+            "reference": 2.184854,
+            "pilot": 2.206529,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 68,
+            "status": "Frame 68 / 221 | 2.2689 s | clock difference 0.0000 s",
+            "reference": 2.301382,
+            "pilot": 2.396109,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-009.png",
+          "wallBefore": "2026-10-08T01:36:14.419Z",
+          "wallAfter": "2026-10-08T01:36:14.608Z",
+          "before": {
+            "frame": 74,
+            "status": "Frame 74 / 221 | 2.4691 s | clock difference 0.0000 s",
+            "reference": 2.501147,
+            "pilot": 2.502651,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 77,
+            "status": "Frame 77 / 221 | 2.5692 s | clock difference 0.0000 s",
+            "reference": 2.601034,
+            "pilot": 2.691249,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-010.png",
+          "wallBefore": "2026-10-08T01:36:14.714Z",
+          "wallAfter": "2026-10-08T01:36:14.846Z",
+          "before": {
+            "frame": 83,
+            "status": "Frame 83 / 221 | 2.7694 s | clock difference 0.0000 s",
+            "reference": 2.787129,
+            "pilot": 2.797606,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 86,
+            "status": "Frame 86 / 221 | 2.8695 s | clock difference 0.0000 s",
+            "reference": 2.902126,
+            "pilot": 2.928762,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-011.png",
+          "wallBefore": "2026-10-08T01:36:14.966Z",
+          "wallAfter": "2026-10-08T01:36:15.063Z",
+          "before": {
+            "frame": 90,
+            "status": "Frame 90 / 221 | 3.0030 s | clock difference 0.0000 s",
+            "reference": 3.034914,
+            "pilot": 3.048821,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 93,
+            "status": "Frame 93 / 221 | 3.1031 s | clock difference 0.0000 s",
+            "reference": 3.135279,
+            "pilot": 3.145622,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-012.png",
+          "wallBefore": "2026-10-08T01:36:15.172Z",
+          "wallAfter": "2026-10-08T01:36:15.265Z",
+          "before": {
+            "frame": 97,
+            "status": "Frame 97 / 221 | 3.2366 s | clock difference 0.0166 s",
+            "reference": 3.234875,
+            "pilot": 3.254602,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 99,
+            "status": "Frame 99 / 221 | 3.3033 s | clock difference 0.0175 s",
+            "reference": 3.318336,
+            "pilot": 3.347598,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-013.png",
+          "wallBefore": "2026-10-08T01:36:15.372Z",
+          "wallAfter": "2026-10-08T01:36:15.464Z",
+          "before": {
+            "frame": 103,
+            "status": "Frame 103 / 221 | 3.4368 s | clock difference 0.0166 s",
+            "reference": 3.434878,
+            "pilot": 3.455522,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 105,
+            "status": "Frame 105 / 221 | 3.5035 s | clock difference 0.0000 s",
+            "reference": 3.533781,
+            "pilot": 3.546703,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-014.png",
+          "wallBefore": "2026-10-08T01:36:15.573Z",
+          "wallAfter": "2026-10-08T01:36:15.660Z",
+          "before": {
+            "frame": 109,
+            "status": "Frame 109 / 221 | 3.6370 s | clock difference 0.0330 s",
+            "reference": 3.618374,
+            "pilot": 3.655689,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 111,
+            "status": "Frame 111 / 221 | 3.7037 s | clock difference 0.0307 s",
+            "reference": 3.703475,
+            "pilot": 3.743032,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-015.png",
+          "wallBefore": "2026-10-08T01:36:15.776Z",
+          "wallAfter": "2026-10-08T01:36:15.857Z",
+          "before": {
+            "frame": 115,
+            "status": "Frame 115 / 221 | 3.8372 s | clock difference 0.0000 s",
+            "reference": 3.852868,
+            "pilot": 3.859567,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 117,
+            "status": "Frame 117 / 221 | 3.9039 s | clock difference 0.0000 s",
+            "reference": 3.934013,
+            "pilot": 3.940248,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-016.png",
+          "wallBefore": "2026-10-08T01:36:15.964Z",
+          "wallAfter": "2026-10-08T01:36:16.058Z",
+          "before": {
+            "frame": 120,
+            "status": "Frame 120 / 221 | 4.0040 s | clock difference 0.0000 s",
+            "reference": 4.035328,
+            "pilot": 4.04637,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 123,
+            "status": "Frame 123 / 221 | 4.1041 s | clock difference 0.0150 s",
+            "reference": 4.118642,
+            "pilot": 4.141463,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-017.png",
+          "wallBefore": "2026-10-08T01:36:16.165Z",
+          "wallAfter": "2026-10-08T01:36:16.251Z",
+          "before": {
+            "frame": 126,
+            "status": "Frame 126 / 221 | 4.2042 s | clock difference 0.0332 s",
+            "reference": 4.200895,
+            "pilot": 4.246714,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 129,
+            "status": "Frame 129 / 221 | 4.3043 s | clock difference 0.0174 s",
+            "reference": 4.30082,
+            "pilot": 4.33362,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-018.png",
+          "wallBefore": "2026-10-08T01:36:16.365Z",
+          "wallAfter": "2026-10-08T01:36:16.463Z",
+          "before": {
+            "frame": 132,
+            "status": "Frame 132 / 221 | 4.4044 s | clock difference 0.0000 s",
+            "reference": 4.435036,
+            "pilot": 4.449091,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 135,
+            "status": "Frame 135 / 221 | 4.5045 s | clock difference 0.0310 s",
+            "reference": 4.502742,
+            "pilot": 4.546279,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-019.png",
+          "wallBefore": "2026-10-08T01:36:16.572Z",
+          "wallAfter": "2026-10-08T01:36:16.654Z",
+          "before": {
+            "frame": 139,
+            "status": "Frame 139 / 221 | 4.6380 s | clock difference 0.0000 s",
+            "reference": 4.651228,
+            "pilot": 4.655555,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 141,
+            "status": "Frame 141 / 221 | 4.7047 s | clock difference 0.0000 s",
+            "reference": 4.734192,
+            "pilot": 4.736404,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-020.png",
+          "wallBefore": "2026-10-08T01:36:16.758Z",
+          "wallAfter": "2026-10-08T01:36:16.848Z",
+          "before": {
+            "frame": 144,
+            "status": "Frame 144 / 221 | 4.8048 s | clock difference 0.0177 s",
+            "reference": 4.817195,
+            "pilot": 4.841228,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 147,
+            "status": "Frame 147 / 221 | 4.9049 s | clock difference 0.0295 s",
+            "reference": 4.88837,
+            "pilot": 4.931857,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-021.png",
+          "wallBefore": "2026-10-08T01:36:16.959Z",
+          "wallAfter": "2026-10-08T01:36:17.059Z",
+          "before": {
+            "frame": 150,
+            "status": "Frame 150 / 221 | 5.0050 s | clock difference 0.0164 s",
+            "reference": 5.019834,
+            "pilot": 5.04275,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 153,
+            "status": "Frame 153 / 221 | 5.1051 s | clock difference 0.0165 s",
+            "reference": 5.117967,
+            "pilot": 5.142115,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-022.png",
+          "wallBefore": "2026-10-08T01:36:17.163Z",
+          "wallAfter": "2026-10-08T01:36:17.264Z",
+          "before": {
+            "frame": 156,
+            "status": "Frame 156 / 221 | 5.2052 s | clock difference 0.0331 s",
+            "reference": 5.201054,
+            "pilot": 5.246549,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 159,
+            "status": "Frame 159 / 221 | 5.3053 s | clock difference 0.0000 s",
+            "reference": 5.335655,
+            "pilot": 5.346699,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-023.png",
+          "wallBefore": "2026-10-08T01:36:17.373Z",
+          "wallAfter": "2026-10-08T01:36:17.467Z",
+          "before": {
+            "frame": 163,
+            "status": "Frame 163 / 221 | 5.4388 s | clock difference 0.0000 s",
+            "reference": 5.453322,
+            "pilot": 5.455764,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 165,
+            "status": "Frame 165 / 221 | 5.5055 s | clock difference 0.0298 s",
+            "reference": 5.50388,
+            "pilot": 5.550003,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-024.png",
+          "wallBefore": "2026-10-08T01:36:17.590Z",
+          "wallAfter": "2026-10-08T01:36:17.679Z",
+          "before": {
+            "frame": 169,
+            "status": "Frame 169 / 221 | 5.6390 s | clock difference 0.0141 s",
+            "reference": 5.654343,
+            "pilot": 5.670968,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 172,
+            "status": "Frame 172 / 221 | 5.7391 s | clock difference 0.0173 s",
+            "reference": 5.734334,
+            "pilot": 5.762284,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-025.png",
+          "wallBefore": "2026-10-08T01:36:17.788Z",
+          "wallAfter": "2026-10-08T01:36:17.888Z",
+          "before": {
+            "frame": 175,
+            "status": "Frame 175 / 221 | 5.8392 s | clock difference 0.0000 s",
+            "reference": 5.868819,
+            "pilot": 5.871336,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 178,
+            "status": "Frame 178 / 221 | 5.9393 s | clock difference 0.0000 s",
+            "reference": 5.967639,
+            "pilot": 5.97166,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-026.png",
+          "wallBefore": "2026-10-08T01:36:17.993Z",
+          "wallAfter": "2026-10-08T01:36:18.121Z",
+          "before": {
+            "frame": 181,
+            "status": "Frame 181 / 221 | 6.0394 s | clock difference 0.0000 s",
+            "reference": 6.068909,
+            "pilot": 6.075746,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 185,
+            "status": "Frame 185 / 221 | 6.1728 s | clock difference 0.0177 s",
+            "reference": 6.16716,
+            "pilot": 6.203867,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-027.png",
+          "wallBefore": "2026-10-08T01:36:18.237Z",
+          "wallAfter": "2026-10-08T01:36:18.366Z",
+          "before": {
+            "frame": 189,
+            "status": "Frame 189 / 221 | 6.3063 s | clock difference 0.0161 s",
+            "reference": 6.301547,
+            "pilot": 6.320469,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 192,
+            "status": "Frame 192 / 221 | 6.4064 s | clock difference 0.0179 s",
+            "reference": 6.400611,
+            "pilot": 6.449956,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-028.png",
+          "wallBefore": "2026-10-08T01:36:18.472Z",
+          "wallAfter": "2026-10-08T01:36:18.615Z",
+          "before": {
+            "frame": 196,
+            "status": "Frame 196 / 221 | 6.5399 s | clock difference 0.0000 s",
+            "reference": 6.551186,
+            "pilot": 6.555833,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 199,
+            "status": "Frame 199 / 221 | 6.6400 s | clock difference 0.0169 s",
+            "reference": 6.633657,
+            "pilot": 6.699124,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-029.png",
+          "wallBefore": "2026-10-08T01:36:18.719Z",
+          "wallAfter": "2026-10-08T01:36:18.863Z",
+          "before": {
+            "frame": 203,
+            "status": "Frame 203 / 221 | 6.7734 s | clock difference 0.0000 s",
+            "reference": 6.800585,
+            "pilot": 6.802192,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 206,
+            "status": "Frame 206 / 221 | 6.8735 s | clock difference 0.0170 s",
+            "reference": 6.884177,
+            "pilot": 6.946746,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-030.png",
+          "wallBefore": "2026-10-08T01:36:18.968Z",
+          "wallAfter": "2026-10-08T01:36:19.098Z",
+          "before": {
+            "frame": 210,
+            "status": "Frame 210 / 221 | 7.0070 s | clock difference 0.0333 s",
+            "reference": 7.001259,
+            "pilot": 7.051117,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 214,
+            "status": "Frame 214 / 221 | 7.1405 s | clock difference 0.0000 s",
+            "reference": 7.150412,
+            "pilot": 7.180041,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-031.png",
+          "wallBefore": "2026-10-08T01:36:19.204Z",
+          "wallAfter": "2026-10-08T01:36:19.332Z",
+          "before": {
+            "frame": 218,
+            "status": "Frame 218 / 221 | 7.2739 s | clock difference 0.0157 s",
+            "reference": 7.268301,
+            "pilot": 7.287731,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 221,
+            "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0321 s",
+            "reference": 7.352428,
+            "pilot": 7.4074,
+            "paused": [
+              false,
+              true
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "file": "normal-032.png",
+          "wallBefore": "2026-10-08T01:36:19.437Z",
+          "wallAfter": "2026-10-08T01:36:19.570Z",
+          "before": {
+            "frame": 221,
+            "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+            "reference": 7.374033,
+            "pilot": 7.374033,
+            "paused": [
+              true,
+              true
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          },
+          "after": {
+            "frame": 221,
+            "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+            "reference": 7.374033,
+            "pilot": 7.374033,
+            "paused": [
+              true,
+              true
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "wallStart": "2026-10-08T01:36:11.861Z",
+      "end": {
+        "frame": 221,
+        "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "reference": 7.374033,
+        "pilot": 7.374033,
+        "paused": [
+          true,
+          true
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      },
+      "wallEnd": "2026-10-08T01:36:19.573Z",
+      "maxObservedClockDeltaSeconds": 0.09472700000000023
+    },
+    {
+      "rate": 0.25,
+      "label": "quarter",
+      "start": {
+        "frame": 0,
+        "status": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+        "reference": 0,
+        "pilot": 0,
+        "paused": [
+          true,
+          true
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "observations": [
+        {
+          "file": "quarter-000.png",
+          "wallBefore": "2026-10-08T01:36:19.770Z",
+          "wallAfter": "2026-10-08T01:36:19.834Z",
+          "before": {
+            "frame": 0,
+            "status": "Frame 0 / 221 | 0.0000 s | clock difference 0.0021 s",
+            "reference": 0,
+            "pilot": 0.00289,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 0,
+            "status": "Frame 0 / 221 | 0.0000 s | clock difference 0.0145 s",
+            "reference": 0,
+            "pilot": 0.018953,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-001.png",
+          "wallBefore": "2026-10-08T01:36:20.013Z",
+          "wallAfter": "2026-10-08T01:36:20.094Z",
+          "before": {
+            "frame": 1,
+            "status": "Frame 1 / 221 | 0.0334 s | clock difference 0.0205 s",
+            "reference": 0.039822,
+            "pilot": 0.063444,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 2,
+            "status": "Frame 2 / 221 | 0.0667 s | clock difference 0.0048 s",
+            "reference": 0.077196,
+            "pilot": 0.083795,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-002.png",
+          "wallBefore": "2026-10-08T01:36:20.276Z",
+          "wallAfter": "2026-10-08T01:36:20.358Z",
+          "before": {
+            "frame": 3,
+            "status": "Frame 3 / 221 | 0.1001 s | clock difference 0.0085 s",
+            "reference": 0.118773,
+            "pilot": 0.129507,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 4,
+            "status": "Frame 4 / 221 | 0.1335 s | clock difference 0.0292 s",
+            "reference": 0.118794,
+            "pilot": 0.15,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-003.png",
+          "wallBefore": "2026-10-08T01:36:20.543Z",
+          "wallAfter": "2026-10-08T01:36:20.645Z",
+          "before": {
+            "frame": 5,
+            "status": "Frame 5 / 221 | 0.1668 s | clock difference 0.0000 s",
+            "reference": 0.193811,
+            "pilot": 0.196179,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 6,
+            "status": "Frame 6 / 221 | 0.2002 s | clock difference 0.0249 s",
+            "reference": 0.193811,
+            "pilot": 0.221704,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-004.png",
+          "wallBefore": "2026-10-08T01:36:20.823Z",
+          "wallAfter": "2026-10-08T01:36:20.945Z",
+          "before": {
+            "frame": 7,
+            "status": "Frame 7 / 221 | 0.2336 s | clock difference 0.0333 s",
+            "reference": 0.231335,
+            "pilot": 0.266056,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 8,
+            "status": "Frame 8 / 221 | 0.2669 s | clock difference 0.0250 s",
+            "reference": 0.268864,
+            "pilot": 0.296756,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-005.png",
+          "wallBefore": "2026-10-08T01:36:21.120Z",
+          "wallAfter": "2026-10-08T01:36:21.283Z",
+          "before": {
+            "frame": 10,
+            "status": "Frame 10 / 221 | 0.3337 s | clock difference 0.0000 s",
+            "reference": 0.33971,
+            "pilot": 0.340022,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 10,
+            "status": "Frame 10 / 221 | 0.3337 s | clock difference 0.0249 s",
+            "reference": 0.341304,
+            "pilot": 0.381035,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-006.png",
+          "wallBefore": "2026-10-08T01:36:21.463Z",
+          "wallAfter": "2026-10-08T01:36:21.636Z",
+          "before": {
+            "frame": 12,
+            "status": "Frame 12 / 221 | 0.4004 s | clock difference 0.0041 s",
+            "reference": 0.418836,
+            "pilot": 0.426133,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 13,
+            "status": "Frame 13 / 221 | 0.4338 s | clock difference 0.0332 s",
+            "reference": 0.42158,
+            "pilot": 0.469212,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-007.png",
+          "wallBefore": "2026-10-08T01:36:21.822Z",
+          "wallAfter": "2026-10-08T01:36:21.997Z",
+          "before": {
+            "frame": 15,
+            "status": "Frame 15 / 221 | 0.5005 s | clock difference 0.0085 s",
+            "reference": 0.506291,
+            "pilot": 0.515802,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 16,
+            "status": "Frame 16 / 221 | 0.5339 s | clock difference 0.0000 s",
+            "reference": 0.539739,
+            "pilot": 0.559307,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-008.png",
+          "wallBefore": "2026-10-08T01:36:22.181Z",
+          "wallAfter": "2026-10-08T01:36:22.362Z",
+          "before": {
+            "frame": 18,
+            "status": "Frame 18 / 221 | 0.6006 s | clock difference 0.0249 s",
+            "reference": 0.577241,
+            "pilot": 0.60569,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 19,
+            "status": "Frame 19 / 221 | 0.6340 s | clock difference 0.0231 s",
+            "reference": 0.614733,
+            "pilot": 0.650922,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-009.png",
+          "wallBefore": "2026-10-08T01:36:22.540Z",
+          "wallAfter": "2026-10-08T01:36:22.720Z",
+          "before": {
+            "frame": 20,
+            "status": "Frame 20 / 221 | 0.6673 s | clock difference 0.0039 s",
+            "reference": 0.689838,
+            "pilot": 0.695386,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 21,
+            "status": "Frame 21 / 221 | 0.7007 s | clock difference 0.0292 s",
+            "reference": 0.690267,
+            "pilot": 0.740116,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-010.png",
+          "wallBefore": "2026-10-08T01:36:22.898Z",
+          "wallAfter": "2026-10-08T01:36:23.082Z",
+          "before": {
+            "frame": 23,
+            "status": "Frame 23 / 221 | 0.7674 s | clock difference 0.0044 s",
+            "reference": 0.777022,
+            "pilot": 0.784919,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 24,
+            "status": "Frame 24 / 221 | 0.8008 s | clock difference 0.0000 s",
+            "reference": 0.810443,
+            "pilot": 0.830934,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-011.png",
+          "wallBefore": "2026-10-08T01:36:23.256Z",
+          "wallAfter": "2026-10-08T01:36:23.436Z",
+          "before": {
+            "frame": 26,
+            "status": "Frame 26 / 221 | 0.8675 s | clock difference 0.0292 s",
+            "reference": 0.843843,
+            "pilot": 0.87443,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 27,
+            "status": "Frame 27 / 221 | 0.9009 s | clock difference 0.0331 s",
+            "reference": 0.881449,
+            "pilot": 0.919312,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-012.png",
+          "wallBefore": "2026-10-08T01:36:23.615Z",
+          "wallAfter": "2026-10-08T01:36:23.783Z",
+          "before": {
+            "frame": 28,
+            "status": "Frame 28 / 221 | 0.9343 s | clock difference 0.0041 s",
+            "reference": 0.956355,
+            "pilot": 0.964162,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 29,
+            "status": "Frame 29 / 221 | 0.9676 s | clock difference 0.0000 s",
+            "reference": 0.989934,
+            "pilot": 1.006188,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-013.png",
+          "wallBefore": "2026-10-08T01:36:23.959Z",
+          "wallAfter": "2026-10-08T01:36:24.112Z",
+          "before": {
+            "frame": 31,
+            "status": "Frame 31 / 221 | 1.0344 s | clock difference 0.0205 s",
+            "reference": 1.02732,
+            "pilot": 1.050084,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 32,
+            "status": "Frame 32 / 221 | 1.0677 s | clock difference 0.0125 s",
+            "reference": 1.064722,
+            "pilot": 1.088328,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-014.png",
+          "wallBefore": "2026-10-08T01:36:24.300Z",
+          "wallAfter": "2026-10-08T01:36:24.437Z",
+          "before": {
+            "frame": 33,
+            "status": "Frame 33 / 221 | 1.1011 s | clock difference 0.0330 s",
+            "reference": 1.098311,
+            "pilot": 1.135258,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 34,
+            "status": "Frame 34 / 221 | 1.1345 s | clock difference 0.0249 s",
+            "reference": 1.135611,
+            "pilot": 1.169453,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-015.png",
+          "wallBefore": "2026-10-08T01:36:24.610Z",
+          "wallAfter": "2026-10-08T01:36:24.748Z",
+          "before": {
+            "frame": 36,
+            "status": "Frame 36 / 221 | 1.2012 s | clock difference 0.0041 s",
+            "reference": 1.206409,
+            "pilot": 1.212947,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 37,
+            "status": "Frame 37 / 221 | 1.2346 s | clock difference 0.0392 s",
+            "reference": 1.206409,
+            "pilot": 1.247457,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-016.png",
+          "wallBefore": "2026-10-08T01:36:24.923Z",
+          "wallAfter": "2026-10-08T01:36:25.069Z",
+          "before": {
+            "frame": 38,
+            "status": "Frame 38 / 221 | 1.2679 s | clock difference 0.0041 s",
+            "reference": 1.285522,
+            "pilot": 1.29121,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 39,
+            "status": "Frame 39 / 221 | 1.3013 s | clock difference 0.0377 s",
+            "reference": 1.285522,
+            "pilot": 1.327478,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-017.png",
+          "wallBefore": "2026-10-08T01:36:25.251Z",
+          "wallAfter": "2026-10-08T01:36:25.403Z",
+          "before": {
+            "frame": 41,
+            "status": "Frame 41 / 221 | 1.3680 s | clock difference 0.0083 s",
+            "reference": 1.364664,
+            "pilot": 1.373134,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 41,
+            "status": "Frame 41 / 221 | 1.3680 s | clock difference 0.0000 s",
+            "reference": 1.398116,
+            "pilot": 1.411164,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-018.png",
+          "wallBefore": "2026-10-08T01:36:25.577Z",
+          "wallAfter": "2026-10-08T01:36:25.717Z",
+          "before": {
+            "frame": 43,
+            "status": "Frame 43 / 221 | 1.4348 s | clock difference 0.0168 s",
+            "reference": 1.435304,
+            "pilot": 1.454848,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 44,
+            "status": "Frame 44 / 221 | 1.4681 s | clock difference 0.0083 s",
+            "reference": 1.468785,
+            "pilot": 1.489545,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-019.png",
+          "wallBefore": "2026-10-08T01:36:25.904Z",
+          "wallAfter": "2026-10-08T01:36:26.054Z",
+          "before": {
+            "frame": 46,
+            "status": "Frame 46 / 221 | 1.5349 s | clock difference 0.0333 s",
+            "reference": 1.502251,
+            "pilot": 1.536405,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 46,
+            "status": "Frame 46 / 221 | 1.5349 s | clock difference 0.0208 s",
+            "reference": 1.539568,
+            "pilot": 1.573844,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-020.png",
+          "wallBefore": "2026-10-08T01:36:26.236Z",
+          "wallAfter": "2026-10-08T01:36:26.408Z",
+          "before": {
+            "frame": 48,
+            "status": "Frame 48 / 221 | 1.6016 s | clock difference 0.0083 s",
+            "reference": 1.610498,
+            "pilot": 1.619237,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 49,
+            "status": "Frame 49 / 221 | 1.6350 s | clock difference 0.0000 s",
+            "reference": 1.643932,
+            "pilot": 1.662145,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-021.png",
+          "wallBefore": "2026-10-08T01:36:26.592Z",
+          "wallAfter": "2026-10-08T01:36:26.749Z",
+          "before": {
+            "frame": 51,
+            "status": "Frame 51 / 221 | 1.7017 s | clock difference 0.0295 s",
+            "reference": 1.677455,
+            "pilot": 1.708368,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 51,
+            "status": "Frame 51 / 221 | 1.7017 s | clock difference 0.0202 s",
+            "reference": 1.711013,
+            "pilot": 1.747376,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-022.png",
+          "wallBefore": "2026-10-08T01:36:26.936Z",
+          "wallAfter": "2026-10-08T01:36:27.090Z",
+          "before": {
+            "frame": 53,
+            "status": "Frame 53 / 221 | 1.7684 s | clock difference 0.0083 s",
+            "reference": 1.785383,
+            "pilot": 1.794395,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 54,
+            "status": "Frame 54 / 221 | 1.8018 s | clock difference 0.0000 s",
+            "reference": 1.818932,
+            "pilot": 1.83262,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-023.png",
+          "wallBefore": "2026-10-08T01:36:27.265Z",
+          "wallAfter": "2026-10-08T01:36:27.440Z",
+          "before": {
+            "frame": 56,
+            "status": "Frame 56 / 221 | 1.8685 s | clock difference 0.0166 s",
+            "reference": 1.8563,
+            "pilot": 1.876495,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 57,
+            "status": "Frame 57 / 221 | 1.9019 s | clock difference 0.0080 s",
+            "reference": 1.893887,
+            "pilot": 1.920396,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-024.png",
+          "wallBefore": "2026-10-08T01:36:27.623Z",
+          "wallAfter": "2026-10-08T01:36:27.800Z",
+          "before": {
+            "frame": 58,
+            "status": "Frame 58 / 221 | 1.9353 s | clock difference 0.0332 s",
+            "reference": 1.931267,
+            "pilot": 1.966025,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 59,
+            "status": "Frame 59 / 221 | 1.9686 s | clock difference 0.0208 s",
+            "reference": 1.968881,
+            "pilot": 2.01042,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-025.png",
+          "wallBefore": "2026-10-08T01:36:27.979Z",
+          "wallAfter": "2026-10-08T01:36:28.170Z",
+          "before": {
+            "frame": 61,
+            "status": "Frame 61 / 221 | 2.0354 s | clock difference 0.0042 s",
+            "reference": 2.047915,
+            "pilot": 2.055198,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 62,
+            "status": "Frame 62 / 221 | 2.0687 s | clock difference 0.0000 s",
+            "reference": 2.081328,
+            "pilot": 2.102896,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-026.png",
+          "wallBefore": "2026-10-08T01:36:28.352Z",
+          "wallAfter": "2026-10-08T01:36:28.535Z",
+          "before": {
+            "frame": 64,
+            "status": "Frame 64 / 221 | 2.1355 s | clock difference 0.0291 s",
+            "reference": 2.118748,
+            "pilot": 2.148476,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 65,
+            "status": "Frame 65 / 221 | 2.1688 s | clock difference 0.0166 s",
+            "reference": 2.156455,
+            "pilot": 2.194119,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-027.png",
+          "wallBefore": "2026-10-08T01:36:28.712Z",
+          "wallAfter": "2026-10-08T01:36:28.915Z",
+          "before": {
+            "frame": 67,
+            "status": "Frame 67 / 221 | 2.2356 s | clock difference 0.0040 s",
+            "reference": 2.231337,
+            "pilot": 2.23832,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 68,
+            "status": "Frame 68 / 221 | 2.2689 s | clock difference 0.0573 s",
+            "reference": 2.231337,
+            "pilot": 2.289132,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-028.png",
+          "wallBefore": "2026-10-08T01:36:29.103Z",
+          "wallAfter": "2026-10-08T01:36:29.272Z",
+          "before": {
+            "frame": 70,
+            "status": "Frame 70 / 221 | 2.3357 s | clock difference 0.0084 s",
+            "reference": 2.327022,
+            "pilot": 2.335973,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 70,
+            "status": "Frame 70 / 221 | 2.3357 s | clock difference 0.0000 s",
+            "reference": 2.36048,
+            "pilot": 2.378282,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-029.png",
+          "wallBefore": "2026-10-08T01:36:29.460Z",
+          "wallAfter": "2026-10-08T01:36:29.631Z",
+          "before": {
+            "frame": 72,
+            "status": "Frame 72 / 221 | 2.4024 s | clock difference 0.0246 s",
+            "reference": 2.398214,
+            "pilot": 2.425285,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 73,
+            "status": "Frame 73 / 221 | 2.4358 s | clock difference 0.0165 s",
+            "reference": 2.435426,
+            "pilot": 2.468121,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-030.png",
+          "wallBefore": "2026-10-08T01:36:29.816Z",
+          "wallAfter": "2026-10-08T01:36:29.974Z",
+          "before": {
+            "frame": 75,
+            "status": "Frame 75 / 221 | 2.5025 s | clock difference 0.0043 s",
+            "reference": 2.50628,
+            "pilot": 2.514487,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 76,
+            "status": "Frame 76 / 221 | 2.5359 s | clock difference 0.0332 s",
+            "reference": 2.50628,
+            "pilot": 2.553877,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-031.png",
+          "wallBefore": "2026-10-08T01:36:30.163Z",
+          "wallAfter": "2026-10-08T01:36:30.324Z",
+          "before": {
+            "frame": 77,
+            "status": "Frame 77 / 221 | 2.5692 s | clock difference 0.0042 s",
+            "reference": 2.593716,
+            "pilot": 2.600923,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 78,
+            "status": "Frame 78 / 221 | 2.6026 s | clock difference 0.0000 s",
+            "reference": 2.627104,
+            "pilot": 2.641389,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-032.png",
+          "wallBefore": "2026-10-08T01:36:30.503Z",
+          "wallAfter": "2026-10-08T01:36:30.656Z",
+          "before": {
+            "frame": 80,
+            "status": "Frame 80 / 221 | 2.6693 s | clock difference 0.0209 s",
+            "reference": 2.664678,
+            "pilot": 2.686225,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 81,
+            "status": "Frame 81 / 221 | 2.7027 s | clock difference 0.0086 s",
+            "reference": 2.701927,
+            "pilot": 2.724298,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-033.png",
+          "wallBefore": "2026-10-08T01:36:30.829Z",
+          "wallAfter": "2026-10-08T01:36:30.941Z",
+          "before": {
+            "frame": 82,
+            "status": "Frame 82 / 221 | 2.7361 s | clock difference 0.0291 s",
+            "reference": 2.735538,
+            "pilot": 2.76772,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 83,
+            "status": "Frame 83 / 221 | 2.7694 s | clock difference 0.0247 s",
+            "reference": 2.769107,
+            "pilot": 2.795517,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-034.png",
+          "wallBefore": "2026-10-08T01:36:31.127Z",
+          "wallAfter": "2026-10-08T01:36:31.234Z",
+          "before": {
+            "frame": 85,
+            "status": "Frame 85 / 221 | 2.8362 s | clock difference 0.0333 s",
+            "reference": 2.806257,
+            "pilot": 2.841655,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 85,
+            "status": "Frame 85 / 221 | 2.8362 s | clock difference 0.0209 s",
+            "reference": 2.843658,
+            "pilot": 2.868852,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-035.png",
+          "wallBefore": "2026-10-08T01:36:31.421Z",
+          "wallAfter": "2026-10-08T01:36:31.517Z",
+          "before": {
+            "frame": 87,
+            "status": "Frame 87 / 221 | 2.9029 s | clock difference 0.0332 s",
+            "reference": 2.881287,
+            "pilot": 2.915689,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 87,
+            "status": "Frame 87 / 221 | 2.9029 s | clock difference 0.0164 s",
+            "reference": 2.918773,
+            "pilot": 2.939596,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-036.png",
+          "wallBefore": "2026-10-08T01:36:31.705Z",
+          "wallAfter": "2026-10-08T01:36:31.803Z",
+          "before": {
+            "frame": 89,
+            "status": "Frame 89 / 221 | 2.9696 s | clock difference 0.0294 s",
+            "reference": 2.956165,
+            "pilot": 2.986654,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 90,
+            "status": "Frame 90 / 221 | 3.0030 s | clock difference 0.0125 s",
+            "reference": 2.993702,
+            "pilot": 3.011028,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-037.png",
+          "wallBefore": "2026-10-08T01:36:31.987Z",
+          "wallAfter": "2026-10-08T01:36:32.067Z",
+          "before": {
+            "frame": 91,
+            "status": "Frame 91 / 221 | 3.0364 s | clock difference 0.0249 s",
+            "reference": 3.031272,
+            "pilot": 3.05692,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 92,
+            "status": "Frame 92 / 221 | 3.0697 s | clock difference 0.0053 s",
+            "reference": 3.068802,
+            "pilot": 3.077056,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-038.png",
+          "wallBefore": "2026-10-08T01:36:32.248Z",
+          "wallAfter": "2026-10-08T01:36:32.333Z",
+          "before": {
+            "frame": 93,
+            "status": "Frame 93 / 221 | 3.1031 s | clock difference 0.0124 s",
+            "reference": 3.106323,
+            "pilot": 3.122443,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 94,
+            "status": "Frame 94 / 221 | 3.1365 s | clock difference 0.0330 s",
+            "reference": 3.110439,
+            "pilot": 3.143602,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-039.png",
+          "wallBefore": "2026-10-08T01:36:32.519Z",
+          "wallAfter": "2026-10-08T01:36:32.602Z",
+          "before": {
+            "frame": 95,
+            "status": "Frame 95 / 221 | 3.1698 s | clock difference 0.0043 s",
+            "reference": 3.185377,
+            "pilot": 3.190184,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 96,
+            "status": "Frame 96 / 221 | 3.2032 s | clock difference 0.0210 s",
+            "reference": 3.185377,
+            "pilot": 3.21076,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-040.png",
+          "wallBefore": "2026-10-08T01:36:32.781Z",
+          "wallAfter": "2026-10-08T01:36:32.874Z",
+          "before": {
+            "frame": 97,
+            "status": "Frame 97 / 221 | 3.2366 s | clock difference 0.0289 s",
+            "reference": 3.223157,
+            "pilot": 3.255746,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 98,
+            "status": "Frame 98 / 221 | 3.2699 s | clock difference 0.0165 s",
+            "reference": 3.260572,
+            "pilot": 3.278791,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-041.png",
+          "wallBefore": "2026-10-08T01:36:33.062Z",
+          "wallAfter": "2026-10-08T01:36:33.145Z",
+          "before": {
+            "frame": 99,
+            "status": "Frame 99 / 221 | 3.3033 s | clock difference 0.0247 s",
+            "reference": 3.298054,
+            "pilot": 3.325837,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 100,
+            "status": "Frame 100 / 221 | 3.3367 s | clock difference 0.0099 s",
+            "reference": 3.335524,
+            "pilot": 3.346661,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-042.png",
+          "wallBefore": "2026-10-08T01:36:33.327Z",
+          "wallAfter": "2026-10-08T01:36:33.424Z",
+          "before": {
+            "frame": 101,
+            "status": "Frame 101 / 221 | 3.3700 s | clock difference 0.0164 s",
+            "reference": 3.373046,
+            "pilot": 3.392097,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 102,
+            "status": "Frame 102 / 221 | 3.4034 s | clock difference 0.0041 s",
+            "reference": 3.410489,
+            "pilot": 3.416132,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-043.png",
+          "wallBefore": "2026-10-08T01:36:33.609Z",
+          "wallAfter": "2026-10-08T01:36:33.681Z",
+          "before": {
+            "frame": 103,
+            "status": "Frame 103 / 221 | 3.4368 s | clock difference 0.0127 s",
+            "reference": 3.448054,
+            "pilot": 3.462579,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 104,
+            "status": "Frame 104 / 221 | 3.4701 s | clock difference 0.0292 s",
+            "reference": 3.448075,
+            "pilot": 3.48024,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-044.png",
+          "wallBefore": "2026-10-08T01:36:33.861Z",
+          "wallAfter": "2026-10-08T01:36:33.944Z",
+          "before": {
+            "frame": 105,
+            "status": "Frame 105 / 221 | 3.5035 s | clock difference 0.0041 s",
+            "reference": 3.518898,
+            "pilot": 3.525385,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 106,
+            "status": "Frame 106 / 221 | 3.5369 s | clock difference 0.0251 s",
+            "reference": 3.518898,
+            "pilot": 3.546257,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-045.png",
+          "wallBefore": "2026-10-08T01:36:34.123Z",
+          "wallAfter": "2026-10-08T01:36:34.207Z",
+          "before": {
+            "frame": 107,
+            "status": "Frame 107 / 221 | 3.5702 s | clock difference 0.0333 s",
+            "reference": 3.556163,
+            "pilot": 3.591006,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 108,
+            "status": "Frame 108 / 221 | 3.6036 s | clock difference 0.0170 s",
+            "reference": 3.593531,
+            "pilot": 3.611967,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-046.png",
+          "wallBefore": "2026-10-08T01:36:34.387Z",
+          "wallAfter": "2026-10-08T01:36:34.474Z",
+          "before": {
+            "frame": 109,
+            "status": "Frame 109 / 221 | 3.6370 s | clock difference 0.0294 s",
+            "reference": 3.626911,
+            "pilot": 3.657125,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 110,
+            "status": "Frame 110 / 221 | 3.6703 s | clock difference 0.0166 s",
+            "reference": 3.660461,
+            "pilot": 3.678781,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-047.png",
+          "wallBefore": "2026-10-08T01:36:34.653Z",
+          "wallAfter": "2026-10-08T01:36:34.745Z",
+          "before": {
+            "frame": 111,
+            "status": "Frame 111 / 221 | 3.7037 s | clock difference 0.0248 s",
+            "reference": 3.698093,
+            "pilot": 3.723629,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 112,
+            "status": "Frame 112 / 221 | 3.7371 s | clock difference 0.0081 s",
+            "reference": 3.735421,
+            "pilot": 3.746591,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-048.png",
+          "wallBefore": "2026-10-08T01:36:34.934Z",
+          "wallAfter": "2026-10-08T01:36:35.026Z",
+          "before": {
+            "frame": 113,
+            "status": "Frame 113 / 221 | 3.7704 s | clock difference 0.0209 s",
+            "reference": 3.768809,
+            "pilot": 3.794013,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 114,
+            "status": "Frame 114 / 221 | 3.8038 s | clock difference 0.0084 s",
+            "reference": 3.806377,
+            "pilot": 3.816584,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-049.png",
+          "wallBefore": "2026-10-08T01:36:35.216Z",
+          "wallAfter": "2026-10-08T01:36:35.313Z",
+          "before": {
+            "frame": 115,
+            "status": "Frame 115 / 221 | 3.8372 s | clock difference 0.0188 s",
+            "reference": 3.843907,
+            "pilot": 3.864232,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 116,
+            "status": "Frame 116 / 221 | 3.8705 s | clock difference 0.0039 s",
+            "reference": 3.88137,
+            "pilot": 3.888585,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-050.png",
+          "wallBefore": "2026-10-08T01:36:35.496Z",
+          "wallAfter": "2026-10-08T01:36:35.584Z",
+          "before": {
+            "frame": 117,
+            "status": "Frame 117 / 221 | 3.9039 s | clock difference 0.0126 s",
+            "reference": 3.918672,
+            "pilot": 3.934262,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 118,
+            "status": "Frame 118 / 221 | 3.9373 s | clock difference 0.0000 s",
+            "reference": 3.952108,
+            "pilot": 3.956386,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-051.png",
+          "wallBefore": "2026-10-08T01:36:35.762Z",
+          "wallAfter": "2026-10-08T01:36:35.853Z",
+          "before": {
+            "frame": 119,
+            "status": "Frame 119 / 221 | 3.9706 s | clock difference 0.0080 s",
+            "reference": 3.989668,
+            "pilot": 4.000719,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 120,
+            "status": "Frame 120 / 221 | 4.0040 s | clock difference 0.0288 s",
+            "reference": 3.989668,
+            "pilot": 4.023515,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-052.png",
+          "wallBefore": "2026-10-08T01:36:36.040Z",
+          "wallAfter": "2026-10-08T01:36:36.121Z",
+          "before": {
+            "frame": 121,
+            "status": "Frame 121 / 221 | 4.0374 s | clock difference 0.0085 s",
+            "reference": 4.060265,
+            "pilot": 4.070281,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 122,
+            "status": "Frame 122 / 221 | 4.0707 s | clock difference 0.0292 s",
+            "reference": 4.060265,
+            "pilot": 4.090469,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-053.png",
+          "wallBefore": "2026-10-08T01:36:36.308Z",
+          "wallAfter": "2026-10-08T01:36:36.386Z",
+          "before": {
+            "frame": 123,
+            "status": "Frame 123 / 221 | 4.1041 s | clock difference 0.0045 s",
+            "reference": 4.13115,
+            "pilot": 4.137352,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 124,
+            "status": "Frame 124 / 221 | 4.1375 s | clock difference 0.0251 s",
+            "reference": 4.13115,
+            "pilot": 4.156921,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-054.png",
+          "wallBefore": "2026-10-08T01:36:36.572Z",
+          "wallAfter": "2026-10-08T01:36:36.654Z",
+          "before": {
+            "frame": 125,
+            "status": "Frame 125 / 221 | 4.1708 s | clock difference 0.0000 s",
+            "reference": 4.202164,
+            "pilot": 4.203356,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 126,
+            "status": "Frame 126 / 221 | 4.2042 s | clock difference 0.0206 s",
+            "reference": 4.202164,
+            "pilot": 4.223876,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-055.png",
+          "wallBefore": "2026-10-08T01:36:36.837Z",
+          "wallAfter": "2026-10-08T01:36:36.920Z",
+          "before": {
+            "frame": 127,
+            "status": "Frame 127 / 221 | 4.2376 s | clock difference 0.0297 s",
+            "reference": 4.239416,
+            "pilot": 4.269542,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 128,
+            "status": "Frame 128 / 221 | 4.2709 s | clock difference 0.0123 s",
+            "reference": 4.272962,
+            "pilot": 4.290516,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-056.png",
+          "wallBefore": "2026-10-08T01:36:37.101Z",
+          "wallAfter": "2026-10-08T01:36:37.186Z",
+          "before": {
+            "frame": 129,
+            "status": "Frame 129 / 221 | 4.3043 s | clock difference 0.0251 s",
+            "reference": 4.310229,
+            "pilot": 4.335682,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 130,
+            "status": "Frame 130 / 221 | 4.3377 s | clock difference 0.0084 s",
+            "reference": 4.343738,
+            "pilot": 4.356829,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-057.png",
+          "wallBefore": "2026-10-08T01:36:37.364Z",
+          "wallAfter": "2026-10-08T01:36:37.464Z",
+          "before": {
+            "frame": 131,
+            "status": "Frame 131 / 221 | 4.3710 s | clock difference 0.0168 s",
+            "reference": 4.381157,
+            "pilot": 4.401281,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 132,
+            "status": "Frame 132 / 221 | 4.4044 s | clock difference 0.0083 s",
+            "reference": 4.414602,
+            "pilot": 4.426325,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-058.png",
+          "wallBefore": "2026-10-08T01:36:37.646Z",
+          "wallAfter": "2026-10-08T01:36:37.794Z",
+          "before": {
+            "frame": 133,
+            "status": "Frame 133 / 221 | 4.4378 s | clock difference 0.0167 s",
+            "reference": 4.451875,
+            "pilot": 4.471889,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 134,
+            "status": "Frame 134 / 221 | 4.4711 s | clock difference 0.0084 s",
+            "reference": 4.489309,
+            "pilot": 4.508628,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-059.png",
+          "wallBefore": "2026-10-08T01:36:37.974Z",
+          "wallAfter": "2026-10-08T01:36:38.128Z",
+          "before": {
+            "frame": 136,
+            "status": "Frame 136 / 221 | 4.5379 s | clock difference 0.0290 s",
+            "reference": 4.522898,
+            "pilot": 4.553832,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 137,
+            "status": "Frame 137 / 221 | 4.5712 s | clock difference 0.0207 s",
+            "reference": 4.556292,
+            "pilot": 4.592083,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-060.png",
+          "wallBefore": "2026-10-08T01:36:38.318Z",
+          "wallAfter": "2026-10-08T01:36:38.461Z",
+          "before": {
+            "frame": 139,
+            "status": "Frame 139 / 221 | 4.6380 s | clock difference 0.0084 s",
+            "reference": 4.631217,
+            "pilot": 4.639957,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 139,
+            "status": "Frame 139 / 221 | 4.6380 s | clock difference 0.0047 s",
+            "reference": 4.664748,
+            "pilot": 4.67539,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-061.png",
+          "wallBefore": "2026-10-08T01:36:38.647Z",
+          "wallAfter": "2026-10-08T01:36:38.792Z",
+          "before": {
+            "frame": 141,
+            "status": "Frame 141 / 221 | 4.7047 s | clock difference 0.0165 s",
+            "reference": 4.702053,
+            "pilot": 4.722067,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 142,
+            "status": "Frame 142 / 221 | 4.7381 s | clock difference 0.0115 s",
+            "reference": 4.736188,
+            "pilot": 4.758199,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-062.png",
+          "wallBefore": "2026-10-08T01:36:38.972Z",
+          "wallAfter": "2026-10-08T01:36:39.076Z",
+          "before": {
+            "frame": 143,
+            "status": "Frame 143 / 221 | 4.7714 s | clock difference 0.0292 s",
+            "reference": 4.77292,
+            "pilot": 4.803288,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 144,
+            "status": "Frame 144 / 221 | 4.8048 s | clock difference 0.0167 s",
+            "reference": 4.810342,
+            "pilot": 4.829276,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-063.png",
+          "wallBefore": "2026-10-08T01:36:39.255Z",
+          "wallAfter": "2026-10-08T01:36:39.358Z",
+          "before": {
+            "frame": 146,
+            "status": "Frame 146 / 221 | 4.8715 s | clock difference 0.0250 s",
+            "reference": 4.847653,
+            "pilot": 4.873982,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 146,
+            "status": "Frame 146 / 221 | 4.8715 s | clock difference 0.0166 s",
+            "reference": 4.881074,
+            "pilot": 4.899839,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-064.png",
+          "wallBefore": "2026-10-08T01:36:39.534Z",
+          "wallAfter": "2026-10-08T01:36:39.639Z",
+          "before": {
+            "frame": 148,
+            "status": "Frame 148 / 221 | 4.9383 s | clock difference 0.0248 s",
+            "reference": 4.914532,
+            "pilot": 4.943772,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 148,
+            "status": "Frame 148 / 221 | 4.9383 s | clock difference 0.0167 s",
+            "reference": 4.951903,
+            "pilot": 4.970059,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-065.png",
+          "wallBefore": "2026-10-08T01:36:39.815Z",
+          "wallAfter": "2026-10-08T01:36:39.928Z",
+          "before": {
+            "frame": 150,
+            "status": "Frame 150 / 221 | 5.0050 s | clock difference 0.0206 s",
+            "reference": 4.989568,
+            "pilot": 5.014194,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 151,
+            "status": "Frame 151 / 221 | 5.0384 s | clock difference 0.0124 s",
+            "reference": 5.026925,
+            "pilot": 5.041867,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-066.png",
+          "wallBefore": "2026-10-08T01:36:40.113Z",
+          "wallAfter": "2026-10-08T01:36:40.227Z",
+          "before": {
+            "frame": 152,
+            "status": "Frame 152 / 221 | 5.0717 s | clock difference 0.0245 s",
+            "reference": 5.06063,
+            "pilot": 5.088384,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 153,
+            "status": "Frame 153 / 221 | 5.1051 s | clock difference 0.0166 s",
+            "reference": 5.097755,
+            "pilot": 5.117001,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-067.png",
+          "wallBefore": "2026-10-08T01:36:40.405Z",
+          "wallAfter": "2026-10-08T01:36:40.515Z",
+          "before": {
+            "frame": 154,
+            "status": "Frame 154 / 221 | 5.1385 s | clock difference 0.0248 s",
+            "reference": 5.135559,
+            "pilot": 5.16155,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 155,
+            "status": "Frame 155 / 221 | 5.1718 s | clock difference 0.0124 s",
+            "reference": 5.172866,
+            "pilot": 5.188912,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-068.png",
+          "wallBefore": "2026-10-08T01:36:40.702Z",
+          "wallAfter": "2026-10-08T01:36:40.811Z",
+          "before": {
+            "frame": 156,
+            "status": "Frame 156 / 221 | 5.2052 s | clock difference 0.0249 s",
+            "reference": 5.210313,
+            "pilot": 5.23594,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 157,
+            "status": "Frame 157 / 221 | 5.2386 s | clock difference 0.0165 s",
+            "reference": 5.243698,
+            "pilot": 5.263158,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-069.png",
+          "wallBefore": "2026-10-08T01:36:40.999Z",
+          "wallAfter": "2026-10-08T01:36:41.113Z",
+          "before": {
+            "frame": 159,
+            "status": "Frame 159 / 221 | 5.3053 s | clock difference 0.0248 s",
+            "reference": 5.281148,
+            "pilot": 5.309753,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 159,
+            "status": "Frame 159 / 221 | 5.3053 s | clock difference 0.0206 s",
+            "reference": 5.314583,
+            "pilot": 5.338386,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-070.png",
+          "wallBefore": "2026-10-08T01:36:41.294Z",
+          "wallAfter": "2026-10-08T01:36:41.417Z",
+          "before": {
+            "frame": 161,
+            "status": "Frame 161 / 221 | 5.3720 s | clock difference 0.0290 s",
+            "reference": 5.351928,
+            "pilot": 5.383945,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 162,
+            "status": "Frame 162 / 221 | 5.4054 s | clock difference 0.0252 s",
+            "reference": 5.385309,
+            "pilot": 5.414604,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-071.png",
+          "wallBefore": "2026-10-08T01:36:41.592Z",
+          "wallAfter": "2026-10-08T01:36:41.718Z",
+          "before": {
+            "frame": 163,
+            "status": "Frame 163 / 221 | 5.4388 s | clock difference 0.0000 s",
+            "reference": 5.456074,
+            "pilot": 5.458227,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 164,
+            "status": "Frame 164 / 221 | 5.4721 s | clock difference 0.0291 s",
+            "reference": 5.456074,
+            "pilot": 5.489853,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-072.png",
+          "wallBefore": "2026-10-08T01:36:41.904Z",
+          "wallAfter": "2026-10-08T01:36:42.011Z",
+          "before": {
+            "frame": 165,
+            "status": "Frame 165 / 221 | 5.5055 s | clock difference 0.0083 s",
+            "reference": 5.527108,
+            "pilot": 5.536342,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 166,
+            "status": "Frame 166 / 221 | 5.5389 s | clock difference 0.0333 s",
+            "reference": 5.527108,
+            "pilot": 5.563159,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-073.png",
+          "wallBefore": "2026-10-08T01:36:42.202Z",
+          "wallAfter": "2026-10-08T01:36:42.310Z",
+          "before": {
+            "frame": 168,
+            "status": "Frame 168 / 221 | 5.6056 s | clock difference 0.0086 s",
+            "reference": 5.601898,
+            "pilot": 5.610819,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 168,
+            "status": "Frame 168 / 221 | 5.6056 s | clock difference 0.0333 s",
+            "reference": 5.601898,
+            "pilot": 5.637769,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-074.png",
+          "wallBefore": "2026-10-08T01:36:42.496Z",
+          "wallAfter": "2026-10-08T01:36:42.615Z",
+          "before": {
+            "frame": 170,
+            "status": "Frame 170 / 221 | 5.6723 s | clock difference 0.0042 s",
+            "reference": 5.676942,
+            "pilot": 5.684311,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 171,
+            "status": "Frame 171 / 221 | 5.7057 s | clock difference 0.0333 s",
+            "reference": 5.676942,
+            "pilot": 5.713932,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-075.png",
+          "wallBefore": "2026-10-08T01:36:42.791Z",
+          "wallAfter": "2026-10-08T01:36:42.901Z",
+          "before": {
+            "frame": 172,
+            "status": "Frame 172 / 221 | 5.7391 s | clock difference 0.0040 s",
+            "reference": 5.752114,
+            "pilot": 5.758047,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 173,
+            "status": "Frame 173 / 221 | 5.7724 s | clock difference 0.0291 s",
+            "reference": 5.752114,
+            "pilot": 5.785642,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-076.png",
+          "wallBefore": "2026-10-08T01:36:43.087Z",
+          "wallAfter": "2026-10-08T01:36:43.203Z",
+          "before": {
+            "frame": 174,
+            "status": "Frame 174 / 221 | 5.8058 s | clock difference 0.0085 s",
+            "reference": 5.822749,
+            "pilot": 5.832113,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 175,
+            "status": "Frame 175 / 221 | 5.8392 s | clock difference 0.0333 s",
+            "reference": 5.822749,
+            "pilot": 5.861149,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-077.png",
+          "wallBefore": "2026-10-08T01:36:43.383Z",
+          "wallAfter": "2026-10-08T01:36:43.502Z",
+          "before": {
+            "frame": 176,
+            "status": "Frame 176 / 221 | 5.8725 s | clock difference 0.0042 s",
+            "reference": 5.897758,
+            "pilot": 5.905987,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 177,
+            "status": "Frame 177 / 221 | 5.9059 s | clock difference 0.0000 s",
+            "reference": 5.931155,
+            "pilot": 5.935868,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-078.png",
+          "wallBefore": "2026-10-08T01:36:43.678Z",
+          "wallAfter": "2026-10-08T01:36:43.799Z",
+          "before": {
+            "frame": 179,
+            "status": "Frame 179 / 221 | 5.9726 s | clock difference 0.0083 s",
+            "reference": 5.968547,
+            "pilot": 5.979891,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 180,
+            "status": "Frame 180 / 221 | 6.0060 s | clock difference 0.0000 s",
+            "reference": 6.006028,
+            "pilot": 6.010072,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-079.png",
+          "wallBefore": "2026-10-08T01:36:43.976Z",
+          "wallAfter": "2026-10-08T01:36:44.076Z",
+          "before": {
+            "frame": 181,
+            "status": "Frame 181 / 221 | 6.0394 s | clock difference 0.0043 s",
+            "reference": 6.047643,
+            "pilot": 6.05414,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 182,
+            "status": "Frame 182 / 221 | 6.0727 s | clock difference 0.0292 s",
+            "reference": 6.047664,
+            "pilot": 6.079455,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-080.png",
+          "wallBefore": "2026-10-08T01:36:44.255Z",
+          "wallAfter": "2026-10-08T01:36:44.362Z",
+          "before": {
+            "frame": 183,
+            "status": "Frame 183 / 221 | 6.1061 s | clock difference 0.0000 s",
+            "reference": 6.12266,
+            "pilot": 6.124004,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 184,
+            "status": "Frame 184 / 221 | 6.1395 s | clock difference 0.0250 s",
+            "reference": 6.12266,
+            "pilot": 6.150516,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-081.png",
+          "wallBefore": "2026-10-08T01:36:44.549Z",
+          "wallAfter": "2026-10-08T01:36:44.657Z",
+          "before": {
+            "frame": 185,
+            "status": "Frame 185 / 221 | 6.1728 s | clock difference 0.0330 s",
+            "reference": 6.161461,
+            "pilot": 6.197532,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 186,
+            "status": "Frame 186 / 221 | 6.2062 s | clock difference 0.0250 s",
+            "reference": 6.197721,
+            "pilot": 6.22466,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-082.png",
+          "wallBefore": "2026-10-08T01:36:44.834Z",
+          "wallAfter": "2026-10-08T01:36:44.949Z",
+          "before": {
+            "frame": 187,
+            "status": "Frame 187 / 221 | 6.2396 s | clock difference 0.0332 s",
+            "reference": 6.235349,
+            "pilot": 6.269046,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 188,
+            "status": "Frame 188 / 221 | 6.2729 s | clock difference 0.0210 s",
+            "reference": 6.272725,
+            "pilot": 6.297593,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-083.png",
+          "wallBefore": "2026-10-08T01:36:45.127Z",
+          "wallAfter": "2026-10-08T01:36:45.265Z",
+          "before": {
+            "frame": 190,
+            "status": "Frame 190 / 221 | 6.3397 s | clock difference 0.0333 s",
+            "reference": 6.306177,
+            "pilot": 6.342151,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 190,
+            "status": "Frame 190 / 221 | 6.3397 s | clock difference 0.0247 s",
+            "reference": 6.343827,
+            "pilot": 6.376505,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-084.png",
+          "wallBefore": "2026-10-08T01:36:45.441Z",
+          "wallAfter": "2026-10-08T01:36:45.590Z",
+          "before": {
+            "frame": 192,
+            "status": "Frame 192 / 221 | 6.4064 s | clock difference 0.0039 s",
+            "reference": 6.414474,
+            "pilot": 6.420562,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 193,
+            "status": "Frame 193 / 221 | 6.4398 s | clock difference 0.0290 s",
+            "reference": 6.414495,
+            "pilot": 6.457904,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-085.png",
+          "wallBefore": "2026-10-08T01:36:45.765Z",
+          "wallAfter": "2026-10-08T01:36:45.925Z",
+          "before": {
+            "frame": 194,
+            "status": "Frame 194 / 221 | 6.4731 s | clock difference 0.0000 s",
+            "reference": 6.497716,
+            "pilot": 6.501659,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 195,
+            "status": "Frame 195 / 221 | 6.5065 s | clock difference 0.0333 s",
+            "reference": 6.497737,
+            "pilot": 6.541575,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-086.png",
+          "wallBefore": "2026-10-08T01:36:46.112Z",
+          "wallAfter": "2026-10-08T01:36:46.295Z",
+          "before": {
+            "frame": 197,
+            "status": "Frame 197 / 221 | 6.5732 s | clock difference 0.0041 s",
+            "reference": 6.581036,
+            "pilot": 6.588213,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 198,
+            "status": "Frame 198 / 221 | 6.6066 s | clock difference 0.0333 s",
+            "reference": 6.583155,
+            "pilot": 6.633926,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-087.png",
+          "wallBefore": "2026-10-08T01:36:46.469Z",
+          "wallAfter": "2026-10-08T01:36:46.639Z",
+          "before": {
+            "frame": 200,
+            "status": "Frame 200 / 221 | 6.6733 s | clock difference 0.0040 s",
+            "reference": 6.672873,
+            "pilot": 6.677706,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 200,
+            "status": "Frame 200 / 221 | 6.6733 s | clock difference 0.0290 s",
+            "reference": 6.672873,
+            "pilot": 6.719897,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-088.png",
+          "wallBefore": "2026-10-08T01:36:46.816Z",
+          "wallAfter": "2026-10-08T01:36:46.983Z",
+          "before": {
+            "frame": 202,
+            "status": "Frame 202 / 221 | 6.7401 s | clock difference 0.0040 s",
+            "reference": 6.756112,
+            "pilot": 6.764259,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 203,
+            "status": "Frame 203 / 221 | 6.7734 s | clock difference 0.0000 s",
+            "reference": 6.789617,
+            "pilot": 6.806114,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-089.png",
+          "wallBefore": "2026-10-08T01:36:47.171Z",
+          "wallAfter": "2026-10-08T01:36:47.334Z",
+          "before": {
+            "frame": 205,
+            "status": "Frame 205 / 221 | 6.8402 s | clock difference 0.0249 s",
+            "reference": 6.826913,
+            "pilot": 6.853027,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 206,
+            "status": "Frame 206 / 221 | 6.8735 s | clock difference 0.0333 s",
+            "reference": 6.860282,
+            "pilot": 6.89398,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-090.png",
+          "wallBefore": "2026-10-08T01:36:47.510Z",
+          "wallAfter": "2026-10-08T01:36:47.667Z",
+          "before": {
+            "frame": 207,
+            "status": "Frame 207 / 221 | 6.9069 s | clock difference 0.0039 s",
+            "reference": 6.931269,
+            "pilot": 6.937988,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 208,
+            "status": "Frame 208 / 221 | 6.9403 s | clock difference 0.0375 s",
+            "reference": 6.931269,
+            "pilot": 6.976765,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-091.png",
+          "wallBefore": "2026-10-08T01:36:47.840Z",
+          "wallAfter": "2026-10-08T01:36:48.007Z",
+          "before": {
+            "frame": 210,
+            "status": "Frame 210 / 221 | 7.0070 s | clock difference 0.0041 s",
+            "reference": 7.014619,
+            "pilot": 7.020496,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 211,
+            "status": "Frame 211 / 221 | 7.0404 s | clock difference 0.0374 s",
+            "reference": 7.014619,
+            "pilot": 7.062115,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-092.png",
+          "wallBefore": "2026-10-08T01:36:48.181Z",
+          "wallAfter": "2026-10-08T01:36:48.356Z",
+          "before": {
+            "frame": 212,
+            "status": "Frame 212 / 221 | 7.0737 s | clock difference 0.0044 s",
+            "reference": 7.097705,
+            "pilot": 7.105636,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 213,
+            "status": "Frame 213 / 221 | 7.1071 s | clock difference 0.0390 s",
+            "reference": 7.097705,
+            "pilot": 7.148989,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-093.png",
+          "wallBefore": "2026-10-08T01:36:48.543Z",
+          "wallAfter": "2026-10-08T01:36:48.725Z",
+          "before": {
+            "frame": 215,
+            "status": "Frame 215 / 221 | 7.1738 s | clock difference 0.0083 s",
+            "reference": 7.185244,
+            "pilot": 7.196086,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 216,
+            "status": "Frame 216 / 221 | 7.2072 s | clock difference 0.0000 s",
+            "reference": 7.222749,
+            "pilot": 7.241665,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-094.png",
+          "wallBefore": "2026-10-08T01:36:48.905Z",
+          "wallAfter": "2026-10-08T01:36:49.087Z",
+          "before": {
+            "frame": 218,
+            "status": "Frame 218 / 221 | 7.2739 s | clock difference 0.0291 s",
+            "reference": 7.256155,
+            "pilot": 7.286549,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 219,
+            "status": "Frame 219 / 221 | 7.3073 s | clock difference 0.0166 s",
+            "reference": 7.293684,
+            "pilot": 7.332216,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        },
+        {
+          "file": "quarter-095.png",
+          "wallBefore": "2026-10-08T01:36:49.274Z",
+          "wallAfter": "2026-10-08T01:36:49.465Z",
+          "before": {
+            "frame": 221,
+            "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0081 s",
+            "reference": 7.368831,
+            "pilot": 7.378948,
+            "paused": [
+              false,
+              false
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          },
+          "after": {
+            "frame": 221,
+            "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+            "reference": 7.374033,
+            "pilot": 7.374033,
+            "paused": [
+              true,
+              true
+            ],
+            "muted": [
+              true,
+              true
+            ],
+            "rates": [
+              0.25,
+              0.25
+            ]
+          }
+        }
+      ],
+      "wallStart": "2026-10-08T01:36:19.715Z",
+      "end": {
+        "frame": 221,
+        "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "reference": 7.374033,
+        "pilot": 7.374033,
+        "paused": [
+          true,
+          true
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "wallEnd": "2026-10-08T01:36:49.469Z",
+      "maxObservedClockDeltaSeconds": 0.05779500000000004
+    }
+  ],
+  "console": [],
+  "externalRequests": [],
+  "helperServersStarted": 0,
+  "browserVersion": "149.0.7827.55"
+}

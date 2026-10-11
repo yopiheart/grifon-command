@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "completedAt": "2026-10-08T14:35:48.129Z",
+  "status": "LOCAL_REUSABLE_WORKFLOW_AND_PREVIEWS_VERIFIED",
+  "branch": "codex/grifon-motion-reuse",
+  "acceptedBase": "118a5e8aac30739b2705489077ad862b671dbfd4",
+  "scope": "Reusable local authoring workflow and previews selected by Neil; no customer application feature.",
+  "sources": [
+    {
+      "path": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "path": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "path": "tools/motion-launch/visual.mjs",
+      "bytes": 22930,
+      "sha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b"
+    },
+    {
+      "path": "tools/motion-launch/preview-page.mjs",
+      "bytes": 10288,
+      "sha256": "d62d781c146269c709940eb1e6e3c61d9d14c716023e5def2ade710ee9b27d95"
+    },
+    {
+      "path": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "path": "tools/motion-launch/audio.mjs",
+      "bytes": 42037,
+      "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+    },
+    {
+      "path": "tests/unit/motionLaunchProject.test.ts",
+      "bytes": 19649,
+      "sha256": "5d17b40a6b8fb071ecc047bcb41bf887ed3d06cbd368e73f18bc28e1254b63dd"
+    },
+    {
+      "path": "tests/unit/motionLaunchAudio.test.ts",
+      "bytes": 14054,
+      "sha256": "c7733dfef6f9d35c772ce8c62250e5a3c699d175c0b8f8c8ee9970863f6b45e9"
+    },
+    {
+      "path": "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+      "bytes": 12040,
+      "sha256": "65bb52a25ca778c771f8cd8b47295c1405ab7d66a84b4255577d7f380d771eda"
+    },
+    {
+      "path": "artifacts/grifon-motion-reuse-preview.html",
+      "bytes": 2317415,
+      "sha256": "b03318712755658ec0727278b04d747fbc2c6c449c3d042f745ae292abee2d1c"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+      "bytes": 2976,
+      "sha256": "3df54c12e037b65d8fd546f915d8711c1ef300680e2ecf9bb5e0a2aaa1ded9cc"
+    },
+    {
+      "path": "workflows/grifon_motion_production.md",
+      "bytes": 16374,
+      "sha256": "d3dcc664ecc1be9195c99f35cfcab12634fd027affc67a24527d754504355fa7"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 2251,
+      "sha256": "469091c312d4811ee4dd3fca727af5427c2a342c0aba6444aa3fb6fdba1cece9"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/report.json",
+      "bytes": 132517,
+      "sha256": "9ac49d23d0e73d8c866be7057ba4c7733cae3b66b13935de8b290b4a301ae172"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/final-browser-report.json",
+      "bytes": 101702,
+      "sha256": "35c4defade19a0a4890897cb3b4e184aadd761dd519da00edd02260e28db12fa"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json",
+      "bytes": 754,
+      "sha256": "3eb291efef42016954baf1042d845bfc80a194773fa89bad6ff8890ac46cae14"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/independent-review.md",
+      "bytes": 10333,
+      "sha256": "6e6b07413fd1c696f9920f2b54d31b5bde510f929e194dd374ad41e7ea699151"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/final-delivery-v2.json",
+      "bytes": 6854,
+      "sha256": "e112d0be943e4ce1b0ca4d555f03e9aafd33d82bd69868de7c6c4446ffd3deb7"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/final-delivery-v2.md",
+      "bytes": 2514,
+      "sha256": "be627fa3915e4cbc54d2d16f5326513397a510855494aa390b718b2990788b42"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/staged-checkout-v2.json",
+      "bytes": 22659,
+      "sha256": "4a25298b6e936a0d5785d490a74aae7fd8f2cedbec892761c601cf34c90264a9"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build.json",
+      "bytes": 1230,
+      "sha256": "a3d260aec86279aff5febc7207b265de8b1f8ede16b1df9e0fa211140c4633f8"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-review.json",
+      "bytes": 6166,
+      "sha256": "bc34ff67d266a4ccf7a9e906d13c5cb33eeb36be178d8d0be7946cb261c57345"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-resolution.json",
+      "bytes": 5241,
+      "sha256": "3c0599304f1674519456a43ddcbb971cef5e48a06b254619011775b793f26611"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/audio-clock-diagnosis-v1.json",
+      "bytes": 5215,
+      "sha256": "b2ccfdb1b7c0946573ce1c6bfa46226f519ef1b1523c83697c4909cfb9a51099"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/shader-codec-join-diagnosis-v1.json",
+      "bytes": 2566,
+      "sha256": "1fc2f944ffd49deca034ed24ae368e7db7e3fafd35bf5797e0f20193dcc08253"
+    },
+    {
+      "path": "workflows/assets/grifon-motion-repeatability/qa/initial-preview-preservation.json",
+      "bytes": 1407,
+      "sha256": "46b6fe619361f0f03e50ea487e286ff4597a7e00d7e34715b2a314db22740adb"
+    }
+  ],
+  "repositoryChecks": [
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "status": "PASS",
+      "prebuild": "check:ps1-ascii PASS",
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-build.log",
+        "bytes": 1647,
+        "sha256": "36aa563c18ab0c3ae79bce233178929ad598326c33f77a82f26fc7f8a691a34c"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    },
+    {
+      "command": "npm.cmd run test",
+      "exitCode": 0,
+      "status": "PASS",
+      "testFilesPassed": 118,
+      "testFilesSkipped": 9,
+      "testsPassed": 1463,
+      "testsSkipped": 32,
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-test.log",
+        "bytes": 363,
+        "sha256": "b16ea7497c9ad47016c064b33a6421abd36df5535d89c4b2a2a1eac59c543854"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-artifact-anchors.log",
+        "bytes": 775,
+        "sha256": "c6294afa2c51f207225ddf82017298de5c72c73a077660c39c233bc3533c577a"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    },
+    {
+      "command": "npm.cmd run check:bundle-leak",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-bundle-leak.log",
+        "bytes": 175,
+        "sha256": "2100b050474dac6f2c71400ff4e1d3f23b25de68843dd40974c9a6e9d68108fd"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-domain.log",
+        "bytes": 158,
+        "sha256": "bbd45a27f0fbb252f5738bcbb14e4ddeac07651ad110659c5c0cad927e0e37b9"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-voice-sync.log",
+        "bytes": 306,
+        "sha256": "e1c104d3a48b7dfe9991f54325922339193969e137cb53b380ad0fbfd304bee8"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "exitCode": 0,
+      "status": "PASS",
+      "entrypoints": 33,
+      "files": 106,
+      "testsPassed": 26,
+      "log": {
+        "path": ".tmp/motion-repeatability-root/final-codex.log",
+        "bytes": 2550,
+        "sha256": "348ef83b78f0112ff7c10bb91dc8f4d814bc4276aed517e3c81a21f270f50168"
+      },
+      "exitCodeEvidence": "Observed command process exit 0 in root tool transcript; logs retained privately."
+    }
+  ],
+  "media": {
+    "checksPassed": 35,
+    "report": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/report.json",
+    "completeNativeBasic": "288 frames / 12s / 1080x1920 / 24fps; picture render+verification 80.9959689s; full AAC stream copy passed",
+    "newFull932ShaderCapture": "NOT_RUN",
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "browser": {
+    "checksPassed": 28,
+    "engine": "Fresh isolated installed Playwright headless shell; not Codex IAB",
+    "clockSamples": {
+      "samples": 12,
+      "maxVisualLeadMs": 0,
+      "maxVisualLagMs": 43.92833333333357,
+      "maxAbsoluteDifferenceMs": 43.92833333333357,
+      "boundMs": 100,
+      "note": "Same DOM evaluation reads both native displayed frame and actual AAC currentTime. Bound covers quantization/rAF/seek scheduling; actual observed values retained. Controlled delayed first response exercises stalled startup; silent samples excluded."
+    },
+    "downloads": [
+      {
+        "id": "shader-landscape",
+        "suggestedFilename": "shader-landscape-draft.mp4",
+        "expectedFilename": "shader-landscape-draft.mp4",
+        "bytes": 846083,
+        "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556",
+        "expectedSha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556",
+        "urlScheme": "blob",
+        "nativeDownloadEvent": true,
+        "failure": null
+      },
+      {
+        "id": "basic-portrait",
+        "suggestedFilename": "basic-portrait-draft.mp4",
+        "expectedFilename": "basic-portrait-draft.mp4",
+        "bytes": 53617,
+        "sha256": "8486bd06cc6d29a1750d3feebcb192aee8aba81928beec7d88eed88758c03871",
+        "expectedSha256": "8486bd06cc6d29a1750d3feebcb192aee8aba81928beec7d88eed88758c03871",
+        "urlScheme": "blob",
+        "nativeDownloadEvent": true,
+        "failure": null
+      }
+    ],
+    "rootVisualReview": "Viewed both current 390x844 standalone PNGs; controls and text readable, no visible overflow. Technical/visual workflow proof only; no auditory-quality acceptance."
+  },
+  "independentReview": "PASS; source and delivery findings resolved; final-delivery-v2 report explicitly predated root browser/repository completion, completed here.",
+  "freshCheckout": {
+    "status": "STAGED_AND_FRESH_WINDOWS_CHECKOUT_PASS",
+    "boundFiles": 59,
+    "coreAutocrlf": true,
+    "acceptedOriginalsVerified": 17,
+    "workingAndFreshStandaloneChecks": "PASS"
+  },
+  "appProviderControlScope": "Exact accepted-base diff: App.tsx/api/services/components/types/package manifests/.agents/.claude/.codex unchanged",
+  "history": "Failed and pre-fix reports preserved; current source/artifact and final media/browser reports take precedence.",
+  "limits": [
+    "Cold/repeat benchmarks exclude new-reference authoring, creative iterations and customer infrastructure.",
+    "A reference is a brief; unsupported effects, characters, footage, simulations and assets need deliberate authoring.",
+    "No universal automatic replication or customer turnaround guarantee.",
+    "Encoded audio integrity and timeline checks do not establish auditory quality.",
+    "Raw recordings, stems and caches remain private; no customer audio-library rights inferred.",
+    "No deployment, merge, paid provider call, or production-data change."
+  ],
+  "operationalResume": "NOW.md is separately updated with actual draft PR after creation; excluded from immutable source bindings to avoid a circular commit/PR dependency."
+}

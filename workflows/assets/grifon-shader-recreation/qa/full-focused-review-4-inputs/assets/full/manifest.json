@@ -1,0 +1,59 @@
+{
+  "specSha256": "2b62d012c9c011db4acb650bf16847e4b1695a96592d0a056d6ee8678072b1fa",
+  "files": [
+    {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "source": "../grifon-motion-depth/assets/inter-normalized-outlines.json"
+    },
+    {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "source": "../grifon-motion-depth/assets/inter-900.ttf"
+    },
+    {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "source": "../grifon-motion-depth/assets/OFL-Inter.txt"
+    },
+    {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "source": "../../../public/logo.png"
+    },
+    {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "source": "../grifon-shader-launch/assets/captures/script.png"
+    },
+    {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "source": "../grifon-shader-launch/assets/captures/portrait-script.png"
+    },
+    {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "source": "../grifon-shader-launch/assets/captures/storyboard.png"
+    }
+  ],
+  "logoAlphaBounds": {
+    "left": 40,
+    "top": 40,
+    "width": 666,
+    "height": 918,
+    "sourceWidth": 745,
+    "sourceHeight": 997
+  },
+  "captureEvidence": "../grifon-shader-launch/qa/product-capture.json",
+  "captureEvidenceSha256": "d2d0349fcd54a5e3eafd54ed644fdb185e096c8f78033120d01ec42d810eea85",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

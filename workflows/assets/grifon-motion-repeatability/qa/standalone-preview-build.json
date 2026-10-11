@@ -1,0 +1,31 @@
+{
+  "artifact": "artifacts/grifon-motion-reuse-preview.html",
+  "bytes": 2317415,
+  "sha256": "b03318712755658ec0727278b04d747fbc2c6c449c3d042f745ae292abee2d1c",
+  "manifestSha256": "3df54c12e037b65d8fd546f915d8711c1ef300680e2ecf9bb5e0a2aaa1ded9cc",
+  "builderSha256": "65bb52a25ca778c771f8cd8b47295c1405ab7d66a84b4255577d7f380d771eda",
+  "files": [
+    {
+      "file": "qa/independent-smoke/20261008T140712202Z/shader-landscape-draft.mp4",
+      "bytes": 846083,
+      "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+    },
+    {
+      "file": "qa/independent-smoke/20261008T140712202Z/shader-landscape-poster.png",
+      "bytes": 804612,
+      "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0"
+    },
+    {
+      "file": "qa/independent-smoke/20261008T140712202Z/basic-portrait-draft.mp4",
+      "bytes": 53617,
+      "sha256": "8486bd06cc6d29a1750d3feebcb192aee8aba81928beec7d88eed88758c03871"
+    },
+    {
+      "file": "qa/independent-smoke/20261008T140712202Z/basic-portrait-poster.png",
+      "bytes": 25786,
+      "sha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff"
+    }
+  ],
+  "status": "DRAFT_WORKFLOW_PROOF_ONLY",
+  "providerCalls": 0
+}

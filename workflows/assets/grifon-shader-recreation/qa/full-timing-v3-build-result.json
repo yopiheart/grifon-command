@@ -1,0 +1,7 @@
+{
+  "output": "qa/full-timing-v3-build-output.txt",
+  "exit": 0,
+  "elapsedMs": 32841,
+  "paidLiveFlagsUnset": true,
+  "command": "npm.cmd run build"
+}

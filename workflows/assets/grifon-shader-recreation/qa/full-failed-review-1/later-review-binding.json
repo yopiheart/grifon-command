@@ -1,0 +1,96 @@
+{
+  "filmSha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab",
+  "purpose": "Preserve subsequently completed mobile/check/native reports on the failed candidate; original preservation receipt and payload unchanged.",
+  "payload": [
+    {
+      "file": "qa/player-build.json",
+      "bytes": 1541,
+      "sha256": "2d70297fbacc2a21a3cd2ffe07f3f9f847890ffc8f71eb01f8a6435f2706d959"
+    },
+    {
+      "file": "qa/player-checks.json",
+      "bytes": 5446,
+      "sha256": "866d9979ef9043b63bc66d3a8532caa8cb60c95ae4349ca85fdce1f84d0a0e6c"
+    },
+    {
+      "file": "qa/player-integrity.json",
+      "bytes": 1004,
+      "sha256": "06d15c53f321a955dbf010ac48db9bf3aad293569156ff1268b6791590f6795a"
+    },
+    {
+      "file": "qa/player-mobile-1280x844-download.mp4",
+      "bytes": 27719697,
+      "sha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab"
+    },
+    {
+      "file": "qa/player-mobile-1280x844-ended.png",
+      "bytes": 669947,
+      "sha256": "90d63bc9225708e35801510d5884dafa89f5a2a01378aa78adb0fce6edcc5f14"
+    },
+    {
+      "file": "qa/player-mobile-1280x844-playing.png",
+      "bytes": 830841,
+      "sha256": "bff00958c685441f24fb31ba1a3df1c14c1236a1300468faba60869dbdb0bf3b"
+    },
+    {
+      "file": "qa/player-mobile-1280x844-poster.png",
+      "bytes": 614813,
+      "sha256": "99484577445f5e3c85dc629ce379ade787a612fbcec10d098b946cc01c611010"
+    },
+    {
+      "file": "qa/player-mobile-1280x844-scrub.png",
+      "bytes": 802180,
+      "sha256": "623910ecaed6534082f7861510bf2117f8d4230fe20901cfe59c06b1e97a55b1"
+    },
+    {
+      "file": "qa/player-mobile-390x844-download.mp4",
+      "bytes": 27719697,
+      "sha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab"
+    },
+    {
+      "file": "qa/player-mobile-390x844-ended.png",
+      "bytes": 292953,
+      "sha256": "5c62521af2218597ec3f1c2a5b3712c9d8bceeffc3880b31d56e4b1f2d4548c7"
+    },
+    {
+      "file": "qa/player-mobile-390x844-playing.png",
+      "bytes": 338443,
+      "sha256": "7f24e6439020caad70923918ccc0aac5ff57812c74dd636651b5b51cf7b24791"
+    },
+    {
+      "file": "qa/player-mobile-390x844-poster.png",
+      "bytes": 307914,
+      "sha256": "7d8b25638eead047c7c55bfe49d313c9f0683b842c71484e274eee5ae98d92d3"
+    },
+    {
+      "file": "qa/player-mobile-390x844-scrub.png",
+      "bytes": 323360,
+      "sha256": "e2af9a3ae0ed04b99552d9d79b341c796c2196f3e3f842aa6aa32202214420e6"
+    },
+    {
+      "file": "qa/player-mobile-report.json",
+      "bytes": 41752,
+      "sha256": "7eab50ad613b73af44619bd80ad08282f572bf9e83507de35671cfe750a03dc0"
+    },
+    {
+      "file": "qa/player-mobile-smoke.mjs",
+      "bytes": 10827,
+      "sha256": "de41fcd0ecbbc862a4637254247124b3af2a40724e6766fa9a15c285099e1cec"
+    },
+    {
+      "file": "reference/player-mobile-review.md",
+      "bytes": 5808,
+      "sha256": "ee0c0353d19593d5bab98bc472082e441396711617ab9419a9a64e69e11eece6"
+    },
+    {
+      "file": "reference/full-native-review-v1.md",
+      "bytes": 9258,
+      "sha256": "5e3060843c8916c4f2b9955bba172ad7ce4d6563dd7774a54d4fe3d809326798"
+    },
+    {
+      "file": "reference/full-correction-brief-v1.md",
+      "bytes": 4611,
+      "sha256": "cf3cff8310035b0e72bc367c1a52685f6607f592e1d673a6ab758b5e930763de"
+    }
+  ]
+}

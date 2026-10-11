@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "status": "INITIAL_ROOT_PRE_STAGING_SNAPSHOT_PRESERVED",
+  "initialRecord": {
+    "path": "workflows/assets/grifon-motion-repeatability/qa/delivery-root-initial.json",
+    "bytes": 12148,
+    "sha256": "0840179163c21db4339d1da3aba01f525e959bb8cebcf3146c0077d72492d346"
+  },
+  "privateExactRecord": {
+    "path": ".tmp/motion-repeatability-root/delivery-root-initial.json",
+    "bytes": 12148,
+    "sha256": "0840179163c21db4339d1da3aba01f525e959bb8cebcf3146c0077d72492d346"
+  },
+  "privatePreNormalizationGuide": {
+    "path": ".tmp/motion-repeatability-root/guide-before-final-eol.md",
+    "bytes": 16374,
+    "sha256": "d3dcc664ecc1be9195c99f35cfcab12634fd027affc67a24527d754504355fa7"
+  },
+  "privatePriorAttributes": {
+    "path": ".tmp/motion-repeatability-root/attributes-before-final-eol.txt",
+    "bytes": 2251,
+    "sha256": "469091c312d4811ee4dd3fca727af5427c2a342c0aba6444aa3fb6fdba1cece9"
+  },
+  "reason": "Initial repository/media/browser results passed; final staging audit found guide CRLF versus normalized Git LF binding difference and immutable CRLF harness-record EOL interpretation. Guide is now explicitly LF; exact harness evidence retains raw bytes with CR-at-EOL declared while whitespace rules stay active. Current delivery-root-final.json supersedes initial source bindings. No producer, artifact, runtime or media bytes changed."
+}

@@ -1,0 +1,35 @@
+{
+  "artifact": "artifacts/grifon-shader-sound-v1.html",
+  "bytes": 33746991,
+  "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a",
+  "media": {
+    "file": "grifon-recreation-landscape-sound-v1.mp4",
+    "bytes": 25057741,
+    "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "frames": 932,
+    "fps": "30000/1001",
+    "duration": 31.146,
+    "nativeVideoDuration": 31.097733333333334,
+    "measuredVideoTrackDuration": 31.098
+  },
+  "inputs": {
+    "tools/artifacts/build-grifon-shader-sound-v1.mjs": "deef501d89a22c0841dca39d0815186bcc8527c4edd036aaa2059991eb8b8a4d",
+    "tools/artifacts/grifon-shader-recreation.tpl.html": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d",
+    "tools/artifacts/_gates.mjs": "57dd8b78b37160c9643964dffbdc4a07cdddeb728fe0ecbbf8ab177747af0f94",
+    "qa/full-poster.png": "1e8d54f6f57f5c6db2f7bffb716a64e6886168d3b703022c48c9640d47b39003",
+    "sound-v1/qa/media.json": "450c44f53cd723c7f522ce34553ba191cd441b05ca0ace7a1ca2963573054bec",
+    "sound-v1/sound-spec.json": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+    "sound-v1/qa/mix-verification.json": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3",
+    "sound-v1/qa/packets.json": "2fa6e5cd920ead7fbc5e447a73f6992f0f562c077dfe025cd107332d244fecaa"
+  },
+  "soundtrack": "AUTHORED_MUSIC_AND_MOTION_SFX",
+  "cueCount": 47,
+  "subjectiveListening": "PENDING_HUMAN_REVIEW",
+  "embeddedMedia": "Finished Grifon MP4 and existing poster only; raw music and isolated effects remain private",
+  "download": "Original MP4 bytes from the same inline payload",
+  "externalRequests": "Blocked by CSP; browser smoke is a separate gate"
+}

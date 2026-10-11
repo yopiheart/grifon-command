@@ -1,0 +1,30 @@
+{
+  "scope": "Final standalone artifact construction and root control checks; independent visual and audio judgments are separate",
+  "film": { "bytes": 24994401, "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917" },
+  "artifact": { "file": "artifacts/grifon-shader-recreation.html", "bytes": 33662393, "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423" },
+  "executed": [
+    { "command": "node tools/artifacts/build-grifon-shader-recreation.mjs", "exitCode": 0 },
+    { "command": "node tools/artifacts/build-grifon-shader-recreation.mjs --check", "exitCode": 0, "result": "Player and build receipt reproduce exactly" },
+    { "command": "npm.cmd run check:artifact-anchors", "exitCode": 0, "result": "check:artifact-anchors ok; existing eli5-image-gate artifact unchanged" },
+    { "command": "git diff --check", "exitCode": 0, "scope": "Working tracked diff; staged full scope checked separately at commit" }
+  ],
+  "privateComparison": {
+    "pairSha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf",
+    "receiptSha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402",
+    "pageSha256": "d65ecb907938b12e83d3bfe4f93c83c57dc27292ccd5b4d3ed0f1e9360e80475",
+    "server": "http://127.0.0.1:59028/",
+    "ownedServerPid": 21024,
+    "head": { "status": 200, "contentLength": 16376839, "contentType": "video/mp4" },
+    "restart": "Verified listener27428/node.exe/exact script+port before stopping that owned old server; replacement21024 pins the new immutable generation"
+  },
+  "separateActualGates": {
+    "production": "qa/full-production-v3.json",
+    "buildAndDefaultVitest": "qa/full-timing-v3-checks.json",
+    "audio": "qa/audio-final-verification.json",
+    "playerControls": "qa/player-final-v3/player-mobile-report.json",
+    "earlierUnchangedControlChecks": "qa/root-full-control-checks-v2.json"
+  },
+  "providerCalls": 0,
+  "additionalPaidSpendUsd": 0,
+  "limits": "This construction/control record does not establish film fidelity or heard sonic resemblance. Historical mocked guards remain qualified by their own reports."
+}

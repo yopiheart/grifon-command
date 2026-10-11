@@ -1,0 +1,7 @@
+{
+  "command": "npx.cmd vitest run",
+  "exit": 0,
+  "elapsedMs": 48394,
+  "output": "qa/full-timing-v3-vitest-output.txt",
+  "paidLiveFlagsUnset": true
+}

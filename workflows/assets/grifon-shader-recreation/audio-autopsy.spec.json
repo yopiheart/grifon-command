@@ -1,0 +1,43 @@
+{
+  "status": "PROPOSED_AWAITING_EXPLICIT_APPROVAL",
+  "purpose": "Resolve unreliable semantic audio findings from the first autopsy and assess two already-existing clean music alternatives before scoring Grifon audio against the reference.",
+  "sourceUrl": "https://x.com/npm_i_shaders/status/2107467668009963819",
+  "inputs": [
+    {"id": "A", "file": "reference/source-audio.m4a", "bytes": 505101, "sha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae", "seconds": 31.146667, "mimeType": "audio/mp4", "role": "Native reference AAC stream; private inspection only"},
+    {"id": "B", "file": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources/close-up.mp3", "bytes": 3045294, "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b", "seconds": 95.137959, "mimeType": "audio/mpeg", "role": "Existing registered clean Mixkit music; no old mixed master"},
+    {"id": "C", "file": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3", "bytes": 3232566, "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48", "seconds": 101.0155, "mimeType": "audio/mpeg", "role": "Existing registered clean Mixkit music; no automatic reuse decision"}
+  ],
+  "analyzer": {
+    "model": "gemini-3.5-flash",
+    "promptFile": "audio-autopsy-prompt.txt",
+    "responseMimeType": "application/json",
+    "temperature": 0.2,
+    "maxOutputTokens": 8192,
+    "httpOptions": {"retryOptions": {"attempts": 1}},
+    "canonicalPromptToolProviderOrSkillChanges": "None. Proposed exact new prompt and bounded task-local adapter only, applied after approval."
+  },
+  "budget": {
+    "maxAdditionalPaidUsd": 0.1,
+    "maxGenerateContentAttempts": 1,
+    "retries": 0,
+    "maxInputTokens": 12000,
+    "inputPriceUsdPerMillion": 1.5,
+    "outputIncludingThinkingPriceUsdPerMillion": 9,
+    "maximumTokenCostUsd": 0.091728,
+    "priorRunEstimatedUsd": 0.0396285,
+    "maximumCombinedEstimatedUsd": 0.1396285,
+    "pricingSource": "https://ai.google.dev/gemini-api/docs/pricing",
+    "preflight": "Verify exact three input hashes/durations and prompt/spec hashes; upload only named sources; count exact request tokens before generation; abort on count>12000 or uncertain cap/auth. Persist one attempt before generation. No alternate model/provider, additional analysis or retry."
+  },
+  "pass": [
+    "Returned JSON follows the exact prompt structure and preserves uncertainty.",
+    "All named-file times use numeric decimal seconds and lie within measured durations; no perfect sync/frame precision claim.",
+    "Reported input modality includes AUDIO; native reference track was supplied intact.",
+    "Sound/BPM hypotheses are cross-checked against existing free onset/silence measurements and independent review before use.",
+    "Token usage/cost receipt confirms one attempt and additional estimated cost<=0.10."
+  ],
+  "fail": ["Missing audio modality, implausible timing, unsupported sound identities, forced candidate choice, changed input or cap uncertainty; stop without retry."],
+  "evidence": ["Exact request/input/prompt hashes", "AUDIO-modality usage receipt", "raw JSON", "schema/timing validation", "free audio-event cross-check", "computed token cost"],
+  "rights": "Private analysis only. Do not redistribute/sample reference audio or raw stock sources in the delivered player. No newly generated music/SFX or commercial-clearance assertion.",
+  "approval": "No second paid analysis is authorized until Neil approves this exact changed-input/prompt spec."
+}

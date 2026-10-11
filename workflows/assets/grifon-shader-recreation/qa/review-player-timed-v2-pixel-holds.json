@@ -1,0 +1,415 @@
+{
+  "method": "Exact raw-pixel hash of reference half in native timed browser screenshots, excluding pair gap",
+  "holds": [
+    {
+      "rate": 1,
+      "hash": "1c208675cb18378b1144942607abf842b639f3bf72933ad60e843de45cabbc25",
+      "count": 7,
+      "files": [
+        "normal-004.png",
+        "normal-005.png",
+        "normal-006.png",
+        "normal-007.png",
+        "normal-008.png",
+        "normal-009.png",
+        "normal-010.png"
+      ],
+      "first": {
+        "frame": 32,
+        "status": "Frame 32 / 221 | 1.0677 s | clock difference 0.0324 s",
+        "reference": 1.035388,
+        "pilot": 1.071363,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      },
+      "last": {
+        "frame": 86,
+        "status": "Frame 86 / 221 | 2.8695 s | clock difference 0.0000 s",
+        "reference": 2.902126,
+        "pilot": 2.928762,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rate": 1,
+      "hash": "4c4a69f2d881ea55d8f1c1425fcbf816c65cf951ef9a8ed24108a9c8a98f8ab8",
+      "count": 12,
+      "files": [
+        "normal-014.png",
+        "normal-015.png",
+        "normal-016.png",
+        "normal-017.png",
+        "normal-018.png",
+        "normal-019.png",
+        "normal-020.png",
+        "normal-021.png",
+        "normal-022.png",
+        "normal-023.png",
+        "normal-024.png",
+        "normal-025.png"
+      ],
+      "first": {
+        "frame": 109,
+        "status": "Frame 109 / 221 | 3.6370 s | clock difference 0.0330 s",
+        "reference": 3.618374,
+        "pilot": 3.655689,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      },
+      "last": {
+        "frame": 178,
+        "status": "Frame 178 / 221 | 5.9393 s | clock difference 0.0000 s",
+        "reference": 5.967639,
+        "pilot": 5.97166,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rate": 1,
+      "hash": "c61bbf3c2dac5fa7309bf8b42a2840a78c57e6993a41d99ad3cceaba07ba9bd7",
+      "count": 6,
+      "files": [
+        "normal-027.png",
+        "normal-028.png",
+        "normal-029.png",
+        "normal-030.png",
+        "normal-031.png",
+        "normal-032.png"
+      ],
+      "first": {
+        "frame": 189,
+        "status": "Frame 189 / 221 | 6.3063 s | clock difference 0.0161 s",
+        "reference": 6.301547,
+        "pilot": 6.320469,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      },
+      "last": {
+        "frame": 221,
+        "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "reference": 7.374033,
+        "pilot": 7.374033,
+        "paused": [
+          true,
+          true
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "rate": 0.25,
+      "hash": "48e8f2db109f4cfd52230b117dd2dc4a2bc1a0dcef890f716d03d0dab7434f86",
+      "count": 3,
+      "files": [
+        "quarter-000.png",
+        "quarter-001.png",
+        "quarter-002.png"
+      ],
+      "first": {
+        "frame": 0,
+        "status": "Frame 0 / 221 | 0.0000 s | clock difference 0.0021 s",
+        "reference": 0,
+        "pilot": 0.00289,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "last": {
+        "frame": 4,
+        "status": "Frame 4 / 221 | 0.1335 s | clock difference 0.0292 s",
+        "reference": 0.118794,
+        "pilot": 0.15,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      }
+    },
+    {
+      "rate": 0.25,
+      "hash": "e33dad5877008c75f8f9a2d1b9ca9cdcdcd38baa2fa70650f12a0d831736a978",
+      "count": 10,
+      "files": [
+        "quarter-018.png",
+        "quarter-019.png",
+        "quarter-020.png",
+        "quarter-021.png",
+        "quarter-022.png",
+        "quarter-023.png",
+        "quarter-024.png",
+        "quarter-025.png",
+        "quarter-026.png",
+        "quarter-027.png"
+      ],
+      "first": {
+        "frame": 43,
+        "status": "Frame 43 / 221 | 1.4348 s | clock difference 0.0168 s",
+        "reference": 1.435304,
+        "pilot": 1.454848,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "last": {
+        "frame": 68,
+        "status": "Frame 68 / 221 | 2.2689 s | clock difference 0.0573 s",
+        "reference": 2.231337,
+        "pilot": 2.289132,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      }
+    },
+    {
+      "rate": 0.25,
+      "hash": "9a6dd2902a93b8781eafd98cfe06803282971a58955d10b9bf184e3337a57a20",
+      "count": 9,
+      "files": [
+        "quarter-028.png",
+        "quarter-029.png",
+        "quarter-030.png",
+        "quarter-031.png",
+        "quarter-032.png",
+        "quarter-033.png",
+        "quarter-034.png",
+        "quarter-035.png",
+        "quarter-036.png"
+      ],
+      "first": {
+        "frame": 70,
+        "status": "Frame 70 / 221 | 2.3357 s | clock difference 0.0084 s",
+        "reference": 2.327022,
+        "pilot": 2.335973,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "last": {
+        "frame": 90,
+        "status": "Frame 90 / 221 | 3.0030 s | clock difference 0.0125 s",
+        "reference": 2.993702,
+        "pilot": 3.011028,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      }
+    },
+    {
+      "rate": 0.25,
+      "hash": "1e91bfff0427b9a299d3a537fd7856e72ca538eb5c5179776ec139df8b82c0dd",
+      "count": 17,
+      "files": [
+        "quarter-062.png",
+        "quarter-063.png",
+        "quarter-064.png",
+        "quarter-065.png",
+        "quarter-066.png",
+        "quarter-067.png",
+        "quarter-068.png",
+        "quarter-069.png",
+        "quarter-070.png",
+        "quarter-071.png",
+        "quarter-072.png",
+        "quarter-073.png",
+        "quarter-074.png",
+        "quarter-075.png",
+        "quarter-076.png",
+        "quarter-077.png",
+        "quarter-078.png"
+      ],
+      "first": {
+        "frame": 143,
+        "status": "Frame 143 / 221 | 4.7714 s | clock difference 0.0292 s",
+        "reference": 4.77292,
+        "pilot": 4.803288,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "last": {
+        "frame": 180,
+        "status": "Frame 180 / 221 | 6.0060 s | clock difference 0.0000 s",
+        "reference": 6.006028,
+        "pilot": 6.010072,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      }
+    },
+    {
+      "rate": 0.25,
+      "hash": "438f70712278b94b9a3c0e19f5d0277bd903d8b3ceba517cdc222e4650740884",
+      "count": 2,
+      "files": [
+        "quarter-094.png",
+        "quarter-095.png"
+      ],
+      "first": {
+        "frame": 218,
+        "status": "Frame 218 / 221 | 7.2739 s | clock difference 0.0291 s",
+        "reference": 7.256155,
+        "pilot": 7.286549,
+        "paused": [
+          false,
+          false
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      },
+      "last": {
+        "frame": 221,
+        "status": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "reference": 7.374033,
+        "pilot": 7.374033,
+        "paused": [
+          true,
+          true
+        ],
+        "muted": [
+          true,
+          true
+        ],
+        "rates": [
+          0.25,
+          0.25
+        ]
+      }
+    }
+  ]
+}

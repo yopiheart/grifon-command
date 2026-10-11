@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "status": "DELIVERY_AND_SCOPE_REVIEW_PASS",
+  "createdAt": "2026-10-08T13:54:03.860Z",
+  "scope": "Read-only delivery/source/scope addendum; no browser,GPU,FFmpeg or heavy tests. Earlier independent reports remain immutable.",
+  "unresolvedFindings": [],
+  "bindings": [
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+      "bytes": 2960,
+      "sha256": "e247092b9fff86a26d8f35e01c02ecf77abbc9dcc5585de793af9d64b5ab52a6"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/report.json",
+      "bytes": 132426,
+      "sha256": "55e9719e9fb9e34d4eed2962685f47422f29368d0cf257182d1b398567ad7cc4"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build.json",
+      "bytes": 1230,
+      "sha256": "bd6db2791b4241c04fc9ffbeea860ed139c8c325e6227d4a3bee922e9c0b3c3e"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/staged-checkout-v1.json",
+      "bytes": 12867,
+      "sha256": "955c20240da87a8f81ede6bb933c15502208328afc7f4208d957f7b50a6a5541"
+    },
+    {
+      "file": "artifacts/grifon-motion-reuse-preview.html",
+      "bytes": 2315769,
+      "sha256": "1b64604e0432c5ec7ba5004e204f23f829074da975efc92a822ada2f34444af4"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+      "bytes": 11273,
+      "sha256": "291e02751551a8dba1bd8d2bb69b101fb410c91f4c45bb97671077670d5e939f"
+    },
+    {
+      "file": "workflows/grifon_motion_production.md",
+      "bytes": 15457,
+      "sha256": "4adfba12b9afd975c44fac74c4c8eeec405ac2c5e18e004db0aa04a251ebfe29"
+    }
+  ],
+  "currentMediaBindings": [
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+      "bytes": 846083,
+      "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+      "bytes": 804612,
+      "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+      "bytes": 52970,
+      "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+      "bytes": 25786,
+      "sha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff"
+    }
+  ],
+  "actualContainerRead": [
+    {
+      "id": "shader-landscape",
+      "videoFrames": 90,
+      "dimensions": [
+        960,
+        540
+      ],
+      "videoTimescale": 30000,
+      "videoDurationTicks": 90090,
+      "nativeVideoDurationSeconds": 3.003,
+      "aacTrack": true,
+      "posterDimensions": [
+        960,
+        540
+      ]
+    },
+    {
+      "id": "basic-portrait",
+      "videoFrames": 72,
+      "dimensions": [
+        540,
+        960
+      ],
+      "videoTimescale": 24,
+      "videoDurationTicks": 72,
+      "nativeVideoDurationSeconds": 3,
+      "aacTrack": true,
+      "posterDimensions": [
+        540,
+        960
+      ]
+    }
+  ],
+  "mediaEvidence": {
+    "status": "PASS_LOCAL_DRAFT_CONTRACT",
+    "checks": 35,
+    "allChecksPass": true,
+    "producersBeforeAfterIdentical": true,
+    "currentTwoClipsAndPostersMatchManifest": true,
+    "evidenceHashMatches": true
+  },
+  "MR4": {
+    "resolution": "PASS_ACTUAL_FRESH_WINDOWS_CHECKOUT_VERIFIED",
+    "snapshotReportSha256": "955c20240da87a8f81ede6bb933c15502208328afc7f4208d957f7b50a6a5541",
+    "gitCoreAutocrlf": "true",
+    "ownVerifiedBindings": 31,
+    "method": "Reviewer independently hashed actual worktree bytes, read each actual staged blob through gitshow, and read every corresponding fresh-checkout file. All31equal the immutable snapshot binding.",
+    "standaloneCheck": {
+      "command": "node tools/artifacts/build-grifon-motion-reuse-preview.mjs --check",
+      "exitCode": 0,
+      "result": "PASS: byte-identical standalone preview"
+    },
+    "priorPendingStatus": "The prior immutable source review accurately left this gate pending at that time; this addendum closes it."
+  },
+  "timingClaims": {
+    "timings": [
+      {
+        "id": "shader-landscape",
+        "pictureColdSeconds": 36.1884174,
+        "verifiedPictureRepeatSeconds": 0.9417024999999994,
+        "manifestTimesExact": true,
+        "capturedFramesOnRepeat": 0
+      },
+      {
+        "id": "basic-portrait",
+        "pictureColdSeconds": 19.9152559,
+        "verifiedPictureRepeatSeconds": 0.8006906000000017,
+        "manifestTimesExact": true,
+        "capturedFramesOnRepeat": 0
+      }
+    ],
+    "pictureOnlyColdAndRepeat": true,
+    "nativeBasic": {
+      "frames": 288,
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "duration": 12,
+      "pictureRenderAndVerificationSeconds": 83.771565,
+      "videoPacketsVerified": 288
+    },
+    "separateAudioColdSeconds": [
+      {
+        "label": "shader-cold",
+        "seconds": 5.026178999999996
+      },
+      {
+        "label": "basic-cold",
+        "seconds": 1.693915200000003
+      }
+    ],
+    "newReferenceAuthoringExcluded": true,
+    "noCustomerSlaClaim": true,
+    "fullNewShaderExport": "NOT_RUN"
+  },
+  "deliveryScope": {
+    "protectedScopeCommand": "git diff --exit-code 118a5e8aac30739b2705489077ad862b671dbfd4 -- api services components App.tsx types.ts package.json package-lock.json .claude .codex .agents DESIGN.md",
+    "protectedScopeExitCode": 0,
+    "protectedScopeOutput": "EMPTY",
+    "stagedScopeFiles": [
+      ".gitattributes",
+      "NOW.md",
+      "artifacts/grifon-motion-reuse-preview.html",
+      "tests/unit/motionLaunchAudio.test.ts",
+      "tests/unit/motionLaunchProject.test.ts",
+      "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+      "tools/motion-launch.mjs",
+      "tools/motion-launch/audio.mjs",
+      "tools/motion-launch/preview-page.mjs",
+      "tools/motion-launch/project.mjs",
+      "tools/motion-launch/templates.mjs",
+      "tools/motion-launch/visual.mjs",
+      "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+      "workflows/assets/grifon-motion-repeatability/qa/audio-clock-diagnosis-v1.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-review-final.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-review.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T131046690Z/report.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/report.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-draft.mp4",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-poster.png",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-390x844-ready.jpg",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/report.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/contract.json",
+      "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/independent-review.md",
+      "workflows/assets/grifon-motion-repeatability/qa/review-final.md",
+      "workflows/assets/grifon-motion-repeatability/qa/review.md",
+      "workflows/assets/grifon-motion-repeatability/qa/runtime-launch-diagnosis-v1.json",
+      "workflows/assets/grifon-motion-repeatability/qa/shader-codec-join-diagnosis-v1.json",
+      "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build.json",
+      "workflows/grifon_motion_production.md"
+    ],
+    "rawLicensedAudioOrStemFilesStaged": false,
+    "authOrSessionFilesStaged": false,
+    "embeddedMixedMp4s": 2,
+    "embeddedRawAudioUrls": 0,
+    "externalResourceAttributes": false,
+    "connectNoneCsp": true,
+    "historicalWitness": {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-draft.mp4",
+      "scope": "Preserved pre-final-producer bounded shader witness from the failed second attempt; excluded from final preview manifest and current proof claims.",
+      "excludedFromCurrentManifest": true
+    },
+    "acceptedOriginalsRootSnapshotCount": 17,
+    "acceptedOriginalsClaim": "Root snapshot binds17acceptedoriginals unchanged; reviewer confirms these paths are outside the branch diff and this additive delivery scope."
+  },
+  "limitations": [
+    "No fresh932-frame shader capture/export; retained codec-join evidence remains separate.",
+    "Browser/player QA and root default application suite are owned by root; this addendum does not invent their final results.",
+    "Current NOW.md still labels fresh-checkout pending; root should update the resume document with final actual gates when completion is recorded.",
+    "Metadata references to licensed source files appear in technical evidence; raw recordings and stem bytes are not staged or embedded."
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

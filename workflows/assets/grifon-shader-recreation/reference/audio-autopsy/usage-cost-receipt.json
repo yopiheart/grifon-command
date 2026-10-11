@@ -1,0 +1,29 @@
+{
+  "completedAt": "2026-10-08T00:54:09.699Z",
+  "generationAttempts": 1,
+  "usageMetadata": {
+    "promptTokenCount": 6427,
+    "candidatesTokenCount": 772,
+    "totalTokenCount": 8716,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 744
+      },
+      {
+        "modality": "AUDIO",
+        "tokenCount": 5683
+      }
+    ],
+    "thoughtsTokenCount": 1517,
+    "serviceTier": "standard"
+  },
+  "outputIncludingThinkingTokens": 2289,
+  "additionalCostUsd": 0.0302415,
+  "priorRunEstimatedUsd": 0.0396285,
+  "combinedEstimatedUsd": 0.06987,
+  "audioModalityPresent": true,
+  "additionalCeilingUsd": 0.1,
+  "pricingBasis": "Standard paid-tier token estimate; invoice not inspected",
+  "noHumanHearingClaim": true
+}

@@ -1,0 +1,4565 @@
+{
+  "status": "INDEPENDENT_TECHNICAL_SOUND_PASS_LISTENING_PENDING",
+  "startedAt": "2026-10-08T11:57:21.234Z",
+  "completedAt": "2026-10-08T11:57:34.891Z",
+  "freeze": {
+    "film": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+    "recipe": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+    "builder": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+  },
+  "verifierScratchSha256": "2d8889e6a7cac0a502a5223ca7c4ebf8efab3902205f07fd492c5939b7e22fd4",
+  "checks": [
+    {
+      "name": "registered-source-bytes",
+      "status": "PASS",
+      "sources": [
+        {
+          "file": "close-up.mp3",
+          "bytes": 3045294,
+          "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+          "registerSha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+          "registerBytes": 3045294
+        },
+        {
+          "file": "digital-clouds.mp3",
+          "bytes": 3232566,
+          "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+          "registerSha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+          "registerBytes": 3232566
+        },
+        {
+          "file": "sweep.wav",
+          "bytes": 138746,
+          "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3",
+          "registerSha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3",
+          "registerBytes": 138746
+        },
+        {
+          "file": "air-zoom.wav",
+          "bytes": 224908,
+          "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa",
+          "registerSha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa",
+          "registerBytes": 224908
+        },
+        {
+          "file": "shutter.wav",
+          "bytes": 62562,
+          "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824",
+          "registerSha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824",
+          "registerBytes": 62562
+        },
+        {
+          "file": "lens.wav",
+          "bytes": 217348,
+          "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3",
+          "registerSha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3",
+          "registerBytes": 217348
+        },
+        {
+          "file": "tech-select.wav",
+          "bytes": 88930,
+          "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed",
+          "registerSha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed",
+          "registerBytes": 88930
+        },
+        {
+          "file": "key.wav",
+          "bytes": 58022,
+          "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205",
+          "registerSha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205",
+          "registerBytes": 58022
+        },
+        {
+          "file": "bubble.wav",
+          "bytes": 54050,
+          "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f",
+          "registerSha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f",
+          "registerBytes": 54050
+        },
+        {
+          "file": "gear.wav",
+          "bytes": 200748,
+          "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af",
+          "registerSha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af",
+          "registerBytes": 200748
+        }
+      ],
+      "used": [
+        "close-up.mp3",
+        "sweep.wav",
+        "air-zoom.wav",
+        "shutter.wav",
+        "lens.wav",
+        "tech-select.wav",
+        "key.wav",
+        "bubble.wav",
+        "gear.wav"
+      ],
+      "unusedHashOnly": "digital-clouds.mp3",
+      "register": {
+        "file": "workflows/assets/grifon-reference-full/assets/audio-v07/source-manifest.json",
+        "bytes": 2060,
+        "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+      },
+      "credits": {
+        "file": "workflows/assets/grifon-reference-full/assets/audio-v07/SOURCES.md",
+        "bytes": 2995,
+        "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9"
+      }
+    },
+    {
+      "name": "originals-and-frozen-receipt",
+      "status": "PASS",
+      "expected": {
+        "film": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+        "recipe": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+        "builder": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+      },
+      "previousFilmSha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+      "silentSha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    {
+      "name": "native-stream-contract",
+      "status": "PASS",
+      "video": {
+        "codec": "h264",
+        "frames": "932",
+        "width": 1920,
+        "height": 1080,
+        "fps": "30000/1001",
+        "timeBase": "1/30000",
+        "duration": "31.098000"
+      },
+      "audio": {
+        "codec": "aac",
+        "rate": "48000",
+        "channels": 2,
+        "duration": "31.146000"
+      },
+      "containerDuration": "31.146000"
+    },
+    {
+      "name": "strict-whole-film-decode",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "all-video-payloads-and-timestamps-preserved",
+      "status": "PASS",
+      "fields": [
+        "pts",
+        "dts",
+        "duration",
+        "size",
+        "flags",
+        "data_hash"
+      ],
+      "sourcePackets": 932,
+      "finalPackets": 932,
+      "mismatches": [],
+      "extradataSha256": "SHA256:11abece1d3473f351a0e2fc518c4c58d431ddd93860fdd256a9e50aad4e89297",
+      "firstPts": 0,
+      "endTick": 932932,
+      "timeBase": "1/30000",
+      "nativeTimelineSeconds": 31.097733333333334,
+      "probedTrackDurationSeconds": 31.098,
+      "trackRoundingAboveNativeSeconds": 0.00026666666666486094,
+      "sourceSequenceSha256": "c9302fc7f32f724d0b3b82d1e6ff309bb0955e0889e6d6d84995a9053299cf8b",
+      "finalSequenceSha256": "c9302fc7f32f724d0b3b82d1e6ff309bb0955e0889e6d6d84995a9053299cf8b"
+    },
+    {
+      "name": "aac-master-payload-timing-and-priming-preserved",
+      "status": "PASS",
+      "masterPackets": 1461,
+      "filmPackets": 1461,
+      "mismatches": [],
+      "fields": [
+        "pts",
+        "dts",
+        "duration",
+        "size",
+        "flags",
+        "data_hash",
+        "side_data_list"
+      ],
+      "firstPacket": {
+        "codec_type": "audio",
+        "stream_index": 1,
+        "pts": -1024,
+        "pts_time": "-0.021333",
+        "dts": -1024,
+        "dts_time": "-0.021333",
+        "duration": 1024,
+        "duration_time": "0.021333",
+        "size": "530",
+        "pos": "55151",
+        "flags": "KD",
+        "side_data_list": [
+          {
+            "side_data_type": "Skip Samples",
+            "skip_samples": 1024,
+            "discard_padding": 0,
+            "skip_reason": 0,
+            "discard_reason": 0
+          }
+        ],
+        "data_hash": "SHA256:8555976078b4d8accbe596067a7ef0f8b2241657ba57f4b6a9ad533446d8ec37"
+      },
+      "lastPacket": {
+        "codec_type": "audio",
+        "stream_index": 1,
+        "pts": 1494016,
+        "pts_time": "31.125333",
+        "dts": 1494016,
+        "dts_time": "31.125333",
+        "duration": 992,
+        "duration_time": "0.020667",
+        "size": "6",
+        "pos": "25057735",
+        "flags": "K_",
+        "data_hash": "SHA256:8a487dc722403a9dffef435b459f5afa999401a7623878ad7ab41eeb8ea0609b"
+      }
+    },
+    {
+      "name": "decoded-aac-identity-and-sample-count",
+      "status": "PASS",
+      "sampleFrames": 1495040,
+      "logicalDuration": 31.14666666666667,
+      "masterDecodedSha256": "f942ff1b8f920b0c9b3d67c6a4b1d5360befb69cbd36131d90fa51cfe42b6ff3",
+      "finalDecodedSha256": "f942ff1b8f920b0c9b3d67c6a4b1d5360befb69cbd36131d90fa51cfe42b6ff3",
+      "decodedGapAfterNativeVideoSeconds": 0.04893333333333416,
+      "decodedGapAfterRoundedVideoTrackSeconds": 0.0486666666666693,
+      "containerGapSeconds": 0.04800000000000182,
+      "note": "About 49ms of authored audio continues after the native video packet timeline ends; rounded track metadata is listed separately."
+    },
+    {
+      "name": "finished-encoded-signal-and-levels",
+      "status": "PASS",
+      "integratedLufs": -16.33,
+      "truePeakDbtp": -2.18,
+      "loudnessRangeLu": 9.9,
+      "decoded": {
+        "startSample": 0,
+        "endSample": 1495040,
+        "rmsAmplitude": 0.12139296830175952,
+        "rmsDbfs": -18.31612938155611,
+        "peakAmplitude": 0.7777984738349915,
+        "peakDbfs": -2.1826582668591716,
+        "stereoCorrelation": 0.8167844809518416,
+        "monoEnergyRatio": 0.9083521335725262,
+        "monoFoldLossDb": -0.4174575938519001,
+        "nonfinite": 0,
+        "clips": 0
+      },
+      "master": {
+        "input_i": "-16.28",
+        "input_tp": "-2.20",
+        "input_lra": "10.00",
+        "input_thresh": "-26.75",
+        "output_i": "-14.84",
+        "output_tp": "-2.20",
+        "output_lra": "2.20",
+        "output_thresh": "-25.11",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.36"
+      },
+      "measurement": "Analysis-only loudnorm to null; does not modify delivered samples."
+    },
+    {
+      "name": "every-music-sample-clean-source-envelope-and-real-ducking",
+      "status": "PASS",
+      "sourceInSample": 3027360,
+      "sourceOutSample": 4522400,
+      "continuousUnstretchedRegion": true,
+      "samplesCompared": 2990080,
+      "maximumEnvelopeError": 1.4898083600112244e-8,
+      "realizedDucks": [
+        {
+          "frame": 26,
+          "sample": 41642,
+          "realizedAttenuationDb": 3.0000002992265546,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.0010677457030587069
+        },
+        {
+          "frame": 57,
+          "sample": 91291,
+          "realizedAttenuationDb": 3.0000000654050583,
+          "expectedDuckDb": 2.9999999893792997,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 2.9999999893792997,
+          "sourceEnergy": 0.06753985079391273
+        },
+        {
+          "frame": 82,
+          "sample": 131331,
+          "realizedAttenuationDb": 3.000000248780909,
+          "expectedDuckDb": 2.9999999893792997,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 2.9999999893792997,
+          "sourceEnergy": 0.0032233327212036894
+        },
+        {
+          "frame": 145,
+          "sample": 232232,
+          "realizedAttenuationDb": 2.9999999017844727,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.0008830664004126146
+        },
+        {
+          "frame": 258,
+          "sample": 413213,
+          "realizedAttenuationDb": 2.999999795746391,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.04577599249327946
+        },
+        {
+          "frame": 307,
+          "sample": 491691,
+          "realizedAttenuationDb": 2.999999777283966,
+          "expectedDuckDb": 2.9999999893792997,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 2.9999999893792997,
+          "sourceEnergy": 0.016415233493775702
+        },
+        {
+          "frame": 357,
+          "sample": 571771,
+          "realizedAttenuationDb": 2.9999999476190142,
+          "expectedDuckDb": 2.9999999893792997,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 2.9999999893792997,
+          "sourceEnergy": 0.03450044206856351
+        },
+        {
+          "frame": 417,
+          "sample": 667867,
+          "realizedAttenuationDb": 12.999999720983194,
+          "expectedDuckDb": 13,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 13,
+          "sourceEnergy": 0.007735373686880778
+        },
+        {
+          "frame": 445,
+          "sample": 712712,
+          "realizedAttenuationDb": 3.00000008094973,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.02456865041705997
+        },
+        {
+          "frame": 496,
+          "sample": 794394,
+          "realizedAttenuationDb": 2.9999996739169927,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.1092075738491447
+        },
+        {
+          "frame": 547,
+          "sample": 876075,
+          "realizedAttenuationDb": 3.000000025158757,
+          "expectedDuckDb": 2.9999999893792997,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 2.9999999893792997,
+          "sourceEnergy": 0.03053765936304559
+        },
+        {
+          "frame": 586,
+          "sample": 938538,
+          "realizedAttenuationDb": 3.00000020207031,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.010964944885358152
+        },
+        {
+          "frame": 626,
+          "sample": 1002602,
+          "realizedAttenuationDb": 2.9999998033745925,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.005624058284529276
+        },
+        {
+          "frame": 665,
+          "sample": 1065064,
+          "realizedAttenuationDb": 2.9999997483966414,
+          "expectedDuckDb": 3,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 3,
+          "sourceEnergy": 0.011534891855188648
+        }
+      ],
+      "realizedGaps": [
+        {
+          "frame": 413.5,
+          "sample": 662262,
+          "realizedAttenuationDb": 12.999999994323279,
+          "expectedDuckDb": 13,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 13,
+          "sourceEnergy": 0.0006557612970891809
+        },
+        {
+          "frame": 642,
+          "sample": 1028227,
+          "realizedAttenuationDb": 11.999999720230736,
+          "expectedDuckDb": 12,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 12,
+          "sourceEnergy": 0.0024186058109856856
+        }
+      ],
+      "realizedBoundedMusicTransientDips": [
+        {
+          "frame": 385.78046953046953,
+          "sample": 617866,
+          "realizedAttenuationDb": 3.199999897640005,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 3.2,
+          "expectedTotalAttenuationDb": 3.2,
+          "sourceEnergy": 0.9251357970231071
+        },
+        {
+          "frame": 728.2736013986014,
+          "sample": 1166403,
+          "realizedAttenuationDb": 2.300000185829733,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 2.3,
+          "expectedTotalAttenuationDb": 2.3,
+          "sourceEnergy": 0.9064186743092977
+        },
+        {
+          "frame": 511.65459540459534,
+          "sample": 819466,
+          "realizedAttenuationDb": 1.8999998817649189,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.9,
+          "expectedTotalAttenuationDb": 1.9,
+          "sourceEnergy": 1.772952938068812
+        },
+        {
+          "frame": 372.92145354645356,
+          "sample": 597271,
+          "realizedAttenuationDb": 1.9000004365182974,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.9,
+          "expectedTotalAttenuationDb": 1.9,
+          "sourceEnergy": 0.7281829755735716
+        },
+        {
+          "frame": 442.32642357642357,
+          "sample": 708430,
+          "realizedAttenuationDb": 2.156776271456679,
+          "expectedDuckDb": 0.25677645799115617,
+          "expectedHeadroomDb": 1.9,
+          "expectedTotalAttenuationDb": 2.156776457991156,
+          "sourceEnergy": 1.0726188738954825
+        },
+        {
+          "frame": 699.8595154845154,
+          "sample": 1120895,
+          "realizedAttenuationDb": 1.8000003652750527,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.8,
+          "expectedTotalAttenuationDb": 1.8,
+          "sourceEnergy": 1.0194249079431508
+        },
+        {
+          "frame": 716.338036963037,
+          "sample": 1147287,
+          "realizedAttenuationDb": 1.8000001074940601,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.8,
+          "expectedTotalAttenuationDb": 1.8,
+          "sourceEnergy": 1.1269304483180953
+        },
+        {
+          "frame": 767.2315184815185,
+          "sample": 1228798,
+          "realizedAttenuationDb": 1.8000003309247314,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.8,
+          "expectedTotalAttenuationDb": 1.8,
+          "sourceEnergy": 0.7294560428504226
+        },
+        {
+          "frame": 374.6253746253746,
+          "sample": 600000,
+          "realizedAttenuationDb": 1.799999714962752,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.8,
+          "expectedTotalAttenuationDb": 1.8,
+          "sourceEnergy": 1.0467100335293544
+        },
+        {
+          "frame": 806.2175324675325,
+          "sample": 1291238,
+          "realizedAttenuationDb": 1.6000000454946846,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.6,
+          "expectedTotalAttenuationDb": 1.6,
+          "sourceEnergy": 1.1718637843101085
+        },
+        {
+          "frame": 793.3834915084915,
+          "sample": 1270683,
+          "realizedAttenuationDb": 1.6000000709955526,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.6,
+          "expectedTotalAttenuationDb": 1.6,
+          "sourceEnergy": 1.1143524976757035
+        },
+        {
+          "frame": 32.690434565434565,
+          "sample": 52357,
+          "realizedAttenuationDb": 1.2000001416406978,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 1.2,
+          "expectedTotalAttenuationDb": 1.2,
+          "sourceEnergy": 1.0685714286665053
+        }
+      ],
+      "unduckedBaselines": [
+        {
+          "frame": 180,
+          "sample": 288288,
+          "realizedAttenuationDb": -1.678491110603131e-7,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 0,
+          "sourceEnergy": 0.004673405421318624
+        },
+        {
+          "frame": 280,
+          "sample": 448448,
+          "realizedAttenuationDb": -4.030690535113399e-8,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 0,
+          "sourceEnergy": 0.008510505465525009
+        },
+        {
+          "frame": 350,
+          "sample": 560560,
+          "realizedAttenuationDb": -7.433920754398511e-8,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 0,
+          "sourceEnergy": 0.017748627813846785
+        },
+        {
+          "frame": 690,
+          "sample": 1105104,
+          "realizedAttenuationDb": 3.3686254737895713e-7,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 0,
+          "sourceEnergy": 0.010764613359713696
+        },
+        {
+          "frame": 800,
+          "sample": 1281280,
+          "realizedAttenuationDb": -2.5611734813601645e-7,
+          "expectedDuckDb": 0,
+          "expectedHeadroomDb": 0,
+          "expectedTotalAttenuationDb": 0,
+          "sourceEnergy": 0.024667886485186807
+        }
+      ],
+      "interpretation": "Actual gain from source samples to retained music stem establishes dips; this does not establish perceived mix balance."
+    },
+    {
+      "name": "actual-47-cue-contacts-and-all-56-layers-in-mix",
+      "status": "PASS",
+      "cueLedgerMatchesSpec": true,
+      "eventCount": 47,
+      "layerCount": 56,
+      "maximumContactErrorSamples": 0,
+      "maximumNativeQuantizationErrorSamples": 0.40000000002328306,
+      "layerHashMismatches": 0,
+      "maximumIsolatedStemSumError": 2.9802322387695312e-8,
+      "maximumSourceLayerError": 7.444795030453477e-9,
+      "effectSumExactlyReproduced": false,
+      "effectSumNote": "Sub-LSB differences can occur because isolated files round each layer to float32 before summing, while producer accumulates each unrounded value into the float32 bus.",
+      "effectsSha256": "58aef2af43fdd5c23aa867abeae9dfb47b5cec8303dd182459777e31c6e48e58",
+      "cueRows": [
+        {
+          "id": "first-lens",
+          "frame": 26,
+          "layers": [
+            {
+              "source": "air-zoom",
+              "startSample": 27777,
+              "endSample": 50081,
+              "contactSample": 41642,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 41642,
+              "postFadeContactErrorSamples": 0,
+              "energy": 42.78457145522993,
+              "preFadePeak": 0.223872110247612,
+              "maximumCleanSourcePreparationError": 7.4335609057119e-9,
+              "postFadePeakDbfs": -13.000000140032197,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "206c25ee1e79c291b8c85d530faa791937dcb01e057f702e5ff7a6d7f03f2c0d"
+            },
+            {
+              "source": "sub",
+              "startSample": 41247,
+              "endSample": 54687,
+              "contactSample": 41642,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 41642,
+              "postFadeContactErrorSamples": 0,
+              "energy": 40.070774558551506,
+              "preFadePeak": 0.1412537544965744,
+              "maximumCleanSourcePreparationError": 7.127723161692856e-9,
+              "postFadePeakDbfs": -16.99999999789091,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "e0dbceec6a23a614f6fa95d8c15f5fff611fcab6792388262aab160ef8d2c511"
+            }
+          ],
+          "music": {
+            "startSample": 38282,
+            "endSample": 47402,
+            "rmsAmplitude": 0.16823604480875773,
+            "rmsDbfs": -15.481619007329002,
+            "peakAmplitude": 0.668217658996582,
+            "peakDbfs": -3.501641028808587,
+            "stereoCorrelation": 0.988143899502661,
+            "monoEnergyRatio": 0.9927342741435765,
+            "monoFoldLossDb": -0.03166983847823309,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 38282,
+            "endSample": 47402,
+            "rmsAmplitude": 0.16823604480875773,
+            "rmsDbfs": -15.481619007329002,
+            "peakAmplitude": 0.668217658996582,
+            "peakDbfs": -3.501641028808587,
+            "stereoCorrelation": 0.988143899502661,
+            "monoEnergyRatio": 0.9927342741435765,
+            "monoFoldLossDb": -0.03166983847823309,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 38282,
+            "endSample": 47402,
+            "rmsAmplitude": 0.16823604480875773,
+            "rmsDbfs": -15.481619007329002,
+            "peakAmplitude": 0.668217658996582,
+            "peakDbfs": -3.501641028808587,
+            "stereoCorrelation": 0.988143899502661,
+            "monoEnergyRatio": 0.9927342741435765,
+            "monoFoldLossDb": -0.03166983847823309,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "warm-lens",
+          "frame": 57,
+          "layers": [
+            {
+              "source": "lens",
+              "startSample": 85822,
+              "endSample": 108959,
+              "contactSample": 91291,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 91291,
+              "postFadeContactErrorSamples": 0,
+              "energy": 48.465517530564284,
+              "preFadePeak": 0.17782793939113617,
+              "maximumCleanSourcePreparationError": 7.339828439478779e-9,
+              "postFadePeakDbfs": -15.000000078774018,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "a52fdefa1335c0b30974d30cc0bae96664acb806fdc28ad6d3f99ed4fc7ec24d"
+            }
+          ],
+          "music": {
+            "startSample": 87931,
+            "endSample": 97051,
+            "rmsAmplitude": 0.033674726882126575,
+            "rmsDbfs": -29.453918358464108,
+            "peakAmplitude": 0.11492966115474701,
+            "peakDbfs": -18.791357474374767,
+            "stereoCorrelation": 0.7524965166404358,
+            "monoEnergyRatio": 0.8758065618226641,
+            "monoFoldLossDb": -0.5759180525864713,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 87931,
+            "endSample": 97051,
+            "rmsAmplitude": 0.043097601637903646,
+            "rmsDbfs": -27.31093794917779,
+            "peakAmplitude": 0.17782793939113617,
+            "peakDbfs": -15.000000078774018,
+            "stereoCorrelation": 0.994287198713199,
+            "monoEnergyRatio": 0.975417267790035,
+            "monoFoldLossDb": -0.10809560370917046,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 87931,
+            "endSample": 97051,
+            "rmsAmplitude": 0.13238413142948474,
+            "rmsDbfs": -17.56328139243329,
+            "peakAmplitude": 0.6209017038345337,
+            "peakDbfs": -4.139542967843718,
+            "stereoCorrelation": 0.8930643350493674,
+            "monoEnergyRatio": 0.9385922170671337,
+            "monoFoldLossDb": -0.275230513368321,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-reveal",
+          "frame": 82,
+          "layers": [
+            {
+              "source": "shutter",
+              "startSample": 126500,
+              "endSample": 135074,
+              "contactSample": 131331,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 131331,
+              "postFadeContactErrorSamples": 0,
+              "energy": 2.6591175573285,
+              "preFadePeak": 0.15848931670188904,
+              "maximumCleanSourcePreparationError": 6.058890444915477e-9,
+              "postFadePeakDbfs": -16.000000139434217,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "aae5566e702f1b926b4e049916a37cdfc8a9175120a64a90081ef5587e534f39"
+            },
+            {
+              "source": "sub",
+              "startSample": 131002,
+              "endSample": 142202,
+              "contactSample": 131331,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 131331,
+              "postFadeContactErrorSamples": 0,
+              "energy": 16.73148933699328,
+              "preFadePeak": 0.10000000149011612,
+              "maximumCleanSourcePreparationError": 3.7248497897213184e-9,
+              "postFadePeakDbfs": -19.99999987057016,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "3e14dd9a8b64d5af167589317ae608c95de33934ca17fabf93dc6e630d4dc882"
+            }
+          ],
+          "music": {
+            "startSample": 127971,
+            "endSample": 137091,
+            "rmsAmplitude": 0.02890945502359509,
+            "rmsDbfs": -30.7792019040315,
+            "peakAmplitude": 0.13825061917304993,
+            "peakDbfs": -17.186658299512406,
+            "stereoCorrelation": 0.8087857085537954,
+            "monoEnergyRatio": 0.8990561404401896,
+            "monoFoldLossDb": -0.4621318844237254,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 127971,
+            "endSample": 137091,
+            "rmsAmplitude": 0.0323327816482387,
+            "rmsDbfs": -29.807138612678497,
+            "peakAmplitude": 0.25848931074142456,
+            "peakDbfs": -11.751148229892024,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 127971,
+            "endSample": 137091,
+            "rmsAmplitude": 0.10723285180651927,
+            "rmsDbfs": -19.393442880066832,
+            "peakAmplitude": 0.6744714975357056,
+            "peakDbfs": -3.420727968752155,
+            "stereoCorrelation": 0.9131069938496593,
+            "monoEnergyRatio": 0.9558802202721708,
+            "monoFoldLossDb": -0.19596525018829364,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-1",
+          "frame": 91,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 145604,
+              "endSample": 147139,
+              "contactSample": 145746,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 145746,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.037238211238102226,
+              "preFadePeak": 0.04466835781931877,
+              "maximumCleanSourcePreparationError": 1.6060773613824075e-9,
+              "postFadePeakDbfs": -27.000000271412922,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "9569d404b2aa628672db0758c50b9383b5c5fe6ded6de24c73aff6e5433cc609"
+            }
+          ],
+          "music": {
+            "startSample": 142386,
+            "endSample": 151506,
+            "rmsAmplitude": 0.01678727205266493,
+            "rmsDbfs": -35.50039742772073,
+            "peakAmplitude": 0.08634669333696365,
+            "peakDbfs": -21.275085783356516,
+            "stereoCorrelation": 0.8341909730429198,
+            "monoEnergyRatio": 0.9159805427496106,
+            "monoFoldLossDb": -0.381137515136188,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 142386,
+            "endSample": 151506,
+            "rmsAmplitude": 0.0014288346995297095,
+            "rmsDbfs": -56.900360228023104,
+            "peakAmplitude": 0.04466835781931877,
+            "peakDbfs": -27.000000271412922,
+            "stereoCorrelation": 1.0000000000000002,
+            "monoEnergyRatio": 0.9755282572010606,
+            "monoFoldLossDb": -0.10760146291238594,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 142386,
+            "endSample": 151506,
+            "rmsAmplitude": 0.04102558840072395,
+            "rmsDbfs": -27.738903629090295,
+            "peakAmplitude": 0.21168071031570435,
+            "peakDbfs": -13.48637431671489,
+            "stereoCorrelation": 0.8335202254002166,
+            "monoEnergyRatio": 0.9158866515661304,
+            "monoFoldLossDb": -0.38158270486442886,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-2",
+          "frame": 97,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 155229,
+              "endSample": 156597,
+              "contactSample": 155355,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 155355,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.02715395776566594,
+              "preFadePeak": 0.03981071710586548,
+              "maximumCleanSourcePreparationError": 1.6310755732162896e-9,
+              "postFadePeakDbfs": -27.99999998897849,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "63068c965b112eda6a3f40965e10497670cd221d867aab4cb221bbd20736daca"
+            }
+          ],
+          "music": {
+            "startSample": 151995,
+            "endSample": 161115,
+            "rmsAmplitude": 0.04902645120425239,
+            "rmsDbfs": -26.19139084329189,
+            "peakAmplitude": 0.21064287424087524,
+            "peakDbfs": -13.529064557489502,
+            "stereoCorrelation": 0.8188461009393753,
+            "monoEnergyRatio": 0.9082968958425995,
+            "monoFoldLossDb": -0.41772170035699796,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 151995,
+            "endSample": 161115,
+            "rmsAmplitude": 0.001220124512036389,
+            "rmsDbfs": -58.27191695812624,
+            "peakAmplitude": 0.03981071710586548,
+            "peakDbfs": -27.99999998897849,
+            "stereoCorrelation": 0.9999999999999959,
+            "monoEnergyRatio": 0.9861849608285432,
+            "monoFoldLossDb": -0.060416246795286795,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 151995,
+            "endSample": 161115,
+            "rmsAmplitude": 0.11982156596963696,
+            "rmsDbfs": -18.42930017671444,
+            "peakAmplitude": 0.5150555372238159,
+            "peakDbfs": -5.76291878968407,
+            "stereoCorrelation": 0.8175151147599213,
+            "monoEnergyRatio": 0.9077365211242979,
+            "monoFoldLossDb": -0.42040191156244033,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-3",
+          "frame": 104,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 166450,
+              "endSample": 167709,
+              "contactSample": 166566,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 166566,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.03001269645638404,
+              "preFadePeak": 0.04216964915394783,
+              "maximumCleanSourcePreparationError": 1.5488810511943285e-9,
+              "postFadePeakDbfs": -27.500000244885708,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "d6d47107ddf5c63414accb06f7bc6a2be532413647f8579b93f7c63c0ff2422e"
+            }
+          ],
+          "music": {
+            "startSample": 163206,
+            "endSample": 172326,
+            "rmsAmplitude": 0.056238591501105585,
+            "rmsDbfs": -24.999311295667074,
+            "peakAmplitude": 0.17586472630500793,
+            "peakDbfs": -15.096425190076907,
+            "stereoCorrelation": 0.926082771839143,
+            "monoEnergyRatio": 0.9630413038568028,
+            "monoFoldLossDb": -0.16355086029761198,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 163206,
+            "endSample": 172326,
+            "rmsAmplitude": 0.0012827442924285006,
+            "rmsDbfs": -57.83719818123673,
+            "peakAmplitude": 0.04216964915394783,
+            "peakDbfs": -27.500000244885708,
+            "stereoCorrelation": 1.0000000000000009,
+            "monoEnergyRatio": 0.9938441717041316,
+            "monoFoldLossDb": -0.026817048122152427,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 163206,
+            "endSample": 172326,
+            "rmsAmplitude": 0.13791542894077083,
+            "rmsDbfs": -17.2077429101288,
+            "peakAmplitude": 0.43662649393081665,
+            "peakDbfs": -7.197798307999762,
+            "stereoCorrelation": 0.9268821683470352,
+            "monoEnergyRatio": 0.9634408821531345,
+            "monoFoldLossDb": -0.16174929002684707,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-4",
+          "frame": 111,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 177670,
+              "endSample": 178835,
+              "contactSample": 177778,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 177778,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.02613062105267743,
+              "preFadePeak": 0.03981071710586548,
+              "maximumCleanSourcePreparationError": 1.7670461691099426e-9,
+              "postFadePeakDbfs": -27.99999998897849,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "8874c7a8e5b84c8f4cf5f19371da9292903bd32de8a5828d18907e669e402ded"
+            }
+          ],
+          "music": {
+            "startSample": 174418,
+            "endSample": 183538,
+            "rmsAmplitude": 0.05079795433805719,
+            "rmsDbfs": -25.88307553289718,
+            "peakAmplitude": 0.24076493084430695,
+            "peakDbfs": -12.368135418878394,
+            "stereoCorrelation": 0.7242872801171955,
+            "monoEnergyRatio": 0.8621428142193568,
+            "monoFoldLossDb": -0.6442078720310564,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 174418,
+            "endSample": 183538,
+            "rmsAmplitude": 0.0011969126277278288,
+            "rmsDbfs": -58.43875102162296,
+            "peakAmplitude": 0.03981071710586548,
+            "peakDbfs": -27.99999998897849,
+            "stereoCorrelation": 0.9999999999999999,
+            "monoEnergyRatio": 0.9938441701389057,
+            "monoFoldLossDb": -0.02681705496194696,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 174418,
+            "endSample": 183538,
+            "rmsAmplitude": 0.12406964301532526,
+            "rmsDbfs": -18.126689347252597,
+            "peakAmplitude": 0.5647220015525818,
+            "peakDbfs": -4.963305836665182,
+            "stereoCorrelation": 0.7258839163668144,
+            "monoEnergyRatio": 0.8629399202029047,
+            "monoFoldLossDb": -0.6401943978031083,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-5",
+          "frame": 119,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 190490,
+              "endSample": 191575,
+              "contactSample": 190590,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 190590,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.017902914793815398,
+              "preFadePeak": 0.03548133745789528,
+              "maximumCleanSourcePreparationError": 1.4654622723653254e-9,
+              "postFadePeakDbfs": -29.00000035874756,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "250cf5d7cd7c8b14bd32c9914902e56d347da67285b7b0fc4726e738a04cf7ca"
+            }
+          ],
+          "music": {
+            "startSample": 187230,
+            "endSample": 196350,
+            "rmsAmplitude": 0.03734608450298315,
+            "rmsDbfs": -28.55509848895952,
+            "peakAmplitude": 0.12430994212627411,
+            "peakDbfs": -18.109882714711986,
+            "stereoCorrelation": 0.8923825757309627,
+            "monoEnergyRatio": 0.9454453334792327,
+            "monoFoldLossDb": -0.24363577400300318,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 187230,
+            "endSample": 196350,
+            "rmsAmplitude": 0.000990716635277372,
+            "rmsDbfs": -60.081010892798375,
+            "peakAmplitude": 0.03548133745789528,
+            "peakDbfs": -29.00000035874756,
+            "stereoCorrelation": 0.9999999999999984,
+            "monoEnergyRatio": 0.9938441712448555,
+            "monoFoldLossDb": -0.026817050129118038,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 187230,
+            "endSample": 196350,
+            "rmsAmplitude": 0.09150482749561283,
+            "rmsDbfs": -20.771119867435758,
+            "peakAmplitude": 0.3050602674484253,
+            "peakDbfs": -10.312287066527869,
+            "stereoCorrelation": 0.8940865987790285,
+            "monoEnergyRatio": 0.9464043540147864,
+            "monoFoldLossDb": -0.23923270366340996,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-6",
+          "frame": 126,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 201691,
+              "endSample": 202890,
+              "contactSample": 201802,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 201802,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.024678312333084075,
+              "preFadePeak": 0.03981071710586548,
+              "maximumCleanSourcePreparationError": 1.6310755801551835e-9,
+              "postFadePeakDbfs": -27.99999998897849,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "5f1a891cced80f9ebf66fd979449f2226eed96f7861503403ff9f9e79ad8be34"
+            }
+          ],
+          "music": {
+            "startSample": 198442,
+            "endSample": 207562,
+            "rmsAmplitude": 0.047625894873605676,
+            "rmsDbfs": -26.443137020019826,
+            "peakAmplitude": 0.18230146169662476,
+            "peakDbfs": -14.78419698299116,
+            "stereoCorrelation": 0.7805507720419997,
+            "monoEnergyRatio": 0.8893950772726172,
+            "monoFoldLossDb": -0.5090527866407407,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 198442,
+            "endSample": 207562,
+            "rmsAmplitude": 0.0011631756745393784,
+            "rmsDbfs": -58.687093775570474,
+            "peakAmplitude": 0.03981071710586548,
+            "peakDbfs": -27.99999998897849,
+            "stereoCorrelation": 0.9999999999999991,
+            "monoEnergyRatio": 0.9861849599893324,
+            "monoFoldLossDb": -0.060416250490989316,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 198442,
+            "endSample": 207562,
+            "rmsAmplitude": 0.11620816003276105,
+            "rmsDbfs": -18.69526750211959,
+            "peakAmplitude": 0.4542791545391083,
+            "peakDbfs": -6.853543823088656,
+            "stereoCorrelation": 0.7810803106012599,
+            "monoEnergyRatio": 0.8896824414367763,
+            "monoFoldLossDb": -0.5076498048081456,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "ring-material-7",
+          "frame": 132,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 211276,
+              "endSample": 212739,
+              "contactSample": 211411,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 211411,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.031493110086578666,
+              "preFadePeak": 0.037583742290735245,
+              "maximumCleanSourcePreparationError": 1.861890835952451e-9,
+              "postFadePeakDbfs": -28.499999569702812,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "0c241fffd91b7f54a092ea368f7403781c118193f0e4a7aedc6d04560de4d67a"
+            }
+          ],
+          "music": {
+            "startSample": 208051,
+            "endSample": 217171,
+            "rmsAmplitude": 0.025529103101210697,
+            "rmsDbfs": -31.85928885474719,
+            "peakAmplitude": 0.07821149379014969,
+            "peakDbfs": -22.134588385647977,
+            "stereoCorrelation": 0.7545348478601752,
+            "monoEnergyRatio": 0.876463676213346,
+            "monoFoldLossDb": -0.5726607791244742,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 208051,
+            "endSample": 217171,
+            "rmsAmplitude": 0.0013139999801100072,
+            "rmsDbfs": -57.6280928270029,
+            "peakAmplitude": 0.037583742290735245,
+            "peakDbfs": -28.499999569702812,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 208051,
+            "endSample": 217171,
+            "rmsAmplitude": 0.06256813092029555,
+            "rmsDbfs": -24.07293636764665,
+            "peakAmplitude": 0.19160021841526031,
+            "peakDbfs": -14.352080003637145,
+            "stereoCorrelation": 0.75529051269929,
+            "monoEnergyRatio": 0.8768681378572473,
+            "monoFoldLossDb": -0.5706571029030769,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "relief-reveal",
+          "frame": 145,
+          "layers": [
+            {
+              "source": "sweep",
+              "startSample": 218236,
+              "endSample": 251257,
+              "contactSample": 232232,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 232232,
+              "postFadeContactErrorSamples": 0,
+              "energy": 56.33699751671319,
+              "preFadePeak": 0.17782793939113617,
+              "maximumCleanSourcePreparationError": 7.444795030453477e-9,
+              "postFadePeakDbfs": -15.000000078774018,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c9c5fe27670821d22680b5b3d268fd84e517034ef271266d2365350addeab0ca"
+            },
+            {
+              "source": "air-zoom",
+              "startSample": 221834,
+              "endSample": 238562,
+              "contactSample": 232232,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 232232,
+              "postFadeContactErrorSamples": 0,
+              "energy": 8.559157498175157,
+              "preFadePeak": 0.11220184713602066,
+              "maximumCleanSourcePreparationError": 3.7108031369914585e-9,
+              "postFadePeakDbfs": -18.9999998679469,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "8da6c66b7163b158c5e1f2f2b48fdc2cf41e5e2f81b091e89dce64b265a01ea4"
+            },
+            {
+              "source": "sub",
+              "startSample": 231816,
+              "endSample": 245963,
+              "contactSample": 232232,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 232232,
+              "postFadeContactErrorSamples": 0,
+              "energy": 26.61469479351394,
+              "preFadePeak": 0.11220184713602066,
+              "maximumCleanSourcePreparationError": 3.723327035576318e-9,
+              "postFadePeakDbfs": -18.9999998679469,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c84dc15ab061fbfe88993104415e464b922b2016a6aaf96fd5907cf1f03b3309"
+            }
+          ],
+          "music": {
+            "startSample": 228872,
+            "endSample": 237992,
+            "rmsAmplitude": 0.01765528493607312,
+            "rmsDbfs": -35.062505380578216,
+            "peakAmplitude": 0.061921678483486176,
+            "peakDbfs": -24.16314559875257,
+            "stereoCorrelation": 0.5367805179211328,
+            "monoEnergyRatio": 0.7609749416544606,
+            "monoFoldLossDb": -1.186296439920699,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 228872,
+            "endSample": 237992,
+            "rmsAmplitude": 0.06257633203144763,
+            "rmsDbfs": -24.07179794018773,
+            "peakAmplitude": 0.28962913155555725,
+            "peakDbfs": -10.763155159060009,
+            "stereoCorrelation": 0.9954661849327487,
+            "monoEnergyRatio": 0.9962031215829752,
+            "monoFoldLossDb": -0.016521017482480287,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 228872,
+            "endSample": 237992,
+            "rmsAmplitude": 0.1605541018326999,
+            "rmsDbfs": -15.887571892195425,
+            "peakAmplitude": 0.7451963424682617,
+            "peakDbfs": -2.554585707017496,
+            "stereoCorrelation": 0.9618153676489805,
+            "monoEnergyRatio": 0.978966570035939,
+            "monoFoldLossDb": -0.0923213832639095,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "relief-desaturate",
+          "frame": 209,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 333991,
+              "endSample": 336135,
+              "contactSample": 334734,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 334734,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.7422930374251109,
+              "preFadePeak": 0.05623413249850273,
+              "maximumCleanSourcePreparationError": 1.8517153643760054e-9,
+              "postFadePeakDbfs": -25.000000003171387,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "63a8cbfe2724824bf72ef20e3c312fa66056d6fc248dd48fa7df96789dc39c72"
+            }
+          ],
+          "music": {
+            "startSample": 331374,
+            "endSample": 340494,
+            "rmsAmplitude": 0.053009095205135415,
+            "rmsDbfs": -25.512992170808374,
+            "peakAmplitude": 0.19590041041374207,
+            "peakDbfs": -14.159293083041796,
+            "stereoCorrelation": 0.8596305135857726,
+            "monoEnergyRatio": 0.9270555396408123,
+            "monoFoldLossDb": -0.32894246613874834,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 331374,
+            "endSample": 340494,
+            "rmsAmplitude": 0.006379333053675008,
+            "rmsDbfs": -43.90449447024559,
+            "peakAmplitude": 0.05623413249850273,
+            "peakDbfs": -25.000000003171387,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 331374,
+            "endSample": 340494,
+            "rmsAmplitude": 0.13046330146553095,
+            "rmsDbfs": -17.69023271094786,
+            "peakAmplitude": 0.4785875380039215,
+            "peakDbfs": -6.400772284388692,
+            "stereoCorrelation": 0.8621067800544632,
+            "monoEnergyRatio": 0.9285905736475442,
+            "monoFoldLossDb": -0.3217572927810947,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "macro-rosette",
+          "frame": 222,
+          "layers": [
+            {
+              "source": "gear",
+              "startSample": 351801,
+              "endSample": 359749,
+              "contactSample": 355555,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 355555,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.6532985549517539,
+              "preFadePeak": 0.07943282276391983,
+              "maximumCleanSourcePreparationError": 3.6353939442124172e-9,
+              "postFadePeakDbfs": -22.000000077474585,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "df2d290b02d13f0d8523350e2614205efb1471e22dc5c84c67ca1ceca320bafa"
+            }
+          ],
+          "music": {
+            "startSample": 352195,
+            "endSample": 361315,
+            "rmsAmplitude": 0.03692078237586527,
+            "rmsDbfs": -28.654582091210195,
+            "peakAmplitude": 0.10663723200559616,
+            "peakDbfs": -19.441822729554094,
+            "stereoCorrelation": 0.8554267985638231,
+            "monoEnergyRatio": 0.9277073391507521,
+            "monoFoldLossDb": -0.32589007658142377,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 352195,
+            "endSample": 361315,
+            "rmsAmplitude": 0.005981903120993639,
+            "rmsDbfs": -44.46321249596554,
+            "peakAmplitude": 0.07943282276391983,
+            "peakDbfs": -22.000000077474585,
+            "stereoCorrelation": 0.9974187518453393,
+            "monoEnergyRatio": 0.9983020926127011,
+            "monoFoldLossDb": -0.00738018530096632,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 352195,
+            "endSample": 361315,
+            "rmsAmplitude": 0.09138270292272438,
+            "rmsDbfs": -20.782720010074712,
+            "peakAmplitude": 0.3237161636352539,
+            "peakDbfs": -9.79671230157836,
+            "stereoCorrelation": 0.8603054033410188,
+            "monoEnergyRatio": 0.9301329311452485,
+            "monoFoldLossDb": -0.3145497925543144,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "macro-strip",
+          "frame": 229,
+          "layers": [
+            {
+              "source": "shutter",
+              "startSample": 362905,
+              "endSample": 369615,
+              "contactSample": 366766,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 366766,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.2901202996845825,
+              "preFadePeak": 0.06309573352336884,
+              "maximumCleanSourcePreparationError": 1.8195000159315633e-9,
+              "postFadePeakDbfs": -24.000000127289304,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c1f0ed947c548373a733720c126e1f71987dd30323b40bdda80e8374a8df2083"
+            }
+          ],
+          "music": {
+            "startSample": 363406,
+            "endSample": 372526,
+            "rmsAmplitude": 0.014335991779508164,
+            "rmsDbfs": -36.871445134268555,
+            "peakAmplitude": 0.07212965935468674,
+            "peakDbfs": -22.837722376780732,
+            "stereoCorrelation": 0.8013491884132591,
+            "monoEnergyRatio": 0.8997904427175585,
+            "monoFoldLossDb": -0.4585862408117637,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 363406,
+            "endSample": 372526,
+            "rmsAmplitude": 0.003987892904779203,
+            "rmsDbfs": -47.98513026441903,
+            "peakAmplitude": 0.06309573352336884,
+            "peakDbfs": -24.000000127289304,
+            "stereoCorrelation": 0.9999999999999918,
+            "monoEnergyRatio": 0.9861849602653242,
+            "monoFoldLossDb": -0.06041624927558131,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 363406,
+            "endSample": 372526,
+            "rmsAmplitude": 0.036204138845148004,
+            "rmsDbfs": -28.824835564551165,
+            "peakAmplitude": 0.1872982531785965,
+            "peakDbfs": -14.549325460336584,
+            "stereoCorrelation": 0.8065731598253788,
+            "monoEnergyRatio": 0.9021382778999503,
+            "monoFoldLossDb": -0.4472688959081101,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "macro-dots",
+          "frame": 238,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 381044,
+              "endSample": 382525,
+              "contactSample": 381181,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 381181,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.07591121511722324,
+              "preFadePeak": 0.06309573352336884,
+              "maximumCleanSourcePreparationError": 1.8531325432502577e-9,
+              "postFadePeakDbfs": -24.000000127289304,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "d88cdb24fca261d766d021bc5a98b06d3b996908eee2a27835d450d354a97f20"
+            }
+          ],
+          "music": {
+            "startSample": 377821,
+            "endSample": 386941,
+            "rmsAmplitude": 0.09735270106166223,
+            "rmsDbfs": -20.233039888548895,
+            "peakAmplitude": 0.29049715399742126,
+            "peakDbfs": -10.737162360775589,
+            "stereoCorrelation": 0.9196233468515251,
+            "monoEnergyRatio": 0.9591013277202657,
+            "monoFoldLossDb": -0.1813550779794605,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 377821,
+            "endSample": 386941,
+            "rmsAmplitude": 0.002040048792163843,
+            "rmsDbfs": -53.80718890722604,
+            "peakAmplitude": 0.06309573352336884,
+            "peakDbfs": -24.000000127289304,
+            "stereoCorrelation": 1.0000000000000018,
+            "monoEnergyRatio": 0.9861849609815977,
+            "monoFoldLossDb": -0.060416246121268134,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 377821,
+            "endSample": 386941,
+            "rmsAmplitude": 0.23850885681391046,
+            "rmsDbfs": -12.44990978371507,
+            "peakAmplitude": 0.7134068608283997,
+            "peakDbfs": -2.933254367416494,
+            "stereoCorrelation": 0.9202527072237248,
+            "monoEnergyRatio": 0.9594133879987256,
+            "monoFoldLossDb": -0.17994225526779584,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "catalog-swipe",
+          "frame": 258,
+          "layers": [
+            {
+              "source": "sweep",
+              "startSample": 401966,
+              "endSample": 428500,
+              "contactSample": 413213,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 413213,
+              "postFadeContactErrorSamples": 0,
+              "energy": 26.213479971182693,
+              "preFadePeak": 0.1412537544965744,
+              "maximumCleanSourcePreparationError": 7.438426680161925e-9,
+              "postFadePeakDbfs": -16.99999999789091,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "ca2f05cdd765cca0e6ea7cd5c84a94425a271dd4d8cd74c22796b4fa0a01a9ff"
+            }
+          ],
+          "music": {
+            "startSample": 409853,
+            "endSample": 418973,
+            "rmsAmplitude": 0.02531664415579921,
+            "rmsDbfs": -31.93187725366918,
+            "peakAmplitude": 0.10796522349119186,
+            "peakDbfs": -19.334322238049065,
+            "stereoCorrelation": 0.8993563962625857,
+            "monoEnergyRatio": 0.9495970870178659,
+            "monoFoldLossDb": -0.22460626292310076,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 409853,
+            "endSample": 418973,
+            "rmsAmplitude": 0.03582842932546478,
+            "rmsDbfs": -28.915444607113336,
+            "peakAmplitude": 0.1412537544965744,
+            "peakDbfs": -16.99999999789091,
+            "stereoCorrelation": 0.9946805252173406,
+            "monoEnergyRatio": 0.9838277671293701,
+            "monoFoldLossDb": -0.07080924264096936,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 409853,
+            "endSample": 418973,
+            "rmsAmplitude": 0.1158974688864297,
+            "rmsDbfs": -18.71852097195499,
+            "peakAmplitude": 0.5393705368041992,
+            "peakDbfs": -5.362255612717529,
+            "stereoCorrelation": 0.9641728357686383,
+            "monoEnergyRatio": 0.9775437739159712,
+            "monoFoldLossDb": -0.09863786009328404,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "capability-dive",
+          "frame": 307,
+          "layers": [
+            {
+              "source": "air-zoom",
+              "startSample": 476093,
+              "endSample": 501185,
+              "contactSample": 491691,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 491691,
+              "postFadeContactErrorSamples": 0,
+              "energy": 43.92137335682203,
+              "preFadePeak": 0.21134890615940094,
+              "maximumCleanSourcePreparationError": 7.443830968290044e-9,
+              "postFadePeakDbfs": -13.499999910582904,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "0d295ab140b12d42d74fe0b5ee5c396b277f8b22fa1461c1c668c60716188c71"
+            },
+            {
+              "source": "sub",
+              "startSample": 491315,
+              "endSample": 504115,
+              "contactSample": 491691,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 491691,
+              "postFadeContactErrorSamples": 0,
+              "energy": 24.078230824667592,
+              "preFadePeak": 0.11220184713602066,
+              "maximumCleanSourcePreparationError": 3.7236346922542296e-9,
+              "postFadePeakDbfs": -18.9999998679469,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "73c7008bca248c22095a012960d036d6c8c9f3e326f6701e6c8f94e003ef997a"
+            }
+          ],
+          "music": {
+            "startSample": 488331,
+            "endSample": 497451,
+            "rmsAmplitude": 0.0629734394626668,
+            "rmsDbfs": -24.016851717930834,
+            "peakAmplitude": 0.23437710106372833,
+            "peakDbfs": -12.601696433920416,
+            "stereoCorrelation": 0.8764305807261128,
+            "monoEnergyRatio": 0.9379875022876747,
+            "monoFoldLossDb": -0.2780294810671197,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 488331,
+            "endSample": 497451,
+            "rmsAmplitude": 0.057084533948733966,
+            "rmsDbfs": -24.869630805500474,
+            "peakAmplitude": 0.21562904119491577,
+            "peakDbfs": -13.325854964202035,
+            "stereoCorrelation": 0.9955452531327053,
+            "monoEnergyRatio": 0.9962419718879612,
+            "monoFoldLossDb": -0.01635165298522926,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 488331,
+            "endSample": 497451,
+            "rmsAmplitude": 0.2118693475157544,
+            "rmsDbfs": -13.47863741771414,
+            "peakAmplitude": 0.7219229936599731,
+            "peakDbfs": -2.8301825087778445,
+            "stereoCorrelation": 0.9320653463970585,
+            "monoEnergyRatio": 0.9659825000223838,
+            "monoFoldLossDb": -0.15030741299366654,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "character-material",
+          "frame": 344,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 550424,
+              "endSample": 551943,
+              "contactSample": 550950,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 550950,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.31929771990483174,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.8541488205903178e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "91c5dec8e9840f5a92474d80ceb87f3bfeb43b9cf578c468e5d899241d7217b0"
+            }
+          ],
+          "music": {
+            "startSample": 547590,
+            "endSample": 556710,
+            "rmsAmplitude": 0.04258049227350833,
+            "rmsDbfs": -27.415786439714175,
+            "peakAmplitude": 0.2147706001996994,
+            "peakDbfs": -13.360503383556978,
+            "stereoCorrelation": 0.5731410454098552,
+            "monoEnergyRatio": 0.7816470091656675,
+            "monoFoldLossDb": -1.0698932952556752,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 547590,
+            "endSample": 556710,
+            "rmsAmplitude": 0.015135822317781409,
+            "rmsDbfs": -36.39987958351267,
+            "peakAmplitude": 0.09364637732505798,
+            "peakDbfs": -20.57018036965487,
+            "stereoCorrelation": 0.9888200502925633,
+            "monoEnergyRatio": 0.9900477589875923,
+            "monoFoldLossDb": -0.04343854933268203,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 547590,
+            "endSample": 556710,
+            "rmsAmplitude": 0.11047070554263141,
+            "rmsDbfs": -19.135057445530858,
+            "peakAmplitude": 0.5537620782852173,
+            "peakDbfs": -5.133535762540847,
+            "stereoCorrelation": 0.6302965466709498,
+            "monoEnergyRatio": 0.8100745741184113,
+            "monoFoldLossDb": -0.9147499885305332,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "shell-turn",
+          "frame": 357,
+          "layers": [
+            {
+              "source": "lens",
+              "startSample": 544144,
+              "endSample": 572725,
+              "contactSample": 571771,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 571771,
+              "postFadeContactErrorSamples": 0,
+              "energy": 28.09250177259832,
+              "preFadePeak": 0.1258925348520279,
+              "maximumCleanSourcePreparationError": 6.32738883510342e-9,
+              "postFadePeakDbfs": -18.000000436554874,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "3256b598ac0743301484a98363eaca175df8f01a03661cd00c5811683c04e08e"
+            }
+          ],
+          "music": {
+            "startSample": 568411,
+            "endSample": 577531,
+            "rmsAmplitude": 0.05755597722217841,
+            "rmsDbfs": -24.79819135908067,
+            "peakAmplitude": 0.22012872993946075,
+            "peakDbfs": -13.146465442444358,
+            "stereoCorrelation": 0.8661691928727576,
+            "monoEnergyRatio": 0.931396471703787,
+            "monoFoldLossDb": -0.3086541158524814,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 568411,
+            "endSample": 577531,
+            "rmsAmplitude": 0.018942714241702005,
+            "rmsDbfs": -34.451155843784946,
+            "peakAmplitude": 0.1258925348520279,
+            "peakDbfs": -18.000000436554874,
+            "stereoCorrelation": 0.9981115948549664,
+            "monoEnergyRatio": 0.9141123382433327,
+            "monoFoldLossDb": -0.3900042912260996,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 568411,
+            "endSample": 577531,
+            "rmsAmplitude": 0.1481522333630934,
+            "rmsDbfs": -16.58583594477118,
+            "peakAmplitude": 0.6327572464942932,
+            "peakDbfs": -3.9752574498433497,
+            "stereoCorrelation": 0.8675081640947182,
+            "monoEnergyRatio": 0.9295453882379422,
+            "monoFoldLossDb": -0.3172939945849015,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "lobe-landing",
+          "frame": 377,
+          "layers": [
+            {
+              "source": "gear",
+              "startSample": 598172,
+              "endSample": 610094,
+              "contactSample": 603803,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 603803,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.39516204769956176,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.848439706853e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "d10d457ef2c8b902f7e15cde8c303ef0f3c2134cb122f48f4e96d811431e9d2f"
+            }
+          ],
+          "music": {
+            "startSample": 600443,
+            "endSample": 609563,
+            "rmsAmplitude": 0.05810299408398722,
+            "rmsDbfs": -24.71602975128102,
+            "peakAmplitude": 0.24275243282318115,
+            "peakDbfs": -12.296728179469085,
+            "stereoCorrelation": 0.8951354318419983,
+            "monoEnergyRatio": 0.9474164853001232,
+            "monoFoldLossDb": -0.23459062702227967,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 600443,
+            "endSample": 609563,
+            "rmsAmplitude": 0.004214194208626072,
+            "rmsDbfs": -47.50570908129237,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 600443,
+            "endSample": 609563,
+            "rmsAmplitude": 0.1427241917595787,
+            "rmsDbfs": -16.91004815407301,
+            "peakAmplitude": 0.5977869033813477,
+            "peakDbfs": -4.469072078725572,
+            "stereoCorrelation": 0.895712061955683,
+            "monoEnergyRatio": 0.9476854901003756,
+            "monoFoldLossDb": -0.23335768755352035,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "pinwheel",
+          "frame": 391,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 625641,
+              "endSample": 627329,
+              "contactSample": 626226,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 626226,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.4607243255749669,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.8450286229376722e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "222b185749c98952e23bfcf4157f858fddfff6df4f2941b6774b24844ed6fe50"
+            }
+          ],
+          "music": {
+            "startSample": 622866,
+            "endSample": 631986,
+            "rmsAmplitude": 0.07761332976735842,
+            "rmsDbfs": -22.20127368121299,
+            "peakAmplitude": 0.3006995916366577,
+            "peakDbfs": -10.437343233803855,
+            "stereoCorrelation": 0.8785559987370565,
+            "monoEnergyRatio": 0.9380232301868823,
+            "monoFoldLossDb": -0.2778640616565681,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 622866,
+            "endSample": 631986,
+            "rmsAmplitude": 0.005025834167337297,
+            "rmsDbfs": -45.97583691016734,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 622866,
+            "endSample": 631986,
+            "rmsAmplitude": 0.1905138594059711,
+            "rmsDbfs": -14.401468500072276,
+            "peakAmplitude": 0.7319064736366272,
+            "peakDbfs": -2.710888230706228,
+            "stereoCorrelation": 0.8792954783803503,
+            "monoEnergyRatio": 0.9383233975573254,
+            "monoFoldLossDb": -0.2764745419184198,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "pattern-one",
+          "frame": 397,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 635700,
+              "endSample": 637163,
+              "contactSample": 635835,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 635835,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.05386048599108737,
+              "preFadePeak": 0.05623413249850273,
+              "maximumCleanSourcePreparationError": 1.606957927835495e-9,
+              "postFadePeakDbfs": -25.000000003171387,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "315bfbf727dc346dabb8fef09b636136c5255f452b2ec963872883f199d8c312"
+            }
+          ],
+          "music": {
+            "startSample": 632475,
+            "endSample": 641595,
+            "rmsAmplitude": 0.04474369111992996,
+            "rmsDbfs": -26.985363834875,
+            "peakAmplitude": 0.25652915239334106,
+            "peakDbfs": -11.817265476217385,
+            "stereoCorrelation": 0.42282219849677605,
+            "monoEnergyRatio": 0.710253946718138,
+            "monoFoldLossDb": -1.4858634432358098,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 632475,
+            "endSample": 641595,
+            "rmsAmplitude": 0.0024678663912744985,
+            "rmsDbfs": -52.153567128618086,
+            "peakAmplitude": 0.05623413249850273,
+            "peakDbfs": -25.000000003171387,
+            "stereoCorrelation": 0.9928138555516425,
+            "monoEnergyRatio": 0.9873409930602534,
+            "monoFoldLossDb": -0.05532831293185928,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 632475,
+            "endSample": 641595,
+            "rmsAmplitude": 0.10836441240847516,
+            "rmsDbfs": -19.30226639141189,
+            "peakAmplitude": 0.6173141002655029,
+            "peakDbfs": -4.189876061255105,
+            "stereoCorrelation": 0.42304040622417644,
+            "monoEnergyRatio": 0.7105449816208198,
+            "monoFoldLossDb": -1.4840842350519814,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "pattern-two",
+          "frame": 400,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 640524,
+              "endSample": 641783,
+              "contactSample": 640640,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 640640,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.057229818547325846,
+              "preFadePeak": 0.05623413249850273,
+              "maximumCleanSourcePreparationError": 1.7082288986114413e-9,
+              "postFadePeakDbfs": -25.000000003171387,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "f68eced92ee68686a8d16fff38134dd183efedc0c8d58e0473eb8df1553c4fc4"
+            }
+          ],
+          "music": {
+            "startSample": 637280,
+            "endSample": 646400,
+            "rmsAmplitude": 0.0494563167109918,
+            "rmsDbfs": -26.11556462227519,
+            "peakAmplitude": 0.25652915239334106,
+            "peakDbfs": -11.817265476217385,
+            "stereoCorrelation": 0.459916747722663,
+            "monoEnergyRatio": 0.7259817598706909,
+            "monoFoldLossDb": -1.3907429071453628,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 637280,
+            "endSample": 646400,
+            "rmsAmplitude": 0.0024012980895157846,
+            "rmsDbfs": -52.391078493185205,
+            "peakAmplitude": 0.05623413249850273,
+            "peakDbfs": -25.000000003171387,
+            "stereoCorrelation": 0.9931169902738618,
+            "monoEnergyRatio": 0.9963550722288366,
+            "monoFoldLossDb": -0.015858639566973483,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 637280,
+            "endSample": 646400,
+            "rmsAmplitude": 0.11993148863691322,
+            "rmsDbfs": -18.421335513030385,
+            "peakAmplitude": 0.6173141002655029,
+            "peakDbfs": -4.189876061255105,
+            "stereoCorrelation": 0.459499492154661,
+            "monoEnergyRatio": 0.7260251733347753,
+            "monoFoldLossDb": -1.3904832082766228,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "pattern-three",
+          "frame": 403,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 645342,
+              "endSample": 646456,
+              "contactSample": 645445,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 645445,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.04794627212862101,
+              "preFadePeak": 0.05623413249850273,
+              "maximumCleanSourcePreparationError": 1.74390813595382e-9,
+              "postFadePeakDbfs": -25.000000003171387,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "db2d418473631553ead244a46cf27709ce6869edc799271f4e059d438dcb29b0"
+            }
+          ],
+          "music": {
+            "startSample": 642085,
+            "endSample": 651205,
+            "rmsAmplitude": 0.032236462527545744,
+            "rmsDbfs": -29.833052432287445,
+            "peakAmplitude": 0.1407967507839203,
+            "peakDbfs": -17.0281473488918,
+            "stereoCorrelation": 0.7027721049629303,
+            "monoEnergyRatio": 0.8393587029817843,
+            "monoFoldLossDb": -0.7605240218234581,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 642085,
+            "endSample": 651205,
+            "rmsAmplitude": 0.0016213060600592732,
+            "rmsDbfs": -55.8026998801036,
+            "peakAmplitude": 0.05623413249850273,
+            "peakDbfs": -25.000000003171387,
+            "stereoCorrelation": 0.9999999999999994,
+            "monoEnergyRatio": 0.9938441709059377,
+            "monoFoldLossDb": -0.02681705161013616,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 642085,
+            "endSample": 651205,
+            "rmsAmplitude": 0.07880637338163263,
+            "rmsDbfs": -22.068773159715334,
+            "peakAmplitude": 0.3386806547641754,
+            "peakDbfs": -9.404192185743964,
+            "stereoCorrelation": 0.70119028939184,
+            "monoEnergyRatio": 0.8384281421321679,
+            "monoFoldLossDb": -0.7653415287037979,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "pattern-four",
+          "frame": 407,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 651758,
+              "endSample": 652765,
+              "contactSample": 651851,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 651851,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.03533703318028495,
+              "preFadePeak": 0.05623413249850273,
+              "maximumCleanSourcePreparationError": 1.7029770094101337e-9,
+              "postFadePeakDbfs": -25.000000003171387,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "6973a3e37955dbccd29c7b8c54f6941c99612b6f160efa21b182fb36dd454fb9"
+            }
+          ],
+          "music": {
+            "startSample": 648491,
+            "endSample": 657611,
+            "rmsAmplitude": 0.04998759440155601,
+            "rmsDbfs": -26.022755253853155,
+            "peakAmplitude": 0.25274333357810974,
+            "peakDbfs": -11.94640581293292,
+            "stereoCorrelation": 0.8592292297155413,
+            "monoEnergyRatio": 0.9285235598010924,
+            "monoFoldLossDb": -0.3220707225613497,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 648491,
+            "endSample": 657611,
+            "rmsAmplitude": 0.0013918826622278063,
+            "rmsDbfs": -57.12794749702189,
+            "peakAmplitude": 0.05623413249850273,
+            "peakDbfs": -25.000000003171387,
+            "stereoCorrelation": 0.9999999999999938,
+            "monoEnergyRatio": 0.9619397669929006,
+            "monoFoldLossDb": -0.16852120978381233,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 648491,
+            "endSample": 657611,
+            "rmsAmplitude": 0.12200604527964014,
+            "rmsDbfs": -18.272372998546935,
+            "peakAmplitude": 0.6045019626617432,
+            "peakDbfs": -4.372045695178126,
+            "stereoCorrelation": 0.8622381784118706,
+            "monoEnergyRatio": 0.93022929759787,
+            "monoFoldLossDb": -0.31409986492188985,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "particle-reveal",
+          "frame": 417,
+          "layers": [
+            {
+              "source": "air-zoom",
+              "startSample": 658932,
+              "endSample": 682548,
+              "contactSample": 667867,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 667867,
+              "postFadeContactErrorSamples": 0,
+              "energy": 31.433163843002017,
+              "preFadePeak": 0.19952623546123505,
+              "maximumCleanSourcePreparationError": 7.422986614269433e-9,
+              "postFadePeakDbfs": -13.999999827421785,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "59d06c905c6df67bf853da5db27ced4d314174dc109eafd7dd7b071c8c1ccbaf"
+            },
+            {
+              "source": "sub",
+              "startSample": 667508,
+              "endSample": 679726,
+              "contactSample": 667867,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 667867,
+              "postFadeContactErrorSamples": 0,
+              "energy": 28.93263485062788,
+              "preFadePeak": 0.1258925348520279,
+              "maximumCleanSourcePreparationError": 6.809485114667169e-9,
+              "postFadePeakDbfs": -18.000000436554874,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "780c6080775603eb204a06c884c13613bc4eb43da022b91d558098fb95364684"
+            }
+          ],
+          "music": {
+            "startSample": 664507,
+            "endSample": 673627,
+            "rmsAmplitude": 0.014997635344805546,
+            "rmsDbfs": -36.47954420242995,
+            "peakAmplitude": 0.12288428843021393,
+            "peakDbfs": -18.210072819773448,
+            "stereoCorrelation": 0.13524649271515551,
+            "monoEnergyRatio": 0.5676226207303975,
+            "monoFoldLossDb": -2.4594030549322303,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 664507,
+            "endSample": 673627,
+            "rmsAmplitude": 0.0517387700601196,
+            "rmsDbfs": -25.723677991883935,
+            "peakAmplitude": 0.1942989081144333,
+            "peakDbfs": -14.230592799245617,
+            "stereoCorrelation": 0.9860428864468943,
+            "monoEnergyRatio": 0.9881877294782128,
+            "monoFoldLossDb": -0.051605431332928525,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 664507,
+            "endSample": 673627,
+            "rmsAmplitude": 0.13114059855127272,
+            "rmsDbfs": -17.645256769204977,
+            "peakAmplitude": 0.4834744334220886,
+            "peakDbfs": -6.312529737401703,
+            "stereoCorrelation": 0.9191203883695115,
+            "monoEnergyRatio": 0.9559456197014027,
+            "monoFoldLossDb": -0.19566812467976402,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "glyph-reveal",
+          "frame": 445,
+          "layers": [
+            {
+              "source": "sweep",
+              "startSample": 700605,
+              "endSample": 725371,
+              "contactSample": 712712,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 712712,
+              "postFadeContactErrorSamples": 0,
+              "energy": 34.82042662083531,
+              "preFadePeak": 0.15848931670188904,
+              "maximumCleanSourcePreparationError": 7.4385055892634e-9,
+              "postFadePeakDbfs": -16.000000139434217,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "d0c9fcb794823c0d84676567d8e5c23eda9f390b895f093d5fc17c36f99c6586"
+            },
+            {
+              "source": "gear",
+              "startSample": 708795,
+              "endSample": 717089,
+              "contactSample": 712712,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 712712,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.7103068543593978,
+              "preFadePeak": 0.07943282276391983,
+              "maximumCleanSourcePreparationError": 3.5741055115501297e-9,
+              "postFadePeakDbfs": -22.000000077474585,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c147772aef4e4fda5c7e25c6afe1823e26eeef9f56e153920dcd9b550083336e"
+            }
+          ],
+          "music": {
+            "startSample": 709352,
+            "endSample": 718472,
+            "rmsAmplitude": 0.05843595884230541,
+            "rmsDbfs": -24.666396509502068,
+            "peakAmplitude": 0.2205537110567093,
+            "peakDbfs": -13.129712606916504,
+            "stereoCorrelation": 0.9377159711894407,
+            "monoEnergyRatio": 0.9673765213454953,
+            "monoFoldLossDb": -0.14404457338127427,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 709352,
+            "endSample": 718472,
+            "rmsAmplitude": 0.03813594557678308,
+            "rmsDbfs": -28.373309617109935,
+            "peakAmplitude": 0.20958340167999268,
+            "peakDbfs": -13.572862300581834,
+            "stereoCorrelation": 0.9978178590572816,
+            "monoEnergyRatio": 0.9979880987591206,
+            "monoFoldLossDb": -0.008746377447533604,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 709352,
+            "endSample": 718472,
+            "rmsAmplitude": 0.17649117182793703,
+            "rmsDbfs": -15.06554026697366,
+            "peakAmplitude": 0.6995720863342285,
+            "peakDbfs": -3.1033505531315537,
+            "stereoCorrelation": 0.9581526487635958,
+            "monoEnergyRatio": 0.9772809890285546,
+            "monoFoldLossDb": -0.09980549444479646,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "glyph-metal",
+          "frame": 459,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 734432,
+              "endSample": 736457,
+              "contactSample": 735134,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 735134,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.4497240206194077,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.8504064461244418e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "50661beb8c9bc848c0f832365336870238798934a120b58b34a618167d2d57de"
+            }
+          ],
+          "music": {
+            "startSample": 731774,
+            "endSample": 740894,
+            "rmsAmplitude": 0.07636878992531475,
+            "rmsDbfs": -22.341681816053832,
+            "peakAmplitude": 0.26338648796081543,
+            "peakDbfs": -11.588130172494377,
+            "stereoCorrelation": 0.8869403839886807,
+            "monoEnergyRatio": 0.9432429144363529,
+            "monoFoldLossDb": -0.2537644849935064,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 731774,
+            "endSample": 740894,
+            "rmsAmplitude": 0.004965473006983477,
+            "rmsDbfs": -46.08078749306692,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9999999999999993,
+            "monoEnergyRatio": 0.9861849599415644,
+            "monoFoldLossDb": -0.06041625070134929,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 731774,
+            "endSample": 740894,
+            "rmsAmplitude": 0.1867828902562491,
+            "rmsDbfs": -14.573258173212784,
+            "peakAmplitude": 0.6881423592567444,
+            "peakDbfs": -3.2464341584261316,
+            "stereoCorrelation": 0.8895895435773129,
+            "monoEnergyRatio": 0.9445828751231176,
+            "monoFoldLossDb": -0.24759932258101278,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "glyph-round",
+          "frame": 471,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 753764,
+              "endSample": 755467,
+              "contactSample": 754354,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 754354,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.405142263192272,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.8335185314466429e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "e1b191f1e6ef2b73b21c1ccd269f806e07bf9e2e259a65b333521f2496f2d367"
+            }
+          ],
+          "music": {
+            "startSample": 750994,
+            "endSample": 760114,
+            "rmsAmplitude": 0.04290712913742216,
+            "rmsDbfs": -27.34941085196406,
+            "peakAmplitude": 0.15363232791423798,
+            "peakDbfs": -16.27034777495694,
+            "stereoCorrelation": 0.8625582299393812,
+            "monoEnergyRatio": 0.9310807586845508,
+            "monoFoldLossDb": -0.3101264820236805,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 750994,
+            "endSample": 760114,
+            "rmsAmplitude": 0.004712933999701371,
+            "rmsDbfs": -46.53417284183763,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9999999999999996,
+            "monoEnergyRatio": 0.9938441703657271,
+            "monoFoldLossDb": -0.026817053970772418,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 750994,
+            "endSample": 760114,
+            "rmsAmplitude": 0.10541964279577604,
+            "rmsDbfs": -19.541569193665055,
+            "peakAmplitude": 0.38334470987319946,
+            "peakDbfs": -8.328210511920705,
+            "stereoCorrelation": 0.865743465602651,
+            "monoEnergyRatio": 0.9326918891804281,
+            "monoFoldLossDb": -0.3026179990649253,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "glyph-glass",
+          "frame": 483,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 773047,
+              "endSample": 774566,
+              "contactSample": 773573,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 773573,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.2536271954802179,
+              "preFadePeak": 0.04466835781931877,
+              "maximumCleanSourcePreparationError": 1.849784200813609e-9,
+              "postFadePeakDbfs": -27.000000271412922,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "0c4409851e554a161e54df11c10e3fdfd64500687649cf81cff6de4673d5410a"
+            }
+          ],
+          "music": {
+            "startSample": 770213,
+            "endSample": 779333,
+            "rmsAmplitude": 0.04619668012333294,
+            "rmsDbfs": -26.70778466893063,
+            "peakAmplitude": 0.23131901025772095,
+            "peakDbfs": -12.715773491516348,
+            "stereoCorrelation": 0.6404968964391028,
+            "monoEnergyRatio": 0.8192183661440589,
+            "monoFoldLossDb": -0.8660031976472028,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 770213,
+            "endSample": 779333,
+            "rmsAmplitude": 0.003728940835170884,
+            "rmsDbfs": -48.568290145391984,
+            "peakAmplitude": 0.04466835781931877,
+            "peakDbfs": -27.000000271412922,
+            "stereoCorrelation": 1.0000000000000009,
+            "monoEnergyRatio": 0.9755282581901686,
+            "monoFoldLossDb": -0.10760145850898552,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 770213,
+            "endSample": 779333,
+            "rmsAmplitude": 0.11233816444813254,
+            "rmsDbfs": -18.989453531319647,
+            "peakAmplitude": 0.5385557413101196,
+            "peakDbfs": -5.37538679845958,
+            "stereoCorrelation": 0.6514013130902521,
+            "monoEnergyRatio": 0.8248309492188627,
+            "monoFoldLossDb": -0.8363505186760384,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "script-arrival",
+          "frame": 496,
+          "layers": [
+            {
+              "source": "sweep",
+              "startSample": 784704,
+              "endSample": 807565,
+              "contactSample": 794394,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 794394,
+              "postFadeContactErrorSamples": 0,
+              "energy": 15.076547781334279,
+              "preFadePeak": 0.11220184713602066,
+              "maximumCleanSourcePreparationError": 3.7205881431301435e-9,
+              "postFadePeakDbfs": -18.9999998679469,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "82d4afb10000aa3cc5370b6e07e8fd3f915ab95a11c8ce60816ec631531dca4a"
+            },
+            {
+              "source": "lens",
+              "startSample": 789609,
+              "endSample": 809854,
+              "contactSample": 794394,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 794394,
+              "postFadeContactErrorSamples": 0,
+              "energy": 5.393443220187833,
+              "preFadePeak": 0.05623413249850273,
+              "maximumCleanSourcePreparationError": 1.8615604613358983e-9,
+              "postFadePeakDbfs": -25.000000003171387,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "3d32b05598f65ccb6ae25c2b974599cb40ef218ad99780133c32662c76542aef"
+            }
+          ],
+          "music": {
+            "startSample": 791034,
+            "endSample": 800154,
+            "rmsAmplitude": 0.05284129770801533,
+            "rmsDbfs": -25.54053050528735,
+            "peakAmplitude": 0.20274987816810608,
+            "peakDbfs": -13.860787961663885,
+            "stereoCorrelation": 0.9219721884961382,
+            "monoEnergyRatio": 0.9607192421051631,
+            "monoFoldLossDb": -0.17403510790578536,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 791034,
+            "endSample": 800154,
+            "rmsAmplitude": 0.031337473947077185,
+            "rmsDbfs": -30.078720281828314,
+            "peakAmplitude": 0.14811548590660095,
+            "peakDbfs": -16.587990646970916,
+            "stereoCorrelation": 0.995148834223045,
+            "monoEnergyRatio": 0.9935415812148338,
+            "monoFoldLossDb": -0.028139522942160544,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 791034,
+            "endSample": 800154,
+            "rmsAmplitude": 0.15113685005868113,
+            "rmsDbfs": -16.412592668749504,
+            "peakAmplitude": 0.6937843561172485,
+            "peakDbfs": -3.1755099425327455,
+            "stereoCorrelation": 0.9404310639848887,
+            "monoEnergyRatio": 0.9701732899247634,
+            "monoFoldLossDb": -0.13150686211673174,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "responsive-select",
+          "frame": 514,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 822673,
+              "endSample": 824258,
+              "contactSample": 823222,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 823222,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.8687499994116339,
+              "preFadePeak": 0.07079457491636276,
+              "maximumCleanSourcePreparationError": 3.704794609982187e-9,
+              "postFadePeakDbfs": -23.000000432125567,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "db4fd14d762d355876806e9aebcab6d9b73308ad1d731a74af7ea8e61d8b30a6"
+            }
+          ],
+          "music": {
+            "startSample": 819862,
+            "endSample": 828982,
+            "rmsAmplitude": 0.06087902914103132,
+            "rmsDbfs": -24.3106456405364,
+            "peakAmplitude": 0.20374174416065216,
+            "peakDbfs": -13.818399606421288,
+            "stereoCorrelation": 0.9452444572859621,
+            "monoEnergyRatio": 0.9724444985551566,
+            "monoFoldLossDb": -0.12135176284081826,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 819862,
+            "endSample": 828982,
+            "rmsAmplitude": 0.006901364914786182,
+            "rmsDbfs": -43.22130016688352,
+            "peakAmplitude": 0.07079457491636276,
+            "peakDbfs": -23.000000432125567,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 819862,
+            "endSample": 828982,
+            "rmsAmplitude": 0.15026694157961012,
+            "rmsDbfs": -16.462731056086874,
+            "peakAmplitude": 0.5003058314323425,
+            "peakDbfs": -6.01528870131129,
+            "stereoCorrelation": 0.9468187179422852,
+            "monoEnergyRatio": 0.9732123304872491,
+            "monoFoldLossDb": -0.11792397245691702,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "whirl-resolve",
+          "frame": 547,
+          "layers": [
+            {
+              "source": "sweep",
+              "startSample": 863845,
+              "endSample": 885073,
+              "contactSample": 876075,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 876075,
+              "postFadeContactErrorSamples": 0,
+              "energy": 24.016414140848546,
+              "preFadePeak": 0.1412537544965744,
+              "maximumCleanSourcePreparationError": 7.192593215465948e-9,
+              "postFadePeakDbfs": -16.99999999789091,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "a7bdc675c77809bbb1cc26b1e207aa9457fc560b1a7b63f115a0c6689aca4d40"
+            }
+          ],
+          "music": {
+            "startSample": 872715,
+            "endSample": 881835,
+            "rmsAmplitude": 0.051123478970738365,
+            "rmsDbfs": -25.827591999033558,
+            "peakAmplitude": 0.1763029843568802,
+            "peakDbfs": -15.074806722957938,
+            "stereoCorrelation": 0.9673019166481617,
+            "monoEnergyRatio": 0.9829943336219933,
+            "monoFoldLossDb": -0.0744898561017712,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 872715,
+            "endSample": 881835,
+            "rmsAmplitude": 0.035481953346054626,
+            "rmsDbfs": -28.99984958962395,
+            "peakAmplitude": 0.1412537544965744,
+            "peakDbfs": -16.99999999789091,
+            "stereoCorrelation": 0.9936491301395195,
+            "monoEnergyRatio": 0.9941007060132673,
+            "monoFoldLossDb": -0.025696177651912577,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 872715,
+            "endSample": 881835,
+            "rmsAmplitude": 0.1495634708593673,
+            "rmsDbfs": -16.503489298066974,
+            "peakAmplitude": 0.45601481199264526,
+            "peakDbfs": -6.820421012404365,
+            "stereoCorrelation": 0.9729017508593591,
+            "monoEnergyRatio": 0.9864410084485561,
+            "monoFoldLossDb": -0.059288814926980814,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "storyboard-select",
+          "frame": 567,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 907442,
+              "endSample": 909360,
+              "contactSample": 908107,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 908107,
+              "postFadeContactErrorSamples": 0,
+              "energy": 1.0477185992814957,
+              "preFadePeak": 0.07079457491636276,
+              "maximumCleanSourcePreparationError": 3.708575710414941e-9,
+              "postFadePeakDbfs": -23.000000432125567,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "2b0112d6bdccb09c03a7b63dacf89b7c0d0dd748657246d79bea71c6b1f39aee"
+            }
+          ],
+          "music": {
+            "startSample": 904747,
+            "endSample": 913867,
+            "rmsAmplitude": 0.04396075175485842,
+            "rmsDbfs": -27.13869778985028,
+            "peakAmplitude": 0.16419893503189087,
+            "peakDbfs": -15.692593279443994,
+            "stereoCorrelation": 0.690332609777726,
+            "monoEnergyRatio": 0.845113322790128,
+            "monoFoldLossDb": -0.7308505180464695,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 904747,
+            "endSample": 913867,
+            "rmsAmplitude": 0.0075789651457113345,
+            "rmsDbfs": -42.40780180342515,
+            "peakAmplitude": 0.07079457491636276,
+            "peakDbfs": -23.000000432125567,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 904747,
+            "endSample": 913867,
+            "rmsAmplitude": 0.10860051007555499,
+            "rmsDbfs": -19.283362698906853,
+            "peakAmplitude": 0.4156187176704407,
+            "peakDbfs": -7.6260980385658925,
+            "stereoCorrelation": 0.7036152188913187,
+            "monoEnergyRatio": 0.8517431828019434,
+            "monoFoldLossDb": -0.6969133376049159,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "canvas-push",
+          "frame": 586,
+          "layers": [
+            {
+              "source": "air-zoom",
+              "startSample": 929625,
+              "endSample": 943963,
+              "contactSample": 938538,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 938538,
+              "postFadeContactErrorSamples": 0,
+              "energy": 5.124110589917738,
+              "preFadePeak": 0.10000000149011612,
+              "maximumCleanSourcePreparationError": 3.6717163198751734e-9,
+              "postFadePeakDbfs": -19.99999987057016,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c6068150c687cabd540a43ee1016851ef75cff900597cc096a46ba5602e6f38f"
+            }
+          ],
+          "music": {
+            "startSample": 935178,
+            "endSample": 944298,
+            "rmsAmplitude": 0.022393760110058305,
+            "rmsDbfs": -32.9974595683972,
+            "peakAmplitude": 0.1034468486905098,
+            "peakDbfs": -19.70565469487416,
+            "stereoCorrelation": 0.40784772075993087,
+            "monoEnergyRatio": 0.7032182990953116,
+            "monoFoldLossDb": -1.5290983660789645,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 935178,
+            "endSample": 944298,
+            "rmsAmplitude": 0.016734299592542003,
+            "rmsDbfs": -35.52784920297468,
+            "peakAmplitude": 0.10000000149011612,
+            "peakDbfs": -19.99999987057016,
+            "stereoCorrelation": 0.9994376048832628,
+            "monoEnergyRatio": 0.9956558325890156,
+            "monoFoldLossDb": -0.01890757799236493,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 935178,
+            "endSample": 944298,
+            "rmsAmplitude": 0.06911093337581033,
+            "rmsDbfs": -23.209064832784808,
+            "peakAmplitude": 0.2967274785041809,
+            "peakDbfs": -10.552844677966803,
+            "stereoCorrelation": 0.6372699020432592,
+            "monoEnergyRatio": 0.8186281258533888,
+            "monoFoldLossDb": -0.8691333824793512,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "typed-E",
+          "frame": 590,
+          "layers": [
+            {
+              "source": "key",
+              "startSample": 944532,
+              "endSample": 947510,
+              "contactSample": 944944,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 944944,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.06236957821774177,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.6890273069058992e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "59e3d1484931b01a130f35fd0120c73ad2992f6bcffb088a9e997b55255cd361"
+            }
+          ],
+          "music": {
+            "startSample": 941584,
+            "endSample": 950704,
+            "rmsAmplitude": 0.029373496372508055,
+            "rmsDbfs": -30.64088711318628,
+            "peakAmplitude": 0.16165271401405334,
+            "peakDbfs": -15.82833999099189,
+            "stereoCorrelation": 0.31743877605065907,
+            "monoEnergyRatio": 0.6586898195945841,
+            "monoFoldLossDb": -1.813190487614045,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 941584,
+            "endSample": 950704,
+            "rmsAmplitude": 0.002916304902096974,
+            "rmsDbfs": -50.703341442638006,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9959761450083082,
+            "monoEnergyRatio": 0.9979213377295022,
+            "monoFoldLossDb": -0.009036911138594176,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 941584,
+            "endSample": 950704,
+            "rmsAmplitude": 0.07109761673622143,
+            "rmsDbfs": -22.962899140300742,
+            "peakAmplitude": 0.39122647047042847,
+            "peakDbfs": -8.151435368572086,
+            "stereoCorrelation": 0.3234678157271233,
+            "monoEnergyRatio": 0.6617159091721705,
+            "monoFoldLossDb": -1.7932842379281477,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "typed-A",
+          "frame": 596,
+          "layers": [
+            {
+              "source": "key",
+              "startSample": 954168,
+              "endSample": 956960,
+              "contactSample": 954554,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 954554,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.0650526787004273,
+              "preFadePeak": 0.04731512442231178,
+              "maximumCleanSourcePreparationError": 1.4738362683064388e-9,
+              "postFadePeakDbfs": -26.50000027055998,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "b4b8a6a21979c0daa535495d0760033b1790a079794decee1d5983e7c450ad21"
+            }
+          ],
+          "music": {
+            "startSample": 951194,
+            "endSample": 960314,
+            "rmsAmplitude": 0.06373944930206835,
+            "rmsDbfs": -23.911833861521245,
+            "peakAmplitude": 0.21808628737926483,
+            "peakDbfs": -13.22743281430771,
+            "stereoCorrelation": 0.8548228956790958,
+            "monoEnergyRatio": 0.9268589202624625,
+            "monoFoldLossDb": -0.32986365978839693,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 951194,
+            "endSample": 960314,
+            "rmsAmplitude": 0.0018885138542976856,
+            "rmsDbfs": -54.477596496072884,
+            "peakAmplitude": 0.04731512442231178,
+            "peakDbfs": -26.50000027055998,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 951194,
+            "endSample": 960314,
+            "rmsAmplitude": 0.156105084573087,
+            "rmsDbfs": -16.13165902189426,
+            "peakAmplitude": 0.525916576385498,
+            "peakDbfs": -5.581662808515139,
+            "stereoCorrelation": 0.858802506409546,
+            "monoEnergyRatio": 0.9288676480080491,
+            "monoFoldLossDb": -0.32046163115776705,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "typed-D",
+          "frame": 600,
+          "layers": [
+            {
+              "source": "key",
+              "startSample": 960518,
+              "endSample": 963708,
+              "contactSample": 960960,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 960960,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.06516330897704051,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.3649731761544714e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "67d767dc0be707cc05cfa633a372462bf1acf7616000bf20c0fd83a5e7224e0a"
+            }
+          ],
+          "music": {
+            "startSample": 957600,
+            "endSample": 966720,
+            "rmsAmplitude": 0.037462168746704556,
+            "rmsDbfs": -28.52814168419023,
+            "peakAmplitude": 0.1630278080701828,
+            "peakDbfs": -15.75476621113789,
+            "stereoCorrelation": 0.9003160263077652,
+            "monoEnergyRatio": 0.9501219993215567,
+            "monoFoldLossDb": -0.22220626047624578,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 957600,
+            "endSample": 966720,
+            "rmsAmplitude": 0.0024808327917461687,
+            "rmsDbfs": -52.10805012422231,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9995122911082993,
+            "monoEnergyRatio": 0.9961293903851499,
+            "monoFoldLossDb": -0.016842460335838347,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 957600,
+            "endSample": 966720,
+            "rmsAmplitude": 0.09158671821128549,
+            "rmsDbfs": -20.763350051921886,
+            "peakAmplitude": 0.4003024101257324,
+            "peakDbfs": -7.952235902062009,
+            "stereoCorrelation": 0.9036366646932116,
+            "monoEnergyRatio": 0.951785816201609,
+            "monoFoldLossDb": -0.2146077147597965,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "typed-S",
+          "frame": 603,
+          "layers": [
+            {
+              "source": "key",
+              "startSample": 965364,
+              "endSample": 968259,
+              "contactSample": 965765,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 965765,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.04773093498289266,
+              "preFadePeak": 0.04731512442231178,
+              "maximumCleanSourcePreparationError": 1.4738362683064388e-9,
+              "postFadePeakDbfs": -26.50000027055998,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "635d5e77b9511f0090b28378820fc0fccdcd7b70fa705f5674b6245f58ab1ede"
+            }
+          ],
+          "music": {
+            "startSample": 962405,
+            "endSample": 971525,
+            "rmsAmplitude": 0.03447062281775704,
+            "rmsDbfs": -29.251017393128244,
+            "peakAmplitude": 0.22651103138923645,
+            "peakDbfs": -12.898212848315673,
+            "stereoCorrelation": 0.33088012963097824,
+            "monoEnergyRatio": 0.6653892477499558,
+            "monoFoldLossDb": -1.7692422132200727,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 962405,
+            "endSample": 971525,
+            "rmsAmplitude": 0.002614598372789553,
+            "rmsDbfs": -51.65190026883834,
+            "peakAmplitude": 0.04731512442231178,
+            "peakDbfs": -26.50000027055998,
+            "stereoCorrelation": 0.9721034416825458,
+            "monoEnergyRatio": 0.9815553505068387,
+            "monoFoldLossDb": -0.08085205241858565,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 962405,
+            "endSample": 971525,
+            "rmsAmplitude": 0.08397278990595355,
+            "rmsDbfs": -21.517228352114707,
+            "peakAmplitude": 0.5562531352043152,
+            "peakDbfs": -5.094550563884185,
+            "stereoCorrelation": 0.33682339781213794,
+            "monoEnergyRatio": 0.6683248426149637,
+            "monoFoldLossDb": -1.7501239521317544,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "canvas-tear",
+          "frame": 608,
+          "layers": [
+            {
+              "source": "gear",
+              "startSample": 970436,
+              "endSample": 977501,
+              "contactSample": 973773,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 973773,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.432980303481698,
+              "preFadePeak": 0.07079457491636276,
+              "maximumCleanSourcePreparationError": 3.5220510397060423e-9,
+              "postFadePeakDbfs": -23.000000432125567,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "d406ec1d51a573897944c8c1d035085f892f7466d70bb1162e7a69baba6cdb30"
+            }
+          ],
+          "music": {
+            "startSample": 970413,
+            "endSample": 979533,
+            "rmsAmplitude": 0.02966811687896271,
+            "rmsDbfs": -30.554200374660596,
+            "peakAmplitude": 0.11748124659061432,
+            "peakDbfs": -18.60062907673472,
+            "stereoCorrelation": 0.8537487304130267,
+            "monoEnergyRatio": 0.9242055202211936,
+            "monoFoldLossDb": -0.34231441796059237,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 970413,
+            "endSample": 979533,
+            "rmsAmplitude": 0.004872161248844508,
+            "rmsDbfs": -46.245566934907046,
+            "peakAmplitude": 0.07079457491636276,
+            "peakDbfs": -23.000000432125567,
+            "stereoCorrelation": 0.9941264431566283,
+            "monoEnergyRatio": 0.994601671583153,
+            "monoFoldLossDb": -0.02350815203603467,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 970413,
+            "endSample": 979533,
+            "rmsAmplitude": 0.07365012506402253,
+            "rmsDbfs": -22.656530227053278,
+            "peakAmplitude": 0.29070329666137695,
+            "peakDbfs": -10.731000863475062,
+            "stereoCorrelation": 0.8603301186312446,
+            "monoEnergyRatio": 0.9274638972801312,
+            "monoFoldLossDb": -0.32702986852736937,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "canvas-pullback",
+          "frame": 626,
+          "layers": [
+            {
+              "source": "air-zoom",
+              "startSample": 996273,
+              "endSample": 1013001,
+              "contactSample": 1002602,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1002602,
+              "postFadeContactErrorSamples": 0,
+              "energy": 5.556807992636983,
+              "preFadePeak": 0.10000000149011612,
+              "maximumCleanSourcePreparationError": 3.6822392635027512e-9,
+              "postFadePeakDbfs": -19.99999987057016,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c7c4402be9bd87ba4b71e84e2de173f549998e89092dd86e15b0b9184c1a7cdf"
+            }
+          ],
+          "music": {
+            "startSample": 999242,
+            "endSample": 1008362,
+            "rmsAmplitude": 0.016533635982953983,
+            "rmsDbfs": -35.63263256718141,
+            "peakAmplitude": 0.09035983681678772,
+            "peakDbfs": -20.88049124109649,
+            "stereoCorrelation": 0.3238259086739412,
+            "monoEnergyRatio": 0.6617040539682174,
+            "monoFoldLossDb": -1.7933620461795297,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 999242,
+            "endSample": 1008362,
+            "rmsAmplitude": 0.017187888430539477,
+            "rmsDbfs": -35.29554948114309,
+            "peakAmplitude": 0.10000000149011612,
+            "peakDbfs": -19.99999987057016,
+            "stereoCorrelation": 0.9986127904443226,
+            "monoEnergyRatio": 0.9885647588752815,
+            "monoFoldLossDb": -0.049948756664627336,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 999242,
+            "endSample": 1008362,
+            "rmsAmplitude": 0.05860439853022934,
+            "rmsDbfs": -24.641395739119933,
+            "peakAmplitude": 0.32217153906822205,
+            "peakDbfs": -9.838256563970443,
+            "stereoCorrelation": 0.6859853930554158,
+            "monoEnergyRatio": 0.8421194586791153,
+            "monoFoldLossDb": -0.746262973777251,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "erase-1",
+          "frame": 636,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 1018529,
+              "endSample": 1019497,
+              "contactSample": 1018618,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1018618,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.029467615644893006,
+              "preFadePeak": 0.05011872202157974,
+              "maximumCleanSourcePreparationError": 1.5913169393311222e-9,
+              "postFadePeakDbfs": -26.00000023242929,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "c379739c7b265359c440cd7049288c531c681699d14bf2c61b68552c325fd0cd"
+            }
+          ],
+          "music": {
+            "startSample": 1015258,
+            "endSample": 1024378,
+            "rmsAmplitude": 0.016591046896377228,
+            "rmsDbfs": -35.6025241818939,
+            "peakAmplitude": 0.0882648453116417,
+            "peakDbfs": -21.08424471150181,
+            "stereoCorrelation": 0.7470380197711998,
+            "monoEnergyRatio": 0.8732589464256401,
+            "monoFoldLossDb": -0.5885695637639003,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 1015258,
+            "endSample": 1024378,
+            "rmsAmplitude": 0.004642448220579494,
+            "rmsDbfs": -46.66505862905824,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9782947838987239,
+            "monoEnergyRatio": 0.9798029226560103,
+            "monoFoldLossDb": -0.08861269419916112,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 1015258,
+            "endSample": 1024378,
+            "rmsAmplitude": 0.04194599755063495,
+            "rmsDbfs": -27.546189456944678,
+            "peakAmplitude": 0.21277976036071777,
+            "peakDbfs": -13.441393691232832,
+            "stereoCorrelation": 0.7657839894567884,
+            "monoEnergyRatio": 0.8828153856297274,
+            "monoFoldLossDb": -0.5413010659798435,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "erase-2",
+          "frame": 637,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 1019768,
+              "endSample": 1021070,
+              "contactSample": 1020219,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1020219,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.14472364074208188,
+              "preFadePeak": 0.03548133745789528,
+              "maximumCleanSourcePreparationError": 1.8141401089688536e-9,
+              "postFadePeakDbfs": -29.00000035874756,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "2352bfd7b5f35f309c3cbe5f459fcc9951013405f9251fc228ddd7dd6181f5cc"
+            }
+          ],
+          "music": {
+            "startSample": 1016859,
+            "endSample": 1025979,
+            "rmsAmplitude": 0.009081191322358654,
+            "rmsDbfs": -40.837143490397,
+            "peakAmplitude": 0.05277042090892792,
+            "peakDbfs": -25.552188835541948,
+            "stereoCorrelation": 0.4008659822242832,
+            "monoEnergyRatio": 0.697701726723404,
+            "monoFoldLossDb": -1.5633020219569045,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 1016859,
+            "endSample": 1025979,
+            "rmsAmplitude": 0.0046424557929070475,
+            "rmsDbfs": -46.665044461458585,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9782948293373537,
+            "monoEnergyRatio": 0.9798029087111818,
+            "monoFoldLossDb": -0.08861275600916371,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 1016859,
+            "endSample": 1025979,
+            "rmsAmplitude": 0.02463027819702605,
+            "rmsDbfs": -32.17061365623379,
+            "peakAmplitude": 0.13693363964557648,
+            "peakDbfs": -17.26979696605862,
+            "stereoCorrelation": 0.51694971960175,
+            "monoEnergyRatio": 0.7574151748921065,
+            "monoFoldLossDb": -1.2066599799274005,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "erase-3",
+          "frame": 638,
+          "layers": [
+            {
+              "source": "bubble",
+              "startSample": 1020783,
+              "endSample": 1021927,
+              "contactSample": 1021821,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1021821,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.029404511298810106,
+              "preFadePeak": 0.03981071710586548,
+              "maximumCleanSourcePreparationError": 1.7670461760488365e-9,
+              "postFadePeakDbfs": -27.99999998897849,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "9fcd31e8d87dd411057259b3f358cedca3cb74cca137c0c12cce8c8ffeeb019f"
+            }
+          ],
+          "music": {
+            "startSample": 1018461,
+            "endSample": 1027581,
+            "rmsAmplitude": 0.006517246963996204,
+            "rmsDbfs": -43.71871643149633,
+            "peakAmplitude": 0.037203699350357056,
+            "peakDbfs": -28.588277477863375,
+            "stereoCorrelation": 0.19161204957687775,
+            "monoEnergyRatio": 0.5946249443770605,
+            "monoFoldLossDb": -2.2575687619720366,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 1018461,
+            "endSample": 1027581,
+            "rmsAmplitude": 0.0046424557929070475,
+            "rmsDbfs": -46.665044461458585,
+            "peakAmplitude": 0.05011872202157974,
+            "peakDbfs": -26.00000023242929,
+            "stereoCorrelation": 0.9782948293373537,
+            "monoEnergyRatio": 0.9798029087111818,
+            "monoFoldLossDb": -0.08861275600916371,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 1018461,
+            "endSample": 1027581,
+            "rmsAmplitude": 0.019216938359441726,
+            "rmsDbfs": -34.326316058130466,
+            "peakAmplitude": 0.13693363964557648,
+            "peakDbfs": -17.26979696605862,
+            "stereoCorrelation": 0.4505060888897102,
+            "monoEnergyRatio": 0.725096613594941,
+            "monoFoldLossDb": -1.396041231452908,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "erase-4",
+          "frame": 639,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 1022632,
+              "endSample": 1024910,
+              "contactSample": 1023422,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1023422,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.18951976851805252,
+              "preFadePeak": 0.03162277489900589,
+              "maximumCleanSourcePreparationError": 1.702677901449512e-9,
+              "postFadePeakDbfs": -30.00000046767787,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "b238a403b069e1b0f5ffb648d793d4759f733db68d6e31d58c4da60f4fc3b7b0"
+            }
+          ],
+          "music": {
+            "startSample": 1020062,
+            "endSample": 1029182,
+            "rmsAmplitude": 0.0061822835312690455,
+            "rmsDbfs": -44.17702162491749,
+            "peakAmplitude": 0.037203699350357056,
+            "peakDbfs": -28.588277477863375,
+            "stereoCorrelation": 0.18851551462491445,
+            "monoEnergyRatio": 0.5933350472287793,
+            "monoFoldLossDb": -2.2669999791482516,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 1020062,
+            "endSample": 1029182,
+            "rmsAmplitude": 0.004443526645788336,
+            "rmsDbfs": -47.04544422446742,
+            "peakAmplitude": 0.03981071710586548,
+            "peakDbfs": -27.99999998897849,
+            "stereoCorrelation": 0.9917299856847708,
+            "monoEnergyRatio": 0.9812024557137421,
+            "monoFoldLossDb": -0.08241373529662571,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 1020062,
+            "endSample": 1029182,
+            "rmsAmplitude": 0.018281998575001804,
+            "rmsDbfs": -34.759526584899014,
+            "peakAmplitude": 0.12020237743854523,
+            "peakDbfs": -18.401738849955038,
+            "stereoCorrelation": 0.45336597139242224,
+            "monoEnergyRatio": 0.7266736079876531,
+            "monoFoldLossDb": -1.3866061263386,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "logo-landing",
+          "frame": 665,
+          "layers": [
+            {
+              "source": "tech-select",
+              "startSample": 1064274,
+              "endSample": 1066552,
+              "contactSample": 1065064,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1065064,
+              "postFadeContactErrorSamples": 0,
+              "energy": 1.2433683281444028,
+              "preFadePeak": 0.07079457491636276,
+              "maximumCleanSourcePreparationError": 3.528081923831472e-9,
+              "postFadePeakDbfs": -23.000000432125567,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "786e290c895c70d304968491a4eccebe06f02f07f96b6c24d3e777c2c8bbc8f9"
+            },
+            {
+              "source": "sub",
+              "startSample": 1064625,
+              "endSample": 1079558,
+              "contactSample": 1065064,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1065064,
+              "postFadeContactErrorSamples": 0,
+              "energy": 28.093790761084424,
+              "preFadePeak": 0.11220184713602066,
+              "maximumCleanSourcePreparationError": 3.722070943124045e-9,
+              "postFadePeakDbfs": -18.9999998679469,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "36783c44491aeb8b3d1145d94a3a1bf6a5b33ee0e29beaa2b9403b0d84a50496"
+            }
+          ],
+          "music": {
+            "startSample": 1061704,
+            "endSample": 1070824,
+            "rmsAmplitude": 0.05763297558758943,
+            "rmsDbfs": -24.7865791447568,
+            "peakAmplitude": 0.2065025269985199,
+            "peakDbfs": -13.70149258913,
+            "stereoCorrelation": 0.8632713056537837,
+            "monoEnergyRatio": 0.931203644433559,
+            "monoFoldLossDb": -0.30955333001008994,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 1061704,
+            "endSample": 1070824,
+            "rmsAmplitude": 0.03910010638190937,
+            "rmsDbfs": -28.156441219850766,
+            "peakAmplitude": 0.17503517866134644,
+            "peakDbfs": -15.137493156203181,
+            "stereoCorrelation": 1,
+            "monoEnergyRatio": 1,
+            "monoFoldLossDb": 0,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 1061704,
+            "endSample": 1070824,
+            "rmsAmplitude": 0.16687088607238082,
+            "rmsDbfs": -15.552388559530339,
+            "peakAmplitude": 0.5806573629379272,
+            "peakDbfs": -4.7216012516982335,
+            "stereoCorrelation": 0.9047744853777913,
+            "monoEnergyRatio": 0.9523456213444995,
+            "monoFoldLossDb": -0.2120541064667021,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        },
+        {
+          "id": "logo-recede",
+          "frame": 834,
+          "layers": [
+            {
+              "source": "air-zoom",
+              "startSample": 1327295,
+              "endSample": 1349599,
+              "contactSample": 1335734,
+              "contactErrorSamples": 0,
+              "postFadeStrongestSample": 1335734,
+              "postFadeContactErrorSamples": 0,
+              "energy": 0.966249622101551,
+              "preFadePeak": 0.03548133745789528,
+              "maximumCleanSourcePreparationError": 1.4654622723653254e-9,
+              "postFadePeakDbfs": -29.00000035874756,
+              "phasePolicy": "Same polarity stereo projection; no phase inversion",
+              "isolatedSha256": "a16612f24074329c0e0ffa0c2e867361d2d4d720efac64b9badf647cca668ef4"
+            }
+          ],
+          "music": {
+            "startSample": 1332374,
+            "endSample": 1341494,
+            "rmsAmplitude": 0.046270572741850986,
+            "rmsDbfs": -26.69390249451212,
+            "peakAmplitude": 0.1670185774564743,
+            "peakDbfs": -15.544704392843332,
+            "stereoCorrelation": 0.9048268433423383,
+            "monoEnergyRatio": 0.9523213406634286,
+            "monoFoldLossDb": -0.21216483412688505,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "effects": {
+            "startSample": 1332374,
+            "endSample": 1341494,
+            "rmsAmplitude": 0.006877547984458737,
+            "rmsDbfs": -43.2513274173466,
+            "peakAmplitude": 0.03548133745789528,
+            "peakDbfs": -29.00000035874756,
+            "stereoCorrelation": 0.9993657962831023,
+            "monoEnergyRatio": 0.993309404761691,
+            "monoFoldLossDb": -0.029154525613205754,
+            "nonfinite": 0,
+            "clips": 0
+          },
+          "finished": {
+            "startSample": 1332374,
+            "endSample": 1341494,
+            "rmsAmplitude": 0.1151699892531952,
+            "rmsDbfs": -18.773213473761082,
+            "peakAmplitude": 0.43245911598205566,
+            "peakDbfs": -7.281098875782794,
+            "stereoCorrelation": 0.9075286708710891,
+            "monoEnergyRatio": 0.9536462207939356,
+            "monoFoldLossDb": -0.2061270795063672,
+            "nonfinite": 0,
+            "clips": 0
+          }
+        }
+      ],
+      "contactMeaning": "Strongest prepared stereo sample before whole-film ending fade. The frame834 cue fades afterward, so its final post-fade maximum may move."
+    },
+    {
+      "name": "stem-sum-linear-master-and-encoded-correlation",
+      "status": "PASS",
+      "maximumPremasterSumError": 1.4901161193847656e-8,
+      "linearMasterGainDb": 7.79,
+      "maximumLinearError": 1.1897617583061376e-7,
+      "allowed24bitError": 4.76837158203125e-7,
+      "aacVsPcmZeroLagCorrelation": 0.9982706788690621,
+      "aacVsPcmSnrDb": 24.609649983432405,
+      "masterPcmSha256": "20d0e4c601c4c67253477e323ce915d0bf3e8c77d1e7c1a6c276cc5702e08b04",
+      "noCompressorLimiterOrTimeStretch": "The retained premaster samples differ from the PCM master only by one constant gain and 24-bit quantization."
+    },
+    {
+      "name": "intentional-encoded-end-fade",
+      "status": "PASS",
+      "fadeStartFrame": 834,
+      "fadeStartSample": 1335734,
+      "lastSample": 1495039,
+      "curve": "quadratic",
+      "windows": [
+        {
+          "startSample": 0,
+          "endSample": 960,
+          "rmsAmplitude": 0.02090399770730709,
+          "rmsDbfs": -33.59541301825902,
+          "peakAmplitude": 0.07481699436903,
+          "peakDbfs": -22.519994854903864,
+          "stereoCorrelation": 0.4400653740878591,
+          "monoEnergyRatio": 0.7191262191066835,
+          "monoFoldLossDb": -1.4319487672329225,
+          "nonfinite": 0,
+          "clips": 0
+        },
+        {
+          "startSample": 1478240,
+          "endSample": 1495040,
+          "rmsAmplitude": 1.0564960611977293e-7,
+          "rmsDbfs": -139.52264235469013,
+          "peakAmplitude": 5.442770998342894e-7,
+          "peakDbfs": -125.28359876009702,
+          "stereoCorrelation": 0.5429245312626514,
+          "monoEnergyRatio": 0.7714560483846351,
+          "monoFoldLossDb": -1.1268881164588191,
+          "nonfinite": 0,
+          "clips": 0
+        },
+        {
+          "startSample": 1494080,
+          "endSample": 1495040,
+          "rmsAmplitude": 0,
+          "rmsDbfs": null,
+          "peakAmplitude": 0,
+          "peakDbfs": null,
+          "stereoCorrelation": null,
+          "monoEnergyRatio": null,
+          "monoFoldLossDb": null,
+          "nonfinite": 0,
+          "clips": 0
+        }
+      ],
+      "silenceMeaning": "rmsAmplitude=0 and peakAmplitude=0 is exact decoded silence; its logarithmic dB value is negative infinity, serialized as null rather than rejected."
+    },
+    {
+      "name": "independent-tail-gate-silence-and-energy-controls",
+      "status": "PASS",
+      "exactSilence": {
+        "startSample": 0,
+        "endSample": 960,
+        "rmsAmplitude": 0,
+        "rmsDbfs": null,
+        "peakAmplitude": 0,
+        "peakDbfs": null,
+        "stereoCorrelation": null,
+        "monoEnergyRatio": null,
+        "monoFoldLossDb": null,
+        "nonfinite": 0,
+        "clips": 0
+      },
+      "energeticTail": {
+        "startSample": 0,
+        "endSample": 960,
+        "rmsAmplitude": 0.10000000149011641,
+        "rmsDbfs": -19.999999870570132,
+        "peakAmplitude": 0.10000000149011612,
+        "peakDbfs": -19.99999987057016,
+        "stereoCorrelation": 1,
+        "monoEnergyRatio": 1,
+        "monoFoldLossDb": 0,
+        "nonfinite": 0,
+        "clips": 0
+      },
+      "expected": [
+        "silent tail passes",
+        "-20dBFS constant tail fails"
+      ],
+      "meaning": "Executes the same independent numerical gate used on the actual decoded ending; exact zero is retained explicitly."
+    },
+    {
+      "name": "mono-compatibility-energy",
+      "status": "PASS",
+      "finished": {
+        "startSample": 0,
+        "endSample": 1495040,
+        "rmsAmplitude": 0.12139296830175952,
+        "rmsDbfs": -18.31612938155611,
+        "peakAmplitude": 0.7777984738349915,
+        "peakDbfs": -2.1826582668591716,
+        "stereoCorrelation": 0.8167844809518416,
+        "monoEnergyRatio": 0.9083521335725262,
+        "monoFoldLossDb": -0.4174575938519001,
+        "nonfinite": 0,
+        "clips": 0
+      },
+      "effects": {
+        "startSample": 0,
+        "endSample": 1495040,
+        "rmsAmplitude": 0.013360591270908816,
+        "rmsDbfs": -37.48348643599551,
+        "peakAmplitude": 0.28962913155555725,
+        "peakDbfs": -10.763155159060009,
+        "stereoCorrelation": 0.9813135152980538,
+        "monoEnergyRatio": 0.9904490332761758,
+        "monoFoldLossDb": -0.041678675624964516,
+        "nonfinite": 0,
+        "clips": 0
+      },
+      "minimumCueWindowFinishedMonoRatio": 0.6617159091721705,
+      "interpretation": "Energy/phase compatibility only. Does not grade speakers, headphones or heard intelligibility."
+    },
+    {
+      "name": "actual-validator-original-defect-and-stale-source-controls",
+      "status": "PASS",
+      "positiveExitCode": 0,
+      "negative": [
+        {
+          "name": "original-empty-cues",
+          "exitCode": 1,
+          "status": "PASS",
+          "fixtureSha256": "592be22cfd142438620fb48cd103ff4803eb42dd96fe13ca9f10e8d25a37f2c0",
+          "expectedError": "47 authored SFX",
+          "matchedError": true
+        },
+        {
+          "name": "stale-source-hash",
+          "exitCode": 1,
+          "status": "PASS",
+          "fixtureSha256": "d31ae4c84674cdaeeed745859a4d114e1f1bf8a6016e84c7262d8a9075f25993",
+          "expectedError": "music binding differs",
+          "matchedError": true
+        }
+      ],
+      "originalCueCount": 0,
+      "originalRecipeSha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689",
+      "builderSha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7",
+      "note": "Fresh independent child processes run the frozen actual validator. Raw source bytes and prior evidence are never mutated."
+    },
+    {
+      "name": "failed-attempts-preserved-and-current-controls-bound",
+      "status": "PASS",
+      "history": [
+        {
+          "attempt": "attempt-1",
+          "reason": "Single linear master cannot reach loudness and headroom simultaneously",
+          "failedExitCode": 1,
+          "receiptBinding": {
+            "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/failure.json",
+            "bytes": 1099,
+            "sha256": "6ff7a1dfb50844673eba12a3e5e72fb85ad47294c3e4c5ad77d511ab0c4b8613"
+          },
+          "snapshotsMatch": true,
+          "publishedCandidate": false,
+          "thresholdsUnchanged": true
+        },
+        {
+          "attempt": "attempt-2",
+          "reason": "Verifier falsely rejected exact digital silence represented by rmsDbfs:null",
+          "failedExitCode": 1,
+          "receiptBinding": {
+            "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/failure.json",
+            "bytes": 1221,
+            "sha256": "fca312e92e28d9503d51583b2acc64de156adb7ae3d1922a1d4f980f2ea4916a"
+          },
+          "snapshotsMatch": true,
+          "publishedCandidate": false,
+          "thresholdsUnchanged": true,
+          "candidateSha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+        }
+      ],
+      "currentControlsBinding": {
+        "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls-v3.json",
+        "bytes": 3944,
+        "sha256": "4996caa915a5410add7f1a6e47337dffa77101c8f390320941ab9cc77c34674b"
+      },
+      "currentControlNames": [
+        "original-music-only-cues",
+        "changed-source-binding",
+        "exact-encoded-silence-accepted",
+        "energetic-tail-rejected"
+      ],
+      "interpretation": "Attempt1 failed real crest/headroom gate. Attempt2 used the same final recipe/candidate bytes but falsely rejected exactly silent encoded tail. Neither failed attempt is relabeled as a pass."
+    },
+    {
+      "name": "all-bound-inputs-stable-during-independent-audit",
+      "status": "PASS",
+      "before": [
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+          "bytes": 25057741,
+          "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/sound-spec.json",
+          "bytes": 10325,
+          "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs",
+          "bytes": 34660,
+          "sha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+        },
+        {
+          "file": "workflows/assets/grifon-reference-full/assets/audio-v07/source-manifest.json",
+          "bytes": 2060,
+          "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+        },
+        {
+          "file": "workflows/assets/grifon-reference-full/assets/audio-v07/SOURCES.md",
+          "bytes": 2995,
+          "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+          "bytes": 24137255,
+          "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/audio.json",
+          "bytes": 2211,
+          "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/media.json",
+          "bytes": 1241,
+          "sha256": "450c44f53cd723c7f522ce34553ba191cd441b05ca0ace7a1ca2963573054bec"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/mix-verification.json",
+          "bytes": 12774,
+          "sha256": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/cues.json",
+          "bytes": 685220,
+          "sha256": "7e654377d8b3adc059b705db148d2e591ccca546235bf17ae2f3f4f1a795197d"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/sources.json",
+          "bytes": 7422,
+          "sha256": "968f52959c8df8917ed8115ef97965bb48a0d4ccda7ba9b5d87beb90611b913a"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/packets.json",
+          "bytes": 1863148,
+          "sha256": "2fa6e5cd920ead7fbc5e447a73f6992f0f562c077dfe025cd107332d244fecaa"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls.json",
+          "bytes": 3111,
+          "sha256": "3fab7de99f435bf68f5641b1265ef662608ebe070e97720b6946dabd0d56f607"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls-v3.json",
+          "bytes": 3944,
+          "sha256": "4996caa915a5410add7f1a6e47337dffa77101c8f390320941ab9cc77c34674b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/failure.json",
+          "bytes": 1099,
+          "sha256": "6ff7a1dfb50844673eba12a3e5e72fb85ad47294c3e4c5ad77d511ab0c4b8613"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/failure.json",
+          "bytes": 1221,
+          "sha256": "fca312e92e28d9503d51583b2acc64de156adb7ae3d1922a1d4f980f2ea4916a"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/music.f32le",
+          "bytes": 11960320,
+          "sha256": "8540d96d9f665f124e57f055d4df938e62aed3867befa4538db8af13793e3b39"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/sfx.f32le",
+          "bytes": 11960320,
+          "sha256": "58aef2af43fdd5c23aa867abeae9dfb47b5cec8303dd182459777e31c6e48e58"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/premaster.f32le",
+          "bytes": 11960320,
+          "sha256": "40c98704886a0467c1daa3e21a7704232340163ec712727d2566f8ab6a4b8f49"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/master.wav",
+          "bytes": 8970342,
+          "sha256": "49a6106b05374514ddfd51f2ed55bd7a55b11ea3bbc2ff56dba316fd89350c02"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/master.m4a",
+          "bytes": 903927,
+          "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f"
+        }
+      ],
+      "after": [
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+          "bytes": 25057741,
+          "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/sound-spec.json",
+          "bytes": 10325,
+          "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs",
+          "bytes": 34660,
+          "sha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+        },
+        {
+          "file": "workflows/assets/grifon-reference-full/assets/audio-v07/source-manifest.json",
+          "bytes": 2060,
+          "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+        },
+        {
+          "file": "workflows/assets/grifon-reference-full/assets/audio-v07/SOURCES.md",
+          "bytes": 2995,
+          "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+          "bytes": 24137255,
+          "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/audio.json",
+          "bytes": 2211,
+          "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/media.json",
+          "bytes": 1241,
+          "sha256": "450c44f53cd723c7f522ce34553ba191cd441b05ca0ace7a1ca2963573054bec"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/mix-verification.json",
+          "bytes": 12774,
+          "sha256": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/cues.json",
+          "bytes": 685220,
+          "sha256": "7e654377d8b3adc059b705db148d2e591ccca546235bf17ae2f3f4f1a795197d"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/sources.json",
+          "bytes": 7422,
+          "sha256": "968f52959c8df8917ed8115ef97965bb48a0d4ccda7ba9b5d87beb90611b913a"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/packets.json",
+          "bytes": 1863148,
+          "sha256": "2fa6e5cd920ead7fbc5e447a73f6992f0f562c077dfe025cd107332d244fecaa"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls.json",
+          "bytes": 3111,
+          "sha256": "3fab7de99f435bf68f5641b1265ef662608ebe070e97720b6946dabd0d56f607"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls-v3.json",
+          "bytes": 3944,
+          "sha256": "4996caa915a5410add7f1a6e47337dffa77101c8f390320941ab9cc77c34674b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-1/failure.json",
+          "bytes": 1099,
+          "sha256": "6ff7a1dfb50844673eba12a3e5e72fb85ad47294c3e4c5ad77d511ab0c4b8613"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/attempt-2/failure.json",
+          "bytes": 1221,
+          "sha256": "fca312e92e28d9503d51583b2acc64de156adb7ae3d1922a1d4f980f2ea4916a"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/music.f32le",
+          "bytes": 11960320,
+          "sha256": "8540d96d9f665f124e57f055d4df938e62aed3867befa4538db8af13793e3b39"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/sfx.f32le",
+          "bytes": 11960320,
+          "sha256": "58aef2af43fdd5c23aa867abeae9dfb47b5cec8303dd182459777e31c6e48e58"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/premaster.f32le",
+          "bytes": 11960320,
+          "sha256": "40c98704886a0467c1daa3e21a7704232340163ec712727d2566f8ab6a4b8f49"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/master.wav",
+          "bytes": 8970342,
+          "sha256": "49a6106b05374514ddfd51f2ed55bd7a55b11ea3bbc2ff56dba316fd89350c02"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/sound-v1/.tmp/build-v3/master.m4a",
+          "bytes": 903927,
+          "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f"
+        }
+      ],
+      "sourcesStable": true
+    }
+  ],
+  "commands": [
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-threads",
+        "2",
+        "-count_frames",
+        "-show_streams",
+        "-show_format",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-threads",
+        "2",
+        "-count_frames",
+        "-show_streams",
+        "-show_format",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-silent.mp4"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4",
+        "-f",
+        "null",
+        "-"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-select_streams",
+        "v:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-silent.mp4"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-select_streams",
+        "v:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-select_streams",
+        "a:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\sound-v1\\.tmp\\build-v3\\master.m4a"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-select_streams",
+        "a:0",
+        "-show_packets",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-threads",
+        "2",
+        "-count_frames",
+        "-show_streams",
+        "-show_format",
+        "-show_data_hash",
+        "sha256",
+        "-of",
+        "json",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\sound-v1\\.tmp\\build-v3\\master.m4a"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4",
+        "-map",
+        "0:a:0",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\sound-v1\\.tmp\\build-v3\\master.m4a",
+        "-map",
+        "0:a:0",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\sound-v1\\.tmp\\build-v3\\master.wav",
+        "-map",
+        "0:a:0",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-sound-v1.mp4",
+        "-map",
+        "0:a:0",
+        "-af",
+        "loudnorm=I=-15.2:TP=-2.2:LRA=14:print_format=json",
+        "-f",
+        "null",
+        "-"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-i",
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\sound-v1\\.tmp\\build-v3\\master.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "loudnorm=I=-15.2:TP=-2.2:LRA=14:print_format=json",
+        "-f",
+        "null",
+        "-"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\close-up.mp3",
+        "-map",
+        "0:a:0",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\sweep.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\air-zoom.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\shutter.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\lens.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\tech-select.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\key.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\bubble.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "ffmpeg.exe",
+      "args": [
+        "-nostdin",
+        "-hide_banner",
+        "-threads",
+        "2",
+        "-filter_threads",
+        "1",
+        "-v",
+        "error",
+        "-xerror",
+        "-i",
+        "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\gear.wav",
+        "-map",
+        "0:a:0",
+        "-af",
+        "highpass=f=90,lowpass=f=10500",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-c:a",
+        "pcm_f32le",
+        "-f",
+        "f32le",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "tool": "node.exe",
+      "args": [
+        "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\sound-v1\\build-sound.mjs",
+        "--validate"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "limitations": [
+    "No direct hearing; no subjective musical fit, SFX identity, sonic similarity or competition-winner claim.",
+    "No fresh full native/paced visual review: all 932 encoded picture packets, timing and decoder extradata are identical to the frozen silent film.",
+    "Per-cue musical balance remains human listening; energy windows and contact placement are technical evidence only.",
+    "Stock provenance is the existing source register; this is not a fresh legal clearance.",
+    "Browser control/download testing is a separate root gate."
+  ],
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "referenceAudioDecoded": false,
+  "playerStaticIntegration": {
+    "status": "PASS",
+    "reviewedAt": "2026-10-08T12:00:11.811Z",
+    "rootBuilder": {
+      "file": "tools/artifacts/build-grifon-shader-sound-v1.mjs",
+      "bytes": 7928,
+      "sha256": "deef501d89a22c0841dca39d0815186bcc8527c4edd036aaa2059991eb8b8a4d"
+    },
+    "artifact": {
+      "file": "artifacts/grifon-shader-sound-v1.html",
+      "bytes": 33746991,
+      "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+    },
+    "receipt": {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-v1-player-build.json",
+      "bytes": 1783,
+      "sha256": "ca326376f564aec497ab4cfb97024218efd3baac0334f96f2b35271db2c4361b"
+    },
+    "actualInlineMp4Sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+    "actualInlineMp4Bytes": 25057741,
+    "nativePacketVideoDuration": 31.097733333333334,
+    "roundedVideoTrackDuration": 31.098,
+    "containerDuration": 31.146,
+    "browserSmoke": "Separate root gate; no browser or hearing claim from static integration."
+  },
+  "finalizerScratchSha256": "05e5c85a22bed614ebeff39d162eec4689c6e717ea3720ce8206d0673264052f"
+}

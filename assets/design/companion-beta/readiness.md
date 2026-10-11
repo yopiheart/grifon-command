@@ -157,6 +157,14 @@ Full hosted results remain required. [Browser timing proof](qa/main-readiness/br
 [initial cloud summary](qa/main-readiness/ci-pre-shard-summary.json),
 [cloud database proof](qa/main-readiness/ci-database-result.json).
 
+Newest main `e6e083bf` (motion PR165/166/170) is integrated before the final run.
+Application, prompts, dependencies and E2E source are unchanged by that upstream
+update; both new motion unit suites are included. Main's CI target branches and
+byte-stability attributes are retained. The only content conflict was this
+checkout's resume state, reconciled with main's actual motion landing receipts.
+Inherited shader QA files retain their exact main bytes, including pre-existing
+whitespace diagnostics; no hash-bound delivery or receipt was cleaned up.
+
 The [exact additive migration proposal](qa/main-readiness/database-rollout/finished-ad-meter-proposal.sql)
 passed independent source review and a separate native rehearsal: all seeded rows
 were preserved, a second application refused safely, and a deliberately invalid

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "status": "ACTIONABLE_LIVE_SOURCE_PREVIEW_FINDING",
+  "reviewer": "Independent Codex review agent",
+  "scope": "Source preview clock correctness only; read-only source and existing browser evidence, pure Node VM controls, no browser, capture, FFmpeg, cache mutation, source change or listening-quality claim",
+  "reviewedSource": {
+    "path": "tools/motion-launch/preview-page.mjs",
+    "sha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133",
+    "lines": [17, 18]
+  },
+  "finding": {
+    "id": "LP1",
+    "priority": "P2",
+    "title": "Audible source preview advances pictures on a different clock from its soundtrack",
+    "trigger": "Enable sound, select a cue and press Play while audio playback starts asynchronously, or while audio subsequently buffers/stalls",
+    "cause": "Play records performance.now() and starts the picture RAF chain immediately. tick computes first + floor(elapsedPerformanceTime * fps), independently of audio.currentTime and the pending audio.play() promise.",
+    "impact": "Sound contacts cannot be judged against the displayed native frame reliably. Startup delay remains as a picture lead after audio begins, later audio stalls increase that lead, and Pause can retain the wrong picture/audio relationship. This violates the timed live cue audition requirement.",
+    "smallestFix": "For enabled sound, derive tick's native frame target from floor(audio.currentTime * fps). Keep the current performance clock for explicit silent playback. Preserve draw serialization, playback-generation checks, active-failure handling and the existing native ending behavior.",
+    "whyAwaitingPlayAloneIsInsufficient": "Waiting only for audio.play() fulfillment removes an initial startup offset but does not follow later buffering or other media-clock stalls. The media timeline must remain the playback authority while sound is enabled."
+  },
+  "existingActualBrowserEvidence": {
+    "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-preview-browser-report.json",
+    "sha256": "153f6a273e376c3bf39411389a25d103f3e9fc9326b68953f72aff83d9c06607",
+    "check": "shader natural progress and pause",
+    "originalCheckStatus": "PASS",
+    "qualification": "Its existing PASS records control progression/pause, and does not establish clock alignment. The recorded native frame and media time themselves demonstrate the defect.",
+    "playing": {
+      "nativeFrame": 860,
+      "visualSeconds": 28.695333333333334,
+      "audioSeconds": 28.461766,
+      "visualLeadSeconds": 0.23356733333333324
+    },
+    "paused": {
+      "nativeFrame": 862,
+      "visualSeconds": 28.76206666666667,
+      "audioSeconds": 28.478288,
+      "visualLeadSeconds": 0.2837786666666702
+    }
+  },
+  "pureVmControl": {
+    "executed": true,
+    "exitCode": 0,
+    "implementation": "Execute the script returned by previewPage in node:vm with a mock DOM, controlled performance clock, manually delivered RAF callbacks, immediate shader frame seeks and a deferred audio.play promise. Reuse the DOM shape from motionLaunchProject.test.ts:94-138. No source file was modified.",
+    "setup": {
+      "fpsNumerator": 30000,
+      "fpsDenominator": 1001,
+      "nativeFrames": 932,
+      "selectedCueFrame": 66,
+      "selectedAudioSeconds": 2.2022,
+      "playStartPerformanceMs": 1000
+    },
+    "original": {
+      "atPerformance1300WhilePlayPending": {
+        "nativeFrame": 74,
+        "visualSeconds": 2.469133333333333,
+        "audioSeconds": 2.2022,
+        "visualLeadSeconds": 0.266933333333333
+      },
+      "atPerformance1400AfterAudioAdvances100Ms": {
+        "nativeFrame": 77,
+        "visualSeconds": 2.5692333333333335,
+        "audioSeconds": 2.3022,
+        "visualLeadSeconds": 0.2670333333333335
+      },
+      "atPerformance2400WithAudioStillAt2_3022": {
+        "nativeFrame": 107,
+        "expectedMediaClockFrame": 68
+      },
+      "pausePreservesInitialLead": true
+    },
+    "proposedInMemoryOnlyControl": {
+      "replacement": "const target=enabled?Math.floor(audio.currentTime*fps):first+Math.floor((now-start)/1000*fps);",
+      "atPerformance1300WhilePlayPendingNativeFrame": 66,
+      "atPerformance1400AfterAudioAdvances100MsNativeFrame": 68,
+      "atPerformance2400WithAudioStillAt2_3022NativeFrame": 68,
+      "nativeEnding": {
+        "audioSeconds": 31.097733333333335,
+        "nativeFrame": 931,
+        "playLabel": "Play",
+        "playDisabled": false
+      },
+      "silentModeSnapshotsEqualOriginal": true,
+      "sourceFixImplementedOrApprovedByThisReview": false
+    }
+  },
+  "requiredVerificationForFix": [
+    "Demonstrate a new regression fails against the reviewed 3ce369 source: pending audio.play must not advance picture beyond the media-clock frame despite a 300ms RAF clock advance.",
+    "Resolve play, advance media time, then hold media time while advancing RAF by one second; pictures must follow and then hold the media-clock frame.",
+    "Retain silent wall-clock advancement, cue-seek waiting, prior-generation callback rejection, ordinary pause cancellation, active audio failure and native-end controls.",
+    "Sample native frame plus audio.currentTime during actual audible preview and after pause. Explicitly assess clock alignment; document any asynchronous rendering lag rather than treating movement alone as an alignment PASS."
+  ],
+  "historicalEvidencePreserved": {
+    "finalMediaReport": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/report.json",
+    "finalMediaReportSha256": "55e9719e9fb9e34d4eed2962685f47422f29368d0cf257182d1b398567ad7cc4",
+    "finalMediaResult": "35/35 PASS remains evidence for that frozen producer tuple and encoded export paths; this live source clock finding does not invalidate mux packet or decode checks.",
+    "standaloneEncodedPreviewSha256": "1b64604e0432c5ec7ba5004e204f23f829074da975efc92a822ada2f34444af4",
+    "standaloneEncodedPreviewResult": "Unchanged; it uses native encoded MP4 playback rather than this source composition clock.",
+    "priorReportsModified": false,
+    "full932ShaderCapture": "NOT RUN"
+  }
+}

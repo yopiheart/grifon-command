@@ -1,0 +1,228 @@
+{
+  "verdict": "HOLD_FOCUSED_CORRECTION",
+  "releaseToFullCapture": false,
+  "fullFilmVerdict": null,
+  "originalVideoSha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+  "producerReceipt": {
+    "file": "qa/full-focused.json",
+    "sha256": "1f0571c186d3ca135e9b1ad362f59dbbcbbcbc62519ba04462c47bc8230b7f88"
+  },
+  "pairReceipt": {
+    "file": ".tmp/full-correction-1-pairs/receipt.json",
+    "sha256": "5b8156c1c2bbfbf6f46a933efade0241328d77f88bd68980ecb3568dc2a77d3c"
+  },
+  "originalNativeMap": {
+    "file": ".tmp/full-correction-1-native/frame-map.json",
+    "sha256": "16e48005cb0d234cb81a74ba0f5ef1abcb300ec3c3ea4c86c87aaadff90eff82"
+  },
+  "review": {
+    "file": "reference/full-focused-review-v2.md",
+    "sha256": "077bba15659036cb7cc3eb092e36c4b9e33f04902b84548ad9441b9fefe5e118"
+  },
+  "independentEvidence": {
+    "file": ".tmp/full-focused-critic-v2/receipt.json",
+    "sha256": "eadc3766a84128bda00160cb20e48ff9e23814e048bb1b5326b45d429517e8dd"
+  },
+  "sources": {
+    "full.json": "6125837b49f92cd50097f35127f0b1681fef9c749fa0eac72fdfeeeebbeeac9f",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "f6485152d20cd207cd7e6969d269738efe5b6b7ab33a8a79336d886ff246b767",
+    "full-surfaces.frag": "fa6acc6543e8125bc7069aecc87ef596400c2d6fc7a8ec00d063ef86f615a801",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "3b6b2eb4cb1d2701862c58c76fc77ef9e12a4570f8ac53afa99d7913059b38b0",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+  },
+  "sampleFrames": [
+    222,
+    225,
+    228,
+    229,
+    232,
+    235,
+    237,
+    255,
+    258,
+    260,
+    269,
+    285,
+    302,
+    306,
+    307,
+    324,
+    344,
+    348,
+    352,
+    356,
+    357,
+    362,
+    369,
+    376,
+    399,
+    401,
+    404,
+    408,
+    440,
+    442,
+    443,
+    444,
+    445,
+    446,
+    450,
+    458,
+    459,
+    463,
+    470,
+    471,
+    476,
+    482,
+    483,
+    489,
+    495,
+    541,
+    544,
+    546,
+    586,
+    590,
+    600,
+    606,
+    607,
+    617,
+    633
+  ],
+  "pairedDetailFrames": [
+    225,
+    232,
+    235,
+    258,
+    302,
+    306,
+    348,
+    362,
+    399,
+    401,
+    404,
+    408,
+    444,
+    489,
+    541,
+    544,
+    546,
+    606,
+    617,
+    633
+  ],
+  "nativeDraftFrames": [
+    258,
+    362,
+    399,
+    444,
+    489,
+    546,
+    606,
+    617
+  ],
+  "nativeOriginalFrames": [
+    362,
+    399,
+    489,
+    606
+  ],
+  "inputRecheck": {
+    "sourceFiles": 13,
+    "authoredSamples": 55,
+    "originalNativeSamples": 55,
+    "mismatches": []
+  },
+  "signatureStatus": [
+    {
+      "target": "character and point shell",
+      "status": "OPEN",
+      "priority": 1,
+      "criticalFrames": [
+        357,
+        362,
+        369,
+        376
+      ]
+    },
+    {
+      "target": "radial bridge and glyph materials",
+      "status": "OPEN",
+      "priority": 1,
+      "criticalFrames": [
+        444,
+        446,
+        489,
+        495
+      ]
+    },
+    {
+      "target": "rosette and strip",
+      "status": "PARTIAL_OPEN",
+      "priority": 2,
+      "criticalFrames": [
+        225,
+        232,
+        235,
+        237
+      ]
+    },
+    {
+      "target": "catalog projection",
+      "status": "PARTIAL_OPEN",
+      "priority": 2,
+      "criticalFrames": [
+        258,
+        260,
+        302
+      ],
+      "preserve": [
+        306,
+        307,
+        324
+      ]
+    },
+    {
+      "target": "patterns and diagonal grain",
+      "status": "PARTIAL_OPEN",
+      "priority": 2,
+      "criticalFrames": [
+        399,
+        401,
+        404,
+        408
+      ]
+    },
+    {
+      "target": "outgoing UI whirl and desktop resolution",
+      "status": "PARTIAL_OPEN",
+      "priority": 2,
+      "criticalFrames": [
+        541,
+        544,
+        546
+      ]
+    },
+    {
+      "target": "canvas projection and layered material",
+      "status": "PARTIAL_OPEN",
+      "priority": 2,
+      "criticalFrames": [
+        606,
+        617,
+        633
+      ]
+    }
+  ],
+  "continuousPlaybackInspected": false,
+  "audioHeard": false,
+  "reviewerProviderCalls": 0,
+  "reviewerPaidSpendUsd": 0,
+  "scope": "55 frozen focused still pairs; no full-film or sonic approval"
+}

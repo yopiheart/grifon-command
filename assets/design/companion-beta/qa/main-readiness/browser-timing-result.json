@@ -163,5 +163,50 @@
     "effectiveRulesHttpStatus": 403,
     "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
     "repositoryRulesChanged": false
+  },
+  "exactInvocations": {
+    "original": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/playwright.config.ts --project=baseline --grep 'stale second tab|another tab cannot resume'",
+    "green": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/playwright.config.ts --project=budget15 --grep 'stale second tab|another tab cannot resume' --repeat-each=3"
+  },
+  "sourceIntegrity": {
+    "trackedFilesCompared": 455,
+    "stableFiles": 454,
+    "onlyChangedPath": "playwright.config.ts",
+    "changeOwner": "Root agent changed CI expectation budget during repro; application files unchanged",
+    "beforeManifestSha256": "53fece61614a84496ccae966aa0f0d1faa000382ab1e3ebb386d18838b804652",
+    "afterManifestSha256": "2174ceeee99bdc42852af95ee37375729c1f835c482188887062d6b043f03ee8",
+    "selectedStableHashes": [
+      {
+        "path": "App.tsx",
+        "sha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      {
+        "path": "components/CompanionChat/CompanionChatShell.tsx",
+        "sha256": "0e381c6cb6406b6dc3957f9ea6c4b38bdad5ad7fc719e0cd3b5afc4238657b6e"
+      },
+      {
+        "path": "components/CompanionChat/CompanionAvatar.tsx",
+        "sha256": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a"
+      },
+      {
+        "path": "services/companionConversations.ts",
+        "sha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345"
+      },
+      {
+        "path": "tests/e2e/companion-beta.spec.ts",
+        "sha256": "4b18cde64db4954d9efad32e5c106302612d469bcf906898441332e10c5619b7"
+      },
+      {
+        "path": "public/companion/main.js",
+        "sha256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b"
+      }
+    ],
+    "changedHashes": [
+      {
+        "before": "EAA2D37DBF7A556C889AEA052468640CB7E345D734CCB9E33DDBE872ED207C87",
+        "after": "2CDD715A808CA2EC3F3B101575AF6C7EB53FF7812AB61A44D2E19431A4DA5F8E",
+        "path": "playwright.config.ts"
+      }
+    ]
   }
 }

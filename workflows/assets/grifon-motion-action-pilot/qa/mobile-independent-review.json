@@ -1,0 +1,22 @@
+{
+  "status": "PASS_WITH_DRIVER_AND_LISTENING_LIMITATIONS",
+  "reviewedScreenshot": "mobile-viewport-cua.jpg",
+  "screenshotSource": "Root agent documented CUA capture at requested 390x844 viewport",
+  "independentRole": "Screenshots and root-driven CUA receipt independently reviewed by smoke agent; downloaded file size/hash independently checked. UI was not operated inside this agent because CUA browser inventory was empty.",
+  "pass": [
+    "Continuous dark ground and visible glass panels",
+    "Readable solid near-white display text and gold controls",
+    "Poster visible and controls wrap sensibly",
+    "Footnotes and private review limitations are readable in the full-page capture",
+    "Corrected 390x844 viewport screenshot shows complete heading, plate and time readout with right margin; no visible horizontal clipping"
+  ],
+  "finding": "Prior full-page 375px capture excluded scrollbar space and caused apparent clipping. Corrected exact 390x844 viewport capture resolves it. Final root-driven receipt records innerWidth 390, clientWidth 375 and scrollWidth 375, which establishes no horizontal overflow in the scrollbar-bearing layout.",
+  "controls": "Reviewed smoke-cua.json: play advances; ended at 8s; replay/restart advance from beginning; pause holds; chapter seeks to 2.4s; scrub seeks to 6.8 then 1.6s; audio muted changes true then false. Controls are all 46px high. Fixed playback screenshot shows correct workflow chapter and timeline state. Offline player JavaScript syntax independently passes.",
+  "download": {
+    "source": "Root-driven real browser download; independently checked local file metadata and SHA256",
+    "bytes": 2883189,
+    "sha256": "a9a473307a0d1df8a12c96b46e9659c88bfcf6f0a0e5c5c4eb85c788d940ce47",
+    "matchesSourceAndEmbeddedMedia": true
+  },
+  "directListening": "NOT RUN"
+}

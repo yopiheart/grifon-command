@@ -1,0 +1,308 @@
+{
+  "status": "TECHNICAL_PRODUCTION_PASS_INDEPENDENT_VISUAL_GATE_PENDING",
+  "version": 3,
+  "media": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 24994401,
+    "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+  },
+  "silent": {
+    "file": "grifon-recreation-landscape-silent.mp4",
+    "bytes": 24137255,
+    "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+  },
+  "preservation": {
+    "receipt": "qa/full-failed-review-2/preservation-receipt.json",
+    "sha256": "27d153f04e876a1f9ab294a98d9b9a4d2316577298b583c321eeb9b80fd40e06",
+    "priorFilmSha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce"
+  },
+  "runtimeInputs": [
+    {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "file": "full.html",
+      "bytes": 649,
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    {
+      "file": "full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "file": "full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    {
+      "file": "assets/full/manifest.json",
+      "bytes": 2075,
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    }
+  ],
+  "frozen13RehashedBeforeAndAfterProduction": true,
+  "acceptedOpening": {
+    "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "runtimeInputs": 9,
+    "decodedPrefixFramesVerified": 222
+  },
+  "capture": {
+    "file": ".tmp/full-frames/receipt.json",
+    "bytes": 102302,
+    "sha256": "dc079552beb97ed4f742b0961bce0434d01fa5782a1661287cc47ae4e61bec28",
+    "producerToolSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "frames": 710,
+    "nonlinearSamples": 106,
+    "freshRuntimeSamples": 106,
+    "initializationRuns": [
+      {
+        "result": "PASS",
+        "timeoutMs": 60000,
+        "readyWaitMs": 7620.0848,
+        "totalMs": 11275.3702
+      },
+      {
+        "result": "PASS",
+        "timeoutMs": 60000,
+        "readyWaitMs": 4914.034799999994,
+        "totalMs": 6563.982799999998
+      }
+    ],
+    "timeoutMs": 60000,
+    "errors": 0,
+    "externalRequests": 0
+  },
+  "boundedCorrection": {
+    "editedRuntimeFiles": [
+      "full.js",
+      "full-surfaces.frag"
+    ],
+    "changedFrames": [
+      400,
+      403,
+      636,
+      639
+    ],
+    "allRawFramesCompared": 710,
+    "byteIdenticalFrames": 706,
+    "negativeRawWitnessControls": 2,
+    "staleExistingMovieRejected": true
+  },
+  "video": {
+    "frames": 932,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": "30000/1001",
+    "timeBase": "1/30000",
+    "ptsFormula": "n*1001",
+    "videoDuration": 31.097733,
+    "containerDuration": 31.146,
+    "strictDecode": "PASS",
+    "blackTail": {
+      "start": 853,
+      "endExclusive": 932,
+      "frames": 79,
+      "capturedRgbMaximum": 0,
+      "decodedRgbMaximum": 0,
+      "decodedFrameMd5": "9b2c4088acb2c896d5d79adbe4b893ac"
+    }
+  },
+  "audio": {
+    "masterSha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+    "packets": 1461,
+    "packetPayloadTimingPrimingPreserved": true,
+    "streamMetadataPreserved": {
+      "duration": 31.146,
+      "durationTs": 1495008,
+      "timeBase": "1/48000"
+    },
+    "logicalDecodedSampleFrames": 1495040,
+    "pcmSha256": "f9357fb441f1c36f0264268d9e4cfd3765a975c15aa547e6be998c8b1109494d",
+    "logicalDecodedDuration": 31.14666666666667,
+    "sonicStatus": "SONIC_UNVERIFIED",
+    "recipeUnchanged": true,
+    "streamCopy": true
+  },
+  "commands": [
+    {
+      "command": "node render-full.mjs render",
+      "exit": 0
+    },
+    {
+      "command": "node qa/verify-full-timing-v3.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node render-full.mjs mux",
+      "exit": 0
+    },
+    {
+      "command": "node render-full.mjs verify",
+      "exit": 0
+    },
+    {
+      "command": "node verify-full-guard.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node verify-full-capture.mjs",
+      "exit": 0
+    },
+    {
+      "output": "qa/full-timing-v3-build-output.txt",
+      "exit": 0,
+      "elapsedMs": 32841,
+      "paidLiveFlagsUnset": true,
+      "command": "npm.cmd run build"
+    },
+    {
+      "command": "npx.cmd vitest run",
+      "exit": 0,
+      "elapsedMs": 48394,
+      "output": "qa/full-timing-v3-vitest-output.txt",
+      "paidLiveFlagsUnset": true
+    }
+  ],
+  "checks": {
+    "build": "PASS",
+    "vitest": "PASS",
+    "passedTestFiles": 116,
+    "defaultSkippedTestFiles": 9,
+    "passedTests": 1432,
+    "defaultSkippedTests": 32,
+    "paidLiveFlagsUnset": true,
+    "noGpuOverlap": true
+  },
+  "proofs": [
+    {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+    },
+    {
+      "file": "qa/full-silent-media.json",
+      "bytes": 2231,
+      "sha256": "ef7d1c66060eb5930e5c489d33d46fa1a91e8a75b2ddbea9b577a46dfc35e4a6"
+    },
+    {
+      "file": "qa/full-render.json",
+      "bytes": 42168,
+      "sha256": "185c304c7e40cd805d6fba1e3c17d9eb03a469e2aae019fc9bb5e88677eba5b3"
+    },
+    {
+      "file": "qa/full-source-receipt.json",
+      "bytes": 8260,
+      "sha256": "7dabc921763f90aee39c2247c79ad2a39fc445dda3bd325deba4e8549c2261d6"
+    },
+    {
+      "file": "qa/full-media-verification.json",
+      "bytes": 2584,
+      "sha256": "3c84277ae9f5ea418860bf645868817e08c75cb72b8a4a6912068f66d4d18192"
+    },
+    {
+      "file": "qa/full-temporal-mux.json",
+      "bytes": 20378,
+      "sha256": "6105ce13091d920d769265a483a486c104a3f5fbb5cdb7dd3e929ff765c16290"
+    },
+    {
+      "file": "qa/full-temporal-silent.json",
+      "bytes": 20373,
+      "sha256": "2dcca9992fc54129c4532754cdfb05311f65eb488d6558035459f11743da8f8f"
+    },
+    {
+      "file": "qa/full-audio-mux-proof.json",
+      "bytes": 949,
+      "sha256": "4339061bb785f72f2c1f752788713e195ef3369630c680a22d285e4ad263d30e"
+    },
+    {
+      "file": "qa/full-guard-negative.json",
+      "bytes": 2074,
+      "sha256": "0d7a8cb16931af53e21924dda365088ab3f08c5beaf7107e8c4e104bd46b53c8"
+    },
+    {
+      "file": "qa/full-v3-capture-boundary.json",
+      "bytes": 3245,
+      "sha256": "3e87bbf37acae6fcfe20ddff5362cbecf5a727400c75ca631227ab73aef28f32"
+    },
+    {
+      "file": "qa/full-timing-v3-raw-witness.json",
+      "bytes": 228575,
+      "sha256": "264eaa2c8f1a9abf7b9f0fa84b9d4375a052ee0f067e74251dea71390f4ecc98"
+    },
+    {
+      "file": "qa/full-timing-v3-build-output.txt",
+      "bytes": 1895,
+      "sha256": "3d8d480e626a00534ea18c8f19d18c25154a3c691bd52db5ff4fb62198645ce2"
+    },
+    {
+      "file": "qa/full-timing-v3-build-result.json",
+      "bytes": 159,
+      "sha256": "8a40e4a8ae4cbffb7434919c7ac8c144fa23692a0e7733ebca7ad6c78cb4531e"
+    },
+    {
+      "file": "qa/full-timing-v3-vitest-output.txt",
+      "bytes": 301,
+      "sha256": "b3d0e1e60027e902b72f0dc9244dd827ca3dd96635a4c9657bca42772f978dca"
+    },
+    {
+      "file": "qa/full-timing-v3-vitest-result.json",
+      "bytes": 161,
+      "sha256": "fed6c9d78bd0a7aebb0678a601294ea7001454986d492bbc8c19330bf9b1a199"
+    },
+    {
+      "file": "qa/full-capture-producer.mjs",
+      "bytes": 20291,
+      "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "fidelityStatus": "PENDING_INDEPENDENT_FULL_NATIVE_AND_TIMED_REVIEW",
+  "playerStatus": "ROOT_OWNED_REBUILD_AND_CHECKS_PENDING",
+  "deviations": []
+}

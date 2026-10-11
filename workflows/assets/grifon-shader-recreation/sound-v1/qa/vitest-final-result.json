@@ -1,0 +1,7 @@
+{
+  "command": "npx.cmd vitest run",
+  "completedAt": "2026-10-08T11:53:58.7749237Z",
+  "exitCode": 0,
+  "purpose": "Fresh full defaults after isolated original timeout path passed",
+  "startedAt": "2026-10-08T11:53:13.2299110Z"
+}

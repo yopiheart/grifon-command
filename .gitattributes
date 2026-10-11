@@ -7,3 +7,40 @@
 
 # Vitest's transform of this imported shebang entrypoint rejects CRLF on Windows.
 tools/check-eval-prompt-sync.mjs text eol=lf
+
+# Preserve the shader study's byte-verified bundle, licenses and capture receipts.
+workflows/assets/grifon-shader-study/**/*.js text eol=lf
+workflows/assets/grifon-shader-study/**/*.mjs text eol=lf
+workflows/assets/grifon-shader-study/**/*.html text eol=lf
+workflows/assets/grifon-shader-study/**/*.json text eol=lf
+workflows/assets/grifon-shader-study/**/*.md text eol=lf
+workflows/assets/grifon-shader-study/**/*.txt text eol=lf
+artifacts/grifon-shader-study.html text eol=lf
+tools/artifacts/build-grifon-shader-review.mjs text eol=lf
+
+# Preserve the launch film's exact source/capture hashes across Windows and Git.
+workflows/assets/grifon-shader-launch/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+artifacts/grifon-shader-launch.html text eol=lf
+tools/artifacts/build-grifon-shader-launch.mjs text eol=lf
+
+# Preserve the redo's exact approved prompt/spec and immutable analysis hashes.
+workflows/assets/grifon-shader-recreation/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Keep the offline recreation player's bound text inputs byte-stable after checkout.
+artifacts/grifon-shader-recreation.html text eol=lf
+tools/artifacts/build-grifon-shader-recreation.mjs text eol=lf
+tools/artifacts/grifon-shader-recreation.tpl.html text eol=lf
+tools/artifacts/_gates.mjs text eol=lf
+artifacts/grifon-shader-sound-v1.html text eol=lf
+tools/artifacts/build-grifon-shader-sound-v1.mjs text eol=lf
+tools/artifacts/build-grifon-motion-reuse-preview.mjs text eol=lf
+artifacts/grifon-motion-reuse-preview.html text eol=lf
+
+# Bind reusable workflow source and proof receipts to stable checkout bytes.
+tools/motion-launch.mjs text eol=lf
+tools/motion-launch/** text eol=lf
+tests/unit/motionLaunchProject.test.ts text eol=lf
+tests/unit/motionLaunchAudio.test.ts text eol=lf
+workflows/grifon_motion_production.md text eol=lf
+workflows/assets/grifon-motion-repeatability/** -text
+workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

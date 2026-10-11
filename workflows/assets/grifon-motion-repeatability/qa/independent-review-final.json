@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "status": "IMPLEMENTATION_REVIEW_PASS",
+  "createdAt": "2026-10-08T13:35:10.129Z",
+  "base": "118a5e8aac30739b2705489077ad862b671dbfd4",
+  "scope": "Independent source correctness re-review on the explicit final frozen tuple; report-only; original findings/evidence remain immutable.",
+  "reviewedFiles": [
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 22930,
+      "sha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 10246,
+      "sha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 42037,
+      "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+    },
+    {
+      "file": "tests/unit/motionLaunchProject.test.ts",
+      "bytes": 15925,
+      "sha256": "fb04b1cf17592f14971d26a43a674fb394d482ea55cd07a73073a2dea634f311"
+    },
+    {
+      "file": "tests/unit/motionLaunchAudio.test.ts",
+      "bytes": 14054,
+      "sha256": "c7733dfef6f9d35c772ce8c62250e5a3c699d175c0b8f8c8ee9970863f6b45e9"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+      "bytes": 11065,
+      "sha256": "883ee82674678d1688e19f7d460fcd66c7dd98d3167e9aa9c10d20a13c13909f"
+    },
+    {
+      "file": ".gitattributes",
+      "bytes": 2251,
+      "sha256": "469091c312d4811ee4dd3fca727af5427c2a342c0aba6444aa3fb6fdba1cece9"
+    },
+    {
+      "file": "workflows/grifon_motion_production.md",
+      "bytes": 13669,
+      "sha256": "7f38bb6a573acfb5c4239a0132190eeaf5ba1938a5da9c35e94e17ceb96fcfa5"
+    }
+  ],
+  "diagnostics": [
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/shader-codec-join-diagnosis-v1.json",
+      "bytes": 2566,
+      "sha256": "1fc2f944ffd49deca034ed24ae368e7db7e3fafd35bf5797e0f20193dcc08253"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/runtime-launch-diagnosis-v1.json",
+      "bytes": 2166,
+      "sha256": "82e076d6b5c72f124ce8e7298f37b445284f94d5c703e68ef23b5dc8380733cf"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/audio-clock-diagnosis-v1.json",
+      "bytes": 5215,
+      "sha256": "b2ccfdb1b7c0946573ce1c6bfa46226f519ef1b1523c83697c4909cfb9a51099"
+    }
+  ],
+  "unresolvedImplementationFindings": [],
+  "resolutions": [
+    {
+      "id": "MR-1",
+      "status": "FIXED_IMPLEMENTATION_AND_RETAINED_MEDIA_CONTROL",
+      "location": "tools/motion-launch/visual.mjs:208",
+      "resolution": "Exact codec extradata/profile/level/layout checked before concat; auto_convert=0 preserves packet payloads; exact222opening packet and decoded-frame proofs retained; full output strict decode checked.",
+      "evidence": "Public shader-codec diagnosis binds originals and control. auto_convert1 reproduces six unequal header-insertion packets; compatible auto_convert0 has exact222packets/decodedframes and strict932decode PASS. No new full shader capture was run."
+    },
+    {
+      "id": "MR-2",
+      "status": "FIXED_INDEPENDENT_PURE_VM_PASS",
+      "location": "tools/motion-launch/preview-page.mjs:14",
+      "resolution": "Play awaits the latest requested frame; RAF callbacks carry a generation; audio rejection only affects the currently playing generation.",
+      "ownEvidence": {
+        "cueFrame": 66,
+        "fps": "30000/1001",
+        "audioStartsBeforeSeekResolves": 0,
+        "audioStartSeconds": 2.2022,
+        "expectedAudioStartSeconds": 2.2022,
+        "rafChainsAfterStaleCallback": 1,
+        "rafChainsAfterCurrentCallback": 1,
+        "ordinaryPauseCancellation": {
+          "playDisabled": false,
+          "scrubDisabled": false
+        },
+        "activePlaybackError": {
+          "playDisabled": true,
+          "scrubDisabled": true,
+          "status": "actual active playback failure"
+        }
+      },
+      "followup": {
+        "priorPreviewSha256": "7b93b64a1890301d34ed9ef18244936b04a248183d6cdb0e9822ffa35bec247c",
+        "defect": "An unconditional audio.play().catch(fail) handled a stopped-generation cancellation as a fatal current error; the reviewer reproduced ordinary Pause permanently disabling controls.",
+        "baselineResult": "FAIL observed in independent pure VM; builder also reports its new12thcontrol failed11PASS/1FAIL against that old source before fixing.",
+        "finalPreviewSha256": "3ce3697a96797bcd0f506ac656be3a31be826c675decb2be5cd28e4f44cce133",
+        "primaryBehaviorSource": "https://developer.chrome.com/blog/play-request-was-interrupted/"
+      }
+    },
+    {
+      "id": "MR-3",
+      "status": "FIXED_INDEPENDENT_RUNTIME_READ_AUDIT_PASS",
+      "location": "tools/motion-launch/visual.mjs:87",
+      "resolution": "Installed headless shell selected by bound registry revision/version/profile; all290immutable distribution files including ANGLE/V8/resources are hashed; mutable.log files are excluded; six relevant Playwright implementation/registry files are content-bound.",
+      "ownEvidence": {
+        "browserRuntimeFiles": 290,
+        "libEGLAndLibGLESv2Bound": true,
+        "logsExcluded": true,
+        "playwrightFiles": [
+          "browsers.json",
+          "lib/coreBundle.js",
+          "lib/serverRegistry.js",
+          "lib/utilsBundle.js",
+          "lib/bootstrap.js",
+          "lib/package.js"
+        ],
+        "selectedRevision": "1228",
+        "expectedVersion": "149.0.7827.55"
+      }
+    },
+    {
+      "id": "MR-4",
+      "status": "FIXED_IMPLEMENTATION_FRESH_CHECKOUT_VERIFICATION_PENDING_ROOT",
+      "location": ".gitattributes:39",
+      "resolution": "CLI/modules/tests use explicit LF; repeatability proof asset tree has -text; standalone builder/player already use LF.",
+      "ownEvidence": {
+        "previewManifest": {
+          "text": "unset",
+          "eol": "unspecified"
+        },
+        "standaloneReceipt": {
+          "text": "unset",
+          "eol": "unspecified"
+        },
+        "visualModule": {
+          "text": "set",
+          "eol": "lf"
+        }
+      },
+      "pending": "Root must prove staged blob/fresh checkout verification before declaring the complete delivery portable/reproducible."
+    }
+  ],
+  "relatedSmokeCorrection": {
+    "owner": "Independent behavior smoke/root/builder",
+    "location": "tools/motion-launch/audio.mjs:354",
+    "defect": "FFmpeg default mux clock changes native24 integer ticks/timebase, so existing exact packet verifier rejects basic24exports.",
+    "finalResolution": "muxCopyArguments validates integral1/N native timebase and explicitly supplies -video_track_timescaleN; packet payload/timestamp/priming/extradata/decodedPCM checks remain.",
+    "ownStaticReview": "PASS",
+    "witnessReportSha256": "f2ff04037e75a481885f697e5da80eabc43b37b181393c78bb93bb6b1cb76c29",
+    "ownReadOnlyWitnessFieldRecomparison": [
+      {
+        "fps": "24/1",
+        "videoPackets": 72,
+        "audioPackets": 142,
+        "sourceClock": "1/24",
+        "oldClock": "1/12288",
+        "correctedClock": "1/24",
+        "videoFieldsAndSideDataExact": true,
+        "audioFieldsAndSideDataExact": true
+      },
+      {
+        "fps": "30000/1001",
+        "videoPackets": 90,
+        "audioPackets": 142,
+        "sourceClock": "1/30000",
+        "oldClock": "1/30000",
+        "correctedClock": "1/30000",
+        "videoFieldsAndSideDataExact": true,
+        "audioFieldsAndSideDataExact": true
+      }
+    ],
+    "sixInputBindingsUnchanged": true
+  },
+  "verificationLimits": [
+    "Reviewer ran no browser/GPU/FFmpeg process or application/full-suite tests and changed no source/media/cache/runtime; only reports were written.",
+    "Reviewer independently executed generated preview controls in a pure Node VM, read actual browser distribution/hash bindings and independently compared supplied witness packet fields.",
+    "A new full932shadercapture/export is NOT_RUN; retained codec-join witness does not change that status.",
+    "Final source-bound independent behavior smoke and staged/fresh-checkout gate are pending root-owned completion at this report creation; this source review is not full task acceptance.",
+    "No creative/listening quality or arbitrary reference conversion/customer product behavior claim is made."
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "status": "STAGED_AND_FRESH_WINDOWS_CHECKOUT_PASS",
+  "gitCoreAutocrlf": "true",
+  "stagedScopeFiles": [
+    ".gitattributes",
+    "NOW.md",
+    "artifacts/grifon-motion-reuse-preview.html",
+    "tests/unit/motionLaunchAudio.test.ts",
+    "tests/unit/motionLaunchProject.test.ts",
+    "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+    "tools/motion-launch.mjs",
+    "tools/motion-launch/audio.mjs",
+    "tools/motion-launch/preview-page.mjs",
+    "tools/motion-launch/project.mjs",
+    "tools/motion-launch/templates.mjs",
+    "tools/motion-launch/visual.mjs",
+    "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+    "workflows/assets/grifon-motion-repeatability/qa/audio-clock-diagnosis-v1.json",
+    "workflows/assets/grifon-motion-repeatability/qa/delivery-review.json",
+    "workflows/assets/grifon-motion-repeatability/qa/delivery-review.md",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-review-final.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-review.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T131046690Z/report.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/report.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-draft.mp4",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-poster.png",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-basic-landscape-1280x844-frame144.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-1280x844-frame144.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-390x844-frame144.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-390x844-ready.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-preview-browser-report.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-shader-1280x844-frame222-final.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-shader-1280x844-frame222.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-shader-390x844-frame222.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/report.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-browser-report.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-browser-report.partial.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-portrait-1280x844-midclip.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-portrait-390x844-midclip.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-shader-1280x844-scrub.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-shader-390x844-ready.jpg",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/basic-portrait-draft.mp4",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/basic-portrait-poster.png",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/report.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/shader-landscape-draft.mp4",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/shader-landscape-poster.png",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/contract.json",
+    "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/independent-review.md",
+    "workflows/assets/grifon-motion-repeatability/qa/initial-preview-preservation.json",
+    "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-resolution.json",
+    "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-resolution.md",
+    "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-review.json",
+    "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-review.md",
+    "workflows/assets/grifon-motion-repeatability/qa/preview-manifest-initial.json",
+    "workflows/assets/grifon-motion-repeatability/qa/review-final.md",
+    "workflows/assets/grifon-motion-repeatability/qa/review.md",
+    "workflows/assets/grifon-motion-repeatability/qa/runtime-launch-diagnosis-v1.json",
+    "workflows/assets/grifon-motion-repeatability/qa/shader-codec-join-diagnosis-v1.json",
+    "workflows/assets/grifon-motion-repeatability/qa/staged-checkout-v1.json",
+    "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build-initial.json",
+    "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build.json",
+    "workflows/grifon_motion_production.md"
+  ],
+  "stagedBindings": [
+    {
+      "file": "artifacts/grifon-motion-reuse-preview.html",
+      "bytes": 2317415,
+      "sha256": "b03318712755658ec0727278b04d747fbc2c6c449c3d042f745ae292abee2d1c"
+    },
+    {
+      "file": "tests/unit/motionLaunchAudio.test.ts",
+      "bytes": 14054,
+      "sha256": "c7733dfef6f9d35c772ce8c62250e5a3c699d175c0b8f8c8ee9970863f6b45e9"
+    },
+    {
+      "file": "tests/unit/motionLaunchProject.test.ts",
+      "bytes": 19649,
+      "sha256": "5d17b40a6b8fb071ecc047bcb41bf887ed3d06cbd368e73f18bc28e1254b63dd"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+      "bytes": 12040,
+      "sha256": "65bb52a25ca778c771f8cd8b47295c1405ab7d66a84b4255577d7f380d771eda"
+    },
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 42037,
+      "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 10288,
+      "sha256": "d62d781c146269c709940eb1e6e3c61d9d14c716023e5def2ade710ee9b27d95"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 22930,
+      "sha256": "3ee78b05405fbbd134c35bc9c6c8918572dcc5e53ad9c03b6eb47b14b4be4a3b"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/preview-manifest.json",
+      "bytes": 2976,
+      "sha256": "3df54c12e037b65d8fd546f915d8711c1ef300680e2ecf9bb5e0a2aaa1ded9cc"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/audio-clock-diagnosis-v1.json",
+      "bytes": 5215,
+      "sha256": "b2ccfdb1b7c0946573ce1c6bfa46226f519ef1b1523c83697c4909cfb9a51099"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/delivery-review.json",
+      "bytes": 9841,
+      "sha256": "3be87ad004ad1acd7ce49a5afa6d7139c1c69c26be420f077c7ebd7b4e345edb"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/delivery-review.md",
+      "bytes": 1551,
+      "sha256": "e636e6df65728be6267cf542ec21a6e5d5ecf7882250c972f90e148ebe2709d2"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-review-final.json",
+      "bytes": 8854,
+      "sha256": "f473edc32f76a445750a546435f19612af67753fde1b271aca8c3821be923f2f"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-review.json",
+      "bytes": 8466,
+      "sha256": "a2c1e4fcd2e9e346e7ae7147498c9ce471f53b2d67c2c8c27494ad6c0c79df64"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T131046690Z/report.json",
+      "bytes": 27820,
+      "sha256": "fe3be899847888eb7379b43088de587e17e8727c5019e415715c4d7b9b0a33ef"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/report.json",
+      "bytes": 85621,
+      "sha256": "76768bd2050e1ae316cf8637d32501edf851a44f57aadcf98260beec35275fb4"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-draft.mp4",
+      "bytes": 845514,
+      "sha256": "9bfff3d045a70d5e02dcbef6a05085adedbe969becef229888c833862a1f80f1"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-poster.png",
+      "bytes": 804612,
+      "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-draft.mp4",
+      "bytes": 52970,
+      "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/basic-portrait-poster.png",
+      "bytes": 25786,
+      "sha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-basic-landscape-1280x844-frame144.jpg",
+      "bytes": 45297,
+      "sha256": "2712e73c170c403dadb4ddcaa301a2c4e41384766fd172089c823ebe020645fb"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-1280x844-frame144.jpg",
+      "bytes": 13898,
+      "sha256": "390045f56ae0a0f0ab8c907b32bd4f71c072148bbd0179f980e44fac5025ba62"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-390x844-frame144.jpg",
+      "bytes": 72167,
+      "sha256": "cf27cefb18c8f48d279daea504f6271e473cf0992dc5e6e8c08f852c39980bfd"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-portrait-390x844-ready.jpg",
+      "bytes": 29476,
+      "sha256": "9ee3e275929bd8b3ff0a7739fb826c5d6f2ffbf829f9305b445a02fd818769dd"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-preview-browser-report.json",
+      "bytes": 28450,
+      "sha256": "153f6a273e376c3bf39411389a25d103f3e9fc9326b68953f72aff83d9c06607"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-shader-1280x844-frame222-final.jpg",
+      "bytes": 178915,
+      "sha256": "ff2fde7119a4c760b3e6466a57f2a6c24dc7314cbdfa1a6e21f1c799b42393ac"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-shader-1280x844-frame222.jpg",
+      "bytes": 156689,
+      "sha256": "6b6b6c8ecd4ea61b462d6f6cb210431a329889e95f245174612e4199c7296ca3"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/live-shader-390x844-frame222.jpg",
+      "bytes": 53952,
+      "sha256": "2ffb0e97acf38fc5285a79bf406ff72fc44cce05782a9001b8adb9496e59453e"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/report.json",
+      "bytes": 132426,
+      "sha256": "55e9719e9fb9e34d4eed2962685f47422f29368d0cf257182d1b398567ad7cc4"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-draft.mp4",
+      "bytes": 846083,
+      "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/shader-landscape-poster.png",
+      "bytes": 804612,
+      "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-browser-report.json",
+      "bytes": 17393,
+      "sha256": "ff4da75326822ded0bc1147f44b77285e44a145dcd987fcabd58970015f0a48e"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-browser-report.partial.json",
+      "bytes": 16106,
+      "sha256": "aeb96eab1d32616740a726b7f3008a0f292fa77855d2eb9cb46ed9172ae5f5e0"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-portrait-1280x844-midclip.jpg",
+      "bytes": 87629,
+      "sha256": "ef3c186c8834a5e3b9704a817fe855790ac31a57ed05a586da084f9b83642d2c"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-portrait-390x844-midclip.jpg",
+      "bytes": 59011,
+      "sha256": "0db6c1c6a41fae0592fcfa64cdc3ae8a651a3418b32d1fbcd6d323cd597c7e9c"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-shader-1280x844-scrub.jpg",
+      "bytes": 69492,
+      "sha256": "023e4544bd81b56e9a38704f7ecca64536b9432744f8542ddc182db387e59515"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T133243413Z/standalone-shader-390x844-ready.jpg",
+      "bytes": 44807,
+      "sha256": "91756992cdaec178f0da72362d069a713b86ebad58630b5cda4c66a56de7b981"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/basic-portrait-draft.mp4",
+      "bytes": 53617,
+      "sha256": "8486bd06cc6d29a1750d3feebcb192aee8aba81928beec7d88eed88758c03871"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/basic-portrait-poster.png",
+      "bytes": 25786,
+      "sha256": "bda5dc10e0cfa32aae3d08c80a7eadeadb0df5ddc4a1fc46fc6f2eeda2d346ff"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/report.json",
+      "bytes": 132517,
+      "sha256": "9ac49d23d0e73d8c866be7057ba4c7733cae3b66b13935de8b290b4a301ae172"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/shader-landscape-draft.mp4",
+      "bytes": 846083,
+      "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/shader-landscape-poster.png",
+      "bytes": 804612,
+      "sha256": "3bfd3f62c30392d804a75a7e72a5bb168c24d712fc63e88c82d7d83028d00dd0"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/contract.json",
+      "bytes": 4520,
+      "sha256": "2b442095b835d62a5e1abf8d079acc70c301aea190feadc88d8be3241c0e28d8"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/independent-review.md",
+      "bytes": 7546,
+      "sha256": "6d8c14c87a2aa447d0f36236af6b5e52f99f55cf8762bf2d9260bed2723415c8"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/initial-preview-preservation.json",
+      "bytes": 1407,
+      "sha256": "46b6fe619361f0f03e50ea487e286ff4597a7e00d7e34715b2a314db22740adb"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-resolution.json",
+      "bytes": 5241,
+      "sha256": "3c0599304f1674519456a43ddcbb971cef5e48a06b254619011775b793f26611"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-resolution.md",
+      "bytes": 2221,
+      "sha256": "a0b3745287d06649dc63ed61449bef019bbd69231efe9c6c5d8ad62199e33b3a"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-review.json",
+      "bytes": 6166,
+      "sha256": "bc34ff67d266a4ccf7a9e906d13c5cb33eeb36be178d8d0be7946cb261c57345"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/live-audio-clock-review.md",
+      "bytes": 2362,
+      "sha256": "559d316a1f2bb812bc9be648aab98eefa7dfa668973ef0dab81dee63417860c7"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/preview-manifest-initial.json",
+      "bytes": 2960,
+      "sha256": "e247092b9fff86a26d8f35e01c02ecf77abbc9dcc5585de793af9d64b5ab52a6"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/review-final.md",
+      "bytes": 1498,
+      "sha256": "c2befeb45ca60e0cc5070afb63b94a1e3ca006c4ada98de20dc71ce9e3763722"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/review.md",
+      "bytes": 3123,
+      "sha256": "5fad7b2ee8aefdce800f7a9ca4fbdf152794fe5e037aad6e248d98c80421b518"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/runtime-launch-diagnosis-v1.json",
+      "bytes": 2166,
+      "sha256": "82e076d6b5c72f124ce8e7298f37b445284f94d5c703e68ef23b5dc8380733cf"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/shader-codec-join-diagnosis-v1.json",
+      "bytes": 2566,
+      "sha256": "1fc2f944ffd49deca034ed24ae368e7db7e3fafd35bf5797e0f20193dcc08253"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/staged-checkout-v1.json",
+      "bytes": 12867,
+      "sha256": "955c20240da87a8f81ede6bb933c15502208328afc7f4208d957f7b50a6a5541"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build-initial.json",
+      "bytes": 1230,
+      "sha256": "bd6db2791b4241c04fc9ffbeea860ed139c8c325e6227d4a3bee922e9c0b3c3e"
+    },
+    {
+      "file": "workflows/assets/grifon-motion-repeatability/qa/standalone-preview-build.json",
+      "bytes": 1230,
+      "sha256": "a3d260aec86279aff5febc7207b265de8b1f8ede16b1df9e0fa211140c4633f8"
+    }
+  ],
+  "historicalMovie": {
+    "file": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T132508377Z/shader-landscape-draft.mp4",
+    "scope": "Preserved pre-final-producer bounded shader witness from the failed second attempt; excluded from final preview manifest and current proof claims."
+  },
+  "freshCheckout": ".tmp/motion-repeatability-root/fresh-checkout-v2",
+  "freshCheckoutMode": "git checkout-index from actual staged index; no byte rewrite or autocrlf override",
+  "freshPreviewCheck": "PASS: byte-identical standalone preview",
+  "acceptedOriginalsVerified": [
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+      "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+    },
+    {
+      "file": "artifacts/grifon-shader-recreation.html",
+      "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.js",
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.json",
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/render-full.mjs",
+      "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/build-full.mjs",
+      "sha256": "dbfe243676e6ce8173a1f64265ceaee4a3e32d6878cd95bb26011f88eebbb2bf"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+      "sha256": "ffb4c9fd5104cadf97bab26e4674152e150312e59eb7f3821f493461c068b223"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+      "sha256": "2d282feb4dda8d7c470f416431930267aa76ea38a6beda877f1ad29392a09cc3"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-shader-recreation.mjs",
+      "sha256": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157"
+    },
+    {
+      "file": "tools/artifacts/grifon-shader-recreation.tpl.html",
+      "sha256": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+      "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+    },
+    {
+      "file": "artifacts/grifon-shader-sound-v1.html",
+      "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs",
+      "sha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/sound-spec.json",
+      "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+    }
+  ],
+  "appProviderControlScope": "UNCHANGED_VS_ACCEPTED_118a5e8a",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

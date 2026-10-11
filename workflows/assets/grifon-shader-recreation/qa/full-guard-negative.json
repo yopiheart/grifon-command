@@ -1,0 +1,15 @@
+{
+  "result": "PASS",
+  "claim": "Verify refuses to retroactively bind existing media to edited runtime inputs",
+  "fixture": ".tmp/full-guard-fixture",
+  "originalRuntimeSha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+  "editedRuntimeSha256": "0a44466dcec14bd65df3111cc3bb05794b99a1854b016b8e5b20223dccd466ac",
+  "unchangedMediaSha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+  "producerReceiptSha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a",
+  "producerReceiptUnchanged": true,
+  "expectedExit": 1,
+  "expectedError": "Existing producer source binding differs",
+  "actualStderr": "file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/.tmp/full-guard-fixture/render-full.mjs:27\r\nfunction requireSources(receipt){if(JSON.stringify(receipt.sources)!==JSON.stringify(sources))throw Error('Existing producer source binding differs; changed inputs require capture and encode');}\r\n                                                                                                    ^\r\n\r\nError: Existing producer source binding differs; changed inputs require capture and encode\r\n    at requireSources (file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/.tmp/full-guard-fixture/render-full.mjs:27:101)\r\n    at requireMedia (file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/.tmp/full-guard-fixture/render-full.mjs:28:37)\r\n    at file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/.tmp/full-guard-fixture/render-full.mjs:139:59\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\r\n    at async node:internal/modules/esm/loader:647:26\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\r\n\r\nNode.js v24.21.0\r\n",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

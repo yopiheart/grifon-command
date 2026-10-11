@@ -1,0 +1,135 @@
+{
+  "status": "QUALIFIED_WITNESS_CODE_PASS",
+  "scope": "Independent helper/receipt audit of four-frame raw change scope; not logical/visual fidelity, full-movie integrity or playback approval.",
+  "reviewedAt": "2026-10-08T08:41:53.159Z",
+  "files": {
+    "helper": "qa/verify-full-timing-v3.mjs",
+    "witness": "qa/full-timing-v3-raw-witness.json",
+    "checks": "qa/full-timing-v3-checks.json",
+    "before": ".tmp/full-failed-review-2/frames/receipt.json",
+    "after": ".tmp/full-frames/receipt.json",
+    "preservation": "qa/full-failed-review-2/preservation-receipt.json",
+    "boundary": "qa/full-v3-capture-boundary.json",
+    "silent": "qa/full-silent-media.json",
+    "sourceReview": "qa/full-timing-source-review-v3.json"
+  },
+  "beforeHashes": {
+    "qa/verify-full-timing-v3.mjs": "ed39f1d38aeb34be3e121bd836818662362e7f5874f893940dd2a24e600bacd7",
+    "qa/full-timing-v3-raw-witness.json": "264eaa2c8f1a9abf7b9f0fa84b9d4375a052ee0f067e74251dea71390f4ecc98",
+    "qa/full-timing-v3-checks.json": "a61444ebc4c21f0965e6dc25ab8929e409a065eafd09e314894384af4a1184fa",
+    ".tmp/full-failed-review-2/frames/receipt.json": "b480d87f32c122d8ba640704fb57b4b58bc79824483a1e5e7e14b027f5ec73f3",
+    ".tmp/full-frames/receipt.json": "dc079552beb97ed4f742b0961bce0434d01fa5782a1661287cc47ae4e61bec28",
+    "qa/full-failed-review-2/preservation-receipt.json": "27d153f04e876a1f9ab294a98d9b9a4d2316577298b583c321eeb9b80fd40e06",
+    "qa/full-v3-capture-boundary.json": "3e87bbf37acae6fcfe20ddff5362cbecf5a727400c75ca631227ab73aef28f32",
+    "qa/full-silent-media.json": "ef7d1c66060eb5930e5c489d33d46fa1a91e8a75b2ddbea9b577a46dfc35e4a6",
+    "qa/full-timing-source-review-v3.json": "d3ece28244f841834070947e13e923363f7d425ae3bcb4260085ea9c64ec65d1"
+  },
+  "afterHashes": {
+    "qa/verify-full-timing-v3.mjs": "ed39f1d38aeb34be3e121bd836818662362e7f5874f893940dd2a24e600bacd7",
+    "qa/full-timing-v3-raw-witness.json": "264eaa2c8f1a9abf7b9f0fa84b9d4375a052ee0f067e74251dea71390f4ecc98",
+    "qa/full-timing-v3-checks.json": "a61444ebc4c21f0965e6dc25ab8929e409a065eafd09e314894384af4a1184fa",
+    ".tmp/full-failed-review-2/frames/receipt.json": "b480d87f32c122d8ba640704fb57b4b58bc79824483a1e5e7e14b027f5ec73f3",
+    ".tmp/full-frames/receipt.json": "dc079552beb97ed4f742b0961bce0434d01fa5782a1661287cc47ae4e61bec28",
+    "qa/full-failed-review-2/preservation-receipt.json": "27d153f04e876a1f9ab294a98d9b9a4d2316577298b583c321eeb9b80fd40e06",
+    "qa/full-v3-capture-boundary.json": "3e87bbf37acae6fcfe20ddff5362cbecf5a727400c75ca631227ab73aef28f32",
+    "qa/full-silent-media.json": "ef7d1c66060eb5930e5c489d33d46fa1a91e8a75b2ddbea9b577a46dfc35e4a6",
+    "qa/full-timing-source-review-v3.json": "d3ece28244f841834070947e13e923363f7d425ae3bcb4260085ea9c64ec65d1"
+  },
+  "sourceReviewReused": {
+    "file": "qa/full-timing-source-review-v3.json",
+    "sha256": "d3ece28244f841834070947e13e923363f7d425ae3bcb4260085ea9c64ec65d1",
+    "noRedundantRuntimePrefixRehash": true
+  },
+  "checks": {
+    "helperAndWitnessMatchExecutionReceipt": true,
+    "preservedBaselineReceiptAndSourcesBound": true,
+    "currentCaptureSourcesBoundToV3BoundaryAndSourceReview": true,
+    "silentExportCaptureReceiptBound": true,
+    "producerUnchanged": true,
+    "acceptedPrefixReceiptBindingEqual": true,
+    "comparedRecords": 710,
+    "actualPngFilesStatChecked": 1420,
+    "rawPngBodyRereadByThisReviewer": false,
+    "strictNativeFrames": [
+      222,
+      931
+    ],
+    "strictFileNames": [
+      "0000.png",
+      "0709.png"
+    ],
+    "perFrameReceiptHashesConsistent": true,
+    "changedFrames": [
+      400,
+      403,
+      636,
+      639
+    ],
+    "unchangedFrames": 706
+  },
+  "codeLineReferences": {
+    "absolutePaths": 9,
+    "strictLength": 14,
+    "oldCaptureBinding": 15,
+    "fullLoop": 17,
+    "nativeOrder": 19,
+    "realBufferReads": 20,
+    "perPngHashes": 21,
+    "byteEquality": 22,
+    "exactChangedList": 13,
+    "currentCaptureBinding": 25,
+    "silentCaptureBinding": 26,
+    "producerBinding": 27,
+    "actualOriginalControl": 30,
+    "originalRejectionReason": 31,
+    "extraListOnlyControl": 33,
+    "exclusiveReceiptWrite": 40
+  },
+  "staticProof": "The helper reads both actual PNG buffers for every710 native frames, verifies each bufferSHA against its capture receipt, compares Buffer.equals, and derives the observed changed list from those byte comparisons. Metadata/receipt cross-checks independently cover all710 comparison rows here. It is neither a four-frame sample check nor only a comparison of declared receipt hashes.",
+  "negativeControls": [
+    {
+      "name": "Actual uncorrected preserved710-frame sequence",
+      "method": "Actual child helper invocation with --negative-original chooses preserved capture as both before and after; validates every actual PNG hash and buffer before rejecting observed[] at requireChanged.",
+      "recorded": {
+        "name": "Actual uncorrected preserved710-frame sequence",
+        "command": "node qa/verify-full-timing-v3.mjs --negative-original",
+        "exit": 1,
+        "observedChangedFrames": [],
+        "result": "EXPECTED_REJECTION",
+        "error": "Expected exactly400/403/636/639 raw frame changes; observed []"
+      },
+      "qualification": "Actual710-frame original-sequence control. It fails at the change witness before current-source/export checks, and before spawning any further control or writing a receipt.",
+      "reexecutedByReviewer": false
+    },
+    {
+      "name": "Unexpected fifth frame change",
+      "method": "In-memory requireChanged array test for an unexpected extra407. It exercises exact changed-frame-list policy, using the same native order produced by the real loop.",
+      "recorded": {
+        "name": "Unexpected fifth frame change",
+        "observedChangedFrames": [
+          400,
+          403,
+          407,
+          636,
+          639
+        ],
+        "result": "EXPECTED_REJECTION",
+        "error": "Expected exactly400/403/636/639 raw frame changes; observed [400,403,407,636,639]"
+      },
+      "qualification": "List-policy control only; no actual PNG file or capture receipt was mutated. It does not independently exercise corrupted-file/hash handling.",
+      "reexecutedByReviewer": false
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "No green helper/test/control was rerun and no fake frame/temp file was written.",
+    "Independent review stat-checks1420 files and cross-checks710 rows/receipt hashes; actual PNG body reads and Buffer.equals execution belong to the pinned producer witness.",
+    "The fifth-change control must be described as extra-frame-list rejection, not an actual PNG-file mutation.",
+    "This witness proves correction scope and byte preservation of706 continuation frames. Incorrect visual content at the four changed frames could still pass it.",
+    "222 decoded accepted opening frames are verified separately by native temporal proof, as the witness already states.",
+    "Independent all932 native visual review, actual1x/0.25x aligned playback, encoded-media/mux and audio gates remain separate."
+  ],
+  "inputBindingsStable": true,
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

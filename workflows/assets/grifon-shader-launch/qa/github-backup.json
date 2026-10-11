@@ -1,0 +1,37 @@
+{
+  "purpose": "Authenticated GitHub blob content compared byte for byte with corrected final media/player.",
+  "repository": "yopiheart/grifon-command",
+  "private": true,
+  "productionCommit": "e906a852c0b8b61330bb540f5d83cfaf596ec9d4",
+  "remoteCommit": "e906a852c0b8b61330bb540f5d83cfaf596ec9d4",
+  "files": [
+    {
+      "path": "workflows/assets/grifon-shader-launch/landscape.mp4",
+      "gitBlobSha": "98af82316f4410995fbf80f48f8b85c2179b0a6e",
+      "bytes": 7952020,
+      "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc",
+      "rawDownloadUrl": "https://github.com/yopiheart/grifon-command/raw/e906a852c0b8b61330bb540f5d83cfaf596ec9d4/workflows/assets/grifon-shader-launch/landscape.mp4",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/portrait.mp4",
+      "gitBlobSha": "e48ed6920810cd4f8a50cc1a5491ba6706792581",
+      "bytes": 8568284,
+      "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5",
+      "rawDownloadUrl": "https://github.com/yopiheart/grifon-command/raw/e906a852c0b8b61330bb540f5d83cfaf596ec9d4/workflows/assets/grifon-shader-launch/portrait.mp4",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "artifacts/grifon-shader-launch.html",
+      "gitBlobSha": "8a70b644bec8ba9b269447a957ea4c5a97341c77",
+      "bytes": 24116406,
+      "sha256": "1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207",
+      "rawDownloadUrl": "https://github.com/yopiheart/grifon-command/raw/e906a852c0b8b61330bb540f5d83cfaf596ec9d4/artifacts/grifon-shader-launch.html",
+      "result": "BYTE_EXACT_PASS"
+    }
+  ],
+  "rawAccess": "Download links require access to the private repository.",
+  "rawAudio": "Ignored source recordings/stems use the verified private recovery archive.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

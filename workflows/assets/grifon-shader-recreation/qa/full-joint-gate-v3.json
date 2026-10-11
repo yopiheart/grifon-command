@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 1,
+  "verdict": "QUALIFIED_VISUAL_DELIVERY_PASS",
+  "completedAt": "2026-10-08T09:23:06.169Z",
+  "scope": "Finished Grifon visual adaptation and offline player; sonic resemblance remains unverified",
+  "film": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 24994401,
+    "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+  },
+  "silent": {
+    "file": "grifon-recreation-landscape-silent.mp4",
+    "bytes": 24137255,
+    "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+  },
+  "artifact": {
+    "file": "artifacts/grifon-shader-recreation.html",
+    "bytes": 33662393,
+    "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+  },
+  "privateReference": {
+    "file": "reference/source-x.mp4",
+    "bytes": 11514975,
+    "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089"
+  },
+  "privatePair": {
+    "file": ".tmp/paired-full.mp4",
+    "bytes": 16376839,
+    "sha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf"
+  },
+  "evidence": [
+    {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+    },
+    {
+      "file": "qa/full-source-receipt.json",
+      "bytes": 8260,
+      "sha256": "7dabc921763f90aee39c2247c79ad2a39fc445dda3bd325deba4e8549c2261d6"
+    },
+    {
+      "file": "qa/full-render.json",
+      "bytes": 42168,
+      "sha256": "185c304c7e40cd805d6fba1e3c17d9eb03a469e2aae019fc9bb5e88677eba5b3"
+    },
+    {
+      "file": "qa/full-production-v3.json",
+      "bytes": 9025,
+      "sha256": "8b47f6a4efa646eff11fe211ea15d95512d13baa6c8a31b62c684b3903f55982"
+    },
+    {
+      "file": "qa/full-paired-review-receipt.json",
+      "bytes": 3525,
+      "sha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402"
+    },
+    {
+      "file": "qa/full-timing-source-review-v3.json",
+      "bytes": 20272,
+      "sha256": "d3ece28244f841834070947e13e923363f7d425ae3bcb4260085ea9c64ec65d1"
+    },
+    {
+      "file": "reference/full-timing-source-review-v3.md",
+      "bytes": 4392,
+      "sha256": "74bd2fca1de2e62fea09a628945a9f3fb8492bf1ba1c8fb708c269f271ebdbc9"
+    },
+    {
+      "file": "qa/full-timing-v3-raw-witness.json",
+      "bytes": 228575,
+      "sha256": "264eaa2c8f1a9abf7b9f0fa84b9d4375a052ee0f067e74251dea71390f4ecc98"
+    },
+    {
+      "file": "qa/full-timing-witness-review-v3.json",
+      "bytes": 7155,
+      "sha256": "60cbc3361f8a641ce32b2c964d278ad3ccc2cf267b1b11c81f2ef310645d34c0"
+    },
+    {
+      "file": "reference/full-timing-witness-review-v3.md",
+      "bytes": 3727,
+      "sha256": "b00040687769add3d1299b586318fad04982833ec250e348ac4869f96f4cd268"
+    },
+    {
+      "file": "qa/full-native-review-v3.json",
+      "bytes": 9578,
+      "sha256": "c9a3b02f6f2f6330e2674bc264ecd19c28b988adfaaa2569eae0e8968c2870f5"
+    },
+    {
+      "file": "reference/full-native-review-v3.md",
+      "bytes": 5978,
+      "sha256": "7e8224fb6fcfa6a0b6c234777c57677e5cab42a9828710aa45e315d8be9f9746"
+    },
+    {
+      "file": "qa/full-native-cut-review-v3.json",
+      "bytes": 50042,
+      "sha256": "966e24e817e43ff7c09f74e6ade076c01fbc62ab725aebd4cad696799c90dcb8"
+    },
+    {
+      "file": "qa/review-player-timed-full-single-clocks.json",
+      "bytes": 664404,
+      "sha256": "cac3b8ff89463b80e5a5c3ebf5463ea649af45f65f24282c6db524b32018eabd"
+    },
+    {
+      "file": "qa/full-paced-review-v3.json",
+      "bytes": 18488,
+      "sha256": "ef5323d988454e0f605b98a6f944e1530f680d642afae0d035f77af653968ddc"
+    },
+    {
+      "file": "reference/full-paced-review-v3.md",
+      "bytes": 5105,
+      "sha256": "7e713124693c4c225e887b04750afdbfdb352a7ecb69d5e52a1fc03805c659ad"
+    },
+    {
+      "file": "qa/full-paced-early-review-v3.json",
+      "bytes": 206841,
+      "sha256": "0b9e26a746ce9c6328ce16921ec091ec9a171475b001b5c7290466c6dfd6e655"
+    },
+    {
+      "file": "qa/full-paced-late-review-v3.json",
+      "bytes": 453455,
+      "sha256": "d969189c8bd49eaabf5b6a45e8142bdcfc273896980b68496aca797eb691ff8c"
+    },
+    {
+      "file": "qa/audio-final-verification.json",
+      "bytes": 23950,
+      "sha256": "26465102d245b4fffe1e2f7495290683f86aa7620065187b6ea14723ec8b614f"
+    },
+    {
+      "file": "reference/full-audio-review-v3.md",
+      "bytes": 3868,
+      "sha256": "0a64f1e8f80001ecd28d2aae9c8fb129328d292e9205cd1852fb8c9ddaa15be6"
+    },
+    {
+      "file": "qa/player-final-v3/player-mobile-report.json",
+      "bytes": 41775,
+      "sha256": "92505935f393560a062bf03bf7194c17b1a79a9e51596f661bfd03af0242a0dc"
+    },
+    {
+      "file": "qa/player-final-v3/screenshot-integrity.json",
+      "bytes": 4203,
+      "sha256": "2f75cbae63aea26a60a74515ba4d1a875e7b7ac86d8cb554a086a01a06c587a3"
+    },
+    {
+      "file": "reference/player-mobile-review-v3.md",
+      "bytes": 4048,
+      "sha256": "53d6887c6643fa707297c966ffa4ade88bc57e467772b444c0c455f5a901b6eb"
+    },
+    {
+      "file": "qa/full-timing-v3-checks.json",
+      "bytes": 1562,
+      "sha256": "a61444ebc4c21f0965e6dc25ab8929e409a065eafd09e314894384af4a1184fa"
+    },
+    {
+      "file": "qa/root-final-artifact-checks-v3.json",
+      "bytes": 2137,
+      "sha256": "e5bae15a0043b9a5d9492acfdff7a35200e05c33cc85826421db520676a2e439"
+    },
+    {
+      "file": "qa/root-full-control-checks-v2.json",
+      "bytes": 3826,
+      "sha256": "252853afd0f967d83dc4db41642dd1321bc37f32c45d23cd20b4861d5287e6a1"
+    }
+  ],
+  "currentRuntimeInputs": [
+    {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "file": "full.html",
+      "bytes": 649,
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    {
+      "file": "full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "file": "full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    {
+      "file": "assets/full/manifest.json",
+      "bytes": 2075,
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    }
+  ],
+  "approvedPaidInputs": [
+    {
+      "file": "autopsy.spec.json",
+      "bytes": 3044,
+      "sha256": "4d082dc611b2fa349b327a5ef33732b16a08022a75bdcc48b1a6f77c5628e371"
+    },
+    {
+      "file": "audio-autopsy.spec.json",
+      "bytes": 3628,
+      "sha256": "cc4104c83b9a5d1b55acfdaea0b302afa2e08926095fafd9271d257143aa5d7c"
+    },
+    {
+      "file": "audio-autopsy-prompt.txt",
+      "bytes": 2695,
+      "sha256": "5bbb7925a1f60fad306811bee33d41b9ccd14f7633d4958fa7a4253a6d82603b"
+    }
+  ],
+  "independentGates": {
+    "native": {
+      "status": "PASS",
+      "frames": 932,
+      "enlargedPairs": 88,
+      "nativeSizePairs": 47,
+      "separateTeamCutBoards": 49
+    },
+    "paced": {
+      "status": "PACED_PASS",
+      "normalCaptures": 136,
+      "quarterCaptures": 452,
+      "reviewedCaptures": 588,
+      "reviewedSheets": 55,
+      "method": "Actual natural 1x and 0.25x playback of one aligned silent stream; disjoint team inspection of all retained captures",
+      "normalDrops": 0,
+      "quarterDrops": 1,
+      "quarterDropLocation": "Near presented frame 3; no later drops"
+    },
+    "source": "QUALIFIED_SOURCE_PASS",
+    "witness": "QUALIFIED_WITNESS_CODE_PASS",
+    "player": {
+      "status": "PASS_TECHNICAL_PLAYER_CURRENT_CANDIDATE",
+      "assertionsPassed": 33,
+      "viewports": [
+        "390x844",
+        "1280x844"
+      ],
+      "downloads": "Exact film bytes"
+    },
+    "audio": {
+      "status": "TECHNICAL_AUDIO_PASS_SONIC_UNVERIFIED",
+      "technicalChecksPassed": 12,
+      "sonicResemblance": "SONIC_UNVERIFIED"
+    }
+  },
+  "correction": {
+    "sourceLinesChanged": 2,
+    "rawContinuationFramesCompared": 710,
+    "changedNativeFrames": [
+      400,
+      403,
+      636,
+      639
+    ],
+    "unchangedContinuationFrames": 706,
+    "acceptedOpeningDecodedFramesUnchanged": 222,
+    "extraFrameNegativeControl": "Changed-list policy rejection in memory; not a mutated PNG"
+  },
+  "applicationChecks": {
+    "build": "npm.cmd run build: exit 0",
+    "defaultTests": "npx.cmd vitest run: exit 0; equivalent package test command",
+    "passedTests": 1432,
+    "existingDefaultSkippedTests": 32,
+    "paidLiveFlags": "Unset",
+    "controlEvidence": "qa/root-full-control-checks-v2.json and qa/root-final-artifact-checks-v3.json"
+  },
+  "paid": {
+    "approvedCallsCompleted": 2,
+    "retries": 0,
+    "combinedEstimatedUsd": 0.06987,
+    "invoiceVerified": false,
+    "newProviderCallsForFinalDelivery": 0,
+    "additionalPaidSpendUsd": 0
+  },
+  "qualifications": [
+    "Close adaptation under approved Grifon copy, typeface, palette and product-capture substitutions",
+    "Non-blocking grain, glow, shape, density and stripe-position residuals are retained in independent reports",
+    "Playback review covers all retained actual-playback snapshots, not every display refresh",
+    "Technical audio integrity, metering and browser playback do not establish hearing, song identity, named SFX or perceived sonic resemblance",
+    "Historical mocked provenance fixtures retain their stated scope; actual final encode, decode and playback have separate receipts"
+  ],
+  "history": "This joint record closes the independent gates after production. Production-time pending verdicts and preserved failed candidates are unchanged; they are not final delivery verdicts.",
+  "publication": "Local artifact and draft PR only; no merge or deployment"
+}

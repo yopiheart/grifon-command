@@ -1,0 +1,65 @@
+{
+  "sourceUrl": "https://x.com/npm_i_shaders/status/2107467668009963819",
+  "sourceMediaId": "2107467613437935618",
+  "acquisition": {
+    "method": "Existing yt-dlp2026.08.19 ordinary public Twitter extractor; exact post only; format http-10368",
+    "cookies": false,
+    "login": false,
+    "securityBypass": false,
+    "downloads": 1,
+    "installs": 0,
+    "providerAnalysisCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "media": [
+    {
+      "file": "source-x.mp4",
+      "bytes": 11514975,
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089"
+    },
+    {
+      "file": "source-audio.m4a",
+      "bytes": 505101,
+      "sha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae"
+    },
+    {
+      "file": "source-x.info.json",
+      "bytes": 11828,
+      "sha256": "9a265870b8663e06a46940753ba5b6d346fb7596b5fc465f2122c3b3138eaea4"
+    }
+  ],
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "30000/1001",
+    "frames": 932,
+    "videoDuration": 31.097733,
+    "containerDuration": 31.146667,
+    "strictDecode": "PASS"
+  },
+  "audio": {
+    "codec": "AAC LC",
+    "sampleRate": 48000,
+    "channels": 2,
+    "duration": 31.146667,
+    "bitrate": 128029,
+    "extraction": "Stream copy; no re-encoding",
+    "nativeAdtsPayloadSha256": "0cfc56051645ccd70e03ad85ba3daf1e5c7e8aa4fd7667690227e77d5082722b",
+    "nativePayloadBytes": 508680,
+    "nativePayloadByteComparison": "Source MP4 and extracted M4A ADTS payloads exactly equal",
+    "strictDecode": "PASS",
+    "measuredIntegratedLufs": -10.01,
+    "measuredTruePeakDbtp": 3.88,
+    "measuredLraLu": 11.6,
+    "measurement": "FFmpeg loudnorm input measurements on native extracted track; no sonic interpretation"
+  },
+  "hearing": {
+    "status": "UNAVAILABLE",
+    "probe": "Supported functions.audio helper returned: audio content omitted because you do not support audio input",
+    "referenceActuallyHeard": false,
+    "browserAudioStateIsNotListening": true,
+    "waveformIsNotListening": true,
+    "soundtrackSelection": "Not made"
+  },
+  "rights": "Third-party reference acquired only for private inspection. No soundtrack license or permission to redistribute/sample in Grifon deliverables is established."
+}
