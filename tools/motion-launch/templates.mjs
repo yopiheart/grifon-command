@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 export const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const shader = 'workflows/assets/grifon-shader-recreation';
 const basic = 'workflows/assets/grifon-motion-director-demo';
+const orbital = 'workflows/assets/grifon-pluto-adaptation';
 
 export const templates = {
   'shader-reference': {
@@ -29,9 +30,18 @@ export const templates = {
     ],
     audio: null,
   },
+  'orbital-launch': {
+    timeline: { fpsNumerator: 60, fpsDenominator: 1, frames: 1389, sampleFrames: 1111200 },
+    formats: { landscape: { width: 1920, height: 1080 } },
+    config: 'orbital.json', entry: 'orbital.html', lockedPrefixFrames: 0,
+    files: ['orbital.json', 'orbital.html', 'orbital.js', 'assets/logo.png', 'assets/inter-900.ttf',
+      'assets/jbmono-600.ttf', 'assets/OFL-Inter.txt', 'assets/OFL-JetBrainsMono.txt', 'assets/manifest.json']
+      .map(file => ({ source: `${orbital}/${file}`, target: `composition/${file}` })),
+    audio: `${orbital}/audio-plan.json`,
+  },
 };
 
 export function templateFor(id) {
-  if (!Object.hasOwn(templates, id)) throw Error(`Unknown template ${id}; choose shader-reference or basic-launch`);
+  if (!Object.hasOwn(templates, id)) throw Error(`Unknown template ${id}; choose ${Object.keys(templates).join(', ')}`);
   return templates[id];
 }

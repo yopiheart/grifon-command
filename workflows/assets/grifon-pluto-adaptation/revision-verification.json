@@ -1,0 +1,205 @@
+{
+  "status": "PASS",
+  "finishedUtc": "2026-10-11T08:54:06.701Z",
+  "revisionFromFrozenBaselineWallMs": 368624,
+  "wallFromFirstRevisionInitIncludesColdBenchmarkWaitMs": 1267105,
+  "scope": "Disposable one-text revision only; silent visual draft and full-length unchanged audio cache verified separately",
+  "baselineVisualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+  "revisionVisualSourceKey": "55b3e27514f8889b5d3ff18921e664b3d67703a26398403f165343a25b49d5d5",
+  "oneStringOnly": true,
+  "otherSourceAndMetadataFilesExact": 13,
+  "nativeTimeline": {
+    "fpsNumerator": 60,
+    "fpsDenominator": 1,
+    "frames": 1389,
+    "sampleFrames": 1111200
+  },
+  "nativeFormats": {
+    "landscape": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "draftWindow": {
+    "format": "landscape",
+    "from": 434,
+    "frames": 120,
+    "profile": "draft",
+    "width": 960,
+    "height": 540
+  },
+  "draftMedia": {
+    "file": "draft.mp4",
+    "bytes": 257387,
+    "sha256": "6435ee532271f4c560d74ab7fc0800d4e361057ebe491c34ed0f104d95f41e6e",
+    "width": 960,
+    "height": 540,
+    "frames": 120,
+    "fps": "60/1",
+    "timeBase": "1/60",
+    "duration": 2,
+    "strictDecode": "PASS",
+    "audio": null
+  },
+  "coldProcessElapsedMs": 39253.9033,
+  "warmProcessElapsedMs": 1564.7471,
+  "warmRunnerElapsedMs": 1086.7615999999998,
+  "warmCacheHit": true,
+  "warmCapturedFrames": 0,
+  "audioKeyBefore": "9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23",
+  "audioKeyAfter": "9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23",
+  "audioMasterSha256": "2283f43c71bc3c2903779ce160d04c6b7e671f7840ba83c3d2959dd2bd950c01",
+  "audioCacheHitBefore": true,
+  "audioCacheHitAfter": true,
+  "audioMixBeforeElapsedMs": 578.2216,
+  "audioMixAfterElapsedMs": 566.1916000000001,
+  "audioPlanSourceRegistryCreditsRightsByteIdentical": true,
+  "semanticFrameChecks": {
+    "status": "PASS",
+    "criterion": "Exact one-string source diff; unchanged native timing/layout/audio source bytes; same text geometry; readable actual encoded edited headline. Cross-page raster identity is informational.",
+    "affectedFrame": 505,
+    "unaffectedFrame": 85,
+    "affectedText": "Make your next move.",
+    "sameHeadlineGeometry": {
+      "method": "fillText",
+      "font": "900 78px Inter",
+      "align": "center",
+      "baseline": "middle",
+      "args": [
+        960,
+        545
+      ]
+    },
+    "unaffectedTextCallsIdentical": true,
+    "affectedDifferencesConfinedToHeadlineBounds": {
+      "minX": 531,
+      "minY": 507,
+      "maxX": 1385,
+      "maxY": 584
+    },
+    "initialStrictPixelComparator": {
+      "status": "FAIL",
+      "retainedReport": "frame-comparison-report.json",
+      "unaffectedControl": {
+        "frame": 85,
+        "count": 17,
+        "maxDelta": 2,
+        "totalDelta": 19,
+        "bounds": {
+          "minX": 650,
+          "minY": 378,
+          "maxX": 1012,
+          "maxY": 653
+        },
+        "sample": [
+          {
+            "x": 693,
+            "y": 378,
+            "delta": 1
+          },
+          {
+            "x": 704,
+            "y": 378,
+            "delta": 1
+          },
+          {
+            "x": 730,
+            "y": 381,
+            "delta": 1
+          },
+          {
+            "x": 821,
+            "y": 450,
+            "delta": 1
+          },
+          {
+            "x": 821,
+            "y": 451,
+            "delta": 2
+          },
+          {
+            "x": 821,
+            "y": 452,
+            "delta": 1
+          },
+          {
+            "x": 828,
+            "y": 471,
+            "delta": 1
+          },
+          {
+            "x": 821,
+            "y": 582,
+            "delta": 1
+          },
+          {
+            "x": 821,
+            "y": 583,
+            "delta": 1
+          },
+          {
+            "x": 821,
+            "y": 584,
+            "delta": 2
+          },
+          {
+            "x": 717,
+            "y": 591,
+            "delta": 1
+          },
+          {
+            "x": 1012,
+            "y": 613,
+            "delta": 1
+          },
+          {
+            "x": 797,
+            "y": 619,
+            "delta": 1
+          },
+          {
+            "x": 764,
+            "y": 643,
+            "delta": 1
+          },
+          {
+            "x": 762,
+            "y": 644,
+            "delta": 1
+          },
+          {
+            "x": 650,
+            "y": 647,
+            "delta": 1
+          },
+          {
+            "x": 672,
+            "y": 653,
+            "delta": 1
+          }
+        ]
+      },
+      "note": "17 pixels differed by at most 2 RGB levels across independent pages. Semantic layout/source checks pass; no claim of exact cross-page pixel identity."
+    },
+    "actualEncodedScreenshot": {
+      "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-evidence\\rendered-revision-frame-0500-draft.png",
+      "projectFrame": 500,
+      "localDraftFrame": 66,
+      "sha256": "dbd6d32de72f22d6ce360f75cc46b42917595b7a637e64843731c366b1417abc",
+      "visualInspection": "Exact approved new copy, readable, centered and unclipped."
+    }
+  },
+  "helperPid": 29516,
+  "helperProcessStillPresent": false,
+  "listening": "UNVERIFIED",
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "artifacts": {
+    "draft": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-project\\.cache\\visual\\83480c75a9e7235b51a496eb18b9e8dff945c2b4b784754f90e219784a9a0a97\\draft.mp4",
+    "screenshot": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-evidence\\rendered-revision-frame-0500-draft.png",
+    "unaffectedBaseline": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-evidence\\project-frame-0085.png",
+    "unaffectedRevision": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-evidence\\revision-project-frame-0085.png",
+    "editableProject": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-project",
+    "sourceAudioProof": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\revision-evidence\\source-audio-revision-proof.json"
+  }
+}

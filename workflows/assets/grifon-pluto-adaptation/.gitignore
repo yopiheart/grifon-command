@@ -1,0 +1,12 @@
+# Retain compact source and delivered film; keep diagnostics/private stock off Git.
+.cache/
+frames/
+qa/
+render-cache/
+local-project/
+audio-sources/
+*.f32le
+*.f64le
+master.wav
+master.m4a
+*.log

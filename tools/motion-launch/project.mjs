@@ -123,6 +123,21 @@ export async function readProject(project) {
     if (end !== 932) throw Error('Shot table does not cover the continuation');
     for (const key of ['capability', 'canvas', 'brand', 'disclosure', 'disclosureDetail']) if (typeof config.copy?.[key] !== 'string' || !config.copy[key].trim() || config.copy[key].length > 120) throw Error(`Invalid shader copy field ${key}`);
     shots = [{ key: 'locked-encoded-opening', start: 0, end: 222 }, ...config.shots];
+  } else if (job.templateId === 'orbital-launch') {
+    if (config.frames !== 1389 || config.fps !== 60 || config.width !== 1920 || config.height !== 1080) throw Error('Orbital launch native timeline/layout changed');
+    for (const key of ['one', 'idea', 'title', 'next', 'script', 'storyboard', 'video', 'motion', 'journey', 'describe', 'build', 'launch', 'brand', 'url']) {
+      if (typeof config.copy?.[key] !== 'string' || !config.copy[key].trim() || config.copy[key].length > 40) throw Error(`Invalid orbital copy field ${key}`);
+    }
+    if (!Array.isArray(config.shots) || !config.shots.length) throw Error('Missing orbital shot table');
+    let end = 0;
+    for (const shot of config.shots) {
+      if (typeof shot.key !== 'string' || !Number.isSafeInteger(shot.start) || !Number.isSafeInteger(shot.end) || shot.start !== end || shot.end <= shot.start) throw Error('Orbital shot table contains gaps, overlaps or invalid frames');
+      end = shot.end;
+    }
+    if (end !== 1389) throw Error('Orbital shot table does not cover the timeline');
+    const boundaries = [0, 210, 434, 570, 780, 948, 1260, 1389];
+    if (config.shots.length !== 7 || config.shots.some((shot, index) => shot.start !== boundaries[index] || shot.end !== boundaries[index + 1])) throw Error('Orbital shot boundaries are fixed to the authored native choreography');
+    shots = config.shots;
   } else {
     if (config.duration !== 12 || config.fps !== 24 || Object.keys(config.formats || {}).length !== 2 || !Object.entries(template.formats).every(([key, size]) => config.formats?.[key]?.width === size.width && config.formats?.[key]?.height === size.height)) throw Error('Basic launch native duration/fps/layout changed');
     for (const value of Object.values(config.copy || {})) if (typeof value !== 'string' || !value.trim() || value.length > 24) throw Error('Basic copy must be nonempty and at most 24 characters per field');
@@ -145,6 +160,7 @@ export async function planProject(project) {
     if (cues.some(cue => !Number.isSafeInteger(cue.frame) || cue.frame < 0 || cue.frame >= state.job.timeline.frames)) throw Error('Audio cue outside project timeline');
   }
   return { schemaVersion: 1, templateId: state.job.templateId, timeline: state.job.timeline, formats: state.job.formats,
+    entry: state.template.entry,
     visualSourceKey: state.visualSourceKey, inputs: state.files, shots: state.shots, cues,
     lockedPrefixFrames: state.template.lockedPrefixFrames,
     audioStatus: state.job.audioPlan ? 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE' : 'EXPLICIT_SILENT_PREVIEW',

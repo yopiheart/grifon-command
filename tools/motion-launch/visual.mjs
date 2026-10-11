@@ -52,7 +52,7 @@ export async function serveProject({ project, port = 0, format = 'landscape' }) 
       else if (name === '/composition/index.html') {
         const state = await readProject(initial.root), selected = url.searchParams.get('format') || format;
         if (!Object.hasOwn(state.job.formats, selected)) throw Error('Unsupported preview format');
-        bytes = state.job.templateId === 'basic-launch' ? Buffer.from(await basicHtml(state, selected)) : await readFile(await safeFile(state.root, 'composition/full.html'));
+        bytes = state.template.entry ? await readFile(await safeFile(state.root, `composition/${state.template.entry}`)) : Buffer.from(await basicHtml(state, selected));
         type = mime['.html'];
       } else if (name === '/audio-status' || name === '/audio-master') {
         const state = await readProject(initial.root), receipt = state.job.audioPlan ? await currentAudio(state.root) : null;
@@ -184,7 +184,7 @@ export async function renderVisual({ project, format = 'landscape', from = 0, fr
     page.on('pageerror', error => errors.push(error.message));
     await page.route('**/*', route => { if (new URL(route.request().url()).origin !== host.url) { external.push(route.request().url()); return route.abort(); } return route.continue(); });
     await page.goto(`${host.url}/composition/index.html?format=${format}`);
-    if (state.job.templateId === 'shader-reference') {
+    if (state.template.entry) {
       await page.waitForFunction(() => window.__motionReady || window.__motionError, null, { timeout: 60000 });
       const error = await page.evaluate(() => window.__motionError); if (error) throw Error(error);
     } else await page.waitForFunction(() => !!window.__timelines?.main);
@@ -194,7 +194,7 @@ export async function renderVisual({ project, format = 'landscape', from = 0, fr
     const capture = performance.now(), captures = [];
     for (let n = 0; n < count; n++) {
       const frame = first + n;
-      await page.evaluate(async ({ frame, numerator, denominator, shader }) => { if (shader) await window.seekFullFrame(frame); else window.__timelines.main.pause().totalTime(frame * denominator / numerator, false); }, { frame, numerator: state.job.timeline.fpsNumerator, denominator: state.job.timeline.fpsDenominator, shader: state.job.templateId === 'shader-reference' });
+      await page.evaluate(async ({ frame, numerator, denominator, native }) => { if (native) await window.seekFullFrame(frame); else window.__timelines.main.pause().totalTime(frame * denominator / numerator, false); }, { frame, numerator: state.job.timeline.fpsNumerator, denominator: state.job.timeline.fpsDenominator, native: !!state.template.entry });
       const bytes = await page.screenshot({ type: 'png', animations: 'disabled' }), file = `${String(n).padStart(4, '0')}.png`;
       await writeFile(path.join(framesDirectory, file), bytes, { flag: 'wx' }); captures.push({ frame, file, sha256: sha256(bytes) });
     }

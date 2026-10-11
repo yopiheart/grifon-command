@@ -1,74 +1,73 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11; authorized ordered motion-stack landing**
+**Stamped: 2026-10-11; new-reference film and benchmark complete, review pending**
 
-## Active task
-Chat: Grifon shader launch film, 01a11748-4bfb-7582-9c06-826e9667b5fd.
+## Active task and result
+Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd, Grifon motion workflow.
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Neil explicitly authorized PR165 -> PR166 -> PR170, retargeting each to main
-and rechecking before merge. This supersedes the earlier no-merge boundary.
-No manual deployment, provider call, new paid run, email or PC sleep was requested.
-PR173 remains closed; rejected Bodila files remain absent.
+Branch: codex/motion-pluto-benchmark, based on origin/main e6e083bf.
+Neil chose an own-brand adaptation of Abdullah.A's Pluto reference:
+https://x.com/abdullah4204k/status/2100297302497997167.
+Delivered candidate: workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4.
+Native picture:1920x1080,60fps,1389frames,23.15s; stereo48k AAC music plus26SFX.
+Film SHA256:691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48.
+Editable source/recipe/licenses/contact sheet/evidence are in the same folder.
+New orbital-launch treatment preserves existing basic and shader contracts.
+Final visual source:5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083.
+No paid provider calls or additional spend. No new merge/deploy authorized.
+Draft PR backup is pending creation; completed work is ready to commit/push.
 
-## Landing receipts
-PR165 merged 2026-10-11 at 73c3ea2aa9236409db286fa8c5fe4ad791ddfb04.
-Its merged tree exactly equals reviewed head 0d19d8f0.
-PR166 was retargeted to main and synchronized at 62764123 with an identical
-reviewed tree; fresh CI 38121674177 and exact-head Vercel passed.
-PR166 merge receipt: 1f43eeaf804471fa09a4d15ee896dba81cc133db.
-PR170 is retargeted to main; its current branch contains both predecessor merges.
-This resume update accompanies its final landing review, before the merge.
-The final exact-head CI/Vercel and merged receipt are authoritative on GitHub:
-- PR165: https://github.com/yopiheart/grifon-command/pull/165
-- PR166: https://github.com/yopiheart/grifon-command/pull/166
-- PR170: https://github.com/yopiheart/grifon-command/pull/170
 ## ▶ NEXT ACTION
-Check live PR170 state before any further landing attempt. Once MERGED, the
-authorized motion-stack task is complete; no creative/source edits remain.
-Ordinary merge commits preserve history; no branch deletion or forced push.
+Commit/push this branch and create/attach a draft PR; record the actual PR here.
+Show the finished MP4 to Neil for whole-film playback and music/SFX fit review.
+Technical verification is complete; human listening and creative acceptance pending.
+Live preview:http://127.0.0.1:50585 (local server session21610); Enable sound then Play.
+UI open requests were queued; do not claim user playback or acceptance.
+Do not merge or deploy this new task without an explicit request.
 
-## Protected delivery
-Accepted film: workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4
-SHA256: f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df
-Accepted player: artifacts/grifon-shader-sound-v1.html
-SHA256: 550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a
-All films, players, sources, fonts, captures, licenses, audio recipe and three
-required posters remain exact. All 79 original reusable workflow files except
-NOW remain identical to 60c10376. No picture or soundtrack edit or new render.
-Historical source/evidence bindings remain frozen.
-
-## PR166 archive and recovery
-Original checkpoint: 118a5e8aac30739b2705489077ad862b671dbfd4.
-Exactly 762 historical QA binaries / 917,501,853 bytes were archived and removed.
-Both shader asset folders contain ARCHIVED_MEDIA.md and qa-media-archive.json.
-All entries independently match original Git blobs, sizes and SHA256; actual
-first, last and raw recovery samples passed. All 625 retained nonmetadata
-original PR166 delivery inputs remain exact.
-PR166 reviewed package: 229,657,756 bytes versus 1,146,939,394 originally (~80% less).
-Ordinary Git history still contains old blobs; historical clone size is unchanged.
-Archive: F:/GrifonLocalArchives/pr166-media-archive/118a5e8a-qa-media.tar
-918,128,640 bytes; SHA256 12e3895e0bc1590205e315163c64297142bd4f740371f1c5b1d1cecacfae546d
-F: is local to this machine, not an off-device backup. Initial C: ENOSPC was
-resolved by scoped archive/pruning. Avoid regenerating the old QA set on C:.
-A clean staged-tree export reproduced all three finished players exactly with
-only the three QA posters and no archived inputs. Historical image-dependent
-runners require restoring their listed archived inputs before rerunning.
+## Measured benchmark
+Earliest retained intake artifact:2026-10-11T08:07:26.0200871Z; user arrival unknown.
+New authoring through final source checkpoint:19m35s, including QA/review waits.
+Live preview:28m37s from intake artifact. First playable MP4:39m07s from intake.
+Encoded-output QA complete:45m53s; all benchmark checks complete:46m41s from intake.
+Cold native full picture:8m49s, of which8m19s was frame capture.
+Identical warm render:16.47s, zero captures; same full-video hash.
+Root audio integration:4.48s; repeated mix0.30s. Mux19.41s, picture stream copied.
+One headline revision:2-second/120f/960x540 draft39.25s; repeat1.57s/zero captures.
+Full revision check6m09s; first disposable init through receipt21m07s included
+cold-benchmark wait. Audio recipe/key/master and13 other files stayed exact.
+One independent-page control differed17pixels by at most2RGB levels; semantic
+layout/source checks pass. No exact cross-page pixel identity is claimed.
+Compact evidence:workflows/assets/grifon-pluto-adaptation/benchmark.json.
+Large media, reference, caches and diagnostics:F:/GrifonBenchmarks/pluto-2100297302497997167/.
+Landscape only; new visual styles still require authoring, not arbitrary conversion.
 
 ## Verification and limits
-Independent CI, archive, propagation and landing-tree reviews passed.
-Historical readiness against main 4b36c62b passed build, 1,475 tests / 32 existing
-default skips, Codex 26 checks, bundle leak, voice sync, evaluation prompt parity,
-domain, PowerShell ASCII, artifact anchors and design lint. Paid/live flags unset.
-Logs: .tmp/merge-ready-verification/main-4b36c62b-20261011/.
-Both templates initialized/validated; 21 copied inputs exact, all 24 declared
-inputs tracked, with zero archived QA dependencies. Historical 35 media / 28
-browser checks remain source-bound. No fresh full 932-frame capture was run.
-CI covers main and both original stack bases, with job bodies and
-existing paid/live defaults unchanged. Legacy Claude review remains opt-in.
-Canonical upstream prompt blob d0998f1931c6cbfd7b4aae68517ff582435fa003 is inherited
-verbatim; zero task-authored tuned diff. Upstream product changes are preserved.
-Librarian sweeps judge broad-token hits; no other task-related living-doc status
-required changes. Motion guide limits and the unapplied skill proposal remain true.
-Universal reference coverage, auditory scoring and customer turnaround are not
-established. Both approved autopsies are consumed; estimate US$0.06987, invoice
-unverified. Existing rights, protected stems, recovery ZIPs, paid caps and
-unrelated Oceanides/Vivo work remain untouched.
+Independent Codex source review PASS; four findings resolved on the final source.
+Native source QA:33frames,9exact out-of-order seeks,390px phone preview,zeroerrors.
+Actual MP4 strict AV decode PASS; all1389video packets/timestamps match master.
+Bounded encoded visual inspection:55frames across all7beats/transitions PASS.
+Audio:registered Digital Clouds32.00-55.15s;26contacts; -16.53LUFS/-2.19dBTP.
+Nominal AAC23.150s; decoded padded tail23.168s. Listening remains unverified.
+Build PASS; focused14tests PASS; full suite1476PASS/32defaultskips with2workers.
+Initial unrestricted suite had one5s anchor timeout; isolated9checks and full
+bounded-worker suite passed. No tests/config skipped or bypassed for this task.
+check:codex26PASS; bundle-leak/voice-sync/eval-prompts/domain/PSASCII/anchors PASS.
+Staged diff check reports one upstream SIL license trailing space at
+assets/OFL-JetBrainsMono.txt:21. Independent review retains the verbatim hashed
+legal data; this formatting diagnostic is not green. No gate/config is bypassed.
+Paid/live switches stayed unset; no tuned prompt/model/schema/knob edits.
+Raw stock recordings/stems/reference footage and frame caches are excluded from Git.
+Both historical paid autopsy approvals are consumed. Do not reuse them.
+
+## Protected delivery and prior landing
+Accepted shader film/source/license/player unchanged; no accepted-media overwrite.
+Film:workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4.
+SHA256:f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df.
+Player:artifacts/grifon-shader-sound-v1.html.
+SHA256:550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a.
+PR165/166/170 ordered landing is complete; main e6e083bf, CI38122594194 allpassed.
+Audit:F:/GrifonLocalArchives/pr166-media-archive/merge-receipts-20261011.json.
+PR173 stays closed; rejected Bodila absent. Do not redo prior merge work.
+762 oldQA/917501853bytes recoverable from F:/GrifonLocalArchives/pr166-media-archive/118a5e8a-qa-media.tar.
+Tar SHA256:12e3895e0bc1590205e315163c64297142bd4f740371f1c5b1d1cecacfae546d.
+Do not restore archived QA to C: or touch unrelated primary Desktop checkout work.

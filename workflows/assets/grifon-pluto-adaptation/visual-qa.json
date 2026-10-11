@@ -1,0 +1,58 @@
+{
+  "verdict": "PASS_BOUNDED_VISUAL_AND_SEMANTIC_CHECK",
+  "visualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+  "captureReport": {
+    "file": "report.json",
+    "sha256": "9cf5f0511bd2faed440938906e936dfeb8759067d4d91bdf33233152a3537f3d"
+  },
+  "timeline": {
+    "fpsNumerator": 60,
+    "fpsDenominator": 1,
+    "frames": 1389,
+    "sampleFrames": 1111200
+  },
+  "selectedNativeFrames": 33,
+  "checks": {
+    "sevenBeatChoreography": "PASS: fragments/type, particle globe/collage, globe row, scan/material flash/push, rolling verbs/horizon, orbital satellites/flatten/recenter, canonical brand lockup",
+    "visibleCopy": "PASS: all recorded text calls use exact brief whitelist; reveal masks use authored words, not random letter generation",
+    "readability": "PASS: corrected white collage headline, separated horizon words, stronger reduced-size particles, larger final URL",
+    "cameraEndpoints": "PASS: corrected push endpoint matches close horizon; pullback begins at preceding horizon position",
+    "satelliteFade": "PASS: 1240/1248/1255/1259/1260 show continuous fade without opaque pop",
+    "canonicalLogo": "PASS: project logo hash matches unchanged public/logo.png; source uses 74% height inside thin transparent gold ring",
+    "localFonts": "PASS: loaded Inter900 and JetBrains600; asset hashes match canonical local sources",
+    "phoneLandscapePreview": "PASS: 390x844 viewport, 390px document width, fully contained 16:9 display and operable scrub",
+    "lastFrameContract": "PASS",
+    "semanticSeekRepeatability": "PASS",
+    "rawPixelSeekRepeatability": "PASS_9_OF_9_ZERO_PIXEL_VARIANCE",
+    "pngByteSeekRepeatability": "PASS_9_OF_9",
+    "readableFinalHold": "PASS: frames1300,1350,1388 are identical, clear and unclipped",
+    "sourceStableDuringCapture": true,
+    "browserErrors": 0,
+    "externalRequests": 0
+  },
+  "fixedFindings": [
+    "Initial opening raster differences resolved by bounded startup warm-up",
+    "Low-contrast collage title corrected",
+    "Reduced-size particle coverage strengthened",
+    "Gold horizon words separated from gold globe",
+    "Satellite/label alpha inheritance corrected",
+    "Camera endpoint discontinuities aligned",
+    "Final URL enlarged"
+  ],
+  "historicalEvidence": [
+    "../2026-10-11T08-25-31-989Z/pixel-diff.json",
+    "../2026-10-11T08-28-38-745Z/pixel-diff.json"
+  ],
+  "noRemainingVisibleBlockerInInspectedSamples": true,
+  "limits": [
+    "33 selected native frames and9 out-of-order repeats; not every-frame visual acceptance",
+    "Exact raster proof applies to this installed browser/runtime and tested source only",
+    "Full1389-frame MP4 decode/content verification pending root export",
+    "Audio listening and soundtrack match UNVERIFIED; no inference from waveforms or metadata"
+  ],
+  "allTemporaryFilesOnF": true,
+  "helperPid": 24296,
+  "helperStopped": true,
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

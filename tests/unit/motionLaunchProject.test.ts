@@ -5,7 +5,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { initProject, readProject, planProject, contained, safeFile, projectDirectory, validateWindow, jsonBytes, sha256 } from '../../tools/motion-launch/project.mjs';
 import { parseArguments } from '../../tools/motion-launch.mjs';
-import { basicHtml, verifyVisualCache, visualCacheKey, headlessBrowserPath, browserRuntimeFiles } from '../../tools/motion-launch/visual.mjs';
+import { basicHtml, serveProject, verifyVisualCache, visualCacheKey, headlessBrowserPath, browserRuntimeFiles } from '../../tools/motion-launch/visual.mjs';
 import { previewPage } from '../../tools/motion-launch/preview-page.mjs';
 
 let root: string;
@@ -41,6 +41,36 @@ describe('isolated native motion projects', () => {
     expect(() => validateWindow(state.job, { from: 0, frames: 20, profile: 'final' })).toThrow('locked encoded opening');
     await writeFile(path.join(state.root, 'composition/grifon-opening-pilot-silent.mp4'), 'changed opening');
     await expect(readProject(state.root)).rejects.toThrow('Locked encoded opening changed');
+  });
+
+  it('authors the separate 60fps orbital treatment and serves its own entry', async () => {
+    const state = await initProject({ project: fresh('orbital'), templateId: 'orbital-launch' });
+    expect(state.job.timeline).toEqual({ fpsNumerator: 60, fpsDenominator: 1, frames: 1389, sampleFrames: 1111200 });
+    const plan = await planProject(state.root);
+    expect(plan.entry).toBe('orbital.html'); expect(plan.shots).toHaveLength(7);
+    expect(plan.audioStatus).toBe('AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE'); expect(plan.cues.length).toBeGreaterThan(0);
+    expect(plan.shots[0].start).toBe(0); expect(plan.shots.at(-1)?.end).toBe(1389);
+    expect(plan.lockedPrefixFrames).toBe(0);
+    expect(validateWindow(state.job, { from: 1260, frames: 120 })).toMatchObject({ frames: 120, width: 960, height: 540 });
+    expect(() => validateWindow(state.job, { frames: 121 })).toThrow('bounded');
+    expect(validateWindow(state.job, { frames: 1389, profile: 'final' })).toMatchObject({ width: 1920, height: 1080 });
+    const host = await serveProject({ project: state.root });
+    try {
+      const response = await fetch(`${host.url}/composition/index.html`);
+      expect(response.status).toBe(200);
+      expect(await response.text()).toContain('./orbital.js');
+      const preview = await fetch(host.url).then(reply => reply.text());
+      expect(preview).toContain('plan.entry'); expect(preview).not.toContain('Editable 12-second');
+    } finally { await host.close(); }
+    state.config.copy.motion = 'Bring this into motion.';
+    await writeFile(path.join(state.root, 'composition/orbital.json'), jsonBytes(state.config));
+    expect((await readProject(state.root)).visualSourceKey).not.toBe(state.visualSourceKey);
+    state.config.shots[1].start++;
+    await writeFile(path.join(state.root, 'composition/orbital.json'), jsonBytes(state.config));
+    await expect(readProject(state.root)).rejects.toThrow('gaps, overlaps');
+    state.config.shots[0].end++; // Contiguous metadata cannot claim timing different from the authored scene.
+    await writeFile(path.join(state.root, 'composition/orbital.json'), jsonBytes(state.config));
+    await expect(readProject(state.root)).rejects.toThrow('fixed to the authored native choreography');
   });
 
   it('rejects invalid timeline, layout, fractional and out-of-range frame windows', async () => {
@@ -98,7 +128,7 @@ describe('cache proof and path boundaries', () => {
     let resolveSeek: () => void = () => {}, audioStarts = 0, delayed = true;
     const audio = elements.get('audio'); audio.currentTime = 0; audio.pause = () => {}; audio.play = () => { audioStarts++; return Promise.resolve(); };
     elements.get('composition').contentWindow = { __motionReady: true, document: { fonts: { ready: Promise.resolve() } }, seekFullFrame: (frame: number) => frame === 66 && delayed ? new Promise<void>(resolve => { resolveSeek = () => { delayed = false; resolve(); }; }) : Promise.resolve() };
-    const plan = { templateId: 'shader-reference', timeline: { fpsNumerator: 30000, fpsDenominator: 1001, frames: 932 }, formats: { landscape: { width: 1920, height: 1080 } }, lockedPrefixFrames: 222, audioStatus: 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE', shots: [{ key: 'opening', start: 0, end: 222 }], cues: [{ id: 'cue', frame: 66 }] };
+    const plan = { templateId: 'shader-reference', entry: 'full.html', timeline: { fpsNumerator: 30000, fpsDenominator: 1001, frames: 932 }, formats: { landscape: { width: 1920, height: 1080 } }, lockedPrefixFrames: 222, audioStatus: 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE', shots: [{ key: 'opening', start: 0, end: 222 }], cues: [{ id: 'cue', frame: 66 }] };
     const html = previewPage(plan, 'landscape'), script = html.match(/<script>([\s\S]*?)<\/script>/)![1];
     vm.runInNewContext(script, { document: { getElementById: (id: string) => elements.get(id), createElement: element }, ResizeObserver: class { observe() {} }, location: { assign() {}, reload() {} }, performance, setTimeout, requestAnimationFrame(callback: (now: number) => void) { raf.push(callback); }, fetch: async () => ({ ok: true, json: async () => ({ available: true }) }) });
     await elements.get('composition').onload(); elements.get('sound').onclick();
@@ -124,7 +154,7 @@ describe('cache proof and path boundaries', () => {
     let rejectAudio: (error: Error) => void = () => {};
     const audio = elements.get('audio'); audio.currentTime = 0; audio.pause = () => {}; audio.play = () => new Promise<void>((_, reject) => { rejectAudio = reject; });
     elements.get('composition').contentWindow = { __motionReady: true, document: { fonts: { ready: Promise.resolve() } }, seekFullFrame: () => Promise.resolve() };
-    const plan = { templateId: 'shader-reference', timeline: { fpsNumerator: 30000, fpsDenominator: 1001, frames: 932 }, formats: { landscape: { width: 1920, height: 1080 } }, lockedPrefixFrames: 222, audioStatus: 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE', shots: [{ key: 'opening', start: 0, end: 222 }], cues: [] };
+    const plan = { templateId: 'shader-reference', entry: 'full.html', timeline: { fpsNumerator: 30000, fpsDenominator: 1001, frames: 932 }, formats: { landscape: { width: 1920, height: 1080 } }, lockedPrefixFrames: 222, audioStatus: 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE', shots: [{ key: 'opening', start: 0, end: 222 }], cues: [] };
     const script = previewPage(plan, 'landscape').match(/<script>([\s\S]*?)<\/script>/)![1];
     vm.runInNewContext(script, { document: { getElementById: (id: string) => elements.get(id), createElement: element }, ResizeObserver: class { observe() {} }, location: { assign() {}, reload() {} }, performance, setTimeout, requestAnimationFrame() {}, fetch: async () => ({ ok: true, json: async () => ({ available: true }) }) });
     await elements.get('composition').onload(); elements.get('sound').onclick();
@@ -144,7 +174,7 @@ describe('cache proof and path boundaries', () => {
     let now = 0, resolveStart: () => void = () => {}, audioStarts = 0;
     const audio = elements.get('audio'); audio.currentTime = 0; audio.pause = () => {}; audio.play = () => { audioStarts++; return new Promise<void>(resolve => { resolveStart = resolve; }); };
     elements.get('composition').contentWindow = { __motionReady: true, document: { fonts: { ready: Promise.resolve() } }, seekFullFrame: () => Promise.resolve() };
-    const fps = 30000 / 1001, plan = { templateId: 'shader-reference', timeline: { fpsNumerator: 30000, fpsDenominator: 1001, frames: 932 }, formats: { landscape: { width: 1920, height: 1080 } }, lockedPrefixFrames: 222, audioStatus: 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE', shots: [{ key: 'opening', start: 0, end: 222 }], cues: [{ id: 'contact', frame: 66 }] };
+    const fps = 30000 / 1001, plan = { templateId: 'shader-reference', entry: 'full.html', timeline: { fpsNumerator: 30000, fpsDenominator: 1001, frames: 932 }, formats: { landscape: { width: 1920, height: 1080 } }, lockedPrefixFrames: 222, audioStatus: 'AUTHORED_PLAN_NOT_LISTENING_ACCEPTANCE', shots: [{ key: 'opening', start: 0, end: 222 }], cues: [{ id: 'contact', frame: 66 }] };
     const script = previewPage(plan, 'landscape').match(/<script>([\s\S]*?)<\/script>/)![1];
     vm.runInNewContext(script, { document: { getElementById: (id: string) => elements.get(id), createElement: element }, ResizeObserver: class { observe() {} }, location: { assign() {}, reload() {} }, performance: { now: () => now }, setTimeout, requestAnimationFrame(callback: (time: number) => void) { raf.push(callback); }, fetch: async () => ({ ok: true, json: async () => ({ available: true }) }) });
     const flush = async () => { await new Promise<void>(resolve => setImmediate(resolve)); };
