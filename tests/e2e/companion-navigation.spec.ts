@@ -137,7 +137,7 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
 
 test('switching chats while typing isolates callbacks and preserves unsent input across accounts', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 }); await openFixture(page);
-  await page.clock.install(); await page.clock.pauseAt(new Date());
+  await page.clock.install(); await page.clock.pauseAt(new Date(Date.now() + 2 * 60 * 60 * 1000));
   await input(page).fill('Pending coffee'); await input(page).press('Enter');
   await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toBeVisible();
   await input(page).fill('Unsent coffee');

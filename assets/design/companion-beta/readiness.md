@@ -304,9 +304,34 @@ CLI/config commands successfully and binds the final Resume source.
 Full exact-head CI must pass before merge readiness. Physical phones, hosted auth
 and live output remain separate release gates.
 
+### Successful full CI and isolated clock guard
+
+Exact `9c6ca440` completed all224 cases,223 first-attempt and one retry-pass,
+with zero terminal failures, browser skips or omissions. All seven earlier
+blockers passed first attempt. Build/static/artifacts,1,572units (32existing skips),
+database24/24 and Vercel passed. All35 checkouts and local/head/tested trees match;
+442 watched source files stayed unchanged. Independent review rederived the
+actual224-case union from every shard log.
+[Full receipt](qa/main-readiness/ci-thirtytwo-summary.json).
+
+The sole retry failed before user input at navigation140: `clock.pauseAt` received
+a target that was already past. A one-line test-only guard chooses two hours in
+the future before any answer, retaining all1000ms, callback, composer and account
+assertions. Original0ms target fails with an injected500ms delay; guarded ordinary
+2/2 and delayed1/1 pass without retries/skips. This proves stale-target sensitivity
+and the guarded behavior; exact hosted latency is not measured. Fixture calls and
+page errors were observed throughout; request-category counters apply only to the
+delayed positive run. [Original CI error](qa/main-readiness/ci-navigation-clock-flake.json).
+The [clock result](qa/main-readiness/ci-navigation-clock-result.json) binds original,
+guarded source and exact harness copies. Refreshed [final discovery](qa/main-readiness/ci-final-partition-result.json)
+again verifies224 identical IDs,32x7, no duplicates/omissions and36 successful
+CLI/config commands against the guarded source.
+The current PR head must still have a fully successful CI before merge.
+
 ## External release gates
 
-- [ ] Complete exact-head CI on the integrated main-target PR and verify its hosted candidate. The old [blocked status](qa/hosted-checks.json) is historical.
+- CI merge gate: all224 cases and required jobs must pass on the exact PR head. The completed source candidate `9c6ca440` passed [run38130887530](https://github.com/yopiheart/grifon-command/actions/runs/38130887530):223first-pass,1retry-pass, zero terminal failures/browser skips/omissions; build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel passed. [Bound receipt](qa/main-readiness/ci-thirtytwo-summary.json). Latest head status on [PR177](https://github.com/yopiheart/grifon-command/pull/177) is authoritative before merge.
+- [ ] Authenticated hosted desktop/mobile render and login checks on the release candidate. Vercel metadata confirms a successful preview build only; the old [blocked status](qa/hosted-checks.json) is historical.
 - [x] Prove exactly-once debit, rollback and permissions on isolated native PostgreSQL with real concurrent sessions.
 - [x] Approve/apply the exact target migration; verify catalog, permissions, REST cache resolution/anonymous denial and read-only service-role input validation.
 - [ ] Real OTP delivery, expired session, and second-account isolation on the release candidate.
