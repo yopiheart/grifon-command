@@ -1,0 +1,524 @@
+{
+  "recordedUtc": "2026-10-11T08:23:10.121Z",
+  "overall": "NOT GREEN:3browser shards cancelled at15m cap with persistent failures before cancellation",
+  "pullRequest": "https://github.com/yopiheart/grifon-command/pull/177",
+  "head": "b60c44513a60d3d8bb15e4ce94d13c450fe26b93",
+  "base": "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+  "testedPrMergeCommit": "10708453fb3606141a028a75c6027b43064e6853",
+  "testedTree": "275f9055c8a849a592610362d4e3046de05d0d0e",
+  "treeIdentityEvidence": "Parent independently compared GitHub git-commits PR-merge tree to local candidate HEAD tree; both identical",
+  "runId": 38123364739,
+  "runUrl": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739",
+  "status": "completed",
+  "conclusion": "cancelled",
+  "observerActions": "Read-only GitHub run/check/log inspection; owned ignored QA writes only; no rerun,cancel,source edit,paid operation,DB write,deploy or merge",
+  "jobs": [
+    {
+      "name": "artifacts",
+      "id": 114422509145,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509145",
+      "startedAt": "2026-10-11T08:01:37Z",
+      "completedAt": "2026-10-11T08:02:56Z",
+      "durationSeconds": 79
+    },
+    {
+      "name": "e2e (2)",
+      "id": 114422509351,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509351",
+      "startedAt": "2026-10-11T08:01:38Z",
+      "completedAt": "2026-10-11T08:16:58Z",
+      "durationSeconds": 920
+    },
+    {
+      "name": "e2e (4)",
+      "id": 114422509398,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509398",
+      "startedAt": "2026-10-11T08:01:37Z",
+      "completedAt": "2026-10-11T08:06:41Z",
+      "durationSeconds": 304
+    },
+    {
+      "name": "database",
+      "id": 114422509399,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509399",
+      "startedAt": "2026-10-11T08:01:37Z",
+      "completedAt": "2026-10-11T08:03:01Z",
+      "durationSeconds": 84
+    },
+    {
+      "name": "e2e (3)",
+      "id": 114422509456,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509456",
+      "startedAt": "2026-10-11T08:01:38Z",
+      "completedAt": "2026-10-11T08:17:05Z",
+      "durationSeconds": 927
+    },
+    {
+      "name": "verify",
+      "id": 114422509479,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509479",
+      "startedAt": "2026-10-11T08:01:37Z",
+      "completedAt": "2026-10-11T08:05:45Z",
+      "durationSeconds": 248
+    },
+    {
+      "name": "e2e (1)",
+      "id": 114422509641,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114422509641",
+      "startedAt": "2026-10-11T08:01:38Z",
+      "completedAt": "2026-10-11T08:16:55Z",
+      "durationSeconds": 917
+    },
+    {
+      "name": "main-status",
+      "id": 114425206361,
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/yopiheart/grifon-command/actions/runs/38123364739/job/114425206361",
+      "startedAt": "2026-10-11T08:17:05Z",
+      "completedAt": "2026-10-11T08:17:05Z",
+      "durationSeconds": 0
+    }
+  ],
+  "verify": {
+    "status": "PASS",
+    "unitTests": {
+      "passed": 1572,
+      "failed": 0,
+      "skipped": 32,
+      "total": 1604,
+      "filesPassed": 127,
+      "filesSkipped": 9,
+      "totalFiles": 136,
+      "durationSeconds": 132.93
+    },
+    "nativeCodex": {
+      "passed": 25,
+      "failed": 0,
+      "skipped": 1,
+      "total": 26
+    },
+    "hookGate": {
+      "passed": 25,
+      "failed": 0
+    },
+    "gates": [
+      "build",
+      "PowerShell ASCII",
+      "bundle-leak11bundles/0markers",
+      "voice sync2funnels",
+      "eval prompt sync6pairs",
+      "Codex controls",
+      "design lint"
+    ]
+  },
+  "database": {
+    "status": "PASS",
+    "totalChecks": 24,
+    "breakdown": {
+      "existingSqlSuite": 1,
+      "originalDuplicateChargeRejectionControls": 4,
+      "independentBackendConcurrencyAndObservedLockCases": 12,
+      "replayAndAgedReceiptCases": 4,
+      "actualSetRoleChecks": 3
+    },
+    "postgresVersion": "17.11",
+    "cleanup": "Owned database and bootstrap roles dropped",
+    "limitation": "Isolated PostgreSQL only; not target Supabase rollout or PostgREST verification"
+  },
+  "artifacts": {
+    "status": "PASS",
+    "artifactAnchorCheck": "1generated15KB HTML artifact unchanged;5reported anchors checked"
+  },
+  "browser": {
+    "planned": 224,
+    "reportedUniqueCases": 154,
+    "duplicateKeysAcrossShards": 0,
+    "firstAttemptPasses": 134,
+    "flakyPasses": 4,
+    "persistentFailures": 14,
+    "withoutReportedResult": 70,
+    "attemptCount": 172,
+    "retryAttempts": 18,
+    "observedSkipped": 0,
+    "lastRecordClassification": "Shard1 and2 last failure records precede job cancellation by~25s; no retry result or separate assertion diagnostics were reported. First attempts failed, retries unresolved; not classified persistent failures.",
+    "unresolvedCasesAfterFailedFirstAttempt": 2,
+    "successfulUniqueCases": 138,
+    "all224Completed": false,
+    "shards": [
+      {
+        "shard": 1,
+        "planned": 56,
+        "status": "CANCELLED",
+        "attemptCount": 58,
+        "uniqueCases": 55,
+        "firstAttemptPasses": 51,
+        "flakyPasses": 2,
+        "persistentFailures": 1,
+        "retryAttempts": 3,
+        "failedReporterRecords": 5,
+        "skipped": 0,
+        "unreportedCases": 1,
+        "lastReportedCase": {
+          "status": "failed",
+          "index": 58,
+          "key": "[chromium] › tests/e2e/companion-chat.spec.ts:91:1 › draft reload/account isolation, error retry and fixture checkpoint restore",
+          "retry": 0,
+          "duration": "46.0s",
+          "timestamp": "2026-10-11T08:16:25.1333371Z"
+        },
+        "lastPassedCase": {
+          "status": "passed",
+          "index": 57,
+          "key": "[chromium] › tests/e2e/companion-chat.spec.ts:78:1 › IME Enter does not submit; invalid files and missing image cannot generate",
+          "retry": 0,
+          "duration": "3.0s",
+          "timestamp": "2026-10-11T08:15:39.0663254Z"
+        },
+        "cancelAt": "2026-10-11T08:16:50.7818773Z",
+        "reporterSummary": [],
+        "unresolvedCasesAfterFailedFirstAttempt": 1
+      },
+      {
+        "shard": 2,
+        "planned": 56,
+        "status": "CANCELLED",
+        "attemptCount": 19,
+        "uniqueCases": 15,
+        "firstAttemptPasses": 10,
+        "flakyPasses": 1,
+        "persistentFailures": 3,
+        "retryAttempts": 4,
+        "failedReporterRecords": 8,
+        "skipped": 0,
+        "unreportedCases": 41,
+        "lastReportedCase": {
+          "status": "failed",
+          "index": 19,
+          "key": "[chromium] › tests/e2e/companion-continuity.spec.ts:104:3 › ready renderer continuity across New chat and saved chats at 375px",
+          "retry": 0,
+          "duration": "1.1m",
+          "timestamp": "2026-10-11T08:16:28.0361898Z"
+        },
+        "lastPassedCase": {
+          "status": "passed",
+          "index": 18,
+          "key": "[chromium] › tests/e2e/companion-chat.spec.ts:336:1 › parent pointer events move the embedded companion eyes",
+          "retry": 1,
+          "duration": "19.2s",
+          "timestamp": "2026-10-11T08:15:23.1888319Z"
+        },
+        "cancelAt": "2026-10-11T08:16:50.9722811Z",
+        "reporterSummary": [],
+        "unresolvedCasesAfterFailedFirstAttempt": 1
+      },
+      {
+        "shard": 3,
+        "planned": 56,
+        "status": "CANCELLED",
+        "attemptCount": 39,
+        "uniqueCases": 28,
+        "firstAttemptPasses": 17,
+        "flakyPasses": 1,
+        "persistentFailures": 10,
+        "retryAttempts": 11,
+        "failedReporterRecords": 21,
+        "skipped": 0,
+        "unreportedCases": 28,
+        "lastReportedCase": {
+          "status": "passed",
+          "index": 39,
+          "key": "[chromium] › tests/e2e/companion-typing.spec.ts:118:1 › reduced motion keeps the typing indicator static while preserving the delay",
+          "retry": 0,
+          "duration": "27.6s",
+          "timestamp": "2026-10-11T08:16:43.4160485Z"
+        },
+        "lastPassedCase": {
+          "status": "passed",
+          "index": 39,
+          "key": "[chromium] › tests/e2e/companion-typing.spec.ts:118:1 › reduced motion keeps the typing indicator static while preserving the delay",
+          "retry": 0,
+          "duration": "27.6s",
+          "timestamp": "2026-10-11T08:16:43.4160485Z"
+        },
+        "cancelAt": "2026-10-11T08:16:51.1595381Z",
+        "reporterSummary": [],
+        "unresolvedCasesAfterFailedFirstAttempt": 0
+      },
+      {
+        "shard": 4,
+        "planned": 56,
+        "status": "PASS",
+        "attemptCount": 56,
+        "uniqueCases": 56,
+        "firstAttemptPasses": 56,
+        "flakyPasses": 0,
+        "persistentFailures": 0,
+        "retryAttempts": 0,
+        "failedReporterRecords": 0,
+        "skipped": 0,
+        "unreportedCases": 0,
+        "lastReportedCase": {
+          "status": "passed",
+          "index": 56,
+          "key": "[chromium] › tests/e2e/typography.spec.ts:178:3 › real public components with signed-out boot stub at 1280px",
+          "retry": 0,
+          "duration": "3.3s",
+          "timestamp": "2026-10-11T08:06:37.2369242Z"
+        },
+        "lastPassedCase": {
+          "status": "passed",
+          "index": 56,
+          "key": "[chromium] › tests/e2e/typography.spec.ts:178:3 › real public components with signed-out boot stub at 1280px",
+          "retry": 0,
+          "duration": "3.3s",
+          "timestamp": "2026-10-11T08:06:37.2369242Z"
+        },
+        "reporterSummary": [
+          "  56 passed (3.2m)"
+        ],
+        "unresolvedCasesAfterFailedFirstAttempt": 0
+      }
+    ],
+    "persistentFailedCases": [
+      {
+        "shard": 1,
+        "test": "[chromium] › tests/e2e/companion-chat.spec.ts:45:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 2,
+        "test": "[chromium] › tests/e2e/companion-chat.spec.ts:109:3 › 375px layout and real avatar bridge",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 2,
+        "test": "[chromium] › tests/e2e/companion-chat.spec.ts:109:3 › 390px layout and real avatar bridge",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 2,
+        "test": "[chromium] › tests/e2e/companion-chat.spec.ts:191:1 › allowance and preset gates dispatch no generation or revision until permitted",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:248:5 › fast normal motion startup reveals only after actual pixels at 375px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:259:3 › genuine model failure offers truthful still and retry hides it until new real pixels at 375px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:248:5 › fast normal motion startup reveals only after actual pixels at 390px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:259:3 › genuine model failure offers truthful still and retry hides it until new real pixels at 390px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:248:5 › fast normal motion startup reveals only after actual pixels at 1280px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-startup.spec.ts:259:3 › genuine model failure offers truthful still and retry hides it until new real pixels at 1280px",
+        "status": "failed",
+        "reportedAttempts": 2
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-typing.spec.ts:46:1 › all five intake steps are paced; double Enter cannot consume a second answer and typing keeps focus",
+        "status": "failed",
+        "reportedAttempts": 2
+      }
+    ],
+    "flakyCases": [
+      {
+        "shard": 1,
+        "test": "[chromium] › tests/e2e/companion-account.spec.ts:434:1 › late subscription response cannot replace the newly signed-in account plan",
+        "status": "flaky"
+      },
+      {
+        "shard": 1,
+        "test": "[chromium] › tests/e2e/companion-beta.spec.ts:25:34 › guided beta limitations are visible at 390px",
+        "status": "flaky"
+      },
+      {
+        "shard": 2,
+        "test": "[chromium] › tests/e2e/companion-chat.spec.ts:336:1 › parent pointer events move the embedded companion eyes",
+        "status": "flaky"
+      },
+      {
+        "shard": 3,
+        "test": "[chromium] › tests/e2e/companion-typing.spec.ts:26:1 › intake reply waits through 499ms and arrives at 600ms with accessible typing status",
+        "status": "flaky"
+      }
+    ],
+    "unresolvedCases": [
+      {
+        "shard": 1,
+        "test": "[chromium] › tests/e2e/companion-chat.spec.ts:91:1 › draft reload/account isolation, error retry and fixture checkpoint restore",
+        "status": "failed-first-attempt-retry-unresolved-at-job-cancellation",
+        "firstAttemptDuration": "46.0s",
+        "lastRecordAt": "2026-10-11T08:16:25.1333371Z"
+      },
+      {
+        "shard": 2,
+        "test": "[chromium] › tests/e2e/companion-continuity.spec.ts:104:3 › ready renderer continuity across New chat and saved chats at 375px",
+        "status": "failed-first-attempt-retry-unresolved-at-job-cancellation",
+        "firstAttemptDuration": "1.1m",
+        "lastRecordAt": "2026-10-11T08:16:28.0361898Z"
+      }
+    ],
+    "capEvidence": [
+      {
+        "shard": 1,
+        "annotation": "The job has exceeded the maximum execution time of15m0s"
+      },
+      {
+        "shard": 2,
+        "annotation": "The job has exceeded the maximum execution time of15m0s"
+      },
+      {
+        "shard": 3,
+        "annotation": "The job has exceeded the maximum execution time of15m0s"
+      }
+    ],
+    "previouslyReproducedBudgetCases": {
+      "staleTab": "PASS first attempt44.0s",
+      "crossTabPendingImageLock": "PASS first attempt19.0s"
+    }
+  },
+  "diagnostics": {
+    "startup": {
+      "affectedPersistentCases": 9,
+      "assertions": [
+        {
+          "file": "tests/e2e/companion-startup.spec.ts",
+          "line": 163,
+          "condition": "normal motion gets a gentle, brief reveal",
+          "expected": "intermediate positive opacity samples>0",
+          "received": 0
+        },
+        {
+          "file": "tests/e2e/companion-startup.spec.ts",
+          "line": 146,
+          "condition": "cold-load slot exact equality on375/1280 retries",
+          "example": {
+            "width": 375,
+            "expectedLeft": 159.5,
+            "receivedLeft": 159.484375,
+            "deltaCssPixels": 0.015625
+          }
+        }
+      ],
+      "earlierAssertionsPassed": "Actual colored WebGL pixels>1; exactly1ready message after firstPaint; nofallback. Most failures also passed positive/monotonic single reveal checks before missing-intermediate assertion.",
+      "reducedMotionStartupCases": "3/3PASS",
+      "interpretation": "RAF sampling of a short reveal and strict fractional geometry are plausible harness causes; no missing-model/pixel assertion failure appears.",
+      "pageErrorsAndConsole": "Not printed in job logs; custom capture follows assertReady, so failed cases may not persist these arrays. Unverified rather than assumed empty."
+    },
+    "chatCore": {
+      "file": "tests/e2e/companion-chat.spec.ts",
+      "firstAttempt": {
+        "line": 50,
+        "assertion": "start-call array length immediately after Generate storyboard dblclick",
+        "expected": 1,
+        "received": 0
+      },
+      "retry": {
+        "line": 59,
+        "error": "Approve storyboard click exhausted60s waiting visible/enabled/stable"
+      }
+    },
+    "mobileBridge": {
+      "file": "tests/e2e/companion-chat.spec.ts",
+      "widths": [
+        375,
+        390
+      ],
+      "first375": "line122 frame reaction.state evaluate/poll exhausted60s",
+      "retries": "brief helper line42 Generate storyboard toBeEnabled locator missing/undefined; overall60s exhausted"
+    },
+    "typing": {
+      "file": "tests/e2e/companion-typing.spec.ts",
+      "line": 22,
+      "error": "clock.pauseAt:Cannot fast-forward to the past",
+      "setup": "Clock installed then paused at only1s later; first test flakes, all-five test first attempt fails setup.",
+      "allFiveRetry": "line62 locator.count after clock.runFor499 exhausted60s; context closed"
+    },
+    "exactExcerptFiles": [
+      "e2e-1-failure-excerpts.json",
+      "e2e-2-failure-excerpts.json",
+      "e2e-3-failure-excerpts.json"
+    ]
+  },
+  "prTerminal": {
+    "draft": true,
+    "mergeable": "MERGEABLE",
+    "mergeStateStatus": "UNSTABLE",
+    "vercel": {
+      "__typename": "StatusContext",
+      "context": "Vercel",
+      "startedAt": "2026-10-11T08:04:05Z",
+      "state": "SUCCESS",
+      "targetUrl": "https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/TkPia1zg23Ea2TKM2pB7sbzZiyfk"
+    }
+  },
+  "artifactDownload": {
+    "downloaded": false,
+    "reason": "Completed job logs contain key assertion diagnostics. Low local disk; avoid154MBshard3/70MBshard2/51MBshard1 ZIPs."
+  },
+  "limitations": [
+    "Run is not a224-case browser pass;70unique cases lack reported results and2first-fail cases have unresolved retries.",
+    "Database job proves isolatedPostgreSQL behavior, not targetSupabase/PostgREST; parent separately owns rollout verification.",
+    "No hosted UI, real-phone, live provider or finished-ad quality verification performed by this observer."
+  ]
+}

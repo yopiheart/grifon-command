@@ -1,0 +1,26 @@
+{
+  "phase": "focused",
+  "exitCode": 0,
+  "expected": 15,
+  "unexpected": 0,
+  "flaky": 0,
+  "skipped": 0,
+  "durationMs": 184910.981,
+  "sourceFilesChecked": 455,
+  "sourceChanges": [],
+  "identitySha256": [
+    "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+  ],
+  "rejectedExternalRequests": 0,
+  "pageErrors": 0,
+  "testCommand": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/three-specs.config.ts --grep 'brief, explicit start|(?:375|390)px layout and real avatar bridge|allowance and preset gates|cold slow load|fast normal motion startup|genuine model failure|intake reply waits|all five intake steps'",
+  "retries": 0,
+  "workers": 1,
+  "expectMs": 15000,
+  "testMs": 60000,
+  "scope": "Isolated fixture server on 127.0.0.1:5187; real avatar; local Playwright Chromium; not hosted Linux/full-suite proof",
+  "instrumentation": {
+    "actualInstrumentedCases": 4,
+    "limitation": "The shared import registers hooks only in the first spec file loaded per worker. Served App identity/pageerror/external-request counters apply only to these recorded cases. Every test retained its own repository fixture network guards and behavior assertions."
+  }
+}

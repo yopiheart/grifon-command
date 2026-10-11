@@ -110,7 +110,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
     steps:
       - uses: actions/checkout@v4
 
@@ -142,7 +142,7 @@ jobs:
         run: npx playwright install-deps chromium
 
       - name: Boot/render smoke
-        run: npm run test:e2e -- --shard=${{ matrix.shard }}/4
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/8
 
       - name: Upload screenshots
         if: always()

@@ -8,6 +8,7 @@ const input = (page: Page) => page.getByRole('textbox', { name: 'Message Grifon'
 const typing = (page: Page) => page.getByRole('status', { name: 'Grifon is typing', exact: true });
 
 async function openFixture(page: Page, fakeClock = true) {
+  if (fakeClock) await page.clock.install({ time: new Date('2026-10-07T12:00:00Z') });
   await page.route('**/*', route => {
     const req = route.request(); const url = new URL(req.url());
     if (req.method() === 'GET' && ['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) return route.continue();
@@ -18,8 +19,8 @@ async function openFixture(page: Page, fakeClock = true) {
   await expect(input(page)).toBeVisible();
   await expect(page.locator('iframe:visible')).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
   if (fakeClock) {
-    await page.clock.install({ time: new Date('2026-10-07T12:00:00Z') });
-    await page.clock.pauseAt(new Date('2026-10-07T12:00:01Z'));
+    // Let loading timers run, then pause beyond the unchanged 60s test cap.
+    await page.clock.pauseAt(new Date('2026-10-07T14:00:00Z'));
   }
 }
 
@@ -34,10 +35,11 @@ test('intake reply waits through 499ms and arrives at 600ms with accessible typi
   await page.screenshot({ path: path.join(QA, `${phase}-timing-initial.png`) });
   expect.soft(immediate.typing, 'show an accessible typing status immediately after accepting the answer').toBe(1);
   expect.soft(immediate.assistantMessages, 'next intake question must not arrive immediately').toBe(1);
-  await page.clock.runFor(499);
+  // Check exact timer boundaries without stepping every unrelated render frame.
+  await page.clock.fastForward(499);
   expect.soft(await typing(page).count(), 'typing remains visible for at least 500ms').toBe(1);
   expect.soft(await page.locator('article .companion-message-assistant').count()).toBe(1);
-  await page.clock.runFor(101);
+  await page.clock.fastForward(101);
   await expect(typing(page)).toHaveCount(0);
   await expect(page.locator('article .companion-message-assistant')).toHaveCount(2);
   await expect(page.locator('article .companion-message-assistant').last()).toContainText('brand name');
@@ -58,11 +60,11 @@ test('all five intake steps are paced; double Enter cannot consume a second answ
     await input(page).press('Enter');
     await expect(input(page)).toHaveValue('Draft for the next answer');
     await expect(page.getByRole('button', { name: 'Send', exact: true })).toBeDisabled();
-    await page.clock.runFor(499);
+    await page.clock.fastForward(499);
     expect(await page.locator('article .companion-message-assistant').count()).toBe(index + 1);
     expect(await page.locator('.companion-message-user').count()).toBe(index + 1);
     expect(await page.locator('[aria-label="Review your brief"]').count()).toBe(0);
-    await page.clock.runFor(101);
+    await page.clock.fastForward(101);
     await expect(typing(page)).toHaveCount(0);
     await expect(page.locator('article .companion-message-assistant')).toHaveCount(index + 2);
     await expect(input(page)).toHaveValue('Draft for the next answer');
@@ -104,6 +106,7 @@ for (const lifecycle of ['reload', 'leave-and-return']) {
     await openFixture(page);
     await input(page).fill('Persist this accepted answer'); await input(page).press('Enter');
     await expect(typing(page)).toBeVisible();
+    await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
     if (lifecycle === 'reload') await page.reload();
     else { await page.goto('about:blank'); await page.goto('/companion-chat-preview.html'); }
     await expect(page.getByTestId('conversation-scroll').getByText('Persist this accepted answer', { exact: true })).toBeVisible();
@@ -121,9 +124,9 @@ test('reduced motion keeps the typing indicator static while preserving the dela
   await input(page).fill('A reduced motion brief'); await input(page).press('Enter');
   await expect(typing(page)).toBeVisible();
   expect(await typing(page).evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(0);
-  await page.clock.runFor(499);
+  await page.clock.fastForward(499);
   await expect(typing(page)).toBeVisible();
-  await page.clock.runFor(101);
+  await page.clock.fastForward(101);
   await expect(typing(page)).toHaveCount(0);
   await expect(page.locator('article .companion-message-assistant')).toHaveCount(2);
 });

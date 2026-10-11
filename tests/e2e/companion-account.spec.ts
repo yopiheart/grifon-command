@@ -438,6 +438,7 @@ test('late subscription response cannot replace the newly signed-in account plan
   await expect.poll(() => page.evaluate(() => (window as any).accountFixture.planWaiters.length)).toBeGreaterThan(0);
   await page.evaluate(() => { (window as any).accountFixture.signInAs('account-fixture-second'); });
   await expect.poll(() => page.evaluate(() => (window as any).accountFixture.calls.filter((call: any) => call.name === 'plan-read' && call.userId === 'account-fixture-second').length)).toBeGreaterThan(0);
+  await expect(input(page)).toBeVisible();
   const settings = await showAccountSettings(page);
   await expect(settings).toContainText('Starter Edition');
   await page.evaluate(() => {

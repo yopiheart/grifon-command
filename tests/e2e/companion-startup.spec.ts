@@ -33,16 +33,35 @@ async function configure(page: Page, width: number, height: number) {
       };
     }
     if (window !== window.top) return;
-    const ledger = { samples: [] as any[], readyMessages: [] as any[], frameInsertedAt: null as number | null, frameInsertedTimeline: null as number | null, running: true };
+    const ledger = { samples: [] as any[], readyMessages: [] as any[], revealAnimations: [] as any[], frameInsertedAt: null as number | null, frameInsertedTimeline: null as number | null, running: true };
+    let heldReveal: Animation | null = null;
+    const observedReady = new WeakSet<Element>();
     (window as any).startupEvidence = ledger;
+    (window as any).resumeStartupReveal = () => { heldReveal?.play(); heldReveal = null; };
     new MutationObserver(records => {
-      for (const record of records) for (const node of record.addedNodes) {
-        if (node instanceof Element && (node.matches('iframe[title="Grifon animated companion"]') || node.querySelector('iframe[title="Grifon animated companion"]'))) {
-          ledger.frameInsertedAt = performance.timeOrigin + performance.now();
-          ledger.frameInsertedTimeline = document.timeline.currentTime as number;
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node instanceof Element && (node.matches('iframe[title="Grifon animated companion"]') || node.querySelector('iframe[title="Grifon animated companion"]'))) {
+            ledger.frameInsertedAt = performance.timeOrigin + performance.now();
+            ledger.frameInsertedTimeline = document.timeline.currentTime as number;
+          }
+        }
+        const frame = record.target;
+        if (record.type !== 'attributes' || !(frame instanceof HTMLIFrameElement) || frame.title !== 'Grifon animated companion'
+          || frame.dataset.ready !== 'true' || observedReady.has(frame)) continue;
+        observedReady.add(frame);
+        // Capture the browser-created transition before a slow parent RAF can miss it.
+        for (const animation of frame.getAnimations()) {
+          if (!(animation instanceof CSSTransition) || animation.transitionProperty !== 'opacity' || !(animation.effect instanceof KeyframeEffect)) continue;
+          const timing = animation.effect.getTiming(), keyframes = animation.effect.getKeyframes();
+          animation.pause();
+          animation.currentTime = Number(timing.duration) / 2;
+          ledger.revealAnimations.push({ at: performance.timeOrigin + performance.now(), duration: timing.duration, keyframes,
+            midpointOpacity: Number(getComputedStyle(frame).opacity), playbackRate: animation.playbackRate });
+          heldReveal = animation;
         }
       }
-    }).observe(document, { childList: true, subtree: true });
+    }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-ready', 'style'] });
     const visible = (element: Element | null) => {
       if (!element) return false;
       const b = element.getBoundingClientRect();
@@ -134,8 +153,14 @@ async function assertLoading(page: Page, width: number) {
   expect(value.overflow).toBeLessThanOrEqual(0);
   return value;
 }
+function assertStableSlot(actual: Awaited<ReturnType<typeof observation>>['slot'], before: Awaited<ReturnType<typeof observation>>['slot']) {
+  expect(actual.width).toBe(before.width); expect(actual.height).toBe(before.height);
+  // Chromium may quantize the same position by one 1/64px layout unit.
+  for (const axis of ['left', 'top'] as const) expect(Math.abs(actual[axis] - before[axis]), `avatar slot ${axis} stays stable`).toBeLessThanOrEqual(0.02);
+}
 async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observation>>, reduced = false) {
   await expect(page.locator(FRAME)).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
+  await page.evaluate(() => { (window as any).resumeStartupReveal(); });
   await expect.poll(() => page.locator(FRAME).evaluate(element => Number(getComputedStyle(element).opacity))).toBe(1);
   const value = await observation(page);
   expect(value.firstPaint?.coloredPixels, 'ready must be backed by actual nontransparent colored WebGL pixels').toBeGreaterThan(1);
@@ -143,7 +168,7 @@ async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observ
   expect(value.ledger.readyMessages[0].firstPaint?.at).toBeLessThanOrEqual(value.ledger.readyMessages[0].at);
   expect(value.innerFallbackVisible).toBe(false);
   await expect(page.locator(STILL)).not.toBeVisible();
-  if (before) expect(value.slot).toEqual(before.slot);
+  if (before) assertStableSlot(value.slot, before.slot);
   const positive = value.ledger.samples.filter((sample: any) => sample.state.visible && sample.state.opacity > 0);
   expect(positive.length).toBeGreaterThan(0);
   expect(positive[0].at).toBeGreaterThanOrEqual(value.firstPaint.at);
@@ -158,11 +183,15 @@ async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observ
   if (reduced) {
     expect(positive.every((sample: any) => sample.state.opacity === 1)).toBe(true);
     expect(positive.flatMap((sample: any) => sample.state.animations)).toEqual([]);
+    expect(value.ledger.revealAnimations).toEqual([]);
   } else {
-    const intermediate = positive.filter((sample: any) => sample.state.opacity < 1);
-    expect(intermediate.length, 'normal motion gets a gentle, brief reveal').toBeGreaterThan(0);
-    for (const animation of intermediate.flatMap((sample: any) => sample.state.animations)) {
+    expect(value.ledger.revealAnimations, 'normal motion gets one real opacity transition').toHaveLength(1);
+    for (const animation of value.ledger.revealAnimations) {
+      expect(animation.at).toBeGreaterThanOrEqual(value.firstPaint.at);
       expect(Number(animation.duration)).toBeGreaterThan(0); expect(Number(animation.duration)).toBeLessThanOrEqual(500);
+      expect(animation.keyframes[0].opacity).toBe('0'); expect(animation.keyframes.at(-1).opacity).toBe('1');
+      expect(animation.midpointOpacity, 'the actual browser effect interpolates a gentle reveal').toBeGreaterThan(0);
+      expect(animation.midpointOpacity).toBeLessThan(1); expect(animation.playbackRate).toBe(1);
     }
   }
   expect(value.overflow).toBeLessThanOrEqual(0); expect(value.calls).toEqual([]);
@@ -212,7 +241,7 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       await load(page); await expect.poll(() => requests).toBe(1);
       const before = await assertLoading(page, width);
       await page.waitForTimeout(1400);
-      const slow = await assertLoading(page, width); expect(slow.slot).toEqual(before.slot);
+      const slow = await assertLoading(page, width); assertStableSlot(slow.slot, before.slot);
       await capture(page, `slow-${width}`, { before, slow, network });
       const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);
       expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();
@@ -274,9 +303,9 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
       const failed = await observation(page); await capture(page, `failure-${width}`, { failed, network });
       fail = false;
-      await page.evaluate(() => { (window as any).startupEvidence.samples.length = 0; (window as any).startupEvidence.readyMessages.length = 0; });
+      await page.evaluate(() => { (window as any).startupEvidence.samples.length = 0; (window as any).startupEvidence.readyMessages.length = 0; (window as any).startupEvidence.revealAnimations.length = 0; });
       await retry.click(); await expect.poll(() => requests).toBe(2);
-      const retryLoading = await assertLoading(page, width); expect(retryLoading.slot).toEqual(failed.slot);
+      const retryLoading = await assertLoading(page, width); assertStableSlot(retryLoading.slot, failed.slot);
       await capture(page, `retry-loading-${width}`, { retryLoading, network });
       release(); const recovered = await assertReady(page, retryLoading);
       await expect(retry).toHaveCount(0);

@@ -33,11 +33,13 @@ async function openFixture(page: Page) {
 }
 
 async function brief(page: Page, expectGenerate = true) {
-  for (const answer of answers) {
+  for (const [index, answer] of answers.entries()) {
     await composer(page).fill(answer);
     await page.getByRole('button', { name: 'Send', exact: true }).click();
-    await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
+    await expect(page.locator('article .companion-message-assistant')).toHaveCount(index + 2);
   }
+  await expect(page.locator('.companion-message-user')).toHaveText(answers);
+  await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
   await page.getByLabel('Product photo', { exact: true }).setInputFiles({ name: 'coffee.png', mimeType: 'image/png', buffer: PNG });
   if (expectGenerate) await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toBeEnabled();
 }
@@ -47,7 +49,8 @@ test('brief, explicit start, truthful callbacks, storyboard approval, video and 
   await brief(page);
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(0);
   await page.getByRole('button', { name: 'Generate storyboard', exact: true }).dblclick();
-  expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(1);
+  await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(1);
+  await expect(page.getByText('Researching your product', { exact: true }).first()).toBeVisible();
   await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'working');
   await emit(page, 'script');
   await expect(page.getByText(/writing your script/i).first()).toBeVisible();
@@ -55,9 +58,11 @@ test('brief, explicit start, truthful callbacks, storyboard approval, video and 
   await emit(page, 'storyboard');
   await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeEnabled();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'approve')).toHaveLength(0);
   await page.getByRole('button', { name: /approve storyboard/i }).click();
-  expect((await snapshot(page)).calls.filter((c: any) => c.name === 'approve')).toHaveLength(1);
+  await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'approve')).toHaveLength(1);
+  await expect(page.getByRole('button', { name: 'Open storyboard', exact: true })).toHaveCount(0);
   await emit(page, 'result');
   await expect(page.locator('video')).toBeVisible();
   await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'ready');
@@ -90,16 +95,23 @@ test('IME Enter does not submit; invalid files and missing image cannot generate
 
 test('draft reload/account isolation, error retry and fixture checkpoint restore', async ({ page }) => {
   await openFixture(page); await brief(page);
+  await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
   await page.reload(); await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toBeEnabled();
   await page.evaluate(() => (window as any).companionFixture.account('fixture-user-b'));
   await expect(page.getByText('North Coffee', { exact: true })).toHaveCount(0);
   await page.evaluate(() => (window as any).companionFixture.account('fixture-user-a'));
   await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Generate storyboard', exact: true }).click();
+  await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(1);
+  await expect(page.getByText('Researching your product', { exact: true }).first()).toBeVisible();
   await emit(page, 'error');
   await page.getByRole('button', { name: 'Resume saved progress', exact: true }).click();
-  expect((await snapshot(page)).calls).toContainEqual({ name: 'retry' });
-  await emit(page, 'storyboard'); await page.reload();
+  await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'retry')).toEqual([{ name: 'retry' }]);
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await emit(page, 'storyboard');
+  await expect(page.getByRole('button', { name: 'Open storyboard', exact: true })).toBeVisible();
+  await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
+  await page.reload();
   await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await expect(page.getByRole('button', { name: /approve storyboard/i })).toBeVisible();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(0);
@@ -118,6 +130,7 @@ for (const width of [320, 375, 390, 1280]) {
     await page.screenshot({ path: `${QA}/initial-${width}.png`, fullPage: true });
     await brief(page);
     await page.getByRole('button', { name: 'Generate storyboard', exact: true }).click();
+    await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(1);
     const frame = await (await page.locator('iframe:visible').elementHandle())!.contentFrame();
     await expect.poll(() => frame!.evaluate(() => (window as any).grifonDebug.snapshot().reaction.state)).toBe('working');
     await expect(page.getByRole('button', { name: /^(Pause|Resume) companion motion$/ })).toHaveCount(0);
@@ -193,11 +206,13 @@ test('allowance and preset gates dispatch no generation or revision until permit
   await page.evaluate(() => (window as any).companionFixture.quota(true));
   await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'View plan options', exact: true }).click();
+  await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'upgrade')).toHaveLength(1);
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(0);
   await emit(page, 'storyboard');
   await page.getByRole('button', { name: 'Open storyboard', exact: true }).click();
   await page.evaluate(() => (window as any).companionFixture.videoAllowed(false));
   await page.getByRole('button', { name: 'Unlock video production', exact: true }).click();
+  await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'upgrade')).toHaveLength(2);
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'approve')).toHaveLength(0);
   await emit(page, 'result');
   await page.evaluate(() => (window as any).companionFixture.presets(false));
@@ -338,9 +353,13 @@ test('parent pointer events move the embedded companion eyes', async ({ page }) 
   await openFixture(page);
   await expect(page.locator('iframe:visible')).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
   const frame = (await (await page.locator('iframe:visible').elementHandle())!.contentFrame())!;
-  await page.mouse.move(5, 350); await page.waitForTimeout(350);
+  await page.mouse.move(5, 350);
+  await expect.poll(() => frame.evaluate(() => (window as any).grifonDebug.snapshot().target.x)).toBeLessThan(0);
+  await expect.poll(() => frame.evaluate(() => (window as any).grifonDebug.snapshot().controls.gazeX)).toBeLessThan(0);
   const left = await frame.evaluate(() => (window as any).grifonDebug.snapshot().controls.gazeX);
-  await page.mouse.move(385, 350); await page.waitForTimeout(350);
+  await page.mouse.move(385, 350);
+  await expect.poll(() => frame.evaluate(() => (window as any).grifonDebug.snapshot().target.x)).toBeGreaterThan(0);
+  await expect.poll(() => frame.evaluate(() => (window as any).grifonDebug.snapshot().controls.gazeX)).toBeGreaterThan(Math.max(0, left + 0.1));
   const right = await frame.evaluate(() => (window as any).grifonDebug.snapshot().controls.gazeX);
   expect(right - left).toBeGreaterThan(0.1);
 });

@@ -165,6 +165,41 @@ checkout's resume state, reconciled with main's actual motion landing receipts.
 Inherited shader QA files retain their exact main bytes, including pre-existing
 whitespace diagnostics; no hash-bound delivery or receipt was cleaned up.
 
+The integrated four-shard run on `b60c4451` passed build/static/artifact/database
+gates and1,572 units (32 existing skips). Shard4 passed56/56, but shards1-3 hit
+the15-minute job cap with persistent failures. Of224 planned cases,154 reported
+results:134 first-pass,4 retry-pass,14 persistent failures and2 unresolved retries;
+70 had no reported result. [Terminal summary](qa/main-readiness/ci-four-shard-summary.json).
+This is another partial run, not full-suite proof. Playwright
+partitions contiguous test ranges, so all34 account cases remained in shard1.
+The unchanged224 cases now use8 shards of28 tests each, with the same single worker,
+retry/assertion budgets, real assets and15-minute cap. Full completion remains required.
+Pending test fixes await accepted intake turns and asynchronous save/action callbacks,
+avoid a fake-clock pause in the past, retain exact499/600ms reply boundaries without
+stepping unrelated render frames, and poll the actual pointer response with the
+original0.1 gaze delta. Startup now captures the actual browser-created opacity
+transition and midpoint interpolation before a slow parent RAF misses its200ms fade.
+Real colored pixels before exactly one ready message, monotonic reveal, reduced motion,
+retry and exact avatar dimensions remain required; only position quantization gets
+a0.02px tolerance. [Focused retest](qa/main-readiness/ci-harness-focused-result.json)
+passed15/15 with zero retries/skips in184.911s and455 unchanged watched source
+hashes. Independent source review passed. The [complete3spec run before final save waits](qa/main-readiness/ci-harness-full-before-save-waits.json)
+was41 passed/2 failed of43 with zero retries/skips; all13 startup cases passed.
+Both failures navigated before the final photo/accepted-answer write was acknowledged,
+with Playwright's default unload handling proceeding. Those tests now await the saved
+footer before navigating; post-navigation photo/answer/question assertions remain.
+The typing clock stays paused during the save, preserving navigation during typing.
+A separate account-switch test now waits for the new shell before opening Settings;
+its stale-plan isolation assertions remain unchanged. [Four affected cases x3 repeats](qa/main-readiness/ci-harness-save-account-result.json)
+passed12/12 in78.078s with zero retries/skips,455 unchanged frozen source hashes
+and served App identity verified in all12 executions. The unchanged startup verifier
+[rejects both missing transitions and0.125px slot drift](qa/main-readiness/ci-startup-negative-controls.json)
+after real colored-pixel checks pass. Independent source review passed; full exact-head
+eight-shard CI remains required. These narrow passes do not relabel the earlier43-case
+red run as a single complete green run.
+Vercel READY metadata matches the exact integrated head; anonymous GET redirects
+to Vercel SSO. Hosted mobile/desktop rendering is unverified behind that protection.
+
 The [exact additive migration proposal](qa/main-readiness/database-rollout/finished-ad-meter-proposal.sql)
 passed independent source review and a separate native rehearsal: all seeded rows
 were preserved, a second application refused safely, and a deliberately invalid
