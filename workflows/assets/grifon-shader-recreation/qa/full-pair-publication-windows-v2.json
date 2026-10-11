@@ -1,0 +1,19 @@
+{
+  "scope": "Actual Windows pair-publication failure and recovery; media fidelity remains a separate gate",
+  "observer": "Root agent; execution details recorded from the original tool outputs",
+  "failedAttempts": 2,
+  "failure": "EPERM while replacing .tmp/paired-full.mp4; the prior owned review server held the alias open",
+  "oldPairSha256": "898304ae13f5492405411da7b29e975a2f10add657420b6e1b781f69440e5169",
+  "oldReceiptSha256": "615948203d348111131cd3c94cffbb42546cec152717b7f7161ee86e28d258fe",
+  "failurePreservation": "Both old hashes matched their preserved first-candidate copies after the failed attempts. No prior generation was deleted.",
+  "recovery": "Verified the old listener PID21844 and exact review-server.mjs command before stopping that owned server. Its command used an ephemeral port, so no literal port argument was present. The third pair build succeeded; a new owned server PID27428 listens on59028 and pins the immutable generation in memory.",
+  "newFilmSha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+  "newPairSha256": "534db1eb3cb970a6ec709885131205b02e8080de6f1e10dbb32cb5daaa3aad61",
+  "newReceiptSha256": "a0c5494003a53c79f4e55e90fabfe82e91385bc3e73c99fc1277235024df3797",
+  "builderSha256": "45bd23d46bc5e9751ff3b9f2f8c3092fe4495ab97b5b1f22ecfb70926acf2015",
+  "serverSha256": "3e40ce34c45b5043a5e1e0240c179d6cb1a47c659ac1317258092597e112f5b7",
+  "httpHead": { "status": 200, "contentLength": 16279713, "contentType": "video/mp4" },
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "limitations": "The EPERM observations are historical tool-output evidence; this note does not claim a new induced live failure or a visual PASS. The separately executed fixture guard tests publication failures with mocked media."
+}

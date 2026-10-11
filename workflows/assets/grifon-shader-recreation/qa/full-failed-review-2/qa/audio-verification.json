@@ -1,0 +1,541 @@
+{
+  "status": "TECHNICAL_PASS_SONIC_UNVERIFIED",
+  "recipeSha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689",
+  "scriptSha256": "de7e4b6becd986b99112396a7e60f96eeb8c030c03bb50ac3a9ed274085156cb",
+  "source": {
+    "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+    "bytes": 3232566,
+    "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+    "sourceProbe": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "mp3",
+          "codec_long_name": "MP3 (MPEG audio layer 3)",
+          "codec_type": "audio",
+          "codec_time_base": "1/44100",
+          "codec_tag_string": "[0][0][0][0]",
+          "codec_tag": "0x0000",
+          "sample_fmt": "fltp",
+          "sample_rate": "44100",
+          "channels": 2,
+          "channel_layout": "stereo",
+          "bits_per_sample": 0,
+          "r_frame_rate": "0/0",
+          "avg_frame_rate": "0/0",
+          "time_base": "1/14112000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "duration_ts": 1425530736,
+          "duration": "101.015500",
+          "bit_rate": "256000",
+          "disposition": {
+            "default": 0,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0
+          }
+        }
+      ],
+      "format": {
+        "filename": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\digital-clouds.mp3",
+        "nb_streams": 1,
+        "nb_programs": 0,
+        "format_name": "mp3",
+        "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+        "start_time": "0.000000",
+        "duration": "101.015500",
+        "size": "3232566",
+        "bit_rate": "256005",
+        "probe_score": 51,
+        "tags": {
+          "TBPM": "140",
+          "encoded_by": "LAME in FL Studio 12",
+          "date": "2019"
+        }
+      }
+    },
+    "hashPreserved": true
+  },
+  "continuousRegion": {
+    "sourceStartSampleAt48k": 1387440,
+    "sourceInSeconds": 28.905,
+    "sourceOutSeconds": 60.05166666666667,
+    "playbackRate": 1,
+    "spliceCount": 0,
+    "referenceAudioInputs": 0,
+    "voiceInputs": 0,
+    "sfxCues": 0
+  },
+  "fades": [
+    {
+      "id": "opening-taper",
+      "type": "in",
+      "startSeconds": 0,
+      "endSeconds": 0.06,
+      "curve": "tri",
+      "reason": "Authored short taper to prevent an abrupt nonzero music start; not a reconstructed SFX.",
+      "startSample": 0,
+      "endSample": 2880
+    },
+    {
+      "id": "ending-taper",
+      "type": "out",
+      "startSeconds": 27.8278,
+      "endSeconds": 31.14666666666667,
+      "curve": "qua",
+      "reason": "Authored broad decline from the source's end-composition recession through the audio tail. Reference measurements show quieter late energy; this is not a copied waveform or exact envelope match.",
+      "startSample": 1335734,
+      "endSample": 1495040
+    }
+  ],
+  "normalization": {
+    "target": {
+      "integratedLufs": -16.45,
+      "loudnessToleranceLu": 0.5,
+      "masterTruePeakDbtp": -3,
+      "maximumEncodedTruePeakDbtp": -1.5,
+      "loudnessRangeLu": 11,
+      "aacBitrate": "192k"
+    },
+    "measuredMaster": {
+      "input_i": "-16.45",
+      "input_tp": "-3.04",
+      "input_lra": "9.30",
+      "input_thresh": "-26.90",
+      "output_i": "-16.89",
+      "output_tp": "-3.55",
+      "output_lra": "1.60",
+      "output_thresh": "-27.13",
+      "normalization_type": "dynamic",
+      "target_offset": "0.44"
+    },
+    "firstPass": {
+      "input_i": "-12.67",
+      "input_tp": "0.74",
+      "input_lra": "9.30",
+      "input_thresh": "-23.12",
+      "output_i": "-16.89",
+      "output_tp": "-3.55",
+      "output_lra": "1.60",
+      "output_thresh": "-27.13",
+      "normalization_type": "dynamic",
+      "target_offset": "0.44"
+    },
+    "secondPass": {
+      "input_i": "-12.49",
+      "input_tp": "0.74",
+      "input_lra": "2.00",
+      "input_thresh": "-22.75",
+      "output_i": "-16.27",
+      "output_tp": "-3.04",
+      "output_lra": "1.90",
+      "output_thresh": "-26.53",
+      "normalization_type": "linear",
+      "target_offset": "-0.18"
+    }
+  },
+  "pcm": [
+    {
+      "file": "assets/audio/music-premaster.wav",
+      "bytes": 11960478,
+      "sha256": "8b4343f9a353f46bb34ada46b5605a982e4061023bede5a18d607d33240b85e9",
+      "sampleFrames": 1495040,
+      "durationSeconds": 31.14666666666667,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "pcm_f32le",
+            "codec_long_name": "PCM 32-bit floating point little-endian",
+            "codec_type": "audio",
+            "codec_time_base": "1/48000",
+            "codec_tag_string": "[3][0][0][0]",
+            "codec_tag": "0x0003",
+            "sample_fmt": "flt",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 32,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "duration_ts": 1495040,
+            "duration": "31.146667",
+            "bit_rate": "3072000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\assets\\audio\\music-premaster.wav",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "format_name": "wav",
+          "format_long_name": "WAV / WAVE (Waveform Audio)",
+          "duration": "31.146667",
+          "size": "11960478",
+          "bit_rate": "3072040",
+          "probe_score": 99,
+          "tags": {
+            "date": "2019",
+            "encoder": "Lavf60.3.100",
+            "encoded_by": "LAME in FL Studio 12"
+          }
+        }
+      },
+      "strictDecode": "PASS",
+      "firstFramePeakDbfs": null,
+      "finalFramePeakDbfs": -227.9701177079623,
+      "first20msRmsDbfs": -39.10846531134561,
+      "final20msRmsDbfs": -114.66679739720944,
+      "final350msRmsDbfs": -54.282064402904936
+    },
+    {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296",
+      "sampleFrames": 1495040,
+      "durationSeconds": 31.14666666666667,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "pcm_s24le",
+            "codec_long_name": "PCM signed 24-bit little-endian",
+            "codec_type": "audio",
+            "codec_time_base": "1/48000",
+            "codec_tag_string": "[1][0][0][0]",
+            "codec_tag": "0x0001",
+            "sample_fmt": "s32",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 24,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "duration_ts": 1495040,
+            "duration": "31.146667",
+            "bit_rate": "2304000",
+            "bits_per_raw_sample": "24",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\assets\\audio\\mix-master.wav",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "format_name": "wav",
+          "format_long_name": "WAV / WAVE (Waveform Audio)",
+          "duration": "31.146667",
+          "size": "8970386",
+          "bit_rate": "2304037",
+          "probe_score": 99,
+          "tags": {
+            "date": "2019",
+            "encoder": "Lavf60.3.100",
+            "encoded_by": "LAME in FL Studio 12"
+          }
+        }
+      },
+      "strictDecode": "PASS",
+      "firstFramePeakDbfs": null,
+      "finalFramePeakDbfs": null,
+      "first20msRmsDbfs": -42.888438200395676,
+      "final20msRmsDbfs": -118.3401145219436,
+      "final350msRmsDbfs": -58.062059364340456
+    },
+    {
+      "file": "assets/audio/opening-preview.wav",
+      "bytes": 2133476,
+      "sha256": "3114ba6ad2e9bf379d9f2f0d1f92b8ed5f3fd2c63b8f18b3187fe32371c694ae",
+      "sampleFrames": 355555,
+      "durationSeconds": 7.407395833333333,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "pcm_s24le",
+            "codec_long_name": "PCM signed 24-bit little-endian",
+            "codec_type": "audio",
+            "codec_time_base": "1/48000",
+            "codec_tag_string": "[1][0][0][0]",
+            "codec_tag": "0x0001",
+            "sample_fmt": "s32",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 24,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "duration_ts": 355555,
+            "duration": "7.407396",
+            "bit_rate": "2304000",
+            "bits_per_raw_sample": "24",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\assets\\audio\\opening-preview.wav",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "format_name": "wav",
+          "format_long_name": "WAV / WAVE (Waveform Audio)",
+          "duration": "7.407396",
+          "size": "2133476",
+          "bit_rate": "2304157",
+          "probe_score": 99,
+          "tags": {
+            "date": "2019",
+            "encoder": "Lavf60.3.100",
+            "encoded_by": "LAME in FL Studio 12"
+          }
+        }
+      },
+      "strictDecode": "PASS",
+      "firstFramePeakDbfs": null,
+      "finalFramePeakDbfs": -23.93822722319281,
+      "first20msRmsDbfs": -42.888438200395676,
+      "final20msRmsDbfs": -21.29139060666528,
+      "final350msRmsDbfs": -14.685135298416625
+    }
+  ],
+  "aac": [
+    {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_time_base": "1/48000",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 1495008,
+            "duration": "31.146000",
+            "bit_rate": "214051",
+            "max_bit_rate": "214051",
+            "nb_frames": "1461",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler"
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\assets\\audio\\mix-master.m4a",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "31.147000",
+          "size": "840615",
+          "bit_rate": "215909",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "M4A ",
+            "minor_version": "512",
+            "compatible_brands": "M4A isomiso2",
+            "date": "2019",
+            "encoder": "Lavf60.3.100"
+          }
+        }
+      },
+      "strictDecode": "PASS",
+      "decodedSampleFrames": 1495040,
+      "logicalDurationToleranceSeconds": 0.001,
+      "measured": {
+        "input_i": "-16.50",
+        "input_tp": "-3.15",
+        "input_lra": "9.20",
+        "input_thresh": "-26.96",
+        "output_i": "-16.88",
+        "output_tp": "-3.60",
+        "output_lra": "1.60",
+        "output_thresh": "-27.13",
+        "normalization_type": "dynamic",
+        "target_offset": "0.43"
+      }
+    },
+    {
+      "file": "assets/audio/opening-preview.m4a",
+      "bytes": 201775,
+      "sha256": "d6a694e3dfd600af37eb75938622b0242ba94e7a4128c7f72ab2b153e8763347",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_time_base": "1/48000",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 355536,
+            "duration": "7.407000",
+            "bit_rate": "214890",
+            "max_bit_rate": "214890",
+            "nb_frames": "349",
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler"
+            }
+          }
+        ],
+        "format": {
+          "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\assets\\audio\\opening-preview.m4a",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "7.408000",
+          "size": "201775",
+          "bit_rate": "217899",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "M4A ",
+            "minor_version": "512",
+            "compatible_brands": "M4A isomiso2",
+            "date": "2019",
+            "encoder": "Lavf60.3.100"
+          }
+        }
+      },
+      "strictDecode": "PASS",
+      "decodedSampleFrames": 356352,
+      "logicalDurationToleranceSeconds": 0.001,
+      "measured": {
+        "input_i": "-15.61",
+        "input_tp": "-3.45",
+        "input_lra": "0.50",
+        "input_thresh": "-25.61",
+        "output_i": "-16.15",
+        "output_tp": "-3.89",
+        "output_lra": "0.90",
+        "output_thresh": "-26.15",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.30"
+      }
+    }
+  ],
+  "checks": {
+    "maximumPremasterEnvelopeError": 2.979213220566379e-8,
+    "everyPremasterSampleComparedToContinuousCleanInput": true,
+    "openingPcmExactlyMatchesMasterPrefix": true,
+    "previewAudioFrames": 355555,
+    "previewAudioMinusVideoSeconds": -0.000004166666666804986,
+    "masterEndpointPeaksBelowMinus120Dbfs": true,
+    "normalizationLinear": true,
+    "measuredConstantGainDb": -3.7800000091646,
+    "maximumMasterLinearGainError": 1.1962919854724419e-7,
+    "allowedMasterGainError24BitSteps": 4
+  },
+  "sonicReview": "UNVERIFIED: no direct hearing, accepted transcript, exact-track identity or musical-quality judgement. Technical metrics do not pass sonic fidelity.",
+  "delivery": "All raw/working/standalone audio stays ignored and private. No film mux or delivered audio-only remix.",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

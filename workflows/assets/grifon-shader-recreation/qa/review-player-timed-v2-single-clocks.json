@@ -1,0 +1,4844 @@
+{
+  "scope": "Independent timed visual inspection of one frame-aligned decoded comparison stream; left reference/right pilot, audio absent",
+  "generatedAt": "2026-10-08T01:47:30.706Z",
+  "binding": {
+    "bytes": 3799432,
+    "sha256": "0ef1e831e42a363f14d20591f4661c538f275818f3948597b6570766d0e478b9"
+  },
+  "receipt": {
+    "purpose": "PRIVATE reference-fidelity inspection; not a Grifon export",
+    "createdAt": "2026-10-08T01:44:49.855Z",
+    "inputs": {
+      "reference": {
+        "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+        "bytes": 11514975
+      },
+      "pilot": {
+        "sha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8",
+        "bytes": 3992749
+      }
+    },
+    "output": {
+      "path": "workflows/assets/grifon-shader-recreation/.tmp/paired-pilot.mp4",
+      "sha256": "0ef1e831e42a363f14d20591f4661c538f275818f3948597b6570766d0e478b9",
+      "bytes": 3799432,
+      "width": 1920,
+      "height": 540,
+      "frames": 222,
+      "fps": "30000/1001",
+      "audio": false
+    },
+    "layout": {
+      "left": "REFERENCE, frames0-221 at960x540",
+      "right": "GRIFON, same native frames at960x540"
+    },
+    "method": "[0:v]trim=end_frame=222,setpts=PTS-STARTPTS,scale=960:540,setsar=1[a];[1:v]trim=end_frame=222,setpts=PTS-STARTPTS,scale=960:540,setsar=1[b];[a][b]hstack=inputs=2:shortest=1[v]",
+    "checks": {
+      "encode": 0,
+      "probe": 0,
+      "strictDecode": 0,
+      "inputHashesStable": true
+    }
+  },
+  "plays": [
+    {
+      "rate": 1,
+      "label": "normal",
+      "start": {
+        "currentTime": 0,
+        "frame": 0,
+        "presentedFrame": 0,
+        "clockText": "Clock frame 0 / 221 · 0.0000s · presented frame 0",
+        "paused": true,
+        "seeking": false,
+        "rate": 1,
+        "muted": true,
+        "quality": {
+          "totalVideoFrames": 4,
+          "droppedVideoFrames": 0
+        }
+      },
+      "wallStart": "2026-10-08T01:47:32.257Z",
+      "observations": [
+        {
+          "file": "single-normal-000.png",
+          "wallBefore": "2026-10-08T01:47:32.311Z",
+          "wallAfter": "2026-10-08T01:47:32.405Z",
+          "before": {
+            "currentTime": 0.010646,
+            "frame": 0,
+            "presentedFrame": 0,
+            "clockText": "Clock frame 0 / 221 · 0.0061s · presented frame 0",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 5,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 0.103799,
+            "frame": 3,
+            "presentedFrame": 3,
+            "clockText": "Clock frame 3 / 221 · 0.0897s · presented frame 3",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 8,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-001.png",
+          "wallBefore": "2026-10-08T01:47:32.521Z",
+          "wallAfter": "2026-10-08T01:47:32.658Z",
+          "before": {
+            "currentTime": 0.220349,
+            "frame": 6,
+            "presentedFrame": 6,
+            "clockText": "Clock frame 6 / 221 · 0.1889s · presented frame 6",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 11,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 0.356836,
+            "frame": 11,
+            "presentedFrame": 11,
+            "clockText": "Clock frame 11 / 221 · 0.3554s · presented frame 11",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 16,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-002.png",
+          "wallBefore": "2026-10-08T01:47:32.770Z",
+          "wallAfter": "2026-10-08T01:47:32.920Z",
+          "before": {
+            "currentTime": 0.469275,
+            "frame": 14,
+            "presentedFrame": 14,
+            "clockText": "Clock frame 14 / 221 · 0.4548s · presented frame 14",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 19,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 0.619372,
+            "frame": 18,
+            "presentedFrame": 18,
+            "clockText": "Clock frame 18 / 221 · 0.5888s · presented frame 18",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 23,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-003.png",
+          "wallBefore": "2026-10-08T01:47:33.037Z",
+          "wallAfter": "2026-10-08T01:47:33.201Z",
+          "before": {
+            "currentTime": 0.735726,
+            "frame": 22,
+            "presentedFrame": 22,
+            "clockText": "Clock frame 22 / 221 · 0.7230s · presented frame 22",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 27,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 0.899482,
+            "frame": 26,
+            "presentedFrame": 26,
+            "clockText": "Clock frame 26 / 221 · 0.8555s · presented frame 26",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 32,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-004.png",
+          "wallBefore": "2026-10-08T01:47:33.304Z",
+          "wallAfter": "2026-10-08T01:47:33.416Z",
+          "before": {
+            "currentTime": 1.003381,
+            "frame": 30,
+            "presentedFrame": 30,
+            "clockText": "Clock frame 30 / 221 · 0.9893s · presented frame 30",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 35,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 1.115173,
+            "frame": 33,
+            "presentedFrame": 33,
+            "clockText": "Clock frame 33 / 221 · 1.0894s · presented frame 33",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 38,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-005.png",
+          "wallBefore": "2026-10-08T01:47:33.525Z",
+          "wallAfter": "2026-10-08T01:47:33.653Z",
+          "before": {
+            "currentTime": 1.221748,
+            "frame": 36,
+            "presentedFrame": 36,
+            "clockText": "Clock frame 36 / 221 · 1.1885s · presented frame 36",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 41,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 1.352404,
+            "frame": 40,
+            "presentedFrame": 40,
+            "clockText": "Clock frame 40 / 221 · 1.3213s · presented frame 40",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 45,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-006.png",
+          "wallBefore": "2026-10-08T01:47:33.772Z",
+          "wallAfter": "2026-10-08T01:47:33.899Z",
+          "before": {
+            "currentTime": 1.470869,
+            "frame": 44,
+            "presentedFrame": 44,
+            "clockText": "Clock frame 44 / 221 · 1.4551s · presented frame 44",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 49,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 1.597626,
+            "frame": 48,
+            "presentedFrame": 48,
+            "clockText": "Clock frame 48 / 221 · 1.5891s · presented frame 48",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 53,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-007.png",
+          "wallBefore": "2026-10-08T01:47:34.007Z",
+          "wallAfter": "2026-10-08T01:47:34.131Z",
+          "before": {
+            "currentTime": 1.705917,
+            "frame": 51,
+            "presentedFrame": 51,
+            "clockText": "Clock frame 51 / 221 · 1.6885s · presented frame 51",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 56,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 1.830152,
+            "frame": 55,
+            "presentedFrame": 55,
+            "clockText": "Clock frame 55 / 221 · 1.8219s · presented frame 55",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 60,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-008.png",
+          "wallBefore": "2026-10-08T01:47:34.243Z",
+          "wallAfter": "2026-10-08T01:47:34.362Z",
+          "before": {
+            "currentTime": 1.941775,
+            "frame": 58,
+            "presentedFrame": 58,
+            "clockText": "Clock frame 58 / 221 · 1.9219s · presented frame 58",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 63,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 2.060774,
+            "frame": 62,
+            "presentedFrame": 62,
+            "clockText": "Clock frame 62 / 221 · 2.0592s · presented frame 62",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 67,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-009.png",
+          "wallBefore": "2026-10-08T01:47:34.475Z",
+          "wallAfter": "2026-10-08T01:47:34.607Z",
+          "before": {
+            "currentTime": 2.174485,
+            "frame": 65,
+            "presentedFrame": 65,
+            "clockText": "Clock frame 65 / 221 · 2.1563s · presented frame 65",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 70,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 2.306187,
+            "frame": 69,
+            "presentedFrame": 69,
+            "clockText": "Clock frame 69 / 221 · 2.2886s · presented frame 69",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 74,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-010.png",
+          "wallBefore": "2026-10-08T01:47:34.725Z",
+          "wallAfter": "2026-10-08T01:47:34.882Z",
+          "before": {
+            "currentTime": 2.424256,
+            "frame": 73,
+            "presentedFrame": 73,
+            "clockText": "Clock frame 73 / 221 · 2.4222s · presented frame 73",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 78,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 2.581248,
+            "frame": 77,
+            "presentedFrame": 77,
+            "clockText": "Clock frame 77 / 221 · 2.5554s · presented frame 77",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 82,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-011.png",
+          "wallBefore": "2026-10-08T01:47:34.992Z",
+          "wallAfter": "2026-10-08T01:47:35.062Z",
+          "before": {
+            "currentTime": 2.690722,
+            "frame": 81,
+            "presentedFrame": 81,
+            "clockText": "Clock frame 81 / 221 · 2.6890s · presented frame 81",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 86,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 2.761349,
+            "frame": 83,
+            "presentedFrame": 83,
+            "clockText": "Clock frame 83 / 221 · 2.7556s · presented frame 83",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 88,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-012.png",
+          "wallBefore": "2026-10-08T01:47:35.173Z",
+          "wallAfter": "2026-10-08T01:47:35.241Z",
+          "before": {
+            "currentTime": 2.872932,
+            "frame": 86,
+            "presentedFrame": 86,
+            "clockText": "Clock frame 86 / 221 · 2.8551s · presented frame 86",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 91,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 2.939454,
+            "frame": 88,
+            "presentedFrame": 88,
+            "clockText": "Clock frame 88 / 221 · 2.9219s · presented frame 88",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 93,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-013.png",
+          "wallBefore": "2026-10-08T01:47:35.346Z",
+          "wallAfter": "2026-10-08T01:47:35.407Z",
+          "before": {
+            "currentTime": 3.045434,
+            "frame": 91,
+            "presentedFrame": 91,
+            "clockText": "Clock frame 91 / 221 · 3.0215s · presented frame 91",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 96,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 3.104085,
+            "frame": 93,
+            "presentedFrame": 93,
+            "clockText": "Clock frame 93 / 221 · 3.0891s · presented frame 93",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 98,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-014.png",
+          "wallBefore": "2026-10-08T01:47:35.517Z",
+          "wallAfter": "2026-10-08T01:47:35.580Z",
+          "before": {
+            "currentTime": 3.21496,
+            "frame": 96,
+            "presentedFrame": 96,
+            "clockText": "Clock frame 96 / 221 · 3.1881s · presented frame 96",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 101,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 3.279068,
+            "frame": 98,
+            "presentedFrame": 98,
+            "clockText": "Clock frame 98 / 221 · 3.2556s · presented frame 98",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 103,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-015.png",
+          "wallBefore": "2026-10-08T01:47:35.709Z",
+          "wallAfter": "2026-10-08T01:47:35.791Z",
+          "before": {
+            "currentTime": 3.407726,
+            "frame": 102,
+            "presentedFrame": 102,
+            "clockText": "Clock frame 102 / 221 · 3.3890s · presented frame 102",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 107,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 3.489218,
+            "frame": 104,
+            "presentedFrame": 104,
+            "clockText": "Clock frame 104 / 221 · 3.4555s · presented frame 104",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 110,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-016.png",
+          "wallBefore": "2026-10-08T01:47:35.906Z",
+          "wallAfter": "2026-10-08T01:47:35.971Z",
+          "before": {
+            "currentTime": 3.605683,
+            "frame": 108,
+            "presentedFrame": 108,
+            "clockText": "Clock frame 108 / 221 · 3.5883s · presented frame 108",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 113,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 3.669738,
+            "frame": 110,
+            "presentedFrame": 110,
+            "clockText": "Clock frame 110 / 221 · 3.6548s · presented frame 110",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 115,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-017.png",
+          "wallBefore": "2026-10-08T01:47:36.079Z",
+          "wallAfter": "2026-10-08T01:47:36.150Z",
+          "before": {
+            "currentTime": 3.777834,
+            "frame": 113,
+            "presentedFrame": 113,
+            "clockText": "Clock frame 113 / 221 · 3.7551s · presented frame 113",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 118,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 3.847408,
+            "frame": 115,
+            "presentedFrame": 115,
+            "clockText": "Clock frame 115 / 221 · 3.8216s · presented frame 115",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 120,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-018.png",
+          "wallBefore": "2026-10-08T01:47:36.267Z",
+          "wallAfter": "2026-10-08T01:47:36.340Z",
+          "before": {
+            "currentTime": 3.965708,
+            "frame": 119,
+            "presentedFrame": 119,
+            "clockText": "Clock frame 119 / 221 · 3.9554s · presented frame 119",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 124,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 4.038248,
+            "frame": 121,
+            "presentedFrame": 121,
+            "clockText": "Clock frame 121 / 221 · 4.0219s · presented frame 121",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 126,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-019.png",
+          "wallBefore": "2026-10-08T01:47:36.457Z",
+          "wallAfter": "2026-10-08T01:47:36.526Z",
+          "before": {
+            "currentTime": 4.154349,
+            "frame": 124,
+            "presentedFrame": 124,
+            "clockText": "Clock frame 124 / 221 · 4.1213s · presented frame 124",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 129,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 4.22399,
+            "frame": 126,
+            "presentedFrame": 126,
+            "clockText": "Clock frame 126 / 221 · 4.1890s · presented frame 126",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 131,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-020.png",
+          "wallBefore": "2026-10-08T01:47:36.641Z",
+          "wallAfter": "2026-10-08T01:47:36.709Z",
+          "before": {
+            "currentTime": 4.339859,
+            "frame": 130,
+            "presentedFrame": 130,
+            "clockText": "Clock frame 130 / 221 · 4.3216s · presented frame 130",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 135,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 4.40798,
+            "frame": 132,
+            "presentedFrame": 132,
+            "clockText": "Clock frame 132 / 221 · 4.3882s · presented frame 132",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 137,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-021.png",
+          "wallBefore": "2026-10-08T01:47:36.828Z",
+          "wallAfter": "2026-10-08T01:47:36.940Z",
+          "before": {
+            "currentTime": 4.526813,
+            "frame": 136,
+            "presentedFrame": 136,
+            "clockText": "Clock frame 136 / 221 · 4.5212s · presented frame 136",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 141,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 4.63934,
+            "frame": 139,
+            "presentedFrame": 139,
+            "clockText": "Clock frame 139 / 221 · 4.6226s · presented frame 139",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 144,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-022.png",
+          "wallBefore": "2026-10-08T01:47:37.045Z",
+          "wallAfter": "2026-10-08T01:47:37.117Z",
+          "before": {
+            "currentTime": 4.743751,
+            "frame": 142,
+            "presentedFrame": 142,
+            "clockText": "Clock frame 142 / 221 · 4.7224s · presented frame 142",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 147,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 4.815515,
+            "frame": 144,
+            "presentedFrame": 144,
+            "clockText": "Clock frame 144 / 221 · 4.7895s · presented frame 144",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 149,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-023.png",
+          "wallBefore": "2026-10-08T01:47:37.230Z",
+          "wallAfter": "2026-10-08T01:47:37.297Z",
+          "before": {
+            "currentTime": 4.928959,
+            "frame": 147,
+            "presentedFrame": 148,
+            "clockText": "Clock frame 147 / 221 · 4.9213s · presented frame 148",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 153,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 4.996051,
+            "frame": 149,
+            "presentedFrame": 150,
+            "clockText": "Clock frame 149 / 221 · 4.9879s · presented frame 150",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 155,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-024.png",
+          "wallBefore": "2026-10-08T01:47:37.403Z",
+          "wallAfter": "2026-10-08T01:47:37.481Z",
+          "before": {
+            "currentTime": 5.101379,
+            "frame": 153,
+            "presentedFrame": 153,
+            "clockText": "Clock frame 153 / 221 · 5.0893s · presented frame 153",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 158,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 5.179992,
+            "frame": 155,
+            "presentedFrame": 155,
+            "clockText": "Clock frame 155 / 221 · 5.1552s · presented frame 155",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 160,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-025.png",
+          "wallBefore": "2026-10-08T01:47:37.591Z",
+          "wallAfter": "2026-10-08T01:47:37.668Z",
+          "before": {
+            "currentTime": 5.290223,
+            "frame": 158,
+            "presentedFrame": 159,
+            "clockText": "Clock frame 158 / 221 · 5.2885s · presented frame 159",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 164,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 5.366953,
+            "frame": 161,
+            "presentedFrame": 161,
+            "clockText": "Clock frame 161 / 221 · 5.3559s · presented frame 161",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 166,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-026.png",
+          "wallBefore": "2026-10-08T01:47:37.778Z",
+          "wallAfter": "2026-10-08T01:47:37.848Z",
+          "before": {
+            "currentTime": 5.477142,
+            "frame": 163,
+            "presentedFrame": 164,
+            "clockText": "Clock frame 163 / 221 · 5.4554s · presented frame 164",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 169,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 5.547199,
+            "frame": 165,
+            "presentedFrame": 166,
+            "clockText": "Clock frame 165 / 221 · 5.5214s · presented frame 166",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 171,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-027.png",
+          "wallBefore": "2026-10-08T01:47:37.965Z",
+          "wallAfter": "2026-10-08T01:47:38.037Z",
+          "before": {
+            "currentTime": 5.664114,
+            "frame": 169,
+            "presentedFrame": 170,
+            "clockText": "Clock frame 169 / 221 · 5.6553s · presented frame 170",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 175,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 5.735926,
+            "frame": 171,
+            "presentedFrame": 172,
+            "clockText": "Clock frame 171 / 221 · 5.7223s · presented frame 172",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 177,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-028.png",
+          "wallBefore": "2026-10-08T01:47:38.153Z",
+          "wallAfter": "2026-10-08T01:47:38.245Z",
+          "before": {
+            "currentTime": 5.85135,
+            "frame": 175,
+            "presentedFrame": 175,
+            "clockText": "Clock frame 175 / 221 · 5.8337s · presented frame 175",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 180,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 5.943939,
+            "frame": 177,
+            "presentedFrame": 178,
+            "clockText": "Clock frame 177 / 221 · 5.9222s · presented frame 178",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 183,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-029.png",
+          "wallBefore": "2026-10-08T01:47:38.355Z",
+          "wallAfter": "2026-10-08T01:47:38.450Z",
+          "before": {
+            "currentTime": 6.053865,
+            "frame": 180,
+            "presentedFrame": 181,
+            "clockText": "Clock frame 180 / 221 · 6.0214s · presented frame 181",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 186,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 6.147845,
+            "frame": 183,
+            "presentedFrame": 184,
+            "clockText": "Clock frame 183 / 221 · 6.1222s · presented frame 184",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 189,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-030.png",
+          "wallBefore": "2026-10-08T01:47:38.559Z",
+          "wallAfter": "2026-10-08T01:47:38.654Z",
+          "before": {
+            "currentTime": 6.257206,
+            "frame": 187,
+            "presentedFrame": 188,
+            "clockText": "Clock frame 187 / 221 · 6.2559s · presented frame 188",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 193,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 6.352553,
+            "frame": 190,
+            "presentedFrame": 190,
+            "clockText": "Clock frame 190 / 221 · 6.3382s · presented frame 190",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 195,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-031.png",
+          "wallBefore": "2026-10-08T01:47:38.763Z",
+          "wallAfter": "2026-10-08T01:47:38.904Z",
+          "before": {
+            "currentTime": 6.461646,
+            "frame": 193,
+            "presentedFrame": 194,
+            "clockText": "Clock frame 193 / 221 · 6.4549s · presented frame 194",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 199,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 6.601746,
+            "frame": 197,
+            "presentedFrame": 198,
+            "clockText": "Clock frame 197 / 221 · 6.5878s · presented frame 198",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 203,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-032.png",
+          "wallBefore": "2026-10-08T01:47:39.010Z",
+          "wallAfter": "2026-10-08T01:47:39.130Z",
+          "before": {
+            "currentTime": 6.709026,
+            "frame": 200,
+            "presentedFrame": 201,
+            "clockText": "Clock frame 200 / 221 · 6.6879s · presented frame 201",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 206,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 6.829266,
+            "frame": 203,
+            "presentedFrame": 204,
+            "clockText": "Clock frame 203 / 221 · 6.7890s · presented frame 204",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 210,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-033.png",
+          "wallBefore": "2026-10-08T01:47:39.242Z",
+          "wallAfter": "2026-10-08T01:47:39.365Z",
+          "before": {
+            "currentTime": 6.941139,
+            "frame": 207,
+            "presentedFrame": 208,
+            "clockText": "Clock frame 207 / 221 · 6.9221s · presented frame 208",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 213,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 7.063933,
+            "frame": 211,
+            "presentedFrame": 212,
+            "clockText": "Clock frame 211 / 221 · 7.0559s · presented frame 212",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 217,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-034.png",
+          "wallBefore": "2026-10-08T01:47:39.476Z",
+          "wallAfter": "2026-10-08T01:47:39.606Z",
+          "before": {
+            "currentTime": 7.175606,
+            "frame": 215,
+            "presentedFrame": 215,
+            "clockText": "Clock frame 215 / 221 · 7.1721s · presented frame 215",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 220,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 7.304518,
+            "frame": 218,
+            "presentedFrame": 219,
+            "clockText": "Clock frame 218 / 221 · 7.2890s · presented frame 219",
+            "paused": false,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 222,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-normal-035.png",
+          "wallBefore": "2026-10-08T01:47:39.711Z",
+          "wallAfter": "2026-10-08T01:47:39.843Z",
+          "before": {
+            "currentTime": 7.4074,
+            "frame": 221,
+            "presentedFrame": 221,
+            "clockText": "Clock frame 221 / 221 · 7.4074s · presented frame 221",
+            "paused": true,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 222,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 7.4074,
+            "frame": 221,
+            "presentedFrame": 221,
+            "clockText": "Clock frame 221 / 221 · 7.4074s · presented frame 221",
+            "paused": true,
+            "seeking": false,
+            "rate": 1,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 222,
+              "droppedVideoFrames": 0
+            }
+          }
+        }
+      ],
+      "end": {
+        "currentTime": 7.4074,
+        "frame": 221,
+        "presentedFrame": 221,
+        "clockText": "Clock frame 221 / 221 · 7.4074s · presented frame 221",
+        "paused": true,
+        "seeking": false,
+        "rate": 1,
+        "muted": true,
+        "quality": {
+          "totalVideoFrames": 222,
+          "droppedVideoFrames": 0
+        }
+      },
+      "wallEnd": "2026-10-08T01:47:39.845Z"
+    },
+    {
+      "rate": 0.25,
+      "label": "quarter",
+      "start": {
+        "currentTime": 0,
+        "frame": 0,
+        "presentedFrame": 0,
+        "clockText": "Clock frame 0 / 221 · 0.0000s · presented frame 0",
+        "paused": true,
+        "seeking": false,
+        "rate": 0.25,
+        "muted": true,
+        "quality": {
+          "totalVideoFrames": 226,
+          "droppedVideoFrames": 0
+        }
+      },
+      "wallStart": "2026-10-08T01:47:39.956Z",
+      "observations": [
+        {
+          "file": "single-quarter-000.png",
+          "wallBefore": "2026-10-08T01:47:40.008Z",
+          "wallAfter": "2026-10-08T01:47:40.063Z",
+          "before": {
+            "currentTime": 0.002764,
+            "frame": 0,
+            "presentedFrame": 0,
+            "clockText": "Clock frame 0 / 221 · 0.0023s · presented frame 0",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 226,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 0.016164,
+            "frame": 0,
+            "presentedFrame": 0,
+            "clockText": "Clock frame 0 / 221 · 0.0023s · presented frame 0",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 226,
+              "droppedVideoFrames": 0
+            }
+          }
+        },
+        {
+          "file": "single-quarter-001.png",
+          "wallBefore": "2026-10-08T01:47:40.239Z",
+          "wallAfter": "2026-10-08T01:47:40.294Z",
+          "before": {
+            "currentTime": 0.060363,
+            "frame": 1,
+            "presentedFrame": 1,
+            "clockText": "Clock frame 1 / 221 · 0.0315s · presented frame 1",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 227,
+              "droppedVideoFrames": 0
+            }
+          },
+          "after": {
+            "currentTime": 0.074123,
+            "frame": 2,
+            "presentedFrame": 3,
+            "clockText": "Clock frame 2 / 221 · 0.0689s · presented frame 3",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 229,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-002.png",
+          "wallBefore": "2026-10-08T01:47:40.475Z",
+          "wallAfter": "2026-10-08T01:47:40.543Z",
+          "before": {
+            "currentTime": 0.119458,
+            "frame": 3,
+            "presentedFrame": 4,
+            "clockText": "Clock frame 3 / 221 · 0.0981s · presented frame 4",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 230,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.136284,
+            "frame": 4,
+            "presentedFrame": 5,
+            "clockText": "Clock frame 4 / 221 · 0.1317s · presented frame 5",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 231,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-003.png",
+          "wallBefore": "2026-10-08T01:47:40.727Z",
+          "wallAfter": "2026-10-08T01:47:40.824Z",
+          "before": {
+            "currentTime": 0.182494,
+            "frame": 5,
+            "presentedFrame": 6,
+            "clockText": "Clock frame 5 / 221 · 0.1649s · presented frame 6",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 232,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.206794,
+            "frame": 6,
+            "presentedFrame": 7,
+            "clockText": "Clock frame 6 / 221 · 0.1984s · presented frame 7",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 233,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-004.png",
+          "wallBefore": "2026-10-08T01:47:41.009Z",
+          "wallAfter": "2026-10-08T01:47:41.142Z",
+          "before": {
+            "currentTime": 0.253051,
+            "frame": 7,
+            "presentedFrame": 8,
+            "clockText": "Clock frame 7 / 221 · 0.2315s · presented frame 8",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 234,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.286317,
+            "frame": 8,
+            "presentedFrame": 9,
+            "clockText": "Clock frame 8 / 221 · 0.2689s · presented frame 9",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 235,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-005.png",
+          "wallBefore": "2026-10-08T01:47:41.321Z",
+          "wallAfter": "2026-10-08T01:47:41.480Z",
+          "before": {
+            "currentTime": 0.330875,
+            "frame": 9,
+            "presentedFrame": 10,
+            "clockText": "Clock frame 9 / 221 · 0.2982s · presented frame 10",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 236,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.370629,
+            "frame": 11,
+            "presentedFrame": 12,
+            "clockText": "Clock frame 11 / 221 · 0.3649s · presented frame 12",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 238,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-006.png",
+          "wallBefore": "2026-10-08T01:47:41.665Z",
+          "wallAfter": "2026-10-08T01:47:41.862Z",
+          "before": {
+            "currentTime": 0.416756,
+            "frame": 12,
+            "presentedFrame": 13,
+            "clockText": "Clock frame 12 / 221 · 0.3980s · presented frame 13",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 239,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.465967,
+            "frame": 14,
+            "presentedFrame": 14,
+            "clockText": "Clock frame 14 / 221 · 0.4642s · presented frame 14",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 241,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-007.png",
+          "wallBefore": "2026-10-08T01:47:42.037Z",
+          "wallAfter": "2026-10-08T01:47:42.194Z",
+          "before": {
+            "currentTime": 0.510069,
+            "frame": 15,
+            "presentedFrame": 16,
+            "clockText": "Clock frame 15 / 221 · 0.4980s · presented frame 16",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 242,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.549216,
+            "frame": 16,
+            "presentedFrame": 17,
+            "clockText": "Clock frame 16 / 221 · 0.5314s · presented frame 17",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 243,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-008.png",
+          "wallBefore": "2026-10-08T01:47:42.380Z",
+          "wallAfter": "2026-10-08T01:47:42.532Z",
+          "before": {
+            "currentTime": 0.595862,
+            "frame": 17,
+            "presentedFrame": 18,
+            "clockText": "Clock frame 17 / 221 · 0.5645s · presented frame 18",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 244,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.633613,
+            "frame": 19,
+            "presentedFrame": 20,
+            "clockText": "Clock frame 19 / 221 · 0.6314s · presented frame 20",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 246,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-009.png",
+          "wallBefore": "2026-10-08T01:47:42.707Z",
+          "wallAfter": "2026-10-08T01:47:42.862Z",
+          "before": {
+            "currentTime": 0.677548,
+            "frame": 20,
+            "presentedFrame": 21,
+            "clockText": "Clock frame 20 / 221 · 0.6649s · presented frame 21",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 247,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.716153,
+            "frame": 21,
+            "presentedFrame": 22,
+            "clockText": "Clock frame 21 / 221 · 0.7023s · presented frame 22",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 248,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-010.png",
+          "wallBefore": "2026-10-08T01:47:43.049Z",
+          "wallAfter": "2026-10-08T01:47:43.228Z",
+          "before": {
+            "currentTime": 0.76293,
+            "frame": 22,
+            "presentedFrame": 23,
+            "clockText": "Clock frame 22 / 221 · 0.7316s · presented frame 23",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 249,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.807552,
+            "frame": 24,
+            "presentedFrame": 25,
+            "clockText": "Clock frame 24 / 221 · 0.8021s · presented frame 25",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 251,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-011.png",
+          "wallBefore": "2026-10-08T01:47:43.410Z",
+          "wallAfter": "2026-10-08T01:47:43.545Z",
+          "before": {
+            "currentTime": 0.853284,
+            "frame": 25,
+            "presentedFrame": 26,
+            "clockText": "Clock frame 25 / 221 · 0.8315s · presented frame 26",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 252,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.887032,
+            "frame": 26,
+            "presentedFrame": 27,
+            "clockText": "Clock frame 26 / 221 · 0.8687s · presented frame 27",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 253,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-012.png",
+          "wallBefore": "2026-10-08T01:47:43.724Z",
+          "wallAfter": "2026-10-08T01:47:43.855Z",
+          "before": {
+            "currentTime": 0.93168,
+            "frame": 28,
+            "presentedFrame": 29,
+            "clockText": "Clock frame 28 / 221 · 0.9313s · presented frame 29",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 255,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 0.964308,
+            "frame": 28,
+            "presentedFrame": 29,
+            "clockText": "Clock frame 28 / 221 · 0.9313s · presented frame 29",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 255,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-013.png",
+          "wallBefore": "2026-10-08T01:47:44.039Z",
+          "wallAfter": "2026-10-08T01:47:44.153Z",
+          "before": {
+            "currentTime": 1.010354,
+            "frame": 30,
+            "presentedFrame": 31,
+            "clockText": "Clock frame 30 / 221 · 0.9980s · presented frame 31",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 257,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.038667,
+            "frame": 31,
+            "presentedFrame": 32,
+            "clockText": "Clock frame 31 / 221 · 1.0356s · presented frame 32",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 258,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-014.png",
+          "wallBefore": "2026-10-08T01:47:44.334Z",
+          "wallAfter": "2026-10-08T01:47:44.432Z",
+          "before": {
+            "currentTime": 1.084002,
+            "frame": 32,
+            "presentedFrame": 33,
+            "clockText": "Clock frame 32 / 221 · 1.0688s · presented frame 33",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 259,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.108661,
+            "frame": 33,
+            "presentedFrame": 34,
+            "clockText": "Clock frame 33 / 221 · 1.0978s · presented frame 34",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 260,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-015.png",
+          "wallBefore": "2026-10-08T01:47:44.615Z",
+          "wallAfter": "2026-10-08T01:47:44.717Z",
+          "before": {
+            "currentTime": 1.154505,
+            "frame": 34,
+            "presentedFrame": 35,
+            "clockText": "Clock frame 34 / 221 · 1.1312s · presented frame 35",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 261,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.179835,
+            "frame": 35,
+            "presentedFrame": 36,
+            "clockText": "Clock frame 35 / 221 · 1.1688s · presented frame 36",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 262,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-016.png",
+          "wallBefore": "2026-10-08T01:47:44.896Z",
+          "wallAfter": "2026-10-08T01:47:45.011Z",
+          "before": {
+            "currentTime": 1.224663,
+            "frame": 36,
+            "presentedFrame": 37,
+            "clockText": "Clock frame 36 / 221 · 1.1979s · presented frame 37",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 263,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.253546,
+            "frame": 37,
+            "presentedFrame": 38,
+            "clockText": "Clock frame 37 / 221 · 1.2356s · presented frame 38",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 264,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-017.png",
+          "wallBefore": "2026-10-08T01:47:45.193Z",
+          "wallAfter": "2026-10-08T01:47:45.306Z",
+          "before": {
+            "currentTime": 1.29875,
+            "frame": 39,
+            "presentedFrame": 40,
+            "clockText": "Clock frame 39 / 221 · 1.2983s · presented frame 40",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 266,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.327119,
+            "frame": 39,
+            "presentedFrame": 40,
+            "clockText": "Clock frame 39 / 221 · 1.2983s · presented frame 40",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 266,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-018.png",
+          "wallBefore": "2026-10-08T01:47:45.484Z",
+          "wallAfter": "2026-10-08T01:47:45.609Z",
+          "before": {
+            "currentTime": 1.371655,
+            "frame": 41,
+            "presentedFrame": 42,
+            "clockText": "Clock frame 41 / 221 · 1.3646s · presented frame 42",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 268,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.402854,
+            "frame": 42,
+            "presentedFrame": 43,
+            "clockText": "Clock frame 42 / 221 · 1.4022s · presented frame 43",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 269,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-019.png",
+          "wallBefore": "2026-10-08T01:47:45.782Z",
+          "wallAfter": "2026-10-08T01:47:45.893Z",
+          "before": {
+            "currentTime": 1.446203,
+            "frame": 43,
+            "presentedFrame": 44,
+            "clockText": "Clock frame 43 / 221 · 1.4316s · presented frame 44",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 270,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.473832,
+            "frame": 44,
+            "presentedFrame": 45,
+            "clockText": "Clock frame 44 / 221 · 1.4646s · presented frame 45",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 271,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-020.png",
+          "wallBefore": "2026-10-08T01:47:46.077Z",
+          "wallAfter": "2026-10-08T01:47:46.193Z",
+          "before": {
+            "currentTime": 1.520112,
+            "frame": 45,
+            "presentedFrame": 46,
+            "clockText": "Clock frame 45 / 221 · 1.4983s · presented frame 46",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 272,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.54882,
+            "frame": 46,
+            "presentedFrame": 47,
+            "clockText": "Clock frame 46 / 221 · 1.5355s · presented frame 47",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 273,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-021.png",
+          "wallBefore": "2026-10-08T01:47:46.374Z",
+          "wallAfter": "2026-10-08T01:47:46.493Z",
+          "before": {
+            "currentTime": 1.594126,
+            "frame": 48,
+            "presentedFrame": 48,
+            "clockText": "Clock frame 48 / 221 · 1.5936s · presented frame 48",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 274,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.623962,
+            "frame": 48,
+            "presentedFrame": 49,
+            "clockText": "Clock frame 48 / 221 · 1.6022s · presented frame 49",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 275,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-022.png",
+          "wallBefore": "2026-10-08T01:47:46.668Z",
+          "wallAfter": "2026-10-08T01:47:46.799Z",
+          "before": {
+            "currentTime": 1.667676,
+            "frame": 50,
+            "presentedFrame": 50,
+            "clockText": "Clock frame 50 / 221 · 1.6595s · presented frame 50",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 277,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.700547,
+            "frame": 51,
+            "presentedFrame": 52,
+            "clockText": "Clock frame 51 / 221 · 1.6983s · presented frame 52",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 278,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-023.png",
+          "wallBefore": "2026-10-08T01:47:46.981Z",
+          "wallAfter": "2026-10-08T01:47:47.094Z",
+          "before": {
+            "currentTime": 1.74588,
+            "frame": 52,
+            "presentedFrame": 53,
+            "clockText": "Clock frame 52 / 221 · 1.7357s · presented frame 53",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 279,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.77423,
+            "frame": 53,
+            "presentedFrame": 54,
+            "clockText": "Clock frame 53 / 221 · 1.7687s · presented frame 54",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 280,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-024.png",
+          "wallBefore": "2026-10-08T01:47:47.274Z",
+          "wallAfter": "2026-10-08T01:47:47.396Z",
+          "before": {
+            "currentTime": 1.819226,
+            "frame": 54,
+            "presentedFrame": 55,
+            "clockText": "Clock frame 54 / 221 · 1.7980s · presented frame 55",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 281,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.849616,
+            "frame": 55,
+            "presentedFrame": 56,
+            "clockText": "Clock frame 55 / 221 · 1.8353s · presented frame 56",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 282,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-025.png",
+          "wallBefore": "2026-10-08T01:47:47.572Z",
+          "wallAfter": "2026-10-08T01:47:47.686Z",
+          "before": {
+            "currentTime": 1.893575,
+            "frame": 56,
+            "presentedFrame": 57,
+            "clockText": "Clock frame 56 / 221 · 1.8646s · presented frame 57",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 283,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.922105,
+            "frame": 57,
+            "presentedFrame": 58,
+            "clockText": "Clock frame 57 / 221 · 1.9022s · presented frame 58",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 284,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-026.png",
+          "wallBefore": "2026-10-08T01:47:47.870Z",
+          "wallAfter": "2026-10-08T01:47:47.985Z",
+          "before": {
+            "currentTime": 1.968171,
+            "frame": 59,
+            "presentedFrame": 60,
+            "clockText": "Clock frame 59 / 221 · 1.9648s · presented frame 60",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 286,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 1.996948,
+            "frame": 60,
+            "presentedFrame": 60,
+            "clockText": "Clock frame 60 / 221 · 1.9914s · presented frame 60",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 286,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-027.png",
+          "wallBefore": "2026-10-08T01:47:48.166Z",
+          "wallAfter": "2026-10-08T01:47:48.295Z",
+          "before": {
+            "currentTime": 2.042268,
+            "frame": 61,
+            "presentedFrame": 62,
+            "clockText": "Clock frame 61 / 221 · 2.0316s · presented frame 62",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 288,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.074248,
+            "frame": 62,
+            "presentedFrame": 63,
+            "clockText": "Clock frame 62 / 221 · 2.0649s · presented frame 63",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 289,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-028.png",
+          "wallBefore": "2026-10-08T01:47:48.476Z",
+          "wallAfter": "2026-10-08T01:47:48.591Z",
+          "before": {
+            "currentTime": 2.119746,
+            "frame": 63,
+            "presentedFrame": 64,
+            "clockText": "Clock frame 63 / 221 · 2.0982s · presented frame 64",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 290,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.14852,
+            "frame": 64,
+            "presentedFrame": 65,
+            "clockText": "Clock frame 64 / 221 · 2.1313s · presented frame 65",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 291,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-029.png",
+          "wallBefore": "2026-10-08T01:47:48.774Z",
+          "wallAfter": "2026-10-08T01:47:48.897Z",
+          "before": {
+            "currentTime": 2.19424,
+            "frame": 66,
+            "presentedFrame": 66,
+            "clockText": "Clock frame 66 / 221 · 2.1939s · presented frame 66",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 292,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.224932,
+            "frame": 66,
+            "presentedFrame": 67,
+            "clockText": "Clock frame 66 / 221 · 2.1982s · presented frame 67",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 293,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-030.png",
+          "wallBefore": "2026-10-08T01:47:49.071Z",
+          "wallAfter": "2026-10-08T01:47:49.224Z",
+          "before": {
+            "currentTime": 2.268225,
+            "frame": 68,
+            "presentedFrame": 69,
+            "clockText": "Clock frame 68 / 221 · 2.2646s · presented frame 69",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 295,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.306729,
+            "frame": 69,
+            "presentedFrame": 70,
+            "clockText": "Clock frame 69 / 221 · 2.2980s · presented frame 70",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 296,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-031.png",
+          "wallBefore": "2026-10-08T01:47:49.411Z",
+          "wallAfter": "2026-10-08T01:47:49.567Z",
+          "before": {
+            "currentTime": 2.35352,
+            "frame": 70,
+            "presentedFrame": 71,
+            "clockText": "Clock frame 70 / 221 · 2.3357s · presented frame 71",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 297,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.392445,
+            "frame": 72,
+            "presentedFrame": 72,
+            "clockText": "Clock frame 72 / 221 · 2.3912s · presented frame 72",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 298,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-032.png",
+          "wallBefore": "2026-10-08T01:47:49.741Z",
+          "wallAfter": "2026-10-08T01:47:49.897Z",
+          "before": {
+            "currentTime": 2.435921,
+            "frame": 73,
+            "presentedFrame": 74,
+            "clockText": "Clock frame 73 / 221 · 2.4317s · presented frame 74",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 300,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.474752,
+            "frame": 74,
+            "presentedFrame": 75,
+            "clockText": "Clock frame 74 / 221 · 2.4647s · presented frame 75",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 301,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-033.png",
+          "wallBefore": "2026-10-08T01:47:50.080Z",
+          "wallAfter": "2026-10-08T01:47:50.227Z",
+          "before": {
+            "currentTime": 2.520784,
+            "frame": 75,
+            "presentedFrame": 76,
+            "clockText": "Clock frame 75 / 221 · 2.4981s · presented frame 76",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 302,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.557434,
+            "frame": 76,
+            "presentedFrame": 77,
+            "clockText": "Clock frame 76 / 221 · 2.5312s · presented frame 77",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 303,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-034.png",
+          "wallBefore": "2026-10-08T01:47:50.407Z",
+          "wallAfter": "2026-10-08T01:47:50.555Z",
+          "before": {
+            "currentTime": 2.602494,
+            "frame": 78,
+            "presentedFrame": 79,
+            "clockText": "Clock frame 78 / 221 · 2.6020s · presented frame 79",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 305,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.639126,
+            "frame": 79,
+            "presentedFrame": 80,
+            "clockText": "Clock frame 79 / 221 · 2.6312s · presented frame 80",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 306,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-035.png",
+          "wallBefore": "2026-10-08T01:47:50.732Z",
+          "wallAfter": "2026-10-08T01:47:50.872Z",
+          "before": {
+            "currentTime": 2.683778,
+            "frame": 80,
+            "presentedFrame": 81,
+            "clockText": "Clock frame 80 / 221 · 2.6687s · presented frame 81",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 307,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.718476,
+            "frame": 81,
+            "presentedFrame": 82,
+            "clockText": "Clock frame 81 / 221 · 2.6978s · presented frame 82",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 308,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-036.png",
+          "wallBefore": "2026-10-08T01:47:51.045Z",
+          "wallAfter": "2026-10-08T01:47:51.110Z",
+          "before": {
+            "currentTime": 2.761976,
+            "frame": 82,
+            "presentedFrame": 83,
+            "clockText": "Clock frame 82 / 221 · 2.7355s · presented frame 83",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 309,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.778233,
+            "frame": 83,
+            "presentedFrame": 84,
+            "clockText": "Clock frame 83 / 221 · 2.7688s · presented frame 84",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 310,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-037.png",
+          "wallBefore": "2026-10-08T01:47:51.298Z",
+          "wallAfter": "2026-10-08T01:47:51.363Z",
+          "before": {
+            "currentTime": 2.825089,
+            "frame": 84,
+            "presentedFrame": 85,
+            "clockText": "Clock frame 84 / 221 · 2.8020s · presented frame 85",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 311,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.841434,
+            "frame": 85,
+            "presentedFrame": 86,
+            "clockText": "Clock frame 85 / 221 · 2.8314s · presented frame 86",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 312,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-038.png",
+          "wallBefore": "2026-10-08T01:47:51.547Z",
+          "wallAfter": "2026-10-08T01:47:51.608Z",
+          "before": {
+            "currentTime": 2.887281,
+            "frame": 86,
+            "presentedFrame": 87,
+            "clockText": "Clock frame 86 / 221 · 2.8689s · presented frame 87",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 313,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.902554,
+            "frame": 87,
+            "presentedFrame": 88,
+            "clockText": "Clock frame 87 / 221 · 2.9022s · presented frame 88",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 314,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-039.png",
+          "wallBefore": "2026-10-08T01:47:51.796Z",
+          "wallAfter": "2026-10-08T01:47:51.862Z",
+          "before": {
+            "currentTime": 2.949742,
+            "frame": 88,
+            "presentedFrame": 89,
+            "clockText": "Clock frame 88 / 221 · 2.9353s · presented frame 89",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 315,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 2.966262,
+            "frame": 88,
+            "presentedFrame": 89,
+            "clockText": "Clock frame 88 / 221 · 2.9353s · presented frame 89",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 316,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-040.png",
+          "wallBefore": "2026-10-08T01:47:52.043Z",
+          "wallAfter": "2026-10-08T01:47:52.105Z",
+          "before": {
+            "currentTime": 3.011373,
+            "frame": 90,
+            "presentedFrame": 91,
+            "clockText": "Clock frame 90 / 221 · 2.9979s · presented frame 91",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 317,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.026665,
+            "frame": 90,
+            "presentedFrame": 91,
+            "clockText": "Clock frame 90 / 221 · 2.9979s · presented frame 91",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 317,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-041.png",
+          "wallBefore": "2026-10-08T01:47:52.292Z",
+          "wallAfter": "2026-10-08T01:47:52.357Z",
+          "before": {
+            "currentTime": 3.073652,
+            "frame": 92,
+            "presentedFrame": 93,
+            "clockText": "Clock frame 92 / 221 · 3.0647s · presented frame 93",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 319,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.089725,
+            "frame": 92,
+            "presentedFrame": 93,
+            "clockText": "Clock frame 92 / 221 · 3.0647s · presented frame 93",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 319,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-042.png",
+          "wallBefore": "2026-10-08T01:47:52.542Z",
+          "wallAfter": "2026-10-08T01:47:52.603Z",
+          "before": {
+            "currentTime": 3.136171,
+            "frame": 94,
+            "presentedFrame": 95,
+            "clockText": "Clock frame 94 / 221 · 3.1355s · presented frame 95",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 321,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.15129,
+            "frame": 94,
+            "presentedFrame": 95,
+            "clockText": "Clock frame 94 / 221 · 3.1355s · presented frame 95",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 321,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-043.png",
+          "wallBefore": "2026-10-08T01:47:52.793Z",
+          "wallAfter": "2026-10-08T01:47:52.862Z",
+          "before": {
+            "currentTime": 3.198777,
+            "frame": 96,
+            "presentedFrame": 96,
+            "clockText": "Clock frame 96 / 221 · 3.1902s · presented frame 96",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 323,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.216071,
+            "frame": 96,
+            "presentedFrame": 97,
+            "clockText": "Clock frame 96 / 221 · 3.2021s · presented frame 97",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 323,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-044.png",
+          "wallBefore": "2026-10-08T01:47:53.042Z",
+          "wallAfter": "2026-10-08T01:47:53.113Z",
+          "before": {
+            "currentTime": 3.261024,
+            "frame": 98,
+            "presentedFrame": 98,
+            "clockText": "Clock frame 98 / 221 · 3.2565s · presented frame 98",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 324,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.278748,
+            "frame": 98,
+            "presentedFrame": 99,
+            "clockText": "Clock frame 98 / 221 · 3.2687s · presented frame 99",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 325,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-045.png",
+          "wallBefore": "2026-10-08T01:47:53.290Z",
+          "wallAfter": "2026-10-08T01:47:53.365Z",
+          "before": {
+            "currentTime": 3.323103,
+            "frame": 100,
+            "presentedFrame": 100,
+            "clockText": "Clock frame 100 / 221 · 3.3227s · presented frame 100",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 326,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.342047,
+            "frame": 100,
+            "presentedFrame": 101,
+            "clockText": "Clock frame 100 / 221 · 3.3352s · presented frame 101",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 327,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-046.png",
+          "wallBefore": "2026-10-08T01:47:53.539Z",
+          "wallAfter": "2026-10-08T01:47:53.612Z",
+          "before": {
+            "currentTime": 3.385221,
+            "frame": 101,
+            "presentedFrame": 102,
+            "clockText": "Clock frame 101 / 221 · 3.3645s · presented frame 102",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 328,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.403714,
+            "frame": 102,
+            "presentedFrame": 103,
+            "clockText": "Clock frame 102 / 221 · 3.4022s · presented frame 103",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 329,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-047.png",
+          "wallBefore": "2026-10-08T01:47:53.788Z",
+          "wallAfter": "2026-10-08T01:47:53.852Z",
+          "before": {
+            "currentTime": 3.447736,
+            "frame": 103,
+            "presentedFrame": 104,
+            "clockText": "Clock frame 103 / 221 · 3.4332s · presented frame 104",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 330,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.463703,
+            "frame": 103,
+            "presentedFrame": 104,
+            "clockText": "Clock frame 103 / 221 · 3.4524s · presented frame 104",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 330,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-048.png",
+          "wallBefore": "2026-10-08T01:47:54.036Z",
+          "wallAfter": "2026-10-08T01:47:54.102Z",
+          "before": {
+            "currentTime": 3.509754,
+            "frame": 105,
+            "presentedFrame": 106,
+            "clockText": "Clock frame 105 / 221 · 3.4981s · presented frame 106",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 332,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.526256,
+            "frame": 105,
+            "presentedFrame": 106,
+            "clockText": "Clock frame 105 / 221 · 3.5188s · presented frame 106",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 332,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-049.png",
+          "wallBefore": "2026-10-08T01:47:54.285Z",
+          "wallAfter": "2026-10-08T01:47:54.354Z",
+          "before": {
+            "currentTime": 3.571885,
+            "frame": 107,
+            "presentedFrame": 108,
+            "clockText": "Clock frame 107 / 221 · 3.5645s · presented frame 108",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 334,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.589317,
+            "frame": 107,
+            "presentedFrame": 108,
+            "clockText": "Clock frame 107 / 221 · 3.5856s · presented frame 108",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 334,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-050.png",
+          "wallBefore": "2026-10-08T01:47:54.534Z",
+          "wallAfter": "2026-10-08T01:47:54.602Z",
+          "before": {
+            "currentTime": 3.634089,
+            "frame": 109,
+            "presentedFrame": 110,
+            "clockText": "Clock frame 109 / 221 · 3.6313s · presented frame 110",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 336,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.651269,
+            "frame": 109,
+            "presentedFrame": 110,
+            "clockText": "Clock frame 109 / 221 · 3.6313s · presented frame 110",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 336,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-051.png",
+          "wallBefore": "2026-10-08T01:47:54.778Z",
+          "wallAfter": "2026-10-08T01:47:54.844Z",
+          "before": {
+            "currentTime": 3.695343,
+            "frame": 110,
+            "presentedFrame": 111,
+            "clockText": "Clock frame 110 / 221 · 3.6647s · presented frame 111",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 337,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.711712,
+            "frame": 111,
+            "presentedFrame": 112,
+            "clockText": "Clock frame 111 / 221 · 3.7020s · presented frame 112",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 338,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-052.png",
+          "wallBefore": "2026-10-08T01:47:55.031Z",
+          "wallAfter": "2026-10-08T01:47:55.099Z",
+          "before": {
+            "currentTime": 3.758237,
+            "frame": 112,
+            "presentedFrame": 113,
+            "clockText": "Clock frame 112 / 221 · 3.7312s · presented frame 113",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 339,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.775247,
+            "frame": 113,
+            "presentedFrame": 114,
+            "clockText": "Clock frame 113 / 221 · 3.7689s · presented frame 114",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 340,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-053.png",
+          "wallBefore": "2026-10-08T01:47:55.276Z",
+          "wallAfter": "2026-10-08T01:47:55.343Z",
+          "before": {
+            "currentTime": 3.81972,
+            "frame": 114,
+            "presentedFrame": 115,
+            "clockText": "Clock frame 114 / 221 · 3.7982s · presented frame 115",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 341,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.836423,
+            "frame": 115,
+            "presentedFrame": 116,
+            "clockText": "Clock frame 115 / 221 · 3.8354s · presented frame 116",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 342,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-054.png",
+          "wallBefore": "2026-10-08T01:47:55.524Z",
+          "wallAfter": "2026-10-08T01:47:55.595Z",
+          "before": {
+            "currentTime": 3.881762,
+            "frame": 116,
+            "presentedFrame": 117,
+            "clockText": "Clock frame 116 / 221 · 3.8686s · presented frame 117",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 343,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.89929,
+            "frame": 116,
+            "presentedFrame": 117,
+            "clockText": "Clock frame 116 / 221 · 3.8686s · presented frame 117",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 344,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-055.png",
+          "wallBefore": "2026-10-08T01:47:55.777Z",
+          "wallAfter": "2026-10-08T01:47:55.843Z",
+          "before": {
+            "currentTime": 3.9448,
+            "frame": 118,
+            "presentedFrame": 119,
+            "clockText": "Clock frame 118 / 221 · 3.9313s · presented frame 119",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 345,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 3.961318,
+            "frame": 118,
+            "presentedFrame": 119,
+            "clockText": "Clock frame 118 / 221 · 3.9313s · presented frame 119",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 345,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-056.png",
+          "wallBefore": "2026-10-08T01:47:56.025Z",
+          "wallAfter": "2026-10-08T01:47:56.092Z",
+          "before": {
+            "currentTime": 4.006998,
+            "frame": 120,
+            "presentedFrame": 121,
+            "clockText": "Clock frame 120 / 221 · 4.0021s · presented frame 121",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 347,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.023631,
+            "frame": 120,
+            "presentedFrame": 121,
+            "clockText": "Clock frame 120 / 221 · 4.0021s · presented frame 121",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 347,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-057.png",
+          "wallBefore": "2026-10-08T01:47:56.276Z",
+          "wallAfter": "2026-10-08T01:47:56.341Z",
+          "before": {
+            "currentTime": 4.069605,
+            "frame": 122,
+            "presentedFrame": 123,
+            "clockText": "Clock frame 122 / 221 · 4.0688s · presented frame 123",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 349,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.085702,
+            "frame": 122,
+            "presentedFrame": 123,
+            "clockText": "Clock frame 122 / 221 · 4.0688s · presented frame 123",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 349,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-058.png",
+          "wallBefore": "2026-10-08T01:47:56.520Z",
+          "wallAfter": "2026-10-08T01:47:56.592Z",
+          "before": {
+            "currentTime": 4.130894,
+            "frame": 124,
+            "presentedFrame": 124,
+            "clockText": "Clock frame 124 / 221 · 4.1229s · presented frame 124",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 350,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.148577,
+            "frame": 124,
+            "presentedFrame": 125,
+            "clockText": "Clock frame 124 / 221 · 4.1354s · presented frame 125",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 351,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-059.png",
+          "wallBefore": "2026-10-08T01:47:56.769Z",
+          "wallAfter": "2026-10-08T01:47:56.832Z",
+          "before": {
+            "currentTime": 4.192916,
+            "frame": 126,
+            "presentedFrame": 126,
+            "clockText": "Clock frame 126 / 221 · 4.1885s · presented frame 126",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 352,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.208543,
+            "frame": 126,
+            "presentedFrame": 127,
+            "clockText": "Clock frame 126 / 221 · 4.1980s · presented frame 127",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 353,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-060.png",
+          "wallBefore": "2026-10-08T01:47:57.017Z",
+          "wallAfter": "2026-10-08T01:47:57.098Z",
+          "before": {
+            "currentTime": 4.254966,
+            "frame": 128,
+            "presentedFrame": 128,
+            "clockText": "Clock frame 128 / 221 · 4.2545s · presented frame 128",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 354,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.275114,
+            "frame": 128,
+            "presentedFrame": 129,
+            "clockText": "Clock frame 128 / 221 · 4.2688s · presented frame 129",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 355,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-061.png",
+          "wallBefore": "2026-10-08T01:47:57.279Z",
+          "wallAfter": "2026-10-08T01:47:57.345Z",
+          "before": {
+            "currentTime": 4.320594,
+            "frame": 129,
+            "presentedFrame": 130,
+            "clockText": "Clock frame 129 / 221 · 4.3203s · presented frame 130",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 356,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.336924,
+            "frame": 130,
+            "presentedFrame": 131,
+            "clockText": "Clock frame 130 / 221 · 4.3352s · presented frame 131",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 357,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-062.png",
+          "wallBefore": "2026-10-08T01:47:57.530Z",
+          "wallAfter": "2026-10-08T01:47:57.636Z",
+          "before": {
+            "currentTime": 4.383175,
+            "frame": 131,
+            "presentedFrame": 132,
+            "clockText": "Clock frame 131 / 221 · 4.3647s · presented frame 132",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 358,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.409593,
+            "frame": 132,
+            "presentedFrame": 133,
+            "clockText": "Clock frame 132 / 221 · 4.3978s · presented frame 133",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 359,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-063.png",
+          "wallBefore": "2026-10-08T01:47:57.811Z",
+          "wallAfter": "2026-10-08T01:47:57.916Z",
+          "before": {
+            "currentTime": 4.453385,
+            "frame": 133,
+            "presentedFrame": 134,
+            "clockText": "Clock frame 133 / 221 · 4.4531s · presented frame 134",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 360,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.479665,
+            "frame": 134,
+            "presentedFrame": 135,
+            "clockText": "Clock frame 134 / 221 · 4.4646s · presented frame 135",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 361,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-064.png",
+          "wallBefore": "2026-10-08T01:47:58.091Z",
+          "wallAfter": "2026-10-08T01:47:58.202Z",
+          "before": {
+            "currentTime": 4.523551,
+            "frame": 135,
+            "presentedFrame": 136,
+            "clockText": "Clock frame 135 / 221 · 4.5192s · presented frame 136",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 362,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.551333,
+            "frame": 136,
+            "presentedFrame": 137,
+            "clockText": "Clock frame 136 / 221 · 4.5351s · presented frame 137",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 363,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-065.png",
+          "wallBefore": "2026-10-08T01:47:58.391Z",
+          "wallAfter": "2026-10-08T01:47:58.504Z",
+          "before": {
+            "currentTime": 4.598329,
+            "frame": 138,
+            "presentedFrame": 139,
+            "clockText": "Clock frame 138 / 221 · 4.5980s · presented frame 139",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 365,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.626709,
+            "frame": 138,
+            "presentedFrame": 139,
+            "clockText": "Clock frame 138 / 221 · 4.5980s · presented frame 139",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 365,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-066.png",
+          "wallBefore": "2026-10-08T01:47:58.687Z",
+          "wallAfter": "2026-10-08T01:47:58.773Z",
+          "before": {
+            "currentTime": 4.672336,
+            "frame": 140,
+            "presentedFrame": 141,
+            "clockText": "Clock frame 140 / 221 · 4.6648s · presented frame 141",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 367,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.693887,
+            "frame": 140,
+            "presentedFrame": 141,
+            "clockText": "Clock frame 140 / 221 · 4.6648s · presented frame 141",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 367,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-067.png",
+          "wallBefore": "2026-10-08T01:47:58.950Z",
+          "wallAfter": "2026-10-08T01:47:59.036Z",
+          "before": {
+            "currentTime": 4.738364,
+            "frame": 142,
+            "presentedFrame": 143,
+            "clockText": "Clock frame 142 / 221 · 4.7354s · presented frame 143",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 369,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.759704,
+            "frame": 142,
+            "presentedFrame": 143,
+            "clockText": "Clock frame 142 / 221 · 4.7354s · presented frame 143",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 369,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-068.png",
+          "wallBefore": "2026-10-08T01:47:59.218Z",
+          "wallAfter": "2026-10-08T01:47:59.312Z",
+          "before": {
+            "currentTime": 4.805287,
+            "frame": 144,
+            "presentedFrame": 145,
+            "clockText": "Clock frame 144 / 221 · 4.7981s · presented frame 145",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 371,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.828521,
+            "frame": 144,
+            "presentedFrame": 145,
+            "clockText": "Clock frame 144 / 221 · 4.7981s · presented frame 145",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 371,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-069.png",
+          "wallBefore": "2026-10-08T01:47:59.498Z",
+          "wallAfter": "2026-10-08T01:47:59.572Z",
+          "before": {
+            "currentTime": 4.875123,
+            "frame": 146,
+            "presentedFrame": 147,
+            "clockText": "Clock frame 146 / 221 · 4.8645s · presented frame 147",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 373,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.893708,
+            "frame": 146,
+            "presentedFrame": 147,
+            "clockText": "Clock frame 146 / 221 · 4.8645s · presented frame 147",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 373,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-070.png",
+          "wallBefore": "2026-10-08T01:47:59.747Z",
+          "wallAfter": "2026-10-08T01:47:59.820Z",
+          "before": {
+            "currentTime": 4.937544,
+            "frame": 148,
+            "presentedFrame": 149,
+            "clockText": "Clock frame 148 / 221 · 4.9314s · presented frame 149",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 375,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 4.955696,
+            "frame": 148,
+            "presentedFrame": 149,
+            "clockText": "Clock frame 148 / 221 · 4.9314s · presented frame 149",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 375,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-071.png",
+          "wallBefore": "2026-10-08T01:47:59.998Z",
+          "wallAfter": "2026-10-08T01:48:00.079Z",
+          "before": {
+            "currentTime": 5.000048,
+            "frame": 150,
+            "presentedFrame": 151,
+            "clockText": "Clock frame 150 / 221 · 4.9981s · presented frame 151",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 377,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.020274,
+            "frame": 150,
+            "presentedFrame": 151,
+            "clockText": "Clock frame 150 / 221 · 4.9981s · presented frame 151",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 377,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-072.png",
+          "wallBefore": "2026-10-08T01:48:00.266Z",
+          "wallAfter": "2026-10-08T01:48:00.355Z",
+          "before": {
+            "currentTime": 5.066972,
+            "frame": 152,
+            "presentedFrame": 153,
+            "clockText": "Clock frame 152 / 221 · 5.0648s · presented frame 153",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 379,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.089527,
+            "frame": 152,
+            "presentedFrame": 153,
+            "clockText": "Clock frame 152 / 221 · 5.0648s · presented frame 153",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 379,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-073.png",
+          "wallBefore": "2026-10-08T01:48:00.544Z",
+          "wallAfter": "2026-10-08T01:48:00.618Z",
+          "before": {
+            "currentTime": 5.136573,
+            "frame": 154,
+            "presentedFrame": 155,
+            "clockText": "Clock frame 154 / 221 · 5.1314s · presented frame 155",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 381,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.155336,
+            "frame": 154,
+            "presentedFrame": 155,
+            "clockText": "Clock frame 154 / 221 · 5.1314s · presented frame 155",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 381,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-074.png",
+          "wallBefore": "2026-10-08T01:48:00.794Z",
+          "wallAfter": "2026-10-08T01:48:00.868Z",
+          "before": {
+            "currentTime": 5.199145,
+            "frame": 156,
+            "presentedFrame": 157,
+            "clockText": "Clock frame 156 / 221 · 5.1980s · presented frame 157",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 383,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.217727,
+            "frame": 156,
+            "presentedFrame": 157,
+            "clockText": "Clock frame 156 / 221 · 5.1980s · presented frame 157",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 383,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-075.png",
+          "wallBefore": "2026-10-08T01:48:01.042Z",
+          "wallAfter": "2026-10-08T01:48:01.115Z",
+          "before": {
+            "currentTime": 5.261084,
+            "frame": 157,
+            "presentedFrame": 158,
+            "clockText": "Clock frame 157 / 221 · 5.2489s · presented frame 158",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 384,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.279488,
+            "frame": 158,
+            "presentedFrame": 159,
+            "clockText": "Clock frame 158 / 221 · 5.2685s · presented frame 159",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 385,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-076.png",
+          "wallBefore": "2026-10-08T01:48:01.290Z",
+          "wallAfter": "2026-10-08T01:48:01.370Z",
+          "before": {
+            "currentTime": 5.323207,
+            "frame": 159,
+            "presentedFrame": 160,
+            "clockText": "Clock frame 159 / 221 · 5.3190s · presented frame 160",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 386,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.343168,
+            "frame": 160,
+            "presentedFrame": 161,
+            "clockText": "Clock frame 160 / 221 · 5.3353s · presented frame 161",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 387,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-077.png",
+          "wallBefore": "2026-10-08T01:48:01.555Z",
+          "wallAfter": "2026-10-08T01:48:01.638Z",
+          "before": {
+            "currentTime": 5.389503,
+            "frame": 161,
+            "presentedFrame": 162,
+            "clockText": "Clock frame 161 / 221 · 5.3853s · presented frame 162",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 388,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.410245,
+            "frame": 162,
+            "presentedFrame": 163,
+            "clockText": "Clock frame 162 / 221 · 5.4019s · presented frame 163",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 389,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-078.png",
+          "wallBefore": "2026-10-08T01:48:01.821Z",
+          "wallAfter": "2026-10-08T01:48:01.902Z",
+          "before": {
+            "currentTime": 5.4559,
+            "frame": 163,
+            "presentedFrame": 164,
+            "clockText": "Clock frame 163 / 221 · 5.4519s · presented frame 164",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 390,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.47622,
+            "frame": 164,
+            "presentedFrame": 165,
+            "clockText": "Clock frame 164 / 221 · 5.4686s · presented frame 165",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 391,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-079.png",
+          "wallBefore": "2026-10-08T01:48:02.088Z",
+          "wallAfter": "2026-10-08T01:48:02.170Z",
+          "before": {
+            "currentTime": 5.522715,
+            "frame": 165,
+            "presentedFrame": 166,
+            "clockText": "Clock frame 165 / 221 · 5.5181s · presented frame 166",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 392,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.543138,
+            "frame": 166,
+            "presentedFrame": 167,
+            "clockText": "Clock frame 166 / 221 · 5.5354s · presented frame 167",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 393,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-080.png",
+          "wallBefore": "2026-10-08T01:48:02.349Z",
+          "wallAfter": "2026-10-08T01:48:02.419Z",
+          "before": {
+            "currentTime": 5.588027,
+            "frame": 167,
+            "presentedFrame": 168,
+            "clockText": "Clock frame 167 / 221 · 5.5841s · presented frame 168",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 394,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.605408,
+            "frame": 168,
+            "presentedFrame": 169,
+            "clockText": "Clock frame 168 / 221 · 5.6018s · presented frame 169",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 395,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-081.png",
+          "wallBefore": "2026-10-08T01:48:02.598Z",
+          "wallAfter": "2026-10-08T01:48:02.669Z",
+          "before": {
+            "currentTime": 5.650255,
+            "frame": 169,
+            "presentedFrame": 170,
+            "clockText": "Clock frame 169 / 221 · 5.6499s · presented frame 170",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 396,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.667962,
+            "frame": 170,
+            "presentedFrame": 171,
+            "clockText": "Clock frame 170 / 221 · 5.6643s · presented frame 171",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 397,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-082.png",
+          "wallBefore": "2026-10-08T01:48:02.848Z",
+          "wallAfter": "2026-10-08T01:48:02.920Z",
+          "before": {
+            "currentTime": 5.712835,
+            "frame": 171,
+            "presentedFrame": 172,
+            "clockText": "Clock frame 171 / 221 · 5.6980s · presented frame 172",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 398,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.730641,
+            "frame": 171,
+            "presentedFrame": 172,
+            "clockText": "Clock frame 171 / 221 · 5.7137s · presented frame 172",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 398,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-083.png",
+          "wallBefore": "2026-10-08T01:48:03.098Z",
+          "wallAfter": "2026-10-08T01:48:03.168Z",
+          "before": {
+            "currentTime": 5.775135,
+            "frame": 173,
+            "presentedFrame": 174,
+            "clockText": "Clock frame 173 / 221 · 5.7645s · presented frame 174",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 400,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.792735,
+            "frame": 173,
+            "presentedFrame": 174,
+            "clockText": "Clock frame 173 / 221 · 5.7810s · presented frame 174",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 400,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-084.png",
+          "wallBefore": "2026-10-08T01:48:03.347Z",
+          "wallAfter": "2026-10-08T01:48:03.422Z",
+          "before": {
+            "currentTime": 5.837439,
+            "frame": 175,
+            "presentedFrame": 176,
+            "clockText": "Clock frame 175 / 221 · 5.8311s · presented frame 176",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 402,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.856135,
+            "frame": 175,
+            "presentedFrame": 176,
+            "clockText": "Clock frame 175 / 221 · 5.8479s · presented frame 176",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 402,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-085.png",
+          "wallBefore": "2026-10-08T01:48:03.597Z",
+          "wallAfter": "2026-10-08T01:48:03.678Z",
+          "before": {
+            "currentTime": 5.899884,
+            "frame": 177,
+            "presentedFrame": 178,
+            "clockText": "Clock frame 177 / 221 · 5.8978s · presented frame 178",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 404,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.920087,
+            "frame": 177,
+            "presentedFrame": 178,
+            "clockText": "Clock frame 177 / 221 · 5.9152s · presented frame 178",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 404,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-086.png",
+          "wallBefore": "2026-10-08T01:48:03.863Z",
+          "wallAfter": "2026-10-08T01:48:03.939Z",
+          "before": {
+            "currentTime": 5.966472,
+            "frame": 179,
+            "presentedFrame": 180,
+            "clockText": "Clock frame 179 / 221 · 5.9645s · presented frame 180",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 406,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 5.985538,
+            "frame": 179,
+            "presentedFrame": 180,
+            "clockText": "Clock frame 179 / 221 · 5.9814s · presented frame 180",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 406,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-087.png",
+          "wallBefore": "2026-10-08T01:48:04.126Z",
+          "wallAfter": "2026-10-08T01:48:04.208Z",
+          "before": {
+            "currentTime": 6.032104,
+            "frame": 181,
+            "presentedFrame": 182,
+            "clockText": "Clock frame 181 / 221 · 6.0314s · presented frame 182",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 408,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.052788,
+            "frame": 181,
+            "presentedFrame": 182,
+            "clockText": "Clock frame 181 / 221 · 6.0474s · presented frame 182",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 408,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-088.png",
+          "wallBefore": "2026-10-08T01:48:04.392Z",
+          "wallAfter": "2026-10-08T01:48:04.473Z",
+          "before": {
+            "currentTime": 6.09858,
+            "frame": 183,
+            "presentedFrame": 184,
+            "clockText": "Clock frame 183 / 221 · 6.0979s · presented frame 184",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 410,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.118966,
+            "frame": 183,
+            "presentedFrame": 184,
+            "clockText": "Clock frame 183 / 221 · 6.1134s · presented frame 184",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 410,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-089.png",
+          "wallBefore": "2026-10-08T01:48:04.657Z",
+          "wallAfter": "2026-10-08T01:48:04.745Z",
+          "before": {
+            "currentTime": 6.164724,
+            "frame": 184,
+            "presentedFrame": 185,
+            "clockText": "Clock frame 184 / 221 · 6.1312s · presented frame 185",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 412,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.186994,
+            "frame": 185,
+            "presentedFrame": 186,
+            "clockText": "Clock frame 185 / 221 · 6.1797s · presented frame 186",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 412,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-090.png",
+          "wallBefore": "2026-10-08T01:48:04.921Z",
+          "wallAfter": "2026-10-08T01:48:05.007Z",
+          "before": {
+            "currentTime": 6.230944,
+            "frame": 186,
+            "presentedFrame": 187,
+            "clockText": "Clock frame 186 / 221 · 6.1979s · presented frame 187",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 413,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.252425,
+            "frame": 187,
+            "presentedFrame": 188,
+            "clockText": "Clock frame 187 / 221 · 6.2463s · presented frame 188",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 414,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-091.png",
+          "wallBefore": "2026-10-08T01:48:05.186Z",
+          "wallAfter": "2026-10-08T01:48:05.291Z",
+          "before": {
+            "currentTime": 6.297107,
+            "frame": 188,
+            "presentedFrame": 189,
+            "clockText": "Clock frame 188 / 221 · 6.2644s · presented frame 189",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 415,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.323476,
+            "frame": 189,
+            "presentedFrame": 190,
+            "clockText": "Clock frame 189 / 221 · 6.3120s · presented frame 190",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 416,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-092.png",
+          "wallBefore": "2026-10-08T01:48:05.467Z",
+          "wallAfter": "2026-10-08T01:48:05.591Z",
+          "before": {
+            "currentTime": 6.367491,
+            "frame": 191,
+            "presentedFrame": 192,
+            "clockText": "Clock frame 191 / 221 · 6.3645s · presented frame 192",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 418,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.398326,
+            "frame": 191,
+            "presentedFrame": 192,
+            "clockText": "Clock frame 191 / 221 · 6.3782s · presented frame 192",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 419,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-093.png",
+          "wallBefore": "2026-10-08T01:48:05.776Z",
+          "wallAfter": "2026-10-08T01:48:05.911Z",
+          "before": {
+            "currentTime": 6.444778,
+            "frame": 193,
+            "presentedFrame": 194,
+            "clockText": "Clock frame 193 / 221 · 6.4445s · presented frame 194",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 420,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.478461,
+            "frame": 194,
+            "presentedFrame": 195,
+            "clockText": "Clock frame 194 / 221 · 6.4685s · presented frame 195",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 421,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-094.png",
+          "wallBefore": "2026-10-08T01:48:06.089Z",
+          "wallAfter": "2026-10-08T01:48:06.232Z",
+          "before": {
+            "currentTime": 6.52283,
+            "frame": 195,
+            "presentedFrame": 196,
+            "clockText": "Clock frame 195 / 221 · 6.5106s · presented frame 196",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 422,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.558603,
+            "frame": 196,
+            "presentedFrame": 197,
+            "clockText": "Clock frame 196 / 221 · 6.5351s · presented frame 197",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 423,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-095.png",
+          "wallBefore": "2026-10-08T01:48:06.415Z",
+          "wallAfter": "2026-10-08T01:48:06.535Z",
+          "before": {
+            "currentTime": 6.604583,
+            "frame": 198,
+            "presentedFrame": 199,
+            "clockText": "Clock frame 198 / 221 · 6.5979s · presented frame 199",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 425,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.634356,
+            "frame": 199,
+            "presentedFrame": 200,
+            "clockText": "Clock frame 199 / 221 · 6.6313s · presented frame 200",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 426,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-096.png",
+          "wallBefore": "2026-10-08T01:48:06.713Z",
+          "wallAfter": "2026-10-08T01:48:06.840Z",
+          "before": {
+            "currentTime": 6.678863,
+            "frame": 200,
+            "presentedFrame": 201,
+            "clockText": "Clock frame 200 / 221 · 6.6644s · presented frame 201",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 427,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.710735,
+            "frame": 201,
+            "presentedFrame": 202,
+            "clockText": "Clock frame 201 / 221 · 6.7099s · presented frame 202",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 428,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-097.png",
+          "wallBefore": "2026-10-08T01:48:07.024Z",
+          "wallAfter": "2026-10-08T01:48:07.148Z",
+          "before": {
+            "currentTime": 6.756791,
+            "frame": 202,
+            "presentedFrame": 203,
+            "clockText": "Clock frame 202 / 221 · 6.7313s · presented frame 203",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 429,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.787774,
+            "frame": 203,
+            "presentedFrame": 204,
+            "clockText": "Clock frame 203 / 221 · 6.7771s · presented frame 204",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 430,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-098.png",
+          "wallBefore": "2026-10-08T01:48:07.321Z",
+          "wallAfter": "2026-10-08T01:48:07.451Z",
+          "before": {
+            "currentTime": 6.831034,
+            "frame": 204,
+            "presentedFrame": 205,
+            "clockText": "Clock frame 204 / 221 · 6.7979s · presented frame 205",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 431,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.863402,
+            "frame": 205,
+            "presentedFrame": 206,
+            "clockText": "Clock frame 205 / 221 · 6.8436s · presented frame 206",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 432,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-099.png",
+          "wallBefore": "2026-10-08T01:48:07.634Z",
+          "wallAfter": "2026-10-08T01:48:07.765Z",
+          "before": {
+            "currentTime": 6.909268,
+            "frame": 207,
+            "presentedFrame": 208,
+            "clockText": "Clock frame 207 / 221 · 6.8980s · presented frame 208",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 434,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 6.941863,
+            "frame": 208,
+            "presentedFrame": 209,
+            "clockText": "Clock frame 208 / 221 · 6.9352s · presented frame 209",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 435,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-100.png",
+          "wallBefore": "2026-10-08T01:48:07.944Z",
+          "wallAfter": "2026-10-08T01:48:08.073Z",
+          "before": {
+            "currentTime": 6.98675,
+            "frame": 209,
+            "presentedFrame": 210,
+            "clockText": "Clock frame 209 / 221 · 6.9788s · presented frame 210",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 436,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.018805,
+            "frame": 210,
+            "presentedFrame": 211,
+            "clockText": "Clock frame 210 / 221 · 7.0018s · presented frame 211",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 437,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-101.png",
+          "wallBefore": "2026-10-08T01:48:08.259Z",
+          "wallAfter": "2026-10-08T01:48:08.379Z",
+          "before": {
+            "currentTime": 7.065324,
+            "frame": 212,
+            "presentedFrame": 213,
+            "clockText": "Clock frame 212 / 221 · 7.0646s · presented frame 213",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 439,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.095403,
+            "frame": 212,
+            "presentedFrame": 213,
+            "clockText": "Clock frame 212 / 221 · 7.0646s · presented frame 213",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 439,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-102.png",
+          "wallBefore": "2026-10-08T01:48:08.555Z",
+          "wallAfter": "2026-10-08T01:48:08.703Z",
+          "before": {
+            "currentTime": 7.139417,
+            "frame": 214,
+            "presentedFrame": 215,
+            "clockText": "Clock frame 214 / 221 · 7.1313s · presented frame 215",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 441,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.176461,
+            "frame": 215,
+            "presentedFrame": 216,
+            "clockText": "Clock frame 215 / 221 · 7.1755s · presented frame 216",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 442,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-103.png",
+          "wallBefore": "2026-10-08T01:48:08.884Z",
+          "wallAfter": "2026-10-08T01:48:09.001Z",
+          "before": {
+            "currentTime": 7.221725,
+            "frame": 216,
+            "presentedFrame": 217,
+            "clockText": "Clock frame 216 / 221 · 7.1980s · presented frame 217",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 443,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.250745,
+            "frame": 217,
+            "presentedFrame": 218,
+            "clockText": "Clock frame 217 / 221 · 7.2436s · presented frame 218",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-104.png",
+          "wallBefore": "2026-10-08T01:48:09.178Z",
+          "wallAfter": "2026-10-08T01:48:09.314Z",
+          "before": {
+            "currentTime": 7.295132,
+            "frame": 218,
+            "presentedFrame": 219,
+            "clockText": "Clock frame 218 / 221 · 7.2644s · presented frame 219",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.329028,
+            "frame": 219,
+            "presentedFrame": 220,
+            "clockText": "Clock frame 219 / 221 · 7.3101s · presented frame 220",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-105.png",
+          "wallBefore": "2026-10-08T01:48:09.489Z",
+          "wallAfter": "2026-10-08T01:48:09.616Z",
+          "before": {
+            "currentTime": 7.372988,
+            "frame": 220,
+            "presentedFrame": 221,
+            "clockText": "Clock frame 220 / 221 · 7.3311s · presented frame 221",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.40482,
+            "frame": 221,
+            "presentedFrame": 221,
+            "clockText": "Clock frame 221 / 221 · 7.3738s · presented frame 221",
+            "paused": false,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          }
+        },
+        {
+          "file": "single-quarter-106.png",
+          "wallBefore": "2026-10-08T01:48:09.800Z",
+          "wallAfter": "2026-10-08T01:48:09.926Z",
+          "before": {
+            "currentTime": 7.4074,
+            "frame": 221,
+            "presentedFrame": 221,
+            "clockText": "Clock frame 221 / 221 · 7.4074s · presented frame 221",
+            "paused": true,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          },
+          "after": {
+            "currentTime": 7.4074,
+            "frame": 221,
+            "presentedFrame": 221,
+            "clockText": "Clock frame 221 / 221 · 7.4074s · presented frame 221",
+            "paused": true,
+            "seeking": false,
+            "rate": 0.25,
+            "muted": true,
+            "quality": {
+              "totalVideoFrames": 444,
+              "droppedVideoFrames": 1
+            }
+          }
+        }
+      ],
+      "end": {
+        "currentTime": 7.4074,
+        "frame": 221,
+        "presentedFrame": 221,
+        "clockText": "Clock frame 221 / 221 · 7.4074s · presented frame 221",
+        "paused": true,
+        "seeking": false,
+        "rate": 0.25,
+        "muted": true,
+        "quality": {
+          "totalVideoFrames": 444,
+          "droppedVideoFrames": 1
+        }
+      },
+      "wallEnd": "2026-10-08T01:48:09.928Z"
+    }
+  ],
+  "console": [],
+  "externalRequests": [],
+  "helperServersStarted": 0,
+  "browserVersion": "149.0.7827.55",
+  "finalBinding": {
+    "bytes": 3799432,
+    "sha256": "0ef1e831e42a363f14d20591f4661c538f275818f3948597b6570766d0e478b9"
+  }
+}

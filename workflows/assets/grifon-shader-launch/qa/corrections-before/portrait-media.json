@@ -1,0 +1,25 @@
+{
+  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "output": {
+    "file": "portrait.mp4",
+    "bytes": 8567773,
+    "sha256": "0d3de0fe547aed299776c34ac8473dfa888c7e2036c3646c40f2c1574b9933a4",
+    "frames": 936,
+    "duration": 31.2,
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "fps": "30/1",
+    "audio": {
+      "codec": "aac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "integratedLufs": -16,
+      "truePeakDbtp": -1.9
+    },
+    "strictDecode": "PASS"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -1,0 +1,9 @@
+{
+  "status": "FAIL_GENERIC_OUTPUT",
+  "canonicalValidatorSha256": "c1c3b775069688396a63238b695993673d38c801fa049dc7594eb4b8b4672261",
+  "problems": [
+    "why_it_works[1] evidence has no measured value: \"Major visual transitions align precisely with the transient beats of the backgro\""
+  ],
+  "whyItWorksCount": 3,
+  "noRetryAuthorized": true
+}

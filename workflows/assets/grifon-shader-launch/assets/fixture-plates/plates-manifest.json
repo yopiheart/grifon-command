@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "generator": "generate-plates.mjs",
+  "generatorSha256": "7b3897e01ea6f4a65517b1930a5b64bc7ac31a9c9b08b050da7ac99d2a738abd",
+  "provenance": "Manually authored deterministic local SVG geometry, gradients and fixed-seed grain, rasterized with existing Sharp. Text-free illustrative example assets; no generated product output, logos, external inputs or provider calls.",
+  "usage": "Private Grifon launch example-project fixture; matches unchanged SceneImageDisplay 112x192 object-cover slot.",
+  "runtime": {
+    "sharp": "0.35.3",
+    "librsvg": "2.62.3"
+  },
+  "providerCalls": 0,
+  "spendUsd": 0,
+  "files": [
+    {
+      "id": "research",
+      "path": "research-example-7x12.png",
+      "description": "Nodes and relationships; abstract audience research motif.",
+      "width": 1120,
+      "height": 1920,
+      "aspectRatio": "7:12",
+      "hasAlpha": false,
+      "bytes": 199791,
+      "sha256": "b78f2ddef59dffcbb128445f8d9482bfa8743b2844301481940cd28e96ac0b48",
+      "authoredSvgSha256": "1e0c6cb3ac42c7c52b13f711061d4570a6707393cea115727191f65a83011097"
+    },
+    {
+      "id": "script",
+      "path": "script-example-7x12.png",
+      "description": "Paper, message lines and one selected passage; abstract script motif.",
+      "width": 1120,
+      "height": 1920,
+      "aspectRatio": "7:12",
+      "hasAlpha": false,
+      "bytes": 80294,
+      "sha256": "ef882c6cce9ca423e914cb4fb7386f297ef3aa280f586f8731ad91e0969e81fb",
+      "authoredSvgSha256": "f557efef26ea6726310b97a599fce7bdc129fc2f4112dfb4adc0c74f700b40a7"
+    },
+    {
+      "id": "storyboard",
+      "path": "storyboard-example-7x12.png",
+      "description": "Three connected scene cards with manually authored material studies.",
+      "width": 1120,
+      "height": 1920,
+      "aspectRatio": "7:12",
+      "hasAlpha": false,
+      "bytes": 183875,
+      "sha256": "7cab2a2095c830145fdff2bccece2654fc154ee73e0cc62e65efc9663b952a05",
+      "authoredSvgSha256": "1bf00c42d6afef324509a7d09c6cd3c3af2821f85117adf10ed800d93912287c"
+    }
+  ]
+}

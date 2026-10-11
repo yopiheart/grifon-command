@@ -1,0 +1,176 @@
+{
+  "status": "TECHNICAL_PASS_AUDITORY_QA_PENDING",
+  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "duration": 31.2,
+  "sampleRate": 48000,
+  "channels": 2,
+  "purpose": "Clean Digital Clouds plus a restrained newly positioned mix of existing selected SFX; no VO or old mixed-master input.",
+  "sources": [
+    {
+      "id": "digital-clouds",
+      "asset": "assets/audio/digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+    },
+    {
+      "id": "paper-swipe-2",
+      "asset": "assets/audio/paper-swipe-2.wav",
+      "bytes": 384078,
+      "sha256": "398a01aee9b2f7b1de01de2d0852ca3708107a29120ae734f0ecc86217b4afd5"
+    },
+    {
+      "id": "rotation-air-2",
+      "asset": "assets/audio/rotation-air-2.wav",
+      "bytes": 384078,
+      "sha256": "182d04dc1289b346ed882cd05819c581b8aa584f59d9b3708f9057a514443199"
+    },
+    {
+      "id": "camera-contact-2",
+      "asset": "assets/audio/camera-contact-2.wav",
+      "bytes": 192078,
+      "sha256": "9de3ee1f004d3633c4bdfa5dac00a7238d68446e4f9dc8139be0646bb37ec4cd"
+    },
+    {
+      "id": "phone-contact-2",
+      "asset": "assets/audio/phone-contact-2.wav",
+      "bytes": 192078,
+      "sha256": "0fa98d4669deea51b9605a9c599463ea4e966cd052b2e9718ecabb73f38c374b"
+    },
+    {
+      "id": "laptop-contact-1",
+      "asset": "assets/audio/laptop-contact-1.wav",
+      "bytes": 576078,
+      "sha256": "2922ebc87c2ed31759ee33c1f1c2190a2c7c0c5935a85511d6c10b730b69badd"
+    },
+    {
+      "id": "card-pop-2",
+      "asset": "assets/audio/card-pop-2.wav",
+      "bytes": 384078,
+      "sha256": "6c2123f4908a256f5324c74d6fc1d50a31255741eba8029dc56dfda9ed8f99f7"
+    },
+    {
+      "id": "reverse-air-1",
+      "asset": "assets/audio/reverse-air-1.wav",
+      "bytes": 384078,
+      "sha256": "90531a66e2239f7a4cbd0533a592d72982771778e7dd7bb2370f069ab1054baa"
+    },
+    {
+      "id": "orb-inward-1",
+      "asset": "assets/audio/orb-inward-1.wav",
+      "bytes": 192078,
+      "sha256": "2d6eba0d507ace2579fd41e7952213ddb512d2821adb5af91740427b9e3759ab"
+    },
+    {
+      "id": "pencil-4",
+      "asset": "assets/audio/pencil-4.wav",
+      "bytes": 384078,
+      "sha256": "b410f0789fb80ab2946a4c40ba0954cd8fcf4d03a7935642e32c9ac23dfce4bc"
+    }
+  ],
+  "normalization": {
+    "targetIntegratedLufs": -16,
+    "targetMasterTruePeakDbtp": -3,
+    "encodedTruePeakLimitDbtp": -1.5,
+    "firstPass": {
+      "input_i": "-17.32",
+      "input_tp": "-1.56",
+      "input_lra": "3.90",
+      "input_thresh": "-27.44",
+      "output_i": "-15.93",
+      "output_tp": "-3.00",
+      "output_lra": "3.00",
+      "output_thresh": "-25.99",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.07"
+    },
+    "secondPass": {
+      "input_i": "-17.32",
+      "input_tp": "-1.56",
+      "input_lra": "3.90",
+      "input_thresh": "-27.44",
+      "output_i": "-15.97",
+      "output_tp": "-3.00",
+      "output_lra": "2.90",
+      "output_thresh": "-26.03",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.03"
+    },
+    "measuredMaster": {
+      "input_i": "-15.97",
+      "input_tp": "-2.88",
+      "input_lra": "2.80",
+      "input_thresh": "-26.09",
+      "output_i": "-15.63",
+      "output_tp": "-2.34",
+      "output_lra": "2.60",
+      "output_thresh": "-25.70",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.37"
+    }
+  },
+  "stems": [
+    {
+      "file": "music-stem.wav",
+      "bytes": 8985746,
+      "sha256": "a8daa0536bf5c1d7e0f40c45e61fdb1a85858b5077830f80132b23c6b551dc44",
+      "frames": 1497600,
+      "duration": 31.2,
+      "sampleRate": 48000,
+      "channels": 2,
+      "bits": 24,
+      "first20msRmsDbfs": -44.46531208965503,
+      "final20msRmsDbfs": -74.18067098293079
+    },
+    {
+      "file": "sfx-stem.wav",
+      "bytes": 8985702,
+      "sha256": "28235677c8730b1674e5f0e02a07db3a9cf6b6da9161eb367f52d1e9cdb03197",
+      "frames": 1497600,
+      "duration": 31.2,
+      "sampleRate": 48000,
+      "channels": 2,
+      "bits": 24,
+      "first20msRmsDbfs": null,
+      "final20msRmsDbfs": null
+    },
+    {
+      "file": "mix-master.wav",
+      "bytes": 8985746,
+      "sha256": "ba0da2aa040266a156a3e229a0ebfcf2b3e0ee239bb4b53a4dc96fa2ba518f0c",
+      "frames": 1497600,
+      "duration": 31.2,
+      "sampleRate": 48000,
+      "channels": 2,
+      "bits": 24,
+      "first20msRmsDbfs": -42.182573074641766,
+      "final20msRmsDbfs": -72.9147898614366
+    }
+  ],
+  "cueCount": 15,
+  "maximumContactErrorSamples": 0,
+  "aacPreview": {
+    "file": ".tmp/audio-192k-preview.m4a",
+    "bytes": 816449,
+    "sha256": "a0a00ee1acf74b30b874d70df5273228a9b4f509bac5c5fce2efbb3a7d7b4da2",
+    "codec": "AAC",
+    "bitrate": "192k",
+    "strictDecode": "PASS",
+    "measured": {
+      "input_i": "-16.03",
+      "input_tp": "-1.85",
+      "input_lra": "2.80",
+      "input_thresh": "-26.15",
+      "output_i": "-15.63",
+      "output_tp": "-1.80",
+      "output_lra": "2.60",
+      "output_thresh": "-25.69",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.37"
+    }
+  },
+  "encodedAacQa": "AAC-only preview passed; finished MP4 AAC must also be measured against its exact output hash.",
+  "auditoryQa": "PENDING: direct listening and musical taste are not established by timing/level checks.",
+  "rights": "PRIVATE REVIEW ONLY: existing selected ElevenLabs sources predate paid subscription.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

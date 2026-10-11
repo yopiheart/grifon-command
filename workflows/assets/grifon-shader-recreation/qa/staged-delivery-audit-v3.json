@@ -1,0 +1,156 @@
+{
+  "status": "AUTHORED_SOURCE_WHITESPACE_PASS_WITH_PRESERVED_EVIDENCE_DIAGNOSTICS",
+  "recordedAt": "2026-10-08T09:28:45.607Z",
+  "fullStagedWhitespace": {
+    "command": "git diff --cached --check",
+    "exitCode": 2,
+    "stdout": "workflows/assets/grifon-shader-recreation/qa/full-build-output.txt:37: trailing whitespace.\n+[plugin builtin:vite-reporter] \r\nworkflows/assets/grifon-shader-recreation/qa/full-current-build-output.txt:37: trailing whitespace.\n+[plugin builtin:vite-reporter] \r\nworkflows/assets/grifon-shader-recreation/qa/full-current-vitest-output.txt:9: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-failed-review-1/qa/full-build-output.txt:37: trailing whitespace.\n+[plugin builtin:vite-reporter] \r\nworkflows/assets/grifon-shader-recreation/qa/full-failed-review-1/qa/full-vitest-output.txt:9: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-failed-review-2/qa/full-shell-v5-build-output.txt:37: trailing whitespace.\n+[plugin builtin:vite-reporter] \r\nworkflows/assets/grifon-shader-recreation/qa/full-failed-review-2/qa/full-shell-v5-vitest-output.txt:9: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-native-cut-review-v3.json:1727: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-paced-early-review-v3.json:5538: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-shell-v5-build-output.txt:37: trailing whitespace.\n+[plugin builtin:vite-reporter] \r\nworkflows/assets/grifon-shader-recreation/qa/full-shell-v5-vitest-output.txt:9: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-timing-v3-build-output.txt:37: trailing whitespace.\n+[plugin builtin:vite-reporter] \r\nworkflows/assets/grifon-shader-recreation/qa/full-timing-v3-vitest-output.txt:9: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/qa/full-vitest-output.txt:9: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/reference/full-native-cut-review-v3.md:98: new blank line at EOF.\nworkflows/assets/grifon-shader-recreation/reference/full-paced-early-review-v3.md:77: new blank line at EOF.\n",
+    "stderr": "",
+    "diagnostics": [
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-build-output.txt",
+        "line": 37,
+        "message": "trailing whitespace.",
+        "bytes": 1886,
+        "sha256": "794fdea7a783765e3de58648ecc16a5cbdfa6f946dda8379975829f5e12960e9"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-current-build-output.txt",
+        "line": 37,
+        "message": "trailing whitespace.",
+        "bytes": 1895,
+        "sha256": "3991abdd4136dd2d3788ba1b8ee3b8bd5804670daf91badded0729d017e54ebe"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-current-vitest-output.txt",
+        "line": 9,
+        "message": "new blank line at EOF.",
+        "bytes": 300,
+        "sha256": "1e4a20cbf72649822d576d060f1488cad2ecb1e00dd34d641c23de4e4df8bc61"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-failed-review-1/qa/full-build-output.txt",
+        "line": 37,
+        "message": "trailing whitespace.",
+        "bytes": 1886,
+        "sha256": "794fdea7a783765e3de58648ecc16a5cbdfa6f946dda8379975829f5e12960e9"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-failed-review-1/qa/full-vitest-output.txt",
+        "line": 9,
+        "message": "new blank line at EOF.",
+        "bytes": 301,
+        "sha256": "3eaf813118e61ab0bebb252de21533e6e5616b2ec201cfc3977d777ef382a051"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-failed-review-2/qa/full-shell-v5-build-output.txt",
+        "line": 37,
+        "message": "trailing whitespace.",
+        "bytes": 1886,
+        "sha256": "f5b70117cad1d453d0d30b6ea192960aa7713a5f11e4857a31c5e1d8d8f1cb9c"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-failed-review-2/qa/full-shell-v5-vitest-output.txt",
+        "line": 9,
+        "message": "new blank line at EOF.",
+        "bytes": 301,
+        "sha256": "6da819a3b3147b45e753705688f85a6eab25d0172dc0df434ccd5bc45e13ee57"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-native-cut-review-v3.json",
+        "line": 1727,
+        "message": "new blank line at EOF.",
+        "bytes": 50042,
+        "sha256": "966e24e817e43ff7c09f74e6ade076c01fbc62ab725aebd4cad696799c90dcb8"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-paced-early-review-v3.json",
+        "line": 5538,
+        "message": "new blank line at EOF.",
+        "bytes": 206841,
+        "sha256": "0b9e26a746ce9c6328ce16921ec091ec9a171475b001b5c7290466c6dfd6e655"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-shell-v5-build-output.txt",
+        "line": 37,
+        "message": "trailing whitespace.",
+        "bytes": 1886,
+        "sha256": "f5b70117cad1d453d0d30b6ea192960aa7713a5f11e4857a31c5e1d8d8f1cb9c"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-shell-v5-vitest-output.txt",
+        "line": 9,
+        "message": "new blank line at EOF.",
+        "bytes": 301,
+        "sha256": "6da819a3b3147b45e753705688f85a6eab25d0172dc0df434ccd5bc45e13ee57"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-timing-v3-build-output.txt",
+        "line": 37,
+        "message": "trailing whitespace.",
+        "bytes": 1895,
+        "sha256": "3d8d480e626a00534ea18c8f19d18c25154a3c691bd52db5ff4fb62198645ce2"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-timing-v3-vitest-output.txt",
+        "line": 9,
+        "message": "new blank line at EOF.",
+        "bytes": 301,
+        "sha256": "b3d0e1e60027e902b72f0dc9244dd827ca3dd96635a4c9657bca42772f978dca"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/qa/full-vitest-output.txt",
+        "line": 9,
+        "message": "new blank line at EOF.",
+        "bytes": 301,
+        "sha256": "3eaf813118e61ab0bebb252de21533e6e5616b2ec201cfc3977d777ef382a051"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/reference/full-native-cut-review-v3.md",
+        "line": 98,
+        "message": "new blank line at EOF.",
+        "bytes": 10539,
+        "sha256": "3d81998c519b4eb1dc09e8331b5cdb452dcd6d4fff332310546655e2523ad882"
+      },
+      {
+        "file": "workflows/assets/grifon-shader-recreation/reference/full-paced-early-review-v3.md",
+        "line": 77,
+        "message": "new blank line at EOF.",
+        "bytes": 8692,
+        "sha256": "e887ea73314f99380599491951c0e3f7eda262e6bf828a318d791db6b940aa24"
+      }
+    ]
+  },
+  "authoredSourceWhitespace": {
+    "exitCode": 0,
+    "paths": [
+      ".gitattributes",
+      "NOW.md",
+      "tools/artifacts",
+      "artifacts/grifon-shader-recreation.html",
+      "workflows/assets/grifon-shader-recreation/README.md",
+      "workflows/assets/grifon-shader-recreation/full.json",
+      "workflows/assets/grifon-shader-recreation/full.html",
+      "workflows/assets/grifon-shader-recreation/full.js",
+      "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+      "workflows/assets/grifon-shader-recreation/build-full.mjs",
+      "workflows/assets/grifon-shader-recreation/build-full-paired-review.mjs",
+      "workflows/assets/grifon-shader-recreation/render-full.mjs",
+      "workflows/assets/grifon-shader-recreation/review-server.mjs",
+      "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+      "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+      "workflows/assets/grifon-shader-recreation/qa/full-joint-gate-v3.json"
+    ]
+  },
+  "interpretation": "All 16 diagnostics concern original captured command output or closed byte/hash-bound independent reviews. Those bytes remain unchanged. The complete staged diff is not claimed whitespace-clean.",
+  "policyAudit": "Independent read-only inspection found no mandatory whitespace acceptance gate in repository instructions, surgical-edit, configured Codex hooks, native Git hooks, package checks or CI. Normal commit hooks remain enabled; no attribute or hook suppression is applied.",
+  "priorIndexAudit": {
+    "stagedPaths": 787,
+    "exactRecreationFiles": 785,
+    "bytes": 787233411,
+    "allCheckedIndexBytesMatchDisk": true,
+    "privateInputsExcluded": true,
+    "approvedPaidTuplesUnchanged": true
+  },
+  "limits": "Index counts precede addition of this audit receipt. This is a preservation and staging record, not a new application/visual/audio test."
+}

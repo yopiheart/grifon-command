@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-07T19:06:12.666Z",
+  "status": "TECHNICAL_PASS_PARENT_DELIVERY_CHECKS_SEPARATE",
+  "originalCommit": "f818c4952c88a5011257944717dbf82c89f2ef8d",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+  "changes": [
+    "Correct third workflow node CSS selector; add original-fail/fix-pass DOM geometry gate.",
+    "Use three local manually authored text-free7:12 opaque example plates.",
+    "Raise landscape native capture DSF1.5 to4.5; preserve portrait2 and original editorial framing.",
+    "Losslessly extract approved landscape source rectangles to avoid observed combined full-image decode failure."
+  ],
+  "unchangedFields": [
+    "duration",
+    "fps",
+    "formats",
+    "copy",
+    "scenes",
+    "actions",
+    "audio",
+    "qa"
+  ],
+  "unchangedSources": [
+    {
+      "file": "composition.js",
+      "before": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352",
+      "after": "5e11ad389b92840f839f44c6483a7a146463af330dc83b75dbdec46d8a5ef352",
+      "identical": true
+    },
+    {
+      "file": "capture-fixtures.tsx",
+      "before": "59b1ff7e2131896317916863a0bc57bdbef6a77cf3e21aa9dcc95e043a50da9f",
+      "after": "59b1ff7e2131896317916863a0bc57bdbef6a77cf3e21aa9dcc95e043a50da9f",
+      "identical": true
+    }
+  ],
+  "audioIdentity": [
+    {
+      "file": "music-stem.wav",
+      "before": "a8daa0536bf5c1d7e0f40c45e61fdb1a85858b5077830f80132b23c6b551dc44",
+      "after": "a8daa0536bf5c1d7e0f40c45e61fdb1a85858b5077830f80132b23c6b551dc44",
+      "identical": true
+    },
+    {
+      "file": "sfx-stem.wav",
+      "before": "28235677c8730b1674e5f0e02a07db3a9cf6b6da9161eb367f52d1e9cdb03197",
+      "after": "28235677c8730b1674e5f0e02a07db3a9cf6b6da9161eb367f52d1e9cdb03197",
+      "identical": true
+    },
+    {
+      "file": "mix-master.wav",
+      "before": "ba0da2aa040266a156a3e229a0ebfcf2b3e0ee239bb4b53a4dc96fa2ba518f0c",
+      "after": "ba0da2aa040266a156a3e229a0ebfcf2b3e0ee239bb4b53a4dc96fa2ba518f0c",
+      "identical": true
+    },
+    {
+      "file": "mix-premaster.wav",
+      "before": "dbc6421befe29fa066db07f0e56202407004cce22baafb7619b06b98b5ae6250",
+      "after": "dbc6421befe29fa066db07f0e56202407004cce22baafb7619b06b98b5ae6250",
+      "identical": true
+    }
+  ],
+  "productCapture": {
+    "file": "qa/product-capture.json",
+    "sha256": "d2d0349fcd54a5e3eafd54ed644fdb185e096c8f78033120d01ec42d810eea85",
+    "realScreenshots": 8,
+    "losslessDerivatives": [
+      {
+        "surface": "research",
+        "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-research.png",
+        "dimensions": [
+          1800,
+          768
+        ],
+        "bytes": 66562,
+        "sha256": "8058746ce6a4996369211ba180f808cb94761464e8fc905f2bae5ec32922bec3",
+        "fullSourcePath": "workflows/assets/grifon-shader-launch/assets/captures/research.png",
+        "fullSourceSha256": "c458fc1accca4f6484d94ee945b9d75d92031ef308c403ed5a1d097cfe804da0",
+        "fullSourceDimensions": [
+          5760,
+          4050
+        ],
+        "sourceRectangle": {
+          "left": 420,
+          "top": 1500,
+          "width": 1800,
+          "height": 768
+        },
+        "pixelComparison": {
+          "result": "EXACT_PASS",
+          "changedPixels": 0,
+          "sourceRectangleRawSha256": "b58719d8e291074fc25cfb0d0d0fc3fe57e3f2d308c285f90f79d80c55203e65",
+          "derivativeRawSha256": "b58719d8e291074fc25cfb0d0d0fc3fe57e3f2d308c285f90f79d80c55203e65",
+          "channels": 3
+        },
+        "treatment": "Lossless extraction only; no resizing, sharpening or UI changes."
+      },
+      {
+        "surface": "script",
+        "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-script.png",
+        "dimensions": [
+          1800,
+          768
+        ],
+        "bytes": 51645,
+        "sha256": "8282c3e1469b45cf552fde0b5f3aa32bd5959fff0f773a4dbb7979b1d482c02c",
+        "fullSourcePath": "workflows/assets/grifon-shader-launch/assets/captures/script.png",
+        "fullSourceSha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+        "fullSourceDimensions": [
+          5760,
+          4050
+        ],
+        "sourceRectangle": {
+          "left": 630,
+          "top": 1410,
+          "width": 1800,
+          "height": 768
+        },
+        "pixelComparison": {
+          "result": "EXACT_PASS",
+          "changedPixels": 0,
+          "sourceRectangleRawSha256": "86845172f3f0d712a6b70598197da0f409ac342cbc2a419a767f02a0255876c0",
+          "derivativeRawSha256": "86845172f3f0d712a6b70598197da0f409ac342cbc2a419a767f02a0255876c0",
+          "channels": 3
+        },
+        "treatment": "Lossless extraction only; no resizing, sharpening or UI changes."
+      },
+      {
+        "surface": "storyboard",
+        "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-storyboard.png",
+        "dimensions": [
+          1800,
+          768
+        ],
+        "bytes": 99655,
+        "sha256": "86cdbc74c5431504f91b1a1226a0b2ad9a82e3a1901dfae05eafb2b066c3efbc",
+        "fullSourcePath": "workflows/assets/grifon-shader-launch/assets/captures/storyboard.png",
+        "fullSourceSha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+        "fullSourceDimensions": [
+          5760,
+          4050
+        ],
+        "sourceRectangle": {
+          "left": 570,
+          "top": 2730,
+          "width": 1800,
+          "height": 768
+        },
+        "pixelComparison": {
+          "result": "EXACT_PASS",
+          "changedPixels": 0,
+          "sourceRectangleRawSha256": "e233ef23814217fdd15eb0f0b7fa144139644fbc301c4e6970eca858badfef1d",
+          "derivativeRawSha256": "e233ef23814217fdd15eb0f0b7fa144139644fbc301c4e6970eca858badfef1d",
+          "channels": 3
+        },
+        "treatment": "Lossless extraction only; no resizing, sharpening or UI changes."
+      }
+    ],
+    "apiRequests": 0,
+    "externalRequests": 0,
+    "providerCalls": 0
+  },
+  "fixturePlates": {
+    "manifest": "assets/fixture-plates/plates-manifest.json",
+    "sha256": "8c62b8791cb2e2cf9f5b57dc475e632d9b6c6594fa3ef8ec6f919b99759465b4",
+    "provenance": "Manually authored deterministic local SVG geometry, gradients and fixed-seed grain, rasterized with existing Sharp. Text-free illustrative example assets; no generated product output, logos, external inputs or provider calls."
+  },
+  "formats": {
+    "landscape": {
+      "originalGeometry": {
+        "file": "qa/corrections-before/landscape-track-geometry.json",
+        "sha256": "44a5c46c35246c7c345ac13ae19bb9509366165332c1946442771d039a5db518",
+        "result": "FAIL",
+        "commandExitCode": 1,
+        "cases": [
+          {
+            "time": 13.6,
+            "delta": {
+              "x": 126.5,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 13.7,
+            "delta": {
+              "x": 126.5,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 14.4,
+            "delta": {
+              "x": 126.5,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 15.35,
+            "delta": {
+              "x": 126.5,
+              "y": -0.5
+            }
+          }
+        ]
+      },
+      "correctedGeometry": {
+        "file": "qa/landscape-track-geometry.json",
+        "sha256": "278717d928bd610e773483a75f1ce4e89c7b7469314e103cc0caec3c58c474a2",
+        "result": "PASS",
+        "cases": [
+          {
+            "time": 13.6,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 13.7,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 14.4,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 15.35,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          }
+        ]
+      },
+      "captureCheck": {
+        "file": "qa/landscape-capture-check.json",
+        "sha256": "ea34a295806438cda5565ad37ee114e29fe40f9d31ddde0a3e45ba97eb63dd8d",
+        "exactSeekCount": 12,
+        "motionCount": 7,
+        "nativeRenderer": "WebGPU"
+      },
+      "frameCache": {
+        "file": "qa/landscape-frame-receipt.json",
+        "sha256": "a622c0b71a5cf565ca4b5f2061d414d96362f4f0e2aa78560f3c5c08a0fb4643",
+        "verifiedFrames": 936
+      },
+      "encoded": {
+        "file": "landscape.mp4",
+        "bytes": 7952020,
+        "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc",
+        "frames": 936,
+        "duration": 31.2,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "fps": "30/1",
+        "audio": {
+          "codec": "aac",
+          "sampleRate": 48000,
+          "channels": 2,
+          "integratedLufs": -16,
+          "truePeakDbtp": -1.9
+        },
+        "strictDecode": "PASS"
+      }
+    },
+    "portrait": {
+      "originalGeometry": {
+        "file": "qa/corrections-before/portrait-track-geometry.json",
+        "sha256": "6ef61b74fd90c231852c8120520ab45af8adc2fdaa5cdc6de2f48b0bf20df0aa",
+        "result": "FAIL",
+        "commandExitCode": 1,
+        "cases": [
+          {
+            "time": 13.6,
+            "delta": {
+              "x": 109,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 13.7,
+            "delta": {
+              "x": 109,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 14.4,
+            "delta": {
+              "x": 109,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 15.35,
+            "delta": {
+              "x": 109,
+              "y": -0.5
+            }
+          }
+        ]
+      },
+      "correctedGeometry": {
+        "file": "qa/portrait-track-geometry.json",
+        "sha256": "01011390e8e3d4c9ec47a70bfc0a33c05e250945f667aa40e3070df768701544",
+        "result": "PASS",
+        "cases": [
+          {
+            "time": 13.6,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 13.7,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 14.4,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          },
+          {
+            "time": 15.35,
+            "delta": {
+              "x": 0,
+              "y": -0.5
+            }
+          }
+        ]
+      },
+      "captureCheck": {
+        "file": "qa/portrait-capture-check.json",
+        "sha256": "b4cc62c4aa27f6538b6e5d0bf4b60a4dacb6e5826aab86785d24249a8ab2b45f",
+        "exactSeekCount": 12,
+        "motionCount": 7,
+        "nativeRenderer": "WebGPU"
+      },
+      "frameCache": {
+        "file": "qa/portrait-frame-receipt.json",
+        "sha256": "33811282776af099de1120f73a8dee83b4b130653ed0731b4151d0aa8d1a421a",
+        "verifiedFrames": 936
+      },
+      "encoded": {
+        "file": "portrait.mp4",
+        "bytes": 8568284,
+        "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5",
+        "frames": 936,
+        "duration": 31.2,
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "fps": "30/1",
+        "audio": {
+          "codec": "aac",
+          "sampleRate": 48000,
+          "channels": 2,
+          "integratedLufs": -16,
+          "truePeakDbtp": -1.9
+        },
+        "strictDecode": "PASS"
+      }
+    }
+  },
+  "encodedReport": {
+    "file": "qa/encoded-report.json",
+    "sha256": "6c0f2439636a889dc8a24baf09576b55ffb1240ad7ea463f7a350536f89f13cb"
+  },
+  "offlinePlayer": {
+    "path": "artifacts/grifon-shader-launch.html",
+    "bytes": 24116406,
+    "sha256": "1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207",
+    "embeddedMediaExact": true,
+    "reproducibleBuild": "PASS",
+    "inlineScriptSyntax": "PASS"
+  },
+  "commands": [
+    {
+      "command": "node --check workflows/assets/grifon-shader-launch/render.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/capture-ui.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/prepare-assets.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/contract.test.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/build.mjs --check",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs check-track landscape",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs check-track portrait",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs samples landscape",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs samples portrait",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs check landscape",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs check portrait",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/audio.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs render landscape",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs render portrait",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/media-check.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node tools/artifacts/build-grifon-shader-launch.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node tools/artifacts/build-grifon-shader-launch.mjs --check",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/qa/smoke-source-checks.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs verify-cache landscape",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs verify-cache portrait",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-launch/render.mjs cache-test landscape",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "result": "PASS"
+    }
+  ],
+  "independentApplicationChecks": {
+    "file": "qa/application-correction-checks.json",
+    "sha256": "4ce274dcad2f121ea898675a51a28e9891024cd0579254ed37e9d877bf1fcb43"
+  },
+  "selfVisualInspection": {
+    "source": [
+      "landscape-sample-07.png",
+      "landscape-sample-08.png",
+      "landscape-sample-09.png",
+      "portrait-sample-09.png",
+      "landscape-track-14-40.png",
+      "portrait-track-14-40.png"
+    ],
+    "encoded": [
+      "qa/encoded-landscape/frame-00.png",
+      "qa/encoded-landscape/frame-14.png",
+      "qa/encoded-landscape/frame-18.png",
+      "qa/encoded-portrait/frame-19.png",
+      "qa/encoded-portrait/frame-26.png"
+    ],
+    "result": "Reviewed actual first/critical/final PNGs; corrected node aligned, landscape text sharp and portrait thumbnail text-free. Independent parent review remains separate."
+  },
+  "historicalEvidence": "Initial pass/mobile/backup/archive reports describe media at f818c4952c88a5011257944717dbf82c89f2ef8d. Original metadata and failure frames are preserved in qa/corrections-before; parent refreshes final mobile, backup and recovery receipts separately.",
+  "deviations": [
+    "Parent approved three lossless framed capture derivatives after the full-resolution three-image load failed; source rectangles/raw pixels preserved exactly.",
+    "Renderer load-error diagnostic additionally reports local image dimensions; no gate or animation behavior changed.",
+    "Standing build/Vitest checks re-run independently despite unchanged application source."
+  ],
+  "limitations": [
+    "PRIVATE REVIEW ONLY: existing SFX sources require commercial clearance.",
+    "Direct auditory and physical Android-device QA remain unperformed.",
+    "Git backup update, email draft, new recovery archive and PC sleep remain parent-owned delivery work."
+  ],
+  "helpers": "All capture/render/probe contexts and scoped HTTP servers were closed when their commands returned; no preview helper started.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "parentFinalSmoke": {
+    "file": "qa/parent-final-smoke.json",
+    "sha256": "619bbd6ba59966e06cd2f34918d8bbef1a1879a48f1e176326b3f114366a5c61",
+    "result": "PASS",
+    "playerSha256": "1707c07152c64aebfb5757e86fef446577fca433ceddee0470f7a8ec3a378207",
+    "downloads": {
+      "landscape": {
+        "path": "C:\\Users\\ADMIN\\Downloads\\grifon-shader-launch-landscape (1).mp4",
+        "bytes": 7952020,
+        "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc"
+      },
+      "portrait": {
+        "path": "C:\\Users\\ADMIN\\Downloads\\grifon-shader-launch-portrait (1).mp4",
+        "bytes": 8568284,
+        "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5"
+      }
+    },
+    "screenshots": [
+      "parent-final-mobile-390x844-landscape.jpg",
+      "parent-final-mobile-390x844-portrait.jpg"
+    ],
+    "scope": "Documented CUA browser playback/control/download checks at390x844; muted, not direct hearing or a physical-device test."
+  },
+  "independentFinalCorrectionReview": {
+    "file": "qa/parent-independent-correction-review.md",
+    "sha256": "912003170272df8530a5aff08f4c205eb69d55c4363c0910d8fed411846cffb6",
+    "result": "PASS"
+  }
+}

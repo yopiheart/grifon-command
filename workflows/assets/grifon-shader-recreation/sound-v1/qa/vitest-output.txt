@@ -1,0 +1,83 @@
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command
+
+ ❯ tests/unit/checkAnchors.test.ts (9 tests | 5 failed) 58436ms
+     × stays green when a cited call site only SHIFTS LINES 9056ms
+     × fails on a drifted twin even when it has been STAGED 14270ms
+     × refuses to report on an UNTRACKED twin instead of calling it unchanged 5121ms
+     × refuses to report on a SPARSE-EXCLUDED twin, whose git flag is an uppercase S 5324ms
+     × treats a NEW staged twin as new, not as a moved call site 6070ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > stays green when a cited call site only SHIFTS LINES
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/checkAnchors.test.ts:156:3
+    154|   });
+    155|
+    156|   it('stays green when a cited call site only SHIFTS LINES', () => {
+       |   ^
+    157|     // The whole point of citing the anchor STRING instead of the reso…
+    158|     // A blank line above the first anchor moves all three orchestrato…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > fails on a drifted twin even when it has been STAGED
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/checkAnchors.test.ts:172:3
+    170|   });
+    171|
+    172|   it('fails on a drifted twin even when it has been STAGED', () => {
+       |   ^
+    173|     // False-green #1. `git diff` alone compares the index to the work…
+    174|     // rebuilt twin is staged it reproduces the staged bytes and repor…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > refuses to report on an UNTRACKED twin instead of calling it unchanged
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/checkAnchors.test.ts:191:3
+    189|   });
+    190|
+    191|   it('refuses to report on an UNTRACKED twin instead of calling it unc…
+       |   ^
+    192|     // False-green #2. With the path absent from HEAD there is nothing…
+    193|     // so `git diff HEAD` succeeds and the artifact looks verified whi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > refuses to report on a SPARSE-EXCLUDED twin, whose git flag is an uppercase S
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/checkAnchors.test.ts:208:3
+    206|   });
+    207|
+    208|   it('refuses to report on a SPARSE-EXCLUDED twin, whose git flag is a…
+       |   ^
+    209|     // False-green #3, and the reason this asserts the letter itself: …
+    210|     // skip-worktree, which `ls-files -v` tags `S`. A regex matching o…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > treats a NEW staged twin as new, not as a moved call site
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/checkAnchors.test.ts:225:3
+    223|   });
+    224|
+    225|   it('treats a NEW staged twin as new, not as a moved call site', () =…
+       |   ^
+    226|     // The prescribed workflow for adding an artifact: register it, st…
+    227|     // this as a sanity pass. `git diff HEAD` reports the whole file a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed | 115 passed | 9 skipped (125)
+      Tests  5 failed | 1427 passed | 32 skipped (1464)
+   Start at  19:45:35
+   Duration  60.89s (transform 20.31s, setup 0ms, import 55.09s, tests 172.97s, environment 24ms)
+

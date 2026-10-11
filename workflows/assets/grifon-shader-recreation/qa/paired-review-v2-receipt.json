@@ -1,0 +1,35 @@
+{
+  "purpose": "PRIVATE reference-fidelity inspection; not a Grifon export",
+  "createdAt": "2026-10-08T01:44:49.855Z",
+  "inputs": {
+    "reference": {
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+      "bytes": 11514975
+    },
+    "pilot": {
+      "sha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8",
+      "bytes": 3992749
+    }
+  },
+  "output": {
+    "path": "workflows/assets/grifon-shader-recreation/.tmp/paired-pilot.mp4",
+    "sha256": "0ef1e831e42a363f14d20591f4661c538f275818f3948597b6570766d0e478b9",
+    "bytes": 3799432,
+    "width": 1920,
+    "height": 540,
+    "frames": 222,
+    "fps": "30000/1001",
+    "audio": false
+  },
+  "layout": {
+    "left": "REFERENCE, frames0-221 at960x540",
+    "right": "GRIFON, same native frames at960x540"
+  },
+  "method": "[0:v]trim=end_frame=222,setpts=PTS-STARTPTS,scale=960:540,setsar=1[a];[1:v]trim=end_frame=222,setpts=PTS-STARTPTS,scale=960:540,setsar=1[b];[a][b]hstack=inputs=2:shortest=1[v]",
+  "checks": {
+    "encode": 0,
+    "probe": 0,
+    "strictDecode": 0,
+    "inputHashesStable": true
+  }
+}

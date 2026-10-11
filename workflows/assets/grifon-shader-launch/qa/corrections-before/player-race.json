@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "builderSha256": "2453f9a12cc2736e3cab7078f3b0b2535cc8fc071e5558d652d6ee8fb1aa97c5",
+  "fixedScriptSha256": "5f98df60a26b461484068c62d7ef405ec819ee11c4e458ce6b19c733ea782f37",
+  "reconstructedOriginalScriptSha256": "ce72974ca745faf4294acc40fd29a49b91e41d2c9515161a3c5b0085e874976c",
+  "method": "Execute the actual builder script template in a minimal DOM/media-state simulation; reconstruct only the inspected pre-fix Restart callback and handler.",
+  "originalFail": {
+    "currentTime": 8,
+    "paused": true,
+    "result": "FAIL"
+  },
+  "fixPass": {
+    "currentTime": 0,
+    "paused": false,
+    "result": "PASS"
+  },
+  "rapidFormatSwitchWithObsoleteMetadata": {
+    "currentTime": 0,
+    "paused": false,
+    "result": "PASS"
+  },
+  "limitations": [
+    "This is a state-machine regression fixture, not browser playback, decode, sound, download, or device evidence."
+  ]
+}

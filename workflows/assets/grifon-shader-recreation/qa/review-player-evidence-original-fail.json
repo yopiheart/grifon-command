@@ -1,0 +1,792 @@
+{
+  "scope": "Technical comparison-player smoke only; no visual-fidelity or listening pass",
+  "url": "http://127.0.0.1:63407/",
+  "screenshots": [
+    "review-player-mobile-390x844.png",
+    "review-player-desktop-1280x844.png",
+    "review-player-terminal-mismatch.png"
+  ],
+  "checks": [],
+  "mobile": {
+    "body": {
+      "client": 375,
+      "width": 375
+    },
+    "controls": [
+      {
+        "height": 46,
+        "id": "play",
+        "label": "Play both",
+        "width": 98.125
+      },
+      {
+        "height": 46,
+        "id": "previous",
+        "label": "Previous frame",
+        "width": 129.28125
+      },
+      {
+        "height": 46,
+        "id": "next",
+        "label": "Next frame",
+        "width": 103.59375
+      },
+      {
+        "height": 46,
+        "id": "restart",
+        "label": "Restart",
+        "width": 141.765625
+      },
+      {
+        "height": 46,
+        "id": "speed",
+        "label": "1x0.5x0.25x",
+        "width": 87
+      },
+      {
+        "height": 46,
+        "id": "audio",
+        "label": "Reference audio: off",
+        "width": 347
+      },
+      {
+        "height": 44,
+        "id": "seek",
+        "label": "",
+        "width": 347
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "0 / Start",
+        "width": 91.390625
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "26 / Lens",
+        "width": 91.390625
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "57 / Warm lens",
+        "width": 124.375
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "82 / Chrome",
+        "width": 104.578125
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "91 / Glass",
+        "width": 97.984375
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "97 / Gold",
+        "width": 91.390625
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "104 / Cream",
+        "width": 104.578125
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "111 / Carbon",
+        "width": 111.171875
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "119 / Chrome",
+        "width": 111.171875
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "126 / Voxel",
+        "width": 104.578125
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "132 / Glass field",
+        "width": 144.171875
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "138 / Flare",
+        "width": 104.578125
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "145 / Raised type",
+        "width": 144.171875
+      },
+      {
+        "height": 46,
+        "id": "",
+        "label": "209 / Gray relief",
+        "width": 144.171875
+      }
+    ],
+    "readout": "Frame 145 / 221 | 4.8382 s | clock difference 0.0000 s",
+    "scroll": {
+      "x": 0,
+      "y": 0
+    },
+    "videos": [
+      {
+        "currentTime": 4.838166,
+        "duration": 31.146667,
+        "error": null,
+        "height": 1080,
+        "id": "reference",
+        "muted": true,
+        "paused": true,
+        "rate": 1,
+        "readyState": 4,
+        "src": "http://127.0.0.1:63407/reference.mp4",
+        "width": 1920
+      },
+      {
+        "currentTime": 4.838166,
+        "duration": 7.4074,
+        "error": null,
+        "height": 1080,
+        "id": "pilot",
+        "muted": true,
+        "paused": true,
+        "rate": 1,
+        "readyState": 4,
+        "src": "http://127.0.0.1:63407/pilot.mp4",
+        "width": 1920
+      }
+    ],
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  "assets": {
+    "assets": [
+      {
+        "id": "ced1305ab9ccc09b",
+        "kind": "video",
+        "name": "reference.mp4",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "video"
+          },
+          {
+            "kind": "resource",
+            "property": "video"
+          },
+          {
+            "kind": "resource",
+            "property": "video"
+          },
+          {
+            "kind": "attribute",
+            "nodeId": 4,
+            "property": "src"
+          }
+        ],
+        "url": "http://127.0.0.1:63407/reference.mp4"
+      },
+      {
+        "id": "d4e5b49f534e6218",
+        "kind": "video",
+        "name": "pilot.mp4",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "video"
+          },
+          {
+            "kind": "resource",
+            "property": "video"
+          },
+          {
+            "kind": "attribute",
+            "nodeId": 6,
+            "property": "src"
+          }
+        ],
+        "url": "http://127.0.0.1:63407/pilot.mp4"
+      }
+    ],
+    "id": "0610ce8b-c1d8-4809-88c8-e7beb49a0bf9",
+    "inlineSvgs": [],
+    "pageUrl": "http://127.0.0.1:63407/",
+    "summary": {
+      "byKind": {
+        "font": 0,
+        "image": 0,
+        "other": 0,
+        "script": 0,
+        "stylesheet": 0,
+        "video": 2
+      },
+      "inlineSvgCount": 0,
+      "totalCount": 2
+    }
+  },
+  "seeks": [
+    {
+      "frame": 0,
+      "readout": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 0,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 0,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 26,
+      "readout": "Frame 26 / 221 | 0.8675 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 0.867533,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 0.867533,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 57,
+      "readout": "Frame 57 / 221 | 1.9019 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 1.9019,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 1.9019,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 82,
+      "readout": "Frame 82 / 221 | 2.7361 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 2.736066,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 2.736066,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 91,
+      "readout": "Frame 91 / 221 | 3.0364 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 3.036366,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 3.036366,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 97,
+      "readout": "Frame 97 / 221 | 3.2366 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 3.236566,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 3.236566,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 104,
+      "readout": "Frame 104 / 221 | 3.4701 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 3.470133,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 3.470133,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 111,
+      "readout": "Frame 111 / 221 | 3.7037 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 3.7037,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 3.7037,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 119,
+      "readout": "Frame 119 / 221 | 3.9706 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 3.970633,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 3.970633,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 126,
+      "readout": "Frame 126 / 221 | 4.2042 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 4.2042,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 4.2042,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 132,
+      "readout": "Frame 132 / 221 | 4.4044 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 4.4044,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 4.4044,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 138,
+      "readout": "Frame 138 / 221 | 4.6046 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 4.6046,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 4.6046,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 145,
+      "readout": "Frame 145 / 221 | 4.8382 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 4.838166,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 4.838166,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    },
+    {
+      "frame": 209,
+      "readout": "Frame 209 / 221 | 6.9736 s | clock difference 0.0000 s",
+      "videos": [
+        {
+          "currentTime": 6.973633,
+          "id": "reference",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        },
+        {
+          "currentTime": 6.973633,
+          "id": "pilot",
+          "muted": true,
+          "paused": true,
+          "readyState": 4
+        }
+      ]
+    }
+  ],
+  "playStarted": {
+    "readout": "Frame 9 / 221 | 0.3003 s | clock difference 0.0269 s",
+    "videos": [
+      {
+        "currentTime": 0.304342,
+        "id": "reference",
+        "muted": true,
+        "paused": false,
+        "rate": 1
+      },
+      {
+        "currentTime": 0.336947,
+        "id": "pilot",
+        "muted": true,
+        "paused": false,
+        "rate": 1
+      }
+    ]
+  },
+  "playEnded": {
+    "frame": 221,
+    "playLabel": "Play both",
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "videos": [
+      {
+        "currentTime": 7.374033,
+        "id": "reference",
+        "muted": true,
+        "paused": true,
+        "rate": 1
+      },
+      {
+        "currentTime": 7.374033,
+        "id": "pilot",
+        "muted": true,
+        "paused": true,
+        "rate": 1
+      }
+    ]
+  },
+  "sharedSlider": {
+    "frame": 84,
+    "readout": "Frame 84 / 221 | 2.8028 s | clock difference 0.0000 s",
+    "times": [
+      2.8028,
+      2.8028
+    ]
+  },
+  "nextFrame": {
+    "frame": 85,
+    "times": [
+      2.836166,
+      2.836166
+    ]
+  },
+  "previousFrame": {
+    "frame": 84,
+    "times": [
+      2.8028,
+      2.8028
+    ]
+  },
+  "speeds": [
+    {
+      "rates": [
+        0.5,
+        0.5
+      ],
+      "selection": "0.5"
+    },
+    {
+      "rates": [
+        0.25,
+        0.25
+      ],
+      "selection": "0.25"
+    },
+    {
+      "rates": [
+        1,
+        1
+      ],
+      "selection": "1"
+    }
+  ],
+  "audioOn": {
+    "label": "Reference audio: on",
+    "muteStates": [
+      {
+        "id": "reference",
+        "muted": false
+      },
+      {
+        "id": "pilot",
+        "muted": true
+      }
+    ],
+    "pressed": "true"
+  },
+  "audioOff": {
+    "label": "Reference audio: off",
+    "muteStates": [
+      {
+        "id": "reference",
+        "muted": true
+      },
+      {
+        "id": "pilot",
+        "muted": true
+      }
+    ],
+    "pressed": "false"
+  },
+  "desktop": {
+    "body": {
+      "client": 1265,
+      "width": 1265
+    },
+    "readout": "Frame 145 / 221 | 4.8382 s | clock difference 0.0000 s",
+    "videos": [
+      {
+        "currentTime": 4.838166,
+        "id": "reference",
+        "muted": true,
+        "paused": true,
+        "readyState": 4,
+        "rect": {
+          "height": 338.90625,
+          "width": 602.5,
+          "x": 21,
+          "y": 207
+        }
+      },
+      {
+        "currentTime": 4.838166,
+        "id": "pilot",
+        "muted": true,
+        "paused": true,
+        "readyState": 4,
+        "rect": {
+          "height": 338.90625,
+          "width": 602.5,
+          "x": 641.5,
+          "y": 207
+        }
+      }
+    ],
+    "viewport": {
+      "height": 844,
+      "width": 1280
+    }
+  },
+  "console": [],
+  "upperClamp": {
+    "frame": 221,
+    "times": [
+      7.374033,
+      7.4074
+    ]
+  },
+  "lowerClamp": {
+    "frame": 0,
+    "times": [
+      0,
+      0
+    ]
+  },
+  "generatedAt": "2026-10-08T01:09:23.412Z",
+  "status": "FAIL",
+  "limitations": [
+    "Chromium viewport check does not emulate Android WebView painting",
+    "No visual-reference-fidelity or audio-listening approval",
+    "Observed page asset inventory and console checked; no complete HAR captured"
+  ],
+  "automationNotes": [
+    "CUA status-filter wait expired before a later observation confirmed normal frame-221 completion",
+    "Body key press and exact Speed label locator were unsupported; documented scroll and select ID actions succeeded"
+  ],
+  "terminalFreshSeek": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "videos": [
+      {
+        "currentTime": 7.374033,
+        "duration": 31.146667,
+        "ended": false,
+        "id": "reference",
+        "paused": true,
+        "readyState": 4
+      },
+      {
+        "currentTime": 7.374033,
+        "duration": 7.4074,
+        "ended": true,
+        "id": "pilot",
+        "paused": true,
+        "readyState": 4
+      }
+    ]
+  },
+  "terminalFreshNext": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0334 s",
+    "videos": [
+      {
+        "currentTime": 7.374033,
+        "duration": 31.146667,
+        "ended": false,
+        "id": "reference",
+        "paused": true,
+        "readyState": 4
+      },
+      {
+        "currentTime": 7.4074,
+        "duration": 7.4074,
+        "ended": true,
+        "id": "pilot",
+        "paused": true,
+        "readyState": 4
+      }
+    ]
+  },
+  "terminalSettled": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0334 s",
+    "videos": [
+      {
+        "currentTime": 7.374033,
+        "ended": false,
+        "id": "reference",
+        "paused": true,
+        "readyState": 4,
+        "seekingProperty": "undefined"
+      },
+      {
+        "currentTime": 7.4074,
+        "ended": true,
+        "id": "pilot",
+        "paused": true,
+        "readyState": 4,
+        "seekingProperty": "undefined"
+      }
+    ]
+  },
+  "failure": {
+    "check": "Upper terminal clamp preserves paired clocks",
+    "steps": [
+      "Load a fresh player tab",
+      "Set Shared frame to 221",
+      "Click Next frame",
+      "Inspect settled visible status and media clocks"
+    ],
+    "expectedTimes": [
+      7.374033333333333,
+      7.374033333333333
+    ],
+    "actualTimes": [
+      7.374033,
+      7.4074
+    ],
+    "visibleClockDifferenceSeconds": 0.0334,
+    "scope": "Only terminal Next-frame clock alignment fails; other requested controls/layout/media checks pass"
+  },
+  "settlingNote": "Failure remains in a separate later tool observation after fresh seek/control action and after readyState=4; CUA read-only media proxy does not expose seeking (String(v.seeking) is undefined), so no claim of direct native seeked-event instrumentation."
+}

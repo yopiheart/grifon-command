@@ -1,0 +1,129 @@
+{
+  "sourceSha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae",
+  "decodedFrames": 1495040,
+  "duration": 31.14666666666667,
+  "eventCount": 148,
+  "highTransientCount": 99,
+  "tempo120": {
+    "exactHalfSecondCorrelation": -0.064562,
+    "bestWithin117to123Bpm": 122.449,
+    "nearbyAutocorrelation": -0.035213,
+    "nearbyIsLocalPeak": false,
+    "relativeToStrongestLag": -0.051554,
+    "highTransientCount": 99,
+    "bestHalfSecondPhase": 0.425,
+    "highTransientsWithin60msOfGridFraction": 0.292929,
+    "status": "FAIL_TO_ESTABLISH_120BPM"
+  },
+  "earlyTimestamps": [
+    {
+      "claimedSeconds": 0.06,
+      "toleranceSeconds": 0.03,
+      "detectedOnsetWithinTolerance": [
+        {
+          "time": 0.061333,
+          "flux": 0.025344633,
+          "robustScoreMad": 4.025,
+          "timingUncertaintySeconds": 0.021333
+        }
+      ],
+      "stereo20msRmsDbfsAtClaim": -27.49,
+      "medianBeforeDbfs": null,
+      "beforeIsDigitalSilence": true,
+      "maxAfterMinusMedianBeforeDb": null,
+      "status": "PASS_MEASURED_CHANGE_NEAR_TIMESTAMP",
+      "sfxIdentity": "NOT ASSESSABLE FROM METRICS"
+    },
+    {
+      "claimedSeconds": 0.1,
+      "toleranceSeconds": 0.03,
+      "detectedOnsetWithinTolerance": [],
+      "stereo20msRmsDbfsAtClaim": -21.72,
+      "medianBeforeDbfs": -21.407,
+      "beforeIsDigitalSilence": false,
+      "maxAfterMinusMedianBeforeDb": 0.922,
+      "status": "FAIL_NO_PROMINENT_DETECTED_CHANGE_NEAR_TIMESTAMP",
+      "sfxIdentity": "NOT ASSESSABLE FROM METRICS"
+    }
+  ],
+  "tempoCandidates": [
+    {
+      "bpm": 130.4348,
+      "lagSeconds": 0.46,
+      "refinedLagSeconds": 0.461386,
+      "refinedBpmCandidate": 130.0428,
+      "normalizedAutocorrelation": 0.683039
+    },
+    {
+      "bpm": 64.8649,
+      "lagSeconds": 0.925,
+      "refinedLagSeconds": 0.922813,
+      "refinedBpmCandidate": 65.0186,
+      "normalizedAutocorrelation": 0.678527
+    },
+    {
+      "bpm": 86.9565,
+      "lagSeconds": 0.69,
+      "refinedLagSeconds": 0.692251,
+      "refinedBpmCandidate": 86.6737,
+      "normalizedAutocorrelation": 0.676431
+    },
+    {
+      "bpm": 104.3478,
+      "lagSeconds": 0.575,
+      "refinedLagSeconds": 0.577357,
+      "refinedBpmCandidate": 103.9218,
+      "normalizedAutocorrelation": 0.06006
+    },
+    {
+      "bpm": 173.913,
+      "lagSeconds": 0.345,
+      "refinedLagSeconds": 0.345785,
+      "refinedBpmCandidate": 173.518,
+      "normalizedAutocorrelation": 0.054346
+    }
+  ],
+  "tempo120SupportedWindows": 0,
+  "tempoWindowCount": 7,
+  "silenceIntervals": [],
+  "quietIntervalsBelow40Dbfs": [
+    {
+      "start": 30.795,
+      "end": 31.145,
+      "duration": 0.35
+    }
+  ],
+  "cutProximity": {
+    "within80msCutCount": 16,
+    "inspectedAbruptBoundaryCount": 25,
+    "allDetectedEventsCoverFractionOfTimelineAt80ms": 0.678607,
+    "highTransientEventsCoverFractionOfTimelineAt80ms": 0.482716,
+    "interpretation": "Descriptive proximity only. Many detected events cover a large part of the timeline, so proximity can occur by chance and does not establish intentional beat-sync."
+  },
+  "highestTwentyEventTimes": [
+    13.071333,
+    24.136333,
+    22.291333,
+    16.751333,
+    14.906333,
+    11.226333,
+    25.981333,
+    18.601333,
+    20.446333,
+    25.061333,
+    8.201333,
+    24.826333,
+    23.441333,
+    27.831333,
+    13.981333,
+    16.056333,
+    21.366333,
+    13.761333,
+    12.611333,
+    12.376333
+  ],
+  "sourceHashPreserved": true,
+  "hearing": "NOT PERFORMED. The runtime cannot ingest audio. Metrics do not establish genre, SFX identity, speech or musical intent.",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

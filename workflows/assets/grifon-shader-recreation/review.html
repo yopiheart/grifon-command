@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Grifon reference comparison</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;background:#070708;color:#F5F5F7;font-family:Arial,sans-serif}
+    .ground{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 45% 0%,#131316,#09090B 60%,#070708);pointer-events:none}
+    main{position:relative;max-width:1600px;margin:auto;padding:28px 20px 48px}h1{font-size:clamp(25px,4vw,44px);font-weight:900;letter-spacing:-.04em;margin:8px 0 12px}p{color:#B4B4BC;line-height:1.5;margin:8px 0 18px}.eyebrow{font:11px monospace;letter-spacing:.24em;color:#FFCC00}
+    .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{min-width:0;background:linear-gradient(135deg,#ffffff09,#ffffff02);border:1px solid #ffffff20;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px #0005}.label{font:12px monospace;padding:13px 14px;color:#F5F5F7;border-bottom:1px solid #ffffff14}video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+    .controls{margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}button,select{min-height:46px;border:1px solid #ffffff30;border-radius:8px;background:#18181D;color:#F5F5F7;padding:10px 15px;font:14px Arial,sans-serif;cursor:pointer}button.primary{background:#FFCC00;color:#09090B;border-color:#FFCC00;font-weight:700}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #FFCC00;outline-offset:3px}label{display:flex;align-items:center;gap:8px;color:#B4B4BC;font-size:13px}input[type=range]{width:100%;height:44px;accent-color:#FFCC00}.readout{font:12px monospace;color:#D5D5DD;padding:12px 0}.cuts{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px}.cuts button{white-space:nowrap;font:12px monospace;flex-shrink:0}.note{font-size:12px;color:#9A9AA3;max-width:850px}.error{color:#FF8563}footer{margin-top:28px;font:10px monospace;letter-spacing:.2em;color:#9A9AA3}
+    @media(max-width:720px){main{padding:22px 14px 35px}.pair{grid-template-columns:1fr;gap:12px}.label{padding:10px 12px}.controls{gap:8px}button{flex-grow:1}.controls label{flex-grow:1}.cuts button{flex-grow:0}}
+  </style>
+</head>
+<body>
+  <div class="ground"></div>
+  <main>
+    <div class="eyebrow">// PRIVATE REFERENCE STUDY</div>
+    <h1>Opening comparison</h1>
+    <p>Shared frame seeking for paused detail. <a href="/paired" style="color:#FFCC00">Open the single-video synced motion review.</a> Original reference above the Grifon pilot on mobile; side by side on desktop.</p>
+    <div class="pair">
+      <section class="panel"><div class="label">REFERENCE / ORIGINAL 30000:1001</div><video id="reference" src="/reference.mp4" preload="auto" muted playsinline></video></section>
+      <section class="panel"><div class="label">GRIFON / SILENT VISUAL PILOT</div><video id="pilot" src="/pilot.mp4" preload="auto" muted playsinline></video></section>
+    </div>
+    <div class="controls">
+      <button class="primary" id="play">Play both</button><button id="previous">Previous frame</button><button id="next">Next frame</button><button id="restart">Restart</button>
+      <label>Speed <select id="speed"><option value="1">1x</option><option value="0.5">0.5x</option><option value="0.25">0.25x</option></select></label>
+      <button id="audio" aria-pressed="false">Reference audio: off</button>
+    </div>
+    <label for="seek">Shared frame</label><input id="seek" type="range" min="0" max="221" step="1" value="0">
+    <div class="readout" id="readout" role="status">Loading both videos...</div>
+    <div class="cuts" id="cuts" aria-label="Material and scene boundaries"></div>
+    <p class="note">Independent video decoders can drift during playback. Use the single-video review for timed visual judgment. The original audio is a private inspection input and is absent from the Grifon export. No listening or fidelity pass is implied by this player.</p>
+    <footer>GRIFON / LOCAL REVIEW</footer>
+  </main>
+  <script>
+    const reference=document.getElementById('reference'),pilot=document.getElementById('pilot'),seek=document.getElementById('seek'),play=document.getElementById('play'),readout=document.getElementById('readout');
+    const fps=30000/1001,end=222/fps,videos=[reference,pilot];let playing=false,loaded=0,reviewFrame=0;
+    function display(){const frame=Math.min(221,Math.max(0,Math.floor(pilot.currentTime*fps+0.02)));reviewFrame=frame;seek.value=frame;readout.textContent=`Frame ${frame} / 221 | ${(frame/fps).toFixed(4)} s | clock difference ${Math.abs(reference.currentTime-pilot.currentTime).toFixed(4)} s`;}
+    function pause(){playing=false;videos.forEach(v=>v.pause());play.textContent='Play both';display();}
+    function setFrame(frame){pause();reviewFrame=Math.min(221,Math.max(0,Number(frame)));const t=reviewFrame/fps;videos.forEach(v=>{if(Math.abs(v.currentTime-t)>0.000001)v.currentTime=t;});seek.value=reviewFrame;display();}
+    async function start(){if(loaded<2)return;if(pilot.currentTime>=end-1/fps)setFrame(0);reference.currentTime=pilot.currentTime;playing=true;play.textContent='Pause both';try{await Promise.all(videos.map(v=>v.play()));}catch(error){pause();readout.textContent=error.message;readout.classList.add('error');}}
+    play.onclick=()=>playing?pause():start();document.getElementById('restart').onclick=()=>setFrame(0);document.getElementById('previous').onclick=()=>setFrame(reviewFrame-1);document.getElementById('next').onclick=()=>setFrame(reviewFrame+1);seek.oninput=()=>setFrame(seek.value);
+    document.getElementById('speed').onchange=event=>videos.forEach(v=>v.playbackRate=Number(event.target.value));
+    document.getElementById('audio').onclick=event=>{reference.muted=!reference.muted;event.target.textContent=`Reference audio: ${reference.muted?'off':'on'}`;event.target.setAttribute('aria-pressed',String(!reference.muted));};
+    const cuts=[[0,'Start'],[26,'Lens'],[57,'Warm lens'],[82,'Chrome'],[91,'Glass'],[97,'Gold'],[104,'Cream'],[111,'Carbon'],[119,'Chrome'],[126,'Voxel'],[132,'Glass field'],[138,'Flare'],[145,'Raised type'],[209,'Gray relief']];
+    for(const [frame,label] of cuts){const button=document.createElement('button');button.textContent=`${frame} / ${label}`;button.onclick=()=>setFrame(frame);document.getElementById('cuts').append(button);}
+    videos.forEach(v=>{v.addEventListener('loadeddata',()=>{loaded++;if(loaded===2){setFrame(0);}} ,{once:true});v.addEventListener('seeked',display);v.addEventListener('error',()=>{readout.textContent='A local review input is unavailable. Start review-server.mjs with the preserved private source and the current pilot.';readout.classList.add('error');});});
+    function tick(){if(playing){if(pilot.currentTime>=end-0.01){pause();setFrame(221);}else{display();}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

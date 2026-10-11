@@ -1,0 +1,52 @@
+{
+  "purpose": "Historical root pre-encode framing feedback only",
+  "method": "Corresponding source review JPGs at480x270 and draft native PNGs resized480x270, left/right",
+  "frames": [
+    225,
+    242,
+    285,
+    324,
+    362,
+    383,
+    393,
+    442,
+    450,
+    476,
+    500,
+    529,
+    573,
+    617,
+    633,
+    740,
+    842
+  ],
+  "sourceSha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+  "boards": [
+    {
+      "file": "board-0.png",
+      "bytes": 1396896,
+      "sha256": "a2a132195d875530a32fe83a32e15d0ad06f1aacf750e1bb8807d94bf63a488c"
+    },
+    {
+      "file": "board-1.png",
+      "bytes": 1388535,
+      "sha256": "cb9624d95359f3e619570c54d878ff0ccf898e927949d7cf639258e2197959e4"
+    },
+    {
+      "file": "board-2.png",
+      "bytes": 869581,
+      "sha256": "b7b5bcc4d2fc0a253e1422811d9c4c2f0e579210a6c20389fee11136f55ba638"
+    },
+    {
+      "file": "board-3.png",
+      "bytes": 1456230,
+      "sha256": "91691ecb7ed5fa348cba15ed3698e3185a3f27bfe98385b965411e6225b2765a"
+    },
+    {
+      "file": "board-4.png",
+      "bytes": 133214,
+      "sha256": "7ea555154e75dd3938b0b5bdcfa69b2411794ef973304befdcd6d4cda0043b88"
+    }
+  ],
+  "limits": "Mutable draft was being edited. These boards preserve observed images only; no frozen source-code binding, full-film native review, continuous playback or audio verdict is claimed."
+}

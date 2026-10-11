@@ -1,0 +1,27 @@
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command
+
+ ❯ tests/unit/checkAnchors.test.ts (9 tests | 1 failed) 26133ms
+     × refuses to report on an UNTRACKED twin instead of calling it unchanged 5965ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/checkAnchors.test.ts > check-anchors.mjs > refuses to report on an UNTRACKED twin instead of calling it unchanged
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/checkAnchors.test.ts:191:3
+    189|   });
+    190|
+    191|   it('refuses to report on an UNTRACKED twin instead of calling it unc…
+       |   ^
+    192|     // False-green #2. With the path absent from HEAD there is nothing…
+    193|     // so `git diff HEAD` succeeds and the artifact looks verified whi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  19:49:30
+   Duration  26.74s (transform 44ms, setup 0ms, import 61ms, tests 26.13s, environment 0ms)
+

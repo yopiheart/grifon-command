@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scriptSha256": "6bca470284f15957c767cf9991de6a91cc70344d7e81f350c52ce403d5356c4a",
+  "recipeSha256": "e47ccaa4dd601b8d1108b137a06689290fe3849b1eecd2e317244d4b51686ce3",
+  "controls": [
+    {
+      "name": "original-music-only-cues",
+      "status": "PASS",
+      "actualExitCode": 1,
+      "fixtureSha256": "5cb2e0b0f5f02b9ae88fb104d77e537e3d66703dc765e1a4dd81e27ee20ab0fb",
+      "error": "file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:18\r\nconst fail = message => { throw Error(message); };\r\n                                ^\r\n\r\nError: Exactly 47 authored SFX cue events are required; a music-only recipe is ineligible\r\n    at fail (file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:18:33)\r\n    at validate (file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:55:71)\r\n    at file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:90:19\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\r\n    at async node:internal/modules/esm/loader:647:26\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\r\n\r\nNode.js v24.21.0\r\n",
+      "originalRecipeSha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689",
+      "originalCueCount": 0
+    },
+    {
+      "name": "changed-source-binding",
+      "status": "PASS",
+      "actualExitCode": 1,
+      "fixtureSha256": "4691920aab8ef60b1881d315382eaae18263b8b1a98e69339df92a893c0ebe12",
+      "error": "file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:18\r\nconst fail = message => { throw Error(message); };\r\n                                ^\r\n\r\nError: Registered Close Up music binding differs\r\n    at fail (file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:18:33)\r\n    at validate (file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:56:177)\r\n    at file:///C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs:90:19\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\r\n    at async node:internal/modules/esm/loader:647:26\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\r\n\r\nNode.js v24.21.0\r\n"
+    }
+  ],
+  "method": "Actual child-process validation of fixtures; empty cue array is taken from the preserved original music-only recipe. Changed hash mutates the recipe binding, not original source bytes.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

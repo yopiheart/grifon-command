@@ -1,0 +1,200 @@
+{
+  "result": "PASS",
+  "format": "headerless row-major Float32; distance in pixel/512; negative inside; top row first",
+  "assets": [
+    {
+      "key": "introduction",
+      "sha256": "429381440afcf452a91d77d2de36aaf31e8dfb2f9eaf8021a90f7cc8f8f9377d",
+      "bytes": 1048576,
+      "inside": 14049,
+      "outside": 248095,
+      "counters": {
+        "expected": 2,
+        "actual": 2,
+        "witnesses": [
+          {
+            "pixel": 124200,
+            "area": 138
+          },
+          {
+            "pixel": 124309,
+            "area": 458
+          }
+        ]
+      },
+      "independentDistances": [
+        {
+          "pixel": 0,
+          "actual": 0.4552164077758789,
+          "expected": 0.45521641541499935,
+          "result": "PASS"
+        },
+        {
+          "pixel": 511,
+          "actual": 0.4552164077758789,
+          "expected": 0.45521641541499935,
+          "result": "PASS"
+        },
+        {
+          "pixel": 262143,
+          "actual": 0.4552164077758789,
+          "expected": 0.45521641541499935,
+          "result": "PASS"
+        },
+        {
+          "pixel": 118303,
+          "actual": -0.001953125,
+          "expected": -0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 143840,
+          "actual": -0.001953125,
+          "expected": -0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 118272,
+          "actual": 0.060546875,
+          "expected": 0.060546875,
+          "result": "PASS"
+        },
+        {
+          "pixel": 124200,
+          "actual": 0.001953125,
+          "expected": 0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 124309,
+          "actual": 0.001953125,
+          "expected": 0.001953125,
+          "result": "PASS"
+        }
+      ],
+      "invalidFixtures": [
+        {
+          "fixture": "inverted-sign",
+          "rejected": "Wrong SDF sign at 0"
+        },
+        {
+          "fixture": "all-outside",
+          "rejected": "Wrong SDF sign at 118303"
+        },
+        {
+          "fixture": "truncated",
+          "rejected": "Wrong SDF byte length"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "key": "relief",
+      "sha256": "0c290d3222504bd7a41c1255299a83a9ce52a138ad6faa47747280ef76ec2004",
+      "bytes": 1048576,
+      "inside": 13224,
+      "outside": 248920,
+      "counters": {
+        "expected": 4,
+        "actual": 4,
+        "witnesses": [
+          {
+            "pixel": 120889,
+            "area": 99
+          },
+          {
+            "pixel": 126274,
+            "area": 53
+          },
+          {
+            "pixel": 126923,
+            "area": 190
+          },
+          {
+            "pixel": 133327,
+            "area": 68
+          }
+        ]
+      },
+      "independentDistances": [
+        {
+          "pixel": 0,
+          "actual": 0.44743192195892334,
+          "expected": 0.44743190822738604,
+          "result": "PASS"
+        },
+        {
+          "pixel": 511,
+          "actual": 0.4668336510658264,
+          "expected": 0.4668336478716549,
+          "result": "PASS"
+        },
+        {
+          "pixel": 262143,
+          "actual": 0.43819698691368103,
+          "expected": 0.43819698944937996,
+          "result": "PASS"
+        },
+        {
+          "pixel": 113019,
+          "actual": -0.001953125,
+          "expected": -0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 149459,
+          "actual": -0.001953125,
+          "expected": -0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 112640,
+          "actual": 0.09018278121948242,
+          "expected": 0.09018278422355622,
+          "result": "PASS"
+        },
+        {
+          "pixel": 120889,
+          "actual": 0.001953125,
+          "expected": 0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 126274,
+          "actual": 0.001953125,
+          "expected": 0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 126923,
+          "actual": 0.001953125,
+          "expected": 0.001953125,
+          "result": "PASS"
+        },
+        {
+          "pixel": 133327,
+          "actual": 0.001953125,
+          "expected": 0.001953125,
+          "result": "PASS"
+        }
+      ],
+      "invalidFixtures": [
+        {
+          "fixture": "inverted-sign",
+          "rejected": "Wrong SDF sign at 0"
+        },
+        {
+          "fixture": "all-outside",
+          "rejected": "Wrong SDF sign at 113019"
+        },
+        {
+          "fixture": "truncated",
+          "rejected": "Wrong SDF byte length"
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

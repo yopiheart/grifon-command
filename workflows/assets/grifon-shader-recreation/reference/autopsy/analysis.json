@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "source_ref": "https://x.com/npm_i_shaders/status/2107467668009963819",
+    "local_file": "reference/source-x.mp4",
+    "niche": "WebGPU software launch motion design",
+    "source": "x",
+    "model": "gemini-3.5-flash",
+    "analyzed_at": "2026-10-08T00:41:36.471Z",
+    "source_sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+    "audio_findings_status": "Machine-analysis hypothesis; direct human hearing and frame-indexed cross-check pending"
+  },
+  "analysis": {
+    "video": {
+      "duration_s": 30.7,
+      "format_guess": "b-roll montage",
+      "language": "NO_VO",
+      "platform_native_style": "X (Twitter) motion design showcase"
+    },
+    "hook": {
+      "first_3s_timeline": [
+        {
+          "t": "0.0-0.8",
+          "what": "Glitchy CRT-style text pattern with static buzz sound."
+        },
+        {
+          "t": "0.8-1.5",
+          "what": "Sleek 3D bubble with 'SHADERS IS NOW' text, camera shutter click SFX."
+        },
+        {
+          "t": "1.5-3.0",
+          "what": "Rotating 3D bubble transitioning from dark blue to orange background."
+        }
+      ],
+      "text_on_frame_1": true,
+      "first_on_screen_text": "SHADERS IS NOW",
+      "subject_or_product_visible_at_s": 1,
+      "hook_type": "pattern interrupt",
+      "spoken_hook_verbatim": "NO_VO"
+    },
+    "shots": {
+      "count": 24,
+      "median_shot_s": 1,
+      "shortest_shot_s": 0.5,
+      "longest_shot_s": 8
+    },
+    "perceived_pace_driver": "Rapid visual cuts synchronized perfectly with the 120 BPM electronic music track, averaging 1-2 cuts per second.",
+    "captions": {
+      "present": true,
+      "chunk_words": "1-3",
+      "swap_interval_s": 1,
+      "case": "mixed",
+      "color": "White, pink, purple, yellow",
+      "screen_height_pct": "50%",
+      "treatment": "plain",
+      "animation": "instant swap",
+      "emphasis_method": "color shift"
+    },
+    "edit_grammar": {
+      "transitions": [
+        "Glitch transition at 0.0s, 0.06s, 0.11s, 0.20s",
+        "Hard cuts on the beat throughout",
+        "Zoom/pan transition at 0.17s"
+      ],
+      "sfx_hits": [
+        "Glitch static buzz at 0.0s",
+        "Camera shutter click at 0.8s",
+        "Glitch buzz at 0.06s",
+        "Vinyl scratch/beat drop at 0.10s"
+      ],
+      "music": "Upbeat electronic house track driving the visual rhythm",
+      "silences_over_0_3s": 0,
+      "dead_air_notes": "None"
+    },
+    "camera": "Simulated 3D camera drift, pans, and zooms within digital environments.",
+    "product_reveal": {
+      "at_s": 1,
+      "mechanic": "hard cut"
+    },
+    "proof_elements": [
+      "200+ COMPONENTS text at 10.0s",
+      "UI editor demo at 17.0s"
+    ],
+    "cta": {
+      "first_at_s": 22,
+      "holds_to_final_frame": true,
+      "mechanic": "end card"
+    },
+    "storytelling_format": {
+      "name": "feature showcase",
+      "beats": [
+        {
+          "t": "0.0-3.0",
+          "beat": "Hook",
+          "summary": "Glitchy intro transitioning into sleek brand reveal."
+        },
+        {
+          "t": "3.0-9.0",
+          "beat": "Capability Showcase",
+          "summary": "Rapid montage of diverse visual shader styles."
+        },
+        {
+          "t": "9.0-11.0",
+          "beat": "Value Prop",
+          "summary": "Highlighting 200+ open-source components."
+        },
+        {
+          "t": "11.0-16.0",
+          "beat": "Visual Proof",
+          "summary": "Further demonstration of high-fidelity shader effects."
+        },
+        {
+          "t": "17.0-21.0",
+          "beat": "Application",
+          "summary": "Showing shaders integrated into a real UI editor."
+        },
+        {
+          "t": "21.0-30.0",
+          "beat": "Outro",
+          "summary": "Clean brand logo animation and hold."
+        }
+      ]
+    },
+    "transcript": "NO_VO",
+    "why_it_works": [
+      {
+        "claim": "High-frequency visual novelty maintains viewer engagement.",
+        "timestamp": "0.0-21.0",
+        "evidence": "Features 24 distinct visual styles and cuts within a 30-second duration.",
+        "confidence": "high"
+      },
+      {
+        "claim": "Perfect audio-visual synchronization creates a satisfying sensory loop.",
+        "timestamp": "1.0",
+        "evidence": "Major visual transitions align precisely with the transient beats of the background track.",
+        "confidence": "high"
+      },
+      {
+        "claim": "Immediate value proposition establishes utility early.",
+        "timestamp": "10.0",
+        "evidence": "Displays '200+ COMPONENTS' text within the first 10 seconds of the video.",
+        "confidence": "medium"
+      }
+    ],
+    "weaknesses": [
+      "Lack of voiceover or explanatory text may leave non-technical viewers confused about the product's exact utility."
+    ],
+    "believability": {
+      "performance": {
+        "observation": "not assessable",
+        "evidence": "No on-screen person.",
+        "confidence": "high"
+      },
+      "voice_delivery": {
+        "observation": "not assessable",
+        "evidence": "No voiceover.",
+        "confidence": "high"
+      },
+      "lighting": {
+        "observation": "not assessable",
+        "evidence": "Fully digital motion graphics.",
+        "confidence": "high"
+      },
+      "camera_lens": {
+        "observation": "not assessable",
+        "evidence": "Digital viewport.",
+        "confidence": "high"
+      },
+      "image_realism": {
+        "observation": "not assessable",
+        "evidence": "Stylized 3D/2D motion graphics.",
+        "confidence": "high"
+      },
+      "lip_sync": {
+        "observation": "not assessable",
+        "evidence": "No talking face.",
+        "confidence": "high"
+      },
+      "observed_register": "cinematic",
+      "source_realism_verdict": {
+        "verdict": "real-human",
+        "evidence": "Highly polished, professionally designed motion graphics and UI mockups.",
+        "confidence": "high"
+      }
+    }
+  }
+}

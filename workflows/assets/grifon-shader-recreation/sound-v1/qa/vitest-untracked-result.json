@@ -1,0 +1,7 @@
+{
+  "purpose": "Isolate original remaining timeout; other eight cases filtered solely for diagnosis",
+  "completedAt": "2026-10-08T11:51:39.0325452Z",
+  "exitCode": 0,
+  "startedAt": "2026-10-08T11:51:35.1197050Z",
+  "command": "npx.cmd vitest run tests/unit/checkAnchors.test.ts -t 'refuses to report on an UNTRACKED twin instead of calling it unchanged'"
+}

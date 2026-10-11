@@ -1,0 +1,38 @@
+{
+  "status": "FAIL",
+  "reason": "Single linear master cannot reach loudness and headroom simultaneously",
+  "actualBuildExitCode": 1,
+  "measuredPremaster": {
+    "integratedLufs": -23.93,
+    "truePeakDbtp": -8.28,
+    "loudnessRangeLu": 10.2
+  },
+  "maximumSample": {
+    "sample": 617866,
+    "frame": 385.78046953046953,
+    "peak": 0.3818679451942444
+  },
+  "privateWork": "sound-v1/.tmp/build",
+  "publishedCandidate": false,
+  "thresholdsUnchanged": true,
+  "preserved": [
+    {
+      "original": "build-sound.mjs",
+      "snapshot": "qa/attempt-1/build-sound.mjs",
+      "bytes": 32082,
+      "sha256": "6bca470284f15957c767cf9991de6a91cc70344d7e81f350c52ce403d5356c4a"
+    },
+    {
+      "original": "sound-spec.json",
+      "snapshot": "qa/attempt-1/sound-spec.json",
+      "bytes": 9791,
+      "sha256": "e47ccaa4dd601b8d1108b137a06689290fe3849b1eecd2e317244d4b51686ce3"
+    },
+    {
+      "original": "qa/controls.json",
+      "snapshot": "qa/attempt-1/controls.json",
+      "bytes": 3111,
+      "sha256": "3fab7de99f435bf68f5641b1265ef662608ebe070e97720b6946dabd0d56f607"
+    }
+  ]
+}

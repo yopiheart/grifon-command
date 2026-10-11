@@ -1,0 +1,38 @@
+{
+  "status": "FAIL",
+  "reason": "Verifier falsely rejected exact digital silence represented by rmsDbfs:null",
+  "actualBuildExitCode": 1,
+  "measuredAac": {
+    "integratedLufs": -16.33,
+    "truePeakDbtp": -2.18,
+    "loudnessRangeLu": 9.9,
+    "final350msRmsDbfs": -139.52264235469013,
+    "final20msRmsDbfs": null,
+    "final20msPeakDbfs": null
+  },
+  "privateWork": "sound-v1/.tmp/build-v2",
+  "candidateSha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+  "candidateBytes": 25057741,
+  "publishedCandidate": false,
+  "thresholdsUnchanged": true,
+  "preserved": [
+    {
+      "original": "build-sound.mjs",
+      "snapshot": "qa/attempt-2/build-sound.mjs",
+      "bytes": 32902,
+      "sha256": "c9e5be67a77d84f4170a42d5a7965053b3f5233427a62a1698596774aa1173e6"
+    },
+    {
+      "original": "sound-spec.json",
+      "snapshot": "qa/attempt-2/sound-spec.json",
+      "bytes": 10325,
+      "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+    },
+    {
+      "original": "qa/controls-v2.json",
+      "snapshot": "qa/attempt-2/controls-v2.json",
+      "bytes": 3111,
+      "sha256": "f8987f35fe90c1e814805bf0b62a1287329f90af95cbf4bee203f5ff2dff1a9a"
+    }
+  ]
+}

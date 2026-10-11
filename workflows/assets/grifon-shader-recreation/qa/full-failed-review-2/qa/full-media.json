@@ -1,0 +1,60 @@
+{
+  "file": "grifon-recreation-landscape-provisional.mp4",
+  "bytes": 25018826,
+  "sha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+  "frames": 932,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "fps": "30000/1001",
+  "codec": "h264",
+  "timeBase": "1/30000",
+  "pixFmt": "yuv420p",
+  "duration": 31.146,
+  "videoDuration": 31.097733,
+  "strictDecode": "PASS",
+  "sources": {
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+    "full-surfaces.frag": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+  },
+  "producerToolSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+  "audio": {
+    "codec": "aac",
+    "sampleRate": 48000,
+    "channels": 2,
+    "duration": 31.146
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "prefixFramesVerified": 222,
+  "temporalProof": "qa/full-temporal-mux.json",
+  "temporalProofSha256": "f7874686d3aba036f6d884f992a88557a110529866209ba62bf79ca73c9362b0",
+  "audioProof": "qa/full-audio-mux-proof.json",
+  "audioProofSha256": "a773c3cbfafb9cc5a6f7f367cdb35efc46dcccce2ab2a706a0acf7158578292f",
+  "logicalDecodedAudioDuration": 31.14666666666667,
+  "decodedAudioSampleFrames": 1495040,
+  "captureReceiptSha256": "b480d87f32c122d8ba640704fb57b4b58bc79824483a1e5e7e14b027f5ec73f3",
+  "captureProducerToolSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+  "captureProducerSnapshot": "qa/full-capture-producer.mjs",
+  "prefixSha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+  "silentSha256": "7cdc68b2f4fb89472965a6aaeb16a492fb30e665de2d65c867c229cf74727b5b",
+  "audioProvenance": {
+    "masterSha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+    "recipeSha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689",
+    "sonicStatus": "SONIC_UNVERIFIED",
+    "recipe": "unchanged existing master; stream-copy mux; full AAC tail retained"
+  },
+  "fidelityStatus": "PENDING_INDEPENDENT_FULL_REVIEW"
+}

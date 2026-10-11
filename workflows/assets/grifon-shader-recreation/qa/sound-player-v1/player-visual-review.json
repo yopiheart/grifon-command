@@ -1,0 +1,79 @@
+{
+  "status": "PASS_INDEPENDENT_PLAYER_VISUAL_SMOKE",
+  "checkedAt": "2026-10-08T12:02:38.7660664Z",
+  "technicalAssertions": 33,
+  "technicalPassed": 33,
+  "technicalFailed": 0,
+  "originalHelperSha256": "a4ad69b109e4cc5c6bc7c5d3fa85b7fd17f36651b3c685ae0513784c2c687eba",
+  "privateHelperSha256": "ac5700a29921335fc2d410d6ec5f2167fdd0c068f2a28cc40e3d50cd24bd7edf",
+  "threeStructuralRetargetsOnly": true,
+  "reverseNormalizedSourceExactlyOriginal": true,
+  "screenshots": [
+    {
+      "file": "player-mobile-390x844-poster.png",
+      "bytes": 311856,
+      "sha256": "cf7cf078789907173feccf28701c89a365edc8445bb98bb454f84cb8bbc5c1fe",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-390x844-playing.png",
+      "bytes": 341583,
+      "sha256": "d1cbf2e8c390235518ba44890ea6a99efac4414ef1fec74e2237b4552ad4f5d5",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-390x844-scrub.png",
+      "bytes": 327170,
+      "sha256": "2726f438c2887b094ae92d481e763d394d1bc48244b37378264d40ac26b32409",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-390x844-ended.png",
+      "bytes": 296825,
+      "sha256": "81db3ee35c722839c79957956d0acad2669bad689efbacb84eb8065cb1eae843",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-1280x844-poster.png",
+      "bytes": 614886,
+      "sha256": "292907b46213bc1c8555512050ac80c74ccf1aef760002397983b04ef030fe2d",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-1280x844-playing.png",
+      "bytes": 830629,
+      "sha256": "5a45672030a4cfbe4f80b193890b17b434adb61c4449ada9ea864919490de1df",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-1280x844-scrub.png",
+      "bytes": 813319,
+      "sha256": "777b53c33ea4b536561544e4d055ec00c56327f202c55d43676da451550f2bbe",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    },
+    {
+      "file": "player-mobile-1280x844-ended.png",
+      "bytes": 694928,
+      "sha256": "3364deda3d97f4595758c3902ea734bff18a795ee6fa723049462cb4f26b9462",
+      "viewedWithActualImageTool": true,
+      "observation": "Player shell, ground, panel edges, readable type, and controls intact; no horizontal clipping observed."
+    }
+  ],
+  "directListening": "NOT_RUN",
+  "fullFilmAestheticAcceptance": "NOT_RUN",
+  "realAndroidWebView": "NOT_RUN",
+  "supplementalCua": {
+    "status": "NOT_RUN",
+    "chrome": "Initial open timed out; recovery reported unavailable.",
+    "inAppBrowser": "file:// URL rejected by browser security policy; no workaround or further retry."
+  },
+  "helperServersStarted": 0,
+  "processCleanup": "Playwright browser/contexts closed by test finally; no helper server or separately owned PID."
+}

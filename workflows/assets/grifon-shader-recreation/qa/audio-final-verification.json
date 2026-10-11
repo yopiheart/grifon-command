@@ -1,0 +1,662 @@
+{
+  "status": "TECHNICAL_AUDIO_PASS_SONIC_UNVERIFIED",
+  "startedAt": "2026-10-08T08:30:49.046Z",
+  "completedAt": "2026-10-08T08:31:03.035Z",
+  "frozenFilmSha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+  "verifierSha256": "38d5fd8cd77f9879a7e3de17f303eb06dec124eb482b81d8ac64aa0b9d4fdc85",
+  "before": {
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    "aacMaster": {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+    },
+    "pcmMaster": {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+    },
+    "recipe": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audioReceipt": {
+      "file": "qa/audio-verification.json",
+      "bytes": 17884,
+      "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+    },
+    "producerReceipt": {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+    },
+    "fullSpec": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "referenceProbe": {
+      "file": "reference/source-probe.json",
+      "bytes": 3119,
+      "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+    }
+  },
+  "after": {
+    "film": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    "aacMaster": {
+      "file": "assets/audio/mix-master.m4a",
+      "bytes": 840615,
+      "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+    },
+    "pcmMaster": {
+      "file": "assets/audio/mix-master.wav",
+      "bytes": 8970386,
+      "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+    },
+    "recipe": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audioReceipt": {
+      "file": "qa/audio-verification.json",
+      "bytes": 17884,
+      "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+    },
+    "producerReceipt": {
+      "file": "qa/full-media.json",
+      "bytes": 3119,
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+    },
+    "fullSpec": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "referenceProbe": {
+      "file": "reference/source-probe.json",
+      "bytes": 3119,
+      "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+    }
+  },
+  "checks": [
+    {
+      "name": "producer-film-binding",
+      "status": "PASS",
+      "recordedFile": "grifon-recreation-landscape-provisional.mp4",
+      "recordedSha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+      "recordedBytes": 24994401
+    },
+    {
+      "name": "clean-audio-recipe-binding",
+      "status": "PASS",
+      "fullSpecAudio": {
+        "file": "assets/audio/mix-master.m4a",
+        "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+        "recipe": "audio.json",
+        "sonicStatus": "SONIC_UNVERIFIED"
+      },
+      "inputSourceSha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "provenance": "Bound to the earlier every-sample clean Digital Clouds placement receipt. Original reference AAC is not a verifier or export input."
+    },
+    {
+      "name": "native-video-contract",
+      "status": "PASS",
+      "width": 1920,
+      "height": 1080,
+      "frames": "932",
+      "averageFps": "30000/1001",
+      "declaredFps": "30000/1001"
+    },
+    {
+      "name": "single-stereo-aac-stream",
+      "status": "PASS",
+      "totalStreams": 2,
+      "audioStream": {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_time_base": "1/48000",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 1495008,
+        "duration": "31.146000",
+        "bit_rate": "214056",
+        "max_bit_rate": "214056",
+        "nb_frames": "1461",
+        "nb_read_frames": "1460",
+        "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler"
+        }
+      }
+    },
+    {
+      "name": "whole-film-strict-decode",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "aac-payload-identical",
+      "status": "PASS",
+      "originalPacketCount": 1461,
+      "finalPacketCount": 1461,
+      "mismatchIndices": [],
+      "originalNormalizedAdtsSha256": "6bcba7da7993e95d2dc289a4f9f4540388588a91681b05004d7652b92f962086",
+      "finalNormalizedAdtsSha256": "6bcba7da7993e95d2dc289a4f9f4540388588a91681b05004d7652b92f962086",
+      "originalNormalizedAdtsBytes": 844172,
+      "finalNormalizedAdtsBytes": 844172
+    },
+    {
+      "name": "decoded-pcm-identity",
+      "status": "PASS",
+      "decodedFrames": 1495040,
+      "originalDecodedFrames": 1495040,
+      "differenceFrames": 0,
+      "durationSeconds": 31.14666666666667,
+      "originalDecodedPcmSha256": "f9357fb441f1c36f0264268d9e4cfd3765a975c15aa547e6be998c8b1109494d",
+      "finalDecodedPcmSha256": "f9357fb441f1c36f0264268d9e4cfd3765a975c15aa547e6be998c8b1109494d",
+      "commonPrefixEqual": true,
+      "correlationAtZeroLag": 1,
+      "maximumAbsoluteSampleError": 0,
+      "differenceRms": 0,
+      "containerEditDifferences": "NONE"
+    },
+    {
+      "name": "encoded-levels",
+      "status": "PASS",
+      "integratedLufs": -16.5,
+      "truePeakDbtp": -3.15,
+      "loudnessRangeLu": 9.2,
+      "masterMeasurements": {
+        "input_i": "-16.50",
+        "input_tp": "-3.15",
+        "input_lra": "9.20",
+        "input_thresh": "-26.96",
+        "output_i": "-16.88",
+        "output_tp": "-3.60",
+        "output_lra": "1.60",
+        "output_thresh": "-27.13",
+        "normalization_type": "dynamic",
+        "target_offset": "0.43"
+      },
+      "finalMeasurements": {
+        "input_i": "-16.50",
+        "input_tp": "-3.15",
+        "input_lra": "9.20",
+        "input_thresh": "-26.96",
+        "output_i": "-16.88",
+        "output_tp": "-3.60",
+        "output_lra": "1.60",
+        "output_thresh": "-27.13",
+        "normalization_type": "dynamic",
+        "target_offset": "0.43"
+      }
+    },
+    {
+      "name": "encoded-ending-fade",
+      "status": "PASS",
+      "authoredFade": {
+        "id": "ending-taper",
+        "type": "out",
+        "startSeconds": 27.8278,
+        "endSeconds": 31.14666666666667,
+        "curve": "qua",
+        "reason": "Authored broad decline from the source's end-composition recession through the audio tail. Reference measurements show quieter late energy; this is not a copied waveform or exact envelope match."
+      },
+      "measuredWindows": [
+        {
+          "startSample": 1335734,
+          "endSample": 1383734,
+          "startSeconds": 27.827791666666666,
+          "endSeconds": 28.827791666666666,
+          "rmsDbfs": -19.418750436139142,
+          "peakDbfs": -4.049051387757011
+        },
+        {
+          "startSample": 1383734,
+          "endSample": 1431734,
+          "startSeconds": 28.827791666666666,
+          "endSeconds": 29.827791666666666,
+          "rmsDbfs": -27.28890727227345,
+          "peakDbfs": -11.037222375794656
+        },
+        {
+          "startSample": 1431734,
+          "endSample": 1479734,
+          "startSeconds": 29.827791666666666,
+          "endSeconds": 30.827791666666666,
+          "rmsDbfs": -39.554891303328866,
+          "peakDbfs": -23.82762195125327
+        },
+        {
+          "startSample": 1478240,
+          "endSample": 1495040,
+          "startSeconds": 30.796666666666667,
+          "endSeconds": 31.14666666666667,
+          "rmsDbfs": -58.10364564911901,
+          "peakDbfs": -43.4426278185674
+        },
+        {
+          "startSample": 1494080,
+          "endSample": 1495040,
+          "startSeconds": 31.126666666666665,
+          "endSeconds": 31.14666666666667,
+          "rmsDbfs": -118.29403250200588,
+          "peakDbfs": -106.46434469122977
+        }
+      ],
+      "interpretation": "Encoded energy measurements only; no heard tail or SFX identity claim."
+    },
+    {
+      "name": "black-video-tail",
+      "status": "PASS",
+      "firstVideoFrame": 853,
+      "finalVideoFrame": 931,
+      "decodedTailFrames": 79,
+      "measurementResolution": [
+        64,
+        36
+      ],
+      "pixelFormat": "rgb24",
+      "rgbComponentMaximum": 0,
+      "rgbComponentMean": 0,
+      "decodedTailRgbSha256": "f5c8c7ed910da5f72201dbe61d21b22dd0a07357c83818c64c65670d2112dfec"
+    },
+    {
+      "name": "native-audio-video-tail-gap",
+      "status": "PASS",
+      "expectedVideoDurationSeconds": 31.097733333333334,
+      "probedVideoDurationSeconds": 31.097733,
+      "decodedAudioDurationSeconds": 31.14666666666667,
+      "probedAudioDurationSeconds": 31.146,
+      "containerDurationSeconds": 31.146,
+      "originalMeasuredGapSeconds": 0.048933999999999145,
+      "decodedAudioMinusVideoSeconds": 0.04893366666666665,
+      "logicalAudioMinusVideoSeconds": 0.04826699999999917,
+      "heldFrame": "The final 79 decoded video frames are black. Audio extends about 49ms after the video stream ends, as in the native reference. Actual player display behavior is a separate browser check."
+    },
+    {
+      "name": "all-frozen-inputs-stable",
+      "status": "PASS",
+      "before": {
+        "film": {
+          "file": "grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        "aacMaster": {
+          "file": "assets/audio/mix-master.m4a",
+          "bytes": 840615,
+          "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+        },
+        "pcmMaster": {
+          "file": "assets/audio/mix-master.wav",
+          "bytes": 8970386,
+          "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+        },
+        "recipe": {
+          "file": "audio.json",
+          "bytes": 2211,
+          "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+        },
+        "audioReceipt": {
+          "file": "qa/audio-verification.json",
+          "bytes": 17884,
+          "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+        },
+        "producerReceipt": {
+          "file": "qa/full-media.json",
+          "bytes": 3119,
+          "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+        },
+        "fullSpec": {
+          "file": "full.json",
+          "bytes": 5060,
+          "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+        },
+        "referenceProbe": {
+          "file": "reference/source-probe.json",
+          "bytes": 3119,
+          "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+        }
+      },
+      "after": {
+        "film": {
+          "file": "grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        "aacMaster": {
+          "file": "assets/audio/mix-master.m4a",
+          "bytes": 840615,
+          "sha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523"
+        },
+        "pcmMaster": {
+          "file": "assets/audio/mix-master.wav",
+          "bytes": 8970386,
+          "sha256": "cefa2112751c5c6181f8cef3b10af1a139721dfde94d5d8edcb1c12f99a6f296"
+        },
+        "recipe": {
+          "file": "audio.json",
+          "bytes": 2211,
+          "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+        },
+        "audioReceipt": {
+          "file": "qa/audio-verification.json",
+          "bytes": 17884,
+          "sha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42"
+        },
+        "producerReceipt": {
+          "file": "qa/full-media.json",
+          "bytes": 3119,
+          "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a"
+        },
+        "fullSpec": {
+          "file": "full.json",
+          "bytes": 5060,
+          "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+        },
+        "referenceProbe": {
+          "file": "reference/source-probe.json",
+          "bytes": 3119,
+          "sha256": "7a1a0b4081a46ca78b76cdac3046567fc86e163adf08bf89f139847907e007c5"
+        }
+      }
+    }
+  ],
+  "probes": {
+    "film": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "profile": "High",
+          "codec_type": "video",
+          "codec_time_base": "1001/60000",
+          "codec_tag_string": "avc1",
+          "codec_tag": "0x31637661",
+          "width": 1920,
+          "height": 1080,
+          "coded_width": 1920,
+          "coded_height": 1088,
+          "has_b_frames": 2,
+          "pix_fmt": "yuv420p",
+          "level": 40,
+          "chroma_location": "left",
+          "refs": 4,
+          "is_avc": "true",
+          "nal_length_size": "4",
+          "r_frame_rate": "30000/1001",
+          "avg_frame_rate": "30000/1001",
+          "time_base": "1/30000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "duration_ts": 932932,
+          "duration": "31.097733",
+          "bit_rate": "6206627",
+          "bits_per_raw_sample": "8",
+          "nb_frames": "932",
+          "nb_read_frames": "932",
+          "extradata_hash": "SHA256:11abece1d3473f351a0e2fc518c4c58d431ddd93860fdd256a9e50aad4e89297",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0
+          },
+          "tags": {
+            "language": "und",
+            "handler_name": "VideoHandler",
+            "encoder": "Lavc60.3.100 libx264"
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "aac",
+          "codec_long_name": "AAC (Advanced Audio Coding)",
+          "profile": "LC",
+          "codec_type": "audio",
+          "codec_time_base": "1/48000",
+          "codec_tag_string": "mp4a",
+          "codec_tag": "0x6134706d",
+          "sample_fmt": "fltp",
+          "sample_rate": "48000",
+          "channels": 2,
+          "channel_layout": "stereo",
+          "bits_per_sample": 0,
+          "r_frame_rate": "0/0",
+          "avg_frame_rate": "0/0",
+          "time_base": "1/48000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "duration_ts": 1495008,
+          "duration": "31.146000",
+          "bit_rate": "214056",
+          "max_bit_rate": "214056",
+          "nb_frames": "1461",
+          "nb_read_frames": "1460",
+          "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0
+          },
+          "tags": {
+            "language": "und",
+            "handler_name": "SoundHandler"
+          }
+        }
+      ],
+      "format": {
+        "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\grifon-recreation-landscape-provisional.mp4",
+        "nb_streams": 2,
+        "nb_programs": 0,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "format_long_name": "QuickTime / MOV",
+        "start_time": "0.000000",
+        "duration": "31.146000",
+        "size": "24994401",
+        "bit_rate": "6419932",
+        "probe_score": 100,
+        "tags": {
+          "major_brand": "isom",
+          "minor_version": "512",
+          "compatible_brands": "isomiso2avc1mp41",
+          "encoder": "Lavf60.3.100"
+        }
+      }
+    },
+    "master": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "aac",
+          "codec_long_name": "AAC (Advanced Audio Coding)",
+          "profile": "LC",
+          "codec_type": "audio",
+          "codec_time_base": "1/48000",
+          "codec_tag_string": "mp4a",
+          "codec_tag": "0x6134706d",
+          "sample_fmt": "fltp",
+          "sample_rate": "48000",
+          "channels": 2,
+          "channel_layout": "stereo",
+          "bits_per_sample": 0,
+          "r_frame_rate": "0/0",
+          "avg_frame_rate": "0/0",
+          "time_base": "1/48000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "duration_ts": 1495008,
+          "duration": "31.146000",
+          "bit_rate": "214051",
+          "max_bit_rate": "214051",
+          "nb_frames": "1461",
+          "nb_read_frames": "1460",
+          "extradata_hash": "SHA256:b3108813350006ef07740046fab14af9c374938867d16db02fe1a8baa5e72f10",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0
+          },
+          "tags": {
+            "language": "und",
+            "handler_name": "SoundHandler"
+          }
+        }
+      ],
+      "format": {
+        "filename": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-recreation\\assets\\audio\\mix-master.m4a",
+        "nb_streams": 1,
+        "nb_programs": 0,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "format_long_name": "QuickTime / MOV",
+        "start_time": "0.000000",
+        "duration": "31.147000",
+        "size": "840615",
+        "bit_rate": "215909",
+        "probe_score": 100,
+        "tags": {
+          "major_brand": "M4A ",
+          "minor_version": "512",
+          "compatible_brands": "M4A isomiso2",
+          "date": "2019",
+          "encoder": "Lavf60.3.100"
+        }
+      }
+    }
+  },
+  "producerReceipt": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 24994401,
+    "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+    "frames": 932,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": "30000/1001",
+    "codec": "h264",
+    "timeBase": "1/30000",
+    "pixFmt": "yuv420p",
+    "duration": 31.146,
+    "videoDuration": 31.097733,
+    "strictDecode": "PASS",
+    "sources": {
+      "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+      "full.js": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "full-surfaces.frag": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "assets/full/manifest.json": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+      "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    },
+    "producerToolSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "audio": {
+      "codec": "aac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "duration": 31.146
+    },
+    "providerCalls": 0,
+    "paidSpendUsd": 0,
+    "prefixFramesVerified": 222,
+    "temporalProof": "qa/full-temporal-mux.json",
+    "temporalProofSha256": "6105ce13091d920d769265a483a486c104a3f5fbb5cdb7dd3e929ff765c16290",
+    "audioProof": "qa/full-audio-mux-proof.json",
+    "audioProofSha256": "4339061bb785f72f2c1f752788713e195ef3369630c680a22d285e4ad263d30e",
+    "logicalDecodedAudioDuration": 31.14666666666667,
+    "decodedAudioSampleFrames": 1495040,
+    "captureReceiptSha256": "dc079552beb97ed4f742b0961bce0434d01fa5782a1661287cc47ae4e61bec28",
+    "captureProducerToolSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "captureProducerSnapshot": "qa/full-capture-producer.mjs",
+    "prefixSha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "silentSha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b",
+    "audioProvenance": {
+      "masterSha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+      "recipeSha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689",
+      "sonicStatus": "SONIC_UNVERIFIED",
+      "recipe": "unchanged existing master; stream-copy mux; full AAC tail retained"
+    },
+    "fidelityStatus": "PENDING_INDEPENDENT_FULL_REVIEW"
+  },
+  "sourceProof": {
+    "acceptedAacMaster": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+    "previousCleanInputReceiptSha256": "7869b51136b5aabd785301e39507883cc46f7737c970834a078424a98f82bc42",
+    "originalReferenceAudioRead": false,
+    "claim": "Every final AAC packet matches the registered clean master; there is exactly one audio stream. This establishes this mux uses that master rather than native reference AAC."
+  },
+  "sonicReview": "UNVERIFIED: direct hearing is unsupported. No soundtrack identity, instrument/vocal/SFX classification, perceived quality or reference-similarity pass follows from these technical measurements.",
+  "providerCalls": 0,
+  "newSpendUsd": 0
+}

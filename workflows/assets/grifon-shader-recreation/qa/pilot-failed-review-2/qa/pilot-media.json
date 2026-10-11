@@ -1,0 +1,27 @@
+{
+  "file": "grifon-opening-pilot-silent.mp4",
+  "bytes": 3992749,
+  "sha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8",
+  "frames": 222,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "fps": "30000/1001",
+  "duration": 7.408,
+  "strictDecode": "PASS",
+  "audio": "intentionally absent: visual comparison pilot only",
+  "sources": {
+    "pilot.json": "150cc090532a5327938e2de28a4a0d2f1a106bd5b92252526cc24753450b9fec",
+    "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+    "pilot.js": "e4853a20d9900813f91069c8da72cafcfcf6caca4a5c1a06b7850ed5d8c61b49",
+    "surfaces.frag": "2362c20374d57008f5b6b098b9920c25a6ff697b8dfdd7764a2ce25cfb35e3c9",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/sdf-manifest.json": "df704fede157d0ea5b7e350a1640106fb0196c3d6a9776687cdc21cff6ff1399",
+    "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+    "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+    "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

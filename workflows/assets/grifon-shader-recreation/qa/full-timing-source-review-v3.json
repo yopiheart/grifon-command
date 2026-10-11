@@ -1,0 +1,456 @@
+{
+  "status": "QUALIFIED_SOURCE_PASS",
+  "scope": "Exact two-line correction only; separate from GPU, full-media, native visual, paced playback and hearing gates.",
+  "reviewedAt": "2026-10-08T08:23:44.613Z",
+  "preservation": {
+    "file": "qa/full-failed-review-2/preservation-receipt.json",
+    "sha256": "27d153f04e876a1f9ab294a98d9b9a4d2316577298b583c321eeb9b80fd40e06",
+    "priorFilmSha256": "15cbddf056015c6ab16986fb5a22abd71ec03fb8c8b3b0903efcd6de1cbd37ce",
+    "payloadCounts": {
+      "public": 185,
+      "private": 22
+    },
+    "all13PreservedSourcesRehashed": true,
+    "publicPrivateMediaAnd710RawRehashedByThisReviewer": false
+  },
+  "captureBoundary": {
+    "file": "qa/full-v3-capture-boundary.json",
+    "sha256": "3e87bbf37acae6fcfe20ddff5362cbecf5a727400c75ca631227ab73aef28f32",
+    "actorStaleFilmRejection": {
+      "exit": 1,
+      "error": "Existing producer source binding differs",
+      "producerReceiptUnchanged": true
+    }
+  },
+  "changes": [
+    {
+      "file": "full.js",
+      "line": 192,
+      "before": "        mode=5;uniforms.uPhase.value=(frame-397)/13;",
+      "after": "        mode=5;uniforms.uPhase.value=key==='chevron-one'?.125:key==='stepped-two'?.375:key==='zigzag-three'?.625:.875;",
+      "expected": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "beforeSha256": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+      "afterSha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "exactOneReplacement": true
+    },
+    {
+      "file": "full-surfaces.frag",
+      "line": 142,
+      "before": "    if(f>=636.){float erase=step(hash(vec2(floor(p.y*34.),f)),(f-636.)/3.);color*=1.-erase;}",
+      "after": "    if(f>=636.){float erase=step(hash(vec2(floor(p.y*34.),f)),clamp((f-636.)/3.,.125,.875));color*=1.-erase;}",
+      "expected": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "beforeSha256": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+      "afterSha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "exactOneReplacement": true
+    }
+  ],
+  "sourceChecks": [
+    {
+      "file": "full.json",
+      "beforeSha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "afterSha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "unchanged": true
+    },
+    {
+      "file": "full.html",
+      "beforeSha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+      "afterSha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+      "unchanged": true
+    },
+    {
+      "file": "full.js",
+      "beforeSha256": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+      "afterSha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "unchanged": false
+    },
+    {
+      "file": "full-surfaces.frag",
+      "beforeSha256": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+      "afterSha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "unchanged": false
+    },
+    {
+      "file": "vendor/three.global.js",
+      "beforeSha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "afterSha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/manifest.json",
+      "beforeSha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+      "afterSha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/inter-outlines.json",
+      "beforeSha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "afterSha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/inter-900.ttf",
+      "beforeSha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "afterSha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/OFL-Inter.txt",
+      "beforeSha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "afterSha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/logo.png",
+      "beforeSha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "afterSha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/script-desktop.png",
+      "beforeSha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "afterSha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/script-mobile.png",
+      "beforeSha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "afterSha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "unchanged": true
+    },
+    {
+      "file": "assets/full/storyboard.png",
+      "beforeSha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "afterSha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "unchanged": true
+    }
+  ],
+  "currentSources": {
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+    "full-surfaces.frag": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+  },
+  "acceptedOpening": {
+    "file": "grifon-opening-pilot-silent.mp4",
+    "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "actualBytesVerified": true,
+    "inputCount": 9,
+    "inputs": {
+      "pilot.json": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+      "pilot.js": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "surfaces.frag": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "assets/sdf-manifest.json": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+      "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8"
+    }
+  },
+  "producer": {
+    "file": "render-full.mjs",
+    "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "preservedBytesEqual": true,
+    "snapshotFile": "qa/full-capture-producer.mjs",
+    "snapshotSha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+  },
+  "patternCutFrames": [
+    397,
+    400,
+    403,
+    407,
+    410
+  ],
+  "pattern": [
+    {
+      "frame": 397,
+      "key": "chevron-one",
+      "oldPhase": 0,
+      "newPhase": 0.125,
+      "newPhaseFloat32": 0.125,
+      "oldBin": 0,
+      "newBin": 0,
+      "changed": false
+    },
+    {
+      "frame": 398,
+      "key": "chevron-one",
+      "oldPhase": 0.07692307692307693,
+      "newPhase": 0.125,
+      "newPhaseFloat32": 0.125,
+      "oldBin": 0,
+      "newBin": 0,
+      "changed": false
+    },
+    {
+      "frame": 399,
+      "key": "chevron-one",
+      "oldPhase": 0.15384615384615385,
+      "newPhase": 0.125,
+      "newPhaseFloat32": 0.125,
+      "oldBin": 0,
+      "newBin": 0,
+      "changed": false
+    },
+    {
+      "frame": 400,
+      "key": "stepped-two",
+      "oldPhase": 0.23076923076923078,
+      "newPhase": 0.375,
+      "newPhaseFloat32": 0.375,
+      "oldBin": 0,
+      "newBin": 1,
+      "changed": true
+    },
+    {
+      "frame": 401,
+      "key": "stepped-two",
+      "oldPhase": 0.3076923076923077,
+      "newPhase": 0.375,
+      "newPhaseFloat32": 0.375,
+      "oldBin": 1,
+      "newBin": 1,
+      "changed": false
+    },
+    {
+      "frame": 402,
+      "key": "stepped-two",
+      "oldPhase": 0.38461538461538464,
+      "newPhase": 0.375,
+      "newPhaseFloat32": 0.375,
+      "oldBin": 1,
+      "newBin": 1,
+      "changed": false
+    },
+    {
+      "frame": 403,
+      "key": "zigzag-three",
+      "oldPhase": 0.46153846153846156,
+      "newPhase": 0.625,
+      "newPhaseFloat32": 0.625,
+      "oldBin": 1,
+      "newBin": 2,
+      "changed": true
+    },
+    {
+      "frame": 404,
+      "key": "zigzag-three",
+      "oldPhase": 0.5384615384615384,
+      "newPhase": 0.625,
+      "newPhaseFloat32": 0.625,
+      "oldBin": 2,
+      "newBin": 2,
+      "changed": false
+    },
+    {
+      "frame": 405,
+      "key": "zigzag-three",
+      "oldPhase": 0.6153846153846154,
+      "newPhase": 0.625,
+      "newPhaseFloat32": 0.625,
+      "oldBin": 2,
+      "newBin": 2,
+      "changed": false
+    },
+    {
+      "frame": 406,
+      "key": "zigzag-three",
+      "oldPhase": 0.6923076923076923,
+      "newPhase": 0.625,
+      "newPhaseFloat32": 0.625,
+      "oldBin": 2,
+      "newBin": 2,
+      "changed": false
+    },
+    {
+      "frame": 407,
+      "key": "stepped-four",
+      "oldPhase": 0.7692307692307693,
+      "newPhase": 0.875,
+      "newPhaseFloat32": 0.875,
+      "oldBin": 3,
+      "newBin": 3,
+      "changed": false
+    },
+    {
+      "frame": 408,
+      "key": "stepped-four",
+      "oldPhase": 0.8461538461538461,
+      "newPhase": 0.875,
+      "newPhaseFloat32": 0.875,
+      "oldBin": 3,
+      "newBin": 3,
+      "changed": false
+    },
+    {
+      "frame": 409,
+      "key": "stepped-four",
+      "oldPhase": 0.9230769230769231,
+      "newPhase": 0.875,
+      "newPhaseFloat32": 0.875,
+      "oldBin": 3,
+      "newBin": 3,
+      "changed": false
+    },
+    {
+      "frame": 410,
+      "key": "black-interruption",
+      "oldBin": null,
+      "newBin": null,
+      "changed": false
+    }
+  ],
+  "erase": [
+    {
+      "frame": 636,
+      "oldThreshold": 0,
+      "newThreshold": 0.125,
+      "oldFloat32": 0,
+      "newFloat32": 0.125,
+      "changed": true
+    },
+    {
+      "frame": 637,
+      "oldThreshold": 0.3333333333333333,
+      "newThreshold": 0.3333333333333333,
+      "oldFloat32": 0.3333333432674408,
+      "newFloat32": 0.3333333432674408,
+      "changed": false
+    },
+    {
+      "frame": 638,
+      "oldThreshold": 0.6666666666666666,
+      "newThreshold": 0.6666666666666666,
+      "oldFloat32": 0.6666666865348816,
+      "newFloat32": 0.6666666865348816,
+      "changed": false
+    },
+    {
+      "frame": 639,
+      "oldThreshold": 1,
+      "newThreshold": 0.875,
+      "oldFloat32": 1,
+      "newFloat32": 0.875,
+      "changed": true
+    }
+  ],
+  "expectedChangedNativeFrames": [
+    400,
+    403,
+    636,
+    639
+  ],
+  "expectedUnchangedContinuationFrames": 706,
+  "reasoning": {
+    "pattern": "Exact binary phase midpoints are selected from the already-selected native shot key. Mode5 uses t only for unchanged band/light/shadow family predicates.",
+    "erase": "Only endpoint thresholds636/639 change.637/638 Float32 thresholds, native frame and row hash seeds, colors, lights, field, text hide, post-erase grain and black640 remain unchanged.",
+    "determinism": "Absolute integer frame and shot key determine all changed state. No elapsed-time, previous-frame, shared geometry or transport dependency was added.",
+    "isolation": "Whole-file byte equality after only the specified replacements proves all other runtime/shader expressions untouched.11 other runtime/asset files and9 opening inputs/movie are byte-identical."
+  },
+  "independentStaleSourceControl": {
+    "method": "Exact unchanged requireSources evaluated in memory against preserved old media receipt; no CLI/media call",
+    "expectedError": "Existing producer source binding differs; changed inputs require capture and encode",
+    "actualError": "Existing producer source binding differs; changed inputs require capture and encode",
+    "rejected": true,
+    "newReceiptWrite": false,
+    "sourceMismatches": [
+      "full.js",
+      "full-surfaces.frag"
+    ]
+  },
+  "syntax": {
+    "command": "node --check workflows/assets/grifon-shader-recreation/full.js",
+    "cwd": "C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command",
+    "exit": 0
+  },
+  "reviewHarnessHistory": [
+    {
+      "attempt": 1,
+      "exit": 1,
+      "reason": "Reviewer initially compared the real long producer error to an abbreviated string. The guard correctly rejected stale source; only the in-memory assertion was repaired. No report/source/media was written by the failed attempt."
+    },
+    {
+      "attempt": 2,
+      "exit": 0,
+      "reason": "Exact rejection string and all source/hash/semantic checks passed."
+    }
+  ],
+  "beforeHashes": {
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+    "full-surfaces.frag": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+    "pilot.json": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+    "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+    "pilot.js": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+    "surfaces.frag": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+    "assets/sdf-manifest.json": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+    "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+    "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+    "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8",
+    "grifon-opening-pilot-silent.mp4": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "render-full.mjs": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "qa/full-capture-producer.mjs": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "qa/full-failed-review-2/preservation-receipt.json": "27d153f04e876a1f9ab294a98d9b9a4d2316577298b583c321eeb9b80fd40e06",
+    "qa/full-v3-capture-boundary.json": "3e87bbf37acae6fcfe20ddff5362cbecf5a727400c75ca631227ab73aef28f32",
+    "reference/full-timing-correction-brief-v3.md": "80d9c15f02412f605abf24ba9d60fbe28d2349ea6a952f7127df04fa7a0cae03"
+  },
+  "afterHashes": {
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+    "full-surfaces.frag": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+    "pilot.json": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+    "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+    "pilot.js": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+    "surfaces.frag": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+    "assets/sdf-manifest.json": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+    "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+    "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+    "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8",
+    "grifon-opening-pilot-silent.mp4": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "render-full.mjs": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "qa/full-capture-producer.mjs": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+    "qa/full-failed-review-2/preservation-receipt.json": "27d153f04e876a1f9ab294a98d9b9a4d2316577298b583c321eeb9b80fd40e06",
+    "qa/full-v3-capture-boundary.json": "3e87bbf37acae6fcfe20ddff5362cbecf5a727400c75ca631227ab73aef28f32",
+    "reference/full-timing-correction-brief-v3.md": "80d9c15f02412f605abf24ba9d60fbe28d2349ea6a952f7127df04fa7a0cae03"
+  },
+  "inputsStableAfterReview": true,
+  "findings": [],
+  "limits": [
+    "Preservation receipt and13 frozen sources are independently rehashed here;185 public/22 private and710 raw preservation claims are not redundantly rehashed during active capture.",
+    "Code and Float32 selector checks do not prove rendered pixel identity. Fresh capture must show exactly400/403/636/639 differ and706 others match byte-for-byte.",
+    "All106 nonlinear and106 fresh-runtime samples,710 ordered captures,932 native timestamps,222 decoded prefix frames, strict decode, mux and provenance remain executed gates.",
+    "New all932 native review and actual1x/0.25x aligned playback are separate required gates.",
+    "Audio integrity and heard similarity remain separate. No listening was performed."
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

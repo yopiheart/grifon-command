@@ -1,0 +1,612 @@
+{
+  "date": "2026-10-07T18:43:32.727Z",
+  "format": "landscape",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "browser": "149.0.7827.55",
+  "browserArgs": [
+    "--enable-unsafe-webgpu",
+    "--enable-gpu",
+    "--ignore-gpu-blocklist",
+    "--disable-dawn-features=use_dxc",
+    "--disable-gpu-rasterization"
+  ],
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+  "samples": [
+    {
+      "scene": "opening",
+      "time": 1.45,
+      "file": "landscape-sample-00.png",
+      "sha256": "d98f82c97a98622a89952cf6c77266becae43d71b233173257a0f4e195136b4b"
+    },
+    {
+      "scene": "product",
+      "time": 3.35,
+      "file": "landscape-sample-01.png",
+      "sha256": "2d659d970052c855dc276934bba1bba548fa68d80286bb6144b55b8eabde8717"
+    },
+    {
+      "scene": "story",
+      "time": 5.15,
+      "file": "landscape-sample-02.png",
+      "sha256": "1bb5e9fa6f93358d3ce71f13a5875b42c35f078bec44acc2fb2cf957f426638c"
+    },
+    {
+      "scene": "business",
+      "time": 6.95,
+      "file": "landscape-sample-03.png",
+      "sha256": "19586b40a4ea933e8d5e2a5030a97207f6436af1396c360e32c8997f8c69aafd"
+    },
+    {
+      "scene": "research",
+      "time": 9.3,
+      "file": "landscape-sample-04.png",
+      "sha256": "65f86704cd345397bddd18cfbd6e45635fa0c37dcfaba705f6d30c139ab07ed3"
+    },
+    {
+      "scene": "script",
+      "time": 11.95,
+      "file": "landscape-sample-05.png",
+      "sha256": "44b74aeb4aa8f2dca07b124a83b48ed96e1e716c87931d08d37ae838848f15b4"
+    },
+    {
+      "scene": "storyboard",
+      "time": 14.4,
+      "file": "landscape-sample-06.png",
+      "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae"
+    },
+    {
+      "scene": "research-screen",
+      "time": 16.8,
+      "file": "landscape-sample-07.png",
+      "sha256": "0bbe159c4cec9d91042c8da79b1c6686a46f8530586b9150c2bfe5a7b515e559"
+    },
+    {
+      "scene": "script-screen",
+      "time": 19.1,
+      "file": "landscape-sample-08.png",
+      "sha256": "b19cab3a8432f79a09a8efb9f3fff253d083237a18297671e654f1f5a3ba31d7"
+    },
+    {
+      "scene": "storyboard-screen",
+      "time": 21.45,
+      "file": "landscape-sample-09.png",
+      "sha256": "800011cadf746e59e4b752f832999415e6472816afc30c8a14dd86cfe26e8e1a"
+    },
+    {
+      "scene": "direction",
+      "time": 24.5,
+      "file": "landscape-sample-10.png",
+      "sha256": "4b03155808987d0ce3082c30c8048e64c9fa04a0ddbf4ed1a321882a76614e78"
+    },
+    {
+      "scene": "finish",
+      "time": 29.45,
+      "file": "landscape-sample-11.png",
+      "sha256": "67674f0a23f458887839d8df28a13a2651da6c81e8178baa7e25ba9acbffcc83"
+    }
+  ],
+  "safeCases": [
+    {
+      "scene": "opening",
+      "boxes": [
+        {
+          "selector": "#opening-copy",
+          "text": "Your next ad.",
+          "x": 160,
+          "y": 381,
+          "width": 1047.609375,
+          "height": 215
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "product",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To launch",
+          "x": 165,
+          "y": 340,
+          "width": 397.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "a product.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 623.796875,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "story",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To tell",
+          "x": 165,
+          "y": 340,
+          "width": 236.515625,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your story.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 672.625,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "business",
+      "boxes": [
+        {
+          "selector": "#intent-copy",
+          "text": "To grow",
+          "x": 165,
+          "y": 340,
+          "width": 331.171875,
+          "height": 124
+        },
+        {
+          "selector": "#intent-copy",
+          "text": "your business.",
+          "x": 165,
+          "y": 457.15625,
+          "width": 915.828125,
+          "height": 164
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Research",
+          "x": 155,
+          "y": 263,
+          "width": 480.671875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Know your audience.",
+          "x": 155,
+          "y": 428,
+          "width": 410.328125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1596.359375,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Script",
+          "x": 155,
+          "y": 263,
+          "width": 304.875,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Shape your message.",
+          "x": 155,
+          "y": 428,
+          "width": 424.125,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1596.359375,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard",
+      "boxes": [
+        {
+          "selector": "#workflow-title",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 263,
+          "width": 577.328125,
+          "height": 136
+        },
+        {
+          "selector": "#workflow-detail",
+          "text": "Plan every scene.",
+          "x": 155,
+          "y": 428,
+          "width": 342.09375,
+          "height": 59
+        },
+        {
+          "selector": ".track-label",
+          "text": "Research",
+          "x": 180,
+          "y": 901,
+          "width": 119.71875,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Script",
+          "x": 922.0625,
+          "y": 901,
+          "width": 75.859375,
+          "height": 35
+        },
+        {
+          "selector": ".track-label",
+          "text": "Storyboard",
+          "x": 1596.359375,
+          "y": 901,
+          "width": 143.640625,
+          "height": 35
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "research-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Research",
+          "x": 155,
+          "y": 165,
+          "width": 287.546875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "script-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Script",
+          "x": 155,
+          "y": 165,
+          "width": 182.875,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "storyboard-screen",
+      "boxes": [
+        {
+          "selector": "#screen-copy",
+          "text": "Storyboard",
+          "x": 155,
+          "y": 165,
+          "width": 345.578125,
+          "height": 80
+        },
+        {
+          "selector": "#screen-disclosure",
+          "text": "Example project",
+          "x": 1301.09375,
+          "y": 162,
+          "width": 437.90625,
+          "height": 77
+        },
+        {
+          "selector": "#screen-panel",
+          "x": 155,
+          "y": 278,
+          "width": 1610,
+          "height": 688
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "direction",
+      "boxes": [
+        {
+          "selector": "#direction-copy",
+          "text": "Give your next ad",
+          "x": 160,
+          "y": 261,
+          "width": 1089.65625,
+          "height": 169
+        },
+        {
+          "selector": "#direction-copy",
+          "text": "a clear direction.",
+          "x": 160,
+          "y": 412.5,
+          "width": 1046.6875,
+          "height": 169
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scene": "finish",
+      "boxes": [
+        {
+          "selector": "#mark-ring",
+          "x": 605.5,
+          "y": 434.5,
+          "width": 144,
+          "height": 144
+        },
+        {
+          "selector": "#brand-word",
+          "text": "GRIFON",
+          "x": 783.5,
+          "y": 418.5,
+          "width": 512.984375,
+          "height": 176
+        },
+        {
+          "selector": "#brand-url",
+          "text": "grifon.ai",
+          "x": 869.484375,
+          "y": 635,
+          "width": 181.03125,
+          "height": 63
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "trackGeometry": {
+    "format": "landscape",
+    "result": "PASS",
+    "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+    "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+    "indexSha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+    "renderSha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+    "cases": [
+      {
+        "time": 13.6,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-13-60.png",
+        "sha256": "d158ed3dc3cda9345a2341f60fc04031cc67952ec84548a143854eba6438fa77",
+        "result": "PASS"
+      },
+      {
+        "time": 13.7,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-13-70.png",
+        "sha256": "2151397f6c50ddb475f45a329304edd5a03b5384fc66a402613f8289b959ec2e",
+        "result": "PASS"
+      },
+      {
+        "time": 14.4,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-14-40.png",
+        "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+        "result": "PASS"
+      },
+      {
+        "time": 15.35,
+        "geometry": {
+          "signal": {
+            "x": 1726.5,
+            "y": 863,
+            "width": 20,
+            "height": 20
+          },
+          "thirdNode": {
+            "x": 1726.5,
+            "y": 863.5,
+            "width": 27,
+            "height": 27
+          },
+          "active": true,
+          "opacity": 1
+        },
+        "delta": {
+          "x": 0,
+          "y": -0.5
+        },
+        "toleranceCssPixels": 1,
+        "file": "landscape-track-15-35.png",
+        "sha256": "2b78a260c722a6b7c83c8dfcac99def465341b2796aa3b9c50b4c954931fea8e",
+        "result": "PASS"
+      }
+    ],
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "invalidFixture": {
+    "file": "invalid-duplicate-action.json",
+    "exitCode": 1,
+    "error": "Action specification: duplicate/missing action ID opening-reveal"
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1920,
+        1080
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        820,
+        530
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "runtimeErrors": [],
+  "externalRequests": []
+}

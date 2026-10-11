@@ -1,0 +1,213 @@
+{
+  "status": "PASS",
+  "recordedAt": "2026-10-08T11:55:19.411Z",
+  "recipeSha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+  "producerSha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7",
+  "mediaSha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+  "requiredBuild": {
+    "startedAt": "2026-10-08T11:52:19.9464249Z",
+    "exitCode": 0,
+    "command": "npm.cmd run build",
+    "completedAt": "2026-10-08T11:52:35.4059741Z",
+    "purpose": "Final root builder source freeze"
+  },
+  "requiredDefaultVitest": {
+    "command": "npx.cmd vitest run",
+    "completedAt": "2026-10-08T11:53:58.7749237Z",
+    "exitCode": 0,
+    "purpose": "Fresh full defaults after isolated original timeout path passed",
+    "startedAt": "2026-10-08T11:53:13.2299110Z",
+    "passedFiles": 116,
+    "passedTests": 1432,
+    "existingSkippedFiles": 9,
+    "existingSkippedTests": 32,
+    "durationSeconds": 44.06
+  },
+  "retainedPriorFailures": {
+    "firstDefault": {
+      "command": "npx.cmd vitest run",
+      "exitCode": 1,
+      "completedAt": "2026-10-08T11:46:37.8407923Z",
+      "startedAt": "2026-10-08T11:45:14.8568718Z"
+    },
+    "isolated": {
+      "completedAt": "2026-10-08T11:49:57.5235319Z",
+      "exitCode": 1,
+      "startedAt": "2026-10-08T11:49:21.4479776Z",
+      "command": "npx.cmd vitest run tests/unit/checkAnchors.test.ts"
+    },
+    "filteredDiagnostic": {
+      "purpose": "Isolate original remaining timeout; other eight cases filtered solely for diagnosis",
+      "completedAt": "2026-10-08T11:51:39.0325452Z",
+      "exitCode": 0,
+      "startedAt": "2026-10-08T11:51:35.1197050Z",
+      "command": "npx.cmd vitest run tests/unit/checkAnchors.test.ts -t 'refuses to report on an UNTRACKED twin instead of calling it unchanged'"
+    },
+    "facts": "First full default run had five unchanged 5000ms anchor-test timeouts; unchanged isolated file had one. The single remaining original case passed in1.61s before a fresh default suite passed. Cause of timing variation is unproven. No test/timeout/configuration/flag/skip changes."
+  },
+  "logs": {
+    "build-output.txt": {
+      "bytes": 1911,
+      "sha256": "51942f65053b948257189ca26404942352af5ec4248b9e16ddb85840a41915c9"
+    },
+    "build-result.json": {
+      "bytes": 156,
+      "sha256": "32a28398adf21172d7f0196a0e8753468c4b3b6c1923d6db9b015684eaa8b4e5"
+    },
+    "vitest-output.txt": {
+      "bytes": 4341,
+      "sha256": "6e009fb246d5dc1cf4de9cd43728ac42894718ac9090750c05a4fd63502a4991"
+    },
+    "vitest-result.json": {
+      "bytes": 157,
+      "sha256": "999a6b2efbdc1c11692e2da3a8c221c0a2440fe556e858d35eb2a849d23f2eb0"
+    },
+    "vitest-isolated-output.txt": {
+      "bytes": 1198,
+      "sha256": "508cc99f60e3bbf7c254ed1f1594e68280f59e4e6003cc37ff3aac8952409618"
+    },
+    "vitest-isolated-result.json": {
+      "bytes": 189,
+      "sha256": "817ad006a35eb51a175beaddad0b5493b58fdb10e7459e630e90952191c65754"
+    },
+    "vitest-untracked-output.txt": {
+      "bytes": 270,
+      "sha256": "e9f6a23f5f57519f2c23f61744657a785dadd1b6cb659167adc222bb90188234"
+    },
+    "vitest-untracked-result.json": {
+      "bytes": 366,
+      "sha256": "ab2af3d0346d375e8760cf4f3d5a268515c43c0109f62201e85606c3262a05e4"
+    },
+    "build-final-output.txt": {
+      "bytes": 1794,
+      "sha256": "49fccc60b4af8b7aa7643dc3f324a249b0d0bac51cfdb684dd7b923f29a2fa5a"
+    },
+    "build-final-result.json": {
+      "bytes": 206,
+      "sha256": "9835fa3ccb608df2a4cca8fad5803a4e4a22d872ee581ae9c5de9167e7dbe870"
+    },
+    "vitest-final-output.txt": {
+      "bytes": 300,
+      "sha256": "2ef8e4bc463d0409a0aa2eb03dce61d4d3b81c2bc549417feb76e3e29fa19769"
+    },
+    "vitest-final-result.json": {
+      "bytes": 238,
+      "sha256": "ca4132edcf40e1ee80bd45fed0b6696f6b9f92ed735f124ef7681b9466cce021"
+    }
+  },
+  "productionReceipts": {
+    "media.json": {
+      "bytes": 1241,
+      "sha256": "450c44f53cd723c7f522ce34553ba191cd441b05ca0ace7a1ca2963573054bec"
+    },
+    "mix-verification.json": {
+      "bytes": 12774,
+      "sha256": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3"
+    },
+    "sources.json": {
+      "bytes": 7422,
+      "sha256": "968f52959c8df8917ed8115ef97965bb48a0d4ccda7ba9b5d87beb90611b913a"
+    },
+    "cues.json": {
+      "bytes": 685220,
+      "sha256": "7e654377d8b3adc059b705db148d2e591ccca546235bf17ae2f3f4f1a795197d"
+    },
+    "packets.json": {
+      "bytes": 1863148,
+      "sha256": "2fa6e5cd920ead7fbc5e447a73f6992f0f562c077dfe025cd107332d244fecaa"
+    },
+    "commands.json": {
+      "bytes": 14978,
+      "sha256": "5782bb47aeacd9a9d2dee747ac1fea188ebaf6ccaedc482542d074a5752b0701"
+    },
+    "controls-v3.json": {
+      "bytes": 3944,
+      "sha256": "4996caa915a5410add7f1a6e47337dffa77101c8f390320941ab9cc77c34674b"
+    }
+  },
+  "allFrozenInputHashesStillMatch": true,
+  "frozenAfter": {
+    "grifon-recreation-landscape-silent.mp4": {
+      "bytes": 24137255,
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    "grifon-recreation-landscape-provisional.mp4": {
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    "audio.json": {
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audio-mix.mjs": {
+      "bytes": 14800,
+      "sha256": "de7e4b6becd986b99112396a7e60f96eeb8c030c03bb50ac3a9ed274085156cb"
+    },
+    "full.json": {
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "full.html": {
+      "bytes": 649,
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    "full.js": {
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    "full-surfaces.frag": {
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    "vendor/three.global.js": {
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    "assets/full/manifest.json": {
+      "bytes": 2075,
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    "assets/full/inter-outlines.json": {
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    "assets/full/inter-900.ttf": {
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    "assets/full/OFL-Inter.txt": {
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    "assets/full/logo.png": {
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    "assets/full/script-desktop.png": {
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    "assets/full/script-mobile.png": {
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    "assets/full/storyboard.png": {
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    }
+  },
+  "originalPlayer": {
+    "bytes": 33662393,
+    "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+  },
+  "paidLiveSwitches": {
+    "RUN_REGRESSION": false,
+    "RUN_BURNIN": false,
+    "RUN_IMAGE_GATE_SMOKE": false,
+    "method": "Presence checked in worker shell before required checks; no switches set by this task."
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "scope": "Only sound-v1/** and new grifon-recreation-landscape-sound-v1.mp4 authored. Root owns standalone player/docs/NOW; independent reviews and browser smoke are separate.",
+  "listening": "PENDING; no direct hearing or competition quality pass claimed."
+}

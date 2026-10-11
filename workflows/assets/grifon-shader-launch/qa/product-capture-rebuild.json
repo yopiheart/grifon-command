@@ -1,0 +1,57 @@
+{
+  "purpose": "Final recapture after unused React default import removal; verify no changed product pixels.",
+  "oldFixtureSha256": "dfa2f21f53ca101ad0bb92964f3c073ed8fb5b5f80e4b4781870ae203659bcd6",
+  "newFixtureSha256": "59b1ff7e2131896317916863a0bc57bdbef6a77cf3e21aa9dcc95e043a50da9f",
+  "comparisons": [
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/research.png",
+      "beforeSha256": "95d9410e9fd43d426fb304f353538dd2501673f11c6f1f0814325244873bc763",
+      "afterSha256": "95d9410e9fd43d426fb304f353538dd2501673f11c6f1f0814325244873bc763",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-research.png",
+      "beforeSha256": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
+      "afterSha256": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/script.png",
+      "beforeSha256": "80d6964bf1e22d1059a2d1556915381397076e2b6ee45282d0ca1d43acb0dd69",
+      "afterSha256": "80d6964bf1e22d1059a2d1556915381397076e2b6ee45282d0ca1d43acb0dd69",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-script.png",
+      "beforeSha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "afterSha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-script-detail.png",
+      "beforeSha256": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
+      "afterSha256": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/storyboard.png",
+      "beforeSha256": "274def3f27a41166f5cfd754b477669968e731c7a41845be36a7151838eac23f",
+      "afterSha256": "274def3f27a41166f5cfd754b477669968e731c7a41845be36a7151838eac23f",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-storyboard.png",
+      "beforeSha256": "8db36b49a0921224e20efc1dda03a98a697881cbe8fcc40b66bcfc9a1861f223",
+      "afterSha256": "8db36b49a0921224e20efc1dda03a98a697881cbe8fcc40b66bcfc9a1861f223",
+      "result": "BYTE_EXACT_PASS"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-storyboard-detail.png",
+      "beforeSha256": "37f8c97181627653ad75f7a787fc9985b4e0a59d93c2da35724b18ac82f37bad",
+      "afterSha256": "37f8c97181627653ad75f7a787fc9985b4e0a59d93c2da35724b18ac82f37bad",
+      "result": "BYTE_EXACT_PASS"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

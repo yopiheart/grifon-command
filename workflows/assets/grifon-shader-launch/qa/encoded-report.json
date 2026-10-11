@@ -1,0 +1,469 @@
+{
+  "date": "2026-10-07T18:58:41.008Z",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+  "files": [
+    {
+      "file": "landscape.mp4",
+      "bytes": 7952020,
+      "sha256": "c3d2399b64fe85a1ddbec82cdbe45af261462ffe8a176113115fa7cedd201dfc",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "frames": 936,
+      "fps": "30/1",
+      "duration": 31.2,
+      "strictDecode": "PASS",
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channels": 2,
+        "integratedLufs": -16,
+        "truePeakDbtp": -1.9
+      },
+      "samples": [
+        {
+          "time": 0.2,
+          "file": "qa/encoded-landscape/frame-00.png",
+          "sha256": "c126a75d7961c13cf4a3c4de1e8cea55a3eb7c2af325b682776e85368c42de53"
+        },
+        {
+          "time": 0.53,
+          "file": "qa/encoded-landscape/frame-01.png",
+          "sha256": "fd6fad07e7ac81e145c72542530d783f3559c6341212949254a8aef449007e46"
+        },
+        {
+          "time": 1.45,
+          "file": "qa/encoded-landscape/frame-02.png",
+          "sha256": "47484e62d51e04a7093b15177c21bc42c4af6019571c8f6e1a517867acf866d9"
+        },
+        {
+          "time": 2.4899999999999998,
+          "file": "qa/encoded-landscape/frame-03.png",
+          "sha256": "78bb7b5a3fcab5ea3617e59516e4bed8045cef559e820d5d5a5a6ee4ba1faf0e"
+        },
+        {
+          "time": 2.7375,
+          "file": "qa/encoded-landscape/frame-04.png",
+          "sha256": "3f50f7cee741ffac100ac221d168c56931e9149a74c69659d646f130176c36ad"
+        },
+        {
+          "time": 3.35,
+          "file": "qa/encoded-landscape/frame-05.png",
+          "sha256": "8502aa09172dfb5053c435a36b70e8fc48568b8939d0a2eb690994777076a2e3"
+        },
+        {
+          "time": 5.15,
+          "file": "qa/encoded-landscape/frame-06.png",
+          "sha256": "5c2ad0e7bccea1c80dacbcb79d932fcd0d87ecb88d9582339b1a2281a303293d"
+        },
+        {
+          "time": 6.95,
+          "file": "qa/encoded-landscape/frame-07.png",
+          "sha256": "df01f58593b143cfceb2c4ef59dadd5f3316bd9f6eb1b5eba6a978ad8887107b"
+        },
+        {
+          "time": 7.92,
+          "file": "qa/encoded-landscape/frame-08.png",
+          "sha256": "64b2b77cac2e6d5dc2d2156b537413d2767e38f57911f8498e4385244e6101db"
+        },
+        {
+          "time": 8.25,
+          "file": "qa/encoded-landscape/frame-09.png",
+          "sha256": "c07e7eebe21b1599ae2633c70b845f118996823c9e635f307669fe3b6ee7189b"
+        },
+        {
+          "time": 9.3,
+          "file": "qa/encoded-landscape/frame-10.png",
+          "sha256": "f2c90728c4e1c07c66864ba0637927218f002d3ebea6bb0cb6e1312e2878a965"
+        },
+        {
+          "time": 10.52,
+          "file": "qa/encoded-landscape/frame-11.png",
+          "sha256": "e96f6fc40eb568422a170b10385b31803048148f16fcf2e6f49c4722b13368b1"
+        },
+        {
+          "time": 10.85,
+          "file": "qa/encoded-landscape/frame-12.png",
+          "sha256": "50f81b9252500c55b2452c560b8afd63fa33a576ef6accce8c1d07785ba8b3b1"
+        },
+        {
+          "time": 11.95,
+          "file": "qa/encoded-landscape/frame-13.png",
+          "sha256": "ff19888a82a1f8397bc91ec6d3c29fb114d8c5ab3d68981f7d24f99e4922fbdb"
+        },
+        {
+          "time": 14.4,
+          "file": "qa/encoded-landscape/frame-14.png",
+          "sha256": "d13eee876a480888cc03d60e184e83a2767840ce3e060a038c02f492ca47fb34"
+        },
+        {
+          "time": 15.7,
+          "file": "qa/encoded-landscape/frame-15.png",
+          "sha256": "e8fa4493f583ddadb4846934101a4f2f4a8e18908d597a77882d1576f0007c58"
+        },
+        {
+          "time": 15.975000000000001,
+          "file": "qa/encoded-landscape/frame-16.png",
+          "sha256": "ec42b04bc184b7a1509794959ce68ba9a84af60e2654d7439ecb210240989003"
+        },
+        {
+          "time": 16.8,
+          "file": "qa/encoded-landscape/frame-17.png",
+          "sha256": "8dd74e759ecb95a3ddf63bdfa7e76d783349cfd5772296dd703c7363545cfea0"
+        },
+        {
+          "time": 19.1,
+          "file": "qa/encoded-landscape/frame-18.png",
+          "sha256": "9c4b543a3fc09f5f34055a5737b3a448fc78e9007def2a46e3be47caddec4ca0"
+        },
+        {
+          "time": 21.45,
+          "file": "qa/encoded-landscape/frame-19.png",
+          "sha256": "9cc2e21572ea18a02d78694dab6fa75b742d23dc20ec60619f03a0a3e7dc690b"
+        },
+        {
+          "time": 22.63,
+          "file": "qa/encoded-landscape/frame-20.png",
+          "sha256": "ff9f874722bbe3da8b5d53656f4b77541638dffc66921ef35f36ff7f64ef7ee4"
+        },
+        {
+          "time": 22.987499999999997,
+          "file": "qa/encoded-landscape/frame-21.png",
+          "sha256": "485aa81c0eb5441e7519f4bc40058b20bf108ae6c16dd97f0cb31c59609d395d"
+        },
+        {
+          "time": 24.5,
+          "file": "qa/encoded-landscape/frame-22.png",
+          "sha256": "9114217d2772344c5316f1755945646b6e3143dfd5a987d6fadba3eaefdd2e6b"
+        },
+        {
+          "time": 26.56,
+          "file": "qa/encoded-landscape/frame-23.png",
+          "sha256": "405f983a8631ee77b5fd6418c189b954c7ee8fbbef84f7368613046a17f58550"
+        },
+        {
+          "time": 27,
+          "file": "qa/encoded-landscape/frame-24.png",
+          "sha256": "e10153aec97a800ae4c65185aba06c0838205cd9cef8e27dae1d954d06aafc09"
+        },
+        {
+          "time": 29.45,
+          "file": "qa/encoded-landscape/frame-25.png",
+          "sha256": "61c01b1a4e44106d705f28100e7705f777fadebebffd2d71438ab46a478101a4"
+        },
+        {
+          "time": 31.166666666666664,
+          "file": "qa/encoded-landscape/frame-26.png",
+          "sha256": "c5804fc7425b9cb8585f998124c69c15f9884c73bf759db43d09033d4892773d"
+        }
+      ],
+      "motion": [
+        {
+          "actionId": "opening-reveal",
+          "times": [
+            0.2,
+            0.53
+          ],
+          "meanAbsoluteDifference": 6.78884765625,
+          "result": "PASS"
+        },
+        {
+          "actionId": "orb-reveal",
+          "times": [
+            2.4899999999999998,
+            2.7375
+          ],
+          "meanAbsoluteDifference": 16.82473307291667,
+          "result": "PASS"
+        },
+        {
+          "actionId": "research-panel",
+          "times": [
+            7.92,
+            8.25
+          ],
+          "meanAbsoluteDifference": 6.075953776041667,
+          "result": "PASS"
+        },
+        {
+          "actionId": "script-signal",
+          "times": [
+            10.52,
+            10.85
+          ],
+          "meanAbsoluteDifference": 5.123502604166666,
+          "result": "PASS"
+        },
+        {
+          "actionId": "research-screen-reveal",
+          "times": [
+            15.7,
+            15.975000000000001
+          ],
+          "meanAbsoluteDifference": 7.7879427083333335,
+          "result": "PASS"
+        },
+        {
+          "actionId": "direction-reveal",
+          "times": [
+            22.63,
+            22.987499999999997
+          ],
+          "meanAbsoluteDifference": 10.914921875,
+          "result": "PASS"
+        },
+        {
+          "actionId": "brand-reveal",
+          "times": [
+            26.56,
+            27
+          ],
+          "meanAbsoluteDifference": 4.310439453125,
+          "result": "PASS"
+        }
+      ],
+      "endingHold": {
+        "times": [
+          28.2,
+          31.166666666666664
+        ],
+        "meanAbsoluteDifference": 0.01781024948559671,
+        "result": "PASS"
+      }
+    },
+    {
+      "file": "portrait.mp4",
+      "bytes": 8568284,
+      "sha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "frames": 936,
+      "fps": "30/1",
+      "duration": 31.2,
+      "strictDecode": "PASS",
+      "audio": {
+        "codec": "aac",
+        "sampleRate": 48000,
+        "channels": 2,
+        "integratedLufs": -16,
+        "truePeakDbtp": -1.9
+      },
+      "samples": [
+        {
+          "time": 0.2,
+          "file": "qa/encoded-portrait/frame-00.png",
+          "sha256": "3eea4ea4fdfb1ae7b164597a414aba1059457b27fb13452ceda7b02030ce6462"
+        },
+        {
+          "time": 0.53,
+          "file": "qa/encoded-portrait/frame-01.png",
+          "sha256": "0413caf977b771b7c60c07e432223b56ebc1938d0c2e42c11e3b5804916250bd"
+        },
+        {
+          "time": 1.45,
+          "file": "qa/encoded-portrait/frame-02.png",
+          "sha256": "f892a2de27791e99fe24c161ff85e40da7c50cc6bf787fba2640827458dcd647"
+        },
+        {
+          "time": 2.4899999999999998,
+          "file": "qa/encoded-portrait/frame-03.png",
+          "sha256": "b8da6b8ca454c8f20dc4dbebe9b8f3f4dda46fc01c0e9fb39894799dcd022f1c"
+        },
+        {
+          "time": 2.7375,
+          "file": "qa/encoded-portrait/frame-04.png",
+          "sha256": "f38b1ddbfae0c9104bff14afa9c9c99c36571e869c0152d0ce181ee72aec1727"
+        },
+        {
+          "time": 3.35,
+          "file": "qa/encoded-portrait/frame-05.png",
+          "sha256": "fc758734acdf8cf82e8f2256c5212c29d3e509f07d7351664d14281df6185149"
+        },
+        {
+          "time": 5.15,
+          "file": "qa/encoded-portrait/frame-06.png",
+          "sha256": "511f2a9c36079cd5c0c0806dd5ef258a94f8305ae4128b4809db497a3520e7fe"
+        },
+        {
+          "time": 6.95,
+          "file": "qa/encoded-portrait/frame-07.png",
+          "sha256": "2bf905d19be99744ec3bae8169c183932b63d3bef1c5ce5cd8205aed3a1ef8af"
+        },
+        {
+          "time": 7.92,
+          "file": "qa/encoded-portrait/frame-08.png",
+          "sha256": "15096594a49e9c3c25742af15e32a2dccc063e9bf2fa36d3e5f1937351524d2d"
+        },
+        {
+          "time": 8.25,
+          "file": "qa/encoded-portrait/frame-09.png",
+          "sha256": "9bd6cbd4521e9d4d93c1dd69ee6906d5958d6c949d488fd9c4059976c411e076"
+        },
+        {
+          "time": 9.3,
+          "file": "qa/encoded-portrait/frame-10.png",
+          "sha256": "a25d558bca03d9623fb47578dc768e2db50b4f459e576483ced55e8caeac7c84"
+        },
+        {
+          "time": 10.52,
+          "file": "qa/encoded-portrait/frame-11.png",
+          "sha256": "7c949b74d2c6c88912056cceee2678a5532f008368f357fbca0e273c505cbe08"
+        },
+        {
+          "time": 10.85,
+          "file": "qa/encoded-portrait/frame-12.png",
+          "sha256": "ead7e6f2f42728c5c1dbeaf23b0745647586eaf00801ddbf766617c470ed24dc"
+        },
+        {
+          "time": 11.95,
+          "file": "qa/encoded-portrait/frame-13.png",
+          "sha256": "fdd5a24a259a07c80f1ce49f80ff40739a566dcbcd1dc7d55a8d264bdc6d7892"
+        },
+        {
+          "time": 14.4,
+          "file": "qa/encoded-portrait/frame-14.png",
+          "sha256": "f181f6df4f218274df771afd893213061e555c548b91cb695d3a2fc7f309ad27"
+        },
+        {
+          "time": 15.7,
+          "file": "qa/encoded-portrait/frame-15.png",
+          "sha256": "0386647c34e921d965d39ee16dd16bf9bf529b7508e42e051a0d5f5e094d0341"
+        },
+        {
+          "time": 15.975000000000001,
+          "file": "qa/encoded-portrait/frame-16.png",
+          "sha256": "3005722e92638016f857eb9cd5fe0a7199bdb7062079741e546caf2580c50e35"
+        },
+        {
+          "time": 16.8,
+          "file": "qa/encoded-portrait/frame-17.png",
+          "sha256": "97bc439f559074eb7b954bcd7a833598eccc70795ffc7715f42b0e49a8271f17"
+        },
+        {
+          "time": 19.1,
+          "file": "qa/encoded-portrait/frame-18.png",
+          "sha256": "9080518f5d58ea8221a22fb97c08ce881bc27b8ccf18d22a1115bf7c731bd6cb"
+        },
+        {
+          "time": 21.45,
+          "file": "qa/encoded-portrait/frame-19.png",
+          "sha256": "3b0fe56aa0b4f210bed91da8870c36371e9521e0e2e2c27f2bbf2924adec70d6"
+        },
+        {
+          "time": 22.63,
+          "file": "qa/encoded-portrait/frame-20.png",
+          "sha256": "e9b0939006d07334c33777d234f40e619d0d6546077db4a5c2a622bbd3a598f4"
+        },
+        {
+          "time": 22.987499999999997,
+          "file": "qa/encoded-portrait/frame-21.png",
+          "sha256": "b44765166f5c2328147e7adddf0d1afdaa38d9350cf79df40afd7b29bd6dc619"
+        },
+        {
+          "time": 24.5,
+          "file": "qa/encoded-portrait/frame-22.png",
+          "sha256": "9830b2dbf042bcd91fe07bda6a30d60b7f333401c0d32b55ae4ad7cab61e91b5"
+        },
+        {
+          "time": 26.56,
+          "file": "qa/encoded-portrait/frame-23.png",
+          "sha256": "38a8fbfe1471195a2fc4e97ba60a67e141453c0776d2ade842b7a80324ddc9bb"
+        },
+        {
+          "time": 27,
+          "file": "qa/encoded-portrait/frame-24.png",
+          "sha256": "9e5fb7422016317550aad96865a2ac1df78bbc2f5ce3b98eba843bf2da10f782"
+        },
+        {
+          "time": 29.45,
+          "file": "qa/encoded-portrait/frame-25.png",
+          "sha256": "ae840c7c4137aafd2ea941a6eb11d4614ad919aa39bffcf390485eb701193875"
+        },
+        {
+          "time": 31.166666666666664,
+          "file": "qa/encoded-portrait/frame-26.png",
+          "sha256": "233941c2feac4f1bcdc8eb05f506cf2f45b3fd4a22d1e6f52887e73db9a8e795"
+        }
+      ],
+      "motion": [
+        {
+          "actionId": "opening-reveal",
+          "times": [
+            0.2,
+            0.53
+          ],
+          "meanAbsoluteDifference": 6.680048828125,
+          "result": "PASS"
+        },
+        {
+          "actionId": "orb-reveal",
+          "times": [
+            2.4899999999999998,
+            2.7375
+          ],
+          "meanAbsoluteDifference": 15.480621744791666,
+          "result": "PASS"
+        },
+        {
+          "actionId": "research-panel",
+          "times": [
+            7.92,
+            8.25
+          ],
+          "meanAbsoluteDifference": 8.082229817708333,
+          "result": "PASS"
+        },
+        {
+          "actionId": "script-signal",
+          "times": [
+            10.52,
+            10.85
+          ],
+          "meanAbsoluteDifference": 6.779309895833333,
+          "result": "PASS"
+        },
+        {
+          "actionId": "research-screen-reveal",
+          "times": [
+            15.7,
+            15.975000000000001
+          ],
+          "meanAbsoluteDifference": 7.38142578125,
+          "result": "PASS"
+        },
+        {
+          "actionId": "direction-reveal",
+          "times": [
+            22.63,
+            22.987499999999997
+          ],
+          "meanAbsoluteDifference": 11.59095703125,
+          "result": "PASS"
+        },
+        {
+          "actionId": "brand-reveal",
+          "times": [
+            26.56,
+            27
+          ],
+          "meanAbsoluteDifference": 3.8989453125,
+          "result": "PASS"
+        }
+      ],
+      "endingHold": {
+        "times": [
+          28.2,
+          31.166666666666664
+        ],
+        "meanAbsoluteDifference": 0.22752507716049383,
+        "result": "PASS"
+      }
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "auditoryQa": "PENDING: encoded AAC levels and timing are measured; direct listening is unavailable."
+}

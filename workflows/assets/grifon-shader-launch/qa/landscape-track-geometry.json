@@ -1,0 +1,120 @@
+{
+  "format": "landscape",
+  "result": "PASS",
+  "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+  "specSha256": "121d2b5cd0bb099bce8a0467eb35dbd9655915b25e4442402f2910d27442ec3c",
+  "indexSha256": "b781a31b85279077d1c258072293c9c7761b2ccc407495505049873a98c53cfd",
+  "renderSha256": "bfbe707e9537f40cf41f4fd3eed3193cbc53435fd8a4ebfb5c2a931b5157e675",
+  "cases": [
+    {
+      "time": 13.6,
+      "geometry": {
+        "signal": {
+          "x": 1726.5,
+          "y": 863,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 1726.5,
+          "y": 863.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 0,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "landscape-track-13-60.png",
+      "sha256": "d158ed3dc3cda9345a2341f60fc04031cc67952ec84548a143854eba6438fa77",
+      "result": "PASS"
+    },
+    {
+      "time": 13.7,
+      "geometry": {
+        "signal": {
+          "x": 1726.5,
+          "y": 863,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 1726.5,
+          "y": 863.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 0,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "landscape-track-13-70.png",
+      "sha256": "2151397f6c50ddb475f45a329304edd5a03b5384fc66a402613f8289b959ec2e",
+      "result": "PASS"
+    },
+    {
+      "time": 14.4,
+      "geometry": {
+        "signal": {
+          "x": 1726.5,
+          "y": 863,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 1726.5,
+          "y": 863.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 0,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "landscape-track-14-40.png",
+      "sha256": "9d39407f360b0e518f565c44bcc24b6be89959574b49abf483381b7d197eb8ae",
+      "result": "PASS"
+    },
+    {
+      "time": 15.35,
+      "geometry": {
+        "signal": {
+          "x": 1726.5,
+          "y": 863,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 1726.5,
+          "y": 863.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 0,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "landscape-track-15-35.png",
+      "sha256": "2b78a260c722a6b7c83c8dfcac99def465341b2796aa3b9c50b4c954931fea8e",
+      "result": "PASS"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

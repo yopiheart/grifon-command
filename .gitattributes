@@ -17,3 +17,19 @@ workflows/assets/grifon-shader-study/**/*.md text eol=lf
 workflows/assets/grifon-shader-study/**/*.txt text eol=lf
 artifacts/grifon-shader-study.html text eol=lf
 tools/artifacts/build-grifon-shader-review.mjs text eol=lf
+
+# Preserve the launch film's exact source/capture hashes across Windows and Git.
+workflows/assets/grifon-shader-launch/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+artifacts/grifon-shader-launch.html text eol=lf
+tools/artifacts/build-grifon-shader-launch.mjs text eol=lf
+
+# Preserve the redo's exact approved prompt/spec and immutable analysis hashes.
+workflows/assets/grifon-shader-recreation/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Keep the offline recreation player's bound text inputs byte-stable after checkout.
+artifacts/grifon-shader-recreation.html text eol=lf
+tools/artifacts/build-grifon-shader-recreation.mjs text eol=lf
+tools/artifacts/grifon-shader-recreation.tpl.html text eol=lf
+tools/artifacts/_gates.mjs text eol=lf
+artifacts/grifon-shader-sound-v1.html text eol=lf
+tools/artifacts/build-grifon-shader-sound-v1.mjs text eol=lf

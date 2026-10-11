@@ -1,0 +1,350 @@
+{
+  "status": "TECHNICAL_SOUND_PASS_LISTENING_PENDING",
+  "startedAt": "2026-10-08T11:42:29.250Z",
+  "completedAt": "2026-10-08T11:43:18.711Z",
+  "recipeSha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+  "scriptSha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7",
+  "mediaSha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+  "cueCount": 47,
+  "layerCount": 56,
+  "sourceHashes": {
+    "close-up.mp3": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+    "digital-clouds.mp3": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+    "sweep.wav": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3",
+    "air-zoom.wav": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa",
+    "shutter.wav": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824",
+    "lens.wav": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3",
+    "tech-select.wav": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed",
+    "key.wav": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205",
+    "bubble.wav": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f",
+    "gear.wav": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af"
+  },
+  "sourceBindingStatus": "PASS",
+  "frozenBefore": {
+    "grifon-recreation-landscape-silent.mp4": {
+      "file": "grifon-recreation-landscape-silent.mp4",
+      "bytes": 24137255,
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    "grifon-recreation-landscape-provisional.mp4": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    "audio.json": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audio-mix.mjs": {
+      "file": "audio-mix.mjs",
+      "bytes": 14800,
+      "sha256": "de7e4b6becd986b99112396a7e60f96eeb8c030c03bb50ac3a9ed274085156cb"
+    },
+    "full.json": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "full.html": {
+      "file": "full.html",
+      "bytes": 649,
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    "full.js": {
+      "file": "full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    "full-surfaces.frag": {
+      "file": "full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    "vendor/three.global.js": {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    "assets/full/manifest.json": {
+      "file": "assets/full/manifest.json",
+      "bytes": 2075,
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    "assets/full/inter-outlines.json": {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    "assets/full/inter-900.ttf": {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    "assets/full/OFL-Inter.txt": {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    "assets/full/logo.png": {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    "assets/full/script-desktop.png": {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    "assets/full/script-mobile.png": {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    "assets/full/storyboard.png": {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    }
+  },
+  "frozenAfter": {
+    "grifon-recreation-landscape-silent.mp4": {
+      "file": "grifon-recreation-landscape-silent.mp4",
+      "bytes": 24137255,
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    "grifon-recreation-landscape-provisional.mp4": {
+      "file": "grifon-recreation-landscape-provisional.mp4",
+      "bytes": 24994401,
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    "audio.json": {
+      "file": "audio.json",
+      "bytes": 2211,
+      "sha256": "7a1e2d4ba455d609d62403fafbf90eb98ade8c4bfe3c0c8dad8ccac46b4aa689"
+    },
+    "audio-mix.mjs": {
+      "file": "audio-mix.mjs",
+      "bytes": 14800,
+      "sha256": "de7e4b6becd986b99112396a7e60f96eeb8c030c03bb50ac3a9ed274085156cb"
+    },
+    "full.json": {
+      "file": "full.json",
+      "bytes": 5060,
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    "full.html": {
+      "file": "full.html",
+      "bytes": 649,
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    "full.js": {
+      "file": "full.js",
+      "bytes": 37633,
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    "full-surfaces.frag": {
+      "file": "full-surfaces.frag",
+      "bytes": 10269,
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    "vendor/three.global.js": {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    "assets/full/manifest.json": {
+      "file": "assets/full/manifest.json",
+      "bytes": 2075,
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    "assets/full/inter-outlines.json": {
+      "file": "assets/full/inter-outlines.json",
+      "bytes": 406146,
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    "assets/full/inter-900.ttf": {
+      "file": "assets/full/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    "assets/full/OFL-Inter.txt": {
+      "file": "assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    "assets/full/logo.png": {
+      "file": "assets/full/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    "assets/full/script-desktop.png": {
+      "file": "assets/full/script-desktop.png",
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    "assets/full/script-mobile.png": {
+      "file": "assets/full/script-mobile.png",
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    "assets/full/storyboard.png": {
+      "file": "assets/full/storyboard.png",
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    }
+  },
+  "sampleRate": 48000,
+  "channels": 2,
+  "pcmFrames": 1495040,
+  "decodedAacFrames": 1495040,
+  "aacPackets": 1461,
+  "decodedAacPcmSha256": "f942ff1b8f920b0c9b3d67c6a4b1d5360befb69cbd36131d90fa51cfe42b6ff3",
+  "pcmMaster": {
+    "file": "sound-v1/.tmp/build-v3/master.wav",
+    "bytes": 8970342,
+    "sha256": "49a6106b05374514ddfd51f2ed55bd7a55b11ea3bbc2ff56dba316fd89350c02"
+  },
+  "aacMaster": {
+    "file": "sound-v1/.tmp/build-v3/master.m4a",
+    "bytes": 903927,
+    "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f"
+  },
+  "mastering": {
+    "firstPass": {
+      "input_i": "-24.07",
+      "input_tp": "-9.99",
+      "input_lra": "10.00",
+      "input_thresh": "-34.45",
+      "output_i": "-14.84",
+      "output_tp": "-2.20",
+      "output_lra": "2.20",
+      "output_thresh": "-25.11",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.36"
+    },
+    "normalizationDb": 7.79,
+    "method": "Single sample-invariant linear gain, followed by 24-bit quantization and AAC encoding. No compressor, limiter, time stretch or music pitch changes.",
+    "maximumMasterLinearError": 1.1897617583061376e-7,
+    "pcm": {
+      "input_i": "-16.28",
+      "input_tp": "-2.20",
+      "input_lra": "10.00",
+      "input_thresh": "-26.75",
+      "output_i": "-14.84",
+      "output_tp": "-2.20",
+      "output_lra": "2.20",
+      "output_thresh": "-25.11",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.36"
+    },
+    "encoded": {
+      "input_i": "-16.33",
+      "input_tp": "-2.18",
+      "input_lra": "9.90",
+      "input_thresh": "-26.80",
+      "output_i": "-14.85",
+      "output_tp": "-2.20",
+      "output_lra": "2.20",
+      "output_thresh": "-25.11",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.35"
+    }
+  },
+  "samples": {
+    "premasterMaximum": 0.3166555166244507,
+    "encodedMaximum": 0.7777984738349915,
+    "nonfinite": 0,
+    "clipped": 0
+  },
+  "stereoMono": {
+    "master": {
+      "firstSample": 0,
+      "lastSample": 1495040,
+      "rmsDbfs": -18.28363053231086,
+      "peakDbfs": -2.198259126998188,
+      "leftRmsDbfs": -18.343953260082934,
+      "rightRmsDbfs": -18.22413421091951,
+      "zeroLagStereoCorrelation": 0.8138495060997546,
+      "monoFoldEnergyRatio": 0.9068860386256664,
+      "monoFoldLossDb": -0.4244728394936662
+    },
+    "music": {
+      "firstSample": 0,
+      "lastSample": 1495040,
+      "rmsDbfs": -26.413081601968194,
+      "peakDbfs": -9.988258829904385,
+      "leftRmsDbfs": -26.469302934751383,
+      "rightRmsDbfs": -26.357578787461485,
+      "zeroLagStereoCorrelation": 0.800180551291982,
+      "monoFoldEnergyRatio": 0.9000571805575208,
+      "monoFoldLossDb": -0.4572989899205162
+    },
+    "sfx": {
+      "firstSample": 0,
+      "lastSample": 1495040,
+      "rmsDbfs": -37.48348643599551,
+      "peakDbfs": -10.763155159060009,
+      "leftRmsDbfs": -37.6117207083016,
+      "rightRmsDbfs": -37.358930199272315,
+      "zeroLagStereoCorrelation": 0.9813135152980538,
+      "monoFoldEnergyRatio": 0.9904490332761758,
+      "monoFoldLossDb": -0.041678675624964516
+    },
+    "policy": "Music retains original stereo; authored SFX use same-polarity mono projection and equal-power pan. Energy preservation is measured, not a perceived headphone or speaker quality grade."
+  },
+  "fadeMeasurements": [
+    {
+      "firstSample": 0,
+      "lastSample": 960,
+      "rmsDbfs": -33.59541301825902,
+      "peakDbfs": -22.519994854903864,
+      "leftRmsDbfs": -34.00823397515528,
+      "rightRmsDbfs": -33.21844920343508,
+      "zeroLagStereoCorrelation": 0.4400653740878591,
+      "monoFoldEnergyRatio": 0.7191262191066835,
+      "monoFoldLossDb": -1.4319487672329225
+    },
+    {
+      "firstSample": 1478240,
+      "lastSample": 1495040,
+      "rmsDbfs": -139.52264235469013,
+      "peakDbfs": -125.28359876009702,
+      "leftRmsDbfs": -139.552135082297,
+      "rightRmsDbfs": -139.49334856057754,
+      "zeroLagStereoCorrelation": 0.5429245312626514,
+      "monoFoldEnergyRatio": 0.7714560483846351,
+      "monoFoldLossDb": -1.1268881164588191
+    },
+    {
+      "firstSample": 1494080,
+      "lastSample": 1495040,
+      "rmsDbfs": null,
+      "peakDbfs": null,
+      "leftRmsDbfs": null,
+      "rightRmsDbfs": null,
+      "zeroLagStereoCorrelation": null,
+      "monoFoldEnergyRatio": null,
+      "monoFoldLossDb": null
+    }
+  ],
+  "picturePreservation": {
+    "status": "PASS",
+    "sourceSilentSha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b",
+    "packetsVerified": 932,
+    "packetFields": [
+      "pts",
+      "dts",
+      "duration",
+      "size",
+      "data_hash",
+      "flags"
+    ],
+    "openingDecodedFramesVerified": 222,
+    "prefixFrameMd5Sha256": "b687315a7963e5abdd2f2355680a0e65a64d7574032215468e1bbc869c8b5875"
+  },
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "paidSpendUsd": 0,
+  "listening": "PENDING: no direct hearing is available. These checks establish technical integrity and authored timing, not sonic resemblance, perceived musical fit, SFX identity or competition ranking."
+}

@@ -1,0 +1,37 @@
+{
+  "scope": "local pilot initialization performance; no reference-fidelity verdict",
+  "readinessLimitMs": 60000,
+  "failedAttempts": [
+    {
+      "command": "node workflows/assets/grifon-shader-recreation/render-pilot.mjs samples",
+      "source": "pre-final pass 2 draft with five honeycomb field evaluations for finite-difference normals; no completed source receipt",
+      "result": "INITIALIZATION_TIMEOUT",
+      "failure": "page.waitForFunction: Timeout 60000ms exceeded.",
+      "runtimeErrorsRecorded": false,
+      "note": "Subsequent analytic cell normals removed the four redundant evaluations; the next sample run completed. Compilation cost is an inference rather than a profiler measurement."
+    },
+    {
+      "command": "node workflows/assets/grifon-shader-recreation/render-pilot.mjs render",
+      "surfacesSha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "concurrentOwnedChecks": ["npm.cmd run build", "npx.cmd vitest run"],
+      "result": "INITIALIZATION_TIMEOUT",
+      "failure": "Pilot initialization failed: page.waitForFunction: Timeout 60000ms exceeded.; runtime errors []",
+      "runtimeErrors": [],
+      "note": "Performance/readiness failure. Empty runtime errors do not prove successful initialization."
+    }
+  ],
+  "unchangedStandaloneRender": {
+    "result": "READINESS_AND_RENDER_PASS",
+    "surfacesSha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+    "mp4Sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "processCreatedLocal": "2026-10-08T10:13:16+08:00",
+    "firstPngWrittenLocal": "2026-10-08T10:14:10+08:00",
+    "startupThroughFirstPngUpperBoundSeconds": 54,
+    "exactReadinessTimingRecorded": false,
+    "note": "The 54 s value includes browser startup and first-frame capture. Successful standalone rendering supports workability under the unchanged bound but does not establish concurrency as the exclusive cause of the failed run."
+  },
+  "instrumentedCheckReceipt": "pilot-check.json",
+  "visualInputsUnchangedAfterFreeze": true,
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -1,0 +1,24 @@
+{
+  "purpose": "Private byte-preserving recovery of rejected opening pilot v2, including native capture sequence and incidental private audio copies; audio was not used by this silent pilot.",
+  "createdAt": "2026-10-08T01:51:29.049Z",
+  "pilotSha256": "50713631826e5b6cb7cf90d6795f6f20e492fbc970a5d63cc3cb82256b7e57e8",
+  "archive": {
+    "path": "C:/Users/ADMIN/Desktop/grifon-command/.tools/grifon-motion-archives/grifon-opening-pilot-v2-2026-10-08-50713631826e.zip",
+    "bytes": 140339268,
+    "sha256": "3ab1112f82988b298b40df74b7a178ed32dab4440d05272a5839e642c3403216",
+    "entries": 293
+  },
+  "checks": {
+    "CRC": true,
+    "allDecodedBytesEqual": true,
+    "allEntrySha256Equal": true,
+    "preservationReceiptSha256": "9d4cc8fa03834f9ec0c229d5681a9d5d5cb0bcfeffdfceee01f72d0ab4a69584"
+  },
+  "sourceSnapshotsPreserved": true,
+  "snapshotReceiptAnnotation": {
+    "currentSha256": "ade8569b9bfd6be61455ee131c0073042b1a78a692adb27b8e9535a68383e0ca",
+    "reason": "The frozen receipt was subsequently annotated to identify eight incidental private audio copies as unused by this silent pilot. The archive retains its original receipt and all292 preserved payload files still match current bytes.",
+    "preservedPayloadFiles": 292,
+    "allPayloadBytesStillEqual": true
+  }
+}

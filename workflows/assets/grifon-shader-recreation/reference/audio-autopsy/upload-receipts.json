@@ -1,0 +1,26 @@
+[
+  {
+    "id": "A",
+    "name": "files/174qtdzexau0",
+    "state": "ACTIVE",
+    "mimeType": "audio/mp4",
+    "sizeBytes": "505101",
+    "inputSha256": "5d848e1648efc71cb6b842d34625f8595ed2da842a4daa87dc0499217baca9ae"
+  },
+  {
+    "id": "B",
+    "name": "files/hs83x9copth4",
+    "state": "ACTIVE",
+    "mimeType": "audio/mpeg",
+    "sizeBytes": "3045294",
+    "inputSha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b"
+  },
+  {
+    "id": "C",
+    "name": "files/xm3n5u3375f0",
+    "state": "ACTIVE",
+    "mimeType": "audio/mpeg",
+    "sizeBytes": "3232566",
+    "inputSha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+  }
+]

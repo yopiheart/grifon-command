@@ -1,0 +1,40 @@
+{
+  "file": "grifon-recreation-landscape-sound-v1.mp4",
+  "bytes": 25057741,
+  "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "frames": 932,
+  "fps": "30000/1001",
+  "duration": 31.146,
+  "videoDuration": 31.098,
+  "audioDuration": 31.146,
+  "logicalDecodedAudioDuration": 31.14666666666667,
+  "strictDecode": "PASS",
+  "codec": "h264",
+  "pixFmt": "yuv420p",
+  "timeBase": "1/30000",
+  "picturePreservation": {
+    "status": "PASS",
+    "sourceSilentSha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b",
+    "packetsVerified": 932,
+    "packetFields": [
+      "pts",
+      "dts",
+      "duration",
+      "size",
+      "data_hash",
+      "flags"
+    ],
+    "openingDecodedFramesVerified": 222,
+    "prefixFrameMd5Sha256": "b687315a7963e5abdd2f2355680a0e65a64d7574032215468e1bbc869c8b5875"
+  },
+  "recipeSha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea",
+  "scriptSha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7",
+  "mixVerificationSha256": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3",
+  "sonicStatus": "LISTENING_PENDING",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

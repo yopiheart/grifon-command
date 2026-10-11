@@ -1,0 +1,43 @@
+
+> creative-director-ai-assistant@1.0.0 prebuild
+> npm run check:ps1-ascii
+
+
+> creative-director-ai-assistant@1.0.0 check:ps1-ascii
+> node tools/check-ps1-ascii.mjs
+
+OK: every scripts/*.ps1 is pure ASCII.
+
+> creative-director-ai-assistant@1.0.0 build
+> tsc && vite build
+
+vite v8.0.16 building client environment for production...
+[2K
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+transforming...✓ 2580 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 14.62 kB │ gzip:   4.29 kB
+dist/assets/index-BX484UXo.css                 132.02 kB │ gzip:  21.85 kB
+dist/assets/captionRegionDetect-CGt4KQrd.js      2.03 kB │ gzip:   1.12 kB
+dist/assets/purify.es-Bs0Imjnk.js               27.11 kB │ gzip:  10.53 kB
+dist/assets/vision_bundle--cbkgjk9.js          134.91 kB │ gzip:  39.98 kB
+dist/assets/index.es-RXJBSIiA.js               151.38 kB │ gzip:  48.88 kB
+dist/assets/html2canvas-CDhlPu6X.js            199.56 kB │ gzip:  46.78 kB
+dist/assets/index-PwJmHO7B.js                2,052.67 kB │ gzip: 589.96 kB
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - vite:css (52%)
+  - rolldown:vite-resolve (17%)
+  - vite:build-html (16%)
+  - vite:css-post (8%)
+See https://rolldown.rs/options/checks#plugintimings for more details.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 17.56s

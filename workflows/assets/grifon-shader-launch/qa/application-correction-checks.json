@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-07T18:52:13.9293377Z",
+  "worktree": "C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command",
+  "branch": "codex/grifon-shader-launch",
+  "head": "f818c4952c88a5011257944717dbf82c89f2ef8d",
+  "startingHead": "f818c4952c88a5011257944717dbf82c89f2ef8d",
+  "scope": "Existing application regression/control checks after launch-asset correction. Browser, runtime/source integrity, final encoded media and audio review are outside this check.",
+  "nodeVersion": "v24.21.0",
+  "npmVersion": "11.19.0",
+  "commands": [
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "elapsedSeconds": 23.9219055,
+      "log": ".tmp/correction-checks/build.log",
+      "logSha256": "1b83d8b4c78328ef939a960ae78a9ecd3fd494076938b2ef1b022ac7e24cf2fc"
+    },
+    {
+      "command": "npx.cmd vitest run --maxWorkers=2",
+      "exitCode": 0,
+      "elapsedSeconds": 83.9517835,
+      "log": ".tmp/correction-checks/vitest.log",
+      "logSha256": "b87845598802e54e719a92f595d0f8159794f11e8b0cd6e489ecb17cc20ad46c"
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "exitCode": 0,
+      "elapsedSeconds": 11.9914775,
+      "log": ".tmp/correction-checks/check-codex.log",
+      "logSha256": "119286b1ea398142de38b7c1058c64d46b61bf612545bee8fa4e004a28132e52"
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "elapsedSeconds": 0.9120067,
+      "log": ".tmp/correction-checks/check-artifact-anchors.log",
+      "logSha256": "c6294afa2c51f207225ddf82017298de5c72c73a077660c39c233bc3533c577a"
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0,
+      "elapsedSeconds": 0.8542228,
+      "log": ".tmp/correction-checks/check-domain.log",
+      "logSha256": "bbd45a27f0fbb252f5738bcbb14e4ddeac07651ad110659c5c0cad927e0e37b9"
+    },
+    {
+      "command": "npm.cmd run check:ps1-ascii",
+      "exitCode": 0,
+      "elapsedSeconds": 0.6249335,
+      "log": ".tmp/correction-checks/check-ps1-ascii.log",
+      "logSha256": "2a8af94839e1a747c84a3704dbee70bce68cc0e5c2509c5859b28781a14bdd89"
+    }
+  ],
+  "vitest": {
+    "filesPassed": 116,
+    "filesSkipped": 9,
+    "totalFiles": 125,
+    "testsPassed": 1432,
+    "testsSkipped": 32,
+    "totalTests": 1464,
+    "failures": 0
+  },
+  "codex": {
+    "testsPassed": 26,
+    "failures": 0
+  },
+  "domain": {
+    "filesScanned": 292,
+    "driftHits": 0
+  },
+  "paidLiveSwitchesUnset": true,
+  "paidProviderOperations": 0,
+  "spendUsd": 0,
+  "applicationTrackedDiffPaths": [],
+  "warnings": [
+    "Browserslist caniuse-lite data is 7 months old (existing warning).",
+    "Vite reports chunks larger than 500 kB after minification (existing warning).",
+    "Vite plugin timing report lists CSS processing as the largest build share."
+  ],
+  "fixesPerformed": false,
+  "browserOperations": false,
+  "helperProcessesStarted": 0,
+  "intentionalOutputs": [
+    ".tmp/correction-checks/*.log",
+    ".tmp/correction-checks/gate-results.json",
+    "workflows/assets/grifon-shader-launch/qa/application-correction-checks.json"
+  ],
+  "buildSideEffect": "The required npm build regenerated ignored dist output."
+}

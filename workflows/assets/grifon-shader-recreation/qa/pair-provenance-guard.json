@@ -1,0 +1,676 @@
+{
+  "purpose": "Isolated provenance and immutable HTTP control-flow smoke test; not similarity review or final-film PASS",
+  "createdAt": "2026-10-08T05:20:27.758Z",
+  "command": "node workflows/assets/grifon-shader-recreation/qa/pair-provenance-guard.mjs --synthetic-only",
+  "node": "v24.21.0",
+  "bindings": {
+    "original": {
+      "path": "qa/pair-provenance-original-builder.mjs",
+      "sha256": "cae06400ccf99d335332176d9263afe587d3c1531628e377d9f15cc4cf202f1a"
+    },
+    "builder": {
+      "path": "build-full-paired-review.mjs",
+      "sha256": "45bd23d46bc5e9751ff3b9f2f8c3092fe4495ab97b5b1f22ecfb70926acf2015"
+    },
+    "server": {
+      "path": "review-server.mjs",
+      "sha256": "3e40ce34c45b5043a5e1e0240c179d6cb1a47c659ac1317258092597e112f5b7"
+    }
+  },
+  "verifierSha256": "196d5df167038345644a372c9c4cbb4e3f13aec54df6525e4e1d6dd7bc442540",
+  "privateFixtureRoot": ".tmp/pair-provenance-AoPQ0r",
+  "boundaries": {
+    "nativeProcesses": 0,
+    "mediaBoundary": "MOCKED: probe JSON, decoded prefix lines, encoder writes, strict decode",
+    "fixturePins": "PRIVATE fixture execution rebinds only reference/opening hash literals to synthetic bytes; digest/source/publication checks remain the bound helper code",
+    "actualInputAccess": "NONE; original defect witness retained only as historical evidence",
+    "externalNetworkRequests": 0,
+    "providerCalls": 0,
+    "paidSpendUsd": 0,
+    "browserOrGpu": false,
+    "helperProcessesStarted": 0,
+    "loopbackServerPid": 9332
+  },
+  "tests": [
+    {
+      "name": "original stale-media defect reproduced; corrected builder rejects before media/write",
+      "status": "NOT_RUN",
+      "reason": "--synthetic-only avoids all current reference/film/source input access; retained evidence is timestamp/hash-bound history"
+    },
+    {
+      "name": "failed encode-failure preserves prior pair and bound receipt",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "caughtError": "INDUCED_MOCK_ENCODE_FAILURE",
+      "previousBindingUnchanged": true,
+      "publishedGenerations": 0,
+      "orphanStagingFiles": 1,
+      "trace": [
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockEncode",
+          "output": ".tmp/paired-full-staging-c6cce54a-cbd4-45c4-8f15-c952ca22ebbb.mp4",
+          "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        }
+      ],
+      "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+    },
+    {
+      "name": "failed probe-failure preserves prior pair and bound receipt",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "caughtError": "Paired full media contract differs",
+      "previousBindingUnchanged": true,
+      "publishedGenerations": 0,
+      "orphanStagingFiles": 1,
+      "trace": [
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockEncode",
+          "output": ".tmp/paired-full-staging-aae22df5-e7a1-44ee-9e28-e8727cb764b8.mp4",
+          "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        },
+        {
+          "operation": "mockOutputProbe"
+        }
+      ],
+      "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+    },
+    {
+      "name": "failed timestamps-failure preserves prior pair and bound receipt",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "caughtError": "Paired output native presentation timestamps differ",
+      "previousBindingUnchanged": true,
+      "publishedGenerations": 0,
+      "orphanStagingFiles": 1,
+      "trace": [
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockEncode",
+          "output": ".tmp/paired-full-staging-8b6ca196-a9b3-43ae-8d29-c494fe20f16d.mp4",
+          "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        },
+        {
+          "operation": "mockOutputProbe"
+        },
+        {
+          "operation": "mockOutputNativeTimestamps"
+        }
+      ],
+      "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+    },
+    {
+      "name": "failed strictdecode-failure preserves prior pair and bound receipt",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "caughtError": "INDUCED_MOCK_STRICT_DECODE_FAILURE",
+      "previousBindingUnchanged": true,
+      "publishedGenerations": 0,
+      "orphanStagingFiles": 1,
+      "trace": [
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockEncode",
+          "output": ".tmp/paired-full-staging-c6dd6cb0-2418-4f37-a3b8-c6961bb563d8.mp4",
+          "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        },
+        {
+          "operation": "mockOutputProbe"
+        },
+        {
+          "operation": "mockOutputNativeTimestamps"
+        },
+        {
+          "operation": "mockStrictDecode"
+        }
+      ],
+      "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+    },
+    {
+      "name": "failed input-stability-failure preserves prior pair and bound receipt",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "caughtError": "Continuation input changed during pair creation: full.js",
+      "previousBindingUnchanged": true,
+      "publishedGenerations": 0,
+      "orphanStagingFiles": 1,
+      "trace": [
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockEncode",
+          "output": ".tmp/paired-full-staging-85b1ec3e-3fba-45eb-a57f-42f7ed04534a.mp4",
+          "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        },
+        {
+          "operation": "mockOutputProbe"
+        },
+        {
+          "operation": "mockOutputNativeTimestamps"
+        },
+        {
+          "operation": "mockStrictDecode"
+        }
+      ],
+      "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+    },
+    {
+      "name": "failed page-stability-failure preserves prior pair and bound receipt",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "caughtError": "A producer receipt or comparison page changed during pair creation",
+      "previousBindingUnchanged": true,
+      "publishedGenerations": 0,
+      "orphanStagingFiles": 1,
+      "trace": [
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockInputProbe"
+        },
+        {
+          "operation": "mockInputNativeTimestamps"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockDecodedOpening"
+        },
+        {
+          "operation": "mockEncode",
+          "output": ".tmp/paired-full-staging-79f3445d-9d8c-4fc4-a2c7-c611f2206060.mp4",
+          "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        },
+        {
+          "operation": "mockOutputProbe"
+        },
+        {
+          "operation": "mockOutputNativeTimestamps"
+        },
+        {
+          "operation": "mockStrictDecode"
+        }
+      ],
+      "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+    },
+    {
+      "name": "successful mocked builder checks staging before unique generation publication",
+      "status": "PASS",
+      "mockedMediaBoundary": true,
+      "successfulBuilds": 2,
+      "uniqueStagingAndGenerations": true,
+      "priorImmutableGenerationUnchanged": true,
+      "builds": [
+        {
+          "stagingPath": ".tmp/paired-full-staging-657f3bc4-8d49-48ce-ae37-0248ae1d9522.mp4",
+          "generation": {
+            "mediaPath": ".tmp/full-paired-generations/be9ce57c754f-0a536b88816d-c42c0127-9619-40b9-a492-64cc2775fe0f/pair.mp4",
+            "pagePath": ".tmp/full-paired-generations/be9ce57c754f-0a536b88816d-c42c0127-9619-40b9-a492-64cc2775fe0f/review.html",
+            "receiptPath": ".tmp/full-paired-generations/be9ce57c754f-0a536b88816d-c42c0127-9619-40b9-a492-64cc2775fe0f/receipt.json"
+          },
+          "trace": [
+            {
+              "operation": "mockInputProbe"
+            },
+            {
+              "operation": "mockInputNativeTimestamps"
+            },
+            {
+              "operation": "mockInputProbe"
+            },
+            {
+              "operation": "mockInputNativeTimestamps"
+            },
+            {
+              "operation": "mockDecodedOpening"
+            },
+            {
+              "operation": "mockDecodedOpening"
+            },
+            {
+              "operation": "mockEncode",
+              "output": ".tmp/paired-full-staging-657f3bc4-8d49-48ce-ae37-0248ae1d9522.mp4",
+              "previousPairSha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+            },
+            {
+              "operation": "mockOutputProbe"
+            },
+            {
+              "operation": "mockOutputNativeTimestamps"
+            },
+            {
+              "operation": "mockStrictDecode"
+            }
+          ],
+          "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+        },
+        {
+          "stagingPath": ".tmp/paired-full-staging-582b65ce-7f63-4e01-a27f-8c9687043bc8.mp4",
+          "generation": {
+            "mediaPath": ".tmp/full-paired-generations/be9ce57c754f-0a536b88816d-593d701c-87ed-4807-92e5-a2249fe87fc1/pair.mp4",
+            "pagePath": ".tmp/full-paired-generations/be9ce57c754f-0a536b88816d-593d701c-87ed-4807-92e5-a2249fe87fc1/review.html",
+            "receiptPath": ".tmp/full-paired-generations/be9ce57c754f-0a536b88816d-593d701c-87ed-4807-92e5-a2249fe87fc1/receipt.json"
+          },
+          "trace": [
+            {
+              "operation": "mockInputProbe"
+            },
+            {
+              "operation": "mockInputNativeTimestamps"
+            },
+            {
+              "operation": "mockInputProbe"
+            },
+            {
+              "operation": "mockInputNativeTimestamps"
+            },
+            {
+              "operation": "mockDecodedOpening"
+            },
+            {
+              "operation": "mockDecodedOpening"
+            },
+            {
+              "operation": "mockEncode",
+              "output": ".tmp/paired-full-staging-582b65ce-7f63-4e01-a27f-8c9687043bc8.mp4",
+              "previousPairSha256": "0a536b88816df4e702495b01fac51b307ea3e80cc0dc2b9ba99771deb7c09caf"
+            },
+            {
+              "operation": "mockOutputProbe"
+            },
+            {
+              "operation": "mockOutputNativeTimestamps"
+            },
+            {
+              "operation": "mockStrictDecode"
+            }
+          ],
+          "instrumentedSha256": "458bdaef8d4cf43ec891fd11ea991e552a6de831d980e6feb7e8a3408f92bd02"
+        }
+      ]
+    },
+    {
+      "name": "server rejects mismatched generation-page with 503",
+      "status": "PASS",
+      "statuses": [
+        {
+          "route": "/paired-full",
+          "status": 503
+        },
+        {
+          "route": "/paired-full.mp4",
+          "status": 503
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "status": 503
+        }
+      ],
+      "caughtBindingError": "Comparison generation bytes differ from its receipt",
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "server rejects mismatched generation-pair with 503",
+      "status": "PASS",
+      "statuses": [
+        {
+          "route": "/paired-full",
+          "status": 503
+        },
+        {
+          "route": "/paired-full.mp4",
+          "status": 503
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "status": 503
+        }
+      ],
+      "caughtBindingError": "Comparison generation bytes differ from its receipt",
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "server rejects mismatched producer-receipt with 503",
+      "status": "PASS",
+      "statuses": [
+        {
+          "route": "/paired-full",
+          "status": 503
+        },
+        {
+          "route": "/paired-full.mp4",
+          "status": 503
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "status": 503
+        }
+      ],
+      "caughtBindingError": "Comparison producer binding differs",
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "server rejects mismatched producer-film with 503",
+      "status": "PASS",
+      "statuses": [
+        {
+          "route": "/paired-full",
+          "status": 503
+        },
+        {
+          "route": "/paired-full.mp4",
+          "status": 503
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "status": 503
+        }
+      ],
+      "caughtBindingError": "Comparison producer binding differs",
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "server rejects mismatched working-page with 503",
+      "status": "PASS",
+      "statuses": [
+        {
+          "route": "/paired-full",
+          "status": 503
+        },
+        {
+          "route": "/paired-full.mp4",
+          "status": 503
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "status": 503
+        }
+      ],
+      "caughtBindingError": "Comparison page version differs",
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "server rejects mismatched generation-receipt with 503",
+      "status": "PASS",
+      "statuses": [
+        {
+          "route": "/paired-full",
+          "status": 503
+        },
+        {
+          "route": "/paired-full.mp4",
+          "status": 503
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "status": 503
+        }
+      ],
+      "caughtBindingError": "Comparison generation bytes differ from its receipt",
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "server caches byte-identical page/pair/receipt across working and generation mutations",
+      "status": "PASS",
+      "firstRequest": "HEAD initializes immutable cache",
+      "mutatedDiskFiles": [
+        ".tmp/paired-full.mp4",
+        "qa/full-paired-review-receipt.json",
+        "paired-full-review.html",
+        "qa/full-media.json",
+        "grifon-recreation-landscape-provisional.mp4",
+        "reference/source-x.mp4",
+        "grifon-opening-pilot-silent.mp4",
+        "full.js",
+        ".tmp/full-paired-generations/prior/pair.mp4",
+        ".tmp/full-paired-generations/prior/review.html",
+        ".tmp/full-paired-generations/prior/receipt.json"
+      ],
+      "byteIdenticalRoutes": [
+        {
+          "route": "/paired-full",
+          "sha256": "3f6155827ae59d69adc82f63b19f8d57e9fcf6a85c1c6229d852b73053df8615",
+          "bytes": 53,
+          "status": 200
+        },
+        {
+          "route": "/paired-full.mp4",
+          "sha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b",
+          "bytes": 69,
+          "status": 200
+        },
+        {
+          "route": "/paired-full-receipt.json",
+          "sha256": "6056b6a2c2524712b167314123d85eb3c0ff3f2867bccf45f7f63c086575cf14",
+          "bytes": 2406,
+          "status": 200
+        }
+      ],
+      "successiveRanges": [
+        {
+          "start": 0,
+          "end": 9,
+          "status": 206,
+          "sha256": "9fa7bd5544ec819a432d3cec33c7bd1554d3d19272465d1c9cc59e05b6bcf7bc"
+        },
+        {
+          "start": 10,
+          "end": 24,
+          "status": 206,
+          "sha256": "652c7207bce4ddcdad19543124b5201a558764ffba98ecdc58dad1424b894358"
+        },
+        {
+          "start": 25,
+          "end": 68,
+          "status": 206,
+          "sha256": "8c6e7e487de6b9d5b4120a31f8baff89dd2ffa3dd3813b6dd0e602ffe812fed3"
+        },
+        {
+          "start": 0,
+          "end": 68,
+          "status": 206,
+          "sha256": "e3e723cc1acb411e345ec8b398483a311ed2abe35482f199abee161eb3f7049b"
+        }
+      ],
+      "invalidRangesRejected": 4,
+      "serverClosed": true,
+      "instrumentedSha256": "1b3572e8380aa0dfe6b2d7b27032e949e4be489dfa2a7e4a95e9e34721ecb61c"
+    },
+    {
+      "name": "failed server load can retry after fixture binding repair",
+      "status": "PASS",
+      "statuses": [
+        503,
+        200
+      ],
+      "serverClosed": true
+    },
+    {
+      "name": "bound helper sources unchanged throughout smoke run",
+      "status": "PASS",
+      "allBindingsUnchanged": true
+    }
+  ],
+  "historicalOriginalDefect": {
+    "observedAt": "2026-10-08T05:20:23.557Z",
+    "bindings": {
+      "original": {
+        "path": "qa/pair-provenance-original-builder.mjs",
+        "sha256": "cae06400ccf99d335332176d9263afe587d3c1531628e377d9f15cc4cf202f1a"
+      },
+      "builder": {
+        "path": "build-full-paired-review.mjs",
+        "sha256": "45bd23d46bc5e9751ff3b9f2f8c3092fe4495ab97b5b1f22ecfb70926acf2015"
+      },
+      "server": {
+        "path": "review-server.mjs",
+        "sha256": "3e40ce34c45b5043a5e1e0240c179d6cb1a47c659ac1317258092597e112f5b7"
+      }
+    },
+    "test": {
+      "name": "original stale-media defect reproduced; corrected builder rejects before media/write",
+      "status": "PASS",
+      "oldFilmSha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab",
+      "producerReceiptSha256": "d2ded0249b0975470fb107fcd1c19eda6b8f9cb0cb1ebe5a5df83ff5d2615162",
+      "mismatches": [
+        {
+          "file": "full.json",
+          "receiptSha256": "729501ae328949605d5247636d1c0ec6a66e79de6a9ee5560f0f3f50f2650956",
+          "currentSha256": "2b62d012c9c011db4acb650bf16847e4b1695a96592d0a056d6ee8678072b1fa"
+        },
+        {
+          "file": "full.js",
+          "receiptSha256": "20ca19a987f69bb6d42c3d2e4330102ba75592d647212c8cf28f1cbffd3ecd57",
+          "currentSha256": "e0fa59e23938aacca187e11f4e4ae5c712536f3bb6a3a86d1ffd1a5b7f4790bc"
+        },
+        {
+          "file": "full-surfaces.frag",
+          "receiptSha256": "8561080f540cdecb3d86a62f00f424294e8b1359d33abd9a7695ddc61cf9d73a",
+          "currentSha256": "50fadb0af59ef3c83c73a303aee8f753e518052039f433ce6dbfaa972a4d3d5a"
+        },
+        {
+          "file": "assets/full/manifest.json",
+          "receiptSha256": "38144c26ba1f812332229ea1997a1bb5bdfccedda807ba699453a81969c18e79",
+          "currentSha256": "cd276009fd2d913980d2b01c3d52bb210cffbb5d78b0b4aa84d63d95914e6509"
+        }
+      ],
+      "original": {
+        "caughtError": "MOCK_FIRST_MEDIA_PROBE_REACHED",
+        "mediaCalls": [
+          {
+            "executable": "ffprobe.exe",
+            "operation": "first media probe",
+            "input": "source-x.mp4"
+          }
+        ],
+        "writes": 0,
+        "instrumentedSha256": "45024935da2a0dd2ba9c1f3527d17e94be5490dff8961ba3412795a0456beb55",
+        "transforms": [
+          "ES-module imports supplied by isolated VM",
+          "here bound to ",
+          "run(exe,args) bound to deterministic mock or first-probe sentinel"
+        ]
+      },
+      "corrected": {
+        "caughtError": "Full media source binding differs; changed inputs require a new render",
+        "mediaCalls": 0,
+        "writes": 0,
+        "instrumentedSha256": "eb168979ceb1c36b6511963dd47ff3b5af250095742b44896ec6bc1f30b6ddbc",
+        "transforms": [
+          "ES-module imports supplied by isolated VM",
+          "here bound to ",
+          "run(exe,args) bound to deterministic mock or first-probe sentinel"
+        ]
+      },
+      "realInputsUnchanged": true
+    }
+  },
+  "passed": 16,
+  "failed": 0,
+  "notRun": 1,
+  "status": "PASS",
+  "commandExitCode": 0,
+  "limits": [
+    "Synthetic fixture bytes are not playable media; native geometry/timestamps/strict-decode responses are mocked.",
+    "Original defect reproduction terminates at the first mocked media probe; it does not encode or validate the stale film.",
+    "No source-fidelity, audio, provider, browser/GPU, deployment or final-film validation is claimed.",
+    "Failed builder checks may leave orphan private staging files; prior working/bound generation remains intact.",
+    "--synthetic-only is repeatable without current real media; its historical original-defect evidence is not a new live-input check."
+  ]
+}

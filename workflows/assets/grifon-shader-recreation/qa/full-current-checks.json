@@ -1,0 +1,47 @@
+{
+  "focusedReceiptSha256": "2cfc3443387df563037507d3b66c230a6daffabcbfa8a22a319a6deef1820f18",
+  "sources": {
+    "full.json": "2b62d012c9c011db4acb650bf16847e4b1695a96592d0a056d6ee8678072b1fa",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "211ede51b0d73f69b944ee0f0eff9c26db83a481d9b8f6f713b0458816313a5d",
+    "full-surfaces.frag": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "cd276009fd2d913980d2b01c3d52bb210cffbb5d78b0b4aa84d63d95914e6509",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+  },
+  "frozenSourcesMatch": true,
+  "build": {
+    "command": "npm.cmd run build",
+    "exitCode": 0,
+    "log": "qa/full-current-build-output.txt",
+    "logBytes": 1895,
+    "logSha256": "3991abdd4136dd2d3788ba1b8ee3b8bd5804670daf91badded0729d017e54ebe"
+  },
+  "tests": {
+    "command": "npx.cmd vitest run",
+    "equivalentPackageTestScript": "vitest run",
+    "exitCode": 0,
+    "filesPassed": 116,
+    "filesSkipped": 9,
+    "testsPassed": 1432,
+    "testsSkipped": 32,
+    "durationSeconds": 44.27,
+    "log": "qa/full-current-vitest-output.txt",
+    "logBytes": 300,
+    "logSha256": "1e4a20cbf72649822d576d060f1488cad2ecb1e00dd34d641c23de4e4df8bc61"
+  },
+  "liveFlags": {
+    "RUN_REGRESSION": false,
+    "RUN_BURNIN": false,
+    "RUN_IMAGE_GATE_SMOKE": false
+  },
+  "scope": "Technical application checks only; focused native fidelity is independently pending",
+  "frozenPayloadsVerified": 131,
+  "preservationReceiptSha256": "a908cece740c3c9e75bbe7ba9231afc5d3630a6754bf2d18f1f49a13844844e1"
+}

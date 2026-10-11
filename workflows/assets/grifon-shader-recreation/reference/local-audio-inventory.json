@@ -1,0 +1,196 @@
+{
+  "purpose": "Available clean local sources only; no soundtrack selection or old-master input",
+  "registeredStockSources": [
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\close-up.mp3",
+      "bytes": 3045294,
+      "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b",
+      "role": "clean music",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+      "role": "clean music",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\sweep.wav",
+      "bytes": 138746,
+      "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\air-zoom.wav",
+      "bytes": 224908,
+      "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\shutter.wav",
+      "bytes": 62562,
+      "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\lens.wav",
+      "bytes": 217348,
+      "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\tech-select.wav",
+      "bytes": 88930,
+      "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\key.wav",
+      "bytes": 58022,
+      "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\bubble.wav",
+      "bytes": 54050,
+      "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\gear.wav",
+      "bytes": 200748,
+      "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af",
+      "role": "clean SFX",
+      "provenance": "Existing V07 source register",
+      "recordedLicense": "https://mixkit.co/license/",
+      "rights": "Registered Mixkit manually authored web/social video permission; raw sources/stems not for redistribution"
+    }
+  ],
+  "registeredSelectedElevenLabsSources": [
+    {
+      "id": "paper-swipe-2",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\paper-swipe-2.wav",
+      "bytes": 384078,
+      "sha256": "398a01aee9b2f7b1de01de2d0852ca3708107a29120ae734f0ecc86217b4afd5",
+      "nativeContactSeconds": 1.408,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "rotation-air-2",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\rotation-air-2.wav",
+      "bytes": 384078,
+      "sha256": "182d04dc1289b346ed882cd05819c581b8aa584f59d9b3708f9057a514443199",
+      "nativeContactSeconds": 0.564,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "camera-contact-2",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\camera-contact-2.wav",
+      "bytes": 192078,
+      "sha256": "9de3ee1f004d3633c4bdfa5dac00a7238d68446e4f9dc8139be0646bb37ec4cd",
+      "nativeContactSeconds": 0.136,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "phone-contact-2",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\phone-contact-2.wav",
+      "bytes": 192078,
+      "sha256": "0fa98d4669deea51b9605a9c599463ea4e966cd052b2e9718ecabb73f38c374b",
+      "nativeContactSeconds": 0.18,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "laptop-contact-1",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\laptop-contact-1.wav",
+      "bytes": 576078,
+      "sha256": "2922ebc87c2ed31759ee33c1f1c2190a2c7c0c5935a85511d6c10b730b69badd",
+      "nativeContactSeconds": 0.268,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "card-pop-2",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\card-pop-2.wav",
+      "bytes": 384078,
+      "sha256": "6c2123f4908a256f5324c74d6fc1d50a31255741eba8029dc56dfda9ed8f99f7",
+      "nativeContactSeconds": 0.014,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "reverse-air-1",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\reverse-air-1.wav",
+      "bytes": 384078,
+      "sha256": "90531a66e2239f7a4cbd0533a592d72982771778e7dd7bb2370f069ab1054baa",
+      "nativeContactSeconds": 1.646,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "orb-inward-1",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\orb-inward-1.wav",
+      "bytes": 192078,
+      "sha256": "2d6eba0d507ace2579fd41e7952213ddb512d2821adb5af91740427b9e3759ab",
+      "nativeContactSeconds": 0.056,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    },
+    {
+      "id": "pencil-4",
+      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\workflows\\assets\\grifon-shader-launch\\assets\\audio\\pencil-4.wav",
+      "bytes": 384078,
+      "sha256": "b410f0789fb80ab2946a4c40ba0954cd8fcf4d03a7935642e32c9ac23dfce4bc",
+      "nativeContactSeconds": 1.888,
+      "rights": "PRIVATE REVIEW ONLY: source predates paid subscription."
+    }
+  ],
+  "otherCacheFiles": [
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\keyboard.wav",
+      "exists": true,
+      "status": "Not in inspected source-manifest; provenance not established for adoption"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\sci-fi-score.mp3",
+      "exists": true,
+      "status": "Not in inspected source-manifest; provenance not established for adoption"
+    },
+    {
+      "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\your-breath.mp3",
+      "exists": true,
+      "status": "Not in inspected source-manifest; provenance not established for adoption"
+    }
+  ],
+  "measurementCapabilities": [
+    "Native FFprobe frame count/dimensions/duration/AAC packet metadata",
+    "Strict FFmpeg decode",
+    "Byte-exact native AAC extraction and payload comparison",
+    "Loudnorm/ebur128 integrated LUFS,LRA,truepeak",
+    "Waveform/native transient/sample timing checks"
+  ],
+  "listeningCapability": "Unavailable: supported audio helper reports this model does not support audio input",
+  "paidCalls": 0,
+  "newSpendUsd": 0
+}

@@ -1,0 +1,13 @@
+{
+  "status": "FAIL",
+  "problems": [
+    "reference.energy_and_changes[1]: interval exceeds 31.146667 seconds"
+  ],
+  "validatorSelfCheck": {
+    "acceptedUncertainNeither": true,
+    "rejectedInvalidFixtures": 9
+  },
+  "semanticAudioCrossCheck": "PENDING_MAIN_TASK",
+  "independentReview": "PENDING_MAIN_TASK",
+  "noRetryAuthorized": true
+}

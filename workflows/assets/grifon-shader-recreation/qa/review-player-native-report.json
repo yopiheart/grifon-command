@@ -1,0 +1,2216 @@
+{
+  "status": "PASS",
+  "scope": "Private localhost player technical smoke; no reference-fidelity or listening approval",
+  "generatedAt": "2026-10-08T01:16:31.853Z",
+  "checks": [
+    {
+      "name": "Both inputs load with reference muted and silent pilot muted",
+      "status": "PASS",
+      "actual": {
+        "frame": 0,
+        "readout": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 0,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 0,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 0 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 0,
+        "readout": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 0,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 0,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 26 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 26,
+        "readout": "Frame 26 / 221 | 0.8675 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 0.867533,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 0.867533,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 57 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 57,
+        "readout": "Frame 57 / 221 | 1.9019 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 1.9019,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 1.9019,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 82 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 82,
+        "readout": "Frame 82 / 221 | 2.7361 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 2.736066,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 2.736066,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 91 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 91,
+        "readout": "Frame 91 / 221 | 3.0364 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 3.036366,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 3.036366,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 97 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 97,
+        "readout": "Frame 97 / 221 | 3.2366 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 3.236566,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 3.236566,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 104 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 104,
+        "readout": "Frame 104 / 221 | 3.4701 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 3.470133,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 3.470133,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 111 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 111,
+        "readout": "Frame 111 / 221 | 3.7037 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 3.7037,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 3.7037,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 119 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 119,
+        "readout": "Frame 119 / 221 | 3.9706 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 3.970633,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 3.970633,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 126 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 126,
+        "readout": "Frame 126 / 221 | 4.2042 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 4.2042,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 4.2042,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 132 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 132,
+        "readout": "Frame 132 / 221 | 4.4044 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 4.4044,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 4.4044,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 138 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 138,
+        "readout": "Frame 138 / 221 | 4.6046 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 4.6046,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 4.6046,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 145 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 145,
+        "readout": "Frame 145 / 221 | 4.8382 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 4.838166,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 4.838166,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cut seek 209 pairs exact after native seeking=false",
+      "status": "PASS",
+      "actual": {
+        "frame": 209,
+        "readout": "Frame 209 / 221 | 6.9736 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 6.973633,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 6.973633,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Shared slider terminal seek",
+      "status": "PASS",
+      "actual": {
+        "frame": 221,
+        "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": true,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Upper clamp preserves exact terminal pair",
+      "status": "PASS",
+      "actual": {
+        "frame": 221,
+        "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": true,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Previous frame from terminal",
+      "status": "PASS",
+      "actual": {
+        "frame": 220,
+        "readout": "Frame 220 / 221 | 7.3407 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 7.340666,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 7.340666,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Next frame to terminal",
+      "status": "PASS",
+      "actual": {
+        "frame": 221,
+        "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": true,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lower clamp preserves frame zero",
+      "status": "PASS",
+      "actual": {
+        "frame": 0,
+        "readout": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 0,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 0,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Natural full timeline playback stops paired at frame 221",
+      "status": "PASS",
+      "actual": {
+        "frame": 221,
+        "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+        "playLabel": "Play both",
+        "videos": [
+          {
+            "id": "reference",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": false,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 31.146667
+          },
+          {
+            "id": "pilot",
+            "currentTime": 7.374033,
+            "paused": true,
+            "seeking": false,
+            "ended": true,
+            "readyState": 4,
+            "muted": true,
+            "rate": 1,
+            "width": 1920,
+            "height": 1080,
+            "duration": 7.4074
+          }
+        ]
+      }
+    },
+    {
+      "name": "Speed 0.5 applies to both",
+      "status": "PASS",
+      "actual": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "name": "Speed 0.25 applies to both",
+      "status": "PASS",
+      "actual": [
+        0.25,
+        0.25
+      ]
+    },
+    {
+      "name": "Speed 1 applies to both",
+      "status": "PASS",
+      "actual": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Reference audio toggle leaves pilot muted",
+      "status": "PASS",
+      "actual": [
+        {
+          "id": "reference",
+          "muted": false
+        },
+        {
+          "id": "pilot",
+          "muted": true
+        }
+      ]
+    },
+    {
+      "name": "Audio restored off",
+      "status": "PASS",
+      "actual": [
+        {
+          "id": "reference",
+          "muted": true
+        },
+        {
+          "id": "pilot",
+          "muted": true
+        }
+      ]
+    },
+    {
+      "name": "390px viewport and exact screenshot",
+      "status": "PASS",
+      "actual": {
+        "layout": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "body": {
+            "scrollWidth": 390,
+            "clientWidth": 390
+          },
+          "controls": [
+            {
+              "label": "Play both",
+              "id": "play",
+              "width": 103.125,
+              "height": 46
+            },
+            {
+              "label": "Previous frame",
+              "id": "previous",
+              "width": 134.28125,
+              "height": 46
+            },
+            {
+              "label": "Next frame",
+              "id": "next",
+              "width": 108.59375,
+              "height": 46
+            },
+            {
+              "label": "Restart",
+              "id": "restart",
+              "width": 149.265625,
+              "height": 46
+            },
+            {
+              "label": "1x0.5x0.25x",
+              "id": "speed",
+              "width": 87,
+              "height": 46
+            },
+            {
+              "label": "Reference audio: off",
+              "id": "audio",
+              "width": 362,
+              "height": 46
+            },
+            {
+              "label": "",
+              "id": "seek",
+              "width": 362,
+              "height": 44
+            },
+            {
+              "label": "0 / Start",
+              "id": "",
+              "width": 91.390625,
+              "height": 46
+            },
+            {
+              "label": "26 / Lens",
+              "id": "",
+              "width": 91.390625,
+              "height": 46
+            },
+            {
+              "label": "57 / Warm lens",
+              "id": "",
+              "width": 124.375,
+              "height": 46
+            },
+            {
+              "label": "82 / Chrome",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "91 / Glass",
+              "id": "",
+              "width": 97.984375,
+              "height": 46
+            },
+            {
+              "label": "97 / Gold",
+              "id": "",
+              "width": 91.390625,
+              "height": 46
+            },
+            {
+              "label": "104 / Cream",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "111 / Carbon",
+              "id": "",
+              "width": 111.171875,
+              "height": 46
+            },
+            {
+              "label": "119 / Chrome",
+              "id": "",
+              "width": 111.171875,
+              "height": 46
+            },
+            {
+              "label": "126 / Voxel",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "132 / Glass field",
+              "id": "",
+              "width": 144.171875,
+              "height": 46
+            },
+            {
+              "label": "138 / Flare",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "145 / Raised type",
+              "id": "",
+              "width": 144.171875,
+              "height": 46
+            },
+            {
+              "label": "209 / Gray relief",
+              "id": "",
+              "width": 144.171875,
+              "height": 46
+            }
+          ],
+          "videos": [
+            {
+              "id": "reference",
+              "x": 15,
+              "y": 193,
+              "width": 360,
+              "height": 202.5
+            },
+            {
+              "id": "pilot",
+              "x": 15,
+              "y": 444.5,
+              "width": 360,
+              "height": 202.5
+            }
+          ]
+        },
+        "screenshot": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    },
+    {
+      "name": "390px no horizontal body overflow and controls at least 44px",
+      "status": "PASS",
+      "actual": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "body": {
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "controls": [
+          {
+            "label": "Play both",
+            "id": "play",
+            "width": 103.125,
+            "height": 46
+          },
+          {
+            "label": "Previous frame",
+            "id": "previous",
+            "width": 134.28125,
+            "height": 46
+          },
+          {
+            "label": "Next frame",
+            "id": "next",
+            "width": 108.59375,
+            "height": 46
+          },
+          {
+            "label": "Restart",
+            "id": "restart",
+            "width": 149.265625,
+            "height": 46
+          },
+          {
+            "label": "1x0.5x0.25x",
+            "id": "speed",
+            "width": 87,
+            "height": 46
+          },
+          {
+            "label": "Reference audio: off",
+            "id": "audio",
+            "width": 362,
+            "height": 46
+          },
+          {
+            "label": "",
+            "id": "seek",
+            "width": 362,
+            "height": 44
+          },
+          {
+            "label": "0 / Start",
+            "id": "",
+            "width": 91.390625,
+            "height": 46
+          },
+          {
+            "label": "26 / Lens",
+            "id": "",
+            "width": 91.390625,
+            "height": 46
+          },
+          {
+            "label": "57 / Warm lens",
+            "id": "",
+            "width": 124.375,
+            "height": 46
+          },
+          {
+            "label": "82 / Chrome",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "91 / Glass",
+            "id": "",
+            "width": 97.984375,
+            "height": 46
+          },
+          {
+            "label": "97 / Gold",
+            "id": "",
+            "width": 91.390625,
+            "height": 46
+          },
+          {
+            "label": "104 / Cream",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "111 / Carbon",
+            "id": "",
+            "width": 111.171875,
+            "height": 46
+          },
+          {
+            "label": "119 / Chrome",
+            "id": "",
+            "width": 111.171875,
+            "height": 46
+          },
+          {
+            "label": "126 / Voxel",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "132 / Glass field",
+            "id": "",
+            "width": 144.171875,
+            "height": 46
+          },
+          {
+            "label": "138 / Flare",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "145 / Raised type",
+            "id": "",
+            "width": 144.171875,
+            "height": 46
+          },
+          {
+            "label": "209 / Gray relief",
+            "id": "",
+            "width": 144.171875,
+            "height": 46
+          }
+        ],
+        "videos": [
+          {
+            "id": "reference",
+            "x": 15,
+            "y": 193,
+            "width": 360,
+            "height": 202.5
+          },
+          {
+            "id": "pilot",
+            "x": 15,
+            "y": 444.5,
+            "width": 360,
+            "height": 202.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "390px paired layout",
+      "status": "PASS",
+      "actual": [
+        {
+          "id": "reference",
+          "x": 15,
+          "y": 193,
+          "width": 360,
+          "height": 202.5
+        },
+        {
+          "id": "pilot",
+          "x": 15,
+          "y": 444.5,
+          "width": 360,
+          "height": 202.5
+        }
+      ]
+    },
+    {
+      "name": "1280px viewport and exact screenshot",
+      "status": "PASS",
+      "actual": {
+        "layout": {
+          "viewport": {
+            "width": 1280,
+            "height": 844
+          },
+          "body": {
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          },
+          "controls": [
+            {
+              "label": "Play both",
+              "id": "play",
+              "width": 95.015625,
+              "height": 46
+            },
+            {
+              "label": "Previous frame",
+              "id": "previous",
+              "width": 126.15625,
+              "height": 46
+            },
+            {
+              "label": "Next frame",
+              "id": "next",
+              "width": 100.46875,
+              "height": 46
+            },
+            {
+              "label": "Restart",
+              "id": "restart",
+              "width": 77.125,
+              "height": 46
+            },
+            {
+              "label": "1x0.5x0.25x",
+              "id": "speed",
+              "width": 87,
+              "height": 46
+            },
+            {
+              "label": "Reference audio: off",
+              "id": "audio",
+              "width": 157.84375,
+              "height": 46
+            },
+            {
+              "label": "",
+              "id": "seek",
+              "width": 1240,
+              "height": 44
+            },
+            {
+              "label": "0 / Start",
+              "id": "",
+              "width": 91.390625,
+              "height": 46
+            },
+            {
+              "label": "26 / Lens",
+              "id": "",
+              "width": 91.390625,
+              "height": 46
+            },
+            {
+              "label": "57 / Warm lens",
+              "id": "",
+              "width": 124.375,
+              "height": 46
+            },
+            {
+              "label": "82 / Chrome",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "91 / Glass",
+              "id": "",
+              "width": 97.984375,
+              "height": 46
+            },
+            {
+              "label": "97 / Gold",
+              "id": "",
+              "width": 91.390625,
+              "height": 46
+            },
+            {
+              "label": "104 / Cream",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "111 / Carbon",
+              "id": "",
+              "width": 111.171875,
+              "height": 46
+            },
+            {
+              "label": "119 / Chrome",
+              "id": "",
+              "width": 111.171875,
+              "height": 46
+            },
+            {
+              "label": "126 / Voxel",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "132 / Glass field",
+              "id": "",
+              "width": 144.171875,
+              "height": 46
+            },
+            {
+              "label": "138 / Flare",
+              "id": "",
+              "width": 104.578125,
+              "height": 46
+            },
+            {
+              "label": "145 / Raised type",
+              "id": "",
+              "width": 144.171875,
+              "height": 46
+            },
+            {
+              "label": "209 / Gray relief",
+              "id": "",
+              "width": 144.171875,
+              "height": 46
+            }
+          ],
+          "videos": [
+            {
+              "id": "reference",
+              "x": 21,
+              "y": 207,
+              "width": 610,
+              "height": 343.125
+            },
+            {
+              "id": "pilot",
+              "x": 649,
+              "y": 207,
+              "width": 610,
+              "height": 343.125
+            }
+          ]
+        },
+        "screenshot": {
+          "width": 1280,
+          "height": 844
+        }
+      }
+    },
+    {
+      "name": "1280px no horizontal body overflow and controls at least 44px",
+      "status": "PASS",
+      "actual": {
+        "viewport": {
+          "width": 1280,
+          "height": 844
+        },
+        "body": {
+          "scrollWidth": 1280,
+          "clientWidth": 1280
+        },
+        "controls": [
+          {
+            "label": "Play both",
+            "id": "play",
+            "width": 95.015625,
+            "height": 46
+          },
+          {
+            "label": "Previous frame",
+            "id": "previous",
+            "width": 126.15625,
+            "height": 46
+          },
+          {
+            "label": "Next frame",
+            "id": "next",
+            "width": 100.46875,
+            "height": 46
+          },
+          {
+            "label": "Restart",
+            "id": "restart",
+            "width": 77.125,
+            "height": 46
+          },
+          {
+            "label": "1x0.5x0.25x",
+            "id": "speed",
+            "width": 87,
+            "height": 46
+          },
+          {
+            "label": "Reference audio: off",
+            "id": "audio",
+            "width": 157.84375,
+            "height": 46
+          },
+          {
+            "label": "",
+            "id": "seek",
+            "width": 1240,
+            "height": 44
+          },
+          {
+            "label": "0 / Start",
+            "id": "",
+            "width": 91.390625,
+            "height": 46
+          },
+          {
+            "label": "26 / Lens",
+            "id": "",
+            "width": 91.390625,
+            "height": 46
+          },
+          {
+            "label": "57 / Warm lens",
+            "id": "",
+            "width": 124.375,
+            "height": 46
+          },
+          {
+            "label": "82 / Chrome",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "91 / Glass",
+            "id": "",
+            "width": 97.984375,
+            "height": 46
+          },
+          {
+            "label": "97 / Gold",
+            "id": "",
+            "width": 91.390625,
+            "height": 46
+          },
+          {
+            "label": "104 / Cream",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "111 / Carbon",
+            "id": "",
+            "width": 111.171875,
+            "height": 46
+          },
+          {
+            "label": "119 / Chrome",
+            "id": "",
+            "width": 111.171875,
+            "height": 46
+          },
+          {
+            "label": "126 / Voxel",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "132 / Glass field",
+            "id": "",
+            "width": 144.171875,
+            "height": 46
+          },
+          {
+            "label": "138 / Flare",
+            "id": "",
+            "width": 104.578125,
+            "height": 46
+          },
+          {
+            "label": "145 / Raised type",
+            "id": "",
+            "width": 144.171875,
+            "height": 46
+          },
+          {
+            "label": "209 / Gray relief",
+            "id": "",
+            "width": 144.171875,
+            "height": 46
+          }
+        ],
+        "videos": [
+          {
+            "id": "reference",
+            "x": 21,
+            "y": 207,
+            "width": 610,
+            "height": 343.125
+          },
+          {
+            "id": "pilot",
+            "x": 649,
+            "y": 207,
+            "width": 610,
+            "height": 343.125
+          }
+        ]
+      }
+    },
+    {
+      "name": "1280px paired layout",
+      "status": "PASS",
+      "actual": [
+        {
+          "id": "reference",
+          "x": 21,
+          "y": 207,
+          "width": 610,
+          "height": 343.125
+        },
+        {
+          "id": "pilot",
+          "x": 649,
+          "y": 207,
+          "width": 610,
+          "height": 343.125
+        }
+      ]
+    },
+    {
+      "name": "No console errors, unexpected failed requests, or nonlocal requests",
+      "status": "PASS",
+      "actual": {
+        "console": [],
+        "unexpectedRequestFailures": [],
+        "expectedMediaRangeCancellations": [
+          {
+            "url": "http://127.0.0.1:63407/reference.mp4",
+            "failure": "net::ERR_ABORTED",
+            "resourceType": "media",
+            "range": "bytes=0-"
+          }
+        ],
+        "externalRequests": []
+      }
+    },
+    {
+      "name": "Review source unchanged during run",
+      "status": "PASS",
+      "actual": "303d871d0a9a40eb570b9ae8803ce8ca389fdb44619a8f0ec5b44af3d00899a0"
+    }
+  ],
+  "seeks": [
+    {
+      "frame": 0,
+      "readout": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 0,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 0,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 26,
+      "readout": "Frame 26 / 221 | 0.8675 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 0.867533,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 0.867533,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 57,
+      "readout": "Frame 57 / 221 | 1.9019 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 1.9019,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 1.9019,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 82,
+      "readout": "Frame 82 / 221 | 2.7361 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 2.736066,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 2.736066,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 91,
+      "readout": "Frame 91 / 221 | 3.0364 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 3.036366,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 3.036366,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 97,
+      "readout": "Frame 97 / 221 | 3.2366 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 3.236566,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 3.236566,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 104,
+      "readout": "Frame 104 / 221 | 3.4701 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 3.470133,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 3.470133,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 111,
+      "readout": "Frame 111 / 221 | 3.7037 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 3.7037,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 3.7037,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 119,
+      "readout": "Frame 119 / 221 | 3.9706 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 3.970633,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 3.970633,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 126,
+      "readout": "Frame 126 / 221 | 4.2042 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 4.2042,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 4.2042,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 132,
+      "readout": "Frame 132 / 221 | 4.4044 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 4.4044,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 4.4044,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 138,
+      "readout": "Frame 138 / 221 | 4.6046 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 4.6046,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 4.6046,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 145,
+      "readout": "Frame 145 / 221 | 4.8382 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 4.838166,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 4.838166,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    {
+      "frame": 209,
+      "readout": "Frame 209 / 221 | 6.9736 s | clock difference 0.0000 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 6.973633,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 6.973633,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    }
+  ],
+  "console": [],
+  "network": [
+    {
+      "url": "http://127.0.0.1:63407/",
+      "status": 200,
+      "resourceType": "document",
+      "range": null,
+      "contentRange": null
+    },
+    {
+      "url": "http://127.0.0.1:63407/reference.mp4",
+      "status": 206,
+      "resourceType": "media",
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-11514974/11514975"
+    },
+    {
+      "url": "http://127.0.0.1:63407/pilot.mp4",
+      "status": 206,
+      "resourceType": "media",
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-4447266/4447267"
+    },
+    {
+      "url": "http://127.0.0.1:63407/reference.mp4",
+      "status": 206,
+      "resourceType": "media",
+      "range": "bytes=11501568-",
+      "contentRange": "bytes 11501568-11514974/11514975"
+    },
+    {
+      "url": "http://127.0.0.1:63407/reference.mp4",
+      "status": 206,
+      "resourceType": "media",
+      "range": "bytes=360448-",
+      "contentRange": "bytes 360448-11514974/11514975"
+    }
+  ],
+  "externalRequests": [],
+  "requestFailures": [
+    {
+      "url": "http://127.0.0.1:63407/reference.mp4",
+      "failure": "net::ERR_ABORTED",
+      "resourceType": "media",
+      "range": "bytes=0-"
+    }
+  ],
+  "sourceHashes": {
+    "review.html": "303d871d0a9a40eb570b9ae8803ce8ca389fdb44619a8f0ec5b44af3d00899a0",
+    "grifon-opening-pilot-silent.mp4": "c8b52e7514162d19ac921ccc69f173fd20a7ccdce764d0663650c5ae3360a0f5",
+    "reference/source-x.mp4": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089"
+  },
+  "screenshots": [
+    {
+      "file": "review-player-native-390x844.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "review-player-native-1280x844.png",
+      "width": 1280,
+      "height": 844
+    }
+  ],
+  "helperServersStarted": 0,
+  "upperClamp": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "playLabel": "Play both",
+    "videos": [
+      {
+        "id": "reference",
+        "currentTime": 7.374033,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "readyState": 4,
+        "muted": true,
+        "rate": 1,
+        "width": 1920,
+        "height": 1080,
+        "duration": 31.146667
+      },
+      {
+        "id": "pilot",
+        "currentTime": 7.374033,
+        "paused": true,
+        "seeking": false,
+        "ended": true,
+        "readyState": 4,
+        "muted": true,
+        "rate": 1,
+        "width": 1920,
+        "height": 1080,
+        "duration": 7.4074
+      }
+    ]
+  },
+  "playStarted": {
+    "frame": 0,
+    "readout": "Frame 0 / 221 | 0.0000 s | clock difference 0.0000 s",
+    "playLabel": "Pause both",
+    "videos": [
+      {
+        "id": "reference",
+        "currentTime": 0.01386,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "readyState": 4,
+        "muted": true,
+        "rate": 1,
+        "width": 1920,
+        "height": 1080,
+        "duration": 31.146667
+      },
+      {
+        "id": "pilot",
+        "currentTime": 0.013854,
+        "paused": false,
+        "seeking": false,
+        "ended": false,
+        "readyState": 4,
+        "muted": true,
+        "rate": 1,
+        "width": 1920,
+        "height": 1080,
+        "duration": 7.4074
+      }
+    ]
+  },
+  "playEnded": {
+    "frame": 221,
+    "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0000 s",
+    "playLabel": "Play both",
+    "videos": [
+      {
+        "id": "reference",
+        "currentTime": 7.374033,
+        "paused": true,
+        "seeking": false,
+        "ended": false,
+        "readyState": 4,
+        "muted": true,
+        "rate": 1,
+        "width": 1920,
+        "height": 1080,
+        "duration": 31.146667
+      },
+      {
+        "id": "pilot",
+        "currentTime": 7.374033,
+        "paused": true,
+        "seeking": false,
+        "ended": true,
+        "readyState": 4,
+        "muted": true,
+        "rate": 1,
+        "width": 1920,
+        "height": 1080,
+        "duration": 7.4074
+      }
+    ]
+  },
+  "expectedMediaRangeCancellations": [
+    {
+      "url": "http://127.0.0.1:63407/reference.mp4",
+      "failure": "net::ERR_ABORTED",
+      "resourceType": "media",
+      "range": "bytes=0-"
+    }
+  ],
+  "negativeControl": {
+    "construction": "Current local HTML with only the one-microsecond redundant-assignment guard removed; no file/server changes",
+    "status": "FAIL_REPRODUCED",
+    "actual": {
+      "frame": 221,
+      "readout": "Frame 221 / 221 | 7.3740 s | clock difference 0.0334 s",
+      "playLabel": "Play both",
+      "videos": [
+        {
+          "id": "reference",
+          "currentTime": 7.374033,
+          "paused": true,
+          "seeking": false,
+          "ended": false,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 31.146667
+        },
+        {
+          "id": "pilot",
+          "currentTime": 7.4074,
+          "paused": true,
+          "seeking": false,
+          "ended": true,
+          "readyState": 4,
+          "muted": true,
+          "rate": 1,
+          "width": 1920,
+          "height": 1080,
+          "duration": 7.4074
+        }
+      ]
+    },
+    "originalIabFailureEvidence": "review-player-evidence-original-fail.json"
+  }
+}

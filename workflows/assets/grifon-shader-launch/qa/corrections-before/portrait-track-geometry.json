@@ -1,0 +1,120 @@
+{
+  "format": "portrait",
+  "result": "FAIL",
+  "expectation": "Settled signal center matches the actual third track-dot DOM center; no animation position formula supplies expected coordinates.",
+  "specSha256": "022aae76fc07c0961392179199611a7501663f6e5f1434688d34563227905515",
+  "indexSha256": "2193f9f0383ebb103a51e699f315942fca5d54b384e791f1685022b8d6172311",
+  "renderSha256": "ae2aa8dcf1f0d89867a86af8320c40f46b78533999ef12707ef353dacbb661c7",
+  "cases": [
+    {
+      "time": 13.6,
+      "geometry": {
+        "signal": {
+          "x": 961.5,
+          "y": 1548,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 852.5,
+          "y": 1548.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 109,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "portrait-track-13-60.png",
+      "sha256": "6f356732e7788c5cb532f463be2cc6a084fd7da53207e899b045d89374b74c39",
+      "result": "FAIL"
+    },
+    {
+      "time": 13.7,
+      "geometry": {
+        "signal": {
+          "x": 961.5,
+          "y": 1548,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 852.5,
+          "y": 1548.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 109,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "portrait-track-13-70.png",
+      "sha256": "99d551e47d6dd0b98e82cb78680d47ce0b5d44d1ef759eba00c3b11019ec90d5",
+      "result": "FAIL"
+    },
+    {
+      "time": 14.4,
+      "geometry": {
+        "signal": {
+          "x": 961.5,
+          "y": 1548,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 852.5,
+          "y": 1548.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 109,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "portrait-track-14-40.png",
+      "sha256": "0eb536868916b49ffa97a4ad860cac22f184d2aa5cf991f8d951983e55f84a46",
+      "result": "FAIL"
+    },
+    {
+      "time": 15.35,
+      "geometry": {
+        "signal": {
+          "x": 961.5,
+          "y": 1548,
+          "width": 20,
+          "height": 20
+        },
+        "thirdNode": {
+          "x": 852.5,
+          "y": 1548.5,
+          "width": 27,
+          "height": 27
+        },
+        "active": true,
+        "opacity": 1
+      },
+      "delta": {
+        "x": 109,
+        "y": -0.5
+      },
+      "toleranceCssPixels": 1,
+      "file": "portrait-track-15-35.png",
+      "sha256": "4c23dfa6f97cfb37867e37b23f4f23857e3d6fd58039bf331b6166ec5549db38",
+      "result": "FAIL"
+    }
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

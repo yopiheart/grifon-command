@@ -1,0 +1,181 @@
+{
+  "scope": "Frozen visual correction pass 2 / v3, pending joint independent native and timed fidelity gate",
+  "media": {
+    "file": "grifon-opening-pilot-silent.mp4",
+    "bytes": 5504941,
+    "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "frames": 222,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": "30000/1001",
+    "duration": 7.408,
+    "strictDecode": "PASS",
+    "audio": "intentionally absent: visual comparison pilot only",
+    "sources": {
+      "pilot.json": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+      "pilot.js": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "surfaces.frag": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "assets/sdf-manifest.json": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+      "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8"
+    },
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "files": [
+    {
+      "file": "pilot.json",
+      "bytes": 1542,
+      "sha256": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "pilot.html",
+      "bytes": 470,
+      "sha256": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "pilot.js",
+      "bytes": 5389,
+      "sha256": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "surfaces.frag",
+      "bytes": 17867,
+      "sha256": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "build-pilot.mjs",
+      "bytes": 7236,
+      "sha256": "1909315a269b9cead317af3563df85caf9c3c0920bf2c26d12abd684fcaeb37d",
+      "role": "producer tool or local mask/license"
+    },
+    {
+      "file": "render-pilot.mjs",
+      "bytes": 10522,
+      "sha256": "6a5fac1046a2dba8ee0386aa7337530296971962a7f3e329b0dcf08f2c57f46d",
+      "role": "current producer helper; verification provenance/unknown-command guard added after frozen visual review",
+      "historicalSha256": "e41219b4f75031d80023869e633df0e584e066f5ce3deb7fba141a3a1a866eb0",
+      "historicalBytes": 9408
+    },
+    {
+      "file": "verify-sdf.mjs",
+      "bytes": 6468,
+      "sha256": "ae370875a04b1aefab7d362dcfe0e08c41991ecff726d38f8900747cc0c483ee",
+      "role": "producer tool or local mask/license"
+    },
+    {
+      "file": "assets/sdf-manifest.json",
+      "bytes": 1990,
+      "sha256": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "assets/introduction-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "assets/relief-sdf.bin",
+      "bytes": 1048576,
+      "sha256": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "assets/relief-height.bin",
+      "bytes": 1048576,
+      "sha256": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "assets/introduction-mask.png",
+      "bytes": 8784,
+      "sha256": "0ee9381a6e7ab2ce2f490fdb1b94216f78d3e9f2d1881f0f57dda64625b178b3",
+      "role": "producer tool or local mask/license"
+    },
+    {
+      "file": "assets/relief-mask.png",
+      "bytes": 10032,
+      "sha256": "2ee54bf959cb108fccc90d74ab3dc0dbe9d6c549c0fbdb92031665d6ae3c67fc",
+      "role": "producer tool or local mask/license"
+    },
+    {
+      "file": "assets/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "role": "producer tool or local mask/license"
+    },
+    {
+      "file": "vendor/three.global.js",
+      "bytes": 701915,
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "role": "runtime visual input"
+    },
+    {
+      "file": "vendor/LICENSE-Three.txt",
+      "bytes": 1102,
+      "sha256": "df2a91696186fe58c92518a25d48bc59c8ee2edc7cac9ca6d19a5a0d599a2a05",
+      "role": "producer tool or local mask/license"
+    }
+  ],
+  "builderInput": {
+    "file": "../grifon-motion-depth/assets/inter-normalized-outlines.json",
+    "bytes": 406146,
+    "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "role": "offline vector glyph contour input; not a browser request"
+  },
+  "encodeToolSnapshot": {
+    "file": "qa/pilot-encode-renderer.mjs",
+    "bytes": 8446,
+    "sha256": "047e955ed2f2b7a490d5890fd876aaf432f7716c9dbccb308e25bb9b7298556a"
+  },
+  "renderReceipt": "qa/pilot-render.json",
+  "sampleReceipt": "qa/pilot-samples.json",
+  "readinessTimingReceipt": "qa/pilot-check.json",
+  "initializationHistory": "qa/pilot-initialization-history.json",
+  "checks": {
+    "build": {
+      "command": "npm.cmd run build",
+      "exitCode": 0
+    },
+    "vitest": {
+      "command": "npx.cmd vitest run",
+      "exitCode": 0,
+      "filesPassed": 116,
+      "filesSkipped": 9,
+      "testsPassed": 1432,
+      "testsSkipped": 32,
+      "durationSeconds": 45.64
+    },
+    "sdf": {
+      "command": "node workflows/assets/grifon-shader-recreation/verify-sdf.mjs",
+      "result": "PASS",
+      "receipt": "qa/sdf-validation.json"
+    }
+  },
+  "audio": "Absent from renderer inputs and MP4; no audio files are read by this receipt",
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "producerRevision": {
+    "purpose": "Structural verification guard only; nine runtime inputs and encoded pilot unchanged",
+    "historicalReadinessToolSha256": "e41219b4f75031d80023869e633df0e584e066f5ce3deb7fba141a3a1a866eb0",
+    "currentToolSha256": "6a5fac1046a2dba8ee0386aa7337530296971962a7f3e329b0dcf08f2c57f46d",
+    "encodedProducerSnapshot": {
+      "file": "qa/pilot-encode-renderer.mjs",
+      "bytes": 8446,
+      "sha256": "047e955ed2f2b7a490d5890fd876aaf432f7716c9dbccb308e25bb9b7298556a"
+    },
+    "positiveVerification": "qa/pilot-media-verification.json",
+    "originalDefectAndNegativeControls": "qa/pilot-provenance-guard.json",
+    "jointVisualGate": "qa/pilot-joint-gate-v3.json"
+  }
+}

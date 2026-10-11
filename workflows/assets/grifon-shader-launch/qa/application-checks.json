@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-08",
+  "checkout": "C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command",
+  "baseCommit": "d76f46af56ce9ddf0e6dfa7229c08a5bf9c48edb",
+  "tools": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "dependencyReuse": "Junction to the existing primary node_modules; no install or lockfile edit."
+  },
+  "checks": [
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "result": "PASS",
+      "note": "Final build PASS after removing an unused default React import from the new capture fixture (TS6133). Existing chunk-size/Browserslist warnings only; application source unchanged."
+    },
+    {
+      "command": "npm.cmd run test",
+      "exitCode": 0,
+      "passedTests": 1432,
+      "skippedTests": 32,
+      "passedFiles": 116,
+      "skippedFiles": 9,
+      "result": "PASS",
+      "note": "Final independent film-agent Vitest rerun also passed 116 files / 1432 tests, 32 skipped."
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0,
+      "scannedFiles": 292,
+      "driftHits": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:ps1-ascii",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:bundle-leak",
+      "exitCode": 0,
+      "scannedBundles": 6,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:eval-prompts",
+      "exitCode": 0,
+      "coveredPairs": 6,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "exitCode": 0,
+      "passedTests": 26,
+      "result": "PASS"
+    }
+  ],
+  "livePaidSwitches": "RUN_REGRESSION, RUN_BURNIN and RUN_IMAGE_GATE_SMOKE explicitly unset in verification shells.",
+  "scope": "Artifact production only. These checks establish existing application/control compatibility; finished video, browser player, private recovery and creative review have separate evidence.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

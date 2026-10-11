@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-08T00:53:45.929Z",
+  "name": "models/gemini-3.5-flash",
+  "inputTokenLimit": 1048576,
+  "outputTokenLimit": 65536,
+  "supportedActions": [
+    "generateContent",
+    "countTokens",
+    "createCachedContent",
+    "batchGenerateContent"
+  ],
+  "audioMp4Documentation": "https://firebase.google.com/docs/ai-logic/input-file-requirements#supported-mime-types_2",
+  "multipleAudioFilesDocumentation": "https://ai.google.dev/gemini-api/docs/generate-content/audio#technical-details-about-audio",
+  "combinedOutputCapDocumentation": "https://ai.google.dev/gemini-api/docs/generate-content/thinking#token-limits-and-max_output_tokens",
+  "pricingDocumentation": "https://ai.google.dev/gemini-api/docs/pricing",
+  "checkedDate": "2026-10-08",
+  "note": "Firebase cited for MIME support only; this run uses the direct Generate Content API, whose guide permits multiple audio files. Exact upload/count preflight also required."
+}

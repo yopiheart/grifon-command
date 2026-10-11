@@ -1,0 +1,28 @@
+{
+  "file": "grifon-recreation-landscape-provisional.mp4",
+  "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+  "masterFile": "assets/audio/mix-master.m4a",
+  "masterSha256": "0358a2223f2bfe2c5a73aa60e07d99a8ca7b97746507f967c08d18edaa44b523",
+  "packetCount": 1461,
+  "packetsSha256": "634f339de44edbad8d69d31d26e23ddf48c0feaaea3f7e63951280000984ef87",
+  "packetPayloadTimingPrimingPreserved": true,
+  "masterStream": {
+    "duration": 31.146,
+    "durationTs": 1495008,
+    "timeBase": "1/48000"
+  },
+  "muxStream": {
+    "duration": 31.146,
+    "durationTs": 1495008,
+    "timeBase": "1/48000"
+  },
+  "logicalDecodedPcm": {
+    "sampleFrames": 1495040,
+    "sha256": "f9357fb441f1c36f0264268d9e4cfd3765a975c15aa547e6be998c8b1109494d"
+  },
+  "logicalDecodedDuration": 31.14666666666667,
+  "logicalMetadataToleranceSeconds": 0.001,
+  "masterPcmPreserved": true,
+  "sonicStatus": "SONIC_UNVERIFIED",
+  "result": "PASS"
+}

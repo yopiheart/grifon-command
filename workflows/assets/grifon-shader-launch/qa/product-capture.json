@@ -1,0 +1,412 @@
+{
+  "status": "PASS",
+  "purpose": "Private launch film product-interface evidence",
+  "fixtureSha256": "59b1ff7e2131896317916863a0bc57bdbef6a77cf3e21aa9dcc95e043a50da9f",
+  "harnessSha256": "80656a69740735ae5cece18146e78e9c396be2656e147191af0b6ac650848394",
+  "productSources": [
+    {
+      "path": "components/MarketResearch.tsx",
+      "sha256": "63063d8337870d2e83e4b939dbf14fd70ae923c9b0a2465f8f64dcabe8c1b61e"
+    },
+    {
+      "path": "components/Step3AdScript.tsx",
+      "sha256": "17992df78a5e4d13181c03629f49195515bf8694f862f353fa449e982db9049a"
+    },
+    {
+      "path": "components/Step5Storyboard.tsx",
+      "sha256": "23b0c6d696fa5b3b4e1f7330ba53740fa810e645e1c13a82ac3d8e93e4014d55"
+    },
+    {
+      "path": "types.ts",
+      "sha256": "67d9612178136df404423661164c96a362f685805c10e752a7f368ae4b4ec85f"
+    },
+    {
+      "path": "index.css",
+      "sha256": "ebe3b06892f09f1855226968ae44647d4126ec432b1ff7519a11aaafa682c67c"
+    },
+    {
+      "path": "index.html",
+      "sha256": "dbaad40f95976cec85deb54b3716d3b777903f5a76ed6ca7833cdb9bd994cecb"
+    },
+    {
+      "path": "tailwind.config.js",
+      "sha256": "dc9741f9e07217d6747de5e72e47a3f371eea3de594ab845cdbafc1d07a934c9"
+    }
+  ],
+  "exampleImages": [
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/research-example-7x12.png",
+      "sha256": "b78f2ddef59dffcbb128445f8d9482bfa8743b2844301481940cd28e96ac0b48"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/script-example-7x12.png",
+      "sha256": "ef882c6cce9ca423e914cb4fb7386f297ef3aa280f586f8731ad91e0969e81fb"
+    },
+    {
+      "path": "workflows/assets/grifon-shader-launch/assets/fixture-plates/storyboard-example-7x12.png",
+      "sha256": "7cab2a2095c830145fdff2bccece2654fc154ee73e0cc62e65efc9663b952a05"
+    }
+  ],
+  "bundleInputCount": 2397,
+  "captures": [
+    {
+      "surface": "research",
+      "portrait": false,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/research.png",
+      "dimensions": [
+        5760,
+        4050
+      ],
+      "bytes": 624576,
+      "sha256": "c458fc1accca4f6484d94ee945b9d75d92031ef308c403ed5a1d097cfe804da0",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 66
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "research",
+      "portrait": true,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-research.png",
+      "dimensions": [
+        1080,
+        1500
+      ],
+      "bytes": 76307,
+      "sha256": "f6cc455e3712ec0581584f5626f5cd800d4c2170617abfbfc39b0de3689b297d",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 59
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "script",
+      "portrait": false,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/script.png",
+      "dimensions": [
+        5760,
+        4050
+      ],
+      "bytes": 1523876,
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 66
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "script",
+      "portrait": true,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-script.png",
+      "dimensions": [
+        1080,
+        1500
+      ],
+      "bytes": 182390,
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 59
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "script",
+      "portrait": true,
+      "view": "native scroll detail",
+      "scrollY": 350,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-script-detail.png",
+      "dimensions": [
+        1080,
+        1500
+      ],
+      "bytes": 170762,
+      "sha256": "cc8014da957195ee41052b926d49be6ee78546dd2ee1c00c9480f0522622c80e",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 59
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": false,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/storyboard.png",
+      "dimensions": [
+        5760,
+        4050
+      ],
+      "bytes": 1984503,
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 66
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": true,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-storyboard.png",
+      "dimensions": [
+        1080,
+        1500
+      ],
+      "bytes": 260393,
+      "sha256": "522a5ddd068fedde0bf4f60eb16923055b4886d2f5a944e53d3003e39f2d56b8",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 59
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": true,
+      "view": "native scroll detail",
+      "scrollY": 250,
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/portrait-storyboard-detail.png",
+      "dimensions": [
+        1080,
+        1500
+      ],
+      "bytes": 234195,
+      "sha256": "e79060385aa3a006235ca3cc05f63ed3195ff46d42d62ca3ebd257133e56bbee",
+      "disclosure": {
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 59
+      },
+      "storage": {
+        "local": 0,
+        "session": 0
+      },
+      "screenshot": "real unchanged component; manually prepared content"
+    }
+  ],
+  "framedDerivatives": [
+    {
+      "surface": "research",
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-research.png",
+      "dimensions": [
+        1800,
+        768
+      ],
+      "bytes": 66562,
+      "sha256": "8058746ce6a4996369211ba180f808cb94761464e8fc905f2bae5ec32922bec3",
+      "fullSourcePath": "workflows/assets/grifon-shader-launch/assets/captures/research.png",
+      "fullSourceSha256": "c458fc1accca4f6484d94ee945b9d75d92031ef308c403ed5a1d097cfe804da0",
+      "fullSourceDimensions": [
+        5760,
+        4050
+      ],
+      "sourceRectangle": {
+        "left": 420,
+        "top": 1500,
+        "width": 1800,
+        "height": 768
+      },
+      "pixelComparison": {
+        "result": "EXACT_PASS",
+        "changedPixels": 0,
+        "sourceRectangleRawSha256": "b58719d8e291074fc25cfb0d0d0fc3fe57e3f2d308c285f90f79d80c55203e65",
+        "derivativeRawSha256": "b58719d8e291074fc25cfb0d0d0fc3fe57e3f2d308c285f90f79d80c55203e65",
+        "channels": 3
+      },
+      "treatment": "Lossless extraction only; no resizing, sharpening or UI changes."
+    },
+    {
+      "surface": "script",
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-script.png",
+      "dimensions": [
+        1800,
+        768
+      ],
+      "bytes": 51645,
+      "sha256": "8282c3e1469b45cf552fde0b5f3aa32bd5959fff0f773a4dbb7979b1d482c02c",
+      "fullSourcePath": "workflows/assets/grifon-shader-launch/assets/captures/script.png",
+      "fullSourceSha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "fullSourceDimensions": [
+        5760,
+        4050
+      ],
+      "sourceRectangle": {
+        "left": 630,
+        "top": 1410,
+        "width": 1800,
+        "height": 768
+      },
+      "pixelComparison": {
+        "result": "EXACT_PASS",
+        "changedPixels": 0,
+        "sourceRectangleRawSha256": "86845172f3f0d712a6b70598197da0f409ac342cbc2a419a767f02a0255876c0",
+        "derivativeRawSha256": "86845172f3f0d712a6b70598197da0f409ac342cbc2a419a767f02a0255876c0",
+        "channels": 3
+      },
+      "treatment": "Lossless extraction only; no resizing, sharpening or UI changes."
+    },
+    {
+      "surface": "storyboard",
+      "path": "workflows/assets/grifon-shader-launch/assets/captures/framed-storyboard.png",
+      "dimensions": [
+        1800,
+        768
+      ],
+      "bytes": 99655,
+      "sha256": "86cdbc74c5431504f91b1a1226a0b2ad9a82e3a1901dfae05eafb2b066c3efbc",
+      "fullSourcePath": "workflows/assets/grifon-shader-launch/assets/captures/storyboard.png",
+      "fullSourceSha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "fullSourceDimensions": [
+        5760,
+        4050
+      ],
+      "sourceRectangle": {
+        "left": 570,
+        "top": 2730,
+        "width": 1800,
+        "height": 768
+      },
+      "pixelComparison": {
+        "result": "EXACT_PASS",
+        "changedPixels": 0,
+        "sourceRectangleRawSha256": "e233ef23814217fdd15eb0f0b7fa144139644fbc301c4e6970eca858badfef1d",
+        "derivativeRawSha256": "e233ef23814217fdd15eb0f0b7fa144139644fbc301c4e6970eca858badfef1d",
+        "channels": 3
+      },
+      "treatment": "Lossless extraction only; no resizing, sharpening or UI changes."
+    }
+  ],
+  "requests": [
+    {
+      "surface": "research",
+      "portrait": false,
+      "url": "LOCAL_ORIGIN/?surface=research"
+    },
+    {
+      "surface": "research",
+      "portrait": false,
+      "url": "LOCAL_ORIGIN/fixture.js"
+    },
+    {
+      "surface": "research",
+      "portrait": true,
+      "url": "LOCAL_ORIGIN/?surface=research"
+    },
+    {
+      "surface": "research",
+      "portrait": true,
+      "url": "LOCAL_ORIGIN/fixture.js"
+    },
+    {
+      "surface": "script",
+      "portrait": false,
+      "url": "LOCAL_ORIGIN/?surface=script"
+    },
+    {
+      "surface": "script",
+      "portrait": false,
+      "url": "LOCAL_ORIGIN/fixture.js"
+    },
+    {
+      "surface": "script",
+      "portrait": true,
+      "url": "LOCAL_ORIGIN/?surface=script"
+    },
+    {
+      "surface": "script",
+      "portrait": true,
+      "url": "LOCAL_ORIGIN/fixture.js"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": false,
+      "url": "LOCAL_ORIGIN/?surface=storyboard"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": false,
+      "url": "LOCAL_ORIGIN/fixture.js"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": true,
+      "url": "LOCAL_ORIGIN/?surface=storyboard"
+    },
+    {
+      "surface": "storyboard",
+      "portrait": true,
+      "url": "LOCAL_ORIGIN/fixture.js"
+    }
+  ],
+  "apiRequests": [],
+  "externalRequests": [],
+  "pageErrors": [],
+  "noAuthentication": true,
+  "freshContextPerCapture": true,
+  "providerCalls": 0,
+  "newSpend": 0,
+  "safeguards": [
+    "No Vite server/middleware",
+    "No environment file read",
+    "Non-Cinematic Custom Script",
+    "Preloaded Script",
+    "Nonempty manual Storyboard",
+    "avatar:null",
+    "Fresh isolated browser contexts",
+    "All API and remote requests blocked",
+    "CSP connect-src none",
+    "No analysis/generation button clicks"
+  ],
+  "fonts": "Local Inter variable; system monospace fallback for JetBrains Mono",
+  "limitations": [
+    "Manually prepared examples demonstrate existing controls, not generated research quality or instant end-to-end generation.",
+    "No authenticated user journey or provider generation was tested.",
+    "Portrait captures show the unchanged responsive component at a 540px CSS viewport; scrolling content below the filmed viewport is omitted."
+  ]
+}

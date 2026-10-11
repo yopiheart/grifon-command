@@ -1,0 +1,21 @@
+Analyze only the supplied audio. No video frames are supplied. Do not infer sounds from visual cuts or from filenames.
+
+Audio A is the complete original reference soundtrack, 31.146667 seconds. Listen to its whole beginning, middle and end. Audio B is the existing clean candidate Close Up, 95.137959 seconds. Audio C is the existing clean candidate Digital Clouds, 101.015500 seconds. Analyze A first; compare B/C only after that.
+
+Return JSON with this structure:
+{
+  "reference": {
+    "voice": {"present": true_or_false_or_null, "transcript": "exact words, NONE if no intelligible speech, UNKNOWN if uncertain", "confidence": "high|medium|low", "evidence": "audible observation"},
+    "music": {"style": "specific audible description", "instruments_and_texture": [], "tempo_bpm_estimate": number_or_null, "tempo_confidence": "high|medium|low", "tempo_is_estimate": true, "energy_and_changes": [{"start_s": number, "end_s": number, "observation": "audible change", "confidence": "high|medium|low"}]},
+    "foreground_events": [{"start_s": number, "end_s": number, "description": "what is audible", "class": "music percussion|separate effect|uncertain", "confidence": "high|medium|low", "evidence": "audible distinction from the music"}],
+    "silence_intervals": [{"start_s": number, "end_s": number, "confidence": "high|medium|low"}],
+    "uncertainties": []
+  },
+  "candidates": [
+    {"id": "B", "audible_style": "description", "tempo_bpm_estimate": number_or_null, "closest_region_start_s": number_or_null, "closest_region_end_s": number_or_null, "match_to_A": "specific similarities and differences", "confidence": "high|medium|low"},
+    {"id": "C", "audible_style": "description", "tempo_bpm_estimate": number_or_null, "closest_region_start_s": number_or_null, "closest_region_end_s": number_or_null, "match_to_A": "specific similarities and differences", "confidence": "high|medium|low"}
+  ],
+  "recommendation": {"choice": "B|C|neither|uncertain", "reason": "audible evidence; do not force a choice", "confidence": "high|medium|low"}
+}
+
+Times are decimal SECONDS from the start of each named file. Six seconds means 6.0, not 0.06. Every event/interval must lie within its actual file duration and have end_s >= start_s. Do not claim frame-accurate timestamps or perfect synchronization. Do not assign a sound-effect identity when it could be an ordinary drum or synth transient. Mark uncertain events explicitly; empty event lists are acceptable when no separate effects can be established. Report silence only when audible, not because the video ends or fades. These are machine observations for later waveform/manual cross-check, not proof of human listening or soundtrack rights.

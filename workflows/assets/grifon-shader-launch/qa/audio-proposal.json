@@ -1,0 +1,27 @@
+{
+  "editorialIntent": "One decisive type arrival; air/body for the orb; one material turn; restrained workflow accents; short product-screen landings; a three-layer brand punctuation followed by breathing space. Fifteen cues replace the previous film's much denser cue schedule.",
+  "audio": {
+    "music":{"asset":"./assets/audio/digital-clouds.mp3","sourceIn":8,"gainDb":-4,"fadeIn":0.12,"fadeOut":1.6},
+    "assets":{"paper-swipe-2":"./assets/audio/paper-swipe-2.wav","rotation-air-2":"./assets/audio/rotation-air-2.wav","camera-contact-2":"./assets/audio/camera-contact-2.wav","phone-contact-2":"./assets/audio/phone-contact-2.wav","laptop-contact-1":"./assets/audio/laptop-contact-1.wav","card-pop-2":"./assets/audio/card-pop-2.wav","reverse-air-1":"./assets/audio/reverse-air-1.wav","orb-inward-1":"./assets/audio/orb-inward-1.wav","pencil-4":"./assets/audio/pencil-4.wav"},
+    "cues":[
+      {"id":"opening-contact","actionId":"opening-reveal","assetId":"card-pop-2","sourceIn":0.004,"sourceOut":0.062,"sourceContact":0.014,"gainDb":-12},
+      {"id":"orb-anticipation","actionId":"orb-reveal","assetId":"reverse-air-1","sourceIn":1.236,"sourceOut":1.69,"sourceContact":1.646,"gainDb":-14.5},
+      {"id":"orb-body","actionId":"orb-reveal","assetId":"orb-inward-1","sourceIn":0,"sourceOut":0.32,"sourceContact":0.056,"gainDb":0},
+      {"id":"story-material-turn","actionId":"story-reveal","assetId":"rotation-air-2","sourceIn":0.296,"sourceOut":1.03,"sourceContact":0.564,"gainDb":-11},
+      {"id":"research-contact","actionId":"research-reveal","assetId":"card-pop-2","sourceIn":0.004,"sourceOut":0.046,"sourceContact":0.014,"gainDb":-17},
+      {"id":"script-friction","actionId":"script-reveal","assetId":"pencil-4","sourceIn":1.4,"sourceOut":1.94,"sourceContact":1.888,"gainDb":-3},
+      {"id":"storyboard-contact","actionId":"storyboard-reveal","assetId":"camera-contact-2","sourceIn":0.1,"sourceOut":0.3,"sourceContact":0.136,"gainDb":-3},
+      {"id":"research-screen-travel","actionId":"research-screen-reveal","assetId":"paper-swipe-2","sourceIn":1.1,"sourceOut":1.58,"sourceContact":1.408,"gainDb":-3},
+      {"id":"research-screen-contact","actionId":"research-screen-reveal","assetId":"laptop-contact-1","sourceIn":0.23,"sourceOut":0.54,"sourceContact":0.268,"gainDb":3},
+      {"id":"script-screen-contact","actionId":"script-screen-reveal","assetId":"card-pop-2","sourceIn":0.004,"sourceOut":0.062,"sourceContact":0.014,"gainDb":-16},
+      {"id":"storyboard-screen-contact","actionId":"storyboard-screen-reveal","assetId":"phone-contact-2","sourceIn":0.145,"sourceOut":0.4,"sourceContact":0.18,"gainDb":3},
+      {"id":"direction-contact","actionId":"direction-reveal","assetId":"card-pop-2","sourceIn":0.004,"sourceOut":0.062,"sourceContact":0.014,"gainDb":-17},
+      {"id":"brand-anticipation","actionId":"brand-reveal","assetId":"reverse-air-1","sourceIn":1.236,"sourceOut":1.69,"sourceContact":1.646,"gainDb":-13},
+      {"id":"brand-contact","actionId":"brand-reveal","assetId":"phone-contact-2","sourceIn":0.145,"sourceOut":0.4,"sourceContact":0.18,"gainDb":5},
+      {"id":"brand-body","actionId":"brand-reveal","assetId":"orb-inward-1","sourceIn":0,"sourceOut":0.78,"sourceContact":0.056,"gainDb":1.5}
+    ]
+  },
+  "providerCalls":0,
+  "paidSpendUsd":0,
+  "auditoryQa":"PENDING: source labels, existing measured native contacts and waveform/level checks guide this proposal; no direct-hearing claim."
+}

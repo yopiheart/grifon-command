@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "verdict": "TECHNICAL_SOUND_DELIVERY_PASS_LISTENING_PENDING",
+  "completedAt": "2026-10-08T12:03:46.928Z",
+  "scope": "New music and authored motion SFX on the accepted picture; free local edit and offline player",
+  "film": {
+    "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+    "bytes": 25057741,
+    "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df"
+  },
+  "artifact": {
+    "file": "artifacts/grifon-shader-sound-v1.html",
+    "bytes": 33746991,
+    "sha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+  },
+  "soundtrack": {
+    "music": "Close Up / Michael Ramir C. / Mixkit1167",
+    "sourceRegionSeconds": [
+      63.07,
+      94.216666667
+    ],
+    "authoredEvents": 47,
+    "recordingLayers": 56,
+    "encodedIntegratedLufs": -16.33,
+    "encodedTruePeakDbtp": -2.18,
+    "decodedStereo48kFrames": 1495040
+  },
+  "independentGates": {
+    "technical": {
+      "status": "INDEPENDENT_TECHNICAL_SOUND_PASS_LISTENING_PENDING",
+      "checksPassed": 17
+    },
+    "player": {
+      "status": "PASS_TECHNICAL_PLAYER_CURRENT_CANDIDATE",
+      "assertionsPassed": 33,
+      "viewports": [
+        "390x844",
+        "1280x844"
+      ],
+      "screenshotsReviewed": 8,
+      "download": "Original MP4 bytes preserved"
+    },
+    "visual": {
+      "basis": "All932 video packets, timestamps and extradata copied exactly;222 decoded opening frames match",
+      "previousGate": "QUALIFIED_VISUAL_DELIVERY_PASS",
+      "previousFilmSha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    }
+  },
+  "applicationChecks": {
+    "buildExitCode": 0,
+    "defaultVitestExitCode": 0,
+    "passedTests": 1432,
+    "existingSkippedTests": 32,
+    "checkCodex": {
+      "exitCode": 0,
+      "checksPassed": 26
+    },
+    "artifactAnchorsExitCode": 0,
+    "playerRegenerationExitCode": 0,
+    "paidLiveFlags": "Unset; checked without printing values",
+    "priorFailures": "Original anchor timeouts retained in sound-v1/qa/checks.json; fresh unchanged default suite passed; timing cause unproven"
+  },
+  "letters": {
+    "glyphs": [
+      "G",
+      "R",
+      "a",
+      "C"
+    ],
+    "purpose": "Decorative material demonstrations; no documented acronym",
+    "audit": "reference/letter-audit.md"
+  },
+  "evidence": [
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/sound-spec.json",
+      "bytes": 10325,
+      "sha256": "2814f78ac9ba32103cee283f7dff8c4880e18f515748cf2615b16d5a1c226eea"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/build-sound.mjs",
+      "bytes": 34660,
+      "sha256": "815d50464f95c0ce29d49f40c3b6f30c9cc71bc9525694a8cc7ec5a1ece49fc7"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/checks.json",
+      "bytes": 8009,
+      "sha256": "fa07987cc9fdd35e532a891f117c242f12ebf3385ca50038fdb857f493d33cc5"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/media.json",
+      "bytes": 1241,
+      "sha256": "450c44f53cd723c7f522ce34553ba191cd441b05ca0ace7a1ca2963573054bec"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/mix-verification.json",
+      "bytes": 12774,
+      "sha256": "dfb2d2aee649052236f771f7ea42eec680842e4f6b96ff187ecd4cf019bb9fd3"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/packets.json",
+      "bytes": 1863148,
+      "sha256": "2fa6e5cd920ead7fbc5e447a73f6992f0f562c077dfe025cd107332d244fecaa"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/cues.json",
+      "bytes": 685220,
+      "sha256": "7e654377d8b3adc059b705db148d2e591ccca546235bf17ae2f3f4f1a795197d"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/sources.json",
+      "bytes": 7422,
+      "sha256": "968f52959c8df8917ed8115ef97965bb48a0d4ccda7ba9b5d87beb90611b913a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/sound-v1/qa/controls-v3.json",
+      "bytes": 3944,
+      "sha256": "4996caa915a5410add7f1a6e47337dffa77101c8f390320941ab9cc77c34674b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-v1-player-build.json",
+      "bytes": 1783,
+      "sha256": "ca326376f564aec497ab4cfb97024218efd3baac0334f96f2b35271db2c4361b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-technical-review-v1.json",
+      "bytes": 167937,
+      "sha256": "eee8bb0f2e346cdce2fe515e311ef8cbec9d50aed521bfc8467436fc60d4f8d1"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/sound-technical-review-v1.md",
+      "bytes": 3686,
+      "sha256": "4aef8491aaa79444a49e59b0f503c03eccb5d2d79f3b6b06b7bd81e97cb3f928"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-mobile-report.json",
+      "bytes": 41622,
+      "sha256": "bee46dcecfe3f8e92d6d257097822df726e6aac4a86b307017b283089135c1c2"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/sound-player-v1/player-visual-review.json",
+      "bytes": 3750,
+      "sha256": "d36db36ef5f74349106c284025e7a2afcc9aed701203a22ed5586f67249b66b1"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/sound-player-review-v1.md",
+      "bytes": 4815,
+      "sha256": "fa4f84f2e2cd83722c28f03fd22a8912f064265f35bea019a3fc0702d82a311e"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/letter-audit.md",
+      "bytes": 1420,
+      "sha256": "8cebf92b4e2288d1f468521806123c7aa1732853d4d3c1c83b8222b34b3b91e0"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/reference/sound-source-credits-v1.md",
+      "bytes": 1823,
+      "sha256": "53205207a73dbef50ac1316443f2d6a616371f3223ed5f879f455ad485dddaee"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/qa/full-joint-gate-v3.json",
+      "bytes": 10980,
+      "sha256": "a7961433e740ff8377a8f33f8ae608abd065bab929302d81ff17ef4018d88e0d"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-shader-sound-v1.mjs",
+      "bytes": 7928,
+      "sha256": "deef501d89a22c0841dca39d0815186bcc8527c4edd036aaa2059991eb8b8a4d"
+    }
+  ],
+  "frozenBoundaries": [
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.json",
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.html",
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full.js",
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/vendor/three.global.js",
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/manifest.json",
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/inter-outlines.json",
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/inter-900.ttf",
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/OFL-Inter.txt",
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/logo.png",
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/script-desktop.png",
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/script-mobile.png",
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/assets/full/storyboard.png",
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/autopsy.spec.json",
+      "sha256": "4d082dc611b2fa349b327a5ef33732b16a08022a75bdcc48b1a6f77c5628e371"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/audio-autopsy.spec.json",
+      "sha256": "cc4104c83b9a5d1b55acfdaea0b302afa2e08926095fafd9271d257143aa5d7c"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/audio-autopsy-prompt.txt",
+      "sha256": "5bbb7925a1f60fad306811bee33d41b9ccd14f7633d4958fa7a4253a6d82603b"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+    },
+    {
+      "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+      "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+    },
+    {
+      "file": "artifacts/grifon-shader-recreation.html",
+      "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+    }
+  ],
+  "qualifications": [
+    "Direct listening, perceived musical fit and competition quality remain pending user review.",
+    "Timing, levels and browser playback do not establish heard song/SFX identity.",
+    "Original visual residuals and qualified playback scope remain in the prior independent gate."
+  ],
+  "providerCalls": 0,
+  "additionalSpendUsd": 0,
+  "publication": "Local end-product and draft PR only; no merge or deployment",
+  "history": "Original player/movie/source/evidence and failed sound attempts remain unchanged."
+}

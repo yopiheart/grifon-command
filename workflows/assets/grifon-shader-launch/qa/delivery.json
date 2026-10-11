@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "destination": "User's existing signed-in Gmail account",
+  "subject": "Grifon launch film - ready for review",
+  "actualSubjectUsesEmDash": true,
+  "draftLabelVerified": "DRAFT",
+  "recipients": [],
+  "sent": false,
+  "attachment": {
+    "filename": "grifon-launch-portrait-2026-10-08.mp4",
+    "mimeType": "video/mp4",
+    "gmailMimeBytes": 8568284,
+    "verifiedLocalUploadSourceSha256": "2b1413d0a490d0bd2d7974eed190d69f0bae21275f05f651f6fb694e7a0cd5f5",
+    "evidence": "Actual filechooser upload completed; saved draft list and full Gmail MIME tree independently confirm filename, type, size and attachment presence. Gmail attachment bytes were not downloaded or separately hashed."
+  },
+  "linksPinnedToCommit": "e906a852c0b8b61330bb540f5d83cfaf596ec9d4",
+  "links": ["1920x1080 landscape MP4", "offline interactive player", "draft PR166"],
+  "proof": "Private screenshot saved under ignored .tmp/delivery/gmail-launch-draft.jpg; draft/message IDs, account details and screenshot are not committed.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

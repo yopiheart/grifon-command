@@ -1,0 +1,1727 @@
+{
+  "schemaVersion": 1,
+  "review": "full-native-cut-review-v3",
+  "reviewer": "/root/native_cut_critic_v3",
+  "status": "CUT_PASS",
+  "scope": "Independent visual review of all 49 existing five-frame native-index cut neighborhoods only. Whole-film material review, continuous paced playback, audio hearing and final artifact approval remain separate.",
+  "sourceSha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+  "filmSha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+  "pairSha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf",
+  "mediaReceiptSha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a",
+  "pairReceiptSha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402",
+  "extractionReceipt": {
+    "file": ".tmp/full-native-critic-v3/receipt.json",
+    "sha256": "220ae323d771dcfe36d00af8a21e0b4b93d98eea49648525a4ef41089893786d",
+    "bytes": 200959
+  },
+  "indexConvention": "Zero-based native presentation index; 30000/1001 fps; frame n starts at n*1001/30000 seconds.",
+  "method": {
+    "cutBoardSize": [
+      480,
+      775
+    ],
+    "pairRowSize": [
+      480,
+      135
+    ],
+    "eachSourceAndCandidatePictureSize": [
+      240,
+      135
+    ],
+    "displayDetail": "original",
+    "all49BoardsVisuallyInspected": true,
+    "pairPresentations": 245,
+    "uniqueNativeFrameIndices": 227,
+    "uniqueFrames": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      55,
+      56,
+      57,
+      58,
+      59,
+      80,
+      81,
+      82,
+      83,
+      84,
+      89,
+      90,
+      91,
+      92,
+      93,
+      95,
+      96,
+      97,
+      98,
+      99,
+      102,
+      103,
+      104,
+      105,
+      106,
+      109,
+      110,
+      111,
+      112,
+      113,
+      117,
+      118,
+      119,
+      120,
+      121,
+      124,
+      125,
+      126,
+      127,
+      128,
+      130,
+      131,
+      132,
+      133,
+      134,
+      136,
+      137,
+      138,
+      139,
+      140,
+      143,
+      144,
+      145,
+      146,
+      147,
+      207,
+      208,
+      209,
+      210,
+      211,
+      220,
+      221,
+      222,
+      223,
+      224,
+      227,
+      228,
+      229,
+      230,
+      231,
+      236,
+      237,
+      238,
+      239,
+      240,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      342,
+      343,
+      344,
+      345,
+      346,
+      355,
+      356,
+      357,
+      358,
+      359,
+      375,
+      376,
+      377,
+      378,
+      379,
+      389,
+      390,
+      391,
+      392,
+      393,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      415,
+      416,
+      417,
+      418,
+      419,
+      443,
+      444,
+      445,
+      446,
+      447,
+      457,
+      458,
+      459,
+      460,
+      461,
+      469,
+      470,
+      471,
+      472,
+      473,
+      481,
+      482,
+      483,
+      484,
+      485,
+      494,
+      495,
+      496,
+      497,
+      498,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      539,
+      540,
+      541,
+      542,
+      543,
+      545,
+      546,
+      547,
+      548,
+      549,
+      565,
+      566,
+      567,
+      568,
+      569,
+      584,
+      585,
+      586,
+      587,
+      588,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      624,
+      625,
+      626,
+      627,
+      628,
+      634,
+      635,
+      636,
+      637,
+      638,
+      639,
+      640,
+      641,
+      642,
+      653,
+      654,
+      655,
+      656,
+      657,
+      832,
+      833,
+      834,
+      835,
+      836,
+      851,
+      852,
+      853,
+      854,
+      855
+    ],
+    "cutOffsets": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "initialSevenBoardsReconfirmedBetweenLiveAudits": true,
+    "noThinning": true,
+    "newExtraction": false,
+    "nativeSizeDetailInspection": false,
+    "continuousPlaybackInspected": false,
+    "audioHeard": false
+  },
+  "acceptedAdaptation": "The approved Grifon copy, charcoal/gold/cream palette, Inter contours and truthful disclosed product captures. Existing V2 accepted residuals do not imply exact source pixels, hue, typography or blend strength.",
+  "blockingIssues": [],
+  "correctedEndpoints": [
+    {
+      "frame": 400,
+      "timeSeconds": 13.346666666666666,
+      "observation": "Second rectangular-step pattern starts in both source and candidate.",
+      "status": "PASS"
+    },
+    {
+      "frame": 403,
+      "timeSeconds": 13.446766666666667,
+      "observation": "Third upright zigzag pattern starts in both source and candidate.",
+      "status": "PASS"
+    },
+    {
+      "frame": 407,
+      "timeSeconds": 13.580233333333334,
+      "observation": "Fourth step pattern remains aligned.",
+      "status": "PASS"
+    },
+    {
+      "frame": 636,
+      "timeSeconds": 21.2212,
+      "observation": "First visible erase bars are present in both.",
+      "status": "PASS"
+    },
+    {
+      "frame": 639,
+      "timeSeconds": 21.3213,
+      "observation": "Final surviving horizontal fragments are present in both.",
+      "status": "PASS"
+    },
+    {
+      "frame": 640,
+      "timeSeconds": 21.354666666666667,
+      "observation": "Both are visually black.",
+      "status": "PASS"
+    }
+  ],
+  "nonBlockingResiduals": [
+    "Sharper catalog focus through 255–257 than the source blur blend.",
+    "Different product-reflow blend strength around 514–518 and stronger initial whirl distortion at 541.",
+    "Different stripe density/position at 636–639; the corrected endpoint states are all visible.",
+    "Previously accepted palette, copy, contour, density and sharpness differences remain."
+  ],
+  "coverage": [
+    {
+      "cut": 26,
+      "frames": [
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-026.jpg",
+      "sha256": "7676e5faec6c9ff40b985091d49cf97f4fb57dbb093c420165e9fd0328cd0d8b",
+      "bytes": 77315,
+      "before": {
+        "sha256": "7676e5faec6c9ff40b985091d49cf97f4fb57dbb093c420165e9fd0328cd0d8b",
+        "bytes": 77315
+      },
+      "after": {
+        "sha256": "7676e5faec6c9ff40b985091d49cf97f4fb57dbb093c420165e9fd0328cd0d8b",
+        "bytes": 77315
+      },
+      "status": "CUT_PASS",
+      "observation": "Coarse blocks begin stretching into the broad smooth field at the indexed boundary."
+    },
+    {
+      "cut": 57,
+      "frames": [
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-057.jpg",
+      "sha256": "8df96b52506f7fc3c65753e6953517222c3bed2c36513409e258895f0ec67013",
+      "bytes": 79795,
+      "before": {
+        "sha256": "8df96b52506f7fc3c65753e6953517222c3bed2c36513409e258895f0ec67013",
+        "bytes": 79795
+      },
+      "after": {
+        "sha256": "8df96b52506f7fc3c65753e6953517222c3bed2c36513409e258895f0ec67013",
+        "bytes": 79795
+      },
+      "status": "CUT_PASS",
+      "observation": "The fixed circular lens changes its surrounding material at frame 57; Grifon gold is the approved palette substitution."
+    },
+    {
+      "cut": 82,
+      "frames": [
+        80,
+        81,
+        82,
+        83,
+        84
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-082.jpg",
+      "sha256": "323d0be16b91c6b5c10d125628174bf7cce2af4b453f0fbb33a00641b2dd4b50",
+      "bytes": 68372,
+      "before": {
+        "sha256": "323d0be16b91c6b5c10d125628174bf7cce2af4b453f0fbb33a00641b2dd4b50",
+        "bytes": 68372
+      },
+      "after": {
+        "sha256": "323d0be16b91c6b5c10d125628174bf7cce2af4b453f0fbb33a00641b2dd4b50",
+        "bytes": 68372
+      },
+      "status": "CUT_PASS",
+      "observation": "Both move from the lens/bowl to the pale-background rounded profile."
+    },
+    {
+      "cut": 91,
+      "frames": [
+        89,
+        90,
+        91,
+        92,
+        93
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-091.jpg",
+      "sha256": "68cd65976e61029db8ffb746c497736aa0f034ebc4707812262f1d3d16e4a832",
+      "bytes": 41930,
+      "before": {
+        "sha256": "68cd65976e61029db8ffb746c497736aa0f034ebc4707812262f1d3d16e4a832",
+        "bytes": 41930
+      },
+      "after": {
+        "sha256": "68cd65976e61029db8ffb746c497736aa0f034ebc4707812262f1d3d16e4a832",
+        "bytes": 41930
+      },
+      "status": "CUT_PASS",
+      "observation": "Both rounded profiles switch to the pale transparent material."
+    },
+    {
+      "cut": 97,
+      "frames": [
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-097.jpg",
+      "sha256": "4396b5d3d80f8d2598c9edb2095d0a2c1ecf40fcb6fc683e692a3d4c20d3582b",
+      "bytes": 50097,
+      "before": {
+        "sha256": "4396b5d3d80f8d2598c9edb2095d0a2c1ecf40fcb6fc683e692a3d4c20d3582b",
+        "bytes": 50097
+      },
+      "after": {
+        "sha256": "4396b5d3d80f8d2598c9edb2095d0a2c1ecf40fcb6fc683e692a3d4c20d3582b",
+        "bytes": 50097
+      },
+      "status": "CUT_PASS",
+      "observation": "Both rounded profiles switch to metallic gold."
+    },
+    {
+      "cut": 104,
+      "frames": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-104.jpg",
+      "sha256": "4647a80270af5d5b56d2ab2f26e156be258bf5047fc9ba8762077cf36d309ca8",
+      "bytes": 49024,
+      "before": {
+        "sha256": "4647a80270af5d5b56d2ab2f26e156be258bf5047fc9ba8762077cf36d309ca8",
+        "bytes": 49024
+      },
+      "after": {
+        "sha256": "4647a80270af5d5b56d2ab2f26e156be258bf5047fc9ba8762077cf36d309ca8",
+        "bytes": 49024
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from gold to the approved pale matte material family."
+    },
+    {
+      "cut": 111,
+      "frames": [
+        109,
+        110,
+        111,
+        112,
+        113
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-111.jpg",
+      "sha256": "3104b8afa1e5bec746396f0d120d3855cec17ec48b9b77d17f8335515bfd6322",
+      "bytes": 49039,
+      "before": {
+        "sha256": "3104b8afa1e5bec746396f0d120d3855cec17ec48b9b77d17f8335515bfd6322",
+        "bytes": 49039
+      },
+      "after": {
+        "sha256": "3104b8afa1e5bec746396f0d120d3855cec17ec48b9b77d17f8335515bfd6322",
+        "bytes": 49039
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the dark rough/tiled material."
+    },
+    {
+      "cut": 119,
+      "frames": [
+        117,
+        118,
+        119,
+        120,
+        121
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-119.jpg",
+      "sha256": "1f277024e2bf633279874d1a6ab981d774c9a1b8b425a592ec3423a88c9d19e3",
+      "bytes": 53049,
+      "before": {
+        "sha256": "1f277024e2bf633279874d1a6ab981d774c9a1b8b425a592ec3423a88c9d19e3",
+        "bytes": 53049
+      },
+      "after": {
+        "sha256": "1f277024e2bf633279874d1a6ab981d774c9a1b8b425a592ec3423a88c9d19e3",
+        "bytes": 53049
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the glossy/transmissive profile family."
+    },
+    {
+      "cut": 126,
+      "frames": [
+        124,
+        125,
+        126,
+        127,
+        128
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-126.jpg",
+      "sha256": "35edcdc72731587029b811221029c51eca8faecd3aca5ada894169263d29681e",
+      "bytes": 60083,
+      "before": {
+        "sha256": "35edcdc72731587029b811221029c51eca8faecd3aca5ada894169263d29681e",
+        "bytes": 60083
+      },
+      "after": {
+        "sha256": "35edcdc72731587029b811221029c51eca8faecd3aca5ada894169263d29681e",
+        "bytes": 60083
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to coarse pixel blocks while retaining the profile."
+    },
+    {
+      "cut": 132,
+      "frames": [
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-132.jpg",
+      "sha256": "bdedfc427cb3f772bf13266e225ef6cbcade85bf6204a5c444772a414d28e3f8",
+      "bytes": 73677,
+      "before": {
+        "sha256": "bdedfc427cb3f772bf13266e225ef6cbcade85bf6204a5c444772a414d28e3f8",
+        "bytes": 73677
+      },
+      "after": {
+        "sha256": "bdedfc427cb3f772bf13266e225ef6cbcade85bf6204a5c444772a414d28e3f8",
+        "bytes": 73677
+      },
+      "status": "CUT_PASS",
+      "observation": "Both return to the smooth profile over the bright surrounding field."
+    },
+    {
+      "cut": 138,
+      "frames": [
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-138.jpg",
+      "sha256": "974bf6b963bdf32369c5f9292ce2c2d62961823185af03420fb850c82caefb4c",
+      "bytes": 74010,
+      "before": {
+        "sha256": "974bf6b963bdf32369c5f9292ce2c2d62961823185af03420fb850c82caefb4c",
+        "bytes": 74010
+      },
+      "after": {
+        "sha256": "974bf6b963bdf32369c5f9292ce2c2d62961823185af03420fb850c82caefb4c",
+        "bytes": 74010
+      },
+      "status": "CUT_PASS",
+      "observation": "Both begin the bright flare/type transition; strength and color differ within the accepted opening."
+    },
+    {
+      "cut": 145,
+      "frames": [
+        143,
+        144,
+        145,
+        146,
+        147
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-145.jpg",
+      "sha256": "ea56684817669090311fd86b98532b1e45e113426bbd2bb280d7dbce2565ca0c",
+      "bytes": 62137,
+      "before": {
+        "sha256": "ea56684817669090311fd86b98532b1e45e113426bbd2bb280d7dbce2565ca0c",
+        "bytes": 62137
+      },
+      "after": {
+        "sha256": "ea56684817669090311fd86b98532b1e45e113426bbd2bb280d7dbce2565ca0c",
+        "bytes": 62137
+      },
+      "status": "CUT_PASS",
+      "observation": "The relief type emerges through the flare at the same boundary; approved copy differs."
+    },
+    {
+      "cut": 209,
+      "frames": [
+        207,
+        208,
+        209,
+        210,
+        211
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-209.jpg",
+      "sha256": "b57fe3642cfc3b64cf6e3fb3ddc0c871ddbc9eafbb99be963de617de365f7d5c",
+      "bytes": 167920,
+      "before": {
+        "sha256": "b57fe3642cfc3b64cf6e3fb3ddc0c871ddbc9eafbb99be963de617de365f7d5c",
+        "bytes": 167920
+      },
+      "after": {
+        "sha256": "b57fe3642cfc3b64cf6e3fb3ddc0c871ddbc9eafbb99be963de617de365f7d5c",
+        "bytes": 167920
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the broad gray relief surround."
+    },
+    {
+      "cut": 222,
+      "frames": [
+        220,
+        221,
+        222,
+        223,
+        224
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-222.jpg",
+      "sha256": "25ad5fe66bb4a7896314f2ac89dd77d97aefd1d6544299b4e2f355d34556ab43",
+      "bytes": 99506,
+      "before": {
+        "sha256": "25ad5fe66bb4a7896314f2ac89dd77d97aefd1d6544299b4e2f355d34556ab43",
+        "bytes": 99506
+      },
+      "after": {
+        "sha256": "25ad5fe66bb4a7896314f2ac89dd77d97aefd1d6544299b4e2f355d34556ab43",
+        "bytes": 99506
+      },
+      "status": "CUT_PASS",
+      "observation": "Both leave the relief/type field for the localized blurred rosette family."
+    },
+    {
+      "cut": 229,
+      "frames": [
+        227,
+        228,
+        229,
+        230,
+        231
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-229.jpg",
+      "sha256": "7d43ad2b019e5fd93208d9165a1bf6a1448a65bdbb667d14f11fef0e1dfeffff",
+      "bytes": 93989,
+      "before": {
+        "sha256": "7d43ad2b019e5fd93208d9165a1bf6a1448a65bdbb667d14f11fef0e1dfeffff",
+        "bytes": 93989
+      },
+      "after": {
+        "sha256": "7d43ad2b019e5fd93208d9165a1bf6a1448a65bdbb667d14f11fef0e1dfeffff",
+        "bytes": 93989
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the perforated curved strip over concentric polygon bands."
+    },
+    {
+      "cut": 238,
+      "frames": [
+        236,
+        237,
+        238,
+        239,
+        240
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-238.jpg",
+      "sha256": "ab72aa986a409b6ea0080f63c4ccbf8db62b224277da9d50b2656c75afb5bd25",
+      "bytes": 107208,
+      "before": {
+        "sha256": "ab72aa986a409b6ea0080f63c4ccbf8db62b224277da9d50b2656c75afb5bd25",
+        "bytes": 107208
+      },
+      "after": {
+        "sha256": "ab72aa986a409b6ea0080f63c4ccbf8db62b224277da9d50b2656c75afb5bd25",
+        "bytes": 107208
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the six-blade dotted aperture field."
+    },
+    {
+      "cut": 255,
+      "frames": [
+        253,
+        254,
+        255,
+        256,
+        257
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-255.jpg",
+      "sha256": "f41daa443d966a77cd4b4d985b1d88f31782fbf4cbe5fa296ca9a5dd73e6a58a",
+      "bytes": 92552,
+      "before": {
+        "sha256": "f41daa443d966a77cd4b4d985b1d88f31782fbf4cbe5fa296ca9a5dd73e6a58a",
+        "bytes": 92552
+      },
+      "after": {
+        "sha256": "f41daa443d966a77cd4b4d985b1d88f31782fbf4cbe5fa296ca9a5dd73e6a58a",
+        "bytes": 92552
+      },
+      "status": "CUT_PASS",
+      "observation": "Both enter the catalog transition family; candidate focus is sharper than the source blur blend, an accepted V2 residual."
+    },
+    {
+      "cut": 258,
+      "frames": [
+        256,
+        257,
+        258,
+        259,
+        260
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-258.jpg",
+      "sha256": "6cb50de21650331c2c20365ffe85f3bdc92a68d73a2cd1ce216e4ac92bba2b7d",
+      "bytes": 95783,
+      "before": {
+        "sha256": "6cb50de21650331c2c20365ffe85f3bdc92a68d73a2cd1ce216e4ac92bba2b7d",
+        "bytes": 95783
+      },
+      "after": {
+        "sha256": "6cb50de21650331c2c20365ffe85f3bdc92a68d73a2cd1ce216e4ac92bba2b7d",
+        "bytes": 95783
+      },
+      "status": "CUT_PASS",
+      "observation": "Catalog motion continues through the transition endpoint in both; the sharper candidate focus is an accepted residual."
+    },
+    {
+      "cut": 306,
+      "frames": [
+        304,
+        305,
+        306,
+        307,
+        308
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-306.jpg",
+      "sha256": "c69a3c564c882642e8e0a2c908205bab4615f5e5c881566faefe7348b8b9ffaf",
+      "bytes": 74213,
+      "before": {
+        "sha256": "c69a3c564c882642e8e0a2c908205bab4615f5e5c881566faefe7348b8b9ffaf",
+        "bytes": 74213
+      },
+      "after": {
+        "sha256": "c69a3c564c882642e8e0a2c908205bab4615f5e5c881566faefe7348b8b9ffaf",
+        "bytes": 74213
+      },
+      "status": "CUT_PASS",
+      "observation": "Both show the distinct enlarged circular lens on this single native frame."
+    },
+    {
+      "cut": 307,
+      "frames": [
+        305,
+        306,
+        307,
+        308,
+        309
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-307.jpg",
+      "sha256": "c4b7ca62a6f3d2af1adea6399a35b2a25e58208285106b591e73eaddd02896cf",
+      "bytes": 70987,
+      "before": {
+        "sha256": "c4b7ca62a6f3d2af1adea6399a35b2a25e58208285106b591e73eaddd02896cf",
+        "bytes": 70987
+      },
+      "after": {
+        "sha256": "c4b7ca62a6f3d2af1adea6399a35b2a25e58208285106b591e73eaddd02896cf",
+        "bytes": 70987
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the expanded cropped lens with centered copy."
+    },
+    {
+      "cut": 344,
+      "frames": [
+        342,
+        343,
+        344,
+        345,
+        346
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-344.jpg",
+      "sha256": "9697d0821d97730fc004f2ee293ffcf547a6fd311b268dd1cfa87af8dcaadd4b",
+      "bytes": 132332,
+      "before": {
+        "sha256": "9697d0821d97730fc004f2ee293ffcf547a6fd311b268dd1cfa87af8dcaadd4b",
+        "bytes": 132332
+      },
+      "after": {
+        "sha256": "9697d0821d97730fc004f2ee293ffcf547a6fd311b268dd1cfa87af8dcaadd4b",
+        "bytes": 132332
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from the expanded lens to the coherent character-row folded field."
+    },
+    {
+      "cut": 357,
+      "frames": [
+        355,
+        356,
+        357,
+        358,
+        359
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-357.jpg",
+      "sha256": "8775157c849e6ccb01b5c2775501b4eb41009762f70d87fd11097ec87a194af4",
+      "bytes": 133169,
+      "before": {
+        "sha256": "8775157c849e6ccb01b5c2775501b4eb41009762f70d87fd11097ec87a194af4",
+        "bytes": 133169
+      },
+      "after": {
+        "sha256": "8775157c849e6ccb01b5c2775501b4eb41009762f70d87fd11097ec87a194af4",
+        "bytes": 133169
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from characters to the joined two-mouth point-row shell."
+    },
+    {
+      "cut": 377,
+      "frames": [
+        375,
+        376,
+        377,
+        378,
+        379
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-377.jpg",
+      "sha256": "77707dac94f5257460722646fd9518be3f630bbaafa4fb0907e0d8849bc27ace",
+      "bytes": 92767,
+      "before": {
+        "sha256": "77707dac94f5257460722646fd9518be3f630bbaafa4fb0907e0d8849bc27ace",
+        "bytes": 92767
+      },
+      "after": {
+        "sha256": "77707dac94f5257460722646fd9518be3f630bbaafa4fb0907e0d8849bc27ace",
+        "bytes": 92767
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from the point shell to the folded lobe cluster."
+    },
+    {
+      "cut": 391,
+      "frames": [
+        389,
+        390,
+        391,
+        392,
+        393
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-391.jpg",
+      "sha256": "e50d77f8ebb0a41cdec91f954472eb80038209da0d70c8dfeb1de7046e6af4f5",
+      "bytes": 83786,
+      "before": {
+        "sha256": "e50d77f8ebb0a41cdec91f954472eb80038209da0d70c8dfeb1de7046e6af4f5",
+        "bytes": 83786
+      },
+      "after": {
+        "sha256": "e50d77f8ebb0a41cdec91f954472eb80038209da0d70c8dfeb1de7046e6af4f5",
+        "bytes": 83786
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from the cluster to the pale segmented pinwheel family."
+    },
+    {
+      "cut": 397,
+      "frames": [
+        395,
+        396,
+        397,
+        398,
+        399
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-397.jpg",
+      "sha256": "1f76bce500ac2c7133a6ce7caae5444c4809290e65338fc7b3cecd2054b07dca",
+      "bytes": 85026,
+      "before": {
+        "sha256": "1f76bce500ac2c7133a6ce7caae5444c4809290e65338fc7b3cecd2054b07dca",
+        "bytes": 85026
+      },
+      "after": {
+        "sha256": "1f76bce500ac2c7133a6ce7caae5444c4809290e65338fc7b3cecd2054b07dca",
+        "bytes": 85026
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the first chevron pattern on frame 397."
+    },
+    {
+      "cut": 400,
+      "frames": [
+        398,
+        399,
+        400,
+        401,
+        402
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-400.jpg",
+      "sha256": "dee944f428af2ead649f04bbddbd8ee7f814d35a90c8f543d7db4bf679d4713b",
+      "bytes": 88655,
+      "before": {
+        "sha256": "dee944f428af2ead649f04bbddbd8ee7f814d35a90c8f543d7db4bf679d4713b",
+        "bytes": 88655
+      },
+      "after": {
+        "sha256": "dee944f428af2ead649f04bbddbd8ee7f814d35a90c8f543d7db4bf679d4713b",
+        "bytes": 88655
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from chevrons to the second rectangular-step pattern on frame 400; the prior one-frame delay is absent."
+    },
+    {
+      "cut": 403,
+      "frames": [
+        401,
+        402,
+        403,
+        404,
+        405
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-403.jpg",
+      "sha256": "7cbd81ac5077363151cc148cf4426470ffc723cce6dc5c7689cc2d78472110a7",
+      "bytes": 82890,
+      "before": {
+        "sha256": "7cbd81ac5077363151cc148cf4426470ffc723cce6dc5c7689cc2d78472110a7",
+        "bytes": 82890
+      },
+      "after": {
+        "sha256": "7cbd81ac5077363151cc148cf4426470ffc723cce6dc5c7689cc2d78472110a7",
+        "bytes": 82890
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch from rectangular steps to the third upright zigzag pattern on frame 403; the prior one-frame delay is absent."
+    },
+    {
+      "cut": 407,
+      "frames": [
+        405,
+        406,
+        407,
+        408,
+        409
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-407.jpg",
+      "sha256": "97f201bbd5f272bd5f5b9566b1e8cd37074566da56aaaafc1bd57f625ba2a066",
+      "bytes": 77125,
+      "before": {
+        "sha256": "97f201bbd5f272bd5f5b9566b1e8cd37074566da56aaaafc1bd57f625ba2a066",
+        "bytes": 77125
+      },
+      "after": {
+        "sha256": "97f201bbd5f272bd5f5b9566b1e8cd37074566da56aaaafc1bd57f625ba2a066",
+        "bytes": 77125
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the fourth step pattern on frame 407; the already-aligned boundary remains aligned."
+    },
+    {
+      "cut": 410,
+      "frames": [
+        408,
+        409,
+        410,
+        411,
+        412
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-410.jpg",
+      "sha256": "221218dfcac7acac21804fee19780c20c9973c0c0d8dded0bad56bff30e1fbc7",
+      "bytes": 41960,
+      "before": {
+        "sha256": "221218dfcac7acac21804fee19780c20c9973c0c0d8dded0bad56bff30e1fbc7",
+        "bytes": 41960
+      },
+      "after": {
+        "sha256": "221218dfcac7acac21804fee19780c20c9973c0c0d8dded0bad56bff30e1fbc7",
+        "bytes": 41960
+      },
+      "status": "CUT_PASS",
+      "observation": "Both become visually black on frame 410."
+    },
+    {
+      "cut": 417,
+      "frames": [
+        415,
+        416,
+        417,
+        418,
+        419
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-417.jpg",
+      "sha256": "2aa2545643d8a8b514d802fccd711748bf0176c2f9c020efde19a39dcac23855",
+      "bytes": 79472,
+      "before": {
+        "sha256": "2aa2545643d8a8b514d802fccd711748bf0176c2f9c020efde19a39dcac23855",
+        "bytes": 79472
+      },
+      "after": {
+        "sha256": "2aa2545643d8a8b514d802fccd711748bf0176c2f9c020efde19a39dcac23855",
+        "bytes": 79472
+      },
+      "status": "CUT_PASS",
+      "observation": "Both leave the black pause for the diagonal bright particle band on frame 417."
+    },
+    {
+      "cut": 445,
+      "frames": [
+        443,
+        444,
+        445,
+        446,
+        447
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-445.jpg",
+      "sha256": "cadfb59007446247340e32b85bd07094cf593eb4489a847d5bce90e56b6e578d",
+      "bytes": 77988,
+      "before": {
+        "sha256": "cadfb59007446247340e32b85bd07094cf593eb4489a847d5bce90e56b6e578d",
+        "bytes": 77988
+      },
+      "after": {
+        "sha256": "cadfb59007446247340e32b85bd07094cf593eb4489a847d5bce90e56b6e578d",
+        "bytes": 77988
+      },
+      "status": "CUT_PASS",
+      "observation": "Both enter the first macro material through a blur/veil; the candidate veil is stronger, an accepted residual."
+    },
+    {
+      "cut": 459,
+      "frames": [
+        457,
+        458,
+        459,
+        460,
+        461
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-459.jpg",
+      "sha256": "cdd6abd413239dbd3084a8d387b8051f2de3aa63dec9aad062ae370cd320446f",
+      "bytes": 67550,
+      "before": {
+        "sha256": "cdd6abd413239dbd3084a8d387b8051f2de3aa63dec9aad062ae370cd320446f",
+        "bytes": 67550
+      },
+      "after": {
+        "sha256": "cdd6abd413239dbd3084a8d387b8051f2de3aa63dec9aad062ae370cd320446f",
+        "bytes": 67550
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the dark folded macro material."
+    },
+    {
+      "cut": 471,
+      "frames": [
+        469,
+        470,
+        471,
+        472,
+        473
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-471.jpg",
+      "sha256": "eb7d647accc4330384dc50072d078a975f0ff74f51d6525f071ea5863a03a2c3",
+      "bytes": 60259,
+      "before": {
+        "sha256": "eb7d647accc4330384dc50072d078a975f0ff74f51d6525f071ea5863a03a2c3",
+        "bytes": 60259
+      },
+      "after": {
+        "sha256": "eb7d647accc4330384dc50072d078a975f0ff74f51d6525f071ea5863a03a2c3",
+        "bytes": 60259
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the warm relief macro material."
+    },
+    {
+      "cut": 483,
+      "frames": [
+        481,
+        482,
+        483,
+        484,
+        485
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-483.jpg",
+      "sha256": "9e2e7995069cb37e9b48f9de8fbede46fb6198dbd304d6287975a87f888336c3",
+      "bytes": 63386,
+      "before": {
+        "sha256": "9e2e7995069cb37e9b48f9de8fbede46fb6198dbd304d6287975a87f888336c3",
+        "bytes": 63386
+      },
+      "after": {
+        "sha256": "9e2e7995069cb37e9b48f9de8fbede46fb6198dbd304d6287975a87f888336c3",
+        "bytes": 63386
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the soft milky/transmissive macro material."
+    },
+    {
+      "cut": 496,
+      "frames": [
+        494,
+        495,
+        496,
+        497,
+        498
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-496.jpg",
+      "sha256": "96512d97e5459c7983add8da07d757a0f2e9e9ae5799caca52a68b42ccbc2a1f",
+      "bytes": 79833,
+      "before": {
+        "sha256": "96512d97e5459c7983add8da07d757a0f2e9e9ae5799caca52a68b42ccbc2a1f",
+        "bytes": 79833
+      },
+      "after": {
+        "sha256": "96512d97e5459c7983add8da07d757a0f2e9e9ae5799caca52a68b42ccbc2a1f",
+        "bytes": 79833
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to a product desktop view; the disclosed Grifon Script content is the approved substitution."
+    },
+    {
+      "cut": 514,
+      "frames": [
+        512,
+        513,
+        514,
+        515,
+        516
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-514.jpg",
+      "sha256": "3572f78e07e782e77b19472ae635cd4cbea39033cb03023ad233e733c69a4e4b",
+      "bytes": 80824,
+      "before": {
+        "sha256": "3572f78e07e782e77b19472ae635cd4cbea39033cb03023ad233e733c69a4e4b",
+        "bytes": 80824
+      },
+      "after": {
+        "sha256": "3572f78e07e782e77b19472ae635cd4cbea39033cb03023ad233e733c69a4e4b",
+        "bytes": 80824
+      },
+      "status": "CUT_PASS",
+      "observation": "Both desktop/mobile reflow sequences are present around this boundary; blend strength differs with the approved product substitution."
+    },
+    {
+      "cut": 518,
+      "frames": [
+        516,
+        517,
+        518,
+        519,
+        520
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-518.jpg",
+      "sha256": "73f342296ea86ad16e84fd5d765c81d3328e028b03ebe0a7f00b6b22df9385e1",
+      "bytes": 79491,
+      "before": {
+        "sha256": "73f342296ea86ad16e84fd5d765c81d3328e028b03ebe0a7f00b6b22df9385e1",
+        "bytes": 79491
+      },
+      "after": {
+        "sha256": "73f342296ea86ad16e84fd5d765c81d3328e028b03ebe0a7f00b6b22df9385e1",
+        "bytes": 79491
+      },
+      "status": "CUT_PASS",
+      "observation": "Both reach a legible centered mobile view over the desktop background."
+    },
+    {
+      "cut": 541,
+      "frames": [
+        539,
+        540,
+        541,
+        542,
+        543
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-541.jpg",
+      "sha256": "d10deea9bd1c5fbc04a532f3d8cc47dd8a847aca241f6cd1ccfafc6ee1434f8b",
+      "bytes": 78928,
+      "before": {
+        "sha256": "d10deea9bd1c5fbc04a532f3d8cc47dd8a847aca241f6cd1ccfafc6ee1434f8b",
+        "bytes": 78928
+      },
+      "after": {
+        "sha256": "d10deea9bd1c5fbc04a532f3d8cc47dd8a847aca241f6cd1ccfafc6ee1434f8b",
+        "bytes": 78928
+      },
+      "status": "CUT_PASS",
+      "observation": "Both enter the full-field whirl at frame 541; the candidate's initial distortion is stronger, an accepted residual."
+    },
+    {
+      "cut": 547,
+      "frames": [
+        545,
+        546,
+        547,
+        548,
+        549
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-547.jpg",
+      "sha256": "a10e24cd8114fb7cbc985e542135f66162c3934cb61b4f42b234fd5acd9f51b5",
+      "bytes": 86522,
+      "before": {
+        "sha256": "a10e24cd8114fb7cbc985e542135f66162c3934cb61b4f42b234fd5acd9f51b5",
+        "bytes": 86522
+      },
+      "after": {
+        "sha256": "a10e24cd8114fb7cbc985e542135f66162c3934cb61b4f42b234fd5acd9f51b5",
+        "bytes": 86522
+      },
+      "status": "CUT_PASS",
+      "observation": "Both have resolved the whirl back to the desktop view; the frame-546 resolve remains visible."
+    },
+    {
+      "cut": 567,
+      "frames": [
+        565,
+        566,
+        567,
+        568,
+        569
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-567.jpg",
+      "sha256": "c48f7eb813b467d0b542087577246d8d123e3649c38769f42b22aaf1acfe7422",
+      "bytes": 85766,
+      "before": {
+        "sha256": "c48f7eb813b467d0b542087577246d8d123e3649c38769f42b22aaf1acfe7422",
+        "bytes": 85766
+      },
+      "after": {
+        "sha256": "c48f7eb813b467d0b542087577246d8d123e3649c38769f42b22aaf1acfe7422",
+        "bytes": 85766
+      },
+      "status": "CUT_PASS",
+      "observation": "Both switch to the second product/editor capture; Grifon Storyboard is the approved content substitution."
+    },
+    {
+      "cut": 586,
+      "frames": [
+        584,
+        585,
+        586,
+        587,
+        588
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-586.jpg",
+      "sha256": "0e81f98dd3b0b62e55640581bd1803d257bb113ebd1127e7a905b659f84823f7",
+      "bytes": 102632,
+      "before": {
+        "sha256": "0e81f98dd3b0b62e55640581bd1803d257bb113ebd1127e7a905b659f84823f7",
+        "bytes": 102632
+      },
+      "after": {
+        "sha256": "0e81f98dd3b0b62e55640581bd1803d257bb113ebd1127e7a905b659f84823f7",
+        "bytes": 102632
+      },
+      "status": "CUT_PASS",
+      "observation": "Both move from the editor capture to the tilted binary canvas and emerging type."
+    },
+    {
+      "cut": 608,
+      "frames": [
+        606,
+        607,
+        608,
+        609,
+        610
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-608.jpg",
+      "sha256": "5fd579283ca47ff79049dffdb6c61da8de335ac6368074733c3a1af80dd49591",
+      "bytes": 138598,
+      "before": {
+        "sha256": "5fd579283ca47ff79049dffdb6c61da8de335ac6368074733c3a1af80dd49591",
+        "bytes": 138598
+      },
+      "after": {
+        "sha256": "5fd579283ca47ff79049dffdb6c61da8de335ac6368074733c3a1af80dd49591",
+        "bytes": 138598
+      },
+      "status": "CUT_PASS",
+      "observation": "Both enter the horizontal tear at frame 608 and retain it at 609."
+    },
+    {
+      "cut": 610,
+      "frames": [
+        608,
+        609,
+        610,
+        611,
+        612
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-610.jpg",
+      "sha256": "2c3fa8bae2e9a992843ce782b04f1adc5f21928bc650735d65c0aa284053f050",
+      "bytes": 147311,
+      "before": {
+        "sha256": "2c3fa8bae2e9a992843ce782b04f1adc5f21928bc650735d65c0aa284053f050",
+        "bytes": 147311
+      },
+      "after": {
+        "sha256": "2c3fa8bae2e9a992843ce782b04f1adc5f21928bc650735d65c0aa284053f050",
+        "bytes": 147311
+      },
+      "status": "CUT_PASS",
+      "observation": "Both resolve the two-frame tear back to the layered binary canvas on frame 610."
+    },
+    {
+      "cut": 626,
+      "frames": [
+        624,
+        625,
+        626,
+        627,
+        628
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-626.jpg",
+      "sha256": "905cd68348bf0add3cfe4c3839d7dc37a7f34700073a7dd5211d0a3aa9aa8c52",
+      "bytes": 132191,
+      "before": {
+        "sha256": "905cd68348bf0add3cfe4c3839d7dc37a7f34700073a7dd5211d0a3aa9aa8c52",
+        "bytes": 132191
+      },
+      "after": {
+        "sha256": "905cd68348bf0add3cfe4c3839d7dc37a7f34700073a7dd5211d0a3aa9aa8c52",
+        "bytes": 132191
+      },
+      "status": "CUT_PASS",
+      "observation": "Both begin the parent/pullback canvas presentation; differing field density and transition softness remain accepted residuals."
+    },
+    {
+      "cut": 636,
+      "frames": [
+        634,
+        635,
+        636,
+        637,
+        638
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-636.jpg",
+      "sha256": "bd729945093ddc2e41c11ae1f0c83b38b1b0a512913c0c9e17b232e9b0881018",
+      "bytes": 133614,
+      "before": {
+        "sha256": "bd729945093ddc2e41c11ae1f0c83b38b1b0a512913c0c9e17b232e9b0881018",
+        "bytes": 133614
+      },
+      "after": {
+        "sha256": "bd729945093ddc2e41c11ae1f0c83b38b1b0a512913c0c9e17b232e9b0881018",
+        "bytes": 133614
+      },
+      "status": "CUT_PASS",
+      "observation": "Visible black erase bars occur on frame 636 in both. Candidate bar density/positions differ, but the missing first erase state is restored."
+    },
+    {
+      "cut": 640,
+      "frames": [
+        638,
+        639,
+        640,
+        641,
+        642
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-640.jpg",
+      "sha256": "8e64580492dbb0e88b2e0f9c368e7dcbe7d74108c2f515e9976b80f717416b78",
+      "bytes": 47696,
+      "before": {
+        "sha256": "8e64580492dbb0e88b2e0f9c368e7dcbe7d74108c2f515e9976b80f717416b78",
+        "bytes": 47696
+      },
+      "after": {
+        "sha256": "8e64580492dbb0e88b2e0f9c368e7dcbe7d74108c2f515e9976b80f717416b78",
+        "bytes": 47696
+      },
+      "status": "CUT_PASS",
+      "observation": "Both retain visible horizontal fragments at frame 639 and are visually black at frame 640. The prior missing residue is restored."
+    },
+    {
+      "cut": 655,
+      "frames": [
+        653,
+        654,
+        655,
+        656,
+        657
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-655.jpg",
+      "sha256": "02844346452edd2b3143f9ec81349eac6934ca5173bde3837c7b5734d9b7b6aa",
+      "bytes": 28575,
+      "before": {
+        "sha256": "02844346452edd2b3143f9ec81349eac6934ca5173bde3837c7b5734d9b7b6aa",
+        "bytes": 28575
+      },
+      "after": {
+        "sha256": "02844346452edd2b3143f9ec81349eac6934ca5173bde3837c7b5734d9b7b6aa",
+        "bytes": 28575
+      },
+      "status": "CUT_PASS",
+      "observation": "The low-light mark/globe fade is present through the neighborhood in both; this is a fade checkpoint, not a hard cut."
+    },
+    {
+      "cut": 834,
+      "frames": [
+        832,
+        833,
+        834,
+        835,
+        836
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-834.jpg",
+      "sha256": "cd953f67761dc2c4045afcfcc7570286d40f5e13a70d88cdc88d52137e46a3b4",
+      "bytes": 54550,
+      "before": {
+        "sha256": "cd953f67761dc2c4045afcfcc7570286d40f5e13a70d88cdc88d52137e46a3b4",
+        "bytes": 54550
+      },
+      "after": {
+        "sha256": "cd953f67761dc2c4045afcfcc7570286d40f5e13a70d88cdc88d52137e46a3b4",
+        "bytes": 54550
+      },
+      "status": "CUT_PASS",
+      "observation": "Both enter the tilted/receding mark and globe exit; panel visibility and contour geometry remain accepted residuals."
+    },
+    {
+      "cut": 853,
+      "frames": [
+        851,
+        852,
+        853,
+        854,
+        855
+      ],
+      "file": ".tmp/full-native-critic-v3/cuts/cut-853.jpg",
+      "sha256": "d77597d9acc5012609b5573f7a0b0ba58ac06421bc7ad525d757d439c1629e13",
+      "bytes": 13895,
+      "before": {
+        "sha256": "d77597d9acc5012609b5573f7a0b0ba58ac06421bc7ad525d757d439c1629e13",
+        "bytes": 13895
+      },
+      "after": {
+        "sha256": "d77597d9acc5012609b5573f7a0b0ba58ac06421bc7ad525d757d439c1629e13",
+        "bytes": 13895
+      },
+      "status": "CUT_PASS",
+      "observation": "Both are visually black through the closing neighborhood; numerical black-tail validation belongs to the separate technical gate."
+    }
+  ],
+  "beforeInputHashes": {
+    "reference/source-x.mp4": {
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+      "bytes": 11514975
+    },
+    "grifon-recreation-landscape-provisional.mp4": {
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+      "bytes": 24994401
+    },
+    ".tmp/paired-full.mp4": {
+      "sha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf",
+      "bytes": 16376839
+    },
+    "qa/full-media.json": {
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a",
+      "bytes": 3119
+    },
+    "qa/full-paired-review-receipt.json": {
+      "sha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402",
+      "bytes": 3525
+    },
+    "grifon-opening-pilot-silent.mp4": {
+      "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+      "bytes": 5504941
+    },
+    ".tmp/full-native-critic-v3/prepare.mjs": {
+      "sha256": "5e4eac5f35610780f1444c47c9c38958a36aa1f567288a55b5e3e2da87d3a215",
+      "bytes": 14193
+    },
+    ".tmp/full-native-critic-v3/plan.json": {
+      "sha256": "d6cd35e5141663b80af5d5d55e620bdf258222a7cc6d9c145d6e0ae0e3dc9830",
+      "bytes": 5071
+    },
+    "reference/full-native-review-v2.md": {
+      "sha256": "38506e5d1e80cd42be09e78ab3e135a472bd9cd7f4ab763e3e23fcdd2adae2a5",
+      "bytes": 8624
+    },
+    "qa/full-native-review-v2.json": {
+      "sha256": "18a0c0e821da0cfede05a293794105758ae87974658cf8847e037f1795d4cc0e",
+      "bytes": 43070
+    },
+    ".tmp/full-native-critic-v2/receipt.json": {
+      "sha256": "46d6f16fe2267ae8746cba288cb773a16e4aefe7fd91900806acc32bd8bde6e7",
+      "bytes": 195744
+    },
+    ".tmp/full-native-critic-v2/closure.json": {
+      "sha256": "e48af15fcd481c857647d0b8b62aa7b8d492d02ebafd0af14dd012432428527f",
+      "bytes": 16990
+    },
+    "reference/full-native-review-v1.md": {
+      "sha256": "48c521cf91ac3de103fd2b4e7e8fb7161760c4abd588e3befd0dafb696335790",
+      "bytes": 9362
+    },
+    "reference/full-correction-brief-v1.md": {
+      "sha256": "a0fd0d3d6e676a74eb918f2ab064d5249c525210208cd33ef0282c5b3e6de3ab",
+      "bytes": 4652
+    },
+    "reference/full-focused-review-v5.md": {
+      "sha256": "4407a2421185851e2f7f33732a127c485dbfe4b81938537fcd836d7354b1649b",
+      "bytes": 6575
+    },
+    "qa/full-focused-review-v5.json": {
+      "sha256": "58b5e29fe63c782aaf7bd60dd9395dc727efd0f2e0436cce7142ea737f410d69",
+      "bytes": 4903
+    },
+    ".tmp/full-native-critic/receipt.json": {
+      "sha256": "428858033c102fb216539aa5fbfd067a9a70678b428c62d35240b0afec87c65d",
+      "bytes": 11912
+    },
+    "full.json": {
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "bytes": 5060
+    },
+    "full.html": {
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+      "bytes": 649
+    },
+    "full.js": {
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "bytes": 37633
+    },
+    "full-surfaces.frag": {
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "bytes": 10269
+    },
+    "vendor/three.global.js": {
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "bytes": 701915
+    },
+    "assets/full/manifest.json": {
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+      "bytes": 2075
+    },
+    "assets/full/inter-outlines.json": {
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "bytes": 406146
+    },
+    "assets/full/inter-900.ttf": {
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "bytes": 327260
+    },
+    "assets/full/OFL-Inter.txt": {
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "bytes": 4472
+    },
+    "assets/full/logo.png": {
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "bytes": 18408
+    },
+    "assets/full/script-desktop.png": {
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "bytes": 1523876
+    },
+    "assets/full/script-mobile.png": {
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "bytes": 182390
+    },
+    "assets/full/storyboard.png": {
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "bytes": 1984503
+    },
+    "render-full.mjs": {
+      "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+      "bytes": 20291
+    }
+  },
+  "afterInputHashes": {
+    "reference/source-x.mp4": {
+      "sha256": "47c8bbc8e3d06953dd850500e4c7702ce690b3a4bc6708c4fc6a1f3d392df089",
+      "bytes": 11514975
+    },
+    "grifon-recreation-landscape-provisional.mp4": {
+      "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917",
+      "bytes": 24994401
+    },
+    ".tmp/paired-full.mp4": {
+      "sha256": "f38818a7f53b5b3108a7b77eb4a94e0810e21c12c97a504dc220663c852d05bf",
+      "bytes": 16376839
+    },
+    "qa/full-media.json": {
+      "sha256": "e41cd21f0b234bab353578d554296136096af5fff52e00ca055f7866f455570a",
+      "bytes": 3119
+    },
+    "qa/full-paired-review-receipt.json": {
+      "sha256": "b341f74d7e326f0d9fcf8f5d1f1c503d1f5120c3f67526eb29dbc2b2a28e1402",
+      "bytes": 3525
+    },
+    "grifon-opening-pilot-silent.mp4": {
+      "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+      "bytes": 5504941
+    },
+    ".tmp/full-native-critic-v3/prepare.mjs": {
+      "sha256": "5e4eac5f35610780f1444c47c9c38958a36aa1f567288a55b5e3e2da87d3a215",
+      "bytes": 14193
+    },
+    ".tmp/full-native-critic-v3/plan.json": {
+      "sha256": "d6cd35e5141663b80af5d5d55e620bdf258222a7cc6d9c145d6e0ae0e3dc9830",
+      "bytes": 5071
+    },
+    "reference/full-native-review-v2.md": {
+      "sha256": "38506e5d1e80cd42be09e78ab3e135a472bd9cd7f4ab763e3e23fcdd2adae2a5",
+      "bytes": 8624
+    },
+    "qa/full-native-review-v2.json": {
+      "sha256": "18a0c0e821da0cfede05a293794105758ae87974658cf8847e037f1795d4cc0e",
+      "bytes": 43070
+    },
+    ".tmp/full-native-critic-v2/receipt.json": {
+      "sha256": "46d6f16fe2267ae8746cba288cb773a16e4aefe7fd91900806acc32bd8bde6e7",
+      "bytes": 195744
+    },
+    ".tmp/full-native-critic-v2/closure.json": {
+      "sha256": "e48af15fcd481c857647d0b8b62aa7b8d492d02ebafd0af14dd012432428527f",
+      "bytes": 16990
+    },
+    "reference/full-native-review-v1.md": {
+      "sha256": "48c521cf91ac3de103fd2b4e7e8fb7161760c4abd588e3befd0dafb696335790",
+      "bytes": 9362
+    },
+    "reference/full-correction-brief-v1.md": {
+      "sha256": "a0fd0d3d6e676a74eb918f2ab064d5249c525210208cd33ef0282c5b3e6de3ab",
+      "bytes": 4652
+    },
+    "reference/full-focused-review-v5.md": {
+      "sha256": "4407a2421185851e2f7f33732a127c485dbfe4b81938537fcd836d7354b1649b",
+      "bytes": 6575
+    },
+    "qa/full-focused-review-v5.json": {
+      "sha256": "58b5e29fe63c782aaf7bd60dd9395dc727efd0f2e0436cce7142ea737f410d69",
+      "bytes": 4903
+    },
+    ".tmp/full-native-critic/receipt.json": {
+      "sha256": "428858033c102fb216539aa5fbfd067a9a70678b428c62d35240b0afec87c65d",
+      "bytes": 11912
+    },
+    "full.json": {
+      "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+      "bytes": 5060
+    },
+    "full.html": {
+      "sha256": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+      "bytes": 649
+    },
+    "full.js": {
+      "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276",
+      "bytes": 37633
+    },
+    "full-surfaces.frag": {
+      "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228",
+      "bytes": 10269
+    },
+    "vendor/three.global.js": {
+      "sha256": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "bytes": 701915
+    },
+    "assets/full/manifest.json": {
+      "sha256": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+      "bytes": 2075
+    },
+    "assets/full/inter-outlines.json": {
+      "sha256": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "bytes": 406146
+    },
+    "assets/full/inter-900.ttf": {
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "bytes": 327260
+    },
+    "assets/full/OFL-Inter.txt": {
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "bytes": 4472
+    },
+    "assets/full/logo.png": {
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "bytes": 18408
+    },
+    "assets/full/script-desktop.png": {
+      "sha256": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "bytes": 1523876
+    },
+    "assets/full/script-mobile.png": {
+      "sha256": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "bytes": 182390
+    },
+    "assets/full/storyboard.png": {
+      "sha256": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7",
+      "bytes": 1984503
+    },
+    "render-full.mjs": {
+      "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02",
+      "bytes": 20291
+    }
+  },
+  "extractionReceiptBefore": {
+    "sha256": "220ae323d771dcfe36d00af8a21e0b4b93d98eea49648525a4ef41089893786d",
+    "bytes": 200959
+  },
+  "extractionReceiptAfter": {
+    "sha256": "220ae323d771dcfe36d00af8a21e0b4b93d98eea49648525a4ef41089893786d",
+    "bytes": 200959
+  },
+  "closure": {
+    "boundInputCount": 31,
+    "cutBoardCount": 49,
+    "allBoundInputsMatchExtraction": true,
+    "allBoundInputsUnchanged": true,
+    "allCutBoardsMatchExtraction": true,
+    "allCutBoardsUnchanged": true,
+    "extractionReceiptUnchanged": true
+  },
+  "reviewerGpuRenders": 0,
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "report": "reference/full-native-cut-review-v3.md"
+}
+

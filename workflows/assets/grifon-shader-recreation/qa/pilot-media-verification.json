@@ -1,0 +1,46 @@
+{
+  "command": "verify",
+  "producerToolSha256": "6a5fac1046a2dba8ee0386aa7337530296971962a7f3e329b0dcf08f2c57f46d",
+  "verifiedBinding": {
+    "receiptSha256": "3375ea1795ce8ee221fd5a81d29f09f84f086ada5dcdc4601e57fd388b2889bf",
+    "mediaSha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "sources": {
+      "pilot.json": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+      "pilot.js": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "surfaces.frag": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "assets/sdf-manifest.json": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+      "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8"
+    }
+  },
+  "media": {
+    "file": "grifon-opening-pilot-silent.mp4",
+    "bytes": 5504941,
+    "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+    "frames": 222,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": "30000/1001",
+    "duration": 7.408,
+    "strictDecode": "PASS",
+    "audio": "intentionally absent: visual comparison pilot only",
+    "sources": {
+      "pilot.json": "cc01fb168b463a2c5e86232052db21520685306a85c17667aed7e24534fdc1af",
+      "pilot.html": "336e85ca73761c479bb35d4874e4a3e2318a49f7e7860979ea4b8719cd4017fe",
+      "pilot.js": "2986e7dd9eca3d9ded36dfaec49552d10191380c013c50d6191fc460198c38cd",
+      "surfaces.frag": "3f308397b05e0699e0f53e31a22fa5f1b3408e7af32d58fa12eea85a7259b4ff",
+      "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "assets/sdf-manifest.json": "5194302966167c44ea06c1556bbb1c47c590db32e2c331ffd12fa84e3bd2be8e",
+      "assets/introduction-sdf.bin": "0ccef9e7df56495159bc6f56e84aca03ccb8ce217405f49f4048b43e4d636b9d",
+      "assets/relief-sdf.bin": "9970a733985552ab5edad6ea0743e492cfc281bb8137aba7d7777c91a84e1691",
+      "assets/relief-height.bin": "947f2430e5f908102b9f4ad6d0da1c8bfdeec53aff1a789c2473e3edbc7f48d8"
+    },
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  }
+}

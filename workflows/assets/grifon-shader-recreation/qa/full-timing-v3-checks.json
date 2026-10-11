@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "build": {
+    "output": "qa/full-timing-v3-build-output.txt",
+    "exit": 0,
+    "elapsedMs": 32841,
+    "paidLiveFlagsUnset": true,
+    "command": "npm.cmd run build"
+  },
+  "vitest": {
+    "command": "npx.cmd vitest run",
+    "exit": 0,
+    "elapsedMs": 48394,
+    "output": "qa/full-timing-v3-vitest-output.txt",
+    "paidLiveFlagsUnset": true
+  },
+  "passedFiles": 116,
+  "passedTests": 1432,
+  "defaultSkippedFiles": 9,
+  "defaultSkippedTests": 32,
+  "proofs": [
+    {
+      "file": "qa/verify-full-timing-v3.mjs",
+      "bytes": 5014,
+      "sha256": "ed39f1d38aeb34be3e121bd836818662362e7f5874f893940dd2a24e600bacd7"
+    },
+    {
+      "file": "qa/full-timing-v3-raw-witness.json",
+      "bytes": 228575,
+      "sha256": "264eaa2c8f1a9abf7b9f0fa84b9d4375a052ee0f067e74251dea71390f4ecc98"
+    },
+    {
+      "file": "qa/full-production-v3.json",
+      "bytes": 9025,
+      "sha256": "8b47f6a4efa646eff11fe211ea15d95512d13baa6c8a31b62c684b3903f55982"
+    },
+    {
+      "file": "qa/full-production-implementation-v3.md",
+      "bytes": 5872,
+      "sha256": "2f18d8862c525916bcd6616e05a8ffb68b82d69b4c9c10ef8c53dd94d18abaeb"
+    },
+    {
+      "file": "qa/full-timing-v3-build-output.txt",
+      "bytes": 1895,
+      "sha256": "3d8d480e626a00534ea18c8f19d18c25154a3c691bd52db5ff4fb62198645ce2"
+    },
+    {
+      "file": "qa/full-timing-v3-vitest-output.txt",
+      "bytes": 301,
+      "sha256": "b3d0e1e60027e902b72f0dc9244dd827ca3dd96635a4c9657bca42772f978dca"
+    }
+  ],
+  "deviations": [],
+  "runtimeMediaEditsAfterFreeze": 0
+}

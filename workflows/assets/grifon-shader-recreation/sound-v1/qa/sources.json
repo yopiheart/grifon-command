@@ -1,0 +1,190 @@
+{
+  "register": {
+    "file": "../grifon-reference-full/assets/audio-v07/source-manifest.json",
+    "bytes": 2060,
+    "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+  },
+  "credits": {
+    "file": "../grifon-reference-full/assets/audio-v07/SOURCES.md",
+    "bytes": 2995,
+    "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9"
+  },
+  "before": {
+    "close-up.mp3": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/close-up.mp3",
+      "bytes": 3045294,
+      "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b"
+    },
+    "digital-clouds.mp3": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+    },
+    "sweep.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/sweep.wav",
+      "bytes": 138746,
+      "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3"
+    },
+    "air-zoom.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/air-zoom.wav",
+      "bytes": 224908,
+      "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa"
+    },
+    "shutter.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/shutter.wav",
+      "bytes": 62562,
+      "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824"
+    },
+    "lens.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/lens.wav",
+      "bytes": 217348,
+      "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3"
+    },
+    "tech-select.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/tech-select.wav",
+      "bytes": 88930,
+      "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed"
+    },
+    "key.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/key.wav",
+      "bytes": 58022,
+      "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205"
+    },
+    "bubble.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/bubble.wav",
+      "bytes": 54050,
+      "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f"
+    },
+    "gear.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/gear.wav",
+      "bytes": 200748,
+      "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af"
+    }
+  },
+  "after": {
+    "close-up.mp3": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/close-up.mp3",
+      "bytes": 3045294,
+      "sha256": "a7f05a29d07a84d38072ccd2b35204bca812db86e75b2a837e71cc144d3e739b"
+    },
+    "digital-clouds.mp3": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/digital-clouds.mp3",
+      "bytes": 3232566,
+      "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+    },
+    "sweep.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/sweep.wav",
+      "bytes": 138746,
+      "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3"
+    },
+    "air-zoom.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/air-zoom.wav",
+      "bytes": 224908,
+      "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa"
+    },
+    "shutter.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/shutter.wav",
+      "bytes": 62562,
+      "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824"
+    },
+    "lens.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/lens.wav",
+      "bytes": 217348,
+      "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3"
+    },
+    "tech-select.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/tech-select.wav",
+      "bytes": 88930,
+      "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed"
+    },
+    "key.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/key.wav",
+      "bytes": 58022,
+      "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205"
+    },
+    "bubble.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/bubble.wav",
+      "bytes": 54050,
+      "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f"
+    },
+    "gear.wav": {
+      "file": "workflows/assets/grifon-reference-full/assets/audio-v07/sources/gear.wav",
+      "bytes": 200748,
+      "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af"
+    }
+  },
+  "readAudioSources": [
+    "close-up.mp3",
+    "sweep.wav",
+    "air-zoom.wav",
+    "shutter.wav",
+    "lens.wav",
+    "tech-select.wav",
+    "key.wav",
+    "bubble.wav",
+    "gear.wav"
+  ],
+  "unusedRegisteredSource": "digital-clouds.mp3 (hash checked, not decoded)",
+  "musicRegion": {
+    "sourceInSample": 3027360,
+    "sourceOutSample": 4522400,
+    "sourceInSeconds": 63.07,
+    "sourceOutSeconds": 94.21666666666667,
+    "continuous": true,
+    "playbackRate": 1,
+    "sourceRegionPcmSha256": "eaaaa673d039f7d129c0627c47815501ed7b1d2e60d183cc108da9aa22383251",
+    "maximumEnvelopeError": 2.8560517506548422e-8
+  },
+  "sfxPreparation": {
+    "sweep": {
+      "trimStartSample": 3509,
+      "trimEndSample": 33228,
+      "rawTrimPeak": 0.47578657418489456,
+      "filteredDecodeSha256": "1ea64c5ee96a54f9d164fdf396085f3ee13c1ef51245a0ea769b0cbdb7f0dc7b"
+    },
+    "air-zoom": {
+      "trimStartSample": 6712,
+      "trimEndSample": 26786,
+      "rawTrimPeak": 0.9048305153846741,
+      "filteredDecodeSha256": "bfe7d8c68a9ef3a94e2cd15cb6de6af14498bb0f5a0ece8a0f994bdc5aa61f6d"
+    },
+    "shutter": {
+      "trimStartSample": 4899,
+      "trimEndSample": 12616,
+      "rawTrimPeak": 0.4047423154115677,
+      "filteredDecodeSha256": "6e60626ed93b17eaafe37c3f4b661b7f325a02eff8a0e7e0d830539a8560a5a0"
+    },
+    "lens": {
+      "trimStartSample": 291,
+      "trimEndSample": 24585,
+      "rawTrimPeak": 0.9687771201133728,
+      "filteredDecodeSha256": "858e54ca8c6be70ce9f4b187447367fb1140c478988e1365253b386a514e792b"
+    },
+    "tech-select": {
+      "trimStartSample": 0,
+      "trimEndSample": 1823,
+      "rawTrimPeak": 0.5775971710681915,
+      "filteredDecodeSha256": "2378a95107f4ef7e66b4470c2bf7cabad5d56af5730060fe934f8aa73a67332e"
+    },
+    "key": {
+      "trimStartSample": 4735,
+      "trimEndSample": 7862,
+      "rawTrimPeak": 0.4523679316043854,
+      "filteredDecodeSha256": "eb276d101116db9197684494aea429b7828ce349c1224df4a86a5836f334c487"
+    },
+    "bubble": {
+      "trimStartSample": 5096,
+      "trimEndSample": 6355,
+      "rawTrimPeak": 0.9590253233909607,
+      "filteredDecodeSha256": "11144d31986782ad257f36eb522950e08954c62b1f7244ebd9b45b8896c130ae"
+    },
+    "gear": {
+      "trimStartSample": 111,
+      "trimEndSample": 9649,
+      "rawTrimPeak": 0.8955143094062805,
+      "filteredDecodeSha256": "a1144d1a4ee81a256ad962c12fa96e18d3a95e4e38a8e93f7acf667cbbe43ea1"
+    }
+  },
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

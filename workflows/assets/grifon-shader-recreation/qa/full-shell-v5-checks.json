@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "sources": {
+    "full.json": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4",
+    "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+    "full.js": "be204f18807004b485d29a1ff53312a46376eeb8fec1249e5acb3d45a1b447f1",
+    "full-surfaces.frag": "f9572254a213b67dfda976bbf66423fa973f157fa010609b6ffddd0c47bd6214",
+    "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+    "assets/full/manifest.json": "f594993b04c93d07e2e157958bc37e5d141c20b1b1847c9660acc512fc275a98",
+    "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+    "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+    "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+    "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+    "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+    "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+    "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+  },
+  "focusedReceiptSha256": "13f5f530ce2cdf81d53e4ffc28c0456cdec6fc95b931ae7aaa553627c7000108",
+  "preservationSha256": "6a567858556a286cbba74513f64ca7bf44ab73487227c1357c24e7365204a4dc",
+  "stabilityReceiptSha256": "fa74ab6ef633c1780fd8088840ed02fd2b274c4219ea2d598179e8b8e9a287eb",
+  "frozenPayloadsVerified": 131,
+  "sourceAndCaptureBytesUnchanged": true,
+  "paidLiveFlagsUnset": [
+    "RUN_REGRESSION",
+    "RUN_BURNIN",
+    "RUN_IMAGE_GATE_SMOKE"
+  ],
+  "build": {
+    "command": "npm.cmd run build",
+    "exitCode": 0,
+    "file": "qa/full-shell-v5-build-output.txt",
+    "bytes": 1886,
+    "sha256": "f5b70117cad1d453d0d30b6ea192960aa7713a5f11e4857a31c5e1d8d8f1cb9c"
+  },
+  "vitest": {
+    "command": "npx.cmd vitest run",
+    "exitCode": 0,
+    "file": "qa/full-shell-v5-vitest-output.txt",
+    "bytes": 301,
+    "sha256": "6da819a3b3147b45e753705688f85a6eab25d0172dc0df434ccd5bc45e13ee57",
+    "passedFiles": 116,
+    "defaultSkippedFiles": 9,
+    "passedTests": 1432,
+    "defaultSkippedTests": 32,
+    "durationSeconds": 44.91
+  },
+  "liveFlagsSettingsTimeoutsOrSkipsChanged": false,
+  "fidelity": "INDEPENDENT_FOCUSED_REVIEW_PENDING"
+}

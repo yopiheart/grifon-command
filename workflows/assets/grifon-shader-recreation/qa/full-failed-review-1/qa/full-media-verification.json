@@ -1,0 +1,56 @@
+{
+  "command": "verify",
+  "verifiedProducerReceiptSha256": "d2ded0249b0975470fb107fcd1c19eda6b8f9cb0cb1ebe5a5df83ff5d2615162",
+  "media": {
+    "file": "grifon-recreation-landscape-provisional.mp4",
+    "bytes": 27719697,
+    "sha256": "045ba2b06e283f2894fd8581c49fac8ef51780244c5cf6ec7a9fdfcb78c27dab",
+    "frames": 932,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": "30000/1001",
+    "codec": "h264",
+    "timeBase": "1/30000",
+    "pixFmt": "yuv420p",
+    "duration": 31.146,
+    "videoDuration": 31.097733,
+    "strictDecode": "PASS",
+    "sources": {
+      "full.json": "729501ae328949605d5247636d1c0ec6a66e79de6a9ee5560f0f3f50f2650956",
+      "full.html": "3fe9681531b87d9dbe8475cedb98d82d799f36759d5cb630165877cc9cd70206",
+      "full.js": "20ca19a987f69bb6d42c3d2e4330102ba75592d647212c8cf28f1cbffd3ecd57",
+      "full-surfaces.frag": "8561080f540cdecb3d86a62f00f424294e8b1359d33abd9a7695ddc61cf9d73a",
+      "vendor/three.global.js": "3e189a772c8e3780cd9923e056310d9524f6b2244d49b3545366190b080a5bad",
+      "assets/full/manifest.json": "38144c26ba1f812332229ea1997a1bb5bdfccedda807ba699453a81969c18e79",
+      "assets/full/inter-outlines.json": "4380d788d52f32f4cefb196f7af8e4349091ad834257c8ae8a02b453ce061078",
+      "assets/full/inter-900.ttf": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+      "assets/full/OFL-Inter.txt": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+      "assets/full/logo.png": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+      "assets/full/script-desktop.png": "03114e0be20baa3b8e1897d5875390ef63288849a13d3c7cce566d95952e5b47",
+      "assets/full/script-mobile.png": "82164f7e2ba8646a82ebd3c80abfd87ac9e911107e024c50a2c4f909e61400a6",
+      "assets/full/storyboard.png": "0e58ba26239687d168186a5d8e824b017e11c22286676ca8f79593fb9e0c45f7"
+    },
+    "producerToolSha256": "c9e0402c4262b9e2ac6fe77f2c06fc977bd3c6970168faa712dcb2e93d0782c0",
+    "audio": {
+      "codec": "aac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "duration": 31.146
+    },
+    "providerCalls": 0,
+    "paidSpendUsd": 0
+  },
+  "temporal": {
+    "prefixFramesVerified": 222,
+    "temporalProof": "qa/full-temporal-mux.json",
+    "temporalProofSha256": "8d336402130aa05c3dd9521e1eddbf60366ba5bb183bcb201206059189e4e3ff"
+  },
+  "audio": {
+    "audioProof": "qa/full-audio-mux-proof.json",
+    "audioProofSha256": "1513d98c3ce7ee62a7a19c2d38e118d023947dfc4806f4ab7b6a3c95b8a36541",
+    "logicalDecodedAudioDuration": 31.14666666666667,
+    "decodedAudioSampleFrames": 1495040
+  }
+}

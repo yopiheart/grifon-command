@@ -1,0 +1,38 @@
+// Isolated defect controls: never alter the frozen pilot's inputs or export.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const dir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const fixture=path.join(dir,'.tmp/provenance-guard');
+fs.mkdirSync(path.join(fixture,'qa'),{recursive:true});
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const original=fs.readFileSync(path.join(dir,'qa/pilot-media.json'));
+const receipt=JSON.parse(original),inputFiles=Object.keys(receipt.sources);
+const immutable=[...inputFiles,'grifon-opening-pilot-silent.mp4','qa/pilot-media.json'];
+const before=Object.fromEntries(immutable.map(p=>[p,sha(fs.readFileSync(path.join(dir,p)))]));
+for(const file of immutable){const target=path.join(fixture,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(path.join(dir,file),target);}
+const legacy=fs.readFileSync(path.join(dir,'qa/pilot-encode-renderer.mjs'));
+const current=fs.readFileSync(path.join(dir,'render-pilot.mjs'));
+const helper=path.join(fixture,'render-pilot.mjs');
+const run=command=>spawnSync(process.execPath,[helper,command],{encoding:'utf8',maxBuffer:1024*1024});
+const altered=Buffer.concat([fs.readFileSync(path.join(dir,'surfaces.frag')),Buffer.from('\n// isolated changed source\n')]);
+fs.writeFileSync(path.join(fixture,'surfaces.frag'),altered);
+fs.writeFileSync(helper,legacy);
+const defect=run('verify');
+if(defect.status!==0||JSON.parse(fs.readFileSync(path.join(fixture,'qa/pilot-media.json'),'utf8')).sources['surfaces.frag']!==sha(altered))throw Error('Original rebinding defect was not demonstrated');
+fs.writeFileSync(path.join(fixture,'qa/pilot-media.json'),original);
+fs.writeFileSync(helper,current);
+const changedSource=run('verify');
+if(changedSource.status===0||!changedSource.stderr.includes('Existing media source binding differs'))throw Error('Changed-source control was not rejected');
+fs.copyFileSync(path.join(dir,'surfaces.frag'),path.join(fixture,'surfaces.frag'));
+fs.appendFileSync(path.join(fixture,'grifon-opening-pilot-silent.mp4'),Buffer.from('changed'));
+const changedMedia=run('verify');
+if(changedMedia.status===0||!changedMedia.stderr.includes('Existing encoded media binding differs'))throw Error('Changed-media control was not rejected');
+const unknown=run('verfiy');
+if(unknown.status===0||!unknown.stderr.includes('Unsupported pilot command'))throw Error('Unknown-command control was not rejected');
+for(const [file,hash]of Object.entries(before))if(sha(fs.readFileSync(path.join(dir,file)))!==hash)throw Error('Frozen input changed: '+file);
+const report={result:'PASS',producerToolSha256:sha(current),legacyToolSha256:sha(legacy),originalDefect:{command:'verify',exitCode:defect.status,observation:'Legacy helper rebound unchanged MP4 to modified shader hashes'},controls:{changedSource:{exitCode:changedSource.status,result:'REJECTED'},changedEncodedBytes:{exitCode:changedMedia.status,result:'REJECTED'},unknownCommand:{exitCode:unknown.status,result:'REJECTED'}},frozenInputHashesUnchanged:before,mediaReceiptUnchanged:true,providerCalls:0,paidSpendUsd:0};
+fs.writeFileSync(path.join(dir,'qa/pilot-provenance-guard.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({result:report.result,originalDefectDemonstrated:true,negativeControls:3,frozenInputsUnchanged:true}));
