@@ -5,6 +5,7 @@
 Chat: 01a12b66-b2cb-7ef1-bc28-515b314e7a8a.
 Checkout: F:/CodexWorktrees/de71/grifon-command.
 Branch: codex/oceanides-profile-interview-draft.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/179
 User requested a premium white-and-blue editable PowerPoint company profile,
 using the supplied letterhead inspiration, existing Oceanides logo and photos.
 Each page has the registered company name, colored header/footer, contacts and
@@ -27,6 +28,7 @@ User initially supplied ciprianoaugos@gmail.com; that message was sent before
 the user corrected the recipient to ceprianoaugust@gmail.com.
 Initial SENT receipt: message/thread ID 1a12b8ea2dce5dc4.
 Resent all three unchanged attachments to the corrected address; Gmail SENT.
+Corrected SENT receipt: message/thread ID 1a12b90d4a178c09.
 Subject: Oceanides Company Profile - First Draft for Review.
 The email attached PPTX, PDF and script/templates; it clearly requests review.
 Only the initially supplied and corrected recipients were contacted.
