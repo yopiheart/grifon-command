@@ -29,7 +29,7 @@
     document.getElementById('dialog-title').textContent = post.title;
     document.getElementById('dialog-family').textContent = `${post.family} / ${post.awareness}`;
     const image = document.getElementById('dialog-image');
-    image.src = post.preview;
+    image.src = document.querySelector(`.post-open[data-open="${post.id}"] img`).src;
     image.alt = post.title;
     caption.value = post.caption;
     status.textContent = '';

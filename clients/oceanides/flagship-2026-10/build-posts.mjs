@@ -15,7 +15,7 @@ const selected = only ? posts.filter((post) => post.id === only) : posts;
 if (!selected.length) throw new Error(`Unknown post ID: ${only}`);
 for (let i = 0; i < args.length; i++) {
   if (['--runtime-root', '--only'].includes(args[i]) && args[i + 1] && !args[i + 1].startsWith('--')) { i++; continue; }
-  throw new Error(`Usage: node build-posts.mjs [--runtime-root <existing-checkout>] [--only <01..06>]. Unknown or incomplete argument: ${args[i]}`);
+  throw new Error(`Usage: node build-posts.mjs [--runtime-root <existing-checkout>] [--only <post ID>]. Unknown or incomplete argument: ${args[i]}`);
 }
 
 const require = createRequire(runtimeRoot ? path.join(path.resolve(runtimeRoot), 'package.json') : import.meta.url);
@@ -31,8 +31,9 @@ const out = path.join(here, 'out');
 await mkdir(out, { recursive: true });
 const dataUrl = async (filename, type) => `data:${type};base64,${(await readFile(filename)).toString('base64')}`;
 const source = path.join(repo, 'clients/oceanides/assets');
-const [css, anton, inter, logo, ba2Before, ba2After, ba3Before, ba3After] = await Promise.all([
+const [baseCss, varietyCss, anton, inter, logo, ba2Before, ba2After, ba3Before, ba3After, gabriel, truck, inquiryUI] = await Promise.all([
   readFile(path.join(here, 'posts.css'), 'utf8'),
+  readFile(path.join(here, 'templates/variety.css'), 'utf8'),
   dataUrl(path.join(here, 'templates/fonts/Anton-Regular.ttf'), 'font/ttf'),
   dataUrl(path.join(here, 'templates/fonts/InterVariable.ttf'), 'font/ttf'),
   dataUrl(path.join(repo, 'funnels/oceanides-price-page/public/img/logo.webp'), 'image/webp'),
@@ -40,8 +41,12 @@ const [css, anton, inter, logo, ba2Before, ba2After, ba3Before, ba3After] = awai
   dataUrl(path.join(source, 'tb2-ba2-after.png'), 'image/png'),
   dataUrl(path.join(source, 'tb2-ba3-before.png'), 'image/png'),
   dataUrl(path.join(source, 'tb2-ba3-after.png'), 'image/png'),
+  dataUrl(path.join(repo, 'funnels/oceanides-price-page/public/img/gabriel.webp'), 'image/webp'),
+  dataUrl(path.join(repo, 'funnels/oceanides-price-page/public/img/hero-truck.webp'), 'image/webp'),
+  dataUrl(path.join(here, 'templates/inquiry-ui.webp'), 'image/webp'),
 ]);
-const assets = { logo, ba2Before, ba2After, ba3Before, ba3After };
+const css = `${baseCss}\n${varietyCss}`;
+const assets = { logo, ba2Before, ba2After, ba3Before, ba3After, gabriel, truck, inquiryUI };
 const browser = await chromium.launch();
 const manifest = [];
 

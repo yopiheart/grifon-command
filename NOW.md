@@ -3,28 +3,31 @@
 
 ## Active: Oceanides flagship refresh
 Branch codex/oceanides-flagship-refresh, worktree fee8/grifon-command.
-Neil authorized six flagship designs + matching interactive inquiry preview.
-Package clients/oceanides/flagship-2026-10: index.html, six2160x2700 PNGs,
+Neil authorized flagship refresh plus 12 designs from other saved inspirations.
+Package clients/oceanides/flagship-2026-10: index.html, 18 PNGs at 2160x2700,
 1080x1350 WEBPs, reusable canvases/builders, exact draft captions and sources.
 Three families: problem/proof/decision; navy/amber/Anton/Inter client brand.
-Neil supplied Globe0917-671-6383 and Smart0939-245-6217; added to all six
-poster footers/captions and refreshed gallery/exports/contact sheet. Render and
-20 browser checks PASS again. Source mappings distinguish adaptation from direct
-format reuse (S4 checklist, S21 native platform format, loose S28 stage sequence).
+Globe 0917-671-6383 and Smart 0939-245-6217 appear in all 18 footers/captions.
+New 07..18 first: portrait, poster, cutaway, whiteboard, collage, home, folder,
+fleet, actual inquiry UI, split, notebook, monochrome. Saved references recorded.
+18 render checks PASS; original six PNGs pixel-identical to 6ffbee1f.
+Saved approved Gabriel AI portrait + edited fleet labelled; SVGs, no paid AI.
 Inquiry has validation, back/edit, safe creative IDs, copy/select fallback/reset;
 no contact PII, network submission, booking or persistence. No paid generation.
-Build succeeded with --outDir F:/codex-task-output/oceanides-flagship-20261011.
+Build PASS again; dist junction: F:/codex-task-output/oceanides-flagship-20261011.
 C: filled during first build; preserved incomplete output on F: instead of deleting.
 Ignored node_modules junction reuses PRIMARY dependencies; dist junction points F:.
 Own PRIMARY/.tmp/oceanides-posting-audit-20261011 diagnostics preserved on F:
 with a junction at the original path (131 files/102525555 bytes matched).
-Full unit suite1432PASS/32SKIP (116filesPASS/9SKIP), --maxWorkers=2.
+Full unit suite rerun: 1432 PASS / 32 SKIP (116 files PASS / 9 SKIP).
 Bundle-leak, voice-sync, domain, PS1-ASCII, artifact-anchor checks PASS.
-Independent visual critic found mobile overlay masking poster footer: fixed.
-QA20/20PASS; embedded inquiry Next scroll defect reproduced before fix, nowPASS.
+Independent visual/diff review PASS (44/50); 09 label and 17 metadata fixed.
+QA 21/21 PASS; all 18 modals/captions/exports/IDs, 1440/390/320 responsive.
+First expanded QA 20/21 caught stale 15 manifest; evidence kept, rebuild fixed.
+Original embedded inquiry Next-scroll regression remains PASS.
 Final qa/report.json, regression evidence and README hold delivery verification.
-Backed up at b1364942; draftPR176 https://github.com/yopiheart/grifon-command/pull/176.
-Local review browser queued; helperPID26224/session8856 serves127.0.0.1:52904
+Own branch / draft PR176 https://github.com/yopiheart/grifon-command/pull/176.
+Local review helper PID23344/session62965 serves 127.0.0.1:61666
 /clients/oceanides/flagship-2026-10/ (package only). No public deployment.
 
 ## Release boundaries

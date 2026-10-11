@@ -18,7 +18,7 @@
       "status": "pass"
     },
     {
-      "name": "gallery family filters show two each and all six",
+      "name": "gallery family filters match the complete current catalog",
       "status": "pass"
     },
     {
@@ -63,6 +63,10 @@
     },
     {
       "name": "inquiry edit, outside NCR, back and reset preserve expected state",
+      "status": "pass"
+    },
+    {
+      "name": "all current creative IDs retain inquiry attribution",
       "status": "pass"
     },
     {

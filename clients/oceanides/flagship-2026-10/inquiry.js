@@ -21,7 +21,8 @@
   let currentStep = 0;
   let reachedStep = 0;
   const postParam = new URLSearchParams(window.location.search).get('post');
-  const sourcePost = new Set(['01', '02', '03', '04', '05', '06']).has(postParam) ? postParam : null;
+  const allowedPostIds = new Set(JSON.parse(document.getElementById('inquiry-post-ids').textContent));
+  const sourcePost = allowedPostIds.has(postParam) ? postParam : null;
   if (sourcePost) document.getElementById('inquiry-source').textContent = `FROM CREATIVE ${sourcePost} / INQUIRY PREVIEW`;
 
   const value = (name) => form.elements.namedItem(name).value;

@@ -1,3 +1,5 @@
+import { extraPosts } from './posts-variety.mjs';
+
 const sourceRoot = 'clients/oceanides/assets/';
 export const contacts = [
   { label: 'Globe', number: '0917-671-6383' },
@@ -10,7 +12,7 @@ const archiveContext = {
   timing: 'Historical archive. Actual job dates and locations are not verified. No current service availability is implied.',
 };
 
-export const posts = [
+const basePosts = [
   {
     id: '01',
     slug: '01-paulit-ulit-ang-bara',
@@ -133,7 +135,9 @@ Buksan ang inquiry guide at ayusin ang city, concern, at target na schedule bago
     destination: 'inquiry.html?post=06',
     publicationStatus: 'private-review',
   },
-].map(post => ({
+];
+
+export const posts = [...basePosts, ...extraPosts].map(post => ({
   ...post,
   caption: `${post.caption}\n\n${contacts.map(contact => `${contact.label}: ${contact.number}`).join('\n')}`,
 }));

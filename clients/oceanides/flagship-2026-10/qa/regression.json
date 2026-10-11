@@ -17,8 +17,8 @@
   },
   "after": {
     "status": "pass",
-    "passed": 20,
-    "total": 20,
+    "passed": 21,
+    "total": 21,
     "stageCheck": "pass",
     "bounds": [
       {

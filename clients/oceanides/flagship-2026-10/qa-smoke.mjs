@@ -4,7 +4,7 @@ import { readFile, mkdir, writeFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { posts } from './posts.mjs';
+import { posts, contacts } from './posts.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../../..');
@@ -130,10 +130,12 @@ if (args.includes('--serve')) {
         }
       });
     }
-    await check('gallery family filters show two each and all six', async () => {
+    await check('gallery family filters match the complete current catalog', async () => {
       for (const family of ['problem', 'proof', 'decision', 'all']) {
         await page.locator(`[data-filter="${family}"]`).click();
-        assert.equal(await page.locator('.post-card:visible').count(), family === 'all' ? 6 : 2);
+        const count = family === 'all' ? posts.length : posts.filter(post => post.family === family).length;
+        assert.equal(await page.locator('.post-card:visible').count(), count);
+        assert.equal((await page.locator(`[data-filter="${family}"] span`).textContent()).trim(), String(count).padStart(2, '0'));
         assert.equal(await page.locator(`[data-filter="${family}"]`).getAttribute('aria-pressed'), 'true');
       }
     });
@@ -153,12 +155,13 @@ if (args.includes('--serve')) {
     });
     await check('render manifest matches current creative sources and output dimensions', async () => {
       const manifest = JSON.parse(await readFile(path.join(here, 'out/manifest.json'), 'utf8'));
-      assert.equal(manifest.length, 6);
+      assert.equal(manifest.length, posts.length);
       for (const post of posts) {
         const entry = manifest.find((item) => item.id === post.id);
         assert.ok(entry, `missing manifest entry ${post.id}`);
         for (const key of ['slug', 'title', 'caption', 'inspiration', 'assetSources', 'proofContext', 'publicationStatus', 'destination']) assert.deepEqual(entry[key], post[key], `stale ${key} in manifest for ${post.id}`);
         assert.deepEqual(entry.verification.issues, []);
+        for (const contact of contacts) assert.equal(post.caption.split(contact.number).length - 1, 1, `contact missing or duplicated in ${post.id}`);
         for (const source of post.assetSources) assert.ok((await readFile(path.join(repo, source))).length > 0, `missing source ${source}`);
         const metadata = await sharp(path.join(here, 'out', entry.outputs.webp)).metadata();
         assert.deepEqual([metadata.width, metadata.height], [1080, 1350]);
@@ -169,6 +172,8 @@ if (args.includes('--serve')) {
         const opener = page.locator(`.post-open[data-open="${post.id}"]`);
         await opener.click();
         assert.ok(await page.locator('#creative-dialog').evaluate((element) => element.open));
+        await page.locator('#dialog-image').evaluate(image => image.decode());
+        assert.equal(await page.locator('#dialog-image').getAttribute('src'), await opener.locator('img').getAttribute('src'));
         assert.equal(await page.locator('#dialog-caption').inputValue(), post.caption);
         assert.ok(!(await page.locator('#dialog-proof').textContent()).includes('[object Object]'), 'proof provenance renders as an object rather than text');
         const href = await page.locator('#download-post').getAttribute('href');
@@ -258,6 +263,13 @@ if (args.includes('--serve')) {
       assert.equal(await page.locator('input:checked').count(), 0);
       assert.equal(await page.locator('#city').inputValue(), '');
       assert.ok(await page.locator('[data-step="2"]').isDisabled());
+    });
+    await check('all current creative IDs retain inquiry attribution', async () => {
+      for (const post of posts) {
+        await page.goto(`${base}inquiry.html?post=${post.id}`, { waitUntil: 'domcontentloaded' });
+        assert.match(await page.locator('#inquiry-source').textContent(), new RegExp(`CREATIVE ${post.id}`));
+      }
+      assert.deepEqual(await page.locator('#inquiry-post-ids').evaluate(element => JSON.parse(element.textContent)), posts.map(post => post.id));
     });
     await check('unknown and malicious source query are inert', async () => {
       for (const post of ['999', '<img src=x onerror="window.__injected=1">', '</script><script>window.__injected=1</script>', '03&city=<script>window.__injected=1</script>']) {

@@ -1,4 +1,5 @@
 import { contacts } from '../posts.mjs';
+import { renderVarietyCanvas } from './variety.mjs';
 
 const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 
@@ -57,7 +58,7 @@ export function renderCanvas(post, assets) {
       <div class="process-close"><p>Malinaw muna.<br><strong>Bago ka pumayag.</strong></p><span class="line-arrow"></span></div>
       ${footer()}`,
   };
-  if (!templates[post.id]) throw new Error(`Unknown post template: ${post.id}`);
+  if (!templates[post.id]) return renderVarietyCanvas(post, assets, { brand, footer, photo, escape });
   return `<main id="canvas" class="canvas post-${post.id}" aria-label="${escape(post.title)}">${templates[post.id]()}</main>`;
 }
 
