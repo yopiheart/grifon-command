@@ -1,0 +1,9 @@
+{
+  "scope":"Exact source-frame startup/nonlinear verification; no pixel tolerance introduced.",
+  "originalFailure":{"scene":"orb","time":1.69,"firstSha256":"499cc8fa58750ae02400c36ed595ce3767b4a6cfe6075b6712369adfa36fdd41","freshSha256":"26b42da0f7d779e930f153a6dd4a37d57dd4380e82f2e2c9566a3e2db28baa3c","changedPixels":1,"maxChannelDelta":1,"differenceBounds":[918,929,918,929],"evidence":["startup-first.png","startup-fresh.png","startup-failure.json"]},
+  "confirmed":"Failure was confined to one pixel in the transformed orb, rather than the opening text. A scoped Chromium --disable-gpu-rasterization flag made exact fresh-browser/nonlinear checks pass in all three scenes while actual shader evidence remained native AMD WebGPU.",
+  "inference":"Chromium's raster/compositor path contributed to the one-channel resampling difference. Internal driver/cache behavior was not inspected; raw GPU canvas equivalence was not claimed.",
+  "verification":"Current qa/capture-check.json binds successful exact gates to current composition/helper/bundle/renderer source hashes. The historical failed images remain labelled as failures.",
+  "pixelTolerance":0,
+  "providerCalls":0,"paidSpendUsd":0
+}

@@ -1,0 +1,5 @@
+# Local licensed recordings and isolated audio are not a redistributable library.
+/assets/audio/
+/*-stem.wav
+/mix-premaster.wav
+/mix-master.wav

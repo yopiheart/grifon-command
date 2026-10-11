@@ -1,0 +1,42 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { cueManifest, validateSpec } from './action-spec.mjs';
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(HERE, '../../..');
+const PRIMARY = path.resolve(process.env.GRIFON_TOOL_ROOT || ROOT.split(`${path.sep}.tmp${path.sep}worktrees${path.sep}`)[0]);
+const ffmpeg = path.join(PRIMARY, 'node_modules/ffmpeg-static/ffmpeg.exe');
+const spec = validateSpec(JSON.parse(fs.readFileSync(path.join(HERE, 'pilot.json'), 'utf8')));
+const manifest = cueManifest(spec);
+const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+fs.mkdirSync(path.join(HERE, 'qa'), { recursive: true });
+function run(args) {
+  const result = spawnSync(ffmpeg, ['-nostdin', '-hide_banner', ...args], { encoding: 'utf8', maxBuffer: 12 * 1024 * 1024, timeout: 30000 });
+  if (result.status !== 0) throw Error(`FFmpeg failed (${result.status}): ${result.stderr.slice(-1500)}`);
+  return result.stderr;
+}
+const output = name => path.join(HERE, name);
+const music = spec.audio.music;
+run(['-y', '-i', path.resolve(HERE, music.asset), '-af', `atrim=start=${music.sourceIn}:duration=${spec.duration},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,volume=${music.gainDb}dB,afade=t=in:st=0:d=${music.fadeIn},afade=t=out:st=${spec.duration - music.fadeOut}:d=${music.fadeOut}`, '-c:a', 'pcm_s24le', output('music-stem.wav')]);
+const assetIds = Object.keys(spec.audio.assets);
+const inputs = assetIds.flatMap(id => ['-i', path.resolve(HERE, spec.audio.assets[id])]);
+const filters = manifest.cues.map((cue, index) => {
+  const assetIndex = assetIds.indexOf(cue.assetId);
+  const duration = cue.sourceOut - cue.sourceIn;
+  const tail = Math.min(.01, duration / 4);
+  return `[${assetIndex}:a]atrim=start=${cue.sourceIn}:end=${cue.sourceOut},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,volume=${cue.gainDb}dB,afade=t=out:st=${duration - tail}:d=${tail},adelay=${Math.round(cue.start * 48000)}S:all=1[c${index}]`;
+});
+filters.push(`${manifest.cues.map((_, index) => `[c${index}]`).join('')}amix=inputs=${manifest.cues.length}:duration=longest:normalize=0,apad=whole_dur=${spec.duration},atrim=duration=${spec.duration}[sfx]`);
+run(['-y', ...inputs, '-filter_complex', filters.join(';'), '-map', '[sfx]', '-t', String(spec.duration), '-c:a', 'pcm_s24le', output('sfx-stem.wav')]);
+run(['-y', '-i', output('music-stem.wav'), '-i', output('sfx-stem.wav'), '-filter_complex', '[0:a][1:a]amix=inputs=2:normalize=0:duration=longest[mix]', '-map', '[mix]', '-c:a', 'pcm_f32le', output('mix-premaster.wav')]);
+const measured = run(['-hide_banner', '-i', output('mix-premaster.wav'), '-af', 'loudnorm=I=-16:TP=-1.8:LRA=9:print_format=json', '-f', 'null', '-']);
+const firstPass = JSON.parse(measured.slice(measured.lastIndexOf('{'), measured.lastIndexOf('}') + 1));
+const filter = `loudnorm=I=-16:TP=-1.8:LRA=9:measured_I=${firstPass.input_i}:measured_TP=${firstPass.input_tp}:measured_LRA=${firstPass.input_lra}:measured_thresh=${firstPass.input_thresh}:offset=${firstPass.target_offset}:linear=true:print_format=json,aresample=48000`;
+run(['-y', '-i', output('mix-premaster.wav'), '-af', filter, '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s24le', output('mix-master.wav')]);
+const stderr = run(['-hide_banner', '-i', output('mix-master.wav'), '-af', 'ebur128=peak=true', '-f', 'null', '-']);
+const sources = [music.asset, ...Object.values(spec.audio.assets)].map(asset => ({ asset, sha256: hash(path.resolve(HERE, asset)) }));
+fs.writeFileSync(output('qa/audio-cue-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+fs.writeFileSync(output('qa/audio.json'), JSON.stringify({ specSha256: hash(output('pilot.json')), sources, firstPass, finalMeter: stderr.slice(stderr.lastIndexOf('Summary:')), stems: ['music-stem.wav', 'sfx-stem.wav', 'mix-master.wav'].map(file => ({ file, sha256: hash(output(file)) })), auditoryQa: 'Pending: this tool measures levels and timing; direct listening was not available.', providerCalls: 0, paidSpendUsd: 0 }, null, 2) + '\n');
+console.log('PASS: derived audio cue manifest and separate music/SFX/master stems; zero provider calls.');

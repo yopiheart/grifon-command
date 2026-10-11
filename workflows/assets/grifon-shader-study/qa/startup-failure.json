@@ -1,0 +1,58 @@
+{
+  "mode": "after",
+  "a": "e6f7f51dd8d9d5c679b705f489427e59989ca2c006729d99ad6c9e3ffc47690f",
+  "fresh": "a371c272dbbdfd6f1bcc93010b1a55562b400d4b16b9e3e3abcb07a8c49704e6",
+  "state": {
+    "time": 1.6,
+    "scene": "orb",
+    "mode": "after",
+    "materialTime": 1.6,
+    "orbReveal": 1,
+    "openingReveal": 1,
+    "orbScale": 1.0147941695026446,
+    "cardReveal": 0,
+    "cardSweep": 0,
+    "compress": 0,
+    "finishReveal": 0,
+    "transitionSweep": 0,
+    "fade": 0,
+    "reveal": 1,
+    "sweep": 0,
+    "finishAtmosphere": 0
+  },
+  "gpu": {
+    "renderer": "WebGPU",
+    "failure": null,
+    "package": "shaders",
+    "version": "4.0.1",
+    "backend": "webgpu",
+    "adapter": {
+      "vendor": "amd",
+      "architecture": "gcn-5",
+      "device": "",
+      "description": "",
+      "isFallbackAdapter": false
+    },
+    "materials": [
+      "FlowingGradient",
+      "LiquidMetal",
+      "FlutedGlass"
+    ],
+    "resolution": {
+      "background": [
+        1920,
+        1080
+      ],
+      "orb": [
+        960,
+        960
+      ],
+      "glass": [
+        1400,
+        340
+      ]
+    },
+    "timing": "speed=0; absolute-time effect uniforms; renderSyntheticFrame(0, waitForGpu=true)"
+  },
+  "source": "9fe9eb7f08eee117e29ed45aa1e00f448fcd3d4f8dd0903bd08ee054905b3fd4"
+}

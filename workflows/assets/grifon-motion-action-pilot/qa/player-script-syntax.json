@@ -1,0 +1,17 @@
+{
+  "original": {
+    "file": "qa/player-invalid-script.txt",
+    "sha256": "57373de90b73301c4e735ca978e92cb45b3ce54e5d913fe8e7a09c9140705501",
+    "exitCode": 1,
+    "error": "missing ) after argument list"
+  },
+  "fixed": {
+    "artifact": "artifacts/grifon-motion-action-pilot.html",
+    "sha256": "6a97eeee665e0030b8140461879cb19916f5bdb65f04b012eefde6c7ff0779d7",
+    "builderSha256": "5960a352c50293d1743c426b388bece53c40ba8c9d0336749dcb95b3555f326d",
+    "verifierSha256": "0f25b5cc4d9244726f5fe895ac5942baa309bf85448150a013122ea45c264ab2",
+    "exitCode": 0,
+    "result": "PASS: 1 emitted player script(s) parse."
+  },
+  "limits": "Syntax only; functional playback is independently checked in the browser. Film and media hashes unchanged."
+}

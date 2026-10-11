@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-08",
+  "scope": "Shared scene/action pilot; application and installed skill unchanged",
+  "build": {"command": "npm.cmd run build", "exitCode": 0},
+  "unit": {"command": "npm.cmd run test -- --maxWorkers=2", "exitCode": 0, "passed": 1432, "skipped": 32},
+  "codex": {"command": "npm.cmd run check:codex", "exitCode": 0, "passed": 26},
+  "artifactAnchors": {"command": "npm.cmd run check:artifact-anchors", "exitCode": 0},
+  "playerSyntax": {"command": "node workflows/assets/grifon-motion-action-pilot/verify-player.mjs", "exitCode": 0},
+  "contractTests": {"passed": 16, "independentReviewer": "action_contract_review"},
+  "independentCodeReview": {"status": "PASS_AFTER_FIXES", "findingsResolved": ["Inherited easing lookup", "Missing authored action binding", "Unrelated or ignored scene exit binding", "Inherited audio asset lookup", "Generated player syntax error"], "recordedGpuEvidenceReviewed": true, "independentGpuCaptureRepeated": false},
+  "mobile": {"status": "PASS_WITH_DISCLOSED_DRIVER_LIMITATION", "viewport": [390, 844], "driver": "Root documented CUA on scoped HTTP endpoint", "independentScreenshotAndReceiptReview": "pilot_mobile_smoke", "receipt": "smoke-cua.json", "independentReport": "mobile-independent-review.json"},
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "limitations": ["Direct audio listening not performed", "Physical phone rendering not tested", "Shader GPU validation is specific to the recorded native desktop adapter", "Private review only; selected source SFX are not cleared for commercial publication"]
+}

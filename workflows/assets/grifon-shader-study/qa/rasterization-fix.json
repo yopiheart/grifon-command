@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-07",
+  "scope": "Opening text rasterization and composition-browser isolation; exact pixel checks retained",
+  "diagnosis": {
+    "confirmed": "Startup differences were confined to opening-text edges. Visible background and orb GPU canvas readbacks matched across seek history and fresh startup.",
+    "inference": "Chromium inherited a different text raster/cache path after rendering the conventional baseline in the same browser. The exact internal glyph-cache mechanism was not inspected."
+  },
+  "originalFailure": {
+    "indexSha256": "6dcd9a632c0c95faa66897706750ff3444a599c97f5767c1fd335a2e172af25e",
+    "time": 1.6,
+    "historyFrameSha256": "34ebeaeda1a4123b08e0573d14a7632e17f2d89ac74d5369427d912c725f4505",
+    "freshFrameSha256": "147f420e0fa4c90720a5402c29270afc76b4a63193361f5c5d04268414d68b7e",
+    "changedPixels": 15,
+    "maxChannelDelta": 1,
+    "totalChannelDelta": 38,
+    "differenceBounds": [337, 506, 896, 563],
+    "localArchive": ".tmp/shader-builder-check/startup-original-{index.html,first.png,fresh.png}"
+  },
+  "cssAloneDidNotFixSharedBrowser": {
+    "indexSha256": "147fda40106d05e78c56954f39e9e14b01e6aaec3adb0cf4b1bd080cd1fbb525",
+    "historyFrame": "after-startup-first.png",
+    "historyFrameSha256": "e6f7f51dd8d9d5c679b705f489427e59989ca2c006729d99ad6c9e3ffc47690f",
+    "freshFrame": "after-startup-fresh.png",
+    "freshFrameSha256": "a371c272dbbdfd6f1bcc93010b1a55562b400d4b16b9e3e3abcb07a8c49704e6",
+    "changedPixels": 20,
+    "maxChannelDelta": 1,
+    "totalChannelDelta": 54,
+    "differenceBounds": [224, 506, 863, 564],
+    "status": "FAIL; historical evidence retained, not relabeled as fixed"
+  },
+  "fix": {
+    "css": "#opening-copy { will-change: opacity; }",
+    "exporterRequirement": "Launch a fresh Chromium browser for each composition mode; never render before and after in the same browser instance.",
+    "fixedIndexSha256": "147fda40106d05e78c56954f39e9e14b01e6aaec3adb0cf4b1bd080cd1fbb525",
+    "timingOrMaterialChanges": false,
+    "pixelTolerance": 0
+  },
+  "canonicalVerification": {
+    "afterOpening": {
+      "time": 1.6,
+      "history": [0.8, 1.6, 2.9, 4.15, 5.85, 6.8, 1.6],
+      "independentFreshStarts": 2,
+      "historyAndBothFreshSha256": "a371c272dbbdfd6f1bcc93010b1a55562b400d4b16b9e3e3abcb07a8c49704e6",
+      "status": "PASS with one mode per browser"
+    },
+    "afterGlass": {
+      "time": 3.1,
+      "history": [0.8, 2.9, 3.1],
+      "historyAndFreshSha256": "23f6345381879fd966cb3959540b200f9430578217f27430f57d192c857e94ae",
+      "changedPixels": 0,
+      "status": "PASS"
+    },
+    "afterFinish": {
+      "time": 6.8,
+      "history": [0.8, 2.9, 5.85, 6.8],
+      "historyAndFreshSha256": "21f99402f1a279cb0f09041f09d9daafce946f45edaeb3ddccfbb83c3f3e635f",
+      "changedPixels": 0,
+      "status": "PASS"
+    },
+    "exporterCheck": {
+      "command": "node workflows/assets/grifon-shader-study/render.mjs check",
+      "evidence": "capture-check.json",
+      "browser": "149.0.7827.55",
+      "beforeAndAfter": "PASS: nonlinear seek, independent fresh-browser frame, stationary brand hold",
+      "actualAfterBackend": "WebGPU; AMD gcn-5; isFallbackAdapter=false",
+      "runtimeErrors": 0,
+      "externalRequests": 0
+    }
+  },
+  "limits": "This receipt verifies source-frame rasterization. Final encoded media verification is recorded separately in media.json. Sharing a browser between modes remains unsupported."
+}
