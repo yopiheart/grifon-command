@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "status": "FINAL_EVIDENCE_REVIEW_COMPLETE",
+  "findings": [],
+  "completesCheckpoint": {
+    "report": "workflows/assets/grifon-motion-repeatability/qa/final-evidence-review.json",
+    "sha256": "d0395006e9efa5363235bf6c23b0585c1b37bdb6bf54ec5b745b6018f8fa8d8f",
+    "qualification": "The immutable report was written before root reported the post-packaging control rerun. Its pending item is completed by the evidence below; all earlier claims and binding reviews remain applicable."
+  },
+  "postPackagingCodexControls": {
+    "command": "npm.cmd run check:codex",
+    "exitCode": 0,
+    "exitCodeAuthority": "Root observed completed session9232 and reported exit0",
+    "tests": 26,
+    "passes": 26,
+    "failures": 0,
+    "skips": 0,
+    "countersIndependentlyReadFromLog": true,
+    "log": {
+      "path": ".tmp/motion-repeatability-root/final-codex-attributes.log",
+      "bytes": 2546,
+      "sha256": "0828ca953cee1da70bcfac8174326287e67bb45c0cf8ba28e915bba28bdc5d2e"
+    }
+  },
+  "publication": "Root reported the initial implementation commit7b99855 pushed and draft PR170 created/attached. Root owns the final NOW/review-only follow-up commit; this reviewer makes no Git mutations.",
+  "limitations": "Full new932-frame shader capture remains NOT RUN; technical media/browser evidence does not claim auditory quality or universal reference conversion.",
+  "preservation": "No existing reports, source, artifact, caches or media modified by this completion addendum."
+}

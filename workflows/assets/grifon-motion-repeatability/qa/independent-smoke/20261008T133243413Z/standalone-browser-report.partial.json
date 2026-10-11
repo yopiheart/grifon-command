@@ -1,0 +1,657 @@
+{
+  "schemaVersion": 1,
+  "status": "RUNNING",
+  "scope": "Independent normal-loopback draft player smoke; no direct listening or musical-fit claim",
+  "engine": "Codex In-app Browser",
+  "artifact": {
+    "file": "artifacts/grifon-motion-reuse-preview.html",
+    "sha256": "1b64604e0432c5ec7ba5004e204f23f829074da975efc92a822ada2f34444af4",
+    "bytes": 2315769
+  },
+  "helper": {
+    "pid": 1264,
+    "url": "http://127.0.0.1:49350"
+  },
+  "checks": [
+    {
+      "name": "mobile390x844 geometry and46px controls",
+      "status": "PASS",
+      "evidence": {
+        "width": 390,
+        "height": 844,
+        "clientWidth": 375,
+        "scrollWidth": 375,
+        "minimumHeight": 46,
+        "minimumWidth": 156
+      }
+    },
+    {
+      "name": "shader metadata and actual progress",
+      "status": "PASS",
+      "evidence": {
+        "nativeDimensions": [
+          960,
+          540
+        ],
+        "duration": 3.003,
+        "readyState": 4,
+        "progressTime": 0.123268,
+        "paused": false
+      }
+    },
+    {
+      "name": "shader Pause and rapidPlayPause",
+      "status": "PASS",
+      "evidence": {
+        "pausedTimes": [
+          0.171688,
+          0.457702
+        ],
+        "controlsEnabled": true,
+        "status": "Paused."
+      }
+    },
+    {
+      "name": "shader Restart",
+      "status": "PASS",
+      "evidence": {
+        "time": 0,
+        "paused": true
+      }
+    },
+    {
+      "name": "shader completed naturally and scrubbedto0.300",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Shader launch / landscape",
+        "play": "Play preview",
+        "selected": "0",
+        "slider": 0.3,
+        "status": "Preview complete. Restart or choose another draft.",
+        "video": {
+          "duration": 3.003,
+          "ended": false,
+          "error": null,
+          "height": 540,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 0.3,
+          "width": 960
+        }
+      }
+    },
+    {
+      "name": "shader actual mute toggle",
+      "status": "PASS",
+      "evidence": {
+        "muted": {
+          "duration": 3.003,
+          "ended": false,
+          "error": null,
+          "height": 540,
+          "muted": true,
+          "paused": true,
+          "readyState": 4,
+          "time": 0.3,
+          "width": 960
+        },
+        "unmuted": {
+          "duration": 3.003,
+          "ended": false,
+          "error": null,
+          "height": 540,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 0.3,
+          "width": 960
+        }
+      }
+    },
+    {
+      "name": "shader inline browser media bytebinding (download separately unverified)",
+      "status": "PASS",
+      "evidence": {
+        "bytes": 846083,
+        "sha256": "8b28be232b179bbad5f9ac29e5ee962ac2b92935d918c42d89649fe7bff83556"
+      }
+    },
+    {
+      "name": "standalone requested desktop1280x844 nooverflow46pxcontrols",
+      "status": "PASS",
+      "evidence": {
+        "clientWidth": 1265,
+        "controls": [
+          {
+            "height": 46,
+            "label": "Shader launch / landscapeTypography + UI / portrait",
+            "width": 863.8125
+          },
+          {
+            "height": 46,
+            "label": "Play preview",
+            "width": 223.75
+          },
+          {
+            "height": 46,
+            "label": "Restart",
+            "width": 223.75
+          },
+          {
+            "height": 46,
+            "label": "Mute sound",
+            "width": 223.75
+          },
+          {
+            "height": 46,
+            "label": "Download MP4",
+            "width": 223.75
+          },
+          {
+            "height": 46,
+            "label": "Preview timeline",
+            "width": 831.421875
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 1265,
+        "width": 1280
+      }
+    },
+    {
+      "name": "choose portrait while playing cancels prior playback",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Play preview",
+        "selected": "1",
+        "slider": 0,
+        "status": "Typography + UI / portrait / measured here: 19.9s first render, 0.80s verified repeat (0 new frames). Tap Play.",
+        "video": {
+          "duration": 3,
+          "ended": false,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 0,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "portrait inline browser media bytebinding",
+      "status": "PASS",
+      "evidence": {
+        "bytes": 52970,
+        "sha256": "c3abc6b0f83db7009b137fda9ca493aaa83f163b6c7f0247acb3ca246147cfcf"
+      }
+    },
+    {
+      "name": "standalone portrait actual decoded24Hz playback",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Pause"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Pause",
+        "selected": "1",
+        "slider": 0,
+        "status": "Playing draft preview.",
+        "video": {
+          "duration": 3,
+          "ended": false,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": false,
+          "readyState": 4,
+          "time": 0.175131,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standalone portrait Pause retainscontrols",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Play preview",
+        "selected": "1",
+        "slider": 0.226,
+        "status": "Paused.",
+        "video": {
+          "duration": 3,
+          "ended": false,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 0.226362,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standalone portrait rapidPlayPause",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Play preview",
+        "selected": "1",
+        "slider": 0.492,
+        "status": "Paused.",
+        "video": {
+          "duration": 3,
+          "ended": false,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 0.492121,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standalone portrait Restart exactzero",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Play preview",
+        "selected": "1",
+        "slider": 0,
+        "status": "Restarted. Tap Play.",
+        "video": {
+          "duration": 3,
+          "ended": false,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 0,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standalone portrait naturallyends",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Play preview",
+        "selected": "1",
+        "slider": 3,
+        "status": "Preview complete. Restart or choose another draft.",
+        "video": {
+          "duration": 3,
+          "ended": true,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 3,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standalone portrait mute toggle",
+      "status": "PASS",
+      "evidence": {
+        "muted": {
+          "duration": 3,
+          "ended": true,
+          "error": null,
+          "height": 960,
+          "muted": true,
+          "paused": true,
+          "readyState": 4,
+          "time": 3,
+          "width": 540
+        },
+        "unmuted": {
+          "duration": 3,
+          "ended": true,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 4,
+          "time": 3,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standalone portrait midclip scrub pauses decodedtime",
+      "status": "PASS",
+      "evidence": {
+        "controls": [
+          {
+            "disabled": false,
+            "label": "Shader launch / landscapeTypography + UI / portrait"
+          },
+          {
+            "disabled": false,
+            "label": "Play preview"
+          },
+          {
+            "disabled": false,
+            "label": "Restart"
+          },
+          {
+            "disabled": false,
+            "label": "Mute sound"
+          },
+          {
+            "disabled": false,
+            "label": "Download MP4"
+          },
+          {
+            "disabled": false,
+            "label": "Preview timeline"
+          }
+        ],
+        "label": "Typography + UI / portrait",
+        "play": "Play preview",
+        "selected": "1",
+        "slider": 1.5,
+        "status": "Preview complete. Restart or choose another draft.",
+        "video": {
+          "duration": 3,
+          "ended": false,
+          "error": null,
+          "height": 960,
+          "muted": false,
+          "paused": true,
+          "readyState": 1,
+          "time": 1.5,
+          "width": 540
+        }
+      }
+    },
+    {
+      "name": "standaloneportrait390x844 nooverflow46pxcontrols",
+      "status": "PASS",
+      "evidence": {
+        "clientWidth": 375,
+        "controls": [
+          {
+            "height": 46,
+            "label": "Shader launch / landscapeTypography + UI / portrait",
+            "width": 262.8125
+          },
+          {
+            "height": 46,
+            "label": "Play preview",
+            "width": 156
+          },
+          {
+            "height": 46,
+            "label": "Restart",
+            "width": 156
+          },
+          {
+            "height": 46,
+            "label": "Mute sound",
+            "width": 156
+          },
+          {
+            "height": 46,
+            "label": "Download MP4",
+            "width": 156
+          },
+          {
+            "height": 46,
+            "label": "Preview timeline",
+            "width": 230.421875
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    }
+  ],
+  "shots": [
+    {
+      "file": "standalone-shader-390x844-ready.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "clip": "shader-landscape"
+    },
+    {
+      "file": "standalone-shader-1280x844-scrub.jpg",
+      "viewport": {
+        "width": 1280,
+        "height": 844
+      },
+      "clip": "shader-landscape",
+      "nativeTime": 0.3
+    },
+    {
+      "file": "standalone-portrait-1280x844-midclip.jpg",
+      "viewport": {
+        "width": 1280,
+        "height": 844
+      },
+      "clip": "basic-portrait",
+      "nativeTime": 1.5
+    },
+    {
+      "file": "standalone-portrait-390x844-midclip.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "clip": "basic-portrait",
+      "nativeTime": 1.5
+    }
+  ],
+  "downloads": [],
+  "toolLimitations": [
+    {
+      "operation": "waitForEvent(download) then Download MP4 button",
+      "result": "No event before CUA 30-second call timeout; JS kernel reset. Tab retained selected shader, healthy paused at scrub0.300."
+    },
+    {
+      "operation": "documented #film.downloadMedia timeoutMs15000",
+      "result": "Timed out, matching decoded visible video. No saved browser download path yielded."
+    },
+    {
+      "operation": "portrait Download MP4 button waitForEvent10seconds",
+      "result": {
+        "error": "Error: Timed out after 9996ms waiting for download."
+      }
+    }
+  ]
+}

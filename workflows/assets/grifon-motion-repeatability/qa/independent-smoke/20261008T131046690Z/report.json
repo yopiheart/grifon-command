@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "runId": "20261008T131046690Z",
+  "startedAt": "2026-10-08T13:10:46.692Z",
+  "status": "FAIL",
+  "claim": "Independent local draft workflow correctness; no final reference acceptance or direct listening claim",
+  "checks": [
+    {
+      "name": "Preserved original baseline before execution",
+      "status": "PASS",
+      "evidence": [
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+          "bytes": 24137255,
+          "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+          "bytes": 5504941,
+          "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+        },
+        {
+          "file": "artifacts/grifon-shader-recreation.html",
+          "bytes": 33662393,
+          "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.js",
+          "bytes": 37633,
+          "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.json",
+          "bytes": 5060,
+          "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+          "bytes": 10269,
+          "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/render-full.mjs",
+          "bytes": 20291,
+          "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/build-full.mjs",
+          "bytes": 3252,
+          "sha256": "dbfe243676e6ce8173a1f64265ceaee4a3e32d6878cd95bb26011f88eebbb2bf"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+          "bytes": 5459,
+          "sha256": "ffb4c9fd5104cadf97bab26e4674152e150312e59eb7f3821f493461c068b223"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+          "bytes": 2352,
+          "sha256": "2d282feb4dda8d7c470f416431930267aa76ea38a6beda877f1ad29392a09cc3"
+        },
+        {
+          "file": "tools/artifacts/build-grifon-shader-recreation.mjs",
+          "bytes": 5801,
+          "sha256": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157"
+        },
+        {
+          "file": "tools/artifacts/grifon-shader-recreation.tpl.html",
+          "bytes": 7987,
+          "sha256": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d"
+        }
+      ]
+    },
+    {
+      "name": "Fresh isolated project: shader",
+      "status": "PASS",
+      "evidence": {
+        "project": ".tmp/motion-repeatability-smoke/20261008T131046690Z/shader",
+        "visualSourceKey": "3e9249e49b1a445d7324661bebbc30c83774d6f9144ff21ec01680f1d1635e6e",
+        "files": 15,
+        "timeline": {
+          "fpsNumerator": 30000,
+          "fpsDenominator": 1001,
+          "frames": 932,
+          "sampleFrames": 1495040
+        },
+        "shots": 37,
+        "cues": 47,
+        "lockedPrefixFrames": 222
+      }
+    },
+    {
+      "name": "Fresh isolated project: portrait",
+      "status": "PASS",
+      "evidence": {
+        "project": ".tmp/motion-repeatability-smoke/20261008T131046690Z/basic-portrait",
+        "visualSourceKey": "e9ad8ac53a50c26b51cf9d8756e44273fefa7c91992d34c89b4183df09801a8c",
+        "files": 6,
+        "timeline": {
+          "fpsNumerator": 24,
+          "fpsDenominator": 1,
+          "frames": 288,
+          "sampleFrames": 576000
+        },
+        "shots": 4,
+        "cues": 0,
+        "lockedPrefixFrames": 0
+      }
+    },
+    {
+      "name": "Fresh isolated project: landscape",
+      "status": "PASS",
+      "evidence": {
+        "project": ".tmp/motion-repeatability-smoke/20261008T131046690Z/basic-landscape",
+        "visualSourceKey": "e9ad8ac53a50c26b51cf9d8756e44273fefa7c91992d34c89b4183df09801a8c",
+        "files": 6,
+        "timeline": {
+          "fpsNumerator": 24,
+          "fpsDenominator": 1,
+          "frames": 288,
+          "sampleFrames": 576000
+        },
+        "shots": 4,
+        "cues": 0,
+        "lockedPrefixFrames": 0
+      }
+    },
+    {
+      "name": "Fresh project refuses existing directory",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: EEXIST: file already exists, mkdir 'C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T131046690Z\\shader'"
+      }
+    },
+    {
+      "name": "CLI unknown/duplicate/fractional/path options reject early",
+      "status": "PASS",
+      "evidence": [
+        {
+          "error": "Error: Unknown, duplicated or missing option --unknown"
+        },
+        {
+          "error": "Error: --frames requires a nonnegative integer"
+        },
+        {
+          "error": "Error: --port requires a nonnegative integer"
+        },
+        {
+          "error": "Error: Unknown, duplicated or missing option --frames"
+        }
+      ]
+    },
+    {
+      "name": "Invalid native frames/formats/profile reject before cache creation",
+      "status": "PASS",
+      "evidence": [
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Draft preview is bounded to 120 native frames and five seconds"
+        },
+        {
+          "error": "Error: Export window must contain whole native frames within the project timeline"
+        },
+        {
+          "error": "Error: Unsupported format portrait for shader-reference"
+        },
+        {
+          "error": "Error: Unknown profile fast"
+        },
+        {
+          "error": "Error: Native final export preserves the locked encoded opening only for the complete shader timeline; use draft for an opening window or final from frame 222 onward"
+        }
+      ]
+    },
+    {
+      "name": "Unsafe project paths reject",
+      "status": "PASS",
+      "evidence": [
+        {
+          "error": "Error: Unsafe project path ../job.json"
+        },
+        {
+          "error": "Error: Unsafe project path composition/../job.json"
+        },
+        {
+          "error": "Error: Unsafe project path C:/Windows/win.ini"
+        },
+        {
+          "error": "Error: Unsafe project path composition\\full.js"
+        },
+        {
+          "error": "Error: Unsafe project path /job.json"
+        }
+      ]
+    },
+    {
+      "name": "Locked encoded prefix mutation rejects",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Locked encoded opening changed"
+      }
+    },
+    {
+      "name": "Cold shader landscape actual bounded90-frame draft",
+      "status": "FAIL",
+      "error": "Error: browserType.launch: spawn UNKNOWN\nCall log:\n\u001b[2m  - <launching> C:\\Users\\ADMIN\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-angle=d3d11 --disable-features=CalculateNativeWinOcclusion --user-data-dir=C:\\Users\\ADMIN\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-F5Uyrr --remote-debugging-pipe --no-startup-window\u001b[22m\n"
+    },
+    {
+      "name": "Cold basic portrait actual bounded72-frame draft",
+      "status": "FAIL",
+      "error": "Error: browserType.launch: spawn UNKNOWN\nCall log:\n\u001b[2m  - <launching> C:\\Users\\ADMIN\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-angle=d3d11 --disable-features=CalculateNativeWinOcclusion --user-data-dir=C:\\Users\\ADMIN\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-NqQQfY --remote-debugging-pipe --no-startup-window\u001b[22m\n"
+    },
+    {
+      "name": "Cold basic landscape native format",
+      "status": "FAIL",
+      "error": "Error: browserType.launch: spawn UNKNOWN\nCall log:\n\u001b[2m  - <launching> C:\\Users\\ADMIN\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-angle=d3d11 --disable-features=CalculateNativeWinOcclusion --user-data-dir=C:\\Users\\ADMIN\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-QaEI3t --remote-debugging-pipe --no-startup-window\u001b[22m\n"
+    },
+    {
+      "name": "Adding/altering audio plan causes zero visual capture",
+      "status": "FAIL",
+      "error": "TypeError: Cannot read properties of undefined (reading 'window')"
+    },
+    {
+      "name": "Shader registered source actual AAC master",
+      "status": "PASS",
+      "evidence": {
+        "key": "ae116d9ad1400f13912f066912c0616afde78aaf2c3cfbc92c7cef031f44bc09",
+        "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f",
+        "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING",
+        "elapsedMs": 5302.044599999999,
+        "sampleFrames": 1495040,
+        "levels": {
+          "input_i": "-16.33",
+          "input_tp": "-2.18",
+          "input_lra": "9.90",
+          "input_thresh": "-26.80",
+          "output_i": "-14.85",
+          "output_tp": "-2.20",
+          "output_lra": "2.20",
+          "output_thresh": "-25.11",
+          "normalization_type": "dynamic",
+          "target_offset": "-0.35"
+        },
+        "tail": {
+          "rmsDbfs": null,
+          "peakDbfs": null,
+          "peak": 0,
+          "nonfinite": 0,
+          "monoFoldEnergyRatio": null
+        },
+        "cues": 47
+      }
+    },
+    {
+      "name": "Basic self-authored actual24fps AAC master",
+      "status": "PASS",
+      "evidence": {
+        "key": "0253aaf26f88271e59c492a5f9727cfc3c7cd4212d1a82241867f8dc54c9afd5",
+        "sha256": "386c08341e1acc0d22ea58b60ded0b2b68707a7aa673852659699926fd5d4075",
+        "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING",
+        "elapsedMs": 1690.6746000000003,
+        "sampleFrames": 576000,
+        "levels": {
+          "input_i": "-25.01",
+          "input_tp": "-11.49",
+          "input_lra": "15.50",
+          "input_thresh": "-37.31",
+          "output_i": "-24.17",
+          "output_tp": "-10.40",
+          "output_lra": "0.70",
+          "output_thresh": "-35.59",
+          "normalization_type": "dynamic",
+          "target_offset": "-0.83"
+        },
+        "tail": {
+          "rmsDbfs": null,
+          "peakDbfs": null,
+          "peak": 0,
+          "nonfinite": 0,
+          "monoFoldEnergyRatio": null
+        }
+      }
+    },
+    {
+      "name": "Generic native24/30/30000:1001 independently measured contacts",
+      "status": "PASS",
+      "evidence": [
+        {
+          "fps": "24/1",
+          "sampleFrames": 576000,
+          "contactFrame": 144,
+          "independentlyMeasuredStrongestSample": 288000,
+          "expectedSample": 288000,
+          "quantizationErrorSamples": 0,
+          "peak": 0.10000000149011612
+        },
+        {
+          "fps": "30/1",
+          "sampleFrames": 576000,
+          "contactFrame": 180,
+          "independentlyMeasuredStrongestSample": 288000,
+          "expectedSample": 288000,
+          "quantizationErrorSamples": 0,
+          "peak": 0.10000000149011612
+        },
+        {
+          "fps": "30000/1001",
+          "sampleFrames": 576576,
+          "contactFrame": 180,
+          "independentlyMeasuredStrongestSample": 288288,
+          "expectedSample": 288288,
+          "quantizationErrorSamples": 0,
+          "peak": 0.10000000149011612
+        }
+      ]
+    },
+    {
+      "name": "Producer bytes independently change visual/audio cache identity",
+      "status": "FAIL",
+      "error": "TypeError: Cannot read properties of undefined (reading 'window')"
+    },
+    {
+      "name": "Short prepared source cache uses exact cold PCM byte span",
+      "status": "PASS",
+      "evidence": {
+        "preparedBytes": 3072,
+        "preparedSha256": "cccca117ed4be9c72d5198ef326c3c1bc6da48e9053e88e6b1f4e29e65e9ea9e",
+        "preparedCacheHit": true,
+        "firstMasterKey": "d9934395f0cc0e7a2acaa8399a8d03ca9a00bea1d4890277c323986b80603c69",
+        "secondMasterKey": "0c47d1ef18843131fe92d6188790f3b81d25d055d80443fcc9dd21419591db4a"
+      }
+    },
+    {
+      "name": "Failed registered source decode rejects without silent fallback",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: ffmpeg.exe failed (1): C:\\Users\\ADMIN\\.codex\\worktrees\\grifon-shader-launch\\grifon-command\\.tmp\\motion-repeatability-smoke\\20261008T131046690Z\\broken-source\\pulse.wav: Invalid data found when processing input\r\n",
+        "retainedAacMasters": 0
+      }
+    },
+    {
+      "name": "Visual-copy-only edit captures new frames and reuses unchanged AAC",
+      "status": "FAIL",
+      "error": "Error: browserType.launch: spawn UNKNOWN\nCall log:\n\u001b[2m  - <launching> C:\\Users\\ADMIN\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-angle=d3d11 --disable-features=CalculateNativeWinOcclusion --user-data-dir=C:\\Users\\ADMIN\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-Q0tSNv --remote-debugging-pipe --no-startup-window\u001b[22m\n"
+    },
+    {
+      "name": "Audio-only edit creates new AAC and captures zero images",
+      "status": "FAIL",
+      "error": "TypeError: Cannot read properties of undefined (reading 'window')"
+    },
+    {
+      "name": "Retained audio cache rejects corrupt-aac",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Retained cache bytes are corrupt: master.m4a"
+      }
+    },
+    {
+      "name": "Retained audio cache rejects missing-aac",
+      "status": "PASS",
+      "evidence": {
+        "error": "Error: Retained cache bytes are corrupt: master.m4a"
+      }
+    },
+    {
+      "name": "Frozen implementation unchanged through smoke",
+      "status": "PASS",
+      "evidence": [
+        {
+          "file": "tools/motion-launch.mjs",
+          "bytes": 2799,
+          "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+        },
+        {
+          "file": "tools/motion-launch/project.mjs",
+          "bytes": 12093,
+          "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+        },
+        {
+          "file": "tools/motion-launch/visual.mjs",
+          "bytes": 18912,
+          "sha256": "5c35dac1d32ce0ed8e74924b854f314856976de74e67242a9379b5cd9be9c72b"
+        },
+        {
+          "file": "tools/motion-launch/preview-page.mjs",
+          "bytes": 9711,
+          "sha256": "06fe73c9e9d95f4b225457be685df70405a7359e747d9e46fe4bc6f817b2221e"
+        },
+        {
+          "file": "tools/motion-launch/templates.mjs",
+          "bytes": 2097,
+          "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+        },
+        {
+          "file": "tools/motion-launch/audio.mjs",
+          "bytes": 41610,
+          "sha256": "bee05b2b5214c2e3bc787e62d82ff659ab93c33ee0abd15d58e871097258b71c"
+        }
+      ]
+    },
+    {
+      "name": "Accepted originals and old helpers preserved after smoke",
+      "status": "PASS",
+      "evidence": [
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-provisional.mp4",
+          "bytes": 24994401,
+          "sha256": "c99c93c8dd194946f757dbc078b0551ccd18aaecca6c2868f753cba8b0a59917"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-silent.mp4",
+          "bytes": 24137255,
+          "sha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/grifon-opening-pilot-silent.mp4",
+          "bytes": 5504941,
+          "sha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69"
+        },
+        {
+          "file": "artifacts/grifon-shader-recreation.html",
+          "bytes": 33662393,
+          "sha256": "b9ae7e24d1bf955d329200d62be16bf7f648c6b175819b9724fbddd4d5b9b423"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.js",
+          "bytes": 37633,
+          "sha256": "4fcf4bddb952fccf0f94a209dfdd7cf611df4f32cae36dcaa4b4564b863cd276"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full.json",
+          "bytes": 5060,
+          "sha256": "76a34cfbb2dae254edfd9d73c355d7b03b38f35711a2e4c589c06c4f2d00fdb4"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/full-surfaces.frag",
+          "bytes": 10269,
+          "sha256": "00fcb0823fbabb6b50e5f96450a92ec25bdba877ea2504c8d8a5fad9cc951228"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/render-full.mjs",
+          "bytes": 20291,
+          "sha256": "bbd8df71f403f6fc4d437b26df6110dc22d3155cff55572fa1efae26c7338e02"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/build-full.mjs",
+          "bytes": 3252,
+          "sha256": "dbfe243676e6ce8173a1f64265ceaee4a3e32d6878cd95bb26011f88eebbb2bf"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-capture.mjs",
+          "bytes": 5459,
+          "sha256": "ffb4c9fd5104cadf97bab26e4674152e150312e59eb7f3821f493461c068b223"
+        },
+        {
+          "file": "workflows/assets/grifon-shader-recreation/verify-full-guard.mjs",
+          "bytes": 2352,
+          "sha256": "2d282feb4dda8d7c470f416431930267aa76ea38a6beda877f1ad29392a09cc3"
+        },
+        {
+          "file": "tools/artifacts/build-grifon-shader-recreation.mjs",
+          "bytes": 5801,
+          "sha256": "e5d45d76ae16bd4884b74020af9097d46b1b6754f5f618e96de5aa5b8c76d157"
+        },
+        {
+          "file": "tools/artifacts/grifon-shader-recreation.tpl.html",
+          "bytes": 7987,
+          "sha256": "6eefb8fee0be48bf98d202642344b366c1c04b80fc244063c17cc0aba6593c5d"
+        }
+      ]
+    }
+  ],
+  "renderRuns": [],
+  "audioRuns": [
+    {
+      "label": "shader-cold",
+      "key": "ae116d9ad1400f13912f066912c0616afde78aaf2c3cfbc92c7cef031f44bc09",
+      "sha256": "6a588217718d6994f6cccb33de647af0f72ac7d906b85e5508367d653c69c17f",
+      "cacheHit": false,
+      "elapsedMs": 5302.044599999999,
+      "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING"
+    },
+    {
+      "label": "basic-cold",
+      "key": "0253aaf26f88271e59c492a5f9727cfc3c7cd4212d1a82241867f8dc54c9afd5",
+      "sha256": "386c08341e1acc0d22ea58b60ded0b2b68707a7aa673852659699926fd5d4075",
+      "cacheHit": false,
+      "elapsedMs": 1690.6746000000003,
+      "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING"
+    }
+  ],
+  "drafts": [],
+  "commands": [],
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "producersBefore": [
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 18912,
+      "sha256": "5c35dac1d32ce0ed8e74924b854f314856976de74e67242a9379b5cd9be9c72b"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 9711,
+      "sha256": "06fe73c9e9d95f4b225457be685df70405a7359e747d9e46fe4bc6f817b2221e"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 41610,
+      "sha256": "bee05b2b5214c2e3bc787e62d82ff659ab93c33ee0abd15d58e871097258b71c"
+    }
+  ],
+  "privateProjects": {
+    "shader": ".tmp/motion-repeatability-smoke/20261008T131046690Z/shader",
+    "portrait": ".tmp/motion-repeatability-smoke/20261008T131046690Z/basic-portrait",
+    "landscape": ".tmp/motion-repeatability-smoke/20261008T131046690Z/basic-landscape"
+  },
+  "producersAfter": [
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 18912,
+      "sha256": "5c35dac1d32ce0ed8e74924b854f314856976de74e67242a9379b5cd9be9c72b"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 9711,
+      "sha256": "06fe73c9e9d95f4b225457be685df70405a7359e747d9e46fe4bc6f817b2221e"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 41610,
+      "sha256": "bee05b2b5214c2e3bc787e62d82ff659ab93c33ee0abd15d58e871097258b71c"
+    }
+  ],
+  "finishedAt": "2026-10-08T13:11:00.137Z"
+}

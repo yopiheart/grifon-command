@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "status": "ACTIONABLE_FINDINGS",
+  "scope": "Independent correctness review; report-only; additive diff against accepted base118a5e8aac30739b2705489077ad862b671dbfd4",
+  "createdAt": "2026-10-08T13:18:12.564Z",
+  "reviewedFiles": [
+    {
+      "file": ".gitattributes",
+      "bytes": 2251,
+      "sha256": "469091c312d4811ee4dd3fca727af5427c2a342c0aba6444aa3fb6fdba1cece9"
+    },
+    {
+      "file": "NOW.md",
+      "bytes": 5860,
+      "sha256": "d47a9ce3a22ddf46c2d4cddf917419c95828655342ef202a84635612bf9ff4c7"
+    },
+    {
+      "file": "tools/motion-launch.mjs",
+      "bytes": 2799,
+      "sha256": "61d9ac3a172b484dfb8cf20dca5bafc341eda653409b02414c25ececaa03a5ef"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 12093,
+      "sha256": "0007beec2945c8a3746bf52e082b2fbe15ef14d99e29cebdf6b57351c00cfaa3"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2097,
+      "sha256": "7eee04663cb429f87b2a6e93f1294f9b98e450c88948972c8aa7e85e4c8d97c8"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 20145,
+      "sha256": "a4184ebd5ed6e8464bc6f1eb1081a11381bb77188b6217d7e9eb93220ef5b958"
+    },
+    {
+      "file": "tools/motion-launch/audio.mjs",
+      "bytes": 41610,
+      "sha256": "bee05b2b5214c2e3bc787e62d82ff659ab93c33ee0abd15d58e871097258b71c"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 9711,
+      "sha256": "06fe73c9e9d95f4b225457be685df70405a7359e747d9e46fe4bc6f817b2221e"
+    },
+    {
+      "file": "tools/artifacts/build-grifon-motion-reuse-preview.mjs",
+      "bytes": 10761,
+      "sha256": "f0d11843a8cf469283c63ad8787efffa64b800be3330ae1945421af5837488e1"
+    },
+    {
+      "file": "tests/unit/motionLaunchProject.test.ts",
+      "bytes": 9581,
+      "sha256": "f00975a05a9d7d39b1154db01e6273616d42961c25dbf724eee6667c47807641"
+    },
+    {
+      "file": "tests/unit/motionLaunchAudio.test.ts",
+      "bytes": 12914,
+      "sha256": "3b711aa0497d776155a1d633facadb1a26f88d803f6508a967a7b2303bdc49f9"
+    }
+  ],
+  "findings": [
+    {
+      "id": "MR-1",
+      "priority": 1,
+      "title": "Full native shader concat rejects its own header insertion",
+      "file": "tools/motion-launch/visual.mjs",
+      "start": 194,
+      "end": 198,
+      "trigger": "render --project <shader-project> --from 0 --frames 932 --profile final",
+      "impact": "Default concat auto conversion inserts H264 SPS/PPS NAL units before prefix keyframes; the exact packet payload comparison fails after710visualcaptures, so the advertised full-native path cannot succeed.",
+      "evidence": {
+        "method": "Read-only Node MP4 stsz/stsc/stco sample-table parser on preserved accepted opening and accepted full silent film; no FFmpeg/browser/GPU run",
+        "openingSampleCount": 222,
+        "joinedSampleCount": 932,
+        "unequalPrefixSampleIndices": [
+          0,
+          29,
+          69,
+          97,
+          132,
+          209
+        ],
+        "openingFirst": {
+          "bytes": 1122,
+          "sha256": "49e3ce6b9f9c12d7dd7290554e5c2035dd15950ea4b292c12052bd1044e4fbd8",
+          "nalTypes": [
+            6,
+            5
+          ]
+        },
+        "joinedFirst": {
+          "bytes": 1160,
+          "sha256": "87fd1cf790a3ce18eb06ac3822e9a7ea176a48321eac3c30d7540ab699ebde96",
+          "nalTypes": [
+            6,
+            7,
+            8,
+            5
+          ]
+        },
+        "relatedExistingProducer": "workflows/assets/grifon-shader-recreation/render-full.mjs:117-118 uses the same default concat command"
+      },
+      "recommendation": "Use an intentionally packet-preserving compatible join verified against actual prefix/extradata and strict decoded pixels, or reject the unsupported path before capture. Do not merely disable auto_convert without decoder compatibility evidence."
+    },
+    {
+      "id": "MR-2",
+      "priority": 2,
+      "title": "Play races unfinished sound-contact frame seeks",
+      "file": "tools/motion-launch/preview-page.mjs",
+      "start": 15,
+      "end": 18,
+      "trigger": "Select an opening sound contact, then press Play while seekFullFrame still awaits the prefix video seeked event",
+      "impact": "draw only publishes frame after its awaited seek; Play meanwhile starts its wall clock and audio from the old frame. The selected cue can jump back and sound starts at the wrong time. Rapid pause/resume also keeps the old requestAnimationFrame chain because stop does not cancel or invalidate it.",
+      "evidence": {
+        "method": "Execute generated page script in an in-memory Node VM with DOM/audio stubs and a deferred seekFullFrame promise; no browser or GPU",
+        "cueFrame": 66,
+        "fps": "30000/1001",
+        "audioStartedAtSeconds": 0,
+        "expectedAudioStartedAtSeconds": 2.2022,
+        "pendingCallbacksAfterStopAndImmediateResume": 2,
+        "expectedPendingCallbacks": 1
+      },
+      "recommendation": "Await completion of the requested frame before starting audio/playback and cancel or generation-guard pending RAF callbacks. Add meaningful pure async control regression coverage."
+    },
+    {
+      "id": "MR-3",
+      "priority": 2,
+      "title": "Visual runtime key omits rendering runtime modules",
+      "file": "tools/motion-launch/visual.mjs",
+      "start": 92,
+      "end": 102,
+      "trigger": "Selected headless shell keeps executable/revision/version but libGLESv2.dll, libEGL.dll, V8 snapshot/resources, or Playwright core implementation bytes change",
+      "impact": "visualRuntime only hashes ffmpeg,ffprobe,launch executable and local producer files; dependency module changes leave the same visual cache key and permit reuse under a changed actual renderer/profile implementation. This fails the stated full-runtime hash binding contract.",
+      "evidence": {
+        "method": "Static runtime-key field audit and installed selected browser directory inventory",
+        "unboundModules": [
+          {
+            "file": "libEGL.dll",
+            "bytes": 493568
+          },
+          {
+            "file": "libGLESv2.dll",
+            "bytes": 7851008
+          },
+          {
+            "file": "icudtl.dat",
+            "bytes": 10876560
+          },
+          {
+            "file": "v8_context_snapshot.bin",
+            "bytes": 740912
+          }
+        ],
+        "playwrightImplementation": "node_modules/playwright-core/lib/coreBundle.js contains chromiumSwitches/defaultArgs, yet only node_modules/playwright/package.json version is bound"
+      },
+      "recommendation": "Bind the selected browser runtime files and relevant Playwright core/launch implementation bytes or an equivalently complete verified distribution digest; exclude mutable log/profile files."
+    },
+    {
+      "id": "MR-4",
+      "priority": 2,
+      "title": "Windows checkout invalidates standalone proof receipt",
+      "file": ".gitattributes",
+      "start": 36,
+      "end": 37,
+      "trigger": "Commit generated proof files then check them out with the current core.autocrlf=true",
+      "impact": "New preview-manifest.json and standalone-preview-build.json receive CRLF because they inherit text:auto/eol:unspecified. The builder hashes manifest rawbytes and compares receipt rawtext, so --check fails after a normal fresh checkout even with identical media/player.",
+      "evidence": {
+        "method": "Read-only git config/check-attr and builder static audit",
+        "coreAutocrlf": "true",
+        "manifestAttributes": {
+          "text": "auto",
+          "eol": "unspecified"
+        },
+        "receiptAttributes": {
+          "text": "auto",
+          "eol": "unspecified"
+        },
+        "builderLines": [
+          14,
+          50,
+          51
+        ]
+      },
+      "recommendation": "Give all new byte-bound proof/source/receipt text explicit stable newline attributes and verify committed blob/fresh-checkout bytes before reporting reproducible backup."
+    }
+  ],
+  "limitations": [
+    "No browser,GPU,FFmpeg,fullapplication tests or source/media/cache mutation performed by reviewer",
+    "Full932capture path was not run; initial concat blocker demonstrated from preserved existing encoded sample data",
+    "Independent smoke is separately owned; this report does not grade artistic/listening quality",
+    "Builder fixes require a separately preserved final review after refreeze"
+  ],
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

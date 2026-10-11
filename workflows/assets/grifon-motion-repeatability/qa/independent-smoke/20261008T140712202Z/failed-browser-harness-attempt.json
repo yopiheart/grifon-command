@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "artifactMetadataTransportGoalsPassed": 2,
+  "engine": "Fresh isolated configured installed headless shell",
+  "sourceClockGoalsPassed": 12,
+  "newProducerEdits": 0,
+  "clockSamplesPersisted": false,
+  "status": "HARNESS_LOCATOR_FAILURE",
+  "reason": "Harness requested old Download MP4 button role; frozen player exposes a native anchor link. The event waiter rejected before a matching link click, so no Blob failure is established.",
+  "newRuntimeEdits": 0,
+  "observedError": "waitForEvent(download) timeout 10000 ms while unmatched button click was pending; Node unhandled rejection",
+  "actualDownloadAttempted": false,
+  "harnessSha256": "84CB318254729848A65BF0916CABFF4F1E59E2641A9C253F4026D38B05EED458"
+}

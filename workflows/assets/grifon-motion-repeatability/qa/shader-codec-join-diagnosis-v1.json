@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-08T13:24:19.175Z",
+  "purpose": "Codec-join control using retained 222-frame opening and retained 710-frame continuation; no new GPU capture.",
+  "diagnosisSha256": "5d3c99f8324b97ed57aa4b63d8e5185ea8e7bef8d8b4cbfd875f1f06278610c9",
+  "producerSha256": "ef128e2838b0690db07c4b599ac44ac65b89eb16be0b1bb2100521b4c89a0ee1",
+  "tools": {
+    "ffmpegSha256": "e9fd5e711debab9d680955fc1e38a2c1160fd280b144476cc3f62bc43ef49db1",
+    "ffprobeSha256": "4303ec85855340689b1f8aa5d9c1dc06ef3e3090682de3034edc3fca2b0798d5"
+  },
+  "prefixSha256": "6815c6e5143257c2d8b4fa368735677754b8d57cc0685ccb7d2ce380459a1c69",
+  "continuationSha256": "990eb3c73d215797eae976ca2a4be68aae8d77a1254baa5eebc3451812ca18c9",
+  "prefixCodec": {
+    "profile": "High",
+    "level": 40,
+    "extradataSha256": "SHA256:11abece1d3473f351a0e2fc518c4c58d431ddd93860fdd256a9e50aad4e89297",
+    "fps": "30000/1001",
+    "timeBase": "1/30000"
+  },
+  "continuationCodec": {
+    "profile": "High",
+    "level": 40,
+    "extradataSha256": "SHA256:11abece1d3473f351a0e2fc518c4c58d431ddd93860fdd256a9e50aad4e89297",
+    "fps": "30000/1001",
+    "timeBase": "1/30000"
+  },
+  "originalOpeningPacketsSha256": "ed420f1f9e146821c96d43755259e39a56d25ae920b4566c2e2f3ee46720f03c",
+  "originalOpeningDecodedFramesSha256": "c2a96fb9b2e20ca77a79e95d14427ae4af881c68ad0c8df25807965d0bd4ac0a",
+  "trials": [
+    {
+      "autoConvert": 1,
+      "outputSha256": "e57f2fae3a7a7b7ded9dcce63ed98cd9c88136fd595a1765cffa3669a878df3b",
+      "prefixPacketDifferences": [
+        0,
+        29,
+        69,
+        97,
+        132,
+        209
+      ],
+      "prefixPacketProof": "FAIL",
+      "prefixFrameProof": "EXACT_PASS",
+      "strictDecode": "PASS",
+      "errors": [],
+      "frames": "932",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "fps": "30000/1001",
+      "timeBase": "1/30000"
+    },
+    {
+      "autoConvert": 0,
+      "outputSha256": "2b1fe7566bd63afa385bc6e65e0f747bdcd7ff43882c7e1a2571dda7b1a15b58",
+      "prefixPacketDifferences": [],
+      "prefixPacketProof": "EXACT_PASS",
+      "prefixFrameProof": "EXACT_PASS",
+      "strictDecode": "PASS",
+      "errors": [],
+      "frames": "932",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "fps": "30000/1001",
+      "timeBase": "1/30000"
+    }
+  ],
+  "originalsUnchanged": true,
+  "newGpuFrames": 0,
+  "fullNewShaderExport": "NOT_RUN",
+  "verdict": "ORIGINAL_PARAMETER_INSERTION_REPRODUCED_MATCHING_CODEC_AUTOCONVERT_OFF_EXACT_PASS",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

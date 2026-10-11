@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "status": "FINAL_METADATA_STAGING_AND_CHECKOUT_PASS",
+  "coreAutocrlf": "true",
+  "rootDelivery": {
+    "path": "workflows/assets/grifon-motion-repeatability/qa/delivery-root-final.json",
+    "bytes": 12362,
+    "sha256": "74845726ce94d10bdc2a4394717f1d7342ddb844fa31e9e18258da21fb0760b4"
+  },
+  "stagedBindingsVerified": 27,
+  "freshCheckMethod": "Actual git checkout-index under existing Windows core.autocrlf setting; no overrides",
+  "bindings": [
+    {
+      "working": {
+        "path": "workflows/grifon_motion_production.md",
+        "bytes": 16244,
+        "sha256": "ed41af93575b4090743103965a2c00aa0460c06410ad87440ee525212a875d77"
+      },
+      "fresh": {
+        "path": "workflows/grifon_motion_production.md",
+        "bytes": 16244,
+        "sha256": "ed41af93575b4090743103965a2c00aa0460c06410ad87440ee525212a875d77"
+      },
+      "status": "EXACT"
+    },
+    {
+      "working": {
+        "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json",
+        "bytes": 754,
+        "sha256": "3eb291efef42016954baf1042d845bfc80a194773fa89bad6ff8890ac46cae14"
+      },
+      "fresh": {
+        "path": "workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json",
+        "bytes": 754,
+        "sha256": "3eb291efef42016954baf1042d845bfc80a194773fa89bad6ff8890ac46cae14"
+      },
+      "status": "EXACT"
+    }
+  ],
+  "attributes": "workflows/grifon_motion_production.md: text: set\nworkflows/grifon_motion_production.md: eol: lf\nworkflows/grifon_motion_production.md: whitespace: unspecified\nworkflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json: text: unset\nworkflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json: eol: unspecified\nworkflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/failed-browser-harness-attempt.json: whitespace: blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol\n",
+  "cachedDiffCheckExitCode": 0,
+  "scope": "Only final guide line-ending stability and immutable CRLF receipt EOL declaration; producer/artifact/runtime/media unchanged."
+}

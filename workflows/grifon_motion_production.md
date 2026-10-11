@@ -113,6 +113,125 @@ license does not establish redistribution rights for a customer asset library.
 Commercial marketing release or customer delivery needs suitable source rights.
 The workflow and learnings can be reused now with appropriately licensed assets.
 
+## Reusable local projects and previews (2026-10-08)
+
+Neil selected the reusable workflow with previews before a customer dashboard.
+`tools/motion-launch.mjs` creates a separate editable project; it never changes
+the accepted source film. These are authored starting treatments, not an automatic
+reference-to-video converter:
+
+| Treatment | Native timeline | Layouts | Editable source |
+| --- | --- | --- | --- |
+| `shader-reference` | 932 frames, 30000/1001fps | Landscape 1920x1080 | `composition/full.json`, `full.js`, `full-surfaces.frag` |
+| `basic-launch` | 288 frames, 24fps | Portrait 1080x1920; landscape 1920x1080 | `composition/demo.json`, `composition.template.html` |
+
+The shader treatment retains an explicitly locked, encoded 222-frame opening.
+Its continuation is editable. The basic treatment starts with explicit silence.
+Job timelines and layouts are validated against each treatment's native contract;
+a different duration, opening or new visual technique needs deliberate authoring.
+Text, UI, logo, camera and transition requests can start from these sources.
+New characters, realistic footage, simulations or unsupported geometry still
+need suitable assets and another authoring step. Creative suitability requires
+review against the new brief.
+
+From the task checkout, create an unused project directory and inspect its plan:
+
+```powershell
+node tools/motion-launch.mjs init --template basic-launch --project .tmp/motion-jobs/new-launch
+node tools/motion-launch.mjs plan --project .tmp/motion-jobs/new-launch
+node tools/motion-launch.mjs serve --project .tmp/motion-jobs/new-launch --format portrait --port 0
+```
+
+Open the printed loopback URL. The preview has native-frame seeking, playback and
+action navigation. Audible playback follows the audio media clock, including
+startup and buffering; declared silent playback uses elapsed time.
+Edit that project's source, then reload the preview; use a
+new project for another brief. `validate` checks the same job/source contract
+without rendering. A draft is bounded to at most 120 frames and five seconds,
+at half native dimensions. Start with a motion window before requesting a longer
+native export:
+
+```powershell
+node tools/motion-launch.mjs render --project .tmp/motion-jobs/new-launch --format portrait --from 144 --frames 72 --profile draft
+```
+
+The JSON result contains `path` and `receiptPath`. Repeating the same command
+verifies and reuses the existing MP4, with zero new captured frames. Changed
+visual source produces a new cache key; the runner does not guess which frames
+are safe to reuse. A corrupted, missing or stale cache fails visibly instead of
+silently serving older output. `--profile final` uses native dimensions. The
+verification record below identifies which native export paths were actually run.
+
+For shader projects, the starter copies the accepted sound recipe, cue map and
+source register. Recordings remain in the existing local asset collection;
+provide its source directory when mixing:
+
+```powershell
+node tools/motion-launch.mjs init --template shader-reference --project .tmp/motion-jobs/new-shader
+node tools/motion-launch.mjs audio mix --project .tmp/motion-jobs/new-shader --source-root C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources
+node tools/motion-launch.mjs render --project .tmp/motion-jobs/new-shader --format landscape --from 222 --frames 90 --profile draft
+```
+
+To add sound to a bounded draft, use that render's exact `path` and `receiptPath`:
+
+```powershell
+node tools/motion-launch.mjs audio mux --project .tmp/motion-jobs/new-shader --source-root C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources --video RENDER_OUTPUT_PATH --visual-receipt RENDER_RECEIPT_PATH
+```
+
+Replace the two path placeholders with the printed values. The adapter verifies
+the picture receipt, slices the PCM master at native frame/sample boundaries,
+encodes that window and copies the picture packets into the review MP4. A cue or
+music edit rebuilds audio while reusing unchanged picture. A copy edit can reuse
+unchanged audio. The live preview uses the verified full audio master when one
+exists. Invalid audio is an error; silence is accepted only when declared by the
+job. The basic treatment can use a separately authored `audio-plan.json` and
+registered licensed recordings, or explicitly declared procedural cues.
+
+The audio plan owns contacts, source cuts, rates, reverse, pan, gains, fades and
+ducking. Its source register binds recording hashes and rights. Local technical
+checks establish synchronization and encoded integrity; they do not establish
+that a new soundtrack fits the brief. Raw recordings, stems and private caches
+are not a customer asset library and must not be redistributed with a template.
+These commands make no provider calls and require no additional paid generation.
+
+### Measured verification scope
+
+The independent final media run passed 35 checks on this desktop. Its
+[bound report](assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/report.json)
+records the exact sources, runtimes, output hashes, timings and negative controls.
+The [standalone preview player](../artifacts/grifon-motion-reuse-preview.html)
+contains the two actual mixed drafts:
+
+| Draft | Native window | Draft dimensions | First render | Verified repeat | New captures on repeat |
+| --- | --- | --- | --- | --- | --- |
+| Shader landscape | 90 frames / 3.003s | 960x540 | 37.02s | 1.06s | 0 |
+| Typography/UI portrait | 72 frames / 3s | 540x960 | 19.84s | 0.87s | 0 |
+
+A complete basic portrait export also passed: 288 frames, 12 seconds,
+1080x1920 at 24fps, 81.00 seconds for picture render and verification. Its full
+AAC copy passed packet, clock and decoded-audio checks. The separately tested
+basic landscape layout used a four-frame control. First full audio master builds
+took 5.11s for the shader recipe and 1.66s for the procedural basic test recipe.
+Those audio timings are separate from picture rendering.
+
+These are actual local export timings for already authored treatments. They
+exclude authoring a new reference, creative iterations and customer infrastructure;
+they do not establish a customer turnaround promise. The new workflow did not
+capture the complete 932-frame shader film. Its codec-compatible opening join was
+verified against retained sources with exact packet and decoded-frame proofs.
+The original failed browser launch, preview cancellation and 24fps remux findings
+and their corrections remain in the evidence. Independent source and delivery
+review passed. The [final browser report](assets/grifon-motion-repeatability/qa/independent-smoke/20261008T140712202Z/final-browser-report.json)
+passed 28 checks using a fresh isolated installed Playwright headless browser
+because Codex IAB was unavailable. Both native Blob downloads matched the exact
+MP4 hashes; mobile/desktop controls and delayed audio startup passed. Twelve live
+clock samples had no picture lead and at most 43.93ms lag within the stated
+100ms scheduling bound. Automated checks do not establish auditory quality.
+The [root delivery record](assets/grifon-motion-repeatability/qa/delivery-root-final.json)
+binds the final sources, reports and actual repository checks: build, 1,463 passing
+tests (32 existing skips), artifact anchors, bundle leak, domain, voice and Codex
+controls. All 17 protected originals remained exact; no paid provider calls ran.
+
 ## Future Grifon feature boundary
 
 The [future ElevenLabs audio design](grifon_motion_audio_api.md) records single
