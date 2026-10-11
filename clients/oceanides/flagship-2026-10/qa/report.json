@@ -1,0 +1,156 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "name": "local HTTP helper rejects outside paths, dot segments and hidden files",
+      "status": "pass"
+    },
+    {
+      "name": "gallery layout and assets at 1440px",
+      "status": "pass"
+    },
+    {
+      "name": "gallery layout and assets at 390px",
+      "status": "pass"
+    },
+    {
+      "name": "gallery layout and assets at 320px",
+      "status": "pass"
+    },
+    {
+      "name": "gallery family filters show two each and all six",
+      "status": "pass"
+    },
+    {
+      "name": "mobile poster preview is unobscured and detail controls meet 44px target",
+      "status": "pass"
+    },
+    {
+      "name": "proof slider responds to keyboard",
+      "status": "pass"
+    },
+    {
+      "name": "render manifest matches current creative sources and output dimensions",
+      "status": "pass"
+    },
+    {
+      "name": "all modal captions, sources and local exports are usable",
+      "status": "pass"
+    },
+    {
+      "name": "caption copy fallback selects the whole caption",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry layout and assets at 1440px",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry layout and assets at 390px",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry layout and assets at 320px",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry validation and privacy scope",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry tenant and unknown tank journey ends in an honest copyable summary",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry edit, outside NCR, back and reset preserve expected state",
+      "status": "pass"
+    },
+    {
+      "name": "unknown and malicious source query are inert",
+      "status": "pass"
+    },
+    {
+      "name": "embedded mobile inquiry presents each new stage heading within its frame",
+      "status": "pass"
+    },
+    {
+      "name": "no external requests, writes, browser exceptions or missing resources",
+      "status": "pass"
+    },
+    {
+      "name": "negative control rejects a deliberately broken image",
+      "status": "pass"
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "gallery-1440.jpg",
+    "gallery-390.jpg",
+    "inquiry-summary-390.jpg"
+  ],
+  "viewports": [
+    {
+      "page": "gallery",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "page": "gallery",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "page": "gallery",
+      "width": 320,
+      "pass": true
+    },
+    {
+      "page": "inquiry",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "page": "inquiry",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "page": "inquiry",
+      "width": 320,
+      "pass": true
+    }
+  ],
+  "stageHeadingBounds": [
+    {
+      "mode": "standalone",
+      "stage": "details",
+      "y": 169.75,
+      "height": 37.390625,
+      "viewportHeight": 844
+    },
+    {
+      "mode": "standalone",
+      "stage": "review",
+      "y": 169.75,
+      "height": 37.390625,
+      "viewportHeight": 844
+    },
+    {
+      "mode": "embedded",
+      "stage": "details",
+      "y": 169.75,
+      "height": 74.78125,
+      "viewportHeight": 760
+    },
+    {
+      "mode": "embedded",
+      "stage": "review",
+      "y": 169.75,
+      "height": 74.78125,
+      "viewportHeight": 760
+    }
+  ],
+  "browser": "Chromium via Playwright",
+  "externalRequests": [],
+  "writeRequests": []
+}
