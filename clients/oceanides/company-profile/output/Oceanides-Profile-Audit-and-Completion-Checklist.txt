@@ -1,0 +1,95 @@
+OCEANIDES COMPANY PROFILE - AUDIT AND COMPLETION CHECKLIST
+Reviewed 12 October 2026; final format check 13 October 2026 | Internal owner review
+
+OVERALL RESULT
+The revised profile covers all requested service categories and all 190 priority
+cities/municipalities. It is a review draft. Current OPC documents and technical
+treatment details still need to be supplied before broad customer circulation.
+"Triple A" is treated as a request for presentation quality, not a formal
+accessibility, accreditation, or business-performance certification.
+
+ORGANIZATIONAL STRUCTURE
+Names and roles improve accountability. Photos are optional in a reporting chart.
+The revised deck separates the chart (page 21) from leadership/team profiles
+(pages 22-23). The owner confirmed these people and existing roles are current:
+Agosto Cepriano - CEO/Founder; Allan - Finance/HR Manager; Neil - Marketing Head;
+Queenie and Aubrey - Digital Marketing Specialists; Floreza - CSR.
+Source portraits are reused from the supplied old profile. No people were
+generated. Final reporting lines and full staff names remain for confirmation.
+Operations shows a supervisor/team-leader role, not an invented named manager.
+
+CHANGES MADE
+- Brighter blue accents, pale-blue header, white pages, navy text/footer, larger
+  service images and cleaner type spacing. All pages retain contacts/watermark.
+- Native editable PowerPoint text, layout and organization diagram, with PDF.
+- Mission, vision and values restored and adapted to the expanded service offer.
+- Two pages of selected client service experience: 18 entries, with 17 original
+  logo assets; San Miguel Beer remains text because its exact mark is unresolved.
+- Official marks downloaded where available; original supplied-PDF marks retained
+  where needed. No brand marks were generated or recreated.
+- Company-supplied client history is separated from endorsement or partnership.
+  San Miguel Properties and San Miguel Beer are different entries/entities.
+- Actual cleaning before/after photos retained without an invented client/site.
+- Cleaning, excavation and aircon now have relevant sourced stock imagery.
+  AI/stock illustrations are labeled and are not represented as Oceanides jobs.
+- Benefits are visible on every service page. Treatment offer includes an
+  assessment diagram, operating considerations and ongoing support conditions.
+- Exhaustive city/municipality lists moved to a 9-page coverage appendix.
+- Current user-supplied address: Tramo Street Corner Dandan, Pasay City,
+  Philippines 1300. OPC TIN explicitly TO FOLLOW at the owner's request.
+- Primary landline and both mobiles retained. Conflicting second landline omitted.
+
+CONTENT REMOVED OR CORRECTED
+1. Conflicting establishment/registration dates: old cover says 2021; DTI scan
+   says 23 March 2022; BIR trade registration says 13 March 2023. New history is
+   date-neutral until these different milestones are confirmed.
+2. Old TIN was shown on a sole-proprietor COR. It is not presented as a verified
+   OPC TIN. Current OPC COR is still required.
+3. No unverified "DENR-certified", blanket DOH/LLDA accreditation, unspecified
+   awards, 24/7 support or 30-day money-back guarantee has been restored.
+4. No guaranteed savings, zero siphoning, maintenance-free treatment, guaranteed
+   permits, or free lifetime support is promised.
+5. Old treatment-provider documents are not Oceanides's own current permits.
+
+HISTORICAL DOCUMENT AUDIT - OLD PDF PAGE REFERENCES
+p13: 2025 Manila business permit for Oceanides Plumbing Services, sole proprietor.
+p14: 2022 DTI registration plus Reed service agreement; ongoing agreement status
+     and application to the current OPC still need confirmation.
+p15: BIR COR explicitly for single proprietorship, not current OPC proof.
+p16: Applicant affidavit seeking a PTO exemption, not a granted operating permit.
+p17: Hazardous-waste GENERATOR registration issued to Reed Septage Treatment
+     Services; not Oceanides hauling/treatment accreditation.
+p18: 2019 DOH environmental sanitation clearance for Reed/Isirida Bocalan,
+     Cavite service area; current validity not established by that copy.
+p19: 2007 EMB letter about Reed's name change under an existing ECC;
+     not a current Oceanides ECC.
+p20: Individual PCO accreditation for Isirida Bocalan/Reed, stated validity
+     to 17 September 2027; not a facility permit to operate.
+p21: DENR/EMB CALABARZON wastewater-fee receipt/order of payment;
+     it is not an LLDA-issued discharge permit despite the old slide caption.
+p22: Old sole-proprietor invoice/receipt notice.
+This review identifies the pictured records; it does not authenticate them or
+establish their current regulatory standing.
+
+STILL NEEDED BEFORE FINAL CUSTOMER RELEASE
+1. Current SEC OPC certificate, current BIR COR/TIN and business permit;
+   confirm exact legal name, registration numbers and document validity.
+2. Confirm correct second landline: (02) 8330 1329 (new letterhead) vs
+   (02) 8830 1329 (old PDF).
+3. Two or three project references: contracted entity/site, service, date,
+   approved photographs and documented result. Logo downloads do not prove jobs.
+4. Treatment technical provider, technology, wastewater type/volume, capacity,
+   installation scope, operating cost, warranty and maintenance requirements.
+5. Written scope, duration, fees and response arrangements for after-sales and
+   permit-document assistance; confirm responsibilities of each party.
+6. Confirm final reporting lines and preferred complete staff names.
+
+SOURCES AND ASSET RECORDS
+User interview 11 October 2026; current confirmations 12 October 2026.
+User-supplied Blue Modern Company Profile Presentation.pdf, 23 pages.
+User-supplied HEADER 111.docx and address image.
+Official logo URLs: assets-refresh/client-logos/sources.json.
+Stock-photo source/license credits: assets-refresh/service-stock/sources.json.
+Portrait extraction record: assets-refresh/legacy-photos/sources.json.
+Geographic source URLs: coverage.json (Philippine Statistics Authority PSGC).
+Relevant asset and claim references are retained in PowerPoint speaker notes.

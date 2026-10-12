@@ -1,0 +1,85 @@
+{
+  "source_file": "C:\\Users\\ADMIN\\Downloads\\Blue Modern Company Profile Presentation .pdf",
+  "source_sha256": "7ac15abafad7c0cccc200af26347ef12971df58714a5918962f5aafc4ab84f5f",
+  "purpose": "Owner-confirmed team portraits for pages 22-23. Source portraits are not independently authenticated.",
+  "assets": [
+    {
+      "file": "page-06-X14.png",
+      "person": "Agosto Cepriano",
+      "role": "CEO / Founder",
+      "source_page": 6,
+      "sha256": "4b191faaae891d2c8c4bf2aeac795ad0c7562b8b08fd661ecb0aa9add6bc144a",
+      "dimensions": [
+        406,
+        334
+      ],
+      "extraction": "Original embedded image extracted from user-supplied PDF. Placement crop only; no image generation.",
+      "role_confirmation": "Owner confirmed all listed people and roles current on 2026-10-12."
+    },
+    {
+      "file": "page-06-X16.png",
+      "person": "Allan",
+      "role": "Finance / HR Manager",
+      "source_page": 6,
+      "sha256": "71cb569f161e6d744e516088766408fdcef1f34e22cd40440cfc40afa6efb339",
+      "dimensions": [
+        400,
+        400
+      ],
+      "extraction": "Original embedded image extracted from user-supplied PDF. Placement crop only; no image generation.",
+      "role_confirmation": "Owner confirmed all listed people and roles current on 2026-10-12."
+    },
+    {
+      "file": "page-06-X18.jpg",
+      "person": "Neil",
+      "role": "Marketing Head",
+      "source_page": 6,
+      "sha256": "40a2045e8c5243cc1df9fb9e96116ce02f052118467638b5b175179f10de93e8",
+      "dimensions": [
+        274,
+        400
+      ],
+      "extraction": "Original embedded image extracted from user-supplied PDF. Placement crop only; no image generation.",
+      "role_confirmation": "Owner confirmed all listed people and roles current on 2026-10-12."
+    },
+    {
+      "file": "page-08-X14.png",
+      "person": "Queenie",
+      "role": "Digital Marketing Specialist",
+      "source_page": 8,
+      "sha256": "5556e81b9998af5aafb1f3826c81d15977c4bf265def6571a358768de76be744",
+      "dimensions": [
+        427,
+        640
+      ],
+      "extraction": "Original embedded image extracted from user-supplied PDF. Placement crop only; no image generation.",
+      "role_confirmation": "Owner confirmed all listed people and roles current on 2026-10-12."
+    },
+    {
+      "file": "page-08-X16.png",
+      "person": "Aubrey",
+      "role": "Digital Marketing Specialist",
+      "source_page": 8,
+      "sha256": "674fc6da823ac477d0899d7e7d72bbf3e07dae00e635bba36eaf0eedfa99873d",
+      "dimensions": [
+        558,
+        560
+      ],
+      "extraction": "Original embedded image extracted from user-supplied PDF. Placement crop only; no image generation.",
+      "role_confirmation": "Owner confirmed all listed people and roles current on 2026-10-12."
+    },
+    {
+      "file": "page-08-X18.png",
+      "person": "Floreza",
+      "role": "Customer Service Representative",
+      "source_page": 8,
+      "sha256": "df45c7c0af441db572722556c3f86ea0cfcbd8a750b6386c76279ad830ad1223",
+      "dimensions": [
+        400,
+        400
+      ],
+      "extraction": "Original embedded image extracted from user-supplied PDF. Placement crop only; no image generation.",
+      "role_confirmation": "Owner confirmed all listed people and roles current on 2026-10-12."
+    }
+  ]
+}

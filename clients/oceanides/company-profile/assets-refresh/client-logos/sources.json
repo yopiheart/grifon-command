@@ -1,0 +1,455 @@
+{
+  "purpose": "Brand identification within owner-reported service history. No endorsement or corporate partnership implied.",
+  "assets": [
+    {
+      "brand": "Ayala Land",
+      "file": "ayala-land.svg",
+      "source_page": "https://ayalaland.com/",
+      "asset_url": "https://ayalaland.com/assets/images/logo.svg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 3147,
+      "status": "downloaded",
+      "raster_file": "ayala-land.png",
+      "raster_dimensions": [
+        1000,
+        218
+      ],
+      "visible_content_bbox": [
+        4,
+        1,
+        999,
+        215
+      ]
+    },
+    {
+      "brand": "Jollibee",
+      "file": "jollibee.svg",
+      "source_page": "https://www.jollibee.com.ph/",
+      "asset_url": "https://www.jollibee.com.ph/themes/custom/jollibee_theme/logo.svg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 18666,
+      "status": "downloaded",
+      "raster_file": "jollibee.png",
+      "raster_dimensions": [
+        1000,
+        292
+      ],
+      "visible_content_bbox": [
+        749,
+        6,
+        1000,
+        291
+      ],
+      "usage_note": "White wordmark at left is only visible on dark background. Use JollibeeGroup corporate mark or prior profile mascot for white client panel."
+    },
+    {
+      "brand": "Hotel Sogo",
+      "file": "hotel-sogo.jpg",
+      "source_page": "https://www.hotelsogo.com/public/",
+      "asset_url": "https://www.hotelsogo.com/public/images/logo.jpg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 86042,
+      "status": "downloaded",
+      "raster_dimensions": [
+        483,
+        198
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        483,
+        198
+      ]
+    },
+    {
+      "brand": "Mang Inasal",
+      "file": "mang-inasal.svg",
+      "source_page": "https://www.manginasal.ph/",
+      "asset_url": "https://www.manginasal.ph/wp-content/uploads/2024/12/mang-inasal-3.svg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 33337,
+      "status": "downloaded",
+      "raster_file": "mang-inasal.png",
+      "raster_dimensions": [
+        1000,
+        559
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        1000,
+        559
+      ]
+    },
+    {
+      "brand": "KFC",
+      "file": "kfc.svg",
+      "source_page": "https://www.kfc.com.ph/",
+      "asset_url": "https://cdn.tictuk.com/04d917c0-7bcd-6ced-acad-3e4db2bcbfd5/assets/logoDesktopHeader.svg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 3407,
+      "status": "downloaded",
+      "raster_file": "kfc.png",
+      "raster_dimensions": [
+        1000,
+        315
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        1000,
+        315
+      ]
+    },
+    {
+      "brand": "Kenny Rogers Roasters",
+      "file": "kenny-rogers.png",
+      "source_page": "https://kennyrogersdelivery.com.ph/home_-2/",
+      "asset_url": "https://kennyrogersdelivery.com.ph/wp-content/uploads/2025/03/KRRLogo.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 80535,
+      "status": "downloaded",
+      "raster_dimensions": [
+        350,
+        181
+      ],
+      "visible_content_bbox": [
+        24,
+        9,
+        324,
+        171
+      ]
+    },
+    {
+      "brand": "Eagle Cement",
+      "file": "eagle-cement.png",
+      "source_page": "https://www.eaglecement.com.ph/",
+      "asset_url": "https://www.eaglecement.com.ph/wp-content/uploads/2020/08/ECC-COLORED-LOGO-without-tm.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "interview",
+      "bytes": 15508,
+      "status": "downloaded",
+      "raster_dimensions": [
+        146,
+        72
+      ],
+      "visible_content_bbox": [
+        1,
+        1,
+        146,
+        72
+      ]
+    },
+    {
+      "brand": "Avida Land",
+      "file": null,
+      "source_page": "https://www.avidaland.com/",
+      "asset_url": "https://www.avidaland.com/assets/images/logo.svg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "old-profile",
+      "bytes": 3147,
+      "status": "rejected",
+      "error": "Generic official-site logo URL returned Ayala Land parent mark; not used as Avida identification"
+    },
+    {
+      "brand": "Papa Johns",
+      "status": "failed",
+      "source_page": "https://www.papajohns.com/",
+      "asset_url": "https://www.papajohns.com/ak-failover/assets/logo/logo-small.svg",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "brand": "Starmall",
+      "file": "starmall.png",
+      "source_page": "https://www.starmalls.com.ph/",
+      "asset_url": "https://www.starmalls.com.ph/wp-content/uploads/2021/01/logo-1024x311.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "old-profile",
+      "bytes": 86662,
+      "status": "downloaded",
+      "raster_dimensions": [
+        1024,
+        311
+      ],
+      "visible_content_bbox": [
+        14,
+        50,
+        982,
+        252
+      ]
+    },
+    {
+      "brand": "Toyota",
+      "file": "toyota.svg",
+      "source_page": "https://brand.toyota.com/guidelines/visual/logos",
+      "asset_url": "https://brand.toyota.com/content/dam/brandhub/VIS_toyota_logo_horiz_black_RGB_2021.svg",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "old-profile",
+      "bytes": 3230,
+      "status": "downloaded",
+      "raster_file": "toyota.png",
+      "raster_dimensions": [
+        1000,
+        268
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        999,
+        268
+      ]
+    },
+    {
+      "brand": "Yellow Cab Pizza Co.",
+      "file": "yellow-cab.png",
+      "source_page": "https://delivery.yellowcabpizza.com/",
+      "asset_url": "https://mgi-deliveryportal.s3.amazonaws.com/assets/YellowCab_Logo.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Official website asset referenced by current site HTML",
+      "service_history_source": "old-profile",
+      "bytes": 31729,
+      "status": "downloaded",
+      "raster_dimensions": [
+        500,
+        239
+      ],
+      "visible_content_bbox": [
+        20,
+        11,
+        474,
+        229
+      ]
+    },
+    {
+      "brand": "Avida Land",
+      "file": "old-profile-p09-X10.png",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 9,
+      "source_object": "X10.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        254,
+        198
+      ],
+      "visible_content_bbox": [
+        51,
+        69,
+        203,
+        128
+      ]
+    },
+    {
+      "brand": "Papa Johns",
+      "file": "old-profile-p09-X12.png",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 9,
+      "source_object": "X12.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        640,
+        640
+      ],
+      "visible_content_bbox": [
+        28,
+        204,
+        613,
+        437
+      ]
+    },
+    {
+      "brand": "UNIQLO",
+      "file": "old-profile-p09-X17.jpg",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 9,
+      "source_object": "X17.jpg",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        368,
+        366
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        368,
+        366
+      ]
+    },
+    {
+      "brand": "Siomai King",
+      "file": "old-profile-p10-X11.jpg",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 10,
+      "source_object": "X11.jpg",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        225,
+        225
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        225,
+        225
+      ]
+    },
+    {
+      "brand": "GH Greenhills",
+      "file": "old-profile-p10-X12.png",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 10,
+      "source_object": "X12.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        225,
+        225
+      ],
+      "visible_content_bbox": [
+        0,
+        0,
+        225,
+        225
+      ]
+    },
+    {
+      "brand": "San Miguel Properties",
+      "file": "old-profile-p10-X15.png",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 10,
+      "source_object": "X15.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        500,
+        253
+      ],
+      "visible_content_bbox": [
+        31,
+        18,
+        467,
+        237
+      ]
+    },
+    {
+      "brand": "BVMIC - Brenton International Venture Manufacturing Corporation",
+      "file": "old-profile-p10-X17.png",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 10,
+      "source_object": "X17.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile; not independently downloaded from brand website",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        480,
+        480
+      ],
+      "visible_content_bbox": [
+        24,
+        130,
+        457,
+        351
+      ]
+    },
+    {
+      "brand": "San Miguel Beer",
+      "status": "no-exact-asset",
+      "reason": "Official brewery welcome page identifies International; historical profile mark is San Miguel Properties, a different entity. Use plain text until exact site/customer identity confirmed."
+    },
+    {
+      "brand": "Jollibee Group / Jollibee Foods Corporation",
+      "file": "jollibee-group.png",
+      "source_page": "https://www.jollibeegroup.com/",
+      "asset_url": "https://www.jollibeegroup.com/wp-content/themes/main/assets/img/jfc_2025_transparent_logo.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Current official corporate identity asset referenced by company homepage; different from Jollibee restaurant mascot",
+      "service_history_source": "interview",
+      "bytes": 77283,
+      "status": "downloaded",
+      "raster_dimensions": [
+        727,
+        266
+      ],
+      "visible_content_bbox": [
+        57,
+        15,
+        670,
+        244
+      ]
+    },
+    {
+      "brand": "Jollibee mascot (prior profile variant)",
+      "file": "old-profile-p09-X18.png",
+      "source_document": "C:/Users/ADMIN/Downloads/Blue Modern Company Profile Presentation .pdf",
+      "source_page": 9,
+      "source_object": "X18.png",
+      "retrieved": "2026-10-12",
+      "provenance": "Original embedded raster extracted losslessly from user-supplied prior company profile",
+      "service_history_source": "old-profile",
+      "status": "user-reference-fallback",
+      "raster_dimensions": [
+        360,
+        360
+      ],
+      "visible_content_bbox": [
+        58,
+        41,
+        300,
+        318
+      ]
+    },
+    {
+      "brand": "Avida Land (current official inline mark)",
+      "file": "avida-inline.svg",
+      "raster_file": "avida-inline.png",
+      "source_page": "https://www.avidaland.com/",
+      "asset_url": "https://www.avidaland.com/#inline-svg-16",
+      "retrieved": "2026-10-12",
+      "provenance": "Unmodified inline SVG from current official homepage; default currentColor rasterized black. Prior-profile burgundy mark also preserved.",
+      "service_history_source": "old-profile",
+      "status": "downloaded",
+      "raster_dimensions": [
+        1000,
+        390
+      ],
+      "visible_content_bbox": [
+        0,
+        2,
+        990,
+        389
+      ]
+    }
+  ]
+}

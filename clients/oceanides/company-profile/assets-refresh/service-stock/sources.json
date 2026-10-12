@@ -1,0 +1,69 @@
+{
+  "downloaded_on": "2026-10-12",
+  "purpose": "Illustrative service images for Oceanides company-profile revision",
+  "assets": [
+    {
+      "filename": "general-cleaning-pexels-6195278.jpg",
+      "source": "https://www.pexels.com/photo/cleaners-cleaning-the-tiled-floor-6195278/",
+      "download": "https://images.pexels.com/photos/6195278/pexels-photo-6195278.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "photographer": "Tima Miroshnichenko",
+      "published": "2020-12-15",
+      "captured": "2020-12-10",
+      "license": "Pexels License",
+      "license_url": "https://www.pexels.com/license/",
+      "service": "General cleaning",
+      "caption": "Stock photo of cleaning work; not an Oceanides project",
+      "dimensions": [
+        1800,
+        2700
+      ],
+      "sha256": "afcdcd0292f110a6970926c48dbfb3ef59203fae4ca50a9200ebf257c83c94c3",
+      "downloaded_on": "2026-10-12",
+      "status": "visually-inspected",
+      "changes": "Source image unchanged. Presentation cropping may be applied for placement.",
+      "visual_review": "Shows two uniformed cleaners, one mopping and one vacuuming. Relevant service illustration. Crop lower two-thirds to retain action."
+    },
+    {
+      "filename": "excavation-water-main-wikimedia.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:DC_WASA_lead_water_main.jpg",
+      "original_source": "https://www.flickr.com/photos/intangible/2697774899/in/photostream/",
+      "download": "https://upload.wikimedia.org/wikipedia/commons/4/40/DC_WASA_lead_water_main.jpg",
+      "photographer": "IntangibleArts",
+      "captured": "2008-07-07",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "service": "Excavation",
+      "caption": "Excavation exposing a water-service pipe. IntangibleArts / Wikimedia Commons, CC BY 2.0; not an Oceanides project",
+      "changes": "Source image unchanged. Presentation cropping may be applied for placement.",
+      "dimensions": [
+        1000,
+        1500
+      ],
+      "sha256": "8f9d166fe47231e50940da8a86355f89628a162a6098288f68d7e58e77a9d149",
+      "downloaded_on": "2026-10-12",
+      "status": "visually-inspected",
+      "visual_review": "Shows excavation exposing an underground water pipe; no workers or confined-space entry. Image is contextual stock, not an Oceanides worksite. Include photographer and CC BY 2.0 credit; note cropped if placed with crop."
+    },
+    {
+      "filename": "aircon-service-pexels-5463576.jpg",
+      "source": "https://www.pexels.com/photo/man-taping-a-hose-5463576/",
+      "download": "https://images.pexels.com/photos/5463576/pexels-photo-5463576.jpeg?cs=srgb&dl=pexels-jose-andres-pacheco-cortes-3641213-5463576.jpg&fm=jpg",
+      "photographer": "Jose Andres Pacheco Cortes",
+      "published": "2020-09-28",
+      "captured": "2020-07-22",
+      "license": "Pexels License",
+      "license_url": "https://www.pexels.com/license/",
+      "service": "Air-conditioning cleaning",
+      "caption": "Stock air-conditioning maintenance photo; not an Oceanides project",
+      "downloaded_on": "2026-10-12",
+      "dimensions": [
+        4000,
+        6000
+      ],
+      "sha256": "a6c64efe110e3e0ac8f706b9949c43fafb4c127422ee3e0c261389aa8886d5ac",
+      "status": "visually-inspected",
+      "changes": "Source image unchanged. Presentation cropping may be applied for placement.",
+      "visual_review": "Shows maintenance of a recognizable outdoor air-conditioning unit, not filter washing. Caption must say maintenance. No Oceanides project or manufacturer partnership is asserted."
+    }
+  ]
+}
