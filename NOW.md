@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; Orbital ElevenLabs score mixed and delivered for listening**
+**Stamped: 2026-10-13; continuous Orbital v2 delivered for listening**
 
 ## Active task and result
 Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd, Grifon motion workflow.
@@ -17,25 +17,29 @@ NativeMP3 SHA:a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405.
 Private inputs/outputs:F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/.
 Original26SFX reconstructed byte-exact; lossless stereo48k23.15s stem prepared.
 SFX SHA:f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64.
-Finishedfilm:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v1.mp4.
+V1checkpoint:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v1.mp4.
 SHA:59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0.
-Native-tempo sectionedit,250ms breath20.75-21, fuller reveal21s,closingchord22s,
-latefade22.9. Music-only ducking; original26 SFX contacts; nooldmusicunderneath.
+Neil heardv1: musicsourceokay, choppedjoins unprofessional. creative-feedback-v1.json bindsverbatim.
+V2delivered:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
+SHA:4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
+Onecontinuous28.028-51.178s passage; nointernalcuts/forcedpause; groove6s,chord22s,
+26SFX visualcontacts; five smooth/modest musicducks. Noadditionalcredits.
 No reference/film/audio uploaded. No additional paidQA, stemgeneration or top-up.
 Code/model/prompt defaults in application unchanged; no merge/deploy authorized.
 
 ## ▶ NEXT ACTION
-Back up completed package in a draftPR stacked onPR182; listeningreviewpending.
-FinishedMP4 shown inline; open_in_codex requestqueued, not evidence of userplayback.
+Backuppackage in a draftPRstackedonPR182; independentv2checkPASS.
+V2MP4showninline; listening/creativeacceptancepending. Keepv1/rejectionevidence.
 Preserve rawmusic/isolatedSFX privately; no standalone redistribution inGit.
 Creative listening and user acceptance must stay distinct from technicalchecks.
 Consumedapproval does not authorize another generation or paidQA.
 
 ## Verification
-check:codex26PASS; strictAVdecode and all1389picturepackets/timestampsPASS.
-Stereo48kAAC23.15s,-16.04LUFS/-2.36dBTP. Repeatedfinishbyteexact.
-Cueplanhashreviewfindingfixed; independentmedia/sourcecheckPASS, noopenfindings.
-Pausegatepassednewmusicandfailedoldmusiccontrol(-14.68dBFS); SFXreconstructionexact.
+V1:check:codex26PASS; strictdecode/1389picturepacketsPASS;-16.04LUFS/-2.36dBTP.
+Cueplanhashfindingfixed; independentsource/mediaPASS, SFXexact. CreativeassemblyFAIL.
+V2strictdecode/1389packetpayloads+timestampsPASS;48kstereoAAC23.15s,
+-16.06LUFS/-4.10dBTP; continuoussamplemappingerror<6e-8. Independentv2reviewPASS.
+Do not present technicalPASS as musicalacceptance; v2listeningpending.
 No product changes; applicationbuild/fulltests not applicable to this audio-only task.
 Spec SHA:3b4b8cc02cee6e7776543a066e3e8351e50ca9f1f9d80885a9bc688dee65a381.
 Prompt-file SHA:4231c67fe55628c1b68fd7f6056c585d6182cac61b0652a05e555f229834aa8e.

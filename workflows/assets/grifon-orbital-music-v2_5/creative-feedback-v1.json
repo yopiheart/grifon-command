@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-13",
+  "videoSha256": "59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0",
+  "status": "ASSEMBLY_REJECTED_MUSIC_SOURCE_ACCEPTABLE",
+  "source": "Direct user playback feedback in this chat",
+  "verbatim": "Bro okay naman sana ung music. Di ko lang nagustuhan ung pag hati hati kasi parang kalat kalat ung pag kakadikit dikit. Parang hindi professional ung gumawa, hindi malinis. Parang binara bara lang, basta makompleto at maikabit. Parang tira tira na kinabit",
+  "failure": "Waveform-selected sectional splices passed technical gates but did not preserve a clean perceived musical flow.",
+  "correction": "Create a new local version from one continuous native musical passage with its own ending. Let SFX carry precise visual contacts; use smooth mixing rather than rebuilding the score from short disconnected sections.",
+  "paidGenerationRetriesAuthorized": 0,
+  "preservation": "Keep v1 and its technical evidence as a rejected assembly checkpoint; preserve the original film, source and native generated music."
+}

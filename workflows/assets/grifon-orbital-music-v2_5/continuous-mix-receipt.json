@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-13T04:13:28.059Z",
+  "status": "TECHNICAL_PASS_LISTENING_PENDING",
+  "scope": "Local finishing only; generation approval, provider usage and native download are recorded separately.",
+  "planSha256": "3fc1433a33745979b1c5880535572179f436cb64935d502386eb0376b0517cb7",
+  "recipeSha256": "917c9125f4893896ff392ebc6142ac39568d6924f6998e0b3bfb9356c32be08e",
+  "inputs": {
+    "nativeMusic": {
+      "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/native/grifon-launch-theme-native.mp3",
+      "sha256": "a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405"
+    },
+    "cleanSfx": {
+      "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/preparation/grifon-orbital-existing-sfx-48k-f32.wav",
+      "sha256": "f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64"
+    },
+    "picture": {
+      "path": "../grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+      "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48"
+    },
+    "existingCuePlan": {
+      "path": "../grifon-pluto-adaptation/audio-plan.json",
+      "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218"
+    }
+  },
+  "providerCalls": 0,
+  "paidSpend": 0,
+  "nativeTempoPreserved": true,
+  "nativeDecodedSampleFrames": 2989245,
+  "target": {
+    "durationSeconds": 23.15,
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleFrames": 1111200,
+    "videoFrames": 1389,
+    "fps": 60
+  },
+  "normalization": {
+    "preliminary": {
+      "integratedLufs": -16.2,
+      "truePeakDbtp": -4.22,
+      "loudnessRangeLu": 3
+    },
+    "desiredGainDb": 0.1999999999999993,
+    "peakSafeGainDb": 2.32,
+    "appliedLinearGainDb": 0.1999999999999993,
+    "pcm": {
+      "integratedLufs": -16,
+      "truePeakDbtp": -4.02,
+      "loudnessRangeLu": 3
+    },
+    "encoded": {
+      "integratedLufs": -16.06,
+      "truePeakDbtp": -4.1,
+      "loudnessRangeLu": 3.1
+    }
+  },
+  "sfx": {
+    "cues": 26,
+    "gainDb": 5,
+    "contactPositionsUnchanged": true,
+    "maximumLinearSampleError": 2.941489452013002e-8,
+    "qualification": "Only one positive linear stem gain and the common master gain; no SFX edits or time shifts."
+  },
+  "music": {
+    "continuousSourceWindow": {
+      "sourceStartSeconds": 28.028,
+      "sourceEndSeconds": 51.178,
+      "sourceStartSampleFrame": 1345344,
+      "sourceEndSampleFrame": 2456544,
+      "targetStartSeconds": 0,
+      "playbackRate": 1,
+      "internalCuts": 0,
+      "openingFadeSeconds": 0.08,
+      "openingFadeCurve": "raised cosine",
+      "structuralMap": [
+        {
+          "targetSeconds": [
+            0,
+            2
+          ],
+          "role": "Continuous native build"
+        },
+        {
+          "targetSeconds": [
+            2,
+            5.5
+          ],
+          "role": "Source's own decay and rebuild, supported by unchanged visual SFX"
+        },
+        {
+          "targetSeconds": [
+            6,
+            22
+          ],
+          "role": "Uninterrupted full groove; native beat continues through frame1260 reveal"
+        },
+        {
+          "targetSeconds": [
+            22,
+            23.15
+          ],
+          "role": "Original native closing chord and natural tail"
+        }
+      ],
+      "waveformQualification": "Energy confirms a roughly3.5s native breath/rebuild early; quietest3.5-4.75s is about-43 to-50dBFS RMS before mixing. These are structural measurements, not auditory verification."
+    },
+    "internalCuts": 0,
+    "earlyNativeBreath": {
+      "rmsDbfs": -36.069202391508746,
+      "peakDbfs": -5.877832980613885,
+      "nonfinite": 0
+    },
+    "reveal": {
+      "rmsDbfs": -16.658787235288848,
+      "peakDbfs": -5.797098471112726,
+      "nonfinite": 0
+    },
+    "tail": {
+      "rmsDbfs": -56.563238531984766,
+      "peakDbfs": -37.6724185821843,
+      "nonfinite": 0
+    },
+    "all": {
+      "rmsDbfs": -18.783994446795106,
+      "peakDbfs": -4.5835270305931095,
+      "nonfinite": 0
+    },
+    "fadeStartSeconds": 22.95,
+    "maximumContinuousMappingError": 5.856210949506391e-8
+  },
+  "picture": {
+    "sourceSha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48",
+    "packets": 1389,
+    "everyPacketPayloadAndTimestampMatches": true,
+    "strictAudiovisualDecode": "PASS"
+  },
+  "output": {
+    "music": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\continuous-v2\\music-edited-48k-f32.wav",
+      "bytes": 8889644,
+      "sha256": "f46f78a27690cf790cad3fe76931b932e2a363b3500f39f07bac4696c0db52a2"
+    },
+    "sfx": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\continuous-v2\\sfx-mix-48k-f32.wav",
+      "bytes": 8889644,
+      "sha256": "60a2c6a42119127c28bb00e22ba454c97b15161c02aa9e0001994f0944bc4bc7"
+    },
+    "master": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\continuous-v2\\master-48k-f32.wav",
+      "bytes": 8889644,
+      "sha256": "feb7149bd3a405a0c3ced916d53ca38e983a2324f14c0ad6e34bcf77d2888124"
+    },
+    "aac": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\continuous-v2\\master-48k.m4a",
+      "bytes": 936771,
+      "sha256": "b00595e1ee5947b938f7f19a3bfa04615f756e41671ae72259c47a9cc9d7576e"
+    },
+    "video": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\continuous-v2\\grifon-orbital-launch-music-v2_5-continuous-v2.mp4",
+      "bytes": 11604731,
+      "sha256": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405"
+    }
+  },
+  "audioStream": {
+    "codec": "aac",
+    "sampleRate": 48000,
+    "channels": 2,
+    "durationSeconds": 23.15
+  },
+  "listening": "PENDING: no auditory judgment inferred from waveform, prompt, metadata or technical meters. User audiovisual playback and creative acceptance remain separate."
+}

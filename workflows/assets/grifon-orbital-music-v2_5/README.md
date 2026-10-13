@@ -6,6 +6,11 @@ Music replacement requested by Neil on 2026-10-13 for the latest
 source remain intact. This version uses the
 [shared music workflow](../../background_music_production.md).
 
+Latest review: [continuous v2](grifon-orbital-launch-music-v2_5-v2.mp4).
+Neil found the music source acceptable but rejected v1's chopped assembly;
+[verbatim feedback](creative-feedback-v1.json) binds that verdict to v1's hash.
+V2 corrects the assembly locally, with no additional generation or spend.
+
 ## Generation and source
 
 [Exact spec](music.spec.json), [prompt](music.prompt.txt) and
@@ -28,12 +33,15 @@ The song is retained in the
 
 ## Musical fitting
 
-The source is edited in musical sections at its natural tempo, rather than
-accelerating the entire62s track. Target structure: airy ONE IDEA intro,
-clean120BPM electronic groove through particle/collage motion, controlled lift
-through DESCRIBE/BUILD/LAUNCH, wider harmony at the15.8s orbit reveal, a brief
-20.75-21s musical breath, fuller Grifon reveal at21s and a resolved ending.
-Timestamp instructions guided the generation; the local edit owns final timing.
+V2 uses one uninterrupted native28.028-51.178s passage at its original tempo:
+zero internal cuts, source jumps or manufactured reveal silence. The source's
+own opening build and breath lead into a continuous groove around6s; its closing
+chord lands around22s. SFX carry precise visual contacts, including the21s mark
+arrival. Five modest, smoothly eased music ducks leave space for major movements.
+The native early breath is intentional space, not an inserted silent fragment.
+This prioritizes musical flow over forcing every requested timestamp into a
+different source section. Timestamp instructions guided generation; they did
+not guarantee a frame-exact original score.
 
 The original26 SFX contacts were reconstructed from their existing source-bound
 recipe, separately from the original music. The resulting48kHz stereo float WAV
@@ -49,14 +57,14 @@ with those authorized local inputs.
 
 ## Deliver and reproduce
 
-[Finished review MP4](grifon-orbital-launch-music-v2_5-v1.mp4),23.15s/1080p/60fps,
+[Finished review MP4](grifon-orbital-launch-music-v2_5-v2.mp4),23.15s/1080p/60fps,
 with stereo48kHz AAC. SHA256:
-`59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0`.
+`4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405`.
 
-[Fit plan](audio-fit-plan.json) records native source cuts, crossfades, gains,
-music-only ducking, pause and ending. [Local recipe](mix.mjs) requires the
+[Continuous fit plan](continuous-fit-plan.json) records the single source window,
+smooth fades, gains and music-only ducking. [Local recipe](mix-continuous.mjs) requires the
 hash-bound native music, clean SFX, picture and original cue plan; no provider
-call occurs. [Mix receipt](mix-receipt.json) records separate output stems and
+call occurs. [Mix receipt](continuous-mix-receipt.json) records separate output stems and
 final hashes. [SFX reconstruction receipt](existing-sfx-preparation.receipt.json)
 retains source identity and original26 contact frames.
 
@@ -64,7 +72,7 @@ From this checkout, with the installed Node24 and FFmpeg runtime and the private
 inputs present, regenerate into a new output directory:
 
 ```powershell
-node workflows/assets/grifon-orbital-music-v2_5/mix.mjs F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/reproduction
+node workflows/assets/grifon-orbital-music-v2_5/mix-continuous.mjs F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/reproduction-v2
 ```
 
 The recipe writes its receipt alongside outputs and refreshes the tracked mix
@@ -75,10 +83,17 @@ support another installed runtime; raw inputs remain individually hash-bound.
 
 Technical verification: strict audiovisual decode passed; all1,389 picture packet
 payloads and integer PTS/DTS/durations match the original. Final audio measures
--16.04LUFS/-2.36dBTP. The edited music is silent20.75-21s, fuller groove begins21s,
-closing chord lands22s and the final music fade begins22.9s. These are measured
-editing properties, not an auditory taste grade. The
-[independent review](independent-review.json) passed packet/decode, SFX integrity,
-source bindings, timing and loudness checks. Its pause check also rejected the
-original music as a negative control. Actual creative listening and user acceptance remain
-distinct from waveform checks, source labels and technical export validation.
+-16.06LUFS/-4.10dBTP. Every music sample maps consecutively to the single native
+passage before smooth gain shaping; maximum mapping error is below6e-8.
+[Independent v2 review](independent-review-v2.json) verifies that continuous
+mapping, smooth envelopes, unchanged picture packets and26 SFX contacts.
+Actual creative listening and user acceptance remain distinct from waveform
+checks, source labels and technical export validation.
+
+## Rejected assembly checkpoint
+
+[V1 film](grifon-orbital-launch-music-v2_5-v1.mp4), [fit plan](audio-fit-plan.json),
+[recipe](mix.mjs), [receipt](mix-receipt.json) and
+[independent technical review](independent-review.json) remain unchanged.
+V1 passed technical checks but failed Neil's listening review for musical flow.
+Do not treat its exact pause or technical PASS as creative acceptance.

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "orbital_music_smoke independent subagent",
+  "createdAt": "2026-10-13T04:15:32.183Z",
+  "status": "TECHNICAL_PASS_CREATIVE_LISTENING_PENDING",
+  "scope": "Continuous-v2 source review, sample mapping and basic media verification only. V1 historical review preserved; no provider calls or spend.",
+  "sourceSnapshot": {
+    "planSha256": "3fc1433a33745979b1c5880535572179f436cb64935d502386eb0376b0517cb7",
+    "recipeSha256": "917c9125f4893896ff392ebc6142ac39568d6924f6998e0b3bfb9356c32be08e",
+    "receiptSha256": "cb6d26370f0d5ad1639ecfdf7ced3e1320312a3467d790130a0db2e0d6debf8d"
+  },
+  "sourceBindings": {
+    "nativeMusic": true,
+    "cleanSfx": true,
+    "picture": true,
+    "existingCuePlan": true
+  },
+  "continuousMusic": {
+    "sourceStartSeconds": 28.028,
+    "sourceEndSeconds": 51.178,
+    "sourceStartSampleFrame": 1345344,
+    "sourceEndExclusiveSampleFrame": 2456544,
+    "targetSampleFrames": 1111200,
+    "sourceAdvancesOneFramePerTargetFrame": true,
+    "playbackRate": 1,
+    "internalCuts": 0,
+    "maximumFullTimelineMappingError": 5.856210949506391e-8,
+    "mappingGateMaximumError": 0.000001,
+    "maximumGainEnvelopeStepPerSample": 0.00023539032266323145,
+    "interiorZeroGainFrames": 0,
+    "forcedRevealSilence": false,
+    "gainAt20_75Seconds": 0.5754399373371569,
+    "gainAt21Seconds": 0.5754399373371569,
+    "designatedNativeOutroRegion": {
+      "nativeStartSeconds": 50.028,
+      "targetStartSeconds": 22,
+      "retainedSeconds": 1.15
+    },
+    "endingQualification": "Window includes the designated native closing region and its following1.15s, then tapers only the last0.2s. Musical resolution and smoothness are listening judgments."
+  },
+  "sfx": {
+    "cueCount": 26,
+    "cleanStemHashMatchesV1Source": true,
+    "onlyLinearGainAppliedMaximumError": 2.9414894464618868e-8,
+    "contactPositionsUnchanged": true,
+    "masterMusicPlusSfxMaximumError": 2.9802322387695312e-8,
+    "nonfinite": 0
+  },
+  "media": {
+    "strictDecodeExitCode": 0,
+    "picturePackets": 1389,
+    "everyPacketPayloadAndTimestampMatchesOriginal": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": "60/1",
+    "durationSeconds": 23.15,
+    "sampleRate": 48000,
+    "channels": 2,
+    "integratedLufs": -16.06,
+    "truePeakDbtp": -4.1
+  },
+  "v1HistoricalReview": {
+    "sha256Before": "5ccccf5d50a2e79010fc590292f39350ead825abb76f07cde7c0490633416608",
+    "unchanged": true,
+    "acceptance": "User rejected v1 creative continuity; original technical PASS does not override that rejection."
+  },
+  "finalFile": {
+    "name": "grifon-orbital-launch-music-v2_5-continuous-v2.mp4",
+    "bytes": 11604731,
+    "sha256": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405"
+  },
+  "providerCalls": 0,
+  "paidSpend": 0,
+  "unresolvedActionableTechnicalFindings": [],
+  "creativeListening": "PENDING: continuity proof does not establish perceived quality, vibe, pacing/reveal fit, natural ending or SFX masking. Actual audiovisual playback and user acceptance remain necessary."
+}

@@ -73,9 +73,12 @@ Do not claim auditory verification from a prompt, waveform or transcript.
    One variant does not authorize retries; changed inputs need new approval.
 4. Generate once under that spec and preserve the native result, settings,
    receipt and provenance. Recover an uncertain provider outcome before retrying.
-5. Fit the score to the scene map. Keep original music, edited music, SFX and VO
-   separate; align reveal emphasis, edit the brief pause, duck beneath speech,
-   fade edits and give the end card a deliberate musical resolution.
+5. Fit the score to the scene map while preserving musical phrases. Prefer a
+   continuous passage when suitable; let SFX carry precise visual contacts rather
+   than assembling the score from short unrelated fragments. A crossfade or
+   waveform-aligned cut does not establish a musically clean join. Keep original
+   music, edited music, SFX and VO separate; shape reveal emphasis smoothly, duck
+   beneath speech and give the end card a deliberate musical resolution.
 6. Review the actual encoded video with audio. Check speech intelligibility,
    cue timing, music/SFX balance, clipping, awkward loops and ending. Verify
    technical properties separately from listening and creative acceptance.
@@ -96,6 +99,7 @@ The taste interview is complete; apply these priorities to the finished film.
 | Wrong vibe | Compare the actual score against the video's emotion, brand, movement and reference; reject a stylish track that does not fit this film. |
 | Low quality | Listen for muddy balance, harshness, synthetic artifacts, weak development and awkward edits; distinguish source defects from fixable mix problems. |
 | Wrong pacing or reveal | Audition picture and audio together; compare build, pause, beat entry and ending against the cue map and correct their placement in the edit. |
+| Chopped musical flow | Review phrase continuity and every join by listening; a technically correct montage of musical fragments can still sound amateur. Orbital v1 failed this user review despite passing its technical checks. |
 | Voice or SFX masked | Check intelligibility and meaningful contacts in the full mix, including a phone-speaker review where available; adjust arrangement, ducking and levels. |
 
 Pass: the music fits this film, supports its rhythm and reveal, leaves speech
