@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "file": "logo.png",
+      "source": "public/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "file": "inter-900.ttf",
+      "source": "workflows/assets/grifon-promo-canvas/fonts/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "file": "jbmono-600.ttf",
+      "source": "workflows/assets/grifon-promo-canvas/fonts/jbmono-600.ttf",
+      "bytes": 112160,
+      "sha256": "df54dbfafba61d4911eb3dab9bba2d20531fb009f01d64dd42fa96ab862584d8"
+    },
+    {
+      "file": "OFL-Inter.txt",
+      "source": "workflows/assets/grifon-shader-recreation/assets/full/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "OFL-JetBrainsMono.txt",
+      "source": "https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/OFL.txt",
+      "bytes": 4399,
+      "sha256": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697"
+    }
+  ],
+  "procedural": "Sphere shader, particles, collage and grids authored locally; no reference footage."
+}

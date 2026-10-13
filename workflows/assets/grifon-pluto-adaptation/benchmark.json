@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "reference": "https://x.com/abdullah4204k/status/2100297302497997167",
+  "outputChoice": "Grifon adaptation with own branding/copy, same visual style and pacing",
+  "clock": {
+    "firstRetainedIntakeArtifactUtc": "2026-10-11T08:07:26.0200871Z",
+    "instrumentationStartUtc": "2026-10-11T08:13:08Z",
+    "exactUserArrivalUtc": null,
+    "note": "Intake artifact creation is not user-message arrival. Authoring, QA, coordination and waits remain included in wall times. Backup and PR packaging are later, outside the first-playable and completed-test boundaries.",
+    "firstPlayableMp4Utc": "2026-10-11T08:46:33.3941667Z",
+    "firstPlayableFromIntakeSeconds": 2347.374,
+    "encodedMediaQaCompleteUtc": "2026-10-11T08:53:19.120Z",
+    "encodedMediaQaFromIntakeSeconds": 2753.1,
+    "allBenchmarkChecksCompleteUtc": "2026-10-11T08:54:06.701Z",
+    "allBenchmarkChecksFromIntakeSeconds": 2800.681,
+    "compactEvidencePackagedUtc": "2026-10-11T09:00:31.466Z"
+  },
+  "providerCalls": 0,
+  "additionalPaidSpendUsd": 0,
+  "authoring": {
+    "includes": "New choreography, structural treatment extension, tests, independent review/QA waits and fixes",
+    "stableUtc": "2026-10-11T08:35:15Z",
+    "startedUtc": "2026-10-11T08:15:40Z",
+    "elapsedSeconds": 1175
+  },
+  "livePreview": {
+    "fromFirstRetainedIntakeArtifactSeconds": 1716.9799129,
+    "nativeFrames": 1389,
+    "availableObservedUtc": "2026-10-11T08:36:03Z",
+    "audioAvailable": true,
+    "note": "Availability checked through local manifest/audio-status; UI tab queued. Human whole-film playback/listening not asserted.",
+    "url": "http://127.0.0.1:50585"
+  },
+  "coldFullPicture": {
+    "completedUtc": "2026-10-11T08:45:32.0452183Z",
+    "exitCode": 0,
+    "startedUtc": "2026-10-11T08:36:43.1763427Z",
+    "elapsedMs": 528868.8756,
+    "key": "085717a8bedc13772419ede27253bd9155628a4edf974d121750907846826677",
+    "visualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+    "cacheHit": false,
+    "capturedFrames": 1389,
+    "window": {
+      "format": "landscape",
+      "from": 0,
+      "frames": 1389,
+      "profile": "final",
+      "width": 1920,
+      "height": 1080
+    },
+    "media": {
+      "file": "draft.mp4",
+      "bytes": 10652389,
+      "sha256": "03540ccd8bbc2e0576e4a2e03c8f92cb3bee24446cbffbc9f0f9007710432415",
+      "width": 1920,
+      "height": 1080,
+      "frames": 1389,
+      "fps": "60/1",
+      "timeBase": "1/60",
+      "duration": 23.15,
+      "strictDecode": "PASS",
+      "audio": null
+    },
+    "phasesMs": {
+      "preflightMs": 3356.6256,
+      "browserSetupMs": 3025.1703000000007,
+      "captureMs": 499348.2629,
+      "encodeMs": 15610.930999999982,
+      "verificationMs": 5596.421099999978,
+      "totalMs": 527086.8055
+    },
+    "receiptSha256": "b0e12b5bffe824f9e7f95ff12f7189d18d4cc947a76c599930d3da9d92e958c8",
+    "verdict": "NATIVE_EXPORT_TECHNICAL_PASS_NOT_CREATIVE_ACCEPTANCE"
+  },
+  "repeatedFullPicture": {
+    "key": "085717a8bedc13772419ede27253bd9155628a4edf974d121750907846826677",
+    "cacheHit": true,
+    "capturedFrames": 0,
+    "currentRunMs": {
+      "cacheVerificationMs": 15267.226999999999,
+      "totalMs": 16472.0546,
+      "capturedFrames": 0
+    },
+    "sameMediaSha256": true,
+    "note": "Use currentRun for warm timing. The retained receipt phases belong to the original cold render."
+  },
+  "audio": {
+    "integration": {
+      "startedUtc": "2026-10-11T08:23:22.7263702Z",
+      "elapsedMs": 4483.373,
+      "completedUtc": "2026-10-11T08:23:27.2097432Z",
+      "exitCode": 0
+    },
+    "repeatedMix": {
+      "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING",
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio\\9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23\\master.m4a",
+      "sha256": "2283f43c71bc3c2903779ce160d04c6b7e671f7840ba83c3d2959dd2bd950c01",
+      "key": "9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23",
+      "cacheHit": true,
+      "elapsedMs": 296.34970000000004,
+      "providerCalls": 0,
+      "paidSpendUsd": 0
+    },
+    "music": {
+      "file": "digital-clouds.mp3",
+      "title": "Digital Clouds",
+      "creator": "Alejandro Magaña (A. M.)",
+      "sourceInSeconds": 32,
+      "sourceOutSeconds": 55.15,
+      "playbackRate": 1,
+      "basis": "Lowest broad-band energy/dynamics difference across10registeredstockexcerpts; no listening claim."
+    },
+    "measurements": {
+      "integratedLufs": -16.53,
+      "truePeakDbtp": -2.19,
+      "monoFoldEnergyRatio": 0.9593119588356795,
+      "nonfinite": 0,
+      "tailRmsDbfs": -114.06038250331167,
+      "cues": 26,
+      "maximumStrongestSampleContactError": 0,
+      "maximumMasterLinearError": 1.1896190699189901e-7,
+      "method": "Single linear master gain; loudnorm used only as a null-output diagnostic meter, not applied to soundtrack."
+    },
+    "timeline": {
+      "frames": 1389,
+      "fpsNumerator": 60,
+      "fpsDenominator": 1,
+      "sampleRate": 48000,
+      "sampleFrames": 1111200,
+      "decodedAacFrames": 1112064,
+      "logicalSeconds": 23.15
+    },
+    "rights": {
+      "usage": "mixed-video",
+      "rawRedistribution": false,
+      "basis": "Existing registered Mixkit Stock Music Free and Sound Effects Free recordings incorporated in this manually authored local film. No raw recordings or isolated stems distributed with editable source; no software sample-library permission asserted."
+    },
+    "referenceSoundtrackCopied": false,
+    "originalAudioHandoffTimings": {
+      "coldMixCliElapsedMs": 5475.3208,
+      "coldMixReceiptElapsedMs": 5305.6792000000005,
+      "repeatedWarmMixCliElapsedMs": 325.3512,
+      "earliestRetainedDiagnosticArtifactAt": "2026-10-11T08:16:12.738Z",
+      "completedAt": "2026-10-11T08:21:15.396Z",
+      "retainedDiagnosticThroughHandoffWallMs": 302658,
+      "qualification": "Diagnostic-artifact boundary starts after initial skill/code reads; root benchmark records total task wall time. Cached mix time is not customer turnaround."
+    },
+    "handoffNote": "audio-evidence.json is a historical stage handoff. Integration and final mux are complete; its remaining integration instructions are superseded here.",
+    "humanListening": "PENDING",
+    "perceivedMusicAndSfxFit": "UNVERIFIED"
+  },
+  "finalMux": {
+    "elapsedMs": 18957.5769,
+    "exitCode": 0,
+    "completedUtc": "2026-10-11T08:46:33.3941667Z",
+    "startedUtc": "2026-10-11T08:46:13.9883406Z",
+    "status": "STREAM_COPY_PASS",
+    "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\mux\\17864135094e88c80dc90f277178bcef9d485dd0f23d05e7b0c1adfebd61c328\\film.mp4",
+    "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48",
+    "key": "17864135094e88c80dc90f277178bcef9d485dd0f23d05e7b0c1adfebd61c328",
+    "cacheHit": false,
+    "audioCacheHit": true,
+    "providerCalls": 0,
+    "paidSpendUsd": 0,
+    "file": "workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4"
+  },
+  "delivery": {
+    "file": "workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+    "bytes": 11399802,
+    "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48",
+    "visualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083"
+  },
+  "revision": {
+    "status": "PASS",
+    "scope": "Disposable one-text revision only; silent visual draft and full-length unchanged audio cache verified separately",
+    "field": "copy.motion",
+    "before": "Bring it into motion.",
+    "after": "Make your next move.",
+    "finalFilmUnchanged": true,
+    "baselineVisualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+    "revisionVisualSourceKey": "55b3e27514f8889b5d3ff18921e664b3d67703a26398403f165343a25b49d5d5",
+    "oneStringOnly": true,
+    "otherSourceAndMetadataFilesExact": 13,
+    "window": {
+      "format": "landscape",
+      "from": 434,
+      "frames": 120,
+      "profile": "draft",
+      "width": 960,
+      "height": 540
+    },
+    "media": {
+      "file": "draft.mp4",
+      "bytes": 257387,
+      "sha256": "6435ee532271f4c560d74ab7fc0800d4e361057ebe491c34ed0f104d95f41e6e",
+      "width": 960,
+      "height": 540,
+      "frames": 120,
+      "fps": "60/1",
+      "timeBase": "1/60",
+      "duration": 2,
+      "strictDecode": "PASS",
+      "audio": null
+    },
+    "coldProcessElapsedMs": 39253.9033,
+    "warmProcessElapsedMs": 1564.7471,
+    "warmCacheHit": true,
+    "warmCapturedFrames": 0,
+    "revisionFromFrozenBaselineWallMs": 368624,
+    "firstInitToReceiptIncludingColdBenchmarkWaitMs": 1267105,
+    "audioKeyBefore": "9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23",
+    "audioKeyAfter": "9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23",
+    "audioCacheHitBefore": true,
+    "audioCacheHitAfter": true,
+    "crossPageRasterControl": "17 pixels differed by at most 2 RGB levels between independent pages. Semantic layout, text calls and source boundaries passed; exact cross-page pixel identity is not claimed.",
+    "evidence": "revision-verification.json"
+  },
+  "verification": {
+    "independentSourceReview": "PASS; independent-source-review.json, bound to final source key",
+    "nativeSourceFrames": 33,
+    "exactOutOfOrderSeeksWithinSamePage": 9,
+    "encodedOutput": "PASS_TECHNICAL_EXPORT_AND_BOUNDED_ENCODED_VISUAL_INSPECTION",
+    "boundedEncodedFramesInspected": 55,
+    "allVideoPacketPayloadsAndTimestamps": "PASS_EXACT_PACKET_PAYLOAD_AND_TIMING",
+    "checks": {
+      "focusedMotionTests": "14 PASS",
+      "build": "PASS",
+      "fullVitest": "119 files PASS; 1476 tests PASS; 9 files / 32 tests default skipped",
+      "fullVitestNote": "Initial unrestricted workers hit one unrelated 5-second artifact-anchor timeout; its isolated 9 checks and full suite with 2 workers passed. No test or config skips added.",
+      "codexControls": "26 PASS",
+      "bundleLeak": "PASS",
+      "voiceSync": "PASS",
+      "evalPrompts": "PASS",
+      "domainLanguage": "PASS",
+      "powerShellAscii": "PASS",
+      "artifactAnchors": "PASS",
+      "stagedDiffCheck": "One known trailing space in verbatim upstream assets/OFL-JetBrainsMono.txt:21. Independently reviewed vendor legal-data formatting diagnostic; file/hash preserved, no check/config disabled. Not a green diff-check claim."
+    },
+    "contactSheet": {
+      "file": "grifon-orbital-launch-v1-contact-sheet.png",
+      "sha256": "19db7c312a22040bd01509757f1bd3c9f7bb326b1fb6665f350da2986becfd00"
+    },
+    "encodedEvidence": "encoded-output-verification.json",
+    "encodedEvidenceSha256": "7937c94dd22bafb582abf7dfc2bc7c3da4a65f873fc00d56e24d51623ed1627c"
+  },
+  "preservedAcceptedDelivery": {
+    "film": "workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4",
+    "sha256": "f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df",
+    "player": "artifacts/grifon-shader-sound-v1.html",
+    "playerSha256": "550986f8e81c77cb45cd8825f0e5844b1feb7042e11f291cca8b465a867f8b2a"
+  },
+  "limits": [
+    "Landscape only; portrait requires its own composition.",
+    "New visual languages still require authoring; arbitrary video conversion is not implemented.",
+    "Warm caches and two-second drafts are not full new-reference turnaround.",
+    "55 of 1389 encoded frames were visually inspected. Whole human playback, music/SFX listening and creative acceptance remain pending.",
+    "Nominal AAC duration is 23.150s; decoded tail is 23.168s due to padding.",
+    "Raw stock recordings, stems, reference footage and large diagnostic caches remain outside the Git/source package."
+  ]
+}

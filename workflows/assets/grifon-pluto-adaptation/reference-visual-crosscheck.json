@@ -1,0 +1,32 @@
+{
+  "verdict": "PASS_REFERENCE_VISUAL_INTAKE",
+  "scope": "Independent read-only visual reference crosscheck; no output film quality or speed claim.",
+  "reference": "https://x.com/abdullah4204k/status/2100297302497997167?s=20",
+  "source": "F:/GrifonBenchmarks/pluto-2100297302497997167/reference/source-1080p.mp4",
+  "sha256": "2d998f429f3bd07fe58d06a1874c7841381630beb909002e542b06d6fef1a58f",
+  "native": {"width":1920,"height":1080,"fps":60,"videoFrames":1389,"videoSeconds":23.150007,"containerSeconds":23.196735},
+  "method": ["Chronological 6 fps diagnostic sheets across entire reference", "Native 60 fps window at 12.100-12.700s", "20 fps source-PTS opening window 0-1.500s", "30 fps source-PTS type-reveal window 7.100-8.000s", "Six native-resolution frames at 4.500,6.900,10.900,12.333,14.500,22.500s"],
+  "timingCaution": "Broad beat boundaries are approximate within 0.17s. fps=6 sheet labels are resampled timestamps; exact-* sheets preserve source PTS. Exact Earth/particle flash timings below use native frames.",
+  "beats": [
+    {"rangeSeconds":[0,1.233],"action":"Black field with offset red/white halftone fragments, fragmented panels drifting/scaling. No coherent word confidently readable."},
+    {"rangeSeconds":[1.233,3.5],"action":"Oversized 7 then 76 cycles purple/cyan/rainbow/metallic/outline/white fills; hairline rules and flanking copy assemble. Central black circular intrusion transitions into sphere.","copy":["FOR","76","YEARS"]},
+    {"rangeSeconds":[3.5,5],"action":"Orange upper/white lower particle sphere, central PLUTO, sparse offset guide lines and four corner labels.","copy":["PLUTO","NON EXISTENT","DWARF PLANET","7,500,000,000KM","FURTHEST DISTANCE"]},
+    {"rangeSeconds":[5,7.233],"action":"Image cards pop into collage around large PLUTO, central planet texture; then surface imagery expands to full frame behind title. Labels/grid persist.","copy":["PLUTO","was the 9th PLANET"]},
+    {"rangeSeconds":[7.233,9.5],"action":"Hard cut to horizontally traveling repeated radial/particle globes, alternating monochrome and color. Scrambled partial letters resolve into a centered sentence; whole row shrinks/recedes before transition.","copy":["One vote changed that"]},
+    {"rangeSeconds":[9.5,11.5],"action":"Realistic Pluto moves right-to-center along opposing horizontal rules; small side labels appear; circular outline and center axis grow.","copy":["PLUTO","7.5 BILLION LY AWAY","THE NINTH","PLANET"]},
+    {"rangeSeconds":[11.5,12.367],"action":"Vertical split reveals monochrome dense particle treatment on the right half of Pluto, with thin orbit ring."},
+    {"rangeSeconds":[12.367,12.5],"action":"Brief Earth-colored raster/glitch globe replaces Pluto inside growing rings; observed native frames 12.367 through 12.483."},
+    {"rangeSeconds":[12.5,12.567],"action":"Sparse white particle sphere flash; observed native frames 12.500 through 12.550; realistic Pluto returns at 12.567."},
+    {"rangeSeconds":[12.567,13],"action":"Realistic Pluto expands rapidly toward camera, ring scales outward."},
+    {"rangeSeconds":[13,15.8],"action":"Close-up planet horizon at lower edge with soft focus; vertically rolling/fading text changes the verb phrase, green emphasis and white subject.","copy":["but pluto never cared","pluto kept orbiting"]},
+    {"rangeSeconds":[15.8,18.833],"action":"Pull back to large realistic Pluto; small Earth enters from upper edge and orbits to the upper right, both bodies then recede."},
+    {"rangeSeconds":[18.833,21],"action":"Earth/Pluto textures wipe/dissolve into flat gray satellite and white primary circle; grid guides reappear; two-dot logo recenters/reduces."},
+    {"rangeSeconds":[21,23.15],"action":"Camera/layout pullback reveals horizontal end-card cells, green brand cell/cursor, type reveal, then settled grid.","copy":["Pluto.co","RAISE","INVEST"]}
+  ],
+  "templateCrosscheck": {"source":"C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/tools/motion-launch/templates.mjs and project.mjs","basicLaunch":"12s,24fps,288frames,two formats,no authored audio plan","shaderReference":"932frames at 30000/1001fps,landscape,222frame locked encoded opening,existing audio plan","finding":"A native 23.15s/60fps Pluto treatment is outside both existing template timeline contracts; custom authoring is required rather than a copy/asset swap."},
+  "customNeeds": ["Particle/textured globe renderer and split material masks", "Globe collage and expanding surface-image transition", "Repeated radial/particle sphere conveyor", "Scramble/resolve and rolling verb typography", "Large depth/scale camera choreography with close-up focus treatment", "Two-body orbit and texture-to-flat-logo morph", "Fresh frame-accurate music/SFX cue map for new timeline"],
+  "reusableCandidates": ["Project provenance/source hashing", "Local browser preview and bounded native-frame export infrastructure", "Existing typography/grid/easing conventions after deliberate adaptation", "Local audio-plan/mix/measurement tooling; existing cue timings require reauthoring"],
+  "audio": {"streamPresent":true,"listening":"UNVERIFIED","note":"No auditory qualities or musical matching inferred from images, metadata, or waveform."},
+  "limitations": ["No reference soundtrack listening performed", "No universal reference-to-template conversion exists in inspected contracts", "Observed copy is transcribed, not scientifically endorsed", "This check does not establish benchmark elapsed time or final output quality"],
+  "operations": {"providerCalls":0,"paidSpendUsd":0,"helperProcessesStarted":0,"projectSourceEdits":0}
+}

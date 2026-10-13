@@ -1,0 +1,94 @@
+{
+  "status": "TECHNICAL_AUDIO_PASS_LISTENING_PENDING",
+  "completedAt": "2026-10-11T08:21:15.396Z",
+  "scope": "Own Grifon23.15s/1389frame60fps adaptation:26 newly authored contacts; original reference soundtrack excluded.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0,
+  "hearing": "PENDING; technical correctness and broad-energy candidate similarity do not prove perceived fit.",
+  "sourceRoot": "C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources",
+  "sourceReferenceHash": "2d998f429f3bd07fe58d06a1874c7841381630beb909002e542b06d6fef1a58f",
+  "files": [
+    {
+      "name": "audio-plan.json",
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\audio-intake\\audio-only-project\\audio-plan.json",
+      "bytes": 12489,
+      "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218"
+    },
+    {
+      "name": "audio-source-manifest.json",
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\audio-intake\\audio-only-project\\audio-source-manifest.json",
+      "bytes": 2060,
+      "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+    },
+    {
+      "name": "audio-source-credits.md",
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\audio-intake\\audio-only-project\\audio-source-credits.md",
+      "bytes": 2995,
+      "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9"
+    }
+  ],
+  "targetProject": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project",
+  "copiedCompactRecipeToTargetProject": false,
+  "jobUpdateNeeded": "Owner/root must set target project job.json audioPlan to audio-plan.json; audio agent does not overwrite picture-owned job.json.",
+  "mixedMaster": {
+    "aac": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\audio-intake\\audio-only-project\\.cache\\audio\\4f599ecdf539a0d9569c28ef244caaa82bc4e483f8bd9c67390f1c4079f962cb\\master.m4a",
+    "aacSha256": "2283f43c71bc3c2903779ce160d04c6b7e671f7840ba83c3d2959dd2bd950c01",
+    "wav": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\audio-intake\\audio-only-project\\.cache\\audio\\4f599ecdf539a0d9569c28ef244caaa82bc4e483f8bd9c67390f1c4079f962cb\\master.wav",
+    "wavSha256": "e777db5124ed59f72f32eee2e61f12c2f270bf697ec9a4611a3023c1b7fc6131",
+    "receipt": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\audio-intake\\audio-only-project\\.cache\\audio\\4f599ecdf539a0d9569c28ef244caaa82bc4e483f8bd9c67390f1c4079f962cb\\receipt.json",
+    "receiptSha256": "66c3183805965d3a87270abc5b9a90903d13a658345a14e41ce4e9cdb2d122ca",
+    "key": "4f599ecdf539a0d9569c28ef244caaa82bc4e483f8bd9c67390f1c4079f962cb"
+  },
+  "timeline": {
+    "frames": 1389,
+    "fpsNumerator": 60,
+    "fpsDenominator": 1,
+    "sampleRate": 48000,
+    "sampleFrames": 1111200,
+    "decodedAacFrames": 1112064,
+    "logicalSeconds": 23.15
+  },
+  "music": {
+    "file": "digital-clouds.mp3",
+    "title": "Digital Clouds",
+    "creator": "Alejandro Magaña (A. M.)",
+    "sourceInSeconds": 32,
+    "sourceOutSeconds": 55.15,
+    "playbackRate": 1,
+    "basis": "Lowest broad-band energy/dynamics difference across10registeredstockexcerpts; no listening claim."
+  },
+  "measurements": {
+    "integratedLufs": -16.53,
+    "truePeakDbtp": -2.19,
+    "monoFoldEnergyRatio": 0.9593119588356795,
+    "nonfinite": 0,
+    "tailRmsDbfs": -114.06038250331167,
+    "cues": 26,
+    "maximumStrongestSampleContactError": 0,
+    "maximumMasterLinearError": 1.1896190699189901e-7,
+    "method": "Single linear master gain; loudnorm used only as a null-output diagnostic meter, not applied to soundtrack."
+  },
+  "timings": {
+    "coldMixCliElapsedMs": 5475.3208,
+    "coldMixReceiptElapsedMs": 5305.6792000000005,
+    "repeatedWarmMixCliElapsedMs": 325.3512,
+    "earliestRetainedDiagnosticArtifactAt": "2026-10-11T08:16:12.738Z",
+    "completedAt": "2026-10-11T08:21:15.396Z",
+    "retainedDiagnosticThroughHandoffWallMs": 302658,
+    "qualification": "Diagnostic-artifact boundary starts after initial skill/code reads; root benchmark records total task wall time. Cached mix time is not customer turnaround."
+  },
+  "reproduction": [
+    "Copy the3compactrecipefiles to final F project if not already copied; preserve existing job fields and set only audioPlan.",
+    "Run node tools/motion-launch.mjs audio mix --project F:/GrifonBenchmarks/pluto-2100297302497997167/project --source-root C:/Users/ADMIN/Desktop/grifon-command/workflows/assets/grifon-reference-full/assets/audio-v07/sources",
+    "When picture receipt exists, audio mux with the full final video and --visual-receipt. Preserve native60fps stream-copy proof."
+  ],
+  "rights": {
+    "usage": "mixed-video",
+    "rawRedistribution": false,
+    "basis": "Existing registered Mixkit Stock Music Free and Sound Effects Free recordings incorporated in this manually authored local film. No raw recordings or isolated stems distributed with editable source; no software sample-library permission asserted."
+  },
+  "remaining": [
+    "Whole-output human playback/listening and creative sonic-fit approval.",
+    "Root integrates compactrecipe into finalpictureproject and muxes verifiedpicture."
+  ]
+}

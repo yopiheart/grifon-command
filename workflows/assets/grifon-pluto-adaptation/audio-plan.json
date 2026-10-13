@@ -1,0 +1,674 @@
+{
+  "schemaVersion": 1,
+  "sampleRate": 48000,
+  "channels": 2,
+  "sampleFrames": 1111200,
+  "videoFrames": 1389,
+  "fpsNumerator": 60,
+  "fpsDenominator": 1,
+  "rights": {
+    "usage": "mixed-video",
+    "rawRedistribution": false,
+    "basis": "Existing registered Mixkit Stock Music Free and Sound Effects Free recordings incorporated in this manually authored local film. No raw recordings or isolated stems distributed with editable source; no software sample-library permission asserted."
+  },
+  "sourceRegister": "audio-source-manifest.json",
+  "sourceCredits": "audio-source-credits.md",
+  "music": {
+    "file": "digital-clouds.mp3",
+    "bytes": 3232566,
+    "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48",
+    "license": "https://mixkit.co/license/",
+    "title": "Digital Clouds",
+    "creator": "Alejandro Magaña (A. M.)",
+    "catalog": "Mixkit 175",
+    "sourceInSeconds": 32,
+    "sourceOutSeconds": 55.15,
+    "playbackRate": 1,
+    "gainDb": -8.2
+  },
+  "trim": {
+    "sweep": [
+      0.0731041667,
+      0.69225
+    ],
+    "air-zoom": [
+      0.1398333333,
+      0.5580416667
+    ],
+    "shutter": [
+      0.1020625,
+      0.2628333333
+    ],
+    "lens": [
+      0.0060625,
+      0.5121875
+    ],
+    "tech-select": [
+      0,
+      0.0379791667
+    ],
+    "key": [
+      0.0986458333,
+      0.1637916667
+    ],
+    "bubble": [
+      0.1061666667,
+      0.1323958333
+    ],
+    "gear": [
+      0.0023125,
+      0.2010208333
+    ]
+  },
+  "sfxPreparation": {
+    "highpassHz": 90,
+    "lowpassHz": 10500,
+    "endTaperMilliseconds": 4,
+    "normalization": "trimmed mono peak before cue gain",
+    "contact": "Strongest absolute sample after rate/reverse/taper aligned to exact60fps native-frame sample; 800samples/frame."
+  },
+  "musicShape": [
+    [
+      0,
+      -8
+    ],
+    [
+      75,
+      -5
+    ],
+    [
+      162,
+      -4
+    ],
+    [
+      210,
+      0
+    ],
+    [
+      390,
+      -1
+    ],
+    [
+      434,
+      0
+    ],
+    [
+      540,
+      -2
+    ],
+    [
+      570,
+      0
+    ],
+    [
+      648,
+      -2
+    ],
+    [
+      742,
+      0
+    ],
+    [
+      780,
+      -1
+    ],
+    [
+      900,
+      0
+    ],
+    [
+      948,
+      -2
+    ],
+    [
+      1020,
+      -1
+    ],
+    [
+      1190,
+      -3
+    ],
+    [
+      1260,
+      -2
+    ]
+  ],
+  "fades": {
+    "openingSeconds": 0.08,
+    "endStartFrame": 1260,
+    "endCurve": "quadratic",
+    "endSample": 1111200
+  },
+  "ducking": {
+    "attackSeconds": 0.065,
+    "holdSeconds": 0.025,
+    "releaseSeconds": 0.16,
+    "depthDb": 3.2,
+    "frames": [
+      162,
+      210,
+      390,
+      434,
+      570,
+      690,
+      756,
+      948,
+      1260
+    ],
+    "gaps": [
+      {
+        "startFrame": 1248,
+        "endFrame": 1258,
+        "depthDb": 5,
+        "attackSeconds": 0.055,
+        "releaseSeconds": 0.09
+      }
+    ]
+  },
+  "subImpact": {
+    "durationSeconds": 0.24,
+    "frequencyStartHz": 92,
+    "frequencyEndHz": 46,
+    "attackSeconds": 0.006,
+    "decaySeconds": 0.065,
+    "endTaperSeconds": 0.018,
+    "phaseRadians": 0
+  },
+  "mastering": {
+    "targetIntegratedLufs": -16,
+    "maximumMasterTruePeakDbtp": -2.2,
+    "minimumEncodedLufs": -17.5,
+    "maximumEncodedLufs": -15,
+    "maximumEncodedTruePeakDbtp": -1.5,
+    "aacBitrate": "224k",
+    "method": "single linear gain; no compressor or limiter"
+  },
+  "cues": [
+    {
+      "id": "one-impact",
+      "frame": 75,
+      "role": "ONE numeral/title contact",
+      "layers": [
+        {
+          "source": "shutter",
+          "rate": 0.88,
+          "gainDb": -21,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idea-impact",
+      "frame": 126,
+      "role": "IDEA title contact",
+      "layers": [
+        {
+          "source": "gear",
+          "rate": 1.08,
+          "gainDb": -22,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "one-idea-lock",
+      "frame": 162,
+      "role": "ONE IDEA full title lock",
+      "layers": [
+        {
+          "source": "tech-select",
+          "rate": 0.92,
+          "gainDb": -21,
+          "pan": [
+            0,
+            0
+          ]
+        },
+        {
+          "source": "sub",
+          "rate": 1.05,
+          "gainDb": -22,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "particle-world",
+      "frame": 210,
+      "role": "Circle wipe resolves into particle world",
+      "layers": [
+        {
+          "source": "air-zoom",
+          "rate": 0.9,
+          "gainDb": -17,
+          "pan": [
+            -0.35,
+            0.25
+          ]
+        },
+        {
+          "source": "sub",
+          "rate": 1,
+          "gainDb": -20,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collage-script",
+      "frame": 300,
+      "role": "Collage SCRIPT cut",
+      "layers": [
+        {
+          "source": "bubble",
+          "rate": 0.9,
+          "gainDb": -25,
+          "pan": [
+            -0.22,
+            -0.22
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collage-storyboard",
+      "frame": 330,
+      "role": "Collage STORYBOARD cut",
+      "layers": [
+        {
+          "source": "key",
+          "rate": 1.02,
+          "gainDb": -25,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collage-video",
+      "frame": 360,
+      "role": "Collage VIDEO cut",
+      "layers": [
+        {
+          "source": "gear",
+          "rate": 1.22,
+          "gainDb": -25,
+          "pan": [
+            0.2,
+            0.2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "macro-expand",
+      "frame": 390,
+      "role": "Macro texture camera expansion",
+      "layers": [
+        {
+          "source": "air-zoom",
+          "rate": 1.15,
+          "gainDb": -21,
+          "pan": [
+            0.35,
+            -0.3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "globe-conveyor",
+      "frame": 434,
+      "role": "Repeated globe conveyor arrival",
+      "layers": [
+        {
+          "source": "sweep",
+          "rate": 1.12,
+          "gainDb": -20,
+          "pan": [
+            -0.5,
+            0.4
+          ]
+        },
+        {
+          "source": "shutter",
+          "rate": 1.12,
+          "gainDb": -24,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "motion-headline-lock",
+      "frame": 474,
+      "role": "Bring it into motion. reaches readable lock",
+      "layers": [
+        {
+          "source": "tech-select",
+          "rate": 1.12,
+          "gainDb": -24,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conveyor-recede",
+      "frame": 540,
+      "role": "Globe conveyor camera recedes",
+      "layers": [
+        {
+          "source": "air-zoom",
+          "rate": 1.25,
+          "gainDb": -23,
+          "pan": [
+            0.3,
+            -0.4
+          ],
+          "reverse": true
+        }
+      ]
+    },
+    {
+      "id": "solid-world",
+      "frame": 570,
+      "role": "Solid world arrival",
+      "layers": [
+        {
+          "source": "lens",
+          "rate": 1.08,
+          "gainDb": -21,
+          "pan": [
+            -0.25,
+            0.3
+          ]
+        },
+        {
+          "source": "sub",
+          "rate": 0.9,
+          "gainDb": -21,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scan-start",
+      "frame": 648,
+      "role": "Split scan begins",
+      "layers": [
+        {
+          "source": "lens",
+          "rate": 1.25,
+          "gainDb": -24,
+          "pan": [
+            0.3,
+            -0.3
+          ],
+          "reverse": true
+        }
+      ]
+    },
+    {
+      "id": "scan-center",
+      "frame": 690,
+      "role": "Split scan crosses world center",
+      "layers": [
+        {
+          "source": "shutter",
+          "rate": 0.82,
+          "gainDb": -24,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "material-flash",
+      "frame": 742,
+      "role": "Material flash",
+      "layers": [
+        {
+          "source": "tech-select",
+          "rate": 1.26,
+          "gainDb": -25,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "camera-push",
+      "frame": 756,
+      "role": "Fast camera push into world",
+      "layers": [
+        {
+          "source": "air-zoom",
+          "rate": 0.82,
+          "gainDb": -19,
+          "pan": [
+            -0.25,
+            0.25
+          ]
+        },
+        {
+          "source": "sub",
+          "rate": 1.12,
+          "gainDb": -23,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "describe-contact",
+      "frame": 780,
+      "role": "Horizon and DESCRIBE word contact",
+      "layers": [
+        {
+          "source": "gear",
+          "rate": 0.9,
+          "gainDb": -24,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "build-contact",
+      "frame": 840,
+      "role": "BUILD word lock",
+      "layers": [
+        {
+          "source": "key",
+          "rate": 0.96,
+          "gainDb": -24,
+          "pan": [
+            -0.1,
+            -0.1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "launch-contact",
+      "frame": 900,
+      "role": "LAUNCH word lock",
+      "layers": [
+        {
+          "source": "key",
+          "rate": 1.14,
+          "gainDb": -23.5,
+          "pan": [
+            0.1,
+            0.1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "world-pullback",
+      "frame": 948,
+      "role": "Camera pulls back to reveal orbit",
+      "layers": [
+        {
+          "source": "air-zoom",
+          "rate": 0.9,
+          "gainDb": -20,
+          "pan": [
+            0.4,
+            -0.4
+          ],
+          "reverse": true
+        },
+        {
+          "source": "sub",
+          "rate": 1.2,
+          "gainDb": -24,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "satellite-script",
+      "frame": 1020,
+      "role": "SCRIPT satellite arrives",
+      "layers": [
+        {
+          "source": "bubble",
+          "rate": 0.86,
+          "gainDb": -24,
+          "pan": [
+            -0.25,
+            -0.25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "satellite-storyboard",
+      "frame": 1080,
+      "role": "STORYBOARD satellite arrives",
+      "layers": [
+        {
+          "source": "bubble",
+          "rate": 1,
+          "gainDb": -24,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "satellite-video",
+      "frame": 1140,
+      "role": "VIDEO satellite arrives",
+      "layers": [
+        {
+          "source": "bubble",
+          "rate": 1.16,
+          "gainDb": -24,
+          "pan": [
+            0.25,
+            0.25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flat-world-dissolve",
+      "frame": 1190,
+      "role": "Textured world dissolves to simple flat form",
+      "layers": [
+        {
+          "source": "lens",
+          "rate": 1.38,
+          "gainDb": -27,
+          "pan": [
+            0.2,
+            -0.2
+          ],
+          "reverse": true
+        }
+      ]
+    },
+    {
+      "id": "ring-recenter",
+      "frame": 1240,
+      "role": "Thin ring recenters",
+      "layers": [
+        {
+          "source": "sweep",
+          "rate": 1.5,
+          "gainDb": -28,
+          "pan": [
+            -0.2,
+            0.2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grifonmark-lock",
+      "frame": 1260,
+      "role": "Canonical GrifonMark arrival",
+      "layers": [
+        {
+          "source": "tech-select",
+          "rate": 0.8,
+          "gainDb": -21,
+          "pan": [
+            0,
+            0
+          ]
+        },
+        {
+          "source": "sub",
+          "rate": 0.95,
+          "gainDb": -22,
+          "pan": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "providerCalls": 0,
+  "newSpendUsd": 0,
+  "sonicReview": "LISTENING_PENDING: music excerpt selected by objective broad-energy comparison only. Frame contacts and technical measurements do not prove perceived fit."
+}

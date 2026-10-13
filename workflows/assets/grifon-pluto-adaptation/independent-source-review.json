@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_INDEPENDENT_SCOPED_SOURCE_REVIEW",
+  "reviewer": "/root/merge_readiness_review",
+  "reviewedUtc": "2026-10-11T08:39:32.289Z",
+  "repository": "C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command",
+  "baseHead": "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+  "scope": {
+    "tracked": [
+      "tests/unit/motionLaunchProject.test.ts",
+      "tools/motion-launch/templates.mjs",
+      "tools/motion-launch/project.mjs",
+      "tools/motion-launch/visual.mjs",
+      "tools/motion-launch/preview-page.mjs"
+    ],
+    "authoredSource": [
+      "workflows/assets/grifon-pluto-adaptation/.gitignore",
+      "workflows/assets/grifon-pluto-adaptation/assets/inter-900.ttf",
+      "workflows/assets/grifon-pluto-adaptation/assets/jbmono-600.ttf",
+      "workflows/assets/grifon-pluto-adaptation/assets/logo.png",
+      "workflows/assets/grifon-pluto-adaptation/assets/manifest.json",
+      "workflows/assets/grifon-pluto-adaptation/assets/OFL-Inter.txt",
+      "workflows/assets/grifon-pluto-adaptation/assets/OFL-JetBrainsMono.txt",
+      "workflows/assets/grifon-pluto-adaptation/audio-plan.json",
+      "workflows/assets/grifon-pluto-adaptation/audio-source-credits.md",
+      "workflows/assets/grifon-pluto-adaptation/audio-source-manifest.json",
+      "workflows/assets/grifon-pluto-adaptation/brief.md",
+      "workflows/assets/grifon-pluto-adaptation/orbital.html",
+      "workflows/assets/grifon-pluto-adaptation/orbital.js",
+      "workflows/assets/grifon-pluto-adaptation/orbital.json",
+      "workflows/assets/grifon-pluto-adaptation/README.md",
+      "workflows/assets/grifon-pluto-adaptation/reference-provenance.json",
+      "workflows/assets/grifon-pluto-adaptation/reference-visual-crosscheck.json"
+    ],
+    "excluded": [
+      "Root-owned NOW.md",
+      "Final full-film/export acceptance",
+      "Whole-film audio listening acceptance",
+      "Benchmark elapsed-time and revision evidence",
+      "Merge or deployment authorization"
+    ]
+  },
+  "trackedDiffSha256": "107f62a319e483c7d1133570009b0c9dfebc98f1b654e3a99f3f23d925c3c72d",
+  "reviewedStateSha256": "f67f857b39068ff42feffc0dbc4f334fea8706578663bda162fb4170ae7d2b2f",
+  "visualSourceKey": "5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083",
+  "bindings": [
+    {
+      "file": "tests/unit/motionLaunchProject.test.ts",
+      "bytes": 21973,
+      "sha256": "e28e93d527ccb815fc0fc76d9d87ff198d432d1fe97df1b1675ee9f3cff966f6"
+    },
+    {
+      "file": "tools/motion-launch/templates.mjs",
+      "bytes": 2753,
+      "sha256": "e34f928c3373dbf5b75a23c326f305ebab1f36e03a68e492151c289b35b18c01"
+    },
+    {
+      "file": "tools/motion-launch/project.mjs",
+      "bytes": 13502,
+      "sha256": "4eb3ada7cd627609545b9c75e96fef0003956e724b01c39c88a0811a5ce5a4b5"
+    },
+    {
+      "file": "tools/motion-launch/visual.mjs",
+      "bytes": 22881,
+      "sha256": "208743aae5fff26746c0dd13fed4996f7d8b1284d6471d5e96b2a1da894e4492"
+    },
+    {
+      "file": "tools/motion-launch/preview-page.mjs",
+      "bytes": 10278,
+      "sha256": "69b87716ac3587b185b71251724fd587fb31ea7df36cdda2d2a668155be984fa"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/.gitignore",
+      "bytes": 192,
+      "sha256": "5e07682202ad4f8322f52739e6b3bcaec5f0131969ea88f2d5618f66ffa8c402"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/inter-900.ttf",
+      "bytes": 327260,
+      "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/jbmono-600.ttf",
+      "bytes": 112160,
+      "sha256": "df54dbfafba61d4911eb3dab9bba2d20531fb009f01d64dd42fa96ab862584d8"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/logo.png",
+      "bytes": 18408,
+      "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/manifest.json",
+      "bytes": 1262,
+      "sha256": "9e38a446393eae38fcd68b5f154bc347bef21e42788ca7a83a66a856d707e1a5"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/OFL-Inter.txt",
+      "bytes": 4472,
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/assets/OFL-JetBrainsMono.txt",
+      "bytes": 4399,
+      "sha256": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-plan.json",
+      "bytes": 12489,
+      "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-source-credits.md",
+      "bytes": 2995,
+      "sha256": "cd04e28cf1a5532d84e0ebdadc63f77f61deed8edcd455e9f1522edba14c8df9"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/audio-source-manifest.json",
+      "bytes": 2060,
+      "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/brief.md",
+      "bytes": 3530,
+      "sha256": "5c4b17d7d1f2fbf9075bb65bdff81b8961b7aba8c6340ad31d94838cee425f90"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/orbital.html",
+      "bytes": 742,
+      "sha256": "aafdb084687a84ea64f7f38b1ac240758120086ddcd6cdc85da4d20a4633d004"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/orbital.js",
+      "bytes": 16700,
+      "sha256": "1b196edfeb835738bd41059a7207686f4d0ef3436b67249cfcaa93c8b34048f9"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/orbital.json",
+      "bytes": 2405,
+      "sha256": "38a4eccca97d9d5be8c2da3defda8b9966f10982e1b2e0de52bee965741e9771"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/README.md",
+      "bytes": 3514,
+      "sha256": "1e58ad9773f5b5478dd2c098f4ff01aacbc5b421d51e0b9366d1431dd355a23c"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/reference-provenance.json",
+      "bytes": 964,
+      "sha256": "ec3fdfcf86c47fda15e11cf449e238413ec86c6ec7a2e8ce222f200f8869fbe3"
+    },
+    {
+      "file": "workflows/assets/grifon-pluto-adaptation/reference-visual-crosscheck.json",
+      "bytes": 5613,
+      "sha256": "fd57de6f178a67ae63afcbc5108a4e9b277ea765774e5c05f3be153d98b6070a"
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "id": "R1",
+      "issue": "Valid contiguous shot-boundary edits could change preview/evidence metadata without changing hardcoded choreography",
+      "resolution": "Validator now enforces [0,210,434,570,780,948,1260,1389]; documentation identifies fixed timing; regression checks a contiguous but false boundary",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "R2",
+      "issue": "Nested globe/text helpers replaced inherited alpha, preventing satellite fade before frame 1260",
+      "resolution": "Helpers multiply inherited alpha; bounded visual QA confirmed continuous disappearance before the final lockup",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "R3",
+      "issue": "Horizon readability move created camera-position discontinuities",
+      "resolution": "Push ends at y1640/r1255 and pullback starts at x843.1/y1640, matching the adjoining horizon",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "R4",
+      "issue": "Two early frames had tiny raster differences after out-of-order seeks",
+      "resolution": "Single bounded four-frame initialization warm-up before readiness; all nine final repeats are raw-pixel and PNG-byte exact",
+      "status": "RESOLVED"
+    }
+  ],
+  "checks": {
+    "nativeTimeline": {
+      "fpsNumerator": 60,
+      "fpsDenominator": 1,
+      "frames": 1389,
+      "sampleFrames": 1111200
+    },
+    "nativeEntry": "orbital.html",
+    "compositionInputs": 9,
+    "shotBoundaries": [
+      0,
+      210,
+      434,
+      570,
+      780,
+      948,
+      1260,
+      1389
+    ],
+    "oldTreatments": "Shader-reference and basic-launch records, locked encoded prefix checks and final concat branch unchanged",
+    "containment": "Entry remains template-controlled and is read through safeFile; no project escape or arbitrary entry metadata added",
+    "cache": "Visual cache remains bound to source bytes, producer/runtime hashes and exact native export window; audio plan remains separately bound",
+    "assets": [
+      {
+        "file": "logo.png",
+        "sha256": "052972bf7da17166ee6a0c0a7b17081aafdebc8f73b877ef7264f9513591914e",
+        "bytes": 18408,
+        "canonicalSourceMatches": true
+      },
+      {
+        "file": "inter-900.ttf",
+        "sha256": "5b717029a2c4cfca2167e97be1157edb24151591e5ec96eb484745c392817a7a",
+        "bytes": 327260,
+        "canonicalSourceMatches": true
+      },
+      {
+        "file": "jbmono-600.ttf",
+        "sha256": "df54dbfafba61d4911eb3dab9bba2d20531fb009f01d64dd42fa96ab862584d8",
+        "bytes": 112160,
+        "canonicalSourceMatches": true
+      },
+      {
+        "file": "OFL-Inter.txt",
+        "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320",
+        "bytes": 4472,
+        "canonicalSourceMatches": true
+      },
+      {
+        "file": "OFL-JetBrainsMono.txt",
+        "sha256": "a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697",
+        "bytes": 4399,
+        "canonicalSourceMatches": null
+      }
+    ],
+    "audio": {
+      "schema": "PASS",
+      "cues": 26,
+      "samplesPerNativeFrame": 800,
+      "musicRegistered": true,
+      "sfxRegistered": true,
+      "continuousMusicSeconds": 23.15,
+      "rights": {
+        "usage": "mixed-video",
+        "rawRedistribution": false,
+        "basis": "Existing registered Mixkit Stock Music Free and Sound Effects Free recordings incorporated in this manually authored local film. No raw recordings or isolated stems distributed with editable source; no software sample-library permission asserted."
+      },
+      "providerCalls": 0,
+      "paidSpendUsd": 0,
+      "listening": "UNVERIFIED"
+    },
+    "taskAuthoredTunedChanges": false,
+    "providerIntegrationChanges": false,
+    "trackedChangedPaths": [
+      "NOW.md",
+      "tests/unit/motionLaunchProject.test.ts",
+      "tools/motion-launch/preview-page.mjs",
+      "tools/motion-launch/project.mjs",
+      "tools/motion-launch/templates.mjs",
+      "tools/motion-launch/visual.mjs"
+    ]
+  },
+  "boundedQa": {
+    "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/output-qa/2026-10-11T08-35-33-418Z/report.json",
+    "sha256": "9cf5f0511bd2faed440938906e936dfeb8759067d4d91bdf33233152a3537f3d",
+    "reportVerdict": "PENDING_VISUAL_INSPECTION",
+    "technicalVerdict": "PASS_BOUNDED_TECHNICAL_CHECK",
+    "sourceChanged": false,
+    "captures": 33,
+    "exactRepeatFrames": [
+      0,
+      85,
+      365,
+      505,
+      735,
+      880,
+      1160,
+      1350,
+      1388
+    ],
+    "rawPixelsExact": true,
+    "pngBytesExact": true,
+    "browserErrors": [],
+    "externalRequests": [],
+    "unexpectedCanvasTexts": [],
+    "canonicalLogoMatches": true,
+    "mobileViewportWidth": 390,
+    "mobileDocumentWidth": 390,
+    "visualInspection": "PASS reported by separate QA agent after direct inspection; helper JSON retains PENDING_VISUAL_INSPECTION for its automatic capture stage",
+    "wholeFilmAcceptance": "PENDING_ROOT_FULL_EXPORT_AND_REVIEW",
+    "audioListening": "UNVERIFIED"
+  },
+  "testEvidence": {
+    "origin": "Composer-reported; independent reviewer did not rerun broad tests",
+    "focusedTests": 14,
+    "defaultTests": 1476,
+    "rootFinalChecks": "Owned by root after final export/source stabilization"
+  },
+  "openActionableFindings": [],
+  "operations": {
+    "sourceEditsByReviewer": 0,
+    "providerCalls": 0,
+    "paidSpendUsd": 0,
+    "externalWrites": 0,
+    "localEvidenceReports": 2
+  }
+}

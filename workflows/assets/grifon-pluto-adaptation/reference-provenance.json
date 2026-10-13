@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "canonicalUrl": "https://x.com/abdullah4204k/status/2100297302497997167",
+  "author": "Abdullah.A / @abdullah4204k",
+  "postText": "intro from our demo launch for Pluto",
+  "postCreatedAt": "2026-09-16T18:54:33.000Z",
+  "metadataSource": "https://cdn.syndication.twimg.com/tweet-result?id=2100297302497997167&lang=en&token=x",
+  "nativeVideoUrl": "https://video.twimg.com/amplify_video/2100296550048235520/vid/avc1/1920x1080/eOy5ZXK5mh_D6HEm.mp4",
+  "file": "source-1080p.mp4",
+  "bytes": 11355857,
+  "sha256": "2d998f429f3bd07fe58d06a1874c7841381630beb909002e542b06d6fef1a58f",
+  "width": 1920,
+  "height": 1080,
+  "nominalFps": 60,
+  "videoFrames": 1389,
+  "videoDurationSeconds": 23.150007,
+  "containerDurationSeconds": 23.196735,
+  "audio": {"codec": "aac", "sampleRate": 44100, "channels": 2, "durationSeconds": 23.196735},
+  "use": "Private reference analysis. Source footage and Pluto identity are excluded from Grifon output."
+}
