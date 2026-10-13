@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 1,
+  "status": "DETERMINISTIC_EXISTING_SFX_EXPORT_PASS",
+  "createdAt": "2026-10-13T03:39:51.924Z",
+  "purpose": "Private preparation stem for replacing music on the existing Grifon Orbital launch film.",
+  "output": {
+    "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\preparation\\grifon-orbital-existing-sfx-48k-f32.wav",
+    "bytes": 8889656,
+    "sha256": "f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64"
+  },
+  "format": {
+    "codec": "pcm_f32le",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleFrames": 1111200,
+    "durationSeconds": 23.15,
+    "videoFrames": 1389,
+    "fpsNumerator": 60,
+    "fpsDenominator": 1
+  },
+  "gain": "Original unmastered effects output; original cue gains, pans, trims, rates, tapers and shared original fades preserved. No normalization added.",
+  "sourcePlan": {
+    "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\audio-plan.json",
+    "bytes": 12489,
+    "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218"
+  },
+  "producer": {
+    "file": "C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/tools/motion-launch/audio.mjs",
+    "bytes": 42037,
+    "sha256": "158a02843cf15f5e54d83d5e39946776b2eb706696c4661dfca0de82fd4f82c2"
+  },
+  "originalFilm": {
+    "file": "C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command/workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+    "bytes": 11399802,
+    "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48"
+  },
+  "originalMixedReceipt": {
+    "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio\\9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23\\receipt.json",
+    "bytes": 318925,
+    "sha256": "30c4cb26131974b7669e12ebb4dacebe67d77a42edca574fb667be5bb1bee82b"
+  },
+  "preparations": [
+    {
+      "name": "digital-clouds.mp3",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\digital-clouds.mp3",
+        "bytes": 3232566,
+        "sha256": "71cd4ea39edcc7532672bd97311abadfd318d00e7a828310a88b4f57fad9cd48"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\597ae19f234de1dbe52685866411800f83563dc9c9a467a9c1cc30205dabc7e7\\prepared.f32le",
+        "bytes": 8889600,
+        "sha256": "4c88ac9be2aa7b510eedf208eb9232b2624a7d545e9015583882ad51180608b6"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\597ae19f234de1dbe52685866411800f83563dc9c9a467a9c1cc30205dabc7e7\\receipt.json",
+        "bytes": 582,
+        "sha256": "097aa55f843df25bc5cff463081b0001833e8dafc23284e18feb3a7f6687a2e6"
+      }
+    },
+    {
+      "name": "shutter.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\shutter.wav",
+        "bytes": 62562,
+        "sha256": "0a38265f932837141d9fc6a1da560a919139ed621d330418090d4ddf6cb8e824"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\879d269f60ae363220852c0486c8e84afad6938771b765f55923d97de03776f5\\prepared.f64le",
+        "bytes": 61736,
+        "sha256": "c298f067960cc06f3bcbae5cba390922d63fbff25f9533e7a44b122929329ca9"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\879d269f60ae363220852c0486c8e84afad6938771b765f55923d97de03776f5\\receipt.json",
+        "bytes": 593,
+        "sha256": "d2553ae59e6daa38afea6f329352e49f723280cd87780a1443f02abdd45e00ad"
+      }
+    },
+    {
+      "name": "gear.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\gear.wav",
+        "bytes": 200748,
+        "sha256": "c05e7e46c1d5b9d18e9fe64161d1cc567ebfcfc2674959b6e3dd4947904cc2af"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\7cf4095ba6743b5effd830177868c87e5a1f46d99fb03cdbb03518b103e27bb3\\prepared.f64le",
+        "bytes": 76304,
+        "sha256": "a3d3521b380833a7e59ec235c290cab2cc8bed2d5a4099cc3ac481f5beeb124d"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\7cf4095ba6743b5effd830177868c87e5a1f46d99fb03cdbb03518b103e27bb3\\receipt.json",
+        "bytes": 589,
+        "sha256": "9c6a901a3cee189cd53144c9c575b33b0028d31241a33affd6fd5f2d55d5986c"
+      }
+    },
+    {
+      "name": "tech-select.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\tech-select.wav",
+        "bytes": 88930,
+        "sha256": "00270a1847195cddb82d1b10c9407880ce311f522284afaefdc218fbba70d3ed"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\16b68539d6b132a7500737d25cadd9b4a9e43cabca6eb6e47cb79a4992cb265c\\prepared.f64le",
+        "bytes": 14584,
+        "sha256": "7d71fbdc05b3469614c94b42c51e87d4de33d67b0426461a473886065f408f64"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\16b68539d6b132a7500737d25cadd9b4a9e43cabca6eb6e47cb79a4992cb265c\\receipt.json",
+        "bytes": 593,
+        "sha256": "b011024a7b1b23a2668a9cdcdb44e2ca30dff44dffa0ad5d5209d80b7f0c8722"
+      }
+    },
+    {
+      "name": "air-zoom.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\air-zoom.wav",
+        "bytes": 224908,
+        "sha256": "62d46c7faeaa2860f5ba94657be00d7604e8693f143b22291968d28043c70bfa"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\d9072716b85fc11b92f7f6a6a51dde7fcf94a114d367836de819981f9d45fed5\\prepared.f64le",
+        "bytes": 160592,
+        "sha256": "7c802dce8296dd602b02cf3692b9628b5f70c9923fc2c95e9f52d76430aa3ba3"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\d9072716b85fc11b92f7f6a6a51dde7fcf94a114d367836de819981f9d45fed5\\receipt.json",
+        "bytes": 596,
+        "sha256": "95fd423d2f880c40144afbd1d1bcbc91dbc5a25da9b6f3934fc76dd1032e0c31"
+      }
+    },
+    {
+      "name": "bubble.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\bubble.wav",
+        "bytes": 54050,
+        "sha256": "d30ea323e13539d10bc054ed7c971078433314878ea5711a55d0aef63619552f"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\a8d8401dc3cdab2fca0097aabbafb7d74cd2641ad0c678cd6d0c4dfd1bdcda93\\prepared.f64le",
+        "bytes": 10072,
+        "sha256": "b15ec25edb0fb066704cb10e2a49f791000dbe02e6af5765383e98573893f5b5"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\a8d8401dc3cdab2fca0097aabbafb7d74cd2641ad0c678cd6d0c4dfd1bdcda93\\receipt.json",
+        "bytes": 591,
+        "sha256": "59b45d5dff6b90a1ff593c71fffc9f5d325ccad619cf9b05a0181c7dae99e354"
+      }
+    },
+    {
+      "name": "key.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\key.wav",
+        "bytes": 58022,
+        "sha256": "04837e10d65b23aede5626d833e4e46001e90e908817200da1dcf21a51d36205"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\a9e3368e9690a5b01f26c812fd2d07ea17845df99016a378559fddcd66a7f789\\prepared.f64le",
+        "bytes": 25016,
+        "sha256": "2acdb493bea9ec9aaa7885fbf0f686ed55b7927f2dd41cd81c6847425864ec40"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\a9e3368e9690a5b01f26c812fd2d07ea17845df99016a378559fddcd66a7f789\\receipt.json",
+        "bytes": 588,
+        "sha256": "cb92eb73005100240a4bd7f7d1a47762262b5970e69f8bcb93379e96422b5916"
+      }
+    },
+    {
+      "name": "sweep.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\sweep.wav",
+        "bytes": 138746,
+        "sha256": "ca5a0206a7e6b12893a5727cb98a9d43ab02893153465eb21d43fb7b9e6616c3"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\0ba6c4ef4b30d48cefa3e2c573eca7d0577605b2b2bab1e52ba7e401b55742f9\\prepared.f64le",
+        "bytes": 237752,
+        "sha256": "a59b18183667401418f308600d13c08971236f5ff072dce50a4ddddaf3ee8b1a"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\0ba6c4ef4b30d48cefa3e2c573eca7d0577605b2b2bab1e52ba7e401b55742f9\\receipt.json",
+        "bytes": 593,
+        "sha256": "bd4e354ecc7ce7ee9400132969fdfe773f8d1507cff08e1ef100167e1d83ed70"
+      }
+    },
+    {
+      "name": "lens.wav",
+      "source": {
+        "file": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\workflows\\assets\\grifon-reference-full\\assets\\audio-v07\\sources\\lens.wav",
+        "bytes": 217348,
+        "sha256": "f4bf440c8328691c630d3a9d017846bcf05cdfc288cbc0676b96cb8dac8bb9a3"
+      },
+      "prepared": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\d7094776dfa93615fd740249b503027fa164033bb632021e1c67c6e393530661\\prepared.f64le",
+        "bytes": 194352,
+        "sha256": "788d88d2f678865e4e26cb3ee8dfeab97d6bd3a52ce445c60e23ba3c82fcbf70"
+      },
+      "receipt": {
+        "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio-sources\\d7094776dfa93615fd740249b503027fa164033bb632021e1c67c6e393530661\\receipt.json",
+        "bytes": 591,
+        "sha256": "2d99b6e778e4253156dd9b1811041db7e2df8ebd300ed285c3bb8fceaefad8dd"
+      }
+    }
+  ],
+  "proof": {
+    "originalPremaster": {
+      "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\.cache\\audio\\9c62336d6fb7fd7fd8bd3c3950c6141b273dcd1fc90fcfff8ee1562196dc3f23\\premaster.f32le",
+      "bytes": 8889600,
+      "sha256": "a65738c0b6f61119d7b61fe23d9b22b600b85c722ba48d4d053db1ecfa71a732"
+    },
+    "reconstructedPremasterSha256": "a65738c0b6f61119d7b61fe23d9b22b600b85c722ba48d4d053db1ecfa71a732",
+    "reconstructedPremasterByteIdentity": true,
+    "maximumPcmDifference": 0,
+    "effectsPcmSha256": "78b1c463553a23a0ed7d10e0a50a36dc76d74583bee8737cab1b0ac4974c2f80",
+    "decodedWavePcmSha256": "78b1c463553a23a0ed7d10e0a50a36dc76d74583bee8737cab1b0ac4974c2f80",
+    "waveRoundTripByteIdentity": true,
+    "originalInputsUnchanged": true
+  },
+  "cues": [
+    {
+      "id": "one-impact",
+      "frame": 75,
+      "seconds": 1.25,
+      "contactSample": 60000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "idea-impact",
+      "frame": 126,
+      "seconds": 2.1,
+      "contactSample": 100800,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "one-idea-lock",
+      "frame": 162,
+      "seconds": 2.7,
+      "contactSample": 129600,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "particle-world",
+      "frame": 210,
+      "seconds": 3.5,
+      "contactSample": 168000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "collage-script",
+      "frame": 300,
+      "seconds": 5,
+      "contactSample": 240000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "collage-storyboard",
+      "frame": 330,
+      "seconds": 5.5,
+      "contactSample": 264000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "collage-video",
+      "frame": 360,
+      "seconds": 6,
+      "contactSample": 288000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "macro-expand",
+      "frame": 390,
+      "seconds": 6.5,
+      "contactSample": 312000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "globe-conveyor",
+      "frame": 434,
+      "seconds": 7.233333333333333,
+      "contactSample": 347200,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "motion-headline-lock",
+      "frame": 474,
+      "seconds": 7.9,
+      "contactSample": 379200,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "conveyor-recede",
+      "frame": 540,
+      "seconds": 9,
+      "contactSample": 432000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "solid-world",
+      "frame": 570,
+      "seconds": 9.5,
+      "contactSample": 456000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "scan-start",
+      "frame": 648,
+      "seconds": 10.8,
+      "contactSample": 518400,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "scan-center",
+      "frame": 690,
+      "seconds": 11.5,
+      "contactSample": 552000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "material-flash",
+      "frame": 742,
+      "seconds": 12.366666666666667,
+      "contactSample": 593600,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "camera-push",
+      "frame": 756,
+      "seconds": 12.6,
+      "contactSample": 604800,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "describe-contact",
+      "frame": 780,
+      "seconds": 13,
+      "contactSample": 624000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "build-contact",
+      "frame": 840,
+      "seconds": 14,
+      "contactSample": 672000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "launch-contact",
+      "frame": 900,
+      "seconds": 15,
+      "contactSample": 720000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "world-pullback",
+      "frame": 948,
+      "seconds": 15.8,
+      "contactSample": 758400,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "satellite-script",
+      "frame": 1020,
+      "seconds": 17,
+      "contactSample": 816000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "satellite-storyboard",
+      "frame": 1080,
+      "seconds": 18,
+      "contactSample": 864000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "satellite-video",
+      "frame": 1140,
+      "seconds": 19,
+      "contactSample": 912000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "flat-world-dissolve",
+      "frame": 1190,
+      "seconds": 19.833333333333332,
+      "contactSample": 952000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "ring-recenter",
+      "frame": 1240,
+      "seconds": 20.666666666666668,
+      "contactSample": 992000,
+      "contactErrorSamples": 0
+    },
+    {
+      "id": "grifonmark-lock",
+      "frame": 1260,
+      "seconds": 21,
+      "contactSample": 1008000,
+      "contactErrorSamples": 0
+    }
+  ],
+  "rights": {
+    "usage": "private-preparation",
+    "rawRedistribution": false,
+    "basis": "Existing registered Mixkit Stock Music Free and Sound Effects Free recordings incorporated in this manually authored local film. No raw recordings or isolated stems distributed with editable source; no software sample-library permission asserted.",
+    "licenseRegister": {
+      "file": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\project\\audio-source-manifest.json",
+      "bytes": 2060,
+      "sha256": "65125249bb808f006f607a387030a3845d6ef54f63fbfb8cc164d783ef4c84a7"
+    }
+  },
+  "commands": [
+    {
+      "executable": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+      "args": [
+        "-v",
+        "error",
+        "-i",
+        "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\preparation\\grifon-orbital-existing-sfx-48k-f32.wav",
+        "-f",
+        "f32le",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "pipe:1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "executable": "C:\\Users\\ADMIN\\Desktop\\grifon-command\\.tools\\media-runtime\\node_modules\\ffprobe-static\\bin\\win32\\x64\\ffprobe.exe",
+      "args": [
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\preparation\\grifon-orbital-existing-sfx-48k-f32.wav"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "listening": "Not performed; exact technical preservation of existing authored effects does not prove musical fit of the upcoming score.",
+  "providerCalls": 0,
+  "paidSpendUsd": 0
+}

@@ -11,7 +11,7 @@ This is an agent production workflow, not a shipped application integration.
 | Provider/model | ElevenLabs Music v2.5, selected explicitly |
 | Variants | 1 |
 | Duration | Custom duration fitted to the actual video timeline |
-| Auto | Keep the user's requested Auto control; verify its label in the live UI |
+| Auto | Lyrics: Auto (verified in the live UI on 2026-10-13) |
 | Finetune | No Finetune |
 | Vocals | Instrumental by default; vocal textures or singing only when the concept calls for them |
 
@@ -25,9 +25,10 @@ sounds, transition swooshes, zoom accents or narration.
 
 The supplied screenshot's 45 seconds and 675 credits are examples, not a fixed
 duration or price. Its wand toggle was visible as On, but prompt enhancement
-was not selected as a standing preference. Resolve that setting in the first
-concrete generation spec. Do not confuse the requested Auto control with an
-automatic duration or assume it maps to the API's output format.
+was not selected as a standing preference. The first Orbital generation spec
+explicitly approved auto-improve On for that call. The live UI identifies the
+separate Auto control as Lyrics, independent of custom duration; it does not
+map to the API's output format.
 
 ## Confirmed taste
 

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-13T03:56:29.344Z",
+  "status": "TECHNICAL_PASS_LISTENING_PENDING",
+  "scope": "Local finishing only; generation approval, provider usage and native download are recorded separately.",
+  "planSha256": "54452afdbe96b8d9fdb97c39fb71fb87b4ab382841944e046dae5d9d9be2b431",
+  "recipeSha256": "c70b480cf5a780736e191d29962e9bd88fc590831a37956f804252b7829e9454",
+  "inputs": {
+    "nativeMusic": {
+      "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/native/grifon-launch-theme-native.mp3",
+      "sha256": "a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405"
+    },
+    "cleanSfx": {
+      "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/preparation/grifon-orbital-existing-sfx-48k-f32.wav",
+      "sha256": "f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64"
+    },
+    "picture": {
+      "path": "../grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+      "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48"
+    },
+    "existingCuePlan": {
+      "path": "../grifon-pluto-adaptation/audio-plan.json",
+      "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218"
+    }
+  },
+  "providerCalls": 0,
+  "paidSpend": 0,
+  "nativeTempoPreserved": true,
+  "nativeDecodedSampleFrames": 2989245,
+  "target": {
+    "durationSeconds": 23.15,
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleFrames": 1111200,
+    "videoFrames": 1389,
+    "fps": 60
+  },
+  "normalization": {
+    "preliminary": {
+      "integratedLufs": -18.12,
+      "truePeakDbtp": -4.47,
+      "loudnessRangeLu": 5.6
+    },
+    "desiredGainDb": 2.120000000000001,
+    "peakSafeGainDb": 2.57,
+    "appliedLinearGainDb": 2.120000000000001,
+    "pcm": {
+      "integratedLufs": -16,
+      "truePeakDbtp": -2.35,
+      "loudnessRangeLu": 5.6
+    },
+    "encoded": {
+      "integratedLufs": -16.04,
+      "truePeakDbtp": -2.36,
+      "loudnessRangeLu": 5.6
+    }
+  },
+  "sfx": {
+    "cues": 26,
+    "gainDb": 5,
+    "contactPositionsUnchanged": true,
+    "maximumLinearSampleError": 2.989541059150724e-8,
+    "qualification": "Only one positive linear stem gain and the common master gain; no SFX edits or time shifts."
+  },
+  "music": {
+    "breath": {
+      "rmsDbfs": -240,
+      "peakDbfs": -240,
+      "nonfinite": 0
+    },
+    "preBreath": {
+      "rmsDbfs": -16.256545800315433,
+      "peakDbfs": -2.924572079068428,
+      "nonfinite": 0
+    },
+    "reveal": {
+      "rmsDbfs": -14.423179372531362,
+      "peakDbfs": -3.5413335115973115,
+      "nonfinite": 0
+    },
+    "tail": {
+      "rmsDbfs": -66.03404038250596,
+      "peakDbfs": -47.03438256019473,
+      "nonfinite": 0
+    },
+    "all": {
+      "rmsDbfs": -17.95565067230874,
+      "peakDbfs": -2.8261610054139745,
+      "nonfinite": 0
+    },
+    "fadeStartSeconds": 22.9
+  },
+  "picture": {
+    "sourceSha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48",
+    "packets": 1389,
+    "everyPacketPayloadAndTimestampMatches": true,
+    "strictAudiovisualDecode": "PASS"
+  },
+  "output": {
+    "music": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\finishing\\music-edited-48k-f32.wav",
+      "bytes": 8889644,
+      "sha256": "459550776d0b4e43ea2f3adaf7535c6c49a70a6c34d95eed3ee630d3c368ffb4"
+    },
+    "sfx": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\finishing\\sfx-mix-48k-f32.wav",
+      "bytes": 8889644,
+      "sha256": "f94acf1d6c7a3c061c25023503fc80b0bd7c409d544b4b57ebb40bdcc2904d33"
+    },
+    "master": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\finishing\\master-48k-f32.wav",
+      "bytes": 8889644,
+      "sha256": "449443ac993a84828745beceacf77e5081ff378e74b065d745df743fb3433ab4"
+    },
+    "aac": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\finishing\\master-48k.m4a",
+      "bytes": 916194,
+      "sha256": "9e55538e85a7f4619e9ee67e7dc3100a2d07e8990b3b26b457fc550be8bd0bee"
+    },
+    "video": {
+      "path": "F:\\GrifonBenchmarks\\pluto-2100297302497997167\\music-v2_5-20261013\\finishing\\grifon-orbital-launch-music-v2_5-v1.mp4",
+      "bytes": 11584154,
+      "sha256": "59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0"
+    }
+  },
+  "audioStream": {
+    "codec": "aac",
+    "sampleRate": 48000,
+    "channels": 2,
+    "durationSeconds": 23.15
+  },
+  "listening": "PENDING: no auditory judgment inferred from waveform, prompt, metadata or technical meters. User audiovisual playback and creative acceptance remain separate."
+}

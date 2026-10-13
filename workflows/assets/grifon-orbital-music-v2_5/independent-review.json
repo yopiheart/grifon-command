@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "orbital_music_smoke independent subagent",
+  "createdAt": "2026-10-13T03:57:16.536Z",
+  "status": "TECHNICAL_PASS_CREATIVE_LISTENING_PENDING",
+  "scope": "Read-only source review and independent FFmpeg/FFprobe checks; only this report written. No provider calls, paid operations, application tests, or helper server.",
+  "sourceSnapshot": {
+    "planSha256": "54452afdbe96b8d9fdb97c39fb71fb87b4ab382841944e046dae5d9d9be2b431",
+    "recipeSha256": "c70b480cf5a780736e191d29962e9bd88fc590831a37956f804252b7829e9454",
+    "receiptSha256": "db8ea623bcc2676452db8c84a22d84a8acc5173b20cbe0d362b199dba1d3cee2"
+  },
+  "sourceReview": {
+    "nativeMusicCleanSfxPictureHashesMatch": true,
+    "cuePlanHashMatchesApprovedSpec": true,
+    "allFourInputsHashCheckedByRecipe": true,
+    "localRecipeProviderCalls": 0,
+    "localRecipeSpend": 0,
+    "noOriginalMixedAudioReadByMixer": true,
+    "musicOnlyDuckingAndFinalFade": true,
+    "nativeTempoPreservedBySectionalSelection": true,
+    "nodeSyntaxCheckExitCode": 0,
+    "findingResolved": "Cue plan was initially a bare path; finisher added SHA256 binding and validation, then reran. Candidate hash remained identical.",
+    "unresolvedActionableFindings": []
+  },
+  "picture": {
+    "strictAudiovisualDecodeExitCode": 0,
+    "packetCount": 1389,
+    "everyPacketPayloadHashAndPtsDtsDurationSizeFlagsMatchesOriginal": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": "60/1",
+    "durationSeconds": 23.15,
+    "originalFilmHashUnchanged": true
+  },
+  "audio": {
+    "codec": "aac",
+    "channels": 2,
+    "sampleRate": 48000,
+    "streamDurationSeconds": 23.15,
+    "masterPcmSampleFrames": 1111200,
+    "decodedAacSampleFramesIncludingCodecPadding": 1112064,
+    "integratedLufs": -16.04,
+    "truePeakDbtp": -2.36,
+    "maximumTruePeakGateDbtp": -1.5,
+    "loudnessGate": "PASS"
+  },
+  "sfx": {
+    "sourcePlanMatchesApprovedSpecAndRepository": true,
+    "originalPremasterReconstructionByteExact": true,
+    "cleanStemMatchesIndependentlyReconstructedEffectsByteExact": true,
+    "oldMusicInCleanSfxStem": false,
+    "cueCount": 26,
+    "maximumContactErrorSamples": 0,
+    "maximumErrorAfterOnlyLinearGain": 2.9895410647018394e-8,
+    "maximumMasterSumError": 2.9802322387695312e-8
+  },
+  "musicTiming": {
+    "breathSeconds": [20.75, 21],
+    "candidateBreathPeakDbfs": -240,
+    "candidatePauseGate": "PASS",
+    "originalMusicControlPeakDbfs": -14.682480113885955,
+    "originalMusicPauseGate": "FAIL_EXPECTED",
+    "revealStartsSeconds": 21,
+    "revealFrame": 1260,
+    "preBreathRmsDbfs": -16.256545800315433,
+    "revealRmsDbfs": -14.423179372531362,
+    "tailLast50msRmsDbfs": -66.03404038250596,
+    "finalStereoSample": [0, 0],
+    "qualification": "These checks establish silence, source timing and an ending taper; they do not establish perceived musical fit or reveal impact."
+  },
+  "paidEvidence": {
+    "specHashMatchesApproval": true,
+    "providerReceiptBoundToApprovedSpec": true,
+    "recordedAttempts": 1,
+    "recordedRetries": 0,
+    "quotedCredits": 360,
+    "approvedMaximumCredits": 360,
+    "actualChargedCredits": null,
+    "costQualification": "The quote matches the cap; per-generation actual charge is not exposed and is not independently verified.",
+    "providerDurationControl": "FAIL:62.275917s returned for selected24s; documented and fitted locally without regeneration."
+  },
+  "finalFile": {
+    "name": "grifon-orbital-launch-music-v2_5-v1.mp4",
+    "bytes": 11584154,
+    "sha256": "59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0"
+  },
+  "creativeListening": "PENDING: no actual auditory judgment. Vibe, perceived quality, section-edit smoothness, pacing/reveal fit and SFX masking require audiovisual listening and user acceptance."
+}

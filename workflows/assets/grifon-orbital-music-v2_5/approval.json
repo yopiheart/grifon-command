@@ -1,0 +1,12 @@
+{
+  "specSha256": "3b4b8cc02cee6e7776543a066e3e8351e50ca9f1f9d80885a9bc688dee65a381",
+  "promptFileSha256": "4231c67fe55628c1b68fd7f6056c585d6182cac61b0652a05e555f229834aa8e",
+  "date": "2026-10-13",
+  "source": "Direct user reply in this chat",
+  "verbatim": "Approve one generation, max360 credits",
+  "maximumGenerations": 1,
+  "maximumCredits": 360,
+  "maximumRetries": 0,
+  "topUpAuthorized": false,
+  "additionalPaidQaAuthorized": false
+}
