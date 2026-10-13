@@ -1,0 +1,100 @@
+{
+  "status": "PASS",
+  "checkedOn": "2026-10-11",
+  "project": "GRIFON AI",
+  "projectRef": "varoqxjccqmskzeejagn",
+  "authorization": {
+    "source": "Direct human reply to exact migration question",
+    "answer": "Approve this exact migration",
+    "sqlSha256": "b3d564f25522c9d25d1ca8b8b66ec37dc15cb907953389d01612722a5269ee89",
+    "scope": "Exact additive migration and verification only; merge/deployment remain separate"
+  },
+  "apply": {
+    "tool": "supabase.apply_migration",
+    "name": "companion_finished_ad_meter_atomic",
+    "version": "20261011072946",
+    "success": true,
+    "repeatAttempts": 0
+  },
+  "preflight": {
+    "table_rls": {
+      "rate_limits": true,
+      "subscriptions": true
+    },
+    "current_user": "postgres",
+    "session_user": "postgres",
+    "new_rpc_count": 0,
+    "postgres_version": "17.6",
+    "prerequisite_hashes": {
+      "consume_credit": "4bfb6db77ed4d04f45f9b218eeb43430",
+      "rate_limit_check": "b395e65a39839e583a762ffb87faaeb6"
+    },
+    "public_schema_create_anon": false,
+    "public_schema_create_authenticated": false
+  },
+  "postcondition": {
+    "acl": [
+      {
+        "role": "postgres",
+        "grantable": false,
+        "privilege": "EXECUTE"
+      },
+      {
+        "role": "service_role",
+        "grantable": false,
+        "privilege": "EXECUTE"
+      }
+    ],
+    "name": "consume_finished_ad",
+    "owner": "postgres",
+    "language": "plpgsql",
+    "settings": [
+      "search_path=public"
+    ],
+    "signature": "p_user_id uuid, p_unit text, p_finished_ad_id text, p_limit integer",
+    "table_rls": {
+      "rate_limits": true,
+      "subscriptions": true
+    },
+    "body_md5_lf": "7cfd6fb078444301ec89dfebf51dbf54",
+    "return_type": "jsonb",
+    "anon_execute": false,
+    "body_sha256_lf": "6587a88ca83f7f9c7ea7883069b743a295fce3c8a89f202062a7fb40afb5188c",
+    "security_definer": true,
+    "service_role_execute": true,
+    "authenticated_execute": false
+  },
+  "safeServiceExecution": {
+    "executing_role": "service_role",
+    "invalid_input_guard": "passed before any receipt or debit",
+    "transaction_read_only": "on",
+    "rpc_resolved_and_executable": true
+  },
+  "restAnonymousCheck": {
+    "method": "POST",
+    "endpoint": "/rest/v1/rpc/consume_finished_ad",
+    "authentication": "Enabled publishable client key only; no secret/service-role key read",
+    "inputs": {
+      "p_user_id": null,
+      "p_unit": null,
+      "p_finished_ad_id": null,
+      "p_limit": null
+    },
+    "httpStatus": 401,
+    "code": "42501",
+    "message": "permission denied for function consume_finished_ad",
+    "passed": true,
+    "interpretation": "PostgREST resolved the new function and denied anonymous execution"
+  },
+  "dataChanges": {
+    "existingUserRows": "No deployment statements insert/update/delete existing user rows; no valid debit RPC invoked",
+    "existingBalances": "No balance mutation requested",
+    "paidProviderCalls": 0,
+    "infrastructureProvisioned": 0
+  },
+  "limits": [
+    "No valid finished-ad debit against real production users was performed.",
+    "Successful service-role HTTP debit and live media/auth/physical phone journeys remain separate checks; local/CI native SQL prove valid debit concurrency."
+  ],
+  "supersedes": "Proposal-only status in the frozen exact SQL and manifest is historical; those approved bytes are preserved unchanged."
+}

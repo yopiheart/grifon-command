@@ -1,0 +1,41 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep actual email OTP
+
+
+Running 1 test using 1 worker
+
+(node:19220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code (12.2s)
+
+
+  1) tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Settings', exact: true })
+    Expected substring: "Pro Edition"
+    Received string:    "SettingsAccount Smokeaccount-smoke@example.testPlan & billingFree EditionYour current planFreeUpgrade planView available plansPrivacyPersonalized adsShare limited data with ad partners for relevant ads.AppearanceDark appearanceGrifon uses a dark interface.Help & legalHelp & supportTerms of servicePrivacy policyAccountSign outGrifon Command © 2026"
+    Timeout: 8000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 8000ms
+      - waiting for getByRole('dialog', { name: 'Settings', exact: true })
+        19 × locator resolved to <div role="dialog" tabindex="-1" aria-modal="true" aria-busy="false" aria-labelledby="account-settings-title" class="mat-plate relative flex max-h-[calc(100dvh-24px)] w-full max-w-lg flex-col overflow-hidden rounded-2xl ring-1 ring-white/10">…</div>
+           - unexpected value "SettingsAccount Smokeaccount-smoke@example.testPlan & billingFree EditionYour current planFreeUpgrade planView available plansPrivacyPersonalized adsShare limited data with ad partners for relevant ads.AppearanceDark appearanceGrifon uses a dark interface.Help & legalHelp & supportTerms of servicePrivacy policyAccountSign outGrifon Command © 2026"
+
+
+      272 |     await page.screenshot({ path: path.join(QA, `${phase}-otp-plan.png`), fullPage: true });
+      273 |   }
+    > 274 |   await expect(settings).toContainText('Pro Edition');
+          |                          ^
+      275 |   const calls = await page.evaluate(() => (window as any).accountFixture.calls.filter((call: any) => call.name.startsWith('otp-')));
+      276 |   expect(calls.map((call: any) => call.name)).toEqual(['otp-send', 'otp-verify', 'otp-verify']);
+      277 |   expect(calls.every((call: any) => call.email === ACCOUNT_EMAIL)).toBe(true);
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:274:26
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-actual-e-006df--a-recoverable-invalid-code\error-context.md
+
+  1 failed
+    tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code

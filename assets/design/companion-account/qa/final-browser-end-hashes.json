@@ -1,0 +1,118 @@
+{
+  "phase": "final-browser-end",
+  "recordedAt": "2026-10-07T15:36:04.8053536+08:00",
+  "source": [
+    {
+      "path": "App.tsx",
+      "expected": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+      "actual": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+      "unchanged": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatShell.tsx",
+      "expected": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6",
+      "actual": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6",
+      "unchanged": true
+    },
+    {
+      "path": "components/CompanionChat/index.tsx",
+      "expected": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b",
+      "actual": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b",
+      "unchanged": true
+    },
+    {
+      "path": "components/CompanionChat/companionChat.css",
+      "expected": "d547e4b3c7ba5b19785a9717f9ebeee8066f2bbef591fe1bce33c33e96f4fe11",
+      "actual": "d547e4b3c7ba5b19785a9717f9ebeee8066f2bbef591fe1bce33c33e96f4fe11",
+      "unchanged": true
+    },
+    {
+      "path": "components/dashboard/SettingsModal.tsx",
+      "expected": "da09b2a1ba34e4d465338b3ec1327cc27d3ddd7a6967438139dc2b1d705c922e",
+      "actual": "da09b2a1ba34e4d465338b3ec1327cc27d3ddd7a6967438139dc2b1d705c922e",
+      "unchanged": true
+    },
+    {
+      "path": "dev/companionChatPreview.tsx",
+      "expected": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+      "actual": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+      "unchanged": true
+    },
+    {
+      "path": "services/consentService.ts",
+      "expected": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f",
+      "actual": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f",
+      "unchanged": true
+    },
+    {
+      "path": "hooks/useSubscription.ts",
+      "expected": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3",
+      "actual": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3",
+      "unchanged": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "expected": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+      "actual": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+      "unchanged": true
+    }
+  ],
+  "tests": [
+    {
+      "path": "tests/e2e/companion-account.spec.ts",
+      "expected": "a877753ef14192f98cc148c8aeb289861fd514812b5f98cf1f190d3c144c5ad3",
+      "actual": "a877753ef14192f98cc148c8aeb289861fd514812b5f98cf1f190d3c144c5ad3",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    },
+    {
+      "path": "tests/e2e/companion-account-fixture.ts",
+      "expected": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+      "actual": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    },
+    {
+      "path": "tests/e2e/companion-account.config.ts",
+      "expected": "26feabf9556521166d3233b92bc22b8dafe7d17ac78704c7ac4a7883e0941ed4",
+      "actual": "26feabf9556521166d3233b92bc22b8dafe7d17ac78704c7ac4a7883e0941ed4",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    },
+    {
+      "path": "tests/e2e/companion-account-regression.config.ts",
+      "expected": "47216f63bebc8e4eb0a5c7e8fa570df7699820373596cb647a65e72c78b81c30",
+      "actual": "47216f63bebc8e4eb0a5c7e8fa570df7699820373596cb647a65e72c78b81c30",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    },
+    {
+      "path": "tests/e2e/route-consistency.spec.ts",
+      "expected": "2f531ee84b66ed56fe56cd80c59d4f368aeb7c80862e32b47bc16a75fd2ea368",
+      "actual": "2f531ee84b66ed56fe56cd80c59d4f368aeb7c80862e32b47bc16a75fd2ea368",
+      "unchanged": true,
+      "note": "approved OAuth main-frame guard recorded separately before targeted retry"
+    },
+    {
+      "path": "tests/e2e/companion-navigation.spec.ts",
+      "expected": "e42a9b5bee9eaed869c8270ab39878ff433789fced9406158460001a8d1ace4c",
+      "actual": "e42a9b5bee9eaed869c8270ab39878ff433789fced9406158460001a8d1ace4c",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    },
+    {
+      "path": "tests/e2e/companion-startup.spec.ts",
+      "expected": "df2e4efbbabad8a391e392857f07eda210890581999bf441d7fb6ecce7c9e3d2",
+      "actual": "df2e4efbbabad8a391e392857f07eda210890581999bf441d7fb6ecce7c9e3d2",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    },
+    {
+      "path": "tests/unit/companionAccountConsent.test.ts",
+      "expected": "679a5fb35299f98201103849a2cbb9c796e544bbff5bfb793c7b72a4043cd6e0",
+      "actual": "679a5fb35299f98201103849a2cbb9c796e544bbff5bfb793c7b72a4043cd6e0",
+      "unchanged": true,
+      "note": "frozen before consolidated run"
+    }
+  ]
+}

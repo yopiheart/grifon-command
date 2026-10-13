@@ -1,0 +1,16 @@
+{
+  "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+  "components/CompanionChat/CompanionAvatarLayer.tsx": "5cc687a510c07cd9f9b1e2dc4da770078708e8f29eb6dba5fc0686347fd1ddb1",
+  "components/CompanionChat/companionChat.css": "d1c934d9cf484f5a41fb90d51d08e96a1e946aef5deecdd6fdc924042c2e2638",
+  "components/CompanionChat/CompanionChatShell.tsx": "7096bcc3cbc43d6980f3252c35d58b1472a1b24862f6ef77cb1f70cd72bf872c",
+  "components/CompanionChat/CompanionChatSurface.tsx": "b8775adf86159bebeda89f18245aec5bf951d1851c22ed99afc71abf1bb86f99",
+  "components/CompanionChat/CompanionComposer.tsx": "e8c3a04ca9ee9207ae124d6992873d3a2b3e5d6acc18c5a9c92e50ab97cd14ed",
+  "components/CompanionChat/CompanionOutputViewer.tsx": "4bf6247ba31101152decb065b2b335af2298ecba7755b869d6858b2d23075423",
+  "components/CompanionChat/index.tsx": "35e482ae934e35834f09c7b88609c1433ebc1dfcaa68f47b15146531a1a975d9",
+  "components/CompanionChat/useCompanionDictation.ts": "a679206f208f0a4faca858a259dfac00f3992dad73de4851b73e548d77b47acb",
+  "dev/companionChatPreview.tsx": "b7face635c969026114cb925db0e4d507c5da3c0ff5f80032b4f5251d791b6ce",
+  "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+  "public/companion/frame.html": "e90ac0d1522ffd87b661e7de22736309d60e12cf55be07d38f30a7c7f3d4361d",
+  "tests/e2e/companion-continuity.spec.ts": "7993261f73809e5878fdc9af3adaad1dace271a035f3c7606fd78abed37c84de",
+  "tests/e2e/companion-continuity.config.ts": "bee88e4a3a93bb35729baefa9c5a97c5028185af0bed84f8a6b5b46f57eaa4b2"
+}

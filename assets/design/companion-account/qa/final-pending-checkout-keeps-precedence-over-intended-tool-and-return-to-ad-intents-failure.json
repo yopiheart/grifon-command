@@ -1,0 +1,10 @@
+{
+  "errors": [
+    "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeChecked\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('radio', { name: /^Annual/ })\nExpected: checked\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeChecked\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('radio', { name: /^Annual/ })\u001b[22m\n\u001b[2m    2 × waiting for\" http://127.0.0.1:5173/checkout?plan=business&cycle=annual\" navigation to finish...\u001b[22m\n\u001b[2m      - navigated to \"http://127.0.0.1:5173/checkout?plan=business&cycle=annual\"\u001b[22m\n\u001b[2m    - waiting for navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"http://127.0.0.1:5173/checkout?plan=business&cycle=annual\"\u001b[22m\n"
+  ],
+  "evidence": {
+    "unexpected": [],
+    "pageErrors": [],
+    "consentWrites": []
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "phase": "baseline",
+    "messageCount": 120,
+    "typingPreservesPosition": true,
+    "before": 7007,
+    "afterTyping": 7007,
+    "at850ms": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "afterSend": {
+      "top": 6731,
+      "distance": 10319
+    },
+    "followSettledMs": 2883,
+    "explicitSendFollowsLatest": false
+  },
+  {
+    "phase": "final",
+    "messageCount": 120,
+    "typingPreservesPosition": true,
+    "before": 8540,
+    "afterTyping": 8540,
+    "at850ms": {
+      "top": 19736,
+      "distance": 1117
+    },
+    "afterSend": {
+      "top": 20834,
+      "distance": 19
+    },
+    "followSettledMs": 1404,
+    "explicitSendFollowsLatest": true,
+    "nativeWheelInterruptedFollow": true,
+    "interrupted": {
+      "sampledTop": 7673,
+      "settled": {
+        "top": 7673,
+        "distance": 13048
+      }
+    },
+    "reduced": {
+      "motion": true,
+      "transparency": true,
+      "background": "rgb(24, 24, 27)",
+      "shadow": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px 1px 0px 0px"
+    }
+  }
+]

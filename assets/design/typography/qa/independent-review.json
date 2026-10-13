@@ -1,0 +1,396 @@
+{
+  "recordedAtUTC": "2026-10-07T03:06:45.275Z",
+  "reviewer": "Independent report-only agent /root/chat_14px_review",
+  "sourceSHA": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "sourceState": "Uncommitted reviewed changes; bind verdict to the file hashes below, not HEAD alone.",
+  "baselineSHA": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "scope": "Authorized global typography and structural companion drawing resolution. Concurrent CompanionChat navigation is excluded.",
+  "reviewedSources": {
+    "index.html": {
+      "gitBlob": "fc2f23eb6133777bfd106a68e2081a37ff4ef2d5",
+      "sha256": "8215a53bf4692de654e2c2377c913d6de54bc32589c96c27080127915329aa01"
+    },
+    "tailwind.config.js": {
+      "gitBlob": "bcb396e4f42d1ca75f90e51207b66965e6f6dc0f",
+      "sha256": "c312409fcc6d472cc9a65d684a37681b98d9286d30d7def5c384c0fa731af22a"
+    },
+    "DESIGN.md": {
+      "gitBlob": "1b00d8efb48f1da55c5e080f28ca63cda1a6253c",
+      "sha256": "be257a5e6137cd620ec0bd090124d9191ac97cb9b191e48f28509cb63d69b4b9"
+    },
+    ".agents/skills/grifon-creative-director/SKILL.md": {
+      "gitBlob": "6d877d45aedf0650c44053c393e9f6f7f215ed53",
+      "sha256": "91f61e812e11aa7d4fa0bd1db6df3363b6d7b4e593be5e3d1be4d1f6e5ce3162"
+    },
+    "components/ui/Button.tsx": {
+      "gitBlob": "7d7a9fe8c3042968683cf591022a3ff7487bbb15",
+      "sha256": "5e7b9bae77e09881102cdd564cfaf48dc71f6ac5bfe4ff849e9bdb60e7f8090a"
+    },
+    "components/ui/Card.tsx": {
+      "gitBlob": "cbe7c329889171a81a4332968d447872eed361a7",
+      "sha256": "5bc1ba25981c566887923b2b7c167927ccb79acb6855d01f9ec5f943c046942a"
+    },
+    "components/ui/FieldLabel.tsx": {
+      "gitBlob": "4f15b68d75242f5e3a1dbb405748ec1f7b6b3996",
+      "sha256": "5e7c9ef17a2c62433d88c9a295da91e2941b42bd7265d1e66b63ae6126fa7d42"
+    },
+    "components/ui/GoldButton.tsx": {
+      "gitBlob": "de2457f754ac19c435b53621c49a806db0cd6a36",
+      "sha256": "0460f0d510c03fe9eef7cbab2db8cb39cef42ab4ea646108c1288a3bfb6dd08d"
+    },
+    "components/ui/Input.tsx": {
+      "gitBlob": "1af96dc626d47787396f2f8dac9ce08d40404d82",
+      "sha256": "9108bace368d26a72ae891eb2f2d5bc62d5344bb26ccf77b2a2b9b1dbb22d0a5"
+    },
+    "components/ui/SegButton.tsx": {
+      "gitBlob": "d7e53eaf004cf2adc0acbf594c9388ee1da7c44e",
+      "sha256": "cc9b85d3c8af401e3bcc7c8fc58e68e82fa1fa4bb42540940872eba88e712dd2"
+    },
+    "components/ui/StepFooter.tsx": {
+      "gitBlob": "87a229a84f8b053ada2d5d3da708c1b4f057a854",
+      "sha256": "8fe056884b51f601cb8ba7d263dd457b91305de432c39b803209f89a13e5ef39"
+    },
+    "components/ui/StepShell.tsx": {
+      "gitBlob": "47df75c93e7ec9af56eb9c9056688c15295d6d95",
+      "sha256": "1c37bcac361f2c7fa33916fbc90d6b5e21eb8f02d7ad49fd4e954b092c53028e"
+    },
+    "components/ui/Textarea.tsx": {
+      "gitBlob": "de8700c632677e43981ba103b026f4e483d10634",
+      "sha256": "8f35e5b7735e510d87a53972527ada499d2ae4898bee637d22a714f2d0768b4e"
+    },
+    "components/ui/wizardTokens.ts": {
+      "gitBlob": "bcd8f207adc099d45941c49dfc5e3166d6861736",
+      "sha256": "8f8d311b0cfd8b63f03f5ccbdc96a5dd9de50247db7290369a4efe9f3419d8dd"
+    },
+    "components/imageads/SaasOfferCard.tsx": {
+      "gitBlob": "cb6d6c42f58f99e77a73f4efd5c3651af597acf6",
+      "sha256": "d261e11a17fce8d117368c5b13958380bd9bd0c28dc20e3173aa127df7a5acff"
+    },
+    "assets/3d-lab/grifon-companion-live/main.js": {
+      "gitBlob": "8ebf7beb4df8cf7d298340f63bbdfc3094d0951d",
+      "sha256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b"
+    },
+    "public/companion/main.js": {
+      "gitBlob": "8ebf7beb4df8cf7d298340f63bbdfc3094d0951d",
+      "sha256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b"
+    },
+    "public/companion/asset-manifest.json": {
+      "gitBlob": "53be5d66447f4d37520b6b30f26e6ca41e49f4f8",
+      "sha256": "25c9bca17315a7eeb4936af9b0780b611b285635606a21dbb0a1b1ca0b3009a2"
+    }
+  },
+  "correctness": {
+    "verdict": "PASS",
+    "actionableFindings": [],
+    "observations": [
+      "Body and ordinary native entered values are Inter 14px/400. Plain semantic labels are 14px/400; shared field labels and buttons are 14px/600. Legacy native500/600 utilities resolve to 400.",
+      "Ordinary h1-h6 use600, normal case and -0.02em; technical headings, code, IDs and keyboard hints retain mono. Scoped public serif, wordmarks and authored ad export headings are preserved.",
+      "CSS selectors and primitive diffs are limited to the authorized typography. Actual375/390/1280 pixels show no introduced clipping, horizontal overflow, truncated control labels or icon damage.",
+      "Renderer buffers follow current DPR before the paused/visibility guards; unchanged DPR does not cause per-frame layout reads, media-query allocation or resizing. Approved model, camera, textures, filtering and reactions are unchanged.",
+      "Fresh final-renderer CompanionChat pixels at 375/390/1280 remain readable and fit; the full seven-case behavior suite passes on the reviewed runtime, including motion, reduced motion, failure/retry and pointer eyes."
+    ]
+  },
+  "brand": {
+    "verdict": "BRAND_PASS",
+    "criticalCount": 0,
+    "nitCount": 0,
+    "actionableFindings": [],
+    "observations": [
+      "Calmer sans hierarchy follows current DESIGN.md and explicit user typography direction. The older mono sub-label and mandatory-gradient wording in brand-check was resolved against that source of truth.",
+      "Existing zinc canvas/materials and gold action hierarchy remain. Real landing/login keep their public editorial treatment; Google mark remains distinct on the neutral OAuth surface.",
+      "Normal 56/64px mascot captures show modestly cleaner silhouette/face edges. The large detailed render retains the approved appearance. Fine fur still cannot be individually resolved at 64 CSSpx."
+    ],
+    "scores": {
+      "philosophyCoherence": 9,
+      "visualHierarchy": 9,
+      "executionCraft": 9,
+      "functionality": 9,
+      "brandDistinctiveness": 8,
+      "total": 44
+    },
+    "quickWins": []
+  },
+  "resolvedFindings": [
+    {
+      "issue": "Legacy mono classes incorrectly exempted ordinary human controls.",
+      "resolution": "Only explicit tech-data controls retain the technical exception.",
+      "evidence": "Fresh primitive and real-control smoke at 375/390/1280."
+    },
+    {
+      "issue": "Legacy native medium/semibold entered values remained 500/600.",
+      "resolution": "Scoped native input/textarea/select values force 400; technical/public exceptions retained.",
+      "evidence": "Pinned original 3 cases fail; final 6 cases pass including 500/600 legacy utilities."
+    },
+    {
+      "issue": "Eventless CDP DPR changes left the initial MQL-only renderer buffer stale.",
+      "resolution": "Cached raw-DPR check in existing RAF reuses the resize/rearm path before paused guards.",
+      "evidence": "mascot-dpr-events.json and live/paused verifier."
+    }
+  ],
+  "typographyEvidence": {
+    "baselineExitCode": 1,
+    "baselineFailed": 3,
+    "finalExitCode": 0,
+    "finalPassed": 6,
+    "viewportWidths": [
+      375,
+      390,
+      1280
+    ],
+    "report": "verification.json",
+    "finalDurationSeconds": 15.7
+  },
+  "mascotEvidence": {
+    "verifier": "verify-mascot-resolution.mjs",
+    "baselineReport": "mascot-baseline-report.json",
+    "finalReport": "mascot-final-report.json",
+    "baselineExitCode": 1,
+    "baselineFailures": 48,
+    "finalExitCode": 0,
+    "finalFailures": 0,
+    "finalMainSHA256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "contract": "Minimum 2x backing at 56/64px; follow DPR live, paused/reduced-motion, and after reload; backing edge <=1024px.",
+    "liveDprResults": [
+      {
+        "name": "normal-56",
+        "dpr": 1,
+        "buffer": {
+          "width": 112,
+          "height": 112
+        },
+        "paused": false
+      },
+      {
+        "name": "normal-64",
+        "dpr": 1,
+        "buffer": {
+          "width": 128,
+          "height": 128
+        },
+        "paused": false
+      },
+      {
+        "name": "large-512",
+        "dpr": 3,
+        "buffer": {
+          "width": 1024,
+          "height": 1024
+        },
+        "paused": false
+      },
+      {
+        "name": "before-dpr-change",
+        "dpr": 1,
+        "buffer": {
+          "width": 112,
+          "height": 112
+        },
+        "paused": false
+      },
+      {
+        "name": "after-live-dpr3",
+        "dpr": 3,
+        "buffer": {
+          "width": 168,
+          "height": 168
+        },
+        "paused": false
+      },
+      {
+        "name": "after-live-dpr8",
+        "dpr": 8,
+        "buffer": {
+          "width": 448,
+          "height": 448
+        },
+        "paused": false
+      },
+      {
+        "name": "after-reload-dpr8",
+        "dpr": 8,
+        "buffer": {
+          "width": 448,
+          "height": 448
+        },
+        "paused": false
+      },
+      {
+        "name": "paused-live-dpr3",
+        "dpr": 3,
+        "buffer": {
+          "width": 168,
+          "height": 168
+        },
+        "paused": true
+      }
+    ],
+    "approvedAssetsUnchanged": true,
+    "finalBehaviorSmoke": {
+      "passed": 7,
+      "exitCode": 0,
+      "durationSeconds": 31.1,
+      "mainSHA256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+      "report": "verification.json"
+    }
+  },
+  "performance": {
+    "method": "Serial original/final runs after other agents stopped CPU/browser tests. DPR 1,  full motion, 56/64px same-origin iframe in normal-size hosts; 1s warmup and 4s observation. Frame counts cover 4s; interval statistics use the renderer's rolling 180-frame buffer.",
+    "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "comparisons": [
+      {
+        "name": "hosted-56",
+        "css": {
+          "width": 56,
+          "height": 56
+        },
+        "hostViewport": {
+          "width": 375,
+          "height": 667
+        },
+        "observationWindowMs": 4000,
+        "originalBuffer": {
+          "width": 56,
+          "height": 56
+        },
+        "finalBuffer": {
+          "width": 112,
+          "height": 112
+        },
+        "originalFrames": 241,
+        "finalFrames": 241,
+        "originalMeanMs": 16.672777777777778,
+        "finalMeanMs": 16.676111111111112,
+        "originalP95Ms": 17,
+        "finalP95Ms": 16.899999999999636,
+        "intervalSampleCount": 180
+      },
+      {
+        "name": "hosted-64",
+        "css": {
+          "width": 64,
+          "height": 64
+        },
+        "hostViewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "observationWindowMs": 4000,
+        "originalBuffer": {
+          "width": 64,
+          "height": 64
+        },
+        "finalBuffer": {
+          "width": 128,
+          "height": 128
+        },
+        "originalFrames": 240,
+        "finalFrames": 240,
+        "originalMeanMs": 16.672777777777775,
+        "finalMeanMs": 16.673333333333336,
+        "originalP95Ms": 17,
+        "finalP95Ms": 17,
+        "intervalSampleCount": 180
+      }
+    ],
+    "conclusion": "No regression signal in these matched local headless Edge samples. This is not a physical-phone or all-device guarantee."
+  },
+  "limits": [
+    "Native browser zoom and physical-phone keyboard/GPU performance were not tested. DPR changes use CDP emulation, explicitly distinct from native zoom.",
+    "Reused Vite 5173 serves the old helper font-sans fallback stack (Inter, sans-serif). Source Tailwind and compiled production CSS contain the requested Apple/Segoe fallback. Inter is loaded, so inspected glyph appearance is correct; helper fallback rendering was not verified on that dev server. No process with unverified ownership was stopped.",
+    "Public landing/login use the real App with a browser-local signed-out boot stub because the reused server lacks local Supabase configuration. No authentication, production data, paid generation or provider integration was exercised.",
+    "The fixture covers real shared primitives and representative legacy utilities; every historical module was not manually traversed.",
+    "Build/unit/objective gate execution belongs to parent/builder; their final reported build and 1453 unit tests passed. The final seven companion behavior cases passed on the reviewed renderer after independent density verification."
+  ],
+  "finalVerdict": "PASS",
+  "sourceOrTestEditsByReviewer": false,
+  "noPaidLiveDeployCommit": true,
+  "qaTransportFollowup": {
+    "reviewedAtUTC": "2026-10-07T03:11:34.574Z",
+    "verdict": "PASS",
+    "productSourceUnchanged": true,
+    "scope": "Only QA baseline snapshot transport and decoding/hash assertion. Product source and prior source/pixel verdict unchanged.",
+    "snapshot": "preedit-index.json",
+    "encoding": "base64",
+    "byteLength": 14323,
+    "pinnedGitBlob": "f858e5a67e2d050d3819d2fca743bec365f1517f",
+    "decodedEqualsGitCatFile": true,
+    "explicitGitBlobHeaderSHA1": "f858e5a67e2d050d3819d2fca743bec365f1517f",
+    "gitHashObjectSHA1": "f858e5a67e2d050d3819d2fca743bec365f1517f",
+    "snapshotSHA256": "bf3b1b5d9f31c77f14ccf05c06349d7b3f98f5f9a3141f97334a87df7caa7325",
+    "finalTestGitBlob": "58c5c3c7a9524cf2082a50a466de5c65f7d0c3a4",
+    "finalTestSHA256": "782bd1ad708541af9e081eb71abb07479915660538295eb388b4f8eefdd1f508",
+    "baselineExitCode": 1,
+    "baselineExpectedFailed": 3,
+    "finalExitCode": 0,
+    "finalPassed": 6,
+    "finalDurationSeconds": 15.7,
+    "whitespaceGate": {
+      "executor": "root/smoke owner",
+      "exitCode": 0
+    },
+    "typeCheck": {
+      "command": "npx.cmd tsc --noEmit",
+      "executor": "root",
+      "exitCode": 0
+    },
+    "actionableFindings": [],
+    "visualReviewRepeated": false,
+    "recaptureFilesWithChangedPngBytes": [
+      "final-landing-1280-viewport.png",
+      "final-login-375-viewport.png",
+      "final-login-390-viewport.png",
+      "final-login-1280-viewport.png"
+    ],
+    "pixelProvenance": "The QA rerun recaptured screenshots. Prior visually inspected hashes are retained separately; current artifact hashes record the rerun. Product source is byte-for-byte unchanged, so source/pixel review was not repeated."
+  },
+  "primaryReviewPixelHashes": {
+    "final-primitives-375-viewport.png": "23b5cb1db1693409fdf1b9d9707e4e9ded9443eda287b31f71c770c4c9a5918c",
+    "final-primitives-390.png": "73ad884d0c0927ebaa74aa1652b0e86339cdb8a2c2811d074fe27ddab1d5556c",
+    "final-primitives-1280-viewport.png": "d89f65ba2628890327c49bc63e2223cf621817b727d6490f33b5a295e3fd21dd",
+    "final-primitives-390-input.png": "5d63e30583019fee72a4e6937e2470e9f53efd131f385ddf3bb0539ae031982c",
+    "final-primitives-390-button.png": "bfd1bab7f0c897d474767e880b4380ffbdd243d95f57d7cc3d47265f6228b810",
+    "final-primitives-390-heading.png": "2eda5a41031967af9491b653096ace7946fdaeea0ea998af3658495332b9c665",
+    "final-landing-375-viewport.png": "840d74ec462159802e8094b2ae0ca77cb1aab37f90bae082cb703bdb059aa157",
+    "final-landing-390-viewport.png": "cbcab4417cda27a9e6d99d23ba13f834d176abe8f978702c1be2ee74519e0cd4",
+    "final-landing-1280-viewport.png": "6b2c5104aa9ee84709a7f7e683d37801446c3ef7737ba6599391de0c28cf9c46",
+    "final-login-375-viewport.png": "85b9bcd06b023101991372081708d5f41c11ae3b7107139d0fc27f7c88c1b1c4",
+    "final-login-390-viewport.png": "27a627ba9b5b81c362b3ce824527729e433d645eba42c49aa317aa6af466810e",
+    "final-login-1280-viewport.png": "14c3ea9e68919b18803520f1b0f478fc76024385428e5eafec74f0d860b7a759",
+    "mascot-baseline-normal-56.png": "958b416b4070ed7d8456f41017687af1287d46862ce6dfa4a099b1fc0033b662",
+    "mascot-baseline-normal-64.png": "27ac3f3c511c313c9b49104855f8aad1fafc4d4cc1de44c743e1fac9ab915a30",
+    "mascot-final-normal-56.png": "d4e2655c92bc6a09d5999391b98ef4097ebe5a25b57791b6ff8760341e955dba",
+    "mascot-final-normal-64.png": "10b076e577997fbc9179845d88c36c3352e01eb1b904a81e696a328f30445cb9",
+    "mascot-baseline-normal-64-backing.png": "5b743ad0ab5b9c0d705d65ac8bd0b12dc916329fc1c8d2954f5394aaed1644ef",
+    "mascot-final-normal-64-backing.png": "93f7be4553b841762f7cf5a727a9e167f203782c32150d0ef0e35a869aabbb2e",
+    "mascot-final-density3-64-backing.png": "8293d5de1b5443547dba2465d9243d6e5bea3498acad74102bd8782c2d03aa89",
+    "mascot-final-large-512-backing.png": "b6da070d4d3c8bdc27bf2d4765dbd42517d29eb8cf09dd938a1adbb291f1610d",
+    "companion-renderer/initial-375.png": "0c38c5c7eded43a3dcd762f6d0aedda20c10b8067feb10d37e3651d54f1808a2",
+    "companion-renderer/initial-390.png": "e4fb803a8196a5431c7e001bb72ae0a375b0a228ee30dd33c4ec64e2b4a06d3d",
+    "companion-renderer/initial-1280.png": "ec5275c772e10b691e4ff9bc9e3fb3fd599cd4f10be529ea723d8388ed70d064"
+  },
+  "currentEvidencePixelHashes": {
+    "final-primitives-375-viewport.png": "23b5cb1db1693409fdf1b9d9707e4e9ded9443eda287b31f71c770c4c9a5918c",
+    "final-primitives-390.png": "73ad884d0c0927ebaa74aa1652b0e86339cdb8a2c2811d074fe27ddab1d5556c",
+    "final-primitives-1280-viewport.png": "d89f65ba2628890327c49bc63e2223cf621817b727d6490f33b5a295e3fd21dd",
+    "final-primitives-390-input.png": "5d63e30583019fee72a4e6937e2470e9f53efd131f385ddf3bb0539ae031982c",
+    "final-primitives-390-button.png": "bfd1bab7f0c897d474767e880b4380ffbdd243d95f57d7cc3d47265f6228b810",
+    "final-primitives-390-heading.png": "2eda5a41031967af9491b653096ace7946fdaeea0ea998af3658495332b9c665",
+    "final-landing-375-viewport.png": "840d74ec462159802e8094b2ae0ca77cb1aab37f90bae082cb703bdb059aa157",
+    "final-landing-390-viewport.png": "cbcab4417cda27a9e6d99d23ba13f834d176abe8f978702c1be2ee74519e0cd4",
+    "final-landing-1280-viewport.png": "b8a9cd954b2adf0377fde3de7c33ee0dcaba438ce0b4db52703eb92dcc321751",
+    "final-login-375-viewport.png": "a5a86b491f6c55446b99e95596a0ba88f4738b4f50accb0910082ed467378a18",
+    "final-login-390-viewport.png": "83665eb22e1ba48adc56439a1473f005f843e13312eff9dfe199d970726d14bb",
+    "final-login-1280-viewport.png": "f619dd35c0d5a70b61e451e19b031963804653ba400ba74336db09d8090eb41d",
+    "mascot-baseline-normal-56.png": "958b416b4070ed7d8456f41017687af1287d46862ce6dfa4a099b1fc0033b662",
+    "mascot-baseline-normal-64.png": "27ac3f3c511c313c9b49104855f8aad1fafc4d4cc1de44c743e1fac9ab915a30",
+    "mascot-final-normal-56.png": "d4e2655c92bc6a09d5999391b98ef4097ebe5a25b57791b6ff8760341e955dba",
+    "mascot-final-normal-64.png": "10b076e577997fbc9179845d88c36c3352e01eb1b904a81e696a328f30445cb9",
+    "mascot-baseline-normal-64-backing.png": "5b743ad0ab5b9c0d705d65ac8bd0b12dc916329fc1c8d2954f5394aaed1644ef",
+    "mascot-final-normal-64-backing.png": "93f7be4553b841762f7cf5a727a9e167f203782c32150d0ef0e35a869aabbb2e",
+    "mascot-final-density3-64-backing.png": "8293d5de1b5443547dba2465d9243d6e5bea3498acad74102bd8782c2d03aa89",
+    "mascot-final-large-512-backing.png": "b6da070d4d3c8bdc27bf2d4765dbd42517d29eb8cf09dd938a1adbb291f1610d",
+    "companion-renderer/initial-375.png": "0c38c5c7eded43a3dcd762f6d0aedda20c10b8067feb10d37e3651d54f1808a2",
+    "companion-renderer/initial-390.png": "e4fb803a8196a5431c7e001bb72ae0a375b0a228ee30dd33c4ec64e2b4a06d3d",
+    "companion-renderer/initial-1280.png": "ec5275c772e10b691e4ff9bc9e3fb3fd599cd4f10be529ea723d8388ed70d064"
+  }
+}

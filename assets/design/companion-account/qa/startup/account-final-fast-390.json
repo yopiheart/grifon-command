@@ -1,0 +1,1654 @@
+{
+  "value": {
+    "ready": "true",
+    "opacity": 1,
+    "slot": {
+      "left": 167,
+      "top": 4,
+      "width": 56,
+      "height": 56
+    },
+    "canvas": {
+      "width": 112,
+      "height": 112
+    },
+    "innerFallbackVisible": false,
+    "firstPaint": {
+      "at": 1791358484622.5999,
+      "alphaPixels": 3429,
+      "coloredPixels": 3429,
+      "width": 112,
+      "height": 112
+    },
+    "ledger": {
+      "samples": [
+        {
+          "at": 1791358484177.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": null,
+                "currentTime": 0,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 382.4,
+            "slot": {
+              "left": 0,
+              "top": 0,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484211.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 49.999999999999986,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 432.4,
+            "slot": {
+              "left": 0,
+              "top": 0,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484221.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 83.49999999999996,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 465.9,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484228.7,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 99.99999999999997,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 482.4,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484242.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 116.69999999999997,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 499.1,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484260.2,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 133.6,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 516,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484275.7,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 150.09999999999997,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 532.5,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484292.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 166.70000000000002,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 549.1,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484314.7,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 183.49999999999994,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 565.9,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484327.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 200.1,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 582.5,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484341.7,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 216.69999999999996,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 599.1,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484358.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 233.69999999999996,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 616.1,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484390.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 250.09999999999994,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 632.5,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484391.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 266.7,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 649.1,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484408.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 283.3999999999999,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 665.8,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484425.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 682.5,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484631.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 699.2,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484638.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 382.40000000000003,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 882.6,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484642.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 899.2,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484658.4001,
+          "state": {
+            "opacity": 0.343,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 915.9,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484675.3,
+          "state": {
+            "opacity": 0.598,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 932.6,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484693,
+          "state": {
+            "opacity": 0.773,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 950.3,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484708.4001,
+          "state": {
+            "opacity": 0.867,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 966,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484725.4001,
+          "state": {
+            "opacity": 0.927,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 982.7,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484741.8,
+          "state": {
+            "opacity": 0.962,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 999.3,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484758.8,
+          "state": {
+            "opacity": 0.981,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1016.2,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484775.8,
+          "state": {
+            "opacity": 0.992,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1032.7,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484792,
+          "state": {
+            "opacity": 0.997,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1049.4,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484808.4001,
+          "state": {
+            "opacity": 0.999,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1066,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484825.7,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1082.7,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": [
+              {
+                "duration": 200,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "linear",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "at": 1791358484841.8,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1099.3,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484858.6,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1116,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484875,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1132.7,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484892,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1149.3,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484908.3,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1166,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484925.1,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1182.7,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484942.2,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1199.4,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484958.5,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1216,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484975,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1232.6,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358484992.2,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1249.4,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485008.4001,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1266,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485025.1,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1282.8,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485042,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1299.5,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485058.5,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1316,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485074.9001,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1332.6,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485091.8,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1349.4,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485108.3,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1366.1,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485125,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1382.7,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485141.6,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1399.4,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485158.6,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1416.2,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358485180,
+          "state": {
+            "opacity": 1,
+            "visible": true,
+            "still": false,
+            "ready": "true",
+            "cueVisible": false,
+            "cueStyle": null,
+            "timeline": 1432.8,
+            "slot": {
+              "left": 167,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        }
+      ],
+      "readyMessages": [
+        {
+          "at": 1791358484640.2,
+          "firstPaint": {
+            "at": 1791358484622.5999,
+            "alphaPixels": 3429,
+            "coloredPixels": 3429,
+            "width": 112,
+            "height": 112
+          }
+        }
+      ],
+      "frameInsertedAt": 1791358484173.5,
+      "frameInsertedTimeline": 365.8,
+      "running": true
+    },
+    "overflow": 0,
+    "calls": []
+  },
+  "network": {
+    "rejected": [],
+    "pageErrors": []
+  }
+}

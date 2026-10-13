@@ -1,0 +1,602 @@
+{
+  "result": "PASS for requested local smoke and verifier sensitivity; hosted exact-head runtime verification pending",
+  "case": "tests/e2e/companion-beta.spec.ts:112 another tab cannot resume the same ad while a scene image request is pending",
+  "platform": "Windows; installed Playwright Chromium default headless mode; browser executable/version not captured",
+  "budgets": {
+    "testMs": 180000,
+    "actionMs": 15000,
+    "expectMs": 15000,
+    "workers": 1,
+    "retries": 0
+  },
+  "sources": {
+    "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+    "tests/e2e/companion-navigation.spec.ts": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+    "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+    "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+    "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+  },
+  "originalBaseline": {
+    "name": "baseline",
+    "exitCode": 0,
+    "caseExecutions": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "totalDurationMs": 15778.754,
+    "testDurationsMs": [
+      8087,
+      5672
+    ],
+    "errors": [],
+    "originalBetaSha256": "4b18cde64db4954d9efad32e5c106302612d469bcf906898441332e10c5619b7",
+    "sourceChangedFiles": [],
+    "harnessChangedFiles": null,
+    "secondResumeClickDurationMs": [
+      530,
+      368
+    ],
+    "identityHashes": [
+      "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    ],
+    "pageErrors": [],
+    "fixtureScalars": [
+      "Not collected in original baseline; unchanged original assertions checked1/0",
+      "Not collected in original baseline; unchanged original assertions checked1/0"
+    ],
+    "commandReceipt": ".tmp/companion-main-readiness/qa/beta-resume/baseline/command-receipt.json",
+    "command": {
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--config=.tmp/companion-main-readiness/qa/beta-resume/playwright.config.ts",
+        "--grep=another tab cannot resume the same ad while a scene image request is pending$",
+        "--repeat-each=2"
+      ],
+      "envOverrides": {
+        "CI": "true",
+        "BETA_RESUME_PHASE": "baseline",
+        "COMPANION_BETA_PHASE": "baseline"
+      }
+    }
+  },
+  "intermediateVerifier": {
+    "name": "patched",
+    "exitCode": 1,
+    "caseExecutions": 3,
+    "passed": 0,
+    "failed": 3,
+    "skipped": 0,
+    "flaky": 0,
+    "totalDurationMs": 33069.88,
+    "testDurationsMs": [
+      10290,
+      10024,
+      9789
+    ],
+    "errors": [
+      {
+        "message": "Error: expect(received).toEqual(expected) // deep equality",
+        "line": 143
+      },
+      {
+        "message": "Error: expect(received).toEqual(expected) // deep equality",
+        "line": 143
+      },
+      {
+        "message": "Error: expect(received).toEqual(expected) // deep equality",
+        "line": 143
+      }
+    ],
+    "originalBetaSha256": "6e04d2921de77324ca6ef538377f01dacc2ab47d54e07595a66b3fc5db557f2d",
+    "sourceChangedFiles": [],
+    "harnessChangedFiles": [],
+    "secondResumeClickDurationMs": [
+      318,
+      434,
+      316
+    ],
+    "identityHashes": [
+      "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    ],
+    "pageErrors": [],
+    "fixtureScalars": [
+      [
+        {
+          "page": 1,
+          "imageCalls": 1,
+          "canceledClick": false,
+          "disabledWebLock": false
+        },
+        {
+          "page": 2,
+          "imageCalls": 0,
+          "canceledClick": false,
+          "disabledWebLock": false
+        }
+      ],
+      [
+        {
+          "page": 1,
+          "imageCalls": 1,
+          "canceledClick": false,
+          "disabledWebLock": false
+        },
+        {
+          "page": 2,
+          "imageCalls": 0,
+          "canceledClick": false,
+          "disabledWebLock": false
+        }
+      ],
+      [
+        {
+          "page": 1,
+          "imageCalls": 1,
+          "canceledClick": false,
+          "disabledWebLock": false
+        },
+        {
+          "page": 2,
+          "imageCalls": 0,
+          "canceledClick": false,
+          "disabledWebLock": false
+        }
+      ]
+    ],
+    "commandReceipt": ".tmp/companion-main-readiness/qa/beta-resume/patched/command-receipt.json",
+    "command": {
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--config=.tmp/companion-main-readiness/qa/beta-resume/playwright.config.ts",
+        "--grep=another tab cannot resume the same ad while a scene image request is pending$",
+        "--repeat-each=3"
+      ],
+      "envOverrides": {
+        "CI": "true",
+        "BETA_RESUME_PHASE": "patched",
+        "COMPANION_BETA_PHASE": "patched"
+      }
+    },
+    "interpretation": "All3 failed only the overbroad no-framenavigated-events assertion on2 identical-URL events; existing lock-message and1/0 assertions passed, backend[] after that check was not reached; verifier was corrected, not an app defect"
+  },
+  "finalCandidate": {
+    "name": "patched-final",
+    "exitCode": 0,
+    "caseExecutions": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "totalDurationMs": 22468.976000000002,
+    "testDurationsMs": [
+      7106,
+      5891,
+      6558
+    ],
+    "errors": [],
+    "originalBetaSha256": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+    "sourceChangedFiles": [],
+    "harnessChangedFiles": [],
+    "secondResumeClickDurationMs": [
+      286,
+      316,
+      297
+    ],
+    "identityHashes": [
+      "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+    ],
+    "pageErrors": [],
+    "fixtureScalars": [
+      [
+        {
+          "page": 1,
+          "imageCalls": 1,
+          "canceledClick": false,
+          "disabledWebLock": false
+        }
+      ],
+      [
+        {
+          "page": 1,
+          "imageCalls": 1,
+          "canceledClick": false,
+          "disabledWebLock": false
+        }
+      ],
+      [
+        {
+          "page": 1,
+          "imageCalls": 1,
+          "canceledClick": false,
+          "disabledWebLock": false
+        }
+      ]
+    ],
+    "commandReceipt": ".tmp/companion-main-readiness/qa/beta-resume/patched-final/command-receipt.json",
+    "command": {
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--config=.tmp/companion-main-readiness/qa/beta-resume/playwright.config.ts",
+        "--grep=another tab cannot resume the same ad while a scene image request is pending$",
+        "--repeat-each=3"
+      ],
+      "envOverrides": {
+        "CI": "true",
+        "BETA_RESUME_PHASE": "patched-final",
+        "COMPANION_BETA_PHASE": "patched-final"
+      }
+    },
+    "invariants": [
+      "Contention message visible",
+      "First-tab image call count1",
+      "Second-tab image call count0",
+      "Backend unexpected[]",
+      "Same URL",
+      "Original Document JSHandle still refers to document"
+    ]
+  },
+  "controls": [
+    {
+      "name": "control-canceled-second-click",
+      "exitCode": 1,
+      "caseExecutions": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "flaky": 0,
+      "totalDurationMs": 26708.902,
+      "testDurationsMs": [
+        25423
+      ],
+      "errors": [
+        {
+          "message": "Error: expect(locator).toBeVisible() failed",
+          "line": 137
+        }
+      ],
+      "originalBetaSha256": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+      "sourceChangedFiles": [],
+      "harnessChangedFiles": [],
+      "secondResumeClickDurationMs": [
+        373
+      ],
+      "identityHashes": [
+        "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      ],
+      "pageErrors": [],
+      "fixtureScalars": [
+        [
+          {
+            "page": 1,
+            "imageCalls": 1,
+            "canceledClick": false,
+            "disabledWebLock": false
+          },
+          {
+            "page": 2,
+            "imageCalls": 0,
+            "canceledClick": true,
+            "disabledWebLock": false
+          }
+        ]
+      ],
+      "commandReceipt": ".tmp/companion-main-readiness/qa/beta-resume/control-canceled-second-click/command-receipt.json",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/beta-resume/playwright.config.ts",
+          "--grep=another tab cannot resume the same ad while a scene image request is pending$",
+          "--repeat-each=1"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "BETA_RESUME_PHASE": "control-canceled-second-click",
+          "COMPANION_BETA_PHASE": "control-canceled-second-click"
+        }
+      },
+      "expectedFailureDetected": true,
+      "interpretation": "Failed unchanged contention-message oracle; later business/identity assertions were not reached. Post-test scalar reads independently show1/0 and control flagtrue."
+    },
+    {
+      "name": "control-disabled-weblock",
+      "exitCode": 1,
+      "caseExecutions": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "flaky": 0,
+      "totalDurationMs": 23943.354,
+      "testDurationsMs": [
+        22651
+      ],
+      "errors": [
+        {
+          "message": "Error: expect(locator).toBeVisible() failed",
+          "line": 137
+        }
+      ],
+      "originalBetaSha256": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+      "sourceChangedFiles": [],
+      "harnessChangedFiles": [],
+      "secondResumeClickDurationMs": [
+        252
+      ],
+      "identityHashes": [
+        "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      ],
+      "pageErrors": [],
+      "fixtureScalars": [
+        [
+          {
+            "page": 1,
+            "imageCalls": 1,
+            "canceledClick": false,
+            "disabledWebLock": false
+          },
+          {
+            "page": 2,
+            "imageCalls": 0,
+            "canceledClick": false,
+            "disabledWebLock": true
+          }
+        ]
+      ],
+      "commandReceipt": ".tmp/companion-main-readiness/qa/beta-resume/control-disabled-weblock/command-receipt.json",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/beta-resume/playwright.config.ts",
+          "--grep=another tab cannot resume the same ad while a scene image request is pending$",
+          "--repeat-each=1"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "BETA_RESUME_PHASE": "control-disabled-weblock",
+          "COMPANION_BETA_PHASE": "control-disabled-weblock"
+        }
+      },
+      "expectedFailureDetected": true,
+      "interpretation": "Failed unchanged contention-message oracle; later business/identity assertions were not reached. Post-test scalar reads independently show1/0 and control flagtrue."
+    },
+    {
+      "name": "control-forced-same-url-reload",
+      "exitCode": 1,
+      "caseExecutions": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "flaky": 0,
+      "totalDurationMs": 14288.461000000001,
+      "testDurationsMs": [
+        13058
+      ],
+      "errors": [
+        {
+          "message": "Error: elementHandle.evaluate: Execution context was destroyed, most likely because of a navigation",
+          "line": 142
+        }
+      ],
+      "originalBetaSha256": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+      "sourceChangedFiles": [],
+      "harnessChangedFiles": [],
+      "secondResumeClickDurationMs": [
+        415
+      ],
+      "identityHashes": [
+        "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      ],
+      "pageErrors": [],
+      "fixtureScalars": [
+        [
+          {
+            "page": 1,
+            "imageCalls": 1,
+            "canceledClick": false,
+            "disabledWebLock": false
+          },
+          {
+            "page": 2,
+            "imageCalls": 0,
+            "canceledClick": false,
+            "disabledWebLock": false
+          }
+        ]
+      ],
+      "commandReceipt": ".tmp/companion-main-readiness/qa/beta-resume/control-forced-same-url-reload/command-receipt.json",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/beta-resume/playwright.config.ts",
+          "--grep=another tab cannot resume the same ad while a scene image request is pending$",
+          "--repeat-each=1"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "BETA_RESUME_PHASE": "control-forced-same-url-reload",
+          "COMPANION_BETA_PHASE": "control-forced-same-url-reload"
+        }
+      },
+      "expectedFailureDetected": true,
+      "interpretation": "Injected same-URL reload only after original lock-message,1/0 and backend[] assertions passed. URL assertion passed; original Document handle evaluation rejected at the intended identity check. Verifier sensitivity only."
+    }
+  ],
+  "finalDiscovery": {
+    "result": "PASS",
+    "cases": 224,
+    "expectedStatusCounts": {
+      "passed": 224
+    },
+    "shards": [
+      {
+        "shard": 1,
+        "cases": 7
+      },
+      {
+        "shard": 2,
+        "cases": 7
+      },
+      {
+        "shard": 3,
+        "cases": 7
+      },
+      {
+        "shard": 4,
+        "cases": 7
+      },
+      {
+        "shard": 5,
+        "cases": 7
+      },
+      {
+        "shard": 6,
+        "cases": 7
+      },
+      {
+        "shard": 7,
+        "cases": 7
+      },
+      {
+        "shard": 8,
+        "cases": 7
+      },
+      {
+        "shard": 9,
+        "cases": 7
+      },
+      {
+        "shard": 10,
+        "cases": 7
+      },
+      {
+        "shard": 11,
+        "cases": 7
+      },
+      {
+        "shard": 12,
+        "cases": 7
+      },
+      {
+        "shard": 13,
+        "cases": 7
+      },
+      {
+        "shard": 14,
+        "cases": 7
+      },
+      {
+        "shard": 15,
+        "cases": 7
+      },
+      {
+        "shard": 16,
+        "cases": 7
+      },
+      {
+        "shard": 17,
+        "cases": 7
+      },
+      {
+        "shard": 18,
+        "cases": 7
+      },
+      {
+        "shard": 19,
+        "cases": 7
+      },
+      {
+        "shard": 20,
+        "cases": 7
+      },
+      {
+        "shard": 21,
+        "cases": 7
+      },
+      {
+        "shard": 22,
+        "cases": 7
+      },
+      {
+        "shard": 23,
+        "cases": 7
+      },
+      {
+        "shard": 24,
+        "cases": 7
+      },
+      {
+        "shard": 25,
+        "cases": 7
+      },
+      {
+        "shard": 26,
+        "cases": 7
+      },
+      {
+        "shard": 27,
+        "cases": 7
+      },
+      {
+        "shard": 28,
+        "cases": 7
+      },
+      {
+        "shard": 29,
+        "cases": 7
+      },
+      {
+        "shard": 30,
+        "cases": 7
+      },
+      {
+        "shard": 31,
+        "cases": 7
+      },
+      {
+        "shard": 32,
+        "cases": 7
+      }
+    ],
+    "duplicates": [],
+    "omissions": [],
+    "extras": [],
+    "sourceBinding": {
+      "watchedFiles": 38,
+      "before": "source-hashes-before.json",
+      "after": "source-hashes-after.json",
+      "changedFiles": []
+    },
+    "betaSha256": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+    "commands": 36,
+    "allCommandExitsZero": true,
+    "receipt": ".tmp/companion-main-readiness/qa/ci-thirtytwo-validation/validation-receipt.json"
+  },
+  "cleanup": {
+    "pid": 6296,
+    "port": 5192,
+    "stopped": true,
+    "remainingListeners": 0,
+    "checkedCommandLine": "owned qa/beta-resume/server.mjs",
+    "capturedUtc": "2026-10-11T10:05:21.9977641Z"
+  },
+  "limitations": [
+    "Original Windows baseline passed2/2; it did not reproduce or identify the hosted post-click timeout",
+    "Local durations include source-identity request, passive navigation/error listeners, public reporter timing, original screenshots and, after baseline, post-test fixture scalar reads; not a controlled performance comparison",
+    "No CDP/internal Page.enable latency measured; no CPU/GPU cause inferred",
+    "All application/provider/backend behavior remains fixture intercepted; no paid/live generation or target DB calls",
+    "No tracked edits by smoke agent; only owned server PID6296 was stopped",
+    "Initial anchored-grep setup found0 tests and exited1; preserved separately baseline-setup-no-tests and excluded from baseline test counts"
+  ]
+}

@@ -1,0 +1,79 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion.config.ts tests/e2e/companion-beta.spec.ts tests/e2e/companion-chat.spec.ts tests/e2e/companion-glass.spec.ts --reporter=list,json --output assets/design/companion-beta/qa/resumed-final/test-results
+
+
+Running 45 tests using 1 worker
+
+(node:13648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\companion-beta.spec.ts:25:34 › guided beta limitations are visible at 390px (1.1s)
+  ok  2 tests\e2e\companion-beta.spec.ts:25:34 › guided beta limitations are visible at 1280px (584ms)
+  ok  3 tests\e2e\companion-beta.spec.ts:31:1 › stale second tab cannot erase a newer conversation (2.5s)
+  ok  4 tests\e2e\companion-beta.spec.ts:50:1 › refresh warns before leaving an unsaved draft and dismiss keeps the draft (3.9s)
+  ok  5 tests\e2e\companion-beta.spec.ts:70:1 › Stop and Resume cannot duplicate an unsettled scene image request (5.7s)
+  ok  6 tests\e2e\companion-beta.spec.ts:112:1 › another tab cannot resume the same ad while a scene image request is pending (14.9s)
+  ok  7 tests\e2e\companion-beta.spec.ts:139:1 › guided intake accepts a long brief and corrections use Edit brief without generation (7.7s)
+  ok  8 tests\e2e\companion-beta.spec.ts:157:1 › completed ad fixture plays and its download contains video bytes (5.7s)
+  ok  9 tests\e2e\companion-beta.spec.ts:178:44 › completed ad still permits explicit reshoot after Resume editing (4.8s)
+  ok 10 tests\e2e\companion-beta.spec.ts:178:44 › completed ad still permits explicit style after Resume editing (4.1s)
+  x  11 tests\e2e\companion-chat.spec.ts:45:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions (6.8s)
+(node:19536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 tests\e2e\companion-chat.spec.ts:78:1 › IME Enter does not submit; invalid files and missing image cannot generate (1.3s)
+  ok 13 tests\e2e\companion-chat.spec.ts:91:1 › draft reload/account isolation, error retry and fixture checkpoint restore (7.7s)
+  ok 14 tests\e2e\companion-chat.spec.ts:109:3 › 320px layout and real avatar bridge (6.8s)
+  ok 15 tests\e2e\companion-chat.spec.ts:109:3 › 375px layout and real avatar bridge (6.3s)
+  ok 16 tests\e2e\companion-chat.spec.ts:109:3 › 390px layout and real avatar bridge (8.2s)
+  ok 17 tests\e2e\companion-chat.spec.ts:109:3 › 1280px layout and real avatar bridge (8.2s)
+  ok 18 tests\e2e\companion-chat.spec.ts:134:1 › reduced motion stays static and companion failure leaves usable chat (3.4s)
+  ok 19 tests\e2e\companion-chat.spec.ts:148:1 › actual App and ProducerFlow restore the same account run without generation (23.6s)
+  ok 20 tests\e2e\companion-chat.spec.ts:163:1 › actual ProducerFlow prevents duplicate starts and ignores research completing after cancellation (12.1s)
+  ok 21 tests\e2e\companion-chat.spec.ts:191:1 › allowance and preset gates dispatch no generation or revision until permitted (6.4s)
+  ok 22 tests\e2e\companion-chat.spec.ts:209:1 › late attachment completion cannot cross an account remount (891ms)
+  ok 23 tests\e2e\companion-chat.spec.ts:233:1 › actual ProducerFlow rejects stale orchestrator callbacks after Stop waiting (1.6s)
+  ok 24 tests\e2e\companion-chat.spec.ts:256:1 › actual route fails closed while allowance is unknown and recovers after Retry allowance (6.2s)
+  ok 25 tests\e2e\companion-chat.spec.ts:293:1 › actual upgrade and browser Back preserve companion intent and the local brief (8.9s)
+  ok 26 tests\e2e\companion-chat.spec.ts:310:1 › actual saved-run load failure retries the same run without resubmitting (10.5s)
+  ok 27 tests\e2e\companion-chat.spec.ts:324:1 › avatar asset load failure offers still-image fallback and retry without blocking text (6.4s)
+  ok 28 tests\e2e\companion-chat.spec.ts:336:1 › parent pointer events move the embedded companion eyes (4.2s)
+  ok 29 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay baseline contract at 375px (5.9s)
+  ok 30 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 390px (5.7s)
+  ok 31 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 1280px (6.8s)
+  ok 32 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 320px (4.7s)
+  ok 33 tests\e2e\companion-glass.spec.ts:165:1 › mascot selection baseline contract preserves ordinary text selection (3.1s)
+  ok 34 tests\e2e\companion-glass.spec.ts:183:1 › compact composer baseline contract grows and retains keyboard and Plus upload actions (4.8s)
+  ok 35 tests\e2e\companion-glass.spec.ts:217:1 › voice baseline contract updates only the draft with indexed interim and final results (2.1s)
+  ok 36 tests\e2e\companion-glass.spec.ts:243:1 › voice stop allows a final result; typing cancels the session without losing edits (2.5s)
+  ok 37 tests\e2e\companion-glass.spec.ts:260:3 › voice not-allowed provides a usable fallback and preserves existing text (2.2s)
+  ok 38 tests\e2e\companion-glass.spec.ts:260:3 › voice audio-capture provides a usable fallback and preserves existing text (2.1s)
+  ok 39 tests\e2e\companion-glass.spec.ts:260:3 › voice network provides a usable fallback and preserves existing text (1.8s)
+  ok 40 tests\e2e\companion-glass.spec.ts:260:3 › voice no-speech provides a usable fallback and preserves existing text (1.1s)
+  ok 41 tests\e2e\companion-glass.spec.ts:272:1 › unsupported voice remains honest and keyboard drafting works (1.6s)
+  ok 42 tests\e2e\companion-glass.spec.ts:282:1 › voice start rejection returns to typing without discarding the draft (1.8s)
+  ok 43 tests\e2e\companion-glass.spec.ts:291:1 › chat, account, disabled and viewer transitions abort voice and reject late transcripts (3.6s)
+  ok 44 tests\e2e\companion-glass.spec.ts:322:1 › mobile drawer inert and pending navigation reject speech before chat unmount (3.7s)
+  ok 45 tests\e2e\companion-glass.spec.ts:357:1 › reduced motion and material accessibility fallbacks keep composer and header usable (3.7s)
+
+
+  1) tests\e2e\companion-chat.spec.ts:45:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions
+
+    Error: expect(received).toContainEqual(expected) // deep equality
+
+    Expected value: {"name": "reshoot", "value": 0}
+    Received array: [{"name": "start", "value": {"aspectRatio": "9:16", "avatar": {"description": "", "ethnicity": "", "gender": "Any", "prompt": "", "url": ""}, "brandName": "North Coffee", "businessType": "product", "castHints": {"ageRange": "", "ethnicity": "", "gender": "Female"}, "heroImageBase64": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAj/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ALLAB//Z", "language": "English", "offer": "Two bottles for 199", "price": "199", "productDescription": "Cold brew for busy parents. Promote our new bottle.", "productName": "Morning brew", "scriptType": "Testimonial", "voiceId": "EXAVITQu4vr4xnSDxMaL"}}, {"name": "fixture-event", "value": "script"}, {"name": "fixture-event", "value": "storyboard"}, {"name": "approve"}, {"name": "fixture-event", "value": "video"}, {"name": "fixture-event", "value": "result"}]
+
+      65 |   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'reshoot')).toHaveLength(0);
+      66 |   await page.getByRole('button', { name: 'Confirm reshoot', exact: true }).click();
+    > 67 |   expect((await snapshot(page)).calls).toContainEqual({ name: 'reshoot', value: 0 });
+         |                                        ^
+      68 |   await composer(page).fill('style clean'); await page.getByRole('button', { name: 'Send', exact: true }).click();
+      69 |   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'choosePreset')).toHaveLength(0);
+      70 |   await page.getByRole('button', { name: 'Apply style', exact: true }).click();
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-chat.spec.ts:67:40
+
+    Error Context: assets\design\companion-beta\qa\resumed-final\test-results\companion-chat-brief-expli-66fad-deo-and-supported-revisions\error-context.md
+
+  1 failed
+    tests\e2e\companion-chat.spec.ts:45:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions
+  44 passed (4.1m)

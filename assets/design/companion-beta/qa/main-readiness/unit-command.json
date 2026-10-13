@@ -1,0 +1,4 @@
+{
+  "command": "npm.cmd run test -- --maxWorkers=2 --reporter=json --outputFile=.tmp/companion-main-readiness/qa/gates/unit-results.json",
+  "exitCode": 0
+}

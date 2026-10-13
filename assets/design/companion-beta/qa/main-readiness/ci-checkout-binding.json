@@ -1,0 +1,396 @@
+{
+  "result": "PASS",
+  "capturedUtc": "2026-10-11T11:27:02.160Z",
+  "validations": {
+    "allFourCurrentRawHashesMatch": true,
+    "accountCopyBound": true,
+    "fixtureCopyBound": true,
+    "continuityCopyBound": true,
+    "servedAppPositiveBindingsMatch": true,
+    "allProofsPass": true,
+    "staticDiscoveryPass": true,
+    "allOriginal224IdsAndTitlesRetained": true,
+    "allExpectedPassed": true,
+    "all36OwnCommandExitsZero": true,
+    "watched38HashesFrozen": true
+  },
+  "finalFourTrackedHashes": {
+    "App.tsx": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+    "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+    "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+    "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9"
+  },
+  "testCopyHashes": {
+    "account": "77af5f538ff411e71d9c11dc4180fd011ed0e55ca65562ebc252977b64df9ad6",
+    "fixture": "87b0d58ae56376085255436432dfbcd1629c08472866bf1b4c88fb8253b1e727",
+    "continuity": "21d3d2afccb065863cda58d9f5a400bd8003933c4b0c25289fe3b1667a485bbd"
+  },
+  "receiptSha256": {
+    ".tmp/companion-main-readiness/qa/checkout-intent/original-checkout-summary.json": "bd0cd6c5d012d2f3a59692cd6821addb550114ede70c2319bea09379a8ffa0c1",
+    ".tmp/companion-main-readiness/qa/checkout-intent/checkout-regression-summary.json": "8fe6a94cbd52ea0b0e4dd44133e1967f4cc1af037abe3d78db89defcbaf6ac06",
+    ".tmp/companion-main-readiness/qa/checkout-intent/continuity-clock-summary.json": "3bfa4499af0c1efb61c753f102f3931437332d3c9f26dc8c3b44e72eff156f82",
+    ".tmp/companion-main-readiness/qa/ci-checkout-validation/validation-receipt.json": "0b0422452d4c03c8e712e3ed87ebb6eedcd8f4e0d3482e0a1907c48f0e0f06ce",
+    ".tmp/companion-main-readiness/qa/ci-checkout-validation/source-hashes-before.json": "5afc7820de0fb5c054af1e0f6946dd6608289a947d4fceeaa4a200f243c6fed1",
+    ".tmp/companion-main-readiness/qa/ci-checkout-validation/source-hashes-after.json": "5afc7820de0fb5c054af1e0f6946dd6608289a947d4fceeaa4a200f243c6fed1",
+    ".tmp/companion-main-readiness/qa/ci-checkout-validation/original-case-preservation.json": "f30a942ed62e200c710ce0ccb5cc3978600c0364fef504c331be292c4ff212df",
+    ".tmp/companion-main-readiness/qa/checkout-intent/server-cleanup.json": "2a7f98baee7941c2df6de266337d56f731d9a5d0d24bde83404ac592810617bd"
+  },
+  "sourceHashes": {
+    "head": "1b230ba4a5f2f98f9547c67c9ed9a021c4bfd3bb",
+    "files": {
+      ".github/workflows/ci.yml": "2b6a772b2de9f001c0558793e4cd5c5a8ddc62521a190accd68c22c5ce6ec6fd",
+      "package-lock.json": "30a1f510ff766b144978e4730ba3af22bdeab7cdbfca432a6375f6207978377e",
+      "package.json": "1da2d81a5be844bfbe9d5cbeca5a5b57db63b7d04031b75c7425321aa6248f8f",
+      "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+      "tests/e2e/boot.spec.ts": "a243c10038c0d93025d318234b86012480ce06685e5d950ca99c807e5ce91803",
+      "tests/e2e/codex-desktop.spec.ts": "944c9513aee1b77ecd24988f845cec61da8dc05500837025e6e688ea6604ca85",
+      "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+      "tests/e2e/companion-account-regression.config.ts": "47216f63bebc8e4eb0a5c7e8fa570df7699820373596cb647a65e72c78b81c30",
+      "tests/e2e/companion-account.config.ts": "26feabf9556521166d3233b92bc22b8dafe7d17ac78704c7ac4a7883e0941ed4",
+      "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+      "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+      "tests/e2e/companion-chat.spec.ts": "adae48cd56b3275b12af4da057cc626aa5852bc51cdd878add29606e4cc9c3bd",
+      "tests/e2e/companion-continuity.config.ts": "bee88e4a3a93bb35729baefa9c5a97c5028185af0bed84f8a6b5b46f57eaa4b2",
+      "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+      "tests/e2e/companion-glass.config.ts": "9096b7e2021652a5b8ee2574a88437aa83e8f24db41e8aba4bdb9a53be18d4af",
+      "tests/e2e/companion-glass.spec.ts": "6cdb3f02db435d0c32ba82977b7c72764f4933b7290081aca486ad7181123bc2",
+      "tests/e2e/companion-layout.spec.ts": "8bd3ded07ae8cdef06c06ec51df77ea87d86adcdef11afddf313571d7f060f7e",
+      "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+      "tests/e2e/companion-polish.spec.ts": "3ad342a7eba5a5eac4da1cb077516bb66bb7882c428b5025cf4215bde02ea2e0",
+      "tests/e2e/companion-startup.config.ts": "4d257800381718782f3e41ea72d0dce1017c7a6a40879ee8a33bd5b9f3c0e252",
+      "tests/e2e/companion-startup.spec.ts": "135571039c24349644bb96294d79aef119888b5e1897a4248f7d9cf93d55a7e1",
+      "tests/e2e/companion-typing.spec.ts": "9a3a47e77d261e41d9e2e74b8e4bdd2917f5d2545191a1260af9cc2e68009bd7",
+      "tests/e2e/companion.config.ts": "aae78f75f06f84c665be78fce0614443bc3c97cb877dbc730bed666d73ef2e89",
+      "tests/e2e/cookie-presentation.spec.ts": "d5badb55d2d2ba2f9b26616684e7e26bb22965987f83d9572d25e4598cd4e64f",
+      "tests/e2e/dashboard-states.spec.ts": "42f1d2829ae997d184bd6d1431f11e92faff6c4aaeacd10cb71ce226a7bda927",
+      "tests/e2e/fixtures/marketMindReport.ts": "eed12d1b7e3306cf0449257c32bd2a528d128c43f1cc22bd04809a3209988741",
+      "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+      "tests/e2e/fixtures/recovery.webm": "e65041bee11d69279a0ad7d85240892f9df3f494c6b4f3e09f7fbee194df027f",
+      "tests/e2e/landing-reveal.spec.ts": "85c9cdfc70ec8e5c7c5d3a6af2cdd809dcaf6b74cb8b3dbfc215cbd7e2162284",
+      "tests/e2e/legacyRecovery.ts": "9779f9229af35bac65b788f56a715c7007ee0c224a95e0db39f1d3e2be5bd756",
+      "tests/e2e/marketmind-presentation.spec.ts": "74601cca563c6ea40904ad6c5175a67aab633d80d0048a538b9c60e802728fec",
+      "tests/e2e/oneshot-legacy-recovery.spec.ts": "36ad3cf863ed5a10dac8055d3f58b14db6b86ffde6fd32d7f90f97dc0fca3a90",
+      "tests/e2e/oneshot-recovery.spec.ts": "fab61f494b72b9b4bce0663fb0c3761f580156be5bda80c01dae1fc10f79bd71",
+      "tests/e2e/purchase-journey.spec.ts": "277b9f09ab5ff75313ee85a1aa7d86e4ef17890d986b5f76fd1871611430a8ff",
+      "tests/e2e/review-smoke.spec.ts": "ce740884d33d32313983ea1d8b2ca196279f9a1c60d0742544b5023817f08ca5",
+      "tests/e2e/route-consistency.spec.ts": "2f531ee84b66ed56fe56cd80c59d4f368aeb7c80862e32b47bc16a75fd2ea368",
+      "tests/e2e/typography.config.ts": "37a0696d9b21a349934e854d1593a88fca6b4b6b5dfafbc1f9538156f91c7a73",
+      "tests/e2e/typography.spec.ts": "f8bddb3dfb6d2b69c5f933b757e7e9f3036b499b78d5bc87990a3ae3022b6636"
+    }
+  },
+  "coverage": {
+    "local": 225,
+    "ci": 225,
+    "unique": 225,
+    "duplicates": 0,
+    "omissions": 0,
+    "extras": 0,
+    "shards": [
+      {
+        "shard": 1,
+        "cases": 8
+      },
+      {
+        "shard": 2,
+        "cases": 7
+      },
+      {
+        "shard": 3,
+        "cases": 7
+      },
+      {
+        "shard": 4,
+        "cases": 7
+      },
+      {
+        "shard": 5,
+        "cases": 7
+      },
+      {
+        "shard": 6,
+        "cases": 7
+      },
+      {
+        "shard": 7,
+        "cases": 7
+      },
+      {
+        "shard": 8,
+        "cases": 7
+      },
+      {
+        "shard": 9,
+        "cases": 7
+      },
+      {
+        "shard": 10,
+        "cases": 7
+      },
+      {
+        "shard": 11,
+        "cases": 7
+      },
+      {
+        "shard": 12,
+        "cases": 7
+      },
+      {
+        "shard": 13,
+        "cases": 7
+      },
+      {
+        "shard": 14,
+        "cases": 7
+      },
+      {
+        "shard": 15,
+        "cases": 7
+      },
+      {
+        "shard": 16,
+        "cases": 7
+      },
+      {
+        "shard": 17,
+        "cases": 7
+      },
+      {
+        "shard": 18,
+        "cases": 7
+      },
+      {
+        "shard": 19,
+        "cases": 7
+      },
+      {
+        "shard": 20,
+        "cases": 7
+      },
+      {
+        "shard": 21,
+        "cases": 7
+      },
+      {
+        "shard": 22,
+        "cases": 7
+      },
+      {
+        "shard": 23,
+        "cases": 7
+      },
+      {
+        "shard": 24,
+        "cases": 7
+      },
+      {
+        "shard": 25,
+        "cases": 7
+      },
+      {
+        "shard": 26,
+        "cases": 7
+      },
+      {
+        "shard": 27,
+        "cases": 7
+      },
+      {
+        "shard": 28,
+        "cases": 7
+      },
+      {
+        "shard": 29,
+        "cases": 7
+      },
+      {
+        "shard": 30,
+        "cases": 7
+      },
+      {
+        "shard": 31,
+        "cases": 7
+      },
+      {
+        "shard": 32,
+        "cases": 7
+      }
+    ],
+    "caseSetSha256": "a97c13aec7212d8ad92bf00ba0db463728e8d2ad8e37ba7e5332b0a8849889a9"
+  },
+  "originalCasePreservation": {
+    "originalCount": 224,
+    "currentCount": 225,
+    "removedOriginalIds": [],
+    "removedOriginalTitles": [],
+    "addedCases": [
+      {
+        "id": "09b356c665385834cc94-a6a10ceb77f51c0da3fe",
+        "titlePath": [
+          "",
+          "chromium",
+          "companion-account.spec.ts",
+          "failed checkout releases return-to-ad recovery after the saved draft has loaded"
+        ]
+      }
+    ]
+  },
+  "expectedStatusCounts": {
+    "local-all": {
+      "passed": 225,
+      "other": 0
+    },
+    "ci-all": {
+      "passed": 225,
+      "other": 0
+    },
+    "ci-shard-1": {
+      "passed": 8,
+      "other": 0
+    },
+    "ci-shard-2": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-3": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-4": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-5": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-6": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-7": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-8": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-9": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-10": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-11": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-12": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-13": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-14": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-15": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-16": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-17": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-18": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-19": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-20": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-21": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-22": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-23": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-24": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-25": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-26": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-27": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-28": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-29": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-30": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-31": {
+      "passed": 7,
+      "other": 0
+    },
+    "ci-shard-32": {
+      "passed": 7,
+      "other": 0
+    }
+  },
+  "commands": {
+    "total": 36,
+    "rawConfigImports": 2,
+    "playwrightListCommands": 34,
+    "allOwnExitCodesZero": true
+  },
+  "browserLaunchesDuringDiscovery": 0,
+  "webServerLaunchesDuringDiscovery": 0,
+  "cleanup": {
+    "stoppedUtc": "2026-10-11T11:23:03.6713926Z",
+    "processCommandMatched": true,
+    "remainingListeners": 0,
+    "listenerOwnershipMatched": true,
+    "pid": 16188
+  },
+  "limits": [
+    "38-file static freeze covers tests/config/workflow/packages; App is separately bound to served source identities and per-browser-run runtime hashes",
+    "Test copies differ only by documented instrumentation/import/origin seams and line-ending normalization; no original business assertion weakened",
+    "Local focused smoke and static discovery do not prove final225-case hosted runtime green",
+    "Previous ci-marker-validation and earlier proof receipts are preserved unchanged"
+  ]
+}

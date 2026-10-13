@@ -1,0 +1,10 @@
+{
+  "speech": [
+    {
+      "starts": 1,
+      "stops": 1,
+      "aborts": 0,
+      "interimResults": true
+    }
+  ]
+}

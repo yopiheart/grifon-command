@@ -1,0 +1,15 @@
+{
+  "requests": [
+    "/companion/frame.html",
+    "/companion/neutral.png",
+    "/companion/bridge.js",
+    "/companion/main.js",
+    "/companion/reactions.js",
+    "/companion/vendor/three.module.js",
+    "/companion/vendor/three.core.js",
+    "/companion/scene.json",
+    "/companion/scene.bin",
+    "/companion/neutral.png"
+  ],
+  "fallbackCount": 1
+}

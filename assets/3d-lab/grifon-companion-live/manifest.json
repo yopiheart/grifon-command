@@ -1,0 +1,56 @@
+{
+  "subject": "Grifon live companion prototype",
+  "date": "2026-10-06",
+  "stage": "Standalone live browser interaction and five-reaction study; chat integration remains a separate stage",
+  "approved_reference": "../grifon-companion-rig/owner-approval.json",
+  "appearance": "Real 3D geometry with camera-projected Cycles lighting textures from the approved master. Fixed camera; limited gaze/head deformation. Not free-view, dynamic relighting, GLB or Gaussian splatting.",
+  "geometry": {"objects": 22, "native_hair_strands_sampled": 50500, "original_hair_strands": 404000, "binary_bytes": 11950492},
+  "rig_source_sha256": "94fb26540d6f8f2f600416b39bf891d573cec5a2f923d3bd591275e699904446",
+  "runtime": {"library": "Three.js 0.180.0", "backend": "WebGL2", "dependency_scope": "Locally vendored in this prototype; no root package changes", "license": "vendor/LICENSE", "source": "https://unpkg.com/three@0.180.0/", "pixel_ratio_cap": 1.5},
+  "vendor_patch": "Removed one space before a tab in three.core.js SkinnedMesh material assignment indentation to pass the repository whitespace check. No semantic changes.",
+  "interaction": ["Pointer and touch tracking", "Eyes respond before the head", "Independent blink and breathing", "Direction buttons, center and Escape", "Pause/resume", "Reduced-motion preference", "Visibility render pause", "Honest still fallback and retry on load, context or render failure"],
+  "blink": {"close_ms": 100, "fully_closed_ms": 40, "open_ms": 100, "reason": "The closed hold preserves the approved fully closed pose under normal browser frame sampling.", "continuity": "Natural blink timing and in-progress closure persist across reaction changes, repeated state requests and Preview all; pause/reduced-motion guards remain active."},
+  "reactions": {
+    "states": {"idle": "Approved neutral breathing and tracking", "listening": "Attentive head tilt and raised wing beside cheek", "reading": "Left wing holds a message card below the face; right wing advances through its text. Focused downward attention, natural blink and occasional user glance.", "working": "Alternating wing tips contact separate illuminated keys on a tilted gold control pad", "ready": "Raised wings and a brief perk/blink"},
+    "reading_pose": "1.14 by 0.44 message card; inverse wing-tip contact at its surface. Reading-only 10% local-Z wing unfolding around fixed shoulders moves shell, gold interior and fibers together; original geometry files unchanged. Full card header stays below the face. Other states retain extension 1.",
+    "api": "window.grifonCompanion.setState('idle' | 'listening' | 'reading' | 'working' | 'ready')",
+    "transitions": "400ms smooth crossfade from the current blended pose; shared wing, inner-wing and fiber transforms",
+    "tour": "Preview all runs about three seconds per state and ends Idle; manual selection cancels; pause freezes progress; disabled with reduced motion",
+    "truthfulness": "Manual previews only. Listening does not activate a microphone; Working does not run an agent task.",
+    "reference": "reaction-reference.webp preserves the original approved Listening/Working reference",
+    "body_bake": "baked-body-clean.png removes stationary wing texture ghosts while wings move; idle retains original baked-skin.png",
+    "body_bake_sha256": "da6d0f17f903692c2e63ffe621f7a2c76ea44e53886b8fa3b8952d49f3b37900"
+  },
+  "preview": {
+    "local_url": "http://127.0.0.1:8765/",
+    "serve": "python -m http.server 8765 --bind 127.0.0.1 --directory assets/3d-lab/grifon-companion-live",
+    "note": "Open on the host computer or its remote desktop. This localhost URL is not a public phone URL; the server must remain running.",
+    "mobile_recording": "qa/reading-held/reading-held-preview.mp4",
+    "mobile_gif": "qa/reading-held/reading-held-preview.gif",
+    "original_interaction_recording": "qa/mobile-interaction-preview.mp4"
+  },
+  "replay": {
+    "export": "blender --background --python-exit-code 1 --python export-browser.py -- RIG_BLEND FRESH_OUTPUT_DIRECTORY",
+    "assets": "Copy baked-hero.png from the frozen skill's griffin-master-v05-hero.png and neutral.png from the accepted rig. Include this directory's runtime and vendor files alongside the newly exported scene.json, scene.bin and baked-skin.png.",
+    "source_safety": "Export opens the accepted rig but never saves over it. Refuses an output directory containing scene.bin.",
+    "browser_smoke": "Start the local server, then run node assets/3d-lab/grifon-companion-live/qa/reading-held/scoped-smoke.cjs using installed Playwright and Edge. candidate-capture.cjs records a 12-second Reading hold and mobile/desktop screenshots; pass a new prefix to preserve existing evidence. Check harness paths when moving workspaces.",
+    "reaction_body_bake": "blender --background --python-exit-code 1 --python bake-reaction-body.py -- RIG_BLEND FRESH_OUTPUT_PNG; opens source read-only in practice, never saves it, refuses existing output and verifies source hash unchanged"
+  },
+  "verification": {
+    "browser": "PASS: qa/reading-held/scoped-report.json, 13 checks with unchanged runtime hashes. Held card, supporting wing, tracing wing motion, line advance, natural blink, distinct Reading/Working behavior, pause/resume, cleanup, reduced-motion static hold and preserved other states. No normal console/page errors.",
+    "reading_regression": "qa/reading-held/original-report.json: route-only e61c18ba fails the new held-card/wing-action contract. Owner rejected that gaze-only version as too close to Idle. First held-card candidates also failed independent visual review because the chin hid the header; refined2 exposes the full card and visible tracing action.",
+    "blink_regression": "qa/blink-continuity/original-report.json recorded original 51d1b3c8 failure in four checks: tour starvation, repeated same/changed state starvation and canceled ongoing closure. Same verifier passes fixed runtime. The prior 35-check suite tested manual Idle blink but missed automatic blink starvation during state changes.",
+    "baseline_regression": "qa/reactions/baseline-regression.json: route-only original e94959f1 renders without page errors but fails the new five-state contract (missing API and buttons).",
+    "historical_baseline": "qa/smoke-report.json describes e94959f1; qa/reactions/ describes 51d1b3c8; qa/blink-continuity/ describes e61c18ba. Their old hashes and Reading assertions do not describe the current held-card runtime. Original assets/evidence remain preserved.",
+    "viewports": ["390x844", "1280x900"],
+    "performance": "Prior 51d1b3c8 warm samples: median 16.7 ms, p95 16.9-17.0 ms on desktop AMD Radeon via ANGLE/D3D11. Not rebenchmarked for the blink/Reading refinement. Mobile emulation is not phone FPS.",
+    "visual_review": "Independent source and sampled-pose review: observable Reading gate and BRAND_PASS, zero remaining findings. Label-free mobile pose visibly differs from Idle; full message card, supporting wing and advancing tracing tip distinguish it from Working. Soft likeness/fur preserved. Continuous aesthetic quality, owner taste acceptance and real-phone performance remain pending.",
+    "build": "PASS: npm.cmd run build",
+    "binary": "PASS: 22 objects, 315329 vertices, 780320 indices; all attribute ranges/values finite and every index in bounds",
+    "unit": "PASS: 116 files, 1432 tests; 9 files and 32 tests skipped by existing suite configuration",
+    "additional": "PASS: node syntax; final reactions verified by browser smoke. Prior baseline bundle-leak and artifact-anchor checks retained as historical evidence; app code and root dependencies remain unchanged.",
+    "application_scope": "No production app, API, prompt, root dependency or credential changes"
+  },
+  "remaining": ["Owner desktop review", "Actual phone/browser/device performance", "Production transfer size and loading budget", "Chat integration and true agent-state bindings", "Production deployment"],
+  "paid_or_published": "No paid APIs, public deployment, production data changes or merge"
+}

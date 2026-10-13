@@ -1,0 +1,6 @@
+{
+  "finishedAt": "2026-10-07T13:27:31.3414847+08:00",
+  "exitCode": 0,
+  "startedAt": "2026-10-07T13:27:02.5603807+08:00",
+  "command": "npm.cmd run build"
+}

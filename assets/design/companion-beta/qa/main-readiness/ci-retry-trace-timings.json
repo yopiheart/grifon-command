@@ -1,0 +1,555 @@
+{
+  "runId": 38126267694,
+  "head": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+  "inputs": "Allowlisted retry trace.zip files from completed hosted run; metadata before/after/context-options only",
+  "browserContext": {
+    "browserName": "chromium",
+    "platform": "linux",
+    "initialViewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "deviceScaleFactor": 1,
+    "isMobile": false,
+    "hasTouch": false,
+    "executablePath": null,
+    "channel": null,
+    "browserVersion": null
+  },
+  "interpretation": [
+    "Affected chat/layout retries recorded 20–32 browser API calls, repeated multi-second completed operations and a final pending operation. No completed browser API call lasted 40 seconds.",
+    "Completed API calls with no recorded error support cumulative latency; they do not establish renderer, CPU or GPU cause.",
+    "New chat is distinct: a 3000ms click timeout ended after 3391ms, within a 14624ms observed trace.",
+    "Trace elapsed includes fixtures, hooks and cleanup; the test body cap is 60000ms. It is not a measurement of test body alone.",
+    "Only retry attempts were traced. The logged first-attempt setViewportSize 60000ms timeout is not resolved by this timing sample.",
+    "Executable, channel and browser version were not recorded in selected context metadata. No CPU/GPU metric entries were identified; no hardware cause inferred.",
+    "apiName was absent in these trace records; class/method are retained. Params, network, bodies, headers and snapshots were excluded."
+  ],
+  "longestCompletedBrowserApiMs": 10195.718,
+  "cases": [
+    {
+      "shard": 2,
+      "retry": 1,
+      "caseDirectory": "companion-beta-guided-beta-limitations-are-visible-at-390px-chromium-retry1",
+      "observedTraceElapsedMs": 7609.776,
+      "browserApiCalls": 9,
+      "completedBrowserApiCalls": 9,
+      "sumCompletedBrowserApiDurationsMs": 1186.496,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "goto",
+          "startMs": 129837.108,
+          "endMs": 130506.063,
+          "elapsedMs": 668.955,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Page",
+          "method": "screenshot",
+          "startMs": 130779.851,
+          "endMs": 131111.153,
+          "elapsedMs": 331.302,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "expect",
+          "startMs": 130610.749,
+          "endMs": 130683.197,
+          "elapsedMs": 72.448,
+          "error": null
+        }
+      ],
+      "pending": []
+    },
+    {
+      "shard": 2,
+      "retry": 1,
+      "caseDirectory": "companion-chat-320px-layout-and-real-avatar-bridge-chromium-retry1",
+      "observedTraceElapsedMs": 67048.347,
+      "browserApiCalls": 22,
+      "completedBrowserApiCalls": 21,
+      "sumCompletedBrowserApiDurationsMs": 54237.387,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 732617.215,
+          "endMs": 739921.039,
+          "elapsedMs": 7303.824,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 747024.466,
+          "endMs": 754286.859,
+          "elapsedMs": 7262.393,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 761334.024,
+          "endMs": 768583.662,
+          "elapsedMs": 7249.638,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 775500.985,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 2,
+      "retry": 1,
+      "caseDirectory": "companion-chat-brief-expli-66fad-deo-and-supported-revisions-chromium-retry1",
+      "observedTraceElapsedMs": 68584.057,
+      "browserApiCalls": 20,
+      "completedBrowserApiCalls": 19,
+      "sumCompletedBrowserApiDurationsMs": 51715.015,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 519041.448,
+          "endMs": 529237.166,
+          "elapsedMs": 10195.718,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 536263.383,
+          "endMs": 544393.431,
+          "elapsedMs": 8130.048,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 565789.847,
+          "endMs": 573203.325,
+          "elapsedMs": 7413.478,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 575058.326,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 3,
+      "retry": 1,
+      "caseDirectory": "companion-chat-1280px-layout-and-real-avatar-bridge-chromium-retry1",
+      "observedTraceElapsedMs": 65874.829,
+      "browserApiCalls": 25,
+      "completedBrowserApiCalls": 24,
+      "sumCompletedBrowserApiDurationsMs": 55054.649,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 357877.48,
+          "endMs": 364002.952,
+          "elapsedMs": 6125.472,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 370669.226,
+          "endMs": 376268.244,
+          "elapsedMs": 5599.018,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 391328.511,
+          "endMs": 396913.022,
+          "elapsedMs": 5584.511,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 401645.576,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 3,
+      "retry": 1,
+      "caseDirectory": "companion-chat-375px-layout-and-real-avatar-bridge-chromium-retry1",
+      "observedTraceElapsedMs": 66278.962,
+      "browserApiCalls": 26,
+      "completedBrowserApiCalls": 25,
+      "sumCompletedBrowserApiDurationsMs": 55457.983,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 98437.606,
+          "endMs": 104087.371,
+          "elapsedMs": 5649.765,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 88235.604,
+          "endMs": 93758.378,
+          "elapsedMs": 5522.774,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 109530.087,
+          "endMs": 115036.164,
+          "elapsedMs": 5506.077,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "expect",
+          "startMs": 135490.33,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 3,
+      "retry": 1,
+      "caseDirectory": "companion-chat-390px-layout-and-real-avatar-bridge-chromium-retry1",
+      "observedTraceElapsedMs": 66281.184,
+      "browserApiCalls": 25,
+      "completedBrowserApiCalls": 24,
+      "sumCompletedBrowserApiDurationsMs": 50619.79,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 243587.989,
+          "endMs": 249118.606,
+          "elapsedMs": 5530.617,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 232651.301,
+          "endMs": 238157.56,
+          "elapsedMs": 5506.259,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 221830.624,
+          "endMs": 227330.57,
+          "elapsedMs": 5499.946,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 264464.879,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 3,
+      "retry": 1,
+      "caseDirectory": "companion-chat-allowance-a-1c103-or-revision-until-permitted-chromium-retry1",
+      "observedTraceElapsedMs": 66418.694,
+      "browserApiCalls": 24,
+      "completedBrowserApiCalls": 23,
+      "sumCompletedBrowserApiDurationsMs": 54350.248,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 553584.607,
+          "endMs": 562161.396,
+          "elapsedMs": 8576.789,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 579924.842,
+          "endMs": 586166.726,
+          "elapsedMs": 6241.884,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 567441.168,
+          "endMs": 573638.613,
+          "elapsedMs": 6197.445,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "setInputFiles",
+          "startMs": 614790.482,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 4,
+      "retry": 1,
+      "caseDirectory": "companion-layout-centered--38cff-achable-controls-at-375x667-chromium-retry1",
+      "observedTraceElapsedMs": 64748.591,
+      "browserApiCalls": 32,
+      "completedBrowserApiCalls": 31,
+      "sumCompletedBrowserApiDurationsMs": 49048.265,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 427505.868,
+          "endMs": 431880.662,
+          "elapsedMs": 4374.794,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Page",
+          "method": "screenshot",
+          "startMs": 417568.156,
+          "endMs": 420858.487,
+          "elapsedMs": 3290.331,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Page",
+          "method": "screenshot",
+          "startMs": 440702.73,
+          "endMs": 443766.733,
+          "elapsedMs": 3064.003,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "expect",
+          "startMs": 463730.243,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 4,
+      "retry": 1,
+      "caseDirectory": "companion-layout-centered--8204c-achable-controls-at-390x844-chromium-retry1",
+      "observedTraceElapsedMs": 64602.133,
+      "browserApiCalls": 31,
+      "completedBrowserApiCalls": 30,
+      "sumCompletedBrowserApiDurationsMs": 47364.508,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 558149.136,
+          "endMs": 562557.63,
+          "elapsedMs": 4408.494,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Page",
+          "method": "screenshot",
+          "startMs": 547815.397,
+          "endMs": 551226.752,
+          "elapsedMs": 3411.355,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Page",
+          "method": "screenshot",
+          "startMs": 571620.124,
+          "endMs": 574642.665,
+          "elapsedMs": 3022.541,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "waitForSelector",
+          "startMs": 592501.437,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 4,
+      "retry": 1,
+      "caseDirectory": "companion-layout-centered--a5f22-chable-controls-at-1280x900-chromium-retry1",
+      "observedTraceElapsedMs": 64810.066,
+      "browserApiCalls": 29,
+      "completedBrowserApiCalls": 28,
+      "sumCompletedBrowserApiDurationsMs": 49461.694,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 300057.039,
+          "endMs": 304969.019,
+          "elapsedMs": 4911.98,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "expect",
+          "startMs": 272559.152,
+          "endMs": 277034.938,
+          "elapsedMs": 4475.786,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Page",
+          "method": "screenshot",
+          "startMs": 289607.41,
+          "endMs": 293220.373,
+          "elapsedMs": 3612.963,
+          "error": null
+        }
+      ],
+      "pending": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "waitForSelector",
+          "startMs": 333819.659,
+          "endMs": null,
+          "error": "No after record before test teardown"
+        }
+      ]
+    },
+    {
+      "shard": 4,
+      "retry": 1,
+      "caseDirectory": "companion-navigation-New-c-863bf-on-and-returns-in-one-click-chromium-retry1",
+      "observedTraceElapsedMs": 14623.766,
+      "browserApiCalls": 10,
+      "completedBrowserApiCalls": 10,
+      "sumCompletedBrowserApiDurationsMs": 8233.366,
+      "sumIsNotWallTime": true,
+      "longest": [
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "expect",
+          "startMs": 713043.786,
+          "endMs": 716653.412,
+          "elapsedMs": 3609.626,
+          "error": null
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "click",
+          "startMs": 717046.579,
+          "endMs": 720438.048,
+          "elapsedMs": 3391.469,
+          "error": "Timeout 3000ms exceeded."
+        },
+        {
+          "apiName": null,
+          "class": "Frame",
+          "method": "press",
+          "startMs": 712429.053,
+          "endMs": 713011.672,
+          "elapsedMs": 582.619,
+          "error": null
+        }
+      ],
+      "pending": []
+    }
+  ],
+  "fullMetadataLedger": ".tmp/companion-main-readiness/qa/ci-eight-shard/trace-api-timings.json",
+  "extractorScript": ".tmp/companion-main-readiness/qa/ci-eight-shard/trace-timings.ps1",
+  "compactReceiptCommand": "node .tmp/companion-main-readiness/qa/ci-eight-shard/compact-receipts.mjs"
+}

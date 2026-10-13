@@ -3,7 +3,7 @@ import { GlassPanel } from './GlassPanel';
 
 // ===========================================================================
 // StepShell — the shared wizard-step chrome: a GlassPanel wrapping a
-// standardized header (mono sublabel + gradient movie-title-card heading +
+// standardized header (workflow helper + calm gradient heading +
 // hairline divider). Each step's body becomes just its unique controls.
 //
 // Escape hatches (Risk R4 — don't let the abstraction leak):
@@ -16,7 +16,7 @@ import { GlassPanel } from './GlassPanel';
 // ===========================================================================
 
 export const StepShell: React.FC<{
-  /** Mono sublabel, e.g. "STEP 2 · BUSINESS INFO". The "// " marker is added. */
+  /** Workflow helper, e.g. "Step 2 · Business info". The "// " marker is added. */
   sublabel?: string;
   /** Heading. String or nodes (for <br/> in multi-line titles). */
   title: React.ReactNode;
@@ -29,9 +29,9 @@ export const StepShell: React.FC<{
     <div className="mb-8 flex items-start justify-between gap-4 border-b border-white/10 pb-6">
       <div className="min-w-0">
         {sublabel && (
-          <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// {sublabel}</p>
+          <p className="mb-2 text-xs font-sans font-normal normal-case tracking-normal text-on-surface-sublabel">// {sublabel}</p>
         )}
-        <h2 className="text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
+        <h2 className="text-2xl font-sans font-semibold normal-case tracking-[-0.02em] text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
           {title}
         </h2>
       </div>

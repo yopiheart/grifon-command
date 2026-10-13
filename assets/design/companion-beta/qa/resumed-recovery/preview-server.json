@@ -1,0 +1,8 @@
+{
+  "pid": 17136,
+  "owner": "beta_final_smoke",
+  "purpose": "mocked Companion browser verification",
+  "createdAt": "2026-10-10T02:43:34.1612050Z",
+  "stoppedAt": "2026-10-10T03:00:48.6402487Z",
+  "stoppedByExactPid": true
+}

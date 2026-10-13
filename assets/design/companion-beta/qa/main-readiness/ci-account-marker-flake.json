@@ -1,0 +1,34 @@
+{
+  "jobId": 114449580696,
+  "name": "e2e (5)",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/yopiheart/grifon-command/actions/runs/38132512230/job/114449580696",
+  "startedAt": "2026-10-11T10:35:49Z",
+  "completedAt": "2026-10-11T10:39:42Z",
+  "planned": 7,
+  "attemptCount": 8,
+  "uniqueCases": 7,
+  "passed": 7,
+  "firstAttemptPasses": 6,
+  "flakyPasses": 1,
+  "failed": 0,
+  "skipped": 0,
+  "retryAttempts": 1,
+  "reporterSummary": [
+    "  6 passed (2.0m)",
+    "  1 flaky",
+    "  6 passed (2.0m)"
+  ],
+  "failureCases": [],
+  "lastReported": {
+    "key": "[chromium] › tests/e2e/companion-account.spec.ts:456:1 › settings keep an unconfirmed plan pending and recover a failed plan read",
+    "status": "passed",
+    "index": 8,
+    "retry": 0,
+    "duration": "19.0s",
+    "timestamp": "2026-10-11T10:39:38.4377209Z"
+  },
+  "failureContext": "\n  1) [chromium] › tests/e2e/companion-account.spec.ts:373:1 › a return-to-ad marker with no finished ad safely retains the chat entry \n\n    Error: expect(received).toBeNull()\n\n    Received: \"1\"\n\n    Call Log:\n    - Timeout 15000ms exceeded while waiting on the predicate\n\n      375 |   await page.addInitScript(() => sessionStorage.setItem('grifon_return_to_ad', '1'));\n      376 |   await page.goto('/app'); await expect(input(page)).toBeVisible();\n    > 377 |   await expect.poll(() => page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBeNull();\n          |                                                                                               ^\n      378 |   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);\n      379 | });\n      380 |\n        at /home/runner/work/grifon-command/grifon-command/tests/e2e/companion-account.spec.ts:377:95\n\n    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────\n    test-results/companion-account-a-return-d6744-fely-retains-the-chat-entry-chromium/test-failed-1.png\n    ────────────────────────────────────────────────────────────────────────────────────────────────\n\n    Error Context: test-results/companion-account-a-return-d6744-fely-retains-the-chat-entry-chromium/error-context.md\n\n  1 flaky\n    [chromium] › tests/e2e/companion-account.spec.ts:373:1 › a return-to-ad marker with no finished ad safely retains the chat entry \n  6 passed (2.0m)",
+  "checkoutCommit": "91a61dca4be1a6d6487ce3abf9583ab7d108db99"
+}

@@ -1,0 +1,167 @@
+{
+  "capturedUtc": "2026-10-11T09:44:04.646Z",
+  "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-reload/playwright.config.ts --grep \"legacy device draft is adopted without losing image or history; only latest user has a receipt|failed storage keeps the current draft and allows an explicit save retry\" --repeat-each=2",
+  "exitCode": 1,
+  "stats": {
+    "startTime": "2026-10-11T09:42:24.357Z",
+    "duration": 94750.94200000001,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  },
+  "settings": {
+    "retries": 0,
+    "actionTimeoutMs": 15000,
+    "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-reload/playwright.config.ts --grep \"legacy device draft is adopted without losing image or history; only latest user has a receipt|failed storage keeps the current draft and allows an explicit save retry\" --repeat-each=2",
+    "expectTimeoutMs": 15000,
+    "workers": 1,
+    "startedUtc": "2026-10-11T09:42:23.0976035Z",
+    "testTimeoutMs": 180000
+  },
+  "sourceBefore": {
+    "at": "2026-10-11T09:42:06.369Z",
+    "head": "0ebcf5511a33901f1fcc280c7fe46857c58b5415",
+    "navigationSha256": "333c9d7c6f0dec036a0c559f8c283016a3132d722823d398f6cc070f06ed541a",
+    "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+    "storeSha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+    "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+    "paidLiveSwitches": [
+      {
+        "key": "RUN_REGRESSION",
+        "set": false
+      },
+      {
+        "key": "RUN_BURNIN",
+        "set": false
+      },
+      {
+        "key": "RUN_IMAGE_GATE_SMOKE",
+        "set": false
+      }
+    ],
+    "assertionAdaptations": "Instrumentation import and isolated loopback literals/recovery fixture import only; all assertions unchanged",
+    "observerOverhead": "Synchronous metadata/console observers on existing native request/transaction events and beforeunload. No awaited read or delay before test reload; small observer overhead remains."
+  },
+  "sourceAfter": {
+    "navigationSha256": "333c9d7c6f0dec036a0c559f8c283016a3132d722823d398f6cc070f06ed541a",
+    "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+    "storeSha256": "883575cda4e95275219bfaa8298dc255e47e3fddf7c4d97548024e010b3d8345",
+    "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+  },
+  "assertionsUnchanged": true,
+  "cases": [
+    {
+      "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+      "status": "failed",
+      "durationMs": 20829,
+      "beforeReload": {
+        "domSelectedId": "0a32aa18-9299-45d2-8a39-7463f060545d",
+        "committedSelectedId": "42056b58-325f-4ef5-ae93-21fb01aa1258",
+        "selectionAcknowledged": false,
+        "saveFooter": "Saving on this device… Preview · simulated output.",
+        "oldChatStored": true,
+        "oldChatUserMessageCount": 2,
+        "oldChatImagePresent": true,
+        "finalOldSelectionPutObserved": true,
+        "finalOldSelectionPutCompleted": false
+      },
+      "postReload": {
+        "loadedSelectedId": "42056b58-325f-4ef5-ae93-21fb01aa1258",
+        "oldChatStillStored": true,
+        "oldChatUserMessageCount": 2,
+        "oldChatImagePresent": true,
+        "finalDomUserMessageCount": 0,
+        "finalDomImagePresent": false
+      },
+      "beforeunloadSeen": true,
+      "dialogPresence": "NOT OBSERVED; no page dialog listener; default handling unchanged"
+    },
+    {
+      "test": "failed storage keeps the current draft and allows an explicit save retry",
+      "status": "failed",
+      "durationMs": 27165,
+      "beforeReload": {
+        "domSelectedId": "8f5d4ad8-f92c-40c5-bf34-5973c56bc7c6",
+        "committedSelectedId": "e54a981a-ea40-4cab-be3b-9002d61a1a25",
+        "selectionAcknowledged": false,
+        "saveFooter": "Saving on this device… Preview · simulated output.",
+        "oldChatStored": true,
+        "oldChatUserMessageCount": 1,
+        "oldChatImagePresent": false,
+        "finalOldSelectionPutObserved": false,
+        "finalOldSelectionPutCompleted": false
+      },
+      "postReload": {
+        "loadedSelectedId": "e54a981a-ea40-4cab-be3b-9002d61a1a25",
+        "oldChatStillStored": true,
+        "oldChatUserMessageCount": 1,
+        "oldChatImagePresent": false,
+        "finalDomUserMessageCount": 0,
+        "finalDomImagePresent": false
+      },
+      "beforeunloadSeen": true,
+      "dialogPresence": "NOT OBSERVED; no page dialog listener; default handling unchanged"
+    },
+    {
+      "test": "legacy device draft is adopted without losing image or history; only latest user has a receipt",
+      "status": "failed",
+      "durationMs": 17981,
+      "beforeReload": {
+        "domSelectedId": "5fc3b93b-13ba-4723-9d93-b128b1071b5c",
+        "committedSelectedId": "663fe461-a170-4087-9c51-2e4b3cd9385a",
+        "selectionAcknowledged": false,
+        "saveFooter": "Saving on this device… Preview · simulated output.",
+        "oldChatStored": true,
+        "oldChatUserMessageCount": 2,
+        "oldChatImagePresent": true,
+        "finalOldSelectionPutObserved": false,
+        "finalOldSelectionPutCompleted": false
+      },
+      "postReload": {
+        "loadedSelectedId": "663fe461-a170-4087-9c51-2e4b3cd9385a",
+        "oldChatStillStored": true,
+        "oldChatUserMessageCount": 2,
+        "oldChatImagePresent": true,
+        "finalDomUserMessageCount": 0,
+        "finalDomImagePresent": false
+      },
+      "beforeunloadSeen": true,
+      "dialogPresence": "NOT OBSERVED; no page dialog listener; default handling unchanged"
+    },
+    {
+      "test": "failed storage keeps the current draft and allows an explicit save retry",
+      "status": "failed",
+      "durationMs": 25435,
+      "beforeReload": {
+        "domSelectedId": "4cec15e7-34ad-4f3d-9bd6-95ebd1cbb1f3",
+        "committedSelectedId": "81c54459-cee0-4400-9fbb-dc5fa2a8bcfb",
+        "selectionAcknowledged": false,
+        "saveFooter": "Saving on this device… Preview · simulated output.",
+        "oldChatStored": true,
+        "oldChatUserMessageCount": 1,
+        "oldChatImagePresent": false,
+        "finalOldSelectionPutObserved": false,
+        "finalOldSelectionPutCompleted": false
+      },
+      "postReload": {
+        "loadedSelectedId": "81c54459-cee0-4400-9fbb-dc5fa2a8bcfb",
+        "oldChatStillStored": true,
+        "oldChatUserMessageCount": 1,
+        "oldChatImagePresent": false,
+        "finalDomUserMessageCount": 0,
+        "finalDomImagePresent": false
+      },
+      "beforeunloadSeen": true,
+      "dialogPresence": "NOT OBSERVED; no page dialog listener; default handling unchanged"
+    }
+  ],
+  "summarySha256": "90761aeae6643c4617739a71f53029e56e5a96d53681c434f93c260de00c3603",
+  "limits": [
+    "Small synchronous metadata/console observer overhead may change scheduling. No awaited read/delay was inserted before reload.",
+    "The original local baseline failed all four executions after immediate reload with DOM selection differing from committed IndexedDB selection while the old chat remained stored. This reproduces the selection-save race under these synchronous observers; small observer overhead remains, and this alone does not establish every hosted CI failure cause.",
+    "Committed selection is observed from actual existing IDB get results and completed book-put transactions; no new diagnostic IDB request was created.",
+    "Only synthetic fixture IDs/counts/image-presence and save-status text recorded; no brief text or photo bodies.",
+    "Fixture-only local installed Playwright Chromium; no paid/live provider, database, secret or deployment operation."
+  ]
+}

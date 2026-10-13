@@ -1,0 +1,6 @@
+{
+  "sourceHashCount": 440,
+  "purpose": "Demonstrate root-config localhost hostname defects before fixes",
+  "command": "npm.cmd run test:e2e -- tests/e2e/typography.spec.ts tests/e2e/companion-account.spec.ts --grep ordinary-375-or-upgrade-navigation --workers=1 --reporter=json,list --output=.tmp/companion-main-readiness/qa/original-red/test-results",
+  "exitCode": 1
+}

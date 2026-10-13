@@ -26,6 +26,8 @@ import { mapReportToWizard } from './oneShotIntake';
 // sink. Both are light, browser-safe modules; telemetry here is always best-effort.
 import { setActiveRunId } from './runTelemetry';
 import { trackEvent } from './analyticsService';
+import { sanitizeProducerMeta } from '../utils/producerTelemetry';
+import { isUnknownGenerationOutcome } from './generationTransportError';
 import type {
   Avatar,
   BusinessInfo,
@@ -523,7 +525,7 @@ const emitRunEvent = (
   meta: Record<string, unknown>
 ): void => {
   try {
-    void trackEvent({ event, run_id: runId, meta });
+    void trackEvent({ event, run_id: runId, meta: sanitizeProducerMeta(meta) });
   } catch {
     /* best-effort — telemetry never breaks the run */
   }
@@ -575,7 +577,7 @@ async function withRetry<T>(fn: () => Promise<T>, attempts: number, onAttempt?: 
       return await fn();
     } catch (e) {
       lastErr = e;
-      if ((e as Error)?.message === 'ABORTED') throw e;
+      if ((e as Error)?.message === 'ABORTED' || isUnknownGenerationOutcome(e)) throw e;
       // Jittered backoff BETWEEN attempts (not after the final failure): give a
       // transient upstream blip time to clear instead of hot-looping the retry.
       if (n < attempts) {
@@ -645,7 +647,7 @@ async function runNode(
     emitRunEvent('node_done', run.runId, { node: id });
   } catch (e: any) {
     if (e?.message === 'ABORTED') throw e;
-    if (opts.degrade) {
+    if (opts.degrade && !isUnknownGenerationOutcome(e)) {
       // done-with-warning: the run continues; downstream uses its existing fallback.
       await setStage(id, { status: 'done', error: `degraded: ${e?.message ?? 'failed'}` });
       emitRunEvent('node_fail', run.runId, { node: id, degraded: true, error: e?.message ?? 'failed' });
@@ -1504,7 +1506,8 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
         ),
       MAX_STAGE_ATTEMPTS
     );
-  } catch {
+  } catch (error) {
+    if (isUnknownGenerationOutcome(error)) throw error;
     return undefined;
   }
 }
@@ -1840,7 +1843,7 @@ async function runStage(
                       emitRunEvent('check_fail', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'deterministic', reason: reCheck.reason, reroll: true });
                     }
                   } catch (e: any) {
-                    if (e?.message === 'ABORTED') throw e;
+                    if (e?.message === 'ABORTED' || isUnknownGenerationOutcome(e)) throw e;
                   }
                   if (!recovered) {
                     try { await deps.run.flagScene(run.runId, i, `image_check: ${check.reason}`); } catch { /* best-effort */ }

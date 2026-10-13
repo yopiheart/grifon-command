@@ -1,0 +1,45 @@
+{
+  "phase": "final-round3-full",
+  "evidenceType": "summary reconstructed from preserved command log; raw JSON was later replaced by --list",
+  "log": "final-account-command.log",
+  "exitCode": 1,
+  "passed": 27,
+  "failed": 2,
+  "testOracleIssues": [
+    "checkout init-script re-seeded pending plan after full reload",
+    "strict RGB equality rejected approved zinc neutral scrollbar"
+  ],
+  "successfulCases": [
+    "ok  1 tests\\e2e\\companion-account.spec.ts:36:1 › default preview hides the local test fixture toolbar (1.4s)",
+    "ok  2 tests\\e2e\\companion-account.spec.ts:51:1 › default preview exposes account settings from chat navigation (826ms)",
+    "ok  3 tests\\e2e\\companion-account.spec.ts:57:1 › developer fixture controls require explicit opt-in and preview stays truthful (2.1s)",
+    "ok  4 tests\\e2e\\companion-account.spec.ts:77:3 › real account settings preserve player and keyboard access at 375px (3.1s)",
+    "ok  5 tests\\e2e\\companion-account.spec.ts:77:3 › real account settings preserve player and keyboard access at 390px (3.1s)",
+    "ok  6 tests\\e2e\\companion-account.spec.ts:77:3 › real account settings preserve player and keyboard access at 1280px (2.9s)",
+    "ok  7 tests\\e2e\\companion-account.spec.ts:115:1 › collapsed navigation exposes the account settings entry (1.6s)",
+    "ok  8 tests\\e2e\\companion-account.spec.ts:126:1 › settings confirm consent and recover read and write failures without dead preferences (2.3s)",
+    "ok  9 tests\\e2e\\companion-account.spec.ts:150:1 › an unconfirmed consent record withholds the switch until its read finishes (1.6s)",
+    "ok 10 tests\\e2e\\companion-account.spec.ts:164:1 › logout waits for the latest IndexedDB draft before signing out and cleaning wizard state (2.0s)",
+    "ok 11 tests\\e2e\\companion-account.spec.ts:187:1 › failed logout keeps the session, draft and player and permits retry (2.0s)",
+    "ok 12 tests\\e2e\\companion-account.spec.ts:208:3 › failed draft save blocks settings Sign out and preserves session (1.9s)",
+    "ok 13 tests\\e2e\\companion-account.spec.ts:208:3 › failed draft save blocks settings Upgrade plan and preserves session (1.9s)",
+    "ok 14 tests\\e2e\\companion-account.spec.ts:208:3 › failed draft save blocks settings Help & support and preserves session (1.9s)",
+    "ok 15 tests\\e2e\\companion-account.spec.ts:208:3 › failed draft save blocks settings Terms of service and preserves session (2.0s)",
+    "ok 16 tests\\e2e\\companion-account.spec.ts:208:3 › failed draft save blocks settings Privacy policy and preserves session (1.9s)",
+    "ok 17 tests\\e2e\\companion-account.spec.ts:240:1 › chat is the default app entry and Studio navigation preserves draft and browser history (2.5s)",
+    "ok 18 tests\\e2e\\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code (3.3s)",
+    "ok 19 tests\\e2e\\companion-account.spec.ts:282:1 › an intended tool takes precedence over the default chat entry (1.2s)",
+    "ok 21 tests\\e2e\\companion-account.spec.ts:312:1 › a return-to-ad marker with no finished ad safely retains the chat entry (1.8s)",
+    "ok 23 tests\\e2e\\companion-account.spec.ts:358:1 › late subscription response cannot replace the newly signed-in account plan (2.4s)",
+    "ok 24 tests\\e2e\\companion-account.spec.ts:379:1 › settings keep an unconfirmed plan pending and recover a failed plan read (1.9s)",
+    "ok 25 tests\\e2e\\companion-account.spec.ts:402:3 › settings Upgrade plan navigates after saving and browser Back restores chat (2.3s)",
+    "ok 26 tests\\e2e\\companion-account.spec.ts:402:3 › settings Help & support navigates after saving and browser Back restores chat (1.9s)",
+    "ok 27 tests\\e2e\\companion-account.spec.ts:402:3 › settings Terms of service navigates after saving and browser Back restores chat (1.9s)",
+    "ok 28 tests\\e2e\\companion-account.spec.ts:402:3 › settings Privacy policy navigates after saving and browser Back restores chat (1.8s)",
+    "ok 29 tests\\e2e\\companion-account.spec.ts:417:1 › same-account token refresh keeps the paid Studio form and unsent script mounted (1.8s)"
+  ],
+  "failuresRetained": [
+    "final-pending-checkout-keeps-precedence-over-intended-tool-and-return-to-ad-intents-failure.json",
+    "final-chat-sidebar-viewer-and-settings-use-neutral-thin-accessible-scrollbars-failure.json"
+  ]
+}

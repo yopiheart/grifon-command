@@ -17,20 +17,25 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
-  timeout: 60_000,
+  // Hosted traces show many successful 4-10s actions exhausting a full journey's
+  // 60s cap. Bound individual actions below while allowing the complete journey.
+  timeout: process.env.CI ? 180_000 : 60_000,
+  // Headless software rendering can delay a two-tab IndexedDB save past 5s.
+  expect: { timeout: process.env.CI ? 15_000 : 5_000 },
   use: {
     baseURL: `http://localhost:${PORT}`,
+    actionTimeout: process.env.CI ? 15_000 : 0,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    // Dev server (not preview) so SPA history-fallback serves /pricing, /terms,
-    // etc. directly, and VITE_ vars are read from process.env at runtime (no
-    // build-time inlining to coordinate).
+    // Dev server retains SPA fallback and the real pre-auth API guards checked
+    // by codex-desktop.spec.ts. CI has no .env files or provider credentials.
     command: 'npm run dev',
     url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
+    // Refuse a preview from another checkout instead of testing the wrong app.
+    reuseExistingServer: false,
     timeout: 120_000,
     env: {
       // Truthy dummies only — getSupabase() checks presence, not validity.

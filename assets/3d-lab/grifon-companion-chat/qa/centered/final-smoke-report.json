@@ -1,0 +1,74 @@
+{
+  "verdict": "PASS",
+  "baseCommit": "491e86092261ea7183b408ec15ea6ec0264cbc84",
+  "sourceState": "Uncommitted task edits over baseCommit; exact file hashes below",
+  "sourceSha256": {
+    "components/CompanionChat/CompanionAvatar.tsx": "91E2DBA357932768044E8755351EFE9E5EB9BB58496104CB9AFA22DBD02182F2",
+    "components/CompanionChat/CompanionChatSurface.tsx": "4DBC7AB584DF14E4EAA4363546B05C13480818F28A99A273A0D5E2262998ABC7",
+    "components/CompanionChat/companionChat.css": "F79B261050DF090AB3F684FD33FA2D83E220231875AEF3DFA8BEDD2FC99C663C",
+    "dev/companionChatPreview.tsx": "18BA81C40F9BBA6C938938B4D2011D4E12359321D98909FBC4354444FF30158E",
+    "tests/e2e/companion-chat.spec.ts": "E814AA2927200B826CE91265811395DFA98577B9A1AD769FD53B2937C366C1EE",
+    "tests/e2e/companion-layout.spec.ts": "CDC88C5F8CE954A16BC1AB97E7A234FFADA21325FDA3E186A7F5DB48DC24D640",
+    "public/companion/main.js": "CA60E8737997220B0C571323F914D0A92F44549AF0D1282D3840E1FD52D16892",
+    "public/companion/bridge.js": "66E575F98D041AEC786C4E7B9D47DC1BC25016CEE6154E44DD71096D5775E64C",
+    "public/companion/reactions.js": "41ADEE9A7FDFCC671C6BCDFBAD520B00DFDAAE3A20D13C623DD3F2AC505648CE"
+  },
+  "environment": {
+    "server": "http://127.0.0.1:5173",
+    "POLISH_PHASE": "../centered/final",
+    "COMPANION_LAYOUT_PHASE": "final",
+    "COMPANION_QA_DIR": "assets/3d-lab/grifon-companion-chat/qa/centered",
+    "browser": "Installed Microsoft Edge via Playwright, headless"
+  },
+  "checks": [
+    {
+      "testsPassed": 26,
+      "command": "npx.cmd playwright test --config tests/e2e/companion.config.ts",
+      "exitCode": 0,
+      "durationSeconds": 52.1
+    },
+    {
+      "testsPassed": 1,
+      "command": "npx.cmd playwright test --config tests/e2e/companion.config.ts companion-layout.spec.ts --grep \"320px companion retry\"",
+      "exitCode": 0,
+      "durationSeconds": 2.6
+    }
+  ],
+  "geometry": {
+    "horizontalOverflowAllThreeViewports": 0,
+    "avatarDesktop": "96x96, above transcript",
+    "avatarMobile": "88x88, above transcript",
+    "centerOffsetAllThreeViewports": 0
+  },
+  "pixelReview": "PASS: one centered mascot/name above aligned bubble conversation and composer; latest assistant reply visible after ordinary send; new tall brief/storyboard/result opens at heading; mobile controls reachable;320px retry does not overlap navigation.",
+  "retainedCoverage": [
+    "working reaction bridge",
+    "same iframe across responsive resize",
+    "no pause/resume control",
+    "reduced motion remains static",
+    "WebGL/asset failure fallback and retry",
+    "ordinary and120capped message scroll follow",
+    "reader history scroll retained during typing",
+    "mocked quota/preset/approval/start gates",
+    "account isolation and savedrun recovery"
+  ],
+  "screenshots": "final-{initial,active,working,ready,result}-{1280,375,390}.png;final-review-{375,1000}.png;final-retry-320.png",
+  "gaze": {
+    "workingCursorScale": 0.15,
+    "readingCursorScale": 0.2,
+    "idleGazeX": [
+      -0.9919494055650439,
+      0.9916044561276076
+    ],
+    "interpretation": "Pointer tracking works inside the Grifon page; compact eyes are subtle especially reading/working. Outside-browser tracking is not supported or requested.",
+    "diagnostic": "gaze-diagnostic.json",
+    "exitCode": 0
+  },
+  "limitations": [
+    "Local fixture and mocked backend only; no paid provider or live generation exercised.",
+    "Result card uses existing recovery.webm fixture and verifies heading after metadata; does not establish generated video quality.",
+    "Gaze screenshots precede removal of duplicate fixture label; avatar runtime unchanged.",
+    "Final suite collected26tests before additional320px retry test was authored; supplemental test passed separately."
+  ],
+  "paidCalls": 0
+}

@@ -1,0 +1,563 @@
+{
+  "result": "PASS",
+  "capturedUtc": "2026-10-11T11:24:42.345Z",
+  "meaning": "Original product regression rejected; fixed success/rejection pass; one served catch-clear omission is rejected by unchanged recovery assertion",
+  "originalAppSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+  "fixedAppSha256": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+  "accountSha256": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+  "fixtureSha256": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+  "validations": {
+    "originalTwoExpectedMarkerFailures": true,
+    "fixedTwoPasses": true,
+    "catchOnlyNegativeRejectsRecovery": true,
+    "negativePreservesPendingGuard": true,
+    "sourceAndHarnessFrozen": true,
+    "fixtureCountersClean": true,
+    "noRetriesOrSkips": true,
+    "ownedHelperStopped": true
+  },
+  "phases": [
+    {
+      "phase": "original-red",
+      "cases": [
+        {
+          "title": "pending checkout keeps precedence over intended tool and return-to-ad intents",
+          "status": "failed",
+          "durationMs": 1768,
+          "retry": 0,
+          "errors": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"1\"\nReceived: null\n\n  380 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_plan'))).toBeNull();\n  381 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');\n> 382 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');\n      |                                                                                    ^\n  383 | }\n  384 |\n  385 | test('pending checkout keeps precedence over intended tool and return-to-ad intents', async ({ page }) => {\n    at expectHeldCheckout (C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\companion-account.spec.ts:382:84)\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\companion-account.spec.ts:393:3"
+          ]
+        },
+        {
+          "title": "failed checkout releases return-to-ad recovery after the saved draft has loaded",
+          "status": "failed",
+          "durationMs": 1418,
+          "retry": 0,
+          "errors": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"1\"\nReceived: null\n\n  380 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_plan'))).toBeNull();\n  381 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');\n> 382 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');\n      |                                                                                    ^\n  383 | }\n  384 |\n  385 | test('pending checkout keeps precedence over intended tool and return-to-ad intents', async ({ page }) => {\n    at expectHeldCheckout (C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\companion-account.spec.ts:382:84)\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\companion-account.spec.ts:405:3"
+          ]
+        }
+      ],
+      "exitCode": 1,
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/playwright.config.ts",
+          "--grep=pending checkout keeps precedence over intended tool and return-to-ad intents|failed checkout releases return-to-ad recovery after the saved draft has loaded"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CHECKOUT_REGRESSION_PHASE": "original-red",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\original-red",
+          "COMPANION_ACCOUNT_PHASE": "original-red"
+        }
+      },
+      "sourceHashes": {
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+        "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+        "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "dev/companionChatPreview.tsx": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "harnessHashes": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/companion-account.spec.ts": "77af5f538ff411e71d9c11dc4180fd011ed0e55ca65562ebc252977b64df9ad6",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/companion-account-fixture.ts": "87b0d58ae56376085255436432dfbcd1629c08472866bf1b4c88fb8253b1e727",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/instrumented-test.ts": "039db9b9b5d868a7485fec6070a8b0352caaf357936d9c1558dd84e32412864a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/playwright.config.ts": "59b4b7b42cd92ca27d9ac7ea9ad1b2f26f8ecfbca392ad7d5e42650279b9c2cd",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "rawCommandReceipt": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/original-red/command-receipt.json",
+      "rawReport": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/original-red/results.json",
+      "instrumentation": [
+        {
+          "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+          "events": [
+            {
+              "ms": 28.30000001192093,
+              "kind": "probe-installed",
+              "pathname": "/privacy"
+            },
+            {
+              "ms": 801.1000000238419,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 20.19999998807907,
+              "kind": "probe-installed",
+              "pathname": "/app"
+            },
+            {
+              "ms": 506.09999999403954,
+              "kind": "storage-remove",
+              "key": "grifon_intended_plan",
+              "before": true,
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 509.89999997615814,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 521.3999999761581,
+              "kind": "storage-remove",
+              "key": "grifon_return_to_ad",
+              "before": true,
+              "present": false,
+              "caller": "return-to-ad-service"
+            }
+          ],
+          "final": {
+            "plan": false,
+            "module": true,
+            "returnToAd": false
+          },
+          "pathname": "/app",
+          "state": {
+            "authHeld": true,
+            "fixtureCalls": [
+              "plan-read"
+            ]
+          },
+          "requests": {
+            "externalOther": 0,
+            "externalFonts": 6,
+            "callableApi": 7
+          },
+          "fixture": {
+            "unexpectedCount": 0,
+            "pageErrorCount": 0,
+            "consentWriteCount": 0
+          },
+          "catchGuardControl": null
+        },
+        {
+          "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+          "events": [
+            {
+              "ms": 26,
+              "kind": "probe-installed",
+              "pathname": "/privacy"
+            },
+            {
+              "ms": 585.2999999821186,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 17.5,
+              "kind": "probe-installed",
+              "pathname": "/app"
+            },
+            {
+              "ms": 446.69999998807907,
+              "kind": "storage-remove",
+              "key": "grifon_intended_plan",
+              "before": true,
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 450.2999999821186,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 453.90000000596046,
+              "kind": "storage-remove",
+              "key": "grifon_return_to_ad",
+              "before": true,
+              "present": false,
+              "caller": "return-to-ad-service"
+            }
+          ],
+          "final": {
+            "plan": false,
+            "module": true,
+            "returnToAd": false
+          },
+          "pathname": "/app",
+          "state": {
+            "authHeld": true,
+            "fixtureCalls": [
+              "plan-read"
+            ]
+          },
+          "requests": {
+            "externalOther": 0,
+            "externalFonts": 6,
+            "callableApi": 7
+          },
+          "fixture": {
+            "unexpectedCount": 0,
+            "pageErrorCount": 0,
+            "consentWriteCount": 0
+          },
+          "catchGuardControl": null
+        }
+      ]
+    },
+    {
+      "phase": "fixed-green",
+      "cases": [
+        {
+          "title": "pending checkout keeps precedence over intended tool and return-to-ad intents",
+          "status": "passed",
+          "durationMs": 2395,
+          "retry": 0,
+          "errors": []
+        },
+        {
+          "title": "failed checkout releases return-to-ad recovery after the saved draft has loaded",
+          "status": "passed",
+          "durationMs": 1196,
+          "retry": 0,
+          "errors": []
+        }
+      ],
+      "exitCode": 0,
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/playwright.config.ts",
+          "--grep=pending checkout keeps precedence over intended tool and return-to-ad intents|failed checkout releases return-to-ad recovery after the saved draft has loaded"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CHECKOUT_REGRESSION_PHASE": "fixed-green",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\fixed-green",
+          "COMPANION_ACCOUNT_PHASE": "fixed-green"
+        }
+      },
+      "sourceHashes": {
+        "App.tsx": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+        "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+        "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "dev/companionChatPreview.tsx": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "harnessHashes": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/companion-account.spec.ts": "77af5f538ff411e71d9c11dc4180fd011ed0e55ca65562ebc252977b64df9ad6",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/companion-account-fixture.ts": "87b0d58ae56376085255436432dfbcd1629c08472866bf1b4c88fb8253b1e727",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/instrumented-test.ts": "039db9b9b5d868a7485fec6070a8b0352caaf357936d9c1558dd84e32412864a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/playwright.config.ts": "59b4b7b42cd92ca27d9ac7ea9ad1b2f26f8ecfbca392ad7d5e42650279b9c2cd",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "rawCommandReceipt": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/fixed-green/command-receipt.json",
+      "rawReport": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/fixed-green/results.json",
+      "instrumentation": [
+        {
+          "identity": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+          "events": [
+            {
+              "ms": 25.30000001192093,
+              "kind": "probe-installed",
+              "pathname": "/privacy"
+            },
+            {
+              "ms": 112.60000002384186,
+              "kind": "probe-installed",
+              "pathname": "/privacy"
+            },
+            {
+              "ms": 709.4000000059605,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 16.900000005960464,
+              "kind": "probe-installed",
+              "pathname": "/app"
+            },
+            {
+              "ms": 427.09999999403954,
+              "kind": "storage-remove",
+              "key": "grifon_intended_plan",
+              "before": true,
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 431.30000001192093,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 18,
+              "kind": "probe-installed",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 451.59999999403954,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            }
+          ],
+          "final": {
+            "plan": false,
+            "module": true,
+            "returnToAd": true
+          },
+          "pathname": "/checkout",
+          "state": {
+            "authHeld": false,
+            "fixtureCalls": [
+              "plan-read"
+            ]
+          },
+          "requests": {
+            "externalOther": 0,
+            "externalFonts": 11,
+            "callableApi": 13
+          },
+          "fixture": {
+            "unexpectedCount": 0,
+            "pageErrorCount": 0,
+            "consentWriteCount": 0
+          },
+          "catchGuardControl": null
+        },
+        {
+          "identity": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+          "events": [
+            {
+              "ms": 17.599999994039536,
+              "kind": "probe-installed",
+              "pathname": "/privacy"
+            },
+            {
+              "ms": 523.2000000178814,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 16.400000005960464,
+              "kind": "probe-installed",
+              "pathname": "/app"
+            },
+            {
+              "ms": 420.40000000596046,
+              "kind": "storage-remove",
+              "key": "grifon_intended_plan",
+              "before": true,
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 425.90000000596046,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 466.90000000596046,
+              "kind": "storage-remove",
+              "key": "grifon_return_to_ad",
+              "before": true,
+              "present": false,
+              "caller": "return-to-ad-service"
+            }
+          ],
+          "final": {
+            "plan": false,
+            "module": true,
+            "returnToAd": false
+          },
+          "pathname": "/app",
+          "state": {
+            "authHeld": true,
+            "fixtureCalls": [
+              "plan-read"
+            ]
+          },
+          "requests": {
+            "externalOther": 0,
+            "externalFonts": 6,
+            "callableApi": 7
+          },
+          "fixture": {
+            "unexpectedCount": 0,
+            "pageErrorCount": 0,
+            "consentWriteCount": 0
+          },
+          "catchGuardControl": null
+        }
+      ]
+    },
+    {
+      "phase": "catch-clear-disabled-v2",
+      "cases": [
+        {
+          "title": "failed checkout releases return-to-ad recovery after the saved draft has loaded",
+          "status": "failed",
+          "durationMs": 15541,
+          "retry": 0,
+          "errors": [
+            "Error: expect(received).toBeNull()\n\nReceived: \"1\"\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  407 |   await expect(page.getByText('Could not resume checkout', { exact: true })).toBeVisible();\n  408 |   await expect(page.getByText('Account fixture checkout auth unavailable', { exact: true })).toBeVisible();\n> 409 |   await expect.poll(() => page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBeNull();\n      |                                                                                               ^\n  410 |   await expect(page).toHaveURL(/\\/app$/);\n  411 |   await expect(page.getByText('// PREVIOUS_SESSION_DETECTED', { exact: true })).toBeVisible();\n  412 |   await expect(page.getByText('STEP_03_OF_08 — ACCOUNT CHECKOUT DRAFT', { exact: true })).toBeVisible();\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\companion-account.spec.ts:409:95"
+          ]
+        }
+      ],
+      "exitCode": 1,
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/playwright.config.ts",
+          "--grep=failed checkout releases return-to-ad recovery after the saved draft has loaded$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CHECKOUT_REGRESSION_PHASE": "catch-clear-disabled-v2",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\tracked-regression\\catch-clear-disabled-v2",
+          "COMPANION_ACCOUNT_PHASE": "catch-clear-disabled-v2"
+        }
+      },
+      "sourceHashes": {
+        "App.tsx": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+        "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+        "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "dev/companionChatPreview.tsx": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "harnessHashes": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/companion-account.spec.ts": "77af5f538ff411e71d9c11dc4180fd011ed0e55ca65562ebc252977b64df9ad6",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/companion-account-fixture.ts": "87b0d58ae56376085255436432dfbcd1629c08472866bf1b4c88fb8253b1e727",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/instrumented-test.ts": "99a6a205c88aae6af969f61dbf7abb310be8f4ca6e69ad129a5021b26f770319",
+        ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/playwright.config.ts": "59b4b7b42cd92ca27d9ac7ea9ad1b2f26f8ecfbca392ad7d5e42650279b9c2cd",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "rawCommandReceipt": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/catch-clear-disabled-v2/command-receipt.json",
+      "rawReport": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/catch-clear-disabled-v2/results.json",
+      "instrumentation": [
+        {
+          "identity": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+          "events": [
+            {
+              "ms": 33.10000002384186,
+              "kind": "probe-installed",
+              "pathname": "/privacy"
+            },
+            {
+              "ms": 632.9000000059605,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            },
+            {
+              "ms": 21.100000023841858,
+              "kind": "probe-installed",
+              "pathname": "/app"
+            },
+            {
+              "ms": 474.10000002384186,
+              "kind": "storage-remove",
+              "key": "grifon_intended_plan",
+              "before": true,
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 480,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": true
+            }
+          ],
+          "final": {
+            "plan": false,
+            "module": true,
+            "returnToAd": true
+          },
+          "pathname": "/app",
+          "state": {
+            "authHeld": true,
+            "fixtureCalls": [
+              "plan-read"
+            ]
+          },
+          "requests": {
+            "externalOther": 0,
+            "externalFonts": 6,
+            "callableApi": 8
+          },
+          "fixture": {
+            "unexpectedCount": 0,
+            "pageErrorCount": 0,
+            "consentWriteCount": 0
+          },
+          "catchGuardControl": {
+            "omittedCatchClearOnly": true,
+            "originalServedSha256": "c19a0751a40ddea662ca2ae5f1258893f86059532b0fc92680ab50e72269dc20",
+            "controlServedSha256": "58e3673426f360e6e332fde923f5f9a5e1ec25b9de96831bd45307512549c0e8",
+            "pendingSetTrueRetained": true
+          }
+        }
+      ]
+    }
+  ],
+  "originalCausalProof": {
+    "receipt": ".tmp/companion-main-readiness/qa/checkout-intent/original-checkout-summary.json",
+    "sha256": "bd0cd6c5d012d2f3a59692cd6821addb550114ede70c2319bea09379a8ffa0c1"
+  },
+  "excludedSetupAttempt": {
+    "path": ".tmp/companion-main-readiness/qa/checkout-intent/tracked-regression/catch-clear-disabled/",
+    "exitCode": 1,
+    "reason": "Strict served-code seam assertion stopped before app boot because shorthand settername differed from actualsetIsResumingCheckout; not sensitivity proof or product failure"
+  },
+  "execution": {
+    "workers": 1,
+    "retries": 0,
+    "skips": 0,
+    "testBudgetMs": 180000,
+    "expectBudgetMs": 15000,
+    "actionBudgetMs": 15000,
+    "paidLiveSwitches": "unset",
+    "browser": "Installed Playwright Chromium149.0.7827.55 on Windows"
+  },
+  "cleanup": {
+    "stoppedUtc": "2026-10-11T11:23:03.6713926Z",
+    "processCommandMatched": true,
+    "remainingListeners": 0,
+    "listenerOwnershipMatched": true,
+    "pid": 16188
+  },
+  "limits": [
+    "No original marker/business assertions weakened; served negative changes only catchsetIsResumingCheckout(false)",
+    "Mocks/API guards retained; no livecheckout, providers or productionDB",
+    "New final225-case hostedCI not established by these local narrow checks"
+  ]
+}

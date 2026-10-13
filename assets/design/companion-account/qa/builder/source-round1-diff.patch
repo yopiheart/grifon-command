@@ -1,0 +1,942 @@
+diff --git a/App.tsx b/App.tsx
+index 65907774..b61ae68e 100644
+--- a/App.tsx
++++ b/App.tsx
+@@ -168,6 +168,11 @@ const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'captio
+ // a stale sessionStorage stash nor a tampered user_metadata value can pre-select
+ // something the picker doesn't know about.
+ const INTENT_VERTICALS = new Set(['product', 'service', 'real_estate']);
++const appExperience = (): 'companion' | null => new URLSearchParams(window.location.search).get('experience') === 'studio' ? null : 'companion';
++const accountName = (email: string | null, metadata: Record<string, unknown> = {}): string => {
++  const name = [metadata.full_name, metadata.display_name, metadata.name].find(value => typeof value === 'string' && value.trim());
++  return typeof name === 'string' ? name.trim() : email?.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase()) || 'Account';
++};
+
+ // Plausible-email gate for the signup field: enables the CONTINUE button and
+ // drives the on-blur format hint. Intentionally loose (not RFC-perfect) — just
+@@ -199,7 +204,7 @@ const App: React.FC = () => {
+   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
+   // at the app root so any module/wizard step triggers it without prop drilling.
+   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
+-  const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
++  const { billing_cycle, plan_id, loading: subLoading, error: subError, refetch: retrySubscription } = useSubscription();
+   // Purchased top-up balances — the video gate below must see a paid ₱499
+   // credit, or the buyer hits the paywall for the thing they just bought.
+   const { credits: topupCredits, loading: creditsLoading, loaded: creditsLoaded, refetch: refetchQuota } = useQuota();
+@@ -254,19 +259,21 @@ const App: React.FC = () => {
+   }, []);
+   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
+   const [userEmail, setUserEmail] = useState<string | null>(null);
++  const [userName, setUserName] = useState('Account');
++  const loggingOut = useRef(false);
+   const [isCheckingSession, setIsCheckingSession] = useState(true);
+   // Pre-launch curtain. Read once at mount (localStorage), flipped by LaunchLock
+   // after a code is redeemed. Inert unless VITE_LAUNCH_LOCK === 'true' at BUILD
+   // time — see services/launchGate.ts.
+   const [hasLaunchPass, setHasLaunchPass] = useState(() => LAUNCH_LOCK_ENABLED && hasValidPass());
+   const [isSigningIn, setIsSigningIn] = useState(false);
+-  const [activeModule, setActiveModule] = useState<string | null>(() => new URLSearchParams(window.location.search).get('experience') === 'companion' ? 'companion' : null);
++  const [activeModule, setActiveModule] = useState<string | null>(appExperience);
+   const selectDashboardModule = (module: string) => {
+-    if (module === 'companion') window.history.pushState({}, '', '/app?experience=companion');
++    if (module === 'companion') window.history.pushState({}, '', '/app');
+     setActiveModule(module);
+   };
+   const leaveCompanion = () => {
+-    window.history.pushState({}, '', '/app');
++    window.history.pushState({}, '', '/app?experience=studio');
+     setActiveModule(null);
+   };
+   // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
+@@ -441,16 +448,18 @@ const App: React.FC = () => {
+     postAuthRedirectedRef.current = true;
+     const oauthReturn = isBooting || !!sessionStorage.getItem('grifon_oauth_pending');
+     if ((firstAuth && oauthReturn && currentRoute === 'landing') || currentRoute === 'login') {
++      const experience = appExperience();
++      setActiveModule(experience);
+       setCurrentRoute('app');
+       if (typeof window !== 'undefined') {
+-        window.history.replaceState({}, '', ROUTE_PATHS.app);
++        window.history.replaceState({}, '', experience === null ? '/app?experience=studio' : ROUTE_PATHS.app);
+       }
+     }
+   }, [isAuthenticated, currentRoute, isBooting]);
+
+   useEffect(() => {
+     if (!isCheckingSession && !isAuthenticated && currentRoute === 'app') {
+-      window.history.replaceState({}, '', ROUTE_PATHS.login);
++      window.history.replaceState({}, '', appExperience() === null ? '/login?experience=studio' : ROUTE_PATHS.login);
+       setCurrentRoute('login');
+     }
+   }, [isCheckingSession, isAuthenticated, currentRoute]);
+@@ -504,7 +513,7 @@ const App: React.FC = () => {
+     const onPop = () => {
+       setCurrentRoute(detectInitialRoute());
+       setLegalReturn(window.history.state?.legalReturn ?? null);
+-      setActiveModule(previous => new URLSearchParams(window.location.search).get('experience') === 'companion' ? 'companion' : previous === 'companion' ? null : previous);
++      if (detectInitialRoute() === 'app') setActiveModule(appExperience());
+     };
+     window.addEventListener('popstate', onPop);
+     return () => window.removeEventListener('popstate', onPop);
+@@ -541,6 +550,7 @@ const App: React.FC = () => {
+     supabase.auth.getSession().then(({ data }) => {
+       if (data.session?.user) {
+         setUserEmail(data.session.user.email ?? null);
++        setUserName(accountName(data.session.user.email ?? null, data.session.user.user_metadata));
+         setUserId(data.session.user.id);
+         setIsAuthenticated(true);
+         // Returning from an OAuth redirect — play the Film Leader boot once.
+@@ -570,10 +580,12 @@ const App: React.FC = () => {
+     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+       if (session?.user) {
+         setUserEmail(session.user.email ?? null);
++        setUserName(accountName(session.user.email ?? null, session.user.user_metadata));
+         setUserId(session.user.id);
+         setIsAuthenticated(true);
+       } else {
+         setUserEmail(null);
++        setUserName('Account');
+         setUserId(null);
+         setIsAuthenticated(false);
+       }
+@@ -971,12 +983,15 @@ const App: React.FC = () => {
+   };
+
+   const handleLogout = async () => {
++    if (loggingOut.current) return;
++    loggingOut.current = true;
+     try {
+-      if (userId) await clearSession(userId);
+       const supabase = getSupabase();
+-      await supabase.auth.signOut();
+-    } finally {
+-      setActiveModule(null);
++      const { error } = await supabase.auth.signOut();
++      if (error) throw new Error('Could not sign out. Please try again.');
++      setIsAuthenticated(false);
++      setUserEmail(null); setUserName('Account'); setUserId(null);
++      setActiveModule('companion');
+       restart();
+       // Shared cafe-PC hygiene: intent stashes are sessionStorage and would
+       // otherwise survive into the NEXT user's login on this tab.
+@@ -999,7 +1014,7 @@ const App: React.FC = () => {
+       if (typeof window !== 'undefined' && window.history.replaceState) {
+         window.history.replaceState({}, '', '/login?from=logout');
+       }
+-    }
++    } finally { loggingOut.current = false; }
+   };
+
+   const resumeSession = () => {
+@@ -1076,7 +1091,7 @@ const App: React.FC = () => {
+     setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
+     // A restarted ad is finished business: drop the persisted session too, or
+     // the Dashboard keeps offering a "finished ad" card that no longer exists.
+-    if (userId) clearSession(userId);
++    if (userId) void clearSession(userId).catch(() => { /* Wizard cleanup cannot undo a successful sign-out. */ });
+     setPendingSession(null);
+   };
+
+@@ -1109,7 +1124,7 @@ const App: React.FC = () => {
+   // authenticated users go straight to /app. Replaces bare setCurrentRoute('app'),
+   // which left the URL stuck on the marketing page.
+   const enterApp = () => {
+-    if (isAuthenticated) { goToLegal('app'); return; }
++    if (isAuthenticated) { setActiveModule('companion'); goToLegal('app'); return; }
+     // Mirror a guest's pending plan (saved by startCheckout when a plan CTA is
+     // clicked) into the /login URL — so the choice survives refresh, is
+     // shareable, and the pixel/Custom Audiences can see "wanted Pro, didn't buy".
+@@ -1697,7 +1712,9 @@ const App: React.FC = () => {
+   if (!activeModule) {
+     moduleElement = <Dashboard onSelectModule={selectDashboardModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} onResumeFinishedAd={() => { if (!restoreFinishedAd()) setActiveModule('creative_director'); }} />;
+   } else if (activeModule === 'companion' && userId) {
+-    moduleElement = <CompanionChat key={userId} userId={userId} presetUnlocked={devUnlocked || planAtLeast(plan_id, 'pro')} isBusinessTier={plan_id === 'business'}
++    moduleElement = <CompanionChat key={userId} userId={userId} userEmail={userEmail} userName={userName} actualPlanId={plan_id} planLoading={subLoading} planError={!!subError} onRetryPlan={retrySubscription} onLogout={handleLogout}
++      onNavigate={href => goToLegal(href.slice(1) as Route, { legalReturn: { route: 'app', href: window.location.pathname + window.location.search } })}
++      presetUnlocked={devUnlocked || planAtLeast(plan_id, 'pro')} isBusinessTier={plan_id === 'business'}
+       videoAllowed={subLoading || creditsLoading || !creditsLoaded ? null : plan_id !== 'free' || topupCredits.video_ad_credits > 0}
+       videoAllowanceLoading={subLoading || creditsLoading} onRetryVideoAllowance={refetchQuota}
+       onBack={leaveCompanion} onUpgrade={() => { setIntendedModule('companion'); goToLegal('pricing'); }} />;
+diff --git a/components/CompanionChat/CompanionChatShell.tsx b/components/CompanionChat/CompanionChatShell.tsx
+index 3abf276d..78f7fb3d 100644
+--- a/components/CompanionChat/CompanionChatShell.tsx
++++ b/components/CompanionChat/CompanionChatShell.tsx
+@@ -1,6 +1,8 @@
+-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+-import { PanelLeft, PanelLeftClose, Plus, Search, X, Clapperboard } from 'lucide-react';
++import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
++import { PanelLeft, PanelLeftClose, Plus, Search, X, Clapperboard, Settings } from 'lucide-react';
+ import Button from '../ui/Button';
++import SettingsModal from '../dashboard/SettingsModal';
++import type { PlanId } from '../../utils/planGate';
+ import { CompanionAvatarLayer, type CompanionAvatarPresentation } from './CompanionAvatarLayer';
+ import { createConversation, loadConversations, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations } from '../../services/companionConversations';
+ import './companionChat.css';
+@@ -14,15 +16,26 @@ export interface ConversationBinding {
+   openNavigation: () => void;
+   newChat: () => void;
+   presentAvatar: (chatId: string, presentation: CompanionAvatarPresentation) => void;
++  leave: (action: () => void | Promise<void>) => Promise<void>;
+ }
+ interface Props {
+   userId: string;
+   onStudio: () => void;
++  userEmail?: string | null;
++  userName?: string;
++  plan?: PlanId;
++  planLoading?: boolean;
++  planError?: boolean;
++  onRetryPlan?: () => Promise<void>;
++  onLogout?: () => void | Promise<void>;
++  onUpgrade?: () => void | Promise<void>;
++  onNavigate?: (href: string) => void | Promise<void>;
++  preview?: boolean;
+   children: (binding: ConversationBinding) => ReactNode;
+ }
+ const button = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
+
+-export function CompanionChatShell({ userId, onStudio, children }: Props) {
++export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Account', plan = 'free', planLoading = false, planError = false, onRetryPlan, onLogout, onUpgrade, onNavigate, preview = false, children }: Props) {
+   const [book, setBook] = useState<CompanionConversations | null>(null);
+   const current = useRef<CompanionConversations | null>(null);
+   const writes = useRef<Promise<void>>(Promise.resolve());
+@@ -34,6 +47,9 @@ export function CompanionChatShell({ userId, onStudio, children }: Props) {
+   const [collapsed, setCollapsed] = useState(false);
+   const [mobileOpen, setMobileOpen] = useState(false);
+   const [search, setSearch] = useState('');
++  const [settingsOpen, setSettingsOpen] = useState(false);
++  const [navigationError, setNavigationError] = useState('');
++  const settingsTrigger = useRef<HTMLElement | null>(null);
+   const drawer = useRef<HTMLElement>(null);
+   const main = useRef<HTMLDivElement>(null);
+   const navigating = useRef(false);
+@@ -67,7 +83,7 @@ export function CompanionChatShell({ userId, onStudio, children }: Props) {
+     }).catch(() => { if (alive) setLoadError(true); });
+     return () => { alive = false; mounted.current = false; };
+   }, [userId, attempt, persist]);
+-  useEffect(() => {
++  useLayoutEffect(() => {
+     if (!mobileOpen) return;
+     const previous = document.activeElement as HTMLElement | null;
+     const overflow = document.body.style.overflow;
+@@ -91,22 +107,36 @@ export function CompanionChatShell({ userId, onStudio, children }: Props) {
+     const next = updateConversation(current.current, id, patch);
+     current.current = next; setBook(next); void persist(next);
+   }, [persist]);
+-  const navigate = async (id?: string, studio = false) => {
+-    if (!current.current || navigating.current) return;
++  const leave = useCallback(async (action: () => void | Promise<void>) => {
++    if (!current.current || navigating.current) throw new Error('Chat navigation is busy.');
+     navigating.current = true;
++    setNavigationError('');
++    const wasInert = main.current?.hasAttribute('inert');
+     main.current?.setAttribute('inert', '');
++    let flushed = false;
+     try {
+       let snapshot: CompanionConversations;
+       do { snapshot = current.current; await persist(snapshot); } while (snapshot !== current.current);
++      flushed = true;
+       if (!mounted.current) return;
++      await action();
++    } catch (error) {
++      if (mounted.current) setNavigationError(flushed ? 'This action could not finish. Your chat has been kept. Try again.' : 'Draft could not be saved on this device. Your chat has been kept. Try again.');
++      throw flushed ? error : new Error('CHAT_SAVE_FAILED');
++    } finally { navigating.current = false; if (!wasInert) main.current?.removeAttribute('inert'); }
++  }, [persist]);
++  const navigate = async (id?: string, studio = false) => {
++    if (!current.current || navigating.current) return;
++    try { await leave(() => {
+       if (studio) { onStudio(); return; }
+       const chat = id ? null : createConversation();
+-      const next = { ...current.current, selectedId: id ?? chat!.id, chats: chat ? [chat, ...current.current.chats] : current.current.chats };
++      const next = { ...current.current!, selectedId: id ?? chat!.id, chats: chat ? [chat, ...current.current!.chats] : current.current!.chats };
+       current.current = next; setBook(next); setSaved(true); setMobileOpen(false); setSearch('');
+       void persist(next);
+-    } catch { setSaved(false); }
+-    finally { navigating.current = false; main.current?.removeAttribute('inert'); }
++    }); } catch { /* The save/action error stays visible without discarding the chat. */ }
+   };
++  const openSettings = (trigger: HTMLElement) => { settingsTrigger.current = trigger; setMobileOpen(false); setSettingsOpen(true); };
++  const restoreSettingsFocus = useCallback(() => settingsTrigger.current?.isConnected ? settingsTrigger.current : main.current?.querySelector<HTMLElement>('button[aria-label="Open conversations"]') ?? null, []);
+   if (!book) return <div className="flex h-dvh flex-col items-center justify-center gap-4 bg-zinc-950 px-6 text-sm text-white"><p role={loadError ? 'alert' : 'status'}>{loadError ? 'Saved chats could not be opened. Your saved data has been kept.' : 'Opening your chats…'}</p>{loadError && <><Button className={button} onClick={() => setAttempt(value => value + 1)}>Retry saved chats</Button><Button variant="ghost" className={button} onClick={onStudio}>Studio</Button></>}</div>;
+   const chat = book.chats.find(item => item.id === book.selectedId)!;
+   const title = (item: CompanionConversation) => item.draft.productName || item.draft.brandName || item.draft.brief || 'New chat';
+@@ -114,13 +144,15 @@ export function CompanionChatShell({ userId, onStudio, children }: Props) {
+     <div className="flex items-center justify-between px-2 py-2"><span className="px-2 text-sm font-semibold">Chats</span><Button variant="ghost" className={`${button} !p-3`} aria-label={mobileOpen ? 'Close conversations' : 'Collapse conversations'} onClick={() => mobileOpen ? setMobileOpen(false) : setCollapsed(true)}>{mobileOpen ? <X className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}</Button></div>
+     <Button variant="ghost" className={`${button} mx-2 flex items-center justify-start gap-3 !px-3`} onClick={() => void navigate()}><Plus className="h-5 w-5 shrink-0" />New chat</Button>
+     <label className="mx-2 mt-2 flex min-h-11 items-center gap-3 rounded-xl bg-zinc-950 px-3 focus-within:ring-1 focus-within:ring-[#FFCC00]"><Search className="h-4 w-4 shrink-0 text-zinc-400" /><input aria-label="Search chats" placeholder="Search" value={search} onChange={event => setSearch(event.target.value)} className="min-w-0 w-full bg-transparent text-sm outline-none" /></label>
+-    <nav aria-label="Conversations" className="min-h-0 flex-1 space-y-1 overflow-y-auto px-2 py-3">{book.chats.filter(item => title(item).toLowerCase().includes(search.toLowerCase())).map(item => <button key={item.id} data-chat-id={item.id} aria-label={`Open chat: ${title(item)}`} aria-current={item.id === chat.id ? 'page' : undefined} onClick={() => void navigate(item.id)} className={`min-h-11 w-full truncate rounded-xl px-3 text-left text-sm font-semibold ${item.id === chat.id ? 'bg-[#FFCC00]/10 text-[#FFCC00]' : 'text-zinc-300 hover:bg-white/5'}`}>{title(item)}</button>)}{!book.chats.some(item => title(item).toLowerCase().includes(search.toLowerCase())) && <p className="px-3 py-3 text-sm text-zinc-400">No matching chats</p>}</nav>
+-    <div className="border-t border-white/10 p-2"><Button variant="ghost" className={`${button} flex w-full items-center justify-start gap-3 !px-3`} onClick={() => void navigate(undefined, true)}><Clapperboard className="h-5 w-5 shrink-0" />Studio</Button><p className="px-3 py-2 font-mono text-[11px] text-zinc-400">Saved on this device</p></div>
++    <nav aria-label="Conversations" className="companion-sidebar-scroll min-h-0 flex-1 space-y-1 overflow-y-auto px-2 py-3">{book.chats.filter(item => title(item).toLowerCase().includes(search.toLowerCase())).map(item => <button key={item.id} data-chat-id={item.id} aria-label={`Open chat: ${title(item)}`} aria-current={item.id === chat.id ? 'page' : undefined} onClick={() => void navigate(item.id)} className={`min-h-11 w-full truncate rounded-xl px-3 text-left text-sm font-semibold ${item.id === chat.id ? 'bg-[#FFCC00]/10 text-[#FFCC00]' : 'text-zinc-300 hover:bg-white/5'}`}>{title(item)}</button>)}{!book.chats.some(item => title(item).toLowerCase().includes(search.toLowerCase())) && <p className="px-3 py-3 text-sm text-zinc-400">No matching chats</p>}</nav>
++    <div className="border-t border-white/10 p-2"><Button variant="ghost" className={`${button} flex w-full items-center justify-start gap-3 !px-3`} onClick={() => void navigate(undefined, true)}><Clapperboard className="h-5 w-5 shrink-0" />Studio</Button><Button variant="ghost" className={`${button} flex w-full items-center gap-3 !px-3 text-left`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-5 w-5 shrink-0" /><span className="min-w-0 flex-1 truncate">{userName}</span></Button><p className="px-3 py-2 text-xs text-zinc-400">{preview ? 'Preview · simulated output' : 'Saved on this device'}</p>{navigationError && <p role="alert" className="px-3 pb-2 text-sm text-zinc-300">{navigationError}</p>}</div>
+   </>;
+   return <div className="companion-chat companion-shell flex h-dvh min-h-0 overflow-hidden bg-zinc-950 font-sans text-white">
+     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
+-    {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button></aside>}
++    {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
+     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
+-    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar })}<CompanionAvatarLayer presentation={avatar} /></div>
++    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave })}<CompanionAvatarLayer presentation={avatar} />{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
++    <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
++      onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />
+   </div>;
+ }
+diff --git a/components/CompanionChat/companionChat.css b/components/CompanionChat/companionChat.css
+index 69f6ca60..b4ee2418 100644
+--- a/components/CompanionChat/companionChat.css
++++ b/components/CompanionChat/companionChat.css
+@@ -40,9 +40,17 @@
+ .companion-composer .companion-icon-button { color: #D4D4D8; }
+ .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::before,
+ .companion-chat :is(.companion-identity-badge, .companion-composer).mat-chrome::after { display: none; }
+-.companion-scroll {
++.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll {
+   scrollbar-width: thin;
+-  scrollbar-color: #3F3F46 transparent;
++  scrollbar-color: #71717A transparent;
++}
++:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar { width: 6px; height: 6px; }
++:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar-track { background: transparent; }
++:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar-thumb { background: #71717A; border-radius: 8px; }
++:is(.companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll)::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
++.companion-settings { color-scheme: dark; }
++.companion-settings button:focus-visible { outline: 2px solid #FFCC00; outline-offset: -2px; }
++.companion-scroll {
+   padding-top: var(--companion-header-offset, 128px);
+   padding-bottom: var(--companion-footer-offset, 132px);
+   scroll-padding-top: var(--companion-header-offset, 128px);
+@@ -105,3 +113,12 @@
+   .companion-composer { box-shadow: none; border-color: #82828B; }
+   .companion-footer::before { display: none; }
+ }
++@media (prefers-contrast: more) {
++  .companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll { scrollbar-color: #A1A1AA transparent; }
++}
++@media (forced-colors: active) {
++  .companion-scroll, .companion-sidebar-scroll, .companion-output-viewer, .companion-settings-scroll { scrollbar-color: auto; }
++  .companion-settings button:focus-visible { outline-color: Highlight; }
++  .companion-consent-switch > span { border: 1px solid ButtonText; }
++  .companion-consent-switch > span > span { background: ButtonText; }
++}
+diff --git a/components/CompanionChat/index.tsx b/components/CompanionChat/index.tsx
+index c04b5e2c..04604284 100644
+--- a/components/CompanionChat/index.tsx
++++ b/components/CompanionChat/index.tsx
+@@ -3,9 +3,18 @@ import ProducerFlow from '../OneShotAd/ProducerFlow';
+ import { useQuota } from '../../hooks/useQuota';
+ import { CompanionChatSurface } from './CompanionChatSurface';
+ import { CompanionChatShell } from './CompanionChatShell';
++import type { PlanId } from '../../utils/planGate';
+
+ interface Props {
+   userId: string;
++  userEmail: string | null;
++  userName: string;
++  actualPlanId: PlanId;
++  planLoading: boolean;
++  planError: boolean;
++  onRetryPlan?: () => Promise<void>;
++  onLogout: () => Promise<void>;
++  onNavigate: (href: string) => void;
+   presetUnlocked: boolean;
+   isBusinessTier: boolean;
+   videoAllowed: boolean | null;
+@@ -15,7 +24,7 @@ interface Props {
+   onUpgrade: () => void;
+ }
+
+-export default function CompanionChat({ userId, presetUnlocked, isBusinessTier, videoAllowed, videoAllowanceLoading, onRetryVideoAllowance, onBack, onUpgrade }: Props) {
++export default function CompanionChat({ userId, userEmail, userName, actualPlanId, planLoading, planError, onRetryPlan, onLogout, onNavigate, presetUnlocked, isBusinessTier, videoAllowed, videoAllowanceLoading, onRetryVideoAllowance, onBack, onUpgrade }: Props) {
+   const quota = useQuota();
+   const [retryingAllowance, setRetryingAllowance] = useState(false);
+   const allowanceLoading = quota.loading || videoAllowanceLoading || retryingAllowance;
+@@ -28,18 +37,21 @@ export default function CompanionChat({ userId, presetUnlocked, isBusinessTier,
+     catch { /* Keep the unconfirmed allowance closed and offer another retry. */ }
+     finally { setRetryingAllowance(false); }
+   };
+-  return <CompanionChatShell key={userId} userId={userId} onStudio={onBack}>{conversation => <ProducerFlow key={conversation.chat.id} conversation={conversation.chat} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}
+-    onBack={onBack} onUpgrade={onUpgrade} onSwitchToSteps={onBack} onCloneVoice={onBack}
++  return <CompanionChatShell key={userId} userId={userId} userEmail={userEmail} userName={userName} plan={actualPlanId} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} onLogout={onLogout} onUpgrade={onUpgrade} onNavigate={onNavigate} onStudio={onBack}>{conversation => {
++    const back = () => { void conversation.leave(onBack).catch(() => {}); };
++    const upgrade = () => { void conversation.leave(onUpgrade).catch(() => {}); };
++    return <ProducerFlow key={conversation.chat.id} conversation={conversation.chat} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}
++    onBack={back} onUpgrade={upgrade} onSwitchToSteps={back} onCloneVoice={back}
+     renderSurface={controller => <CompanionChatSurface key={conversation.chat.id} conversation={conversation} userId={userId} onAvatarPresentation={conversation.presentAvatar}
+       controller={{ ...controller,
+-        start: input => !quotaReady ? Promise.resolve() : quotaBlocked ? Promise.resolve(onUpgrade()) : controller.start(input),
+-        approve: () => !quotaReady ? Promise.resolve() : videoAllowed === true ? controller.approve() : videoAllowed === false ? Promise.resolve(onUpgrade()) : Promise.resolve(),
++        start: input => !quotaReady ? Promise.resolve() : quotaBlocked ? Promise.resolve(upgrade()) : controller.start(input),
++        approve: () => !quotaReady ? Promise.resolve() : videoAllowed === true ? controller.approve() : videoAllowed === false ? Promise.resolve(upgrade()) : Promise.resolve(),
+         resume: () => controller.run?.gate ? controller.resume?.() ?? Promise.resolve()
+-          : !quotaReady ? Promise.resolve() : quotaBlocked || (controller.run?.storyboardApproved && videoAllowed === false) ? Promise.resolve(onUpgrade())
++          : !quotaReady ? Promise.resolve() : quotaBlocked || (controller.run?.storyboardApproved && videoAllowed === false) ? Promise.resolve(upgrade())
+             : controller.run?.storyboardApproved && videoAllowed !== true ? Promise.resolve() : controller.resume?.() ?? Promise.resolve(),
+       }}
+-      onBack={onBack} onUpgrade={onUpgrade} presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked}
++      onBack={back} onUpgrade={upgrade} presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked}
+       quotaReady={quotaReady} allowanceLoading={allowanceLoading} onRetryAllowance={() => void retryAllowance()}
+       videoAllowed={quotaReady ? videoAllowed : null} />}
+-  />}</CompanionChatShell>;
++  />; }}</CompanionChatShell>;
+ }
+diff --git a/components/dashboard/SettingsModal.tsx b/components/dashboard/SettingsModal.tsx
+index c8e14afb..6667c8f1 100644
+--- a/components/dashboard/SettingsModal.tsx
++++ b/components/dashboard/SettingsModal.tsx
+@@ -1,12 +1,10 @@
+-import React, { useEffect, useState } from 'react';
+-import { motion, AnimatePresence } from 'motion/react';
+-import {
+-  X, User, Crown, Bell, Palette, LifeBuoy, Shield, LogOut, ArrowRight, Check,
+-} from 'lucide-react';
+-import { SPRING } from '../ui/motionTokens';
++import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
++import { createPortal } from 'react-dom';
++import { X, User, Crown, Palette, LifeBuoy, Shield, LogOut, ArrowRight, Check } from 'lucide-react';
++import Button from '../ui/Button';
++import { MAT_PLATE, MAT_PLATE_INSET } from '../ui/materialTokens';
+ import type { PlanId } from '../../utils/planGate';
+ import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
+-import { MAT_VEIL, MAT_PLATE_INSET } from '../ui/materialTokens';
+
+ interface SettingsModalProps {
+   open: boolean;
+@@ -14,175 +12,131 @@ interface SettingsModalProps {
+   userEmail?: string | null;
+   userName: string;
+   plan: PlanId;
+-  onUpgrade?: () => void;
+-  onLogout?: () => void;
++  planLoading?: boolean;
++  planError?: boolean;
++  onRetryPlan?: () => Promise<void>;
++  onUpgrade?: () => void | Promise<void>;
++  onLogout?: () => void | Promise<void>;
++  onNavigate?: (href: string) => void | Promise<void>;
++  preview?: boolean;
++  restoreFocus?: () => HTMLElement | null;
+ }
+-
+-const PLAN_LABEL: Record<string, string> = {
+-  free: 'Free Edition',
+-  starter: 'Starter Edition',
+-  pro: 'Pro Edition',
+-  business: 'Business Edition',
+-};
+-
++const PLAN_LABEL: Record<PlanId, string> = { free: 'Free Edition', starter: 'Starter Edition', pro: 'Pro Edition', business: 'Business Edition' };
++const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
+ const Section: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
+-  <div className="space-y-2">
+-    <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel px-1">
+-      <span className="text-zinc-400">{icon}</span>
+-      {title}
+-    </div>
+-    <div className="bg-zinc-950/60 rounded-2xl ring-1 ring-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+-      {children}
+-    </div>
+-  </div>
+-);
+-
+-const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onClick?: () => void; danger?: boolean }> = ({ label, sub, right, onClick, danger }) => (
+-  <button
+-    onClick={onClick}
+-    disabled={!onClick}
+-    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${onClick ? 'hover:bg-white/[0.04]' : 'cursor-default'}`}
+-  >
+-    <div className="flex-1 min-w-0">
+-      <div className={`text-sm font-semibold ${danger ? 'text-red-400' : 'text-white'}`}>{label}</div>
+-      {sub && <div className="text-xs text-on-surface-sublabel mt-0.5 truncate">{sub}</div>}
+-    </div>
+-    {right}
+-  </button>
++  <section className="space-y-2"><h3 className="flex items-center gap-2 px-1 text-sm font-semibold text-zinc-300"><span className="text-zinc-400">{icon}</span>{title}</h3><div className={`${MAT_PLATE_INSET} overflow-hidden rounded-2xl divide-y divide-white/[0.06]`}>{children}</div></section>
+ );
++const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onClick?: () => void; disabled?: boolean }> = ({ label, sub, right, onClick, disabled }) => {
++  const content = <><div className="min-w-0 flex-1"><div className="text-sm font-semibold text-white">{label}</div>{sub && <div className="mt-0.5 text-sm leading-relaxed text-zinc-400">{sub}</div>}</div>{right}</>;
++  return onClick ? <Button type="button" variant="ghost" disabled={disabled} onClick={onClick} className={`${control} flex w-full items-center gap-3 !rounded-none !px-4 !py-3 text-left`}>{content}</Button> : <div className="flex min-h-11 items-center gap-3 px-4 py-3">{content}</div>;
++};
+
+-/**
+- * GRIFON COMMAND settings — a single, responsive, sectioned modal (Meta-style).
+- * Real surfaces only: account, plan/billing (→ pricing), appearance (dark by
+- * design), notification prefs (local), help, legal, sign out. No invented features.
+- */
+-export const SettingsModal: React.FC<SettingsModalProps> = ({
+-  open, onClose, userEmail, userName, plan, onUpgrade, onLogout,
+-}) => {
+-  const [renderPing, setRenderPing] = useState(true);
+-  const [tips, setTips] = useState(true);
+-  // Marketing/retargeting consent — server-backed (NOT localStorage like the two
+-  // above). Withdrawal here is legally mandatory, so it always reflects the real
+-  // record. See consentService / workflows/consent_capture_plan.md.
+-  const [marketingAds, setMarketingAds] = useState(false);
++/** Account settings expose confirmed server preferences and existing destinations. */
++export const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose, userEmail, userName, plan, planLoading = false, planError = false, onRetryPlan, onUpgrade, onLogout, onNavigate, preview = false, restoreFocus }) => {
++  const overlay = useRef<HTMLDivElement>(null);
++  const dialog = useRef<HTMLDivElement>(null);
++  const consentEpoch = useRef(0);
++  const marketingPending = useRef(false);
++  const actionPending = useRef(false);
++  const callbacks = useRef({ onClose, restoreFocus });
++  callbacks.current = { onClose, restoreFocus };
++  const active = useRef(open);
++  active.current = open;
++  const [marketingAds, setMarketingAds] = useState<boolean | null>(null);
+   const [marketingBusy, setMarketingBusy] = useState(false);
+-
+-  useEffect(() => {
+-    setRenderPing(localStorage.getItem('grifon_notif_render') !== 'false');
+-    setTips(localStorage.getItem('grifon_notif_tips') !== 'false');
+-    if (open) {
+-      getMarketingConsent().then((c) => setMarketingAds(c.granted)).catch(() => {});
++  const [marketingError, setMarketingError] = useState('');
++  const [actionBusy, setActionBusy] = useState('');
++  const [actionError, setActionError] = useState('');
++  const close = useCallback(() => { if (!actionPending.current) callbacks.current.onClose(); }, []);
++  const loadConsent = useCallback(async () => {
++    if (preview) return;
++    const epoch = ++consentEpoch.current;
++    marketingPending.current = true; setMarketingAds(null); setMarketingBusy(true); setMarketingError('');
++    try {
++      const consent = await getMarketingConsent({ strict: true });
++      if (active.current && consentEpoch.current === epoch) setMarketingAds(consent.granted);
++    } catch {
++      if (active.current && consentEpoch.current === epoch) setMarketingError('Your ad preference could not be loaded. Try again.');
++    } finally {
++      if (active.current && consentEpoch.current === epoch) { marketingPending.current = false; setMarketingBusy(false); }
+     }
+-  }, [open]);
+-
++  }, [preview]);
++  useEffect(() => {
++    if (!open) return;
++    active.current = true;
++    setActionError(''); void loadConsent();
++    return () => { active.current = false; consentEpoch.current += 1; marketingPending.current = false; };
++  }, [open, userEmail, loadConsent]);
++  useLayoutEffect(() => {
++    if (!open || !overlay.current) return;
++    const previous = document.activeElement as HTMLElement | null;
++    const background = Array.from(document.body.children).filter((node): node is HTMLElement => node instanceof HTMLElement && node !== overlay.current).map(node => ({ node, inert: node.hasAttribute('inert') }));
++    const overflow = document.body.style.overflow;
++    background.forEach(({ node }) => node.setAttribute('inert', ''));
++    document.body.style.overflow = 'hidden'; dialog.current?.querySelector<HTMLElement>('button')?.focus();
++    const key = (event: KeyboardEvent) => {
++      if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); return; }
++      if (event.key !== 'Tab') return;
++      event.stopPropagation();
++      const items = Array.from(dialog.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), [tabindex="0"]') ?? []).filter(item => item.getClientRects().length);
++      const first = items[0], last = items[items.length - 1];
++      if (!first) { event.preventDefault(); dialog.current?.focus(); }
++      else if (event.shiftKey && (document.activeElement === first || !dialog.current?.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
++      else if (!event.shiftKey && (document.activeElement === last || !dialog.current?.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
++    };
++    document.addEventListener('keydown', key, true);
++    return () => {
++      document.removeEventListener('keydown', key, true);
++      background.forEach(({ node, inert }) => { if (!inert) node.removeAttribute('inert'); }); document.body.style.overflow = overflow;
++      const target = callbacks.current.restoreFocus?.() ?? previous;
++      if (target?.isConnected && !target.closest('[inert]')) target.focus();
++    };
++  }, [open, close]);
+   const toggleMarketing = async () => {
+-    if (marketingBusy) return;
+-    const next = !marketingAds;
+-    setMarketingAds(next); // optimistic
+-    setMarketingBusy(true);
++    if (preview || marketingPending.current || marketingAds === null) return;
++    const epoch = ++consentEpoch.current;
++    marketingPending.current = true; setMarketingBusy(true); setMarketingError('');
+     try {
+-      if (next) await grantConsent();
+-      else await withdrawConsent();
++      const consent = await (marketingAds ? withdrawConsent() : grantConsent());
++      if (active.current && consentEpoch.current === epoch) setMarketingAds(consent.granted);
+     } catch {
+-      setMarketingAds(!next); // revert on failure
++      if (active.current && consentEpoch.current === epoch) setMarketingError('Your ad preference was not changed. Try again.');
+     } finally {
+-      setMarketingBusy(false);
++      if (active.current && consentEpoch.current === epoch) { marketingPending.current = false; setMarketingBusy(false); }
+     }
+   };
+-
+-  useEffect(() => {
+-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+-    if (open) window.addEventListener('keydown', onKey);
+-    return () => window.removeEventListener('keydown', onKey);
+-  }, [open, onClose]);
+-
+-  const toggle = (key: string, val: boolean, setter: (v: boolean) => void) => {
+-    setter(val);
+-    localStorage.setItem(key, String(val));
++  const runAction = async (label: string, action: () => void | Promise<void>) => {
++    if (actionPending.current) return;
++    actionPending.current = true; setActionBusy(label); setActionError('');
++    try { await action(); }
++    catch (error) { if (active.current) setActionError(error instanceof Error && error.message === 'CHAT_SAVE_FAILED' ? 'Draft could not be saved. Your chat is still here. Try this action again.' : label === 'Sign out' ? 'Sign out failed. Your session and draft are still here. Try again.' : 'This page could not be opened. Your chat has been kept. Try again.'); }
++    finally { actionPending.current = false; if (active.current) setActionBusy(''); }
+   };
+-
+-  const Switch: React.FC<{ on: boolean; onToggle: () => void }> = ({ on, onToggle }) => (
+-    <span
+-      onClick={(e) => { e.stopPropagation(); onToggle(); }}
+-      className={`relative w-10 h-6 rounded-full transition-colors shrink-0 cursor-pointer ${on ? 'bg-[#FFCC00]' : 'bg-zinc-700'}`}
+-    >
+-      <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-zinc-950 transition-all ${on ? 'left-[18px]' : 'left-0.5'}`} />
+-    </span>
+-  );
+-
+-  return (
+-    <AnimatePresence>
+-      {open && (
+-        <div className="fixed inset-0 z-[80] flex items-center justify-center p-0 sm:p-4">
+-          <motion.div
+-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+-            onClick={onClose}
+-            className={`absolute inset-0 ${MAT_VEIL}`}
+-          />
+-          <motion.div
+-            initial={{ opacity: 0, scale: 0.97, y: 16 }}
+-            animate={{ opacity: 1, scale: 1, y: 0 }}
+-            exit={{ opacity: 0, scale: 0.97, y: 16 }}
+-            transition={SPRING.standard}
+-            className="relative w-full sm:max-w-lg h-full sm:h-auto sm:max-h-[85vh] bg-zinc-900/90 sm:rounded-3xl ring-1 ring-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden"
+-          >
+-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
+-              <span className="text-lg font-bold text-white tracking-tight">Settings</span>
+-              <button onClick={onClose} aria-label="Close" className="w-9 h-9 rounded-full bg-zinc-950 ring-1 ring-white/10 text-zinc-400 hover:text-white hover:ring-[#FFCC00]/50 transition-all flex items-center justify-center">
+-                <X className="w-4 h-4" />
+-              </button>
+-            </div>
+-
+-            <div className="overflow-y-auto px-5 py-5 space-y-6 custom-scrollbar">
+-              {/* Profile card */}
+-              <div className={`flex items-center gap-3 ${MAT_PLATE_INSET} rounded-2xl ring-1 ring-white/[0.06] p-4`}>
+-                <div className="w-12 h-12 rounded-full bg-zinc-800 ring-1 ring-white/10 flex items-center justify-center shrink-0">
+-                  <User className="w-5 h-5 text-zinc-400" />
+-                </div>
+-                <div className="min-w-0">
+-                  <div className="text-sm font-semibold text-white truncate">{userName}</div>
+-                  <div className="text-xs text-on-surface-sublabel truncate">{userEmail}</div>
+-                </div>
+-              </div>
+-
+-              <Section icon={<Crown className="w-3.5 h-3.5" />} title="Plan & billing">
+-                <Row label={PLAN_LABEL[plan] ?? 'Free Edition'} sub="Your current plan" right={
+-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#FFCC00] bg-[#FFCC00]/10 ring-1 ring-[#FFCC00]/30 rounded-full px-2 py-1">{plan}</span>
+-                } />
+-                <Row label="Upgrade plan" sub="More ads, cinematic renders, priority support" onClick={onUpgrade} right={<ArrowRight className="w-4 h-4 text-[#FFCC00]" />} />
+-              </Section>
+-
+-              <Section icon={<Bell className="w-3.5 h-3.5" />} title="Notifications">
+-                <Row label="Render finished" sub="Ping me when my ad is ready" right={<Switch on={renderPing} onToggle={() => toggle('grifon_notif_render', !renderPing, setRenderPing)} />} />
+-                <Row label="Tips & product news" sub="Occasional in-app tips" right={<Switch on={tips} onToggle={() => toggle('grifon_notif_tips', !tips, setTips)} />} />
+-                <Row label="Personalized ads" sub="Share limited data with ad partners (e.g. Meta) for relevant ads" right={<Switch on={marketingAds} onToggle={toggleMarketing} />} />
+-              </Section>
+-
+-              <Section icon={<Palette className="w-3.5 h-3.5" />} title="Appearance">
+-                <Row label="Theme" sub="Grifon is cinematic dark by design" right={
+-                  <span className="inline-flex items-center gap-1.5 text-xs text-zinc-300"><Check className="w-3.5 h-3.5 text-[#FFCC00]" /> Dark</span>
+-                } />
+-              </Section>
+-
+-              <Section icon={<LifeBuoy className="w-3.5 h-3.5" />} title="Help & legal">
+-                <Row label="Help & support" onClick={() => { window.location.href = '/support'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+-                <Row label="Terms of service" onClick={() => { window.location.href = '/terms'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+-                <Row label="Privacy policy" onClick={() => { window.location.href = '/privacy'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+-              </Section>
+-
+-              <Section icon={<Shield className="w-3.5 h-3.5" />} title="Account">
+-                <Row label="Sign out" danger onClick={onLogout} right={<LogOut className="w-4 h-4 text-red-400" />} />
+-              </Section>
+-
+-              <p className="text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel pt-2">
+-                GRIFON COMMAND © 2026
+-              </p>
+-            </div>
+-          </motion.div>
+-        </div>
+-      )}
+-    </AnimatePresence>
+-  );
++  const navigate = (href: string) => void runAction('Opening page', () => onNavigate ? onNavigate(href) : window.location.assign(href));
++  if (!open) return null;
++  return createPortal(<div ref={overlay} className="companion-settings fixed inset-0 z-[80] flex items-center justify-center bg-zinc-950/80 p-3 font-sans text-sm text-white sm:p-4" onClick={close}>
++    <div ref={dialog} role="dialog" aria-modal="true" aria-labelledby="account-settings-title" aria-busy={!!actionBusy} tabIndex={-1} className={`${MAT_PLATE} relative flex max-h-[calc(100dvh-24px)] w-full max-w-lg flex-col overflow-hidden rounded-2xl ring-1 ring-white/10`} onClick={event => event.stopPropagation()}>
++      <div className="flex shrink-0 items-center justify-between border-b border-white/[0.06] px-5 py-3"><h2 id="account-settings-title" className="!text-base !font-semibold !normal-case !tracking-tight">Settings</h2><Button type="button" variant="ghost" disabled={!!actionBusy} onClick={close} aria-label="Close settings" className={`${control} !p-3`}><X className="h-4 w-4" /></Button></div>
++      <div className="companion-settings-scroll min-h-0 overflow-y-auto overscroll-contain space-y-5 px-5 py-5">
++        {preview && <p className="text-sm leading-relaxed text-zinc-300">Preview account · settings and sign-out are simulated. No external account preference is changed.</p>}
++        <div className={`${MAT_PLATE_INSET} flex items-center gap-3 rounded-2xl p-4`}><div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-800"><User className="h-5 w-5 text-zinc-300" /></div><div className="min-w-0"><p className="truncate text-sm font-semibold">{userName}</p><p className="break-all text-sm text-zinc-400">{userEmail}</p></div></div>
++        <Section icon={<Crown className="h-4 w-4" />} title="Plan & billing"><Row label={planLoading ? 'Checking your plan…' : planError ? 'Your plan could not be confirmed.' : PLAN_LABEL[plan]} sub={preview ? 'Simulated preview plan' : 'Your current plan'} right={!planLoading && !planError && <span className="text-sm text-[#FFCC00]">{plan.charAt(0).toUpperCase() + plan.slice(1)}</span>} />{planError && <div className="px-4 pb-3"><p role="alert" className="text-sm text-zinc-300">Your plan could not be loaded. Try again.</p>{onRetryPlan && <Button variant="secondary" className={`${control} mt-2 !px-3`} disabled={planLoading || !!actionBusy} onClick={() => { void onRetryPlan().catch(() => {}); }}>Retry plan</Button>}</div>}{onUpgrade && <Row label={preview ? 'Preview plan options' : 'Upgrade plan'} sub="View available plans" disabled={!!actionBusy || planLoading || planError} onClick={() => void runAction('Opening plans', onUpgrade)} right={<ArrowRight className="h-4 w-4 text-[#FFCC00]" />} />}</Section>
++        <Section icon={<Shield className="h-4 w-4" />} title="Privacy">
++          {preview ? <Row label="Personalized ads" sub="Unavailable in preview. Sign in to manage your real preference." /> : <>
++            <div className="flex items-center gap-3 px-4 py-3"><div className="min-w-0 flex-1"><p className="text-sm font-semibold">Personalized ads</p><p className="mt-0.5 text-sm leading-relaxed text-zinc-400">Share limited data with ad partners for relevant ads.</p></div><button type="button" role="switch" aria-label="Personalized ads" aria-checked={marketingAds ?? false} aria-busy={marketingBusy} disabled={marketingBusy || marketingAds === null || !!actionBusy} onClick={() => void toggleMarketing()} className="companion-consent-switch flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-xl disabled:opacity-50"><span aria-hidden="true" className={`relative h-6 w-10 rounded-full ${marketingAds ? 'bg-[#FFCC00]' : 'bg-zinc-700'}`}><span className={`absolute top-0.5 h-5 w-5 rounded-full ${marketingAds ? 'left-[18px] bg-zinc-950' : 'left-0.5 bg-zinc-100'}`} /></span></button></div>
++            {marketingBusy && <p role="status" className="px-4 pb-3 text-sm text-zinc-300">{marketingAds === null ? 'Loading your ad preference…' : 'Saving your ad preference…'}</p>}
++            {marketingError && <div className="px-4 pb-3"><p role="alert" className="text-sm text-zinc-300">{marketingError}</p><Button variant="secondary" className={`${control} mt-2 !px-3`} disabled={marketingBusy || !!actionBusy} onClick={() => void (marketingAds === null ? loadConsent() : toggleMarketing())}>Retry ad preference</Button></div>}
++          </>}
++        </Section>
++        <Section icon={<Palette className="h-4 w-4" />} title="Appearance"><Row label="Dark appearance" sub="Grifon uses a dark interface." right={<Check className="h-4 w-4 text-[#FFCC00]" />} /></Section>
++        <Section icon={<LifeBuoy className="h-4 w-4" />} title="Help & legal">{[['Help & support', '/support'], ['Terms of service', '/terms'], ['Privacy policy', '/privacy']].map(([label, href]) => <Row key={href} label={label} disabled={!!actionBusy} onClick={() => navigate(href)} right={<ArrowRight className="h-4 w-4 text-zinc-300" />} />)}{preview && <Row label="Sign in to Grifon" sub="Open the real login page" disabled={!!actionBusy} onClick={() => navigate('/login')} right={<ArrowRight className="h-4 w-4 text-zinc-300" />} />}</Section>
++        {onLogout && <Section icon={<User className="h-4 w-4" />} title="Account"><Row label={actionBusy === 'Sign out' ? 'Signing out…' : preview ? 'Simulate sign out' : 'Sign out'} disabled={!!actionBusy || marketingBusy} onClick={() => void runAction('Sign out', onLogout)} right={<LogOut className="h-4 w-4 text-zinc-300" />} /></Section>}
++        {actionBusy && <p role="status" className="text-sm text-zinc-300">{actionBusy === 'Sign out' ? 'Saving your chat and signing out…' : 'Saving your chat…'}</p>}
++        {actionError && <p role="alert" className="text-sm leading-relaxed text-zinc-300">{actionError}</p>}
++        <p className="text-center text-sm text-zinc-400">Grifon Command © 2026</p>
++      </div>
++    </div>
++  </div>, document.body);
+ };
+
+ export default SettingsModal;
+diff --git a/dev/companionChatPreview.tsx b/dev/companionChatPreview.tsx
+index 47239e11..f05c8fbe 100644
+--- a/dev/companionChatPreview.tsx
++++ b/dev/companionChatPreview.tsx
+@@ -6,6 +6,7 @@ import { CompanionChatSurface } from '../components/CompanionChat/CompanionChatS
+ import type { ProducerSurfaceController } from '../components/OneShotAd/ProducerFlow';
+ import type { ProductionInput } from '../services/oneShotIntake';
+ import type { ProductionRun } from '../services/producerOrchestrator';
++import Button from '../components/ui/Button';
+ import '../index.css';
+
+ const IMAGE = '/tests/fixtures/sample-batch/timpla-hero.jpg';
+@@ -14,6 +15,7 @@ const stageIds = ['market_research', 'script', 'storyboard', 'scene_images', 'vi
+ type FixtureEvent = 'researching' | 'script' | 'storyboard' | 'video' | 'result' | 'error' | 'resume-error';
+ type FixtureCall = { name: string; value?: unknown };
+ const calls: FixtureCall[] = [];
++const debug = new URLSearchParams(window.location.search).get('debug') === '1';
+ const defaultInput: ProductionInput = { brandName: 'North Coffee', productName: 'Cold brew', productDescription: 'Fresh coffee for busy mornings', offer: 'Two bottles for 199', price: '199', heroImageBase64: IMAGE, avatar: { url: '', description: '', ethnicity: 'Filipino', prompt: '' }, voiceId: '', language: 'English', aspectRatio: '9:16', scriptType: 'Testimonial' };
+
+ function makeRun(input: ProductionInput, userId: string): ProductionRun {
+@@ -78,21 +80,26 @@ function Fixture({ conversation, userId, setUserId }: { conversation: Conversati
+     quota: setQuotaBlocked, presets: setPresetUnlocked, videoAllowed: setVideoAllowed,
+     clearCalls: () => { calls.splice(0); },
+   } });
+-  return <div className="companion-fixture" style={{ height: '100dvh', display: 'flex', flexDirection: 'column' }}><style>{'.companion-fixture > [data-testid="companion-chat"] { height: auto; flex: 1; min-height: 0; }'}</style><details style={{ flexShrink: 0, background: '#18181b', color: '#fafafa', padding: '0 16px', borderBottom: '1px solid #3f3f46' }}>
++  return <div className="companion-fixture" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}><style>{'.companion-fixture > [data-testid="companion-chat"] { height: auto; flex: 1; min-height: 0; }'}</style>{debug && <details style={{ flexShrink: 0, background: '#18181b', color: '#fafafa', padding: '0 16px', borderBottom: '1px solid #3f3f46' }}>
+     <summary style={{ minHeight: 44, display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: 13 }}>Local test fixture · mocked generation · no provider calls</summary>
+     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, paddingBottom: 12 }}>
+       {(['researching', 'script', 'storyboard', 'video', 'result', 'error', 'resume-error'] as const).map(event => <button type="button" key={event} onClick={() => emit(event)} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: {event}</button>)}
+       <button type="button" onClick={controller.reset} style={{ minHeight: 44, padding: '8px 12px', border: '1px solid #71717a', borderRadius: 8 }}>Fixture: reset</button>
+       <span style={{ width: '100%', fontSize: 12 }}>These controls emit test callbacks. They do not create an ad or call a provider. Scene images and the video are existing local samples, not generated from your brief.</span>
+     </div>
+-  </details><CompanionChatSurface key={conversation.chat.id} conversation={conversation} controller={controller} userId={userId} onAvatarPresentation={conversation.presentAvatar}
+-    onBack={() => calls.push({ name: 'back' })} onUpgrade={() => calls.push({ name: 'upgrade' })}
++  </details>}<CompanionChatSurface key={conversation.chat.id} conversation={conversation} controller={controller} userId={userId} onAvatarPresentation={conversation.presentAvatar}
++    onBack={() => { void conversation.leave(() => { calls.push({ name: 'back' }); }).catch(() => {}); }} onUpgrade={() => { void conversation.leave(() => { calls.push({ name: 'upgrade' }); }).catch(() => {}); }}
+     presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed} /></div>;
+ }
+
+ function Preview() {
+   const [userId, setUserId] = useState('fixture-user-a');
+-  return <CompanionChatShell key={userId} userId={userId} onStudio={() => calls.push({ name: 'back' })}>{conversation => <Fixture key={conversation.chat.id} userId={userId} setUserId={setUserId} conversation={conversation} />}</CompanionChatShell>;
++  const [signedIn, setSignedIn] = useState(true);
++  const account = (id: string) => { setUserId(id); setSignedIn(true); };
++  if (!signedIn) return <main className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-zinc-950 px-6 font-sans text-sm text-white"><h1 className="!text-lg !font-semibold !normal-case !tracking-tight">Preview signed out</h1><p className="max-w-sm text-center text-sm leading-relaxed text-zinc-300">This simulated account is signed out. Your preview chats remain saved on this device.</p><Button className="!rounded-xl" onClick={() => setSignedIn(true)}>Simulate sign in</Button><a href="/login" className="inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Sign in to Grifon</a></main>;
++  return <CompanionChatShell key={userId} userId={userId} userEmail={`${userId}@preview.invalid`} userName="Preview account" plan="free" preview
++    onLogout={async () => { calls.push({ name: 'preview-sign-out' }); setSignedIn(false); }} onUpgrade={() => { calls.push({ name: 'upgrade' }); }} onStudio={() => { calls.push({ name: 'back' }); }}>
++    {conversation => <Fixture key={conversation.chat.id} userId={userId} setUserId={account} conversation={conversation} />}</CompanionChatShell>;
+ }
+
+ if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(<Preview />);
+diff --git a/hooks/useSubscription.ts b/hooks/useSubscription.ts
+index 7a268ab7..e510223f 100644
+--- a/hooks/useSubscription.ts
++++ b/hooks/useSubscription.ts
+@@ -1,4 +1,4 @@
+-import { useEffect, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ import { getSupabase } from '../services/supabaseClient';
+
+ export type PlanId = 'free' | 'starter' | 'pro' | 'business';
+@@ -19,6 +19,8 @@ export type Subscription = {
+   current_period_end: string | null;
+   billing_cycle: 'monthly' | 'annual' | null;
+   loading: boolean;
++  error?: boolean;
++  refetch?: () => Promise<void>;
+ };
+
+ const DEFAULT: Subscription = {
+@@ -31,70 +33,80 @@ const DEFAULT: Subscription = {
+
+ export const useSubscription = (): Subscription => {
+   const [sub, setSub] = useState<Subscription>(DEFAULT);
++  const refresh = useRef<() => Promise<void>>(async () => {});
++  const refetch = useCallback(() => refresh.current(), []);
+
+   useEffect(() => {
+     let cancelled = false;
+     const supabase = getSupabase();
+-
+-    const load = async (userId: string) => {
+-      const { data } = await supabase
+-        .from('subscriptions')
+-        .select('plan_id, status, current_period_end, billing_cycle')
+-        .eq('user_id', userId)
+-        .maybeSingle();
+-
+-      if (cancelled) return;
+-      if (data) {
+-        setSub({
+-          plan_id: coercePlanId(data.plan_id),
+-          status: data.status as SubscriptionStatus,
++    let account: string | null = null;
++    let initialized = false;
++    let generation = 0;
++    let request = 0;
++    let authVersion = 0;
++    let authTimer: ReturnType<typeof setTimeout> | null = null;
++    let channel: ReturnType<typeof supabase.channel> | null = null;
++    const removeChannel = () => {
++      if (channel) { void supabase.removeChannel(channel); channel = null; }
++    };
++    const load = async (userId: string, epoch: number) => {
++      if (cancelled || account !== userId || generation !== epoch) return;
++      const serial = ++request;
++      const version = authVersion;
++      setSub(previous => ({ ...previous, loading: true, error: false }));
++      try {
++        const { data, error } = await supabase.from('subscriptions').select('plan_id, status, current_period_end, billing_cycle').eq('user_id', userId).maybeSingle();
++        if (cancelled || account !== userId || generation !== epoch || request !== serial || authVersion !== version) return;
++        if (error) throw error;
++        setSub(data ? {
++          plan_id: coercePlanId(data.plan_id), status: data.status as SubscriptionStatus,
+           current_period_end: data.current_period_end ?? null,
+           billing_cycle: (data.billing_cycle as 'monthly' | 'annual' | null) ?? null,
+-          loading: false,
+-        });
+-      } else {
+-        setSub({ ...DEFAULT, loading: false });
++          loading: false, error: false,
++        } : { ...DEFAULT, loading: false, error: false });
++      } catch {
++        if (!cancelled && account === userId && generation === epoch && request === serial && authVersion === version) setSub(previous => ({ ...previous, loading: false, error: true }));
+       }
+     };
+-
+-    let channel: ReturnType<typeof supabase.channel> | null = null;
+-    const channelName = `sub:${Math.random().toString(36).slice(2)}`;
+-
+-    supabase.auth.getSession().then(({ data }) => {
++    const selectAccount = (userId: string | null) => {
+       if (cancelled) return;
+-      const userId = data.session?.user?.id;
+-      if (!userId) {
+-        setSub({ ...DEFAULT, loading: false });
+-        return;
++      if (initialized && account === userId) { if (userId) void load(userId, generation); else setSub({ ...DEFAULT, loading: false, error: false }); return; }
++      initialized = true; account = userId; generation += 1; request += 1; removeChannel();
++      setSub({ ...DEFAULT, loading: !!userId, error: false });
++      if (!userId) return;
++      const epoch = generation;
++      void load(userId, epoch);
++      channel = supabase.channel(`sub:${Math.random().toString(36).slice(2)}`).on('postgres_changes', {
++        event: '*', schema: 'public', table: 'subscriptions', filter: `user_id=eq.${userId}`,
++      }, () => { void load(userId, epoch); }).subscribe((status, err) => {
++        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') console.error(`[useSubscription] realtime ${status}`, err ?? '');
++      });
++    };
++    const readSession = async () => {
++      const version = authVersion;
++      try {
++        const { data, error } = await supabase.auth.getSession();
++        if (cancelled || version !== authVersion) return;
++        if (error) throw error;
++        selectAccount(data.session?.user?.id ?? null);
++      } catch {
++        if (!cancelled && version === authVersion) setSub(previous => ({ ...previous, loading: false, error: true }));
+       }
+-      load(userId);
+-
+-      channel = supabase
+-        .channel(channelName)
+-        .on(
+-          'postgres_changes',
+-          {
+-            event: '*',
+-            schema: 'public',
+-            table: 'subscriptions',
+-            filter: `user_id=eq.${userId}`,
+-          },
+-          () => load(userId)
+-        )
+-        .subscribe((status, err) => {
+-          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+-            console.error(`[useSubscription] realtime ${status}`, err ?? '');
+-          }
+-        });
++    };
++    refresh.current = async () => { if (account) await load(account, generation); else await readSession(); };
++    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
++      authVersion += 1;
++      if (authTimer !== null) clearTimeout(authTimer);
++      // Defer SDK work until the auth callback has released its lock.
++      authTimer = setTimeout(() => { authTimer = null; selectAccount(session?.user?.id ?? null); }, 0);
+     });
+-
++    void readSession();
+     return () => {
+-      cancelled = true;
+-      if (channel) {
+-        supabase.removeChannel(channel);
+-      }
++      cancelled = true; generation += 1; request += 1;
++      if (authTimer !== null) clearTimeout(authTimer);
++      listener.subscription.unsubscribe(); removeChannel(); refresh.current = async () => {};
+     };
+   }, []);
+
+-  return sub;
++  return { ...sub, refetch };
+ };
+diff --git a/services/consentService.ts b/services/consentService.ts
+index 8a51a0e3..4b416cda 100644
+--- a/services/consentService.ts
++++ b/services/consentService.ts
+@@ -52,8 +52,9 @@ export const withdraw = (): Promise<MarketingConsent> => postAction('withdraw');
+
+ // Reads the signed-in user's current consent row via RLS. Returns a default
+ // "not granted" state when no row exists (the common case) or on any error, so
+-// callers (Settings toggle, post-auth sync) never have to special-case nulls.
+-export const getMarketingConsent = async (): Promise<MarketingConsent> => {
++// legacy callers never have to special-case nulls. Strict reads let Settings
++// distinguish a missing record from a failed read without showing false consent.
++export const getMarketingConsent = async (options: { strict?: boolean } = {}): Promise<MarketingConsent> => {
+   const NONE: MarketingConsent = {
+     granted: false,
+     consentAt: null,
+@@ -62,22 +63,28 @@ export const getMarketingConsent = async (): Promise<MarketingConsent> => {
+   };
+   try {
+     const sb = getSupabase();
+-    const { data: sessionData } = await sb.auth.getSession();
++    const { data: sessionData, error: sessionError } = await sb.auth.getSession();
++    if (sessionError) throw sessionError;
+     const uid = sessionData.session?.user?.id;
+-    if (!uid) return NONE;
++    if (!uid) {
++      if (options.strict) throw new Error('NOT_AUTHENTICATED');
++      return NONE;
++    }
+     const { data, error } = await sb
+       .from('marketing_consent')
+       .select('consent_at, withdrawn_at, policy_version')
+       .eq('user_id', uid)
+       .maybeSingle();
+-    if (error || !data) return NONE;
++    if (error) throw error;
++    if (!data) return NONE;
+     return {
+       granted: !!data.consent_at && !data.withdrawn_at,
+       consentAt: data.consent_at ?? null,
+       withdrawnAt: data.withdrawn_at ?? null,
+       policyVersion: data.policy_version ?? null,
+     };
+-  } catch {
++  } catch (error) {
++    if (options.strict) throw error;
+     return NONE;
+   }
+ };

@@ -1,0 +1,465 @@
+# Companion Chat invited-beta audit
+
+Audit started 2026-10-09; resumed 2026-10-10. Frozen application base: `8d5a4be8292d653ae6f9182a1d49eac62077001a`.
+Working branch: `codex/companion-beta-readiness`, based on `codex/companion-chat` (PR164).
+This is the audit checklist and evidence record, not a release authorization or a resume document.
+
+## Release decision
+
+**HOLD.** A passing mocked journey is necessary but cannot establish live generation quality,
+physical-phone behavior, deployed database correctness, or unaided first-time-user comprehension.
+No deployment, invitations, production-data changes, or paid generation are authorized by this audit.
+
+Success: an invited user can finish and retrieve an ad without losing work, crossing account
+boundaries, or unintentionally starting/charging paid work. Failure: any reproducible violation
+of those invariants, or a core journey with no useful recovery action.
+
+## Button and state checklist
+
+For each control verify its ordinary action, disabled reason, repeated tap, failed request,
+keyboard/focus behavior, and narrow-screen layout. Evidence is linked in the final results below.
+
+| Control / journey | Required result | Evidence target |
+| --- | --- | --- |
+| Sign in / expired login | Invalid code can retry; account change cannot display another account's draft/run | account suite; live OTP separately |
+| New chat | Current draft/photo/unsent text saved first; failed save blocks navigation | navigation/account/beta suites |
+| Search / select chat | Correct matches and empty state; history open reads only; no generation or debit | navigation suite |
+| Studio / browser Back and Forward | Draft survives; intended route restored | account/navigation suites |
+| Settings / plan Retry | Real confirmed account/plan state; unknown state fails closed; retry works | account/chat suites |
+| Upload / remove photo | JPG/PNG/WebP accepted; invalid/oversize rejected; delayed upload cannot cross chat/account | chat suite |
+| Send / Enter / IME | One answer per send; composition does not submit; blank/long message has useful feedback | chat/typing/beta suites |
+| Microphone | Editable draft only, never sends automatically; stop/deny/error/unsupported recover to typing | glass suite; physical phones separately |
+| Edit brief | Corrections are explicit field edits; fixed guided intake is disclosed | chat/beta suites |
+| Generate storyboard | Complete valid brief/photo and known allowance required; double taps dispatch once | chat/beta suites |
+| Regenerate image | Explicit user action; busy/history guards and allowance disclosure | chat/beta suites |
+| Approve storyboard | Images ready/unflagged, known video allowance, explicit approval; double taps cannot double charge | chat/beta + quota tests |
+| Stop waiting | Explains submitted work may finish/use allowance; Resume cannot overlap pending work | beta suite |
+| Retry / Resume | Reuse saved run, refresh current state, never repeat finished stages from stale state | recovery/navigation/beta suites |
+| Viewer open / close | Storyboard/first cut available; Escape and focus restore; mobile background inert | navigation/layout/account suites |
+| Watch / download | Correct asset URL and browser action; actual playable file/audio/phone download verified separately | chat suite + live spec |
+| Logout / login | Latest draft committed before logout; failure retains session/work; account isolation | account suite |
+| Refresh / multiple tabs | Pending/failed-save warning; stale tab cannot overwrite newer book; conflict preserves draft | beta/unit storage tests |
+| Help & support | Settings opens support; user can reach existing feedback email | account suite; mailbox operations separately |
+
+## Bug register
+
+| ID / severity | Reproduction and original result | Expected result | Status / evidence |
+| --- | --- | --- | --- |
+| BETA-01 / P1 data loss | Open two tabs for one account. Create/edit a chat in A, then save B's old book. B's whole-book write silently erases A's new work. | Stale write rejected; both drafts recoverable | Fixed with transactional revision checks and Save this chat as a copy; original failure and recovery evidence retained |
+| BETA-02 / P1 duplicate work | Hold a script/image provider promise. Stop, then Resume while it remains pending. Old guard clears and the same stage can dispatch twice. A second tab/remount can also drive the same run. | No overlapping driver; refresh checkpoint before continuation | Fixed for this browser/account with operation guards, non-queued locks and fresh checkpoint reads; regression passed |
+| BETA-03 / P1 duplicate debit | Two concurrent first-scene requests for one finished ad read an empty marker, then each debit a credit. Mocked original returned two allowed calls and two top-up debits. | One atomic charge per account/ad; same result on retries | Atomic debit/receipt RPC implemented; original-defect rejection and independent-session concurrency/rollback/permission checks passed on native PostgreSQL17.6 and CI17.11. Exact approved target migration installed and verified; no real-user debit performed |
+| BETA-04 / P1 monitoring privacy | Provider error detail reaches raw `meta.error`/`detail` in stored lifecycle events. Exclusion of private text is not enforced. No actual secret leak observed. | Only allowlisted categories/status/counters leave the client | Fixed with client and server allowlists; original failure and privacy regressions retained |
+| BETA-05 / P2 clarity | Fixed intake, device history, background limits and several disabled conditions are not clear before action. | Short English guidance visible at relevant step | Guidance added; phone-size/desktop behavior and independent brand checks passed |
+| BETA-06 / P1 interrupted paid work | Close the tab during a held image request, reopen and Resume. Independent browser reproduction submitted the same scene twice because closing released the browser lock. | Persist an uncertainty marker before dispatch; never automatically repeat an ambiguous request | Durable local receipt implemented; close/reopen and read-only recovery checks passed. Manual recovery remains an operational release gate |
+| BETA-07 / P2 misleading recovery | Stop during research, then Back to brief. The button opens an empty new chat despite its label; the original draft remains in history. | Return to the same brief when no run exists; explicitly label creation of a new chat | Fixed; canceled-research browser regression preserves the completed brief |
+| BETA-08 / P1 automatic duplicate submission | One Resume, then a lost/missing paid output, without any user Retry, submitted another image request. Paid text 422/429 errors also replayed the whole flow. | Ambiguous paid submissions surface recovery instead of automatic re-submission; known safe pre-submit retry behavior remains distinct | Fixed with structural transport/output checks. Independent real-HTTP mocked red/green proof covers lost/malformed image, text, voice, video-ID and render results; final paid-text checks dispatch once. Tuned server ladder unchanged |
+| BETA-09 / P3 cosmetic | At a narrow phone viewport after intake, the long composer placeholder wraps and clips inside its one-line field. | Placeholder fits the field | Documented cosmetic issue; Edit brief and the complete instructions remain reachable. See independent disabled-generation screenshot; no core action is hidden |
+| BETA-10 / P2 checkout recovery | Resume a pending checkout, hold its auth read and let the real wizard session finish loading. App consumes the return-to-ad marker before leaving for checkout. | Checkout retains the marker until handoff; a failed handoff releases recovery | Fixed locally with a pending guard and recovery dependency. Original regressions2/2fail, fixed2/2pass; missing catch reset fails recovery. Final exact-head CI required. [Original timeline](qa/main-readiness/ci-checkout-intent-baseline.json) |
+
+Severity: P0 active privacy/charge incident; P1 launch blocker (data loss, unintended spend,
+privacy boundary, or blocked core journey); P2 recoverable usability/confusion; P3 cosmetic.
+Record each new report with candidate SHA, browser/device, exact steps, expected/actual,
+redacted screenshot, and retest result. Never attach real briefs, photos, tokens or raw HAR files.
+
+## Free verification results
+
+Free verification is complete for the reviewed, browser-local mocked contract. No open P1/P2
+remains in the independently reviewed changes. The external gates below still block release.
+Final commands and all 20 application hashes are recorded in [root gates](qa/root-gates.json).
+
+| Check | Actual result | Evidence |
+| --- | --- | --- |
+| Production build and bundle leak check | Both exited 0; build includes the PowerShell ASCII gate, bundle scan found zero protected markers | [Build log](qa/build.log), [bundle log](qa/bundle-leak.log) |
+| Full unit suite | 1,529 passed, zero failed, 32 existing skips; exit 0 | [Structured report](qa/unit-final.json), [command log](qa/unit-final.log) |
+| Repository/control checks | Codex 26/26, voice sync, domain language, six prompt-sync pairs, artifact anchors, design lint and 11 accepted Companion assets passed | [Commands, exits and logs](qa/root-gates.json) |
+| Focused persistence/transport units | 193 passed; TypeScript check exit 0 before the last two-line error classification fix | [Focused log](qa/focused-final.log) |
+| Last paid-text unit regression | Both new cases failed before the fix; full proxy suite 25/25 passed afterward, including safe pre-submit retries | [Original failure](qa/post-provider-before-fix.log), [final proxy run](qa/post-provider-final.log) |
+| Companion UI, narrow/desktop viewports | 45 unique cases green across beta10/glass17 and chat18 runs | [First run](qa/resumed-final/report.json), [chat rerun](qa/resumed-chat-final/report.json) |
+| Independent HTTP/lifecycle review | 39/39 broad + 9/9 final checks passed; 43 unique cases, five image checks repeated after the last patch | [Independent report](qa/independent-review.md), [final run](qa/independent/final-seam-run.log) |
+| Fresh independent diff review | PASS; original P1 paid-text finding resolved, no open P1/P2 in reviewed scope | [Diff review](qa/final-diff-review.md) |
+| Independent brand/mobile layout review | 42/50, zero critical, one documented cosmetic P3 | [Review and screenshots](qa/independent-review.md) |
+| Shared legacy/Producer recovery | 18/18 passed at 375px and 1280px; zero retries/skips, exit 0 | [Recovery summary](qa/resumed-recovery/summary.json), [run log](qa/resumed-recovery/final-run.log) |
+| Actual migration SQL, isolated PostgreSQL | Syntax, monthly/top-up/idempotency, privileges, aged receipt and injected-failure rollback passed; single connection | [SQL result](qa/sql-local.json), [assertions](../../../tests/sql/finished-ad-meter.sql) |
+
+The 45-case UI run first had one timing assertion that did not await the new save barrier;
+the two immediate reshoot/style expectations now poll their exact single-call result. The
+18-case chat rerun passed. The broader earlier 118-case run was 116 passed / 2 harness
+failures; it is historical evidence, not a claimed final 118/118 pass. [Earlier report](qa/verified/report.json).
+
+Recovery diagnostics exposed older test entry URLs that opened Companion instead of Studio,
+a MarketMind fixture missing two fields already required by the server, a helper that did not
+recognize the restored Producer view, and a polling expectation that assumed an automatic
+paid restart. The narrow harness changes select the existing Studio route, match the current
+API contract, accept the already-open view and require one render start before explicit Retry
+and two afterward. Independent static review confirmed that persistence, gate, call-count and
+unexpected-request assertions remain intact. Initial interrupted diagnostics are labeled as
+partial runs in the recovery evidence; they are not full-suite verdicts.
+
+The first full unit run passed 1,523 tests and failed six dialogue-prompt checks because their
+mock returned an empty video-prompt array. The fixture now provides two valid `VideoPrompt`
+objects; all six prompt assertions and request inputs remain unchanged. [Original unit result](qa/unit-before-fixture-fix.json).
+The fixture was refined to the full output type during the final full-unit run; after that
+run, all six prompt checks and six transport checks were rerun against its final reviewed
+content: 12/12 passed. No application source changed. [Final affected checks](qa/dialogue-fixture-final.log).
+
+Application hashes stayed fixed within the independent runs. Only the reviewed two-line
+422/429 transport correction separates the 39-case broad run from the final nine checks.
+The UI checks predate that correction and do not exercise those response codes. Final source
+is bound by [the independent hash manifest](qa/independent/final-seam-source-hashes-after.json).
+Original failures for [cross-tab saves](qa/red-tabs/report.json), [Stop/Resume](qa/red-stop/report.json),
+[unsaved refresh](qa/red-unload/report.json), [billing/privacy](billing-privacy-original.json),
+and [missing output](qa/transport-before-fix.log) are retained.
+
+All provider/API responses in browser checks were mocked or blocked. Fixture video playback
+and downloaded WebM bytes passed; this proves the controls, not generated media quality.
+Playwright phone-sized Edge is emulation, not iPhone Safari or physical Android Chrome proof.
+
+## Main integration checks, 2026-10-11
+
+The main candidate combines Companion `889c0e1d` with main `4b36c62b`. Main's
+MarketMind presentation and approved prompt are retained exactly. Build, 1,541
+unit tests (32 existing skipped), static gates and 10 affected browser checks
+passed. Two hostname assertion defects were reproduced before repair. The full
+local browser attempt reused another checkout and is excluded; Playwright now
+refuses an existing server. Full isolated GitHub CI remains required.
+
+Native PostgreSQL 17.6 reproduced the old double charge in all four billing
+combinations. The fix passed twelve observed lock-contention cases across
+distinct database sessions, plus rollback, replay, aged receipt and real-role
+permission assertions. Cleanup left no temporary databases, bootstrap roles or
+test tables. This verifier is now an independent CI job included in the main-red
+alarm. [Database results](qa/main-readiness/database-result.json),
+[local checks](qa/main-readiness/local-summary.json),
+[independent review](qa/main-readiness/independent-review.md).
+
+Initial read-only catalog verification on GRIFON AI found PostgreSQL 17.6,
+matching credit/rate-limit functions, appropriate RLS and service-only credit
+execution. `consume_finished_ad` was absent before its separately approved
+installation recorded below.
+The earlier PR164 Vercel account block is superseded by a successful current
+preview check. [Draft PR177](https://github.com/yopiheart/grifon-command/pull/177)
+now targets main. Its first database CI attempt correctly rejected the Docker
+bridge address; the reviewed workflow correction runs the unchanged verifier
+inside the database service with read-only sources. Exact-head CI remains required.
+
+The corrected database job passed all24 native checks on CI PostgreSQL17.11.
+Build/unit/static/artifact jobs passed; the browser job hit its15-minute cap after
+48 of224 unique cases (45 first-pass,2 retry-pass,1 persistent failure). The stale-tab
+failure still displayed both correct conversations and a Saving footer. Local
+instrumentation reproduced it on the correct candidate and observed the save
+complete5.83s after Enter, beyond the default5s assertion. Two visible software-rendered
+avatar canvases ran at3-5fps; no correctness defect was established by that failure.
+All224 browser cases are now split across4 independent one-worker runners with
+the same15-minute cap. CI expectations receive15s (local5s; test60s and retry1
+unchanged). No assertions or real avatars were removed. The same two affected
+cases passed6/6 across3 local repeats, zero retries/skips; saved conversations,
+copy/reload recovery and active-tab1/second-tab0 image-call assertions passed.
+Full hosted results remain required. [Browser timing proof](qa/main-readiness/browser-timing-result.json),
+[initial cloud summary](qa/main-readiness/ci-pre-shard-summary.json),
+[cloud database proof](qa/main-readiness/ci-database-result.json).
+
+Newest main `e6e083bf` (motion PR165/166/170) is integrated before the final run.
+Application, prompts, dependencies and E2E source are unchanged by that upstream
+update; both new motion unit suites are included. Main's CI target branches and
+byte-stability attributes are retained. The only content conflict was this
+checkout's resume state, reconciled with main's actual motion landing receipts.
+Inherited shader QA files retain their exact main bytes, including pre-existing
+whitespace diagnostics; no hash-bound delivery or receipt was cleaned up.
+
+The integrated four-shard run on `b60c4451` passed build/static/artifact/database
+gates and1,572 units (32 existing skips). Shard4 passed56/56, but shards1-3 hit
+the15-minute job cap with persistent failures. Of224 planned cases,154 reported
+results:134 first-pass,4 retry-pass,14 persistent failures and2 unresolved retries;
+70 had no reported result. [Terminal summary](qa/main-readiness/ci-four-shard-summary.json).
+This is another partial run, not full-suite proof. Playwright
+partitions contiguous test ranges, so all34 account cases remained in shard1.
+At that revision, the unchanged224 cases used8 shards of28 tests each, with the same single worker,
+retry/assertion budgets, real assets and15-minute cap. Full completion remains required.
+Pending test fixes await accepted intake turns and asynchronous save/action callbacks,
+avoid a fake-clock pause in the past, retain exact499/600ms reply boundaries without
+stepping unrelated render frames, and poll the actual pointer response with the
+original0.1 gaze delta. Startup now captures the actual browser-created opacity
+transition and midpoint interpolation before a slow parent RAF misses its200ms fade.
+Real colored pixels before exactly one ready message, monotonic reveal, reduced motion,
+retry and exact avatar dimensions remain required; only position quantization gets
+a0.02px tolerance. [Focused retest](qa/main-readiness/ci-harness-focused-result.json)
+passed15/15 with zero retries/skips in184.911s and455 unchanged watched source
+hashes. Independent source review passed. The [complete3spec run before final save waits](qa/main-readiness/ci-harness-full-before-save-waits.json)
+was41 passed/2 failed of43 with zero retries/skips; all13 startup cases passed.
+Both failures navigated before the final photo/accepted-answer write was acknowledged,
+with Playwright's default unload handling proceeding. Those tests now await the saved
+footer before navigating; post-navigation photo/answer/question assertions remain.
+The typing clock stays paused during the save, preserving navigation during typing.
+A separate account-switch test now waits for the new shell before opening Settings;
+its stale-plan isolation assertions remain unchanged. [Four affected cases x3 repeats](qa/main-readiness/ci-harness-save-account-result.json)
+passed12/12 in78.078s with zero retries/skips,455 unchanged frozen source hashes
+and served App identity verified in all12 executions. The unchanged startup verifier
+[rejects both missing transitions and0.125px slot drift](qa/main-readiness/ci-startup-negative-controls.json)
+after real colored-pixel checks pass. Independent source review passed; full exact-head
+eight-shard CI remains required. These narrow passes do not relabel the earlier43-case
+red run as a single complete green run.
+Vercel READY metadata matches the exact integrated head; anonymous GET redirects
+to Vercel SSO. Hosted mobile/desktop rendering is unverified behind that protection.
+
+The [exact additive migration proposal](qa/main-readiness/database-rollout/finished-ad-meter-proposal.sql)
+passed independent source review and a separate native rehearsal: all seeded rows
+were preserved, a second application refused safely, and a deliberately invalid
+local postcondition rolled back the new function completely.
+[Rehearsal evidence](qa/main-readiness/database-rollout/rehearsal-result.json).
+The user approved that exact proposal separately. Migration
+`20261011072946_companion_finished_ad_meter_atomic` is installed on GRIFON AI.
+Fresh catalog hashes, owner, search path, service-only ACL and table RLS match.
+A publishable-key anonymous REST probe with all-null arguments returned
+`401 / 42501 permission denied for function consume_finished_ad`, proving cache
+resolution and denial. A read-only service-role all-null SQL call reached the
+expected invalid-input guard. No valid debit against a real user was performed.
+[Target verification](qa/main-readiness/database-rollout/target-result.json).
+The frozen proposal/manifest's proposal-only status is historical; approved bytes
+remain unchanged. Valid service-role HTTP debits and live generation remain
+separate live tests.
+
+### Latest hosted result and bounded CI calibration
+
+The exact `ad20cd62` [eight-shard run](https://github.com/yopiheart/grifon-command/actions/runs/38126267694)
+is **RED/incomplete**. Build/static/artifact gates, 1,572 units (32 existing skips),
+and all24 isolated database checks passed. Browser results cover199/224 cases:
+186 first-pass,3 retry-pass,10 persistent failures and25 unreported. Shards1/5/6/7/8
+passed;2 failed;3/4 hit the15-minute cap. [Terminal receipt](qa/main-readiness/ci-eight-shard-summary.json).
+
+[Retry traces](qa/main-readiness/ci-retry-trace-timings.json) show20-32 sequential
+browser calls, repeated successful4-10s operations and a final pending action at
+the60s test cap. No completed call exceeded10.2s. This supports cumulative latency,
+not a proven CPU/GPU cause. The first-attempt viewport timeout was not traced and
+remains unresolved. New chat separately exceeded its explicit3s click budget.
+
+Two startup retries measured the hidden unpublished overlay defaults, not the
+actual reserved slot. The verifier now captures that reservation before awaiting
+layer visibility, then immediately compares reservation stability and overlay
+alignment. Exact dimensions and0.02px position bounds remain. [Local verification](qa/main-readiness/ci-startup-publication-result.json)
+passed13/13 with no retries/skips; delayed hidden publication passes while missing
+transition,0.125px overlay drift and0.125px reservation drift correctly fail.
+Independent source review found no actionable P1/P2.
+
+The [browser-mode experiment](qa/main-readiness/ci-browser-channel-result.json)
+passed the unchanged core journey3/3 in the default shell at33.2-38.6s. Full
+Chromium failed to launch before navigation, so its journey is NOT RUN and no
+performance comparison is available. The default browser remains unchanged.
+
+The next candidate keeps all224 cases, one worker, one CI retry and the15-minute
+job cap. Sixteen shards provide14 cases each. CI allows180s for a complete journey,
+with15s ordinary actions and unchanged15s expectations; local budgets remain
+unchanged. New chat remains one click, using15s in CI and its original3s locally.
+No save, privacy, geometry or exact paid-call assertion was removed. Not every
+protocol operation supports the action budget. Partition validation, affected
+navigation smoke are complete: [discovery](qa/main-readiness/ci-sixteen-partition-result.json)
+proves224 unique expected-passing cases,14 per shard with no duplicates/omissions;
+[New chat](qa/main-readiness/ci-navigation-budget-result.json) passes3/3 with no
+retries/skips, while blocked navigation correctly fails its unchanged chat-ID
+predicate after15s. Independent review and fresh26/26 controls pass. Exact-head
+full CI remains required; this calibration is not a passing browser gate or proof
+that all stalls are resolved.
+
+Vercel reports SUCCESS for the exact ad20 candidate. Authenticated hosted
+mobile/desktop rendering remains NOT RUN because no browser surface is available;
+the dev-only chat fixture cannot establish deployed behavior. Beta release and
+main merge remain on hold at this evidence boundary.
+
+### Sixteen-shard result and final follow-up
+
+Exact head `0ebcf551` [run38128468369](https://github.com/yopiheart/grifon-command/actions/runs/38128468369)
+passed build/static/artifact gates,1,572 unit tests (32existing skips), all24 native
+database checks and Vercel. Fourteen browser shards passed. Shards6/7 reached the
+unchanged15-minute job cap:220/224 unique cases passed,217 first-pass and3 retry-pass,
+zero persistent reported assertions, four cases unreported. This remains an
+incomplete gate. [Terminal receipt](qa/main-readiness/ci-sixteen-summary.json).
+
+Two reload flakes were reproduced4/4 locally: the UI selected the old conversation
+while the latest selection write was still Saving; the old conversation itself
+remained stored. Exactly two Saved-footer prerequisites now precede reloads,
+retaining all original restoration/no-call assertions. Patched6/6 passes, two
+native held-transaction controls fail at Saved, and two release controls commit
+before reload and pass. No retries/skips or application/store changes. The baseline
+caveat was corrected as metadata only; results and source bindings remain intact.
+[Original failures](qa/main-readiness/ci-navigation-reload-baseline.json),
+[fix and controls](qa/main-readiness/ci-navigation-reload-result.json).
+
+The third retry-pass was a second-tab Resume click timeout after dispatch while
+Playwright waited for possible navigation. Original local repetitions pass2/2;
+the exact hosted cause remains unproven. The narrow follow-up opts only that click
+out of post-click navigation waiting, preserving actionability and the lock-error,
+second-tab-zero and backend assertions. It additionally requires unchanged URL,
+the same browser document and first-tab call count still one. An intermediate
+event-count check failed3/3 on two same-URL frame events per run; their event type
+was not classified. Document identity replaces that overbroad check. Final
+patched3/3 pass without retries/skips. Canceled-click
+and disabled-lock controls fail the original contention-text assertion. A forced
+same-URL reload passes all business and URL assertions, then correctly fails the
+old document handle. These controls prove verifier sensitivity, not a hosted cause.
+[Resume result and controls](qa/main-readiness/ci-beta-resume-result.json).
+
+CI now partitions all224 cases into32 one-worker shards of seven, retaining the
+same retry and job/test/action/assertion budgets. Static discovery proves the case
+union without duplicates or omissions. Final-source discovery repeats all36
+CLI/config commands successfully and binds the final Resume source.
+[Discovery receipt](qa/main-readiness/ci-thirtytwo-discovery.json).
+Full exact-head CI must pass before merge readiness. Physical phones, hosted auth
+and live output remain separate release gates.
+
+### Successful full CI and isolated clock guard
+
+Exact `9c6ca440` completed all224 cases,223 first-attempt and one retry-pass,
+with zero terminal failures, browser skips or omissions. All seven earlier
+blockers passed first attempt. Build/static/artifacts,1,572units (32existing skips),
+database24/24 and Vercel passed. All35 checkouts and local/head/tested trees match;
+442 watched source files stayed unchanged. Independent review rederived the
+actual224-case union from every shard log.
+[Full receipt](qa/main-readiness/ci-thirtytwo-summary.json).
+
+The sole retry failed before user input at navigation140: `clock.pauseAt` received
+a target that was already past. A one-line test-only guard chooses two hours in
+the future before any answer, retaining all1000ms, callback, composer and account
+assertions. Original0ms target fails with an injected500ms delay; guarded ordinary
+2/2 and delayed1/1 pass without retries/skips. This proves stale-target sensitivity
+and the guarded behavior; exact hosted latency is not measured. Fixture calls and
+page errors were observed throughout; request-category counters apply only to the
+delayed positive run. [Original CI error](qa/main-readiness/ci-navigation-clock-flake.json).
+The [clock result](qa/main-readiness/ci-navigation-clock-result.json) binds original,
+guarded source and exact harness copies. Refreshed [final discovery](qa/main-readiness/ci-final-partition-result.json)
+again verifies224 identical IDs,32x7, no duplicates/omissions and36 successful
+CLI/config commands against the guarded source.
+The current PR head must still have a fully successful CI before merge.
+
+### Clock guard CI and return-to-ad fixture isolation
+
+Exact `3791952e` passed all224 browser cases across32x7,223 first-attempt plus
+one retry-pass, with zero final failures, skips, omissions or duplicates.
+Build/static/artifacts,1,572units (32existing skips), database24/24 and Vercel
+passed. All35 checkout identities agree, local/head/tested trees match and442
+watched files stayed unchanged through terminal observation. Clock, both reload
+fixes and cross-tab Resume passed first attempt.
+[Bound receipt](qa/main-readiness/ci-clock-guard-summary.json).
+
+The sole retry saw the return-to-ad marker still1 after15s. Its fixture seeded
+sessionStorage in every child document, including the same-origin avatar frame,
+which can reintroduce a marker App already consumed. The one-line guard now seeds
+only the top window; every original input, cleanup and error assertion remains.
+Ordinary original/guarded runs and guarded forced-frame run pass. After actual
+App consumption reaches null, a forced same-origin child makes the original
+fail that unchanged marker-null assertion; the guard keeps it null. Disabling
+only the served cleanup removeItem also fails the original assertion with the
+guard, so cleanup remains required. Five executions use no retries/skips and
+retain source/harness hashes, fail-closed fixtures and error counters. Their API
+requests are fixture-handled; no paid generation runs. This proves fixture
+mutation mechanics, while its exact hosted timing remains unmeasured.
+[Original CI failure](qa/main-readiness/ci-account-marker-flake.json),
+[controlled result](qa/main-readiness/ci-account-marker-result.json).
+Fresh [32-shard discovery](qa/main-readiness/ci-marker-partition-result.json)
+retains the same224 IDs with no duplicates/omissions and36 zero-exit commands.
+The [source binding](qa/main-readiness/ci-account-marker-binding.json) verifies
+all38 watched hashes and ties the final tracked guard to the tested copy after
+the documented imports/origin/probe adaptation and line-ending normalization.
+The final guard still requires successful exact-head CI before merge.
+
+### Final marker CI: remaining checkout and typing blockers
+
+Exact `1b230ba4` completed all224 cases but failed the merge gate:222 first-pass,
+one checkout retry-pass and one persistent continuity failure; zero browser
+skips/omissions/duplicates. Build/static/artifacts,1,572units (32existing skips),
+database24/24 and Vercel passed. All35 checkout identities and442 frozen source
+files match the tested tree. [Full failed-run receipt](qa/main-readiness/ci-marker-guard-summary.json).
+
+The [checkout retry](qa/main-readiness/ci-checkout-intent-flake.json) exposed a
+real product race. Removing the pending plan precedes an awaited billing auth
+read; meanwhile wizard-session completion can rerun return-to-ad handling and
+consume its marker while the old App document is still open. The
+[controlled original](qa/main-readiness/ci-checkout-intent-baseline.json)
+observes actual plan removal, held SDK auth, real wizard IndexedDB success,
+automatic marker removal, auth release and actual checkout navigation in that
+order. The unchanged checkout URL/cycle/module assertions pass, then its marker
+assertion fails. No manual marker clear or product-module override is used.
+The [original fixture screenshot](qa/main-readiness/checkout-intent-original.png)
+shows the reached annual checkout; its email and billing response are synthetic.
+The pending guard now passes both strengthened checkout regressions locally;
+both fail against the original App. Removing only catch recovery reaches both
+error toasts, then fails the original marker-null assertion. The initial
+wrong-setter control failed during harness setup and is excluded from this
+proof. [Checkout control receipt](qa/main-readiness/ci-checkout-intent-result.json).
+
+The [continuity failure](qa/main-readiness/ci-continuity-typing-failure.json)
+occurs at the600ms typing-status prerequisite, before New chat or callback
+isolation assertions are reached. It does not demonstrate a callback leak.
+The scoped verifier holds the reply timer through the chat switch and resumes
+before renderer checks, retaining the original700ms observation window and
+all state/resource identity assertions. A real1,000ms Node delay expires the
+original typing status and fails its assertion; the fixed clock holds typing
+and passes the complete journey. Removing only the outer fixture remount key
+fails the original enabled-input assertion, proving production-state leakage
+detection. This does not establish a hosted intake callback leak or its exact
+timer timeline. [Continuity control receipt](qa/main-readiness/ci-continuity-clock-result.json).
+
+Build and full unit commands exited0:1,572passed and32existing skips; all four
+changed source hashes stayed unchanged. [Build/unit receipt](qa/main-readiness/ci-checkout-build-unit.json).
+Fresh static discovery retains all original224 IDs/titles and adds only the
+checkout-rejection regression:225unique cases, shard1=8 and the other31=7,
+zero omissions/duplicates,36zero-exit commands and38unchanged watched hashes.
+[Partition receipt](qa/main-readiness/ci-checkout-partition-result.json) and
+[final source binding](qa/main-readiness/ci-checkout-binding.json).
+Independent Codex source/raw-evidence/documentation review passes with no
+actionable P1/P2. [Review](qa/main-readiness/independent-review.md).
+Successful exact-head hosted CI remains required before merge readiness.
+
+## External release gates
+
+- CI merge gate: every discovered browser case and required job must pass on the exact PR head. Latest completed `1b230ba4` [run38133637033](https://github.com/yopiheart/grifon-command/actions/runs/38133637033) is FAILED:223/224pass, one persistent continuity failure, checkout retry; non-browser gates pass. [Bound receipt](qa/main-readiness/ci-marker-guard-summary.json). Prior green379/9c receipts remain historical. Latest head status on [PR177](https://github.com/yopiheart/grifon-command/pull/177) is authoritative before merge.
+- [ ] Authenticated hosted desktop/mobile render and login checks on the release candidate. Vercel metadata confirms a successful preview build only; the old [blocked status](qa/hosted-checks.json) is historical.
+- [x] Prove exactly-once debit, rollback and permissions on isolated native PostgreSQL with real concurrent sessions.
+- [x] Approve/apply the exact target migration; verify catalog, permissions, REST cache resolution/anonymous denial and read-only service-role input validation.
+- [ ] Real OTP delivery, expired session, and second-account isolation on the release candidate.
+- [ ] Physical iPhone Safari and Android Chrome: keyboard leaves Send reachable; long transcript scrolls; drawer/viewer focus; mic permission allow/deny/revoke; photo selection; playback, sound and download.
+- [ ] Approved live test from `live-test-spec.md`: product identity, playable finished video, intelligible voice/audio, correct offer, download and return-to-history.
+- [ ] Three first-time testers independently complete the same journey without coaching. Observe rather than guide; repeated confusion becomes a bug. Testers/invitations require separate authorization.
+- [ ] Existing Help & support channel is monitored by a named human during the beta. Verify a submitted test report reaches the mailbox only with authorization to send.
+- [ ] Authorized operator verifies monitoring ingestion and alerts on the deployed candidate. Zero known P0/P1 findings remain.
+- [ ] The beta operator can resolve an uncertain production report without guessing whether a paid request completed. Testers understand the manual-recovery limitation below.
+
+## Interrupted-work limitation
+
+An unresolved production receipt blocks more paid work for that chat/run. **Check saved
+progress** reads saved output without restarting production. When the outcome cannot be
+established, support-assisted recovery is required; there is no automatic receipt expiry.
+Even a later known quota/service denial can retain the receipt if earlier steps may already
+have completed. This is a conservative safety stop, not seamless retry or durable background
+jobs. Browser storage clearing, another browser/device and older clients are outside browser
+coordination guarantees. Local history is not cross-device history.
+
+Support must verify the request outcome and saved artifacts before any manual recovery.
+Do not clear a receipt, start another paid request or increase a test budget merely to make
+the UI proceed. A read-only result can still be opened/downloaded. Any support action that
+changes production records or starts paid work needs its own authorization. Validate this
+operational path before inviting testers; no manual recovery was performed during this audit.
+
+## First-time tester protocol
+
+After separate invitation approval, give each of three testers the same product photo and
+this goal: “Make an ad for this product, review it, download the result, then come back and
+find it again.” Do not name buttons or explain the intake. Observe where they hesitate,
+misinterpret a control, ask for help, lose work, or cannot proceed. A clearly labeled mocked
+preview can establish usability only; real generation needs its own approved cost spec.
+Record anonymized tester ID, candidate SHA, device/browser, completion without help,
+confusion/reproduction steps and follow-up bug ID. Two testers confused by the same step
+is a P2 defect to fix/retest; any data/spend/privacy/core blocker is P1 even for one tester.
+
+## Feedback and monitoring procedure
+
+Reuse Settings → Help & support → the existing Support page/email; no new account or external
+service is required. Ask testers for the step/button, approximate time, browser/device and
+expected/actual behavior. Briefs/photos are optional private content and must not be included
+automatically. Redact screenshots before sharing.
+
+Use existing producer lifecycle events (`node_fail`, `check_fail`, `check_skip`) and server
+charge/run records for diagnosis. Monitoring should carry stable categories, stage, numeric
+status and run correlation only, never raw provider errors, request bodies, prompts, auth
+headers, or uploaded media. Source tests prove filtering; actual deployed ingestion/alert
+delivery is an external gate, not inferred from source. During the invited beta, a human
+checks new failures and feedback daily and before expanding the group. Any privacy,
+unintended-charge, lost-work or no-recovery report pauses expansion until reproduced/fixed.

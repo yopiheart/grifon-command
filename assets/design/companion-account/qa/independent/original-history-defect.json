@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "name": "browser Forward restores the explicit intended tool",
+      "pass": false
+    }
+  ],
+  "observations": [
+    {
+      "scenario": "real-landing-intent-history",
+      "restored": false,
+      "url": "http://127.0.0.1:5173/app",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    }
+  ]
+}

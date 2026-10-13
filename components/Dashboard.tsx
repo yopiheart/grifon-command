@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { DUR, EASE, SPRING, reducedMotion } from './ui/motionTokens';
 import {
-  Sparkles, ArrowRight, ChevronRight, Flame, Lock, Menu, Bell,
+  Sparkles, ArrowRight, ChevronRight, Flame, Lock, Menu, Bell, MessageSquare,
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { planAtLeast, type PlanId } from '../utils/planGate';
@@ -30,6 +30,7 @@ import {
 import { MAT_CHROME, SCROLL_EDGE } from './ui/materialTokens';
 import { SettingsModal } from './dashboard/SettingsModal';
 import { NotificationsPanel } from './dashboard/NotificationsPanel';
+import Button from './ui/Button';
 
 interface DashboardProps {
   onSelectModule: (module: string) => void;
@@ -417,6 +418,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
               {/* Outcome chips */}
               <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+                <Button variant="secondary" onClick={() => handleSelectModule('companion')} className="flex min-h-11 items-center gap-2 !rounded-xl !px-4 !font-sans !text-xs !font-semibold !normal-case !tracking-normal">
+                  <MessageSquare className="h-4 w-4 shrink-0" /> Make an ad with Grifon
+                </Button>
                 {HERO_CHIPS.map((chip, i) => (
                   <motion.button
                     key={chip.id}

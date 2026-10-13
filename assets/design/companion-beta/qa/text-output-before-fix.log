@@ -1,0 +1,157 @@
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command
+
+stdout | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps a malformed edit decision unresolved: not JSON
+[edl] video attachments — eligible: 0 selected: 0 attached: 0 cap: 10
+
+stdout | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps a malformed edit decision unresolved: {}
+[edl] video attachments — eligible: 0 selected: 0 attached: 0 cap: 10
+
+ ❯ tests/unit/geminiService.proxy.test.ts (23 tests | 8 failed | 15 skipped) 36ms
+     × rejects a missing adscript flow result without paid replay 19ms
+     × rejects a missing marketmind flow result without paid replay 4ms
+     × rejects a missing storyboard flow result without paid replay 2ms
+     × keeps an unusable shot-planning result unresolved: not JSON 2ms
+     × keeps an unusable shot-planning result unresolved: {} 1ms
+     × keeps an unusable shot-planning result unresolved: [] 1ms
+     × keeps a malformed edit decision unresolved: not JSON 3ms
+     × keeps a malformed edit decision unresolved: {} 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > rejects a missing adscript flow result without paid replay
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > rejects a missing marketmind flow result without paid replay
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > rejects a missing storyboard flow result without paid replay
+AssertionError: expected {} to match object { generationOutcomeUnknown: true }
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
+- }
++ {}
+
+ ❯ tests/unit/geminiService.proxy.test.ts:68:26
+     66|         : generateStoryboard(['Fixture'], 'Fixture presenter', busines…
+     67|     await vi.runAllTimersAsync();
+     68|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     69|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     70|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps an unusable shot-planning result unresolved: not JSON
+AssertionError: expected SyntaxError: Unexpected token 'o', "not J… to match object { generationOutcomeUnknown: true }
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
++ SyntaxError {
++   "message": "Unexpected token 'o', \"not JSON\" is not valid JSON",
+  }
+
+ ❯ tests/unit/geminiService.proxy.test.ts:77:26
+     75|     const result = generateVideoPrompts([{ scriptLine: 'Fixture', scen…
+     76|     await vi.runAllTimersAsync();
+     77|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     78|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     79|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps an unusable shot-planning result unresolved: {}
+AssertionError: expected {} to match object { generationOutcomeUnknown: true }
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
+- }
++ {}
+
+ ❯ tests/unit/geminiService.proxy.test.ts:77:26
+     75|     const result = generateVideoPrompts([{ scriptLine: 'Fixture', scen…
+     76|     await vi.runAllTimersAsync();
+     77|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     78|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     79|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps an unusable shot-planning result unresolved: []
+AssertionError: expected [] to match object { generationOutcomeUnknown: true }
+
+- Expected:
+{
+  "generationOutcomeUnknown": true,
+}
+
++ Received:
+[]
+
+ ❯ tests/unit/geminiService.proxy.test.ts:77:26
+     75|     const result = generateVideoPrompts([{ scriptLine: 'Fixture', scen…
+     76|     await vi.runAllTimersAsync();
+     77|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     78|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     79|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps a malformed edit decision unresolved: not JSON
+AssertionError: expected SyntaxError: Unexpected token 'o', "not J… to match object { generationOutcomeUnknown: true }
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
++ SyntaxError {
++   "message": "Unexpected token 'o', \"not JSON\" is not valid JSON",
+  }
+
+ ❯ tests/unit/geminiService.proxy.test.ts:86:26
+     84|     const result = generateEditDecisionList({ finalScript: 'Fixture', …
+     85|     await vi.runAllTimersAsync();
+     86|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     87|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     88|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > keeps a malformed edit decision unresolved: {}
+AssertionError: expected Error: EDL_MALFORMED: model returned no s… to match object { generationOutcomeUnknown: true }
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
++ Error {
++   "message": "EDL_MALFORMED: model returned no scenes array — re-draft the EDL.",
+  }
+
+ ❯ tests/unit/geminiService.proxy.test.ts:86:26
+     84|     const result = generateEditDecisionList({ finalScript: 'Fixture', …
+     85|     await vi.runAllTimersAsync();
+     86|     expect(await result).toMatchObject({ generationOutcomeUnknown: tru…
+       |                          ^
+     87|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     88|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 15 skipped (23)
+   Start at  10:46:27
+   Duration  872ms (transform 168ms, setup 0ms, import 213ms, tests 36ms, environment 0ms)

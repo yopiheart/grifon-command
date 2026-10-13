@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "5c6d6a072a65c39ff2741f93aa55d1975a723196",
+  "recordedAtUtc": "2026-10-07T04:33:28.2809057Z",
+  "scope": "Persistent companion rendering across saved/New-chat switches, with existing chat/account isolation and failure/retry retained.",
+  "sourceSha256": {
+    "components/CompanionChat/CompanionChatShell.tsx": "7096bcc3cbc43d6980f3252c35d58b1472a1b24862f6ef77cb1f70cd72bf872c",
+    "components/CompanionChat/CompanionChatSurface.tsx": "b8775adf86159bebeda89f18245aec5bf951d1851c22ed99afc71abf1bb86f99",
+    "components/CompanionChat/CompanionAvatarLayer.tsx": "5cc687a510c07cd9f9b1e2dc4da770078708e8f29eb6dba5fc0686347fd1ddb1",
+    "components/CompanionChat/index.tsx": "35e482ae934e35834f09c7b88609c1433ebc1dfcaa68f47b15146531a1a975d9",
+    "components/CompanionChat/companionChat.css": "d1c934d9cf484f5a41fb90d51d08e96a1e946aef5deecdd6fdc924042c2e2638",
+    "dev/companionChatPreview.tsx": "b7face635c969026114cb925db0e4d507c5da3c0ff5f80032b4f5251d791b6ce"
+  },
+  "checks": [
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "owner": "/root/typography_builder",
+      "evidence": "Frozen reviewed source; TypeScript/Vite passed, Vite6.07s. PS1 ASCII prebuild passed."
+    },
+    {
+      "command": "npm.cmd run test -- --run",
+      "exitCode": 0,
+      "owner": "/root/typography_builder",
+      "passedFiles": 118,
+      "skippedFiles": 9,
+      "passedTests": 1453,
+      "skippedTests": 32,
+      "durationSeconds": 44.8
+    },
+    {
+      "command": "npm.cmd run check:bundle-leak",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "After final build:11 bundle files,0 crown-jewel markers."
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "exitCode": 0,
+      "owner": "/root"
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "302 files,0 drift hits."
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "owner": "/root"
+    },
+    {
+      "command": "node tools/sync-companion-assets.mjs --check",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "11 sources match; Avatar/runtime/model/textures unchanged."
+    },
+    {
+      "command": "npm.cmd run design:lint",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "Declared CLI invoked explicitly through Node: errors0,warnings0,1.43s; fresh independent rerun also passed."
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "34 skill entrypoints/120 files valid;26 tests passed,0 failed."
+    },
+    {
+      "command": "git diff --cached --check",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "Final owned source, config and evidence staging; no whitespace findings."
+    }
+  ],
+  "browserEvidence": "assets/design/companion-continuity/qa/verification.json",
+  "independentReview": "assets/design/companion-continuity/qa/independent-review.json",
+  "contract": "PASS:12 browser cases;40 independent observations,zero findings; exact iframe/window/canvas retained with zero warm fallback insertions or renderer GETs.",
+  "limitations": [
+    "Responsive desktop Edge checks; no physical-phone/native GPU context-loss or native-zoom proof.",
+    "No real microphone, provider generation, account-transition service, production mutation, deployment or merge."
+  ],
+  "verificationLauncher": {
+    "diagnosedBy": "/root/glass_explorer",
+    "originalCommand": "design.md lint DESIGN.md",
+    "rootOwnedSession": 64519,
+    "observedResolution": [
+      "workspace/DESIGN.md",
+      "node_modules/.bin/design.md",
+      "node_modules/.bin/design.md.cmd"
+    ],
+    "observedProcess": "Idle npm->cmd; no declared CLI Node child. Windows case-insensitive current-directory document shadows CLI name.",
+    "originalOutcome": "Root canceled only its own launch session: exit1, before CLI execution. This was a command launch/setup issue, not a product/linter finding.",
+    "correctedCommand": "node node_modules/@google/design.md/dist/index.js lint DESIGN.md",
+    "packageSha256": "1da2d81a5be844bfbe9d5cbeca5a5b57db63b7d04031b75c7425321aa6248f8f",
+    "uiHashesUnchanged": true
+  }
+}

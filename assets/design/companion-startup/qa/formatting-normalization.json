@@ -1,0 +1,45 @@
+{
+  "reason": "Staged whitespace gate found report-only trailing spaces/extra EOF lines; normalized display copies only. No product or test source changed, all original output preserved losslessly in raw-run-output.json. source-diff.patch is now a display copy; exact patch bytes are archived.",
+  "changes": [
+    {
+      "file": "builder/build-output.txt",
+      "beforeSHA256": "81f38116f27d9c08888bb94d81707cf2853372a16a08da23fbd6dc1512135536",
+      "afterSHA256": "ae20146c0d61e167cd3a3eecd25d54b3c415cd8e5181a3b4873d91a3ade7ecde"
+    },
+    {
+      "file": "builder/unit-output.txt",
+      "beforeSHA256": "876126318404b5dc7e3d5b0c2a2171c8083f50157cbb4b0068be6866a1fc35ba",
+      "afterSHA256": "584666ebb1a6a602cbf401509edd78e6f4150cdfca0f81aeb65741519808e205"
+    },
+    {
+      "file": "builder/source-diff.patch",
+      "beforeSHA256": "8ec5ce8e632c601d0830d761f1d0146256b8376da9bed245badde9d410449032",
+      "afterSHA256": "0020d0ff421d2e687f2dd629bb57eb35e4dfaa23e1bd43926e7594b27fab005b"
+    },
+    {
+      "file": "diagnostic-startup-output.txt",
+      "beforeSHA256": "a47260fa6f8256c584d2b62de24a28a90b6334ebe6ddae7edda947167c718315",
+      "afterSHA256": "c0bf83589de69b9d115bceaa23ef31b619fbbd89099798a70acfe45c4b3252b7"
+    },
+    {
+      "file": "first-attempt-startup-output.txt",
+      "beforeSHA256": "ea579c26d196b0f5633828dfcf09fe9d39c6817c998163a7d327cdae476658cb",
+      "afterSHA256": "7fd2e0ad876be0e4d2f14c9eaf6d17b5d851373ea3d8ff1edf966d1b16122e3a"
+    },
+    {
+      "file": "second-attempt-startup-output.txt",
+      "beforeSHA256": "e2440ac8fdc83477b56a89ec93123b418229057978a3e80aa2872a7123d5ae36",
+      "afterSHA256": "edd049c6289b11007a242327eac1500ef29dbebcfaa95388b35fc4ab1e769218"
+    },
+    {
+      "file": "independent/smoke.mjs",
+      "beforeSHA256": "4895f180596a919bb02b166ccc74aad7f69f3820a9dd22bcae0caf6afcbceb72",
+      "afterSHA256": "addf73afb943bc463ea49762e2361caa39b5ea38f5e2faf86fc8d5e0f0b622dc"
+    },
+    {
+      "file": "independent/timing.mjs",
+      "beforeSHA256": "9ee2a75c23d0b4c7aa8439801ab6d960c7f85560a8bd3019607ba6fbfd0ce68c",
+      "afterSHA256": "284e28facbcbd7bffad53ca57205f751332e928b1118e8a35a206b7e5f29ab9a"
+    }
+  ]
+}

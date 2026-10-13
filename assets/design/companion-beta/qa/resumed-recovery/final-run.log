@@ -1,0 +1,33 @@
+
+> creative-director-ai-assistant@1.0.0 verify:recovery
+> node tools/verify-recovery.mjs
+
+[WebServer] Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+[WebServer]   npx update-browserslist-db@latest
+[WebServer]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+Running 18 tests using 2 workers
+
+  ok  1 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:12:5 › legacy recovery at 375 › typed brief and uploaded asset survive closing and reopening the page (18.1s)
+  ok  3 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:71:5 › legacy recovery at 375 › seeded completed plan opens from the real Dashboard with saved script and scenes (3.3s)
+  ok  2 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:38:5 › legacy recovery at 375 › actual interrupted generation retains its persisted script in consumer review (22.6s)
+  ok  4 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:12:5 › legacy recovery at 1280 › typed brief and uploaded asset survive closing and reopening the page (10.3s)
+  ok  5 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:38:5 › legacy recovery at 1280 › actual interrupted generation retains its persisted script in consumer review (13.2s)
+  ok  6 [chromium] › tests\e2e\oneshot-legacy-recovery.spec.ts:71:5 › legacy recovery at 1280 › seeded completed plan opens from the real Dashboard with saved script and scenes (3.6s)
+  ok  7 [chromium] › tests\e2e\oneshot-recovery.spec.ts:10:5 › 375px Producer recovery › seeded saved-run load failure offers Retry on the same run and Back (2.5s)
+  ok  8 [chromium] › tests\e2e\oneshot-recovery.spec.ts:35:7 › 375px Producer recovery › seeded storyboard gate remains parked after reload (3.4s)
+  ok  9 [chromium] › tests\e2e\oneshot-recovery.spec.ts:35:7 › 375px Producer recovery › seeded first_cut gate remains parked after reload (3.5s)
+  ok 11 [chromium] › tests\e2e\oneshot-recovery.spec.ts:82:5 › 375px Producer recovery › seeded final-render polling failure exposes Retry and preserves completed scenes (9.3s)
+  ok 12 [chromium] › tests\e2e\oneshot-recovery.spec.ts:102:5 › 375px Producer recovery › missing seeded run clears the stale reference and returns to launch (2.1s)
+  ok 10 [chromium] › tests\e2e\oneshot-recovery.spec.ts:59:5 › 375px Producer recovery › a real recorded job survives reload and polls the same handle without resubmitting (17.7s)
+  ok 13 [chromium] › tests\e2e\oneshot-recovery.spec.ts:10:5 › 1280px Producer recovery › seeded saved-run load failure offers Retry on the same run and Back (5.2s)
+  ok 14 [chromium] › tests\e2e\oneshot-recovery.spec.ts:35:7 › 1280px Producer recovery › seeded storyboard gate remains parked after reload (5.3s)
+  ok 15 [chromium] › tests\e2e\oneshot-recovery.spec.ts:35:7 › 1280px Producer recovery › seeded first_cut gate remains parked after reload (5.0s)
+  ok 17 [chromium] › tests\e2e\oneshot-recovery.spec.ts:82:5 › 1280px Producer recovery › seeded final-render polling failure exposes Retry and preserves completed scenes (10.4s)
+  ok 18 [chromium] › tests\e2e\oneshot-recovery.spec.ts:102:5 › 1280px Producer recovery › missing seeded run clears the stale reference and returns to launch (3.3s)
+  ok 16 [chromium] › tests\e2e\oneshot-recovery.spec.ts:59:5 › 1280px Producer recovery › a real recorded job survives reload and polls the same handle without resubmitting (18.9s)
+
+  18 passed (1.5m)
+
+Recovery verification: PASS
+Evidence: C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\.tmp\recovery-verification\2026-10-10T03-11-22-465Z-r39eRj\summary.md

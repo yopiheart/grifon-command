@@ -1,0 +1,115 @@
+{
+  "base": "8d5a4be8292d653ae6f9182a1d49eac62077001a",
+  "branch": "codex/companion-beta-readiness",
+  "capturedAt": "2026-10-10T03:13:55.2263871Z",
+  "files": [
+    {
+      "path": "api/_lib/quota.ts",
+      "sha256": "79AF7228F37031E9048FBD4DAFCF00CEE75F630EBA1655E6665175F68D5FF135"
+    },
+    {
+      "path": "api/events.ts",
+      "sha256": "3AA81406498622A5978FCBFADA4BF9FED6E099AC40335FBE06011CE2868E9288"
+    },
+    {
+      "path": "api/gemini/omni-video.ts",
+      "sha256": "D3131FB96C1EE4772B77B0637DDFF0EEC1CA9C94F923B1EB1C73BC59EA6780AA"
+    },
+    {
+      "path": "api/gemini/omni-video/consume.ts",
+      "sha256": "14EA39EDBDAE8BA12E9AE22F18EC8F45980E4866F5C45FF37D3A123913662AA3"
+    },
+    {
+      "path": "api/gemini/video.ts",
+      "sha256": "B11A244624EF6D4059CDF35C05DA8127060E39FF5E318DED3ACFA6FB9B1237CB"
+    },
+    {
+      "path": "api/kling/omni-video.ts",
+      "sha256": "C8731887874A794B426D36531DC1D18D640CD1397365EA00C9C0D14F278DA676"
+    },
+    {
+      "path": "api/kling/video.ts",
+      "sha256": "745D5DEED829876D4CF332B6C9D66E82CBE21E5ADA1FE389D73ACDAF0BB42CAF"
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatShell.tsx",
+      "sha256": "0E381C6CB6406B6DC3957F9EA6C4B38BDAD5AD7FC719E0CD3B5AFC4238657B6E"
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "sha256": "71D83E71DED1ABC8623EF2C5EA00A64463A9682B9321F9670F3E2650ECFA84F1"
+    },
+    {
+      "path": "components/CompanionChat/index.tsx",
+      "sha256": "A9D3A4BFE1CCB2D647E96F4B1DBA43C75C2D5DBB259175998973277BA3970EF3"
+    },
+    {
+      "path": "components/OneShotAd/ProducerFlow.tsx",
+      "sha256": "0709891055AA8BA251B3F58839235242945D44B4C9A70BEF09F3B79832918C3F"
+    },
+    {
+      "path": "playwright.recovery.config.ts",
+      "sha256": "48A3BDA798933180CADEE9FC6C03F5AB349798BF590B8CD291CF5FAF78CD91AB"
+    },
+    {
+      "path": "services/companionConversations.ts",
+      "sha256": "883575CDA4E95275219BFAA8298DC255E47E3FDDF7C4D97548024E010B3D8345"
+    },
+    {
+      "path": "services/companionProductionLock.ts",
+      "sha256": "DE1C09BBC4EA935CEF072FA2DADE5F4A86CFBBCB315D9B1D8A3E95593FD042D0"
+    },
+    {
+      "path": "services/finalRenderService.ts",
+      "sha256": "BAEECEF4DA13DB6CBAC5209C12CC976D1761297781E1A3CABFCE65BBDE66FD82"
+    },
+    {
+      "path": "services/geminiService.ts",
+      "sha256": "A3345B5B495022B1F87941DD7011F391F9AB68F3D860101C7EC91A9480BF51D0"
+    },
+    {
+      "path": "services/generationTransportError.ts",
+      "sha256": "57BA8533C84420A0A366BFEEE134107C18E5A9B62B484FBFD303C831233B1BB9"
+    },
+    {
+      "path": "services/producerOrchestrator.ts",
+      "sha256": "1C1DA4CA2EEEDC6F7EFFBAA66BF75D7C009207FEFB351763517A2A941FE680C5"
+    },
+    {
+      "path": "services/voiceConsolidationService.ts",
+      "sha256": "D5B8A523B915B9392945F4DEF1EC4C3C65DE10A4478924F5A10D8C0239FEC154"
+    },
+    {
+      "path": "supabase/finished_ad_meter.sql",
+      "sha256": "4EE39C8E04D17B4D42579606E86C759D8F0BF02643D77C91A8DA43D6EE7979D3"
+    },
+    {
+      "path": "tests/e2e/fixtures/oneshotRecovery.ts",
+      "sha256": "C0B78D08941F037A5A244A7BB7CABD4A7960A26ACC839C1F59F7A99B508A9507"
+    },
+    {
+      "path": "tests/e2e/legacyRecovery.ts",
+      "sha256": "9779F9229AF35BAC65B788F56A715C7007EE0C224A95E0DB39F1D3E2BE5BD756"
+    },
+    {
+      "path": "tests/e2e/oneshot-legacy-recovery.spec.ts",
+      "sha256": "36AD3CF863ED5A10DAC8055D3F58B14DB6B86FFDE6FD32D7F90F97DC0FCA3A90"
+    },
+    {
+      "path": "tests/e2e/oneshot-recovery.spec.ts",
+      "sha256": "FAB61F494B72B9B4BCE0663FB0C3761F580156BE5BDA80C01DAE1FC10F79BD71"
+    },
+    {
+      "path": "tools/verify-recovery-server.mjs",
+      "sha256": "A48F6D3FD9E701A3F1B6902221D74EECE56E944156CC4B5CCC0EF91C6EBBF990"
+    },
+    {
+      "path": "tools/verify-recovery.mjs",
+      "sha256": "FF2CFAF026B4B75CC4BEA8FC0C590211448E2F74DF84DE2CB68E4A444CCFFD73"
+    },
+    {
+      "path": "utils/producerTelemetry.ts",
+      "sha256": "204DA96D676868FFF65979CF5BF840E5CE769CFC99A00FCE13F0AC3C12649D37"
+    }
+  ]
+}

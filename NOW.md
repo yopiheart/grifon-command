@@ -1,79 +1,69 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; ordered merge authorized; accepted-source reproduction fix ready**
+**Stamped: 2026-10-13; PR178 and PR182 merged; PR183 final landing in progress**
 
-## Active task and result
-Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd, Grifon motion workflow.
+## Active task
+Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd; Grifon motion/music workflow.
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Branch: codex/orbital-elevenlabs-score, stacked on codex/elevenlabs-music-workflow309b97c5.
-Neil requested original music for latest23.15s Orbital film, fitted and blended with SFX.
-Shared defaults: ElevenLabs Music v2.5,1variant, custom duration, Lyrics Auto,
-No Finetune; instrumental. Sleek/premium120BPM electronic groove for this film.
-Exact spec/prompt/approval: workflows/assets/grifon-orbital-music-v2_5/.
-User approved: "Approve one generation, max360 credits". One attempt consumed.
-Form quoted360credits for24s. Output unexpectedly62.275917s; no retry authorized.
-Actual per-song credit deduction unverified; do not infer it from returned duration.
-Provider project:rYyQpjagFXWxpW2EBq5J, variationTvJs9mBk80hB9OkXthmN.
-NativeMP3 SHA:a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405.
-Private inputs/outputs:F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/.
-Original26SFX reconstructed byte-exact; lossless stereo48k23.15s stem prepared.
-SFX SHA:f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64.
-V1checkpoint:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v1.mp4.
-SHA:59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0.
-Neil heardv1: musicsourceokay, choppedjoins unprofessional. creative-feedback-v1.json bindsverbatim.
-V2accepted:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
-SHA:4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Onecontinuous28.028-51.178s passage; nointernalcuts/forcedpause; groove6s,chord22s,
-26SFX visualcontacts; five smooth/modest musicducks. Noadditionalcredits.
-Neil'sverdict:"AYAN PERFECT!!!!!!!!!!!!"; acceptance-v2.json bindsfilm+sourcecheckpoint.
-No reference/film/audio uploaded. No additional paidQA, stemgeneration or top-up.
-Code/model/prompt defaults unchanged. Neil authorized orderedreview/merge178->182->183.
-PR178 integratedmain9194cdbf at9dd3b011; localbuild/1573units/32focusedtests/staticPASS.
-PR178 finalheadCI38347262382 running; independentreviewPASS. Vercelaccountblocked.
-PR183 reviewP2: directrecipeoverwritesboundreceipt; reproduce.mjs isolatesunchangedrecipe.
-SixprivatecontrolsPASS; exactacceptedMP4reproduced; independentlyreviewedfixPASS.
+Branch: codex/orbital-elevenlabs-score; PR183 retargeted to main b6aaa64e.
+Neil authorized review, retarget/recheck and merge 178 -> 182 -> 183 in order.
+PR178 merged 2026-10-13T04:55:32Z: bcbe8302aadf363dd03e12aac34fedc3fbd4411d.
+Reviewed head 9dd3b011; CI 38347262382 passed all 35 execution jobs.
+PR182 merged 2026-10-13T05:29:52Z: b6aaa64ee05cf2056e90c84117dd0001db08611e.
+Reviewed head 0751a6d6; CI 38349081719 passed all 35 execution jobs.
+Both used normal merge commits; no bypass. Main push CI for PR178 also passed.
+PR183: https://github.com/yopiheart/grifon-command/pull/183.
+Only NOW.md conflicted during main integration; upstream product and CI retained.
 
-## ▶ NEXT ACTION
-DraftPR183:https://github.com/yopiheart/grifon-command/pull/183; backuppushed.
-StackedonPR182, thenPR178; finish178CI/merge, thenretarget/recheck/merge182and183.
-PR183finalretargetedreview/CIstillrequired. No manualdeployment or newpaidcallauthorized.
-V2creativelyaccepted; preserveexactfilm/recipecheckpoint. Keepv1/rejectionevidence.
-Preserve rawmusic/isolatedSFX privately; no standalone redistribution inGit.
-Creative listening and user acceptance must stay distinct from technicalchecks.
-Consumedapproval does not authorize another generation or paidQA.
+## Next action
+Require independent review and final-head GitHub CI before normal PR183 merge.
+Local landing checks cover Codex controls, syntax, diff and protected hashes.
+After merge, verify accepted delivery/source on fetched main and run librarian.
+Evidence and actual merge receipts: F:/GrifonLocalArchives/orbital-merge-20261013/.
+Librarian ran after PR178 and PR182; current task state reconciled here.
+Vercel reports "Account is blocked" separately from build/test verification.
+No repository protection, billing or deployment settings changed.
+No manual deployment, retry or new paid operation authorized.
 
-## Verification
-V1:check:codex26PASS; strictdecode/1389picturepacketsPASS;-16.04LUFS/-2.36dBTP.
-Cueplanhashfindingfixed; independentsource/mediaPASS, SFXexact. CreativeassemblyFAIL.
-V2strictdecode/1389packetpayloads+timestampsPASS;48kstereoAAC23.15s,
--16.06LUFS/-4.10dBTP; continuoussamplemappingerror<6e-8. Independentv2reviewPASS.
-Neil'splaybackacceptance nowPASS; historicaltechnicalreceipts remainunchanged.
-No product changes; applicationbuild/fulltests not applicable to this audio-only task.
-Spec SHA:3b4b8cc02cee6e7776543a066e3e8351e50ca9f1f9d80885a9bc688dee65a381.
-Prompt-file SHA:4231c67fe55628c1b68fd7f6056c585d6182cac61b0652a05e555f229834aa8e.
-Providerdurationadherence failed24s; generated-project screenshot and metadata saved.
-Workflow now records live Auto control as Lyrics; auto-improveOn approved for thiscall.
-Music workflow draftPR182:https://github.com/yopiheart/grifon-command/pull/182.
-PR182 is stacked on PR178; retarget in order after bases land. No newmerge requested.
+## Accepted film and editable source
+Film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
+SHA256: 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
+Neil accepted: "AYAN PERFECT!!!!!!!!!!!!"; acceptance-v2.json binds exact checkpoint.
+Picture: 1920x1080, 60fps, 1,389 frames, 23.15s; stereo 48k AAC.
+One continuous native 28.028-51.178s passage; no internal cuts or manufactured pause.
+26 existing SFX contacts; five modest smooth music ducks; -16.06 LUFS/-4.10 dBTP.
+Music source, recipe, plan, receipts and acceptance bytes remain frozen.
+Editable music: continuous-fit-plan.json, mix-continuous.mjs, continuous-mix-receipt.json.
+Editable picture: workflows/assets/grifon-pluto-adaptation/orbital.json, orbital.js, orbital.html.
+Original Orbital SHA: 691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48.
+Accepted shader SHA: f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df.
+Preservation-before.json captures nine film/source/acceptance bindings.
+V1 chopped assembly rejected; v1 film and creative-feedback-v1.json retained.
 
-## Prior film and measured benchmark
-Orbital original:workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4.
-SHA:691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48.
-1920x1080/60fps/1389frames/23.15s; editable source and evidence in samefolder.
-PR178:https://github.com/yopiheart/grifon-command/pull/178 (open when checked10/13).
-Reference:https://x.com/abdullah4204k/status/2100297302497997167.
-Original firstplayable39m07, allchecks46m41; authoring19m35; coldpicture8m49.
-Warmfull16.47s; headlinepreview39.25s, warm1.57s; sourcekey5f2cfc70c6372a94.
-Prior buildPASS,1476testsPASS/32defaultskips with2workers; source/packaging reviewPASS.
-Prior SIL license trailing-space diagnostic retained verbatim; no gatebypass.
-Prior rawmedia/caches:F:/GrifonBenchmarks/pluto-2100297302497997167/.
+## Reproduction fix and evidence
+Independent review found direct recipe execution overwrites its bound receipt.
+Separate reproduce.mjs stages the unchanged recipe in a fresh external tree.
+Six positive/negative controls passed, including proof of the original overwrite.
+Installed wrapper reproduced the exact accepted MP4 with ten source bindings unchanged.
+reproduction-verification.json and reproduction-installed-check.json retain proof.
+Accepted recipe/plan/receipt/film were not edited or rerendered over.
+Independent wrapper review passed; final integrated delta review still required.
+Prior v2 strict decode, all 1,389 picture packet/timestamp comparisons and mapping passed.
+User listening acceptance remains distinct from machine technical checks.
 
-## Protected delivery and prior landing
-Accepted shaderfilm:workflows/assets/grifon-shader-recreation/grifon-recreation-landscape-sound-v1.mp4.
-SHA:f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df.
-Player:artifacts/grifon-shader-sound-v1.html; sources unchanged.
-PR165/166/170 orderedlanding complete; main e6e083bf, CI38122594194 allpassed.
-Mergeaudit:F:/GrifonLocalArchives/pr166-media-archive/merge-receipts-20261011.json.
-PR173 closed; rejectedBodila absent. Do not redo prior merges.
-762oldQA/917501853bytes archived in F:/GrifonLocalArchives/pr166-media-archive/118a5e8a-qa-media.tar.
-TarSHA:12e3895e0bc1590205e315163c64297142bd4f740371f1c5b1d1cecacfae546d.
-Never reuse either consumed historicalautopsy approval; don'ttouch unrelated primarycheckout.
+## Music production boundaries and prior checks
+Shared workflow: workflows/background_music_production.md.
+Music v2.5, one variant, fitted duration, Lyrics Auto, No Finetune; instrumental default.
+This call approved auto-improve On and 24s selection, quote/cap 360 existing credits.
+One approved attempt consumed. Provider returned 62.275917s; duration adherence failed.
+Actual individual credit deduction unverified; no inference from output duration.
+Native MP3 SHA: a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405.
+Raw native music/SFX stay private under F:/GrifonBenchmarks/pluto-2100297302497997167/.
+No standalone audio redistribution, additional generation, paid QA or top-up.
+PR178 local build passed; 1,573 unit tests passed / 32 default skips; 32 focused tests passed.
+Codex 26 and bundle/voice/eval/domain/anchor/design/PS ASCII checks passed.
+PR182 Codex 26, diff and pointers passed; six Markdown files only.
+No tuned runtime prompt/model/schema changes; paid/live switches remain unset.
+Known upstream SIL license trailing space is retained verbatim with its hash.
+Prior PR165/166/170 landing complete; CI 38122594194 passed. Do not redo those merges.
+Both historical autopsy approvals consumed. PR173 closed; rejected Bodila absent.
+Do not touch unrelated primary Desktop checkout or other active sessions.

@@ -218,6 +218,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   //     via the marker. Dev-unmetered flags bypass inside peekOmniAllowance.
   const gate = await peekOmniAllowance(user.id, plan, finishedAdId);
   if (!gate.allowed) {
+    if (gate.unavailable) {
+      res.setHeader('Retry-After', '30');
+      return res.status(503).json({ error: 'quota_unavailable', detail: 'Allowance is temporarily unavailable. Retry shortly.' });
+    }
     return res.status(402).json({
       error: 'omni_quota_exceeded',
       reason: 'omni_allowance_exhausted',

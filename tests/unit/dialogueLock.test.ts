@@ -39,7 +39,7 @@ const capturePrompt = async (): Promise<string> => {
   fetchMock.mockResolvedValue({
     ok: true,
     status: 200,
-    json: async () => ({ text: '[]' }),
+    json: async () => ({ text: '[{"type":"cinematic","scriptLine":"Hook line here.","prompt":"Hook shot."},{"type":"talking","scriptLine":"Magaan siya sa balat at hindi malagkit kahit mag-commute ka pa.","prompt":"The performer speaks the scripted line."}]' }),
   });
 
   const storyboard = [

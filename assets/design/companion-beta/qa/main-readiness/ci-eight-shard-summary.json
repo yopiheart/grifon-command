@@ -1,0 +1,638 @@
+{
+  "capturedUtc": "2026-10-11T09:09:29.389Z",
+  "runId": 38126267694,
+  "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694",
+  "status": "completed",
+  "conclusion": "failure",
+  "identity": {
+    "head": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+    "base": "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+    "prMergeCommit": "9e06cbb1903811b7dce3a981256db4d23d7bcc3c",
+    "mergeParents": [
+      "e6e083bf3c880cfcab4e908d320d9d5f83fabaa0",
+      "ad20cd6222ac672a77418a8346ec0651661cdc79"
+    ],
+    "headTree": "ef1705c89b21cc4f69c58236ea8f2921ca922fb3",
+    "mergeTree": "ef1705c89b21cc4f69c58236ea8f2921ca922fb3",
+    "localHead": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+    "localTree": "ef1705c89b21cc4f69c58236ea8f2921ca922fb3",
+    "allTreesMatch": true
+  },
+  "browser": {
+    "planned": 224,
+    "uniqueReported": 199,
+    "duplicateCaseKeysAcrossShards": [],
+    "attempts": 212,
+    "firstAttemptPasses": 186,
+    "passedIncludingFlakes": 189,
+    "flakyPasses": 3,
+    "failed": 10,
+    "skipped": 0,
+    "retryAttempts": 13,
+    "persistentFailures": 10,
+    "unresolvedFailedFirstAttempts": 0,
+    "countsReferTo": "Completed reporter records; a test/attempt in progress at cancellation is unreported, not a pass or skip",
+    "unreported": 25,
+    "caseKeySetSha256": "88addc92e27998345b669427a21c919a69eab941677d2cc3e1d2dd5b300d153f",
+    "flakyCases": [
+      {
+        "shard": 2,
+        "key": "[chromium] › tests/e2e/companion-beta.spec.ts:25:34 › guided beta limitations are visible at 390px",
+        "status": "passed",
+        "flaky": true,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-beta.spec.ts:25:34 › guided beta limitations are visible at 390px",
+            "status": "failed",
+            "index": 15,
+            "retry": 0,
+            "duration": "727ms",
+            "timestamp": "2026-10-11T08:55:05.7582405Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-beta.spec.ts:25:34 › guided beta limitations are visible at 390px",
+            "status": "passed",
+            "index": 16,
+            "retry": 1,
+            "duration": "7.5s",
+            "timestamp": "2026-10-11T08:55:14.8489543Z"
+          }
+        ]
+      },
+      {
+        "shard": 5,
+        "key": "[chromium] › tests/e2e/companion-startup.spec.ts:234:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px",
+        "status": "passed",
+        "flaky": true,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-startup.spec.ts:234:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px",
+            "status": "failed",
+            "index": 14,
+            "retry": 0,
+            "duration": "2.7s",
+            "timestamp": "2026-10-11T08:56:33.5862289Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-startup.spec.ts:234:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px",
+            "status": "passed",
+            "index": 15,
+            "retry": 1,
+            "duration": "52.7s",
+            "timestamp": "2026-10-11T08:57:28.3562752Z"
+          }
+        ]
+      },
+      {
+        "shard": 5,
+        "key": "[chromium] › tests/e2e/companion-startup.spec.ts:234:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px",
+        "status": "passed",
+        "flaky": true,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-startup.spec.ts:234:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px",
+            "status": "failed",
+            "index": 19,
+            "retry": 0,
+            "duration": "1.3s",
+            "timestamp": "2026-10-11T08:58:26.5613617Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-startup.spec.ts:234:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px",
+            "status": "passed",
+            "index": 20,
+            "retry": 1,
+            "duration": "56.8s",
+            "timestamp": "2026-10-11T08:59:25.4224958Z"
+          }
+        ]
+      }
+    ],
+    "failureCases": [
+      {
+        "shard": 2,
+        "key": "[chromium] › tests/e2e/companion-chat.spec.ts:47:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:47:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions",
+            "status": "failed",
+            "index": 26,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:01:34.0461952Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:47:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions",
+            "status": "failed",
+            "index": 27,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:02:44.2639725Z"
+          }
+        ]
+      },
+      {
+        "shard": 2,
+        "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 320px layout and real avatar bridge",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 320px layout and real avatar bridge",
+            "status": "failed",
+            "index": 30,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:04:49.0295589Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 320px layout and real avatar bridge",
+            "status": "failed",
+            "index": 31,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:05:57.6608150Z"
+          }
+        ]
+      },
+      {
+        "shard": 3,
+        "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 375px layout and real avatar bridge",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 375px layout and real avatar bridge",
+            "status": "failed",
+            "index": 1,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:54:24.1239857Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 375px layout and real avatar bridge",
+            "status": "failed",
+            "index": 2,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:55:31.7991704Z"
+          }
+        ]
+      },
+      {
+        "shard": 3,
+        "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 390px layout and real avatar bridge",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 390px layout and real avatar bridge",
+            "status": "failed",
+            "index": 3,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:56:37.9683244Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 390px layout and real avatar bridge",
+            "status": "failed",
+            "index": 4,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:57:45.5310767Z"
+          }
+        ]
+      },
+      {
+        "shard": 3,
+        "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 1280px layout and real avatar bridge",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 1280px layout and real avatar bridge",
+            "status": "failed",
+            "index": 5,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:58:51.0490688Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 1280px layout and real avatar bridge",
+            "status": "failed",
+            "index": 6,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:59:58.1971341Z"
+          }
+        ]
+      },
+      {
+        "shard": 3,
+        "key": "[chromium] › tests/e2e/companion-chat.spec.ts:204:1 › allowance and preset gates dispatch no generation or revision until permitted",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:204:1 › allowance and preset gates dispatch no generation or revision until permitted",
+            "status": "failed",
+            "index": 10,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:02:23.7346465Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-chat.spec.ts:204:1 › allowance and preset gates dispatch no generation or revision until permitted",
+            "status": "failed",
+            "index": 11,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:03:31.6150078Z"
+          }
+        ]
+      },
+      {
+        "shard": 4,
+        "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 1280x900",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 1280x900",
+            "status": "failed",
+            "index": 10,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:57:34.2183518Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 1280x900",
+            "status": "failed",
+            "index": 11,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:58:40.0669835Z"
+          }
+        ]
+      },
+      {
+        "shard": 4,
+        "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 375x667",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 375x667",
+            "status": "failed",
+            "index": 12,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T08:59:44.1302920Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 375x667",
+            "status": "failed",
+            "index": 13,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:00:50.0586910Z"
+          }
+        ]
+      },
+      {
+        "shard": 4,
+        "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 390x844",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 390x844",
+            "status": "failed",
+            "index": 14,
+            "retry": 0,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:01:54.4988544Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 390x844",
+            "status": "failed",
+            "index": 15,
+            "retry": 1,
+            "duration": "1.1m",
+            "timestamp": "2026-10-11T09:03:00.1419263Z"
+          }
+        ]
+      },
+      {
+        "shard": 4,
+        "key": "[chromium] › tests/e2e/companion-navigation.spec.ts:35:1 › New chat preserves a pre-generation conversation and returns in one click",
+        "status": "failed",
+        "flaky": false,
+        "records": [
+          {
+            "key": "[chromium] › tests/e2e/companion-navigation.spec.ts:35:1 › New chat preserves a pre-generation conversation and returns in one click",
+            "status": "failed",
+            "index": 19,
+            "retry": 0,
+            "duration": "11.7s",
+            "timestamp": "2026-10-11T09:04:53.9222836Z"
+          },
+          {
+            "key": "[chromium] › tests/e2e/companion-navigation.spec.ts:35:1 › New chat preserves a pre-generation conversation and returns in one click",
+            "status": "failed",
+            "index": 20,
+            "retry": 1,
+            "duration": "14.5s",
+            "timestamp": "2026-10-11T09:05:09.6158938Z"
+          }
+        ]
+      }
+    ],
+    "shards": [
+      {
+        "jobId": 114431167916,
+        "name": "e2e (1)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167916",
+        "durationSeconds": 543,
+        "planned": 28,
+        "uniqueCases": 28,
+        "attemptCount": 28,
+        "passed": 28,
+        "firstAttemptPasses": 28,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "failedCases": []
+      },
+      {
+        "jobId": 114431167872,
+        "name": "e2e (2)",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167872",
+        "durationSeconds": 893,
+        "planned": 28,
+        "uniqueCases": 28,
+        "attemptCount": 31,
+        "passed": 26,
+        "firstAttemptPasses": 25,
+        "flakyPasses": 1,
+        "failed": 2,
+        "skipped": 0,
+        "retryAttempts": 3,
+        "failedCases": [
+          "[chromium] › tests/e2e/companion-chat.spec.ts:47:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions",
+          "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 320px layout and real avatar bridge"
+        ]
+      },
+      {
+        "jobId": 114431167958,
+        "name": "e2e (3)",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167958",
+        "durationSeconds": 922,
+        "planned": 28,
+        "uniqueCases": 14,
+        "attemptCount": 18,
+        "passed": 10,
+        "firstAttemptPasses": 10,
+        "flakyPasses": 0,
+        "failed": 4,
+        "skipped": 0,
+        "retryAttempts": 4,
+        "failedCases": [
+          "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 375px layout and real avatar bridge",
+          "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 390px layout and real avatar bridge",
+          "[chromium] › tests/e2e/companion-chat.spec.ts:121:3 › 1280px layout and real avatar bridge",
+          "[chromium] › tests/e2e/companion-chat.spec.ts:204:1 › allowance and preset gates dispatch no generation or revision until permitted"
+        ]
+      },
+      {
+        "jobId": 114431167864,
+        "name": "e2e (4)",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167864",
+        "durationSeconds": 918,
+        "planned": 28,
+        "uniqueCases": 17,
+        "attemptCount": 21,
+        "passed": 13,
+        "firstAttemptPasses": 13,
+        "flakyPasses": 0,
+        "failed": 4,
+        "skipped": 0,
+        "retryAttempts": 4,
+        "failedCases": [
+          "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 1280x900",
+          "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 375x667",
+          "[chromium] › tests/e2e/companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 390x844",
+          "[chromium] › tests/e2e/companion-navigation.spec.ts:35:1 › New chat preserves a pre-generation conversation and returns in one click"
+        ]
+      },
+      {
+        "jobId": 114431167969,
+        "name": "e2e (5)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167969",
+        "durationSeconds": 631,
+        "planned": 28,
+        "uniqueCases": 28,
+        "attemptCount": 30,
+        "passed": 28,
+        "firstAttemptPasses": 26,
+        "flakyPasses": 2,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 2,
+        "failedCases": []
+      },
+      {
+        "jobId": 114431167867,
+        "name": "e2e (6)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167867",
+        "durationSeconds": 281,
+        "planned": 28,
+        "uniqueCases": 28,
+        "attemptCount": 28,
+        "passed": 28,
+        "firstAttemptPasses": 28,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "failedCases": []
+      },
+      {
+        "jobId": 114431167884,
+        "name": "e2e (7)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167884",
+        "durationSeconds": 255,
+        "planned": 28,
+        "uniqueCases": 28,
+        "attemptCount": 28,
+        "passed": 28,
+        "firstAttemptPasses": 28,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "failedCases": []
+      },
+      {
+        "jobId": 114431167930,
+        "name": "e2e (8)",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167930",
+        "durationSeconds": 283,
+        "planned": 28,
+        "uniqueCases": 28,
+        "attemptCount": 28,
+        "passed": 28,
+        "firstAttemptPasses": 28,
+        "flakyPasses": 0,
+        "failed": 0,
+        "skipped": 0,
+        "retryAttempts": 0,
+        "failedCases": []
+      }
+    ]
+  },
+  "verify": {
+    "conclusion": "success",
+    "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167652",
+    "unitTests": {
+      "passed": 1572,
+      "existingSkipped": 32,
+      "failed": 0,
+      "total": 1604
+    },
+    "unitFiles": {
+      "passed": 127,
+      "skipped": 9,
+      "total": 136
+    },
+    "durationSeconds": 141.08,
+    "buildSeconds": 3.38,
+    "nativeContracts": {
+      "passed": 25,
+      "platformSkipped": 1,
+      "failed": 0
+    },
+    "permissionGate": {
+      "passed": 25,
+      "failed": 0
+    },
+    "otherGates": [
+      "OK: every scripts/*.ps1 is pure ASCII.",
+      "✓ built in 3.38s",
+      "[bundle-leak] OK — scanned 11 bundle file(s), 0 crown-jewel markers found.",
+      "voice-lint sync ok — 2 funnel katulad ng _template (222b3ede9f9b)",
+      "Eval prompt sync: 6 covered pairs match. Other harness prompts, models and runtime behavior are outside this check.",
+      "pass=25 fail=0"
+    ]
+  },
+  "database": {
+    "conclusion": "success",
+    "url": "https://github.com/yopiheart/grifon-command/actions/runs/38126267694/job/114431167795",
+    "totalChecks": 24,
+    "checkNames": [
+      "Existing SQL transactional assertions",
+      "video_ads: original monthly duplicate-charge rejection",
+      "video_ads: original topup duplicate-charge rejection",
+      "omni_ads: original monthly duplicate-charge rejection",
+      "omni_ads: original topup duplicate-charge rejection",
+      "video_ads: same ad monthly exactly once",
+      "video_ads: same ad topup exactly once",
+      "video_ads: different ads last monthly slot",
+      "video_ads: different ads last topup credit",
+      "video_ads: rolled back holder then waiter",
+      "video_ads: rolled back topup holder then waiter",
+      "video_ads: monthly lost response replay and aged receipt",
+      "video_ads: topup lost response replay and aged receipt",
+      "omni_ads: same ad monthly exactly once",
+      "omni_ads: same ad topup exactly once",
+      "omni_ads: different ads last monthly slot",
+      "omni_ads: different ads last topup credit",
+      "omni_ads: rolled back holder then waiter",
+      "omni_ads: rolled back topup holder then waiter",
+      "omni_ads: monthly lost response replay and aged receipt",
+      "omni_ads: topup lost response replay and aged receipt",
+      "SET ROLE anon: denied",
+      "SET ROLE authenticated: denied",
+      "SET ROLE service_role: allowed"
+    ],
+    "observedIndependentLockCases": 12,
+    "cleanup": "Owned database and bootstrap roles dropped",
+    "runtime": "Isolated PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2); no application or provider connections",
+    "limitations": "Isolated PostgreSQL only; not target Supabase rollout or PostgREST verification"
+  },
+  "artifacts": {
+    "conclusion": "success",
+    "anchorCount": 5,
+    "useful": [
+      "  page 15 KB",
+      "  artifacts/eli5-image-gate.html unchanged",
+      "check:artifact-anchors ok"
+    ]
+  },
+  "shardCaps": [
+    {
+      "shard": 3,
+      "capAnnotations": [
+        "The job has exceeded the maximum execution time of 15m0s"
+      ]
+    },
+    {
+      "shard": 4,
+      "capAnnotations": [
+        "The job has exceeded the maximum execution time of 15m0s"
+      ]
+    }
+  ],
+  "flakyCases": [
+    "companion-beta.spec.ts guided limitations 390px: screenshot protocol failure; retry passed",
+    "companion-startup.spec.ts cold 390px: pre-release left drift 166.984375px; retry passed",
+    "companion-startup.spec.ts cold 1280px: initial slot expected 64px received 56px; retry passed"
+  ],
+  "pr": {
+    "url": "https://github.com/yopiheart/grifon-command/pull/177",
+    "draft": true,
+    "mergeable": true,
+    "mergeableState": "unstable"
+  },
+  "commitStatuses": {
+    "sha": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+    "state": "success",
+    "statuses": [
+      {
+        "context": "Vercel",
+        "description": "Deployment has completed",
+        "state": "success",
+        "target_url": "https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/2Lncf2Ge1b9aKUnXqEN6rFkVu9M5",
+        "updated_at": "2026-10-11T08:53:45Z"
+      }
+    ]
+  },
+  "limits": [
+    "GitHub CI with fixture/provider interception; no paid/live generation executed",
+    "Database proof is isolated PostgreSQL17.11, not target Supabase/PostgREST rollout proof",
+    "Vercel status is deployment metadata; hosted render/login review is separate",
+    "This observer performed read-only GitHub operations and ignored evidence writes only; no rerun/cancel/merge/deploy"
+  ],
+  "traceTimingReceipt": ".tmp/companion-main-readiness/qa/ci-eight-shard/trace-timing-compact.json",
+  "fullRunSummary": ".tmp/companion-main-readiness/qa/ci-eight-shard/summary.json",
+  "caseLedger": ".tmp/companion-main-readiness/qa/ci-eight-shard/case-ledger.json"
+}

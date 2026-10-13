@@ -1,0 +1,284 @@
+{
+  "phase": "full",
+  "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/three-specs.config.ts",
+  "exitCode": 1,
+  "ci": true,
+  "expectationTimeoutMs": 15000,
+  "testTimeoutMs": 60000,
+  "retries": 0,
+  "workers": 1,
+  "source": "Fresh worker 3 spec copies; unchanged assertions",
+  "stats": {
+    "startTime": "2026-10-11T08:36:32.949Z",
+    "duration": 462531.39300000004,
+    "expected": 41,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "caseCount": 43,
+  "attemptCount": 43,
+  "failures": [
+    {
+      "file": "companion-chat.spec.ts",
+      "title": "draft reload/account isolation, error retry and fixture checkpoint restore",
+      "line": 97,
+      "expectedStatus": "passed",
+      "status": "unexpected",
+      "attempts": [
+        {
+          "status": "failed",
+          "durationMs": 31595,
+          "retry": 0,
+          "errors": [
+            {
+              "message": "Error: expect(locator).toBeEnabled() failed\n\nLocator:  getByRole('button', { name: 'Generate storyboard', exact: true })\nExpected: enabled\nReceived: disabled\nTimeout:  15000ms\n\nCall log:\n  - Expect \"toBeEnabled\" with timeout 15000ms\n  - waiting for getByRole('button', { name: 'Generate storyboard', exact: true })\n    29 × locator resolved to <button disabled class=\"min-h-11 px-6 py-3 font-semibold normal-case tracking-normal text-sm transition-all duration-150 transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none font-sans rounded-none bg-[#FFCC00] text-black hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] active:translate-y-1 rounded-full min-h-11 min-w-11 !rounded-xl !font-sans !text-sm !font-semibold !normal-case !tracking-normal mt-4 w-full\">Generate storyboard</button>\n       - unexpected value \"disabled\"\n\n\n   97 | test('draft reload/account isolation, error retry and fixture checkpoint restore', async ({ page }) => {\n   98 |   await openFixture(page); await brief(page);\n>  99 |   await page.reload(); await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toBeEnabled();\n      |                                                                                                             ^\n  100 |   await page.evaluate(() => (window as any).companionFixture.account('fixture-user-b'));\n  101 |   await expect(page.getByText('North Coffee', { exact: true })).toHaveCount(0);\n  102 |   await page.evaluate(() => (window as any).companionFixture.account('fixture-user-a'));\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-chat.spec.ts:99:109",
+              "location": {
+                "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-chat.spec.ts",
+                "column": 109,
+                "line": 99
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "companion-typing.spec.ts",
+      "title": "leave-and-return during typing retains the accepted answer and its next question",
+      "line": 106,
+      "expectedStatus": "passed",
+      "status": "unexpected",
+      "attempts": [
+        {
+          "status": "failed",
+          "durationMs": 16692,
+          "retry": 0,
+          "errors": [
+            {
+              "message": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('conversation-scroll').getByText('Persist this accepted answer', { exact: true })\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 15000ms\n  - waiting for getByTestId('conversation-scroll').getByText('Persist this accepted answer', { exact: true })\n\n\n  110 |     if (lifecycle === 'reload') await page.reload();\n  111 |     else { await page.goto('about:blank'); await page.goto('/companion-chat-preview.html'); }\n> 112 |     await expect(page.getByTestId('conversation-scroll').getByText('Persist this accepted answer', { exact: true })).toBeVisible();\n      |                                                                                                                      ^\n  113 |     await page.clock.runFor(1000);\n  114 |     await expect(typing(page)).toHaveCount(0);\n  115 |     await expect(page.locator('.companion-message-user')).toHaveCount(1);\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-typing.spec.ts:112:118",
+              "location": {
+                "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\repro\\companion-typing.spec.ts",
+                "column": 118,
+                "line": 112
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sourceFilesChecked": 455,
+  "sourceChanges": [
+    {
+      "path": "tests/e2e/companion-account.spec.ts",
+      "before": "B05950172E1CAAE8F394DD94C987E3BC844141F1A63DE7DEFFBC1A13FC89BDC9",
+      "after": "7DD8C4B6DEE133836E7C7420FCA7E7A0D81751769FB91278B244DBC67BF69E81"
+    }
+  ],
+  "servedSourceHashes": [
+    "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+  ],
+  "rejectedExternalRequests": 0,
+  "pageErrors": [],
+  "startup": [
+    {
+      "name": "full-cold-ready-1280.json",
+      "actualColoredPixels": 4472,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-cold-ready-375.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-cold-ready-390.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-fast-1280.json",
+      "actualColoredPixels": 4472,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-fast-375.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-fast-390.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-reduced-1280.json",
+      "actualColoredPixels": 4472,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": []
+    },
+    {
+      "name": "full-reduced-375.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": []
+    },
+    {
+      "name": "full-reduced-390.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": []
+    },
+    {
+      "name": "full-reload-ready-1280.json",
+      "actualColoredPixels": 4472,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-reload-ready-375.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-reload-ready-390.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-retry-ready-1280.json",
+      "actualColoredPixels": 4472,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-retry-ready-375.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    },
+    {
+      "name": "full-retry-ready-390.json",
+      "actualColoredPixels": 3431,
+      "readyMessages": 1,
+      "opacity": 1,
+      "generationCalls": 0,
+      "revealAnimations": [
+        {
+          "durationMs": 200,
+          "midpointOpacity": 0.961383,
+          "playbackRate": 1
+        }
+      ]
+    }
+  ],
+  "scope": "Local Playwright Chromium, real avatar, own isolated fixture-only server 127.0.0.1:5187; not hosted Linux/full-suite proof",
+  "instrumentation": {
+    "actualInstrumentedCases": 24,
+    "limitation": "The shared import registers hooks only in the first spec file loaded per worker. Served App identity/pageerror/external-request counters apply only to these recorded cases. Every test retained its own repository fixture network guards and behavior assertions."
+  },
+  "sourceChangeExplanation": "The account spec gained the parent-authorized shell-ready wait while this 43-case run was active. Account is outside these three tested specs; all three tested specs and application source stayed frozen. No tracked file was edited by this smoke agent."
+}

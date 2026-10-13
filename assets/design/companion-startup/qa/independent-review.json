@@ -1,0 +1,212 @@
+{
+  "reviewType": "Independent report-only adversarial correctness, contract smoke and brand review",
+  "reviewedAt": "2026-10-07",
+  "baseCommit": "bccbc2dc",
+  "scope": [
+    "components/CompanionChat/CompanionAvatar.tsx",
+    "components/CompanionChat/companionChat.css",
+    "tests/e2e/companion-startup.spec.ts",
+    "tests/e2e/companion-startup.config.ts",
+    "tests/e2e/companion-continuity.spec.ts: cold-load expectation"
+  ],
+  "frozenSourceHashes": {
+    "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+    "components/CompanionChat/companionChat.css": "81697a3d2f1b912419aff69e6d30111c3e034d1d4bbab18951ade3ef720d086c"
+  },
+  "finalTestHashes": {
+    "tests/e2e/companion-startup.spec.ts": "10f3479d98606c73072e21db161bb257e584d7a94a4e623adb79b098d9d09d16",
+    "tests/e2e/companion-startup.config.ts": "4d257800381718782f3e41ea72d0dce1017c7a6a40879ee8a33bd5b9f3c0e252",
+    "tests/e2e/companion-continuity.spec.ts": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c"
+  },
+  "verdicts": {
+    "correctness": "PASS",
+    "contractSmoke": "PASS",
+    "brand": "BRAND_PASS",
+    "critical": 0,
+    "nit": 0,
+    "actionableFindings": []
+  },
+  "score": {
+    "philosophyCoherence": {
+      "score": 9,
+      "reason": "Neutral zinc canvas and restrained gold action state retained."
+    },
+    "visualHierarchy": {
+      "score": 9,
+      "reason": "Small loading cue and single compact live identity remain subordinate to conversation."
+    },
+    "executionCraft": {
+      "score": 9,
+      "reason": "Stable square slot, token-based reveal, contained still and clean retry icon at 2x."
+    },
+    "functionality": {
+      "score": 10,
+      "reason": "Mobile/desktop loading, failure/retry, reduced motion, late readiness and warm identity checks passed."
+    },
+    "innovationBrandDistinctiveness": {
+      "score": 8,
+      "reason": "Accepted live Grifon mascot remains the distinctive identity; the loading treatment stays quiet."
+    },
+    "total": 45,
+    "maximum": 50,
+    "inAppThreshold": 35,
+    "quickWins": []
+  },
+  "commands": [
+    {
+      "command": "node assets/design/companion-startup/qa/independent/smoke.mjs",
+      "exitCode": 0,
+      "scenarios": 8,
+      "passed": 8,
+      "assertions": 65
+    },
+    {
+      "command": "node assets/design/companion-startup/qa/independent/timing.mjs",
+      "exitCode": 0,
+      "viewports": [
+        [
+          375,
+          667
+        ],
+        [
+          1280,
+          900
+        ]
+      ]
+    }
+  ],
+  "observedContract": [
+    {
+      "criterion": "No still-image startup flash on cold entry or full refresh",
+      "result": "PASS",
+      "evidence": "independent/observations.json and initial/slow/refresh-initial screenshots at both viewports; no outer still insertion in sampled startup lifecycle"
+    },
+    {
+      "criterion": "Stable 56px mobile / 64px desktop avatar slot",
+      "result": "PASS",
+      "evidence": "Equal square slot bounds through held-model startup, ready, refresh, failure and recovery"
+    },
+    {
+      "criterion": "Restrained live reveal only after successful rendered pixels",
+      "result": "PASS",
+      "evidence": "WebGL2 draw/readPixels public seam recorded 3429 colored pixels at 375px and 4471 at 1280px before bridge ready; inner still hidden; normal opacity transition 0.2s with token expressive easing; intermediate opacity sampled"
+    },
+    {
+      "criterion": "Loading indicator appears after quiet CSS delay",
+      "result": "PASS",
+      "evidence": "independent/timing.json: first visible animation currentTime 300ms, effect delay 300ms, playbackRate 1; native document.timeline elapsed 316.7ms at both viewports; no visible sample before 280ms native timeline"
+    },
+    {
+      "criterion": "Reduced motion: no dot motion or reveal fade",
+      "result": "PASS",
+      "evidence": "Reduced-loading screenshots and computed dot animation none/opacity1; iframe transition none/0s; all sampled positive opacity exactly1 at both viewports"
+    },
+    {
+      "criterion": "Genuine renderer failure offers truthful still and usable 44px retry",
+      "result": "PASS",
+      "evidence": "Independent scene.bin HTTP503; failure status retained; retry target44x44, radius12px, lucide RotateCw16x16 and shrink0, gold2px focus; still square object-contain; retry removes still and new actual render recovers"
+    },
+    {
+      "criterion": "Chat remains usable while loading and after failure/timeout",
+      "result": "PASS",
+      "evidence": "Typed/received messages persisted during held load, 503 failure and clock-driven timeout; refresh and retry retain conversation"
+    },
+    {
+      "criterion": "30s timeout and valid late-ready recovery",
+      "result": "PASS",
+      "evidence": "Playwright page.clock.install and fastForward30010 with scene.bin held produced still+retry; real release and resumed clock produced colored pixels+live reveal; post-recovery fastForward31000 left ready live renderer"
+    },
+    {
+      "criterion": "Warm saved/New-chat identity and reaction isolation preserved",
+      "result": "PASS",
+      "evidence": "375px saved chat loops retain iframe/window/canvas identities, draft and messages; reading state restored, old working state reset to idle in New chat; no new renderer resource requests"
+    }
+  ],
+  "brandChecklist": [
+    {
+      "item": "Canvas/action palette",
+      "result": "PASS",
+      "evidence": "No new black canvas or non-gold action accent; loading dots neutral zinc400; focused retry gold"
+    },
+    {
+      "item": "Filter/elevation budget",
+      "result": "PASS",
+      "evidence": "Frozen diff adds no blur, backdrop-filter, box-shadow or filter"
+    },
+    {
+      "item": "Control primitives/rounding",
+      "result": "PASS",
+      "evidence": "Existing Button retained; failure retry computes12px radius and44px square target; no new form/panel/primary CTA"
+    },
+    {
+      "item": "Type/legibility",
+      "result": "PASS",
+      "evidence": "Real preview computes Inter sans-serif and14px ordinary message input; retry is icon-only; cue dots neutral zinc400; accessible loading status text"
+    },
+    {
+      "item": "Icons/rhythm",
+      "result": "PASS",
+      "evidence": "Existing lucide RotateCw renders fully at2x,16px square and shrink0; no new icon+text pair"
+    },
+    {
+      "item": "Responsive fit/images",
+      "result": "PASS",
+      "evidence": "375x667 and1280x900 initial/slow/ready/error screenshots inspected, including2x elements; overflow0; still natural512x512 in56/64 square with object-contain; no crop/squash"
+    },
+    {
+      "item": "Motion/accessibility",
+      "result": "PASS",
+      "evidence": "Shared DUR/EASE tokens; .2s reveal; reduced-motion transitionnone and no dot animation; no new transparency effects"
+    }
+  ],
+  "testValidity": {
+    "result": "PASS for reviewed instrumentation",
+    "baselineEvidence": "Existing baseline-run.json inspected: original bccbc2dc held-model startup check exited1 because visibleStill was true. Reviewer did not mutate source to rerun baseline.",
+    "readinessEvidence": "Tests observe actual nontransparent colored WebGL pixels at draw seam and correlate readiness with paint, independently of app debug readiness.",
+    "timingCorrection": "Final test stores DOM insertion and sampled cue paint on document.timeline, retains >=280ms bound and checks absence of painted cue before bound. This is valid native CSS animation delay verification. Retained performance epoch timestamps are separate evidence, not interchangeable with native CSS timeline.",
+    "sharedExecution": "The startup_smoke agent subsequently reported final startup13/13 and continuity6/6 passing with final test SHA10f3479d98606c73072e21db161bb257e584d7a94a4e623adb79b098d9d09d16 and unchanged frozen source. These shared-suite executions are separate from this reviewer's independently executed8/8 scenarios and65 assertions; their authoritative command logs and reports are owned by startup_smoke."
+  },
+  "clockCaveat": {
+    "nativeTimelineMilliseconds": {
+      "375": 316.7,
+      "1280": 316.7
+    },
+    "separatePerformanceElapsedMilliseconds": {
+      "375": 216.90000000596046,
+      "1280": 226.5
+    },
+    "interpretation": "Native CSS animation currentTime/delay controls the visual reveal. Separate headless Edge performance timestamps differed in the independent probe; the report does not claim a physical-phone or wall-clock responsiveness benchmark.",
+    "timerSeam": "Playwright virtual clock was used only for the existing30s deadline/recovery check; real network-held assets and actual WebGL rendering established later readiness."
+  },
+  "environment": {
+    "browser": "Microsoft Edge headless via installed Playwright",
+    "contexts": "Fresh isolated contexts; no owner browser profile",
+    "preview": "http://127.0.0.1:5173/companion-chat-preview.html",
+    "network": "API/provider routes blocked; Google font GETs allowed; no blocked provider request attempts or page errors observed",
+    "providers": "No live generation, rendering provider, production data or real microphone used",
+    "sourceEdits": "None",
+    "realAccountOrPhysicalPhone": "Not exercised"
+  },
+  "evidence": {
+    "directory": "assets/design/companion-startup/qa/independent",
+    "manifest": "independent/evidence-manifest.json",
+    "observations": "independent/observations.json",
+    "timing": "independent/timing.json",
+    "screenshotsInspected": [
+      "initial-375.png",
+      "slow-375.png",
+      "ready-375.png",
+      "error-375.png",
+      "initial-1280.png",
+      "slow-1280.png",
+      "ready-1280.png",
+      "error-1280.png",
+      "slow-375-element-2x.png",
+      "ready-375-element-2x.png",
+      "error-focused-375-element-2x.png",
+      "slow-1280-element-2x.png",
+      "ready-1280-element-2x.png",
+      "error-focused-1280-element-2x.png"
+    ]
+  }
+}

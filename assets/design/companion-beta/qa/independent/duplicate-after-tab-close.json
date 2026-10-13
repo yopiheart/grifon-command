@@ -1,0 +1,11 @@
+{
+  "calls": 2,
+  "storedStage": {
+    "id": "scene_images",
+    "label": "scene_images",
+    "status": "running",
+    "attempts": 1
+  },
+  "unexpected": [],
+  "meaning": "Two simulated image submissions for one missing scene after tab close. All provider/network calls mocked."
+}

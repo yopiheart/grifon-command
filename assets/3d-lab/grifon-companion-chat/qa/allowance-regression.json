@@ -1,0 +1,9 @@
+{
+  "method": "Actual App and ProducerFlow browser flow with public billing endpoint held pending; route-only historical CompanionChat wrapper without the newly added quotaReady guard. No production files modified.",
+  "command": "COMPANION_OLD_QUOTA=1 npm run test:e2e -- --config tests/e2e/companion.config.ts --grep 'actual route fails closed'",
+  "originalExitCode": 1,
+  "originalDurationSeconds": 12.5,
+  "originalFailure": "Expected 0 Generate storyboard buttons while allowance pending; received 1.",
+  "paidCalls": 0,
+  "fixedResult": "See final-verification.json after final suite."
+}

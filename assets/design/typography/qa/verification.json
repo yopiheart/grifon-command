@@ -1,0 +1,111 @@
+{
+  "recordedAt": "2026-10-07T03:09:46.651Z",
+  "head": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "originalIndexBlob": "f858e5a67e2d050d3819d2fca743bec365f1517f",
+  "originalBaseline": {
+    "exitCode": 1,
+    "failed": 3,
+    "viewportWidths": [
+      375,
+      390,
+      1280
+    ],
+    "note": "The first baseline ran before source edits. Subsequent baseline replays pin the same original global HTML rules while rendering the real shared primitives.",
+    "legacyWeightsDemonstratedToFail": true,
+    "pinnedPublicSnapshot": "preedit-index.json",
+    "snapshotEncoding": "base64",
+    "snapshotByteLength": 14323,
+    "originalBytesPreserved": true,
+    "decodedGitBlob": "f858e5a67e2d050d3819d2fca743bec365f1517f",
+    "exactImmutableGitBlobCompared": true,
+    "cachedWhitespaceCheckExitCode": 0
+  },
+  "finalTypography": {
+    "command": "npx.cmd playwright test --config tests/e2e/typography.config.ts",
+    "exitCode": 0,
+    "passed": 6,
+    "viewportWidths": [
+      375,
+      390,
+      1280
+    ],
+    "durationSeconds": 15.7,
+    "legacyWeightsVerified": {
+      "selectDeclared500": 400,
+      "inputDeclared500": 400,
+      "textareaDeclared600": 400
+    }
+  },
+  "companionTypography": {
+    "exitCode": 0,
+    "passed": 4,
+    "durationSeconds": 8.2,
+    "repeatedAfterFinalFontWeightCorrection": false
+  },
+  "companionRenderer": {
+    "exitCode": 0,
+    "passed": 7,
+    "durationSeconds": 31.1,
+    "viewportWidths": [
+      320,
+      375,
+      390,
+      1280
+    ],
+    "repeatedAfterFinalFontWeightCorrection": true,
+    "mainSHA256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "runtimeSHA256": {
+      "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+      "assets/3d-lab/grifon-companion-live/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b"
+    }
+  },
+  "limits": [
+    "Public landing and login use the real App with only a browser-local signed-out Supabase boot stub because the reused server lacks VITE Supabase configuration.",
+    "No authentication, production data, paid generation, or provider integration was exercised.",
+    "The exact /api/_lib/omniPresets.ts GET script import is a static Vite module; callable API routes and other external requests are aborted.",
+    "Browser automation used Chromium via installed Microsoft Edge on Windows.",
+    "No helper server/process was started. Existing Vite on port5173 remains running.",
+    "CUA viewport was restored and temporary tab closed.",
+    "DPR density transitions were verified by the independent CDP/deviceScaleFactor suite, including live, paused, reduced-motion and reload cases. Native browser zoom and physical-phone behavior were not tested.",
+    "The reused dev server still serves its cached generated font-sans helper with the earlier fallback stack; Inter loaded in all typography captures. Tailwind source and rebuilt production CSS contain the full Apple/Segoe system fallback stack. The existing server was not stopped."
+  ],
+  "sources": {
+    "index.html": "fc2f23eb6133777bfd106a68e2081a37ff4ef2d5",
+    "index.css": "e47ae65db63dad3882a1a9e87325a9b2338350b4",
+    "tailwind.config.js": "bcb396e4f42d1ca75f90e51207b66965e6f6dc0f",
+    "DESIGN.md": "1b00d8efb48f1da55c5e080f28ca63cda1a6253c",
+    "components/ui/Button.tsx": "7d7a9fe8c3042968683cf591022a3ff7487bbb15",
+    "components/ui/GoldButton.tsx": "de2457f754ac19c435b53621c49a806db0cd6a36",
+    "components/ui/Input.tsx": "1af96dc626d47787396f2f8dac9ce08d40404d82",
+    "components/ui/Textarea.tsx": "de8700c632677e43981ba103b026f4e483d10634",
+    "components/ui/FieldLabel.tsx": "4f15b68d75242f5e3a1dbb405748ec1f7b6b3996",
+    "components/ui/Card.tsx": "cbe7c329889171a81a4332968d447872eed361a7",
+    "components/ui/StepShell.tsx": "47df75c93e7ec9af56eb9c9056688c15295d6d95",
+    "components/ui/StepFooter.tsx": "87a229a84f8b053ada2d5d3da708c1b4f057a854",
+    "components/ui/SegButton.tsx": "d7e53eaf004cf2adc0acbf594c9388ee1da7c44e",
+    "components/ui/wizardTokens.ts": "bcd8f207adc099d45941c49dfc5e3166d6861736",
+    "components/imageads/SaasOfferCard.tsx": "cb6d6c42f58f99e77a73f4efd5c3651af597acf6",
+    "App.tsx": "659077744180bbff2b2e1ac2c718a0f01e8b4179",
+    "dev/typographyPreview.tsx": "b7a09383fc729a74adbb6437259da41dd9899a7e",
+    "typography-preview.html": "effdb4ad8e2d9a898c7fbc7cc6d768fbe92878be",
+    "tests/e2e/typography.spec.ts": "58c5c3c7a9524cf2082a50a466de5c65f7d0c3a4",
+    "tests/e2e/typography.config.ts": "a863a298380bb2d55d5a800d076842af3a84d8d8",
+    "public/companion/main.js": "8ebf7beb4df8cf7d298340f63bbdfc3094d0951d",
+    "assets/3d-lab/grifon-companion-live/main.js": "8ebf7beb4df8cf7d298340f63bbdfc3094d0951d",
+    "assets/design/typography/qa/preedit-index.json": "777f6c8c9f94838ec0cf735bf6f46908dbbbfa26"
+  },
+  "independentMascotResolution": {
+    "report": "mascot-final-report.json",
+    "verdict": "PASS",
+    "mainSHA256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "failures": 0,
+    "observations": 12,
+    "performanceObservations": 2,
+    "baselineReport": "mascot-baseline-report.json",
+    "baselineVerdict": "FAIL",
+    "baselineExpectedFailures": 48,
+    "method": "CDP/deviceScaleFactor DPR simulation; native browser zoom NOT tested.",
+    "contract": "Minimum 2x backing at 56/64px; follow DPR live, paused/reduced-motion, and after reload; backing edge <=1024px.",
+    "recordedAtUTC": "2026-10-07T03:02:43.656Z"
+  }
+}

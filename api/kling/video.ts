@@ -87,6 +87,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const plan = await getUserPlan(user.id);
   const videoQuota = await meterVideoRequest(user.id, plan, parsed.data.finishedAdId);
   if (!videoQuota.ok) {
+    if (videoQuota.unavailable) {
+      res.setHeader('Retry-After', '30');
+      return res.status(503).json({ error: 'quota_unavailable', detail: 'Allowance is temporarily unavailable. Retry shortly.' });
+    }
     return res.status(402).json({
       error: 'quota_exceeded',
       scope: 'video_ads',

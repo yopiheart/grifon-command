@@ -1,0 +1,68 @@
+
+> creative-director-ai-assistant@1.0.0 test
+> vitest run tests/unit/geminiService.proxy.test.ts -t post-provider --maxWorkers=1
+
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command
+
+stderr | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 429 'gemini_quota' flow failure
+Quota hit (429). Retrying in 4000ms... (5 retries left)
+
+stderr | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 429 'gemini_quota' flow failure
+Quota hit (429). Retrying in 8000ms... (4 retries left)
+
+stderr | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 429 'gemini_quota' flow failure
+Quota hit (429). Retrying in 16000ms... (3 retries left)
+
+stderr | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 429 'gemini_quota' flow failure
+Quota hit (429). Retrying in 32000ms... (2 retries left)
+
+stderr | tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 429 'gemini_quota' flow failure
+Quota hit (429). Retrying in 64000ms... (1 retries left)
+
+ ❯ tests/unit/geminiService.proxy.test.ts (25 tests | 2 failed | 23 skipped) 22ms
+     × does not replay a post-provider 422 'flow_output_invalid' flow failure 16ms
+     × does not replay a post-provider 429 'gemini_quota' flow failure 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 422 'flow_output_invalid' flow failure
+AssertionError: expected Error: PROXY_ERROR_422: flow_output_inval… { …(2) } to match object { status: 422, …(1) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "generationOutcomeUnknown": true,
++ Error {
+    "status": 422,
+  }
+
+ ❯ tests/unit/geminiService.proxy.test.ts:70:26
+     68|     await vi.runAllTimersAsync();
+
+     69|     expect(fetchMock).toHaveBeenCalledTimes(1);
+     70|     expect(await result).toMatchObject({ status, generationOutcomeUnkn…
+       |                          ^
+     71|   });
+     72|   it.each(['adscript', 'marketmind', 'storyboard'])('rejects a missing…
+ Test Files  1 failed (1)
+      Tests  2 failed | 23 skipped (25)
+   Start at  10:57:07
+   Duration  765ms (transform 180ms, setup 0ms, import 278ms, tests 22ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/geminiService.proxy.test.ts > ambiguous generation dispatch outcomes > does not replay a post-provider 429 'gemini_quota' flow failure
+AssertionError: expected "vi.fn()" to be called 1 times, but got 6 times
+ ❯ tests/unit/geminiService.proxy.test.ts:69:23
+     67|     const result = generateAdScript(businessInfo, 'Fixture', 'English'…
+     68|     await vi.runAllTimersAsync();
+     69|     expect(fetchMock).toHaveBeenCalledTimes(1);
+       |                       ^
+     70|     expect(await result).toMatchObject({ status, generationOutcomeUnkn…
+     71|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
