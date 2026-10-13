@@ -16,7 +16,7 @@ This is a production workflow, not shipped app integration. No music generated.
 Prompt-enhancement toggle and exact Auto control need verification in first paid spec.
 Docs checks: check:codex26PASS, diff check PASS, four workflow pointers resolve.
 NOW within90lines; six Markdown files only, no media/application changes.
-Draft PR backup pending; no paid call, merge or deploy authorized.
+Draft PR182:https://github.com/yopiheart/grifon-command/pull/182; backup pushed.
 
 ## Prior film and benchmark
 Neil chose an own-brand adaptation of Abdullah.A's Pluto reference:
@@ -32,7 +32,7 @@ Draft PR178:https://github.com/yopiheart/grifon-command/pull/178; backup pushed.
 PR178 remains open as of 2026-10-13; remote checks not re-queried for this docs task.
 
 ## ▶ NEXT ACTION
-Back up the music workflow in a draft PR stacked on PR178.
+PR182 is stacked on PR178; retarget after the base lands. No merge/deploy authorized.
 For future generation prepare the exact prompt/assets/settings/cost spec first;
 historical autopsy approvals do not authorize music spend. No replacement requested.
 Prior candidate still needs listening/creative acceptance; local preview server
