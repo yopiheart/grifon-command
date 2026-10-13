@@ -1,69 +1,71 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; PR178 and PR182 merged; PR183 final landing in progress**
+**Stamped: 2026-10-13; authorized ordered merges complete; accepted v2 preserved**
 
-## Active task
+## Completed result
 Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd; Grifon motion/music workflow.
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Branch: codex/orbital-elevenlabs-score; PR183 retargeted to main b6aaa64e.
-Neil authorized review, retarget/recheck and merge 178 -> 182 -> 183 in order.
+Neil requested review, retarget/recheck and merge PR178 -> PR182 -> PR183.
+All three merged normally in that order; no admin override or skipped gates.
+Final main: 091e47027c12d56126800cb5d881295e873c2514.
+This branch, codex/orbital-elevenlabs-score, carries a docs-only closeout checkpoint.
 PR178 merged 2026-10-13T04:55:32Z: bcbe8302aadf363dd03e12aac34fedc3fbd4411d.
-Reviewed head 9dd3b011; CI 38347262382 passed all 35 execution jobs.
 PR182 merged 2026-10-13T05:29:52Z: b6aaa64ee05cf2056e90c84117dd0001db08611e.
-Reviewed head 0751a6d6; CI 38349081719 passed all 35 execution jobs.
-Both used normal merge commits; no bypass. Main push CI for PR178 also passed.
-PR183: https://github.com/yopiheart/grifon-command/pull/183.
-Only NOW.md conflicted during main integration; upstream product and CI retained.
+PR183 merged 2026-10-13T05:51:55Z: 091e47027c12d56126800cb5d881295e873c2514.
+Each was retargeted to updated main and independently reviewed at its final head.
+Final-head CI passed all 35 execution jobs per PR:
+178 head 9dd3b011, run 38347262382; 182 head 0751a6d6, run 38349081719;
+183 head 65018064, run 38351888764. Actual final main tree equals tested 65018064.
+Main push CI for PR178 also passed, run 38348819045.
+Librarian ran after every merge; no unrelated feature documentation changed.
 
-## Next action
-Require independent review and final-head GitHub CI before normal PR183 merge.
-Local landing checks cover Codex controls, syntax, diff and protected hashes.
-After merge, verify accepted delivery/source on fetched main and run librarian.
-Evidence and actual merge receipts: F:/GrifonLocalArchives/orbital-merge-20261013/.
-Librarian ran after PR178 and PR182; current task state reconciled here.
-Vercel reports "Account is blocked" separately from build/test verification.
-No repository protection, billing or deployment settings changed.
-No manual deployment, retry or new paid operation authorized.
+## Remaining external checks
+Post-merge main run 38351681765 first failed Companion's 500ms scroll assertion.
+Identical shard passed on final PR182 and PR183 with unchanged relevant sources.
+Independent triage: likely hosted timing flake, root cause remains unproven.
+One failed-job rerun was dispatched; no steps started due GitHub billing restriction.
+GitHub reports recent account payments failed or spending limit must increase.
+Final main run 38353599201 also failed before execution with that billing annotation.
+Post-merge CI therefore remains unverified; final-head PR verification is green.
+Vercel separately reports "Account is blocked"; no successful preview deployment claimed.
+No test/timeout, repository protection, spending-limit or billing changes made.
+Account owner must resolve service billing/access before another CI/deployment attempt.
+No manual deployment, new paid generation or further retry authorized/performed.
 
-## Accepted film and editable source
+## Accepted delivery and exact preservation
 Film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
 SHA256: 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Neil accepted: "AYAN PERFECT!!!!!!!!!!!!"; acceptance-v2.json binds exact checkpoint.
-Picture: 1920x1080, 60fps, 1,389 frames, 23.15s; stereo 48k AAC.
-One continuous native 28.028-51.178s passage; no internal cuts or manufactured pause.
-26 existing SFX contacts; five modest smooth music ducks; -16.06 LUFS/-4.10 dBTP.
-Music source, recipe, plan, receipts and acceptance bytes remain frozen.
+Neil: "AYAN PERFECT!!!!!!!!!!!!"; acceptance-v2.json binds exact film and checkpoint.
+1080p/60fps, 1,389 frames, 23.15s; stereo 48k AAC; -16.06 LUFS/-4.10 dBTP.
+Continuous native passage 28.028-51.178s, no internal cuts; 26 original SFX contacts.
 Editable music: continuous-fit-plan.json, mix-continuous.mjs, continuous-mix-receipt.json.
 Editable picture: workflows/assets/grifon-pluto-adaptation/orbital.json, orbital.js, orbital.html.
 Original Orbital SHA: 691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48.
 Accepted shader SHA: f92ac352000e0103c3271a16c190241dde80b8bc53e906a02f0ea913be3a53df.
-Preservation-before.json captures nine film/source/acceptance bindings.
-V1 chopped assembly rejected; v1 film and creative-feedback-v1.json retained.
+On fetched final main: nine protected files, all four bound evidence files and all
+four reproduction inputs hash-exact; ordered merge ancestry verified.
+V1 rejected assembly and verbatim creative-feedback-v1.json retained unchanged.
 
-## Reproduction fix and evidence
-Independent review found direct recipe execution overwrites its bound receipt.
+## Review fix and production boundaries
+Review found direct recipe reproduction overwrites the acceptance-bound receipt.
 Separate reproduce.mjs stages the unchanged recipe in a fresh external tree.
-Six positive/negative controls passed, including proof of the original overwrite.
-Installed wrapper reproduced the exact accepted MP4 with ten source bindings unchanged.
-reproduction-verification.json and reproduction-installed-check.json retain proof.
-Accepted recipe/plan/receipt/film were not edited or rerendered over.
-Independent wrapper review passed; final integrated delta review still required.
-Prior v2 strict decode, all 1,389 picture packet/timestamp comparisons and mapping passed.
-User listening acceptance remains distinct from machine technical checks.
-
-## Music production boundaries and prior checks
-Shared workflow: workflows/background_music_production.md.
+Six positive/negative controls and installed-wrapper reproduction passed.
+Exact accepted video reproduced; ten source bindings unchanged; independent review clean.
+Frozen accepted recipe/plan/receipts/film were not edited or rerendered over.
+Shared workflow: workflows/background_music_production.md, now merged.
 Music v2.5, one variant, fitted duration, Lyrics Auto, No Finetune; instrumental default.
-This call approved auto-improve On and 24s selection, quote/cap 360 existing credits.
-One approved attempt consumed. Provider returned 62.275917s; duration adherence failed.
-Actual individual credit deduction unverified; no inference from output duration.
-Native MP3 SHA: a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405.
-Raw native music/SFX stay private under F:/GrifonBenchmarks/pluto-2100297302497997167/.
-No standalone audio redistribution, additional generation, paid QA or top-up.
-PR178 local build passed; 1,573 unit tests passed / 32 default skips; 32 focused tests passed.
-Codex 26 and bundle/voice/eval/domain/anchor/design/PS ASCII checks passed.
-PR182 Codex 26, diff and pointers passed; six Markdown files only.
+One approved attempt consumed: 24s selected, 360-credit cap/quote, auto-improve On.
+Provider returned 62.275917s; duration adherence failed, actual deduction unverified.
+Raw native music/SFX private under F:/GrifonBenchmarks/pluto-2100297302497997167/.
+No standalone audio redistribution, new provider calls, paid QA or top-up.
+PR178 local build, 1,573 unit tests / 32 default skips and 32 focused tests passed.
+Fresh Codex 26 passed for each integration; applicable static/diff checks passed.
+Known upstream SIL license trailing space retained verbatim with its hash.
 No tuned runtime prompt/model/schema changes; paid/live switches remain unset.
-Known upstream SIL license trailing space is retained verbatim with its hash.
-Prior PR165/166/170 landing complete; CI 38122594194 passed. Do not redo those merges.
-Both historical autopsy approvals consumed. PR173 closed; rejected Bodila absent.
+
+## Evidence and recovery
+Merge receipts, final-main preservation proof, reviews and CI/billing evidence:
+F:/GrifonLocalArchives/orbital-merge-20261013/.
+Key files: merge-receipts.json, preservation-after-main.json, independent-reviews.json.
+Prior PR165/166/170 merges complete; do not redo. PR173 closed; rejected Bodila absent.
+Both historical autopsy approvals consumed. Do not reuse any consumed generation spec.
 Do not touch unrelated primary Desktop checkout or other active sessions.
