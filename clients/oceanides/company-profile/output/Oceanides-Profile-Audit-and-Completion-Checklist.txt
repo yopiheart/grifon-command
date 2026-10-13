@@ -3,16 +3,17 @@ Reviewed 12 October 2026; final format check 13 October 2026 | Internal owner re
 
 OVERALL RESULT
 The revised profile covers all requested service categories and all 190 priority
-cities/municipalities. The latest revision has 70 slides, including an STP flow,
-the existing narrated STP film, and 31 document-display pages with an index.
+cities/municipalities. The latest separate-video revision has 69 slides,
+including an STP flow and 31 document-display pages with an index.
+The existing narrated STP film is supplied separately as an MP4, per owner request.
 Corporate tax details are now supplied; treatment specifications remain site-specific.
 "Triple A" is treated as a request for presentation quality, not a formal
 accessibility, accreditation, or business-performance certification.
 
 ORGANIZATIONAL STRUCTURE
 Names and roles improve accountability. Photos are optional in a reporting chart.
-The revised deck separates the chart (page 23) from leadership/team profiles
-(pages 24-25). The owner confirmed these people and existing roles are current:
+The revised deck separates the chart (page 22) from leadership/team profiles
+(pages 23-24). The owner confirmed these people and existing roles are current:
 Agosto Cepriano - CEO/Founder; Allan - Finance/HR Manager; Neil - Marketing Head;
 Queenie and Aubrey - Digital Marketing Specialists; Floreza - CSR.
 Source portraits are reused from the supplied old profile. No people were
@@ -49,26 +50,26 @@ DOCUMENTS RECEIVED FROM OWNER DRIVE - 13 OCTOBER 2026
 Ten unique records were retrieved from the private Oceanides docs folder:
 nine PDFs and one posted BIR receipt/invoice-notice photograph.
 The two Certificate of Incorporation uploads are byte-identical; included once.
-Appendix starts on page 39 with an index, followed by 31 source-page displays:
-- Pages 40-41: SEC Certificate of Incorporation and reportorial requirements.
+Appendix starts on page 38 with an index, followed by 31 source-page displays:
+- Pages 39-40: SEC Certificate of Incorporation and reportorial requirements.
   Incorporation date: 14 January 2026. Registration: 2026010232712-03.
-- Pages 42-45: Articles of Incorporation, all four substantive pages.
-- Pages 46-47: Certificate of Authentication, both declaration pages.
-- Pages 48-50: 2026 Manila electronic business permit, terms and clearance listing.
+- Pages 41-44: Articles of Incorporation, all four substantive pages.
+- Pages 45-46: Certificate of Authentication, both declaration pages.
+- Pages 47-49: 2026 Manila electronic business permit, terms and clearance listing.
   Permit: 2026-000040205-1. Printed terms run through 31 December 2026.
   The displayed 18 April 2026 date is a receipt/date field, not a separately
   labeled permit issue date. Subject to inspection and stated conditions.
-- Pages 51-52: BIR Form 2303, both pages. Corporate TIN/branch 693-974-075-00000,
+- Pages 50-51: BIR Form 2303, both pages. Corporate TIN/branch 693-974-075-00000,
   One Person Corporation, Head Office, registered 22 January 2026, RDO 051 Pasay.
-- Page 53: Posted BIR receipt/invoice notice, correctly identified as a notice.
-- Pages 54-55: PhilGEPS Red-registration printout, ID 498991, registered
+- Page 52: Posted BIR receipt/invoice notice, correctly identified as a notice.
+- Pages 53-54: PhilGEPS Red-registration printout, ID 498991, registered
   27 August 2026. Active / Red Approved are printed statuses, not a fresh online
   check. Display excerpts exclude bank-account details; originals stay private.
-- Page 56: Globaltec DOH Environmental Sanitation Clearance, 28 April 2025.
+- Page 55: Globaltec DOH Environmental Sanitation Clearance, 28 April 2025.
   Listed operating area: Bataan, Bulacan, Pampanga and Tarlac.
-- Pages 57-68: Globaltec amended ECC, complete 12-page supplied record,
+- Pages 56-67: Globaltec amended ECC, complete 12-page supplied record,
   dated 27 December 2024. Conditions apply; an ECC is not an operating permit.
-- Pages 69-70: Globaltec discharge permit, both pages, labeled historical.
+- Pages 68-69: Globaltec discharge permit, both pages, labeled historical.
   Printed validity ended 24 July 2026; renewed copy not yet supplied.
 The owner confirmed Globaltec is the current treatment/disposal provider.
 Provider records are attributed to Globaltec, not Oceanides. Their facility
@@ -104,7 +105,7 @@ CONTENT REMOVED OR CORRECTED
 
 STP EXPLANATION AND EXISTING VIDEO
 Page 19 adds an editable illustrative domestic-wastewater treatment flow.
-Page 20 embeds the original 139.3-second Aira-narrated animation with music,
+The original 139.3-second Aira-narrated animation with music is supplied separately,
 previously accepted by Neil (commit 358797e8). Exact MP4 bytes are retained;
 no new voice generation, media generation or audio edits were made.
 The film explains general STP stages, testing and continuing sludge removal.
@@ -112,11 +113,9 @@ It does not promise numerical effluent targets, guaranteed savings or zero sipho
 The supplied Malera page informed the technical-discussion context; its figures,
 statistics, fines and parameter limits were not copied into Oceanides claims.
 The actual supplier design, applicable discharge criteria and operating terms
-remain site-specific. A standalone MP4 is included as a presentation backup.
-PDF page 20 has a static poster and relative companion-video link; the ZIP package
-preserves the pdf/media folder relationship. PDF viewers may require opening the
-companion MP4 separately. PowerPoint native movie metadata was inspected;
-slideshow playback itself was not started during verification.
+remain site-specific. The owner requested separation on 13 October 2026.
+The latest PowerPoint and PDF omit the video slide and playback links entirely.
+The earlier 70-slide embedded-video revision remains preserved.
 
 HISTORICAL DOCUMENT AUDIT - OLD PDF PAGE REFERENCES
 p13: 2025 Manila business permit for Oceanides Plumbing Services, sole proprietor.

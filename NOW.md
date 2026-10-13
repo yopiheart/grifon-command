@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; Oceanides BIR/TIN, PhilGEPS and STP video update**
+**Stamped: 2026-10-13; Oceanides separate-video profile emailed to owner**
 
 ## Active task
 Chat: 01a12b66-b2cb-7ef1-bc28-515b314e7a8a.
@@ -13,16 +13,18 @@ BIR registration: 22 January 2026, RDO 051 Pasay, One Person Corporation/Head Of
 Pasay office: 2628 Tramo corner Dandan, Alcantara Compound, Barangay 51, 1300.
 Second landline 8330 1329 matches new letterhead and PhilGEPS record.
 Owner confirmed Globaltec is the current treatment/disposal provider.
+Owner requested email delivery to ceprianoaugust@gmail.com and separate STP video.
 No application code change, new paid generation, deployment or merge.
 
 ## Latest deliverables
-70-slide editable 16:9 PowerPoint:
-clients/oceanides/company-profile/output/pptx/Oceanides-Company-Profile-BIR-STP-Review-v3.pptx
+69-slide editable 16:9 PowerPoint, no embedded video:
+clients/oceanides/company-profile/output/pptx/Oceanides-Company-Profile-Separate-Video-Review-v4.pptx
 Matching PDF:
-clients/oceanides/company-profile/output/pdf/Oceanides-Company-Profile-BIR-STP-Review-v3.pdf
+clients/oceanides/company-profile/output/pdf/Oceanides-Company-Profile-Separate-Video-Review-v4.pdf
 Standalone video:
 clients/oceanides/company-profile/output/media/Oceanides-STP-Explainer-Voiceover-1080p.mp4
-Portable ZIP (derived local package outside Git; primary files backed up in Git):
+Earlier embedded-video v3 and its ZIP are preserved; not the version emailed now.
+Earlier ZIP (derived local package outside Git; primary files backed up in Git):
 C:/Users/ADMIN/.codex/visualizations/2026/10/11/01a12b66-b2cb-7ef1-bc28-515b314e7a8a/Oceanides-Company-Profile-BIR-STP-Complete-Package.zip
 Audit/checklist: company-profile/output/Oceanides-Profile-Audit-and-Completion-Checklist.txt.
 Prior first draft and 36/63-slide reviews are preserved. Script/email templates preserved.
@@ -30,13 +32,13 @@ Builder sources: build-audited-profile.py and build-audited-presentation.mjs.
 
 ## Presentation content
 18 client entries/17 marks; source portraits for confirmed team names/roles.
-STP flow page 19; embedded movie page 20; org chart page 23; team pages 24-25.
-190 requested LGUs retained on coverage pages 30-38.
-Document index page 39; 31 source-page displays on pages 40-70 from 10 unique records.
-BIR pages 51-52, posted notice 53, PhilGEPS Red-registration excerpts 54-55.
+STP flow page 19; org chart page 22; team pages 23-24. Video slide removed.
+190 requested LGUs retained on coverage pages 29-37.
+Document index page 38; 31 source-page displays on pages 39-69 from 10 unique records.
+BIR pages 50-51, posted notice 52, PhilGEPS Red-registration excerpts 53-54.
 PhilGEPS shows Active/Red Approved on supplied printout, not Platinum or fresh lookup.
 Bank-account details excluded from display excerpts; originals unchanged in private Drive.
-Globaltec DOH/ECC separately attributed; discharge copy 69-70 labeled historical.
+Globaltec DOH/ECC separately attributed; discharge copy 68-69 labeled historical.
 Its printed validity ended 24 July 2026. Owner said use supplied files; no renewal supplied.
 Malera reference informed discussion; numerical limits/statistics/fines not copied.
 STP design, applicable criteria, operating cost and support terms remain site-specific.
@@ -60,11 +62,27 @@ ZIP preserves pdf/media relative path; standalone MP4 supports direct playback.
 Artifact-anchor and Git whitespace checks passed; app build/test not applicable.
 No invented endorsements, guaranteed savings, zero-siphoning or free lifetime support.
 
+Separate-video v4: finalizer package/geometry/font/import checks passed; all 69
+native slides rendered. Independent reviewer confirmed 69 slides/PDF pages,
+no media/movie/playback relations or PDF video links, TIN throughout, all 190 LGUs
+and 31 document displays. All retained PDF pages are pixel-identical to v3 except
+footer page numbers; selected affected pages visually inspected. Receipts:
+separate-video-review.validation.json and separate-video.validation.json.
+Rebuild: build-audited-profile.py Separate-Video-Review-v4 --separate-stp-video,
+then run the existing native presentation builder. Previous outputs preserved.
+
 ## Earlier authorized email delivery
 Prior first draft sent to initial address, then corrected ceprianoaugust@gmail.com.
 Initial SENT receipt 1a12b8ea2dce5dc4; corrected SENT receipt 1a12b90d4a178c09.
 Subject: Oceanides Company Profile - First Draft for Review.
-Revised BIR/STP package is handed over in this chat; not resent by email this turn.
+Updated 69-slide profile and separate STP MP4 sent on 13 October 2026 by Gmail.
+Recipient: ceprianoaugust@gmail.com. SENT receipt: 1a135db9ab0de49b.
+Subject: Oceanides Updated Company Profile - PowerPoint, PDF and Separate STP Video.
+Three Drive files uploaded to Oceanides docs; recipient reader grants verified.
+PPTX id: 1ZywBNqw0gl7t_sVhfzz6OGDsruZMMQay.
+PDF id: 1VT1amzXQ5cA6OpZ4lW1flW1EqGWRiwhJ.
+MP4 id: 1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2.
+Actual subject, observed URLs and Gmail receipt: separate-video-email-delivery.json.
 
 ## Remaining owner review
 Specific client sites/services/results, treatment specs, written support terms,

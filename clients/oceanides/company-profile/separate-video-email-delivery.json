@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-13",
+  "recipient": "ceprianoaugust@gmail.com",
+  "subject": "Oceanides Updated Company Profile — PowerPoint, PDF and Separate STP Video",
+  "delivery": "Gmail message sent with individual Google Drive links; recipient reader permissions verified",
+  "gmail": {
+    "id": "1a135db9ab0de49b",
+    "thread_id": "1a135db9ab0de49b",
+    "label_ids": [
+      "SENT"
+    ],
+    "snippet": null,
+    "history_id": null,
+    "internal_date": null,
+    "payload": null,
+    "size_estimate": null,
+    "classification_label_values": null
+  },
+  "files": [
+    {
+      "id": "1ZywBNqw0gl7t_sVhfzz6OGDsruZMMQay",
+      "name": "Oceanides-Company-Profile-Separate-Video-Review-v4.pptx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "url": "https://docs.google.com/presentation/d/1ZywBNqw0gl7t_sVhfzz6OGDsruZMMQay/edit?usp=drivesdk&ouid=114589278721036104679&rtpof=true&sd=true"
+    },
+    {
+      "id": "1VT1amzXQ5cA6OpZ4lW1flW1EqGWRiwhJ",
+      "name": "Oceanides-Company-Profile-Separate-Video-Review-v4.pdf",
+      "mime_type": "application/pdf",
+      "url": "https://drive.google.com/file/d/1VT1amzXQ5cA6OpZ4lW1flW1EqGWRiwhJ/view?usp=drivesdk"
+    },
+    {
+      "id": "1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2",
+      "name": "Oceanides-STP-Explainer-Voiceover-1080p.mp4",
+      "mime_type": "video/mp4",
+      "url": "https://drive.google.com/file/d/1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2/view?usp=drivesdk"
+    }
+  ],
+  "video_embedded": false,
+  "slide_count": 69,
+  "pdf_page_count": 69
+}

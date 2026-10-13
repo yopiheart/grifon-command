@@ -21,6 +21,7 @@ for folder in ['pdf', 'pptx', 'preview']:
     (OUT / folder).mkdir(exist_ok=True)
 REV = sys.argv[1] if len(sys.argv) > 1 else 'Audited-Review-v1'
 assert all(c.isalnum() or c == '-' for c in REV)
+INCLUDE_STP_VIDEO = '--separate-stp-video' not in sys.argv[2:]
 W, H = 1280, 720
 NAVY, BLUE, SKY = '#0E2C5E', '#1267A5', '#2DAEEC'
 INK, MUTED, PALE, RULE = '#102B49', '#456079', '#ECF7FF', '#D5E8F5'
@@ -296,15 +297,16 @@ for i, (head, body) in enumerate(stages):
 para(p, 'Testing, servicing and periodic sludge removal remain part of the operating plan.', 42, 585, 1185, 23, 'Strong', BLUE)
 caption(p, 'Illustrative flow. Actual stages and discharge or reuse requirements depend on the selected system and site.', 42, 626, 1190)
 
-p = page('STP video explainer', 'Existing approved original Aira-narrated film, acceptance commit 358797e8. ' + video['scope'] + '\nOpening quarterly service bill is an example; actual client service records differ. Click embedded film to play, then discuss site assessment. Standalone MP4 is included as backup. No new paid voice/render operations.')
-p['media'] = video
-title(p, 'STP video explainer')
-image(p, HERE / 'assets-video/stp-video-poster.png', 42, 225, 752, 423, 'Oceanides STP video poster', contain=True)
-para(p, 'See the treatment process in action', 830, 241, 397, 29, 'Strong', NAVY, 37)
-para(p, '2 min 19 sec\nAnimation with voice-over and music', 830, 349, 397, 23, 'Body', INK, 32)
-para(p, 'Click the video to play in PowerPoint.', 830, 464, 397, 22, 'Strong', BLUE, 30)
-para(p, 'Open companion MP4', 830, 566, 397, 21, 'Strong', BLUE)
-caption(p, 'PDF: static preview with a link to the companion video.', 830, 605, 397, 14)
+if INCLUDE_STP_VIDEO:
+    p = page('STP video explainer', 'Existing approved original Aira-narrated film, acceptance commit 358797e8. ' + video['scope'] + '\nOpening quarterly service bill is an example; actual client service records differ. Click embedded film to play, then discuss site assessment. Standalone MP4 is included as backup. No new paid voice/render operations.')
+    p['media'] = video
+    title(p, 'STP video explainer')
+    image(p, HERE / 'assets-video/stp-video-poster.png', 42, 225, 752, 423, 'Oceanides STP video poster', contain=True)
+    para(p, 'See the treatment process in action', 830, 241, 397, 29, 'Strong', NAVY, 37)
+    para(p, '2 min 19 sec\nAnimation with voice-over and music', 830, 349, 397, 23, 'Body', INK, 32)
+    para(p, 'Click the video to play in PowerPoint.', 830, 464, 397, 22, 'Strong', BLUE, 30)
+    para(p, 'Open companion MP4', 830, 566, 397, 21, 'Strong', BLUE)
+    caption(p, 'PDF: static preview with a link to the companion video.', 830, 605, 397, 14)
 
 p = page('Treatment planning', 'Decision framework only; no fixed saving, zero-siphoning, automatic self-treatment or maintenance-free guarantee. Economics and service intervals depend on the chosen system and site.')
 title(p, 'What changes with a treatment system?')

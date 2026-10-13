@@ -1,0 +1,38 @@
+{
+  "checked_at_utc": "2026-10-13T15:21:35.262437+00:00",
+  "checked_by": "independent separate_video_check agent",
+  "status": "PASS",
+  "pdf": {
+    "file": "clients/oceanides/company-profile/output/pdf/Oceanides-Company-Profile-Separate-Video-Review-v4.pdf",
+    "sha256": "6ebfc288cb889549040f21025f139d2e4c8dacd6a53a8b7dcdd5158d1633da48",
+    "pages": 69
+  },
+  "pptx": {
+    "file": "clients/oceanides/company-profile/output/pptx/Oceanides-Company-Profile-Separate-Video-Review-v4.pptx",
+    "sha256": "03c355029079317068d1b7da02cdbb48f0fb7a539c105b291ad09f3d1ab2ee39",
+    "slides": 69
+  },
+  "checks": {
+    "corporate_tin_on_all_pdf_and_pptx_pages": "693-974-075-00000",
+    "embedded_video_or_audio_files": 0,
+    "media_play_actions_and_relations": 0,
+    "pdf_companion_video_links": 0,
+    "covered_lgu_entries_preserved": 190,
+    "document_displays_preserved": 31,
+    "all_retained_pdf_pages_pixel_identical_except_renumbered_footer": true,
+    "omitted_prior_page": 20,
+    "stp_process_preserved_on_page": 19,
+    "selected_visual_review_pages": [
+      19,
+      20,
+      22,
+      38,
+      50,
+      53,
+      69
+    ],
+    "native_powerpoint_playback_tested": false
+  },
+  "pdf_page_mapping": "v4 pages 1-19 = v3 pages 1-19; v4 pages 20-69 = v3 pages 21-70. Only footer page-number box masked.",
+  "standalone_video_is_unchanged_approved_asset": true
+}
