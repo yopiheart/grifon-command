@@ -1,0 +1,343 @@
+{
+  "retrieved": "2026-10-13",
+  "source_folder": "https://drive.google.com/drive/folders/1g_jhHirxXozF7SS0rb1ABylGCOIyoLv1",
+  "provider_relationship": "Owner confirmed Globaltec Waste Management, Inc. is the current treatment/disposal provider on 2026-10-13.",
+  "source_handling": "Unaltered original PDFs remain in the private Drive folder. Appendix images reproduce complete selected pages without cropping; source text/signatures have not been edited or independently authenticated.",
+  "duplicate": "Certificate file 1PcrAu5joFhXaUrkdW7g_ab7ZjC9SUwKd is byte-identical to selected incorporation source; included once.",
+  "records": [
+    {
+      "key": "incorporation",
+      "title": "SEC Certificate of Incorporation",
+      "holder_group": "Oceanides",
+      "drive_id": "10V-abIEL0OKopo9KM4icja6rCXiu6Agz",
+      "url": "https://drive.google.com/file/d/10V-abIEL0OKopo9KM4icja6rCXiu6Agz/view",
+      "source_sha256": "18e177e21a2c18c192a90784b2baa9936acce131d407ad7c7664f2b60204fa26",
+      "source_page_count": 3,
+      "fields": [
+        [
+          "SEC registration",
+          "2026010232712-03"
+        ],
+        [
+          "Incorporation date",
+          "14 January 2026"
+        ],
+        [
+          "Record holder",
+          "Oceanides Plumbing Siphoning & Pest Management Services OPC"
+        ]
+      ],
+      "status": "Corporate registration record; attached reportorial requirements apply.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "incorporation-01.jpg",
+          "sha256": "ee7935ad2930059cfc039c14c9cc550df0e55343ded4ae9590c875e889b6f8fa"
+        },
+        {
+          "source_page": 2,
+          "file": "incorporation-02.jpg",
+          "sha256": "ff2310c88bfb5a52c38adc4bdb946ade9a08b602d6684223007caf347beb2e11"
+        }
+      ],
+      "excluded_pages": [
+        {
+          "source_page": 3,
+          "reason": "Generic BIR/employer registration advisory"
+        }
+      ]
+    },
+    {
+      "key": "articles",
+      "title": "Articles of Incorporation",
+      "holder_group": "Oceanides",
+      "drive_id": "1vlEe_L6MlJZYsvqtAA6f8in0bvJDpxw5",
+      "url": "https://drive.google.com/file/d/1vlEe_L6MlJZYsvqtAA6f8in0bvJDpxw5/view",
+      "source_sha256": "ffc18d71adce08f780d5f419dc05423cd7c831ca26f5cec2c0a006d7d217189b",
+      "source_page_count": 5,
+      "fields": [
+        [
+          "Corporate form",
+          "One Person Corporation"
+        ],
+        [
+          "Registered office",
+          "Tramo corner Dandan, Pasay City"
+        ],
+        [
+          "Record content",
+          "Corporate purposes and incorporation provisions"
+        ]
+      ],
+      "status": "The incorporator's personal TIN is not the OPC tax registration.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "articles-01.jpg",
+          "sha256": "b17f917ed115381cf8d7b962205f9cb639ff4c6be8285e75ef701569d9810ac2"
+        },
+        {
+          "source_page": 2,
+          "file": "articles-02.jpg",
+          "sha256": "854a0ca7d435a27db6d111b973c67276d91961feff86e917a593b2fe9f172e05"
+        },
+        {
+          "source_page": 3,
+          "file": "articles-03.jpg",
+          "sha256": "a61383603f132bb2224de2c0011bf60e084d6f2ca8e6e272662e488a456596e3"
+        },
+        {
+          "source_page": 4,
+          "file": "articles-04.jpg",
+          "sha256": "a01876ede363411fd13f69589e8d252e573cfb966e5cbb4235d2a829d5b70b3b"
+        }
+      ],
+      "excluded_pages": [
+        {
+          "source_page": 5,
+          "reason": "eSAP signatory and identity-event audit metadata; not needed in customer profile"
+        }
+      ]
+    },
+    {
+      "key": "authentication",
+      "title": "Certificate of Authentication",
+      "holder_group": "Oceanides",
+      "drive_id": "1qwmPxxQSCgztAPkEgsgToYMNYS8TCJeA",
+      "url": "https://drive.google.com/file/d/1qwmPxxQSCgztAPkEgsgToYMNYS8TCJeA/view",
+      "source_sha256": "5cb285c5e0b1776deb9d2201e93b1230af1ce454354cbe745941c49836731f44",
+      "source_page_count": 3,
+      "fields": [
+        [
+          "Record type",
+          "Incorporator declarations"
+        ],
+        [
+          "Authentication event",
+          "12 January 2026"
+        ],
+        [
+          "Related entity",
+          "Oceanides Plumbing Siphoning & Pest Management Services OPC"
+        ]
+      ],
+      "status": "Registration declaration; not an operating permit.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "authentication-01.jpg",
+          "sha256": "aa070e7db84f890ecdcf6f2e081ae82d9a22b9dff5cd3f61564c440479614a55"
+        },
+        {
+          "source_page": 2,
+          "file": "authentication-02.jpg",
+          "sha256": "57f58336cbe8bd0978b77faa1e314b2e3adcddfea5687e1b8521dab1459b5daf"
+        }
+      ],
+      "excluded_pages": [
+        {
+          "source_page": 3,
+          "reason": "eSAP signatory and identity-event audit metadata; not needed in customer profile"
+        }
+      ]
+    },
+    {
+      "key": "business-permit",
+      "title": "2026 Manila Business Permit",
+      "holder_group": "Oceanides",
+      "drive_id": "1vnxHtto0mSVyu2lZrU296Tf3P1O7Wyk8",
+      "url": "https://drive.google.com/file/d/1vnxHtto0mSVyu2lZrU296Tf3P1O7Wyk8/view",
+      "source_sha256": "9896205e49fb182843ac846436dd13afa82914259b9ea6b9c1ba72538ab68552",
+      "source_page_count": 3,
+      "fields": [
+        [
+          "Permit number",
+          "2026-000040205-1"
+        ],
+        [
+          "Business location",
+          "Vito Cruz / Malate, Manila"
+        ],
+        [
+          "Stated validity",
+          "Through 31 December 2026, subject to conditions"
+        ]
+      ],
+      "status": "Plumbing and pest control listed. Ancillary clearance status follows the supplied record.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "business-permit-01.jpg",
+          "sha256": "267fa75f50969ad13c87177b4751a49403ab7cc06cdfaa75f7eece28cfedd3d1"
+        },
+        {
+          "source_page": 2,
+          "file": "business-permit-02.jpg",
+          "sha256": "ffb52b58ecb4d9970604f12626a230e850c1d40a6323b82dc0c6f180a9f2523a"
+        },
+        {
+          "source_page": 3,
+          "file": "business-permit-03.jpg",
+          "sha256": "416b7653b651e439861487b7b8341441e2568291895c92881b26e10f914492c5"
+        }
+      ],
+      "excluded_pages": []
+    },
+    {
+      "key": "doh",
+      "title": "DOH Sanitation Clearance",
+      "holder_group": "Globaltec",
+      "drive_id": "1wPEivf5A-y7mw4b3CLhBPpMA6ir1Rwa5",
+      "url": "https://drive.google.com/file/d/1wPEivf5A-y7mw4b3CLhBPpMA6ir1Rwa5/view",
+      "source_sha256": "67d4c588239e20c3a7f60463bbbd638dfd31700d75c08c5ae31bfb145f5c37ea",
+      "source_page_count": 1,
+      "fields": [
+        [
+          "Record holder",
+          "Globaltec Waste Management, Inc."
+        ],
+        [
+          "Issued",
+          "28 April 2025"
+        ],
+        [
+          "Listed operating area",
+          "Bataan, Bulacan, Pampanga and Tarlac"
+        ]
+      ],
+      "status": "Provider-held clearance. Stated geographic scope applies; no expiry is printed.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "doh-01.jpg",
+          "sha256": "ee847835f341fc9114d076d2c8845565c18c28a54a3aeb82299bea342f0b218c"
+        }
+      ],
+      "excluded_pages": []
+    },
+    {
+      "key": "ecc",
+      "title": "Amended Environmental Compliance Certificate",
+      "holder_group": "Globaltec",
+      "drive_id": "1tWbBysMTgqZSvKDue0xEjLLZf_nsdQsp",
+      "url": "https://drive.google.com/file/d/1tWbBysMTgqZSvKDue0xEjLLZf_nsdQsp/view",
+      "source_sha256": "66c30d442d18a13f68cb94b10990bc8276c4b433c130f9d09548b00a7a8d5591",
+      "source_page_count": 12,
+      "fields": [
+        [
+          "Record holder",
+          "Globaltec Waste Management, Inc."
+        ],
+        [
+          "Issued",
+          "27 December 2024"
+        ],
+        [
+          "Facility",
+          "Treatment, storage and disposal facility in Marilao, Bulacan"
+        ]
+      ],
+      "status": "Provider facility record, subject to attached conditions. An ECC is not an operating permit.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "ecc-01.jpg",
+          "sha256": "761b544a8899fb0f12f4cfde94114866b38c6e5ebb7cf05f4126399f14d9cc8a"
+        },
+        {
+          "source_page": 2,
+          "file": "ecc-02.jpg",
+          "sha256": "8bdb1b9ac4200d9f9a3ab5fd218f89291b9d390e5f1cf5d1ded13537a058d051"
+        },
+        {
+          "source_page": 3,
+          "file": "ecc-03.jpg",
+          "sha256": "12c74f1c345afb343d2f259af04a9ebec8338b3aa99aa4d0bef2e539cd6a649d"
+        },
+        {
+          "source_page": 4,
+          "file": "ecc-04.jpg",
+          "sha256": "94e7dae279f0f550d294c1298e87c8c95234117d5041f706337ca4af24d15608"
+        },
+        {
+          "source_page": 5,
+          "file": "ecc-05.jpg",
+          "sha256": "db5f29a4620baea4635f35766c525a303642a256f5bd56b9f26c70b6dfb68fd6"
+        },
+        {
+          "source_page": 6,
+          "file": "ecc-06.jpg",
+          "sha256": "667d3432a5f969bf9052061e0ace2e6dd9b8c2d85a851bd5146323528fd8c4bc"
+        },
+        {
+          "source_page": 7,
+          "file": "ecc-07.jpg",
+          "sha256": "6d9ea9800e371d7d9d79f042f3e29f1c82ddc3a24896f778af416023f3623487"
+        },
+        {
+          "source_page": 8,
+          "file": "ecc-08.jpg",
+          "sha256": "87f616d71c7c3f6f789e965157c52626ba7648880b6c385dbecc98a08bd4ac9b"
+        },
+        {
+          "source_page": 9,
+          "file": "ecc-09.jpg",
+          "sha256": "4017ec69330ce16438c2dfb815e2306a64423e0e788a3c2157b2bf26bf5e3f29"
+        },
+        {
+          "source_page": 10,
+          "file": "ecc-10.jpg",
+          "sha256": "3adf5e2b94f6c7a2ea1449b19a1e7cd2beab2a74e860f47fd7aff9e539856d4f"
+        },
+        {
+          "source_page": 11,
+          "file": "ecc-11.jpg",
+          "sha256": "55ac5c8951b31292b157edad02bb7b16d1952b655e905eb49cdac8f02b0d8eaf"
+        },
+        {
+          "source_page": 12,
+          "file": "ecc-12.jpg",
+          "sha256": "c5e147468c67fe749639dcbb1cb801ad4fa87e1fd525c2738f21be535fb99677"
+        }
+      ],
+      "excluded_pages": []
+    },
+    {
+      "key": "discharge",
+      "title": "Historical Discharge Permit",
+      "holder_group": "Globaltec",
+      "drive_id": "1sbAPMwfBQXPqwOy1as9cG__MUoYUjboV",
+      "url": "https://drive.google.com/file/d/1sbAPMwfBQXPqwOy1as9cG__MUoYUjboV/view",
+      "source_sha256": "1786309862dd94d03d50f48eccab3c5c442d35e157dceeaf653732b8c7c12045",
+      "source_page_count": 2,
+      "fields": [
+        [
+          "Record holder",
+          "Globaltec Waste Management, Inc."
+        ],
+        [
+          "Issued",
+          "24 July 2025"
+        ],
+        [
+          "Printed validity ended",
+          "24 July 2026"
+        ]
+      ],
+      "status": "Historical supplied copy. Updated renewal copy required; current status is not established by this copy.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "discharge-01.jpg",
+          "sha256": "e83c815a2ba963d58457613be6f4d5215fdcd1fdd7a802a066460056e295c30e"
+        },
+        {
+          "source_page": 2,
+          "file": "discharge-02.jpg",
+          "sha256": "c65694c5a884fdaaa13c6e833e89fc5c5c45744ca17530ac25c8a617a3d6578a"
+        }
+      ],
+      "excluded_pages": []
+    }
+  ]
+}

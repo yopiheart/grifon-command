@@ -3,8 +3,9 @@ Reviewed 12 October 2026; final format check 13 October 2026 | Internal owner re
 
 OVERALL RESULT
 The revised profile covers all requested service categories and all 190 priority
-cities/municipalities. It is a review draft. Current OPC documents and technical
-treatment details still need to be supplied before broad customer circulation.
+cities/municipalities. The documents revision adds 26 source pages and a document
+index at the end, for 63 slides. It remains a review draft. OPC tax details and
+technical treatment details still need to be supplied.
 "Triple A" is treated as a request for presentation quality, not a formal
 accessibility, accreditation, or business-performance certification.
 
@@ -38,6 +39,45 @@ CHANGES MADE
 - Current user-supplied address: Tramo Street Corner Dandan, Pasay City,
   Philippines 1300. OPC TIN explicitly TO FOLLOW at the owner's request.
 - Primary landline and both mobiles retained. Conflicting second landline omitted.
+- Company name aligned to the supplied SEC record: Oceanides Plumbing Siphoning
+  & Pest Management Services OPC.
+
+DOCUMENTS RECEIVED FROM OWNER DRIVE - 13 OCTOBER 2026
+Seven unique PDFs were retrieved from the private Oceanides docs folder.
+The two Certificate of Incorporation uploads are byte-identical; included once.
+Appendix starts on page 37 with an index, followed by 26 complete source pages:
+- Pages 38-39: SEC Certificate of Incorporation and reportorial requirements.
+  Incorporation date: 14 January 2026. Registration: 2026010232712-03.
+- Pages 40-43: Articles of Incorporation, all four substantive pages.
+- Pages 44-45: Certificate of Authentication, both declaration pages.
+- Pages 46-48: 2026 Manila electronic business permit, terms and clearance listing.
+  Permit: 2026-000040205-1. Printed terms run through 31 December 2026.
+  The displayed 18 April 2026 date is a receipt/date field, not a separately
+  labeled permit issue date. Subject to inspection and stated conditions.
+- Page 49: Globaltec DOH Environmental Sanitation Clearance, 28 April 2025.
+  Listed operating area: Bataan, Bulacan, Pampanga and Tarlac.
+- Pages 50-61: Globaltec amended ECC, complete 12-page supplied record,
+  dated 27 December 2024. Conditions apply; an ECC is not an operating permit.
+- Pages 62-63: Globaltec discharge permit, both pages, labeled historical.
+  Printed validity ended 24 July 2026; renewed copy not yet supplied.
+The owner confirmed Globaltec is the current treatment/disposal provider.
+Provider records are attributed to Globaltec, not Oceanides. Their facility
+capacity, vehicles and geography do not become Oceanides equipment claims or
+specifications for the proposed client-site treatment system.
+
+The Articles show the registered office in the Tramo/Dandan area of Pasay.
+The Manila permit covers a Vito Cruz/Malate business location; each is labeled
+according to its source. The confirmed Pasay contact address remains in the deck.
+The Articles and authentication declaration contain an incorporator's personal
+TIN, marked unverified; it is not used as the OPC tax registration.
+The business-permit clearance listing does not prove FSIC or cedula issuance:
+those sections contain contact/wait-for-issuance instructions.
+
+The appendix omits the generic BIR/employer-registration advisory and two eSAP
+identity-event audit pages. Original PDFs remain intact in the private Drive
+folder; reproduced pages retain their text, signatures, QR codes and proportions.
+These are owner-supplied records; authenticity/current regulatory status has not
+been independently established.
 
 CONTENT REMOVED OR CORRECTED
 1. Conflicting establishment/registration dates: old cover says 2021; DTI scan
@@ -72,8 +112,8 @@ This review identifies the pictured records; it does not authenticate them or
 establish their current regulatory standing.
 
 STILL NEEDED BEFORE FINAL CUSTOMER RELEASE
-1. Current SEC OPC certificate, current BIR COR/TIN and business permit;
-   confirm exact legal name, registration numbers and document validity.
+1. Current OPC BIR COR/TIN. SEC records and the 2026 business permit have now
+   been supplied; do not substitute the incorporator's personal TIN.
 2. Confirm correct second landline: (02) 8330 1329 (new letterhead) vs
    (02) 8830 1329 (old PDF).
 3. Two or three project references: contracted entity/site, service, date,
@@ -83,6 +123,7 @@ STILL NEEDED BEFORE FINAL CUSTOMER RELEASE
 5. Written scope, duration, fees and response arrangements for after-sales and
    permit-document assistance; confirm responsibilities of each party.
 6. Confirm final reporting lines and preferred complete staff names.
+7. Updated Globaltec discharge-permit copy; the supplied period has ended.
 
 SOURCES AND ASSET RECORDS
 User interview 11 October 2026; current confirmations 12 October 2026.
@@ -91,5 +132,6 @@ User-supplied HEADER 111.docx and address image.
 Official logo URLs: assets-refresh/client-logos/sources.json.
 Stock-photo source/license credits: assets-refresh/service-stock/sources.json.
 Portrait extraction record: assets-refresh/legacy-photos/sources.json.
+Company/provider document sources and page selection: assets-documents/sources.json.
 Geographic source URLs: coverage.json (Philippine Statistics Authority PSGC).
 Relevant asset and claim references are retained in PowerPoint speaker notes.

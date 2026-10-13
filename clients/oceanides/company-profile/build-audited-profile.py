@@ -86,7 +86,7 @@ def page(section, notes=''):
     image(p, 'clients/oceanides/assets/logo.jpg', 42, 15, 78, 78,
           'Oceanides existing company logo', contain=True)
     text(p, 'OCEANIDES', 142, 14, 800, 30, 25, 'Strong', NAVY)
-    text(p, 'Plumbing, Siphoning, and Pest Management Services OPC', 142, 46, 1000, 26, 19, 'Strong', NAVY)
+    text(p, 'Plumbing Siphoning & Pest Management Services OPC', 142, 46, 1000, 26, 19, 'Strong', NAVY)
     text(p, '(02) 8633 8486   |   Globe 0917 671 6383   |   Smart 0939 245 6217', 142, 75, 1000, 23, 16, 'Body', NAVY)
     text(p, 'marketing@oceanidessepticandpest.com', 142, 97, 750, 19, 14, 'Body', NAVY)
     text(p, 'OPC TIN: TO FOLLOW', 1014, 20, 230, 20, 13, 'Strong', BLUE)
@@ -134,10 +134,10 @@ para(p, 'Plumbing. Septic services. Pest management.\nCleaning. Renovation. Trea
 text(p, 'Commercial  /  Industrial  /  Residential', 42, 578, 580, 30, 21, 'Strong', BLUE)
 para(p, 'AI conceptual illustration; not a project or engineering design.', 660, 620, 570, 12, 'Body', '#FFFFFF', 16)
 
-p = page('About Oceanides', 'Company history is date-neutral: old source says established2021, DTI certificate2022, BIR trade registration2023. Current SEC certificate still required.')
+p = page('About Oceanides', 'Earlier business milestones remain date-neutral. SEC Certificate of Incorporation supplied from owner Drive on 2026-10-13 states incorporation on 14 January 2026. See documents appendix and source manifest.')
 title(p, 'Essential services, one point of contact')
 para(p, 'Oceanides brings plumbing, septic tank services, pest management, cleaning and property improvement together for commercial, industrial and residential clients.', 42, 235, 705, 27, 'Strong', NAVY, 36)
-para(p, 'Our service relationships grew through recurring plumbing, septic tank and grease tank work. We have expanded our offer under Oceanides Plumbing, Siphoning, and Pest Management Services OPC.', 42, 398, 705, 23)
+para(p, 'Our service relationships grew through recurring plumbing, septic tank and grease tank work. We have expanded our offer under Oceanides Plumbing Siphoning & Pest Management Services OPC.', 42, 398, 705, 23)
 image(p, 'clients/oceanides/assets/van.jpg', 810, 234, 428, 322, 'Existing Oceanides white box service van photo')
 caption(p, 'Oceanides asset-library photograph', 810, 568, 420)
 para(p, 'Priority service in Metro Manila and nearby provinces.\nNationwide work by arrangement.', 42, 563, 740, 22, 'Strong', BLUE, 30)
@@ -342,10 +342,10 @@ for heading, people in teams:
         para(p, role, x, 525, 375, 20, 'Strong', BLUE, 27)
         para(p, responsibility, x, 588, 375, 20, 'Body', INK, 27)
 
-p = page('Supplier documentation', 'Old profile pages13-22 contain historical sole-proprietor records and Reed provider records. Current OPC SEC certificate, BIR COR and current business permit not supplied. Do not label applicant affidavit, individual PCO accreditation or payment receipt as Oceanides facility permits. No agency logo badges used as proof.')
+p = page('Supplier documentation', 'Current OPC SEC incorporation certificate, Articles, authentication declarations and 2026 Manila business permit supplied from owner Drive on 2026-10-13. BIR COR/TIN remains to follow. Globaltec confirmed current provider; its supplied discharge permit validity ended 24 July 2026. See separately attributed documents appendix.')
 title(p, 'Company and project documentation')
 para(p, 'Documentation is coordinated during supplier accreditation and project scoping.', 42, 236, 1175, 29, 'Strong', NAVY, 39)
-items = [('Company registration', 'Current OPC registration, tax and business-permit records'),
+items = [('Company registration', 'SEC and 2026 business-permit copies in the appendix'),
          ('Service-specific records', 'Documents applicable to the agreed work and service provider'),
          ('Treatment and disposal', 'Relevant facility records, agreements and supporting documentation'),
          ('Project handover', 'Agreed completion records, operating guidance and service reports')]
@@ -353,7 +353,7 @@ for i, (head, body) in enumerate(items):
     y = 349 + i * 63
     text(p, head, 42, y, 380, 30, 22, 'Strong', BLUE)
     para(p, body, 439, y, 795, 21)
-caption(p, 'Review status: current OPC documents and service-specific supporting copies are still to be inserted.', 42, 624, 1190)
+caption(p, 'OPC BIR COR/TIN and an updated Globaltec discharge-permit copy remain to follow.', 42, 624, 1190)
 
 p = page('Service coordination', 'Proposed client engagement workflow. All scope, cost, timing and responsibilities documented in the service agreement.')
 title(p, 'A clear process for every engagement')
@@ -395,6 +395,38 @@ for c in coverage:
         text(p, name, x + 18, y, 375, 29, 21, 'Body', INK)
     caption(p, 'Geographic names: PSA PSGC. Service schedule and availability confirmed upon inquiry.', 42, 626, 1190)
 
+documents = json.loads((HERE / 'assets-documents/sources.json').read_text(encoding='utf-8'))
+p = page('Company documents appendix', 'Owner-supplied Drive records retrieved 2026-10-13. ' + documents['source_folder'] + '\n' + documents['provider_relationship'])
+title(p, 'Company documents', 'Registration and provider records | Appendix')
+text(p, 'OCEANIDES REGISTRATION', 42, 276, 565, 28, 18, 'Strong', BLUE)
+scope(p, ['SEC Certificate of Incorporation', 'Articles of Incorporation', 'Certificate of Authentication', '2026 Manila Business Permit'], 42, 322, 550, 22)
+para(p, 'OPC BIR COR and TIN remain to follow.', 42, 537, 550, 20, 'Strong', NAVY)
+text(p, 'GLOBALTEC PROVIDER RECORDS', 659, 276, 575, 28, 18, 'Strong', BLUE)
+scope(p, ['DOH Environmental Sanitation Clearance', 'Amended Environmental Compliance Certificate', 'Historical discharge permit: printed validity ended 24 July 2026'], 659, 322, 565, 22)
+caption(p, 'Provider records apply to Globaltec and the stated facility or geographic scope.', 659, 552, 565, 16)
+caption(p, 'Copies supplied by management. Document conditions and stated periods apply.', 42, 627, 1190)
+for doc in documents['records']:
+    for entry in doc['pages']:
+        original_page = entry['source_page']
+        p = page('Documents appendix - ' + doc['title'], doc['url'] + '\nSource page ' + str(original_page) + ' of ' + str(doc['source_page_count']) + '. ' + doc['status'])
+        title(p, doc['title'])
+        label = 'OCEANIDES CORPORATE RECORD' if doc['holder_group'] == 'Oceanides' else 'GLOBALTEC PROVIDER RECORD'
+        text(p, label, 42, 237, 580, 28, 18, 'Strong', BLUE)
+        y = 285
+        for field, value in doc['fields']:
+            text(p, field.upper(), 42, y, 580, 25, 15, 'Strong', BLUE)
+            y = para(p, value, 42, y + 28, 560, 22, 'Body', INK, 28) + 21
+        para(p, doc['status'], 42, max(y, 524), 565, 18, 'Strong', NAVY, 24)
+        source = HERE / 'assets-documents' / entry['file']
+        with Image.open(source) as scan:
+            aspect = scan.width / scan.height
+        h = 432
+        w = min(604, h * aspect)
+        p['elements'].append(dict(type='image', path=str(source), renderPath=str(source),
+                                  x=640 + (598-w)/2, y=218, w=w, h=h,
+                                  fit='contain', alt=doc['title'] + ' complete source page ' + str(original_page)))
+        caption(p, 'Source page ' + str(original_page) + ' of ' + str(doc['source_page_count']) + ' | Owner-supplied copy', 42, 627, 580, 14)
+
 spec = {'width': W, 'height': H, 'fonts': FONT, 'revision': REV, 'pages': pages}
 (TMP / 'layout.json').write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding='utf-8')
 final = OUT / 'pdf' / f'Oceanides-Company-Profile-{REV}.pdf'
@@ -402,7 +434,7 @@ if final.exists():
     raise FileExistsError('Preserve prior revision: ' + str(final))
 c = canvas.Canvas(str(final), pagesize=(W * .75, H * .75))
 c.setTitle('Oceanides Company Profile - Audited Review')
-c.setAuthor('Oceanides Plumbing, Siphoning, and Pest Management Services OPC')
+c.setAuthor('Oceanides Plumbing Siphoning & Pest Management Services OPC')
 for p in pages:
     c.saveState()
     c.scale(.75, .75)

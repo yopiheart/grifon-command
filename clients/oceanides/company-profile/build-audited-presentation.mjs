@@ -26,7 +26,7 @@ for (const page of spec.pages) {
       }
     }
   }
-  slide.speakerNotes.textFrame.setText(page.notes + '\nOwner review draft. Sources: interview2026-10-11, old PDF and current role/client/address confirmations2026-10-12. Reference imagery is labeled; no logo implies endorsement. Original PPTXv4 preserved. OPC tax details still to follow.');
+  slide.speakerNotes.textFrame.setText(page.notes + '\nSources: owner interview 2026-10-11, supplied prior profile and role/client/address confirmations 2026-10-12; company/provider Drive records supplied 2026-10-13. Reference imagery is labeled. Client logos do not imply endorsement. OPC tax details remain to follow.');
 }
 const candidate = path.join(tmp, `candidate-${revision}.pptx`);
 await (await PresentationFile.exportPptx(presentation)).save(candidate);
