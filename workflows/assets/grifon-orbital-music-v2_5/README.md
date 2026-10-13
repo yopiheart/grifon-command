@@ -6,7 +6,9 @@ Music replacement requested by Neil on 2026-10-13 for the latest
 source remain intact. This version uses the
 [shared music workflow](../../background_music_production.md).
 
-Latest review: [continuous v2](grifon-orbital-launch-music-v2_5-v2.mp4).
+Accepted film: [continuous v2](grifon-orbital-launch-music-v2_5-v2.mp4), approved
+by Neil on 2026-10-13: "AYAN PERFECT!!!!!!!!!!!!".
+[Acceptance record](acceptance-v2.json) binds the exact film and source checkpoint.
 Neil found the music source acceptable but rejected v1's chopped assembly;
 [verbatim feedback](creative-feedback-v1.json) binds that verdict to v1's hash.
 V2 corrects the assembly locally, with no additional generation or spend.
@@ -57,7 +59,7 @@ with those authorized local inputs.
 
 ## Deliver and reproduce
 
-[Finished review MP4](grifon-orbital-launch-music-v2_5-v2.mp4),23.15s/1080p/60fps,
+[Accepted MP4](grifon-orbital-launch-music-v2_5-v2.mp4),23.15s/1080p/60fps,
 with stereo48kHz AAC. SHA256:
 `4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405`.
 
@@ -87,8 +89,10 @@ payloads and integer PTS/DTS/durations match the original. Final audio measures
 passage before smooth gain shaping; maximum mapping error is below6e-8.
 [Independent v2 review](independent-review-v2.json) verifies that continuous
 mapping, smooth envelopes, unchanged picture packets and26 SFX contacts.
-Actual creative listening and user acceptance remain distinct from waveform
-checks, source labels and technical export validation.
+Neil's listening and creative acceptance are recorded separately in
+[acceptance-v2.json](acceptance-v2.json). Historical technical receipts retain
+their original listening-pending status; user acceptance supplies the later
+creative verdict rather than retroactively changing those measurements.
 
 ## Rejected assembly checkpoint
 

@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; continuous Orbital v2 delivered for listening**
+**Stamped: 2026-10-13; continuous Orbital v2 creatively accepted by Neil**
 
 ## Active task and result
 Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd, Grifon motion workflow.
@@ -20,17 +20,18 @@ SFX SHA:f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64.
 V1checkpoint:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v1.mp4.
 SHA:59ca220e77536cc99be2ce9a07052892fae9476436b3d97265ec5186412fc7f0.
 Neil heardv1: musicsourceokay, choppedjoins unprofessional. creative-feedback-v1.json bindsverbatim.
-V2delivered:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
+V2accepted:workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
 SHA:4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
 Onecontinuous28.028-51.178s passage; nointernalcuts/forcedpause; groove6s,chord22s,
 26SFX visualcontacts; five smooth/modest musicducks. Noadditionalcredits.
+Neil'sverdict:"AYAN PERFECT!!!!!!!!!!!!"; acceptance-v2.json bindsfilm+sourcecheckpoint.
 No reference/film/audio uploaded. No additional paidQA, stemgeneration or top-up.
 Code/model/prompt defaults in application unchanged; no merge/deploy authorized.
 
 ## ▶ NEXT ACTION
 DraftPR183:https://github.com/yopiheart/grifon-command/pull/183; backuppushed.
 StackedonPR182, thenPR178; retargetinorderafterbasesland. Independentv2checkPASS.
-V2MP4showninline; listening/creativeacceptancepending. Keepv1/rejectionevidence.
+V2creativelyaccepted; preserveexactfilm/recipecheckpoint. Keepv1/rejectionevidence.
 Preserve rawmusic/isolatedSFX privately; no standalone redistribution inGit.
 Creative listening and user acceptance must stay distinct from technicalchecks.
 Consumedapproval does not authorize another generation or paidQA.
@@ -40,7 +41,7 @@ V1:check:codex26PASS; strictdecode/1389picturepacketsPASS;-16.04LUFS/-2.36dBTP.
 Cueplanhashfindingfixed; independentsource/mediaPASS, SFXexact. CreativeassemblyFAIL.
 V2strictdecode/1389packetpayloads+timestampsPASS;48kstereoAAC23.15s,
 -16.06LUFS/-4.10dBTP; continuoussamplemappingerror<6e-8. Independentv2reviewPASS.
-Do not present technicalPASS as musicalacceptance; v2listeningpending.
+Neil'splaybackacceptance nowPASS; historicaltechnicalreceipts remainunchanged.
 No product changes; applicationbuild/fulltests not applicable to this audio-only task.
 Spec SHA:3b4b8cc02cee6e7776543a066e3e8351e50ca9f1f9d80885a9bc688dee65a381.
 Prompt-file SHA:4231c67fe55628c1b68fd7f6056c585d6182cac61b0652a05e555f229834aa8e.
