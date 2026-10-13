@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "grifon-orbital-music-v2_5-20261013",
+  "status": "AWAITING_USER_APPROVAL",
+  "purpose": "Create one original instrumental score for the latest Grifon Orbital launch film and locally blend it with its existing26 SFX contacts.",
+  "module": "Local Grifon video production; ElevenLabs Music website and local FFmpeg finishing",
+  "providerSubmission": {
+    "destination": "https://elevenlabs.io/app/music",
+    "model": "Music v2.5",
+    "variants": 1,
+    "customDurationSeconds": 24,
+    "lyrics": "Auto",
+    "finetune": "No Finetune",
+    "autoImproveUnclearPrompts": "On",
+    "audioReference": null,
+    "uploads": [],
+    "prompt": "Create an original instrumental score for a 23.15-second premium Grifon motion-design launch film. Custom generation length: 24 seconds, including a short tail handle. Sleek, confident, elegant electronic groove at approximately 120 BPM: round tight bass, dry crisp percussion, restrained syncopated hi-hats, tactile muted synth plucks, airy analog pads and a memorable two-note motif. Polished, spacious stereo production, controlled low end, clear transients and understated musical confidence. The visual arc moves from one fragmented idea into a particle world, tactile globe textures, bold typography and orbiting creative tools, then resolves into the Grifon brand mark. Keep rhythmic detail selective so separately mixed transition swooshes, zoom accents and clicks stay clear. Instrumental throughout. All timestamps below are decimal seconds from the start. 0.00-3.50: an intriguing airy pulse and sparse motif, gently introducing bass beneath the opening ONE IDEA typography. 3.50-7.23: establish the clean groove as the particle world and quick collage appear; subtle musical motion through the cuts. 7.23-13.00: add controlled momentum and evolving synth texture through globe travel, a split scan and camera push. 13.00-15.80: lift rhythmic confidence beneath DESCRIBE, BUILD, LAUNCH, with clean space around each word. 15.80-19.83: widen the harmony and stereo atmosphere for the orbit pullback and three satellite arrivals; keep the groove elegant. 19.83-20.75: a concise controlled build toward the brand reveal. 20.75-21.00: a brief near-silent musical breath. Exactly 21.00: the main Grifon reveal lands with a fuller beat and warm confident chord, followed by a clear brand hold. Resolve musically by 22.90, decay gracefully through 23.15, and use 23.15-24.00 only for the fading tail. Compose a complete miniature score with a deliberate ending."
+  },
+  "contextAssets": [
+    {
+      "file": "../grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+      "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48",
+      "durationSeconds": 23.15,
+      "videoFrames": 1389,
+      "fps": 60,
+      "width": 1920,
+      "height": 1080,
+      "transmittedToProvider": false
+    },
+    {
+      "file": "../grifon-pluto-adaptation/audio-plan.json",
+      "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218",
+      "transmittedToProvider": false
+    }
+  ],
+  "budget": {
+    "currency": "ElevenLabs credits",
+    "maximum": 360,
+    "liveQuote": 360,
+    "quoteEvidence": "quote-preflight.png",
+    "maximumGenerations": 1,
+    "maximumRetries": 0,
+    "additionalDollarSpendAuthorized": 0,
+    "topUpsAuthorized": false
+  },
+  "finishing": {
+    "picture": "Copy source picture packets into a separately named MP4; preserve original film/source.",
+    "sfx": "Reconstruct original effects PCM deterministically, retain26 cue contacts; mix separate from music.",
+    "music": "Fit to23.15s, enforce20.75-21s brief breath, fuller reveal at21s, late musical fade around22.9s; discard only excess tail handle.",
+    "narration": "None in this film.",
+    "output": "grifon-orbital-launch-music-v2_5-v1.mp4",
+    "privateNativeAssets": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/"
+  },
+  "passFail": {
+    "creativePass": [
+      "Music fits sleek premium abstract orbital motion",
+      "Clean electronic groove with controlled development",
+      "Brief breath and fuller Grifon reveal land with picture",
+      "SFX contacts remain perceptible without harsh or muddy competition",
+      "Musical ending resolves within23.15s"
+    ],
+    "fail": [
+      "Wrong vibe",
+      "Low quality, artifacts or awkward musical edits",
+      "Pacing or reveal mismatch",
+      "SFX masked",
+      "Abrupt ending or clipping"
+    ],
+    "technical": [
+      "1389 picture packet payloads and timestamps preserved",
+      "23.15s output timeline with stereo48k audio",
+      "Strict audiovisual decode passes",
+      "True peak at most-1.5dBTP and approximately-16LUFS final",
+      "Separate music and SFX provenance and measured cue contacts retained"
+    ],
+    "listening": "Actual audiovisual listening is a separate creative gate. Do not claim hearing from waveform or metadata. If supported listening unavailable, label creative listening pending for user playback."
+  },
+  "evidence": [
+    "settings-preflight.png",
+    "quote-preflight.png",
+    "Native generated audio hash and download/provider receipt",
+    "Edited music and original effects stem hashes",
+    "Mix settings and cue map",
+    "Final MP4 decode/packet/loudness verification",
+    "Listening status and user acceptance kept distinct"
+  ],
+  "prohibited": [
+    "No paid Gemini/other AI QA under this approval",
+    "No retries or extra variants",
+    "No stock/procedural music substitution",
+    "No upload of the reference/film/audio assets",
+    "No merge/deploy/publish",
+    "No overwrite of accepted films"
+  ],
+  "approval": null
+}

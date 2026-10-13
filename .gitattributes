@@ -47,3 +47,6 @@ workflows/assets/grifon-motion-repeatability/qa/independent-smoke/20261008T14071
 
 # Preserve the orbital film's bound source, font licenses and evidence bytes.
 workflows/assets/grifon-pluto-adaptation/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Keep the approved music spec, prompt and source receipts byte-stable.
+workflows/assets/grifon-orbital-music-v2_5/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

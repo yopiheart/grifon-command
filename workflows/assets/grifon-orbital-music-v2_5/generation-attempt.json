@@ -1,0 +1,9 @@
+{
+  "specSha256": "3b4b8cc02cee6e7776543a066e3e8351e50ca9f1f9d80885a9bc688dee65a381",
+  "attempt": 1,
+  "maxAttempts": 1,
+  "submittedAt": "2026-10-13T03:40:25.666Z",
+  "quoteCredits": 360,
+  "status": "RESULT_RETRIEVED_APPROVAL_CONSUMED",
+  "result": "provider-result.json"
+}

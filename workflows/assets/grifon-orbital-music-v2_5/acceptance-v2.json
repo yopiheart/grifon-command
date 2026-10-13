@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "status": "CREATIVELY_ACCEPTED_BY_USER",
+  "date": "2026-10-13",
+  "source": "Direct user feedback in chat01a11748-4bfb-7582-9c06-826e9667b5fd after continuousv2 playback",
+  "verbatim": "AYAN PERFECT!!!!!!!!!!!!",
+  "scope": "Complete Orbital continuousv2 film, including generated music fitting and blend with existing SFX",
+  "video": {
+    "file": "grifon-orbital-launch-music-v2_5-v2.mp4",
+    "sha256": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405",
+    "bytes": 11604731,
+    "durationSeconds": 23.15,
+    "fps": 60,
+    "frames": 1389
+  },
+  "boundEvidence": [
+    {
+      "file": "continuous-fit-plan.json",
+      "sha256": "3fc1433a33745979b1c5880535572179f436cb64935d502386eb0376b0517cb7"
+    },
+    {
+      "file": "mix-continuous.mjs",
+      "sha256": "917c9125f4893896ff392ebc6142ac39568d6924f6998e0b3bfb9356c32be08e"
+    },
+    {
+      "file": "continuous-mix-receipt.json",
+      "sha256": "cb6d26370f0d5ad1639ecfdf7ced3e1320312a3467d790130a0db2e0d6debf8d"
+    },
+    {
+      "file": "independent-review-v2.json",
+      "sha256": "b559ca9134872813f8355d849de91ed6edce1d8b224d59417c70814bd8562227"
+    }
+  ],
+  "creativeReview": "User listening acceptance. Historical technical receipts remain unchanged; this does not assert independent machine hearing.",
+  "preservation": "Preserve accepted video and bound recipe checkpoint; deliberate revisions receive a separately named candidate and fresh acceptance.",
+  "authorizationScope": "Creative acceptance only; no additional paid generation, merge, deployment or publication authorized."
+}

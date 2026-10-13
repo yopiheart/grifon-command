@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Free local sectional fitting and SFX mixing of the single approved native ElevenLabs score.",
+  "timeline": { "durationSeconds": 23.15, "sampleRate": 48000, "channels": 2, "sampleFrames": 1111200, "videoFrames": 1389, "fps": 60 },
+  "inputs": {
+    "nativeMusic": { "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/native/grifon-launch-theme-native.mp3", "sha256": "a982e2f2ef7dbf0aa8c9c00c0426fc78613c2b097eb48cdbf5181eefbc8c9405" },
+    "cleanSfx": { "path": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/preparation/grifon-orbital-existing-sfx-48k-f32.wav", "sha256": "f74f4b8880c6fd332a6471e49efe1dc85748926a85842a096c86492a3169ab64" },
+    "picture": { "path": "../grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4", "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48" },
+    "existingCuePlan": { "path": "../grifon-pluto-adaptation/audio-plan.json", "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218" }
+  },
+  "providerDurationDeviation": {
+    "selectedSeconds": 24,
+    "nativeContainerSeconds": 62.275917,
+    "nativeDecodedSeconds": 62.2759375,
+    "handling": "Preserve native result; sectional edit at native tempo. No retry, whole-track time compression, stock substitution or additional generation."
+  },
+  "sectionEvidence": {
+    "uiInferredBoundariesSeconds": [0, 3.5, 7.23, 13, 16, 20.03, 29.23, 32.23, 51.23, 62.23],
+    "qualification": "Durations inferred from proportional rendered provider timeline geometry, not authoritative audio boundaries. PCM energy shows the source32.23s region is quiet, full groove resumes around34.03s and final chord occurs around50.03s. Waveform analysis does not prove auditory fit.",
+    "nativePulseSeconds": 0.5,
+    "nativePulseQualification": "Local transient spacing supports an approximately120BPM pulse; no tempo change applied."
+  },
+  "sections": [
+    { "id": "opening-through-words", "sourceStartSeconds": 0, "targetStartSeconds": 0, "durationSeconds": 15.82, "fadeInSeconds": 0.025, "fadeOutSeconds": 0.04, "gainDb": 0, "role": "Retain generated opening, groove development and rolling-word lift." },
+    { "id": "orbit-atmosphere", "sourceStartSeconds": 15.98, "targetStartSeconds": 15.78, "durationSeconds": 4.073333333333334, "fadeInSeconds": 0.04, "fadeOutSeconds": 0.04, "gainDb": -0.5, "role": "Native orbit section,40ms centered crossfades at15.8s and19.833333s." },
+    { "id": "concise-build", "sourceStartSeconds": 29.008, "targetStartSeconds": 19.813333333333333, "durationSeconds": 0.9366666666666674, "fadeInSeconds": 0.04, "fadeOutSeconds": 0.025, "gainDb": 0.6, "role": "Last active native build beats; prepare the20.75s breath without stretching." },
+    { "id": "fuller-reveal", "sourceStartSeconds": 34.028, "targetStartSeconds": 21, "durationSeconds": 1.02, "fadeInSeconds": 0.002, "fadeOutSeconds": 0.04, "gainDb": 0.7, "role": "Native fuller groove onset aligned to frame1260, two native beats before closing chord." },
+    { "id": "resolving-chord-and-tail", "sourceStartSeconds": 50.008, "targetStartSeconds": 21.98, "durationSeconds": 1.17, "fadeInSeconds": 0.04, "fadeOutSeconds": 0, "gainDb": 0, "role": "Native closing chord at22s, natural tail then final22.9-23.15s taper." }
+  ],
+  "musicGainDb": -4.8,
+  "sfxGainDb": 5,
+  "musicOnlyDucking": { "allCueDepthDb": 1.2, "prominentCueDepthDb": 3.2, "prominentFrames": [162, 210, 390, 434, 570, 690, 756, 948], "attackSeconds": 0.045, "holdSeconds": 0.018, "releaseSeconds": 0.12, "revealDepthDb": 0.9 },
+  "musicBreath": { "startSeconds": 20.75, "endSeconds": 21, "gain": 0, "sfxUnaffected": true },
+  "ending": { "fadeStartSeconds": 22.9, "fadeEndSeconds": 23.15, "curve": "quadratic", "musicOnly": true },
+  "master": { "targetIntegratedLufs": -16, "maximumPcmTruePeakDbtp": -1.9, "maximumEncodedTruePeakDbtp": -1.5, "method": "One measured linear gain after sectional edit and music-only ducking; no dynamics processor or limiter." },
+  "outputRoot": "F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/finishing",
+  "listening": "PENDING: section choices and technical measurements are not auditory verification."
+}
