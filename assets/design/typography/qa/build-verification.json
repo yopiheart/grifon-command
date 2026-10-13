@@ -1,0 +1,80 @@
+{
+  "baseCommit": "82c8f1c3e19fd95f7ba754308e6f2bb096391cac",
+  "scope": "Authorized global UI typography and structural companion drawing-resolution fix; approved model, textures and reactions retained.",
+  "criticalSources": {
+    "indexHtmlGitBlob": "fc2f23eb6133777bfd106a68e2081a37ff4ef2d5",
+    "canonicalAndPublicMainSha256": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b"
+  },
+  "checks": [
+    {
+      "command": "npm.cmd run build",
+      "executor": "typography_builder",
+      "exitCode": 0,
+      "includes": "TypeScript, Vite, prebuild PowerShell ASCII"
+    },
+    {
+      "command": "npx.cmd vitest run",
+      "executor": "typography_builder",
+      "exitCode": 0,
+      "passedFiles": 118,
+      "passedTests": 1453,
+      "existingOptionalSkippedFiles": 9,
+      "existingOptionalSkippedTests": 32
+    },
+    {
+      "command": "npm.cmd run check:bundle-leak",
+      "executor": "root",
+      "exitCode": 0,
+      "bundleFiles": 11,
+      "leaks": 0
+    },
+    {
+      "command": "npm.cmd run check:codex",
+      "executor": "root",
+      "exitCode": 0,
+      "controlTests": 26,
+      "skillErrors": 0
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "executor": "root",
+      "exitCode": 0
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "executor": "root",
+      "exitCode": 0
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "executor": "root",
+      "exitCode": 0
+    },
+    {
+      "command": "npm.cmd run design:lint",
+      "executor": "root",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/sync-companion-assets.mjs --check",
+      "executor": "typography_builder",
+      "exitCode": 0,
+      "matchedFiles": 11
+    },
+    {
+      "command": "npx.cmd tsc --noEmit",
+      "executor": "root",
+      "exitCode": 0,
+      "note": "Narrow type check after lossless baseline snapshot test transport repair."
+    }
+  ],
+  "browserEvidence": "verification.json",
+  "independentReviewEvidence": "independent-review.json",
+  "resolutionEvidence": "mascot-final-report.json",
+  "repairedSetupFailure": "First build failed on the new DEV fixture ImportMeta typing. Its owner used the existing explicit DEV type pattern; final build passed. No production configuration was modified.",
+  "limitations": [
+    "Public route browser checks use a test-only signed-out Supabase boot stub; the reused server lacks local Supabase configuration.",
+    "No paid generation, production-data modification, deployment or merge occurred.",
+    "Physical-phone keyboard and GPU performance, native browser zoom and live providers remain unverified."
+  ]
+}

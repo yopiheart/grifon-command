@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "completedAtUtc": "2026-10-07T03:40:37.2791394Z",
+  "baselineCommit": "110d882a",
+  "scope": "Companion floating glass header/composer, selection, aligned Plus controls and browser voice-to-draft. No provider, tuned prompt or renderer changes.",
+  "sourceSha256": {
+    "DESIGN.md": "32e8144a47d229dc681e966cad96257b963e9d3efc302171106641b0e2b1e18b",
+    "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+    "components/CompanionChat/CompanionChatSurface.tsx": "856f7732bc16e4d402e12041157e503e96e4230af4d146a5c1bc0f60844ebc5f",
+    "components/CompanionChat/CompanionComposer.tsx": "e8c3a04ca9ee9207ae124d6992873d3a2b3e5d6acc18c5a9c92e50ab97cd14ed",
+    "components/CompanionChat/companionChat.css": "90332d0ece862bfc2b6239f0d367e599fe60c166a86d09580e149d7da494d151",
+    "components/CompanionChat/useCompanionDictation.ts": "a679206f208f0a4faca858a259dfac00f3992dad73de4851b73e548d77b47acb",
+    "tests/e2e/companion-glass.spec.ts": "d2fda74e7b92c2cd494140fcbb55e22417fe37cf6e7d50e611cb514e97fc055f",
+    "tests/e2e/companion-glass.config.ts": "9096b7e2021652a5b8ee2574a88437aa83e8f24db41e8aba4bdb9a53be18d4af",
+    "tests/e2e/companion-layout.spec.ts": "8bd3ded07ae8cdef06c06ec51df77ea87d86adcdef11afddf313571d7f060f7e"
+  },
+  "requiredChecks": [
+    {
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "owner": "/root/typography_builder",
+      "evidence": "Final post-hover run completed on the frozen hashes above; TypeScript and Vite passed."
+    },
+    {
+      "command": "npm.cmd run test -- --run",
+      "exitCode": 0,
+      "owner": "/root/typography_builder",
+      "passedFiles": 118,
+      "skippedFiles": 9,
+      "passedTests": 1453,
+      "skippedTests": 32,
+      "durationSeconds": 44.78,
+      "evidence": "Final post-hover package run; existing optional/paid suites remain off."
+    },
+    {
+      "command": "npm.cmd run check:bundle-leak",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "After the final build:11 bundle files,0 crown-jewel markers."
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "exitCode": 0,
+      "owner": "/root"
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "301 files,0 drift."
+    },
+    {
+      "command": "npm.cmd run design:lint",
+      "exitCode": 0,
+      "owner": "/root"
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0,
+      "owner": "/root"
+    },
+    {
+      "command": "node tools/sync-companion-assets.mjs --check",
+      "exitCode": 0,
+      "owner": "/root",
+      "evidence": "11 sources match; renderer/assets unchanged."
+    }
+  ],
+  "verification": {
+    "smoke": "assets/design/companion-glass/qa/verification.json",
+    "independent": "assets/design/companion-glass/qa/independent-review.json",
+    "summary": "31 unique browser cases;10 targeted readability and2 tall-review repeats;42 independent behavior/contrast checks and18 final hover checks. Test windows and hashes are recorded separately in smoke evidence.",
+    "independentCorrectness": "PASS",
+    "independentBrand": "BRAND_PASS",
+    "openFindings": 0
+  },
+  "limitations": [
+    "Speech API mocks only; real microphone permission, transcription and vendor service untested.",
+    "Desktop Edge responsive viewports; no physical-phone GPU/keyboard or native browser zoom claim.",
+    "Independent reviewer was the read-only explorer reused because fresh allocation was unavailable.",
+    "No deployment, merge, paid generation, campaign write or production data mutation."
+  ]
+}

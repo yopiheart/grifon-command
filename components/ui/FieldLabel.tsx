@@ -1,11 +1,11 @@
 import React from 'react';
-import { T_LABEL } from './wizardTokens';
+import { T_CTRL } from './wizardTokens';
 
 // ===========================================================================
-// FieldLabel — the canonical "// Label" meta-label above a control.
-// Mono, uppercase, tracked; turns gold when its field group is focused
+// FieldLabel — the canonical "// Label" above a control.
+// Readable sans, normal case/tracking; turns gold when its field group is focused
 // (wrap the field in a `group/field` to get the focus tint). Matches the
-// One-Shot composer's label grammar so every step reads identically.
+// shared control typography so every step reads identically.
 // ===========================================================================
 
 export const FieldLabel: React.FC<
@@ -17,7 +17,7 @@ export const FieldLabel: React.FC<
   }
 > = ({ children, className = '', marker = true, invalid = false, ...props }) => (
   <label
-    className={`block ${invalid ? 'text-red-400' : 'text-zinc-400 group-focus-within/field:text-[#FFCC00]'} ${T_LABEL} transition-colors ${className}`}
+    className={`block ${invalid ? 'text-red-400' : 'text-zinc-400 group-focus-within/field:text-[#FFCC00]'} ${T_CTRL} transition-colors ${className}`}
     {...props}
   >
     {marker ? '// ' : ''}

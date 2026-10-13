@@ -1,0 +1,18 @@
+{
+  "final": {
+    "sameIframe": true,
+    "sameWindow": true,
+    "sameCanvas": true,
+    "originalIframeConnected": true,
+    "originalCanvasConnected": true,
+    "iframeCount": 1,
+    "fallbackCount": 0,
+    "ready": "true",
+    "reaction": "idle",
+    "frameCount": 117,
+    "hostReaction": "idle",
+    "events": []
+  },
+  "warmRequests": [],
+  "rejected": []
+}

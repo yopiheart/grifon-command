@@ -29,7 +29,7 @@ export const Pill: React.FC<{
     onClick={onClick}
     disabled={disabled}
     title={title}
-    className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+    className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} font-semibold transition-all ${
       disabled
         ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
         : active
@@ -75,7 +75,7 @@ export function SegButton<T extends string>({
               disabled={'disabled' in opt ? opt.disabled : undefined}
               title={'title' in opt ? opt.title : undefined}
               onClick={() => onChange(opt.value)}
-              className={`relative overflow-visible isolate inline-flex min-h-11 items-center rounded-full px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider transition-colors ${
+              className={`relative overflow-visible isolate inline-flex min-h-11 items-center rounded-full px-6 py-2.5 text-sm font-sans font-semibold normal-case tracking-normal transition-colors ${
                 active ? 'text-black' : 'text-on-surface-sublabel hover:text-white'
               }`}
             >

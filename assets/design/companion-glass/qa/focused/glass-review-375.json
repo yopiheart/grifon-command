@@ -1,0 +1,21 @@
+{
+  "review": {
+    "x": 16,
+    "y": 164.6875,
+    "width": 343,
+    "height": 693
+  },
+  "transcript": {
+    "x": 0,
+    "y": 45,
+    "width": 375,
+    "height": 622
+  },
+  "header": {
+    "x": 0,
+    "y": 45,
+    "width": 375,
+    "height": 104
+  },
+  "safeTop": 149
+}

@@ -1,0 +1,341 @@
+{
+  "setup": {
+    "head": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+    "sourceTest": "tests/e2e/companion-chat.spec.ts",
+    "sourceTestSha256": "adae48cd56b3275b12af4da057cc626aa5852bc51cdd878add29606e4cc9c3bd",
+    "copiedTestSha256": "028d13e5fb5367bb4e1584e0c0ee5d4aef0407f000ec948b0838e56f4a2877ba",
+    "copyEdits": [
+      "instrumentation import",
+      "fixture import path",
+      "local origin 5173 to owned 5192"
+    ],
+    "assertionsChanged": false,
+    "trackedHashCount": 453,
+    "paidSwitchesPresent": [],
+    "node": "v24.21.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "officialBrowserDocumentation": "https://playwright.dev/docs/browsers#chromium-new-headless-mode"
+  },
+  "assertionCopyMatchesAllowedOriginImportChanges": true,
+  "trackedSourceComparison": {
+    "count": 453,
+    "changes": [],
+    "appliesThroughUtc": "2026-10-11T09:19:52.389Z"
+  },
+  "modes": {
+    "shell": {
+      "command": {
+        "startedAtUtc": "2026-10-11T09:16:15.0272085Z",
+        "finishedAtUtc": "2026-10-11T09:18:05.1530762Z",
+        "mode": "shell",
+        "workers": 1,
+        "paidLiveSwitches": "unset",
+        "timeoutMs": 60000,
+        "retries": 0,
+        "exitCode": 0,
+        "expectTimeoutMs": 15000,
+        "command": "npm.cmd run test:e2e -- --config .tmp/companion-main-readiness/qa/browser-channel/harness/playwright.config.ts --grep 'brief, explicit start' --repeat-each=3"
+      },
+      "testCasesScheduled": 3,
+      "journeyCasesExecuted": 3,
+      "journeyStatus": "PASS",
+      "runnerResults": [
+        {
+          "status": "passed",
+          "durationMs": 38616,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 34850,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 33237,
+          "retry": 0
+        }
+      ],
+      "browserExecutableAttempted": "C:\\Users\\ADMIN\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1228\\chrome-headless-shell-win64\\chrome-headless-shell.exe",
+      "browserVersions": [
+        "149.0.7827.55"
+      ],
+      "actualJourneyDurationMs": [
+        38616,
+        34850,
+        33237
+      ],
+      "setupError": null,
+      "pageErrorCount": 0,
+      "rejectedRequestCount": 0,
+      "fixtureCallNamesPerRepeat": [
+        [
+          "start",
+          "fixture-event",
+          "fixture-event",
+          "approve",
+          "fixture-event",
+          "fixture-event",
+          "reshoot",
+          "choosePreset"
+        ],
+        [
+          "start",
+          "fixture-event",
+          "fixture-event",
+          "approve",
+          "fixture-event",
+          "fixture-event",
+          "reshoot",
+          "choosePreset"
+        ],
+        [
+          "start",
+          "fixture-event",
+          "fixture-event",
+          "approve",
+          "fixture-event",
+          "fixture-event",
+          "reshoot",
+          "choosePreset"
+        ]
+      ],
+      "samples": [
+        {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "ready": true,
+          "visible": true,
+          "reducedMotion": false,
+          "frameCount": 243,
+          "sampledFrames": 180,
+          "meanFramePeriodMs": 147.30888888888884,
+          "medianFramePeriodMs": 150,
+          "estimatedFps": 6.788456606676826
+        },
+        {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "ready": true,
+          "visible": true,
+          "reducedMotion": false,
+          "frameCount": 240,
+          "sampledFrames": 180,
+          "meanFramePeriodMs": 137.30999999999997,
+          "medianFramePeriodMs": 133.39999999999964,
+          "estimatedFps": 7.282790765421311
+        },
+        {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "ready": true,
+          "visible": true,
+          "reducedMotion": false,
+          "frameCount": 241,
+          "sampledFrames": 180,
+          "meanFramePeriodMs": 129.16222222222228,
+          "medianFramePeriodMs": 133.29999999999927,
+          "estimatedFps": 7.742201882215299
+        }
+      ],
+      "slowestCompletedApiSteps": [
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: 'Send', exact: true })",
+          "durationMs": 1694
+        },
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: 'Apply style', exact: true })",
+          "durationMs": 1684
+        },
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: 'Send', exact: true })",
+          "durationMs": 1669
+        },
+        {
+          "repeat": 1,
+          "title": "Click getByRole('button', { name: 'Open storyboard', exact: true })",
+          "durationMs": 1654
+        },
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: 'Send', exact: true })",
+          "durationMs": 1652
+        },
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: 'Send', exact: true })",
+          "durationMs": 1650
+        },
+        {
+          "repeat": 1,
+          "title": "Click getByRole('button', { name: 'Send', exact: true })",
+          "durationMs": 1642
+        },
+        {
+          "repeat": 0,
+          "title": "Navigate to \"/companion-chat-preview.html\"",
+          "durationMs": 1633
+        },
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: 'Open storyboard', exact: true })",
+          "durationMs": 1628
+        },
+        {
+          "repeat": 0,
+          "title": "Click getByRole('button', { name: /approve storyboard/i })",
+          "durationMs": 1627
+        },
+        {
+          "repeat": 2,
+          "title": "Click getByRole('button', { name: 'Confirm reshoot', exact: true })",
+          "durationMs": 1622
+        },
+        {
+          "repeat": 1,
+          "title": "Click getByRole('button', { name: /approve storyboard/i })",
+          "durationMs": 1581
+        }
+      ],
+      "cpu": {
+        "model": "AMD Ryzen 5 PRO 4650G with Radeon Graphics",
+        "logicalCpuCount": 12,
+        "runnerProcessMicroseconds": {
+          "user": 454000,
+          "system": 110000
+        },
+        "approximateWholeMachineBusyPercent": 95.12088501791531,
+        "wholeMachineIncludesUnrelatedDesktopProcesses": true
+      },
+      "resolvedRunnerConfig": {
+        "workers": 1,
+        "projects": [
+          {
+            "name": "shell",
+            "timeoutMs": 60000,
+            "retries": 0
+          }
+        ],
+        "stats": {
+          "startTime": "2026-10-11T09:16:15.977Z",
+          "duration": 109126.57400000001,
+          "expected": 3,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      }
+    },
+    "full": {
+      "command": {
+        "retries": 0,
+        "startedAtUtc": "2026-10-11T09:18:18.7235986Z",
+        "command": "npm.cmd run test:e2e -- --config .tmp/companion-main-readiness/qa/browser-channel/harness/playwright.config.ts --grep 'brief, explicit start' --repeat-each=3",
+        "paidLiveSwitches": "unset",
+        "finishedAtUtc": "2026-10-11T09:18:21.7498805Z",
+        "workers": 1,
+        "timeoutMs": 60000,
+        "exitCode": 1,
+        "expectTimeoutMs": 15000,
+        "mode": "full"
+      },
+      "testCasesScheduled": 3,
+      "journeyCasesExecuted": 0,
+      "journeyStatus": "NOT RUN - installed browser failed to launch",
+      "runnerResults": [
+        {
+          "status": "failed",
+          "durationMs": 9,
+          "retry": 0
+        },
+        {
+          "status": "failed",
+          "durationMs": 9,
+          "retry": 0
+        },
+        {
+          "status": "failed",
+          "durationMs": 10,
+          "retry": 0
+        }
+      ],
+      "browserExecutableAttempted": "C:\\Users\\ADMIN\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe",
+      "browserVersions": [],
+      "actualJourneyDurationMs": [],
+      "setupError": "browserType.launch: spawn UNKNOWN",
+      "pageErrorCount": 0,
+      "rejectedRequestCount": 0,
+      "fixtureCallNamesPerRepeat": [],
+      "samples": [],
+      "slowestCompletedApiSteps": [
+        {
+          "repeat": 2,
+          "title": "Create request context",
+          "durationMs": 3
+        },
+        {
+          "repeat": 0,
+          "title": "Create request context",
+          "durationMs": 2
+        },
+        {
+          "repeat": 1,
+          "title": "Create request context",
+          "durationMs": 2
+        }
+      ],
+      "cpu": {
+        "model": "AMD Ryzen 5 PRO 4650G with Radeon Graphics",
+        "logicalCpuCount": 12,
+        "runnerProcessMicroseconds": {
+          "user": 125000,
+          "system": 0
+        },
+        "approximateWholeMachineBusyPercent": 19.643871177090944,
+        "wholeMachineIncludesUnrelatedDesktopProcesses": true
+      },
+      "resolvedRunnerConfig": {
+        "workers": 1,
+        "projects": [
+          {
+            "name": "full",
+            "timeoutMs": 60000,
+            "retries": 0
+          }
+        ],
+        "stats": {
+          "startTime": "2026-10-11T09:18:19.661Z",
+          "duration": 2038.7410000000002,
+          "expected": 0,
+          "skipped": 0,
+          "unexpected": 3,
+          "flaky": 0
+        }
+      }
+    }
+  },
+  "conclusion": "Default shell passed 3 unchanged journeys. Full Chromium could not launch on this Windows desktop; no mode performance comparison or Linux CI claim is established.",
+  "limitations": [
+    "Windows desktop only, not Linux CI",
+    "Sequential shell then full; Vite cache ordering would confound a successful performance comparison",
+    "Fixture-only APIs; no live provider or completed-ad quality proof",
+    "Initial --list invocation with anchored grep matched zero and was excluded; actual result count is guarded at 3 per mode",
+    "Full channel has 3 setup failures before navigation and 0 executed journey assertions; it is NOT RUN, not a product failure"
+  ],
+  "subsequentAuthorizedRootConfigEdit": {
+    "path": "playwright.config.ts",
+    "beforeSha256": "2cdd715a808ca2ec3f3b101575af6c7eb53ff7812ab61a44d2e19431a4da5f8e",
+    "currentSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+    "observedAtUtc": "2026-10-11T09:21:06.696Z",
+    "ownership": "root",
+    "note": "Root separately changed CI whole-test/action budgets after these browser runs. This is outside the closed source-comparison interval; both completed run results resolve timeout60000,retries0,workers1. No browser channel change was made."
+  },
+  "serverCleanup": {
+    "stoppedAtUtc": "2026-10-11T09:20:12.6885233Z",
+    "port": 5192,
+    "pid": 17164,
+    "stoppedOnlyOwnedPid": true,
+    "listenerCountAfterStop": 0
+  }
+}

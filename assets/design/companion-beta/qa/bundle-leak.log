@@ -1,0 +1,5 @@
+
+> creative-director-ai-assistant@1.0.0 check:bundle-leak
+> node tools/check-bundle-leak.mjs
+
+[bundle-leak] OK — scanned 11 bundle file(s), 0 crown-jewel markers found.

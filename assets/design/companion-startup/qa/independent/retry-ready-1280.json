@@ -1,0 +1,428 @@
+{
+  "slot": {
+    "x": 727.984375,
+    "y": 49,
+    "width": 64,
+    "height": 64
+  },
+  "opacity": 1,
+  "ready": "true",
+  "transition": {
+    "duration": "0.2s",
+    "property": "opacity",
+    "ease": "cubic-bezier(0.22, 1, 0.36, 1)"
+  },
+  "loader": null,
+  "retry": null,
+  "image": null,
+  "innerFallbackHidden": true,
+  "paint": {
+    "at": 1791350554678,
+    "count": 4471,
+    "width": 128,
+    "height": 128
+  },
+  "debug": {
+    "ready": true,
+    "renderer": "WebGL2 / Three.js",
+    "failed": false,
+    "pause": false,
+    "reducedMotion": false,
+    "visible": true,
+    "frameCount": 16,
+    "activeTime": 0.29996666666666666,
+    "controls": {
+      "gazeX": 0,
+      "gazeY": 0,
+      "headYaw": 0,
+      "headPitch": 0,
+      "headRoll": 0,
+      "blink": 0,
+      "breath": 0.3089837960515264
+    },
+    "target": {
+      "x": 0,
+      "y": 0
+    },
+    "reaction": {
+      "state": "idle",
+      "stateAge": 0.29996666666666666,
+      "blend": 1,
+      "weights": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wingLeft": [
+        0,
+        0,
+        0
+      ],
+      "wingRight": [
+        0,
+        0,
+        0
+      ],
+      "tapLeft": 0,
+      "tapRight": 0,
+      "propReading": 0,
+      "propWorking": 0,
+      "readingSupport": [
+        -0.48718262753774655,
+        -0.7687732176875274,
+        0.8859607000207929
+      ],
+      "readingTrace": [
+        0.44465278241632034,
+        -0.7589179167683405,
+        0.9298682511229925
+      ],
+      "readingRow": 0.025,
+      "readingWingExtension": 1,
+      "cleanBody": 0,
+      "cursorScale": 1,
+      "readyBlink": 0,
+      "touring": false
+    },
+    "rollingFrameTimes": [
+      183.5,
+      16.5,
+      16.799999999999955,
+      16.5,
+      16.700000000000045,
+      16.700000000000045,
+      16.699999999999932,
+      16.700000000000045,
+      16.699999999999932,
+      16.600000000000023,
+      16.700000000000045,
+      16.699999999999932,
+      16.800000000000068,
+      16.5,
+      16.699999999999932
+    ],
+    "viewport": {
+      "width": 64,
+      "height": 64,
+      "pixelRatio": 2
+    }
+  },
+  "ledger": {
+    "samples": [
+      {
+        "at": 1791350553343,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            240,
+            0,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350553398,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350553587,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": 1
+        }
+      },
+      {
+        "at": 1791350553688,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": true,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554148,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350554452,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": 1
+        }
+      },
+      {
+        "at": 1791350554704,
+        "sample": {
+          "opacity": 0,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554721,
+        "sample": {
+          "opacity": 0.344125,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554738,
+        "sample": {
+          "opacity": 0.597724,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554754,
+        "sample": {
+          "opacity": 0.765247,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554771,
+        "sample": {
+          "opacity": 0.867101,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554788,
+        "sample": {
+          "opacity": 0.926738,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554804,
+        "sample": {
+          "opacity": 0.961459,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554821,
+        "sample": {
+          "opacity": 0.98105,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554837,
+        "sample": {
+          "opacity": 0.991638,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554854,
+        "sample": {
+          "opacity": 0.996904,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554871,
+        "sample": {
+          "opacity": 0.999192,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554888,
+        "sample": {
+          "opacity": 0.999913,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350554904,
+        "sample": {
+          "opacity": 1,
+          "ready": "true",
+          "still": false,
+          "slot": [
+            727.984375,
+            49,
+            64,
+            64
+          ],
+          "cue": null
+        }
+      }
+    ],
+    "messages": [
+      {
+        "event": "failed",
+        "at": 1791350553679,
+        "paint": null
+      },
+      {
+        "event": "ready",
+        "at": 1791350554699,
+        "paint": {
+          "at": 1791350554678,
+          "count": 4471,
+          "width": 128,
+          "height": 128
+        }
+      }
+    ]
+  },
+  "overflow": 0,
+  "chatCalls": [],
+  "typography": {
+    "font": "Inter, sans-serif",
+    "inputSize": "14px"
+  },
+  "counts": {
+    "iframe": 1,
+    "still": 0
+  }
+}

@@ -1,0 +1,557 @@
+{
+  "result": "PASS",
+  "failures": [],
+  "capturedUtc": "2026-10-11T09:22:26.025Z",
+  "beforeHead": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+  "afterHead": "ad20cd6222ac672a77418a8346ec0651661cdc79",
+  "paidSwitches": "unset (presence checked only)",
+  "browserLaunches": 0,
+  "webServerLaunches": 0,
+  "providers": "not invoked; list-only discovery",
+  "local": {
+    "raw": {
+      "timeout": 60000,
+      "expectTimeout": 5000,
+      "actionTimeout": 0,
+      "retries": 0,
+      "workers": null,
+      "forbidOnly": false,
+      "webServerReuseExisting": false
+    },
+    "normalized": {
+      "forbidOnly": false,
+      "workers": 6,
+      "shard": null,
+      "projects": [
+        {
+          "name": "chromium",
+          "retries": 0,
+          "timeout": 60000,
+          "actionTimeout": 0,
+          "baseURL": "http://localhost:5173"
+        }
+      ]
+    },
+    "discoveredCases": 224,
+    "caseSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267"
+  },
+  "ci": {
+    "raw": {
+      "timeout": 180000,
+      "expectTimeout": 15000,
+      "actionTimeout": 15000,
+      "retries": 1,
+      "workers": 1,
+      "forbidOnly": true,
+      "webServerReuseExisting": false
+    },
+    "normalized": {
+      "forbidOnly": true,
+      "workers": 1,
+      "shard": null,
+      "projects": [
+        {
+          "name": "chromium",
+          "retries": 1,
+          "timeout": 180000,
+          "actionTimeout": 15000,
+          "baseURL": "http://localhost:5173"
+        }
+      ]
+    },
+    "discoveredCases": 224,
+    "caseSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267"
+  },
+  "sharding": {
+    "matrix": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "totalCases": 224,
+    "uniqueCases": 224,
+    "duplicates": [],
+    "omissions": [],
+    "extras": [],
+    "caseSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267",
+    "shards": [
+      {
+        "shard": 1,
+        "cases": 14,
+        "caseSetSha256": "32a99f5d0d84cd52fac13c8d4845fd7e3bfe0daf075d3d9bdc4a38ac8a319247",
+        "configShard": {
+          "current": 1,
+          "total": 16
+        }
+      },
+      {
+        "shard": 2,
+        "cases": 14,
+        "caseSetSha256": "49dc8d60b9784aff9164164929121490382fd98ee033f027b7cf67172bf7cf66",
+        "configShard": {
+          "current": 2,
+          "total": 16
+        }
+      },
+      {
+        "shard": 3,
+        "cases": 14,
+        "caseSetSha256": "68988caf75b0600d01e957f6f76ce63ba0678481623b35d202c5386b6201e439",
+        "configShard": {
+          "current": 3,
+          "total": 16
+        }
+      },
+      {
+        "shard": 4,
+        "cases": 14,
+        "caseSetSha256": "7b1f35ad24a6a7b10fe5c926e3bf5fcd6ecde85c52efcf7c7d5a16e5d9ab8744",
+        "configShard": {
+          "current": 4,
+          "total": 16
+        }
+      },
+      {
+        "shard": 5,
+        "cases": 14,
+        "caseSetSha256": "90a80e7dfe730897d33c342b96f08df9dddcf63c882d77d08b54ce1da85fd095",
+        "configShard": {
+          "current": 5,
+          "total": 16
+        }
+      },
+      {
+        "shard": 6,
+        "cases": 14,
+        "caseSetSha256": "a0c03d0e459478d64d7ffa06708a8ffb6fbe8d3d77d7d2399a8fc0baf794163e",
+        "configShard": {
+          "current": 6,
+          "total": 16
+        }
+      },
+      {
+        "shard": 7,
+        "cases": 14,
+        "caseSetSha256": "38321536128532fbbb929f45c92bf0c5acd79e57526e68971c3d5a7a1dc4118e",
+        "configShard": {
+          "current": 7,
+          "total": 16
+        }
+      },
+      {
+        "shard": 8,
+        "cases": 14,
+        "caseSetSha256": "bc79cef697d41f32dc4698d3dd79fd3dd1b80e1c832a39ce18185a80f95f7351",
+        "configShard": {
+          "current": 8,
+          "total": 16
+        }
+      },
+      {
+        "shard": 9,
+        "cases": 14,
+        "caseSetSha256": "9236a8ac5f65e39bf731745ad2c6440fe6b4c29ab068f1b08330b324cfcadae8",
+        "configShard": {
+          "current": 9,
+          "total": 16
+        }
+      },
+      {
+        "shard": 10,
+        "cases": 14,
+        "caseSetSha256": "b519882fcc08ec1d4c551633c967911314677e0a60fd524bbe7f70c463b039da",
+        "configShard": {
+          "current": 10,
+          "total": 16
+        }
+      },
+      {
+        "shard": 11,
+        "cases": 14,
+        "caseSetSha256": "6e53ab896274662c64ba7c0a897dafe890b409371ca4b7908e3979cb77a18a5e",
+        "configShard": {
+          "current": 11,
+          "total": 16
+        }
+      },
+      {
+        "shard": 12,
+        "cases": 14,
+        "caseSetSha256": "4d57ed48eca3d46141e8434755d87c9421f2f5c5e638ff6290f4821127c5744f",
+        "configShard": {
+          "current": 12,
+          "total": 16
+        }
+      },
+      {
+        "shard": 13,
+        "cases": 14,
+        "caseSetSha256": "fc00f5e344355977c795f5011a7a27e5b6ea30f96f82596b3e6abce7dbc1704e",
+        "configShard": {
+          "current": 13,
+          "total": 16
+        }
+      },
+      {
+        "shard": 14,
+        "cases": 14,
+        "caseSetSha256": "8292802432c7cfbdc798a36c2351cfd5865d17ec1496fed333992184df0553df",
+        "configShard": {
+          "current": 14,
+          "total": 16
+        }
+      },
+      {
+        "shard": 15,
+        "cases": 14,
+        "caseSetSha256": "f3cc1df76114edc3b15c30135d21e6f7b7fb7c4064b994699f9bbcd3c89fa055",
+        "configShard": {
+          "current": 15,
+          "total": 16
+        }
+      },
+      {
+        "shard": 16,
+        "cases": 14,
+        "caseSetSha256": "8d9f8749799520b1b73cc31b1ebddb0ac616e4c7f5937215e7ea877c8f31fa64",
+        "configShard": {
+          "current": 16,
+          "total": 16
+        }
+      }
+    ]
+  },
+  "sourceBinding": {
+    "watchedFiles": 38,
+    "before": "source-hashes-before.json",
+    "after": "source-hashes-after.json",
+    "changedFiles": []
+  },
+  "commands": [
+    {
+      "kind": "load-raw-config",
+      "mode": "local",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--input-type=module",
+        "-e",
+        "const {default:c}=await import('./playwright.config.ts');console.log(JSON.stringify({timeout:c.timeout,expectTimeout:c.expect.timeout,actionTimeout:c.use.actionTimeout,retries:c.retries,workers:c.workers??null,forbidOnly:c.forbidOnly,webServerReuseExisting:c.webServer.reuseExistingServer}));"
+      ],
+      "exitCode": 0
+    },
+    {
+      "kind": "load-raw-config",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--input-type=module",
+        "-e",
+        "const {default:c}=await import('./playwright.config.ts');console.log(JSON.stringify({timeout:c.timeout,expectTimeout:c.expect.timeout,actionTimeout:c.use.actionTimeout,retries:c.retries,workers:c.workers??null,forbidOnly:c.forbidOnly,webServerReuseExisting:c.webServer.reuseExistingServer}));"
+      ],
+      "exitCode": 0
+    },
+    {
+      "kind": "playwright-list",
+      "label": "local-all",
+      "mode": "local",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 2089
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-all",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1160
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-1",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=1/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1308
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-2",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=2/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1234
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-3",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=3/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1167
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-4",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=4/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1163
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-5",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=5/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1163
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-6",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=6/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1154
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-7",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=7/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1192
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-8",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=8/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1181
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-9",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=9/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1183
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-10",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=10/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1197
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-11",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=11/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1182
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-12",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=12/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1183
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-13",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=13/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1197
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-14",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=14/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1165
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-15",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=15/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1198
+    },
+    {
+      "kind": "playwright-list",
+      "label": "ci-shard-16",
+      "mode": "CI",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--list",
+        "--reporter=./.tmp/companion-main-readiness/qa/ci-sixteen-validation/list-reporter.cjs",
+        "--output=.tmp/companion-main-readiness/qa/ci-sixteen-validation/unused-output",
+        "--shard=16/16"
+      ],
+      "exitCode": 0,
+      "elapsedMs": 1150
+    }
+  ],
+  "limits": [
+    "Static discovery/config validation only; no browser assertions executed",
+    "Does not prove hosted timing, renderer behavior, or complete runtime journey"
+  ]
+}

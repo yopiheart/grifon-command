@@ -1,0 +1,16 @@
+
+Running 9 tests using 1 worker
+
+(node:20420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 assets\design\companion-beta\qa\independent\review.spec.ts:116:3 › real image transport prevents orchestrator automatic replay after 503 (12.2s)
+  ok 2 assets\design\companion-beta\qa\independent\review.spec.ts:116:3 › real image transport prevents orchestrator automatic replay after 504 (11.1s)
+  ok 3 assets\design\companion-beta\qa\independent\review.spec.ts:116:3 › real image transport prevents orchestrator automatic replay after network (11.0s)
+  ok 4 assets\design\companion-beta\qa\independent\review.spec.ts:116:3 › real image transport prevents orchestrator automatic replay after bodyloss (10.8s)
+  ok 5 assets\design\companion-beta\qa\independent\review.spec.ts:116:3 › real image transport prevents orchestrator automatic replay after invalid200 (11.4s)
+  ok 6 assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text flow_output_invalid cannot replay at the public transport seam (3.0s)
+  ok 7 assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text flow_output_invalid cannot replay through the producer (7.0s)
+  ok 8 assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text gemini_quota cannot replay at the public transport seam (3.0s)
+  ok 9 assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text gemini_quota cannot replay through the producer (7.0s)
+
+  9 passed (1.3m)

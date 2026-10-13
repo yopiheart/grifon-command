@@ -1,0 +1,46 @@
+{
+  "baselineCommit": "5c6d6a072a65c39ff2741f93aa55d1975a723196",
+  "source": {
+    "components/CompanionChat/CompanionAvatar.tsx": "39e51bdc9671791a86261c4d2a1b7866393a8fffe883e819c32ce28224f31778",
+    "components/CompanionChat/CompanionChatShell.tsx": "59f07a7df0de48ce2fe33dd082cc5d9343d164f608583e16b302e36406774aa4",
+    "components/CompanionChat/CompanionChatSurface.tsx": "f70dd6ced1a60c6067e989066731c50c5aa579bcfcac27cead0704cae83e4740",
+    "components/CompanionChat/index.tsx": "05167f797d6245dfd9f04b471621c50f842e3be3d3288e2484a77efe086cdf28",
+    "dev/companionChatPreview.tsx": "21745c98b2fbbd026b0d0ccdb411006c690a14bda32b7ac1cdbf6cbe048b3ba6",
+    "public/companion/main.js": "1305aefbcf350e1df7291fdf15ded91ea0e067d629f2d4a0bdffa95ee599886b",
+    "public/companion/frame.html": "e90ac0d1522ffd87b661e7de22736309d60e12cf55be07d38f30a7c7f3d4361d"
+  },
+  "command": "npx.cmd playwright test --config tests/e2e/companion-continuity.config.ts --grep \"continuity.*375px\" --output assets/design/companion-continuity/qa/baseline-test-results",
+  "exitCode": 1,
+  "expectedFailingCases": 1,
+  "viewports": [
+    {
+      "width": 375,
+      "height": 667
+    }
+  ],
+  "switches": 6,
+  "observations": 8,
+  "iframeRemounts": 6,
+  "neutralFallbackInsertions": 6,
+  "fallbackDurationMs": [
+    386.69999998807907,
+    379.20000000298023,
+    423,
+    385.79999999701977,
+    350.5,
+    411
+  ],
+  "warmRendererRequests": 72,
+  "frameCount": {
+    "initial": 92,
+    "final": 45
+  },
+  "allSwitchIdentitiesLost": true,
+  "unexpectedRequests": [],
+  "mockedCalls": [
+    {
+      "name": "fixture-event",
+      "value": "storyboard"
+    }
+  ]
+}

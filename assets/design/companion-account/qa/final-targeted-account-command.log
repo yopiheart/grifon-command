@@ -1,0 +1,13 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep pending checkout|neutral thin
+
+
+Running 2 tests using 1 worker
+
+(node:15372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\companion-account.spec.ts:292:1 › pending checkout keeps precedence over intended tool and return-to-ad intents (3.0s)
+  ok 2 tests\e2e\companion-account.spec.ts:322:1 › chat, sidebar, viewer and settings use neutral thin accessible scrollbars (1.6s)
+
+  2 passed (7.2s)

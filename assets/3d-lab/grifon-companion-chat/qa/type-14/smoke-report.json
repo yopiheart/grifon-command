@@ -1,0 +1,83 @@
+{
+  "verdict": "PASS",
+  "date": "2026-10-07",
+  "scope": "Companion chat typography only; mocked providers and local fixture.",
+  "baseline": {
+    "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts --grep 'typing and delivered typography|mobile composer uses readable' --output assets/3d-lab/grifon-companion-chat/qa/type-14/baseline-results",
+    "environment": {
+      "COMPANION_QA_DIR": "assets/3d-lab/grifon-companion-chat/qa/type-14",
+      "COMPANION_TYPING_PHASE": "baseline",
+      "COMPANION_LAYOUT_PHASE": "baseline",
+      "POLISH_PHASE": "type-14-baseline"
+    },
+    "exitCode": 1,
+    "tests": 4,
+    "failed": 4,
+    "expectedFailure": true,
+    "failure": "All four updated typography cases rejected original 16px CSS: expected 14px (or numeric 14), received 16px (or numeric 16).",
+    "originalCssSha256": "DFEA02EA49B2C02785F7253F3DC90417A2CB675533B1B00DB88882AEFEE22CAC"
+  },
+  "final": {
+    "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts --output assets/3d-lab/grifon-companion-chat/qa/type-14/final-results",
+    "environment": {
+      "COMPANION_QA_DIR": "assets/3d-lab/grifon-companion-chat/qa/type-14",
+      "COMPANION_TYPING_PHASE": "final",
+      "COMPANION_LAYOUT_PHASE": "final",
+      "POLISH_PHASE": "type-14-final"
+    },
+    "exitCode": 0,
+    "tests": 39,
+    "passed": 39,
+    "failed": 0,
+    "durationReported": "2.1m",
+    "cssSha256": "74AA029ADA0EE44C3ECE1766D66DB81927D419BA1E87D640C2770BBE8A64E9EA",
+    "typingTestSha256": "DD4946F66A30E666DCAA4DE05FED9BF36F89DB3168C7BDCC3006B1543EB6C016",
+    "polishTestSha256": "436BAD2F712448A6DF6866D3995E152FA0BD027841F6B4DAD5246AD2D9B37EA1"
+  },
+  "browserSmoke": {
+    "tool": "Codex CUA in-app browser",
+    "viewport": "390x844",
+    "verdict": "PASS",
+    "checks": [
+      "User and assistant messages: Inter 14px 400.",
+      "Composer, editable brief textareas and language/format/voice selects: Inter 14px 400.",
+      "Visible text button labels: Inter 14px 600.",
+      "Message timestamps: JetBrains Mono 11px 400.",
+      "Horizontal overflow: 0px.",
+      "Generate storyboard action reaches the viewport after normal conversation scrolling; target is 314x44px.",
+      "Gold user messages remain distinct from dark assistant messages."
+    ],
+    "evidence": ["cua-390-edit.png", "cua-390-review.png", "cua-390-actions.png", "cua-390-metrics.json"]
+  },
+  "visualReview": {
+    "verdict": "PASS",
+    "viewports": ["375x667", "390x844", "1280x900"],
+    "inspectedAtOriginalResolution": [
+      "final-active-375.png", "final-active-390.png", "final-active-1280.png",
+      "final-typing-375.png", "final-typing-1280.png", "final-delivered-390.png"
+    ],
+    "findings": "No clipped conversation, horizontal overflow, malformed input icons, lost gold/dark differentiation, or truncated visible control labels. Font change is limited to the approved root/message/editable-control sizing rules.",
+    "brandVerdict": "BRAND_PASS",
+    "critical": 0,
+    "nits": 0,
+    "brandScores": {"philosophyCoherence": 9, "visualHierarchy": 9, "executionCraft": 8, "functionality": 10, "brandDistinctiveness": 8, "total": 44}
+  },
+  "behaviorEvidence": {
+    "replyDelay": "Deterministic checks retain typing through 499ms and deliver at 600ms.",
+    "realTimerReplyDeltaMs": 600.7999999970198,
+    "realTimerProviderCalls": [],
+    "preserved": ["Double Enter protection", "Composer focus", "Pending reply reset", "Account isolation", "Reload and leave/return recovery", "Reduced motion", "Capped transcript follow", "Avatar lifecycle", "Quota and preset gates"],
+    "pointerReads": {"events": 120, "duringBurst": 0, "afterFrame": 1}
+  },
+  "processes": {
+    "helperProcessesStarted": [],
+    "existingDevServerPid": 23652,
+    "existingDevServerLeftRunning": true,
+    "browserCleanup": "Temporary CUA viewport reset and smoke tab closed. Playwright runner completed normally."
+  },
+  "limitations": [
+    "Provider generation and live paid operations were not run; fixture generation and backend recovery are mocked.",
+    "390px CUA smoke used a desktop browser viewport, not a physical phone or mobile Safari keyboard/zoom test.",
+    "Parent agent owns production build, unit tests and other repository gates."
+  ]
+}

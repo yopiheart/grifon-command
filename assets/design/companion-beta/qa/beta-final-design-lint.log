@@ -1,0 +1,17 @@
+
+> creative-director-ai-assistant@1.0.0 design:lint
+> node node_modules/@google/design.md/dist/index.js lint DESIGN.md
+
+{
+  "findings": [
+    {
+      "severity": "info",
+      "message": "Design system defines 8 colors, 7 typography scales, 5 rounding levels, 4 spacing tokens, 6 components."
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1
+  }
+}

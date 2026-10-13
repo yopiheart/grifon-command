@@ -1,0 +1,998 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "fonts": [
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "loaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "loaded"
+    }
+  ],
+  "measurements": [
+    {
+      "tag": "H1",
+      "role": "heading",
+      "text": "Your next ad plan",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.6px",
+      "textTransform": "none",
+      "width": 358,
+      "height": 36,
+      "left": 16,
+      "right": 374
+    },
+    {
+      "tag": "P",
+      "role": "body",
+      "text": "Write a clear brief, then review the result with your team.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 358,
+      "height": 45.5,
+      "left": 16,
+      "right": 374
+    },
+    {
+      "tag": "H2",
+      "role": "heading",
+      "text": "Normal controls",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.48px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 32,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": "normal-label",
+      "text": "Project name",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 87.015625,
+      "height": 17,
+      "left": 41,
+      "right": 128.015625
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": "normal-label",
+      "text": "Aspect ratio",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 79.796875,
+      "height": 17,
+      "left": 41,
+      "right": 120.796875
+    },
+    {
+      "tag": "SELECT",
+      "role": "input",
+      "text": "Portrait 9:16Landscape 16:9",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": "normal-label",
+      "text": "Language",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 65.53125,
+      "height": 17,
+      "left": 41,
+      "right": 106.53125
+    },
+    {
+      "tag": "SELECT",
+      "role": "input",
+      "text": "EnglishFilipino",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "TEXTAREA",
+      "role": "input",
+      "text": "Keep this easy to read.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Client details",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 54,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Business info",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "TEXTAREA",
+      "role": "input",
+      "text": "Coffee for busy mornings. Keep the offer easy to read.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 100,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Offer",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Audience",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "TEXTAREA",
+      "role": "input",
+      "text": "People who want coffee ready to go.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 94.25,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "LABEL",
+      "role": "field-label",
+      "text": "// Client details",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Review brief",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 133.96875,
+      "height": 46,
+      "left": 41,
+      "right": 174.96875
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Unavailable",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 126.875,
+      "height": 44,
+      "left": 190.96875,
+      "right": 317.84375
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Save draft",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 100.75,
+      "height": 44,
+      "left": 41,
+      "right": 141.75
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Another regular action",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 183.71875,
+      "height": 44,
+      "left": 157.75,
+      "right": 341.46875
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Portrait",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 150,
+      "height": 44,
+      "left": 41,
+      "right": 191
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Landscape",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 150,
+      "height": 44,
+      "left": 199,
+      "right": 349
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Review your draft",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.6px",
+      "textTransform": "none",
+      "width": 292,
+      "height": 36,
+      "left": 49,
+      "right": 341
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "// Draft metadata",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "13px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 292,
+      "height": 21.125,
+      "left": 49,
+      "right": 341
+    },
+    {
+      "tag": "P",
+      "role": "body",
+      "text": "Check the brief before continuing.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 292,
+      "height": 22.75,
+      "left": 49,
+      "right": 341
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "// Step metadata",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 149.359375,
+      "height": 16,
+      "left": 41,
+      "right": 190.359375
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Business info",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.48px",
+      "textTransform": "none",
+      "width": 149.359375,
+      "height": 32,
+      "left": 41,
+      "right": 190.359375
+    },
+    {
+      "tag": "P",
+      "role": "body",
+      "text": "Describe what you sell in one clear sentence.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 22.75,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H3",
+      "role": "heading",
+      "text": "Useful details",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "20px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.4px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 28,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H4",
+      "role": "heading",
+      "text": "Small section title",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.28px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 22.75,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H5",
+      "role": "heading",
+      "text": "Supporting title",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.28px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 22.75,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H6",
+      "role": "heading",
+      "text": "Final title",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.28px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 22.75,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H3",
+      "role": "mono",
+      "text": "Job status 200",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H4",
+      "role": "mono",
+      "text": "Job details 001",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 20,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "P",
+      "role": "mono",
+      "text": "job_id: preview_001",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 16,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "P",
+      "role": "mono",
+      "text": "render_time: 00:14",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 16,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "PRE",
+      "role": "mono",
+      "text": "const ready = true;",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 16,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "CODE",
+      "role": "mono",
+      "text": "const ready = true;",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 136.8125,
+      "height": 16,
+      "left": 41,
+      "right": 177.8125
+    },
+    {
+      "tag": "KBD",
+      "role": "mono",
+      "text": "Ctrl K",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 43.203125,
+      "height": 16,
+      "left": 81.859375,
+      "right": 125.0625
+    },
+    {
+      "tag": "LABEL",
+      "role": "mono",
+      "text": "Technical value",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 108,
+      "height": 16,
+      "left": 41,
+      "right": 149
+    },
+    {
+      "tag": "INPUT",
+      "role": "mono",
+      "text": "",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 44,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "BUTTON",
+      "role": "mono",
+      "text": "job_001",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 84.40625,
+      "height": 44,
+      "left": 41,
+      "right": 125.40625
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Ready to create.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "letterSpacing": "-1.08px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 32,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Made to move.",
+      "fontFamily": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 32,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Find your plan.",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "letterSpacing": "-1.08px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 32,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Create more.",
+      "fontFamily": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 308,
+      "height": 32,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H2",
+      "role": "heading",
+      "text": "Exported artwork",
+      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "letterSpacing": "-0.48px",
+      "textTransform": "none",
+      "width": 308,
+      "height": 32,
+      "left": 41,
+      "right": 349
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Fresh coffee every morning",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "63px",
+      "fontWeight": "900",
+      "letterSpacing": "-3.15px",
+      "textTransform": "uppercase",
+      "width": 246.40000915527344,
+      "height": 40.238037109375,
+      "left": 71.80000305175781,
+      "right": 318.20001220703125
+    }
+  ]
+}

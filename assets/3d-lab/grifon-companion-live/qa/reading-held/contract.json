@@ -1,0 +1,20 @@
+{
+  "subject": "Reading holds a physical message card below the beak",
+  "visualAssertions": [
+    "At a 390-pixel viewport, the unlabeled Reading pose and action visibly differ from Idle.",
+    "The card sits below the beak without hiding the face; a supporting wing visibly reaches it, so it does not read as a floating badge.",
+    "The other wing traces or advances a line, coupled to readable line movement; this is distinct from Working's alternating control-pad key presses.",
+    "Downward attention and occasional glance up preserve the approved griffin likeness, with fur attached to the moving wings."
+  ],
+  "behaviorAssertions": [
+    "Reading has a visible card and a non-neutral supporting/reading wing pose after transition.",
+    "Reading contains a changing trace or line-advance action, separate from Working's tap action.",
+    "Natural blinking continues during Reading without using the Blink button.",
+    "Pause freezes pose, props, trace/line progress and state age; resume continues.",
+    "Reduced motion uses a distinct, static held-card pose.",
+    "Leaving Reading clears the card and reading gesture after transition.",
+    "Idle, Listening, Working and Ready retain their previous behavior."
+  ],
+  "baseline": "e61c18ba",
+  "limits": ["390-pixel and desktop captures are desktop Edge emulation, not real-phone performance.", "Visual contact and face visibility require actual screenshot/video inspection, not debug values alone."]
+}

@@ -1,0 +1,48 @@
+{
+  "test": {
+    "script": "vitest run",
+    "exitCode": 0,
+    "command": "npm.cmd run test",
+    "completedUtc": "2026-10-11T11:25:09.0688391Z"
+  },
+  "paidLiveSwitches": "RUN_REGRESSION, RUN_BURNIN, RUN_IMAGE_GATE_SMOKE absent before build/test",
+  "unitTestFilesPassed": 127,
+  "sourceHashes": [
+    {
+      "Path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\App.tsx",
+      "Hash": "CF4AFB30DC68E5CB0DC629BE1B814CDCA94087B80270FAF008117CCE27B91CD6"
+    },
+    {
+      "Path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-account-fixture.ts",
+      "Hash": "9992B7E33B218372FF140386CB1F1D5CABB7000AD71BE3FE67D55444E8B864E3"
+    },
+    {
+      "Path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-account.spec.ts",
+      "Hash": "C8BFB87BB708690FF29C05F36437F79445BDB4FC2F08A09494061E8CD0B9C77D"
+    },
+    {
+      "Path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-continuity.spec.ts",
+      "Hash": "9039FEF1261FBD5E8057F6B6BEE4B62D15BC5F5552BDD45CE9A43E06DDF3E9B9"
+    }
+  ],
+  "unitTestsPassed": 1572,
+  "unitTestFilesSkipped": 9,
+  "sourceFreeze": "4/4 unchanged",
+  "unitTestsSkipped": 32,
+  "logHashes": [
+    {
+      "Path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\build-unit\\build.log",
+      "Hash": "21832ABC52F9DD7386DAE64CD6C73002922D7C785F749BAF237E97BD88025172"
+    },
+    {
+      "Path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\build-unit\\test.log",
+      "Hash": "01617FD1B4243BFB727B2954662A97C8CB344D965559BFABB1CF4016379FBE78"
+    }
+  ],
+  "build": {
+    "exitCode": 0,
+    "completedUtc": "2026-10-11T11:24:00.6538081Z",
+    "command": "npm.cmd run build"
+  },
+  "diffCheckExitCode": 0
+}

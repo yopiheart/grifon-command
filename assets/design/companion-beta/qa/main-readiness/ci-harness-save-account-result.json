@@ -1,0 +1,33 @@
+{
+  "phase": "recovery-repeat",
+  "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/repro/recovery-repeat.config.ts --grep 'draft reload/account isolation|late subscription response cannot replace|(?:reload|leave-and-return) during typing retains' --repeat-each=3",
+  "exitCode": 0,
+  "ci": true,
+  "expectationTimeoutMs": 15000,
+  "testTimeoutMs": 60000,
+  "retries": 0,
+  "workers": 1,
+  "repeatEach": 3,
+  "source": "Frozen current source with account shell and save acknowledgement waits; original behavior assertions",
+  "stats": {
+    "startTime": "2026-10-11T08:46:53.433Z",
+    "duration": 78077.65999999999,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "caseCount": 12,
+  "attemptCount": 12,
+  "failures": [],
+  "sourceFilesChecked": 455,
+  "sourceChanges": [],
+  "servedSourceHashes": [
+    "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+  ],
+  "instrumentedCases": 12,
+  "rejectedExternalRequests": 0,
+  "pageErrors": [],
+  "startup": [],
+  "scope": "Local Playwright Chromium, real avatar, own isolated fixture-only server 127.0.0.1:5187; not hosted Linux/full-suite proof"
+}

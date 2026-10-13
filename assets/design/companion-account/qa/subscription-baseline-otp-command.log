@@ -1,0 +1,34 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep actual email OTP
+
+
+Running 1 test using 1 worker
+
+(node:7584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code (45.1s)
+
+
+  1) tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.fill: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByLabel('EMAIL', { exact: true })
+
+
+      253 |   const evidence = await installAccountApp(page, false);
+      254 |   await page.goto('/app'); await expect(page).toHaveURL(/\/login$/);
+    > 255 |   await page.getByLabel('EMAIL', { exact: true }).fill(ACCOUNT_EMAIL);
+          |                                                   ^
+      256 |   await page.getByRole('button', { name: 'CONTINUE WITH EMAIL', exact: true }).click();
+      257 |   await expect(page.getByLabel('VERIFICATION CODE', { exact: true })).toBeVisible();
+      258 |   await page.evaluate(() => { (window as any).accountFixture.otpFails = true; });
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:255:51
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-actual-e-006df--a-recoverable-invalid-code\error-context.md
+
+  1 failed
+    tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code

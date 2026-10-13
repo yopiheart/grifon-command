@@ -1,0 +1,298 @@
+{
+  "checks": [
+    {
+      "name": "final-app-375 section typography",
+      "pass": true
+    },
+    {
+      "name": "final-app-375 section icon rhythm",
+      "pass": true
+    },
+    {
+      "name": "final-app-375 fit",
+      "pass": true
+    },
+    {
+      "name": "final-app-375 no page errors or unexpected requests",
+      "pass": true,
+      "errors": [],
+      "requests": []
+    },
+    {
+      "name": "final-app-1280 section typography",
+      "pass": true
+    },
+    {
+      "name": "final-app-1280 section icon rhythm",
+      "pass": true
+    },
+    {
+      "name": "final-app-1280 fit",
+      "pass": true
+    },
+    {
+      "name": "final-app-1280 no page errors or unexpected requests",
+      "pass": true,
+      "errors": [],
+      "requests": []
+    },
+    {
+      "name": "final-preview-375 section typography",
+      "pass": true
+    },
+    {
+      "name": "final-preview-375 section icon rhythm",
+      "pass": true
+    },
+    {
+      "name": "final-preview-375 fit",
+      "pass": true
+    },
+    {
+      "name": "final-preview-375 no page errors or unexpected requests",
+      "pass": true,
+      "errors": [],
+      "requests": []
+    },
+    {
+      "name": "final-preview-1280 section typography",
+      "pass": true
+    },
+    {
+      "name": "final-preview-1280 section icon rhythm",
+      "pass": true
+    },
+    {
+      "name": "final-preview-1280 fit",
+      "pass": true
+    },
+    {
+      "name": "final-preview-1280 no page errors or unexpected requests",
+      "pass": true,
+      "errors": [],
+      "requests": []
+    }
+  ],
+  "observations": [
+    {
+      "scenario": "final-app-375-heading-rhythm",
+      "rows": [
+        {
+          "text": "Plan & billing",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Privacy",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Appearance",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Help & legal",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Account",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        }
+      ]
+    },
+    {
+      "scenario": "final-app-1280-heading-rhythm",
+      "rows": [
+        {
+          "text": "Plan & billing",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Privacy",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Appearance",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Help & legal",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Account",
+          "font": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        }
+      ]
+    },
+    {
+      "scenario": "final-preview-375-heading-rhythm",
+      "rows": [
+        {
+          "text": "Plan & billing",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Privacy",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Appearance",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Help & legal",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Account",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        }
+      ]
+    },
+    {
+      "scenario": "final-preview-1280-heading-rhythm",
+      "rows": [
+        {
+          "text": "Plan & billing",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Privacy",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Appearance",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Help & legal",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        },
+        {
+          "text": "Account",
+          "font": "Inter, sans-serif",
+          "weight": "600",
+          "transform": "none",
+          "gap": "12px",
+          "iconWidth": 20,
+          "iconHeight": 20,
+          "shrink": "0"
+        }
+      ]
+    }
+  ]
+}

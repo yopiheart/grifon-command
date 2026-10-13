@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Grifon companion</title>
+  <style>
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}
+    #stage{position:relative;width:100%;height:100%;touch-action:pan-y}
+    #canvas-host,#fallback{position:absolute;inset:0;width:100%;height:100%}
+    #fallback{object-fit:contain}canvas{display:block;width:100%;height:100%}
+    [hidden]{display:none!important}
+  </style>
+</head>
+<body>
+  <div id="stage" aria-hidden="true">
+    <img id="fallback" src="./neutral.png" alt="">
+    <div id="canvas-host"></div>
+  </div>
+  <!-- Keep the accepted runtime's controls available to the bridge, out of the UI. -->
+  <div hidden>
+    <span id="status"></span><span id="motion-note"></span><pre id="diagnostics"></pre>
+    <button id="preview-all" type="button"></button><button id="pause" type="button"></button>
+    <button id="reset" type="button"></button><button id="retry" type="button"></button>
+    <button id="blink" type="button"></button>
+  </div>
+  <script type="module" src="./bridge.js"></script>
+</body>
+</html>

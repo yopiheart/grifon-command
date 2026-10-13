@@ -1,0 +1,11 @@
+{
+  "candidate": "f2568ad2024740745ff7df97a660aef894038e7f",
+  "run": "https://github.com/yopiheart/grifon-command/actions/runs/38120639075",
+  "job": "https://github.com/yopiheart/grifon-command/actions/runs/38120639075/job/114414464195",
+  "exitCode": 1,
+  "failure": "FAIL finished-ad meter: Server must report a loopback address",
+  "stage": "Read-only preflight, before creating test database or roles",
+  "cause": "Docker host port publishing uses the container bridge address for inet_server_addr()",
+  "fix": "Run unchanged verifier inside PostgreSQL service using Node24 executable and read-only source mount",
+  "verification": "Independent source review passed; corrected cloud runtime pending"
+}

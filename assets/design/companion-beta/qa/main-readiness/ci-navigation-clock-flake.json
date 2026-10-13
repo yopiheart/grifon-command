@@ -1,0 +1,34 @@
+{
+  "jobId": 114444799321,
+  "name": "e2e (15)",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/yopiheart/grifon-command/actions/runs/38130887530/job/114444799321",
+  "startedAt": "2026-10-11T10:13:02Z",
+  "completedAt": "2026-10-11T10:22:56Z",
+  "planned": 7,
+  "attemptCount": 8,
+  "uniqueCases": 7,
+  "passed": 7,
+  "firstAttemptPasses": 6,
+  "flakyPasses": 1,
+  "failed": 0,
+  "skipped": 0,
+  "retryAttempts": 1,
+  "reporterSummary": [
+    "  6 passed (7.4m)",
+    "  1 flaky",
+    "  6 passed (7.4m)"
+  ],
+  "failureCases": [],
+  "lastReported": {
+    "key": "[chromium] › tests/e2e/companion-navigation.spec.ts:138:1 › switching chats while typing isolates callbacks and preserves unsent input across accounts",
+    "status": "passed",
+    "index": 8,
+    "retry": 1,
+    "duration": "40.2s",
+    "timestamp": "2026-10-11T10:22:49.9634220Z"
+  },
+  "failureContext": "\n  1) [chromium] › tests/e2e/companion-navigation.spec.ts:138:1 › switching chats while typing isolates callbacks and preserves unsent input across accounts \n\n    Error: clock.pauseAt: Error: Cannot fast-forward to the past\n        at ClockController._innerFastForwardTo (eval at evaluate (:303:30), <anonymous>:201:13)\n        at ClockController.pauseAt (eval at evaluate (:303:30), <anonymous>:132:16)\n        at async <anonymous>:329:30\n        at ClockController._innerFastForwardTo (eval at evaluate (:303:30), <anonymous>:201:13)\n        at ClockController.pauseAt (eval at evaluate (:303:30), <anonymous>:132:16)\n        at async <anonymous>:329:30\n        at /home/runner/work/grifon-command/grifon-command/tests/e2e/companion-navigation.spec.ts:140:48\n\n    Error Context: test-results/companion-navigation-switc-5411b-nsent-input-across-accounts-chromium/error-context.md\n\n  1 flaky\n    [chromium] › tests/e2e/companion-navigation.spec.ts:138:1 › switching chats while typing isolates callbacks and preserves unsent input across accounts \n  6 passed (7.4m)",
+  "checkoutCommit": "3387a481948e84f84b805f548ceb3ec53454da12"
+}

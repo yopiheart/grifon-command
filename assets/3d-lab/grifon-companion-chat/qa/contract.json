@@ -1,0 +1,17 @@
+{
+  "scope": "Actual CompanionChatSurface with injected public ProducerSurfaceController; production provider, auth and persistence transport remain separately verified boundaries.",
+  "success": "A guided brief and product image produce a reviewable summary. Only explicit Generate starts the existing producer. Real controller updates drive truthful chat receipts and companion states through storyboard approval, video result and supported revisions.",
+  "failure": "Early or duplicate starts, fabricated completion, cancelled/stale updates, cross-account drafts, broken restore/retry, hidden generation behind revision text, inaccessible mobile composer, or misleading fixture claims.",
+  "verification": [
+    "Original rendered route lacks the required chat input and cannot complete the new flow; preserve failure before implementation.",
+    "Unit tests: missing-field progression, valid and invalid images/answers, production-input mapping, deterministic supported revision parsing, account-scoped draft persistence.",
+    "Browser: type brief, upload local image, review summary with zero starts, Generate once, receive stage updates, approve storyboard before video, inspect result and supported revision/preset dispatch.",
+    "Browser: duplicate clicks, IME Enter, cancel, late attachment, error and retry, reload restore, account switch and local draft isolation.",
+    "Browser: 320/390/1280 CSS-pixel viewports, no horizontal overflow, visible controls >=44px, focus, reduced motion and avatar fallback.",
+    "Fail-closed HTTP interception: local Vite/static requests only; fixture never invokes provider services. Record blocked/unexpected runtime requests.",
+    "Record compact event evidence, source SHA256s, screenshots and actual mobile-emulated browser video; visual inspection is separate from numeric assertions. No actual phone-performance claim."
+  ],
+  "paidOperations": false,
+  "productionWrites": false,
+  "ownership": "New companion unit/e2e tests, agreed dev fixture and this QA directory only. Runtime owned by other agents."
+}

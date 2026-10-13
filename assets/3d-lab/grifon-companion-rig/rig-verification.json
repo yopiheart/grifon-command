@@ -1,0 +1,680 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "inputs": {
+    "master": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-master-v05.blend",
+    "candidate": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\rig-v09\\griffin-rig-v01.blend",
+    "rejected_baseline": "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\rig-v03\\griffin-rig-v01.blend"
+  },
+  "results": {
+    "candidate": {
+      "checks": {
+        "animated_properties_are_float": true,
+        "neutral_geometry_matches_master": true,
+        "approved_404000_curves_and_objects_preserved": true,
+        "protruding_lid_objects_removed": true,
+        "breathing_deforms_body_and_roots_coherently": true,
+        "blink_interpolates_fractionally": true,
+        "blink_closed16_open18": true,
+        "eyes_lead_neutral_head_at25": true,
+        "head_yaw_pitch_nonzero_at72": true,
+        "drivers_valid_after_reopen_and_evaluation": true
+      },
+      "evidence": {
+        "property_types": {
+          "head_yaw": "float",
+          "head_pitch": "float",
+          "gaze_x": "float",
+          "gaze_y": "float",
+          "blink": "float",
+          "breath": "float"
+        },
+        "neutral_body": {
+          "base_max_error": 0.0,
+          "evaluated_max_error": 5.960464477539063e-08,
+          "vertices": 305602,
+          "matrix_max_error": 0.0
+        },
+        "curve_objects": {
+          "Graphite short feather coat": 240000,
+          "Cream fine facial down": 110000,
+          "Folded wing fine feathers 0": 13000,
+          "Folded wing fine feathers 1": 13000,
+          "Tail short fine coat": 28000
+        },
+        "master_curve_objects": {
+          "Graphite short feather coat": 240000,
+          "Cream fine facial down": 110000,
+          "Folded wing fine feathers 0": 13000,
+          "Folded wing fine feathers 1": 13000,
+          "Tail short fine coat": 28000
+        },
+        "curve_count": 404000,
+        "breathing": {
+          "frame": 13,
+          "control": 0.5,
+          "Continuous griffin silhouette": {
+            "points_tested": 305602,
+            "max_displacement": 0.007028453517705202,
+            "shared_field_max_error": 5.972106009721756e-08
+          },
+          "Graphite short feather coat": {
+            "points_tested": 240000,
+            "max_displacement": 0.0070283496752381325,
+            "shared_field_max_error": 5.98374754190445e-08
+          }
+        },
+        "blink": {
+          "13": {
+            "control": 0.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "14": {
+            "control": 0.25925928354263306,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  0.9395061731338501,
+                  0.7485184669494629
+                ],
+                "depth": 0.00018071627710014582,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  0.9395061731338501,
+                  0.7485184669494629
+                ],
+                "depth": 0.00018071627710014582,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "15": {
+            "control": 0.7407408356666565,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  0.5061727166175842,
+                  0.28148138523101807
+                ],
+                "depth": 0.012042735703289509,
+                "hide_render": false,
+                "crease_scale": [
+                  0.25925952196121216,
+                  0.25925952196121216,
+                  0.25925952196121216
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  0.5061727166175842,
+                  0.28148138523101807
+                ],
+                "depth": 0.012042735703289509,
+                "hide_render": false,
+                "crease_scale": [
+                  0.25925952196121216,
+                  0.25925952196121216,
+                  0.25925952196121216
+                ]
+              }
+            }
+          },
+          "16": {
+            "control": 1.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  0.10000000149011612,
+                  0.029999999329447746
+                ],
+                "depth": 0.03999999910593033,
+                "hide_render": true,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  0.10000000149011612,
+                  0.029999999329447746
+                ],
+                "depth": 0.03999999910593033,
+                "hide_render": true,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            }
+          },
+          "17": {
+            "control": 0.5,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  0.7749999761581421,
+                  0.5149999856948853
+                ],
+                "depth": 0.0024999999441206455,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  0.7749999761581421,
+                  0.5149999856948853
+                ],
+                "depth": 0.0024999999441206455,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "18": {
+            "control": 0.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        },
+        "frame25": {
+          "head_rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eye_matrix_changes": {
+            "Left glossy eye": 0.10038267821073532,
+            "Right glossy eye": 0.09804432094097137
+          },
+          "control": {
+            "head_yaw": 0.0,
+            "head_pitch": 0.0,
+            "gaze_x": -0.8500000238418579,
+            "gaze_y": 0.0,
+            "blink": 0.0,
+            "breath": 0.8660253882408142
+          }
+        },
+        "frame72": {
+          "head_rotation": [
+            -0.044551193714141846,
+            0.0,
+            0.12999999523162842
+          ],
+          "control": {
+            "head_yaw": 0.12999999523162842,
+            "head_pitch": -0.044551193714141846,
+            "gaze_x": 0.8500000238418579,
+            "gaze_y": 0.25,
+            "blink": 0.0,
+            "breath": 0.04361938685178757
+          }
+        },
+        "driver_checks": [
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          },
+          {
+            "total": 35,
+            "invalid": []
+          }
+        ]
+      },
+      "pass": true
+    },
+    "rejected_baseline": {
+      "checks": {
+        "animated_properties_are_float": false,
+        "neutral_geometry_matches_master": true,
+        "approved_404000_curves_and_objects_preserved": false,
+        "protruding_lid_objects_removed": false,
+        "breathing_deforms_body_and_roots_coherently": true,
+        "blink_interpolates_fractionally": false,
+        "blink_closed16_open18": false,
+        "eyes_lead_neutral_head_at25": true,
+        "head_yaw_pitch_nonzero_at72": false,
+        "drivers_valid_after_reopen_and_evaluation": true
+      },
+      "evidence": {
+        "property_types": {
+          "head_yaw": "int",
+          "head_pitch": "int",
+          "gaze_x": "int",
+          "gaze_y": "int",
+          "blink": "int",
+          "breath": "float"
+        },
+        "neutral_body": {
+          "base_max_error": 0.0,
+          "evaluated_max_error": 5.960464477539063e-08,
+          "vertices": 305602,
+          "matrix_max_error": 0.0
+        },
+        "curve_objects": {
+          "Left glossy eye upper eyelid down": 3500,
+          "Left glossy eye lower eyelid down": 3500,
+          "Right glossy eye upper eyelid down": 3500,
+          "Right glossy eye lower eyelid down": 3500,
+          "Graphite short feather coat": 240000,
+          "Cream fine facial down": 110000,
+          "Folded wing fine feathers 0": 13000,
+          "Folded wing fine feathers 1": 13000,
+          "Tail short fine coat": 28000
+        },
+        "master_curve_objects": {
+          "Graphite short feather coat": 240000,
+          "Cream fine facial down": 110000,
+          "Folded wing fine feathers 0": 13000,
+          "Folded wing fine feathers 1": 13000,
+          "Tail short fine coat": 28000
+        },
+        "curve_count": 418000,
+        "breathing": {
+          "frame": 13,
+          "control": 0.5,
+          "Continuous griffin silhouette": {
+            "points_tested": 305602,
+            "max_displacement": 0.007028453517705202,
+            "shared_field_max_error": 5.972106009721756e-08
+          },
+          "Graphite short feather coat": {
+            "points_tested": 240000,
+            "max_displacement": 0.0070283496752381325,
+            "shared_field_max_error": 5.98374754190445e-08
+          }
+        },
+        "blink": {
+          "13": {
+            "control": 0.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "14": {
+            "control": 0.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "15": {
+            "control": 1.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            }
+          },
+          "16": {
+            "control": 1.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            }
+          },
+          "17": {
+            "control": 1.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            }
+          },
+          "18": {
+            "control": 0.0,
+            "eyes": {
+              "Left glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "Right glossy eye": {
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "depth": 0.0,
+                "hide_render": false,
+                "crease_scale": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        },
+        "frame25": {
+          "head_rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eye_matrix_changes": {
+            "Left glossy eye": 0.11826168745756149,
+            "Right glossy eye": 0.1150263100862503
+          },
+          "control": {
+            "head_yaw": 0.0,
+            "head_pitch": 0.0,
+            "gaze_x": -1.0,
+            "gaze_y": 0.0,
+            "blink": 0.0,
+            "breath": 0.8660253882408142
+          }
+        },
+        "frame72": {
+          "head_rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "control": {
+            "head_yaw": 0.0,
+            "head_pitch": 0.0,
+            "gaze_x": 1.0,
+            "gaze_y": 0.0,
+            "blink": 0.0,
+            "breath": 0.04361938685178757
+          }
+        },
+        "driver_checks": [
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          },
+          {
+            "total": 91,
+            "invalid": []
+          }
+        ]
+      },
+      "pass": false
+    }
+  },
+  "source_hashes_unchanged": true,
+  "source_sha256": {
+    "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\griffin-master-v05.blend": "1f5469d46972ec14490f78a33d17a8b611e8b86810d7aec35820cd1cfacd34e7",
+    "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\rig-v09\\griffin-rig-v01.blend": "94fb26540d6f8f2f600416b39bf891d573cec5a2f923d3bd591275e699904446",
+    "C:\\Users\\ADMIN\\.codex\\visualizations\\2026\\10\\06\\01a1103d-37d8-7492-82be-40b3d829d725\\rig-v03\\griffin-rig-v01.blend": "47664148d658e80f5b202e3ab427fe0209176e9b163bd9d7ddbc84d477e22a29"
+  },
+  "regression_rejection_run": true,
+  "old_defect_rejected": true,
+  "pass": true,
+  "runtime_seconds": 8.776
+}

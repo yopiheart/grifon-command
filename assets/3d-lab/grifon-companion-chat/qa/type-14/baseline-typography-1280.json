@@ -1,0 +1,48 @@
+{
+  "user": {
+    "font": "Inter, sans-serif",
+    "size": "16px",
+    "weight": "400",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgba(255, 204, 0, 0.16)",
+    "image": "none",
+    "border": "rgb(229, 231, 235)"
+  },
+  "assistant": {
+    "font": "Inter, sans-serif",
+    "size": "16px",
+    "weight": "400",
+    "color": "rgb(228, 228, 231)",
+    "background": "rgba(255, 255, 255, 0.035)",
+    "image": "none",
+    "border": "rgb(229, 231, 235)"
+  },
+  "input": {
+    "font": "Inter, sans-serif",
+    "size": "16px",
+    "weight": "400",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgba(0, 0, 0, 0)",
+    "image": "none",
+    "border": "rgb(229, 231, 235)"
+  },
+  "button": {
+    "font": "Inter, sans-serif",
+    "size": "14px",
+    "weight": "600",
+    "color": "rgb(161, 161, 170)",
+    "background": "rgba(0, 0, 0, 0)",
+    "image": "none",
+    "border": "rgba(255, 255, 255, 0.1)"
+  },
+  "timestamp": {
+    "font": "\"JetBrains Mono\", monospace",
+    "size": "11px",
+    "weight": "400",
+    "color": "rgb(130, 130, 139)",
+    "background": "rgba(0, 0, 0, 0)",
+    "image": "none",
+    "border": "rgb(229, 231, 235)"
+  },
+  "overflow": 0
+}

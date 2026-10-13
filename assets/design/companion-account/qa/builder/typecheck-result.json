@@ -1,0 +1,6 @@
+{
+  "finishedAt": "2026-10-07T15:02:34.0381218+08:00",
+  "exitCode": 0,
+  "command": "npx.cmd tsc --noEmit",
+  "startedAt": "2026-10-07T15:02:13.7788392+08:00"
+}

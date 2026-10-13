@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:6884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\companion-continuity.spec.ts:104:3 › ready renderer continuity across New chat and saved chats at 375px (5.4s)
+  ok 2 tests\e2e\companion-continuity.spec.ts:104:3 › ready renderer continuity across New chat and saved chats at 390px (4.9s)
+  ok 3 tests\e2e\companion-continuity.spec.ts:104:3 › ready renderer continuity across New chat and saved chats at 1280px (4.5s)
+  ok 4 tests\e2e\companion-continuity.spec.ts:157:1 › pending intake and working production reactions cannot leak into a new chat (3.0s)
+  ok 5 tests\e2e\companion-continuity.spec.ts:187:1 › cold load reserves the avatar slot without a still while chat works (2.1s)
+  ok 6 tests\e2e\companion-continuity.spec.ts:205:1 › real asset failure keeps an honest still fallback and explicit retry restores motion (2.6s)
+
+  6 passed (24.4s)

@@ -1,0 +1,998 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "fonts": [
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Instrument Serif",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "900",
+      "status": "loaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "unloaded"
+    },
+    {
+      "family": "JetBrains Mono",
+      "weight": "400",
+      "status": "loaded"
+    }
+  ],
+  "measurements": [
+    {
+      "tag": "H1",
+      "role": "heading",
+      "text": "Your next ad plan",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "30px",
+      "fontWeight": "900",
+      "letterSpacing": "-1.5px",
+      "textTransform": "uppercase",
+      "width": 736,
+      "height": 36,
+      "left": 272,
+      "right": 1008
+    },
+    {
+      "tag": "P",
+      "role": "body",
+      "text": "Write a clear brief, then review the result with your team.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 736,
+      "height": 26,
+      "left": 272,
+      "right": 1008
+    },
+    {
+      "tag": "H2",
+      "role": "heading",
+      "text": "Normal controls",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "900",
+      "letterSpacing": "-1.2px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 32,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": "normal-label",
+      "text": "Project name",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "1.6px",
+      "textTransform": "uppercase",
+      "width": 134.40625,
+      "height": 21,
+      "left": 297,
+      "right": 431.40625
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "1.6px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": "normal-label",
+      "text": "Aspect ratio",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "1.6px",
+      "textTransform": "uppercase",
+      "width": 134.40625,
+      "height": 21,
+      "left": 297,
+      "right": 431.40625
+    },
+    {
+      "tag": "SELECT",
+      "role": "input",
+      "text": "Portrait 9:16Landscape 16:9",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "1.6px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": "normal-label",
+      "text": "Language",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "letterSpacing": "1px",
+      "textTransform": "uppercase",
+      "width": 56,
+      "height": 13,
+      "left": 297,
+      "right": 353
+    },
+    {
+      "tag": "SELECT",
+      "role": "input",
+      "text": "EnglishFilipino",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "10px",
+      "fontWeight": "500",
+      "letterSpacing": "1px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "letterSpacing": "1.2px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "TEXTAREA",
+      "role": "input",
+      "text": "Keep this easy to read.",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "letterSpacing": "1.2px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Client details",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 54,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Business info",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "TEXTAREA",
+      "role": "input",
+      "text": "Coffee for busy mornings. Keep the offer easy to read.",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 100,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Offer",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "INPUT",
+      "role": "input",
+      "text": "",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": null,
+      "text": "// Audience",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "TEXTAREA",
+      "role": "input",
+      "text": "People who want coffee ready to go.",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 94.25,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "LABEL",
+      "role": "field-label",
+      "text": "// Client details",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Review brief",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 167.609375,
+      "height": 46,
+      "left": 297,
+      "right": 464.609375
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Unavailable",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 155.8125,
+      "height": 44,
+      "left": 480.609375,
+      "right": 636.421875
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Save draft",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 162,
+      "height": 44,
+      "left": 652.421875,
+      "right": 814.421875
+    },
+    {
+      "tag": "BUTTON",
+      "role": "button",
+      "text": "Another regular action",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "1.6px",
+      "textTransform": "none",
+      "width": 278.40625,
+      "height": 44,
+      "left": 297,
+      "right": 575.40625
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Portrait",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 339,
+      "height": 44,
+      "left": 297,
+      "right": 636
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Landscape",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "letterSpacing": "1.4px",
+      "textTransform": "none",
+      "width": 339,
+      "height": 44,
+      "left": 644,
+      "right": 983
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Review your draft",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "36px",
+      "fontWeight": "900",
+      "letterSpacing": "-1.8px",
+      "textTransform": "uppercase",
+      "width": 638,
+      "height": 40,
+      "left": 321,
+      "right": 959
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "// Draft metadata",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "13px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 638,
+      "height": 21.125,
+      "left": 321,
+      "right": 959
+    },
+    {
+      "tag": "P",
+      "role": "body",
+      "text": "Check the brief before continuing.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 638,
+      "height": 26,
+      "left": 321,
+      "right": 959
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "// Step metadata",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 168.734375,
+      "height": 16,
+      "left": 297,
+      "right": 465.734375
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Business info",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "900",
+      "letterSpacing": "-1.2px",
+      "textTransform": "uppercase",
+      "width": 168.734375,
+      "height": 32,
+      "left": 297,
+      "right": 465.734375
+    },
+    {
+      "tag": "P",
+      "role": "body",
+      "text": "Describe what you sell in one clear sentence.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 686,
+      "height": 26,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H3",
+      "role": "heading",
+      "text": "Useful details",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "20px",
+      "fontWeight": "900",
+      "letterSpacing": "-1px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 28,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H4",
+      "role": "heading",
+      "text": "Small section title",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "900",
+      "letterSpacing": "-0.8px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 26,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H5",
+      "role": "heading",
+      "text": "Supporting title",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "900",
+      "letterSpacing": "-0.8px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 26,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H6",
+      "role": "heading",
+      "text": "Final title",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "900",
+      "letterSpacing": "-0.8px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 26,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H3",
+      "role": "mono",
+      "text": "Job status 200",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "900",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H4",
+      "role": "mono",
+      "text": "Job details 001",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "14px",
+      "fontWeight": "900",
+      "letterSpacing": "1.4px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 20,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "P",
+      "role": "mono",
+      "text": "job_id: preview_001",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "1.2px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 16,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "P",
+      "role": "mono",
+      "text": "render_time: 00:14",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "1.2px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 16,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "PRE",
+      "role": "mono",
+      "text": "const ready = true;",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 686,
+      "height": 16,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "CODE",
+      "role": "mono",
+      "text": "const ready = true;",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 136.8125,
+      "height": 16,
+      "left": 297,
+      "right": 433.8125
+    },
+    {
+      "tag": "KBD",
+      "role": "mono",
+      "text": "Ctrl K",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 43.203125,
+      "height": 16,
+      "left": 343.703125,
+      "right": 386.90625
+    },
+    {
+      "tag": "LABEL",
+      "role": "mono",
+      "text": "Technical value",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "1.2px",
+      "textTransform": "uppercase",
+      "width": 126,
+      "height": 16,
+      "left": 297,
+      "right": 423
+    },
+    {
+      "tag": "INPUT",
+      "role": "mono",
+      "text": "",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "1.2px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 44,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "BUTTON",
+      "role": "mono",
+      "text": "job_001",
+      "fontFamily": "\"JetBrains Mono\", monospace",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "letterSpacing": "1.2px",
+      "textTransform": "none",
+      "width": 92.8125,
+      "height": 44,
+      "left": 297,
+      "right": 389.8125
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Ready to create.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "letterSpacing": "-1.08px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 32,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Made to move.",
+      "fontFamily": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 686,
+      "height": 32,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Find your plan.",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "letterSpacing": "-1.08px",
+      "textTransform": "none",
+      "width": 686,
+      "height": 32,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "P",
+      "role": null,
+      "text": "Create more.",
+      "fontFamily": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "24px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "width": 686,
+      "height": 32,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H2",
+      "role": "heading",
+      "text": "Exported artwork",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "24px",
+      "fontWeight": "900",
+      "letterSpacing": "-1.2px",
+      "textTransform": "uppercase",
+      "width": 686,
+      "height": 32,
+      "left": 297,
+      "right": 983
+    },
+    {
+      "tag": "H2",
+      "role": null,
+      "text": "Fresh coffee every morning",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": "63px",
+      "fontWeight": "900",
+      "letterSpacing": "-3.15px",
+      "textTransform": "uppercase",
+      "width": 548.800048828125,
+      "height": 89.62060546875,
+      "left": 365.6000061035156,
+      "right": 914.4000549316406
+    }
+  ]
+}

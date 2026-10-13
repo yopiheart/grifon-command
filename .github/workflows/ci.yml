@@ -105,6 +105,12 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # The complete Companion suite outgrew one runner's time budget. Keep every
+    # case and the existing per-job cap; independent shards use one worker each.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
     steps:
       - uses: actions/checkout@v4
 
@@ -136,13 +142,13 @@ jobs:
         run: npx playwright install-deps chromium
 
       - name: Boot/render smoke
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/32
 
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: boot-smoke-screenshots
+          name: boot-smoke-screenshots-${{ matrix.shard }}
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7
@@ -222,6 +228,44 @@ jobs:
           echo "Redeploy in place via the Artifact tool's url param (CLAUDE.md has the"
           echo "URL in the artifact registry). Do NOT mint a new URL."
 
+  # Real independent backends verify billing locks and rollback without any
+  # application/provider secrets. The verifier owns an ephemeral database only.
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      postgres:
+        image: postgres:17-bookworm
+        env:
+          POSTGRES_DB: grifon_meter_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --volume "${{ github.workspace }}:/workspace:ro"
+          --health-cmd "pg_isready -U postgres -d grifon_meter_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: grifon_meter_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Verify finished-ad meter on isolated PostgreSQL
+        # Run inside the service so both libpq and the backend see loopback.
+        # Host port forwarding makes inet_server_addr() a Docker bridge address.
+        # Only the Node executable is copied; fixtures are mounted read-only.
+        run: |
+          docker cp "$(command -v node)" "${{ job.services.postgres.id }}:/tmp/grifon-node"
+          docker exec "${{ job.services.postgres.id }}" /tmp/grifon-node --version
+          docker exec -e PGHOST=127.0.0.1 -e PGPORT=5432 -e PGUSER=postgres -e PGDATABASE=grifon_meter_test -w /workspace "${{ job.services.postgres.id }}" /tmp/grifon-node tools/verify-finished-ad-meter.mjs --isolated-test-server
+
   # ── main-status ────────────────────────────────────────────────────────────
   # The 2026-08-04→08-07 outage was not a detection failure — CI went red
   # immediately and stayed red for three days. It was a READER failure: the
@@ -240,7 +284,7 @@ jobs:
   # it. Paging on PRs would rebuild the noise this job exists to remove.
   main-status:
     if: always() && github.event_name == 'push'
-    needs: [verify, e2e, artifacts]
+    needs: [verify, e2e, artifacts, database]
     runs-on: ubuntu-latest
     # Serialize so two quick pushes cannot race into two duplicate issues.
     concurrency:
@@ -265,8 +309,9 @@ jobs:
             // exists (the job goes red) but reaches nobody, so a merged refactor
             // leaves the published explainer citing a line that moved.
             const artifactsResult = '${{ needs.artifacts.result }}';
+            const databaseResult = '${{ needs.database.result }}';
             const red = verifyResult !== 'success' || e2eResult !== 'success'
-              || artifactsResult !== 'success';
+              || artifactsResult !== 'success' || databaseResult !== 'success';
             const LABEL = 'ci-red';
             const TITLE = 'main is RED — CI failing';
             const { owner, repo } = context.repo;
@@ -291,6 +336,7 @@ jobs:
             const failed = [
               verifyResult !== 'success' ? `\`verify\` (${verifyResult})` : null,
               e2eResult !== 'success' ? `\`e2e\` (${e2eResult})` : null,
+              databaseResult !== 'success' ? `\`database\` (${databaseResult})` : null,
             ].filter(Boolean).join(' + ');
 
             if (red) {

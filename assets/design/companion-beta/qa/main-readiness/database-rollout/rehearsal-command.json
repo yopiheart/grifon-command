@@ -1,0 +1,5 @@
+{
+  "command": "node .tmp/companion-main-readiness/qa/rollout/rehearse-rollout.mjs",
+  "exitCode": 0,
+  "finishedAtUtc": "2026-10-11T07:17:30.8466171Z"
+}

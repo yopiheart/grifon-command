@@ -1,0 +1,27 @@
+[
+  {
+    "path": "assets/design/companion-account/qa/builder/pre-history-App.tsx",
+    "originalSha256": "ccb23cfe5176a51de96455e4d153c1d43aa06c361cf8c13c467b0012d973be1d",
+    "displaySha256": "d2ea2efee0442da11fbd335d6a2641be4f6b22ac890b456d373e32f86ca986f7"
+  },
+  {
+    "path": "assets/design/companion-account/qa/builder/source-diff.patch",
+    "originalSha256": "b96cd6c74a06ec7e776c73a1eafb920fffa0c7f6832abf11d43e6776307fb759",
+    "displaySha256": "e315735fec8e6868709829a98ee47da1a6ab003a9878012e5fe07dad6c9d5f2b"
+  },
+  {
+    "path": "assets/design/companion-account/qa/builder/source-round1-diff.patch",
+    "originalSha256": "e54e4deea2fc99deee54debd71ea55b3943ed461c4729f7ca49a39be72b6e89b",
+    "displaySha256": "40fc25902d294316ea148bebb5752a528bab8946ff39cb2a3269658cff9fdb8a"
+  },
+  {
+    "path": "assets/design/companion-account/qa/route-oauth-fixture-error-context.md",
+    "originalSha256": "5577c7092e272527a307b8f939bdc0b53b4edc1d38f90b08bb65e5da917633b6",
+    "displaySha256": "06997132cad7615a80da8c1d7162a2e1cc6918604ad8db665a1f36bc26d7ece9"
+  },
+  {
+    "path": "assets/design/companion-account/qa/staged-whitespace-command.log",
+    "originalSha256": "f57923abec0ea4a233833c6160f4b852961e4bf6983627ce79e2bdb8cd9cf230",
+    "displaySha256": "ea35325905d59529693942792e1bf83b3e887930021373f3a5639fe11f01db46"
+  }
+]

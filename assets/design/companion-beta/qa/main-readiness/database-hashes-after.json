@@ -1,0 +1,30 @@
+[
+  {
+    "path": "tools/verify-finished-ad-meter.mjs",
+    "sha256": "2469b5fb5ca176226d02b58b6ad68bb3dd4234d176dbad0b4a7f0f89ed3a9e7a"
+  },
+  {
+    "path": "supabase/finished_ad_meter.sql",
+    "sha256": "4ee39c8e04d17b4d42579606e86c759d8f0bf02643d77c91a8da43d6ee7979d3"
+  },
+  {
+    "path": "tests/sql/finished-ad-meter-legacy-quota.txt",
+    "sha256": "f8a9622495830bd5d65fbcac19c6801d510d10a85f5e5fc08bf167b76f3fe826"
+  },
+  {
+    "path": "tests/sql/finished-ad-meter-bootstrap.sql",
+    "sha256": "88c292ef4d3112f1fffb6e8205b74451e3e262e6d2a3b36e6db310ab9080ec0f"
+  },
+  {
+    "path": "tests/sql/finished-ad-meter.sql",
+    "sha256": "09883dad4eb665444e18e79161fd2af22a7755130d2e8cab49607c3fe8b3e128"
+  },
+  {
+    "path": "supabase/rate_limit.sql",
+    "sha256": "4add0581a5af8e1cbce371f560cf61613a826200e580c69cb53eca4f3c66b175"
+  },
+  {
+    "path": "supabase/credits.sql",
+    "sha256": "74a436c65077dc7a409b7e8df45779aa05515945f9266e16ada66319ead08c53"
+  }
+]

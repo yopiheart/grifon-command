@@ -1,0 +1,5 @@
+{
+  "calls": 1,
+  "unexpected": [],
+  "meaning": "Real Gemini image service tags the fake HTTP outcome; orchestrator does not auto-replay and unresolved receipt blocks manual regeneration."
+}

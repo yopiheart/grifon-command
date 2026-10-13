@@ -29,10 +29,10 @@ export const StepFooter: React.FC<{
   renderNext?: React.ReactNode;
 }> = ({
   onBack,
-  backLabel = 'BACK',
+  backLabel = 'Back',
   hideBack,
   onNext,
-  nextLabel = 'CONFIRM',
+  nextLabel = 'Confirm',
   nextDisabled,
   nextIcon,
   center,
@@ -49,7 +49,7 @@ export const StepFooter: React.FC<{
       <button
         type="button"
         onClick={onBack}
-        className="rounded-full border border-white/10 px-8 py-3 text-xs font-mono uppercase tracking-widest text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+        className="rounded-full border border-white/10 px-8 py-3 text-sm font-sans font-semibold normal-case tracking-normal text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
       >
         {backLabel}
       </button>

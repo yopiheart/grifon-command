@@ -1,0 +1,29 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion.config.ts tests/e2e/companion-chat.spec.ts --reporter=list,json --output C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/assets/design/companion-beta/qa/resumed-chat-final/test-results
+
+
+Running 18 tests using 1 worker
+
+(node:19760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\companion-chat.spec.ts:45:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions (12.6s)
+  ok  2 tests\e2e\companion-chat.spec.ts:78:1 › IME Enter does not submit; invalid files and missing image cannot generate (944ms)
+  ok  3 tests\e2e\companion-chat.spec.ts:91:1 › draft reload/account isolation, error retry and fixture checkpoint restore (7.7s)
+  ok  4 tests\e2e\companion-chat.spec.ts:109:3 › 320px layout and real avatar bridge (7.2s)
+  ok  5 tests\e2e\companion-chat.spec.ts:109:3 › 375px layout and real avatar bridge (14.3s)
+  ok  6 tests\e2e\companion-chat.spec.ts:109:3 › 390px layout and real avatar bridge (6.0s)
+  ok  7 tests\e2e\companion-chat.spec.ts:109:3 › 1280px layout and real avatar bridge (8.4s)
+  ok  8 tests\e2e\companion-chat.spec.ts:134:1 › reduced motion stays static and companion failure leaves usable chat (3.0s)
+  ok  9 tests\e2e\companion-chat.spec.ts:148:1 › actual App and ProducerFlow restore the same account run without generation (4.4s)
+  ok 10 tests\e2e\companion-chat.spec.ts:163:1 › actual ProducerFlow prevents duplicate starts and ignores research completing after cancellation (7.0s)
+  ok 11 tests\e2e\companion-chat.spec.ts:191:1 › allowance and preset gates dispatch no generation or revision until permitted (9.4s)
+  ok 12 tests\e2e\companion-chat.spec.ts:209:1 › late attachment completion cannot cross an account remount (815ms)
+  ok 13 tests\e2e\companion-chat.spec.ts:233:1 › actual ProducerFlow rejects stale orchestrator callbacks after Stop waiting (2.7s)
+  ok 14 tests\e2e\companion-chat.spec.ts:256:1 › actual route fails closed while allowance is unknown and recovers after Retry allowance (6.4s)
+  ok 15 tests\e2e\companion-chat.spec.ts:293:1 › actual upgrade and browser Back preserve companion intent and the local brief (7.4s)
+  ok 16 tests\e2e\companion-chat.spec.ts:310:1 › actual saved-run load failure retries the same run without resubmitting (5.2s)
+  ok 17 tests\e2e\companion-chat.spec.ts:324:1 › avatar asset load failure offers still-image fallback and retry without blocking text (1.8s)
+  ok 18 tests\e2e\companion-chat.spec.ts:336:1 › parent pointer events move the embedded companion eyes (6.3s)
+
+  18 passed (1.9m)

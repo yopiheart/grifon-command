@@ -1,0 +1,122 @@
+{
+  "pass": true,
+  "assertions": 35,
+  "scriptExit": 0,
+  "runtimeSeconds": 67.309,
+  "sourceUnchanged": true,
+  "baselineRejection": true,
+  "normalConsoleErrors": 0,
+  "normalPageErrors": 0,
+  "layoutTiming": [
+    {
+      "width": 320,
+      "height": 740,
+      "pass": true,
+      "samples": 180,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 16.800000000000182,
+      "meanMs": 16.67222222222222,
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "pass": true,
+      "samples": 180,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 17,
+      "meanMs": 16.673333333333332,
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pass": true,
+      "samples": 180,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 17,
+      "meanMs": 16.672777777777778,
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "pass": true,
+      "samples": 180,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 17,
+      "meanMs": 16.675555555555558,
+      "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "visualInspection": {
+    "performed": true,
+    "files": [
+      "final-idle-stage.png",
+      "final-listening-stage.png",
+      "final-reading-stage.png",
+      "final-working-stage.png",
+      "final-ready-stage.png",
+      "refined-contact-left.png",
+      "refined-contact-right.png",
+      "layout-320.png",
+      "layout-1280.png",
+      "video-working-frame.png",
+      "video-ready-frame.png"
+    ],
+    "findings": "Five distinguishable poses preserve the approved soft face, crest, wings and tail. Listening wing sits beside cheek. Reading has page and downward scanning gaze. Working left/right peaks show wing tips reaching the illuminated keys; fibers remain on moving wings. Ready lifts both wings. No gross clipping or doubled stationary wings seen.",
+    "limits": "Sampled visual inspection; final appeal belongs to user. Fixed baked camera lighting; no free-view/PBR validation."
+  },
+  "video": {
+    "file": "five-reactions-preview.webm",
+    "durationSeconds": 15.8,
+    "width": 390,
+    "height": 844,
+    "encodingFps": 25,
+    "note": "Actual browser interaction recording. Encoding FPS is not runtime performance."
+  },
+  "sourceHashes": {
+    "index.html": "483e9b555e91a1222305892bc426978d4629ad7254a692b58d7ab4d340c018b9",
+    "style.css": "28d0933fa03b061a5b920a33d5324a230a9ca590efb4ee31a79d4c811ca809cb",
+    "main.js": "aa379790eed67020ad3f4be520460cc7453900ae48cab9f094e34a072dca75fb",
+    "reactions.js": "8aa1d240b2b28706dd24376b3c0c4403ccae1502f5caffe74a557081d53a8989",
+    "baked-body-clean.png": "da6d0f17f903692c2e63ffe621f7a2c76ea44e53886b8fa3b8952d49f3b37900"
+  },
+  "assetIntegrity": {
+    "scene.json": {
+      "matchesBaseline": false,
+      "sha256": "1a199b50faf7be25b38b78b56bff2c81cc9ba75d34b13882e6ba668486ce62cd",
+      "normalizedTextMatchesBaseline": true,
+      "semanticMatchesBaseline": true,
+      "note": "Git LF versus working-tree CRLF; git diff reports no content changes."
+    },
+    "scene.bin": {
+      "matchesBaseline": true,
+      "sha256": "607ba0c913859739f2a908758d55c34eea8126dc4b7427468887bf7afdd3cca5"
+    },
+    "baked-skin.png": {
+      "matchesBaseline": true,
+      "sha256": "4b73fa1280927a4157bb0de9371643fbfc03e23a61d8cc4ad4b462015cb3f5d0"
+    },
+    "baked-hero.png": {
+      "matchesBaseline": true,
+      "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+    },
+    "neutral.png": {
+      "matchesBaseline": true,
+      "sha256": "e3d14aec0b8e435136493b8a19ee4f7652ebc5f526a77aafa2adc4dd6bcb694e"
+    }
+  },
+  "evidence": [
+    "reactions-report.json",
+    "baseline-regression.json",
+    "final-captures.json",
+    "asset-integrity.json"
+  ],
+  "measurementLimit": "All timing is desktop Edge on AMD Radeon via ANGLE/D3D11. Mobile dimensions emulate a viewport, not phone hardware.",
+  "artifactHashes": {
+    "reactions-smoke.cjs": "c5033db2674e5684f28be4f00a23428787f57b095f99bbba8b5a25afb1e8e6c8",
+    "reactions-report.json": "2d0c359230700c306bf73b644c705491a75ab9be48903a170b4549e01d1119c4",
+    "five-reactions-preview.webm": "59e9414f74cf0c29b539ba845c7c5f561e54410e263a71be6f5f9ff8e66218e9"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "vercel": {
+    "deployment": "https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/HFNfeJ7wnXDrj1S4SGGynFZ6uJ2u",
+    "scope": "GitHub status only, no hosted browser validation",
+    "status": "SUCCESS"
+  },
+  "runUrl": "https://github.com/yopiheart/grifon-command/actions/runs/38121024346",
+  "observer": {
+    "deployments": 0,
+    "sourceEdits": 0,
+    "cancellations": 0,
+    "databaseMutations": 0,
+    "reruns": 0
+  },
+  "jobs": {
+    "artifacts": "PASS",
+    "e2e": "CANCELLED_AT_JOB_TIMEOUT",
+    "verify": "PASS",
+    "database": "PASS",
+    "mainStatus": "SKIPPED_EXPECTED_FOR_PR"
+  },
+  "runId": 38121024346,
+  "controlHarness": {
+    "platformSkipped": 1,
+    "total": 26,
+    "passed": 25,
+    "failed": 0
+  },
+  "headSha": "fd63fdd7c6c36f3f6c9815b6a1af61ce9bb67f66",
+  "overall": "CANCELLED",
+  "units": {
+    "passedFiles": 125,
+    "passed": 1541,
+    "total": 1573,
+    "skippedFiles": 9,
+    "skipped": 32,
+    "failed": 0,
+    "durationSeconds": 135.44
+  },
+  "e2e": {
+    "fullSuiteCompleted": false,
+    "skipsObserved": 0,
+    "completedUniqueCases": 48,
+    "artifactId": 11695563334,
+    "completedAt": "2026-10-11T07:36:00Z",
+    "cancellationAt": "2026-10-11T07:35:53.8853377Z",
+    "uncompletedCases": 176,
+    "completedAttempts": 51,
+    "firstAttemptPasses": 45,
+    "accountSuiteElapsedSeconds": 537.55,
+    "plannedCases": 224,
+    "testStartedAt": "2026-10-11T07:22:11.2311254Z",
+    "failures": [
+      {
+        "file": "tests/e2e/companion-beta.spec.ts",
+        "classification": "afterEach evidence capture error; retry passed",
+        "error": "Protocol error (Page.captureScreenshot): Unable to capture screenshot",
+        "test": "guided beta limitations are visible at 390px",
+        "line": 22
+      },
+      {
+        "error": "Draft saved on this device missing after New chat/send",
+        "classification": "Persistent assertion failure, original and retry",
+        "line": 39,
+        "file": "tests/e2e/companion-beta.spec.ts",
+        "test": "stale second tab cannot erase a newer conversation",
+        "evidence": "Both contexts show newer second conversation rendered, but Saving on this device status persists"
+      },
+      {
+        "error": "already being updated in another tab message missing",
+        "classification": "First attempt assertion failure; retry passed",
+        "line": 134,
+        "file": "tests/e2e/companion-beta.spec.ts",
+        "test": "another tab cannot resume the same ad while a scene image request is pending",
+        "evidence": "Context shows Resume saved progress disabled and no duplicate request evidence yet"
+      }
+    ],
+    "passedAfterRetry": 2,
+    "accountCasesPassed": 34,
+    "persistentFailures": 1,
+    "artifactUrl": "https://github.com/yopiheart/grifon-command/actions/runs/38121024346/artifacts/11695563334"
+  },
+  "database": {
+    "limitations": "Isolated PostgreSQL only; not target Supabase rollout or PostgREST verification",
+    "originalDuplicateChargeRejections": 4,
+    "observedLockWaits": 12,
+    "engine": "PostgreSQL 17.11",
+    "independentBackendPairs": 12,
+    "checks": 24,
+    "roleChecks": 3,
+    "cleanup": "Owned database and bootstrap roles dropped",
+    "summary": "database-summary.json"
+  }
+}

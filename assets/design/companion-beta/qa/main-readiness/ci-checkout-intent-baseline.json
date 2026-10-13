@@ -1,0 +1,945 @@
+{
+  "result": "PASS",
+  "meaning": "Successful original-defect reproduction; product race remains unfixed in this original candidate",
+  "capturedUtc": "2026-10-11T11:10:22.256Z",
+  "hostedEvidence": ".tmp/companion-main-readiness/qa/ci-marker-guard-run/e2e-5-summary.json",
+  "source": {
+    "AppSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+    "accountSha256": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528"
+  },
+  "validations": {
+    "ordinaryPass": true,
+    "controlledExactBusinessFailure": true,
+    "originalCaseAssertionsUnchanged": true,
+    "checkoutAuthCallerVerified": true,
+    "causalOrderWithinAppDocument": true,
+    "heldAppState": true,
+    "actualCheckoutReached": true,
+    "sourceAndHarnessFrozenWithinRuns": true,
+    "verifiedAppIdentity": true,
+    "fixtureCountersClean": true,
+    "noRetryOrSkip": true,
+    "existingFailureScreenshot": true
+  },
+  "timeline": {
+    "timeBasis": "milliseconds since original/app document start; all events below precede actual checkout navigation",
+    "planRemovedMs": 567.3000000119209,
+    "checkoutAuthHeldMs": 567.4000000059605,
+    "realWizardIdbSuccessMs": 584,
+    "returnMarkerRemovedMs": 639.7000000178814,
+    "checkoutAuthReleasedMs": 685.5,
+    "order": "actual plan removal -> held checkout auth -> real wizard get completion -> actual return marker removal while/app -> auth release -> actual checkout"
+  },
+  "phases": [
+    {
+      "phase": "original-ordinary",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/playwright.config.ts",
+          "--grep=pending checkout keeps precedence over intended tool and return-to-ad intents$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CHECKOUT_PHASE": "original-ordinary",
+          "CHECKOUT_HOLD": "0"
+        }
+      },
+      "exitCode": 0,
+      "status": "passed",
+      "durationMs": 4457,
+      "retry": 0,
+      "errors": [],
+      "sourceBefore": {
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "tests/e2e/companion-account.spec.ts": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "sourceAfter": {
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "tests/e2e/companion-account.spec.ts": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/checkout-intent.spec.ts": "92de97a57b9916cce5349469523f74a53fe2c68f6a8e3f5051c8892d7bab2f9a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/companion-account-fixture.ts": "43729295d53a48b3cda6311d1e93b917191b0c990db9829e3904655366bdbdce",
+        ".tmp/companion-main-readiness/qa/checkout-intent/instrumented-test.ts": "c530b400d6295e0f1d82909589f4a8a20e7e1de9e101a486abc33dbc83ae90a0",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed",
+        ".tmp/companion-main-readiness/qa/checkout-intent/playwright.config.ts": "c626cf99d6a5ad02f94803f678abae82deab747f4aef0c6e87cf94f9dac02260",
+        ".tmp/companion-main-readiness/qa/checkout-intent/server.mjs": "ffc5bbe45d5a779c1a4712aa31e9314d0fb5c7a333599c015350af5f4f35cf28"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/checkout-intent.spec.ts": "92de97a57b9916cce5349469523f74a53fe2c68f6a8e3f5051c8892d7bab2f9a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/companion-account-fixture.ts": "43729295d53a48b3cda6311d1e93b917191b0c990db9829e3904655366bdbdce",
+        ".tmp/companion-main-readiness/qa/checkout-intent/instrumented-test.ts": "c530b400d6295e0f1d82909589f4a8a20e7e1de9e101a486abc33dbc83ae90a0",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed",
+        ".tmp/companion-main-readiness/qa/checkout-intent/playwright.config.ts": "c626cf99d6a5ad02f94803f678abae82deab747f4aef0c6e87cf94f9dac02260",
+        ".tmp/companion-main-readiness/qa/checkout-intent/server.mjs": "ffc5bbe45d5a779c1a4712aa31e9314d0fb5c7a333599c015350af5f4f35cf28"
+      },
+      "changedHarnessFiles": [],
+      "instrumentation": {
+        "status": "passed",
+        "durationMs": 4399,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "events": [
+          {
+            "ms": 168.10000002384186,
+            "kind": "probe-installed",
+            "pathname": "/app"
+          },
+          {
+            "ms": 170.10000002384186,
+            "kind": "storage-set",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 170.40000000596046,
+            "kind": "storage-set",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 170.5,
+            "kind": "storage-set",
+            "key": "grifon_return_to_ad",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 3128.800000011921,
+            "kind": "history-replace",
+            "pathname": "/app"
+          },
+          {
+            "ms": 3130.5,
+            "kind": "history-replace",
+            "pathname": "/app"
+          },
+          {
+            "ms": 3153.800000011921,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 3153.9000000059605,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 3154,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 3154.100000023842,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 3154.300000011921,
+            "kind": "storage-remove",
+            "key": "grifon_intended_plan",
+            "before": true,
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 3169.5,
+            "kind": "wizard-idb-get-start",
+            "store": "sessions"
+          },
+          {
+            "ms": 3170.5,
+            "kind": "wizard-idb-get-success",
+            "store": "sessions",
+            "recordPresent": false
+          },
+          {
+            "ms": 56.89999997615814,
+            "kind": "probe-installed",
+            "pathname": "/checkout"
+          },
+          {
+            "ms": 491.89999997615814,
+            "kind": "history-replace",
+            "pathname": "/checkout"
+          },
+          {
+            "ms": 492.7999999821186,
+            "kind": "history-replace",
+            "pathname": "/checkout"
+          },
+          {
+            "ms": 500.89999997615814,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 501,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 501.59999999403954,
+            "kind": "wizard-idb-get-start",
+            "store": "sessions"
+          },
+          {
+            "ms": 501.7999999821186,
+            "kind": "wizard-idb-get-success",
+            "store": "sessions",
+            "recordPresent": false
+          },
+          {
+            "ms": 1012.5,
+            "kind": "storage-get",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 1015.6999999880791,
+            "kind": "storage-get",
+            "key": "grifon_return_to_ad",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 1022.5999999940395,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "other"
+          },
+          {
+            "ms": 1022.6999999880791,
+            "kind": "storage-get",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 1022.7999999821186,
+            "kind": "storage-get",
+            "key": "grifon_return_to_ad",
+            "present": true,
+            "caller": "other"
+          }
+        ],
+        "mainFramePaths": [
+          "/app",
+          "/app",
+          "/app",
+          "/checkout",
+          "/checkout",
+          "/checkout"
+        ],
+        "requests": {
+          "sameOrigin": 519,
+          "externalFonts": 7,
+          "externalOther": 0,
+          "callableApi": 11
+        },
+        "witness": null,
+        "final": {
+          "events": [
+            {
+              "ms": 56.89999997615814,
+              "kind": "probe-installed",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 491.89999997615814,
+              "kind": "history-replace",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 492.7999999821186,
+              "kind": "history-replace",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 500.89999997615814,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 501,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 501.59999999403954,
+              "kind": "wizard-idb-get-start",
+              "store": "sessions"
+            },
+            {
+              "ms": 501.7999999821186,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": false
+            },
+            {
+              "ms": 1012.5,
+              "kind": "storage-get",
+              "key": "grifon_intended_module",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 1015.6999999880791,
+              "kind": "storage-get",
+              "key": "grifon_return_to_ad",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 1022.5999999940395,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "other"
+            },
+            {
+              "ms": 1022.6999999880791,
+              "kind": "storage-get",
+              "key": "grifon_intended_module",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 1022.7999999821186,
+              "kind": "storage-get",
+              "key": "grifon_return_to_ad",
+              "present": true,
+              "caller": "other"
+            }
+          ],
+          "dropped": 0,
+          "pathname": "/checkout",
+          "intentPresence": {
+            "plan": false,
+            "module": true,
+            "returnToAd": true
+          }
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Storage wrappers forward all original operations; no manualmarker mutations. Only next mock checkout auth await held after real plan removal. Real wizard IDB request is observed without replacing its handlers. Public exposeFunction events add instrumentation overhead."
+      }
+    },
+    {
+      "phase": "original-held",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/playwright.config.ts",
+          "--grep=pending checkout keeps precedence over intended tool and return-to-ad intents$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CHECKOUT_PHASE": "original-held",
+          "CHECKOUT_HOLD": "1"
+        }
+      },
+      "exitCode": 1,
+      "status": "failed",
+      "durationMs": 2064,
+      "retry": 0,
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"1\"\nReceived: null\n\n  21 |   await expect(page.getByRole('radio', { name: /^Annual/ })).toBeChecked();\n  22 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');\n> 23 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');\n     |                                                                                    ^\n  24 |   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);\n  25 | });\n  26 |\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\checkout-intent.spec.ts:23:84"
+      ],
+      "sourceBefore": {
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "tests/e2e/companion-account.spec.ts": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "sourceAfter": {
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "tests/e2e/companion-account.spec.ts": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "services/billingService.ts": "37c831c0a46743730a4be8a12afb9ca1a3b33b6242d77f01b74d13f49390065c",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb",
+        "services/wizardSessionStore.ts": "575ded8980ece80559cc9a01a9b962b197a81050df49e2ca90040c9dfb04985a",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/checkout-intent.spec.ts": "92de97a57b9916cce5349469523f74a53fe2c68f6a8e3f5051c8892d7bab2f9a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/companion-account-fixture.ts": "43729295d53a48b3cda6311d1e93b917191b0c990db9829e3904655366bdbdce",
+        ".tmp/companion-main-readiness/qa/checkout-intent/instrumented-test.ts": "c530b400d6295e0f1d82909589f4a8a20e7e1de9e101a486abc33dbc83ae90a0",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed",
+        ".tmp/companion-main-readiness/qa/checkout-intent/playwright.config.ts": "c626cf99d6a5ad02f94803f678abae82deab747f4aef0c6e87cf94f9dac02260",
+        ".tmp/companion-main-readiness/qa/checkout-intent/server.mjs": "ffc5bbe45d5a779c1a4712aa31e9314d0fb5c7a333599c015350af5f4f35cf28"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/checkout-intent.spec.ts": "92de97a57b9916cce5349469523f74a53fe2c68f6a8e3f5051c8892d7bab2f9a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/companion-account-fixture.ts": "43729295d53a48b3cda6311d1e93b917191b0c990db9829e3904655366bdbdce",
+        ".tmp/companion-main-readiness/qa/checkout-intent/instrumented-test.ts": "c530b400d6295e0f1d82909589f4a8a20e7e1de9e101a486abc33dbc83ae90a0",
+        ".tmp/companion-main-readiness/qa/checkout-intent/intent-timeline.ts": "09eb9bb58948f3830d2d56b5d29c4f54797edef14b11412171ee9dc2870185ed",
+        ".tmp/companion-main-readiness/qa/checkout-intent/playwright.config.ts": "c626cf99d6a5ad02f94803f678abae82deab747f4aef0c6e87cf94f9dac02260",
+        ".tmp/companion-main-readiness/qa/checkout-intent/server.mjs": "ffc5bbe45d5a779c1a4712aa31e9314d0fb5c7a333599c015350af5f4f35cf28"
+      },
+      "changedHarnessFiles": [],
+      "instrumentation": {
+        "status": "failed",
+        "durationMs": 1946,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "events": [
+          {
+            "ms": 32.400000005960464,
+            "kind": "probe-installed",
+            "pathname": "/app"
+          },
+          {
+            "ms": 33.60000002384186,
+            "kind": "storage-set",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 33.80000001192093,
+            "kind": "storage-set",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 33.900000005960464,
+            "kind": "storage-set",
+            "key": "grifon_return_to_ad",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 554.5,
+            "kind": "history-replace",
+            "pathname": "/app"
+          },
+          {
+            "ms": 556.3000000119209,
+            "kind": "history-replace",
+            "pathname": "/app"
+          },
+          {
+            "ms": 566.8000000119209,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 567,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 567,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 567.1000000238419,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": true,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 567.3000000119209,
+            "kind": "storage-remove",
+            "key": "grifon_intended_plan",
+            "before": true,
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 567.3000000119209,
+            "kind": "checkout-auth-barrier-armed"
+          },
+          {
+            "ms": 567.4000000059605,
+            "kind": "mock-checkout-auth-held",
+            "caller": "billing-service"
+          },
+          {
+            "ms": 582.1000000238419,
+            "kind": "wizard-idb-get-start",
+            "store": "sessions"
+          },
+          {
+            "ms": 584,
+            "kind": "wizard-idb-get-success",
+            "store": "sessions",
+            "recordPresent": false
+          },
+          {
+            "ms": 639.4000000059605,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 639.6000000238419,
+            "kind": "storage-get",
+            "key": "grifon_return_to_ad",
+            "present": true,
+            "caller": "return-to-ad-service"
+          },
+          {
+            "ms": 639.7000000178814,
+            "kind": "storage-remove",
+            "key": "grifon_return_to_ad",
+            "before": true,
+            "present": false,
+            "caller": "return-to-ad-service"
+          },
+          {
+            "ms": 678,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "other"
+          },
+          {
+            "ms": 678.1000000238419,
+            "kind": "storage-get",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 678.2000000178814,
+            "kind": "storage-get",
+            "key": "grifon_return_to_ad",
+            "present": false,
+            "caller": "other"
+          },
+          {
+            "ms": 685.5,
+            "kind": "control-releasing-checkout-auth"
+          },
+          {
+            "ms": 685.5,
+            "kind": "mock-checkout-auth-released"
+          },
+          {
+            "ms": 31.099999994039536,
+            "kind": "probe-installed",
+            "pathname": "/checkout"
+          },
+          {
+            "ms": 582.6999999880791,
+            "kind": "history-replace",
+            "pathname": "/checkout"
+          },
+          {
+            "ms": 583.8999999761581,
+            "kind": "history-replace",
+            "pathname": "/checkout"
+          },
+          {
+            "ms": 593.0999999940395,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 593.2999999821186,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "billing-service"
+          },
+          {
+            "ms": 594.1999999880791,
+            "kind": "wizard-idb-get-start",
+            "store": "sessions"
+          },
+          {
+            "ms": 594.2999999821186,
+            "kind": "wizard-idb-get-success",
+            "store": "sessions",
+            "recordPresent": false
+          },
+          {
+            "ms": 1052.199999988079,
+            "kind": "storage-get",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 1061,
+            "kind": "storage-get",
+            "key": "grifon_return_to_ad",
+            "present": false,
+            "caller": "other"
+          },
+          {
+            "ms": 1133.8999999761581,
+            "kind": "storage-get",
+            "key": "grifon_intended_plan",
+            "present": false,
+            "caller": "other"
+          },
+          {
+            "ms": 1134,
+            "kind": "storage-get",
+            "key": "grifon_intended_module",
+            "present": true,
+            "caller": "other"
+          },
+          {
+            "ms": 1134.0999999940395,
+            "kind": "storage-get",
+            "key": "grifon_return_to_ad",
+            "present": false,
+            "caller": "other"
+          }
+        ],
+        "mainFramePaths": [
+          "/app",
+          "/app",
+          "/app",
+          "/checkout",
+          "/checkout",
+          "/checkout"
+        ],
+        "requests": {
+          "sameOrigin": 525,
+          "externalFonts": 7,
+          "externalOther": 0,
+          "callableApi": 11
+        },
+        "witness": {
+          "events": [
+            {
+              "ms": 32.400000005960464,
+              "kind": "probe-installed",
+              "pathname": "/app"
+            },
+            {
+              "ms": 33.60000002384186,
+              "kind": "storage-set",
+              "key": "grifon_intended_plan",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 33.80000001192093,
+              "kind": "storage-set",
+              "key": "grifon_intended_module",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 33.900000005960464,
+              "kind": "storage-set",
+              "key": "grifon_return_to_ad",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 554.5,
+              "kind": "history-replace",
+              "pathname": "/app"
+            },
+            {
+              "ms": 556.3000000119209,
+              "kind": "history-replace",
+              "pathname": "/app"
+            },
+            {
+              "ms": 566.8000000119209,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": true,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 567,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": true,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 567,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": true,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 567.1000000238419,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": true,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 567.3000000119209,
+              "kind": "storage-remove",
+              "key": "grifon_intended_plan",
+              "before": true,
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 567.3000000119209,
+              "kind": "checkout-auth-barrier-armed"
+            },
+            {
+              "ms": 567.4000000059605,
+              "kind": "mock-checkout-auth-held",
+              "caller": "billing-service"
+            },
+            {
+              "ms": 582.1000000238419,
+              "kind": "wizard-idb-get-start",
+              "store": "sessions"
+            },
+            {
+              "ms": 584,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": false
+            },
+            {
+              "ms": 639.4000000059605,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 639.6000000238419,
+              "kind": "storage-get",
+              "key": "grifon_return_to_ad",
+              "present": true,
+              "caller": "return-to-ad-service"
+            },
+            {
+              "ms": 639.7000000178814,
+              "kind": "storage-remove",
+              "key": "grifon_return_to_ad",
+              "before": true,
+              "present": false,
+              "caller": "return-to-ad-service"
+            },
+            {
+              "ms": 678,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "other"
+            },
+            {
+              "ms": 678.1000000238419,
+              "kind": "storage-get",
+              "key": "grifon_intended_module",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 678.2000000178814,
+              "kind": "storage-get",
+              "key": "grifon_return_to_ad",
+              "present": false,
+              "caller": "other"
+            }
+          ],
+          "dropped": 0,
+          "pathname": "/app",
+          "intentPresence": {
+            "plan": false,
+            "module": true,
+            "returnToAd": false
+          }
+        },
+        "final": {
+          "events": [
+            {
+              "ms": 31.099999994039536,
+              "kind": "probe-installed",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 582.6999999880791,
+              "kind": "history-replace",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 583.8999999761581,
+              "kind": "history-replace",
+              "pathname": "/checkout"
+            },
+            {
+              "ms": 593.0999999940395,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 593.2999999821186,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "billing-service"
+            },
+            {
+              "ms": 594.1999999880791,
+              "kind": "wizard-idb-get-start",
+              "store": "sessions"
+            },
+            {
+              "ms": 594.2999999821186,
+              "kind": "wizard-idb-get-success",
+              "store": "sessions",
+              "recordPresent": false
+            },
+            {
+              "ms": 1052.199999988079,
+              "kind": "storage-get",
+              "key": "grifon_intended_module",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 1061,
+              "kind": "storage-get",
+              "key": "grifon_return_to_ad",
+              "present": false,
+              "caller": "other"
+            },
+            {
+              "ms": 1133.8999999761581,
+              "kind": "storage-get",
+              "key": "grifon_intended_plan",
+              "present": false,
+              "caller": "other"
+            },
+            {
+              "ms": 1134,
+              "kind": "storage-get",
+              "key": "grifon_intended_module",
+              "present": true,
+              "caller": "other"
+            },
+            {
+              "ms": 1134.0999999940395,
+              "kind": "storage-get",
+              "key": "grifon_return_to_ad",
+              "present": false,
+              "caller": "other"
+            }
+          ],
+          "dropped": 0,
+          "pathname": "/checkout",
+          "intentPresence": {
+            "plan": false,
+            "module": true,
+            "returnToAd": false
+          }
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Storage wrappers forward all original operations; no manualmarker mutations. Only next mock checkout auth await held after real plan removal. Real wizard IDB request is observed without replacing its handlers. Public exposeFunction events add instrumentation overhead."
+      }
+    }
+  ],
+  "translation": {
+    "trackedAccountSha256": "af9b72508f714c174e9d120575da409c66420839f04769ed0ed3a8c9d2ea3528",
+    "extractedOriginalCaseSha256": "1db842d807a3ace034a67d9f578d9f7bda9bebbc0e64e496c0b4581a7430c3d7",
+    "translatedCaseSha256": "92de97a57b9916cce5349469523f74a53fe2c68f6a8e3f5051c8892d7bab2f9a",
+    "assertions": "all original assertions retained unchanged",
+    "changes": [
+      "Extract only selected existing case",
+      "Import test instrumentation and copied account fixture",
+      "One timing witness/release seam immediately after originalpage.goto",
+      "Fixture loopback origin translation to5192",
+      "Only next mock auth.getSession after actual planremove can be held; original return result unchanged"
+    ],
+    "manualMarkerWrites": "none beyond unchanged original fixture seed"
+  },
+  "failureScreenshot": ".tmp/companion-main-readiness/qa/checkout-intent/original-held/test-results/checkout-intent-pending-ch-690ea-ol-and-return-to-ad-intents-chromium/test-failed-1.png",
+  "execution": {
+    "browser": "Installed Playwright Chromium149.0.7827.55 on Windows",
+    "workers": 1,
+    "retries": 0,
+    "skips": 0,
+    "testBudgetMs": 180000,
+    "actionBudgetMs": 15000,
+    "expectBudgetMs": 15000,
+    "paidLiveSwitches": "unset",
+    "helper": {
+      "pid": 16188,
+      "port": 5192,
+      "cwd": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command",
+      "startedUtc": "2026-10-11T11:08:29.458Z",
+      "configFile": false,
+      "envFile": false,
+      "envDir": false
+    },
+    "helperStatus": "Owned fixture server retained temporarily for patched/error controls"
+  },
+  "limits": [
+    "Local causal scheduling proof matches hosted marker assertion but does not establish actual hosted latency values",
+    "Only next copied SDK auth.getSession await after real plan removal is held; application/billing/wizard sources and marker operations are untouched",
+    "No real provider, live checkout, productionDB or paid calls; installed fixture fulfills expectedAPI and blocks unconfigured/external requests",
+    "Passive public binding/storage/history/IDB observers add overhead; no private values, payloads or credentials recorded"
+  ]
+}

@@ -1,0 +1,5 @@
+
+> creative-director-ai-assistant@1.0.0 check:domain
+> node tools/check-domain-language.mjs
+
+[domain-language] OK — scanned 305 file(s), 0 drift hits.

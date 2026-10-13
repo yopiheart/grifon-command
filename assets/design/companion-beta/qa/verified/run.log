@@ -1,0 +1,173 @@
+
+Running 118 tests using 1 worker
+
+(node:31100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   1 tests\e2e\companion-account.spec.ts:36:1 › default preview hides the local test fixture toolbar (2.2s)
+  ok   2 tests\e2e\companion-account.spec.ts:51:1 › default preview exposes account settings from chat navigation (2.7s)
+  ok   3 tests\e2e\companion-account.spec.ts:57:1 › developer fixture controls require explicit opt-in and preview stays truthful (5.0s)
+  ok   4 tests\e2e\companion-account.spec.ts:76:1 › preview disclosure stays visible on mobile and with desktop navigation collapsed (1.6s)
+  ok   5 tests\e2e\companion-account.spec.ts:101:3 › real account settings preserve player and keyboard access at 375px (4.1s)
+  ok   6 tests\e2e\companion-account.spec.ts:101:3 › real account settings preserve player and keyboard access at 390px (5.2s)
+  ok   7 tests\e2e\companion-account.spec.ts:101:3 › real account settings preserve player and keyboard access at 1280px (2.9s)
+  ok   8 tests\e2e\companion-account.spec.ts:139:1 › collapsed navigation exposes the account settings entry (1.6s)
+  ok   9 tests\e2e\companion-account.spec.ts:150:1 › settings confirm consent and recover read and write failures without dead preferences (2.1s)
+  ok  10 tests\e2e\companion-account.spec.ts:174:1 › an unconfirmed consent record withholds the switch until its read finishes (1.6s)
+  ok  11 tests\e2e\companion-account.spec.ts:188:1 › logout waits for the latest IndexedDB draft before signing out and cleaning wizard state (2.0s)
+  ok  12 tests\e2e\companion-account.spec.ts:211:1 › failed logout keeps the session, draft and player and permits retry (2.1s)
+  ok  13 tests\e2e\companion-account.spec.ts:232:3 › failed draft save blocks settings Sign out and preserves session (2.0s)
+  ok  14 tests\e2e\companion-account.spec.ts:232:3 › failed draft save blocks settings Upgrade plan and preserves session (2.2s)
+  ok  15 tests\e2e\companion-account.spec.ts:232:3 › failed draft save blocks settings Help & support and preserves session (2.3s)
+  ok  16 tests\e2e\companion-account.spec.ts:232:3 › failed draft save blocks settings Terms of service and preserves session (2.8s)
+  ok  17 tests\e2e\companion-account.spec.ts:232:3 › failed draft save blocks settings Privacy policy and preserves session (2.6s)
+  ok  18 tests\e2e\companion-account.spec.ts:264:1 › chat is the default app entry and Studio navigation preserves draft and browser history (3.6s)
+  ok  19 tests\e2e\companion-account.spec.ts:276:1 › actual landing Research action survives browser Back and Forward (6.2s)
+  ok  20 tests\e2e\companion-account.spec.ts:293:1 › Studio Edit Bay selection returns to the original chat with browser Back (2.3s)
+  ok  21 tests\e2e\companion-account.spec.ts:311:1 › actual email OTP entry returns to default chat after a recoverable invalid code (3.2s)
+  ok  22 tests\e2e\companion-account.spec.ts:341:1 › an intended tool takes precedence over the default chat entry (1.4s)
+  ok  23 tests\e2e\companion-account.spec.ts:351:1 › pending checkout keeps precedence over intended tool and return-to-ad intents (2.5s)
+  ok  24 tests\e2e\companion-account.spec.ts:373:1 › a return-to-ad marker with no finished ad safely retains the chat entry (1.5s)
+  ok  25 tests\e2e\companion-account.spec.ts:381:1 › chat, sidebar, viewer and settings use neutral thin accessible scrollbars (1.5s)
+  ok  26 tests\e2e\companion-account.spec.ts:434:1 › late subscription response cannot replace the newly signed-in account plan (1.7s)
+  ok  27 tests\e2e\companion-account.spec.ts:455:1 › settings keep an unconfirmed plan pending and recover a failed plan read (2.0s)
+  ok  28 tests\e2e\companion-account.spec.ts:478:3 › settings Upgrade plan navigates after saving and browser Back restores chat (1.8s)
+  ok  29 tests\e2e\companion-account.spec.ts:478:3 › settings Help & support navigates after saving and browser Back restores chat (1.8s)
+  ok  30 tests\e2e\companion-account.spec.ts:478:3 › settings Terms of service navigates after saving and browser Back restores chat (1.8s)
+  ok  31 tests\e2e\companion-account.spec.ts:478:3 › settings Privacy policy navigates after saving and browser Back restores chat (1.8s)
+  ok  32 tests\e2e\companion-account.spec.ts:493:1 › same-account token refresh keeps the paid Studio form and unsent script mounted (1.6s)
+  ok  33 tests\e2e\companion-account.spec.ts:523:1 › an unknown held consent read does not block saved-draft logout and its late response is ignored (2.2s)
+  ok  34 tests\e2e\companion-account.spec.ts:544:1 › a pending confirmed consent write guards logout until the response finishes (2.0s)
+  ok  35 tests\e2e\companion-beta.spec.ts:25:34 › guided beta limitations are visible at 390px (713ms)
+  ok  36 tests\e2e\companion-beta.spec.ts:25:34 › guided beta limitations are visible at 1280px (766ms)
+  ok  37 tests\e2e\companion-beta.spec.ts:31:1 › stale second tab cannot erase a newer conversation (2.5s)
+  ok  38 tests\e2e\companion-beta.spec.ts:50:1 › refresh warns before leaving an unsaved draft and dismiss keeps the draft (3.6s)
+  x   39 tests\e2e\companion-beta.spec.ts:70:1 › Stop and Resume cannot duplicate an unsettled scene image request (13.0s)
+(node:8936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  40 tests\e2e\companion-beta.spec.ts:105:1 › another tab cannot resume the same ad while a scene image request is pending (4.3s)
+  ok  41 tests\e2e\companion-beta.spec.ts:132:1 › guided intake accepts a long brief and corrections use Edit brief without generation (5.7s)
+  ok  42 tests\e2e\companion-beta.spec.ts:150:1 › completed ad fixture plays and its download contains video bytes (3.1s)
+  ok  43 tests\e2e\companion-beta.spec.ts:171:44 › completed ad still permits explicit reshoot after Resume editing (2.6s)
+  ok  44 tests\e2e\companion-beta.spec.ts:171:44 › completed ad still permits explicit style after Resume editing (2.6s)
+  ok  45 tests\e2e\companion-chat.spec.ts:45:1 › brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions (6.6s)
+  ok  46 tests\e2e\companion-chat.spec.ts:78:1 › IME Enter does not submit; invalid files and missing image cannot generate (920ms)
+  ok  47 tests\e2e\companion-chat.spec.ts:91:1 › draft reload/account isolation, error retry and fixture checkpoint restore (7.0s)
+  ok  48 tests\e2e\companion-chat.spec.ts:109:3 › 320px layout and real avatar bridge (6.7s)
+  ok  49 tests\e2e\companion-chat.spec.ts:109:3 › 375px layout and real avatar bridge (6.7s)
+  ok  50 tests\e2e\companion-chat.spec.ts:109:3 › 390px layout and real avatar bridge (6.8s)
+  ok  51 tests\e2e\companion-chat.spec.ts:109:3 › 1280px layout and real avatar bridge (8.2s)
+  ok  52 tests\e2e\companion-chat.spec.ts:134:1 › reduced motion stays static and companion failure leaves usable chat (2.4s)
+  ok  53 tests\e2e\companion-chat.spec.ts:148:1 › actual App and ProducerFlow restore the same account run without generation (3.5s)
+  ok  54 tests\e2e\companion-chat.spec.ts:163:1 › actual ProducerFlow prevents duplicate starts and ignores research completing after cancellation (7.1s)
+  ok  55 tests\e2e\companion-chat.spec.ts:191:1 › allowance and preset gates dispatch no generation or revision until permitted (6.0s)
+  ok  56 tests\e2e\companion-chat.spec.ts:209:1 › late attachment completion cannot cross an account remount (957ms)
+  ok  57 tests\e2e\companion-chat.spec.ts:233:1 › actual ProducerFlow rejects stale orchestrator callbacks after Stop waiting (2.0s)
+  ok  58 tests\e2e\companion-chat.spec.ts:256:1 › actual route fails closed while allowance is unknown and recovers after Retry allowance (6.5s)
+  ok  59 tests\e2e\companion-chat.spec.ts:293:1 › actual upgrade and browser Back preserve companion intent and the local brief (7.3s)
+  ok  60 tests\e2e\companion-chat.spec.ts:310:1 › actual saved-run load failure retries the same run without resubmitting (2.2s)
+  ok  61 tests\e2e\companion-chat.spec.ts:324:1 › avatar asset load failure offers still-image fallback and retry without blocking text (2.2s)
+  ok  62 tests\e2e\companion-chat.spec.ts:336:1 › parent pointer events move the embedded companion eyes (2.5s)
+  ok  63 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay baseline contract at 375px (4.7s)
+  ok  64 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 390px (4.4s)
+  ok  65 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 1280px (4.4s)
+  x   66 tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 320px (4.1s)
+(node:17032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  67 tests\e2e\companion-glass.spec.ts:156:1 › mascot selection baseline contract preserves ordinary text selection (2.2s)
+  ok  68 tests\e2e\companion-glass.spec.ts:174:1 › compact composer baseline contract grows and retains keyboard and Plus upload actions (3.3s)
+  ok  69 tests\e2e\companion-glass.spec.ts:208:1 › voice baseline contract updates only the draft with indexed interim and final results (3.0s)
+  ok  70 tests\e2e\companion-glass.spec.ts:234:1 › voice stop allows a final result; typing cancels the session without losing edits (1.9s)
+  ok  71 tests\e2e\companion-glass.spec.ts:251:3 › voice not-allowed provides a usable fallback and preserves existing text (1.9s)
+  ok  72 tests\e2e\companion-glass.spec.ts:251:3 › voice audio-capture provides a usable fallback and preserves existing text (2.0s)
+  ok  73 tests\e2e\companion-glass.spec.ts:251:3 › voice network provides a usable fallback and preserves existing text (1.9s)
+  ok  74 tests\e2e\companion-glass.spec.ts:251:3 › voice no-speech provides a usable fallback and preserves existing text (1.9s)
+  ok  75 tests\e2e\companion-glass.spec.ts:263:1 › unsupported voice remains honest and keyboard drafting works (1.7s)
+  ok  76 tests\e2e\companion-glass.spec.ts:273:1 › voice start rejection returns to typing without discarding the draft (1.8s)
+  ok  77 tests\e2e\companion-glass.spec.ts:282:1 › chat, account, disabled and viewer transitions abort voice and reject late transcripts (2.9s)
+  ok  78 tests\e2e\companion-glass.spec.ts:313:1 › mobile drawer inert and pending navigation reject speech before chat unmount (2.2s)
+  ok  79 tests\e2e\companion-glass.spec.ts:348:1 › reduced motion and material accessibility fallbacks keep composer and header usable (1.9s)
+  ok  80 tests\e2e\companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 1280x900 (9.4s)
+  ok  81 tests\e2e\companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 375x667 (9.2s)
+  ok  82 tests\e2e\companion-layout.spec.ts:22:3 › centered companion geometry and reachable controls at 390x844 (9.1s)
+  ok  83 tests\e2e\companion-layout.spec.ts:102:3 › new tall brief review starts at its heading at 375x667 (6.7s)
+  ok  84 tests\e2e\companion-layout.spec.ts:102:3 › new tall brief review starts at its heading at 1000x700 (6.6s)
+  ok  85 tests\e2e\companion-layout.spec.ts:141:1 › 320px companion retry does not overlap navigation (1.6s)
+  ok  86 tests\e2e\companion-navigation.spec.ts:35:1 › New chat preserves a pre-generation conversation and returns in one click (2.5s)
+  ok  87 tests\e2e\companion-navigation.spec.ts:53:1 › opening a running production history is GET-only until explicit Resume (3.5s)
+  ok  88 tests\e2e\companion-navigation.spec.ts:73:3 › navigation, search, focus, compact header and viewer at 375px (4.5s)
+  ok  89 tests\e2e\companion-navigation.spec.ts:73:3 › navigation, search, focus, compact header and viewer at 390px (4.5s)
+  ok  90 tests\e2e\companion-navigation.spec.ts:73:3 › navigation, search, focus, compact header and viewer at 1280px (4.3s)
+  ok  91 tests\e2e\companion-navigation.spec.ts:138:1 › switching chats while typing isolates callbacks and preserves unsent input across accounts (1.4s)
+  ok  92 tests\e2e\companion-navigation.spec.ts:159:1 › completed production output opens read-only and Studio still reaches existing tools (2.3s)
+  ok  93 tests\e2e\companion-navigation.spec.ts:174:1 › legacy device draft is adopted without losing image or history; only latest user has a receipt (1.5s)
+  ok  94 tests\e2e\companion-navigation.spec.ts:206:1 › approved companion assets retain their recorded hashes (46ms)
+  ok  95 tests\e2e\companion-navigation.spec.ts:213:1 › switching away from explicitly resumed production rejects late driver callbacks (3.0s)
+  ok  96 tests\e2e\companion-navigation.spec.ts:242:1 › failed storage keeps the current draft and allows an explicit save retry (2.5s)
+  ok  97 tests\e2e\companion-navigation.spec.ts:269:1 › failed saved-chat load is recoverable without replacing the stored book (2.1s)
+  ok  98 tests\e2e\companion-navigation.spec.ts:291:3 › production history Resume cannot submit while allowance is pending (2.4s)
+  ok  99 tests\e2e\companion-navigation.spec.ts:291:3 › production history Resume cannot submit while allowance is denied (2.7s)
+  ok 100 tests\e2e\companion-navigation.spec.ts:313:1 › retrying a failed historical run load only reads; it never resumes production (2.2s)
+  ok 101 tests\e2e\companion-navigation.spec.ts:326:1 › Resume refreshes a stale running snapshot and never resubmits a run already completed elsewhere (1.7s)
+  ok 102 tests\e2e\companion-navigation.spec.ts:342:3 › rendered control closeups › sidebar and storyboard controls at double pixel density (1.4s)
+  ok 103 tests\e2e\companion-navigation.spec.ts:353:1 › pending device writes say Saving and only become Saved after the write completes (774ms)
+  ok 104 tests\e2e\companion-polish.spec.ts:23:1 › polish: pointer burst coalesces avatar bounds reads to one per animation frame (1.7s)
+  ok 105 tests\e2e\companion-polish.spec.ts:40:1 › polish: mobile composer uses readable 14px sans text with normal tracking (1.7s)
+  ok 106 tests\e2e\companion-polish.spec.ts:50:1 › polish: capped120 transcript explicitly follows a sent message from far history (2.5s)
+  ok 107 tests\e2e\companion-typing.spec.ts:26:1 › intake reply waits through 499ms and arrives at 600ms with accessible typing status (2.0s)
+  ok 108 tests\e2e\companion-typing.spec.ts:46:1 › all five intake steps are paced; double Enter cannot consume a second answer and typing keeps focus (3.4s)
+  ok 109 tests\e2e\companion-typing.spec.ts:75:1 › reset cancels the pending reply without reviving the old brief (2.2s)
+  ok 110 tests\e2e\companion-typing.spec.ts:87:1 › account remount isolates the pending reply and restores the accepted answer (1.9s)
+  ok 111 tests\e2e\companion-typing.spec.ts:103:3 › reload during typing retains the accepted answer and its next question (2.0s)
+  ok 112 tests\e2e\companion-typing.spec.ts:103:3 › leave-and-return during typing retains the accepted answer and its next question (2.2s)
+  ok 113 tests\e2e\companion-typing.spec.ts:118:1 › reduced motion keeps the typing indicator static while preserving the delay (2.0s)
+  ok 114 tests\e2e\companion-typing.spec.ts:132:3 › typing and delivered typography plus golden user bubble at 375px (2.2s)
+  ok 115 tests\e2e\companion-typing.spec.ts:132:3 › typing and delivered typography plus golden user bubble at 390px (2.2s)
+  ok 116 tests\e2e\companion-typing.spec.ts:132:3 › typing and delivered typography plus golden user bubble at 1280px (2.2s)
+  ok 117 tests\e2e\companion-typing.spec.ts:170:1 › real timer delivers the next question without provider activity (2.5s)
+  ok 118 tests\e2e\companion-typing.spec.ts:195:1 › result revision controls respond immediately without an intake typing delay (1.9s)
+
+
+  1) tests\e2e\companion-beta.spec.ts:70:1 › Stop and Resume cannot duplicate an unsettled scene image request
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 4
+    Received:   4
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+       97 |   const reads = backend.reads.length;
+       98 |   await resume.click();
+    >  99 |   await expect.poll(() => backend.reads.length).toBeGreaterThan(reads);
+          |                                                 ^
+      100 |   await expect(page.getByRole('button', { name: 'Open storyboard', exact: true })).toBeVisible();
+      101 |   expect(await page.evaluate(() => (window as any).betaImage.calls)).toBe(1);
+      102 |   expect(backend.unexpected).toEqual([]);
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-beta.spec.ts:99:49
+
+    Error Context: assets\design\companion-beta\qa\verified\test-results\companion-beta-Stop-and-Re-05545-settled-scene-image-request\error-context.md
+
+  2) tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 320px ──────────────────────────────
+
+    Error: a bubble crosses the sampled header strip
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      135 |       fs.writeFileSync(path.join(QA, `${phase}-overlap-pixel-${width}.json`), JSON.stringify({ point: overlap.pixelPoint, rgb: color }, null, 2));
+      136 |       expect.soft(color, 'older bubble pixels are visible through the header outside its controls').not.toEqual([9, 9, 11]);
+    > 137 |     } else expect.soft(overlap.pixelPoint, 'a bubble crosses the sampled header strip').not.toBeNull();
+          |                                                                                             ^
+      138 |     const remembered = await scroller.evaluate(node => node.scrollTop);
+      139 |     await input(page).fill('Draft while reading history');
+      140 |     expect(await scroller.evaluate(node => node.scrollTop)).toBe(remembered);
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-glass.spec.ts:137:93
+
+    Error Context: assets\design\companion-beta\qa\verified\test-results\companion-glass-glass-overlay-at-320px\error-context.md
+
+  2 failed
+    tests\e2e\companion-beta.spec.ts:70:1 › Stop and Resume cannot duplicate an unsettled scene image request
+    tests\e2e\companion-glass.spec.ts:106:3 › glass overlay at 320px ───────────────────────────────
+  116 passed (6.4m)

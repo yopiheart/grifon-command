@@ -1,0 +1,44 @@
+{
+  "header": {
+    "x": 0,
+    "y": 45,
+    "width": 375,
+    "height": 96,
+    "top": 45,
+    "right": 375,
+    "bottom": 141,
+    "left": 0
+  },
+  "transcript": {
+    "x": 0,
+    "y": 141,
+    "width": 375,
+    "height": 388.625,
+    "top": 141,
+    "right": 375,
+    "bottom": 529.625,
+    "left": 0
+  },
+  "avatar": {
+    "x": 159.5,
+    "y": 49,
+    "width": 56,
+    "height": 56,
+    "top": 49,
+    "right": 215.5,
+    "bottom": 105,
+    "left": 159.5
+  },
+  "first": {
+    "x": 16,
+    "y": 416.34375,
+    "width": 315.546875,
+    "height": 93.28125,
+    "top": 416.34375,
+    "right": 331.546875,
+    "bottom": 509.625,
+    "left": 16
+  },
+  "background": "rgb(9, 9, 11)",
+  "overflow": 0
+}
