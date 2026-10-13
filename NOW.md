@@ -1,10 +1,24 @@
 # NOW - the resume doc
-**Stamped: 2026-10-11; new-reference film and benchmark complete, review pending**
+**Stamped: 2026-10-13; shared music workflow and taste interview complete**
 
 ## Active task and result
 Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd, Grifon motion workflow.
 Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Branch: codex/motion-pluto-benchmark, based on origin/main e6e083bf.
+Branch: codex/elevenlabs-music-workflow, stacked on codex/motion-pluto-benchmark e4254f24.
+New workflow: workflows/background_music_production.md; AGENTS/CLAUDE and motion guides linked.
+All new video lanes: ElevenLabs Music v2.5, one variant, fitted custom duration,
+Auto, No Finetune; instrumental default. No silent stock/procedural BGM substitution.
+Taste: sleek/premium clean electronic groove, controlled build/pause/fuller reveal;
+UGC voice-first warm/subtle with reveal lift. Interview and premortem complete.
+Failure priorities: wrong vibe, low quality, wrong pacing/reveal. Agent owns choices.
+Creator post and both full replies read; official docs and 2026 outlook researched.
+This is a production workflow, not shipped app integration. No music generated.
+Prompt-enhancement toggle and exact Auto control need verification in first paid spec.
+Docs checks: check:codex26PASS, diff check PASS, four workflow pointers resolve.
+NOW within90lines; six Markdown files only, no media/application changes.
+Draft PR backup pending; no paid call, merge or deploy authorized.
+
+## Prior film and benchmark
 Neil chose an own-brand adaptation of Abdullah.A's Pluto reference:
 https://x.com/abdullah4204k/status/2100297302497997167.
 Delivered candidate: workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4.
@@ -15,13 +29,14 @@ New orbital-launch treatment preserves existing basic and shader contracts.
 Final visual source:5f2cfc70c6372a94005e1e58bddac1302442708fd9701f28bedb45fc79cd6083.
 No paid provider calls or additional spend. No new merge/deploy authorized.
 Draft PR178:https://github.com/yopiheart/grifon-command/pull/178; backup pushed.
-Remote CI/Vercel checks are running; no passing remote result claimed yet.
+PR178 remains open as of 2026-10-13; remote checks not re-queried for this docs task.
 
 ## ▶ NEXT ACTION
-Show the finished MP4 to Neil for whole-film playback and music/SFX fit review.
-Technical verification is complete; human listening and creative acceptance pending.
-Live preview:http://127.0.0.1:50585 (local server session21610); Enable sound then Play.
-UI open requests were queued; do not claim user playback or acceptance.
+Back up the music workflow in a draft PR stacked on PR178.
+For future generation prepare the exact prompt/assets/settings/cost spec first;
+historical autopsy approvals do not authorize music spend. No replacement requested.
+Prior candidate still needs listening/creative acceptance; local preview server
+127.0.0.1:50585 was used on 2026-10-11, current availability unverified.
 Do not merge or deploy this new task without an explicit request.
 
 ## Measured benchmark
@@ -35,19 +50,14 @@ Root audio integration:4.48s; repeated mix0.30s. Mux19.41s, picture stream copie
 One headline revision:2-second/120f/960x540 draft39.25s; repeat1.57s/zero captures.
 Full revision check6m09s; first disposable init through receipt21m07s included
 cold-benchmark wait. Audio recipe/key/master and13 other files stayed exact.
-One independent-page control differed17pixels by at most2RGB levels; semantic
-layout/source checks pass. No exact cross-page pixel identity is claimed.
 Compact evidence:workflows/assets/grifon-pluto-adaptation/benchmark.json.
 Large media, reference, caches and diagnostics:F:/GrifonBenchmarks/pluto-2100297302497997167/.
 Landscape only; new visual styles still require authoring, not arbitrary conversion.
 
 ## Verification and limits
-Independent Codex source review PASS; four findings resolved on the final source.
-Independent final packaging audit PASS; bundle/film/contact hashes and scope verified.
-Scoped Git attributes preserve hashed bundle bytes across Windows checkouts;
-this follows existing film bundles and retains the license whitespace diagnostic.
-Fresh checkout proof PASS:25package files exact, initialized source key5f unchanged.
-Negative control demonstrates4normalization failures in the first backup commit.
+Prior film: independent source review and packaging audit PASS; four findings fixed.
+Fresh checkout proof PASS:25package files exact, initialized source key5f unchanged;
+negative control demonstrates4normalization failures before Git attribute fix.
 Proof:workflows/assets/grifon-pluto-adaptation/git-byte-preservation.json.
 Native source QA:33frames,9exact out-of-order seeks,390px phone preview,zeroerrors.
 Actual MP4 strict AV decode PASS; all1389video packets/timestamps match master.

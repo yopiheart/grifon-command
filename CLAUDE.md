@@ -66,6 +66,16 @@ Sessions run on rented cafe PCs with a defreezer that wipes `C:\Users\Administra
 - For external state that genuinely must live outside the repo (MCP server registrations in `~/.claude.json`, auth tokens, etc.), commit a restore script under [scripts/](scripts/) — see [scripts/restore-notebooklm.ps1](scripts/restore-notebooklm.ps1) as the established idempotent pattern.
 - The auto-memory system at `~/.claude/projects/.../memory/` is itself ephemeral on this machine. Treat it as within-session memory only; durable cross-session knowledge belongs in this file or [agent_lessons.md](agent_lessons.md).
 
+## Video background music
+
+For new video production across motion, Genjutsu, Blender, launch/spec ads and
+UGC, follow [the shared music workflow](workflows/background_music_production.md).
+Neil's defaults: ElevenLabs Music v2.5, one variant, custom duration fitted to
+the video, Auto, No Finetune; instrumental by default. Generate a fitting score
+instead of silently selecting saved stock or procedural music. Preserve accepted
+films and sources. The workflow records confirmed taste and unresolved controls;
+paid-spec approval still applies before generation.
+
 ## Shared Vocabulary & Skills
 
 Before any planning conversation, large refactor, or new module spec, load:

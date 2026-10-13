@@ -6,6 +6,11 @@ It is a local production workflow, not a shipped self-service product.
 The existing [Grifon Motion Director skill](../.agents/skills/grifon-motion-director/SKILL.md)
 remains the entrypoint; its installed instructions and provider prompts are unchanged.
 
+For new background music, follow the [shared music workflow](background_music_production.md)
+approved on 2026-10-13: ElevenLabs Music v2.5, one variant, fitted custom duration,
+Auto and No Finetune. The accepted cases and reproduction recipes below retain
+their original audio; they do not set the default music source for new films.
+
 ## Accepted baseline
 
 - [Approved film](assets/grifon-motion-upgrade/grifon-full-upgrade-elevenlabs-sfx-review-1080p.mp4):
