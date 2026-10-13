@@ -71,17 +71,23 @@ final hashes. [SFX reconstruction receipt](existing-sfx-preparation.receipt.json
 retains source identity and original26 contact frames.
 
 From this checkout, with the installed Node24 and FFmpeg runtime and the private
-inputs present, regenerate into a new output directory:
+inputs present, use the [isolation wrapper](reproduce.mjs). Choose a destination
+that does not exist, outside this repository, with an existing parent directory:
 
 ```powershell
-node workflows/assets/grifon-orbital-music-v2_5/mix-continuous.mjs F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/reproduction-v2
+node workflows/assets/grifon-orbital-music-v2_5/reproduce.mjs F:/GrifonBenchmarks/pluto-2100297302497997167/music-v2_5-20261013/reproduction-v2
 ```
 
-The recipe writes its receipt alongside outputs and refreshes the tracked mix
-receipt; preserve the delivered version before deliberate edits. It overwrites
-files with the same names inside the chosen output directory, so use a fresh
-directory for a revision. Environment overrides `FFMPEG_PATH` and `FFPROBE_PATH`
-support another installed runtime; raw inputs remain individually hash-bound.
+The wrapper verifies the acceptance-bound evidence, accepted film and input
+hashes, then copies the unchanged accepted recipe, plan and relative inputs into
+a fresh isolated tree. New outputs and receipts stay there; the accepted source
+checkpoint remains unchanged. The reproduced MP4 must match the accepted film's
+hash. Existing destinations and destinations inside this repository are refused.
+Run the wrapper for reproduction: the historical accepted recipe writes an
+adjacent receipt when invoked directly. Environment overrides `FFMPEG_PATH` and
+`FFPROBE_PATH` support another installed runtime; raw inputs remain hash-bound.
+[Verification](reproduction-verification.json) records the original overwrite
+negative control, exact reproduction and four destination/input refusal checks.
 
 Technical verification: strict audiovisual decode passed; all1,389 picture packet
 payloads and integer PTS/DTS/durations match the original. Final audio measures

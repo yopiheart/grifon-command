@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; continuous Orbital v2 creatively accepted by Neil**
+**Stamped: 2026-10-13; ordered merge authorized; accepted-source reproduction fix ready**
 
 ## Active task and result
 Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd, Grifon motion workflow.
@@ -26,11 +26,16 @@ Onecontinuous28.028-51.178s passage; nointernalcuts/forcedpause; groove6s,chord2
 26SFX visualcontacts; five smooth/modest musicducks. Noadditionalcredits.
 Neil'sverdict:"AYAN PERFECT!!!!!!!!!!!!"; acceptance-v2.json bindsfilm+sourcecheckpoint.
 No reference/film/audio uploaded. No additional paidQA, stemgeneration or top-up.
-Code/model/prompt defaults in application unchanged; no merge/deploy authorized.
+Code/model/prompt defaults unchanged. Neil authorized orderedreview/merge178->182->183.
+PR178 integratedmain9194cdbf at9dd3b011; localbuild/1573units/32focusedtests/staticPASS.
+PR178 finalheadCI38347262382 running; independentreviewPASS. Vercelaccountblocked.
+PR183 reviewP2: directrecipeoverwritesboundreceipt; reproduce.mjs isolatesunchangedrecipe.
+SixprivatecontrolsPASS; exactacceptedMP4reproduced; independentlyreviewedfixPASS.
 
 ## ▶ NEXT ACTION
 DraftPR183:https://github.com/yopiheart/grifon-command/pull/183; backuppushed.
-StackedonPR182, thenPR178; retargetinorderafterbasesland. Independentv2checkPASS.
+StackedonPR182, thenPR178; finish178CI/merge, thenretarget/recheck/merge182and183.
+PR183finalretargetedreview/CIstillrequired. No manualdeployment or newpaidcallauthorized.
 V2creativelyaccepted; preserveexactfilm/recipecheckpoint. Keepv1/rejectionevidence.
 Preserve rawmusic/isolatedSFX privately; no standalone redistribution inGit.
 Creative listening and user acceptance must stay distinct from technicalchecks.

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "BYTE_EXACT_REPRODUCTION_SOURCE_UNCHANGED",
+  "createdAt": "2026-10-13T04:43:15.239Z",
+  "sourceAcceptanceSha256": "48e9ca122467b5a8b5c68aeb7e8234d5fda8781d79f98ca3ba9daf2c87b1a955",
+  "acceptedVideoSha256": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405",
+  "reproducedVideo": {
+    "path": "F:\\GrifonLocalArchives\\orbital-merge-20261013\\reproduction-installed-check\\output\\grifon-orbital-launch-music-v2_5-continuous-v2.mp4",
+    "sha256": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405"
+  },
+  "freshMixReceipt": {
+    "path": "F:\\GrifonLocalArchives\\orbital-merge-20261013\\reproduction-installed-check\\output\\continuous-mix-receipt.json",
+    "sha256": "e6fb6d7c30b032f16ebbac35b7619465b39553bf5c770c0355f06a5260c25317"
+  },
+  "acceptedBindingsUnchanged": true,
+  "checkedSourceFiles": 10,
+  "recipeAndPlanCopiedUnchanged": true,
+  "isolatedTree": "F:\\GrifonLocalArchives\\orbital-merge-20261013\\reproduction-installed-check",
+  "providerCalls": 0,
+  "paidSpend": 0
+}

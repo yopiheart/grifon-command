@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-13T04:36:40.192Z",
+  "acceptedCommit": "4c924922",
+  "wrapperSha256": "e125b442095e9a09e04f0b0cf5d88b6e4d9bc8da01c358a472ae605f76e7b1e6",
+  "testRoot": "F:\\GrifonLocalArchives\\orbital-merge-20261013\\reproduction-fix\\focused-1791866184340",
+  "providerCalls": 0,
+  "paidSpend": 0,
+  "workingRepositoryWrites": 0,
+  "checks": [
+    {
+      "check": "Original recipe overwrites the copied accepted-bound receipt despite fresh output",
+      "passed": true,
+      "beforeSha256": "cb6d26370f0d5ad1639ecfdf7ced3e1320312a3467d790130a0db2e0d6debf8d",
+      "afterSha256": "990243827276f6ada4b3504c0972971582607819a60263ac16f048cab3e89711",
+      "originalAcceptedFilesTouched": false
+    },
+    {
+      "check": "Wrapper reproduces accepted film byte-exact and preserves every accepted source and relative input",
+      "passed": true,
+      "videoSha256": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405",
+      "acceptedSourceBefore": {
+        "acceptance-v2.json": "48e9ca122467b5a8b5c68aeb7e8234d5fda8781d79f98ca3ba9daf2c87b1a955",
+        "mix-continuous.mjs": "917c9125f4893896ff392ebc6142ac39568d6924f6998e0b3bfb9356c32be08e",
+        "continuous-fit-plan.json": "3fc1433a33745979b1c5880535572179f436cb64935d502386eb0376b0517cb7",
+        "continuous-mix-receipt.json": "cb6d26370f0d5ad1639ecfdf7ced3e1320312a3467d790130a0db2e0d6debf8d",
+        "independent-review-v2.json": "b559ca9134872813f8355d849de91ed6edce1d8b224d59417c70814bd8562227",
+        "grifon-orbital-launch-music-v2_5-v2.mp4": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405"
+      },
+      "acceptedSourceAfter": {
+        "acceptance-v2.json": "48e9ca122467b5a8b5c68aeb7e8234d5fda8781d79f98ca3ba9daf2c87b1a955",
+        "mix-continuous.mjs": "917c9125f4893896ff392ebc6142ac39568d6924f6998e0b3bfb9356c32be08e",
+        "continuous-fit-plan.json": "3fc1433a33745979b1c5880535572179f436cb64935d502386eb0376b0517cb7",
+        "continuous-mix-receipt.json": "cb6d26370f0d5ad1639ecfdf7ced3e1320312a3467d790130a0db2e0d6debf8d",
+        "independent-review-v2.json": "b559ca9134872813f8355d849de91ed6edce1d8b224d59417c70814bd8562227",
+        "grifon-orbital-launch-music-v2_5-v2.mp4": "4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405"
+      },
+      "sourceInputs": [
+        {
+          "file": "workflows/assets/grifon-pluto-adaptation/grifon-orbital-launch-v1.mp4",
+          "sha256": "691e3042040fa5bf58a6877b59e6570e189e5633ba8da2cb9721de9d0407bb48"
+        },
+        {
+          "file": "workflows/assets/grifon-pluto-adaptation/audio-plan.json",
+          "sha256": "6955c48030d9f6735b8589d47c1aacc63afb556d05a89abd590c559937590218"
+        }
+      ]
+    },
+    {
+      "check": "Existing destination refused and source unchanged",
+      "passed": true
+    },
+    {
+      "check": "Destination inside source repository refused before write",
+      "passed": true
+    },
+    {
+      "check": "Altered acceptance-bound recipe refused before destination creation",
+      "passed": true
+    },
+    {
+      "check": "Changed relative input refused before destination creation",
+      "passed": true
+    }
+  ]
+}
