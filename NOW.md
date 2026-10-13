@@ -28,7 +28,8 @@ No reference/film/audio uploaded. No additional paidQA, stemgeneration or top-up
 Code/model/prompt defaults in application unchanged; no merge/deploy authorized.
 
 ## ▶ NEXT ACTION
-Backuppackage in a draftPRstackedonPR182; independentv2checkPASS.
+DraftPR183:https://github.com/yopiheart/grifon-command/pull/183; backuppushed.
+StackedonPR182, thenPR178; retargetinorderafterbasesland. Independentv2checkPASS.
 V2MP4showninline; listening/creativeacceptancepending. Keepv1/rejectionevidence.
 Preserve rawmusic/isolatedSFX privately; no standalone redistribution inGit.
 Creative listening and user acceptance must stay distinct from technicalchecks.
