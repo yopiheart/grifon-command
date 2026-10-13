@@ -1,0 +1,7 @@
+{
+  "phase": "route-oauth-mainframe-guard-start",
+  "recordedAt": "2026-10-07T15:35:23.8607888+08:00",
+  "path": "tests/e2e/route-consistency.spec.ts",
+  "sha256": "2f531ee84b66ed56fe56cd80c59d4f368aeb7c80862e32b47bc16a75fd2ea368",
+  "reason": "Approved main-frame seed guard prevents avatar iframe from re-seeding OAuth intent; all marker consumption and route assertions retained"
+}

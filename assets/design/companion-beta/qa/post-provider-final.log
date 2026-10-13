@@ -1,0 +1,12 @@
+
+> creative-director-ai-assistant@1.0.0 test
+> vitest run tests/unit/geminiService.proxy.test.ts --maxWorkers=1
+
+
+ RUN  v4.1.5 C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command
+
+
+ Test Files  1 passed (1)
+      Tests  25 passed (25)
+   Start at  10:58:31
+   Duration  5.74s (transform 155ms, setup 0ms, import 204ms, tests 5.08s, environment 0ms)

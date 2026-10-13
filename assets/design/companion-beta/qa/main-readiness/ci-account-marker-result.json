@@ -1,0 +1,573 @@
+{
+  "result": "PASS",
+  "capturedUtc": "2026-10-11T10:50:03.508Z",
+  "scope": "Narrow copied account373 test: original and top-window-guard ordinary/forced iframe runs plus cleanup-disabled negative control",
+  "translation": {
+    "trackedSourceSha256": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+    "originalCopySha256": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+    "guardedCopySha256": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+    "exactGuardOnlyDelta": true,
+    "changes": [
+      "Playwright import to passive instrumentation wrapper",
+      "Same-origin loopback5192 translation",
+      "Probe call immediately before unchanged original marker-null assertion; no-op in ordinary mode"
+    ],
+    "guardedCopyOnly": "top-window guard before marker seed; no application edits",
+    "originalMarkerAssertionRetained": true
+  },
+  "validations": {
+    "allExpectedOutcomes": true,
+    "noRetriesOrSkips": true,
+    "originalForcedReachedGenuineConsumedPrecondition": true,
+    "originalForcedChildReseeded": true,
+    "guardedForcedPreservedConsumedMarker": true,
+    "unchangedAssertionRejectsBothNegativeControls": true,
+    "cleanupControlPreservesPresenceDetection": true,
+    "exactGuardOnlyDelta": true,
+    "sourceAndHarnessFrozenWithinEachRun": true,
+    "verifiedCandidate": true,
+    "failClosedFixtureCounters": true,
+    "ownedServerStopped": true
+  },
+  "phases": [
+    {
+      "phase": "original-ordinary",
+      "expectedOutcome": "passed",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/account-marker/playwright.config.ts",
+          "--grep=a return-to-ad marker with no finished ad safely retains the chat entry$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "MARKER_PHASE": "original-ordinary",
+          "MARKER_GUARDED": "0",
+          "MARKER_FORCE": "0",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\original-ordinary",
+          "COMPANION_ACCOUNT_PHASE": "original-ordinary"
+        }
+      },
+      "exitCode": 0,
+      "cases": [
+        {
+          "status": "passed",
+          "durationMs": 3640,
+          "retry": 0,
+          "errors": []
+        }
+      ],
+      "instrumentation": {
+        "status": "passed",
+        "durationMs": 3467,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "requests": {
+          "sameOrigin": 262,
+          "externalFonts": 3,
+          "externalOther": 0,
+          "callableApi": 5
+        },
+        "pageErrors": [],
+        "probe": null,
+        "scalars": {
+          "marker": null,
+          "fixtureCallNames": [
+            "plan-read"
+          ]
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Same-origin child added only after actual App marker consumption; no manual storage clear or application state injection; fixture calls reported as names only"
+      },
+      "sourceBefore": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "changedHarnessFiles": []
+    },
+    {
+      "phase": "guarded-ordinary",
+      "expectedOutcome": "passed",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/account-marker/playwright.config.ts",
+          "--grep=a return-to-ad marker with no finished ad safely retains the chat entry$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "MARKER_PHASE": "guarded-ordinary",
+          "MARKER_GUARDED": "1",
+          "MARKER_FORCE": "0",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\guarded-ordinary",
+          "COMPANION_ACCOUNT_PHASE": "guarded-ordinary"
+        }
+      },
+      "exitCode": 0,
+      "cases": [
+        {
+          "status": "passed",
+          "durationMs": 1150,
+          "retry": 0,
+          "errors": []
+        }
+      ],
+      "instrumentation": {
+        "status": "passed",
+        "durationMs": 889,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "requests": {
+          "sameOrigin": 262,
+          "externalFonts": 3,
+          "externalOther": 0,
+          "callableApi": 5
+        },
+        "pageErrors": [],
+        "probe": null,
+        "scalars": {
+          "marker": null,
+          "fixtureCallNames": [
+            "plan-read"
+          ]
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Same-origin child added only after actual App marker consumption; no manual storage clear or application state injection; fixture calls reported as names only"
+      },
+      "sourceBefore": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "changedHarnessFiles": []
+    },
+    {
+      "phase": "original-forced",
+      "expectedOutcome": "failed",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/account-marker/playwright.config.ts",
+          "--grep=a return-to-ad marker with no finished ad safely retains the chat entry$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "MARKER_PHASE": "original-forced",
+          "MARKER_GUARDED": "0",
+          "MARKER_FORCE": "1",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\original-forced",
+          "COMPANION_ACCOUNT_PHASE": "original-forced"
+        }
+      },
+      "exitCode": 1,
+      "cases": [
+        {
+          "status": "failed",
+          "durationMs": 16906,
+          "retry": 0,
+          "errors": [
+            {
+              "message": "Error: expect(received).toBeNull()\n\nReceived: \"1\"\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  377 |   await page.goto('/app'); await expect(input(page)).toBeVisible();\n  378 |   await probeMarker(page);\n> 379 |   await expect.poll(() => page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBeNull();\n      |                                                                                               ^\n  380 |   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);\n  381 | });\n  382 |\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\account-original.spec.ts:379:95",
+              "location": {
+                "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\account-original.spec.ts",
+                "column": 95,
+                "line": 379
+              }
+            }
+          ]
+        }
+      ],
+      "instrumentation": {
+        "status": "failed",
+        "durationMs": 15282,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "requests": {
+          "sameOrigin": 272,
+          "externalFonts": 3,
+          "externalOther": 0,
+          "callableApi": 6
+        },
+        "pageErrors": [],
+        "probe": {
+          "precondition": null,
+          "forced": true,
+          "child": {
+            "pathname": "/__qa-account-marker-frame.html",
+            "sameOrigin": true,
+            "top": false,
+            "marker": "1"
+          },
+          "markerAfterChild": "1"
+        },
+        "scalars": {
+          "marker": "1",
+          "fixtureCallNames": [
+            "plan-read"
+          ]
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Same-origin child added only after actual App marker consumption; no manual storage clear or application state injection; fixture calls reported as names only"
+      },
+      "sourceBefore": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "changedHarnessFiles": []
+    },
+    {
+      "phase": "guarded-forced",
+      "expectedOutcome": "passed",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/account-marker/playwright.config.ts",
+          "--grep=a return-to-ad marker with no finished ad safely retains the chat entry$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "MARKER_PHASE": "guarded-forced",
+          "MARKER_GUARDED": "1",
+          "MARKER_FORCE": "1",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\guarded-forced",
+          "COMPANION_ACCOUNT_PHASE": "guarded-forced"
+        }
+      },
+      "exitCode": 0,
+      "cases": [
+        {
+          "status": "passed",
+          "durationMs": 1013,
+          "retry": 0,
+          "errors": []
+        }
+      ],
+      "instrumentation": {
+        "status": "passed",
+        "durationMs": 854,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "requests": {
+          "sameOrigin": 266,
+          "externalFonts": 3,
+          "externalOther": 0,
+          "callableApi": 5
+        },
+        "pageErrors": [],
+        "probe": {
+          "precondition": null,
+          "forced": true,
+          "child": {
+            "pathname": "/__qa-account-marker-frame.html",
+            "sameOrigin": true,
+            "top": false,
+            "marker": null
+          },
+          "markerAfterChild": null
+        },
+        "scalars": {
+          "marker": null,
+          "fixtureCallNames": [
+            "plan-read"
+          ]
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Same-origin child added only after actual App marker consumption; no manual storage clear or application state injection; fixture calls reported as names only"
+      },
+      "sourceBefore": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "6abb2e6e65b93aba9025405f853b3a2800bbd30698f7ec95b0da2b755b379596",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "changedHarnessFiles": []
+    },
+    {
+      "phase": "guarded-cleanup-disabled",
+      "expectedOutcome": "failed",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/account-marker/playwright.config.ts",
+          "--grep=a return-to-ad marker with no finished ad safely retains the chat entry$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "MARKER_PHASE": "guarded-cleanup-disabled",
+          "MARKER_GUARDED": "1",
+          "MARKER_FORCE": "0",
+          "COMPANION_ACCOUNT_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\guarded-cleanup-disabled",
+          "COMPANION_ACCOUNT_PHASE": "guarded-cleanup-disabled"
+        }
+      },
+      "exitCode": 1,
+      "cases": [
+        {
+          "status": "failed",
+          "durationMs": 17311,
+          "retry": 0,
+          "errors": [
+            {
+              "message": "Error: expect(received).toBeNull()\n\nReceived: \"1\"\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  377 |   await page.goto('/app'); await expect(input(page)).toBeVisible();\n  378 |   await probeMarker(page);\n> 379 |   await expect.poll(() => page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBeNull();\n      |                                                                                               ^\n  380 |   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);\n  381 | });\n  382 |\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\account-guarded.spec.ts:379:95",
+              "location": {
+                "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\account-marker\\account-guarded.spec.ts",
+                "column": 95,
+                "line": 379
+              }
+            }
+          ]
+        }
+      ],
+      "instrumentation": {
+        "status": "failed",
+        "durationMs": 15709,
+        "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "browserVersion": "149.0.7827.55",
+        "requests": {
+          "sameOrigin": 271,
+          "externalFonts": 3,
+          "externalOther": 0,
+          "callableApi": 6
+        },
+        "pageErrors": [],
+        "probe": null,
+        "cleanupControl": {
+          "omittedRemoveItemOnly": true,
+          "originalServedSha256": "b1fab1de5b57e78c2dbad22b1bd433978bd7144135297cabda9eafb261f77817",
+          "controlServedSha256": "f64ef1df602f8968e7043f4f814e02367634403a88f9013e6d5d7732e43df926",
+          "presenceDetectionPreserved": true,
+          "returnTruePreserved": true
+        },
+        "scalars": {
+          "marker": "1",
+          "fixtureCallNames": [
+            "plan-read"
+          ]
+        },
+        "fixture": {
+          "unexpectedCount": 0,
+          "pageErrorCount": 0,
+          "consentWriteCount": 0
+        },
+        "limits": "Same-origin child added only after actual App marker consumption; no manual storage clear or application state injection; fixture calls reported as names only"
+      },
+      "sourceBefore": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-account.spec.ts": "7dd8c4b6dee133836e7c7420fca7e7a0d81751769fb91278b244dbc67bf69e81",
+        "tests/e2e/companion-account-fixture.ts": "847f0fbd980130d4046db3ecdfdbc9c259ab449cfb47df27e7c89a2de89f44b4",
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+        "components/CompanionChat/CompanionAvatar.tsx": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a",
+        "services/returnToAdService.ts": "002fdf094d85ec2e63250f6dc78e3fb1777089137f631362e9569462c811dceb"
+      },
+      "changedSourceFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "9be6e79a124a0aae6bd05a272b3a961d3a8d322dcb79a91f35ccd5c22efbf454",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/account-marker/account-original.spec.ts": "139eeebb1434ea9c1b9f97570f27e2889c4e13774826b2691c7ae8da5c4ab2fd",
+        ".tmp/companion-main-readiness/qa/account-marker/account-guarded.spec.ts": "1beec2d2babe3bd54c311ae8d5722c6d21398a3a08f8d0ef53626e6b452bba30",
+        ".tmp/companion-main-readiness/qa/account-marker/companion-account-fixture.ts": "59a001f8225723aae3ed4f7239982c5f01042be2edf5a1e6ad6009d9927b1c12",
+        ".tmp/companion-main-readiness/qa/account-marker/playwright.config.ts": "8ce33ee54325f604936f45da2ee8811ec7a3622093917dd85a03a4bb8e632a10",
+        ".tmp/companion-main-readiness/qa/account-marker/instrumented-test.ts": "9be6e79a124a0aae6bd05a272b3a961d3a8d322dcb79a91f35ccd5c22efbf454",
+        ".tmp/companion-main-readiness/qa/account-marker/server.mjs": "b866978b9e1eb64bc74275bb944f07d874f47aa4adccc6b7b3a7355e085e5bee"
+      },
+      "changedHarnessFiles": []
+    }
+  ],
+  "execution": {
+    "browser": "Installed Playwright Chromium149.0.7827.55 on Windows",
+    "workers": 1,
+    "retries": 0,
+    "skips": 0,
+    "testBudgetMs": 180000,
+    "actionBudgetMs": 15000,
+    "expectBudgetMs": 15000,
+    "paidLiveSwitches": "unset",
+    "sourceFilesWatched": 7,
+    "fixtureServer": "Owned127.0.0.1:5192; configFile/envFile/envDir false; server denies callableAPI503 and existing account fixture mocks expected reads"
+  },
+  "proof": {
+    "markerConsumption": "Observed null through unchanged App before forced child; storage was never manually cleared",
+    "forcedOriginal": "Same-origin non-top child caused marker1; unchanged null assertion failed",
+    "guarded": "Only seed top-window guard changed; same child left null and original assertion passed",
+    "cleanupSensitivity": "Omitting only served sessionStorage.removeItem leaves1 and guarded test still fails unchanged null assertion",
+    "trackedSourceEdits": 0
+  },
+  "cleanup": {
+    "remainingListeners": 0,
+    "stoppedUtc": "2026-10-11T10:50:02.7493558Z",
+    "pid": 23248,
+    "processCommandMatched": true,
+    "listenerOwnershipMatched": true
+  },
+  "limits": [
+    "Proves cross-frame initScript marker reseeding mechanism; does not establish exact hosted/avatar timing or causal origin of any hosted failure",
+    "Forced child is minimal same-origin local HTML, not an avatar reload",
+    "Positive and negative runs use test copies; tracked source remained original7dd8c4 throughout all five executions",
+    "Cleanup-disabled control changes one served public module only; original getItem/presence detection/returntrue retained",
+    "CallableAPI request counts5-6 are existing mocked account fixture requests; no external non-font requests, provider/live/DB calls or consent writes",
+    "Failure screenshots remain ignored and are not included in this compact receipt"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "sourceFreeze": "round6",
+  "sourceEndEvidence": "final-browser-end-hashes.json",
+  "sourcePathsUnchanged": 9,
+  "browserCaseCoverage": 102,
+  "finalChecks": [
+    {
+      "phase": "final-consolidated-34",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion-account.config.ts",
+      "exitCode": 0,
+      "passed": 34,
+      "failed": 0,
+      "report": "final-consolidated-34-playwright-report.json"
+    },
+    {
+      "phase": "companion-final-round6",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion-account-regression.config.ts companion-navigation.spec.ts companion-continuity.spec.ts companion-startup.spec.ts companion-glass.spec.ts",
+      "exitCode": 0,
+      "passed": 54,
+      "failed": 0,
+      "suites": { "continuity": 6, "glass": 17, "navigation": 18, "startup": 13 },
+      "report": "companion-final-round6-playwright-report.json"
+    },
+    {
+      "phase": "route-final-round6",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion-account-regression.config.ts route-consistency.spec.ts",
+      "exitCode": 1,
+      "passed": 13,
+      "failed": 1,
+      "failureClass": "test setup: OAuth marker init script ran inside avatar iframe",
+      "report": "route-final-round6-playwright-report.json"
+    },
+    {
+      "phase": "route-oauth-final-round6",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion-account-regression.config.ts route-consistency.spec.ts --grep 'marked OAuth'",
+      "exitCode": 0,
+      "passed": 1,
+      "failed": 0,
+      "change": "approved top-document-only seed guard; marker consumption oracle unchanged",
+      "report": "route-oauth-final-round6-playwright-report.json"
+    }
+  ],
+  "focusedUnit": {
+    "command": "npm.cmd run test -- tests/unit/companionAccountConsent.test.ts",
+    "passed": 9,
+    "exitCode": 0,
+    "runner": "delegated strict_consent_tests worker",
+    "note": "Final full build and Vitest verification belong to root, not this browser report."
+  },
+  "originalDefectProofs": [
+    { "source": "55ef2b21", "failed": 2, "report": "baseline-playwright-report.json", "findings": ["default fixture toolbar visible", "account settings absent"] },
+    { "source": "55ef2b21 useSubscription injected at public browser module seam", "failed": 1, "report": "subscription-baseline-playwright-report.json", "finding": "OTP sign-in succeeds, mocked Pro subscription remains displayed as Free" },
+    { "source": "pre-review useSubscription injected at public browser module seam", "failed": 1, "report": "refresh-baseline-playwright-report.json", "finding": "same-user token refresh removes unsent Studio form while plan read is pending" },
+    { "source": "independent pre-history-repair App", "report": "independent/original-history-defect.json", "finding": "actual Research CTA Back/Forward returns to Chat" }
+  ],
+  "evidenceNotes": [
+    "Early hook injection setup failures are retained separately; only otp-proof and refresh-proof command logs establish product baselines.",
+    "Early account full run: preserved raw log shows 27 passes and 2 test issues (reload re-seeding and strict RGB equality), corrected before final consolidated pass.",
+    "Early Studio history test used a locked-only accessible label after paid plan confirmation; corrected by scoped semantic button lookup.",
+    "Early final-playwright-report.json was replaced by --list; listing-only copy is labeled and full summary reconstructed from preserved raw log. Unique final-consolidated-34 report is raw final evidence."
+  ],
+  "viewports": [[375, 667], [390, 844], [1280, 900]],
+  "isolation": {
+    "browser": "fresh headless Edge",
+    "devServerRestarted": false,
+    "helperServerStarted": false,
+    "realCredentialsOrOwnerSessionUsed": false,
+    "realExternalConsentWrites": false,
+    "realMicrophoneUsed": false,
+    "paidOrProviderCalls": false,
+    "authSeam": "mock SDK factory plus dummy public configuration; real auth wrappers preserved",
+    "persistence": "real IndexedDB"
+  },
+  "browserIdle": true
+}

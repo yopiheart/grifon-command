@@ -1,0 +1,191 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "tests/e2e/companion-startup.config.ts",
+      "--grep",
+      "cold slow"
+    ],
+    "configFile": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-startup.config.ts",
+    "rootDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/assets/design/companion-startup/qa/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "companion-startup.spec.ts"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-startup\\qa\\cue-clock-playwright-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "companion-startup.spec.ts",
+      "file": "companion-startup.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6206,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:24:21.465Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-0f8dbfa5832543d8c4d4",
+          "file": "companion-startup.spec.ts",
+          "line": 205,
+          "column": 3
+        },
+        {
+          "title": "cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:24:28.058Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-472a9656fe07b034fe14",
+          "file": "companion-startup.spec.ts",
+          "line": 205,
+          "column": 3
+        },
+        {
+          "title": "cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T05:24:34.444Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ecac3189711cbc655fe-7d9463ffdffed2e7f417",
+          "file": "companion-startup.spec.ts",
+          "line": 205,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-07T05:24:20.527Z",
+    "duration": 20585.816000000003,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

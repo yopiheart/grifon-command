@@ -1,0 +1,501 @@
+{
+  "result": "PASS",
+  "capturedUtc": "2026-10-11T10:32:57.118Z",
+  "scope": "One existing navigation clock test, original stale-target mechanism control plus three patched runs; no application edits or fake application state",
+  "hostedOriginal": {
+    "run": "https://github.com/yopiheart/grifon-command/actions/runs/38130887530",
+    "headPrefix": "9c6ca440",
+    "firstAttempt": "817ms FAIL at nav line140: Cannot fast-forward to the past",
+    "retry": "40.2s PASS",
+    "receipt": ".tmp/companion-main-readiness/qa/ci-thirtytwo-run/e2e-15-summary.json",
+    "limits": "500ms local injection reproduces mechanism; it does not establish actual hosted transport latency"
+  },
+  "source": {
+    "originalNavigation": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+    "patchedNavigation": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+    "assertionDelta": "none",
+    "clockInstallLocation": "unchanged",
+    "runForMs": 1000,
+    "retainedAssertions": [
+      "typing visible",
+      "new chat has no user message and exactly one assistant",
+      "return restores unsent input and two assistants",
+      "second account cannot see first account chat/messages",
+      "return to first account restores accepted message and unsent input"
+    ]
+  },
+  "execution": {
+    "browser": "Installed Playwright Chromium149.0.7827.55 on Windows",
+    "testBudgetMs": 180000,
+    "actionBudgetMs": 15000,
+    "expectBudgetMs": 15000,
+    "workers": 1,
+    "retries": 0,
+    "skips": 0,
+    "paidLiveSwitches": "unset",
+    "fixtureServer": "127.0.0.1:5192; configFile/envFile/envDir false; callableAPI denied503 unless browser mocks"
+  },
+  "validations": {
+    "originalBaselineExpectedFailure": true,
+    "patchedThreePasses": true,
+    "exactOneLineDelta": true,
+    "sourceAndHarnessFrozenWithinEachRun": true,
+    "verifiedIdentityAndZeroFixtureCalls": true,
+    "discoveryPass": true,
+    "ownedServerStopped": true
+  },
+  "phases": [
+    {
+      "phase": "baseline",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts",
+          "--grep=switching chats while typing isolates callbacks and preserves unsent input across accounts$",
+          "--repeat-each=1"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "NAV_CLOCK_PHASE": "baseline",
+          "NAV_CLOCK_DELAY": "500",
+          "COMPANION_NAV_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\navigation-clock\\baseline"
+        }
+      },
+      "exitCode": 1,
+      "totalDurationMs": 5359.078,
+      "cases": [
+        {
+          "repeat": 0,
+          "status": "failed",
+          "durationMs": 4543,
+          "errors": [
+            "Error: clock.pauseAt: Error: Cannot fast-forward to the past"
+          ],
+          "instrumentation": {
+            "status": "failed",
+            "repeat": 0,
+            "durationMs": 4275,
+            "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+            "browserVersion": "149.0.7827.55",
+            "clock": [
+              {
+                "argumentLeadMs": 0,
+                "injectedDelayMs": 500,
+                "actualDelayMs": 511,
+                "status": "failed",
+                "error": "clock.pauseAt: Error: Cannot fast-forward to the past"
+              }
+            ],
+            "pageErrors": [],
+            "fixture": {
+              "calls": 0
+            },
+            "limits": "Only Node-side pauseAt invocation delayed; no application state or clock arguments modified; source identity before body; fixture scalar after test"
+          }
+        }
+      ],
+      "sourceBefore": {
+        "tests/e2e/companion-navigation.spec.ts": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+        "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+        "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-navigation.spec.ts": "55220b768bafd24c4d9492ebe4f5cbc3e3359af92087201f3f0db7561e220e7b",
+        "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+        "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/navigation-clock/companion-navigation.spec.ts": "e4b6156ff82410c967d8977307282221f0061e07827efe3f19610c952b2161f1",
+        ".tmp/companion-main-readiness/qa/navigation-clock/oneshotRecovery.ts": "f98903088e4a6bd00c4c41046819fa5ad72a739570f2ca6b8ab19cd2d7ed5fc6",
+        ".tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts": "8835afb402fdb9320d23cdc2b13884e55b8884dc444b8424b1da336cacabecc5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/instrumented-test.ts": "4a6840889be7646d20dc196f6d0f7510cf4ce1600360a4cdd5a6e0e95b8744d3",
+        ".tmp/companion-main-readiness/qa/navigation-clock/timing-reporter.cjs": "8699044c9aaed433e16a6ead66f8d6d232e8b1e02a39523f4b75f6ad088c8f8d",
+        ".tmp/companion-main-readiness/qa/navigation-clock/server.mjs": "87ac3cdfcb46e676bb7ff5ad30975c56bfefbad74ea0deabd6b51890d0a56dbf"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/navigation-clock/companion-navigation.spec.ts": "e4b6156ff82410c967d8977307282221f0061e07827efe3f19610c952b2161f1",
+        ".tmp/companion-main-readiness/qa/navigation-clock/oneshotRecovery.ts": "f98903088e4a6bd00c4c41046819fa5ad72a739570f2ca6b8ab19cd2d7ed5fc6",
+        ".tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts": "8835afb402fdb9320d23cdc2b13884e55b8884dc444b8424b1da336cacabecc5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/instrumented-test.ts": "4a6840889be7646d20dc196f6d0f7510cf4ce1600360a4cdd5a6e0e95b8744d3",
+        ".tmp/companion-main-readiness/qa/navigation-clock/timing-reporter.cjs": "8699044c9aaed433e16a6ead66f8d6d232e8b1e02a39523f4b75f6ad088c8f8d",
+        ".tmp/companion-main-readiness/qa/navigation-clock/server.mjs": "87ac3cdfcb46e676bb7ff5ad30975c56bfefbad74ea0deabd6b51890d0a56dbf"
+      }
+    },
+    {
+      "phase": "patched-ordinary",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts",
+          "--grep=switching chats while typing isolates callbacks and preserves unsent input across accounts$",
+          "--repeat-each=2"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "NAV_CLOCK_PHASE": "patched-ordinary",
+          "NAV_CLOCK_DELAY": "0",
+          "COMPANION_NAV_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\navigation-clock\\patched-ordinary"
+        }
+      },
+      "exitCode": 0,
+      "totalDurationMs": 16248.704000000002,
+      "cases": [
+        {
+          "repeat": 0,
+          "status": "passed",
+          "durationMs": 9463,
+          "errors": [],
+          "instrumentation": {
+            "status": "passed",
+            "repeat": 0,
+            "durationMs": 9387,
+            "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+            "browserVersion": "149.0.7827.55",
+            "clock": [
+              {
+                "argumentLeadMs": 7200000,
+                "injectedDelayMs": 0,
+                "actualDelayMs": 0,
+                "status": "passed"
+              }
+            ],
+            "pageErrors": [],
+            "fixture": {
+              "calls": 0
+            },
+            "limits": "Only Node-side pauseAt invocation delayed; no application state or clock arguments modified; source identity before body; fixture scalar after test"
+          }
+        },
+        {
+          "repeat": 1,
+          "status": "passed",
+          "durationMs": 5363,
+          "errors": [],
+          "instrumentation": {
+            "status": "passed",
+            "repeat": 1,
+            "durationMs": 5282,
+            "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+            "browserVersion": "149.0.7827.55",
+            "clock": [
+              {
+                "argumentLeadMs": 7200000,
+                "injectedDelayMs": 0,
+                "actualDelayMs": 0,
+                "status": "passed"
+              }
+            ],
+            "pageErrors": [],
+            "fixture": {
+              "calls": 0
+            },
+            "limits": "Only Node-side pauseAt invocation delayed; no application state or clock arguments modified; source identity before body; fixture scalar after test"
+          }
+        }
+      ],
+      "sourceBefore": {
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+        "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+        "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/navigation-clock/companion-navigation.spec.ts": "f410bab5e60996649bf7dd45c988a8b0b9f62faac3fdc8074960b9c3a8e230cb",
+        ".tmp/companion-main-readiness/qa/navigation-clock/oneshotRecovery.ts": "f98903088e4a6bd00c4c41046819fa5ad72a739570f2ca6b8ab19cd2d7ed5fc6",
+        ".tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts": "8835afb402fdb9320d23cdc2b13884e55b8884dc444b8424b1da336cacabecc5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/instrumented-test.ts": "4a6840889be7646d20dc196f6d0f7510cf4ce1600360a4cdd5a6e0e95b8744d3",
+        ".tmp/companion-main-readiness/qa/navigation-clock/timing-reporter.cjs": "8699044c9aaed433e16a6ead66f8d6d232e8b1e02a39523f4b75f6ad088c8f8d",
+        ".tmp/companion-main-readiness/qa/navigation-clock/server.mjs": "87ac3cdfcb46e676bb7ff5ad30975c56bfefbad74ea0deabd6b51890d0a56dbf"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/navigation-clock/companion-navigation.spec.ts": "f410bab5e60996649bf7dd45c988a8b0b9f62faac3fdc8074960b9c3a8e230cb",
+        ".tmp/companion-main-readiness/qa/navigation-clock/oneshotRecovery.ts": "f98903088e4a6bd00c4c41046819fa5ad72a739570f2ca6b8ab19cd2d7ed5fc6",
+        ".tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts": "8835afb402fdb9320d23cdc2b13884e55b8884dc444b8424b1da336cacabecc5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/instrumented-test.ts": "4a6840889be7646d20dc196f6d0f7510cf4ce1600360a4cdd5a6e0e95b8744d3",
+        ".tmp/companion-main-readiness/qa/navigation-clock/timing-reporter.cjs": "8699044c9aaed433e16a6ead66f8d6d232e8b1e02a39523f4b75f6ad088c8f8d",
+        ".tmp/companion-main-readiness/qa/navigation-clock/server.mjs": "87ac3cdfcb46e676bb7ff5ad30975c56bfefbad74ea0deabd6b51890d0a56dbf"
+      }
+    },
+    {
+      "phase": "patched-delayed",
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts",
+          "--grep=switching chats while typing isolates callbacks and preserves unsent input across accounts$",
+          "--repeat-each=1"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "NAV_CLOCK_PHASE": "patched-delayed",
+          "NAV_CLOCK_DELAY": "500",
+          "COMPANION_NAV_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\navigation-clock\\patched-delayed"
+        }
+      },
+      "exitCode": 0,
+      "totalDurationMs": 9851.550000000001,
+      "cases": [
+        {
+          "repeat": 0,
+          "status": "passed",
+          "durationMs": 9079,
+          "errors": [],
+          "instrumentation": {
+            "status": "passed",
+            "repeat": 0,
+            "durationMs": 9003,
+            "identity": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+            "browserVersion": "149.0.7827.55",
+            "clock": [
+              {
+                "argumentLeadMs": 7200000,
+                "injectedDelayMs": 500,
+                "actualDelayMs": 502,
+                "status": "passed"
+              }
+            ],
+            "pageErrors": [],
+            "requests": {
+              "sameOrigin": 54,
+              "externalFonts": 3,
+              "externalOther": 0,
+              "callableApi": 0
+            },
+            "fixture": {
+              "calls": 0
+            },
+            "limits": "Only Node-side pauseAt invocation delayed; no application state or clock arguments modified; source identity before body; fixture scalar after test"
+          }
+        }
+      ],
+      "sourceBefore": {
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+        "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      "sourceAfter": {
+        "tests/e2e/companion-navigation.spec.ts": "b7438ea8024c07e42c66e5138fd24c3c2aaa60490470c73614bbc5ecd855a7b1",
+        "tests/e2e/companion-beta.spec.ts": "db5e2d8dcf4f877f5fd4b46c72911b43fb03992ba42f75a0afc2bc9c52c50e22",
+        "tests/e2e/fixtures/oneshotRecovery.ts": "c0b78d08941f037a5a244a7bb7cabd4a7960a26acc839c1f59f7a99b508a9507",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+        "App.tsx": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "harnessBefore": {
+        ".tmp/companion-main-readiness/qa/navigation-clock/companion-navigation.spec.ts": "f410bab5e60996649bf7dd45c988a8b0b9f62faac3fdc8074960b9c3a8e230cb",
+        ".tmp/companion-main-readiness/qa/navigation-clock/oneshotRecovery.ts": "f98903088e4a6bd00c4c41046819fa5ad72a739570f2ca6b8ab19cd2d7ed5fc6",
+        ".tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts": "8835afb402fdb9320d23cdc2b13884e55b8884dc444b8424b1da336cacabecc5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/instrumented-test.ts": "2ea2ef5d38cbec822f33ac1162ddac42b9b30128507683035089a9d848c37ff5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/timing-reporter.cjs": "8699044c9aaed433e16a6ead66f8d6d232e8b1e02a39523f4b75f6ad088c8f8d",
+        ".tmp/companion-main-readiness/qa/navigation-clock/server.mjs": "87ac3cdfcb46e676bb7ff5ad30975c56bfefbad74ea0deabd6b51890d0a56dbf"
+      },
+      "harnessAfter": {
+        ".tmp/companion-main-readiness/qa/navigation-clock/companion-navigation.spec.ts": "f410bab5e60996649bf7dd45c988a8b0b9f62faac3fdc8074960b9c3a8e230cb",
+        ".tmp/companion-main-readiness/qa/navigation-clock/oneshotRecovery.ts": "f98903088e4a6bd00c4c41046819fa5ad72a739570f2ca6b8ab19cd2d7ed5fc6",
+        ".tmp/companion-main-readiness/qa/navigation-clock/playwright.config.ts": "8835afb402fdb9320d23cdc2b13884e55b8884dc444b8424b1da336cacabecc5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/instrumented-test.ts": "2ea2ef5d38cbec822f33ac1162ddac42b9b30128507683035089a9d848c37ff5",
+        ".tmp/companion-main-readiness/qa/navigation-clock/timing-reporter.cjs": "8699044c9aaed433e16a6ead66f8d6d232e8b1e02a39523f4b75f6ad088c8f8d",
+        ".tmp/companion-main-readiness/qa/navigation-clock/server.mjs": "87ac3cdfcb46e676bb7ff5ad30975c56bfefbad74ea0deabd6b51890d0a56dbf"
+      }
+    }
+  ],
+  "instrumentationLimits": [
+    "Baseline and ordinary runs record fixture-call count, source identity and page-error names; no request category counters were installed for those runs",
+    "Delayed patched run additionally counts requests: sameOrigin54, externalFonts3, externalOther0, callableAPI0; no bodies/headers/credentials recorded",
+    "500ms wrapper delays only the public Node-side pauseAt invocation after the Date argument exists; no argument/application-state mutation",
+    "Public API-step timing includes small instrumentation overhead; no internal protocol/GPU/CPU attribution"
+  ],
+  "discovery": {
+    "receipt": ".tmp/companion-main-readiness/qa/ci-thirtytwo-validation/validation-receipt.json",
+    "sourceHashes": ".tmp/companion-main-readiness/qa/ci-thirtytwo-validation/source-hashes-after.json",
+    "sourceFilesChecked": 38,
+    "commandCount": 36,
+    "allOwnExitCodesZero": true,
+    "localCases": 224,
+    "ciCases": 224,
+    "shards": 32,
+    "casesPerShard": 7,
+    "unionUnique": 224,
+    "duplicates": 0,
+    "omissions": 0,
+    "extras": 0,
+    "expectedStatusCounts": {
+      "local-all": {
+        "passed": 224,
+        "other": 0
+      },
+      "ci-all": {
+        "passed": 224,
+        "other": 0
+      },
+      "ci-shard-1": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-2": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-3": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-4": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-5": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-6": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-7": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-8": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-9": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-10": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-11": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-12": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-13": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-14": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-15": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-16": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-17": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-18": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-19": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-20": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-21": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-22": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-23": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-24": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-25": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-26": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-27": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-28": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-29": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-30": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-31": {
+        "passed": 7,
+        "other": 0
+      },
+      "ci-shard-32": {
+        "passed": 7,
+        "other": 0
+      }
+    },
+    "caseSetSha256": "8c03e213af7a9815520501acc6a66b763277f1a3223e3d8282f3f4a2bb18d267",
+    "browserLaunches": 0,
+    "webServerLaunches": 0,
+    "limits": "List-only validation; not a full224 runtime rerun of this final patch"
+  },
+  "cleanup": {
+    "pid": 14548,
+    "remainingListeners": 0,
+    "stoppedUtc": "2026-10-11T10:31:47.3344848Z",
+    "processCommandMatched": true,
+    "listenerOwnershipMatched": true
+  },
+  "limitations": [
+    "Does not prove the final one-line patch on hosted Linux CI; prior all224 hosted PASS belongs to9c before this change",
+    "No real iPhone/Android, paid generation, production data, deployment or merge verification performed by this narrow task"
+  ]
+}

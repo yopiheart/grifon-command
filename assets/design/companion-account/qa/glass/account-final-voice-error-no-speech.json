@@ -1,0 +1,13 @@
+{
+  "notice": [
+    "No speech was heard. Try again or keep typing."
+  ],
+  "speech": [
+    {
+      "starts": 1,
+      "stops": 0,
+      "aborts": 1,
+      "interimResults": true
+    }
+  ]
+}

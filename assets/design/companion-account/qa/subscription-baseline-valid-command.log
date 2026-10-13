@@ -1,0 +1,38 @@
+
+> creative-director-ai-assistant@1.0.0 test:e2e
+> playwright test --config tests/e2e/companion-account.config.ts --grep actual email OTP
+
+
+Running 1 test using 1 worker
+
+(node:2024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code (9.7s)
+
+
+  1) tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/login$/
+    Received string:  "http://127.0.0.1:5173/app"
+    Timeout: 8000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 8000ms
+        19 × unexpected value "http://127.0.0.1:5173/app"
+
+
+      252 | test('actual email OTP entry returns to default chat after a recoverable invalid code', async ({ page }) => {
+      253 |   const evidence = await installAccountApp(page, false);
+    > 254 |   await page.goto('/app'); await expect(page).toHaveURL(/\/login$/);
+          |                                               ^
+      255 |   await page.getByLabel('EMAIL', { exact: true }).fill(ACCOUNT_EMAIL);
+      256 |   await page.getByRole('button', { name: 'CONTINUE WITH EMAIL', exact: true }).click();
+      257 |   await expect(page.getByLabel('VERIFICATION CODE', { exact: true })).toBeVisible();
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\tests\e2e\companion-account.spec.ts:254:47
+
+    Error Context: assets\design\companion-account\qa\test-results\companion-account-actual-e-006df--a-recoverable-invalid-code\error-context.md
+
+  1 failed
+    tests\e2e\companion-account.spec.ts:252:1 › actual email OTP entry returns to default chat after a recoverable invalid code

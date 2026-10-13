@@ -1,0 +1,56 @@
+{
+  "reviewedAtUTC": "2026-10-07T02:01:50Z",
+  "reviewer": "chat_14px_review (independent, report-only)",
+  "sourceSHA": "a22b0b39e03f4d436e594dd88713554bcfa89386",
+  "sourceState": "Uncommitted CSS diff against sourceSHA; verdict binds to sourceCssSHA256.",
+  "sourceCssSHA256": "74AA029ADA0EE44C3ECE1766D66DB81927D419BA1E87D640C2770BBE8A64E9EA",
+  "scope": "companionChat.css: root, input/textarea/select, and message font sizes set to user-requested 14px. Related E2E expectations and 390px case inspected. No source or test edits by reviewer.",
+  "criteria": {
+    "success": "Scoped 14px Inter body and inputs, normal tracking, retained brand hierarchy and no viewport clipping.",
+    "failure": "CSS leakage into parent/other surfaces, wrong computed sizes, loss of legibility, overflow or clipped controls.",
+    "verification": "Diff and selector-use audit, independent original-resolution pixel inspection at 375x667, 390x844 and 1280x900; final typography/geometry evidence."
+  },
+  "findings": [],
+  "criticalCount": 0,
+  "nitCount": 0,
+  "correctnessVerdict": "PASS",
+  "brandVerdict": "BRAND_PASS",
+  "passVerdict": true,
+  "observations": [
+    "Only three font-size rules change. Companion classes occur only in the chat implementation; root inheritance flows to descendants, not its parent. No changed global type rule.",
+    "Final typography evidence at all three viewports shows user/assistant/composer Inter 14px, weight 400; header text controls stay 14px/600 and true timestamp metadata stays JetBrains Mono 11px/400.",
+    "CUA 390px metrics show selects 14px/400 and visible text buttons 14px/600; sampled mobile controls retain heights of at least 44px.",
+    "Active intake pixels show clean wrapping, distinct gold user bubbles, readable assistant text and fully drawn composer icons. Brief editing and review fields fit at mobile width; headings retain hierarchy.",
+    "Geometry evidence reports horizontal overflow 0 at 375, 390 and 1280px, centered mascot offset 0, and retained 88px mobile/96px desktop mascot dimensions.",
+    "Colors, materials, radii, motion, avatar, prompt content and parent surface are unchanged by the scoped CSS diff. The requested 14px body/input choice overrides the default DESIGN.md 16px body token and remains above the 12px legibility floor."
+  ],
+  "brandScore": {
+    "philosophyCoherence": 9,
+    "visualHierarchy": 9,
+    "executionCraft": 9,
+    "functionality": 9,
+    "brandDistinctiveness": 8,
+    "totalOutOf50": 44,
+    "quickWins": []
+  },
+  "evidence": {
+    "pixelInspection": [
+      "initial-375.png", "initial-390.png", "initial-1280.png",
+      "final-active-375.png", "final-active-390.png", "final-active-1280.png",
+      "final-ready-375.png", "final-result-375.png", "final-result-390.png", "final-result-1280.png",
+      "final-review-375.png", "cua-390-edit.png"
+    ],
+    "metricsInspected": [
+      "final-typography-375.json", "final-typography-390.json", "final-typography-1280.json",
+      "final-geometry-375.json", "final-geometry-390.json", "final-geometry-1280.json",
+      "cua-390-metrics.json", "baseline-typography-390.json"
+    ],
+    "smokeReportedBySeparateAgent": "39/39 final cases PASS, exit 0; original 16px baseline failed all four focused 14px assertions.",
+    "parentChecksReported": "Build PASS; 1451 unit tests PASS."
+  },
+  "limits": [
+    "Reviewer inspected source, evidence metrics and pixels; test execution was performed by the separate smoke agent and parent.",
+    "Screenshots use the local mocked fixture. Real providers, generated video playback and production data were not exercised.",
+    "Physical iOS keyboard, browser focus zoom and phone performance remain unverified."
+  ]
+}

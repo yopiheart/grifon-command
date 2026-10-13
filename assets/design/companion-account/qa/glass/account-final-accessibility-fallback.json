@@ -1,0 +1,9 @@
+{
+  "css": {
+    "background": "rgb(24, 24, 27)",
+    "transition": "0s"
+  },
+  "reducedMotion": true,
+  "contrast": true,
+  "transparencySupported": true
+}

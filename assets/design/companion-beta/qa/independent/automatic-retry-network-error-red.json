@@ -1,0 +1,5 @@
+{
+  "calls": 2,
+  "unexpected": [],
+  "meaning": "Without closing the page or clicking Retry, orchestrator issued a second image request after simulated ambiguous network failure. This is a defect reproduction."
+}

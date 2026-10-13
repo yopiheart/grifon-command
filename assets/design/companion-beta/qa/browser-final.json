@@ -1,0 +1,74 @@
+{
+  "status": "PASS_SCOPED",
+  "uniqueUiCases": 45,
+  "singleAllGreen45Run": false,
+  "firstRun": {
+    "evidence": "resumed-final/report.json",
+    "log": "resumed-final/run.log",
+    "actualExit": "resumed-final/exit.json",
+    "exitCode": 1,
+    "passed": 44,
+    "failed": 1,
+    "skipped": 0,
+    "flaky": 0,
+    "startTime": "2026-10-10T02:48:36.777Z",
+    "durationMs": 246702.665,
+    "groups": {
+      "beta": "10/10 PASS",
+      "glass": "17/17 PASS",
+      "chat": "17/18 PASS"
+    },
+    "failure": "Immediate reshoot snapshot asserted before the existing asynchronous save/checkpoint barrier completed. The failure report and page context are retained."
+  },
+  "chatRerun": {
+    "evidence": "resumed-chat-final/report.json",
+    "log": "resumed-chat-final/run.log",
+    "actualExit": "resumed-chat-final/exit.json",
+    "exitCode": 0,
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "startTime": "2026-10-10T02:54:38.469Z",
+    "durationMs": 116100.895,
+    "repair": "Poll for exactly one reshoot and exactly one style callback after explicit user confirmation; preserve before-confirmation zero-call and no-unexpected-request assertions."
+  },
+  "finalRecovery": {
+    "status": "PASS",
+    "cases": 18,
+    "flows": 9,
+    "evidence": "resumed-recovery/summary.json",
+    "exitCode": 0,
+    "sourceHashesUnchanged": "27/27"
+  },
+  "keyFindings": [
+    "Stop/Resume and a second tab cannot duplicate an unsettled scene-image request; retry stays disabled pending the original receipt and free saved-progress checks remain available.",
+    "Cross-tab save conflict preserves both conversations; dismissing the unload warning retains the unsaved draft.",
+    "The mocked completed ad actually advances playback; its download has nonzero bytes and WebM EBML magic 1a45dfa3.",
+    "Guided-intake and device-local-history limits are visible at mobile and desktop widths."
+  ],
+  "manualFreeSmoke": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "steps": [
+      "New chat",
+      "Send typed draft",
+      "Reload",
+      "Draft/history restored",
+      "Beta limits visible"
+    ],
+    "externalGenerationCalls": 0,
+    "tabClosed": true
+  },
+  "source": "browser-source-final.json",
+  "limitations": [
+    "UI providers, auth/account switches, microphone responses and generated media are fixtures. These results do not prove real generation quality, billing or database concurrency.",
+    "Mobile dimensions execute in desktop Edge/Chromium; physical iPhone Safari and Android Chrome checks remain required.",
+    "No paid/live generation or deployment was run."
+  ],
+  "process": {
+    "previewPid17136": "stopped by exact owned PID before recovery",
+    "recoveryPid21276": "exited through Playwright cleanup",
+    "port5173": "clear"
+  }
+}

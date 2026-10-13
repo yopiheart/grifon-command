@@ -1,0 +1,55 @@
+{
+  "baselineCommit": "852dec3d",
+  "reviewer": "correctness independent report-only agent",
+  "correctnessVerdict": "PASS",
+  "brandVerdict": "BRAND_PASS",
+  "critical": 0,
+  "nits": 0,
+  "score": {
+    "total": 43,
+    "functionality": 9,
+    "distinctiveness": 8,
+    "coherence": 9,
+    "hierarchy": 9,
+    "craft": 8
+  },
+  "resolvedFindings": [
+    "Flush latest draft before switching chats",
+    "Recover failed GET without production continuation",
+    "Refresh run before Resume and recheck changed approval state",
+    "Honor pending and denied allowances",
+    "Only latest committed storage write can report saved",
+    "Short mobile scene button label; accessible scene label preserved"
+  ],
+  "inspected": [
+    "conversation-375.png",
+    "conversation-390.png",
+    "conversation-1280.png",
+    "navigation-375.png",
+    "navigation-390.png",
+    "navigation-1280.png",
+    "viewer-1280.png",
+    "final/current-ready-375.png",
+    "final/current-ready-390.png",
+    "final/current-result-375.png",
+    "new-chat-2x.png",
+    "studio-2x.png",
+    "storyboard-viewer-2x.png"
+  ],
+  "blobHashes": {
+    "CompanionChatSurface.tsx": "9b3e3440596d6234e85263887dffce4a7e94b19d",
+    "CompanionComposer.tsx": "f83699dd104f1cdc0aa3f97e17125cd7eeea7213",
+    "CompanionChatShell.tsx": "dc23067c82f97c3b6d8d043d9315e6a1181ee384",
+    "CompanionChat/index.tsx": "16ab34f44a965b61f8ba93ecb330483f3e001e68",
+    "ProducerFlow.tsx": "f02d3978f14f4c2a1edf81b239b6e0ee485b1ac7",
+    "companionChat.css": "1858f2995d726162ea7ebd46736e0d21cdac11ee",
+    "companionConversations.ts": "ea525902d8dd3943175ce2185538c596a0ba718e",
+    "CompanionOutputViewer.tsx": "cfc077ced897298075708853b4af1ebb39355d6d"
+  },
+  "remainingFindings": [],
+  "limits": [
+    "Screenshots use mocked local preview",
+    "Physical-phone keyboard and FPS unverified",
+    "No provider or production data calls made"
+  ]
+}

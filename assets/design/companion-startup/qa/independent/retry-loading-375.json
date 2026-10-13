@@ -1,0 +1,122 @@
+{
+  "slot": {
+    "x": 159.5,
+    "y": 49,
+    "width": 56,
+    "height": 56
+  },
+  "opacity": 0,
+  "ready": null,
+  "transition": {
+    "duration": "0s",
+    "property": "all",
+    "ease": "ease"
+  },
+  "loader": {
+    "opacity": "0",
+    "animation": "companion-loading-reveal",
+    "dotAnimation": "companion-typing",
+    "dotOpacity": "0.506068",
+    "dotDuration": "0.6s"
+  },
+  "retry": null,
+  "image": null,
+  "innerFallbackHidden": false,
+  "paint": null,
+  "ledger": {
+    "samples": [
+      {
+        "at": 1791350543586,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            0,
+            0,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350543639,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      },
+      {
+        "at": 1791350543834,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 1
+        }
+      },
+      {
+        "at": 1791350543935,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": true,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": null
+        }
+      },
+      {
+        "at": 1791350544400,
+        "sample": {
+          "opacity": 0,
+          "ready": null,
+          "still": false,
+          "slot": [
+            159.5,
+            49,
+            56,
+            56
+          ],
+          "cue": 0
+        }
+      }
+    ],
+    "messages": [
+      {
+        "event": "failed",
+        "at": 1791350543918,
+        "paint": null
+      }
+    ]
+  },
+  "overflow": 0,
+  "chatCalls": [],
+  "typography": {
+    "font": "Inter, sans-serif",
+    "inputSize": "14px"
+  },
+  "counts": {
+    "iframe": 1,
+    "still": 0
+  }
+}

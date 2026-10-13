@@ -1,0 +1,71 @@
+{
+  "before": {
+    "dpr": 1,
+    "width": 56,
+    "height": 56,
+    "one": true,
+    "three": false,
+    "atLeastTwo": false,
+    "events": [],
+    "resizeEvents": [],
+    "canvas": {
+      "width": 112,
+      "height": 112
+    },
+    "debug": {
+      "width": 56,
+      "height": 56,
+      "pixelRatio": 2
+    }
+  },
+  "after": {
+    "dpr": 3,
+    "width": 56,
+    "height": 56,
+    "one": false,
+    "three": true,
+    "atLeastTwo": true,
+    "events": [],
+    "resizeEvents": [],
+    "canvas": {
+      "width": 112,
+      "height": 112
+    },
+    "debug": {
+      "width": 56,
+      "height": 56,
+      "pixelRatio": 2
+    }
+  },
+  "afterCssResize": {
+    "dpr": 1,
+    "width": 57,
+    "height": 57,
+    "one": true,
+    "three": false,
+    "atLeastTwo": false,
+    "events": [
+      {
+        "matches": true,
+        "dpr": 1,
+        "at": 3734.699999988079
+      }
+    ],
+    "resizeEvents": [
+      {
+        "dpr": 1,
+        "at": 3730.5999999940395
+      }
+    ],
+    "canvas": {
+      "width": 114,
+      "height": 114
+    },
+    "debug": {
+      "width": 57,
+      "height": 57,
+      "pixelRatio": 2
+    }
+  },
+  "method": "CDP DPR emulation; not native zoom"
+}

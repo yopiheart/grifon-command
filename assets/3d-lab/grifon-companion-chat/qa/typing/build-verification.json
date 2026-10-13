@@ -1,0 +1,58 @@
+{
+  "baseCommit": "359e943629d12e24a9d00fd0b7147c162c5572d6",
+  "sourceHashes": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "3E4496A912330E266DCEDAF5923438240170A9E4103EB4EF8409084BDEF9E7C0",
+    "components/CompanionChat/CompanionComposer.tsx": "481B7C93B37188B9217E363F2136FF938AE7199202DE737CDEE230FF4725D153",
+    "components/CompanionChat/companionChat.css": "DFEA02EA49B2C02785F7253F3DC90417A2CB675533B1B00DB88882AEFEE22CAC",
+    "tests/e2e/companion-chat.spec.ts": "61EA1C20058B09C9B440CEA65AB5F9608677CDDD642DE3F65E1C1508F9C732A2",
+    "tests/e2e/companion-layout.spec.ts": "3AAC76BF7B221413FC8C7DBCF2267FC95D5246D86335F3C66ED78956AB0AC002",
+    "tests/e2e/companion-typing.spec.ts": "C76060F4EFFAAB473E7B39B8791BE3202A86647F7CFB1908C77B9455AF8DD8FF"
+  },
+  "builderChecks": [
+    {
+      "modules": 2586,
+      "command": "npm.cmd run build",
+      "exitCode": 0,
+      "warnings": "Existing Browserslist, chunk size and plugin timing warnings"
+    },
+    {
+      "skippedFiles": 9,
+      "durationSeconds": 44.95,
+      "command": "npm.cmd run test",
+      "exitCode": 0,
+      "passedFiles": 117,
+      "skippedTests": 32,
+      "passedTests": 1451
+    }
+  ],
+  "parentChecks": [
+    {
+      "afterFinalBuild": true,
+      "command": "npm.cmd run check:bundle-leak",
+      "exitCode": 0
+    },
+    {
+      "command": "npm.cmd run check:voice-sync",
+      "exitCode": 0
+    },
+    {
+      "command": "npm.cmd run check:domain",
+      "exitCode": 0
+    },
+    {
+      "command": "npm.cmd run check:artifact-anchors",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/sync-companion-assets.mjs --check",
+      "matchingAssets": 11,
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "paidCalls": 0,
+  "deployment": false
+}

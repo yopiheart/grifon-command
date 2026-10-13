@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-07",
+  "verdict": "PASS",
+  "agent": "independent smoke agent",
+  "browser": "Repository Playwright with installed msedge; CUA inventory unavailable in smoke agent",
+  "checkout": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command",
+  "baseline": {
+    "findings": [
+      "New chat absent",
+      "Opening running production history caused 4 mocked advance actions, 1 mocked video submission and 2 checkpoints"
+    ],
+    "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts companion-navigation.spec.ts",
+    "exitCode": 1,
+    "evidence": "baseline-production-history.json"
+  },
+  "verification": [
+    {
+      "result": "56 passed",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts",
+      "exitCode": 0,
+      "duration": "3.3m"
+    },
+    {
+      "result": "2 passed (one added case and strengthened persisted cap assertion)",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts companion-navigation.spec.ts companion-polish.spec.ts -g \"pending device writes|capped120\"",
+      "exitCode": 0
+    },
+    {
+      "result": "Expected failure: old label falsely reported saved while write was held",
+      "command": "$env:COMPANION_OLD_SAVING=\"1\"; npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts companion-navigation.spec.ts -g \"pending device writes\" (isolated process only)",
+      "exitCode": 1
+    },
+    {
+      "result": "1 passed with negative control unset",
+      "command": "npm.cmd run test:e2e -- --config tests/e2e/companion.config.ts companion-navigation.spec.ts -g \"pending device writes\"",
+      "exitCode": 0
+    }
+  ],
+  "uniqueBrowserCases": 57,
+  "coverage": [
+    "375/390/1280 navigation, search, collapse, drawer and viewer",
+    "56px mobile/64px desktop avatar, zero horizontal overflow and >=44px button targets",
+    "One-action New chat and saved conversation selection; independent chat IDs before runs",
+    "Legacy image/draft and selected production run survive adoption/reload",
+    "IDB failed read/save recover without draft replacement; pending saving is truthful",
+    "Account isolation, unsent text, pending typing and late production callbacks",
+    "Real ProducerFlow history is GET-only; explicit Resume refreshes server state and respects allowance",
+    "Completed output read-only; Studio reaches existing Dashboard tools",
+    "Keyboard focus trap, Escape return, body-lock cleanup, reduced motion",
+    "Existing timing, IME, scroll/capped120, approval, allowance, cancellation and asset failure regressions",
+    "Approved asset-manifest SHA256 hashes all match"
+  ],
+  "visualReview": {
+    "findings": [
+      "Calm New chat / Search / chats / Studio hierarchy",
+      "Centered compact mascot, readable chat, gold latest-user bubble and receipt",
+      "375px viewer approval below fold and reachable by scrolling; 390px approval fully visible",
+      "Mock/local disclosure retained; device-only storage labelled honestly"
+    ],
+    "verdict": "PASS",
+    "inspected": [
+      "conversation-375.png",
+      "conversation-390.png",
+      "conversation-1280.png",
+      "navigation-375.png",
+      "navigation-390.png",
+      "viewer-375.png",
+      "viewer-390.png",
+      "viewer-1280.png",
+      "new-chat-2x.png",
+      "studio-2x.png",
+      "storyboard-viewer-2x.png",
+      "final/current-result-375.png"
+    ]
+  },
+  "limits": [
+    "No live providers, spending, production data writes, deployment or merge",
+    "No cloud sync or durable background job claim",
+    "Physical phone FPS/keyboard, live voice and live generation unverified"
+  ],
+  "helperProcessesStarted": 0,
+  "sourceHashes": {
+    "tests/e2e/companion-typing.spec.ts": "38663e6c97befcab8c477788f482df7f6e4ba3b282ed86da76931e1b24950733",
+    "components/CompanionChat/CompanionComposer.tsx": "a6fbc9b95a8fb87b2c2c87f27f7c0ad9c0a409e67a675be49b0c4bca39176c4f",
+    "components/CompanionChat/index.tsx": "05167f797d6245dfd9f04b471621c50f842e3be3d3288e2484a77efe086cdf28",
+    "components/CompanionChat/CompanionOutputViewer.tsx": "4bf6247ba31101152decb065b2b335af2298ecba7755b869d6858b2d23075423",
+    "tests/e2e/companion-chat.spec.ts": "2858eb69ecc039b9ca88ac8c0422d8a1ce2afb7e5e5c32e260da50343d9adbab",
+    "dev/companionChatPreview.tsx": "21745c98b2fbbd026b0d0ccdb411006c690a14bda32b7ac1cdbf6cbe048b3ba6",
+    "components/CompanionChat/CompanionChatSurface.tsx": "34b2ce38fbd38a51a9522779cbd9e01a1cfce1bf3db35236f24619104bd1ae61",
+    "components/OneShotAd/ProducerFlow.tsx": "3fe16b39c1ee59031c541cb10dade0999e2900f264b1d4061b20093276d19241",
+    "tests/e2e/companion-layout.spec.ts": "1441f4dd53c7991c7b174b0319b5ea0a299f576c6a0819238ab92ec721f9789e",
+    "components/CompanionChat/companionChat.css": "ebf712916537e1b05622d156504a527bcb6c9d115eac013a2710046ff2955c37",
+    "tests/e2e/companion-navigation.spec.ts": "2b6e66917822ed93ae185636e1f7dc621713630535faa5505f12a417b44aa131",
+    "services/companionConversations.ts": "5cfb45bb0cdadb9ff372cb0ca1d96c2ab53df0538dfa2290655064ff28d15e3d",
+    "App.tsx": "8ee4793e898298aeab23501e2074d6c21c01d60269cec3f07cf977884f0a76b8",
+    "components/CompanionChat/CompanionChatShell.tsx": "59f07a7df0de48ce2fe33dd082cc5d9343d164f608583e16b302e36406774aa4",
+    "tests/e2e/companion-polish.spec.ts": "3ad342a7eba5a5eac4da1cb077516bb66bb7882c428b5025cf4215bde02ea2e0"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "speech": [
+    {
+      "starts": 1,
+      "stops": 0,
+      "aborts": 1,
+      "interimResults": true
+    },
+    {
+      "starts": 1,
+      "stops": 0,
+      "aborts": 1,
+      "interimResults": true
+    },
+    {
+      "starts": 1,
+      "stops": 0,
+      "aborts": 1,
+      "interimResults": true
+    },
+    {
+      "starts": 1,
+      "stops": 0,
+      "aborts": 1,
+      "interimResults": true
+    }
+  ]
+}

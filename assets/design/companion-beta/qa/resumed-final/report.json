@@ -1,0 +1,1670 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "tests/e2e/companion.config.ts",
+      "tests/e2e/companion-beta.spec.ts",
+      "tests/e2e/companion-chat.spec.ts",
+      "tests/e2e/companion-glass.spec.ts",
+      "--reporter=list,json",
+      "--output",
+      "assets/design/companion-beta/qa/resumed-final/test-results"
+    ],
+    "configFile": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion.config.ts",
+    "rootDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/assets/design/companion-beta/qa/resumed-final/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "companion*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm.cmd run dev -- --host 127.0.0.1 --port 5173 --strictPort",
+      "url": "http://127.0.0.1:5173",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "companion-beta.spec.ts",
+      "file": "companion-beta.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "guided beta limitations are visible at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:48:38.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-f3bab3081da0ae241f08",
+          "file": "companion-beta.spec.ts",
+          "line": 25,
+          "column": 34
+        },
+        {
+          "title": "guided beta limitations are visible at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 584,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:48:41.087Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-93529abe69ecb4822c03",
+          "file": "companion-beta.spec.ts",
+          "line": 25,
+          "column": 34
+        },
+        {
+          "title": "stale second tab cannot erase a newer conversation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2451,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:48:41.688Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-acb5da033460cde936b4",
+          "file": "companion-beta.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "refresh warns before leaving an unsaved draft and dismiss keeps the draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3867,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:48:44.166Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-30c24472d1853884f63c",
+          "file": "companion-beta.spec.ts",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "Stop and Resume cannot duplicate an unsettled scene image request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:48:48.102Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-6c9bb17a3f7ae83b05af",
+          "file": "companion-beta.spec.ts",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "another tab cannot resume the same ad while a scene image request is pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14876,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:48:53.865Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-0939ccded2296a0809be",
+          "file": "companion-beta.spec.ts",
+          "line": 112,
+          "column": 1
+        },
+        {
+          "title": "guided intake accepts a long brief and corrections use Edit brief without generation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:08.773Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-edd0c117b1e98675ab04",
+          "file": "companion-beta.spec.ts",
+          "line": 139,
+          "column": 1
+        },
+        {
+          "title": "completed ad fixture plays and its download contains video bytes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:16.469Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-11523ac65945a89b70f3",
+          "file": "companion-beta.spec.ts",
+          "line": 157,
+          "column": 1
+        },
+        {
+          "title": "completed ad still permits explicit reshoot after Resume editing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4842,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:22.169Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-c93a512e5620f9ea64c1",
+          "file": "companion-beta.spec.ts",
+          "line": 178,
+          "column": 44
+        },
+        {
+          "title": "completed ad still permits explicit style after Resume editing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4124,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:27.030Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68b31366e414e47aff81-5b48e52d3e25f81c3c11",
+          "file": "companion-beta.spec.ts",
+          "line": 178,
+          "column": 44
+        }
+      ]
+    },
+    {
+      "title": "companion-chat.spec.ts",
+      "file": "companion-chat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "brief, explicit start, truthful callbacks, storyboard approval, video and supported revisions",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6762,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContainEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected value: \u001b[32m{\"name\": \"reshoot\", \"value\": 0}\u001b[39m\nReceived array: \u001b[31m[{\"name\": \"start\", \"value\": {\"aspectRatio\": \"9:16\", \"avatar\": {\"description\": \"\", \"ethnicity\": \"\", \"gender\": \"Any\", \"prompt\": \"\", \"url\": \"\"}, \"brandName\": \"North Coffee\", \"businessType\": \"product\", \"castHints\": {\"ageRange\": \"\", \"ethnicity\": \"\", \"gender\": \"Female\"}, \"heroImageBase64\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAj/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ALLAB//Z\", \"language\": \"English\", \"offer\": \"Two bottles for 199\", \"price\": \"199\", \"productDescription\": \"Cold brew for busy parents. Promote our new bottle.\", \"productName\": \"Morning brew\", \"scriptType\": \"Testimonial\", \"voiceId\": \"EXAVITQu4vr4xnSDxMaL\"}}, {\"name\": \"fixture-event\", \"value\": \"script\"}, {\"name\": \"fixture-event\", \"value\": \"storyboard\"}, {\"name\": \"approve\"}, {\"name\": \"fixture-event\", \"value\": \"video\"}, {\"name\": \"fixture-event\", \"value\": \"result\"}]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContainEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected value: \u001b[32m{\"name\": \"reshoot\", \"value\": 0}\u001b[39m\nReceived array: \u001b[31m[{\"name\": \"start\", \"value\": {\"aspectRatio\": \"9:16\", \"avatar\": {\"description\": \"\", \"ethnicity\": \"\", \"gender\": \"Any\", \"prompt\": \"\", \"url\": \"\"}, \"brandName\": \"North Coffee\", \"businessType\": \"product\", \"castHints\": {\"ageRange\": \"\", \"ethnicity\": \"\", \"gender\": \"Female\"}, \"heroImageBase64\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAj/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ALLAB//Z\", \"language\": \"English\", \"offer\": \"Two bottles for 199\", \"price\": \"199\", \"productDescription\": \"Cold brew for busy parents. Promote our new bottle.\", \"productName\": \"Morning brew\", \"scriptType\": \"Testimonial\", \"voiceId\": \"EXAVITQu4vr4xnSDxMaL\"}}, {\"name\": \"fixture-event\", \"value\": \"script\"}, {\"name\": \"fixture-event\", \"value\": \"storyboard\"}, {\"name\": \"approve\"}, {\"name\": \"fixture-event\", \"value\": \"video\"}, {\"name\": \"fixture-event\", \"value\": \"result\"}]\u001b[39m\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-chat.spec.ts:67:40",
+                    "location": {
+                      "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-chat.spec.ts",
+                      "column": 40,
+                      "line": 67
+                    },
+                    "snippet": "  65 |   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'reshoot')).toHaveLength(0);\n  66 |   await page.getByRole('button', { name: 'Confirm reshoot', exact: true }).click();\n> 67 |   expect((await snapshot(page)).calls).toContainEqual({ name: 'reshoot', value: 0 });\n     |                                        ^\n  68 |   await composer(page).fill('style clean'); await page.getByRole('button', { name: 'Send', exact: true }).click();\n  69 |   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'choosePreset')).toHaveLength(0);\n  70 |   await page.getByRole('button', { name: 'Apply style', exact: true }).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-chat.spec.ts",
+                        "column": 40,
+                        "line": 67
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContainEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected value: \u001b[32m{\"name\": \"reshoot\", \"value\": 0}\u001b[39m\nReceived array: \u001b[31m[{\"name\": \"start\", \"value\": {\"aspectRatio\": \"9:16\", \"avatar\": {\"description\": \"\", \"ethnicity\": \"\", \"gender\": \"Any\", \"prompt\": \"\", \"url\": \"\"}, \"brandName\": \"North Coffee\", \"businessType\": \"product\", \"castHints\": {\"ageRange\": \"\", \"ethnicity\": \"\", \"gender\": \"Female\"}, \"heroImageBase64\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAj/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ALLAB//Z\", \"language\": \"English\", \"offer\": \"Two bottles for 199\", \"price\": \"199\", \"productDescription\": \"Cold brew for busy parents. Promote our new bottle.\", \"productName\": \"Morning brew\", \"scriptType\": \"Testimonial\", \"voiceId\": \"EXAVITQu4vr4xnSDxMaL\"}}, {\"name\": \"fixture-event\", \"value\": \"script\"}, {\"name\": \"fixture-event\", \"value\": \"storyboard\"}, {\"name\": \"approve\"}, {\"name\": \"fixture-event\", \"value\": \"video\"}, {\"name\": \"fixture-event\", \"value\": \"result\"}]\u001b[39m\n\n  65 |   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'reshoot')).toHaveLength(0);\n  66 |   await page.getByRole('button', { name: 'Confirm reshoot', exact: true }).click();\n> 67 |   expect((await snapshot(page)).calls).toContainEqual({ name: 'reshoot', value: 0 });\n     |                                        ^\n  68 |   await composer(page).fill('style clean'); await page.getByRole('button', { name: 'Send', exact: true }).click();\n  69 |   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'choosePreset')).toHaveLength(0);\n  70 |   await page.getByRole('button', { name: 'Apply style', exact: true }).click();\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-chat.spec.ts:67:40"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:31.209Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\assets\\design\\companion-beta\\qa\\resumed-final\\test-results\\companion-chat-brief-expli-66fad-deo-and-supported-revisions\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\tests\\e2e\\companion-chat.spec.ts",
+                    "column": 40,
+                    "line": 67
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "443399b08ea616821f70-5b3dce08c36f7457fb63",
+          "file": "companion-chat.spec.ts",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "IME Enter does not submit; invalid files and missing image cannot generate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1317,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:39.399Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-4fefead8e06eb1b33fe1",
+          "file": "companion-chat.spec.ts",
+          "line": 78,
+          "column": 1
+        },
+        {
+          "title": "draft reload/account isolation, error retry and fixture checkpoint restore",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7675,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:41.165Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-83aebfc5ccaf0d6e9891",
+          "file": "companion-chat.spec.ts",
+          "line": 91,
+          "column": 1
+        },
+        {
+          "title": "320px layout and real avatar bridge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6772,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:48.869Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-fee39657f0eaf36ea645",
+          "file": "companion-chat.spec.ts",
+          "line": 109,
+          "column": 3
+        },
+        {
+          "title": "375px layout and real avatar bridge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6307,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:49:55.665Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-3979264523c90dc99a56",
+          "file": "companion-chat.spec.ts",
+          "line": 109,
+          "column": 3
+        },
+        {
+          "title": "390px layout and real avatar bridge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8190,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:50:01.990Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-10c7c8241c9ca77d3acf",
+          "file": "companion-chat.spec.ts",
+          "line": 109,
+          "column": 3
+        },
+        {
+          "title": "1280px layout and real avatar bridge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:50:10.227Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-851450436980f7a6b34e",
+          "file": "companion-chat.spec.ts",
+          "line": 109,
+          "column": 3
+        },
+        {
+          "title": "reduced motion stays static and companion failure leaves usable chat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3406,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:50:18.431Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-1f7cdb3e7651b6238538",
+          "file": "companion-chat.spec.ts",
+          "line": 134,
+          "column": 1
+        },
+        {
+          "title": "actual App and ProducerFlow restore the same account run without generation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23553,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:50:21.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-cedceff256eabef5f74e",
+          "file": "companion-chat.spec.ts",
+          "line": 148,
+          "column": 1
+        },
+        {
+          "title": "actual ProducerFlow prevents duplicate starts and ignores research completing after cancellation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:50:45.519Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-42f83d52012d025873b0",
+          "file": "companion-chat.spec.ts",
+          "line": 163,
+          "column": 1
+        },
+        {
+          "title": "allowance and preset gates dispatch no generation or revision until permitted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6369,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:50:57.782Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-bd7481342fbf254e3aeb",
+          "file": "companion-chat.spec.ts",
+          "line": 191,
+          "column": 1
+        },
+        {
+          "title": "late attachment completion cannot cross an account remount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 891,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:04.192Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-1e5f522e572d66f15583",
+          "file": "companion-chat.spec.ts",
+          "line": 209,
+          "column": 1
+        },
+        {
+          "title": "actual ProducerFlow rejects stale orchestrator callbacks after Stop waiting",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1584,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:05.104Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-2f34babb9fed4888d6a4",
+          "file": "companion-chat.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "actual route fails closed while allowance is unknown and recovers after Retry allowance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6164,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:06.705Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-2306110b39104916fc8c",
+          "file": "companion-chat.spec.ts",
+          "line": 256,
+          "column": 1
+        },
+        {
+          "title": "actual upgrade and browser Back preserve companion intent and the local brief",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8858,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:12.886Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-1381c63a49c28de7f730",
+          "file": "companion-chat.spec.ts",
+          "line": 293,
+          "column": 1
+        },
+        {
+          "title": "actual saved-run load failure retries the same run without resubmitting",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10528,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:21.852Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-684f1bf60e100ff23ec2",
+          "file": "companion-chat.spec.ts",
+          "line": 310,
+          "column": 1
+        },
+        {
+          "title": "avatar asset load failure offers still-image fallback and retry without blocking text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6447,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:32.405Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-59328055e8112ac2ff40",
+          "file": "companion-chat.spec.ts",
+          "line": 324,
+          "column": 1
+        },
+        {
+          "title": "parent pointer events move the embedded companion eyes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4168,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:38.869Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "443399b08ea616821f70-f1b227580101d02f76d6",
+          "file": "companion-chat.spec.ts",
+          "line": 336,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "companion-glass.spec.ts",
+      "file": "companion-glass.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "glass overlay baseline contract at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5906,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:43.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-1b433b2e6e5d9c8fab5c",
+          "file": "companion-glass.spec.ts",
+          "line": 106,
+          "column": 3
+        },
+        {
+          "title": "glass overlay at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5710,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:49.327Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-6a60199036dd5518db41",
+          "file": "companion-glass.spec.ts",
+          "line": 106,
+          "column": 3
+        },
+        {
+          "title": "glass overlay at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6763,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:51:55.055Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-7f1c2fe971089238ca6e",
+          "file": "companion-glass.spec.ts",
+          "line": 106,
+          "column": 3
+        },
+        {
+          "title": "glass overlay at 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4745,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:01.842Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-8e102d954c5f39b94ce5",
+          "file": "companion-glass.spec.ts",
+          "line": 106,
+          "column": 3
+        },
+        {
+          "title": "mascot selection baseline contract preserves ordinary text selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3058,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:06.601Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-0a08d19b9fc636d0574e",
+          "file": "companion-glass.spec.ts",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "compact composer baseline contract grows and retains keyboard and Plus upload actions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4778,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:09.678Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-fd88c2746a2aa432f737",
+          "file": "companion-glass.spec.ts",
+          "line": 183,
+          "column": 1
+        },
+        {
+          "title": "voice baseline contract updates only the draft with indexed interim and final results",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2120,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:14.485Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-d259bd9f3f5fd2989409",
+          "file": "companion-glass.spec.ts",
+          "line": 217,
+          "column": 1
+        },
+        {
+          "title": "voice stop allows a final result; typing cancels the session without losing edits",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2454,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:16.620Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-0381d3f1202ded0cbfdc",
+          "file": "companion-glass.spec.ts",
+          "line": 243,
+          "column": 1
+        },
+        {
+          "title": "voice not-allowed provides a usable fallback and preserves existing text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2188,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:19.091Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-54b7235f43e774b68196",
+          "file": "companion-glass.spec.ts",
+          "line": 260,
+          "column": 3
+        },
+        {
+          "title": "voice audio-capture provides a usable fallback and preserves existing text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:21.312Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-5cf397fdad915ed615fa",
+          "file": "companion-glass.spec.ts",
+          "line": 260,
+          "column": 3
+        },
+        {
+          "title": "voice network provides a usable fallback and preserves existing text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:23.467Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-b83944207bdc1c480330",
+          "file": "companion-glass.spec.ts",
+          "line": 260,
+          "column": 3
+        },
+        {
+          "title": "voice no-speech provides a usable fallback and preserves existing text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:25.317Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-fd68d2f13ab231335e21",
+          "file": "companion-glass.spec.ts",
+          "line": 260,
+          "column": 3
+        },
+        {
+          "title": "unsupported voice remains honest and keyboard drafting works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1637,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:26.434Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-016ca50c05a2a466c5f7",
+          "file": "companion-glass.spec.ts",
+          "line": 272,
+          "column": 1
+        },
+        {
+          "title": "voice start rejection returns to typing without discarding the draft",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:28.087Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-8faaf466a1b60b1f7466",
+          "file": "companion-glass.spec.ts",
+          "line": 282,
+          "column": 1
+        },
+        {
+          "title": "chat, account, disabled and viewer transitions abort voice and reject late transcripts",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3634,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:29.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-6aeaefab40e125452077",
+          "file": "companion-glass.spec.ts",
+          "line": 291,
+          "column": 1
+        },
+        {
+          "title": "mobile drawer inert and pending navigation reject speech before chat unmount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3746,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:33.596Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-df6de5fa43cf877d70f1",
+          "file": "companion-glass.spec.ts",
+          "line": 322,
+          "column": 1
+        },
+        {
+          "title": "reduced motion and material accessibility fallbacks keep composer and header usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3694,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T02:52:37.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "33f6ea38eb18f8cb8c53-50887b25eabcf431b327",
+          "file": "companion-glass.spec.ts",
+          "line": 357,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-10T02:48:36.777Z",
+    "duration": 246702.665,
+    "expected": 44,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

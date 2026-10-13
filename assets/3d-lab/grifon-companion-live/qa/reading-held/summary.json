@@ -1,0 +1,90 @@
+{
+  "pass": true,
+  "checks": {
+    "cardVisible": true,
+    "supportingWingPose": true,
+    "tracingWingMoves": true,
+    "lineAdvanceVisible": true,
+    "readingNotWorkingKeys": true,
+    "readingNaturallyBlinks": true,
+    "workingStillTaps": true,
+    "pauseFreezesReading": true,
+    "resume": true,
+    "readingCleanup": true,
+    "noNormalErrors": true,
+    "reducedStaticHeldCard": true,
+    "otherStatePosesPreserved": true
+  },
+  "verifierExit": 0,
+  "runtimeSeconds": 32.717,
+  "baseline": {
+    "revision": "e61c18ba",
+    "exit": 1,
+    "failed": [
+      "cardPresent",
+      "readingWingPose"
+    ]
+  },
+  "sourceHashes": {
+    "main.js": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+    "reactions.js": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce"
+  },
+  "sourceUnchanged": true,
+  "video": {
+    "final": "reading-only-final.webm",
+    "finalIntervalSeconds": [
+      0,
+      12
+    ],
+    "source": "refined2-reading-12s.webm",
+    "sourceIntervalSeconds": [
+      2.8,
+      14.8
+    ],
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "viewportStageBounds": {
+      "x": 16,
+      "y": 190.671875,
+      "width": 358,
+      "height": 358
+    },
+    "characterCrop": {
+      "x": 16,
+      "y": 190,
+      "width": 358,
+      "height": 328
+    },
+    "ffmpegCrop": "crop=358:328:16:190",
+    "naturalBlinksObservedApproxSeconds": [
+      0.9,
+      4.44,
+      8.48
+    ],
+    "decodedClosedFrame": "final-video-blink.png",
+    "note": "Actual browser recording trimmed to stable Reading; no forced Blink action. Closed-frame pixels inspected at4.44s."
+  },
+  "visualEvidence": [
+    "refined2-390-stage.png",
+    "refined2-1280-stage.png",
+    "refined2-top-stage.png",
+    "refined2-bottom-stage.png",
+    "refined2-deep-dip-stage.png",
+    "refined2-glance-stage.png",
+    "final-video-start.png",
+    "final-video-blink.png"
+  ],
+  "visualFinding": "Full card upper edge/header visible in inspected refinement; supporting wing and descending trace wing visibly reach card. Message is distinct from Working keys. Natural full closure remains clean.",
+  "limits": [
+    "Sampled visual inspection; user remains judge of reading expressiveness.",
+    "Other-state preservation checks compare public reduced-motion poses with e61c18ba plus live Working taps; not every possible trajectory.",
+    "Desktop Edge/mobile emulation, not phone hardware performance."
+  ],
+  "artifactHashes": {
+    "scoped-smoke.cjs": "8b43012646d19e8073ba508902101205f5b66fa34e9cc551dd24fbe94ec311ca",
+    "scoped-report.json": "76faff8641696c4c92d7800ebd54866956e8beada7a511c064f065f390be0df2",
+    "reading-only-final.webm": "120f442e6d1a88e61f7f1ff4113bc0006e26de7a76ebc37402ea0a5e65c76a1a"
+  }
+}

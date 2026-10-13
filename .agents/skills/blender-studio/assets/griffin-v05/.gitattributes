@@ -1,0 +1,2 @@
+# Preserve exact approved source bytes for the manifest across Windows checkouts.
+*.py -text

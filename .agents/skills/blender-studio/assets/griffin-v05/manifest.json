@@ -1,0 +1,40 @@
+{
+  "curves": 404000,
+  "schema": 1,
+  "stage": "still master; no rig or real-time integration",
+  "approved": "2026-10-06",
+  "files": [
+    {
+      "path": "build-griffin-master.py",
+      "bytes": 17600,
+      "sha256": "253e49ec7f7c3e52d104b4900ea56d779930095bcbbb69def2e49302bff03eed"
+    },
+    {
+      "path": "render-griffin-views.py",
+      "bytes": 1423,
+      "sha256": "0601b5dd6b4e0e28dfbfa517455b1b91cebbf2e1d99975469f34ca6845fbf644"
+    },
+    {
+      "path": "griffin-master-v05-hero.png",
+      "bytes": 2427394,
+      "sha256": "0cad0d727d64526c8f8a36b228c09a316a60efdd6c3813f7b141eb2825f81f0a"
+    },
+    {
+      "path": "griffin-master-v05-front.png",
+      "bytes": 1279340,
+      "sha256": "0218541b1733977d3d2051cd48c2e1f364675d81a31a907ccdd04d0662813f23"
+    },
+    {
+      "path": "griffin-master-v05-detail.png",
+      "bytes": 1768497,
+      "sha256": "32948892f69da5822c6cc93501f58cbe9c9b0406403ccf9a88452027edaa9a21"
+    },
+    {
+      "path": "griffin-sprites.webp",
+      "bytes": 179536,
+      "sha256": "527993de9966fbbb0bc4e0e0688e02ac0ca1aed9604008f0796170ab7acba094"
+    }
+  ],
+  "blender": "5.2.2 LTS",
+  "identity": "Grifon griffin v05"
+}

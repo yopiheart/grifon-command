@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "errors": [
+    "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('navigation', { name: 'Conversations', exact: true }).getByRole('button', { name: /Newer second conversation/ })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('navigation', { name: 'Conversations', exact: true }).getByRole('button', { name: /Newer second conversation/ })\u001b[22m\n"
+  ]
+}

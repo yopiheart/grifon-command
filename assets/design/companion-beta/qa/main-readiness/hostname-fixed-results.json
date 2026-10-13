@@ -1,0 +1,541 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/e2e/typography.spec.ts",
+      "tests/e2e/companion-account.spec.ts",
+      "--grep",
+      "ordinary UI type and exceptions|real public components with signed-out boot stub|settings .* navigates after saving",
+      "--workers=1",
+      "--reporter=json,list",
+      "--output=.tmp/companion-main-readiness/qa/affected-green/test-results"
+    ],
+    "configFile": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\playwright.config.ts",
+    "rootDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/.tmp/companion-main-readiness/qa/affected-green/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/ADMIN/.codex/worktrees/4b8d/grifon-command/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ],
+      [
+        "list"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:5173",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "VITE_SUPABASE_URL": "http://localhost:54321",
+        "VITE_SUPABASE_ANON_KEY": "dummy-anon-key-for-boot-smoke"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "companion-account.spec.ts",
+      "file": "companion-account.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "settings Upgrade plan navigates after saving and browser Back restores chat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:34.388Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "09b356c665385834cc94-d2b9e125c3749f00f823",
+          "file": "companion-account.spec.ts",
+          "line": 478,
+          "column": 3
+        },
+        {
+          "title": "settings Help & support navigates after saving and browser Back restores chat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1843,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:36.333Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "09b356c665385834cc94-d0997d822b948e4969df",
+          "file": "companion-account.spec.ts",
+          "line": 478,
+          "column": 3
+        },
+        {
+          "title": "settings Terms of service navigates after saving and browser Back restores chat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1224,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:38.188Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "09b356c665385834cc94-2dde9245fa6f654e7ae0",
+          "file": "companion-account.spec.ts",
+          "line": 478,
+          "column": 3
+        },
+        {
+          "title": "settings Privacy policy navigates after saving and browser Back restores chat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1113,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:39.429Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "09b356c665385834cc94-9b9d54632193d6c01dce",
+          "file": "companion-account.spec.ts",
+          "line": 478,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "typography.spec.ts",
+      "file": "typography.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ordinary UI type and exceptions at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:40.574Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-ordinary-UI-type-and-exceptions-at-375px-chromium\\attachments\\computed-typography-ff700dfb68bc9333bebd7a1bb9131e81de75e0bf.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-ordinary-UI-type-and-exceptions-at-375px-chromium\\attachments\\rendered-typography-dc0ce546452ce1cbfed75a65a25384d05a0a9f34.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "34f7375f007ea02a2901-03a7eb2db8702cdeb47e",
+          "file": "typography.spec.ts",
+          "line": 86,
+          "column": 3
+        },
+        {
+          "title": "ordinary UI type and exceptions at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:41.908Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-ordinary-UI-type-and-exceptions-at-390px-chromium\\attachments\\computed-typography-5c49f5d2965dcca3d797941491cd50e160ca0f46.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-ordinary-UI-type-and-exceptions-at-390px-chromium\\attachments\\rendered-typography-64b392d35a0fd741eaed30be8342d6561d9f1a4c.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "34f7375f007ea02a2901-0a86f9dbfb792bec6696",
+          "file": "typography.spec.ts",
+          "line": 86,
+          "column": 3
+        },
+        {
+          "title": "ordinary UI type and exceptions at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:43.295Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-ordinary-UI-type-and-exceptions-at-1280px-chromium\\attachments\\computed-typography-f47032821a98ff65524ea386d120ba9dfbd486e2.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-ordinary-UI-type-and-exceptions-at-1280px-chromium\\attachments\\rendered-typography-63595bc41958a35f169ac26313de4c00af36e388.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "34f7375f007ea02a2901-082594a132d26562d1d4",
+          "file": "typography.spec.ts",
+          "line": 86,
+          "column": 3
+        },
+        {
+          "title": "real public components with signed-out boot stub at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3348,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:45.039Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-2fbc0-gned-out-boot-stub-at-375px-chromium\\attachments\\computed-typography-6ae7946e0a5b228efa8477b2d3fd3254c763f96c.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-2fbc0-gned-out-boot-stub-at-375px-chromium\\attachments\\rendered-typography-fe5785af300d3f7a43b9ad4e23abe349d6fb279c.png"
+                    },
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-2fbc0-gned-out-boot-stub-at-375px-chromium\\attachments\\computed-typography-bfcc03d502e7f3867af8ad3c6d52b3c5e91d96a3.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-2fbc0-gned-out-boot-stub-at-375px-chromium\\attachments\\rendered-typography-735565cf034d6bd0316c71ec17d2bef3644ae7c7.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "34f7375f007ea02a2901-3cd9861d79ae4fecaf38",
+          "file": "typography.spec.ts",
+          "line": 178,
+          "column": 3
+        },
+        {
+          "title": "real public components with signed-out boot stub at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:48.410Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-010c7-gned-out-boot-stub-at-390px-chromium\\attachments\\computed-typography-037bfc7f30e72d5416dbd72ca8c4caf2c1169208.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-010c7-gned-out-boot-stub-at-390px-chromium\\attachments\\rendered-typography-8f9685517b3ba9ca651e111c557de273d1fc5d9e.png"
+                    },
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-010c7-gned-out-boot-stub-at-390px-chromium\\attachments\\computed-typography-056d0b29ea46012834129dab7a1b41fce63b72a4.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-010c7-gned-out-boot-stub-at-390px-chromium\\attachments\\rendered-typography-14e53b194bb2acfe161ed9897ba6d52802b4c2fc.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "34f7375f007ea02a2901-dfd5e6aa181b8d70fc74",
+          "file": "typography.spec.ts",
+          "line": 178,
+          "column": 3
+        },
+        {
+          "title": "real public components with signed-out boot stub at 1280px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4361,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T06:58:51.394Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-104e9-ned-out-boot-stub-at-1280px-chromium\\attachments\\computed-typography-41e94da37d4a11466d665ce6dc6d4cd73a088ecc.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-104e9-ned-out-boot-stub-at-1280px-chromium\\attachments\\rendered-typography-1966ae8fcdf4fc4a37ceb3a61b5073dd8d3b764e.png"
+                    },
+                    {
+                      "name": "computed typography",
+                      "contentType": "application/json",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-104e9-ned-out-boot-stub-at-1280px-chromium\\attachments\\computed-typography-e8038589a4afa798cf25a54ca6e45c2f81f6c746.json"
+                    },
+                    {
+                      "name": "rendered typography",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\affected-green\\test-results\\typography-real-public-com-104e9-ned-out-boot-stub-at-1280px-chromium\\attachments\\rendered-typography-637bef4100362ad3fcb8149c4b7b9007a69b46a8.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "34f7375f007ea02a2901-28eb50ba9e4922e8a581",
+          "file": "typography.spec.ts",
+          "line": 178,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T06:58:32.967Z",
+    "duration": 22954.913,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,458 @@
+{
+  "checks": [
+    {
+      "name": "same-account token refresh preserves mounted paid tool and its unsent script",
+      "pass": true,
+      "fieldDuringRefresh": true,
+      "valueAfterRefresh": "This unsent Studio script must survive a token refresh."
+    },
+    {
+      "name": "browser Forward restores the explicit intended tool",
+      "pass": true
+    },
+    {
+      "name": "Back from selected Studio tool restores original chat",
+      "pass": true
+    },
+    {
+      "name": "Forward restores the selected Studio tool",
+      "pass": true
+    },
+    {
+      "name": "stale subscription read cannot replace new account plan",
+      "pass": true
+    },
+    {
+      "name": "settings identity follows account switch",
+      "pass": true
+    },
+    {
+      "name": "account change removes old subscription channel",
+      "pass": true
+    },
+    {
+      "name": "unmounted Studio subscription channel is cleaned up",
+      "pass": true
+    },
+    {
+      "name": "unmounted Studio auth listener is cleaned up",
+      "pass": true
+    },
+    {
+      "name": "subscription lifecycle has no page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "1280px modal initial focus",
+      "pass": true
+    },
+    {
+      "name": "1280px modal reverse wrap",
+      "pass": true
+    },
+    {
+      "name": "1280px modal forward wrap",
+      "pass": true
+    },
+    {
+      "name": "1280px background inert",
+      "pass": true
+    },
+    {
+      "name": "1280px player stays mounted with settings",
+      "pass": true
+    },
+    {
+      "name": "1280px minimum targets",
+      "pass": true
+    },
+    {
+      "name": "1280px no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "1280px settings focus restored",
+      "pass": true
+    },
+    {
+      "name": "1280px background operable after close",
+      "pass": true
+    },
+    {
+      "name": "unconfirmed consent is not represented as an off switch",
+      "pass": true
+    },
+    {
+      "name": "failed consent read is not represented as an off switch",
+      "pass": true
+    },
+    {
+      "name": "latest draft is stored before account navigation",
+      "pass": true
+    },
+    {
+      "name": "failed actual IndexedDB save retains auth",
+      "pass": true
+    },
+    {
+      "name": "failed actual IndexedDB save never calls signOut",
+      "pass": true
+    },
+    {
+      "name": "signOut error retains auth",
+      "pass": true
+    },
+    {
+      "name": "successful signOut keeps account-scoped latest chat draft",
+      "pass": true
+    },
+    {
+      "name": "1280px no page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "1280px no unexpected network requests",
+      "pass": true,
+      "requests": []
+    },
+    {
+      "name": "375px modal initial focus",
+      "pass": true
+    },
+    {
+      "name": "375px modal reverse wrap",
+      "pass": true
+    },
+    {
+      "name": "375px modal forward wrap",
+      "pass": true
+    },
+    {
+      "name": "375px background inert",
+      "pass": true
+    },
+    {
+      "name": "375px player stays mounted with settings",
+      "pass": true
+    },
+    {
+      "name": "375px minimum targets",
+      "pass": true
+    },
+    {
+      "name": "375px no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "higher contrast uses readable neutral scrollbar",
+      "pass": true
+    },
+    {
+      "name": "375px settings focus restored",
+      "pass": true
+    },
+    {
+      "name": "375px background operable after close",
+      "pass": true
+    },
+    {
+      "name": "375px no page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "375px no unexpected network requests",
+      "pass": true,
+      "requests": []
+    },
+    {
+      "name": "unknown consent GET does not disable sign out",
+      "pass": true
+    },
+    {
+      "name": "held-consent signout preserves latest draft",
+      "pass": true
+    },
+    {
+      "name": "late consent reply does not cause page errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "name": "default preview hides fixture controls",
+      "pass": true
+    },
+    {
+      "name": "mobile preview exposes an always-visible simulation disclosure",
+      "pass": true
+    },
+    {
+      "name": "preview never exposes consent switch",
+      "pass": true
+    },
+    {
+      "name": "preview signed-out screen has real login link",
+      "pass": true
+    },
+    {
+      "name": "collapsed desktop preview exposes an always-visible simulation disclosure",
+      "pass": true
+    },
+    {
+      "name": "preview has no external account writes",
+      "pass": true,
+      "requests": []
+    }
+  ],
+  "observations": [
+    {
+      "scenario": "initial-studio-network",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "initial-studio-text",
+      "text": "R\n\nGood afternoon, Review-Account-A\n.\n\n// ON THE LOT\n\nWhat are we selling today?\nMake an ad with Grifon\nMake a video ad\nResearch my market\nBuild an offer\n\nStart with your business. Build the ad plan, then choose a paid plan for a finished video.\n\nPick up where you left off\n\nNo saved Director ad plan found on this device\n\nResearch your business above, or open Director to start your ad plan.\n\nCheck againOpen Director \n// FIRST AD?\n\nStart with Director — the 8-step guided workflow.\n\nOr pick any module below para mag-explore. Lahat ng AI tools ready na.\n\nStart with Director\nOR SCROLL\n\n// EXPLORE TOOLS\n\nDirector AI\n\nDirect a full ad, scene by scene\n\nRecon\n\nFind your dream customers\n\nWar Room\n\nBuild an offer they can't refuse\n\nBroadcast\n\nCaptions & headlines that stop the scroll\n\nBUSINESS\n\nConcierge\n\nBring your own script; control every shot\n\nHook Lab\n\nEngineer scroll-stopping hooks\n\nBUSINESS\n\nCinema Command\n\nCraft commercial-grade cinematic ads\n\nBUSINESS\n\nInfluencer Forge\n\nBuild your own AI influencer\n\nRender Bay\n\nTurn your script into video\n\nCreative Strike\n\nGenerate scroll-stopping ad images\n\nSwarm\n\n100+ ad creatives from one hero image\n\nImage Lab\n\nEdit & retouch any image\n\nCampaign Planner\n\nPlan & schedule your content\n\nEdit Bay\n\nAuto-edit your final ad\n\nSignal Modulator\n\nLock your character's voiceover"
+    },
+    {
+      "scenario": "studio-buttons",
+      "buttons": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "R",
+        "",
+        " Make an ad with Grifon",
+        "Make a video ad",
+        "Research my market",
+        "Build an offer",
+        "Check again",
+        "Open Director ",
+        "",
+        "Start with Director",
+        "Director AIDirect a full ad, scene by scene",
+        "ReconFind your dream customers",
+        "War RoomBuild an offer they can't refuse",
+        "BroadcastCaptions & headlines that stop the scroll",
+        " businessConciergeBring your own script; control every shot",
+        "Hook LabEngineer scroll-stopping hooks",
+        " businessCinema CommandCraft commercial-grade cinematic ads",
+        " businessInfluencer ForgeBuild your own AI influencer",
+        "Render BayTurn your script into video",
+        "Creative StrikeGenerate scroll-stopping ad images",
+        "Swarm100+ ad creatives from one hero image",
+        "Image LabEdit & retouch any image",
+        "Campaign PlannerPlan & schedule your content",
+        "Edit BayAuto-edit your final ad",
+        "Signal ModulatorLock your character's voiceover"
+      ]
+    },
+    {
+      "scenario": "same-account-token-refresh",
+      "fieldDuringRefresh": true,
+      "valueAfterRefresh": "This unsent Studio script must survive a token refresh.",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "real-landing-intent-history",
+      "restored": true,
+      "url": "http://127.0.0.1:5173/app",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "subscription-lifecycle",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "settings-1280",
+      "geometry": [
+        {
+          "label": "Close settings",
+          "width": 44,
+          "height": 44,
+          "font": "14px"
+        },
+        {
+          "label": "Upgrade planView available plans",
+          "width": 472,
+          "height": 69.75,
+          "font": "14px"
+        },
+        {
+          "label": "Personalized ads",
+          "width": 44,
+          "height": 44,
+          "font": "14px"
+        },
+        {
+          "label": "Help & support",
+          "width": 472,
+          "height": 44,
+          "font": "14px"
+        },
+        {
+          "label": "Terms of service",
+          "width": 472,
+          "height": 45,
+          "font": "14px"
+        },
+        {
+          "label": "Privacy policy",
+          "width": 472,
+          "height": 45,
+          "font": "14px"
+        },
+        {
+          "label": "Sign out",
+          "width": 472,
+          "height": 44,
+          "font": "14px"
+        }
+      ],
+      "scroll": {
+        "height": 807,
+        "scrollHeight": 850,
+        "width": 512,
+        "scrollbar": "rgb(113, 113, 122) rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "scenario": "unconfirmed-granted-consent",
+      "switchCount": 0,
+      "text": "Settings\n\nIndependent Account\n\nreview-account-a@example.invalid\n\nPlan & billing\nPro Edition\nYour current plan\nPro\nUpgrade plan\nView available plans\nPrivacy\n\nPersonalized ads\n\nShare limited data with ad partners for relevant ads.\n\nLoading your ad preference…\n\nAppearance\nDark appearance\nGrifon uses a dark interface.\nHelp & legal\nHelp & support\nTerms of service\nPrivacy policy\nAccount\nSign out\n\nGrifon Command © 2026"
+    },
+    {
+      "scenario": "failed-consent-read",
+      "switchCount": 0
+    },
+    {
+      "scenario": "network-1280",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": [
+          "withdraw"
+        ]
+      }
+    },
+    {
+      "scenario": "settings-375",
+      "geometry": [
+        {
+          "label": "Close settings",
+          "width": 44,
+          "height": 44,
+          "font": "14px"
+        },
+        {
+          "label": "Upgrade planView available plans",
+          "width": 311,
+          "height": 69.75,
+          "font": "14px"
+        },
+        {
+          "label": "Personalized ads",
+          "width": 44,
+          "height": 44,
+          "font": "14px"
+        },
+        {
+          "label": "Help & support",
+          "width": 311,
+          "height": 44,
+          "font": "14px"
+        },
+        {
+          "label": "Terms of service",
+          "width": 311,
+          "height": 45,
+          "font": "14px"
+        },
+        {
+          "label": "Privacy policy",
+          "width": 311,
+          "height": 45,
+          "font": "14px"
+        },
+        {
+          "label": "Sign out",
+          "width": 311,
+          "height": 44,
+          "font": "14px"
+        }
+      ],
+      "scroll": {
+        "height": 574,
+        "scrollHeight": 889,
+        "width": 351,
+        "scrollbar": "rgb(113, 113, 122) rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "scenario": "network-375",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "held-consent-logout",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    },
+    {
+      "scenario": "preview-network",
+      "network": {
+        "blocked": [],
+        "unexpected": [],
+        "errors": [],
+        "consent": []
+      }
+    }
+  ]
+}

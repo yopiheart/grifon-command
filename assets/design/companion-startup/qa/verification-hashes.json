@@ -1,0 +1,628 @@
+{
+  "algorithm": "SHA256",
+  "sources": [
+    {
+      "path": "components/CompanionChat/CompanionAvatar.tsx",
+      "sha256": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a"
+    },
+    {
+      "path": "components/CompanionChat/companionChat.css",
+      "sha256": "81697a3d2f1b912419aff69e6d30111c3e034d1d4bbab18951ade3ef720d086c"
+    },
+    {
+      "path": "tests/e2e/companion-startup.spec.ts",
+      "sha256": "10f3479d98606c73072e21db161bb257e584d7a94a4e623adb79b098d9d09d16"
+    },
+    {
+      "path": "tests/e2e/companion-startup.config.ts",
+      "sha256": "4d257800381718782f3e41ea72d0dce1017c7a6a40879ee8a33bd5b9f3c0e252"
+    },
+    {
+      "path": "tests/e2e/companion-continuity.spec.ts",
+      "sha256": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "assets/design/companion-startup/qa/baseline-held-model-375.json",
+      "bytes": 226,
+      "sha256": "d6a6e0679bca22fb6fcd9cb1cc58c6eea57e53079bdf98e35683d0f566b0b254"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/baseline-held-model-375.png",
+      "bytes": 27826,
+      "sha256": "125f7d0eeec412e1db108564267ececc4186c828d6ce1ad9ee7570e11c785308"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/baseline-run.json",
+      "bytes": 747,
+      "sha256": "75abfb1ae6ca619b114b51cbf34afbc5d502ac4762218a3e71d6ede3342a653a"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-cold-ready-1280.json",
+      "bytes": 228780,
+      "sha256": "e74446a2af82970fc51dadb69b0609c4a3f27dd33b70d44119346c49cbbb6e59"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-cold-ready-1280.png",
+      "bytes": 53438,
+      "sha256": "5805c7ea715580aa0e56761b4e6f1e0e953aadc48bdeb07fb54d61b0be00e197"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-cold-ready-375.json",
+      "bytes": 223567,
+      "sha256": "9fcfca1bfbf79ffebd4b8b2e77b7139ce7240caed0b08ce57c85cefb8c9d3f07"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-cold-ready-375.png",
+      "bytes": 35551,
+      "sha256": "767b567a1e7bc77c9aeb1960aa0337f7ca8f50cbeb9af883e0c3de527ddfdbf0"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-cold-ready-390.json",
+      "bytes": 240944,
+      "sha256": "ab7489f10bd0c8f5388ac5bc5f73bf08b30d7f7f3dc2f61131e882052ad8c551"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-cold-ready-390.png",
+      "bytes": 36484,
+      "sha256": "e53397b147c15dd8ff37fde8c77d6a5c224d8ed84e1e92f7a9cef81d6b7041c3"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-playwright-report.json",
+      "bytes": 5494,
+      "sha256": "8cfea4b39c72145f26dbb066d570f97b3e77c7bd399f1cea6cc6697ee85ea7c6"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-loading-1280.json",
+      "bytes": 30139,
+      "sha256": "c4731116772b491a302d04ebd617d35a55ca99d212599659dc4eaa248e3b38cd"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-loading-1280.png",
+      "bytes": 49746,
+      "sha256": "974ffcf20430fe483bf1cf27ff4cb04eb5d235f862a928f037a0015c1d613ef1"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-loading-375.json",
+      "bytes": 13058,
+      "sha256": "a8ff75e85445ba9098530c4659e186473b215153863dd1c147a7085147fbd39a"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-loading-375.png",
+      "bytes": 32730,
+      "sha256": "74f8c629743b79b3162543eca28e1fbfc26f1f7a405685b1be3b4706b29fa9af"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-loading-390.json",
+      "bytes": 29992,
+      "sha256": "e2da9ceb2c8de52a823059e880764a4bb7e347f56418e4829b01bf44fb4367a5"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-loading-390.png",
+      "bytes": 33733,
+      "sha256": "f82d482ccb231367c616c4e0278abe273463de20bcfe7db60cadd517e1700eaf"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-ready-1280.json",
+      "bytes": 65139,
+      "sha256": "e8d30cd5109859bd7353935e4b3861639e8898031834b33ea7a2e08b91ca74b8"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-ready-1280.png",
+      "bytes": 53421,
+      "sha256": "34b7a279fcdb2c4e8ab460983a0aa134002c71bb40bf0f44748942662fa3b899"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-ready-375.json",
+      "bytes": 47857,
+      "sha256": "5a83ea35bce2ec2fce993ca6ce30c222d0f9e05659493aaf356eaf9a480f1d3c"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-ready-375.png",
+      "bytes": 35545,
+      "sha256": "88d2440b15197ae2bc15ac2f846b9e5817e19badfd635184382d34ee07890e8a"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-ready-390.json",
+      "bytes": 63042,
+      "sha256": "ac73651d2e3c6cadd7ea7632bc222b8c465d6676b8da3df02ebceee59b96e290"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-reload-ready-390.png",
+      "bytes": 36484,
+      "sha256": "40aa10dcb643324aacf1e8ce1d978f8501d41bcf8701f160f1bb03ca74ae16c4"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-slow-1280.json",
+      "bytes": 154076,
+      "sha256": "6e7b14a9543959f6fbdf9f953df78c752d5499a191699b06040d078cbf2272aa"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-slow-1280.png",
+      "bytes": 49742,
+      "sha256": "17748bc7fef032cbc8dc215122becce5319d74fb1436321b8a9607bbe6c2f4a3"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-slow-375.json",
+      "bytes": 137008,
+      "sha256": "73d6f6247aca7db62012080ded2609f35d1f163c708d9202031db4b8f959b975"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-slow-375.png",
+      "bytes": 32846,
+      "sha256": "13e26b73d119708d3c8bea4ab120e2caa2bbc8f0be1ef14cc8bb2ed5512a4589"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-slow-390.json",
+      "bytes": 156741,
+      "sha256": "4decef06cbff067d3ab79468e5a4e903b029dff08cd43ef808d701110af5cce3"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-slow-390.png",
+      "bytes": 33730,
+      "sha256": "6603434a901ebb3ec2d704f7ef4ee0960c04f7499f5a486dcde81a7e3f0c4bc1"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/cue-clock-startup-output.txt",
+      "bytes": 678,
+      "sha256": "a742c7d9815715f5daaf2e2eb7a880d17be9aeec1de942a8eec447d26b389ac9"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-playwright-report.json",
+      "bytes": 17792,
+      "sha256": "02bbeaeb980304a8b1ed6e3d044dd976a7ea21b9116366a43251864fe0dc16f8"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-slow-1280.json",
+      "bytes": 135086,
+      "sha256": "f566e7a4bd91546227dfc46758b338d536991d77dcb21887f89b5b3c95729010"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-slow-1280.png",
+      "bytes": 38698,
+      "sha256": "7133436fc1b3dcf29b410937f85f9b138ca217dc80fe905bd307c9b31c157987"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-slow-375.json",
+      "bytes": 135795,
+      "sha256": "ec9ae9dd4a3c9142e96883af59f4363f717bf213db33274c90f4781b37fa7f0f"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-slow-375.png",
+      "bytes": 24178,
+      "sha256": "c421feb719bcefc638d1fae01df5f86ffcf391fac084c9bba462d0033a57ef34"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-slow-390.json",
+      "bytes": 132462,
+      "sha256": "0bad43eb494b367bc29c70cc229d5e21df35dfa3c6196813ebe23e1cdeca6292"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-slow-390.png",
+      "bytes": 24834,
+      "sha256": "02218b4fc6571ce2605b86b88675d65a3965b82e39c11d1f9497d4295f7088b4"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/diagnostic-startup-output.txt",
+      "bytes": 5514,
+      "sha256": "c0bf83589de69b9d115bceaa23ef31b619fbbd89099798a70acfe45c4b3252b7"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-cold-ready-1280.json",
+      "bytes": 227213,
+      "sha256": "f46f0ee21165dbf9b6fbf0948fa5d9132462c9339817a39cf0980948753a6aba"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-cold-ready-1280.png",
+      "bytes": 53449,
+      "sha256": "93d7e292abe8e95f187da5f32c16d9bc6544072b9c07c8d8cfb43366c11aa8ca"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-cold-ready-375.json",
+      "bytes": 234771,
+      "sha256": "ddf5a661202d3562a3b9b7c1e63762f6700c621300485fa2d87eb308a5660892"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-cold-ready-375.png",
+      "bytes": 35556,
+      "sha256": "494c256f8340ec5001c3b2130aa43b63eb2a16b6a8e2797a7561f661a077f317"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-cold-ready-390.json",
+      "bytes": 225844,
+      "sha256": "c1e8977a1423ab311f241b1eb3fb0fbec5ae39a80248fb4791fc3d7f8542ab33"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-cold-ready-390.png",
+      "bytes": 36501,
+      "sha256": "74c1b295ee2326731b43f12ee850358fe187e394ea76e4e7e7fdc3ff3b7c3799"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-continuity-output.txt",
+      "bytes": 1038,
+      "sha256": "c0a15cff5235626392674f24c8d2d251abea9c5831b2571ddff3ed9c66f0ef97"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-continuity-report.json",
+      "bytes": 8569,
+      "sha256": "5a6246c342ff7eeb14bbb01045a30e68cebf7c72a022f71fd2fa15ff4bfc5071"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-failure-1280.json",
+      "bytes": 63087,
+      "sha256": "7fd4aec6e7b5506d3ca24dfc6b80f8891c5e00c5b331445962cc1ea0c456c62e"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-failure-1280.png",
+      "bytes": 54704,
+      "sha256": "ba76ee1b39c7107cfd45ed9064956538c6ccd6f7b5c5044ddf7e1c19bef8eeb0"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-failure-375.json",
+      "bytes": 62699,
+      "sha256": "4bb8ba249dfe78fc10d6dde40fcf173d89133480e59b1dc0338b4629ccd75352"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-failure-375.png",
+      "bytes": 36896,
+      "sha256": "0e1e5f092b41f583c30fa4be0938f1d32b61e9f9b9748df90b141466be57cdd3"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-failure-390.json",
+      "bytes": 62053,
+      "sha256": "292558f68de8e32a452b51028f6af7c6710fd874714d57195d83641aa5e02ad3"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-failure-390.png",
+      "bytes": 37884,
+      "sha256": "5c47721fe42f65f960cc443c9fad7b8e091a315f04e8006281512fecfe5fb01a"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-fast-1280.json",
+      "bytes": 46580,
+      "sha256": "22bb89d11af973620f934b24d9d0d961bc5eb261a1c7aa8e98123b540824933e"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-fast-1280.png",
+      "bytes": 42490,
+      "sha256": "f9de3cfeeb7952d6113b0981c7f94e7daf5579593510391b3cdcdbc8da3ed7e7"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-fast-375.json",
+      "bytes": 47221,
+      "sha256": "a6b609d3da4b43d8d740501857986fb8a507e2c34dfe3cbb3d85a7d9f57829c6"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-fast-375.png",
+      "bytes": 26907,
+      "sha256": "7cfa85de4f074ff459a86c916102256a2756e776ebe02c7badab0bb1a74a7968"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-fast-390.json",
+      "bytes": 49935,
+      "sha256": "fbd208b9fa5c5f64a20bc7a490538c9cb4062f2d88d75de172f11b1eef620974"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-fast-390.png",
+      "bytes": 27611,
+      "sha256": "0852b77ade3afc21043bddeabdf80b4a156cf80beb8e2aabde01984c22475559"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-held-model-375.json",
+      "bytes": 249,
+      "sha256": "d52a43ef3443739f64702da7a1ab06d6a605dc3837dce9c8542987986048c8d1"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-held-model-375.png",
+      "bytes": 24149,
+      "sha256": "02d1bf080b2b71d0438e197f35c2a1a7cb12981fb32a2b2f2ad187b1937fb596"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-playwright-report.json",
+      "bytes": 16170,
+      "sha256": "0b9902e693327d6707de2ce3771cf898381eb4cc1d087b6a9c753382ece289f1"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reduced-1280.json",
+      "bytes": 37617,
+      "sha256": "5d685e0dbff1b96231fe1a9db658fabad4bd4c2b4074a54f414136eda9d7be87"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reduced-1280.png",
+      "bytes": 42488,
+      "sha256": "0b54ba480c9653f0d2480a68ce58cbdf32eb010adb0e8b6c0372f685db695aee"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reduced-375.json",
+      "bytes": 38710,
+      "sha256": "4818248c1e03647e90a1d43b2c0e29c3513f1c2c47f3d191de6b899a041bf76d"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reduced-375.png",
+      "bytes": 26899,
+      "sha256": "b7715bb79a723ab76bde97b00a6f2c71845a9a413a49de49ea405205109c2ce8"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reduced-390.json",
+      "bytes": 41770,
+      "sha256": "6270fd70795ad89642b3ffcf223038171d68fd09cb763fe4a32d364840cc01d2"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reduced-390.png",
+      "bytes": 27598,
+      "sha256": "ee26e36d33810b7c73c25e6974528637df3515345ec025d0899cd07d6ef198dc"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-loading-1280.json",
+      "bytes": 30059,
+      "sha256": "8172f9c9e39b3e3f5662ccaf09eefd19e02540fbbeb4832af156c585495dbc32"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-loading-1280.png",
+      "bytes": 49767,
+      "sha256": "f3384acb354e4c9c59c97a1219853c8f969cecd81e95c98466323903af2e8387"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-loading-375.json",
+      "bytes": 28939,
+      "sha256": "a43115b8ac40c503a05e345d58f31b8c4781bf291a0412ebe3d262a3a143648e"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-loading-375.png",
+      "bytes": 32851,
+      "sha256": "6cdb4f9df114edd10bcccf14bf8c7c0ed19c17d1756eac950139a68260ae951b"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-loading-390.json",
+      "bytes": 31150,
+      "sha256": "697776e4d77e5af376b594b16ae4877b5c00cd9e67067fbe4983fd7d095cfa20"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-loading-390.png",
+      "bytes": 33754,
+      "sha256": "cd59891e198dcf30ad3d566730384bd10c9e1d8a8413d96465dc3850a42dc956"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-ready-1280.json",
+      "bytes": 65477,
+      "sha256": "e6e29073a6d0f10a0e4d4e823c21384d56a673b9b7e2d553966831ead4515d8f"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-ready-1280.png",
+      "bytes": 53442,
+      "sha256": "8e88022a98f11a98a7769b57fd1cc24b8777210f9be99816ab57169f9e283611"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-ready-375.json",
+      "bytes": 74063,
+      "sha256": "29ec1c70bd2711b7eca3ecf1ab43b17a08dbab0d15aedde1264ae11257fa89b2"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-ready-375.png",
+      "bytes": 35552,
+      "sha256": "22fb78e918f508ca30c8bcc920c3a66195471c2850c18a87b614285676a358ae"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-ready-390.json",
+      "bytes": 66494,
+      "sha256": "089072e3cef3dc650226ebfede73895f836761390e086758faad8ad5699ba2a7"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-reload-ready-390.png",
+      "bytes": 36511,
+      "sha256": "6a345ef5e7a3fb981f4e8f39c9812eef3e615eae67019b5a62f53b1319f57d18"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-loading-1280.json",
+      "bytes": 12304,
+      "sha256": "d9c78f1427d77e247b96ffb2034a3a4c22375ef87897de36528457cd39cff5b4"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-loading-1280.png",
+      "bytes": 49183,
+      "sha256": "d0f5fb083d6374512976addbd5b3661c5997327908ca13a81475a95f1b40f57b"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-loading-375.json",
+      "bytes": 12973,
+      "sha256": "7d9fbf52e7c0ee551e14d92b604425f57310fccdeccd30a729d41ce0b32c5075"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-loading-375.png",
+      "bytes": 32570,
+      "sha256": "d280860bdded781c715d8fc130551f2fc7a9d5cb9045c2ee24d92e7a5c52b470"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-loading-390.json",
+      "bytes": 13599,
+      "sha256": "d6fe831f1d3f9d915c948a5d7f86e1624c280b89883a27314689b35d88bd899d"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-loading-390.png",
+      "bytes": 33468,
+      "sha256": "4e155eba88764df7ac59fb9154ecac292bc09d3a806e740da2c3a4a64df66594"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-ready-1280.json",
+      "bytes": 44676,
+      "sha256": "19440572ebfcad489d044429059d1d265d74de1c8092c9877a1610da16dc8155"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-ready-1280.png",
+      "bytes": 52976,
+      "sha256": "966b5473e096431f6fd37921b7cd7e45b905406c60a152332b0396a16f054dca"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-ready-375.json",
+      "bytes": 46597,
+      "sha256": "686cd8af95beccd88a0d75df1b27e5abfe5572863f3fabbd75d75f7e30abb882"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-ready-375.png",
+      "bytes": 35402,
+      "sha256": "78baa4da588976f9e22bc6cda0f5c6fdad2de5aedd1afa80643912f2623faf0b"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-ready-390.json",
+      "bytes": 47076,
+      "sha256": "866b23d3a2c14ad7a748e0f5413aecf39f6ee35b75262773c73922b589448928"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-retry-ready-390.png",
+      "bytes": 36332,
+      "sha256": "54d365e77a3111f6a11238cfcbcfe696daf86e4b311dab99b2be851b6e8847c8"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-slow-1280.json",
+      "bytes": 151989,
+      "sha256": "e1472c3cbcf555f20dda30ddaa125842f65c1eae1e5f7e7563ff5ce80b89bf7b"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-slow-1280.png",
+      "bytes": 49765,
+      "sha256": "9559678cfc6d768917d7e1fe111d777c4e97119efc9f9eb120eb63e82f389816"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-slow-375.json",
+      "bytes": 156266,
+      "sha256": "5b43b32c44d7ea1f33c3ba10d2b17f3f0c84701d62c1a107dc6c6d16c58d3cbe"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-slow-375.png",
+      "bytes": 32856,
+      "sha256": "8605da0a67d67cc891be7cd4f7e85d8353a509a64626013b5ffc2ee77fc065f2"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-slow-390.json",
+      "bytes": 151475,
+      "sha256": "d95fdea748450b2de7e4a4c13636934978722c2ae59d757fb8a2c0ec6d4abeb3"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-slow-390.png",
+      "bytes": 33750,
+      "sha256": "8ef04c38d9a513918f8f7766ddc27481229845691b5b067d13cdca2014aef630"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/final-startup-output.txt",
+      "bytes": 2086,
+      "sha256": "f664550426bbdb6997f8ab6e53bcdf5dbf4e9ab6f819fff36823f83858890a1f"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/first-attempt-playwright-report.json",
+      "bytes": 28421,
+      "sha256": "0855c8eb4a6484231c0c866c225c12292a078996a3d3a5f81a74f54108f02372"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/first-attempt-startup-output.txt",
+      "bytes": 7107,
+      "sha256": "7fd2e0ad876be0e4d2f14c9eaf6d17b5d851373ea3d8ff1edf966d1b16122e3a"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/second-attempt-playwright-report.json",
+      "bytes": 28503,
+      "sha256": "4994d088031f7eb448cbbb0837741856ba58cce0cdb35e62a37e151eb32e8e88"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/second-attempt-startup-output.txt",
+      "bytes": 7117,
+      "sha256": "edd049c6289b11007a242327eac1500ef29dbebcfaa95388b35fc4ab1e769218"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-cold-loading.json",
+      "bytes": 325,
+      "sha256": "15ef945cee8b828505adca489af9ebaeb7d302f0a142a798614ec49df937881a"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-cold-loading.png",
+      "bytes": 33271,
+      "sha256": "a772e1236d50ef5ae063367a1b1c9ef9d3f780979891e77e6de54a12baab6168"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-cold-ready.json",
+      "bytes": 426,
+      "sha256": "8b2c124bbd513be1dbc821b65258daabc7ecc0e2cf46ec4c9d8fb34fd51af5df"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-cold-ready.png",
+      "bytes": 35932,
+      "sha256": "9277481a75a61f11fabb50e233391b254ae030c1e62ba6e8adf507c39d3685a1"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-failed-fallback.json",
+      "bytes": 355,
+      "sha256": "b516acd194e7685577f8b0d80b165891b7d0fd190db5ccc4dee0f63966811bf4"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-failed-fallback.png",
+      "bytes": 39179,
+      "sha256": "ce814c450cfa9c929a62faab725d927a24b2c1308c91f7a1d2b7055f3481c605"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-reaction-isolation-390.json",
+      "bytes": 365,
+      "sha256": "73a8d5cc7fc6accf9e49a3f4535d88773464b50b6a7496bcd1581db33d6b1a84"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-reaction-isolation-390.png",
+      "bytes": 36543,
+      "sha256": "259db4e3157a59a24eb60e0961e891e56ecd30f084336806dba28d6a94ba668e"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-retry-ready.json",
+      "bytes": 737,
+      "sha256": "57eed60afbbb5fbcdb8ed125578ada2d35792f4b804ca145ca9992ffbda91bd4"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-retry-ready.png",
+      "bytes": 37638,
+      "sha256": "1958bd073532608fc404357ae4f8ebd155b0edbe66178d0c9c1a5204f6d9a278"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-switches-1280.json",
+      "bytes": 3573,
+      "sha256": "f50aa40538c5d1f20a05680b2f9deb3f871ae221afda677326cc6062d565a843"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-switches-1280.png",
+      "bytes": 56330,
+      "sha256": "c2e51be56c6c3cf968ce5c1435b9895c0eaf816ee37ef03a458208702c72a2d8"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-switches-375.json",
+      "bytes": 3573,
+      "sha256": "c69c9d099d60d72e787d345eba8f889306b316e77b7dfc10523a480a16424f2e"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-switches-375.png",
+      "bytes": 36173,
+      "sha256": "3dc3b98db17d79e12b5a0ced682139e808b7011fe5374d3e8a098033265d30a5"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-switches-390.json",
+      "bytes": 3573,
+      "sha256": "146e84628bd143ab6c45931016aef5e2a2cf7697606074c6c2cb30c2f33a0c22"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/continuity/startup-final-switches-390.png",
+      "bytes": 37243,
+      "sha256": "30e6a170bc6445b1e572698e9f5b433ec4da3c0bb32b98abc85063c3fde80f20"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/raw-run-output.json",
+      "bytes": 72933,
+      "sha256": "2516074fdc58193149ff9542c7bd4bc829874fba68deeba8ae11f1c5f8150357"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/formatting-normalization.json",
+      "bytes": 2197,
+      "sha256": "d593560c0ec02e061b522ee108b05cf46e091abb48f2533bde1aca113edf75c4"
+    },
+    {
+      "path": "assets/design/companion-startup/qa/root-checks.json",
+      "bytes": 4227,
+      "sha256": "98325a0a0d51207c43a383a5bd0c1e4ca7d07cb4a20a02d6accd7f662e279b4f"
+    }
+  ],
+  "formattingNote": "Source hashes retained; generated evidence display copies normalized for staged whitespace gate. Exact pre-format bytes retained in raw-run-output.json; all evidence hashes refreshed after formatting only."
+}

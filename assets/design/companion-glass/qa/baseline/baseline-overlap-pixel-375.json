@@ -1,0 +1,13 @@
+{
+  "point": {
+    "x": 66,
+    "y": 133
+  },
+  "rgb": [
+    9,
+    9,
+    11
+  ],
+  "expectedFail": true,
+  "method": "Same8px-inset bubble strip sampling applied to original browser PNG captured before product edits."
+}

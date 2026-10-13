@@ -1,0 +1,18 @@
+{
+  "baselineCommit": "491e86092261ea7183b408ec15ea6ec0264cbc84",
+  "command": "COMPANION_QA_DIR=assets/3d-lab/grifon-companion-chat/qa/centered COMPANION_LAYOUT_PHASE=baseline npx.cmd playwright test --config tests/e2e/companion.config.ts companion-layout.spec.ts --grep 1280x900",
+  "exitCode": 1,
+  "testsFailed": 1,
+  "reason": "Actual avatar/composer center offset 576.5px exceeds 2px tolerance; avatar bottom615.25 is below transcript top142. Both initial and active geometry fail.",
+  "screenshots": [
+    "baseline-initial-1280.png",
+    "baseline-active-1280.png"
+  ],
+  "geometry": "baseline-geometry-1280.json",
+  "sourceSha256": {
+    "surface": "42EF8B56BAB51E6638FEB98C081047D062E7D43EAD8D097A83F99F5D07214DB2",
+    "composer": "11F2EA570B4124AB8CF5D7EC315DDEC005D2664A6D0F1221038DD75D12593F6A",
+    "css": "A465F702E5416581B59143EABACEAB99D53B1DC91312BD0DA0C3620B67FCCB5C"
+  },
+  "paidCalls": 0
+}

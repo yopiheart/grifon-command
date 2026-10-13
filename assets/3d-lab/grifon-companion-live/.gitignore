@@ -1,0 +1,5 @@
+# Playwright keeps opaque duplicate recording names; retain the named evidence clip.
+qa/page@*.webm
+qa/reactions/page@*.webm
+qa/blink-continuity/page@*.webm
+qa/reading-held/page@*.webm

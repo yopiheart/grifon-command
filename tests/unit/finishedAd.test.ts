@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mirrors quota.monthly.test's mock of the Supabase admin client: rpcMock backs
-// rateLimitCheck (the rate_limit_check RPC), maybeSingleMock backs every
-// peekQuota read (from().select().eq().maybeSingle()).
+// Mock the transactional meter and legacy read seams; no database or paid calls.
 const rpcMock = vi.fn();
 const maybeSingleMock = vi.fn();
 vi.mock('../../api/_lib/supabaseAdmin.js', () => ({
@@ -43,63 +41,40 @@ describe('consumeFinishedAd', () => {
     maybeSingleMock.mockReset();
   });
 
-  it('charges ONE credit the first time an ad is seen', async () => {
-    // 1) job-marker peek → no row (fresh ad)
-    // 2) consumeMonthly's post-consume peek → count 1
-    maybeSingleMock.mockResolvedValueOnce(fresh()).mockResolvedValueOnce(counted(1));
-    // rateLimitCheck called twice: consumeMonthly (allow) then mark the job key
-    rpcMock.mockResolvedValue({ data: true, error: null });
-
-    const res = await consumeFinishedAd('u1', 'pro', 'ad-1'); // pro.video_ads === 8
-    expect(res.allowed).toBe(true);
-    expect(res.alreadyCounted).toBe(false);
-    expect(res.limit).toBe(8);
-    expect(res.used).toBe(1);
-    // one consume + one job-marker write
-    expect(rpcMock).toHaveBeenCalledTimes(2);
+  it('uses one atomic debit-and-receipt RPC for the first ad charge', async () => {
+    rpcMock.mockResolvedValue({ data: { allowed: true, alreadyCounted: false, fromCredit: false, used: 1, limit: 8, remaining: 7 }, error: null });
+    expect(await consumeFinishedAd('u1', 'pro', 'ad-1')).toMatchObject({
+      allowed: true, alreadyCounted: false, used: 1, limit: 8,
+    });
+    expect(rpcMock).toHaveBeenCalledExactlyOnceWith('consume_finished_ad', {
+      p_user_id: 'u1', p_unit: 'video_ads', p_finished_ad_id: 'ad-1', p_limit: 8,
+    });
+    expect(maybeSingleMock).not.toHaveBeenCalled();
   });
 
-  it('does NOT re-charge later scenes of the same ad', async () => {
-    // 1) job-marker peek → already counted (count 1)
-    // 2) peekMonthly read → 3 video_ads used so far
-    maybeSingleMock.mockResolvedValueOnce(counted(1)).mockResolvedValueOnce(counted(3));
-
-    const res = await consumeFinishedAd('u1', 'pro', 'ad-1');
-    expect(res.allowed).toBe(true);
-    expect(res.alreadyCounted).toBe(true);
-    expect(res.used).toBe(3);
-    // no consume, no marker write — the meter is untouched
-    expect(rpcMock).not.toHaveBeenCalled();
-  });
-
-  it('blocks when the allowance is 0 AND no top-up credits remain', async () => {
-    // free.video_ads === 0 → consumeMonthly short-circuits without an RPC, then
-    // we fall back to consume_credit, which finds no credit (data:false).
-    maybeSingleMock.mockResolvedValueOnce(fresh());
-    rpcMock.mockResolvedValue({ data: false, error: null }); // consume_credit → none
-
-    const res = await consumeFinishedAd('u1', 'free', 'ad-1');
-    expect(res.allowed).toBe(false);
-    expect(res.alreadyCounted).toBe(false);
-    expect(res.fromCredit).toBeUndefined();
-    // only the credit probe — no monthly consume, no job-marker write
+  it('returns the existing receipt without a separate debit or marker write', async () => {
+    rpcMock.mockResolvedValue({ data: { allowed: true, alreadyCounted: true, fromCredit: false, used: 2, limit: 8, remaining: 6 }, error: null });
+    expect(await consumeFinishedAd('u1', 'pro', 'ad-1')).toMatchObject({
+      allowed: true, alreadyCounted: true, used: 2,
+    });
     expect(rpcMock).toHaveBeenCalledTimes(1);
-    expect(rpcMock.mock.calls[0][0]).toBe('consume_credit');
+    expect(maybeSingleMock).not.toHaveBeenCalled();
   });
 
-  it('falls back to a purchased top-up credit when the allowance is exhausted', async () => {
-    // free.video_ads === 0 → consumeMonthly short-circuits, then consume_credit
-    // succeeds (data:true) and the job marker is written so later scenes are free.
-    maybeSingleMock.mockResolvedValueOnce(fresh());
-    rpcMock.mockResolvedValue({ data: true, error: null });
+  it('allows an atomic purchased-credit result with no monthly allowance', async () => {
+    rpcMock.mockResolvedValue({ data: { allowed: true, alreadyCounted: false, fromCredit: true, used: 0, limit: 0, remaining: 0 }, error: null });
+    expect(await consumeFinishedAd('u1', 'free', 'ad-credit')).toMatchObject({
+      allowed: true, alreadyCounted: false, fromCredit: true,
+    });
+    expect(rpcMock).toHaveBeenCalledTimes(1);
+  });
 
-    const res = await consumeFinishedAd('u1', 'free', 'ad-credit');
-    expect(res.allowed).toBe(true);
-    expect(res.fromCredit).toBe(true);
-    expect(res.alreadyCounted).toBe(false);
-    // consume_credit + job-marker write (rate_limit_check), in that order
-    expect(rpcMock).toHaveBeenCalledTimes(2);
-    expect(rpcMock.mock.calls.map((c) => c[0])).toEqual(['consume_credit', 'rate_limit_check']);
+  it('denies an ad when neither monthly allowance nor top-up is available', async () => {
+    rpcMock.mockResolvedValue({ data: { allowed: false, alreadyCounted: false, fromCredit: false, used: 0, limit: 0, remaining: 0 }, error: null });
+    expect(await consumeFinishedAd('u1', 'free', 'ad-1')).toEqual({
+      allowed: false, alreadyCounted: false, used: 0, limit: 0, remaining: 0,
+    });
+    expect(rpcMock).toHaveBeenCalledTimes(1);
   });
 });
 

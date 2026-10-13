@@ -1,0 +1,56 @@
+{
+  "revision": "e61c18ba",
+  "routeOnly": true,
+  "checks": {
+    "cardPresent": false,
+    "readingWingPose": false
+  },
+  "contractPass": false,
+  "observed": {
+    "controls": {
+      "gazeX": -0.04050136662312632,
+      "gazeY": -0.42969132370251445,
+      "headYaw": -0.000512024267567719,
+      "headPitch": 0.03742158807936657,
+      "headRoll": 0,
+      "blink": 0,
+      "breath": 0.4214848286006531
+    },
+    "reaction": {
+      "state": "reading",
+      "stateAge": 0.8171000000000003,
+      "blend": 1,
+      "weights": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "wingLeft": [
+        0,
+        0,
+        0
+      ],
+      "wingRight": [
+        0,
+        0,
+        0
+      ],
+      "tapLeft": 0,
+      "tapRight": 0,
+      "propReading": 0,
+      "propWorking": 0,
+      "cleanBody": 0,
+      "cursorScale": 0.2,
+      "readyBlink": 0,
+      "touring": false
+    }
+  },
+  "fixtureHashes": {
+    "index.html": "483e9b555e91a1222305892bc426978d4629ad7254a692b58d7ab4d340c018b9",
+    "main.js": "7668af0ae429470e79bf4cd3c091103eb7a9d540429f1f8f9bf1d9b94a47abd3",
+    "style.css": "28d0933fa03b061a5b920a33d5324a230a9ca590efb4ee31a79d4c811ca809cb",
+    "reactions.js": "4646c68d98334480512d056f57a09cb9a5ca9617635dd7848eff19b98536de4c"
+  }
+}

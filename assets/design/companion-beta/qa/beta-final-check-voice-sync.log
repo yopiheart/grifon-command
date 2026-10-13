@@ -1,0 +1,8 @@
+
+> creative-director-ai-assistant@1.0.0 check:voice-sync
+> node tools/check-voice-lint-sync.mjs
+
+  ·  grifon-starter — walang voice gate (dapat ENGLISH ang copy nito, STEP 0a)
+  ✓  oceanides-paolo
+  ✓  oceanides-price-page
+voice-lint sync ok — 2 funnel katulad ng _template (222b3ede9f9b)

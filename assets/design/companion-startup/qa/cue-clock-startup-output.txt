@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:25748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 375px (6.2s)
+  ok 2 tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 390px (6.4s)
+  ok 3 tests\e2e\companion-startup.spec.ts:205:3 › cold slow load and full refresh keep a stable empty slot then reveal real pixels at 1280px (6.2s)
+
+  3 passed (20.6s)

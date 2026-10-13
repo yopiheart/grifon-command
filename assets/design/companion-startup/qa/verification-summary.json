@@ -1,0 +1,81 @@
+{
+  "result": "PASS",
+  "capturedAt": "2026-10-07T13:27:27.7090917+08:00",
+  "baseline": {
+    "exitCode": 1,
+    "head": "bccbc2dc",
+    "visibleStill": true,
+    "result": "FAIL (expected original-defect demonstration)"
+  },
+  "startup": {
+    "passed": 13,
+    "exitCode": 0,
+    "failed": 0,
+    "durationSeconds": 43.0,
+    "command": "npx.cmd playwright test --config tests/e2e/companion-startup.config.ts"
+  },
+  "continuity": {
+    "passed": 6,
+    "exitCode": 0,
+    "failed": 0,
+    "durationSeconds": 24.4,
+    "command": "npx.cmd playwright test --config tests/e2e/companion-continuity.config.ts --output assets/design/companion-startup/qa/continuity-test-results --reporter list,json"
+  },
+  "environment": "Isolated headless Microsoft Edge contexts; existing Vite 5173; provider/API routes blocked; microphone disabled; no paid/live switches",
+  "limitations": "CSS loading delay verified as 300 ms on the native document animation timeline. Not a wall-clock or phone/GPU performance benchmark. Original failed test-clock attempts and independent clock diagnostics preserved.",
+  "sourceFreezeUnchanged": true,
+  "viewports": [
+    {
+      "width": 375,
+      "height": 667,
+      "slotPixels": 56,
+      "cueTimelineElapsedMs": 316.8,
+      "cueCssDelay": "0.3s",
+      "actualFirstColoredPixels": 3429,
+      "normalReadyMessageCount": 1,
+      "reducedReadyMessageCount": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "slotPixels": 56,
+      "cueTimelineElapsedMs": 317.5,
+      "cueCssDelay": "0.3s",
+      "actualFirstColoredPixels": 3429,
+      "normalReadyMessageCount": 1,
+      "reducedReadyMessageCount": 1
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "slotPixels": 64,
+      "cueTimelineElapsedMs": 316.79999999999995,
+      "cueCssDelay": "0.3s",
+      "actualFirstColoredPixels": 4471,
+      "normalReadyMessageCount": 1,
+      "reducedReadyMessageCount": 1
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "components/CompanionChat/CompanionAvatar.tsx",
+      "sha256": "f3116ee6fd76f87d53a058023d7a67f0476c556e053b98af1a39c87d42aa5d0a"
+    },
+    {
+      "path": "components/CompanionChat/companionChat.css",
+      "sha256": "81697a3d2f1b912419aff69e6d30111c3e034d1d4bbab18951ade3ef720d086c"
+    },
+    {
+      "path": "tests/e2e/companion-startup.spec.ts",
+      "sha256": "10f3479d98606c73072e21db161bb257e584d7a94a4e623adb79b098d9d09d16"
+    },
+    {
+      "path": "tests/e2e/companion-startup.config.ts",
+      "sha256": "4d257800381718782f3e41ea72d0dce1017c7a6a40879ee8a33bd5b9f3c0e252"
+    },
+    {
+      "path": "tests/e2e/companion-continuity.spec.ts",
+      "sha256": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c"
+    }
+  ]
+}

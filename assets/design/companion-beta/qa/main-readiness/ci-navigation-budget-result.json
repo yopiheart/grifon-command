@@ -1,0 +1,77 @@
+{
+  "capturedUtc": "2026-10-11T09:24:54.318Z",
+  "sourceHashes": {
+    "navigationSha256": "333c9d7c6f0dec036a0c559f8c283016a3132d722823d398f6cc070f06ed541a",
+    "configSha256": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4",
+    "appSha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620"
+  },
+  "sourceAndAssertionsUnchanged": true,
+  "boundaryDifferences": {
+    "wholeTestCI": {
+      "before": 60000,
+      "after": 180000
+    },
+    "actionCI": {
+      "before": "no separate action cap",
+      "after": 15000
+    },
+    "expectCI": {
+      "before": 15000,
+      "after": 15000
+    },
+    "newChatClickCI": {
+      "before": 3000,
+      "after": 15000
+    },
+    "localWholeTestMs": 60000,
+    "localNewChatClickMs": 3000
+  },
+  "positive": {
+    "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-budget/playwright.config.ts --grep \"New chat preserves a pre-generation conversation and returns in one click\" --repeat-each=3",
+    "exitCode": 0,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "retries": 0,
+    "durationMs": 24480.174000000003,
+    "finalDocumentObservedNewChatClicksPerCase": [
+      0,
+      0,
+      0
+    ],
+    "finalDocumentMockedProviderCallsPerCase": [
+      0,
+      0,
+      0
+    ],
+    "sourceNewChatClickCallSites": 1,
+    "preReloadRuntimeClickCountsRetained": false,
+    "originalZeroFixtureCallsAssertionBeforeReloadPassed": true
+  },
+  "negative": {
+    "command": "npm.cmd run test:e2e -- --config=.tmp/companion-main-readiness/qa/navigation-budget/playwright.config.ts --grep \"New chat preserves a pre-generation conversation and returns in one click\"",
+    "exitCode": 1,
+    "expectedFailure": "currentId remained original; unchanged not.toBe predicate failed at 15000ms",
+    "testDurationMs": 19637,
+    "blockedExactlyOneEnabledClick": true,
+    "idRemainedOriginal": true,
+    "mockedProviderCalls": 0,
+    "mutation": "Browser-only capture listener cancels New chat click; clickable/visible button and app source retained"
+  },
+  "settings": {
+    "wholeTestMs": 180000,
+    "actionMs": 15000,
+    "expectMs": 15000,
+    "workers": 1,
+    "retries": 0
+  },
+  "cleanup": {
+    "stoppedOwnPid": 28696,
+    "onlyRecordedPidStopped": true,
+    "finishedUtc": "2026-10-11T09:24:41.0571651Z",
+    "listenerRemaining": false
+  },
+  "evidenceSummarySha256": "5245629127363dbc71c85e99d925d411850a38a15342d9988da62232af23d938",
+  "scope": "Installed repository Playwright Chromium; fixture-only API-denied isolated 5187; no app edits, secrets, paid/live providers, production writes, deployment or commits",
+  "instrumentationLimit": "Positive afterEach observation runs after page.reload. addInitScript resets the click ledger and fixture calls in the new document, so final [0,0,0] counts do not measure the preceding New chat clicks. The passed source test has one New chat click call site and asserts zero fixture calls before reload; runtime click count across reload was not retained. Negative control fails before reload and retains its observed one enabled-button click."
+}

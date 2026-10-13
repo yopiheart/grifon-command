@@ -1,0 +1,95 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "device": "Desktop Edge with mobile viewport/touch emulation; not actual phone performance",
+  "scope": "Real chat surface and avatar; controller callbacks and output media are explicit fixtures. No production generation.",
+  "events": [
+    {
+      "name": "ready",
+      "seconds": 0.77,
+      "state": "idle",
+      "reaction": "idle"
+    },
+    {
+      "name": "reading-brief",
+      "seconds": 4.647,
+      "state": "reading",
+      "reaction": "reading"
+    },
+    {
+      "name": "summary-zero-starts",
+      "seconds": 7.875,
+      "state": "idle",
+      "reaction": "idle"
+    },
+    {
+      "name": "working-research",
+      "seconds": 12.565,
+      "state": "working",
+      "reaction": "working"
+    },
+    {
+      "name": "storyboard-review",
+      "seconds": 16.387,
+      "state": "ready",
+      "reaction": "ready"
+    },
+    {
+      "name": "sample-result",
+      "seconds": 23.566,
+      "state": "ready",
+      "reaction": "ready"
+    }
+  ],
+  "calls": [
+    {
+      "name": "start"
+    },
+    {
+      "name": "fixture-event",
+      "value": "script"
+    },
+    {
+      "name": "fixture-event",
+      "value": "storyboard"
+    },
+    {
+      "name": "approve"
+    },
+    {
+      "name": "fixture-event",
+      "value": "video"
+    },
+    {
+      "name": "fixture-event",
+      "value": "result"
+    }
+  ],
+  "errors": [],
+  "blocked": [],
+  "metrics": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001636) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "frameCount": 1373,
+    "state": "ready",
+    "warmMedianMs": 16.700000000000728,
+    "warmP95Ms": 17,
+    "samples": 180
+  },
+  "sourceHashes": {
+    "App.tsx": "8ee4793e898298aeab23501e2074d6c21c01d60269cec3f07cf977884f0a76b8",
+    "components/CompanionChat/CompanionAvatar.tsx": "4a01e31309e94328eb890f519ef62c28241f029a50994a13d4339c9704392348",
+    "components/CompanionChat/CompanionChatSurface.tsx": "f94f447a8052b62db082c85842ad02f2f166d1326d56294051ad755f73ff44ca",
+    "components/CompanionChat/index.tsx": "d9cbcd26a493a8cb7cedbc4927f4745010c18455a7274bf59f67a08e634f942c",
+    "components/OneShotAd/ProducerFlow.tsx": "d5ed72f5d66d3a2bb6f3503eb2fa207b39a0c8a24b60bbd6516576d7bfc7d515",
+    "services/companionIntake.ts": "760106ff3e3d30885a33ce6261dbb43faf88a9036c12ef0c3593082384ac8113",
+    "public/companion/bridge.js": "66e575f98d041aec786c4e7b9d47dc1bc25016cee6154e44dd71096d5775e64c",
+    "public/companion/main.js": "ca60e8737997220b0c571323f914d0a92f44549af0d1282d3840e1fd52d16892",
+    "public/companion/reactions.js": "41adee9a7fdfcc671c6bcdfbad520b00dfdaae3a20d13c623dd3f2ac505648ce",
+    "dev/companionChatPreview.tsx": "4542625bf452acfdd20f93db348ba4a7b1aca8fb9b5c980ef358eac390032f91",
+    "companion-chat-preview.html": "ffbadc85bc71585b15554d3094681ae0b027623d0c3021d948f5a6f488c934dc"
+  },
+  "video": "mobile-demo.webm",
+  "elapsedSeconds": 24.079
+}

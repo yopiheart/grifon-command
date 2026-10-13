@@ -1,0 +1,242 @@
+{
+  "controls": [
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "BUTTON",
+      "label": "Back to dashboard",
+      "size": "14px",
+      "weight": "600",
+      "width": 44
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 46,
+      "kind": "BUTTON",
+      "label": "New ad",
+      "size": "14px",
+      "weight": "600",
+      "width": 76.765625
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "BUTTON",
+      "label": "Edit brief",
+      "size": "14px",
+      "weight": "600",
+      "width": 85.125
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "SELECT",
+      "label": "Ad language",
+      "size": "14px",
+      "weight": "400",
+      "width": 314
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "SELECT",
+      "label": "Ad format",
+      "size": "14px",
+      "weight": "400",
+      "width": 314
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "SELECT",
+      "label": "Ad voice",
+      "size": "14px",
+      "weight": "400",
+      "width": 314
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 46,
+      "kind": "BUTTON",
+      "label": "Add product photo",
+      "size": "14px",
+      "weight": "600",
+      "width": 314
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "BUTTON",
+      "label": "Generate storyboard",
+      "size": "14px",
+      "weight": "600",
+      "width": 314
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "BUTTON",
+      "label": "Attach product photo",
+      "size": "14px",
+      "weight": "700",
+      "width": 44
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 61.5,
+      "kind": "TEXTAREA",
+      "label": "Message Grifon",
+      "size": "14px",
+      "weight": "400",
+      "width": 236
+    },
+    {
+      "family": "Inter, sans-serif",
+      "height": 44,
+      "kind": "BUTTON",
+      "label": "Send",
+      "size": "14px",
+      "weight": "700",
+      "width": 44
+    }
+  ],
+  "messages": [
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    },
+    {
+      "family": "Inter, sans-serif",
+      "kind": "message",
+      "size": "14px",
+      "weight": "400"
+    },
+    {
+      "family": "\"JetBrains Mono\", monospace",
+      "kind": "time",
+      "size": "11px",
+      "weight": "400"
+    }
+  ],
+  "overflow": 0,
+  "viewport": {
+    "height": 844,
+    "width": 390
+  }
+}

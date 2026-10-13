@@ -1,0 +1,29 @@
+{
+  "skill_name": "blender-studio",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Make an editable soft 3D fox companion using my approved character sheet, at the furry Grifon quality. Keep its face and show front and close-up renders.",
+      "expected_output": "Character track; preserve fox identity, adapt geometry rather than reskin griffin, regional groom and independent visual review; editable scene and render evidence without claiming live animation.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Build a premium Blender perfume bottle render from these front and side photos. Use my exact label. The cap is brushed metal and the bottle is glass.",
+      "expected_output": "Product track; inspect dimensions or state approximation, exact artwork and UV placement, distinct glass/metal materials and macro reflection/seam review. No compulsory fur or nonmetallic preset.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Turn my measured floor plan into a furnished 3D condo interior with three eye-level views. Missing finish choices can use sensible defaults.",
+      "expected_output": "Architecture track; measured scale/openings, compare plan blockout, clearly mark authored finish assumptions, plausible furniture scale and lighting; no claim of engineering documentation.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Create a stylized market stall prop for our mobile game. I need the Blender master and a runtime export, not just a beauty render.",
+      "expected_output": "Game track; resolve engine/platform budget, master and runtime mesh, UV/normals/pivot and required LOD/collision checks, export/reimport and target testing or explicit pending status.",
+      "files": []
+    }
+  ]
+}

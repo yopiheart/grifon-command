@@ -1,0 +1,2306 @@
+{
+  "failed": {
+    "ready": null,
+    "opacity": 0,
+    "slot": {
+      "left": 159.5,
+      "top": 4,
+      "width": 56,
+      "height": 56
+    },
+    "canvas": null,
+    "innerFallbackVisible": true,
+    "firstPaint": null,
+    "ledger": {
+      "samples": [
+        {
+          "at": 1791358474735.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": null,
+                "currentTime": 0,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 365.8,
+            "slot": {
+              "left": 0,
+              "top": 0,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474766.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 33.49999999999997,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 399.3,
+            "slot": {
+              "left": 0,
+              "top": 0,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474784.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 66.6,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 432.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474794.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 83.29999999999998,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 449.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474796.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 99.99999999999997,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 465.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474805.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 116.59999999999998,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 482.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474826.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 134.69999999999993,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 500.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474838.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 150.00000000000003,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 515.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474857.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 167.3,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 533.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474874.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 183.3,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 549.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474890,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 199.99999999999994,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 565.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474905,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 216.60000000000002,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 582.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474922,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 233.50000000000003,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 599.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474938.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 250,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 615.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474954.7002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 266.69999999999993,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 632.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474971.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": false,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "0",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 283.4,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 649.2,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358474988.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 665.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475005.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 682.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475021.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 699.2,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475038.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 715.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475054.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 732.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475071.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": false,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Loading companion",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0.3s",
+              "duration": "0s"
+            },
+            "cueAnimations": [
+              {
+                "startTime": 365.8,
+                "currentTime": 300,
+                "playbackRate": 1,
+                "timing": {
+                  "delay": 300,
+                  "direction": "normal",
+                  "duration": 0,
+                  "easing": "linear",
+                  "endDelay": 0,
+                  "fill": "forwards",
+                  "iterationStart": 0,
+                  "iterations": 1
+                }
+              }
+            ],
+            "timeline": 749.2,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475088.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 765.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475105.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 782.6,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475125.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 799.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475139.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 815.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475155.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 832.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475172.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 849.2,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475188.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 865.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475205.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 882.6,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475221.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 899.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475238.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 915.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475255.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 932.7,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475271.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 949.2,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475288.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 966,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475305.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 983,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475321.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 999.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475338.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1015.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475354.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1032.6,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475372.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1049.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475388.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1066,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475404.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1082.7,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475421.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1099.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475438.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1116,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475455.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1132.7,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475472,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1149.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475488.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1166,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475504.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1182.6,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475521.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1199.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475538.7002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1216.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475555,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1232.7,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475571.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1249.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475588.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1266.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475605.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1282.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475621.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1299.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475638.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1316.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475654.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1332.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475672.5,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1349.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475688.3,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1366.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475705.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1382.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475721.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1399.4,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475738.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1416.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475755.7002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1432.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475771.4001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1449.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475788.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1466.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475804.9001,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1482.8,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475821.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1499.6,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475839,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1516.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475855.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1532.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475871.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1549.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475888.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1566.1,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475905,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1582.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475921.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1599.5,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475938.1,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1616.2,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475955.2002,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1632.9,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475971.6,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1649.6,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        },
+        {
+          "at": 1791358475988.8,
+          "state": {
+            "opacity": 0,
+            "visible": false,
+            "still": true,
+            "ready": null,
+            "cueVisible": true,
+            "cueText": "Companion shown as a still image. Chat is available.",
+            "cueStyle": {
+              "opacity": "1",
+              "delay": "0s",
+              "duration": "0s"
+            },
+            "cueAnimations": [],
+            "timeline": 1666.3,
+            "slot": {
+              "left": 159.5,
+              "top": 4,
+              "width": 56,
+              "height": 56
+            },
+            "animations": []
+          }
+        }
+      ],
+      "readyMessages": [],
+      "frameInsertedAt": 1791358474734.2002,
+      "frameInsertedTimeline": 349.1,
+      "running": true
+    },
+    "overflow": 0,
+    "calls": []
+  },
+  "network": {
+    "rejected": [],
+    "pageErrors": []
+  }
+}

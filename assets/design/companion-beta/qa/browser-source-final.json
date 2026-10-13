@@ -1,0 +1,108 @@
+{
+  "capturedAt": "2026-10-10T03:15:22.4583679Z",
+  "reference": "resumed-chat-final/source-before.json",
+  "checkedFiles": 16,
+  "matchingFiles": 15,
+  "changesSinceUiRun": [
+    "services/geminiService.ts"
+  ],
+  "files": [
+    {
+      "path": "components/CompanionChat/CompanionChatShell.tsx",
+      "uiRunSha256": "0E381C6CB6406B6DC3957F9EA6C4B38BDAD5AD7FC719E0CD3B5AFC4238657B6E",
+      "currentSha256": "0E381C6CB6406B6DC3957F9EA6C4B38BDAD5AD7FC719E0CD3B5AFC4238657B6E",
+      "matches": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "uiRunSha256": "71D83E71DED1ABC8623EF2C5EA00A64463A9682B9321F9670F3E2650ECFA84F1",
+      "currentSha256": "71D83E71DED1ABC8623EF2C5EA00A64463A9682B9321F9670F3E2650ECFA84F1",
+      "matches": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionComposer.tsx",
+      "uiRunSha256": "E8C3A04CA9EE9207AE124D6992873D3A2B3E5D6ACC18C5A9C92E50AB97CD14ED",
+      "currentSha256": "E8C3A04CA9EE9207AE124D6992873D3A2B3E5D6ACC18C5A9C92E50AB97CD14ED",
+      "matches": true
+    },
+    {
+      "path": "components/CompanionChat/index.tsx",
+      "uiRunSha256": "A9D3A4BFE1CCB2D647E96F4B1DBA43C75C2D5DBB259175998973277BA3970EF3",
+      "currentSha256": "A9D3A4BFE1CCB2D647E96F4B1DBA43C75C2D5DBB259175998973277BA3970EF3",
+      "matches": true
+    },
+    {
+      "path": "components/OneShotAd/ProducerFlow.tsx",
+      "uiRunSha256": "0709891055AA8BA251B3F58839235242945D44B4C9A70BEF09F3B79832918C3F",
+      "currentSha256": "0709891055AA8BA251B3F58839235242945D44B4C9A70BEF09F3B79832918C3F",
+      "matches": true
+    },
+    {
+      "path": "services/companionConversations.ts",
+      "uiRunSha256": "883575CDA4E95275219BFAA8298DC255E47E3FDDF7C4D97548024E010B3D8345",
+      "currentSha256": "883575CDA4E95275219BFAA8298DC255E47E3FDDF7C4D97548024E010B3D8345",
+      "matches": true
+    },
+    {
+      "path": "services/companionProductionLock.ts",
+      "uiRunSha256": "DE1C09BBC4EA935CEF072FA2DADE5F4A86CFBBCB315D9B1D8A3E95593FD042D0",
+      "currentSha256": "DE1C09BBC4EA935CEF072FA2DADE5F4A86CFBBCB315D9B1D8A3E95593FD042D0",
+      "matches": true
+    },
+    {
+      "path": "services/producerOrchestrator.ts",
+      "uiRunSha256": "1C1DA4CA2EEEDC6F7EFFBAA66BF75D7C009207FEFB351763517A2A941FE680C5",
+      "currentSha256": "1C1DA4CA2EEEDC6F7EFFBAA66BF75D7C009207FEFB351763517A2A941FE680C5",
+      "matches": true
+    },
+    {
+      "path": "services/geminiService.ts",
+      "uiRunSha256": "24B9E92AF60D604CE15C51FC1695D852B4528A142E228F83588B338B914F61A8",
+      "currentSha256": "A3345B5B495022B1F87941DD7011F391F9AB68F3D860101C7EC91A9480BF51D0",
+      "matches": false
+    },
+    {
+      "path": "services/finalRenderService.ts",
+      "uiRunSha256": "BAEECEF4DA13DB6CBAC5209C12CC976D1761297781E1A3CABFCE65BBDE66FD82",
+      "currentSha256": "BAEECEF4DA13DB6CBAC5209C12CC976D1761297781E1A3CABFCE65BBDE66FD82",
+      "matches": true
+    },
+    {
+      "path": "services/voiceConsolidationService.ts",
+      "uiRunSha256": "D5B8A523B915B9392945F4DEF1EC4C3C65DE10A4478924F5A10D8C0239FEC154",
+      "currentSha256": "D5B8A523B915B9392945F4DEF1EC4C3C65DE10A4478924F5A10D8C0239FEC154",
+      "matches": true
+    },
+    {
+      "path": "services/generationTransportError.ts",
+      "uiRunSha256": "57BA8533C84420A0A366BFEEE134107C18E5A9B62B484FBFD303C831233B1BB9",
+      "currentSha256": "57BA8533C84420A0A366BFEEE134107C18E5A9B62B484FBFD303C831233B1BB9",
+      "matches": true
+    },
+    {
+      "path": "tests/e2e/companion-beta.spec.ts",
+      "uiRunSha256": "BC8F5D67194DD321683DB716D1EC193413B2AB652B77377BCF4B66947543AF3F",
+      "currentSha256": "BC8F5D67194DD321683DB716D1EC193413B2AB652B77377BCF4B66947543AF3F",
+      "matches": true
+    },
+    {
+      "path": "tests/e2e/companion-chat.spec.ts",
+      "uiRunSha256": "98277E1E87C006D76CF33343B673E538B9A9D654378CBE86D0892A042E77B3C8",
+      "currentSha256": "98277E1E87C006D76CF33343B673E538B9A9D654378CBE86D0892A042E77B3C8",
+      "matches": true
+    },
+    {
+      "path": "tests/e2e/companion-glass.spec.ts",
+      "uiRunSha256": "6CDB3F02DB435D0C32BA82977B7C72764F4933B7290081ACA486AD7181123BC2",
+      "currentSha256": "6CDB3F02DB435D0C32BA82977B7C72764F4933B7290081ACA486AD7181123BC2",
+      "matches": true
+    },
+    {
+      "path": "tests/e2e/companion.config.ts",
+      "uiRunSha256": "AAE78F75F06F84C665BE78FCE0614443BC3C97CB877DBC730BED666D73EF2E89",
+      "currentSha256": "AAE78F75F06F84C665BE78FCE0614443BC3C97CB877DBC730BED666D73EF2E89",
+      "matches": true
+    }
+  ],
+  "note": "services/geminiService.ts changed later for the final 422/429 no-automatic-paid-retry classification. UI fixture cases do not exercise that provider seam. Final recovery and independent transport checks cover the later source; do not call the UI runs a single final-candidate all-green run."
+}

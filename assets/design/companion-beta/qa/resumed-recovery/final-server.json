@@ -1,0 +1,9 @@
+{
+  "pid": 21276,
+  "parentPid": 20700,
+  "creationDate": "2026-10-10T03:11:23.8376660Z",
+  "identity": "tools/verify-recovery-server.mjs",
+  "port": 5173,
+  "status": "running",
+  "capturedAt": "2026-10-10T03:11:43.0944891Z"
+}

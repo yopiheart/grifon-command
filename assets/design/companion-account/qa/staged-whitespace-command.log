@@ -1,0 +1,124 @@
+assets/design/companion-account/qa/builder/pre-history-App.tsx:310: trailing whitespace.
++    brandColors: '',
+assets/design/companion-account/qa/builder/pre-history-App.tsx:311: trailing whitespace.
++    scriptType: 'MrBeast',
+assets/design/companion-account/qa/builder/source-diff.patch:10: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:25: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:80: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:120: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:145: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:155: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:213: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:306: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:327: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:387: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:404: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:458: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:516: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:748: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:760: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:768: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:788: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:799: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:809: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:818: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:821: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:826: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:950: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-diff.patch:959: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:14: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:64: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:104: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:129: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:139: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:197: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:330: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:347: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:401: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:459: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:690: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:702: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:710: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:730: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:741: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:751: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:760: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:763: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:768: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:890: trailing whitespace.
++
+assets/design/companion-account/qa/builder/source-round1-diff.patch:899: trailing whitespace.
++
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:71: trailing whitespace.
++
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:96: trailing whitespace.
++  36  |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:105: trailing whitespace.
++  45  |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:129: trailing whitespace.
++  69  |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:136: trailing whitespace.
++  76  |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:146: trailing whitespace.
++  86  |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:168: trailing whitespace.
++  108 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:181: trailing whitespace.
++  120 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:201: trailing whitespace.
++  140 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:217: trailing whitespace.
++  156 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:223: trailing whitespace.
++  162 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:235: trailing whitespace.
++  174 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:254: trailing whitespace.
++  193 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:267: trailing whitespace.
++  206 |
+assets/design/companion-account/qa/route-oauth-fixture-error-context.md:275: trailing whitespace.
++  214 |

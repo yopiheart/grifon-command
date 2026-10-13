@@ -1,0 +1,115 @@
+{
+  "capturedAt": {
+    "current_time": "2026-10-07 07:50:06 UTC"
+  },
+  "sourceFiles": [
+    {
+      "path": "App.tsx",
+      "sha256": "cde012f82cf0537b8871b4ef369e044fee512a55deeff4477ee5cd2b7a30b620",
+      "matchesFreeze": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatShell.tsx",
+      "sha256": "92a05328cc718adad52782714f4b80abca8a7ecac80270fa1dc9f21ab9d73ef6",
+      "matchesFreeze": true
+    },
+    {
+      "path": "components/CompanionChat/index.tsx",
+      "sha256": "dea7e28fc207b075be26940a04e19cc6dd41c342650c95ff87d838a9ec944b6b",
+      "matchesFreeze": true
+    },
+    {
+      "path": "components/CompanionChat/companionChat.css",
+      "sha256": "7b1fb135dd375404b7f4b7d390281736faa1eab30d6e658ce09f78ceb9a17bf3",
+      "matchesFreeze": true
+    },
+    {
+      "path": "components/dashboard/SettingsModal.tsx",
+      "sha256": "4632a1ba3610c87998b6d3c23136294c71959057a031208c162aef90a34e1c58",
+      "matchesFreeze": true
+    },
+    {
+      "path": "dev/companionChatPreview.tsx",
+      "sha256": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+      "matchesFreeze": true
+    },
+    {
+      "path": "services/consentService.ts",
+      "sha256": "1ec151ab74767bcc099fe2b88d022f37bf519bfca19aa0d98e1e9b86ecb82a1f",
+      "matchesFreeze": true
+    },
+    {
+      "path": "hooks/useSubscription.ts",
+      "sha256": "cbe0b84aa12767685a12dd79ae7728b3256bd3e5fd60b0be49dd96d0540f79d3",
+      "matchesFreeze": true
+    },
+    {
+      "path": "components/CompanionChat/CompanionChatSurface.tsx",
+      "sha256": "03da288e83ab84d9833be3ba3d44dec4e40e3ca10058eb9d342bd52b3ec3536f",
+      "matchesFreeze": true
+    }
+  ],
+  "build": {
+    "command": "npm.cmd run build",
+    "exitCode": 0,
+    "evidence": "build-command.log",
+    "notes": "Includes TypeScript and PowerShell ASCII; existing chunk-size/Browserslist warnings remain."
+  },
+  "units": {
+    "command": "npm.cmd run test",
+    "exitCode": 0,
+    "passed": 1462,
+    "skipped": 32,
+    "testFilesPassed": 119,
+    "testFilesSkipped": 9,
+    "evidence": "unit-command.log",
+    "notes": "Existing optional/paid skips remain; paid/live flags absent."
+  },
+  "narrowGateEvidence": "final-narrow-gates.json",
+  "bundle": {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "be2db4",
+      "wall_time_seconds": 1.5957318,
+      "exit_code": 0,
+      "original_token_count": 43,
+      "output": "\n> creative-director-ai-assistant@1.0.0 check:bundle-leak\n> node tools/check-bundle-leak.mjs\n\n[bundle-leak] OK — scanned 11 bundle file(s), 0 crown-jewel markers found.\n"
+    }
+  },
+  "compiledCss": {
+    "fontOverridePresent": true,
+    "sectionSvgHeightRem": 1.25,
+    "sectionSvgWidthRem": 1.25,
+    "notes": "Production CSS inspected after final build; original Windows rg wildcard path failed, corrected -g '*.css' inspection exited 0."
+  },
+  "browserEvidence": {
+    "accountPassed": 34,
+    "companionRegressionPassed": 54,
+    "routeUniquePassed": 14,
+    "notes": "These 102 cases ran on round6; final two-file typography/icon-only delta is reconciled in independent report."
+  },
+  "independent": {
+    "behaviorAssertions": 49,
+    "previewFontAssertions": 8,
+    "finalTypographyIconAssertions": 16,
+    "brandScore": 46,
+    "verdict": "BRAND_PASS",
+    "openFindings": 0,
+    "evidence": "independent/review-report.md"
+  },
+  "whitespace": {
+    "command": "git diff --cached --check",
+    "exitCode": 0,
+    "originalExitCode": 2,
+    "originalEvidence": "staged-whitespace-command.log",
+    "rawArchive": "raw-whitespace-originals.json",
+    "decodedArchiveHashesVerified": 5,
+    "normalizationMap": "whitespace-normalization.json",
+    "notes": "Four generated QA display files and their failure log were normalized after exact bytes were archived. Production source and tests were unchanged."
+  },
+  "limitations": [
+    "Preview account/output are simulated.",
+    "Cloud sync, durable background work, natural intake and live voice remain separate milestones.",
+    "Real auth credential delivery, physical-phone performance and real microphone transcription were not exercised."
+  ]
+}

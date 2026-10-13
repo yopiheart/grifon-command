@@ -1,0 +1,106 @@
+
+Running 4 tests using 1 worker
+
+(node:17120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text flow_output_invalid cannot replay at the public transport seam (4.2s)
+(node:21016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text flow_output_invalid cannot replay through the producer (9.2s)
+(node:4772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text gemini_quota cannot replay at the public transport seam (9.5s)
+(node:17420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text gemini_quota cannot replay through the producer (9.3s)
+
+
+  1) assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text flow_output_invalid cannot replay at the public transport seam
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "fulfilled": false,
+    -   "unknown": true,
+    +   "unknown": false,
+      }
+
+      174 |     const green=calls===1&&(result as any).unknown===true;
+      175 |     writeFileSync(`${dir}/paid-text-${code}-transport${green?'':'-red'}.json`,JSON.stringify({calls,result,unexpected:backend.unexpected},null,2));
+    > 176 |     expect(result).toEqual({fulfilled:false,unknown:true});expect(calls).toBe(1);expect(backend.unexpected).toEqual([]);
+          |                    ^
+      177 |   });
+      178 |   test(`paid text ${code} cannot replay through the producer`,async({page})=>{
+      179 |     const seed=seededRun('storyboard');seed.row.status='running';seed.row.current_stage='script';seed.row.artifacts.gate=null;
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\design\companion-beta\qa\independent\review.spec.ts:176:20
+
+    Error Context: test-results\review-paid-text-flow-outp-168b7-t-the-public-transport-seam\error-context.md
+
+  2) assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text flow_output_invalid cannot replay through the producer
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      189 |     try{await expect.poll(()=>backend.row?.status,{timeout:8000}).toBe('error');settled=true;}catch{/* Record the original retry before failing the contract assertion. */}
+      190 |     writeFileSync(`${dir}/paid-text-${code}-producer${calls===1&&settled?'':'-red'}.json`,JSON.stringify({calls,settled,status:backend.row?.status,unexpected:backend.unexpected},null,2));
+    > 191 |     expect(calls).toBe(1);expect(settled).toBe(true);expect(backend.unexpected).toEqual([]);
+          |                   ^
+      192 |     await page.getByRole('button',{name:'Resume saved progress',exact:true}).click();
+      193 |     await expect(page.getByText(/An earlier production request could not be confirmed/).first()).toBeVisible();expect(calls).toBe(1);
+      194 |   });
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\design\companion-beta\qa\independent\review.spec.ts:191:19
+
+    Error Context: test-results\review-paid-text-flow-outp-d3e60-replay-through-the-producer\error-context.md
+
+  3) assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text gemini_quota cannot replay at the public transport seam
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 1
+
+      Object {
+    -   "fulfilled": false,
+    -   "unknown": true,
+    +   "pending": true,
+      }
+
+      174 |     const green=calls===1&&(result as any).unknown===true;
+      175 |     writeFileSync(`${dir}/paid-text-${code}-transport${green?'':'-red'}.json`,JSON.stringify({calls,result,unexpected:backend.unexpected},null,2));
+    > 176 |     expect(result).toEqual({fulfilled:false,unknown:true});expect(calls).toBe(1);expect(backend.unexpected).toEqual([]);
+          |                    ^
+      177 |   });
+      178 |   test(`paid text ${code} cannot replay through the producer`,async({page})=>{
+      179 |     const seed=seededRun('storyboard');seed.row.status='running';seed.row.current_stage='script';seed.row.artifacts.gate=null;
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\design\companion-beta\qa\independent\review.spec.ts:176:20
+
+    Error Context: test-results\review-paid-text-gemini-qu-0eaf0-t-the-public-transport-seam\error-context.md
+
+  4) assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text gemini_quota cannot replay through the producer
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      189 |     try{await expect.poll(()=>backend.row?.status,{timeout:8000}).toBe('error');settled=true;}catch{/* Record the original retry before failing the contract assertion. */}
+      190 |     writeFileSync(`${dir}/paid-text-${code}-producer${calls===1&&settled?'':'-red'}.json`,JSON.stringify({calls,settled,status:backend.row?.status,unexpected:backend.unexpected},null,2));
+    > 191 |     expect(calls).toBe(1);expect(settled).toBe(true);expect(backend.unexpected).toEqual([]);
+          |                   ^
+      192 |     await page.getByRole('button',{name:'Resume saved progress',exact:true}).click();
+      193 |     await expect(page.getByText(/An earlier production request could not be confirmed/).first()).toBeVisible();expect(calls).toBe(1);
+      194 |   });
+        at C:\Users\ADMIN\.codex\worktrees\4b8d\grifon-command\assets\design\companion-beta\qa\independent\review.spec.ts:191:19
+
+    Error Context: test-results\review-paid-text-gemini-qu-c5754-replay-through-the-producer\error-context.md
+
+  4 failed
+    assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text flow_output_invalid cannot replay at the public transport seam
+    assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text flow_output_invalid cannot replay through the producer
+    assets\design\companion-beta\qa\independent\review.spec.ts:162:3 › paid text gemini_quota cannot replay at the public transport seam
+    assets\design\companion-beta\qa\independent\review.spec.ts:178:3 › paid text gemini_quota cannot replay through the producer

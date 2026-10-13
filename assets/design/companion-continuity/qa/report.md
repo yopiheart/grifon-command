@@ -1,0 +1,22 @@
+# Companion chat continuity verification
+
+PASS: six new continuity cases and six existing layout cases passed against the frozen final source. Saved-chat and New-chat switches retain the same live iframe, window, and canvas after initial readiness. No neutral fallback was inserted, readiness never reset, and no renderer resource was requested during warm switching at 375x667, 390x844, or 1280x900.
+
+| Run | Result | Evidence |
+| --- | --- | --- |
+| Original commit `5c6d6a072a65c39ff2741f93aa55d1975a723196`, 375px regression | Expected FAIL, exit 1, one case | Six chat switches remounted the iframe/window/canvas six times, inserted six neutral fallbacks for 350.5–423ms, and requested 72 renderer resources. Frame count restarted from 92 to 45. |
+| Final continuity suite | PASS, exit 0, 6 cases, 24.6s | Three widths, pending intake/production isolation, held cold load, genuine asset failure and explicit retry. |
+| Existing focused layout suite | PASS, exit 0, 6 cases, 46.2s | 375/390/1280 geometry and reachable controls, 375/1000 tall review, and 320px retry. |
+| Separate independent review | PASS, 40 observations; BRAND_PASS 46/50; no findings | `independent-review.json`, including viewer/inert alignment, pointer forwarding, animation progression, and contrast fallback. Not counted among the twelve test cases above. |
+
+Each width records eight observations across six chat switches. All original nodes stay connected, one iframe remains ready, and frame counts advance (375px: 74→210; 390px: 87→218; 1280px: 89→200). Saved drafts and messages restore to their own chats. A storyboard review affects its own chat; returning to the other chat restores its reading reaction without that storyboard. The live renderer still tracks pointer movement. A pending reply and a working production state cannot leak into a new chat.
+
+The fallback remains visible while the actual scene asset is held. Chat remains usable during this cold load and a 503 asset failure. Explicit retry restores the real animation, preserves the conversation, and requests the scene asset exactly twice across failure and retry. These checks exercise the actual shared Shell, Surface, Avatar and renderer through the existing development preview, with local mocked conversation/production seams.
+
+The baseline was captured before builder edits. `baseline-verification.json` preserves exact original source SHA256 values checked again through immutable `git show` bytes. The identity/request/fallback assertions that exposed the original defect remain unchanged. The final test harness permits its explicit mocked storyboard event and adds the pending-reaction case; neither adjustment relaxes the continuity contract. Initial harness setup/closure errors were corrected before the recorded baseline run and are not counted as product failures.
+
+All fourteen recorded source/test hashes matched before and after the final browser window. Avatar, renderer `main.js`, and `frame.html` hashes also match the original commit. Final source and artifact hashes, exact commands, exit codes, and environment settings are in `verification.json`. `browser-run-output.json` transports the three otherwise Git-ignored local browser logs losslessly as encoded bytes with SHA256 values. Full-page final captures at all three primary widths were visually inspected for mascot/header alignment, readable draft/messages, and composer clearance. Prior navigation/glass QA paths were not overwritten.
+
+Formatting-only normalization removed line-end spaces/tabs from six lines of the generated baseline Playwright `error-context.md`. `formatting-normalization.json` records the report's before/after hashes. Baseline source proof, commands, counts, and JSON outcomes were unchanged; no browser rerun was needed for this generated-report formatting change.
+
+Tests reused the existing Vite server and ran serially in headless Edge. No helper process was started. API and external provider traffic was blocked; public font GETs were allowed. No actual microphone, paid generation, authentication/session files, or production/user data was exercised. Coverage is responsive desktop-browser simulation within app chats; physical phones, native zoom/GPU behavior, leaving the app/Studio, and real account transitions were not tested. Build/full-unit and repository gates are owned by the parent/builder and are not claimed as rerun by this smoke agent.

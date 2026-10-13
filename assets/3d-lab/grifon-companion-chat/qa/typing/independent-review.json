@@ -1,0 +1,69 @@
+{
+  "reviewedDate": "2026-10-07",
+  "reviewer": "Independent companion_polish_review agent; report-only; did not author or modify runtime or tests",
+  "baseCommit": "359e943629d12e24a9d00fd0b7147c162c5572d6",
+  "scope": "New 600ms intake reply presentation delay, accessible typing indicator, shared Grifon typography and explicitly requested gold user bubbles. Earlier milestone verdicts do not approve this diff.",
+  "verdict": "PASS",
+  "brandVerdict": "BRAND_PASS",
+  "unresolvedFindings": [],
+  "sourceSha256": {
+    "components/CompanionChat/CompanionChatSurface.tsx": "3E4496A912330E266DCEDAF5923438240170A9E4103EB4EF8409084BDEF9E7C0",
+    "components/CompanionChat/CompanionComposer.tsx": "481B7C93B37188B9217E363F2136FF938AE7199202DE737CDEE230FF4725D153",
+    "components/CompanionChat/companionChat.css": "DFEA02EA49B2C02785F7253F3DC90417A2CB675533B1B00DB88882AEFEE22CAC"
+  },
+  "standards": [
+    "Current DESIGN.md and brand-check checklist reread for this pass; verify-changes contract applied to correctness evidence.",
+    "Explicit user direction permits the warm gold user bubble and calm sentence-case chat typography. The solid gold Send action retains greater visual weight.",
+    "Current material tiers and contrast ladder supersede historical blanket-blur and zinc500 instructions in the brand checklist."
+  ],
+  "correctnessReview": [
+    { "location": "components/CompanionChat/CompanionChatSurface.tsx:167", "result": "PASS", "observation": "The pending ref locks synchronously before React rerenders. The complete accepted draft, including the next assistant question, is persisted immediately. Only presentation is delayed; reload during the pause retains both answer and next question." },
+    { "location": "components/CompanionChat/CompanionChatSurface.tsx:99", "result": "PASS", "observation": "Stable cleanup clears timeout and pending state. Account ownership changes, New ad, exit, and resumed/active run transitions cancel pending presentation. Unmount clears the timeout without a state update; the callback also checks owner and reply identity." },
+    { "location": "components/CompanionChat/CompanionComposer.tsx:36", "result": "PASS", "observation": "Pending delivery disables submission while keeping the textarea enabled. Duplicate Enter does not consume a second answer or clear newly typed text. Existing composition guards and focus behavior remain intact." },
+    { "location": "components/CompanionChat/CompanionChatSurface.tsx:82", "result": "PASS", "observation": "The hidden message and visible-last-message dependency are derived from pending presentation. User acceptance and assistant reveal each trigger the existing follow path. Explicit reading/scroll cancellation and tall review anchoring remain authoritative." },
+    { "location": "components/CompanionChat/CompanionChatSurface.tsx:261", "result": "PASS", "observation": "Accessible typing status occupies a neutral assistant bubble. Final review markup and reviewKey remain absent until reveal, and the generation guard independently rejects pending delivery." },
+    { "location": "components/CompanionChat/CompanionChatSurface.tsx:181", "result": "PASS", "observation": "Only initial intake answers enter the timer branch. Result revision replies remain immediate and continue to require explicit confirmation before paid work. Services, question text, provider code, approvals and allowance policy have no diff against the base." }
+  ],
+  "visualReview": {
+    "method": "Independent source and computed-style inspection, discrete final typing/delivered screenshots at 375x667 and 1280x900, and native 2x-DPR bubble/composer/text-button crops.",
+    "inspectedFiles": ["final-typing-375.png", "final-typing-1280.png", "final-delivered-375.png", "final-delivered-1280.png", "final-user-bubble-2x.png", "final-composer-2x.png", "final-new-ad-button-2x.png", "final-typography-375.json", "final-typography-1280.json"],
+    "observations": [
+      "Shared Inter body/input typography measures 16px at weight 400; New ad measures 14px at 600. Timestamps alone use JetBrains Mono at 11px/400. Normal body tracking is retained.",
+      "Gold user tint and subtle edge are visibly distinct from the neutral assistant bubble, with light text remaining legible. Send remains the strongest gold surface when enabled.",
+      "Three dots are recognizable at mobile size, without adding promotional text or disrupting the compact centered mascot/name hierarchy.",
+      "Native 2x crops show clean text, intact icon paths, clear input focus and smooth bubble edges. No new icon/text pairing or primitive duplication was introduced.",
+      "Computed horizontal overflow is zero at 375 and 1280. Existing 44px controls are preserved. No new backdrop-filter or drop-shadow elevation is introduced.",
+      "Reduced motion makes the dots static; reduced transparency/high contrast gives both bubbles a solid tonal background and retains a gold outline identifying the user bubble."
+    ]
+  },
+  "brandScore": {
+    "philosophyCoherence": { "score": 9, "reason": "Dark neutral canvas and requested Grifon gold remain coherent with the existing companion layout." },
+    "visualHierarchy": { "score": 9, "reason": "Gold-tinted user messages, neutral assistant replies and stronger Send action are clearly distinguished." },
+    "executionCraft": { "score": 8, "reason": "Shared font configuration, readable weights, restrained metadata and native 2x detail inspection are clean." },
+    "functionality": { "score": 9, "reason": "Paced delivery preserves focus, accepted data and recovery; mobile targets and scroll behavior remain verified within local coverage." },
+    "innovationAndDistinctiveness": { "score": 8, "reason": "The approved griffin and gold conversation identity feel specific to Grifon without extra ornamental chrome." },
+    "total": 43,
+    "critical": 0,
+    "nits": 0,
+    "quickWins": []
+  },
+  "verificationEvidence": {
+    "reviewerExecution": "Read final source/diff and rules, independently inspected pixels and computed-style evidence, checked final SHA256 values against smoke report. Did not author or rerun browser tests.",
+    "smokeReport": "final-smoke-report.json",
+    "sourceHashesMatch": true,
+    "browserSuite": { "passed": 38, "failed": 0, "exitCode": 0, "duration": "2.1m", "retainedCases": 27, "newTypingCases": 11 },
+    "baselineDefect": "baseline-result.json records exit 1 against 359e9436: the next assistant question already appears immediately and at 499ms, with no typing status.",
+    "timing": { "deterministicGate": "Typing present and next reply absent at 499ms; reveal at 600ms across all five intake answers.", "finalObservedAcceptanceToDeliveryMs": 612.5, "finalObservedAcceptanceToTypingMs": 0.1, "providerCalls": [], "evidence": "final-real-timing.json" },
+    "edgeCoverage": ["all five intake answers", "final review hidden until reveal", "duplicate Enter and next-text retention", "enabled/focused textarea", "pending New ad", "account isolation", "reload during pending", "unmount and return", "static reduced-motion dots", "high-contrast gold edge", "immediate result revision and explicit confirmation", "retained responsive, scroll, recovery, avatar, quota and generation approval cases"],
+    "harnessCorrection": "An intermediate real-timing observer counted the decorative typing bubble as an assistant message. Reviewer flagged the evidence error; smoke scoped the selector to article messages and reran. Only corrected measurements are used here.",
+    "buildAndUnit": "Parent reports final build, 1451 unit tests and bundle-leak check passed. This reviewer did not execute these checks; their detailed results belong to parent/builder verification."
+  },
+  "limits": [
+    "Headless desktop Edge and emulated mobile viewports; no physical phone, iOS software keyboard, screen-reader listening or input-to-photon measurement claim.",
+    "The 600ms clock tests prove presentation ordering, not exact wall-clock delivery under every device or background-tab scheduling condition.",
+    "Resumed-run timer cleanup was inspected in source; the new pending-to-resumed transition does not have a separately reported timing test. Existing saved-run recovery cases remain passing.",
+    "Screenshots are discrete observations. Continuous mascot motion was not independently measured, and approved mesh/reactions were not changed.",
+    "Local fixture and mocked backend only; no paid provider call, generated-media quality, deployment, merge or production write was exercised.",
+    "This reviewer modified only this report. Prior QA folders and runtime/tests were not edited."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "jobId": 114452910886,
+  "name": "e2e (5)",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/yopiheart/grifon-command/actions/runs/38133637033/job/114452910886",
+  "startedAt": "2026-10-11T10:58:12Z",
+  "completedAt": "2026-10-11T11:00:39Z",
+  "planned": 7,
+  "attemptCount": 8,
+  "uniqueCases": 7,
+  "passed": 7,
+  "firstAttemptPasses": 6,
+  "flakyPasses": 1,
+  "failed": 0,
+  "skipped": 0,
+  "retryAttempts": 1,
+  "reporterSummary": [
+    "  6 passed (48.6s)",
+    "  1 flaky",
+    "  6 passed (48.6s)"
+  ],
+  "failureCases": [],
+  "lastReported": {
+    "key": "[chromium] › tests/e2e/companion-account.spec.ts:456:1 › settings keep an unconfirmed plan pending and recover a failed plan read",
+    "status": "passed",
+    "index": 8,
+    "retry": 0,
+    "duration": "10.7s",
+    "timestamp": "2026-10-11T11:00:35.9166768Z"
+  },
+  "failureContext": "\n  1) [chromium] › tests/e2e/companion-account.spec.ts:351:1 › pending checkout keeps precedence over intended tool and return-to-ad intents \n\n    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: \"1\"\n    Received: null\n\n      367 |   await expect(page.getByRole('radio', { name: /^Annual/ })).toBeChecked();\n      368 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_intended_module'))).toBe('market_research');\n    > 369 |   expect(await page.evaluate(() => sessionStorage.getItem('grifon_return_to_ad'))).toBe('1');\n          |                                                                                    ^\n      370 |   expect(evidence.unexpected).toEqual([]); expect(evidence.pageErrors).toEqual([]);\n      371 | });\n      372 |\n        at /home/runner/work/grifon-command/grifon-command/tests/e2e/companion-account.spec.ts:369:84\n\n    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────\n    test-results/companion-account-pending--3cf03-ol-and-return-to-ad-intents-chromium/test-failed-1.png\n    ────────────────────────────────────────────────────────────────────────────────────────────────\n\n    Error Context: test-results/companion-account-pending--3cf03-ol-and-return-to-ad-intents-chromium/error-context.md\n\n  1 flaky\n    [chromium] › tests/e2e/companion-account.spec.ts:351:1 › pending checkout keeps precedence over intended tool and return-to-ad intents \n  6 passed (48.6s)",
+  "checkoutCommit": "203d47bda9c86c7f7e7410f08e3f8ee65fc58ce9"
+}

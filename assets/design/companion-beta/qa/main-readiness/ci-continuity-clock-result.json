@@ -1,0 +1,289 @@
+{
+  "result": "PASS",
+  "capturedUtc": "2026-10-11T11:24:42.352Z",
+  "originalContinuitySha256": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c",
+  "fixedContinuitySha256": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+  "validations": {
+    "originalTypingObservationFails": true,
+    "fixedWholeJourneyPasses": true,
+    "leafKeyOnlyControlRejectsProductionLeak": true,
+    "realNodeDelayAtLeast1000": true,
+    "sourceAndHarnessFrozen": true,
+    "networkCountersClean": true,
+    "noRetriesOrSkips": true,
+    "ownedHelperStopped": true
+  },
+  "phases": [
+    {
+      "phase": "original-delay",
+      "cases": [
+        {
+          "title": "pending intake and working production reactions cannot leak into a new chat",
+          "status": "failed",
+          "durationMs": 20156,
+          "retry": 0,
+          "errors": [
+            "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('status', { name: 'Grifon is typing', exact: true })\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 15000ms\n  - waiting for getByRole('status', { name: 'Grifon is typing', exact: true })\n\n\n  161 |   await input(page).fill('A pending coffee question'); await input(page).press('Enter');\n  162 |   await nodeDelayWitness(page);\n> 163 |   await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toBeVisible();\n      |                                                                                     ^\n  164 |   const intakeId = (await currentId(page))!;\n  165 |   await page.getByRole('button', { name: 'New chat', exact: true }).click();\n  166 |   await expect(page.getByTestId('companion-chat')).not.toHaveAttribute('data-chat-id', intakeId); await ready(page);\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\continuity\\original.spec.ts:163:85"
+          ]
+        }
+      ],
+      "exitCode": 1,
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/continuity/playwright.config.ts",
+          "--grep=pending intake and working production reactions cannot leak into a new chat$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CONTINUITY_PHASE": "original-delay",
+          "COMPANION_CONTINUITY_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\continuity\\original-delay",
+          "COMPANION_CONTINUITY_PHASE": "original-delay"
+        }
+      },
+      "sourceHashes": {
+        "App.tsx": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+        "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+        "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+        "dev/companionChatPreview.tsx": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "harnessHashes": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/original.spec.ts": "26398a81fe3eef036a9510302e60c5a47aa336c7b1295a8463fd4a195bc17b1a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed.spec.ts": "21d3d2afccb065863cda58d9f5a400bd8003933c4b0c25289fe3b1667a485bbd",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/playwright.config.ts": "7a02c2b786a8e3ee5167c3dc463a43843f9a5878106a6fbab808bc573d9a022b",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/instrumented-test.ts": "14950c7d02efabb8f6c78f4e6278f60b890eb82acf7cc8fa83bd4c7c95280020"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "rawCommandReceipt": ".tmp/companion-main-readiness/qa/checkout-intent/continuity/original-delay/command-receipt.json",
+      "rawReport": ".tmp/companion-main-readiness/qa/checkout-intent/continuity/original-delay/results.json",
+      "instrumentation": {
+        "status": "failed",
+        "durationMs": 19237,
+        "identity": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "browserVersion": "149.0.7827.55",
+        "nodeDelay": {
+          "requestedMs": 1000,
+          "elapsedMs": 1010,
+          "typingCount": 0,
+          "userCount": 1,
+          "assistantCount": 2,
+          "acceptedUserMessage": true
+        },
+        "leafControl": null,
+        "pageErrors": [],
+        "requests": {
+          "externalOther": 0,
+          "externalFonts": 3,
+          "callableApi": 0
+        },
+        "state": {
+          "inputDisabled": false,
+          "typingCount": 0,
+          "userCount": 1,
+          "fixtureCalls": []
+        },
+        "limits": "Node delay added after actual Enter dispatch returned; no application state/timer changes beyond tracked test clock. Served negative control changes only outer Fixture key; no tracked source edits"
+      }
+    },
+    {
+      "phase": "fixed-delay",
+      "cases": [
+        {
+          "title": "pending intake and working production reactions cannot leak into a new chat",
+          "status": "passed",
+          "durationMs": 8748,
+          "retry": 0,
+          "errors": []
+        }
+      ],
+      "exitCode": 0,
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/continuity/playwright.config.ts",
+          "--grep=pending intake and working production reactions cannot leak into a new chat$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CONTINUITY_PHASE": "fixed-delay",
+          "COMPANION_CONTINUITY_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\continuity\\fixed-delay",
+          "COMPANION_CONTINUITY_PHASE": "fixed-delay"
+        }
+      },
+      "sourceHashes": {
+        "App.tsx": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+        "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+        "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+        "dev/companionChatPreview.tsx": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "harnessHashes": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/original.spec.ts": "26398a81fe3eef036a9510302e60c5a47aa336c7b1295a8463fd4a195bc17b1a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed.spec.ts": "21d3d2afccb065863cda58d9f5a400bd8003933c4b0c25289fe3b1667a485bbd",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/playwright.config.ts": "7a02c2b786a8e3ee5167c3dc463a43843f9a5878106a6fbab808bc573d9a022b",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/instrumented-test.ts": "14950c7d02efabb8f6c78f4e6278f60b890eb82acf7cc8fa83bd4c7c95280020"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "rawCommandReceipt": ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed-delay/command-receipt.json",
+      "rawReport": ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed-delay/results.json",
+      "instrumentation": {
+        "status": "passed",
+        "durationMs": 8139,
+        "identity": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "browserVersion": "149.0.7827.55",
+        "nodeDelay": {
+          "requestedMs": 1000,
+          "elapsedMs": 1013,
+          "typingCount": 1,
+          "userCount": 1,
+          "assistantCount": 1,
+          "acceptedUserMessage": true
+        },
+        "leafControl": null,
+        "pageErrors": [],
+        "requests": {
+          "externalOther": 0,
+          "externalFonts": 3,
+          "callableApi": 0
+        },
+        "state": {
+          "inputDisabled": false,
+          "typingCount": 0,
+          "userCount": 1,
+          "fixtureCalls": [
+            "fixture-event"
+          ]
+        },
+        "limits": "Node delay added after actual Enter dispatch returned; no application state/timer changes beyond tracked test clock. Served negative control changes only outer Fixture key; no tracked source edits"
+      }
+    },
+    {
+      "phase": "fixed-leaf-key-disabled",
+      "cases": [
+        {
+          "title": "pending intake and working production reactions cannot leak into a new chat",
+          "status": "failed",
+          "durationMs": 21745,
+          "retry": 0,
+          "errors": [
+            "Error: expect(locator).toBeEnabled() failed\n\nLocator:  getByRole('textbox', { name: 'Message Grifon', exact: true })\nExpected: enabled\nReceived: disabled\nTimeout:  15000ms\n\nCall log:\n  - Expect \"toBeEnabled\" with timeout 15000ms\n  - waiting for getByRole('textbox', { name: 'Message Grifon', exact: true })\n    27 × locator resolved to <textarea disabled rows=\"1\" maxlength=\"4000\" aria-label=\"Message Grifon\" aria-describedby=\"companion-save-status\" placeholder=\"Use the review controls above…\" class=\"companion-message-input min-h-11 max-h-32 min-w-0 flex-1 resize-none bg-transparent px-1 py-3 text-white outline-none placeholder:text-zinc-300 disabled:opacity-50\"></textarea>\n       - unexpected value \"disabled\"\n\n\n  177 |   await page.getByRole('button', { name: 'New chat', exact: true }).click();\n  178 |   await expect(page.getByTestId('companion-chat')).not.toHaveAttribute('data-chat-id', productionId); await ready(page);\n> 179 |   await expect(input(page)).toBeEnabled(); await expect.poll(async () => (await observation(page)).reaction).toBe('idle');\n      |                             ^\n  180 |   await expect(page.getByRole('status').filter({ hasText: 'Researching your product' })).toHaveCount(0);\n  181 |   await openChat(page, intakeId); await ready(page);\n  182 |   await expect(page.locator('.companion-message-user')).toHaveText('A pending coffee question');\n    at C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\continuity\\fixed.spec.ts:179:29"
+          ]
+        }
+      ],
+      "exitCode": 1,
+      "command": {
+        "executable": "C:\\Program Files\\nodejs\\node.exe",
+        "args": [
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "--config=.tmp/companion-main-readiness/qa/checkout-intent/continuity/playwright.config.ts",
+          "--grep=pending intake and working production reactions cannot leak into a new chat$"
+        ],
+        "envOverrides": {
+          "CI": "true",
+          "CONTINUITY_PHASE": "fixed-leaf-key-disabled",
+          "COMPANION_CONTINUITY_QA_DIR": "C:\\Users\\ADMIN\\.codex\\worktrees\\4b8d\\grifon-command\\.tmp\\companion-main-readiness\\qa\\checkout-intent\\continuity\\fixed-leaf-key-disabled",
+          "COMPANION_CONTINUITY_PHASE": "fixed-leaf-key-disabled"
+        }
+      },
+      "sourceHashes": {
+        "App.tsx": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "tests/e2e/companion-account.spec.ts": "c8bfb87bb708690ff29c05f36437f79445bdb4fc2f08a09494061e8cd0b9c77d",
+        "tests/e2e/companion-account-fixture.ts": "9992b7e33b218372ff140386cb1f1d5cabb7000ad71be3fe67d55444e8b864e3",
+        "tests/e2e/companion-continuity.spec.ts": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+        "dev/companionChatPreview.tsx": "4e2a132bf6b8fcb25ebcfbff6f19dd29377bbb28c487c702def0cd1f553950a5",
+        "playwright.config.ts": "91252626e871ef6670aa3494ee955a2fd5a289f2add31e16db1e823f1aabb1e4"
+      },
+      "harnessHashes": {
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/original.spec.ts": "26398a81fe3eef036a9510302e60c5a47aa336c7b1295a8463fd4a195bc17b1a",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed.spec.ts": "21d3d2afccb065863cda58d9f5a400bd8003933c4b0c25289fe3b1667a485bbd",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/playwright.config.ts": "7a02c2b786a8e3ee5167c3dc463a43843f9a5878106a6fbab808bc573d9a022b",
+        ".tmp/companion-main-readiness/qa/checkout-intent/continuity/instrumented-test.ts": "14950c7d02efabb8f6c78f4e6278f60b890eb82acf7cc8fa83bd4c7c95280020"
+      },
+      "changedSourceFiles": [],
+      "changedHarnessFiles": [],
+      "rawCommandReceipt": ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed-leaf-key-disabled/command-receipt.json",
+      "rawReport": ".tmp/companion-main-readiness/qa/checkout-intent/continuity/fixed-leaf-key-disabled/results.json",
+      "instrumentation": {
+        "status": "failed",
+        "durationMs": 21015,
+        "identity": "cf4afb30dc68e5cb0dc629be1b814cdca94087b80270faf008117cce27b91cd6",
+        "browserVersion": "149.0.7827.55",
+        "nodeDelay": {
+          "requestedMs": 1000,
+          "elapsedMs": 1000,
+          "typingCount": 1,
+          "userCount": 1,
+          "assistantCount": 1,
+          "acceptedUserMessage": true
+        },
+        "leafControl": {
+          "onlyOuterFixtureKeyRemoved": true,
+          "innerSurfaceKeyRetained": true,
+          "originalServedSha256": "c1813dd0b860cf55085db11dd3a2162b37d0293f08db877f71b0d8a5a00c5e36",
+          "controlServedSha256": "131e8095a40da6cfe4a7e6a27c13baeb7f3790e7fcd9cd1ba10368e96c8a3dcd"
+        },
+        "pageErrors": [],
+        "requests": {
+          "externalOther": 0,
+          "externalFonts": 3,
+          "callableApi": 0
+        },
+        "state": {
+          "inputDisabled": true,
+          "typingCount": 0,
+          "userCount": 0,
+          "fixtureCalls": [
+            "fixture-event"
+          ]
+        },
+        "limits": "Node delay added after actual Enter dispatch returned; no application state/timer changes beyond tracked test clock. Served negative control changes only outer Fixture key; no tracked source edits"
+      }
+    }
+  ],
+  "translation": {
+    "originalSourceSha256": "7345444d0e4a962eb1d9353421c4f29328141043303babf82970363c711aac8c",
+    "fixedSourceSha256": "9039fef1261fbd5e8057f6b6bee4b62d15bc5f5552bdd45ce9a43e06ddf3e9b9",
+    "changes": [
+      "Playwright import to instrumentation wrapper",
+      "Exact loopback origin5192 only",
+      "Control route hook after original configure/before load",
+      "1000ms Node delay after actual Enter returns/before unchanged typing assertion"
+    ],
+    "businessAssertions": "unchanged",
+    "original700msWait": "retained",
+    "fixedClockContract": "install+future2h pause after ready/mark beforefill; resume immediately after Newchat changedID before readiness/reactionpolls"
+  },
+  "execution": {
+    "workers": 1,
+    "retries": 0,
+    "skips": 0,
+    "testBudgetMs": 180000,
+    "expectBudgetMs": 15000,
+    "actionBudgetMs": 15000,
+    "paidLiveSwitches": "unset",
+    "browser": "Installed Playwright Chromium149.0.7827.55 on Windows"
+  },
+  "cleanup": {
+    "stoppedUtc": "2026-10-11T11:23:03.6713926Z",
+    "processCommandMatched": true,
+    "remainingListeners": 0,
+    "listenerOwnershipMatched": true,
+    "pid": 16188
+  },
+  "limits": [
+    "1000ms real Node delay demonstrates finite600ms typing-observation susceptibility; actual hosted timer expiry is not measured",
+    "Tracked clock only holds pending typing through Newchat identity change; resumes before readiness/reaction polls; existing700ms isolation wait and downstream assertions retained",
+    "OuterFixturekey-only negative demonstrates retained production state after Newchat; it does not prove an old intake callback leak",
+    "No tracked preview/app mutation, providers, microphone or paid calls"
+  ]
+}

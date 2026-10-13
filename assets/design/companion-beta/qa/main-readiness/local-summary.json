@@ -1,0 +1,57 @@
+{
+  "paidCalls": "NOT RUN",
+  "build": {
+    "exitCode": 0,
+    "warnings": [
+      "Existing browserslist data age",
+      "Existing large output chunk"
+    ]
+  },
+  "units": {
+    "total": 1573,
+    "exitCode": 0,
+    "passed": 1541,
+    "failed": 0,
+    "pending": 32
+  },
+  "fullE2E": {
+    "reason": "Root reuseExistingServer reused unrelated Vite from worktree 0b05 on 127.0.0.1:5173. No valid full candidate runtime conclusion.",
+    "completedFail": 37,
+    "unrelatedViteStopped": false,
+    "fullResultsJsonProduced": false,
+    "status": "INVALID_RUNTIME_SETUP_ABORTED",
+    "planned": 224,
+    "exitCode": -1,
+    "completedPass": 4,
+    "sourceChangesDuringRun": 0,
+    "sourceHashCount": 440
+  },
+  "affectedGreen": {
+    "sourceHashCount": 440,
+    "retries": 0,
+    "exitCode": 0,
+    "passed": 10,
+    "failed": 0,
+    "sourceChangesDuringRun": 0
+  },
+  "static": {
+    "gates": [
+      "check:voice-sync",
+      "check:eval-prompts",
+      "check:domain",
+      "check:artifact-anchors",
+      "design:lint",
+      "check:codex",
+      "check:bundle-leak"
+    ],
+    "exitCode": 0,
+    "bundleFiles": 11,
+    "protectedMarkers": 0
+  },
+  "sourceEditsBySmokeAgent": 0,
+  "originalRed": {
+    "exitCode": 1,
+    "failed": 2,
+    "purpose": "Original hostname harness defects proven under owned safe runtime"
+  }
+}

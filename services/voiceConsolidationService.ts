@@ -1,5 +1,6 @@
 import type { ConsolidationScene, ConsolidationResult, StabilityMode } from '../types';
 import { getSupabase } from './supabaseClient';
+import { unknownGenerationOutcome } from './generationTransportError';
 
 // Client coordinator for server-side voice consolidation (Phase 1 endpoint
 // api/voice/consolidate). Returns per-scene PERSISTED (signed, non-blob) MP3
@@ -24,11 +25,17 @@ export const consolidateVoices = async (
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ scenes, voiceId, stabilityMode }),
-  });
+  }).catch(error => { throw unknownGenerationOutcome(error); });
   if (!res.ok) {
     const detail = await res.text().catch(() => res.statusText);
-    throw new Error(`VOICE_CONSOLIDATION_FAILED (${res.status}): ${detail}`);
+    const error = new Error(`VOICE_CONSOLIDATION_FAILED (${res.status}): ${detail}`);
+    throw res.status >= 500 ? unknownGenerationOutcome(error) : error;
   }
-  const body = (await res.json()) as { results?: ConsolidationResult[] };
-  return body.results ?? [];
+  const body = (await res.json().catch(error => { throw unknownGenerationOutcome(error); })) as { results?: ConsolidationResult[] };
+  if (!Array.isArray(body?.results) || scenes.some(scene => !body.results!.some(result => result?.sceneIdx === scene.sceneIdx
+    && ((typeof result.audioUrl === 'string' && !!result.audioUrl.trim())
+      || (result.audioUrl === null && (result.skipped === true || (typeof result.error === 'string' && !!result.error.trim()))))))) {
+    throw unknownGenerationOutcome(new Error('VOICE_CONSOLIDATION_INCOMPLETE_RESPONSE'));
+  }
+  return body.results;
 };

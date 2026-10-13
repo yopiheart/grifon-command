@@ -52,8 +52,9 @@ export const withdraw = (): Promise<MarketingConsent> => postAction('withdraw');
 
 // Reads the signed-in user's current consent row via RLS. Returns a default
 // "not granted" state when no row exists (the common case) or on any error, so
-// callers (Settings toggle, post-auth sync) never have to special-case nulls.
-export const getMarketingConsent = async (): Promise<MarketingConsent> => {
+// legacy callers never have to special-case nulls. Strict reads let Settings
+// distinguish a missing record from a failed read without showing false consent.
+export const getMarketingConsent = async (options: { strict?: boolean } = {}): Promise<MarketingConsent> => {
   const NONE: MarketingConsent = {
     granted: false,
     consentAt: null,
@@ -62,22 +63,28 @@ export const getMarketingConsent = async (): Promise<MarketingConsent> => {
   };
   try {
     const sb = getSupabase();
-    const { data: sessionData } = await sb.auth.getSession();
+    const { data: sessionData, error: sessionError } = await sb.auth.getSession();
+    if (sessionError) throw sessionError;
     const uid = sessionData.session?.user?.id;
-    if (!uid) return NONE;
+    if (!uid) {
+      if (options.strict) throw new Error('NOT_AUTHENTICATED');
+      return NONE;
+    }
     const { data, error } = await sb
       .from('marketing_consent')
       .select('consent_at, withdrawn_at, policy_version')
       .eq('user_id', uid)
       .maybeSingle();
-    if (error || !data) return NONE;
+    if (error) throw error;
+    if (!data) return NONE;
     return {
       granted: !!data.consent_at && !data.withdrawn_at,
       consentAt: data.consent_at ?? null,
       withdrawnAt: data.withdrawn_at ?? null,
       policyVersion: data.policy_version ?? null,
     };
-  } catch {
+  } catch (error) {
+    if (options.strict) throw error;
     return NONE;
   }
 };
