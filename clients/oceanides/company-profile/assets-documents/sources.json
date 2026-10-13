@@ -2,7 +2,7 @@
   "retrieved": "2026-10-13",
   "source_folder": "https://drive.google.com/drive/folders/1g_jhHirxXozF7SS0rb1ABylGCOIyoLv1",
   "provider_relationship": "Owner confirmed Globaltec Waste Management, Inc. is the current treatment/disposal provider on 2026-10-13.",
-  "source_handling": "Unaltered original PDFs remain in the private Drive folder. Appendix images reproduce complete selected pages without cropping; source text/signatures have not been edited or independently authenticated.",
+  "source_handling": "Original PDFs/photos remain in private Drive. Full substantive pages are reproduced, except PhilGEPS display excerpts which exclude bank-account details. No signatures or source wording are changed. Source authenticity and live registration status are not independently authenticated.",
   "duplicate": "Certificate file 1PcrAu5joFhXaUrkdW7g_ab7ZjC9SUwKd is byte-identical to selected incorporation source; included once.",
   "records": [
     {
@@ -184,6 +184,116 @@
       "excluded_pages": []
     },
     {
+      "key": "bir-2303",
+      "title": "BIR Certificate of Registration",
+      "holder_group": "Oceanides",
+      "drive_id": "1sHyPESD2P2uHaE0vQuJl_lORCtgqy8sO",
+      "url": "https://drive.google.com/file/d/1sHyPESD2P2uHaE0vQuJl_lORCtgqy8sO/view",
+      "source_sha256": "4c62c75fe36ffd3b97b2a3d4dd694506e88307a834dd8441b8450baeb6f3c74d",
+      "source_page_count": 2,
+      "fields": [
+        [
+          "Corporate TIN and branch",
+          "693-974-075-00000"
+        ],
+        [
+          "Registered",
+          "22 January 2026"
+        ],
+        [
+          "Issuing office",
+          "BIR RDO 051 - Pasay City"
+        ]
+      ],
+      "status": "BIR Form 2303 identifies the taxpayer as Oceanides OPC, Head Office.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "bir-2303-01.jpg",
+          "sha256": "c7ca8dee530397627d536bf7af7b0404687553ba1784257e7ca624450c6e494c",
+          "display_note": "Complete source page"
+        },
+        {
+          "source_page": 2,
+          "file": "bir-2303-02.jpg",
+          "sha256": "ba36d526d9d1ab6ed730cb1d157a1d968e71b83e0a3b15c946f51cf58e2a160e",
+          "display_note": "Complete source page"
+        }
+      ],
+      "excluded_pages": []
+    },
+    {
+      "key": "bir-receipt-notice",
+      "title": "BIR Receipt and Invoice Notice",
+      "holder_group": "Oceanides",
+      "drive_id": "1q8c03oMsjlrkI3WsMA60nXpk6hQW2AhK",
+      "url": "https://drive.google.com/file/d/1q8c03oMsjlrkI3WsMA60nXpk6hQW2AhK/view",
+      "source_sha256": "e62813ea53c315714c2798229747215ceb4164fd804a2ed06f2745096b1c688f",
+      "source_page_count": 1,
+      "fields": [
+        [
+          "Displayed TIN and branch",
+          "693-974-075-00000"
+        ],
+        [
+          "Record type",
+          "Posted receipt / invoice notice"
+        ],
+        [
+          "Source",
+          "Owner-supplied photograph"
+        ]
+      ],
+      "status": "Posted BIR receipt / invoice notice displaying the company TIN and branch code.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "bir-receipt-notice.jpg",
+          "sha256": "e62813ea53c315714c2798229747215ceb4164fd804a2ed06f2745096b1c688f"
+        }
+      ],
+      "excluded_pages": []
+    },
+    {
+      "key": "philgeps",
+      "title": "PhilGEPS Red Registration",
+      "holder_group": "Oceanides",
+      "drive_id": "15KhaQGk1DNDeudmDMalQx-fF14uH790Y",
+      "url": "https://drive.google.com/file/d/15KhaQGk1DNDeudmDMalQx-fF14uH790Y/view",
+      "source_sha256": "dc35122cd44f53073957f5484f448e6cc10ddbfca057545460e2eba1d2bfb1ec",
+      "source_page_count": 2,
+      "fields": [
+        [
+          "Organization ID",
+          "498991"
+        ],
+        [
+          "Registration date shown",
+          "27 August 2026"
+        ],
+        [
+          "Printed status",
+          "Active / Red Approved"
+        ]
+      ],
+      "status": "Owner-supplied PhilGEPS Red registration printout; status is shown as printed.",
+      "pages": [
+        {
+          "source_page": 1,
+          "file": "philgeps-01-excerpt.jpg",
+          "sha256": "a6a376f6994ecc1d6a0d57004a80051fd5d479dd4496bd974abc0f006d85a392",
+          "display_note": "Excerpt excluding bank-account details; original remains private"
+        },
+        {
+          "source_page": 2,
+          "file": "philgeps-02-excerpt.jpg",
+          "sha256": "c2c42e4478505f673c374efa75dfb97705767cfed4ea1b282fc0ef947979589e",
+          "display_note": "Excerpt excluding bank-account details; original remains private"
+        }
+      ],
+      "excluded_pages": []
+    },
+    {
       "key": "doh",
       "title": "DOH Sanitation Clearance",
       "holder_group": "Globaltec",
@@ -339,5 +449,7 @@
       ],
       "excluded_pages": []
     }
-  ]
+  ],
+  "corporate_tin": "693-974-075-00000",
+  "corporate_tin_source": "BIR Form 2303, both pages; corroborated by BIR notice and PhilGEPS organization record."
 }

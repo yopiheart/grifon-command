@@ -1,0 +1,73 @@
+{
+  "deck": "F:\\CodexWorktrees\\de71\\grifon-command\\clients\\oceanides\\company-profile\\output\\pptx\\Oceanides-Company-Profile-BIR-STP-Review-v3.pptx",
+  "checkedAt": "2026-10-13T22:38:04.3865817+08:00",
+  "fileLength": 28146040,
+  "comInstalled": true,
+  "existingPowerPointPids": [],
+  "playbackTested": false,
+  "playbackLimitation": "Read-only hidden deck inspected. Playback was not started to avoid opening a slideshow or interrupting the desktop.",
+  "errors": [],
+  "appSource": "COM application instance",
+  "powerPointVersion": "16.0",
+  "presentationsBefore": 0,
+  "newPowerPointPids": [
+    21444
+  ],
+  "openedReadOnly": true,
+  "slideCount": 70,
+  "slideSizePoints": {
+    "width": 960.0,
+    "height": 540.0
+  },
+  "slide20MediaShapes": [
+    {
+      "index": 18,
+      "name": "Oceanides STP film",
+      "shapeType": 16,
+      "leftPoints": 31.5,
+      "topPoints": 168.75,
+      "widthPoints": 564.0,
+      "heightPoints": 317.25,
+      "aspectRatio": 1.7777777777777777,
+      "mediaType": 3,
+      "mediaLengthMs": 139300.0,
+      "isEmbedded": true,
+      "isLinked": false
+    }
+  ],
+  "ownDeckClosed": true,
+  "presentationsAfter": 0,
+  "quitOnlyCreatedEmptyApplication": true,
+  "fileMetadataUnchanged": true,
+  "status": "PASS_NATIVE_INSPECTION_AND_EMBEDDED_PACKAGE",
+  "packageVerification": {
+    "nativeVideoElements": 1,
+    "embeddedMediaElements": 1,
+    "relationships": [
+      {
+        "id": "RstpVideo",
+        "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/video",
+        "target": "ppt/media/oceanides-stp.mp4",
+        "external": false,
+        "bytes": 12679698,
+        "sha256": "9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d",
+        "approvedHashMatch": true
+      },
+      {
+        "id": "RstpMedia",
+        "type": "http://schemas.microsoft.com/office/2007/relationships/media",
+        "target": "ppt/media/oceanides-stp.mp4",
+        "external": false,
+        "bytes": 12679698,
+        "sha256": "9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d",
+        "approvedHashMatch": true
+      }
+    ],
+    "hashMatch": true,
+    "noExternalMedia": true,
+    "nativeShapeBoundsPass": true,
+    "nativeAspectPass": true,
+    "nativeDurationPass": true
+  },
+  "deckSha256": "7667e53e4bb6be9aad4a1398dcb359f53aed051cbabca3f943869d84f8d154af"
+}

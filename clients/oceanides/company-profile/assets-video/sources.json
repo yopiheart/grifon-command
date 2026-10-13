@@ -1,0 +1,12 @@
+{
+  "file": "Oceanides-STP-Explainer-Voiceover-1080p.mp4",
+  "relative_video": "../media/Oceanides-STP-Explainer-Voiceover-1080p.mp4",
+  "sha256": "9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d",
+  "duration_seconds": 139.3,
+  "codec": "H.264 1920x1080 30 fps; AAC 48 kHz stereo",
+  "source": "Existing primary worktree STP film, original Aira narration with music",
+  "approval_commit": "358797e8",
+  "approval": "Original 139.3-second version previously accepted by Neil; no new generation or audio edit.",
+  "poster": "stp-video-poster.png",
+  "scope": "General illustrative domestic-wastewater treatment process, not a specific supplier design or Oceanides-owned plant."
+}

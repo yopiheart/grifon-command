@@ -30,6 +30,8 @@ pdfmetrics.registerFont(TTFont('Body', 'C:/Windows/Fonts/segoeui.ttf'))
 pdfmetrics.registerFont(TTFont('Strong', 'C:/Windows/Fonts/segoeuib.ttf'))
 data = json.loads((HERE / 'profile-content.json').read_text(encoding='utf-8-sig'))
 coverage = json.loads((HERE / 'coverage.json').read_text(encoding='utf-8-sig'))
+documents = json.loads((HERE / 'assets-documents/sources.json').read_text(encoding='utf-8'))
+video = json.loads((HERE / 'assets-video/sources.json').read_text(encoding='utf-8'))
 pages = []
 
 
@@ -87,9 +89,9 @@ def page(section, notes=''):
           'Oceanides existing company logo', contain=True)
     text(p, 'OCEANIDES', 142, 14, 800, 30, 25, 'Strong', NAVY)
     text(p, 'Plumbing Siphoning & Pest Management Services OPC', 142, 46, 1000, 26, 19, 'Strong', NAVY)
-    text(p, '(02) 8633 8486   |   Globe 0917 671 6383   |   Smart 0939 245 6217', 142, 75, 1000, 23, 16, 'Body', NAVY)
+    text(p, '(02) 8633 8486 / 8330 1329   |   Globe 0917 671 6383   |   Smart 0939 245 6217', 142, 75, 1000, 23, 16, 'Body', NAVY)
     text(p, 'marketing@oceanidessepticandpest.com', 142, 97, 750, 19, 14, 'Body', NAVY)
-    text(p, 'OPC TIN: TO FOLLOW', 1014, 20, 230, 20, 13, 'Strong', BLUE)
+    text(p, 'OPC TIN: ' + documents['corporate_tin'], 1014, 20, 230, 20, 13, 'Strong', BLUE)
     text(p, 'OCEANIDES', 850, 579, 390, 65, 55, 'Strong', '#F2F8FC')
     rect(p, 0, 658, W, 62, NAVY)
     rect(p, 0, 658, 1280, 3, SKY)
@@ -264,7 +266,7 @@ for i, s in enumerate(data['services']):
     if 'service-stock' in source:
         note(p, (HERE / 'assets-refresh/service-stock/sources.json').read_text(encoding='utf-8'))
 
-p = page('Onsite treatment system offer', 'Owner calls this Septage Treatment Facility. Wastewater source and volume, technology, supplier, design capacity and discharge requirements are not yet established. Generic process diagram below is a project scoping diagram, not a technical flow sheet.')
+p = page('Onsite treatment system offer', 'Owner-confirmed offer is an on-site Sewage Treatment Plant (STP) for building wastewater, also referred to as treatment facility in the interview. Wastewater source/volume, technology, supplier, design capacity and discharge requirements are site-specific. Diagram below concerns project scoping, not equipment design.')
 title(p, 'Onsite wastewater treatment systems')
 para(p, 'A treatment system at your property, backed by agreed operating support.', 42, 235, 1185, 33, 'Strong', NAVY, 44)
 para(p, 'Begin with a site assessment to define a suitable treatment approach and a complete operating plan.', 42, 334, 1175, 25)
@@ -279,6 +281,30 @@ for i, (head, body) in enumerate([
     if i < 2:
         rect(p, x + 375, 489, 32, 4, SKY)
 para(p, 'Compare the proposed system with your current maintenance pattern before deciding.', 42, 599, 1175, 23, 'Strong', BLUE)
+
+p = page('Illustrative STP process', 'General domestic-wastewater flow consistent with the previously accepted STP film. Source: https://www.epa.gov/npdes/peak-flows-sewage-treatment-plants . Not an exact supplier design. Numerical effluent targets are not copied from the supplied Malera reference; applicable requirements and system specifications must be assessed for the site.')
+title(p, 'How an onsite STP works')
+para(p, 'A general treatment flow for building wastewater', 42, 235, 1185, 29, 'Strong', NAVY)
+stages = [('Screening', 'Remove large solids'), ('Settling', 'Separate settleable material'), ('Biological treatment', 'Treat biodegradable pollutants'), ('Clarification', 'Separate treated water and sludge'), ('Disinfection', 'Apply where required by the design')]
+for i, (head, body) in enumerate(stages):
+    x = 42 + i * 245
+    text(p, f'{i+1:02d}', x, 314, 210, 50, 38, 'Strong', BLUE)
+    rect(p, x, 383, 216, 4, SKY)
+    para(p, head, x, 409, 216, 25, 'Strong', NAVY, 30)
+    para(p, body, x, 491, 216, 20, 'Body', INK, 27)
+    if i < 4: rect(p, x + 216, 383, 29, 4, RULE)
+para(p, 'Testing, servicing and periodic sludge removal remain part of the operating plan.', 42, 585, 1185, 23, 'Strong', BLUE)
+caption(p, 'Illustrative flow. Actual stages and discharge or reuse requirements depend on the selected system and site.', 42, 626, 1190)
+
+p = page('STP video explainer', 'Existing approved original Aira-narrated film, acceptance commit 358797e8. ' + video['scope'] + '\nOpening quarterly service bill is an example; actual client service records differ. Click embedded film to play, then discuss site assessment. Standalone MP4 is included as backup. No new paid voice/render operations.')
+p['media'] = video
+title(p, 'STP video explainer')
+image(p, HERE / 'assets-video/stp-video-poster.png', 42, 225, 752, 423, 'Oceanides STP video poster', contain=True)
+para(p, 'See the treatment process in action', 830, 241, 397, 29, 'Strong', NAVY, 37)
+para(p, '2 min 19 sec\nAnimation with voice-over and music', 830, 349, 397, 23, 'Body', INK, 32)
+para(p, 'Click the video to play in PowerPoint.', 830, 464, 397, 22, 'Strong', BLUE, 30)
+para(p, 'Open companion MP4', 830, 566, 397, 21, 'Strong', BLUE)
+caption(p, 'PDF: static preview with a link to the companion video.', 830, 605, 397, 14)
 
 p = page('Treatment planning', 'Decision framework only; no fixed saving, zero-siphoning, automatic self-treatment or maintenance-free guarantee. Economics and service intervals depend on the chosen system and site.')
 title(p, 'What changes with a treatment system?')
@@ -342,10 +368,10 @@ for heading, people in teams:
         para(p, role, x, 525, 375, 20, 'Strong', BLUE, 27)
         para(p, responsibility, x, 588, 375, 20, 'Body', INK, 27)
 
-p = page('Supplier documentation', 'Current OPC SEC incorporation certificate, Articles, authentication declarations and 2026 Manila business permit supplied from owner Drive on 2026-10-13. BIR COR/TIN remains to follow. Globaltec confirmed current provider; its supplied discharge permit validity ended 24 July 2026. See separately attributed documents appendix.')
+p = page('Supplier documentation', 'Current OPC SEC records, 2026 Manila business permit, BIR Form 2303, posted receipt/invoice notice and PhilGEPS Red-registration printout supplied from owner Drive. BIR corporate TIN 693-974-075-00000. Globaltec supplied discharge permit validity ended 24 July 2026. See separately attributed appendix.')
 title(p, 'Company and project documentation')
 para(p, 'Documentation is coordinated during supplier accreditation and project scoping.', 42, 236, 1175, 29, 'Strong', NAVY, 39)
-items = [('Company registration', 'SEC and 2026 business-permit copies in the appendix'),
+items = [('Company registration', 'SEC, BIR Form 2303 and 2026 business-permit copies'),
          ('Service-specific records', 'Documents applicable to the agreed work and service provider'),
          ('Treatment and disposal', 'Relevant facility records, agreements and supporting documentation'),
          ('Project handover', 'Agreed completion records, operating guidance and service reports')]
@@ -353,7 +379,7 @@ for i, (head, body) in enumerate(items):
     y = 349 + i * 63
     text(p, head, 42, y, 380, 30, 22, 'Strong', BLUE)
     para(p, body, 439, y, 795, 21)
-caption(p, 'OPC BIR COR/TIN and an updated Globaltec discharge-permit copy remain to follow.', 42, 624, 1190)
+caption(p, 'PhilGEPS Red-registration record included. Updated Globaltec discharge-permit copy remains to follow.', 42, 624, 1190)
 
 p = page('Service coordination', 'Proposed client engagement workflow. All scope, cost, timing and responsibilities documented in the service agreement.')
 title(p, 'A clear process for every engagement')
@@ -373,13 +399,13 @@ para(p, 'Central and Northern Luzon\n\nNationwide projects by arrangement', 858,
 para(p, 'Detailed city and municipality coverage follows in the appendix.', 42, 585, 1170, 23, 'Strong', BLUE)
 caption(p, 'Service availability, travel requirements and schedules are confirmed for each request.', 42, 628, 1190)
 
-p = page('Contact Oceanides', 'Mobiles and primary landline agree between new letterhead and oldprofile. Conflicting secondlandline omitted pendingconfirmation. Address supplied by user screenshot2026-10-12: TramoStreetCornerDandan,PasayCity,Philippines1300. OPC TIN userconfirmedtofollow. Website and Facebook from client configuration. No unverified office number added.')
+p = page('Contact Oceanides', 'Mobiles and primary landline agree across supplied records. Second landline 8330 1329 appears in new letterhead and current PhilGEPS printout. Full Pasay office address and corporate TIN verified against newly supplied BIR Form 2303; website/Facebook from client configuration.')
 title(p, 'Let us review your property service needs')
 para(p, 'Arrange a site assessment or discuss a service proposal with Oceanides.', 42, 236, 1180, 28, 'Strong', NAVY)
 text(p, '0917 671 6383', 42, 322, 570, 68, 50, 'Strong', BLUE)
 text(p, '0939 245 6217', 659, 322, 575, 68, 50, 'Strong', BLUE)
-text(p, '(02) 8633 8486', 42, 412, 560, 40, 29, 'Strong', NAVY)
-para(p, 'Tramo Street Corner Dandan\nPasay City, Philippines 1300', 659, 411, 574, 24, 'Body', INK, 34)
+text(p, '(02) 8633 8486 / 8330 1329', 42, 412, 575, 40, 29, 'Strong', NAVY)
+para(p, '2628 Tramo Street corner Dandan\nAlcantara Compound, Barangay 51\nPasay City, Philippines 1300', 659, 411, 574, 24, 'Body', INK, 34)
 para(p, 'marketing@oceanidessepticandpest.com\ncorporate@oceanidessepticandpest.com', 42, 514, 1180, 26, 'Strong', NAVY, 40)
 caption(p, 'Please share the service, site location and preferred schedule so we can coordinate the next step.', 42, 624, 1190, 17)
 
@@ -395,12 +421,11 @@ for c in coverage:
         text(p, name, x + 18, y, 375, 29, 21, 'Body', INK)
     caption(p, 'Geographic names: PSA PSGC. Service schedule and availability confirmed upon inquiry.', 42, 626, 1190)
 
-documents = json.loads((HERE / 'assets-documents/sources.json').read_text(encoding='utf-8'))
 p = page('Company documents appendix', 'Owner-supplied Drive records retrieved 2026-10-13. ' + documents['source_folder'] + '\n' + documents['provider_relationship'])
 title(p, 'Company documents', 'Registration and provider records | Appendix')
 text(p, 'OCEANIDES REGISTRATION', 42, 276, 565, 28, 18, 'Strong', BLUE)
-scope(p, ['SEC Certificate of Incorporation', 'Articles of Incorporation', 'Certificate of Authentication', '2026 Manila Business Permit'], 42, 322, 550, 22)
-para(p, 'OPC BIR COR and TIN remain to follow.', 42, 537, 550, 20, 'Strong', NAVY)
+scope(p, ['SEC incorporation and Articles', 'Certificate of Authentication', '2026 Manila Business Permit', 'BIR Form 2303 and posted notice', 'PhilGEPS Red-registration record'], 42, 322, 550, 22)
+para(p, 'Corporate TIN: ' + documents['corporate_tin'], 42, 566, 550, 20, 'Strong', NAVY)
 text(p, 'GLOBALTEC PROVIDER RECORDS', 659, 276, 575, 28, 18, 'Strong', BLUE)
 scope(p, ['DOH Environmental Sanitation Clearance', 'Amended Environmental Compliance Certificate', 'Historical discharge permit: printed validity ended 24 July 2026'], 659, 322, 565, 22)
 caption(p, 'Provider records apply to Globaltec and the stated facility or geographic scope.', 659, 552, 565, 16)
@@ -420,12 +445,13 @@ for doc in documents['records']:
         source = HERE / 'assets-documents' / entry['file']
         with Image.open(source) as scan:
             aspect = scan.width / scan.height
-        h = 432
-        w = min(604, h * aspect)
+        h = min(432, 604 / aspect)
+        w = h * aspect
         p['elements'].append(dict(type='image', path=str(source), renderPath=str(source),
-                                  x=640 + (598-w)/2, y=218, w=w, h=h,
+                                  x=640 + (598-w)/2, y=218 + (432-h)/2, w=w, h=h,
                                   fit='contain', alt=doc['title'] + ' complete source page ' + str(original_page)))
-        caption(p, 'Source page ' + str(original_page) + ' of ' + str(doc['source_page_count']) + ' | Owner-supplied copy', 42, 627, 580, 14)
+        source_label = 'Owner-supplied excerpt' if doc['key'] == 'philgeps' else 'Owner-supplied copy'
+        caption(p, 'Source page ' + str(original_page) + ' of ' + str(doc['source_page_count']) + ' | ' + source_label, 42, 627, 580, 14)
 
 spec = {'width': W, 'height': H, 'fonts': FONT, 'revision': REV, 'pages': pages}
 (TMP / 'layout.json').write_text(json.dumps(spec, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -449,6 +475,8 @@ for p in pages:
             c.setFillColor(HexColor(el['color']))
             c.setFont(el['font'], el['size'])
             c.drawString(x, H - y - el['size'] * .96, el['text'])
+    if p.get('media'):
+        c.linkURL(p['media']['relative_video'], (830, H - 601, 1227, H - 558), relative=1, thickness=0)
     c.restoreState()
     c.showPage()
 c.save()
