@@ -60,6 +60,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: CI E2E helper contracts
+        run: node --test tools/check-ci-e2e-inputs.test.mjs tools/ci-e2e-timing-reporter.test.mjs
+
       # No secrets / .env required: env validation is deferred to runtime,
       # and the live Gemini regression (RUN_REGRESSION) + ffmpeg integration
       # suites (RUN_BURNIN) stay off by default so CI never burns quota.
@@ -113,11 +116,22 @@ jobs:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/clients/
+            !/workflows/assets/
+            !/artifacts/
+            !/baselines/
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
+
+      - name: Verify E2E checkout inputs
+        run: node tools/check-ci-e2e-inputs.mjs
 
       - name: Install dependencies
         run: npm ci
@@ -142,7 +156,8 @@ jobs:
         run: npx playwright install-deps chromium
 
       - name: Boot/render smoke
-        run: npm run test:e2e -- --shard=${{ matrix.shard }}/32
+        # The installed CLI has no --add-reporter; retain both CI reporters.
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/32 --reporter=github,list,./tools/ci-e2e-timing-reporter.mjs
 
       - name: Upload screenshots
         if: always()
@@ -150,6 +165,16 @@ jobs:
         with:
           name: boot-smoke-screenshots-${{ matrix.shard }}
           path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload E2E timing
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boot-smoke-timing-${{ matrix.shard }}
+          path: .tmp/ci-e2e-timing/report.json
+          include-hidden-files: true
           if-no-files-found: ignore
           retention-days: 7
 
