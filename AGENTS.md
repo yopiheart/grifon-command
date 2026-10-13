@@ -100,6 +100,16 @@ in server handlers; browser code calls the `api/*` proxies.
 - Do not deploy or merge unless the user explicitly requests it. Review the
   diff and run applicable checks before committing.
 
+## Video background music
+
+For new video production across motion, Genjutsu, Blender, launch/spec ads and
+UGC, follow [the shared music workflow](workflows/background_music_production.md).
+Neil's defaults: ElevenLabs Music v2.5, one variant, custom duration fitted to
+the video, Auto, No Finetune; instrumental by default. Generate a fitting score
+instead of silently selecting saved stock or procedural music. Preserve accepted
+films and sources. The workflow records confirmed taste and unresolved controls;
+paid-spec approval still applies before generation.
+
 ## Secrets
 
 Never read, print, copy, commit, or place secret values in chat or artifacts.

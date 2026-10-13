@@ -6,6 +6,14 @@ paid execution spec or shipped feature. See [production workflow](grifon_motion_
 
 ## User preferences
 
+Music direction updated 2026-10-13: follow the
+[shared music workflow](background_music_production.md) for new scores:
+ElevenLabs Music v2.5, one variant, fitted custom duration, Auto, No Finetune,
+instrumental by default. The source-reuse and fallback options below apply to
+SFX; they do not authorize saved-stock or procedural music substitution.
+Existing accepted soundtracks remain preserved. This records production intent,
+not an implemented API model switch or authorization for a paid call.
+
 - The agent owns sound selection and placement; users review the finished video.
 - Write positive sound descriptions. Neil's tests found exclusion phrases such
   as "No ..." harmed his ElevenLabs results.
