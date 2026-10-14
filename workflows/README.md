@@ -10,6 +10,8 @@ Markdown SOPs that tell the agent *what* to do and *how*. Each workflow:
 
 ## Index
 
+- [creative_library_roadmap.md](creative_library_roadmap.md) - agreed creative library and reference-led production roadmap
+- [ugc_reference_implementation_plan.md](ugc_reference_implementation_plan.md) - first UGC flow, implementation slices and acceptance checks
 - [launch_readiness.md](launch_readiness.md) — meta-workflow tracking all gates before taking paying users
 - [app_audit.md](app_audit.md) — produce a prioritized punch list of what's broken/stubbed/risky
 - [fix_broken_feature.md](fix_broken_feature.md) — SOP for fixing one item from the punch list
