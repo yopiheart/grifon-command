@@ -1,57 +1,56 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14; recovery contract regressions verified for draft review**
+**Stamped: 2026-10-14; creative library roadmap and UGC implementation plan saved**
 
 ## Active task and boundary
-Checkout: F:/CodexWorktrees/efe4/grifon-command.
-Branch: codex/recovery-contract-gaps; base 3fec65156ace4a9b17b432ae05f8e9bae4a6427e.
-Neil approved missing crash-window and malformed-response tests first, followed
-by minimal fixes for reproduced defects. Keep the existing architecture.
-Draft PR lookup: gh pr view codex/recovery-contract-gaps --repo yopiheart/grifon-command.
-No merge, manual deployment, paid generation, live billing or production writes.
+Checkout: F:/CodexWorktrees/61f5/grifon-command.
+Branch: codex/creative-library-ugc-plan; base origin/main 18d6d169 (PR186).
+Neil requested saving the agreed roadmap and preparing a concrete first-UGC plan
+while he gathers three references and a real brand asset set. Documentation only.
+No application code, tuned content, model IDs, provider settings or assets changed.
+No paid calls, production data changes, merge or manual deployment.
 
-## Implementation
-Scene handle/completion write errors previously vanished in the video pool,
-which persisted video as done and skipped unfinished scenes on resume.
-Workers now drain siblings, retain completed clips and fail the stage so Retry
-can reach recorded handles. Fresh handle-less claims remain recoverable.
-Saved-run load validates control structures, identities, approval flags/gates
-and core stages before rehydration. Malformed responses retain the run and
-show Retry/Back. Supported older snapshots and reference fallbacks are retained.
-Two runtime files: services/producerOrchestrator.ts and producerRunService.ts.
-Seven crash cases + 36 response/compatibility cases; malformed browser flow
-loops eleven response variants at 375px and 1280px. Map now has 20 browser cases.
-No tuned content, models, provider settings, dependencies or migrations changed.
+## Saved decisions and implementation plan
+- workflows/creative_library_roadmap.md: product decisions, creative evidence,
+  model-routing hypotheses, migration and October-December milestone targets.
+- workflows/ugc_reference_implementation_plan.md: code seams, persisted contracts,
+  dependency-ordered vertical slices S0-S6, acceptance checks and pilot spec inputs.
+- workflows/README.md links both documents. These are product plans, not resume docs.
+Default: adapt for brand; optional Match closely; review plan/script/cost first.
+You decide stays inside approved scope/budget. First pilot: 15-30s 9:16 Taglish UGC.
+Library grows from three reference examples toward 30 curated videos; no automatic
+model retraining or unsupported sales prediction. Old accepted work stays intact.
 
-## Current evidence
-Red before green: five initial crash failures plus immediate-retry failure;
-29 malformed-response unit failures, two browser failures and two additional
-review/error missing-core-stage failures before their corresponding fixes.
-Build PASS; full Vitest PASS 1,616 / 32 existing default skips.
-After final assertion additions, affected suites PASS 152/152; runtime unchanged.
-Mapped browser recovery PASS 20/20, zero retries.
-Strengthened malformed Retry PASS 2/2; exact saved script/image restored.
-Companion Stop/Resume + competing-tab checks PASS 2/2, no flaky/skipped cases.
-Fresh independent diff review clean, including final test-only recheck.
-Independent smoke critic ran browser checks; its helper servers exited.
-Codex contracts PASS 26; bundle-leak, voice-sync, eval-prompts, domain,
-artifact anchors, PowerShell ASCII via build, and diff whitespace PASS.
-Local-only evidence: .tmp/recovery-* logs/JSON and .tmp/recovery-verification/.
-Full map report: 2026-10-14T02-21-59-952Z-6qhBDf/summary.md.
-Strengthened report: 2026-10-14T02-25-52-972Z-dFXb2f/summary.md.
-Tests ran on base plus task diff; reviewed runtime hashes match delivery.
-Hosted CI is separate; inspect the draft PR for current status.
+## Findings that shape implementation
+Current Companion uses ProducerFlow and sequential single-photo intake.
+Current producer saves progress but needs the browser to advance stages.
+Existing Omni API is a preset-based edit pass, not the proposed UGC generation path.
+PR186 recovery fixes are in the base. Stale handle-less claims can still resubmit;
+credit dedupe does not cap provider spend. New path needs durable execution,
+version-bound approval, budget reservations and unknown-outcome reconciliation.
+Stable media/version identity must connect chat and Assets and survive URL expiry.
 
-## Remaining limits and next action
-Stale claims without recorded handles can submit again. Repeated lost handle
-writes can cause repeated provider submissions; credit dedupe is not a spend cap.
-Real claim RPC/concurrency, live billing, paid quality and browser-storage-loss
-recovery remain unverified. Review the draft; merging needs Neil's instruction.
-Recovery flow reference: workflows/recovery-feature-map.md.
+## Verification and delivery
+Source inspection and document readback completed.
+Domain-language check PASS (307 files, zero drift hits).
+Diff whitespace PASS; seven local document links resolve.
+App build, tests and paid quality checks are not required/run for this docs-only task.
+Draft PR lookup: gh pr view codex/creative-library-ugc-plan --repo yopiheart/grifon-command.
+Independent implementation review remains a gate before a future non-trivial merge.
+
+## Next action
+Turn S0 into a code brief: reference/Recipe plus up to five photos saved/reopened
+in chat, using fixtures and zero generation. S1 review UI can use a fake planner.
+Neil supplies reference videos, source links, brand facts and assets; then prepare
+exact pilot inputs, creative diff and cost/attempt ceilings for required approval.
+The current request saved/prepared plans; application implementation has not begun.
 
 ## Preserved prior delivery
-CI optimization merged as PR184; current task base is main 3fec6515.
+PR184 CI optimization and PR186 recovery fixes are merged in the base.
+Prior PR186 evidence: build, 1,616 unit passes, mapped recovery 20/20 and Codex
+contracts 26 passed; these are historical results, not rerun in this task.
+Recovery limits and executable checks: workflows/recovery-feature-map.md.
 Accepted film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
 SHA256 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Editable score: continuous-fit-plan.json, mix-continuous.mjs, continuous-mix-receipt.json.
+Editable score: continuous-fit-plan.json, mix-continuous.mjs and receipt in same folder.
 Editable picture: workflows/assets/grifon-pluto-adaptation/orbital.json/js/html.
-Accepted film/source assets untouched. All historical paid approvals consumed.
+Accepted film/source assets untouched. Historical paid approvals are consumed.
