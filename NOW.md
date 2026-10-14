@@ -1,89 +1,81 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14, August STP guide sent; redesign ready for Neil review**
+**Stamped: 2026-10-14, STP concept and engineering follow-up kit ready**
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
 https://github.com/yopiheart/grifon-command/pull/161
-Neil rejected ba0946cf's profile as too similar to the original; new Redesign outputs supersede it.
-Complete visual change: fresh facade cover, Century Gothic/Corbel, navy/blue fields,
-editorial services map and varied section layouts. No merge/deploy; guide-only email authorized.
-Approved STP film is integrated with company profile; print brochure is the leave-behind.
+Neil requests concrete steps and a concept design before finding an STP supplier/engineer.
+Human-confirmed: no technical partner, actual laboratory results, flow records or plans yet.
+Prepare concept study and cost worksheet; final design, sizing and guarantees need technical review.
+No client/supplier outreach, new email, paid call, deployment or merge authorized by this request.
 
-## August presenter guide (2026-10-14)
-output/pdf/Oceanides-STP-Presenter-Guide-August-2026.pdf under company-profile: 4 A4 pages.
-Complete post-video Taglish script, 12 client Q&As, closing and assessment checklist.
-Searchable text, 4 section bookmarks, embedded Century Gothic/Corbel, 88,457 bytes.
-SHA 1bd6054364792a64e0ddfef37ffe0a1132f4641382f739a82cdc5e29e8c3e503.
-Sources/build: stp-presenter-guide.content.json and build-stp-presenter-guide.py.
-Independent visual/content review PASS; 37 content checks, zero out-of-page chars.
-Python compilation PASS; private QA .tmp/oceanides-presenter-guide/.
-Guide is a presenter reference; supplier/model/design/costs remain unconfirmed.
-No new prices, guaranteed savings, maintenance-free or zero-siphoning claims.
-Guide only emailed on Oct 14; SENT and single PDF attachment verified in Gmail.
+## New engineering preparation deliverables
+clients/oceanides/stp-proposal-prep/output/pdf/Oceanides-STP-Concept-and-Follow-Up-Kit-2026.pdf
+6 A4 pages; 74,315 bytes; SHA f0f48cd27996ceeb4c92b61c0def76aae82d901db430d85d8c7233967d190590.
+Actions/owners, draft client and supplier requests, 3 site briefs, two discussion paths,
+buyer-criteria evidence, cost guidance, blank parameter register and technical sources.
+SBR is one candidate for discussion, not selected or represented by the approved film.
+No guessed tank sizes, HRT/SRT, equipment duties, chemical doses, control setpoints or target limits.
+PDF final changed pages independently reviewed PASS; fonts embedded, zero text outside page.
+clients/oceanides/stp-proposal-prep/output/xlsx/Oceanides-STP-Three-Year-Cost-Worksheet-2026.xlsx
+19,170 bytes; SHA 021e4340b52173ec8324d41e67ef2017d040f541886b18a08d6dfc8c19a932b3.
+3 independent site tabs, 68 blank monetary inputs each, Year 1-3 annual costs and source fields.
+Installed CAPEX plus annual OPEX plus nonannual costs; current minus proposed cost comparison.
+Continuing sewer fees, residual liquid hauling, sludge/screens disposal, labour/testing included.
+Missing/invalid inputs or VAT basis prevent final totals; confirmed zero is valid.
+Author boundary tests and 9 rendered views PASS; independent reimport/recalculation PASS.
+Native Excel behavior not tested; final workbook independently recalculated in artifact engine.
+Builders build-concept-kit.py and build-cost-workbook.mjs; Python/Node syntax checks PASS.
+Private QA .tmp/oceanides-stp-proposal-prep/; final outputs contain no test fixture values.
 
-## Current deliverables
-clients/oceanides/company-profile/output/pptx/:
-Oceanides-Company-Profile-Redesign-2026.pptx, 10 editable 16:9 slides, 18,439,683 bytes.
-SHA e41f0358e5a15851e2eab38d8a4ef5eca5bced3019b3bd4d0918429df699d19e.
-Century Gothic/Corbel embedded in 8 styles; film internal on slide 9, explicit click start.
-Company intro/background, 5 services, original proof, STP intro/film, next steps.
-output/pdf/Oceanides-Company-Brochure-Redesign-A5-2026.pdf, 8 pages, 10,251,058 bytes.
-SHA be69d27d45c70f4e93aba30818352bb22df6643557594fe5a6cca9057e358628.
-output/pdf/Oceanides-Company-Brochure-Redesign-A4-Print-2026.pdf, 4 surfaces, 10,268,223 bytes.
-SHA 7b86f9e4c33605da5606ff032a813952eef4210320d636a73d09eabfe3875520.
-A4 landscape, 100% actual size, duplex, short-edge flip; nest 2 sheets/fold center.
-Imposition 8/1, 2/7, 6/3, 4/5; 148.5x210 mm A5 reader, 13 mm safe margins.
-Render previews output/preview/Redesign-*.png; main cover/index/plumbing and brochure.
-Production provenance redesign-2026.delivery.json; content premium-content.json.
-Builders build-redesign-presentation.mjs and build-redesign-brochure.py.
---replace-redesign rebuilds only this task-owned new deck; atomic validated promotion.
-Older deliverables retained; premium-2026.delivery.json records rejected/superseded status.
+## Meeting evidence and current scope
+User supplied New-Recording-21-Knowledge-Transfer.docx and https://share.gemini.google/NK6djEkH4NTO .
+Both are AI analyses; original recording not supplied or heard by this task.
+Reported current building: Maynilad-connected, former STP retired; assess actual quality gap.
+Separate Carmona building requirement approx 30 m3/day; subdivision approx 150 m3/day.
+All flows provisional. Initial minimum '30 cubic' lacks unit basis; 20 m2 is footprint, not flow.
+3-year expense comparison is buyer's decision horizon, not guaranteed payback.
+Reported SBR agreement is unverified; film is generic aerobic treatment with separate clarifier/RAS.
+Conventional SBR candidate concept instead uses timed fill/react/settle/draw/idle in the reactor.
+No unsupported dilution, automated compliance, zero sludge, no staff or fixed savings promises.
+Need Maynilad reference/version, connection agreement, actual outlet, lab results and flow data.
+Carmona requirements/permits must be obtained separately; no generic Class C limits assumed.
+Potential partners researched from official pages only: Ariescor Water, Zoltech, Unique Water.
+Company-published projects are qualification leads; none contacted, selected or independently validated.
+Check responsible designer, comparable operating references/lab results, design/O&M scope,
+36-month costs, commissioning tests, acceptance/performance conditions and after-sales terms.
 
-## Sources and corrections
-D19 workflows/design_swipe_file.md records actual Magnific composition mechanisms.
-Latest scoped DESIGN.md direction supersedes previous profile style sections.
-Fresh stock facade assets/redesign/facade-pexels-14765373.jpg: 3649x6000, To Tao/Pexels.
-Source/license assets/redesign/sources.json; visibly illustrative, not an Oceanides project.
-Real proof now assets/before-1.jpg and after-1.jpg, 1536x2048, unaltered originals.
-Asset manifest tb2-variants.json explicitly says tb2-ba2/ba3 are AI recreations.
-Rejected draft mislabeled tb2-ba2 as actual; new deck/brochure correct this.
-Service scenes disclosed AI; approved STP frame is illustrative, not an engineering design.
-User reference Oceanides.pptx Drive 1bolz4WutO3283gjf-09fFClW9d818yRD slide 1 supports 2021.
-Optional direct history confirmation pending; no invented founder or timeline claims.
-All 5 services, mission/vision/values, process and confirmed contacts retained.
+## Existing presentation and brochure
+clients/oceanides/company-profile/output/pptx/Oceanides-Company-Profile-Redesign-2026.pptx
+10 editable 16:9 slides; SHA e41f0358e5a15851e2eab38d8a4ef5eca5bced3019b3bd4d0918429df699d19e.
+Century Gothic/Corbel embedded; approved film internal on slide 9 with explicit click start.
+Matching A5 8-page brochure and A4 4-surface booklet retained in company-profile/output/pdf/.
+Print A4 landscape, 100%, duplex short-edge flip; nest 2 sheets/fold center.
+All 10 native slides/8 reader pages/4 print surfaces independently inspected PASS.
+Native PowerPoint play/pause/resume PASS; actual projector and physical printing untested.
+Fresh facade source To Tao/Pexels; source/license in company-profile/assets/redesign/sources.json.
+Actual proof uses assets/before-1.jpg and after-1.jpg; tb2-ba2/ba3 are AI recreations, excluded.
+DESIGN.md latest 2026-10-06 direction/D19 supersedes rejected minimal-profile revision.
+Older files retained; premium-2026.delivery.json records rejected/superseded status.
+Current profile provenance company-profile/redesign-2026.delivery.json; Neil design review pending.
 
-## Verification
-Independent substantive redesign review PASS; all 10 native slides, 8 PDF pages, 4 surfaces.
-Cover/typography/map/proof layout compared against rejected version; genuine change PASS.
-Final plumber hands/wrench/repair target, renovation/pest scenes and original tank rims intact.
-PowerPoint package/layout/font/import gates PASS, zero findings/warnings.
-Native read-only open recognizes 99,734 ms film; embedded approved bytes unchanged.
-Native slideshow COM idle 0->0, play 1122 ms, pause 1216->1216 ms, resume 1722 ms PASS.
-Pointer click not exercised; media action/manual timing verified in OOXML. Projector untested.
-Fonts embedded: 8 PPTX styles/all 4 used PDF fonts; no font files copied into repo.
-PDF geometry/fonts/imposition PASS, zero text outside pages/13 mm safe margins.
-Photo effective DPI floor 292.4 STP; others 318.5-1507 DPI. Source artwork unedited.
-Node syntax/Python compile/domain/artifact-anchor/diff checks PASS; no app code changes.
-Independent helper code and native font/atomic promotion review PASS, no actionable findings.
-Private evidence .tmp/oceanides-redesign/{deck,brochure,independent-review}/.
-No new paid calls, installs, reauthentication or old asset deletion.
+## Presenter guide and email continuity
+company-profile/output/pdf/Oceanides-STP-Presenter-Guide-August-2026.pdf: 4 A4 pages.
+Full Taglish post-video explanation, 12 Q&As, closing and assessment checklist; independent PASS.
+SHA 1bd6054364792a64e0ddfef37ffe0a1132f4641382f739a82cdc5e29e8c3e503; 88,457 bytes.
+Only this guide emailed on Oct 14 by explicit request; SENT/recipient/single PDF verified.
+Private receipt .tmp/oceanides-email/presenter-guide-sent-receipt.json.
+Profile/video email remains on hold. No permission to send new engineering kit or contact suppliers.
+Oct 3 standalone video verified DRAFT; earlier combined deck observed SENT, no assistant send.
 
-## Film and email continuity
-Approved tight MP4 unchanged, 9,925,374 bytes, 99.733333 s, 1920x1080/30 fps.
+## Film and release context
+Approved MP4 unchanged: 99.733333 s, 1920x1080/30 fps, 9,925,374 bytes.
 SHA 40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea.
-Same 224 words/12 inputs/Aira/Flow score; speech boundary gaps <=0.36 s; -16.25 LUFS/-1.45 dBTP.
-Existing voice 1600-credit cap and music $0.50 locks remain; no repeat generation/purchase.
-Profile/video email remains on hold; presenter guide separately sent on explicit request.
-Oct 3 standalone video verified DRAFT/no To/no SENT; old combined deck observed SENT, no assistant send.
-Private mail receipts .tmp/oceanides-email/; earlier meeting PPTX/PDF/HTML retained.
-Neil withdrew permits; no permit appendix.
-
-## Client scope and release context
-On-site STP treats domestic building wastewater; supplier/model/capacity unknown.
-May reduce liquid hauling with suitable design/outlet; sludge/equipment care continue.
-No exact savings, maintenance-free or total siphoning elimination claims.
+Same approved Aira narration/Flow score; speech gaps <=0.36 s; -16.25 LUFS/-1.45 dBTP.
+Voice 1600-credit and music $0.50 locks remain; no repeat generation/purchase.
 Oceanides main contact coordinates field teams/specialists through turnover.
 0917 6716383 (Globe); marketing@oceanidessepticandpest.com.
 Tramo Street Corner Dandan, Pasay City, Philippines 1300.
-PR161 -> PR153 -> PR152 -> PR151 and prior recovery stack retained, unmerged.
-Unrelated attachments/workflows reference asset directories remain unstaged.
+Neil withdrew permit appendix from the profile; actual project requirements still need review.
+PR161 -> PR153 -> PR152 -> PR151 stack retained, unmerged.
+Unrelated attachments, CI-tool files and workflow reference assets remain unstaged.
