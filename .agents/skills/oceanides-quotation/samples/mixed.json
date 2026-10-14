@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "client": {"name": "SAMPLE CLIENT / Example Property Administration", "site": "Sample building, North Service Area, Sample City", "contact": "Sample facilities representative"},
+  "title": "Property maintenance services",
+  "summary": "Three defined work items, coordinated through Oceanides with one agreed payment schedule.",
+  "pricing": {"mode": "itemized", "total": "99999.00"},
+  "services": [
+    {"group": "plumbing", "name": "Drain declogging", "description": "Clear the two identified drainage points. Scope excludes replacement of concealed pipework.", "quantity": "2", "unit": "points", "unit_price": "9999.00"},
+    {"group": "pest-control", "name": "Pest control service coordination", "description": "Coordinate the agreed treatment for the assessed service area. Treatment coverage follows the sample assessment; no repeat visits are implied.", "quantity": "1", "unit": "scope", "unit_price": "9999.00"},
+    {"group": "renovation-restoration", "name": "Ceiling restoration", "description": "Repair the specified ceiling area and complete the agreed finish. Materials and access are limited to the written sample scope.", "quantity": "1", "unit": "scope", "unit_price": "70002.00"}
+  ],
+  "payments": [{"trigger": "Before scheduling the agreed work", "amount": "49999.50", "percent": "50"}, {"trigger": "On completion and turnover", "amount": "49999.50", "percent": "50"}],
+  "conditions": ["The payment split and amounts shown are fictional examples, not Oceanides standard terms."],
+  "confirmed": {"client": false, "scope": false, "price": false, "payment": false},
+  "issue_date": "1999-01-01",
+  "valid_days": 30
+}

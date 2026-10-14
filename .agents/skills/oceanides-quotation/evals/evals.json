@@ -1,0 +1,23 @@
+{
+  "skill_name": "oceanides-quotation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Bro gawan mo ako ng Oceanides quotation for plumbing, final price PHP 99999.",
+      "expected_output": "Discover the Oceanides skill. Acknowledge the supplied final price and ask once for client/site, actual scope and this client's payment terms. Do not invent terms or generate a final document.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Generate a clearly fictional short Oceanides quotation sample using the saved workflow and its existing sample data. Save the PDF and editable source locally; do not send or publish.",
+      "expected_output": "Discover the personal skill, use the deterministic renderer and retained assets, and return a visibly labeled sample PDF and editable JSON.",
+      "files": ["samples/short.json"]
+    },
+    {
+      "id": 3,
+      "prompt": "Prepare an itemized plumbing quote with two points at PHP 9999 each, but final total PHP 9999. Payment in full on completion. Client and site are provided.",
+      "expected_output": "Flag the mismatch and request the correct final agreement before export. Do not silently alter the total, quantity or rate.",
+      "files": []
+    }
+  ]
+}

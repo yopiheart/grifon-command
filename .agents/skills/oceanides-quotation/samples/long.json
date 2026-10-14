@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "client": {
+    "name": "SAMPLE CLIENT / Example Condominium and Commercial Property Facilities Administration Committee",
+    "site": "Sample Tower 999, Level 99, North Service Corridor, Maintenance Access Entrance, Sample Business District, Sample City",
+    "contact": "Sample project representative"
+  },
+  "title": "Multi-service property improvement",
+  "summary": "A fictional, extended scope showing how a quotation continues across pages. Each service remains tied to the agreed package; the assessment details below are test data, not an engineering specification.",
+  "pricing": {
+    "mode": "package",
+    "total": "99999.00"
+  },
+  "services": [
+    {
+      "group": "stp",
+      "name": "STP assessment and specialist coordination",
+      "description": "Coordinate the site review, technical scope and specialist proposal for building wastewater treatment. System capacity, equipment, installation details and maintenance requirements follow the agreed specialist proposal.\n\nSample review item 01: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 02: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 03: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 04: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 05: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 06: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 07: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 08: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 09: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 10: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 11: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 12: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 13: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 14: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 15: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 16: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 17: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 18: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 19: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 20: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 21: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 22: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 23: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nSample review item 24: Record the agreed access area, the client-provided site information and the specialist response for this assessment item. Identify outstanding information before including it in the proposed installation scope.\n\nEND OF EXTENDED STP SCOPE."
+    },
+    {
+      "group": "siphoning",
+      "name": "Septic tank service coordination",
+      "description": "Coordinate the work at the accessible tank identified in the agreed site record. Additional tanks, concealed defects and access alterations are excluded unless added to a revised quotation."
+    },
+    {
+      "group": "plumbing",
+      "name": "Drainage repairs",
+      "description": "Repair the drainage points listed in the sample scope. Scope limits, access arrangements and reinstatement follow the agreed site notes. No unlisted fixtures or concealed replacements are included."
+    },
+    {
+      "group": "renovation-restoration",
+      "name": "Ceiling repair and restoration",
+      "description": "Restore the agreed ceiling areas using the materials confirmed for this example. The scope does not include structural changes or repairs outside the identified areas."
+    },
+    {
+      "group": "pest-control",
+      "name": "Pest treatment coordination",
+      "description": "Coordinate treatment of the assessed areas through the assigned specialist. Specific treatment methods, return visits and any warranty must be confirmed separately before inclusion."
+    }
+  ],
+  "payments": [
+    {
+      "trigger": "On written acceptance, before work is scheduled",
+      "amount": "33333.00"
+    },
+    {
+      "trigger": "At the agreed intermediate milestone recorded with the client",
+      "amount": "33333.00"
+    },
+    {
+      "trigger": "At completion and turnover of the agreed scope",
+      "amount": "33333.00"
+    }
+  ],
+  "conditions": [
+    "This is a layout stress sample. No assessment, technical design, service booking or work commitment exists.",
+    "Site access and project milestones must be confirmed with the client. The sample does not imply a guaranteed completion date.",
+    "No equipment ownership, accreditation, treatment performance or maintenance-free promise is made."
+  ],
+  "confirmed": {
+    "client": false,
+    "scope": false,
+    "price": false,
+    "payment": false
+  },
+  "issue_date": "1999-01-01",
+  "valid_days": 30
+}

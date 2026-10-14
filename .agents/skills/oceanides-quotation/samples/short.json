@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "client": {"name": "SAMPLE CLIENT / Not a real customer", "site": "Sample residence, Sample City"},
+  "title": "Septic tank service",
+  "summary": "A written scope and fixed package amount for the requested septic tank work.",
+  "pricing": {"mode": "package", "total": "99999.00"},
+  "services": [{"group": "siphoning", "name": "Septic tank siphoning", "description": "Service the single accessible tank identified during the sample assessment. Work is limited to the tank and access point described in this example."}],
+  "payments": [{"trigger": "Upon completion of the agreed work", "amount": "99999.00"}],
+  "conditions": ["Pipe repairs and additional tanks are excluded from this sample scope."],
+  "confirmed": {"client": false, "scope": false, "price": false, "payment": false},
+  "issue_date": "1999-01-01",
+  "valid_days": 30
+}

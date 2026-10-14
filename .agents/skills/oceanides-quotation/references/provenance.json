@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "dc680e8005044dfa741accabdde7377fb9dc59c6",
+  "sourceBranch": "origin/codex/oceanides-premium-profile-brochure",
+  "companySource": "clients/oceanides/company-profile/premium-content.json",
+  "logoSource": "clients/oceanides/company-profile/assets/logo-transparent.png",
+  "reference": "User-supplied Design.png; layout inspiration only; its content and terms are not Oceanides facts.",
+  "designStatus": "Initial quotation design for user review; preserve after acceptance.",
+  "fonts": "Installed Windows Century Gothic and Corbel; embedded subsets in PDFs. Font binaries are not redistributed."
+}
