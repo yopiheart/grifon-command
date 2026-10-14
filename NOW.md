@@ -1,12 +1,12 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14, August STP presenter guide complete; redesign ready for Neil review**
+**Stamped: 2026-10-14, August STP guide sent; redesign ready for Neil review**
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
 https://github.com/yopiheart/grifon-command/pull/161
 Neil rejected ba0946cf's profile as too similar to the original; new Redesign outputs supersede it.
 Complete visual change: fresh facade cover, Century Gothic/Corbel, navy/blue fields,
-editorial services map and varied section layouts. No merge/deploy/email send requested.
+editorial services map and varied section layouts. No merge/deploy; guide-only email authorized.
 Approved STP film is integrated with company profile; print brochure is the leave-behind.
 
 ## August presenter guide (2026-10-14)
@@ -19,6 +19,7 @@ Independent visual/content review PASS; 37 content checks, zero out-of-page char
 Python compilation PASS; private QA .tmp/oceanides-presenter-guide/.
 Guide is a presenter reference; supplier/model/design/costs remain unconfirmed.
 No new prices, guaranteed savings, maintenance-free or zero-siphoning claims.
+Guide only emailed on Oct 14; SENT and single PDF attachment verified in Gmail.
 
 ## Current deliverables
 clients/oceanides/company-profile/output/pptx/:
@@ -72,7 +73,7 @@ Approved tight MP4 unchanged, 9,925,374 bytes, 99.733333 s, 1920x1080/30 fps.
 SHA 40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea.
 Same 224 words/12 inputs/Aira/Flow score; speech boundary gaps <=0.36 s; -16.25 LUFS/-1.45 dBTP.
 Existing voice 1600-credit cap and music $0.50 locks remain; no repeat generation/purchase.
-Email sending ON HOLD; no new draft/send during redesign.
+Profile/video email remains on hold; presenter guide separately sent on explicit request.
 Oct 3 standalone video verified DRAFT/no To/no SENT; old combined deck observed SENT, no assistant send.
 Private mail receipts .tmp/oceanides-email/; earlier meeting PPTX/PDF/HTML retained.
 Neil withdrew permits; no permit appendix.
