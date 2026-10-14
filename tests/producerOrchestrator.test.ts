@@ -519,6 +519,169 @@ describe('renderOneScene — handle-less orphan requeues + reclaims + re-submits
   });
 });
 
+describe('runProduction — recovery across scene persistence failures', () => {
+  it('recovers a stale handle-less claim after submit succeeds but recording fails', async () => {
+    let checkpoint: ProductionRun | undefined;
+    const { deps, spies, store, rows } = makeFakeDeps({
+      persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
+    });
+    vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
+
+    await runProduction(videoStageRun(1), cb(), deps);
+
+    expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null });
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo).not.toHaveBeenCalled();
+    // The server allows another claim only after its existing stale interval.
+    rows.get(0)!.stale = true;
+
+    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
+    expect(rows.get(0)).toMatchObject({ status: 'done', videoUrl: 'vid://0' });
+    expect(out.scenes[0].videoUrl).toBe('vid://0');
+    expect(out.gate).toBe('first_cut');
+  });
+
+  it('polls the recorded handle after its acknowledgement is lost and preserves a completed sibling', async () => {
+    let checkpoint: ProductionRun | undefined;
+    const { deps, spies, store, rows } = makeFakeDeps({
+      persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
+    });
+    const recordScene = vi.mocked(store.recordScene).getMockImplementation()!;
+    vi.mocked(store.recordScene).mockImplementationOnce(async (...args) => {
+      await recordScene(...args);
+      throw new Error('RECORD_ACK_LOST');
+    });
+
+    await runProduction(videoStageRun(2), cb(), deps);
+
+    const handle = structuredClone(rows.get(0)!.jobHandle!);
+    expect(rows.get(0)?.status).toBe('rendering');
+    expect(rows.get(1)).toMatchObject({ status: 'done', videoUrl: 'vid://1' });
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
+    expect(spies.consolidateVoices).not.toHaveBeenCalled();
+    expect(spies.generateEditDecisionList).not.toHaveBeenCalled();
+    expect(spies.renderFinalVideo).not.toHaveBeenCalled();
+
+    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(2);
+    expect(spies.pollVideo.mock.calls[1][0]).toEqual(handle);
+    expect(rows.get(0)).toMatchObject({ status: 'done', videoUrl: 'vid://0' });
+    expect(out.scenes.map((s) => s.videoUrl)).toEqual(['vid://0', 'vid://1']);
+    expect(out.gate).toBe('first_cut');
+  });
+
+  it('polls the same recorded handle after the completion write fails', async () => {
+    let checkpoint: ProductionRun | undefined;
+    const { deps, spies, store, rows } = makeFakeDeps({
+      persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
+    });
+    vi.mocked(store.completeScene).mockRejectedValueOnce(new Error('COMPLETE_WRITE_FAILED'));
+
+    await runProduction(videoStageRun(1), cb(), deps);
+
+    const handle = structuredClone(rows.get(0)!.jobHandle!);
+    expect(rows.get(0)).toMatchObject({ status: 'rendering', videoUrl: null });
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
+    expect(spies.consolidateVoices).not.toHaveBeenCalled();
+    expect(spies.generateEditDecisionList).not.toHaveBeenCalled();
+    expect(spies.renderFinalVideo).not.toHaveBeenCalled();
+
+    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(2);
+    expect(spies.pollVideo.mock.calls[1][0]).toEqual(handle);
+    expect(store.completeScene).toHaveBeenCalledTimes(2);
+    expect(rows.get(0)).toMatchObject({ status: 'done', videoUrl: 'vid://0' });
+    expect(out.scenes[0].videoUrl).toBe('vid://0');
+    expect(out.gate).toBe('first_cut');
+  });
+
+  it('keeps failed scene writes recoverable without starting downstream production', async () => {
+    const { deps, spies, store } = makeFakeDeps();
+    vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
+
+    const out = await runProduction(videoStageRun(1), cb(), deps);
+
+    expect(out.status).toBe('error');
+    expect(out.stages.find((s) => s.id === 'video')?.status).toBe('failed');
+    expect(out.error).toContain('RECORD_WRITE_FAILED');
+    expect(spies.consolidateVoices).not.toHaveBeenCalled();
+    expect(spies.generateEditDecisionList).not.toHaveBeenCalled();
+    expect(spies.renderFinalVideo).not.toHaveBeenCalled();
+  });
+
+  it('can submit again on each stale recovery when repeated handle writes fail', async () => {
+    let checkpoint: ProductionRun | undefined;
+    const { deps, spies, store, rows } = makeFakeDeps({
+      persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
+    });
+    vi.mocked(store.recordScene)
+      .mockRejectedValueOnce(new Error('FIRST_RECORD_WRITE_FAILED'))
+      .mockRejectedValueOnce(new Error('SECOND_RECORD_WRITE_FAILED'));
+
+    await runProduction(videoStageRun(1), cb(), deps);
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null });
+
+    rows.get(0)!.stale = true;
+    await runProduction(structuredClone(checkpoint!), cb(), deps);
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null });
+
+    // This is a limit of handle-less recovery: two separate failed writes can
+    // leave two accepted provider jobs unavailable to the next session.
+    rows.get(0)!.stale = true;
+    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(3);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
+    expect(out.gate).toBe('first_cut');
+  });
+
+  it('does not submit another job while a handle-less claim is still fresh', async () => {
+    const { deps, spies, rows } = makeFakeDeps({}, {
+      0: { status: 'submitting', jobHandle: null, stale: false },
+    });
+
+    await runProduction(videoStageRun(1), cb(), deps);
+
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+    expect(spies.pollVideo).not.toHaveBeenCalled();
+    expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null, stale: false });
+  });
+
+  it('keeps an immediate retry recoverable until its handle-less claim becomes stale', async () => {
+    let checkpoint: ProductionRun | undefined;
+    const { deps, spies, store, rows } = makeFakeDeps({
+      persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
+    });
+    vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
+    await runProduction(videoStageRun(1), cb(), deps);
+
+    const fresh = await runProduction(structuredClone(checkpoint!), cb(), deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo).not.toHaveBeenCalled();
+    expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null, stale: false });
+    expect(fresh.stages.find((s) => s.id === 'video')?.status).not.toBe('done');
+
+    rows.get(0)!.stale = true;
+    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
+    expect(out.gate).toBe('first_cut');
+  });
+});
+
 // --- 5. Lost race on record -----------------------------------------------
 
 describe('renderOneScene — lost race on recordScene does not double-complete', () => {

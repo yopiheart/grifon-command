@@ -41,7 +41,7 @@ export function seededRun(gate: 'storyboard' | 'first_cut' | 'video' | 'final_re
 export async function installRecoveryBackend(page: Page, seed = seededRun('storyboard')) {
   const state = {
     row: seed.row as ProductionRunRow | null, scenes: seed.scenes,
-    loadFails: false, holdVideo: false, finalPollFails: false,
+    loadFails: false, loadResponse: undefined as unknown, holdVideo: false, finalPollFails: false,
     reads: [] as string[], checkpoints: [] as Record<string, any>[],
     submissions: [] as Record<string, any>[], polls: [] as Record<string, any>[],
     finalStarts: [] as Record<string, any>[], finalPolls: [] as string[],
@@ -64,6 +64,7 @@ export async function installRecoveryBackend(page: Page, seed = seededRun('story
       if (request.method() === 'GET') {
         state.reads.push(url.searchParams.get('runId')!);
         if (state.loadFails) return route.fulfill({ status: 503, json: { error: 'Recovery fixture temporarily offline' } });
+        if (state.loadResponse !== undefined) return route.fulfill({ json: state.loadResponse });
         if (!state.row) return route.fulfill({ status: 404, json: { error: 'run_not_found' } });
         return route.fulfill({ json: { run: state.row, scenes: state.scenes } });
       }

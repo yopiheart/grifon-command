@@ -191,6 +191,39 @@ export const saveRunCheckpoint = (runId: string, patch: RunCheckpoint): Promise<
     current: d?.current as ProductionRunRow | undefined,
   }));
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  value !== null && typeof value === 'object' && !Array.isArray(value);
+
+/** Validate only recovery control state before fromRow/UI can traverse it or resume work.
+ * Old checkpoints may lack the added stages/columns; creative artifacts stay opaque. */
+const isRunResponse = (data: unknown, runId: string): data is { run: ProductionRunRow; scenes?: ProductionSceneRow[] | null } => {
+  if (!isRecord(data) || !isRecord(data.run)) return false;
+  const row = data.run;
+  if (row.run_id !== runId || typeof row.user_id !== 'string' || !isRecord(row.input)) return false;
+  if (!['oneshot', 'concierge'].includes(row.mode as string) || !['running', 'review', 'done', 'error'].includes(row.status as string)) return false;
+  const stages = row.stages ?? [];
+  if (!Array.isArray(stages) || !stages.every(stage => isRecord(stage) && typeof stage.id === 'string' && stage.id.length > 0 && ['pending', 'running', 'done', 'failed'].includes(stage.status as string))) return false;
+  if (new Set(stages.map(stage => stage.id)).size !== stages.length) return false;
+  // Only video_prompts and thumbnail were added by normalizeStages. Losing a core stage
+  // would make an automatic resume, Retry or approval repeat work already purchased.
+  if (row.status !== 'done' && ['market_research', 'script', 'storyboard', 'scene_images', 'video', 'voices', 'edl', 'final_render'].some(id => !stages.some(stage => stage.id === id))) return false;
+
+  const scenes = data.scenes ?? [];
+  if (!Array.isArray(scenes) || !scenes.every(scene => isRecord(scene) && Number.isInteger(scene.scene_idx) && (scene.scene_idx as number) >= 0 && ['pending', 'submitting', 'rendering', 'done', 'flagged', 'failed'].includes(scene.status as string))) return false;
+  if (new Set(scenes.map(scene => scene.scene_idx)).size !== scenes.length) return false;
+  const art = row.artifacts ?? {};
+  if (!isRecord(art)) return false;
+  if (art.scenes != null) {
+    if (!Array.isArray(art.scenes) || !art.scenes.every(scene => isRecord(scene) && Number.isInteger(scene.sceneIdx) && (scene.sceneIdx as number) >= 0 && ['pending', 'submitting', 'rendering', 'done', 'flagged', 'failed'].includes(scene.status as string))) return false;
+    if (new Set(art.scenes.map(scene => scene.sceneIdx)).size !== art.scenes.length) return false;
+  }
+  if (art.storyboard != null && (!Array.isArray(art.storyboard) || !art.storyboard.every(isRecord))) return false;
+  if (art.storyboardApproved != null && typeof art.storyboardApproved !== 'boolean') return false;
+  if (art.gate != null && !['storyboard', 'first_cut'].includes(art.gate as string)) return false;
+  if (row.status === 'review' && art.gate !== 'storyboard' && art.gate !== 'first_cut') return false;
+  return true;
+};
+
 /** Resume-read: the run header + its scene queue, or null if the run doesn't exist. */
 export const loadRun = async (
   runId: string
@@ -206,7 +239,8 @@ export const loadRun = async (
     (err as any).status = res.status;
     throw err;
   }
-  return { run: data.run as ProductionRunRow, scenes: (data.scenes ?? []) as ProductionSceneRow[] };
+  if (!isRunResponse(data, runId)) throw new Error('PRODUCER_LOAD_INVALID');
+  return { run: data.run, scenes: data.scenes ?? [] };
 };
 
 // ── Per-scene video job queue ────────────────────────────────────────────────────

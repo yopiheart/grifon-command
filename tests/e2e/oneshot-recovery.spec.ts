@@ -7,6 +7,53 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
   test.describe(`${viewport.width}px Producer recovery`, () => {
     test.use({ viewport });
 
+    test('seeded malformed saved-run responses preserve Retry and the selected run', async ({ page }, testInfo) => {
+      const backend = await installRecoveryBackend(page);
+      const valid = { run: backend.row, scenes: backend.scenes };
+      const variants: [string, unknown][] = [
+        ['missing run', { scenes: [] }],
+        ['null run', { run: null, scenes: [] }],
+        ['non-array stages', { ...valid, run: { ...valid.run, stages: {} } }],
+        ['non-array scenes', { ...valid, scenes: {} }],
+        ['null scene', { ...valid, scenes: [null] }],
+        ['malformed artifact scene', { ...valid, run: { ...valid.run, artifacts: { ...valid.run!.artifacts, scenes: [{ status: 'pending' }] } } }],
+        ['missing review gate', { ...valid, run: { ...valid.run, artifacts: { ...valid.run!.artifacts, gate: null } } }],
+        ['unknown review gate', { ...valid, run: { ...valid.run, artifacts: { ...valid.run!.artifacts, gate: 'video' } } }],
+        ['null stage', { ...valid, run: { ...valid.run, stages: [null] } }],
+        ['review missing core stage', { ...valid, run: { ...valid.run, stages: valid.run!.stages.filter(stage => (stage as { id: string }).id !== 'script') } }],
+        ['error missing core stage', { ...valid, run: { ...valid.run, status: 'error', stages: valid.run!.stages.filter(stage => (stage as { id: string }).id !== 'script') } }],
+      ];
+      const pageErrors: string[] = [];
+      page.on('pageerror', error => pageErrors.push(error.message));
+      for (const [name, response] of variants) {
+        await test.step(name, async () => {
+          backend.loadResponse = response;
+          await openSeededProducer(page);
+          await expect(page.getByRole('heading', { name: "Couldn't load your saved ad" })).toBeVisible();
+          await expect(page.getByRole('button', { name: 'Retry', exact: true })).toBeVisible();
+          await expect(page.getByRole('button', { name: 'Back', exact: true })).toBeVisible();
+          expect(await page.evaluate(() => localStorage.getItem('osa_producer_active_run'))).toBe(RUN_ID);
+          await assertConsumerOnly(page);
+          backend.loadResponse = undefined;
+          await page.getByRole('button', { name: 'Retry', exact: true }).click();
+          await expect(page.getByRole('heading', { name: 'Your Storyboard', exact: true })).toBeVisible();
+          await expect(page.getByText('A fresh start with Recovery Coffee.', { exact: true })).toBeVisible();
+          await expect(page.getByRole('img', { name: 'Scene 1', exact: true })).toHaveAttribute('src', IMAGE);
+          await expect.poll(() => page.getByRole('img', { name: 'Scene 1', exact: true }).evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+          expect(await page.evaluate(() => localStorage.getItem('osa_producer_active_run'))).toBe(RUN_ID);
+        });
+      }
+      await page.screenshot({ path: testInfo.outputPath('saved-run-response-recovered.png'), fullPage: true });
+      await testInfo.attach('saved-run-response-recovered', { path: testInfo.outputPath('saved-run-response-recovered.png'), contentType: 'image/png' });
+      expect(new Set(backend.reads)).toEqual(new Set([RUN_ID]));
+      expect(backend.submissions).toHaveLength(0);
+      expect(backend.finalStarts).toHaveLength(0);
+      expect(backend.checkpoints).toHaveLength(0);
+      expect(backend.actions).toHaveLength(0);
+      expect(backend.unexpected).toEqual([]);
+      expect(pageErrors).toEqual([]);
+    });
+
     test('seeded saved-run load failure offers Retry on the same run and Back', async ({ page }, testInfo) => {
       const backend = await installRecoveryBackend(page);
       backend.loadFails = true;
