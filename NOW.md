@@ -1,57 +1,59 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14; recovery contract regressions verified for draft review**
+**Stamped: 2026-10-14; Apple-inspired Oceanides quotation redesign verified**
 
 ## Active task and boundary
-Checkout: F:/CodexWorktrees/efe4/grifon-command.
-Branch: codex/recovery-contract-gaps; base 3fec65156ace4a9b17b432ae05f8e9bae4a6427e.
-Neil approved missing crash-window and malformed-response tests first, followed
-by minimal fixes for reproduced defects. Keep the existing architecture.
-Draft PR lookup: gh pr view codex/recovery-contract-gaps --repo yopiheart/grifon-command.
-No merge, manual deployment, paid generation, live billing or production writes.
+Checkout: F:/CodexWorktrees/ecba/grifon-command.
+Branch: codex/oceanides-quotation; base main 18d6d1691a148f448cc672382fb8c171dce827e5.
+Neil approved a reusable Oceanides quotation skill with PDF + editable JSON source.
+No app integration, paid generation, client delivery, deployment or merge requested.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/187.
 
 ## Implementation
-Scene handle/completion write errors previously vanished in the video pool,
-which persisted video as done and skipped unfinished scenes on resume.
-Workers now drain siblings, retain completed clips and fail the stage so Retry
-can reach recorded handles. Fresh handle-less claims remain recoverable.
-Saved-run load validates control structures, identities, approval flags/gates
-and core stages before rehydration. Malformed responses retain the run and
-show Retry/Back. Supported older snapshots and reference fallbacks are retained.
-Two runtime files: services/producerOrchestrator.ts and producerRunService.ts.
-Seven crash cases + 36 response/compatibility cases; malformed browser flow
-loops eleven response variants at 375px and 1280px. Map now has 20 browser cases.
-No tuned content, models, provider settings, dependencies or migrations changed.
+Versioned skill: .agents/skills/oceanides-quotation/.
+Personal installation: C:/Users/ADMIN/.codex/skills/oceanides-quotation/.
+Neil requested Apple-inspired typography/alignment after the earlier design approval.
+White letterhead, neutral body, Oceanides navy/blue and approved transparent logo.
+Bundled Inter-derived Oceanides Sans replaces Century Gothic/Corbel for quotations.
+32/36 title, 15/19 project, 11.5/16 sections, 10/14 primary rows, 8pt contacts.
+Tabular digits, matched row baselines and common numeric right edges; quiet blue total.
+Full contacts/TIN retained from supplied screenshot; source/provenance saved in skill.
+Five service groups; package or itemized prices; decimal arithmetic and flowing A4 PDFs.
+Optional loads/volume table, included/estimated/capacity labels, per-load/per-volume billing.
+Package scope may show quantities without inventing individual prices.
+One bundled confirmation: client/site, actual scope, final price, THIS client's payment.
+PHP final total with no automatic fees/tax; 30-day Manila validity unless overridden.
+Actual records default to ~/Documents/Oceanides/Quotations, outside Git/public folders.
+Unique quote IDs, immutable revisions and source snapshots. No actual client data created.
+Company/asset source: oceanides-premium-profile-brochure at dc680e8005044dfa741accabdde7377fb9dc59c6.
+This update changes the skill package and resume doc; no application source/config changes.
+vercel.json git.deploymentEnabled disables codex/oceanides-quotation previews.
+The earlier automatic preview was not confirmed canceled (connector access denied).
+Current application source is untouched; no production deployment or merge performed.
 
-## Current evidence
-Red before green: five initial crash failures plus immediate-retry failure;
-29 malformed-response unit failures, two browser failures and two additional
-review/error missing-core-stage failures before their corresponding fixes.
-Build PASS; full Vitest PASS 1,616 / 32 existing default skips.
-After final assertion additions, affected suites PASS 152/152; runtime unchanged.
-Mapped browser recovery PASS 20/20, zero retries.
-Strengthened malformed Retry PASS 2/2; exact saved script/image restored.
-Companion Stop/Resume + competing-tab checks PASS 2/2, no flaky/skipped cases.
-Fresh independent diff review clean, including final test-only recheck.
-Independent smoke critic ran browser checks; its helper servers exited.
-Codex contracts PASS 26; bundle-leak, voice-sync, eval-prompts, domain,
-artifact anchors, PowerShell ASCII via build, and diff whitespace PASS.
-Local-only evidence: .tmp/recovery-* logs/JSON and .tmp/recovery-verification/.
-Full map report: 2026-10-14T02-21-59-952Z-6qhBDf/summary.md.
-Strengthened report: 2026-10-14T02-25-52-972Z-dFXb2f/summary.md.
-Tests ran on base plus task diff; reviewed runtime hashes match delivery.
-Hosted CI is separate; inspect the draft PR for current status.
+## Evidence
+35/35 Python contracts PASS; Codex checks 26/26 PASS; skill validator PASS.
+Before-fix geometry tests fail at fe8bc374: 1.5pt baseline spread and 3pt total offset.
+Independent source review clean after font-cache/source-snapshot guard; two probes passed.
+Independent visual review: 8/8 pages, short 1 / mixed 2 / long 4 / siphoning 1 page.
+Design critic found no actionable typography gap; latest preview still needs user feedback.
+Renderer SHA256 E54C120FA8A0B1125044AE084882F29EF36CFF9AD19955B4730FCA60236D348A.
+Bundled OFL fonts reproduce byte-identically and are snapshotted with new revisions.
+Fresh update session passed discovery, load-price arithmetic and bundled scope/volume/payment intake.
+Then clarified that calculated totals from rates need explicit final-total confirmation.
+Evidence details: .agents/skills/oceanides-quotation/references/verification.md.
+Local full logs/screenshots: C:/Users/ADMIN/Documents/Oceanides/Quotation-Review/apple-final/.
+Committed fictional PDFs/preview: .agents/skills/oceanides-quotation/samples/output/.
+Root build/vitest attempted by executor, blocked by absent tsc/vitest setup; no deps changed.
+Applicable standalone PDF/skill checks pass; hosted PR CI is separate.
 
-## Remaining limits and next action
-Stale claims without recorded handles can submit again. Repeated lost handle
-writes can cause repeated provider submissions; credit dedupe is not a spend cap.
-Real claim RPC/concurrency, live billing, paid quality and browser-storage-loss
-recovery remain unverified. Review the draft; merging needs Neil's instruction.
-Recovery flow reference: workflows/recovery-feature-map.md.
+## Remaining decisions
+Current default implements Neil's Apple direction; no conversion uplift claim.
+Future client quotations still require confirmed scope, price and payment terms.
+No default per-service payment agreement was saved. Fonts are now self-contained under OFL.
+Review the draft PR; merging and deployment require Neil's explicit request.
 
 ## Preserved prior delivery
-CI optimization merged as PR184; current task base is main 3fec6515.
+Main includes PR186 recovery contract fixes and PR184 CI optimization.
 Accepted film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
 SHA256 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Editable score: continuous-fit-plan.json, mix-continuous.mjs, continuous-mix-receipt.json.
-Editable picture: workflows/assets/grifon-pluto-adaptation/orbital.json/js/html.
-Accepted film/source assets untouched. All historical paid approvals consumed.
+Existing accepted films/sources and all unrelated application work remain untouched.

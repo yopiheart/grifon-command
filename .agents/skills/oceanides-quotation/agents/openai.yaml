@@ -1,0 +1,6 @@
+interface:
+  display_name: "Oceanides Quotation"
+  short_description: "Create branded Oceanides quotes with reliable totals"
+  default_prompt: "Use $oceanides-quotation to prepare an Oceanides quotation."
+policy:
+  allow_implicit_invocation: true

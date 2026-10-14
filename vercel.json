@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "git": {
+    "deploymentEnabled": {
+      "codex/oceanides-quotation": false
+    }
+  },
   "functions": {
     "api/gemini/text.ts": { "maxDuration": 60 },
     "api/gemini/image.ts": { "maxDuration": 60 },
