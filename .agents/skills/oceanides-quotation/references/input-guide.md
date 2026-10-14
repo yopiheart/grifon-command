@@ -82,8 +82,9 @@ reconcile the register against retained `quote.json` files before relying on its
 
 ## Reproduce an issued PDF
 
-Every revision includes `source/scripts/quote.py`, `source/references/` and the logo.
-With the original licensed fonts, call that snapshot's `render_pdf` using `quote.json`
+Every new revision includes `source/scripts/quote.py`, `source/references/`, the logo
+and `source/assets/fonts/` with the exact fonts/license used. Call that snapshot's
+`render_pdf` using `quote.json`
 and its saved `record`, writing a separate preview path. This preserves identity and
 dates without issuing another revision. Output byte hashes can differ due to PDF
 metadata timestamps; content, amounts, embedded fonts and layout are the contract.

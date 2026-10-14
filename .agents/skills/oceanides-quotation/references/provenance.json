@@ -4,7 +4,9 @@
   "companySource": "clients/oceanides/company-profile/premium-content.json",
   "logoSource": "clients/oceanides/company-profile/assets/logo-transparent.png",
   "reference": "User-supplied Design.png; layout inspiration only; its content and terms are not Oceanides facts.",
-  "designStatus": "Neil approved the quotation design as the Oceanides default on 2026-10-14. Preserve its styling with his requested full corporate header/footer, bold title and selective emphasis.",
+  "designStatus": "Neil approved the earlier default, then requested an Apple-inspired typography/alignment redesign on 2026-10-14. Current default follows that new direction and retains complete company details; the latest redesigned preview awaits visual feedback.",
   "headerFooterReference": "assets/header-footer-reference.png; user-supplied August header/footer screenshot, 2026-10-14. Supplies landlines, Smart, corporate email, website, Facebook and TIN; its profile body and draft label are not quotation content.",
-  "fonts": "Installed Windows Century Gothic and Corbel; embedded subsets in PDFs. Font binaries are not redistributed."
+  "appleReference": "https://www.apple.com/iphone-18-pro/; visually inspected and computed styles measured on 2026-10-14. SF Pro Display: hero 80/84px weight 600, section heading 48/52px weight 600. SF Pro Text/Display: restrained 400/600 weights, muted supporting copy and selective high-contrast emphasis. Adapt proportions and spacing to A4; do not reproduce website pixels literally.",
+  "fonts": "Bundled Oceanides Sans is an Inter derivative: Regular 400 optical size 14, Semibold 600 optical size 14, Display Semibold 600 optical size 32. Digit cmaps use Inter's own tabular glyphs for fixed advances in ReportLab. Family renamed; full original SIL OFL retained. Fonts embedded and snapshotted with every new revision. SF Pro is not used.",
+  "fontSource": "workflows/assets/grifon-motion-action-pilot/assets/inter-variable.ttf and matching OFL-Inter.txt, already versioned in this repository; source SHA256 29160A80FF49DDCAB2C97711247E08B1FAB27A484A329CE8B813D820DC559031. Build helper scripts/build_fonts.py uses FontTools 4.60.1; rendering does not require the build dependency."
 }

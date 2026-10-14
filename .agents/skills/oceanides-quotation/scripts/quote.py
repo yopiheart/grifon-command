@@ -21,13 +21,16 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import BaseDocTemplate, CondPageBreak, Frame, HRFlowable, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.platypus import BaseDocTemplate, CondPageBreak, Flowable, Frame, HRFlowable, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
 CENT = Decimal('0.01')
 MANILA = timezone(timedelta(hours=8))
-NAVY, BLUE, INK, PAPER, MUTED = map(colors.HexColor, ['#0A1F45', '#1C63AD', '#0B1B33', '#F4F6FA', '#526278'])
+NAVY, BLUE, INK, PAPER, MUTED = map(colors.HexColor, ['#0A1F45', '#1C63AD', '#1D1D1F', '#F5F5F7', '#6E6E73'])
+RULE = colors.HexColor('#D2D2D7')
 RED = colors.HexColor('#B42336')
+FONT_FILES = {'OBody': 'OceanidesSans-Regular.ttf', 'OBold': 'OceanidesSans-Semibold.ttf',
+              'OTitle': 'OceanidesSans-Display.ttf', 'OHeading': 'OceanidesSans-Semibold.ttf'}
 FIELDS = {'schema_version', 'client', 'title', 'summary', 'pricing', 'services', 'payments', 'conditions', 'confirmed', 'issue_date', 'valid_days', 'record'}
 GROUPS = {'siphoning', 'plumbing', 'renovation-restoration', 'pest-control', 'stp'}
 PLACEHOLDER = re.compile(r'\b(?:TBD|TODO|TBC|placeholder|lorem ipsum|not yet confirmed)\b|\{\{.*?\}\}|\[.*?\]|⟦.*?⟧', re.I)
@@ -211,12 +214,20 @@ def validate(data, mode='final'):
 
 
 def register_fonts(font_dir=None):
-    folder = Path(font_dir) if font_dir else Path(os.environ.get('WINDIR', 'C:/Windows')) / 'Fonts'
-    for name, filename in {'OBody': 'corbel.ttf', 'OBold': 'corbelb.ttf', 'OTitle': 'GOTHIC.TTF', 'OHeading': 'GOTHICB.TTF'}.items():
+    folder = Path(font_dir) if font_dir else ROOT / 'assets/fonts'
+    if not (folder / 'OFL-Inter.txt').is_file():
+        raise QuoteError(f'Missing font license: {folder / "OFL-Inter.txt"}. Supply the bundled font files and their license together.')
+    for name, filename in FONT_FILES.items():
         path = folder / filename
         if not path.is_file():
             raise QuoteError(f'Missing licensed font: {path}. Supply --font-dir; no automatic substitution.')
-        pdfmetrics.registerFont(TTFont(name, str(path)))
+        selected_font = TTFont(name, str(path))
+        pdfmetrics.registerFont(selected_font)
+        # ReportLab caches both aliases and PostScript face names. Never snapshot
+        # newly selected bytes while a prior font is actually used for rendering.
+        loaded_font = pdfmetrics.getFont(name)
+        if loaded_font.face._ttf_data != selected_font.face._ttf_data:
+            raise QuoteError('Different font files are already cached in this Python process. Run the renderer in a fresh process with the selected --font-dir before exporting.')
     pdfmetrics.registerFontFamily('OBody', normal='OBody', bold='OBold', italic='OBody', boldItalic='OBold')
 
 
@@ -225,8 +236,9 @@ def check_glyphs(data):
     texts += [v for item in data['services'] for k, v in item.items() if k in {'name', 'description', 'unit'}]
     texts += [item['volume']['unit'] for item in data['services'] if 'volume' in item]
     texts += [p['trigger'] for p in data['payments']]
-    # Check actual font roles, including generated currency. Century Gothic has no peso glyph.
-    for name, rendered in [('OBody', texts + ['₱']), ('OBold', texts + ['₱']), ('OHeading', [data['title']])]:
+    # Check actual font roles, including generated currency and volume notation.
+    for name, rendered in [('OBody', texts + ['₱']), ('OBold', texts + ['₱']), ('OHeading', [data['title']]),
+                           ('OTitle', ['Service quotation', '₱'])]:
         cmap = pdfmetrics.getFont(name).face.charToGlyph
         missing = {ord(c) for text in rendered for c in text if not c.isspace() and ord(c) not in cmap}
         if missing:
@@ -243,20 +255,20 @@ def render_pdf(data, destination, record, font_dir=None):
     company = read_json(ROOT / 'references/company.json')
     width = A4[0] - 88
     styles = {
-        'body': ParagraphStyle('body', fontName='OBody', fontSize=10.5, leading=14, textColor=INK, allowOrphans=0, allowWidows=0),
-        'small': ParagraphStyle('small', fontName='OBody', fontSize=9, leading=12, textColor=MUTED),
-        'label': ParagraphStyle('label', fontName='OBold', fontSize=8.5, leading=12, textColor=BLUE),
-        'head': ParagraphStyle('head', fontName='OHeading', fontSize=12, leading=16, textColor=NAVY, spaceBefore=14, spaceAfter=8, keepWithNext=True),
-        'title': ParagraphStyle('title', fontName='OHeading', fontSize=29, leading=35, textColor=NAVY),
-        'project': ParagraphStyle('project', fontName='OHeading', fontSize=17, leading=22, textColor=NAVY, spaceAfter=7, keepWithNext=True),
-        'money': ParagraphStyle('money', fontName='OBold', fontSize=10.5, leading=14, alignment=TA_RIGHT, textColor=INK),
-        'white': ParagraphStyle('white', fontName='OBold', fontSize=9, leading=12, textColor=colors.white),
-        'contact': ParagraphStyle('contact', fontName='OBody', fontSize=7.5, leading=10, textColor=NAVY),
-        'footer': ParagraphStyle('footer', fontName='OBody', fontSize=7.5, leading=10, textColor=colors.white),
+        'body': ParagraphStyle('body', fontName='OBody', fontSize=10, leading=14, textColor=INK, allowOrphans=0, allowWidows=0),
+        'small': ParagraphStyle('small', fontName='OBody', fontSize=8.2, leading=11.5, textColor=MUTED, allowOrphans=0, allowWidows=0),
+        'label': ParagraphStyle('label', fontName='OBold', fontSize=8.2, leading=12, textColor=MUTED),
+        'head': ParagraphStyle('head', fontName='OHeading', fontSize=11.5, leading=16, textColor=INK, spaceBefore=14, spaceAfter=8, keepWithNext=True),
+        'title': ParagraphStyle('title', fontName='OTitle', fontSize=32, leading=36, textColor=INK),
+        'project': ParagraphStyle('project', fontName='OHeading', fontSize=15, leading=19, textColor=INK, spaceAfter=7, keepWithNext=True),
+        'money': ParagraphStyle('money', fontName='OBold', fontSize=10, leading=14, alignment=TA_RIGHT, textColor=INK),
+        'number': ParagraphStyle('number', fontName='OBody', fontSize=10, leading=14, alignment=TA_RIGHT, textColor=INK),
+        'contact': ParagraphStyle('contact', fontName='OBody', fontSize=8, leading=10.5, textColor=MUTED),
+        'footer': ParagraphStyle('footer', fontName='OBody', fontSize=8, leading=10.5, textColor=MUTED),
     }
     styles['scopehead'] = ParagraphStyle('scopehead', parent=styles['head'], keepWithNext=False)
     styles['priceunit'] = ParagraphStyle('priceunit', parent=styles['small'], alignment=TA_RIGHT)
-    styles['whiteRight'] = ParagraphStyle('whiteRight', parent=styles['white'], alignment=TA_RIGHT)
+    styles['labelRight'] = ParagraphStyle('labelRight', parent=styles['label'], alignment=TA_RIGHT)
     def p(value, style='body', markup=False):
         safe = str(value) if markup else escape(str(value)).replace('\n', '<br/>')
         return Paragraph(safe, styles[style])
@@ -265,7 +277,7 @@ def render_pdf(data, destination, record, font_dir=None):
         obj = Table(rows, colWidths=widths, hAlign='LEFT', **kwargs)
         obj.setStyle(TableStyle([
             ('VALIGN', (0, 0), (-1, -1), 'TOP'), ('LEFTPADDING', (0, 0), (-1, -1), 0),
-            ('RIGHTPADDING', (0, 0), (-1, -1), 10), ('TOPPADDING', (0, 0), (-1, -1), 0),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 0), ('TOPPADDING', (0, 0), (-1, -1), 0),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 0), *extra]))
         return obj
 
@@ -279,73 +291,64 @@ def render_pdf(data, destination, record, font_dir=None):
 
     def page_chrome(canvas, document):
         canvas.saveState()
-        top = A4[1] - (25 if mode != 'final' else 0)
-        if mode != 'final':
-            canvas.setFillColor(RED)
-            canvas.rect(0, A4[1] - 25, A4[0], 25, fill=1, stroke=0)
-            canvas.setFillColor(colors.white)
-            canvas.setFont('OBold', 9)
-            banner = 'SAMPLE ONLY  /  FICTIONAL SCOPE AND AMOUNTS  /  NOT FOR CLIENT USE' if mode == 'sample' else 'DRAFT  /  NOT APPROVED FOR CLIENT ACCEPTANCE'
-            canvas.drawCentredString(A4[0] / 2, A4[1] - 16, banner)
-        canvas.setFillColor(NAVY)
-        canvas.rect(0, top - 53, A4[0], 53, fill=1, stroke=0)
-        canvas.setFillColor(colors.white)
-        canvas.rect(44, top - 47, 41, 41, fill=1, stroke=0)
-        canvas.drawImage(str(ROOT / 'assets/logo.png'), 46, top - 45, 37, 37, preserveAspectRatio=True, mask='auto')
-        canvas.setFillColor(colors.white)
-        canvas.setFont('OHeading', 12)
-        canvas.drawString(97, top - 21, company['company']['brand'])
-        canvas.setFont('OBold', 9.5)
-        canvas.drawString(97, top - 37, company['company']['legalName'].split(' ', 1)[1])
-        canvas.setFillColor(colors.HexColor('#EAF2FA'))
-        canvas.rect(0, top - 99, A4[0], 46, fill=1, stroke=0)
+        top = A4[1] - 25
         contact = company['contact']
+        canvas.drawImage(str(ROOT / 'assets/logo.png'), 44, top - 37, 37, 37, preserveAspectRatio=True, mask='auto')
+        canvas.setFillColor(NAVY)
+        canvas.setFont('OHeading', 11.5)
+        canvas.drawString(93, top - 12, company['company']['brand'])
+        canvas.setFillColor(INK)
+        canvas.setFont('OBody', 8.5)
+        canvas.drawString(93, top - 27, company['company']['legalName'].split(' ', 1)[1])
         lines = [
-            f"Landline {contact['landline']}   |   Globe {contact['phone']}   |   Smart {contact['smart']}",
-            f"{contact['email']}   |   {contact['corporateEmail']}",
-            f"{contact['address']}   |   TIN {company['company']['tin']}",
+            f"Landline {contact['landline']}   ·   Globe {contact['phone']}   ·   Smart {contact['smart']}",
+            f"{contact['address']}   ·   TIN {company['company']['tin']}",
         ]
-        y = top - 59
+        y = top - 46
         for line in lines:
             paragraph = p(line, 'contact')
             _, height = paragraph.wrap(width, 100)
             paragraph.drawOn(canvas, 44, y - height)
             y -= height + 1
-        if y < top - 99:
+        if y < top - 70:
             raise QuoteError('Company contact header exceeds its reserved area.')
-        canvas.setFillColor(NAVY)
-        canvas.rect(0, 0, A4[0], 58, fill=1, stroke=0)
-        for line, y in [(contact['website'] + '   |   ' + contact['facebook'], 43),
-                        (contact['email'] + '   |   ' + contact['corporateEmail'], 31)]:
+        if mode != 'final':
+            canvas.setFillColor(RED)
+            canvas.setFont('OBold', 7.5)
+            banner = 'SAMPLE ONLY  /  FICTIONAL SCOPE AND AMOUNTS  /  NOT FOR CLIENT USE' if mode == 'sample' else 'DRAFT  /  NOT APPROVED FOR CLIENT ACCEPTANCE'
+            canvas.drawString(44, 73, banner)
+        canvas.setStrokeColor(RULE)
+        canvas.setLineWidth(.5)
+        canvas.line(44, 65, A4[0] - 44, 65)
+        for line, y in [(contact['website'] + '   ·   ' + contact['facebook'], 45),
+                        (contact['email'] + '   ·   ' + contact['corporateEmail'], 33)]:
             paragraph = p(line, 'footer')
             _, height = paragraph.wrap(width, 12)
             if height > 12:
                 raise QuoteError('Company footer exceeds its reserved area.')
             paragraph.drawOn(canvas, 44, y)
-        canvas.setStrokeColor(colors.HexColor('#526B90'))
-        canvas.setLineWidth(.4)
-        canvas.line(44, 25, A4[0] - 44, 25)
-        canvas.setFillColor(colors.white)
-        canvas.setFont('OBody', 7.5)
-        canvas.drawString(44, 12, f'{identity}  |  Quotation, not an invoice')
-        canvas.drawRightString(A4[0] - 44, 12, f'Page {document.page}')
+        canvas.setFillColor(MUTED)
+        canvas.setFont('OBody', 8)
+        canvas.drawString(44, 17, f'{identity}  ·  Quotation, not an invoice')
+        canvas.drawRightString(A4[0] - 44, 17, f'Page {document.page}')
         canvas.restoreState()
 
     # Zero frame padding makes every paragraph, rule and table share the same rail.
-    body_top = A4[1] - (25 if mode != 'final' else 0) - 117
-    frame = Frame(44, 74, width, body_top - 74, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
+    body_top = A4[1] - 111
+    frame = Frame(44, 83, width, body_top - 83, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
     doc.addPageTemplates(PageTemplate(id='quotation', frames=[frame], onPage=page_chrome))
-    story = [p('Service quotation', 'title'), Spacer(1, 7),
+    story = [p('Service quotation', 'title'), Spacer(1, 9),
              p(f'{identity}    •    Issued {date_label(issued)}    •    Valid until {date_label(expires)}', 'small'),
-             Spacer(1, 12), HRFlowable(width='100%', thickness=1.3, color=BLUE), Spacer(1, 12)]
+             Spacer(1, 18), HRFlowable(width='100%', thickness=.5, color=RULE), Spacer(1, 15)]
     client = data['client']
-    left = [p('PREPARED FOR', 'label'), Spacer(1, 4), p(client['name'])]
+    left = [p('PREPARED FOR', 'label'), Spacer(1, 5), p('<b>' + escape(client['name']) + '</b>', markup=True)]
     if client.get('contact'):
         left += [Spacer(1, 3), p(client['contact'], 'small')]
-    right = [p('SERVICE LOCATION', 'label'), Spacer(1, 4), p(client['site'])]
+    right = [p('SERVICE LOCATION', 'label'), Spacer(1, 5), p(client['site'])]
     if client.get('billing_address'):
         left += [Spacer(1, 4), p('Billing address: ' + client['billing_address'], 'small')]
-    story += [table([[left, right]], [width * .47, width * .53], splitByRow=1, splitInRow=1), Spacer(1, 20),
+    story += [table([[left, right]], [width * .47, width * .53], [('RIGHTPADDING', (0, 0), (0, 0), 24)],
+                   splitByRow=1, splitInRow=1), Spacer(1, 20),
               p(data['title'], 'project'), p(data['summary']), CondPageBreak(110), p('Scope & pricing', 'scopehead')]
     itemized = data['pricing']['mode'] == 'itemized'
     has_quantity = itemized or any('quantity' in i or 'loads' in i for i in data['services'])
@@ -354,24 +357,31 @@ def render_pdf(data, destination, record, font_dir=None):
     numeric_widths = []
     if has_quantity:
         headers += ['QTY']
-        quantity_tokens = [token for i in data['services']
-                           for token in [i.get('quantity', ''), i.get('loads', ''), *i.get('unit', '').split()]]
-        quantity_width = max(48, max(pdfmetrics.stringWidth(token, 'OBody', 9) for token in quantity_tokens) + 22)
+        quantity_widths = [pdfmetrics.stringWidth(token, 'OBody', size) for i in data['services']
+                           for token, size in [(i.get('quantity', ''), 10), (i.get('loads', ''), 10),
+                                               *((word, 8.2) for word in i.get('unit', '').split())]]
+        quantity_width = max(48, max(quantity_widths, default=0) + 24)
         numeric_widths += [quantity_width]
     if has_volume:
         headers += ['VOLUME']
-        volume_width = max(86, max(pdfmetrics.stringWidth(i['volume']['total'] + ' ' + i['volume']['unit'], 'OBody', 9)
-                                   for i in data['services'] if 'volume' in i) + 22)
+        volume_widths = []
+        for item in data['services']:
+            if 'volume' in item:
+                volume = item['volume']
+                volume_widths.append(pdfmetrics.stringWidth(volume['total'] + ' ' + volume['unit'], 'OBody', 10))
+                if 'per_load' in volume:
+                    volume_widths.append(pdfmetrics.stringWidth(volume['per_load'] + ' ' + volume['unit'] + ' / load', 'OBody', 8.2))
+        volume_width = max(86, max(volume_widths) + 24)
         numeric_widths += [volume_width]
     if itemized:
         headers += ['PRICE', 'TOTAL']
-        rate_width = max(76, max(pdfmetrics.stringWidth(fmt(i['unit_price']), 'OBold', 10.5) for i in data['services']) + 22)
-        amount_width = max(76, max(pdfmetrics.stringWidth(fmt(i['amount']), 'OBold', 10.5) for i in data['services']) + 22)
+        rate_width = max(76, max(pdfmetrics.stringWidth(fmt(i['unit_price']), 'OBody', 10) for i in data['services']) + 24)
+        amount_width = max(76, max(pdfmetrics.stringWidth(fmt(i['amount']), 'OBold', 10) for i in data['services']) + 12)
         numeric_widths += [rate_width, amount_width]
     widths = [width - sum(numeric_widths), *numeric_widths]
     if widths[0] < 135:
         raise QuoteError('Numeric columns leave too little room for readable scope. Use smaller grouped rows or a package scope; do not shrink the document.')
-    rows = [[p(h, 'whiteRight' if h in {'PRICE', 'TOTAL'} else 'white') for h in headers]]
+    rows = [[p(h, 'label' if index == 0 else 'labelRight') for index, h in enumerate(headers)]]
     for item in data['services']:
         detail = [p('<b>' + escape(item['name']) + '</b>', markup=True), Spacer(1, 4)]
         for index, paragraph in enumerate(item['description'].split('\n\n')):
@@ -380,43 +390,59 @@ def render_pdf(data, destination, record, font_dir=None):
             detail.append(p(paragraph))
         row = [detail]
         if has_quantity:
-            quantity_text = item['quantity'] + '\n' + item['unit'] if 'quantity' in item else ''
-            if 'loads' in item and item.get('unit', '').lower() not in {'load', 'loads'}:
-                quantity_text += ('\n' if quantity_text else '') + item['loads'] + ' loads'
-            row += [p(quantity_text or '-', 'small')]
+            quantity = []
+            if 'quantity' in item:
+                quantity += [p(item['quantity'], 'number'), p(item['unit'], 'priceunit')]
+            if 'loads' in item and (not quantity or item.get('unit', '').lower() not in {'load', 'loads'}):
+                if quantity:
+                    quantity.append(Spacer(1, 4))
+                quantity += [p(item['loads'], 'number'), p('loads', 'priceunit')]
+            row += [quantity or p('-', 'number')]
         if has_volume:
             volume = item.get('volume')
             if volume:
-                volume_text = volume['total'] + ' ' + volume['unit']
+                volume_detail = [p(volume['total'] + ' ' + volume['unit'], 'number')]
                 if 'per_load' in volume:
-                    volume_text += '\n' + volume['per_load'] + ' ' + volume['unit'] + ' / load'
-                volume_text += '\n' + {'included': 'Included volume', 'estimated': 'Estimated volume', 'capacity': 'Truck capacity'}[volume['basis']]
+                    volume_detail += [p(volume['per_load'] + ' ' + volume['unit'] + ' / load', 'priceunit')]
+                volume_detail += [p({'included': 'Included', 'estimated': 'Estimated', 'capacity': 'Truck capacity'}[volume['basis']], 'priceunit')]
             else:
-                volume_text = '-'
-            row += [p(volume_text, 'small')]
+                volume_detail = p('-', 'number')
+            row += [volume_detail]
         if itemized:
             price_unit = 'load' if item['unit'].lower() in {'load', 'loads'} else item['unit']
-            row += [[p(fmt(item['unit_price']), 'money'), p('/ ' + price_unit, 'priceunit')], p(fmt(item['amount']), 'money')]
+            row += [[p(fmt(item['unit_price']), 'number'), p('/ ' + price_unit, 'priceunit')], p(fmt(item['amount']), 'money')]
         rows.append(row)
     story += [table(rows, widths, [
-        ('BACKGROUND', (0, 0), (-1, 0), NAVY), ('ROWBACKGROUNDS', (0, 1), (-1, -1), [PAPER, colors.white]),
-        ('LINEBELOW', (0, 1), (-1, -1), .5, colors.HexColor('#D8E1EC')),
-        ('LEFTPADDING', (0, 0), (-1, -1), 11), ('RIGHTPADDING', (0, 0), (-1, -1), 11),
-        ('TOPPADDING', (0, 0), (-1, -1), 10), ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
-    ], repeatRows=1, splitByRow=1, splitInRow=1), Spacer(1, 12)]
-    total_style = ParagraphStyle('total', fontName='OBold', fontSize=23, leading=29, textColor=colors.white, alignment=TA_RIGHT)
-    total_width = max(width * .52, pdfmetrics.stringWidth(fmt(data['pricing']['total']), 'OBold', 23) + 28)
-    total = table([[p('FINAL TOTAL / PHP' if itemized else 'PACKAGE TOTAL / PHP', 'white'),
-                    Paragraph(escape(fmt(data['pricing']['total'])), total_style)]], [width - total_width, total_width], [
-        ('BACKGROUND', (0, 0), (-1, -1), NAVY), ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('LEFTPADDING', (0, 0), (-1, -1), 14), ('RIGHTPADDING', (0, 0), (-1, -1), 14),
-        ('TOPPADDING', (0, 0), (-1, -1), 12), ('BOTTOMPADDING', (0, 0), (-1, -1), 12)])
+        ('LINEBELOW', (0, 0), (-1, 0), .5, RULE), ('LINEBELOW', (0, 1), (-1, -1), .5, RULE),
+        ('LEFTPADDING', (1, 0), (-1, -1), 12), ('RIGHTPADDING', (0, 0), (-2, -1), 12),
+        ('TOPPADDING', (0, 0), (-1, 0), 0), ('BOTTOMPADDING', (0, 0), (-1, 0), 9),
+        ('TOPPADDING', (0, 1), (-1, -1), 12), ('BOTTOMPADDING', (0, 1), (-1, -1), 12),
+    ], repeatRows=1, splitByRow=1, splitInRow=1), Spacer(1, 14)]
+
+    class TotalPanel(Flowable):
+        def __init__(self):
+            super().__init__()
+            self.width, self.height = width, 55
+
+        def draw(self):
+            canvas = self.canv
+            canvas.setFillColor(PAPER)
+            canvas.roundRect(-12, 0, self.width + 24, self.height, 8, fill=1, stroke=0)
+            canvas.setFillColor(MUTED)
+            canvas.setFont('OBold', 8.2)
+            canvas.drawString(0, 25, 'FINAL TOTAL / PHP' if itemized else 'PACKAGE TOTAL / PHP')
+            canvas.setFillColor(BLUE)
+            canvas.setFont('OTitle', 27)
+            canvas.drawRightString(self.width, 19, fmt(data['pricing']['total']))
+
+    total = TotalPanel()
     pay_rows = []
     for payment in data['payments']:
         suffix = f" ({payment['percent']}%)" if 'percent' in payment else ''
         pay_rows.append([p(payment['trigger'] + suffix), p(fmt(payment['amount']), 'money')])
     payment_table = table(pay_rows, [width - 125, 125], [
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 6), ('LINEBELOW', (0, -1), (-1, -1), .5, colors.HexColor('#D8E1EC'))],
+        ('RIGHTPADDING', (0, 0), (0, -1), 24), ('BOTTOMPADDING', (0, 0), (-1, -1), 7),
+        ('LINEBELOW', (0, -1), (-1, -1), .5, RULE)],
         splitByRow=1, splitInRow=1)
     story += [KeepTogether([total, p('Payment agreement', 'head'), payment_table])]
     closing = [p('Scope notes & conditions', 'head')]
@@ -426,8 +452,8 @@ def render_pdf(data, destination, record, font_dir=None):
         closing += [p(condition, 'small'), Spacer(1, 4)]
     accept = [p('Acceptance & next step', 'head'),
               p('To proceed, sign below and return this quotation to Oceanides. We will coordinate scheduling under the agreed payment terms.', 'small'),
-              Spacer(1, 22), table([[p('Client signature over printed name', 'small'), '', p('Date signed', 'small')]], [width * .62, width * .06, width * .32], [
-                  ('LINEABOVE', (0, 0), (0, 0), .7, NAVY), ('LINEABOVE', (2, 0), (2, 0), .7, NAVY), ('TOPPADDING', (0, 0), (-1, -1), 6)])]
+              Spacer(1, 20), table([[p('Client signature over printed name', 'small'), '', p('Date signed', 'small')]], [width * .62, width * .06, width * .32], [
+                  ('LINEABOVE', (0, 0), (0, 0), .5, RULE), ('LINEABOVE', (2, 0), (2, 0), .5, RULE), ('TOPPADDING', (0, 0), (-1, -1), 6)])]
     # Nested KeepTogether reports an artificial height and unnecessarily moves short closings.
     # Chain acceptance flowables so they remain grouped if unusually long notes must split.
     for flowable in accept[:-1]:
@@ -499,6 +525,11 @@ def issue(data, mode, store, revise=None, font_dir=None):
             shutil.copytree(ROOT / 'references', stage / 'source' / 'references')
             (stage / 'source' / 'assets').mkdir(parents=True)
             shutil.copyfile(ROOT / 'assets/logo.png', stage / 'source/assets/logo.png')
+            font_source = Path(font_dir) if font_dir else ROOT / 'assets/fonts'
+            font_snapshot = stage / 'source/assets/fonts'
+            font_snapshot.mkdir()
+            for filename in [*dict.fromkeys(FONT_FILES.values()), 'OFL-Inter.txt']:
+                shutil.copyfile(font_source / filename, font_snapshot / filename)
             (stage / 'source' / 'scripts').mkdir()
             shutil.copyfile(Path(__file__), stage / 'source/scripts/quote.py')
             folder.mkdir(exist_ok=True)

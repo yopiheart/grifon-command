@@ -3,12 +3,14 @@ import copy
 from datetime import datetime, timedelta
 import importlib.util
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
 from pypdf import PdfReader
+from reportlab.pdfbase import pdfmetrics
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('quote', ROOT / 'scripts/quote.py')
@@ -24,7 +26,50 @@ def fixture(name='short', final=True):
     return data
 
 
+def text_positions(page):
+    """Read emitted baselines and right edges in page coordinates, not cell boxes."""
+    roles = {}
+    for role in ['OBody', 'OBold', 'OTitle', 'OHeading']:
+        name = pdfmetrics.getFont(role).face.name
+        roles[name.decode() if isinstance(name, bytes) else name] = role
+    result = []
+
+    def visit(text, cm, tm, font, size):
+        line = text.rstrip('\n')
+        if not line or '\n' in line or font is None:
+            return
+        font_name = str(font['/BaseFont']).lstrip('/').split('+')[-1]
+        if font_name not in roles:
+            return
+        advance = pdfmetrics.stringWidth(line, roles[font_name], size)
+        x = tm[4] * cm[0] + tm[5] * cm[2] + cm[4]
+        y = tm[4] * cm[1] + tm[5] * cm[3] + cm[5]
+        right = x + advance * (tm[0] * cm[0] + tm[1] * cm[2])
+        result.append({'text': line, 'x': x, 'y': y, 'right': right})
+
+    page.extract_text(visitor_text=visit)
+    return result
+
+
 class QuoteTests(unittest.TestCase):
+    def test_changed_font_selection_fails_before_mismatched_snapshot(self):
+        q.register_fonts()
+        for alternate_face in [True, False]:
+            with self.subTest(alternate_face=alternate_face), tempfile.TemporaryDirectory() as out:
+                selected = Path(out) / 'selected-fonts'
+                shutil.copytree(ROOT / 'assets/fonts', selected)
+                regular = selected / 'OceanidesSans-Regular.ttf'
+                if alternate_face:
+                    regular.write_bytes((selected / 'OceanidesSans-Semibold.ttf').read_bytes())
+                else:
+                    # A valid newer file can keep the same PostScript face name.
+                    regular.write_bytes(regular.read_bytes() + b'\0\0\0\0')
+                store = Path(out) / 'private-quotes'
+                with self.assertRaisesRegex(q.QuoteError, 'fresh process'):
+                    q.issue(fixture(), 'final', store, font_dir=selected)
+                self.assertFalse(list(store.rglob('*.pdf')))
+                self.assertFalse(list(store.glob('OCE-*')))
+
     def test_draft_sentinels_cannot_become_final(self):
         d = fixture(); d['client'] = {}
         draft = q.validate(d, 'draft')
@@ -195,6 +240,61 @@ class QuoteTests(unittest.TestCase):
             self.assertIn('₱18,750.38', text)
             self.assertIn('₱18,750.37', text)
             self.assertNotIn('\x00', text)
+
+    def test_itemized_primary_text_shares_one_baseline(self):
+        with tempfile.TemporaryDirectory() as out:
+            result = q.sample('siphoning', out)
+            positions = text_positions(PdfReader(result['pdf']).pages[0])
+            primary = []
+            for text in ['Siphoning and hauling', '3', '30 m³', '₱12,500.25', '₱37,500.75']:
+                hits = [position for position in positions if position['text'] == text]
+                self.assertTrue(hits, f'Missing primary row text: {text}')
+                primary.append(max(hits, key=lambda position: position['y']))
+            spread = max(position['y'] for position in primary) - min(position['y'] for position in primary)
+            self.assertLessEqual(spread, .5, f'Primary row baselines differ by {spread:.3f} pt: {primary}')
+
+    def test_itemized_headers_and_total_share_numeric_right_rails(self):
+        with tempfile.TemporaryDirectory() as out:
+            result = q.sample('siphoning', out)
+            positions = text_positions(PdfReader(result['pdf']).pages[0])
+            def matching(text):
+                hits = [position for position in positions if position['text'] == text]
+                self.assertTrue(hits, f'Missing numeric rail text: {text}')
+                return hits
+            price = matching('₱12,500.25')[0]
+            self.assertAlmostEqual(price['right'], matching('PRICE')[0]['right'], delta=.5)
+            self.assertAlmostEqual(matching('3')[0]['right'], matching('QTY')[0]['right'], delta=.5)
+            self.assertAlmostEqual(matching('30 m³')[0]['right'], matching('VOLUME')[0]['right'], delta=.5)
+            totals = matching('₱37,500.75')
+            self.assertEqual(len(totals), 2, 'The line amount and final total must both be present.')
+            self.assertAlmostEqual(totals[0]['right'], totals[1]['right'], delta=.5,
+                                   msg='The line amount and final total must use the same right rail.')
+            self.assertAlmostEqual(totals[0]['right'], matching('TOTAL')[0]['right'], delta=.5)
+
+    def test_body_and_amount_fonts_have_tabular_digits(self):
+        q.register_fonts()
+        for role in ['OBody', 'OBold']:
+            widths = [pdfmetrics.stringWidth(str(digit), role, 10) for digit in range(10)]
+            with self.subTest(role=role):
+                self.assertLessEqual(max(widths) - min(widths), .001,
+                                     'Currency and quantity digits must have equal advance widths.')
+
+    def test_default_fonts_work_without_windows_fonts(self):
+        with tempfile.TemporaryDirectory() as out, patch.dict(q.os.environ, {'WINDIR': out + '/missing-windows'}):
+            result = q.sample('siphoning', out)
+            text = '\n'.join(page.extract_text() for page in PdfReader(result['pdf']).pages)
+            self.assertIn('₱37,500.75', text)
+            self.assertNotIn('\x00', text)
+
+    def test_issued_source_preserves_bundled_fonts_and_license(self):
+        filenames = ['OceanidesSans-Regular.ttf', 'OceanidesSans-Semibold.ttf',
+                     'OceanidesSans-Display.ttf', 'OFL-Inter.txt']
+        with tempfile.TemporaryDirectory() as out:
+            result = q.issue(fixture(), 'final', out)
+            snapshot = Path(result['source']).parent / 'source/assets/fonts'
+            for filename in filenames:
+                with self.subTest(filename=filename):
+                    self.assertEqual((snapshot / filename).read_bytes(), (ROOT / 'assets/fonts' / filename).read_bytes())
 
     def test_mismatches_fail_before_any_pdf(self):
         cases = []

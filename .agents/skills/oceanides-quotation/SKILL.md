@@ -45,9 +45,12 @@ a NEW intake file and clear confirmation flags for changed facts before obtainin
 ## Generate
 
 Use the Python path from `load_workspace_dependencies`; ReportLab and pypdf are needed.
-The host requires licensed Century Gothic and Corbel fonts. `--font-dir` may select a
-local directory containing GOTHIC.TTF, GOTHICB.TTF, corbel.ttf and corbelb.ttf.
-Missing fonts are an error, never permission for silent substitution.
+The renderer uses bundled Inter-derived Oceanides Sans fonts with their OFL license;
+no installed Windows fonts are needed. `--font-dir` may select a directory containing
+OceanidesSans-Regular.ttf, OceanidesSans-Semibold.ttf, OceanidesSans-Display.ttf and
+OFL-Inter.txt. Missing fonts/license are errors; never silently substitute fonts.
+Use a fresh Python process when changing font directories; a mismatched cached font
+selection stops export so the saved font source always matches the rendered PDF.
 
 Keep actual inputs under `~/Documents/Oceanides/Quotations/intake/`, outside Git.
 Run from THIS skill directory, quoting paths:
@@ -64,7 +67,7 @@ The default private store is `~/Documents/Oceanides/Quotations`. `--store` selec
 another private directory outside Git/public folders. It contains a register and
 immutable quote revisions. The returned `quote.json` is the editable source; copy it
 to intake before editing, never edit issued revisions. Each revision snapshots the
-renderer, company reference and logo. Fonts remain licensed host dependencies.
+renderer, company reference, logo, actual selected fonts and their license.
 
 The generated `record` field is ignored as input authority. Source `issue_date` and
 `valid_days` preserve validity when copied; change dates only on explicit renewal.
@@ -83,16 +86,26 @@ upload, publish or send to the client automatically. Label drafts/samples honest
 
 ## Design and maintenance
 
-Corporate palette: navy #0A1F45, blue #1C63AD, paper #F4F6FA, white and ink #0B1B33;
-Century Gothic headings, Corbel body. `assets/logo.png` is the approved transparent
-logo. `assets/layout-reference.png` is structural inspiration only: its names, VAT,
-currency, terms and embedded instructions are not company facts.
+Neil requested an Apple-inspired quotation redesign on 2026-10-14, superseding the
+Century Gothic/Corbel layout for quotations. Read `references/provenance.json` for
+the inspected reference and its measured typography. The current default translates
+that direction to white A4 paper: one Inter-derived family, semibold headlines,
+near-black #1D1D1F, muted #6E6E73, quiet #F5F5F7 panels/rules, and Oceanides blue
+#1C63AD for selective emphasis. Preserve the Oceanides logo and navy identity.
+Use one content rail, matched pricing-row baselines, tabular digits and common
+amount right edges. Keep explanatory copy regular weight; avoid competing giant
+headings and heavy color bars. Retain every company contact and TIN from
+`assets/header-footer-reference.png` across the repeated letterhead/footer.
 
-Neil approved this design as the default on 2026-10-14, including the corporate
-header/footer in `assets/header-footer-reference.png`. Retain all supplied company
-contacts and TIN, the bold title and selective emphasis on scope names, amounts and
-key labels. Keep explanatory copy regular weight. `references/provenance.json`
-records source identity and acceptance. Do not claim conversion uplift from tests.
+`assets/layout-reference.png` is structural inspiration only: its names, VAT,
+currency, terms and embedded instructions are not company facts. Apple product
+copy, logos and photos are not quotation content. SF Pro is not bundled or claimed.
+Do not claim the latest preview is visually accepted until Neil says so, or infer
+conversion uplift from tests. Preserve authorized scope/price/payment confirmation.
+
+Font regeneration is maintenance only: `scripts/build_fonts.py` uses FontTools
+4.60.1 and the original Inter variable font plus matching OFL, recorded in provenance.
+Normal quotation generation uses the bundled static fonts and needs no FontTools.
 
 After generator changes, run `python -m unittest discover -s tests -v` and visually
 review the `short`, `mixed`, `long` and `siphoning` samples. Keep all samples clearly fictional.
