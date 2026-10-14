@@ -105,8 +105,9 @@ CONTENT REMOVED OR CORRECTED
 
 STP EXPLANATION AND EXISTING VIDEO
 Page 19 adds an editable illustrative domestic-wastewater treatment flow.
-The original 139.3-second Aira-narrated animation with music is supplied separately,
-previously accepted by Neil (commit 358797e8). Exact MP4 bytes are retained;
+The optimized 99.734-second Aira-narrated animation with music is supplied separately.
+Neil identified the previously shortened ~1m40s cut as intended on 14 October 2026
+(source commit 15d2d876). Exact MP4 bytes are retained;
 no new voice generation, media generation or audio edits were made.
 The film explains general STP stages, testing and continuing sludge removal.
 It does not promise numerical effluent targets, guaranteed savings or zero siphoning.
@@ -116,6 +117,9 @@ The actual supplier design, applicable discharge criteria and operating terms
 remain site-specific. The owner requested separation on 13 October 2026.
 The latest PowerPoint and PDF omit the video slide and playback links entirely.
 The earlier 70-slide embedded-video revision remains preserved.
+On 14 October the Drive video was replaced in place with this optimized cut;
+the previous email link remains valid, and a correction email was sent.
+The 69-page PowerPoint and PDF are unchanged. Earlier 139.3-second video is preserved.
 
 HISTORICAL DOCUMENT AUDIT - OLD PDF PAGE REFERENCES
 p13: 2025 Manila business permit for Oceanides Plumbing Services, sole proprietor.

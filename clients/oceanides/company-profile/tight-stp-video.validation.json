@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "checkedOn": "2026-10-14",
+  "scope": "Read-only source integrity, complete media decode and existing timing evidence; no regeneration or subjective listening review.",
+  "source": "C:/Users/ADMIN/Desktop/grifon-command/clients/oceanides/stp-explainer/output/Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4",
+  "deliveryFile": "output/media/Oceanides-STP-Explainer-Optimized-1m40s-1080p.mp4",
+  "sha256": "40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea",
+  "bytes": 9925374,
+  "sourceAndDeliveryHashesMatch": true,
+  "probe": {
+    "exitCode": 0,
+    "durationSeconds": 99.734,
+    "videoCodec": "h264",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "audioCodec": "aac",
+    "audioSampleRate": 48000,
+    "audioChannels": 2
+  },
+  "fullDecode": {
+    "exitCode": 0,
+    "streams": ["0:v:0", "0:a:0"],
+    "options": ["-hide_banner", "-nostdin", "-v", "error", "-xerror", "-f", "null"],
+    "errors": []
+  },
+  "storyComparison": {
+    "originalDurationSeconds": 139.3,
+    "tightDurationSeconds": 99.73333333333333,
+    "durationReductionSeconds": 39.56666666666668,
+    "originalSceneCount": 12,
+    "tightSceneCount": 12,
+    "comparedFields": ["id", "title", "detail", "caption", "vo"],
+    "nonTimingMismatches": 0
+  },
+  "existingTimingReceipt": {
+    "path": "C:/Users/ADMIN/Desktop/grifon-command/.tmp/oceanides-stp/aira-tight-sync/timing-receipt.json",
+    "createdAt": "2026-10-03T08:18:32.674Z",
+    "approvedWords": 224,
+    "approvedCharacters": 1455,
+    "allTwelveInputsPreserved": true,
+    "noTimeStretch": true,
+    "intraScenePausesUntouched": true,
+    "addedPerScenePaddingSeconds": 0,
+    "rawDurationSeconds": 100.72,
+    "removedQuietBoundarySilenceSeconds": 1.7401814058956917,
+    "quietBoundaryCutCount": 10,
+    "verifiedCutThresholdDbfs": -50,
+    "retainedNonCutFloatSamplesBitExact": true,
+    "paidCalls": 0
+  },
+  "limitations": [
+    "No new real-time listening or browser playback test was performed.",
+    "Timing receipt is historical production evidence; the current full-decode and hash checks independently passed."
+  ]
+}

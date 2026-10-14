@@ -1,0 +1,12 @@
+{
+  "file": "Oceanides-STP-Explainer-Optimized-1m40s-1080p.mp4",
+  "sha256": "40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea",
+  "byte_count": 9925374,
+  "duration_seconds": 99.734,
+  "source": "Existing Oceanides-STP-Aira-Tight-Voice-Music-1080p.mp4 from the primary worktree; exact bytes reused",
+  "source_commit": "15d2d876e8ff8250c3d48ebba52aa3faa195a05b",
+  "selection": "On 2026-10-14 Neil identified the previously shortened approximately 1 minute 40 second video as the intended optimized version for this delivery.",
+  "handling": "No new generation, render or audio edit. Earlier 139.3-second source and embedded-video profile remain preserved. Current 69-slide company profile is unchanged and video remains separate.",
+  "scope": "General illustrative domestic-wastewater treatment process, not an exact supplier design or Oceanides-owned plant.",
+  "drive_file_id": "1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2"
+}

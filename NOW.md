@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; Oceanides separate-video profile emailed to owner**
+**Stamped: 2026-10-14; corrected Oceanides optimized 1m40s STP video delivered**
 
 ## Active task
 Chat: 01a12b66-b2cb-7ef1-bc28-515b314e7a8a.
@@ -14,6 +14,8 @@ Pasay office: 2628 Tramo corner Dandan, Alcantara Compound, Barangay 51, 1300.
 Second landline 8330 1329 matches new letterhead and PhilGEPS record.
 Owner confirmed Globaltec is the current treatment/disposal provider.
 Owner requested email delivery to ceprianoaugust@gmail.com and separate STP video.
+Neil identified the previously shortened ~1m40s cut as the intended version.
+The Drive video now uses that unchanged optimized cut; correction emailed.
 No application code change, new paid generation, deployment or merge.
 
 ## Latest deliverables
@@ -22,7 +24,7 @@ clients/oceanides/company-profile/output/pptx/Oceanides-Company-Profile-Separate
 Matching PDF:
 clients/oceanides/company-profile/output/pdf/Oceanides-Company-Profile-Separate-Video-Review-v4.pdf
 Standalone video:
-clients/oceanides/company-profile/output/media/Oceanides-STP-Explainer-Voiceover-1080p.mp4
+clients/oceanides/company-profile/output/media/Oceanides-STP-Explainer-Optimized-1m40s-1080p.mp4
 Earlier embedded-video v3 and its ZIP are preserved; not the version emailed now.
 Earlier ZIP (derived local package outside Git; primary files backed up in Git):
 C:/Users/ADMIN/.codex/visualizations/2026/10/11/01a12b66-b2cb-7ef1-bc28-515b314e7a8a/Oceanides-Company-Profile-BIR-STP-Complete-Package.zip
@@ -44,7 +46,17 @@ Malera reference informed discussion; numerical limits/statistics/fines not copi
 STP design, applicable criteria, operating cost and support terms remain site-specific.
 
 ## Existing video and verification
-Recovered unchanged original 139.3-second Aira voice/music film from primary worktree.
+Current separate video is the 99.734-second Tight Aira voice/music cut from the
+primary worktree, source commit 15d2d876e8ff8250c3d48ebba52aa3faa195a05b.
+SHA256: 40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea.
+Neil identified it on 14 October as the intended optimized cut; earlier source
+notes marked listening pending, so this selection is recorded separately.
+Independent probe/full video+audio decode passed; H264 1920x1080 30fps and AAC
+48kHz stereo. All 12 scenes and wording match the original; pacing was shortened.
+Receipt: tight-stp-video.validation.json. Provenance: assets-video/separate-video-sources.json.
+No new generation, rendering, speech speed change or audio edit was performed.
+
+Earlier v3 used the original 139.3-second Aira voice/music film, preserved locally.
 Acceptance commit 358797e8; SHA256:
 9c347e603f61d8729f8e059cada56340f11610c38bd71b7d6de01382a900f37d.
 H264 1920x1080 at 30 fps / AAC 48 kHz stereo. No new generation or audio edit.
@@ -83,6 +95,12 @@ PPTX id: 1ZywBNqw0gl7t_sVhfzz6OGDsruZMMQay.
 PDF id: 1VT1amzXQ5cA6OpZ4lW1flW1EqGWRiwhJ.
 MP4 id: 1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2.
 Actual subject, observed URLs and Gmail receipt: separate-video-email-delivery.json.
+On 14 October the existing MP4 Drive ID was updated in place to the optimized
+99.734-second/9,925,374-byte video. Original email video link and reader access remain.
+Correction email sent to the same recipient in the original Gmail thread.
+SENT receipt: 1a138cf247b7eb44; thread 1a135db9ab0de49b.
+Subject: Corrected STP Video - Optimized 1 Minute 40 Second Version.
+Receipt: optimized-video-email-delivery.json. PPTX/PDF are unchanged.
 
 ## Remaining owner review
 Specific client sites/services/results, treatment specs, written support terms,

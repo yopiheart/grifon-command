@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-14",
+  "recipient": "ceprianoaugust@gmail.com",
+  "subject": "Corrected STP Video — Optimized 1 Minute 40 Second Version",
+  "gmail_message_id": "1a138cf247b7eb44",
+  "gmail_thread_id": "1a135db9ab0de49b",
+  "label_ids": [
+    "SENT"
+  ],
+  "delivery": "Correction sent in original delivery thread; existing Drive video replaced in place and recipient reader permission verified",
+  "drive": {
+    "success": true,
+    "accepted_input": "file_uri",
+    "id": "1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2",
+    "title": "Oceanides-STP-Explainer-Optimized-1m40s-1080p.mp4",
+    "mime_type": "video/mp4",
+    "url": "https://drive.google.com/file/d/1OdiX8CSkYLmgvPb9JNi1wSEy0Z2p7fj2/view?usp=drivesdk",
+    "parent_ids": [
+      "1g_jhHirxXozF7SS0rb1ABylGCOIyoLv1"
+    ],
+    "modified_time": "2026-10-14T05:07:29.435Z",
+    "size": "9925374"
+  },
+  "file": "output/media/Oceanides-STP-Explainer-Optimized-1m40s-1080p.mp4",
+  "sha256": "40f143219c83666316c8c92936326e09370355f466a47699f972b33075c56cea",
+  "duration_seconds": 99.734,
+  "previous_duration_seconds": 139.3,
+  "profile_updated": false,
+  "video_embedded": false
+}
