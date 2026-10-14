@@ -4,6 +4,7 @@
   "companySource": "clients/oceanides/company-profile/premium-content.json",
   "logoSource": "clients/oceanides/company-profile/assets/logo-transparent.png",
   "reference": "User-supplied Design.png; layout inspiration only; its content and terms are not Oceanides facts.",
-  "designStatus": "Initial quotation design for user review; preserve after acceptance.",
+  "designStatus": "Neil approved the quotation design as the Oceanides default on 2026-10-14. Preserve its styling with his requested full corporate header/footer, bold title and selective emphasis.",
+  "headerFooterReference": "assets/header-footer-reference.png; user-supplied August header/footer screenshot, 2026-10-14. Supplies landlines, Smart, corporate email, website, Facebook and TIN; its profile body and draft label are not quotation content.",
   "fonts": "Installed Windows Century Gothic and Corbel; embedded subsets in PDFs. Font binaries are not redistributed."
 }

@@ -2,14 +2,20 @@
   "company": {
     "legalName": "Oceanides Plumbing Siphoning & Pest Management Services OPC",
     "brand": "OCEANIDES",
-    "establishedYear": 2021
+    "establishedYear": 2021,
+    "tin": "260-084-087-00000"
   },
   "contact": {
     "phone": "0917 671 6383",
     "phoneDigits": "09176716383",
     "carrier": "Globe",
     "email": "marketing@oceanidessepticandpest.com",
-    "address": "Tramo Street Corner Dandan, Pasay City, Philippines 1300"
+    "address": "Tramo Street Corner Dandan, Pasay City, Philippines 1300",
+    "landline": "(02) 8633 8486 / (02) 8330 1329",
+    "smart": "0939 245 6217",
+    "corporateEmail": "corporate@oceanidessepticandpest.com",
+    "website": "oceanidesph.com",
+    "facebook": "facebook.com/OceanidesMalabanan"
   },
   "title": "Company profile",
   "subtitle": "Property services for homes and company facilities",

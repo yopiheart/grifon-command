@@ -42,6 +42,15 @@ class QuoteTests(unittest.TestCase):
             self.assertIn('123456.789', text)
             self.assertNotIn('000123456', text)
 
+    def test_package_separate_load_count_is_one_number(self):
+        d = fixture()
+        d['services'][0].update(quantity='1', unit='project', loads='123456789')
+        with tempfile.TemporaryDirectory() as out:
+            result = q.issue(d, 'final', out)
+            text = '\n'.join(page.extract_text() for page in PdfReader(result['pdf']).pages)
+            self.assertIn('123456789', text, 'The separate load count must remain one readable number.')
+            self.assertNotRegex(text, r'12345678\s+9|1234567\s+89|123456\s+789')
+
     def test_decimal_rounding_and_milestones(self):
         d = fixture('mixed')
         d['services'] = [dict(d['services'][0], quantity='3', unit_price='0.10')]
@@ -52,6 +61,140 @@ class QuoteTests(unittest.TestCase):
         d['services'][0]['unit_price'] = '0.01'
         d['pricing']['total'] = d['payments'][0]['amount'] = '0.02'
         self.assertEqual(q.validate(d)['services'][0]['amount'], '0.02')
+
+    def test_siphoning_loads_volume_and_money_are_independent(self):
+        d = fixture('siphoning')
+        item = q.validate(d)['services'][0]
+        self.assertEqual(item['quantity'], '3')
+        self.assertEqual(item['loads'], '3')
+        self.assertEqual(item['volume']['total'], '30')
+        self.assertEqual(item['amount'], '37500.75', 'Volume must not multiply the load price again.')
+        self.assertEqual(q.validate(d)['payments'][1]['amount'], '18750.37')
+
+    def test_siphoning_derives_total_volume_and_load_count(self):
+        d = fixture('siphoning')
+        d['services'][0].pop('loads')
+        d['services'][0]['volume'].pop('total')
+        item = q.validate(d)['services'][0]
+        self.assertEqual(item['loads'], '3')
+        self.assertEqual(item['volume']['total'], '30')
+        # Explicit load counts also work when the billed unit is not a load.
+        d = fixture()
+        d['services'][0].update(loads='3', volume={'unit': 'L', 'basis': 'capacity', 'per_load': '10000'})
+        item = q.validate(d)['services'][0]
+        self.assertEqual(item['volume']['total'], '30000')
+
+    def test_volume_only_and_estimates_do_not_invent_loads(self):
+        d = fixture()
+        d['services'][0]['volume'] = {'unit': 'm³', 'basis': 'estimated', 'total': '30.125'}
+        item = q.validate(d)['services'][0]
+        self.assertEqual(item['volume']['total'], '30.125')
+        self.assertNotIn('loads', item)
+        self.assertNotIn('per_load', item['volume'])
+
+    def test_volume_billing_matches_volume_and_converts_units(self):
+        for unit in ['m³', 'm3', 'cbm']:
+            for volume_unit, volume in [('m³', '30'), ('L', '30000')]:
+                d = fixture('siphoning')
+                d['services'][0].update(quantity='30', unit=unit, unit_price='1250.02',
+                                         volume={'unit': volume_unit, 'basis': 'included', 'total': volume})
+                d['pricing']['total'] = '37500.60'
+                d['payments'] = [{'trigger': 'On completion', 'amount': '37500.60'}]
+                with self.subTest(unit=unit, volume_unit=volume_unit):
+                    self.assertEqual(q.validate(d)['services'][0]['amount'], '37500.60')
+        for unit in ['L', 'liters', 'litres']:
+            d = fixture('siphoning')
+            d['services'][0].update(quantity='30000', unit=unit, unit_price='1.25',
+                                     volume={'unit': 'm³', 'basis': 'included', 'total': '30'})
+            d['pricing']['total'] = '37500.00'
+            d['payments'] = [{'trigger': 'On completion', 'amount': '37500.00'}]
+            with self.subTest(unit=unit):
+                self.assertEqual(q.validate(d)['services'][0]['amount'], '37500.00')
+
+    def test_package_can_show_quantities_without_invented_rates(self):
+        for details in [
+            {'quantity': '3', 'unit': 'loads'},
+            {'loads': '3', 'volume': {'unit': 'm³', 'basis': 'included', 'per_load': '10'}},
+            {'quantity': '30', 'unit': 'm³', 'volume': {'unit': 'm³', 'basis': 'included', 'total': '30'}},
+        ]:
+            d = fixture(); d['services'][0].update(details)
+            with self.subTest(details=details):
+                item = q.validate(d)['services'][0]
+                self.assertNotIn('unit_price', item)
+                self.assertNotIn('amount', item)
+                self.assertEqual(q.validate(d)['pricing']['total'], '99999.00')
+            for forbidden in ['unit_price', 'amount']:
+                invalid = copy.deepcopy(d); invalid['services'][0][forbidden] = '99999.00'
+                with self.subTest(field=forbidden), self.assertRaises(q.QuoteError): q.validate(invalid)
+
+    def test_package_quantity_unit_requires_pair(self):
+        for details in [{'quantity': '3'}, {'unit': 'loads'}]:
+            d = fixture(); d['services'][0].update(details)
+            with self.subTest(details=details), self.assertRaises(q.QuoteError): q.validate(d)
+
+    def test_invalid_load_counts_and_fractional_billed_loads_rejected(self):
+        for value in ['0', '-1', '3.5', 'NaN', 'Infinity', 3, True, None]:
+            d = fixture('siphoning'); d['services'][0]['loads'] = value
+            with self.subTest(loads=value), self.assertRaises(q.QuoteError): q.validate(d)
+        d = fixture('siphoning'); d['services'][0]['loads'] = '4'; d['services'][0]['volume']['total'] = '40'
+        with self.assertRaises(q.QuoteError): q.validate(d)
+        d = fixture('siphoning'); d['services'][0].pop('loads'); d['services'][0].pop('volume')
+        d['services'][0]['quantity'] = '2.5'
+        d['pricing']['total'] = '31250.63'; d['payments'] = [{'trigger': 'On completion', 'amount': '31250.63'}]
+        with self.assertRaises(q.QuoteError): q.validate(d)
+        d = fixture(); d['services'][0].update(quantity='2.5', unit='load')
+        with self.assertRaises(q.QuoteError): q.validate(d)
+
+    def test_invalid_volume_rejected_before_export(self):
+        invalid_volumes = [
+            {}, {'unit': 'm³', 'basis': 'included'},
+            {'unit': 'm³', 'total': '30'},
+            {'unit': 'cbm', 'basis': 'included', 'total': '30'},
+            {'unit': 'm³', 'basis': 'actual', 'total': '30'},
+            {'unit': 'm³', 'basis': 'included', 'total': '29', 'per_load': '10'},
+            {'unit': 'm³', 'basis': 'included', 'total': '30', 'extra_charge': '1'},
+        ]
+        for value in ['0', '-1', 'NaN', 'Infinity', '1.0001', 30, True, None]:
+            invalid_volumes.append({'unit': 'm³', 'basis': 'included', 'total': value})
+            invalid_volumes.append({'unit': 'm³', 'basis': 'included', 'per_load': value})
+        for volume in invalid_volumes:
+            d = fixture('siphoning'); d['services'][0]['volume'] = volume
+            with self.subTest(volume=volume), tempfile.TemporaryDirectory() as out:
+                with self.assertRaises(q.QuoteError): q.issue(d, 'final', Path(out) / 'private')
+                self.assertFalse(list(Path(out).rglob('*.pdf')))
+        d = fixture()
+        d['services'][0]['volume'] = {'unit': 'm³', 'basis': 'included', 'per_load': '10'}
+        with self.assertRaises(q.QuoteError): q.validate(d)
+
+    def test_billed_volume_mismatch_rejected_without_rounding_it_away(self):
+        for unit, quantity, volume_unit, total in [
+            ('m³', '30', 'm³', '29.999'),
+            ('m3', '30', 'L', '29999.999'),
+            ('cbm', '30', 'L', '30001'),
+            ('L', '30000', 'm³', '30.001'),
+            ('liters', '30000', 'L', '29999'),
+            ('litres', '30000', 'm³', '29.999'),
+        ]:
+            d = fixture()
+            d['services'][0].update(quantity=quantity, unit=unit,
+                                     volume={'unit': volume_unit, 'basis': 'included', 'total': total})
+            with self.subTest(unit=unit, quantity=quantity, total=total), self.assertRaises(q.QuoteError): q.validate(d)
+
+    def test_siphoning_pdf_keeps_volume_and_price_readable(self):
+        with tempfile.TemporaryDirectory() as out:
+            result = q.sample('siphoning', out)
+            text = '\n'.join(page.extract_text() for page in PdfReader(result['pdf']).pages)
+            self.assertIn('SAMPLE ONLY', text)
+            self.assertIn(fixture('siphoning')['client']['name'], text)
+            self.assertIn('VOLUME', text)
+            self.assertIn('loads', text)
+            self.assertIn('10 m³', text)
+            self.assertIn('30 m³', text)
+            self.assertIn('₱12,500.25', text)
+            self.assertIn('₱37,500.75', text)
+            self.assertIn('₱18,750.38', text)
+            self.assertIn('₱18,750.37', text)
+            self.assertNotIn('\x00', text)
 
     def test_mismatches_fail_before_any_pdf(self):
         cases = []

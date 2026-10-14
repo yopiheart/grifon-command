@@ -21,7 +21,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import BaseDocTemplate, CondPageBreak, Frame, HRFlowable, Image, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.platypus import BaseDocTemplate, CondPageBreak, Frame, HRFlowable, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle
 
 ROOT = Path(__file__).resolve().parents[1]
 CENT = Decimal('0.01')
@@ -66,6 +66,58 @@ def text_value(value, field, mode):
 def only_keys(obj, allowed, field):
     if not isinstance(obj, dict) or set(obj) - set(allowed):
         raise QuoteError(f'{field}: invalid object or unknown fields.')
+
+
+def measure(value, field, whole=False):
+    if not isinstance(value, str) or not re.fullmatch(r'\d+(?:\.\d{1,3})?', value):
+        raise QuoteError(f'{field}: use a positive decimal string (max 3 decimal places).')
+    number = Decimal(value)
+    if not 0 < number <= Decimal('999999999') or (whole and number != number.to_integral_value()):
+        raise QuoteError(f'{field}: outside supported range or not a whole number of loads.')
+    return format(number.normalize(), 'f')
+
+
+def volume_unit(unit):
+    return {'m³': 'm³', 'm3': 'm³', 'cbm': 'm³', 'l': 'L', 'liters': 'L', 'litres': 'L'}.get(unit.lower())
+
+
+def validate_measures(item, prefix, mode, itemized):
+    if itemized or 'quantity' in item or 'unit' in item:
+        item['quantity'] = measure(item.get('quantity'), f'{prefix}.quantity')
+        item['unit'] = text_value(item.get('unit'), f'{prefix}.unit', mode)
+    load_quantity = item.get('unit', '').lower() in {'load', 'loads'}
+    if 'loads' in item:
+        item['loads'] = measure(item['loads'], f'{prefix}.loads', whole=True)
+    if load_quantity:
+        quantity = measure(item['quantity'], f'{prefix}.quantity', whole=True)
+        if 'loads' in item and Decimal(item['loads']) != Decimal(quantity):
+            raise QuoteError(f'{prefix}: loads must match the quoted load quantity.')
+        item['loads'] = quantity
+    if 'volume' not in item:
+        return
+    volume = item['volume']
+    only_keys(volume, {'unit', 'basis', 'per_load', 'total'}, f'{prefix}.volume')
+    if volume.get('unit') not in {'m³', 'L'} or volume.get('basis') not in {'included', 'estimated', 'capacity'}:
+        raise QuoteError(f'{prefix}.volume: specify unit m³ or L and basis included, estimated or capacity.')
+    if not any(k in volume for k in ['per_load', 'total']):
+        raise QuoteError(f'{prefix}.volume: specify per_load or total.')
+    for key in ['per_load', 'total']:
+        if key in volume:
+            volume[key] = measure(volume[key], f'{prefix}.volume.{key}')
+    if 'per_load' in volume:
+        if 'loads' not in item:
+            raise QuoteError(f'{prefix}.volume.per_load requires a confirmed number of loads.')
+        expected = Decimal(item['loads']) * Decimal(volume['per_load'])
+        if 'total' in volume and Decimal(volume['total']) != expected:
+            raise QuoteError(f'{prefix}: total volume must equal loads times volume per load.')
+        volume['total'] = measure(format(expected, 'f'), f'{prefix}.volume.total')
+    billed_unit = volume_unit(item.get('unit', ''))
+    if billed_unit:
+        # Compare physical quantities; billing remains quantity x price, never x volume again.
+        quoted_volume = Decimal(volume['total']) / (1000 if volume['unit'] == 'L' else 1)
+        billed_volume = Decimal(item['quantity']) / (1000 if billed_unit == 'L' else 1)
+        if billed_volume != quoted_volume:
+            raise QuoteError(f'{prefix}: billed volume quantity must match the quoted total volume.')
 
 
 def validate(data, mode='final'):
@@ -114,23 +166,17 @@ def validate(data, mode='final'):
     computed = Decimal('0')
     for index, item in enumerate(services):
         prefix = f'services[{index}]'
-        only_keys(item, {'group', 'name', 'description', 'quantity', 'unit', 'unit_price', 'amount'}, prefix)
+        only_keys(item, {'group', 'name', 'description', 'quantity', 'unit', 'unit_price', 'amount', 'loads', 'volume'}, prefix)
         if item.get('group') not in GROUPS:
             raise QuoteError(f'{prefix}: unknown service group.')
         for key in ['name', 'description']:
             item[key] = text_value(item.get(key), f'{prefix}.{key}', mode)
+        validate_measures(item, prefix, mode, pricing['mode'] == 'itemized')
         if pricing['mode'] == 'package':
-            if any(k in item for k in ['quantity', 'unit', 'unit_price', 'amount']):
-                raise QuoteError('Package scopes must not contain a quantity/rate breakdown; put agreed quantities in the description.')
+            if any(k in item for k in ['unit_price', 'amount']):
+                raise QuoteError('Package scopes may contain quantities/volume, but not invented individual rates or amounts.')
         else:
-            q = item.get('quantity')
-            if not isinstance(q, str) or not re.fullmatch(r'\d+(?:\.\d{1,3})?', q):
-                raise QuoteError(f'{prefix}.quantity must be a decimal string (max 3 decimal places).')
-            quantity = Decimal(q)
-            if not 0 < quantity <= Decimal('999999999'):
-                raise QuoteError(f'{prefix}.quantity outside supported range.')
-            item['quantity'] = format(quantity.normalize(), 'f')
-            item['unit'] = text_value(item.get('unit'), f'{prefix}.unit', mode)
+            quantity = Decimal(item['quantity'])
             rate = money(item.get('unit_price'), f'{prefix}.unit_price')
             amount = (quantity * rate).quantize(CENT, rounding=ROUND_HALF_UP)
             if amount > Decimal('999999999999.99'):
@@ -177,6 +223,7 @@ def register_fonts(font_dir=None):
 def check_glyphs(data):
     texts = [data['title'], data['summary'], *data['client'].values(), *data['conditions']]
     texts += [v for item in data['services'] for k, v in item.items() if k in {'name', 'description', 'unit'}]
+    texts += [item['volume']['unit'] for item in data['services'] if 'volume' in item]
     texts += [p['trigger'] for p in data['payments']]
     # Check actual font roles, including generated currency. Century Gothic has no peso glyph.
     for name, rendered in [('OBody', texts + ['₱']), ('OBold', texts + ['₱']), ('OHeading', [data['title']])]:
@@ -200,12 +247,16 @@ def render_pdf(data, destination, record, font_dir=None):
         'small': ParagraphStyle('small', fontName='OBody', fontSize=9, leading=12, textColor=MUTED),
         'label': ParagraphStyle('label', fontName='OBold', fontSize=8.5, leading=12, textColor=BLUE),
         'head': ParagraphStyle('head', fontName='OHeading', fontSize=12, leading=16, textColor=NAVY, spaceBefore=14, spaceAfter=8, keepWithNext=True),
-        'title': ParagraphStyle('title', fontName='OTitle', fontSize=31, leading=38, textColor=NAVY),
+        'title': ParagraphStyle('title', fontName='OHeading', fontSize=29, leading=35, textColor=NAVY),
         'project': ParagraphStyle('project', fontName='OHeading', fontSize=17, leading=22, textColor=NAVY, spaceAfter=7, keepWithNext=True),
         'money': ParagraphStyle('money', fontName='OBold', fontSize=10.5, leading=14, alignment=TA_RIGHT, textColor=INK),
         'white': ParagraphStyle('white', fontName='OBold', fontSize=9, leading=12, textColor=colors.white),
+        'contact': ParagraphStyle('contact', fontName='OBody', fontSize=7.5, leading=10, textColor=NAVY),
+        'footer': ParagraphStyle('footer', fontName='OBody', fontSize=7.5, leading=10, textColor=colors.white),
     }
     styles['scopehead'] = ParagraphStyle('scopehead', parent=styles['head'], keepWithNext=False)
+    styles['priceunit'] = ParagraphStyle('priceunit', parent=styles['small'], alignment=TA_RIGHT)
+    styles['whiteRight'] = ParagraphStyle('whiteRight', parent=styles['white'], alignment=TA_RIGHT)
     def p(value, style='body', markup=False):
         safe = str(value) if markup else escape(str(value)).replace('\n', '<br/>')
         return Paragraph(safe, styles[style])
@@ -228,6 +279,7 @@ def render_pdf(data, destination, record, font_dir=None):
 
     def page_chrome(canvas, document):
         canvas.saveState()
+        top = A4[1] - (25 if mode != 'final' else 0)
         if mode != 'final':
             canvas.setFillColor(RED)
             canvas.rect(0, A4[1] - 25, A4[0], 25, fill=1, stroke=0)
@@ -235,30 +287,57 @@ def render_pdf(data, destination, record, font_dir=None):
             canvas.setFont('OBold', 9)
             banner = 'SAMPLE ONLY  /  FICTIONAL SCOPE AND AMOUNTS  /  NOT FOR CLIENT USE' if mode == 'sample' else 'DRAFT  /  NOT APPROVED FOR CLIENT ACCEPTANCE'
             canvas.drawCentredString(A4[0] / 2, A4[1] - 16, banner)
-        if document.page > 1:
-            canvas.setFillColor(NAVY)
-            canvas.setFont('OHeading', 10)
-            canvas.drawString(44, A4[1] - 43, 'Oceanides / Quotation continued')
-            canvas.setFont('OBody', 8.5)
-            canvas.drawRightString(A4[0] - 44, A4[1] - 43, identity)
-        canvas.setStrokeColor(colors.HexColor('#D8E1EC'))
-        canvas.setLineWidth(.6)
-        canvas.line(44, 36, A4[0] - 44, 36)
-        canvas.setFillColor(MUTED)
-        canvas.setFont('OBody', 8)
-        canvas.drawString(44, 23, f'{identity}  |  Quotation, not an invoice')
-        canvas.drawRightString(A4[0] - 44, 23, f'Page {document.page}')
+        canvas.setFillColor(NAVY)
+        canvas.rect(0, top - 53, A4[0], 53, fill=1, stroke=0)
+        canvas.setFillColor(colors.white)
+        canvas.rect(44, top - 47, 41, 41, fill=1, stroke=0)
+        canvas.drawImage(str(ROOT / 'assets/logo.png'), 46, top - 45, 37, 37, preserveAspectRatio=True, mask='auto')
+        canvas.setFillColor(colors.white)
+        canvas.setFont('OHeading', 12)
+        canvas.drawString(97, top - 21, company['company']['brand'])
+        canvas.setFont('OBold', 9.5)
+        canvas.drawString(97, top - 37, company['company']['legalName'].split(' ', 1)[1])
+        canvas.setFillColor(colors.HexColor('#EAF2FA'))
+        canvas.rect(0, top - 99, A4[0], 46, fill=1, stroke=0)
+        contact = company['contact']
+        lines = [
+            f"Landline {contact['landline']}   |   Globe {contact['phone']}   |   Smart {contact['smart']}",
+            f"{contact['email']}   |   {contact['corporateEmail']}",
+            f"{contact['address']}   |   TIN {company['company']['tin']}",
+        ]
+        y = top - 59
+        for line in lines:
+            paragraph = p(line, 'contact')
+            _, height = paragraph.wrap(width, 100)
+            paragraph.drawOn(canvas, 44, y - height)
+            y -= height + 1
+        if y < top - 99:
+            raise QuoteError('Company contact header exceeds its reserved area.')
+        canvas.setFillColor(NAVY)
+        canvas.rect(0, 0, A4[0], 58, fill=1, stroke=0)
+        for line, y in [(contact['website'] + '   |   ' + contact['facebook'], 43),
+                        (contact['email'] + '   |   ' + contact['corporateEmail'], 31)]:
+            paragraph = p(line, 'footer')
+            _, height = paragraph.wrap(width, 12)
+            if height > 12:
+                raise QuoteError('Company footer exceeds its reserved area.')
+            paragraph.drawOn(canvas, 44, y)
+        canvas.setStrokeColor(colors.HexColor('#526B90'))
+        canvas.setLineWidth(.4)
+        canvas.line(44, 25, A4[0] - 44, 25)
+        canvas.setFillColor(colors.white)
+        canvas.setFont('OBody', 7.5)
+        canvas.drawString(44, 12, f'{identity}  |  Quotation, not an invoice')
+        canvas.drawRightString(A4[0] - 44, 12, f'Page {document.page}')
         canvas.restoreState()
 
     # Zero frame padding makes every paragraph, rule and table share the same rail.
-    frame = Frame(44, 48, width, A4[1] - 99, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
+    body_top = A4[1] - (25 if mode != 'final' else 0) - 117
+    frame = Frame(44, 74, width, body_top - 74, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
     doc.addPageTemplates(PageTemplate(id='quotation', frames=[frame], onPage=page_chrome))
-    logo = Image(str(ROOT / 'assets/logo.png'), width=64, height=64)
-    header = [p(company['company']['legalName']), Spacer(1, 5), p(company['contact']['address'], 'small'),
-              p(company['contact']['phone'] + '  |  ' + company['contact']['email'], 'small')]
-    story = [table([[logo, header]], [88, width - 88]), Spacer(1, 12), p('Service quotation', 'title'), Spacer(1, 7),
+    story = [p('Service quotation', 'title'), Spacer(1, 7),
              p(f'{identity}    •    Issued {date_label(issued)}    •    Valid until {date_label(expires)}', 'small'),
-             Spacer(1, 15), HRFlowable(width='100%', thickness=1.3, color=BLUE), Spacer(1, 14)]
+             Spacer(1, 12), HRFlowable(width='100%', thickness=1.3, color=BLUE), Spacer(1, 12)]
     client = data['client']
     left = [p('PREPARED FOR', 'label'), Spacer(1, 4), p(client['name'])]
     if client.get('contact'):
@@ -269,15 +348,30 @@ def render_pdf(data, destination, record, font_dir=None):
     story += [table([[left, right]], [width * .47, width * .53], splitByRow=1, splitInRow=1), Spacer(1, 20),
               p(data['title'], 'project'), p(data['summary']), CondPageBreak(110), p('Scope & pricing', 'scopehead')]
     itemized = data['pricing']['mode'] == 'itemized'
-    headers = ['SERVICE / AGREED SCOPE', 'QTY', 'RATE', 'AMOUNT'] if itemized else ['SERVICE / AGREED SCOPE']
+    has_quantity = itemized or any('quantity' in i or 'loads' in i for i in data['services'])
+    has_volume = any('volume' in i for i in data['services'])
+    headers = ['SERVICE / AGREED SCOPE']
+    numeric_widths = []
+    if has_quantity:
+        headers += ['QTY']
+        quantity_tokens = [token for i in data['services']
+                           for token in [i.get('quantity', ''), i.get('loads', ''), *i.get('unit', '').split()]]
+        quantity_width = max(48, max(pdfmetrics.stringWidth(token, 'OBody', 9) for token in quantity_tokens) + 22)
+        numeric_widths += [quantity_width]
+    if has_volume:
+        headers += ['VOLUME']
+        volume_width = max(86, max(pdfmetrics.stringWidth(i['volume']['total'] + ' ' + i['volume']['unit'], 'OBody', 9)
+                                   for i in data['services'] if 'volume' in i) + 22)
+        numeric_widths += [volume_width]
     if itemized:
-        quantity_width = max(48, max(pdfmetrics.stringWidth(i['quantity'], 'OBody', 9) for i in data['services']) + 22)
+        headers += ['PRICE', 'TOTAL']
         rate_width = max(76, max(pdfmetrics.stringWidth(fmt(i['unit_price']), 'OBold', 10.5) for i in data['services']) + 22)
         amount_width = max(76, max(pdfmetrics.stringWidth(fmt(i['amount']), 'OBold', 10.5) for i in data['services']) + 22)
-        widths = [width - quantity_width - rate_width - amount_width, quantity_width, rate_width, amount_width]
-    else:
-        widths = [width]
-    rows = [[p(h, 'white') for h in headers]]
+        numeric_widths += [rate_width, amount_width]
+    widths = [width - sum(numeric_widths), *numeric_widths]
+    if widths[0] < 135:
+        raise QuoteError('Numeric columns leave too little room for readable scope. Use smaller grouped rows or a package scope; do not shrink the document.')
+    rows = [[p(h, 'whiteRight' if h in {'PRICE', 'TOTAL'} else 'white') for h in headers]]
     for item in data['services']:
         detail = [p('<b>' + escape(item['name']) + '</b>', markup=True), Spacer(1, 4)]
         for index, paragraph in enumerate(item['description'].split('\n\n')):
@@ -285,8 +379,24 @@ def render_pdf(data, destination, record, font_dir=None):
                 detail.append(Spacer(1, 8))
             detail.append(p(paragraph))
         row = [detail]
+        if has_quantity:
+            quantity_text = item['quantity'] + '\n' + item['unit'] if 'quantity' in item else ''
+            if 'loads' in item and item.get('unit', '').lower() not in {'load', 'loads'}:
+                quantity_text += ('\n' if quantity_text else '') + item['loads'] + ' loads'
+            row += [p(quantity_text or '-', 'small')]
+        if has_volume:
+            volume = item.get('volume')
+            if volume:
+                volume_text = volume['total'] + ' ' + volume['unit']
+                if 'per_load' in volume:
+                    volume_text += '\n' + volume['per_load'] + ' ' + volume['unit'] + ' / load'
+                volume_text += '\n' + {'included': 'Included volume', 'estimated': 'Estimated volume', 'capacity': 'Truck capacity'}[volume['basis']]
+            else:
+                volume_text = '-'
+            row += [p(volume_text, 'small')]
         if itemized:
-            row += [p(item['quantity'] + '\n' + item['unit'], 'small'), p(fmt(item['unit_price']), 'money'), p(fmt(item['amount']), 'money')]
+            price_unit = 'load' if item['unit'].lower() in {'load', 'loads'} else item['unit']
+            row += [[p(fmt(item['unit_price']), 'money'), p('/ ' + price_unit, 'priceunit')], p(fmt(item['amount']), 'money')]
         rows.append(row)
     story += [table(rows, widths, [
         ('BACKGROUND', (0, 0), (-1, 0), NAVY), ('ROWBACKGROUNDS', (0, 1), (-1, -1), [PAPER, colors.white]),
@@ -317,8 +427,7 @@ def render_pdf(data, destination, record, font_dir=None):
     accept = [p('Acceptance & next step', 'head'),
               p('To proceed, sign below and return this quotation to Oceanides. We will coordinate scheduling under the agreed payment terms.', 'small'),
               Spacer(1, 22), table([[p('Client signature over printed name', 'small'), '', p('Date signed', 'small')]], [width * .62, width * .06, width * .32], [
-                  ('LINEABOVE', (0, 0), (0, 0), .7, NAVY), ('LINEABOVE', (2, 0), (2, 0), .7, NAVY), ('TOPPADDING', (0, 0), (-1, -1), 6)]),
-              Spacer(1, 9), p('Questions? ' + company['contact']['phone'] + '  |  ' + company['contact']['email'], 'small')]
+                  ('LINEABOVE', (0, 0), (0, 0), .7, NAVY), ('LINEABOVE', (2, 0), (2, 0), .7, NAVY), ('TOPPADDING', (0, 0), (-1, -1), 6)])]
     # Nested KeepTogether reports an artificial height and unnecessarily moves short closings.
     # Chain acceptance flowables so they remain grouped if unusually long notes must split.
     for flowable in accept[:-1]:
@@ -431,7 +540,7 @@ def main():
             part.add_argument('--revise')
             part.add_argument('--font-dir')
     part = sub.add_parser('sample')
-    part.add_argument('name', choices=['short', 'mixed', 'long'])
+    part.add_argument('name', choices=['short', 'mixed', 'long', 'siphoning'])
     part.add_argument('--output-dir', required=True)
     part.add_argument('--font-dir')
     args = parser.parse_args()

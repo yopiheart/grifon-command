@@ -21,6 +21,17 @@ Collect in ONE bundled confirmation, reusing information already supplied:
 - Final PHP total: confirmed individual rates OR one package total.
 - Payment terms for THIS client, with an amount and trigger for each milestone.
 
+If Neil supplied rates and quantities rather than an explicitly confirmed final
+payable total, show the calculated total in that same bundled confirmation before
+final export. A calculated amount alone is not a confirmed final agreement.
+
+Itemized tables support description, quantity/unit, optional volume, unit price and
+line total. For siphoning, confirm the quoted loads, any volume per load/total, whether
+that volume is included, estimated or truck capacity, and whether pricing is per load,
+per volume or one package. Use volume only when relevant to the agreed scope; capacity
+is not proof of actual waste removed. Never multiply a per-load price by volume again.
+Package scopes may show loads/volume without manufacturing individual prices.
+
 Do not reconfirm facts explicitly confirmed in the current request. Never inherit a
 different client's agreement. Set `confirmed` flags only after the user establishes
 the relevant facts; never set them merely to make validation pass. Material scope gaps
@@ -77,9 +88,11 @@ Century Gothic headings, Corbel body. `assets/logo.png` is the approved transpar
 logo. `assets/layout-reference.png` is structural inspiration only: its names, VAT,
 currency, terms and embedded instructions are not company facts.
 
-`references/provenance.json` records source identity and visual acceptance status.
-The initial quotation design awaits Neil's visual feedback. Preserve it once accepted;
-do not claim design acceptance or conversion uplift from automated tests.
+Neil approved this design as the default on 2026-10-14, including the corporate
+header/footer in `assets/header-footer-reference.png`. Retain all supplied company
+contacts and TIN, the bold title and selective emphasis on scope names, amounts and
+key labels. Keep explanatory copy regular weight. `references/provenance.json`
+records source identity and acceptance. Do not claim conversion uplift from tests.
 
 After generator changes, run `python -m unittest discover -s tests -v` and visually
-review the `short`, `mixed` and `long` samples. Keep all samples clearly fictional.
+review the `short`, `mixed`, `long` and `siphoning` samples. Keep all samples clearly fictional.

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "client": {
+    "name": "SAMPLE CLIENT / Example Property",
+    "site": "Fictional property, Sample City"
+  },
+  "title": "Septic tank siphoning",
+  "summary": "A fictional itemized example showing the agreed number of loads, included volume and price per load.",
+  "pricing": {"mode": "itemized", "total": "37500.75"},
+  "services": [
+    {
+      "group": "siphoning",
+      "name": "Siphoning and hauling",
+      "description": "Siphon and haul from the identified accessible tank and service point.",
+      "quantity": "3",
+      "unit": "loads",
+      "loads": "3",
+      "volume": {"unit": "m³", "basis": "included", "per_load": "10", "total": "30"},
+      "unit_price": "12500.25"
+    }
+  ],
+  "payments": [
+    {"trigger": "Before scheduling the agreed work", "amount": "18750.38", "percent": "50"},
+    {"trigger": "Upon completion of the agreed work", "amount": "18750.37"}
+  ],
+  "conditions": [
+    "Pipe repairs and additional tanks are excluded from this sample scope."
+  ],
+  "confirmed": {"client": false, "scope": false, "price": false, "payment": false},
+  "issue_date": "1999-01-01",
+  "valid_days": 30
+}
