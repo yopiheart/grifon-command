@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-06, complete Oceanides redesign ready for Neil review**
+**Stamped: 2026-10-14, August STP presenter guide complete; redesign ready for Neil review**
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
@@ -8,6 +8,17 @@ Neil rejected ba0946cf's profile as too similar to the original; new Redesign ou
 Complete visual change: fresh facade cover, Century Gothic/Corbel, navy/blue fields,
 editorial services map and varied section layouts. No merge/deploy/email send requested.
 Approved STP film is integrated with company profile; print brochure is the leave-behind.
+
+## August presenter guide (2026-10-14)
+output/pdf/Oceanides-STP-Presenter-Guide-August-2026.pdf under company-profile: 4 A4 pages.
+Complete post-video Taglish script, 12 client Q&As, closing and assessment checklist.
+Searchable text, 4 section bookmarks, embedded Century Gothic/Corbel, 88,457 bytes.
+SHA 1bd6054364792a64e0ddfef37ffe0a1132f4641382f739a82cdc5e29e8c3e503.
+Sources/build: stp-presenter-guide.content.json and build-stp-presenter-guide.py.
+Independent visual/content review PASS; 37 content checks, zero out-of-page chars.
+Python compilation PASS; private QA .tmp/oceanides-presenter-guide/.
+Guide is a presenter reference; supplier/model/design/costs remain unconfirmed.
+No new prices, guaranteed savings, maintenance-free or zero-siphoning claims.
 
 ## Current deliverables
 clients/oceanides/company-profile/output/pptx/:
@@ -22,7 +33,6 @@ SHA 7b86f9e4c33605da5606ff032a813952eef4210320d636a73d09eabfe3875520.
 A4 landscape, 100% actual size, duplex, short-edge flip; nest 2 sheets/fold center.
 Imposition 8/1, 2/7, 6/3, 4/5; 148.5x210 mm A5 reader, 13 mm safe margins.
 Render previews output/preview/Redesign-*.png; main cover/index/plumbing and brochure.
-Two alternate covers are preview-only; main deck uses architectural corporate cover.
 Production provenance redesign-2026.delivery.json; content premium-content.json.
 Builders build-redesign-presentation.mjs and build-redesign-brochure.py.
 --replace-redesign rebuilds only this task-owned new deck; atomic validated promotion.
@@ -76,4 +86,3 @@ Oceanides main contact coordinates field teams/specialists through turnover.
 Tramo Street Corner Dandan, Pasay City, Philippines 1300.
 PR161 -> PR153 -> PR152 -> PR151 and prior recovery stack retained, unmerged.
 Unrelated attachments/workflows reference asset directories remain unstaged.
-NOW.md is the only resume document.
