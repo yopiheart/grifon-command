@@ -1,0 +1,77 @@
+{
+  "schema": "independent-header-footer-review.v1",
+  "status": "pass",
+  "source_sha256": "91200a443067e46efe55de603a4809e2a0977bbcf7ead6a8708ddcae7eaa8d8d",
+  "final_sha256": "f3aaa2d8d3dafb60893d533847d2a82cd8f1a897a25f6864e74437f81ddd0494",
+  "slide_count": 9,
+  "aspect_ratio": "16:9",
+  "source_notes_parts_byte_identical": 18,
+  "visuals_reviewed": "All 18 before/after full-size images at 1280x720",
+  "visual_result": "No new title, body, header, or footer overlap. Source diagrams remain native and legible. The original slide 3 word wrap remains unchanged.",
+  "scope": "Header/footer only; source technical claims are retained and have not been fact-checked. Native PowerPoint application rendering was not tested.",
+  "per_slide": [
+    {
+      "slide": 1,
+      "native_source_shapes_preserved": 36,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 2,
+      "native_source_shapes_preserved": 18,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 3,
+      "native_source_shapes_preserved": 16,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 4,
+      "native_source_shapes_preserved": 52,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 5,
+      "native_source_shapes_preserved": 12,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 6,
+      "native_source_shapes_preserved": 72,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 7,
+      "native_source_shapes_preserved": 44,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 8,
+      "native_source_shapes_preserved": 35,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    },
+    {
+      "slide": 9,
+      "native_source_shapes_preserved": 5,
+      "text_and_font_sizes_unchanged": true,
+      "branding_fields_present": true,
+      "visual_comparison": "pass"
+    }
+  ]
+}

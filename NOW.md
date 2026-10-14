@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14; corrected Oceanides optimized 1m40s STP video delivered**
+**Stamped: 2026-10-14; supplied 9-slide Advanced STP deck header/footer edited**
 
 ## Active task
 Chat: 01a12b66-b2cb-7ef1-bc28-515b314e7a8a.
@@ -16,9 +16,27 @@ Owner confirmed Globaltec is the current treatment/disposal provider.
 Owner requested email delivery to ceprianoaugust@gmail.com and separate STP video.
 Neil identified the previously shortened ~1m40s cut as the intended version.
 The Drive video now uses that unchanged optimized cut; correction emailed.
+Latest request: edit supplied Advanced_STP_Presentation (2) header/footer to match
+the company profile. Same 9 slides and native diagrams retained; compact branded
+header, current OPC details/TIN and navy contact footer added. No technical rewrite.
 No application code change, new paid generation, deployment or merge.
 
 ## Latest deliverables
+New STP deck:
+clients/oceanides/stp-presentation/output/Oceanides-Advanced-STP-Branded-v1.pptx
+Preview: clients/oceanides/stp-presentation/output/Oceanides-STP-Header-Footer-Preview.png.
+Drive ID: 1227Hg1VsoIcoNuZfpfGKR8mvLaP9-Z9A, original PPTX type retained.
+Office-preview URL and reader grant: stp-presentation/delivery.json.
+Source preserved under stp-presentation/source; builders and validation beside it.
+All 9 final slides rendered; package/geometry/font policy/import checks passed.
+Original body fonts and diagram geometry preserved; only body translation and one
+empty card's top margin changed to fit the new header. Speaker notes unchanged.
+Independent review inspected all 9 source/final slides and compared native XML:
+text/font sizes preserved, all 18 notes/relationship parts byte-identical, details
+correct throughout, and no new clipping/overlap. Receipt: header-footer-review.validation.json.
+Header/footer content edited only; source STP performance claims not fact-checked.
+No email sent for this separate STP deck.
+
 69-slide editable 16:9 PowerPoint, no embedded video:
 clients/oceanides/company-profile/output/pptx/Oceanides-Company-Profile-Separate-Video-Review-v4.pptx
 Matching PDF:

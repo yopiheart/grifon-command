@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-14",
+  "source_file": "source/Advanced-STP-Presentation-Original.pptx",
+  "source_sha256": "91200a443067e46efe55de603a4809e2a0977bbcf7ead6a8708ddcae7eaa8d8d",
+  "output_file": "output/Oceanides-Advanced-STP-Branded-v1.pptx",
+  "output_sha256": "f3aaa2d8d3dafb60893d533847d2a82cd8f1a897a25f6864e74437f81ddd0494",
+  "slides": 9,
+  "scope": "Edit existing header/footer to match Oceanides company-profile branding; preserve treatment content, editable diagrams and original body fonts",
+  "header": "Compact pale-blue header with company logo, exact OPC name, phone numbers, marketing email and corporate TIN",
+  "footer": "Navy footer with website, Facebook, company emails and slide numbers",
+  "source_content_verification": "Original STP wording is retained; this change does not independently verify technical or performance claims",
+  "drive": {
+    "id": "1227Hg1VsoIcoNuZfpfGKR8mvLaP9-Z9A",
+    "url": "https://docs.google.com/presentation/d/1227Hg1VsoIcoNuZfpfGKR8mvLaP9-Z9A/edit?usp=drivesdk&ouid=114589278721036104679&rtpof=true&sd=true",
+    "folder_id": "1g_jhHirxXozF7SS0rb1ABylGCOIyoLv1",
+    "reader": "ceprianoaugust@gmail.com",
+    "readback_size": 245600
+  },
+  "email_sent": false
+}
