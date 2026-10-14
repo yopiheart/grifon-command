@@ -37,6 +37,10 @@ This is source inspection, not verification of live configuration or providers.
 | `services/producerOrchestrator.ts`, `producerDeps.ts` | Browser-driven stages with injected services; EDL follows generated clips | Reuse tested seams; reference timing must constrain planning before generation |
 | `services/producerRunService.ts`, `api/producer/run.ts`, `api/producer/advance.ts` | Durable checkpoints, optimistic revision, scene claims and recorded handles | Reuse ownership/concurrency patterns; add approval/budget/job semantics for new runs |
 | `api/gemini/omni-video.ts` and its poll/status/consume routes | Preset-based source-video edit pass; default model is preview ID | Keep existing edits intact; build a separately versioned UGC generation adapter after contract validation |
+| `services/voiceService.ts`, `voiceConsolidationService.ts`, `api/voice/consolidate.ts`, `api/_lib/sceneVoiceRoute.ts` | Talking footage routes to STS; narration to TTS | Reuse one-voice routing; validate converted speech against Omni footage and remove silent TTS fallback for new talking jobs |
+| `api/elevenlabs/voices.ts`, `api/_lib/filipinoLibrary.ts` | Curated saved library plus user-owned clones and premade voices | Present the curated saved list/private upload choice; preserve owner isolation and consent |
+| `api/elevenlabs/text-to-speech.ts`, `speech-to-speech.ts`, `api/_lib/elevenlabs.ts` | TTS v3 and multilingual STS v2, duplicated constants/settings | Prepare explicit v4 TTS upgrade diff; verify voice compatibility on both TTS and STS |
+| `api/_lib/assets/sfx/`, `api/_lib/sfxTriggers.ts`, `tools/sfx_library_session.mjs` | Existing sound bank, timed render cues and offline ElevenLabs generation tool | Reuse appropriate bank cues; custom generation needs a budgeted production adapter |
 | `api/render/final.ts`, `api/_lib/renderPresets.ts` | Legacy style/preset resolution and 12-scene final-render limit | Explicit reference EDL route without incidental preset rotation; preflight scene limits |
 | `api/_lib/mediaStore.ts`, `api/render/final/list.ts`, `api/gemini/video/library.ts` | Storage facade and existing library/list routes | Reuse media operations; add stable production-version identity and confirm Assets routing |
 | `workflows/viral_swipe_file.md`, `tools/analyze_video.py`, `tools/render_audit.mjs` | Existing creative evidence and analysis tools | Curate Recipe evidence; validate timing and separate measurements from model estimates |
@@ -54,6 +58,9 @@ spend guarantee. Browser-resume persistence is not a background production worke
 2. Validate files and assign roles: character, product, clothing. A reference video
    is a separate input, not one of the five photos. User references remain private
    and do not automatically become shared library content.
+   Choose one saved curated ElevenLabs voice or upload a consented voice sample
+   for a private clone. Audio is separate from the five-photo allowance. Reuse an
+   existing brand voice when available; include a preview in the normal review.
 3. Build a reference blueprint: ordered shots, timing, camera/framing, overlays,
    sound cues and three to five signature traits. Record measured vs inferred data.
 4. Retrieve eligible lessons/Recipes. Produce original brand messaging inside that
@@ -83,6 +90,8 @@ Exact runtime schemas are an implementation deliverable, not approved here.
 | Creative Recipe | ID/version, category, evidence references, eligibility, signature traits, execution method, validation status |
 | Reference blueprint | Source asset/hash, analysis version, shot timeline, measured timing, text/audio observations, uncertainty |
 | Brand and asset snapshot | Owner, immutable media IDs/hashes, roles, approved facts, identity anchors, language |
+| Voice lock | Selected voice ID, curated/private origin, ownership/consent reference, preview, TTS/STS model versions and supported settings, accent/delivery direction |
+| Audio plan | Per-shot STS/TTS/silent routing, original and converted speech keys, alignment version, Music v2.5 source/settings, SFX asset IDs and timed cues |
 | Production plan | Workflow version, blueprint/Recipe version, script/visual plan, shot dependencies, reference differences, audio and finishing strategy |
 | Approval and quote | Plan hash/revision, user, delegation scope, quote expiry, cost currency/unit, planning/production/repair caps and maximum attempts |
 | Stage attempt | Stable attempt key, dependencies, provider, submission intent, provider job handle, outcome, reserved/settled cost, evidence |
@@ -109,6 +118,10 @@ fixture development.
 - Add authenticated asset registration/upload handling through the media facade;
   validate real media type, duration, ownership, size and supported format. Set
   concrete limits after inspecting the actual upload path/platform constraints.
+- Connect the existing curated voice list and private clone upload UI to the new
+  draft. Store the voice selection once; cloning and new previews require their
+  budgeted consent/approval before provider calls. Exercise uploads with fixtures.
+  Do not expose every voice in Neil's provider account or another user's clones.
 - Keep a fixture Recipe distinctly labelled as test data, never a validated Auto
   choice. Retain old drafts through explicit version decoding.
 - Demo: save, close, reopen and edit the same draft on mobile. Checks: six photos
@@ -123,6 +136,9 @@ and an approved paid spec for any paid analysis or research.
   Prefer measured cuts/audio timing and curated evidence over unverified estimates.
 - Store script, visual timeline, signature traits, identity anchors and deviations.
   Add a version-bound approval and quote. Reject stale approvals after input edits.
+- Bind the voice lock and audio plan to that approval. Include clone/preview, STS,
+  TTS, alignment, Music v2.5 and any custom SFX charges. Voice changes invalidate
+  affected audio and final mixes, rather than silently switching mid-ad.
 - Account for planning costs before analysis: use a disclosed planning allowance
   authorized by the initiating action, or a separately approved pilot spec. The
   production review approves the remaining generation/finishing spend. Never make
@@ -163,8 +179,19 @@ spec with supplied assets. Mocked transport work can precede the paid test.
 - Pilot the hardest short Taglish line with the accepted character/product anchors.
   Use 360p development output, then validate the supported finishing path. Do not
   promise an accepted-draft promotion unless the provider actually supports it.
-- Preserve native speaking audio. Do not run the legacy voices stage over it or
-  replace it with unrelated TTS. Off-screen narration is a separate explicit mode.
+- Preserve native speaking audio as the original performance source. Extract clean
+  dialogue, apply ElevenLabs Voice Changer using the locked voice ID, and compare
+  the converted speech with the original picture for transcript, timing, accent,
+  pronunciation and delivery. Isolate dialogue if needed; do not convert a full
+  music/SFX mix or double it with the new score. Keep original and converted stems.
+- Use Eleven v4 TTS with that same voice ID for off-screen narration. Verify the
+  exact v4 contract and supported settings; update both TTS call sites and their
+  sync/evaluation checks only under the approved diff. STS uses its own supported
+  model. A v4 TTS upgrade does not implicitly upgrade or replace STS.
+- Missing/failed talking-source audio must not silently fall back to unrelated
+  TTS over a moving mouth. Pause that shot or use an explicitly planned, budgeted
+  audio-driven lip-sync/regeneration path. Do not double-process good TTS through
+  STS unless a tested workflow calls for it.
 - Demo: an approved shot plays in chat with its attempt/cost receipt. Checks:
   pronunciation and English switching, mouth timing, face/product consistency,
   delivery-resolution defects, duration and correct resumption of provider handles.
@@ -175,6 +202,14 @@ Dependencies: S3; approved script/visual plan and music inputs.
 
 - Compose the 15-30 second pilot from accepted shots, using the reference timeline
   planned before generation. Keep transcription alignment tied to the actual audio.
+- Align captions to final converted/TTS speech, not discarded native timing data.
+  Check voice identity and delivery across STS and TTS joins by listening.
+- Generate the fitted score with Music v2.5 under the shared music workflow.
+  Reuse it for revisions when suitable. Plan SFX separately: use the curated bank
+  for common whooshes, pops, impacts, notifications and contact sounds; request a
+  custom ElevenLabs effect only when no suitable asset fits. Check sound provenance
+  and actual onset, then place cues precisely and duck music/SFX beneath speech.
+  Do not resurrect old generation-tool budget approvals or assume it is a live API.
 - Extend final assembly through an explicit reference-led contract. Preserve the
   old render route/version. Do not inherit automatic title stacks, music, palette
   rotation or captions where the approved reference plan does not call for them.
@@ -194,6 +229,9 @@ Dependencies: S4.
 - Translate requests into a visible change set and dependency impact. Text/style
   changes rerender composition; changed dialogue regenerates affected speech/shot
   and dependent timing. Product/character changes invalidate dependent visual shots.
+- A voice-only change reruns affected conversion/TTS, alignment and final mix while
+  preserving suitable picture. Recheck lip sync; keep the previous accepted version.
+  A missing/deleted voice needs explicit resolution, never silent substitution.
 - Show added cost and obtain the required revised approval; delegated repairs stay
   within their already approved scope and attempt/cost limits.
 - Preserve accepted source media, audio, previous final version and provider handles.
@@ -238,6 +276,9 @@ Independent review is required before requesting merge of non-trivial changes.
 Fixtures must cover approval tampering/staleness, ownership, duplicate submission,
 unknown outcome, budget races, worker restart, closed-browser continuation, expired
 URLs, lost completion writes, native-audio preservation and targeted revisions.
+Also verify one voice ID across STS/TTS/retries, no private-voice leakage, explicit
+clone consent, failed STS handling, missing voice handling, final-audio alignment,
+no accidental doubled music and no custom-SFX calls when bank cues suffice.
 Existing recovery tests do not establish these new guarantees by themselves.
 
 Paid pilot spec, to complete once Neil supplies inputs:
@@ -245,6 +286,8 @@ Paid pilot spec, to complete once Neil supplies inputs:
 - Exact source URLs, media IDs/hashes, permitted usage and brand fact snapshot.
 - Final script/visual plan, identity anchors and three to five signature traits.
 - Provider/model/mode, clip durations, resolution and finishing/audio settings.
+- Locked voice/consented sample, a speaking-to-narration transition, final-audio
+  lip-sync/listening checks, Music v2.5 settings and exact SFX assets or paid prompts.
 - Named pass/fail checks for speech, identity, edit recognizability and delivery.
 - Maximum money/credits, attempt count, targeted repair allowance and stop rules.
 - Evidence: inputs, plans, attempt receipts, comparison frames, full audio/video

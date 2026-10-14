@@ -41,9 +41,23 @@ Neil's highest priorities, in order:
 - A customer character reference takes precedence. When absent, an original AI
   presenter can be proposed; normal review includes its preview before talking
   footage. You decide can delegate this choice explicitly within its scope.
+- Lock one ElevenLabs voice identity per ad, including revisions. The customer
+  chooses from Neil's curated saved-voice list or provides a consented recording
+  for their private clone. Reuse the selected voice across visible speech and
+  narration; do not ask again for each scene. You decide can select an eligible
+  curated voice within its delegated scope.
+- Preserve ElevenLabs Voice Changer for generated talking footage and target
+  Eleven v4 TTS for off-screen narration. Preserve original speech as the source
+  performance, then verify the converted audio against the picture. The same
+  voice ID helps consistency but does not guarantee matching accent or delivery.
 - Original fitted music follows [the music workflow](background_music_production.md).
   A supplied permitted track is an explicit alternative. Match closely does not
   silently copy reference music. Preserve accepted audio when revising a film.
+- Generate new background scores with ElevenLabs Music v2.5, one variant fitted
+  to the timeline, instrumental by default. For SFX, the recommended policy is
+  existing curated bank first, custom ElevenLabs generation only for a missing
+  scene-specific sound. SFX placement follows the reference/cue map, not a fixed
+  effect on every cut. Custom generation stays inside the approved budget.
 - Repair only failed or changed dependencies. Start with one bounded targeted
   repair round inside the approved cap; do not loop until the budget is exhausted.
 - Chat and Assets refer to the same durable output/version. Preserve accepted
@@ -87,6 +101,12 @@ merging every creator's style into a generic average.
   different operations; the latter can change speech and identity.
 - Do not require a low-resolution and high-resolution generation on every order.
   Promote a finishing path only after testing whether it preserves accepted work.
+- Current TTS code uses `eleven_v3`; the Voice Changer uses
+  `eleven_multilingual_sts_v2`. Eleven v4 is the requested TTS target, not an
+  assertion that the app already uses it or that Voice Changer uses the same model.
+  Verify model/voice compatibility and supported settings before proposing the
+  exact implementation diff. Include cloning, previews, conversion and alignment
+  in the production quote.
 - Seedance is a candidate for cinematic and non-speaking footage based on Neil's
   experience; route by shot requirements, not an exclusive category restriction.
 - Frontier reasoning/coding models author new motion approaches. Retain accepted
@@ -131,6 +151,9 @@ this roadmap. No deployment, merge or production data mutation is authorized.
 - [Google Omni 1.1 announcement](https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-omni-1-1-flash/)
 - [Contextual retrieval](https://www.anthropic.com/engineering/contextual-retrieval)
 - [Higgsfield Katana](https://higgsfield.ai/blog/higgsfield-katana)
+- [ElevenLabs TTS](https://elevenlabs.io/docs/overview/capabilities/text-to-speech)
+- [ElevenLabs Voice Changer](https://elevenlabs.io/docs/overview/capabilities/voice-changer)
+- [ElevenLabs sound effects](https://elevenlabs.io/docs/overview/capabilities/sound-effects)
 
 These explain capabilities and product inspiration; they do not establish
 Grifon's measured quality, costs, model superiority or market-first status.

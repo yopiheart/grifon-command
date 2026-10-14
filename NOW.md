@@ -19,6 +19,10 @@ Default: adapt for brand; optional Match closely; review plan/script/cost first.
 You decide stays inside approved scope/budget. First pilot: 15-30s 9:16 Taglish UGC.
 Library grows from three reference examples toward 30 curated videos; no automatic
 model retraining or unsupported sales prediction. Old accepted work stays intact.
+Audio clarification: lock one curated/private ElevenLabs voice per ad. Preserve
+Voice Changer on talking footage; target v4 TTS for narration (code still uses v3).
+Music v2.5 stays the score default; recommend existing SFX bank first and custom
+ElevenLabs SFX only when needed. Plan includes final-audio lip-sync/identity checks.
 
 ## Findings that shape implementation
 Current Companion uses ProducerFlow and sequential single-photo intake.
@@ -35,6 +39,7 @@ Domain-language check PASS (307 files, zero drift hits).
 Diff whitespace PASS; seven local document links resolve.
 App build, tests and paid quality checks are not required/run for this docs-only task.
 Draft PR lookup: gh pr view codex/creative-library-ugc-plan --repo yopiheart/grifon-command.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/188.
 Independent implementation review remains a gate before a future non-trivial merge.
 
 ## Next action
