@@ -15,7 +15,7 @@ npm.cmd run verify:recovery
 ```
 
 The first command lists the supported flows. A selected flow runs at **375px and
-1280px**; the full command runs all nine scenarios, eighteen browser cases.
+1280px**; the full command runs all ten scenarios, twenty browser cases.
 Use the evidence directory printed by the command, not a previous run's report.
 The runner writes a readable summary, machine-readable results, and browser
 evidence. Unselected flows are **NOT RUN**, never implied passes.
@@ -65,7 +65,8 @@ Do not enter the developer Director wizard to reproduce a consumer recovery bug.
 | `first-cut` | Reopen Producer → Your First Cut. Customer review is still required. | Seeds a completed checkpoint with local video; reloads, verifies playable media and zero new submissions. |
 | `recorded-job` | Reopen Producer during video work → resume polling → Your First Cut. | Seeds earlier stages, then exercises actual submit → record handle → reload → poll → final-render adapters against the stateful fixture. The same scene handle is polled; scene submission count stays one. |
 | `saved-run-error` | Reopen Producer with a temporary saved-run failure → visible error with Retry and Back. Retry loads the same run. | Injects HTTP 503, checks that the active run reference survives Back and return, clears the failure, retries into Your Storyboard with no new production. |
-| `polling-error` | Producer final-render polling fails → visible Retry → Your First Cut after recovery. | Seeds completed scene videos and injects polling failure. Existing bounded final-render retries can submit a new final render; this is **not** a no-resubmission guarantee for final rendering. Scene videos and run identity remain. |
+| `polling-error` | Producer final-render polling fails → visible Retry → Your First Cut after recovery. | Seeds completed scene videos and injects polling failure. Poll failure does not automatically restart the final render. Only explicit customer Retry submits a new final render; scene videos and run identity remain. |
+| `malformed-run` | Reopen Producer with malformed saved data → visible error with Retry and Back. | Injects malformed successful response variants; retains the active run reference and checks zero production submissions or checkpoint writes. Repairing the fixture response and clicking Retry restores the same Storyboard gate. |
 | `missing-run` | Producer's saved run no longer exists → launch screen. | Returns 404 for the saved run; clears the stale reference without generation or permanent loading. |
 
 The executable selection source is [recovery-flows.json](../tools/recovery-flows.json).
@@ -106,6 +107,31 @@ before fixing it, then demonstrate the relevant check fails the broken behavior
 and passes the fix. Keep independent review for changes requiring judgment.
 
 ## Boundaries that remain
+
+### Scene-write interruption coverage
+
+Run the free state-machine cases with:
+
+```powershell
+npm.cmd run test -- tests/producerOrchestrator.test.ts
+```
+
+The crash-window cases execute `runProduction` with simulated provider and scene
+store boundaries. They resume clones of the checkpoint actually persisted during
+the interrupted attempt. They cover a failed handle write, a persisted handle
+whose acknowledgement is lost, a failed completion write, and an immediate retry
+before a handle-less claim becomes stale. A scene-write failure keeps the video
+stage recoverable and stops downstream production after sibling workers settle;
+completed sibling clips are retained. Recorded handles are polled on resume.
+
+A stale claim without a recorded handle can still cause another provider
+submission. Repeated failed handle writes can cause repeated submissions on later
+stale recoveries: the tests characterize three submissions across two such
+recoveries. This is not an at-most-one-extra-render guarantee. Run-ID credit
+deduplication and provider-spend deduplication are separate contracts. The fake
+store does not verify the production RPC or its ten-minute stale threshold.
+
+### Browser and live-service limits
 
 Closing a page in the same browser context exercises preserved browser storage;
 this is not a device migration, browser crash or cleared-storage recovery test.

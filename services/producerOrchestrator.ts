@@ -1553,11 +1553,11 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
         await deps.run.flagScene(run.runId, job.sceneIdx, `video: ${outcome.reason}`);
         return null;
       }
-      // expired → fall through to requeue + reclaim + re-render (single-extra-render).
+      // expired → fall through to guarded requeue + reclaim + re-render.
     }
-    // Handle-less orphan (crash before record) OR expired handle: reclaim + re-render so the
-    // scene never gets stuck/wrongly-flagged on resume. The user's video_ad credit is deduped
-    // by runId, so at most one extra provider render per crashed scene.
+    // Handle-less orphan (crash before record) OR expired handle: guarded reclaim + re-render.
+    // Each successful reclaim can add a provider submission; credit dedupe by runId
+    // does not cap provider spend across repeated failures to record a handle.
     await deps.run.requeueScene(run.runId, job.sceneIdx);
     claim = await deps.run.claimScene(run.runId, job.sceneIdx);
     noteMorph(claim.jobHandle);
@@ -1573,6 +1573,7 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
         }
         return null;
       }
+      if (inFlight(claim.status)) throw new Error('This video scene is still in progress. Try again later.');
       return claim.videoUrl ?? null;
     }
   }
@@ -1991,28 +1992,36 @@ async function runStage(
         .filter((j): j is RenderJob => j !== null);
       if (jobs.length === 0) return;
 
-      // Seed the server job queue, then FAN OUT with the atomic per-scene claim so each
-      // render fires exactly once (no double-spend) even under resume / retry / 2 tabs.
+      // Seed the server queue and gate submissions with per-scene claims. Recorded
+      // handles are reused; a stale handle-less claim can permit another submission.
       await deps.run.seedScenes(run.runId, scenes.length);
+      const errors: unknown[] = [];
       await pooled(jobs, FANOUT_CONCURRENCY, async (job) => {
-        if (cb.signal.aborted) return;
-        await commit((r) => {
-          const sc = r.scenes.find((s) => s.sceneIdx === job.sceneIdx);
-          if (sc) sc.status = 'rendering';
-        });
-        const url = await renderOneScene(run, job, deps, cb);
-        await commit((r) => {
-          const sc = r.scenes.find((s) => s.sceneIdx === job.sceneIdx);
-          if (!sc) return;
-          if (url) {
-            sc.status = 'done';
-            sc.videoUrl = url;
-          } else {
-            sc.status = 'flagged';
-            sc.flaggedReason = sc.flaggedReason ?? 'video: failed';
-          }
-        });
+        try {
+          if (cb.signal.aborted) return;
+          await commit((r) => {
+            const sc = r.scenes.find((s) => s.sceneIdx === job.sceneIdx);
+            if (sc) sc.status = 'rendering';
+          });
+          const url = await renderOneScene(run, job, deps, cb);
+          await commit((r) => {
+            const sc = r.scenes.find((s) => s.sceneIdx === job.sceneIdx);
+            if (!sc) return;
+            if (url) {
+              sc.status = 'done';
+              sc.videoUrl = url;
+            } else {
+              sc.status = 'flagged';
+              sc.flaggedReason = sc.flaggedReason ?? 'video: failed';
+            }
+          });
+        } catch (error) {
+          errors.push(error);
+        }
       });
+      // Drain siblings before failing the stage so completed clips survive and
+      // unfinished durable handles remain reachable on the next resume.
+      if (errors.length) throw errors[0];
       return;
     }
 

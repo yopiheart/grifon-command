@@ -23,7 +23,7 @@ function report() {
 const evaluate = (value: unknown, override = {}) => evaluateReport(value, ['draft'], { ...metadata, ...override });
 
 describe('recovery verification evidence contract', () => {
-  it('maps the actual 18 Playwright cases exactly, detecting manifest/title drift without a browser', () => {
+  it('maps the actual 20 Playwright cases exactly, detecting manifest/title drift without a browser', () => {
     const require = createRequire(import.meta.url);
     const child = spawnSync(process.execPath, [require.resolve('@playwright/test/cli'), 'test', '--config', 'playwright.recovery.config.ts', '--list', '--reporter=json'], {
       encoding: 'utf8', shell: false, timeout: 15_000,
@@ -40,7 +40,7 @@ describe('recovery verification evidence contract', () => {
     }
     walk(discovery.suites);
     const expected = expectedCases(manifest.flows.map((flow: { id: string }) => flow.id));
-    expect(actual).toHaveLength(18);
+    expect(actual).toHaveLength(20);
     expect(actual.sort()).toEqual(expected.map((item: { file: string; suite: string; title: string }) => `${item.file}|${item.suite}|${item.title}|chromium`).sort());
   }, 20_000);
   it('requires both viewports and marks all unselected flows NOT RUN', () => {
