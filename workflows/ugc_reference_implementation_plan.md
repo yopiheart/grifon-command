@@ -269,6 +269,19 @@ The integrated browser checks use one shared HTTP fixture backend for inputs and
 jobs, including fresh-browser recovery and continuation while its browser is
 closed. This is simulated execution, not native cloud or paid-provider evidence.
 
+Approved hosted rollout and signed-in smoke passed on 2026-10-15 at source
+`b0f0efde`. Unchanged Prepare reused the original private snapshot (one video,
+five ordered photos and the selected voice). Native Start froze the confirmed
+review and source link. The job completed after its preview tab closed: five
+worker ticks followed closure, captured server-side before reconnection. Reopen
+recovered the same job and restored verified inputs plus original review content
+into an unconfirmed editable chat; review fields survived a full reload. One new
+job, no duplicate snapshots/files and zero actual spend. Evidence is ignored under
+`.tmp/ugc-cloud-linked-live/` and `.tmp/linked-correctness-native*`.
+Only that job tab was closed; physical PC shutdown, a physical second device and
+native cleared-browser recovery were not tested. No paid generation or video/
+Assets output ran.
+
 ```powershell
 npx.cmd vitest run tests/unit/companionLinkedCloudFlow.test.ts tests/unit/companionCloudFixtureReferencesSql.test.ts
 npm.cmd run test:e2e -- --config tests/e2e/companion-cloud-workflow.config.ts
