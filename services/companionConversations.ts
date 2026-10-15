@@ -1,6 +1,7 @@
 import { createCompanionDraft, loadCompanionDraft, type CompanionDraft } from './companionIntake';
 import { isReferenceDraft, type CompanionReferenceDraft } from './companionReferenceDraft';
 import { isReferenceReview, type ReferenceReview } from './companionReferenceReview';
+import { acceptsReferenceQueue, invalidateReferenceQueue, isReferenceQueue, type ReferenceQueue } from './companionReferenceQueue';
 
 export interface CompanionConversation {
   id: string;
@@ -11,6 +12,7 @@ export interface CompanionConversation {
   referenceDraft?: CompanionReferenceDraft;
   referenceInputRevision?: number;
   referenceReview?: ReferenceReview;
+  referenceQueue?: ReferenceQueue;
 }
 export interface CompanionConversations {
   version: 1;
@@ -27,17 +29,24 @@ export function adoptConversations(userId: string, draft: CompanionDraft | null,
   const chat = createConversation(draft ?? createCompanionDraft(), runId);
   return { version: 1, userId, selectedId: chat.id, chats: [chat] };
 }
-export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview'>>): CompanionConversations {
+export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue'>>): CompanionConversations {
   const chat = book.chats.find(item => item.id === id);
   if (!chat || Object.entries(patch).every(([key, value]) => chat[key as keyof CompanionConversation] === value)) return book;
   const inputChanged = patch.referenceDraft !== undefined && patch.referenceDraft !== chat.referenceDraft;
-  const next = { ...chat, ...patch, updatedAt: Date.now() };
+  const reviewChanged = patch.referenceReview !== undefined && JSON.stringify(patch.referenceReview) !== JSON.stringify(chat.referenceReview);
+  const { referenceQueue, ...otherFields } = patch;
+  const next = { ...chat, ...otherFields, updatedAt: Date.now() };
   if (inputChanged) {
     next.referenceInputRevision = (chat.referenceInputRevision ?? 0) + 1;
     if (next.referenceReview) next.referenceReview = { ...next.referenceReview, stale: true, confirmation: null };
   }
   // A late planner completion may not install a review for an older input revision.
   if (next.referenceReview && next.referenceReview.inputRevision !== (next.referenceInputRevision ?? 0)) next.referenceReview = { ...next.referenceReview, stale: true, confirmation: null };
+  if (chat.referenceQueue && (inputChanged || reviewChanged)) next.referenceQueue = invalidateReferenceQueue(chat.referenceQueue);
+  else if (referenceQueue !== undefined) {
+    if (acceptsReferenceQueue(chat.referenceQueue, referenceQueue, next.referenceReview, next.referenceInputRevision ?? 0)) next.referenceQueue = referenceQueue;
+    else if (!Object.entries(otherFields).some(([key, value]) => chat[key as keyof CompanionConversation] !== value)) return book;
+  }
   return { ...book, chats: book.chats.map(item => item.id === id ? next : item) };
 }
 
@@ -70,6 +79,7 @@ export async function loadConversations(userId: string): Promise<CompanionConver
           && (chat.referenceInputRevision === undefined || (Number.isSafeInteger(chat.referenceInputRevision) && chat.referenceInputRevision >= 0))
           && (chat.referenceReview === undefined || (chat.referenceDraft !== undefined && isReferenceReview(chat.referenceReview)
             && (chat.referenceReview.stale || chat.referenceReview.inputRevision === (chat.referenceInputRevision ?? 0))))
+          && (chat.referenceQueue === undefined || (chat.referenceDraft !== undefined && isReferenceQueue(chat.referenceQueue, chat.referenceReview, chat.referenceInputRevision ?? 0)))
           && loadCompanionDraft(userId, { getItem: () => JSON.stringify({ version: 1, userId, draft: chat.draft }) }))
         || !book.chats.some(chat => chat.id === book.selectedId)) throw new Error('Saved conversations could not be opened.');
       return { ...book, revision: book.revision ?? 0 };
